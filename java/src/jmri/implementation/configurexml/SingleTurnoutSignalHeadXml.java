@@ -23,7 +23,7 @@ public class SingleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
 
     /**
      * Default implementation for storing the contents of a
-     * SingleTurnoutSignalHead
+     * SingleTurnoutSignalHead.
      *
      * @param o Object to store, of type TripleTurnoutSignalHead
      * @return Element containing the complete info
@@ -80,7 +80,7 @@ public class SingleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
             case SignalHead.DARK:
                 return "dark";
             default:
-                log.warn("Unexpected appearance: " + mAppearance);
+                log.warn("Unexpected appearance: {}", mAppearance);
                 // go dark
                 return "dark";
         }
@@ -110,7 +110,16 @@ public class SingleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
 
         loadCommon(h, shared);
 
-        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
+        SignalHead existingBean =
+                InstanceManager.getDefault(jmri.SignalHeadManager.class)
+                        .getBySystemName(sys);
+
+        if ((existingBean != null) && (existingBean != h)) {
+            log.error("systemName is already registered: {}", sys);
+        } else {
+            InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
+        }
+
         return true;
     }
 
@@ -150,27 +159,28 @@ public class SingleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
     }
 
     private int getIntFromColour(String colour) {
-        String c = colour.toLowerCase();
-        if (c.equals("red")) {
-            return SignalHead.RED;
-        } else if (c.equals("yellow")) {
-            return SignalHead.YELLOW;
-        } else if (c.equals("green")) {
-            return SignalHead.GREEN;
-        } else if (c.equals("lunar")) {
-            return SignalHead.LUNAR;
-        } else if (c.equals("dark")) {
-            return SignalHead.DARK;
-        } else if (c.equals("flashred")) {
-            return SignalHead.FLASHRED;
-        } else if (c.equals("flashyellow")) {
-            return SignalHead.FLASHYELLOW;
-        } else if (c.equals("flashgreen")) {
-            return SignalHead.FLASHGREEN;
-        } else if (c.equals("flashlunar")) {
-            return SignalHead.FLASHLUNAR;
-        } else {
-            log.warn("Unexpected appearance: " + colour);
+        switch (colour.toLowerCase()) {
+            case "red":
+                return SignalHead.RED;
+            case "yellow":
+                return SignalHead.YELLOW;
+            case "green":
+                return SignalHead.GREEN;
+            case "lunar":
+                return SignalHead.LUNAR;
+            case "dark":
+                return SignalHead.DARK;
+            case "flashred":
+                return SignalHead.FLASHRED;
+            case "flashyellow":
+                return SignalHead.FLASHYELLOW;
+            case "flashgreen":
+                return SignalHead.FLASHGREEN;
+            case "flashlunar":
+                return SignalHead.FLASHLUNAR;
+            default:
+                log.warn("Unexpected appearance: {}", colour);
+                break;
         }
         return SignalHead.DARK;
 

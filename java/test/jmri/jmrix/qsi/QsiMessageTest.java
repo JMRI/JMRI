@@ -8,73 +8,58 @@
 package jmri.jmrix.qsi;
 
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
-public class QsiMessageTest extends TestCase {
+public class QsiMessageTest extends jmri.jmrix.AbstractMessageTestBase {
 
     private QsiSystemConnectionMemo memo = null;
     private QsiTrafficController tc = null;
+    private QsiMessage msg = null;
 
-    public void testCreate() {
-        QsiMessage m = new QsiMessage(1);
-        Assert.assertNotNull("exists", m);
-    }
-
+    @Test
     public void testToASCIIString() {
-        QsiMessage m = new QsiMessage(5);
-        m.setOpCode(0x50);
-        m.setElement(1, 0x20);
-        m.setElement(2, 0x32);
-        m.setElement(3, 0x36);
-        m.setElement(4, 0x31);
-        Assert.assertEquals("string compare ", "50 20 32 36 31 ", m.toString());
+        msg = new QsiMessage(5);
+        msg.setOpCode(0x50);
+        msg.setElement(1, 0x20);
+        msg.setElement(2, 0x32);
+        msg.setElement(3, 0x36);
+        msg.setElement(4, 0x31);
+        Assert.assertEquals("string compare ", "50 20 32 36 31 ", msg.toString());
     }
 
+    @Test
     public void testGetEnable() {
-        QsiMessage m = QsiMessage.getEnableMain();
-        Assert.assertEquals("length", 1, m.getNumDataElements());
-        Assert.assertEquals("opCode", 43, m.getOpCode());
+        msg = QsiMessage.getEnableMain();
+        Assert.assertEquals("length", 1, msg.getNumDataElements());
+        Assert.assertEquals("opCode", 43, msg.getOpCode());
     }
 
+    @Test
     public void testRecognizeEnable() {
-        QsiMessage m = QsiMessage.getEnableMain();
-        Assert.assertEquals("isEnableMain", true, m.isEnableMain());
-        Assert.assertEquals("isKillMain", false, m.isKillMain());
+        msg = QsiMessage.getEnableMain();
+        Assert.assertEquals("isEnableMain", true, msg.isEnableMain());
+        Assert.assertEquals("isKillMain", false, msg.isKillMain());
     }
 
+    @Test
     public void testReadRegister() {
-        QsiMessage m = QsiMessage.getReadRegister(2);
-        Assert.assertEquals("string compare ", "20 ", m.toString());
+        msg = QsiMessage.getReadRegister(2);
+        Assert.assertEquals("string compare ", "20 ", msg.toString());
     }
 
+    @Test
     public void testWriteRegister() {
-        QsiMessage m = QsiMessage.getWriteRegister(2, 250);
-        Assert.assertEquals("string compare ", "20 ", m.toString());
-    }
-
-    // from here down is testing infrastructure
-    public QsiMessageTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {QsiMessageTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(QsiMessageTest.class);
-        return suite;
+        msg = QsiMessage.getWriteRegister(2, 250);
+        Assert.assertEquals("string compare ", "20 ", msg.toString());
     }
 
     // The minimal setup for log4J
     @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
         memo = new QsiSystemConnectionMemo();
         tc = new QsiTrafficControlScaffold(){
@@ -84,10 +69,14 @@ public class QsiMessageTest extends TestCase {
             }
         };
         memo.setQsiTrafficController(tc);
+        m = msg = new QsiMessage(1);
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
+	memo = null;
+	tc = null;
+	m = msg = null;
         JUnitUtil.tearDown();
     }
 

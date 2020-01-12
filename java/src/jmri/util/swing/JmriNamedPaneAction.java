@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Action that, when invoked, creates a JmriPanel from its class name
  * and installs it in a given window.
- *<p>
+ * <p>
  * Windows are referenced through the {@link WindowInterface}, which can
  * provide access to a new or existing single-pane window, or a more complex multi-pane
  * window as seen in the DecoderPro interface.
@@ -74,13 +74,13 @@ public class JmriNamedPaneAction extends JmriAbstractAction {
     @Override
     public jmri.util.swing.JmriPanel makePanel() {
         try {
-            JmriPanel p = (JmriPanel) Class.forName(paneClass).newInstance();
+            JmriPanel p = (JmriPanel) Class.forName(paneClass).getDeclaredConstructor().newInstance();
             p.setWindowInterface(wi);
             p.initComponents();
             p.initContext(context);
 
             return p;
-        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException ex) {
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException | java.lang.reflect.InvocationTargetException ex ) {
             log.warn("could not load pane class: {}", paneClass, ex);
             return null;
         }

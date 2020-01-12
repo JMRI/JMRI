@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir=".." name="JMRI-NBJDK">
+    <property file="nbproject/nbjdk.properties"/>
+    <property location="${netbeans.user}/build.properties" name="user.properties.file"/>
+    <property file="${user.properties.file}"/>
+    <import file="jdk.xml"/>
+    <target depends="-jdk-init,-jdk-presetdef-nbjpdastart" name="debug">
+        <ant inheritall="false" target="debug"/>
+    </target>
+    <target depends="-jdk-init" name="clean">
+        <ant inheritall="false" target="clean"/>
+    </target>
+    <target depends="-jdk-init" name="javadoc">
+        <ant inheritall="false" target="javadoc"/>
+    </target>
+    <target depends="-jdk-init" name="panelpro">
+        <ant inheritall="false" target="panelpro"/>
+    </target>
+    <target depends="-jdk-init" name="profile-nb">
+        <ant inheritall="false" target="profile-nb"/>
+    </target>
+    <target depends="-jdk-init,-jdk-presetdef-nbjpdastart" name="debug-nb">
+        <ant antfile="nbproject/ide-targets.xml" inheritall="false" target="debug-nb"/>
+    </target>
+    <target depends="-jdk-init" name="compile-selected-files-in-src">
+        <ant antfile="nbproject/ide-file-targets.xml" inheritall="false" target="compile-selected-files-in-src"/>
+    </target>
+    <target depends="-jdk-init" name="compile-selected-files-in-test">
+        <ant antfile="nbproject/ide-file-targets.xml" inheritall="false" target="compile-selected-files-in-test"/>
+    </target>
+    <target depends="-jdk-init" name="compile-selected-files-in-tmp">
+        <ant antfile="nbproject/ide-file-targets.xml" inheritall="false" target="compile-selected-files-in-tmp"/>
+    </target>
+    <target depends="-jdk-init" name="debug-apply-fix-in-src">
+        <ant antfile="nbproject/ide-file-targets.xml" inheritall="false" target="debug-apply-fix-in-src"/>
+    </target>
+    <target depends="-jdk-init" name="debug-apply-fix-in-test">
+        <ant antfile="nbproject/ide-file-targets.xml" inheritall="false" target="debug-apply-fix-in-test"/>
+    </target>
+    <target depends="-jdk-init" name="debug-apply-fix-in-tmp">
+        <ant antfile="nbproject/ide-file-targets.xml" inheritall="false" target="debug-apply-fix-in-tmp"/>
+    </target>
+    <target depends="-jdk-init" name="ci-test">
+        <ant inheritall="false" target="ci-test"/>
+    </target>
+    <target depends="-jdk-init" name="test-single">
+        <ant inheritall="false" target="test-single"/>
+    </target>
+    <target depends="-jdk-init,-jdk-presetdef-nbjpdastart" name="debug-test-single.nb">
+        <ant antfile="nbproject/ide-targets.xml" inheritall="false" target="debug-test-single.nb"/>
+    </target>
+</project>

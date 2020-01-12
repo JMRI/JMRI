@@ -2,6 +2,9 @@ package jmri.jmrix.marklin;
 
 import jmri.JmriException;
 import jmri.PowerManager;
+
+import java.beans.PropertyChangeListener;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -79,6 +82,30 @@ public class MarklinPowerManager implements PowerManager, MarklinListener {
         pcs.removePropertyChangeListener(l);
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(propertyName, listener);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public PropertyChangeListener[] getPropertyChangeListeners() {
+        return pcs.getPropertyChangeListeners();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
+        return pcs.getPropertyChangeListeners(propertyName);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        pcs.removePropertyChangeListener(propertyName, listener);
+    }
+
     // to listen for status changes from Marklin system
     @Override
     public void reply(MarklinReply m) {
@@ -89,8 +116,6 @@ public class MarklinPowerManager implements PowerManager, MarklinListener {
                     power = ON;
                     break;
                 case MarklinConstants.CMDSTOPSYS:
-                    power = OFF;
-                    break;
                 case MarklinConstants.CMDHALTSYS:
                     power = OFF;
                     break;
@@ -105,5 +130,7 @@ public class MarklinPowerManager implements PowerManager, MarklinListener {
     public void message(MarklinMessage m) {
         // messages are ignored
     }
+
     private final static Logger log = LoggerFactory.getLogger(MarklinPowerManager.class);
+
 }

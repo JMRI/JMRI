@@ -16,10 +16,10 @@ import org.slf4j.LoggerFactory;
  * <a href="http://callisto.worldonline.nl/~samsvl/stdalone.pas">http://callisto.worldonline.nl/~samsvl/stdalone.pas</a>
  * <a href="http://callisto.worldonline.nl/~samsvl/satpos.htm">http://callisto.worldonline.nl/~samsvl/satpos.htm</a>
  * <a href="http://callisto.worldonline.nl/~samsvl/stdalone.htm">http://callisto.worldonline.nl/~samsvl/stdalone.htm</a>
- * There is also a link there to a C port of Sam's programs
- * <P>
+ * There is also a link there to a C port of Sam's programs.
+ *
  * @author	Bob Jacobsen Copyright (C) 2008
-  */
+ */
 public class Analytic_AAlgorithm extends AbstractCalculator {
 
     public Analytic_AAlgorithm(Point3d[] sensors, double vsound, int offset) {
@@ -341,6 +341,5 @@ public class Analytic_AAlgorithm extends AbstractCalculator {
     }
 
     private final static Logger log = LoggerFactory.getLogger(Analytic_AAlgorithm.class);
+
 }
-
-

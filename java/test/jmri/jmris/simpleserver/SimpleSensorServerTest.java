@@ -1,4 +1,3 @@
-//SimpleSensorServerTest.java
 package jmri.jmris.simpleserver;
 
 import jmri.util.JUnitUtil;
@@ -124,6 +123,16 @@ public class SimpleSensorServerTest extends jmri.jmris.AbstractSensorServerTestB
         Assert.assertNotNull(jmri.InstanceManager.getDefault(jmri.SensorManager.class).getSensor("IS1"));
     }
 
+    // test Parsing an blank status message.
+    @Test
+    public void parseBlankStatusWithOutNewLine() throws Exception {
+        ss.parseStatus("SENSOR IS1");
+        // nothing has changed the sensor, so it should be unknown.
+        checkSensorUnknownSent();
+        // verify the sensor exists, it should have been created with provideSensor.
+        Assert.assertNotNull(jmri.InstanceManager.getDefault(jmri.SensorManager.class).getSensor("IS1"));
+    }
+
     // test Parsing an other status message.
     @Test 
     public void parseOtherStatus() throws Exception {
@@ -136,6 +145,7 @@ public class SimpleSensorServerTest extends jmri.jmris.AbstractSensorServerTestB
     /**
      * {@inhertDoc} 
      */
+    @Override
     public void checkErrorStatusSent(){
          Assert.assertEquals("sendErrorStatus check","SENSOR ERROR\n",sb.toString());
     }
@@ -143,6 +153,7 @@ public class SimpleSensorServerTest extends jmri.jmris.AbstractSensorServerTestB
     /**
      * {@inhertDoc} 
      */
+    @Override
     public void checkSensorActiveSent(){
          Assert.assertEquals("sendStatus check","SENSOR IS1 ACTIVE\n",sb.toString());
     }
@@ -150,6 +161,7 @@ public class SimpleSensorServerTest extends jmri.jmris.AbstractSensorServerTestB
     /**
      * {@inhertDoc} 
      */
+    @Override
     public void checkSensorInActiveSent(){
          Assert.assertEquals("sendStatus check","SENSOR IS1 INACTIVE\n",sb.toString());
     }
@@ -157,6 +169,7 @@ public class SimpleSensorServerTest extends jmri.jmris.AbstractSensorServerTestB
     /**
      * {@inhertDoc} 
      */
+    @Override
     public void checkSensorUnknownSent(){
          Assert.assertEquals("sendStatus check","SENSOR IS1 UNKNOWN\n",sb.toString());
     }

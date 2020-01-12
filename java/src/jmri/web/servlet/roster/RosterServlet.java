@@ -12,6 +12,7 @@ import static jmri.server.json.JSON.MFG;
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.NUMBER;
 import static jmri.server.json.JSON.ROAD;
+import static jmri.server.json.JSON.V5;
 import static jmri.web.servlet.ServletUtil.IMAGE_PNG;
 import static jmri.web.servlet.ServletUtil.UTF8;
 import static jmri.web.servlet.ServletUtil.UTF8_APPLICATION_JSON;
@@ -139,6 +140,13 @@ public class RosterServlet extends HttpServlet {
         OutputStream out = null;
         InputStream fileContent = null;
         File rosterFolder = new File(Roster.getDefault().getRosterLocation(), "roster");
+        if (!rosterFolder.exists()) { //insure roster folder exists
+            if (rosterFolder.mkdir()) {
+                log.debug("Roster folder not found, created '{}'", rosterFolder.getPath());
+            } else {
+                log.error("Could not create roster directory: '{}'", rosterFolder.getPath());
+            }
+        }
         File tempFolder = new File(System.getProperty("java.io.tmpdir"));
         Locale rl = request.getLocale();
 
@@ -267,13 +275,17 @@ public class RosterServlet extends HttpServlet {
                         }
                     }
                 } else {
-                    if (fileTemp.renameTo(fileNew)) { //move the file to proper location
+                    if (fileTemp.renameTo(fileNew)) { //move the file to proper roster location
                         Roster.getDefault().addEntry(reTemp);
                         Roster.getDefault().writeRoster();
                         String m = String.format(rl, Bundle.getMessage(rl, "RosterEntryAdded"), fm.getFileName(), reTemp.getId());
                         log.debug(m);
                         msgList.add(m);
-                    } // TODO: notify of failure
+                    } else {
+                        String m = String.format(rl, Bundle.getMessage(rl, "ErrorMoveFailed"), fm.getFileName(), reTemp.getPathName());
+                        log.error(m);
+                        msgList.add(m);                        
+                    }
                 }
 
             }
@@ -485,11 +497,9 @@ public class RosterServlet extends HttpServlet {
         switch (format) {
             case JSON.JSON:
                 response.setContentType(UTF8_APPLICATION_JSON);
-                JsonRosterServiceFactory factory = InstanceManager.getOptionalDefault(JsonRosterServiceFactory.class).orElseGet(() -> {
-                    return InstanceManager.setDefault(JsonRosterServiceFactory.class, new JsonRosterServiceFactory());
-                });
+                JsonRosterServiceFactory factory = new JsonRosterServiceFactory();
                 try {
-                    response.getWriter().print(factory.getHttpService(mapper).getRoster(request.getLocale(), filter));
+                    response.getWriter().print(factory.getHttpService(mapper, V5).getRoster(request.getLocale(), filter, 0));
                 } catch (JsonException ex) {
                     response.sendError(ex.getCode(), mapper.writeValueAsString(ex.getJsonMessage()));
                 }

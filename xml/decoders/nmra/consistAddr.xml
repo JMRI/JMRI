@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2010</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Bob</firstname>
+        <surname>Jacobsen</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>12</revnumber>
+      <date>2019-07-26</date>
+      <authorinitials>BJ</authorinitials>
+      <revremark>File made from version 11 of xml/decoders/nmra/consistAddrDirection.xml</revremark>
+    </revision>
+    <revision>
+      <revnumber>11</revnumber>
+      <date>2019-07-26</date>
+      <authorinitials>BJ</authorinitials>
+      <revremark>These are read-only CVs</revremark>
+    </revision>
+    <revision>
+      <revnumber>10</revnumber>
+      <date>2018-04-01</date>
+      <authorinitials>WK</authorinitials>
+      <revremark>Exchange translating Dutch and German of the tooltip</revremark>
+    </revision>
+    <revision>
+      <revnumber>9</revnumber>
+      <date>2016-10-23</date>
+      <authorinitials>PS</authorinitials>
+      <revremark>Czech translation</revremark>
+    </revision>
+    <revision>
+      <revnumber>8</revnumber>
+      <date>2014-08-10</date>
+      <authorinitials>EF</authorinitials>
+      <revremark>Added IT,Defaults,tootip,Max</revremark>
+    </revision>
+    <revision>
+      <revnumber>7</revnumber>
+      <date>2013-07-29</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Added German</revremark>
+    </revision>
+    <revision>
+      <revnumber>6</revnumber>
+      <date>2010-03-12</date>
+      <authorinitials>BJ</authorinitials>
+      <revremark>Initial release as separate file</revremark>
+    </revision>
+    <revision>
+      <revnumber>5</revnumber>
+      <date>2003-12-05</date>
+      <authorinitials>BJ</authorinitials>
+      <revremark>Revision in original 0NMRA.xml file</revremark>
+    </revision>
+  </revhistory>
+  <variable CV="19" mask="XVVVVVVV" item="Consist Address" default="0" tooltip="Stores consist address. Range 0-127 (direction set in bit 7)">
+    <decVal max="127"/>
+    <label>Advanced Consist Address</label>
+    <label xml:lang="it">Indirizzo Consist Avanzato</label>
+    <label xml:lang="fr">Addresse UM</label>
+    <label xml:lang="de">Verbundadresse</label>
+    <label xml:lang="cs">Adresa soupravy</label>
+    <label xml:lang="nl">Multitractie-adres</label>
+    <tooltip>Stores consist address. Range 0-127 (direction set in bit 7)</tooltip>
+    <tooltip xml:lang="it">Indirizzo Consist. Valori 0-127 (direzione nel bit 7)</tooltip>
+    <tooltip xml:lang="de">Enthält die Verbundadresse. Grenzwerte 0-127. (Fahrtrichtung wird in Bit 7 gesetzt)</tooltip>
+    <tooltip xml:lang="cs">Obsahuje adresu soupravy. Meze 0-127 (směr je uložen v bitu 7)</tooltip>
+    <tooltip xml:lang="nl">Bevat het Multitractie-adres. Grenswaarden 0-127. (Rijrichting wordt gezet in bit 7)</tooltip>
+  </variable>
+</variables>

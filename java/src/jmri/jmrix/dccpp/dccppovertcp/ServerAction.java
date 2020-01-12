@@ -5,11 +5,11 @@ import javax.swing.AbstractAction;
 import jmri.InstanceManager;
 
 /**
- * Implementation of the DCCppOverTcp LbServer Server Protocol
+ * Implementation of the DCCppOverTcp LbServer Server Protocol.
  *
  * @author Alex Shepherd Copyright (C) 2006
  * @author Mark Underwood Copyright (C) 2015
-  */
+ */
 public class ServerAction
         extends AbstractAction {
 
@@ -29,4 +29,5 @@ public class ServerAction
         ServerFrame f = InstanceManager.getDefault(ServerFrame.class);
         f.setVisible(true);
     }
+
 }

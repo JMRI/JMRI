@@ -28,6 +28,7 @@ public class HubActionTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
 
         memo  = new jmri.jmrix.openlcb.OlcbSystemConnectionMemo();
         TestTrafficController tc = new TestTrafficController();
@@ -36,6 +37,8 @@ public class HubActionTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 }

@@ -35,7 +35,7 @@ import org.junit.runners.Suite;
         ReceiverTest.class,
         TransmitterTest.class,
         RpsBlockTest.class,
-        RpsReporterTest.class,
+        RpsReporterTest.class
 })
 
 /**

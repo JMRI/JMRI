@@ -26,17 +26,6 @@ public class SimpleServer extends JmriServer {
 
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmris.simpleserver.SimpleServerBundle");
 
-    /*
-     * @deprecated since 4.7.1 use @link{InstanceManager.getDefault()} instead.
-     */
-    @Deprecated
-    public static JmriServer instance() {
-        if (InstanceManager.getNullableDefault(SimpleServer.class) == null) {
-            InstanceManager.store(new SimpleServer(),SimpleServer.class);
-        }
-        return InstanceManager.getDefault(SimpleServer.class);
-    }
-
     // Create a new server using the default port
     public SimpleServer() {
         this(Integer.parseInt(rb.getString("SimpleServerPort")));
@@ -72,7 +61,7 @@ public class SimpleServer extends JmriServer {
         // Start by sending a welcome message
         outStream.writeBytes("JMRI " + jmri.Version.name() + " \n");
         outStream.writeBytes("RAILROAD " + InstanceManager.getDefault(WebServerPreferences.class).getRailroadName() + " \n");
-        outStream.writeBytes("NODE " + NodeIdentity.identity() + " \n");
+        outStream.writeBytes("NODE " + NodeIdentity.networkIdentity() + " \n");
 
         while (true) {
             inputScanner.skip("[\r\n]*");// skip any stray end of line characters.

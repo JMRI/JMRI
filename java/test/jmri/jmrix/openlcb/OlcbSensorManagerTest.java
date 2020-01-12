@@ -2,13 +2,10 @@ package jmri.jmrix.openlcb;
 
 import jmri.Sensor;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
+import jmri.util.junit.annotations.*;
+import jmri.jmrix.can.TestTrafficController;
+import org.junit.*;
+import org.openlcb.*;
 
 /**
  * Tests for the jmri.jmrix.openlcb.OlcbSensorManager class.
@@ -17,11 +14,14 @@ import org.junit.Test;
  */
 public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
-    private static OlcbSystemConnectionMemo m;
+    private static OlcbSystemConnectionMemo memo;
+    static Connection connection;
+    static NodeID nodeID = new NodeID(new byte[]{1, 0, 0, 0, 0, 0});
+    static java.util.ArrayList<Message> messages;
 
     @Override
     public String getSystemName(int i) {
-        return "MSX010203040506070" + i;
+        return "MSx010203040506070" + i;
     }
 
     @Test
@@ -30,12 +30,13 @@ public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     }
 
     @Test
+    @Override
     public void testProvideName() {
         // create
         Sensor t = l.provide(getSystemName(getNumToTest1()));
         // check
-        Assert.assertTrue("real object returned ", t != null);
-        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+        Assert.assertNotNull("real object returned ", t);
+        Assert.assertEquals("system name correct ", t, l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
     @Override
@@ -45,14 +46,15 @@ public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         // olcb addresses are hex values requirng 16 digits.
         Sensor t = l.provideSensor(getSystemName(getNumToTest1()));
         // check
-        Assert.assertTrue("real object returned ", t != null);
-        Assert.assertTrue("system name correct " + t.getSystemName(), t == l.getBySystemName(getSystemName(getNumToTest1())));
+        Assert.assertNotNull("real object returned ", t);
+        Assert.assertEquals("system name correct " + t.getSystemName(), t, l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
     @Override
-    @Ignore
+    @Ignore("ignoring this test due to the system name format, needs to be properly coded")
+    @ToDo("Fix system name format")
     @Test
-    public void testUpperLower() { // ignoring this test due to the system name format, needs to be properly coded
+    public void testUpperLower() {
     }
     
     @Override
@@ -81,13 +83,7 @@ public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     @Override
     @Before
     public void setUp() {
-        l = new OlcbSensorManager(m);
-    }
-
-    @BeforeClass
-    public static void preClassInit(){
-        JUnitUtil.setUp();
-        m = OlcbTestInterface.createForLegacyTests();
+        l = new OlcbSensorManager(memo);
     }
 
     @After
@@ -95,12 +91,45 @@ public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         l.dispose();
     }
 
+    @BeforeClass
+    static public void preClassInit() {
+        JUnitUtil.setUp();
+        JUnitUtil.initInternalTurnoutManager();
+        nodeID = new NodeID(new byte[]{1, 0, 0, 0, 0, 0});
+
+        messages = new java.util.ArrayList<>();
+        connection = new AbstractConnection() {
+            @Override
+            public void put(Message msg, Connection sender) {
+                messages.add(msg);
+            }
+        };
+
+        memo = new OlcbSystemConnectionMemo(); // this self-registers as 'M'
+        memo.setProtocol(jmri.jmrix.can.ConfigurationManager.OPENLCB);
+        memo.setInterface(new OlcbInterface(nodeID, connection) {
+            @Override
+            public Connection getOutputConnection() {
+                return connection;
+            }
+        });
+        memo.setTrafficController(new TestTrafficController());
+        memo.configureManagers();
+    
+        jmri.util.JUnitUtil.waitFor(()->{return (messages.size()>0);},"Initialization Complete message");
+    }
+
     @AfterClass
-    public static void postClassTearDown(){
-        if(m != null && m.getInterface() !=null ) {
-           m.getInterface().dispose();
+    public static void postClassTearDown() throws Exception {
+        if(memo != null && memo.getInterface() !=null ) {
+           memo.getInterface().dispose();
         }
+        memo = null;
+        connection = null;
+        nodeID = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
 }

@@ -55,7 +55,7 @@ public class SerialTurnout extends AbstractTurnout {
 
     /**
      * Create a Turnout object, with both system and user names.
-     * <P>
+     * <p>
      * 'systemName' was previously validated in SerialTurnoutManager
      */
     public SerialTurnout(@Nonnull String systemName, String userName, CMRISystemConnectionMemo memo) {

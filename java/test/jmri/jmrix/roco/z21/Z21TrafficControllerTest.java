@@ -22,6 +22,8 @@ public class Z21TrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContro
     @Override
     @After
     public void tearDown() {
+        tc.terminateThreads();
+        tc = null;
         JUnitUtil.tearDown();
     }
 

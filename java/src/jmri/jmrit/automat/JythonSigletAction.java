@@ -10,7 +10,10 @@ import javax.swing.JPanel;
  * Swing action to create and register a JythonSiglet object
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2007
+ * @deprecated since 4.17.5 without direct replacement; does not appear
+ * to have been used since 1.2.3
  */
+@Deprecated
 public class JythonSigletAction extends AbstractAction {
 
     public JythonSigletAction(String s, JPanel who) {

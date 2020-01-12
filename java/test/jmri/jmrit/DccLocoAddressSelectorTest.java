@@ -3,30 +3,26 @@ package jmri.jmrit;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import jmri.DccLocoAddress;
-import jmri.InstanceManager;
-import jmri.ThrottleManager;
-import jmri.jmrix.debugthrottle.DebugThrottleManager;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import org.junit.Assert;
+import org.junit.*;
 
 /**
  * Test simple functioning of DccLocoAddressSelector
  *
  * @author	Bob Jacobsen Copyright (C) 2005
-  */
-public class DccLocoAddressSelectorTest extends TestCase {
-
+ * @author      Paul Bender Copyright (C) 2018
+ */
+public class DccLocoAddressSelectorTest {
+        
+    private DccLocoAddressSelector sel = null;
+ 
+    @Test
     public void testCtor() {
-        DccLocoAddressSelector sel = new DccLocoAddressSelector();
         Assert.assertNotNull("exists", sel);
     }
 
     // you can ask for the text field, and set the number using it
+    @Test
     public void testSetNumByField() {
-        setThrottleManager();
-        DccLocoAddressSelector sel = new DccLocoAddressSelector();
         JTextField f = sel.getTextField();
         f.setText("123");
         Assert.assertEquals("check number ", 123, sel.getAddress().getNumber());
@@ -35,10 +31,10 @@ public class DccLocoAddressSelectorTest extends TestCase {
     // you can ask for the text field once, and only once
     String reportedError;
 
+    @Test
     public void testReqNumByField() {
-        setThrottleManager();
         reportedError = null;
-        DccLocoAddressSelector sel = new DccLocoAddressSelector() {
+        sel = new DccLocoAddressSelector() {
             @Override
             void reportError(String msg) {
                 reportedError = msg;
@@ -52,9 +48,8 @@ public class DccLocoAddressSelectorTest extends TestCase {
     }
 
     // you can ask for the text field & combo box, and set using both (long addr)
+    @Test
     public void testSetTypeLongBySel() {
-        setThrottleManager();
-        DccLocoAddressSelector sel = new DccLocoAddressSelector();
         JTextField f = sel.getTextField();
         JComboBox<String> b = sel.getSelector();
         f.setText("323");
@@ -64,9 +59,8 @@ public class DccLocoAddressSelectorTest extends TestCase {
     }
 
     // you can ask for the text field & combo box, and set using both (short addr)
+    @Test
     public void testSetTypeShortBySel() {
-        setThrottleManager();
-        DccLocoAddressSelector sel = new DccLocoAddressSelector();
         JTextField f = sel.getTextField();
         JComboBox<String> b = sel.getSelector();
         f.setText("23");
@@ -76,9 +70,8 @@ public class DccLocoAddressSelectorTest extends TestCase {
     }
 
     // can leave selector box alone, and get sensical answers
+    @Test
     public void testLetTypeSitLong() {
-        setThrottleManager();
-        DccLocoAddressSelector sel = new DccLocoAddressSelector();
         JTextField f = sel.getTextField();
         JComboBox<String> b = sel.getSelector();
         Assert.assertNotNull("exists", b);
@@ -87,9 +80,8 @@ public class DccLocoAddressSelectorTest extends TestCase {
         Assert.assertEquals("check type  ", true, sel.getAddress().isLongAddress());
     }
 
+    @Test
     public void testLetTypeSitShort() {
-        setThrottleManager();
-        DccLocoAddressSelector sel = new DccLocoAddressSelector();
         JTextField f = sel.getTextField();
         JComboBox<String> b = sel.getSelector();
         Assert.assertNotNull("exists", b);
@@ -99,16 +91,14 @@ public class DccLocoAddressSelectorTest extends TestCase {
     }
 
     // if address not set, don't get a address object
+    @Test
     public void testNotSet() {
-        setThrottleManager();
-        DccLocoAddressSelector sel = new DccLocoAddressSelector();
         Assert.assertEquals("no object ", null, sel.getAddress());
     }
 
     // try setting the address after creation
+    @Test
     public void testSetNumByField1() {
-        setThrottleManager();
-        DccLocoAddressSelector sel = new DccLocoAddressSelector();
         JTextField f = sel.getTextField();
         f.setText("123");
         Assert.assertEquals("check initial number ", 123, sel.getAddress().getNumber());
@@ -117,9 +107,8 @@ public class DccLocoAddressSelectorTest extends TestCase {
         Assert.assertEquals("check updated type ", true, sel.getAddress().isLongAddress());
     }
 
+    @Test
     public void testSetNumByField2() {
-        setThrottleManager();
-        DccLocoAddressSelector sel = new DccLocoAddressSelector();
         JTextField f = sel.getTextField();
         f.setText("1220");
         Assert.assertEquals("check initial number ", 1220, sel.getAddress().getNumber());
@@ -128,27 +117,17 @@ public class DccLocoAddressSelectorTest extends TestCase {
         Assert.assertEquals("check updated type ", false, sel.getAddress().isLongAddress());
     }
 
-    // from here down is testing infrastructure
-    protected void setThrottleManager() {
-        ThrottleManager m = new DebugThrottleManager();
-        InstanceManager.setThrottleManager(m);
-        return;
+    @Before 
+    public void setUp() {
+        jmri.util.JUnitUtil.setUp();
+        jmri.util.JUnitUtil.initDebugThrottleManager();
+        sel = new DccLocoAddressSelector();
     }
 
-    public DccLocoAddressSelectorTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", DccLocoAddressSelectorTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(DccLocoAddressSelectorTest.class);
-        return suite;
+    @After
+    public void tearDown() {
+	sel = null;
+        jmri.util.JUnitUtil.tearDown();
     }
 
 }

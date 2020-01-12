@@ -27,7 +27,7 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
 
     public AbstractCatalogTree(String sysname, String username) {
         super(new CatalogTreeNode(username));
-        mSystemName = sysname.toUpperCase();
+        mSystemName = sysname;
         // use this form to prevent subclass from overriding setUserName
         // during construction
         AbstractCatalogTree.this.setUserName(username);
@@ -82,7 +82,7 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
     }
 
     /*
-     * ** NamedBean implementation (Copied from AbstractNamedBean) *********
+     * NamedBean implementation (Copied from AbstractNamedBean) *********
      */
     /**
      * Get associated comment text.
@@ -108,29 +108,6 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
     }
     private String comment;
 
-    @CheckReturnValue
-    @Override
-    public String getDisplayName() {
-        String name = getUserName();
-        if (name != null && name.length() > 0) {
-            return name;
-        } else {
-            return getSystemName();
-        }
-    }
-
-    @CheckReturnValue
-    @Override
-    public String getFullyFormattedDisplayName() {
-        String name = getUserName();
-        if (name != null && name.length() > 0) {
-            name = name + "(" + getSystemName() + ")";
-        } else {
-            name = getSystemName();
-        }
-        return name;
-    }
-
     // implementing classes will typically have a function/listener to get
     // updates from the layout, which will then call
     //  public void firePropertyChange(String propertyName,
@@ -147,8 +124,28 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
     }
 
     @Override
+    public synchronized void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(propertyName, listener);
+    }
+
+    @Override
     public synchronized void removePropertyChangeListener(PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
+    }
+
+    @Override
+    public synchronized void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        pcs.removePropertyChangeListener(propertyName, listener);
+    }
+
+    @Override
+    public synchronized PropertyChangeListener[] getPropertyChangeListeners() {
+        return pcs.getPropertyChangeListeners();
+    }
+
+    @Override
+    public synchronized PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
+        return pcs.getPropertyChangeListeners(propertyName);
     }
 
     /**
@@ -172,6 +169,17 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
         }
         if (listenerRef != null) {
             listenerRefs.put(l, listenerRef);
+        }
+    }
+
+    @Override
+    public synchronized void addPropertyChangeListener(String propertyName, PropertyChangeListener listener, String beanRef, String listenerRef) {
+        pcs.addPropertyChangeListener(propertyName, listener);
+        if (beanRef != null) {
+            register.put(listener, beanRef);
+        }
+        if (listenerRef != null) {
+            listenerRefs.put(listener, listenerRef);
         }
     }
 

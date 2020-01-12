@@ -17,6 +17,9 @@ public class SerialDriverAdapterTest {
    public void ConstructorTest(){
        SerialDriverAdapter a = new SerialDriverAdapter();
        Assert.assertNotNull(a);
+
+       // clean up
+       a.getSystemConnectionMemo().getSprogTrafficController().dispose();
    }
 
     // The minimal setup for log4J

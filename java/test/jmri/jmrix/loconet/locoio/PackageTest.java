@@ -7,7 +7,6 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
         BundleTest.class,
         LocoIOPanelTest.class,
-        LocoIOTableModelTest.class,
         LocoIOModeListTest.class,
         LocoIOTest.class,
         LocoIODataTest.class,

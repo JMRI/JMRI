@@ -292,17 +292,8 @@ public class TurnoutSection implements Section<CodeGroupTwoBits, CodeGroupTwoBit
         @Override
         public void codeValueDelivered(CodeGroupTwoBits value) {
             lastCodeValue = value;
-        
-            // Check locks
-            boolean permitted = true;
-            if (locks != null) {
-                for (Lock lock : locks) {
-                    if ( ! lock.isLockClear()) permitted = false;
-                }
-            }
-            log.debug(" Lock check found permitted = {}", permitted);
-        
-            if (permitted) {
+                
+            if (Lock.checkLocksClear(locks)) {
                 // Set turnout as commanded, skipping redundant operations
                 if (value == CODE_CLOSED && hLayoutTO.getBean().getCommandedState() != Turnout.CLOSED) {
                     hLayoutTO.getBean().setCommandedState(Turnout.CLOSED);

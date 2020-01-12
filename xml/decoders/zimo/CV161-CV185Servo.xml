@@ -34,7 +34,7 @@
     <label xml:lang="cs">Řídící signál serva</label>
     <label xml:lang="de">Servo Steuersignal</label>
   </variable>
-  <variable item="Servo Centering" CV="161" mask="VVVVVXVV" default="0">
+  <variable item="Servo Centering" CV="161" mask="XXXXXVXX" default="0">
     <enumVal>
       <enumChoice choice="Moves to centre in dual key if both Fn's off">
         <choice>Moves to centre in dual key if both Fn's off</choice>

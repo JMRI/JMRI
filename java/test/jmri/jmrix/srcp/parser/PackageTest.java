@@ -1,4 +1,3 @@
-//SRCPClientParserTests.java
 package jmri.jmrix.srcp.parser;
 
 import org.junit.runner.RunWith;

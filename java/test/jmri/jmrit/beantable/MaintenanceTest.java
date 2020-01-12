@@ -1,18 +1,27 @@
 package jmri.jmrit.beantable;
 
 import jmri.*;
-import jmri.util.JUnitUtil;
+import jmri.util.*;
+import jmri.util.junit.rules.RetryRule;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import java.awt.GraphicsEnvironment;
+
+import org.junit.*;
+import org.junit.rules.Timeout;
+
+import org.netbeans.jemmy.operators.JDialogOperator;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
 public class MaintenanceTest {
+
+    @Rule
+    public Timeout globalTimeout = Timeout.seconds(10);
+
+    @Rule
+    public RetryRule retryRule = new RetryRule(1); // allow 1 retry
 
     @Test
     public void testCTor() {
@@ -64,9 +73,11 @@ public class MaintenanceTest {
         String[] result;
         
         // hit on sensor via to-capital system name
-        InstanceManager.getDefault(SensorManager.class).provideSensor("IS1");
-        result = Maintenance.getTypeAndNames("is1");
-        checkReturnString(result, "Sensor", null, "IS1", "1");  //num listeners is empirical
+        InstanceManager.getDefault(SensorManager.class).provideSensor("is1");
+        result = Maintenance.getTypeAndNames("IS1");
+        checkReturnString(result, "", "IS1", "IS1", "0"); // Sensor "IS1" not found
+        result = Maintenance.getTypeAndNames("ISis1"); // because "is" is invalid prefix, system name is "ISis1"
+        checkReturnString(result, "Sensor", null, "ISis1", "1"); // num listeners is empirical
     }
 
     void checkReturnString(String[] result, String compare, String username, String systemname, String listeners) {
@@ -76,11 +87,67 @@ public class MaintenanceTest {
         Assert.assertEquals("SystemName", systemname, result[2]);
         Assert.assertEquals("Listeners", listeners, result[3]);
     }
-    
+   
+    @Test
+    public void testDeviceReportPressed() throws InterruptedException {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Thread t = new Thread(() -> {
+            // constructor for jdo will wait until the dialog is visible
+            JDialogOperator jdo = new JDialogOperator(Maintenance.rbm.getString("CrossReferenceTitle"));
+            jdo.close();
+	    });
+        t.setName("Cross Reference Dialog Close Thread");
+        t.start();
+        JmriJFrame parent = new jmri.util.JmriJFrame("DeviceReportParent");
+        ThreadingUtil.runOnGUI(() -> {
+            Maintenance.deviceReportPressed("IS1",parent);
+        });
+        t.join(); // only proceed when all done
+        JUnitUtil.dispose(parent);
+    }
+
+    @Test
+    public void testFindOrphansPressed() throws InterruptedException {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Thread t = new Thread(() -> {
+            // constructor for jdo will wait until the dialog is visible
+            JDialogOperator jdo = new JDialogOperator(Maintenance.rbm.getString("OrphanTitle"));
+            jdo.close();
+	    });
+        t.setName("Find Orphan Dialog Close Thread");
+        t.start();
+        JmriJFrame parent = new jmri.util.JmriJFrame("FindOrphansParent");
+        ThreadingUtil.runOnGUI(() -> {
+            Maintenance.findOrphansPressed(parent);
+        });
+        t.join(); // only proceed when all done
+        JUnitUtil.dispose(parent);
+    }
+
+    //@Test
+    public void testFindEmptyPressed() throws InterruptedException {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Thread t = new Thread(() -> {
+            // constructor for jdo will wait until the dialog is visible
+            JDialogOperator jdo = new JDialogOperator(Maintenance.rbm.getString("EmptyConditionalTitle"));
+            jdo.close();
+	    });
+        t.setName("Find Empty Dialog Close Thread");
+        t.start();
+        JmriJFrame parent = new jmri.util.JmriJFrame("FindEmptyParent");
+        ThreadingUtil.runOnGUI(() -> {
+            Maintenance.findEmptyPressed(parent);
+        });
+        t.join(); // only proceed when all done
+        JUnitUtil.dispose(parent);
+    }
+
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalSensorManager();
@@ -88,6 +155,7 @@ public class MaintenanceTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
 

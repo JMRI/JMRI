@@ -5,22 +5,22 @@ import jmri.InstanceManager;
 
 /**
  * This class holds information and options for an AllocationRequestt.
- * <P>
+ * <p>
  * An AllocationRequest holds the following information: Section to be allocated
  * Active Train requesting the allocation
- * <P>
+ * <p>
  * A AllocationRequests is referenced via a list in DispatcherFrame, which
  * serves as a manager for AllocationRequest objects.
- * <P>
+ * <p>
  * AllocationRequests are transient, and are not saved to disk.
  *
- * <P>
+ * <p>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is open source software; you can redistribute it and/or modify it under
  * the terms of version 2 of the GNU General Public License as published by the
  * Free Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.

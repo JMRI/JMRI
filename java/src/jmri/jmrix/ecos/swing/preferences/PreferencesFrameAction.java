@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register a PreferencesFrame object
  *
  * @author Kevin Dickerson Copyright (C) 2009
-  */
+ */
 public class PreferencesFrameAction extends AbstractAction {
 
     public PreferencesFrameAction(String s, EcosSystemConnectionMemo memo) {

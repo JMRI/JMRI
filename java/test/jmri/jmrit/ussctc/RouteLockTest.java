@@ -9,7 +9,7 @@ import org.junit.*;
  * Tests for RouteLock class in the jmri.jmrit.ussctc package
  *
  * @author	Bob Jacobsen Copyright 2007
-  */
+ */
 public class RouteLockTest {
 
     @Test
@@ -137,7 +137,9 @@ public class RouteLockTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.initConfigureManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initConfigureManager();
+        JUnitUtil.initInternalSignalHeadManager();
     }
 
     @After

@@ -105,9 +105,5 @@ public class IEEE802154Message extends jmri.jmrix.AbstractMRMessage {
         return responseLength;
     }
 
-    public String toMonitorString() {
-        return toString();
-    }
-
 }
 

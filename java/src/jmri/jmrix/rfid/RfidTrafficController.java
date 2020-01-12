@@ -10,11 +10,11 @@ import org.slf4j.LoggerFactory;
 /**
  * Converts Stream-based I/O to/from messages. The "RfidInterface" side
  * sends/receives message objects.
- * <P>
+ * <p>
  * The connection to a SerialPortController is via a pair of *Streams, which
  * then carry sequences of characters for transmission. Note that this
  * processing is handled in an independent thread.
- * <P>
+ * <p>
  * This maintains a list of nodes, but doesn't currently do anything with it.
  * <p>
  * This implementation is complete and can be instantiated, but is not
@@ -151,12 +151,6 @@ abstract public class RfidTrafficController extends AbstractMRTrafficController 
     @Override
     protected AbstractMRMessage enterNormalMode() {
         return null;
-    }
-
-    @Deprecated
-    @Override
-    protected void setInstance() {
-//        self = this;
     }
 
     boolean sendInterlock = false; // send the 00 interlock when CRC received

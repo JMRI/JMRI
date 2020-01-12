@@ -7,9 +7,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * JMRIClient implementation of the Sensor interface.
- * <P>
- *
- * Description: extend jmri.AbstractSensor for JMRIClient layouts
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008
  * @author Paul Bender Copyright (C) 2010

@@ -14,15 +14,15 @@ import org.slf4j.LoggerFactory;
  *
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @see jmri.jmrit.XmlFile
  */
@@ -57,7 +57,7 @@ public class CopyRosterItemAction extends AbstractRosterItemAction {
         log.debug("doTransfer starts");
 
         // ensure preferences will be found
-        FileUtil.createDirectory(LocoFile.getFileLocation());
+        FileUtil.createDirectory(Roster.getDefault().getRosterFilesLocation());
 
         // locate the file
         //File f = new File(mFullFromFilename);
@@ -77,13 +77,13 @@ public class CopyRosterItemAction extends AbstractRosterItemAction {
         // set the filename from the ID
         mToEntry.ensureFilenameExists();
 
-        // detach the content element from it's existing file so 
+        // detach the content element from its existing file so
         // it can be reused
         lroot.detach();
 
         // transfer the contents to a new file
         LocoFile newLocoFile = new LocoFile();
-        File fout = new File(LocoFile.getFileLocation() + mToEntry.getFileName());
+        File fout = new File(Roster.getDefault().getRosterFilesLocation() + mToEntry.getFileName());
         newLocoFile.writeFile(fout, lroot, mToEntry);
 
         return true;

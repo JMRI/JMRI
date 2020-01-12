@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
-public class LnSensor extends AbstractSensor implements LocoNetListener {
+public class LnSensor extends AbstractSensor  {
 
     private LnSensorAddress a;
 
@@ -43,9 +43,6 @@ public class LnSensor extends AbstractSensor implements LocoNetListener {
         if (log.isDebugEnabled()) {
             log.debug("create address {}", a);
         }
-
-        // At construction, register for messages
-        tc.addLocoNetListener(~0, this);
     }
 
     /**
@@ -61,10 +58,9 @@ public class LnSensor extends AbstractSensor implements LocoNetListener {
     }
 
     /**
-     * User request to set the state, which means that we broadcast that to all
-     * listeners by putting it out on LocoNet. In turn, the code in this class
-     * should use setOwnState to handle internal sets and bean notifies.
-     *
+     * User request to set the state, which means that we need to broadcast the
+     * new state over the loconet so that other attached devices. The incoming message
+     * will in turn, be processed by the SensorManager.
      */
     @Override
     public void setKnownState(int s) throws jmri.JmriException {
@@ -89,11 +85,10 @@ public class LnSensor extends AbstractSensor implements LocoNetListener {
      * directly)
      *
      */
-    @Override
-    public void message(LocoNetMessage l) {
+    public void messageFromManager(LocoNetMessage l) {
         // parse message type
         switch (l.getOpCode()) {
-            case LnConstants.OPC_INPUT_REP: {               /* page 9 of Loconet PE */
+            case LnConstants.OPC_INPUT_REP: {               /* page 9 of LocoNet PE */
 
                 int sw1 = l.getElement(1);
                 int sw2 = l.getElement(2);
@@ -122,12 +117,6 @@ public class LnSensor extends AbstractSensor implements LocoNetListener {
                 return;
         }
         // reach here only in error
-    }
-
-    @Override
-    public void dispose() {
-        tc.removeLocoNetListener(~0, this);
-        super.dispose();
     }
 
     private final static Logger log = LoggerFactory.getLogger(LnSensor.class);

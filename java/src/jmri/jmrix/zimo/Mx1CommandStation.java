@@ -1,7 +1,6 @@
 package jmri.jmrix.zimo;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import javax.annotation.Nonnull;
 
 /**
  * Defines standard operations for Dcc command stations.
@@ -11,114 +10,39 @@ import org.slf4j.LoggerFactory;
  * Adapted by Sip Bosch for use with Zimo Mx-1
  *
  */
-public class Mx1CommandStation implements jmri.jmrix.DccCommandStation {
+public class Mx1CommandStation implements jmri.CommandStation {
 
+    public Mx1CommandStation(String systemName, String userName) {
+        this.systemName = systemName;
+        this.userName = userName;
+    }
+ 
+     public Mx1CommandStation(String systemName) {
+        this(systemName, "MX-1");
+    }
+   
+     // not multi-connection safe
+     public Mx1CommandStation() {
+        this("Z", "MX-1");
+    }
+   
+    String systemName;
+    String userName;
+    
     /**
      * {@inheritDoc}
-     *
-     * @return true
+     * <p>
+     * This implementation always returns false, as sending
+     * a packet isn't implemented for the Zimo command stations
      */
     @Override
-    public boolean getHasServiceMode() {
-        return true;
-    }
+    public boolean sendPacket(@Nonnull byte[] packet, int repeats) { return false; }
 
     @Override
-    public boolean getInServiceMode() {
-        return mInServiceMode;
-    }
+    public String getUserName() {return userName;}
 
-    /**
-     * Provides the version string returned during the initial check. This
-     * function is not yet implemented...
-     *
-     * @return {@literal <unknown>}
-     */
     @Override
-    public String getVersionString() {
-        return "<unknown>";
-    }
-
-    /**
-     * Remember whether or not in service mode
-     *
-     */
-    boolean mInServiceMode = false;
-
-    /**
-     * Generate a turnout control message.
-     *
-     * @param pNumber turnout number
-     * @param pClose  true to close the turnout; false otherwise
-     * @param pThrow  true to throw the turnout; false otherwise
-     * @param pOn     ignored
-     * @return a message to throw or close a turnout
-     */
-    public Mx1Message getTurnoutCommandMsg(int pNumber, boolean pClose,
-            boolean pThrow, boolean pOn) {
-        Mx1Message l = new Mx1Message(6);
-        l.setElement(0, 0x4E);
-
-        // compute module address
-        int modAdress = ((pNumber - 1) / 32) + 1;
-        // break down into two bytes
-        int modHigh = (modAdress & 0xF0) / 16;
-        int modLow = modAdress & 0x0F;
-
-        // compose the command-byte
-        int number = pNumber - 1;
-        //if (!pOn) number = (number | 0xC0);
-        if (pThrow) {
-            number = (number | 0xC0);
-        }
-        if (pClose) {
-            number = (number | 0x80);
-        }
-        // break output number down into two bytes
-        int numHigh = (number & 0xF0) / 16;
-        int numLow = number & 0x0F;
-
-        // we don't know how to command both states right now!
-        if (pClose & pThrow) {
-            log.error("Zimo turnout logic can't handle both THROWN and CLOSED yet");
-        }
-
-        // built and send message
-        l.setElement(1, bcdToAsc(modHigh));
-        l.setElement(2, bcdToAsc(modLow));
-        l.setElement(3, bcdToAsc(numHigh));
-        l.setElement(4, bcdToAsc(numLow));
-        return l;
-    }
-
-    /**
-     * Get the turnout address from a turnout control message. Note we only
-     * identify the command now; the response to a request for status is not yet
-     * seen here.
-     *
-     * @param pMsg the message to check
-     * @return turnout address or -1 if not a turnout message
-     */
-    public int getTurnoutMsgAddr(Mx1Message pMsg) {
-        if (isTurnoutCommand(pMsg)) {
-            //javax.swing.JOptionPane.showMessageDialog(null, "A-Programma komt tot hier!");
-            int a1 = pMsg.getElement(1);
-            int a2 = pMsg.getElement(2);
-            return (((a1 & 0xff) * 4) + (a2 & 0x6) / 2 + 1);
-        } else {
-            return -1;
-        }
-    }
-
-    /**
-     * Is this a command to change turnout state?
-     *
-     * @param pMsg the message to check
-     * @return true if turnout control message; false otherwise
-     */
-    public boolean isTurnoutCommand(Mx1Message pMsg) {
-        return pMsg.getElement(0) == 0x4E;
-    }
+    public String getSystemPrefix() {return systemName;}
 
     public Mx1Message resetModeMsg() {
         Mx1Message m = new Mx1Message(3);
@@ -193,5 +117,5 @@ public class Mx1CommandStation implements jmri.jmrix.DccCommandStation {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Mx1CommandStation.class);
+    // private final static Logger log = LoggerFactory.getLogger(Mx1CommandStation.class);
 }

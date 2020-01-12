@@ -1,5 +1,3 @@
-// NodeConfigurationMgr.java
-
 package jmri.jmrix.cmri.serial.nodeconfigmanager;
 
 import java.awt.event.ActionEvent;
@@ -44,6 +42,3 @@ public class NodeConfigManagerAction extends AbstractAction {
     private final static Logger log = LoggerFactory.getLogger(NodeConfigManagerAction.class);
 
 }
-
-
-/* @(#)NodeConfigurationMgr.java */

@@ -10,8 +10,6 @@ import jmri.jmrix.ieee802154.IEEE802154TrafficController;
  */
 public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
 
-    final java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrix.ieee802154.IEEE802154ActionListBundle");
-
     /**
      * {@inheritDoc}
      */
@@ -20,7 +18,7 @@ public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
         super.initComponents();
 
         // all we need to do is set the title 
-        setTitle(rb.getString("jmri.jmrix.ieee802154.swing.packetgen.PacketGenActio"));
+        Bundle.getMessage("jmri.jmrix.ieee802154.swing.packetgen.PacketGenAction");
 
         // pack to cause display
         pack();

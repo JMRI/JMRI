@@ -1,6 +1,5 @@
 package jmri.util;
 
-import apps.tests.Log4JFixture;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileSystems;
@@ -8,14 +7,14 @@ import java.nio.file.Files;
 import java.nio.file.PathMatcher;
 import java.util.ArrayList;
 import java.util.Collection;
+
 import org.apache.commons.io.FileUtils;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -88,7 +87,7 @@ public class FileLineEndingsTest {
      * @return a collection of files to validate
      */
     public static Collection<Object[]> getFiles(File directory, String[] patterns, String[] antiPatterns) {
-        Log4JFixture.setUp(); // setup logging early so this method can log
+        jmri.util.JUnitUtil.setUp(); // setup logging early so this method can log
         ArrayList<Object[]> files = new ArrayList<>();
         ArrayList<PathMatcher> antiMatchers = new ArrayList<>();
         for (String antiPattern : antiPatterns) {
@@ -127,13 +126,13 @@ public class FileLineEndingsTest {
         }
     }
 
-    @Before
-    public void setUp() {
+    @BeforeClass  // want to reduce burden
+    static public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
-    public void tearDown() {
+    @AfterClass// want to reduce burden
+    static public void tearDown() {
         JUnitUtil.tearDown();
     }
 }

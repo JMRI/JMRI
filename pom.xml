@@ -6,7 +6,7 @@
     <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>4.11.9-SNAPSHOT</version>
+    <version>4.19.3-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
@@ -16,27 +16,52 @@
         <!-- dependency versions (its easier to include version in dependency
         but if multiple dependencies are linked, use a property for single
         dependency source) -->
-        <cucumber.version>2.0.1</cucumber.version>
+        <cucumber.version>4.3.1</cucumber.version>
         <jetty.version>9.4.7.v20170914</jetty.version>
+        <jemmy.version>22-00c9f753cd0a</jemmy.version> <!-- this is a custom version, see lib/README.md -->
         <slf4j.version>1.7.25</slf4j.version>
-        <jackson.version>2.8.11</jackson.version>
+        <jackson.version>2.10.0</jackson.version>
         <jogamp.version>2.3.2</jogamp.version>
-        <openlcb.version>0.7.18</openlcb.version>
-        <netbeans.version>RELEASE82</netbeans.version>
+        <openlcb.version>0.7.26</openlcb.version>
+        <netbeans.version>RELEASE110</netbeans.version>
+        <jacoco.version>0.8.5</jacoco.version>
+        <jacoco.reportDir>${basedir}/target/</jacoco.reportDir>
         <!-- test environment -->
         <jmri.path.program>${basedir}</jmri.path.program>
         <jmri.prefsdir>${basedir}/temp</jmri.prefsdir>
-        <jinput.plugins>net.bobis.jinput.hidraw.HidRawEnvironmentPlugin</jinput.plugins>
+        <jmri.shutdownmanager>jmri.util.MockShutDownManager</jmri.shutdownmanager>
+        <jinput.useDefaultPlugin>false</jinput.useDefaultPlugin><!-- don't load JInput during CI tests -->
         <ant.version>1.10.1</ant.version>
         <ant.jvm.args></ant.jvm.args>
-        <argLine>-Xmx1536m</argLine>
-        <surefire.version>2.20</surefire.version>
+        <argLine>-Xmx1536m -Duser.language=en -Duser.region=US</argLine>
+        <surefire.version>2.22.0</surefire.version>
+        <failsafe.version>2.22.0</failsafe.version>
+        <jqassistant.version>1.6.0</jqassistant.version>
+        <checkstyle.config.location>${basedir}/checkstyle.xml</checkstyle.config.location>
     </properties>
     <scm>
         <connection>scm:git:https://github.com/JMRI/JMRI.git</connection>
         <url>https://github.com/JMRI/JMRI.git</url>
     </scm>
     <inceptionYear>1997</inceptionYear>
+    <issueManagement>
+        <system>github</system>
+        <url>https://github.com/JMRI/JMRI/issues</url>
+    </issueManagement>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+    <organization>
+        <name>The JMRI Project</name>
+        <url>http://jmri.org</url>
+    </organization>
 
     <profiles>
         <profile>
@@ -122,8 +147,8 @@
                     <plugin>
                         <groupId>com.github.spotbugs</groupId>
                         <artifactId>spotbugs-maven-plugin</artifactId>
-                        <version>3.1.1</version>
-                        <!-- configured to fail on High priority bugs during test phase -->
+                        <version>3.1.12</version>
+                        <!-- configured to fail on Medium priority bugs during test phase (needs to be done two places) -->
                         <executions>
                             <execution>
                                 <id>failing-on-high</id>
@@ -132,14 +157,102 @@
                                     <goal>check</goal>
                                 </goals>
                                 <configuration>
-                                    <excludeFilterFile>.spotbugs.xml</excludeFilterFile>
+                                    <excludeFilterFile>.spotbugs-check.xml</excludeFilterFile>
                                     <effort>Max</effort>
-                                    <threshold>High</threshold>
+                                    <threshold>Low</threshold>
                                     <maxHeap>1536</maxHeap>
                                     <timeout>1200000</timeout><!-- 20 minutes -->
                                 </configuration>
                             </execution>
                         </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-checkstyle-plugin</artifactId>
+                        <version>3.1.0</version>
+                        <executions>
+                            <execution>
+                                <phase>test</phase>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                                <configuration>
+                                    <failOnViolation>true</failOnViolation>
+                                    <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                                    <!-- only show errors, not warnings or infos -->
+                                    <violationSeverity>error</violationSeverity>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>test-warnings-check</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>3.8.1</version>
+                        <configuration>
+                            <compilerId>eclipse</compilerId>
+                            <source>1.8</source>
+                            <target>1.8</target>
+                            <properties>${basedir}/java/ecj.warning.options-ci</properties>
+                            <compilerArgs>
+                                <arg>-sourcepath</arg>
+                                <arg>${basedir}/java/src:${basedir}/target/generated-sources</arg>
+                            </compilerArgs>
+                        </configuration>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.codehaus.plexus</groupId>
+                                <artifactId>plexus-compiler-eclipse</artifactId>
+                                <version>2.8.5</version>
+                            </dependency>
+                            <dependency>
+                                <groupId>org.eclipse.jdt</groupId>
+                                <artifactId>ecj</artifactId>
+                                <version>3.19.0</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>travis-scanhelp</id>
+            <build>
+                <plugins>
+                    <!-- prevent surefire (maven default test harness) from running tests -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${surefire.version}</version>
+                        <configuration>
+                            <skipTests>true</skipTests>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>1.6.0</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <executable>scripts/tidy-check.sh</executable>
+                            <arguments>
+                                <argument>help/en/*/*</argument>
+                                <argument>help/fr/*/*</argument>
+                            </arguments>
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>
@@ -187,9 +300,15 @@
 
         <plugins>
             <plugin>
+                <groupId>org.pitest</groupId>
+                <artifactId>pitest-maven</artifactId>
+                <version>1.4.10</version>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
-                <version>1.8</version>
+                <version>1.8</version><!--$NO-MVN-MAN-VER$-->
+                <!-- above line-end comment silences warning in Eclipse -->
                 <!--
                 <executions>
                     <execution>
@@ -238,7 +357,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.6.1</version>
+                <version>3.8.1</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -269,12 +388,12 @@
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
-                <version>3.1.1</version>
-                <!-- configured to fail on High priority bugs -->
+                <version>3.1.12</version>
+                <!-- configured to fail on medium priority bugs (needs to be done two places)-->
                 <configuration>
-                    <excludeFilterFile>.spotbugs.xml</excludeFilterFile>
+                    <excludeFilterFile>.spotbugs-check.xml</excludeFilterFile>
                     <effort>Max</effort>
-                    <threshold>High</threshold>
+                    <threshold>Low</threshold>
                     <maxHeap>1536</maxHeap>
                     <timeout>1200000</timeout><!-- 20 minutes -->
                 </configuration>
@@ -284,6 +403,9 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefire.version}</version>
                 <configuration>
+	                <additionalClasspathElements>
+	                	<additionalClasspathElement>${basedir}</additionalClasspathElement>
+	                </additionalClasspathElements>
                     <excludes>
                         <!-- ignore until #3492 is resolved -->
                         <exclude>%regex[jmri.jmrix.loconet.locormi.LnMessage[Client|Server]Test]</exclude>
@@ -298,29 +420,41 @@
                         <exclude>jmri.util.SwingTestCase</exclude>
                         <exclude>jmri.jmrit.operations.OperationsTestCase</exclude>
                         <exclude>jmri.jmrit.operations.OperationsSwingTestCase</exclude>
+                        <!-- exclude since intentionally waits forever -->
+                        <exclude>jmri.util.TestWaitsForever</exclude>
                     </excludes>
                     <systemPropertyVariables>
                         <jmri.path.program>${basedir}</jmri.path.program>
                         <jmri.prefsdir>${basedir}/temp</jmri.prefsdir>
-                        <jinput.plugins>net.bobis.jinput.hidraw.HidRawEnvironmentPlugin</jinput.plugins>
+                        <jmri.shutdownmanager>jmri.util.MockShutDownManager</jmri.shutdownmanager>
+                        <jinput.useDefaultPlugin>false</jinput.useDefaultPlugin><!-- don't load JInput during CI tests -->
                     </systemPropertyVariables>
                     <trimStackTrace>false</trimStackTrace>
                     <workingDirectory>${basedir}</workingDirectory>
-                    <argLine>@{argLine} -Djava.security.manager -Djava.security.policy=${basedir}/lib/security.policy</argLine>
+                    <argLine>@{argLine} ${surefire.argLine} -Djava.security.manager -Djava.security.policy=${basedir}/lib/security.policy</argLine>
                     <useSystemClassLoader>true</useSystemClassLoader>
                     <useManifestOnlyJar>false</useManifestOnlyJar>
+                    <!-- forkCount causes tests to run in forked JVMs.  The following the number with C says to fork the number multiplied by the number of cores available. -->
                     <forkCount>1</forkCount>
-                    <!-- uncomment to force each test into new context (DO NOT attempt on CI servers)
+                    <!-- setting re-use forks to false causes a timeout on CI servers, please do not uncomment.
                     <reuseForks>false</reuseForks>
                     -->
-                    <dependencies>
-                        <dependency>
-                            <groupId>org.apache.maven.surefire</groupId>
-                            <artifactId>surefire-junit47</artifactId>
-                            <version>${surefire.version}</version>
-                        </dependency>
-                    </dependencies>
                 </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>${failsafe.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                        <configuration>
+                            <argLine>@{argLine} ${failsafe.argLine} -Djava.security.manager -Djava.security.policy=${basedir}/lib/security.policy</argLine>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -390,22 +524,37 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.10.4</version>
+                <version>3.1.0</version>
                 <configuration>
                     <!-- differs from ant-produced Javadocs by including JMRI version -->
                     <maxmemory>512m</maxmemory>
                     <overview>${basedir}/java/src/jmri/overview.html</overview>
                     <sourcepath>${basedir}/java/src:${project.build.directory}/generated-sources/javacc:${project.build.directory}/generated-sources/jjtree</sourcepath>
                     <show>package</show>
-                    <!-- remove -Xdoclint:-missing to get warnings about missing Javadoc tags -->
-                    <!-- change from default 100 warnings -->
-                    <additionalparam>-breakiterator -Xdoclint:all -Xdoclint:-missing -Xmaxwarns 2300</additionalparam>
+                    <!-- change from default 100 warnings; keep number synced with ant javadoc-lint target -->
+                    <additionalJOption>-breakiterator -Xmaxwarns 1650</additionalJOption>
+                    <!-- remove ",-missing" to get warnings about missing Javadoc tags -->
+                    <doclint>all,-missing</doclint>
                     <author>true</author><!-- default -->
                     <use>true</use><!-- default -->
                     <failOnError>true</failOnError><!-- default -->
                     <quiet>true</quiet>
                     <splitindex>true</splitindex>
+                    <additionalJOption>-J-Dhttp.agent=maven-javadoc-plugin-${project.name}</additionalJOption>
                     <tags>
                         <tag>
                             <!-- disable output of custom @navassoc tag - used for UML image generation -->
@@ -456,36 +605,76 @@
                     <bottom><![CDATA[<i>Copyright &copy; ${project.inceptionYear}&#x2013;{currentYear} JMRI Community.
                     <br>JMRI&reg;, DecoderPro&reg;, PanelPro, SignalPro, SoundPro, DispatcherPro, TrainPro and associated logos are our trademarks.</i>
                        <br><a href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
-                       <br>Site hosted by:
-                       <a href="http://sourceforge.net/projects/jmri">
-                       <img src="https://sourceforge.net/sflogo.php?type=13&group_id=26788" border="0" alt="JMRI Model Railroad Interface at SourceForge.net"/></a>
+                       <br>Site hosted by: <br/>
+                        <a href="http://www.tagadab.com/">
+                        <img src="https://www.tagadab.com/sites/default/files/logo-tagadab-nostrap.png" height="28" width="103" border="0" alt="Tagadab logo"/></a>
                 ]]>
                     </bottom>
                     <links>
                         <link>http://docs.oracle.com/javase/8/docs/api/</link>
                         <link>http://java.sun.com/products/javacomm/reference/api/</link>
-                        <!-- <link>https://www.javadoc.io/doc/com.github.purejavacomm/purejavacomm/1.0.2.RELEASE</link> wrong format data -->
                         <link>http://www.jdom.org/docs/apidocs/</link>
                         <link>http://javacsv.sourceforge.net/</link>
-                        <link>http://static.javadoc.io/com.fasterxml.jackson.core/jackson-databind/${jackson.version}/</link>
+                        <link>https://static.javadoc.io/com.fasterxml.jackson.core/jackson-databind/${jackson.version}/</link>
                         <link>http://logging.apache.org/log4j/1.2/apidocs/</link>
                         <link>http://download.java.net/media/java3d/javadoc/1.3.2/</link>
-                        <link>https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/</link>
                         <link>https://static.javadoc.io/org.openlcb/openlcb/${openlcb.version}/</link>
                         <link>https://commons.apache.org/proper/commons-lang/javadocs/api-release/</link>
+                        <link>https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/</link>
+                        <link>https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE/</link>
+                        <link>https://static.javadoc.io/com.alexandriasoftware.swing/jsplitbutton/1.3.1/</link>
                     </links>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.7.9</version>
+                <version>${jacoco.version}</version>
                 <executions>
                     <execution>
                         <id>prepare-agent</id>
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
+                        <configuration>
+                            <append>true</append>
+                            <destFile>${jacoco.reportDir}/jacoco-unit.exec</destFile>
+                            <propertyName>surefire.argLine</propertyName>
+                         </configuration>
+                    </execution>
+                    <execution>
+                        <id>prepare-agent-integration</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>      
+                        <configuration>
+                            <append>true</append>
+                            <destFile>${jacoco.reportDir}/jacoco-it.exec</destFile>
+                            <propertyName>failsafe.argLine</propertyName>
+                         </configuration>
+                    </execution>
+                    <execution>
+                       <id>merge</id>
+                       <phase>post-integration-test</phase>
+                       <goals>
+                          <goal>merge</goal>
+                       </goals>
+                       <configuration>
+                           <fileSets>
+                              <fileSet>
+                                 <directory>${jacoco.reportDir}</directory>
+                                 <includes>
+                                   <File>**/*.exec</File>
+                                 </includes>
+                              </fileSet>
+                           </fileSets>
+                       </configuration>
+                    </execution> 
+                    <execution>
+                        <id>report</id>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>      
                     </execution>
                     <execution>
                         <id>default-check</id>
@@ -503,26 +692,19 @@
                                 <File>jmri/jmrit/symbolicprog/tabbedframe/CheckProgrammerNames.class</File>
                                 <File>jmri/jmrix/openlcb/SampleFactory.class</File>
                                 <File>jmri/util/swing/SamplePane.class</File>
-                                <File>apps/tests/Log4JFixture.class</File>
                                 <File>jmri/jmrit/display/EditorFrameOperator.class</File>
                                 <File>jmri/util/web/BrowserFactory.class</File>
                                 <!-- pure interfaces and classes of constants -->
                                 <File>jmri/AddressedProgrammerManager.class</File>
-                                <File>jmri/PhysicalLocationReporter.class</File>
                                 <File>jmri/jmris/simpleserver/parser/JmriServerParserTreeConstants.class</File>
                                 <File>jmri/jmris/srcp/parser/SRCPParserTreeConstants.class</File>
                                 <File>jmri/jmrit/audio/AudioSource.class</File>
-                                <File>jmri/jmrit/operations/locations/Xml.class</File>
-                                <File>jmri/jmrit/operations/rollingstock/cars/Xml.class</File>
-                                <File>jmri/jmrit/operations/rollingstock/engines/Xml.class</File>
-                                <File>jmri/jmrit/operations/trains/Xml.class</File>
-                                <File>jmri/jmrit/ussctc/Lock.class</File>
                                 <File>jmri/jmrix/srcp/parser/SRCPClientParserTreeConstants.class</File>
-                                <File>jmri/server/json/roster/JsonRoster.class</File>
-                                <File>jmri/server/json/reporter/JsonReporter.class</File>
-                                <File>jmri/server/json/signalMast/JsonSignalMast.class</File>
                                 <!-- deprecated classes -->
                                 <File>jmri/jmrix/loconet/AbstractAlmImplementation.class</File>
+                                <!-- Exclude files meant to check SpotBugs. -->
+                                <File>apps/FindBugsCheck.class</File>
+                                <File>apps/CheckerFrameworkCheck.class</File>
                             </excludes>
                             <rules>
                                 <rule>
@@ -531,12 +713,12 @@
                                         <limit>
                                             <counter>LINE</counter>
                                             <value>COVEREDRATIO</value>
-                                            <minimum>0.35</minimum>
+                                            <minimum>0.50</minimum>
                                         </limit>
                                         <limit>
                                             <counter>CLASS</counter>
                                             <value>COVEREDRATIO</value>
-                                            <minimum>0.75</minimum>
+                                            <minimum>0.80</minimum>
                                         </limit>
                                     </limits>
                                 </rule>
@@ -555,8 +737,8 @@
                                     <limits>
                                         <limit>
                                             <counter>LINE</counter>
-                                            <value>COVEREDCOUNT</value>
-                                            <minimum>1</minimum>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>0.00001</minimum>
                                         </limit>
                                     </limits>
                                 </rule>
@@ -565,19 +747,76 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- don't run  jqassistant (yet) on every build.
             <plugin>
-                <groupId>net.ossindex</groupId>
+                <groupId>com.buschmais.jqassistant</groupId>
+                <artifactId>jqassistant-maven-plugin</artifactId>
+            </plugin>
+            -->
+            <plugin>
+                <groupId>org.sonatype.ossindex.maven</groupId>
                 <artifactId>ossindex-maven-plugin</artifactId>
-                <version>2.3.7</version>
+                <version>3.0.4</version>
                 <configuration>
-                    <failOnError>true</failOnError>
+                    <fail>true</fail>
                     <!-- List packages with vulnerabilities to ignore. -->
                     <!-- Include an issue in GitHub for each ignored package -->
                     <!-- documenting why the vulnerability is ignored. -->
-                    <!-- jython 2.7.0: https://github.com/JMRI/JMRI/issues/3712 -->
-                    <ignore>org.python:jython-standalone:2.7.0</ignore>
+                    <excludeCoordinates>
+                    </excludeCoordinates>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>3.0.0-M2</version>
+                <executions>
+                    <execution>
+                        <id>enforce-maven</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireMavenVersion>
+                                    <version>[3.3.9,)</version>
+                                </requireMavenVersion>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <failOnViolation>true</failOnViolation>
+                    <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                    <!-- show errors, warnings, and infos -->
+                    <violationSeverity>info</violationSeverity>
+                </configuration>
+            </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>3.1.0</version>
+				<configuration>
+					<filesets>
+						<!-- cleanup behind Eclipse -->
+						<fileset>
+							<directory>.apt_generated</directory>
+							<followSymlinks>false</followSymlinks>
+							<useDefaultExcludes>true</useDefaultExcludes>
+						</fileset>
+						<fileset>
+							<directory>.apt_generated_tests</directory>
+							<followSymlinks>false</followSymlinks>
+							<useDefaultExcludes>true</useDefaultExcludes>
+						</fileset>
+					</filesets>
+				</configuration>
+			</plugin>
         </plugins>
         <pluginManagement>
             <plugins>
@@ -624,6 +863,60 @@
                         </lifecycleMappingMetadata>
                     </configuration>
                 </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-gpg-plugin</artifactId>
+                    <version>1.6</version>
+                    <executions>
+                        <execution>
+                            <id>sign-artifacts</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>sign</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.sonatype.plugins</groupId>
+                    <artifactId>nexus-staging-maven-plugin</artifactId>
+                    <version>1.6.7</version>
+                    <extensions>true</extensions>
+                    <configuration>
+                        <serverId>ossrh</serverId>
+                        <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                        <autoReleaseAfterClose>false</autoReleaseAfterClose>
+                    </configuration>
+                </plugin>
+                <plugin>
+                   <groupId>com.buschmais.jqassistant</groupId>
+                   <artifactId>jqassistant-maven-plugin</artifactId>
+                   <version>${jqassistant.version}</version>
+                   <executions>
+                        <execution>
+                            <goals>
+                                <goal>scan</goal>
+                                <goal>analyze</goal>
+                            </goals>
+                            <configuration>
+                                <warnOnSeverity>MINOR</warnOnSeverity>
+                                <failOnSeverity>MAJOR</failOnSeverity>
+                            </configuration>
+                        </execution>
+                   </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>3.1.0</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.puppycrawl.tools</groupId>
+                            <artifactId>checkstyle</artifactId>
+                            <version>8.24</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
@@ -640,7 +933,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>versions-maven-plugin</artifactId>
-                <version>2.5</version>
+                <version>2.7</version>
                 <reportSets>
                     <reportSet>
                         <reports>
@@ -650,6 +943,37 @@
                         </reports>
                     </reportSet>
                 </reportSets>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco.version}</version>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <!-- select non-aggregate reports -->
+                            <!-- <report>report</report>
+                            <report>report-integration</report> -->
+                            <report>report-aggregate</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+            <plugin>
+                <groupId>com.buschmais.jqassistant</groupId>
+                <artifactId>jqassistant-maven-plugin</artifactId>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>report</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>3.1.0</version>
             </plugin>
         </plugins>
     </reporting>
@@ -688,6 +1012,18 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>com.tngtech.archunit</groupId>
+            <artifactId>archunit-junit4</artifactId>
+            <version>0.11.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.12.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java</artifactId>
             <version>${cucumber.version}</version>
@@ -720,7 +1056,7 @@
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
-            <version>2.0.1</version>
+            <version>3.4.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -809,11 +1145,9 @@
             <type>jar</type>
         </dependency>
         <dependency>
-            <!-- when updating, remove from net.ossindex list of ignored -->
-            <!-- vulnerabilities elsewhere in this file -->
             <groupId>org.python</groupId>
             <artifactId>jython-standalone</artifactId>
-            <version>2.7.0</version><!-- versions < 2.7.1 have CVE against them -->
+            <version>2.7.1</version>
         </dependency>
         <!--
         <dependency>
@@ -835,7 +1169,7 @@
         <dependency>
             <groupId>org.jmdns</groupId>
             <artifactId>jmdns</artifactId>
-            <version>3.5.1</version>
+            <version>3.5.5</version>
         </dependency>
         <!--
         <dependency>
@@ -869,7 +1203,21 @@
         <dependency>
             <groupId>com.pi4j</groupId>
             <artifactId>pi4j-core</artifactId>
-            <version>1.1</version>
+            <version>1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.pi4j</groupId>
+            <artifactId>pi4j-device</artifactId>
+            <version>1.2</version>
+            <optional>true</optional> <!-- not used at compile time,
+                                           may be used at runtime. -->
+        </dependency>
+        <dependency>
+            <groupId>com.pi4j</groupId>
+            <artifactId>pi4j-gpio-extension</artifactId>
+            <version>1.2</version>
+            <optional>true</optional> <!-- not used at compile time,
+                                           may be used at runtime. -->
         </dependency>
         <dependency>
             <groupId>net.sf.bluecove</groupId>
@@ -897,12 +1245,6 @@
             <version>2.0</version>
         </dependency>
         <dependency>
-            <groupId>net.sf.jfcunit</groupId>
-            <artifactId>jfcunit</artifactId>
-            <version>2.08</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>org.openlcb</groupId>
             <artifactId>openlcb</artifactId>
             <version>${openlcb.version}</version>
@@ -910,7 +1252,7 @@
         <dependency>
             <groupId>org.usb4java</groupId>
             <artifactId>usb4java-javax</artifactId>
-            <version>1.2.0</version>
+            <version>1.3.0</version>
         </dependency>
         <!-- SpotBugs annotations -->
         <dependency>
@@ -928,7 +1270,7 @@
         <dependency>
             <groupId>com.github.spotbugs</groupId>
             <artifactId>spotbugs-annotations</artifactId>
-            <version>3.1.1</version>
+            <version>3.1.7</version>
         </dependency>
         <!--
         <dependency>
@@ -940,7 +1282,7 @@
         <dependency>
             <groupId>com.digi.xbee</groupId>
             <artifactId>xbee-java-library</artifactId>
-            <version>1.2.0</version>
+            <version>1.2.1</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.slf4j</groupId>
@@ -984,8 +1326,8 @@
         -->
         <dependency>
             <groupId>org.netbeans.external</groupId>
-            <artifactId>jemmy-2.3.1.1</artifactId>
-            <version>RELEASE802</version>
+            <artifactId>jemmy</artifactId>
+            <version>${jemmy.version}</version>
             <scope>test</scope>
         </dependency>
         <!--
@@ -1011,17 +1353,39 @@
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>json-schema-validator</artifactId>
-            <version>0.1.19</version>
+            <version>1.0.28</version>
         </dependency>
         <dependency>
-	         <groupId>org.eclipse.paho</groupId>
-	         <artifactId>mqtt-client</artifactId>
-	         <version>0.4.0</version>
-	    </dependency>
+            <groupId>org.eclipse.paho</groupId>
+            <artifactId>mqtt-client</artifactId>
+            <version>0.4.0</version>
+        </dependency>
         <dependency>
-             <groupId>com.alexandriasoftware.swing</groupId>
-             <artifactId>jsplitbutton</artifactId>
-             <version>1.3.1</version>
+            <groupId>com.alexandriasoftware.swing</groupId>
+            <artifactId>jsplitbutton</artifactId>
+            <version>1.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alexandriasoftware.swing</groupId>
+            <artifactId>jinputvalidator</artifactId>
+            <version>0.8.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>5.1.3.RELEASE</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>5.1.3.RELEASE</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.coobird</groupId>
+            <artifactId>thumbnailator</artifactId>
+            <version>0.4.8</version>
         </dependency>
     </dependencies>
 
@@ -1035,16 +1399,6 @@
         <repository>
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
-        </repository>
-        <!--
-        Repository hosting NetBeans modules, especially APIs.
-        Versions are based on IDE releases, e.g.: RELEASE691
-        To create your own repository, use: nbm:populate-repository
-        -->
-        <repository>
-            <id>netbeans</id>
-            <name>NetBeans</name>
-            <url>http://bits.netbeans.org/nexus/content/groups/netbeans/</url>
         </repository>
         <!--
         Repository hosting libraries not available through maven.org
@@ -1062,14 +1416,4 @@
             <url>file://${project.basedir}/lib</url>
         </repository>
     </repositories>
-
-    <dependencyManagement>
-    	<dependencies>
-    		<dependency>
-    			<groupId>org.jmdns</groupId>
-    			<artifactId>jmdns</artifactId>
-    			<version>3.5.1</version>
-    		</dependency>
-    	</dependencies>
-    </dependencyManagement>
 </project>

@@ -3,49 +3,52 @@ package jmri.jmrit.decoderdefn;
 import java.util.List;
 import javax.swing.JComboBox;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 import org.jdom2.DocType;
 import org.jdom2.Document;
 import org.jdom2.Element;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
- * Tests for DecoderIndexFile class
+ * Tests for DecoderIndexFile class.
  *
  * @author	Bob Jacobsen, Copyright (c) 2001, 2002
-  */
-public class DecoderIndexFileTest extends TestCase {
+ */
+public class DecoderIndexFileTest {
 
-    public void testLoading() {
+    @Test
+    public void testLoading() throws org.jdom2.JDOMException, java.io.IOException {
         // setup the test object with guts
         DecoderIndexFile di = new DecoderIndexFile();
         setupDoc();
         // invoke parsing
-        di.readMfgSection(decoderIndexElement);
+        di.readMfgSection();
         di.readFamilySection(decoderIndexElement);
         // success here is getting to the end
     }
 
-    public void testMfgSection() {
+    @Test
+    public void testMfgSection() throws org.jdom2.JDOMException, java.io.IOException {
         // setup the test object with guts
         DecoderIndexFile di = new DecoderIndexFile();
         setupDoc();
         // invoke parsing
-        di.readMfgSection(decoderIndexElement);
+        di.readMfgSection();
         // check results
         Assert.assertEquals("Digitrax ID from name ", "129", di.mfgIdFromName("Digitrax"));
-        Assert.assertEquals("NMRA ID from name ", null, di.mfgIdFromName("NMRA"));
+        Assert.assertEquals("NMRA ID from name ", "999", di.mfgIdFromName("NMRA"));
         Assert.assertEquals("Digitrax name from id ", "Digitrax", di.mfgNameFromId("129"));
     }
 
-    public void testReadFamilySection() {
+    @Test
+    public void testReadFamilySection() throws org.jdom2.JDOMException, java.io.IOException {
         // setup the test object with guts
         DecoderIndexFile di = new DecoderIndexFile();
         setupDoc();
         // invoke parsing
-        di.readMfgSection(decoderIndexElement);
+        di.readMfgSection();
         di.readFamilySection(decoderIndexElement);
         // check first Digitrax decoder in test tree; actually the 5th decoder (counting 2 families)
         Assert.assertEquals("1st decoder model ", "DH142", (di.decoderList.get(4)).getModel());
@@ -54,11 +57,12 @@ public class DecoderIndexFileTest extends TestCase {
         Assert.assertEquals("1st decoder family ", "FX2 family", (di.decoderList.get(4)).getFamily());
     }
 
-    public void testReadFamily1() {
+    @Test
+    public void testReadFamily1() throws org.jdom2.JDOMException, java.io.IOException {
         // setup the test object with guts
         DecoderIndexFile di = new DecoderIndexFile();
         setupDoc();
-        di.readMfgSection(decoderIndexElement);
+        di.readMfgSection();
         // parse a single Family
         di.readFamily(family1);
         // expect to find two decoders in a single family
@@ -66,15 +70,16 @@ public class DecoderIndexFileTest extends TestCase {
         // check second one
         Assert.assertEquals("2nd decoder model ", "full set", (di.decoderList.get(1)).getModel());
         Assert.assertEquals("2nd decoder mfg ", "NMRA", (di.decoderList.get(1)).getMfg());
-        Assert.assertEquals("2nd decoder mfgID ", null, (di.decoderList.get(1)).getMfgID());
+        Assert.assertEquals("2nd decoder mfgID ", "999", (di.decoderList.get(1)).getMfgID());
         Assert.assertEquals("2nd decoder family ", "NMRA S&RP definitions", (di.decoderList.get(1)).getFamily());
     }
 
-    public void testReadFamily2() {
+    @Test
+    public void testReadFamily2() throws org.jdom2.JDOMException, java.io.IOException {
         // setup the test object with guts
         DecoderIndexFile di = new DecoderIndexFile();
         setupDoc();
-        di.readMfgSection(decoderIndexElement);
+        di.readMfgSection();
         // parse a single Family
         di.readFamily(family2);
         // expect to find two decoders in a single family
@@ -102,12 +107,13 @@ public class DecoderIndexFileTest extends TestCase {
         Assert.assertEquals("2nd decoder numOuts ", 1, (di.decoderList.get(2)).getNumOutputs());
     }
 
-    public void testMatchingDecoderList() {
+    @Test
+    public void testMatchingDecoderList() throws org.jdom2.JDOMException, java.io.IOException {
         // setup the test object with guts
         DecoderIndexFile di = new DecoderIndexFile();
         setupDoc();
         // invoke parsing
-        di.readMfgSection(decoderIndexElement);
+        di.readMfgSection();
         di.readFamilySection(decoderIndexElement);
         // search for the two Digitrax decoders
         List<DecoderFile> l1 = di.matchingDecoderList("Digitrax", null, null, null, null, null);
@@ -125,12 +131,13 @@ public class DecoderIndexFileTest extends TestCase {
         Assert.assertEquals("Found with version 21 ", 1, l3.size());
     }
 
-    public void testMatchingComboBox() {
+    @Test
+    public void testMatchingComboBox() throws org.jdom2.JDOMException, java.io.IOException {
         // setup the test object with guts
         DecoderIndexFile di = new DecoderIndexFile();
         setupDoc();
         // invoke parsing
-        di.readMfgSection(decoderIndexElement);
+        di.readMfgSection();
         di.readFamilySection(decoderIndexElement);
         // search for the two Digitrax decoders
         JComboBox<String> l1 = di.matchingComboBox("Digitrax", null, null, null, null, null);
@@ -148,12 +155,13 @@ public class DecoderIndexFileTest extends TestCase {
         Assert.assertEquals("Found with version 21 ", 1, l3.getItemCount());
     }
 
-    public void testMatchingVersionRange() {
+    @Test
+    public void testMatchingVersionRange() throws org.jdom2.JDOMException, java.io.IOException {
         // setup the test object with guts
         DecoderIndexFile di = new DecoderIndexFile();
         setupDoc();
         // invoke parsing
-        di.readMfgSection(decoderIndexElement);
+        di.readMfgSection();
         di.readFamilySection(decoderIndexElement);
         // search for the one with various version IDs
         List<DecoderFile> l3;
@@ -236,33 +244,16 @@ public class DecoderIndexFileTest extends TestCase {
         return;
     }
 
-    // from here down is testing infrastructure
-    public DecoderIndexFileTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", DecoderIndexFileTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(DecoderIndexFileTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(DecoderIndexFileTest.class);
+
 }

@@ -10,139 +10,133 @@ import org.junit.Test;
  * Tests for the jmri.jmrix.lenz.XNetReply class
  *
  * @author	Bob Jacobsen
- * @author  Paul Bender Copyright (C) 2004-2017	
+ * @author  Paul Bender Copyright (C) 2004-2018	
  */
-public class XNetReplyTest {
-
-    @Test
-    public void testCtor() {
-        XNetReply m = new XNetReply();
-        Assert.assertNotNull(m);
-    }
+public class XNetReplyTest extends jmri.jmrix.AbstractMessageTestBase {
+       
+    protected XNetReply msg = null;
 
     // Test the string constructor.
     @Test
     public void testStringCtor() {
-        XNetReply m = new XNetReply("12 34 AB 03 19 06 0B B1");
-        Assert.assertEquals("length", 8, m.getNumDataElements());
-        Assert.assertEquals("0th byte", 0x12, m.getElement(0) & 0xFF);
-        Assert.assertEquals("1st byte", 0x34, m.getElement(1) & 0xFF);
-        Assert.assertEquals("2nd byte", 0xAB, m.getElement(2) & 0xFF);
-        Assert.assertEquals("3rd byte", 0x03, m.getElement(3) & 0xFF);
-        Assert.assertEquals("4th byte", 0x19, m.getElement(4) & 0xFF);
-        Assert.assertEquals("5th byte", 0x06, m.getElement(5) & 0xFF);
-        Assert.assertEquals("6th byte", 0x0B, m.getElement(6) & 0xFF);
-        Assert.assertEquals("7th byte", 0xB1, m.getElement(7) & 0xFF);
+        msg = new XNetReply("12 34 AB 03 19 06 0B B1");
+        Assert.assertEquals("length", 8, msg.getNumDataElements());
+        Assert.assertEquals("0th byte", 0x12, msg.getElement(0) & 0xFF);
+        Assert.assertEquals("1st byte", 0x34, msg.getElement(1) & 0xFF);
+        Assert.assertEquals("2nd byte", 0xAB, msg.getElement(2) & 0xFF);
+        Assert.assertEquals("3rd byte", 0x03, msg.getElement(3) & 0xFF);
+        Assert.assertEquals("4th byte", 0x19, msg.getElement(4) & 0xFF);
+        Assert.assertEquals("5th byte", 0x06, msg.getElement(5) & 0xFF);
+        Assert.assertEquals("6th byte", 0x0B, msg.getElement(6) & 0xFF);
+        Assert.assertEquals("7th byte", 0xB1, msg.getElement(7) & 0xFF);
     }
 
     // Test the string constructor with an empty string paramter.
     @Test
     public void testStringCtorEmptyString() {
-        XNetReply m = new XNetReply("");
-        Assert.assertEquals("length", 0, m.getNumDataElements());
-        Assert.assertTrue("empty reply",m.toString().equals(""));
+        Assert.assertEquals("length", 0, msg.getNumDataElements());
+        Assert.assertTrue("empty reply",msg.toString().equals(""));
     }
 
     // Test the copy constructor.
     @Test
     public void testCopyCtor() {
         XNetReply x = new XNetReply("12 34 AB 03 19 06 0B B1");
-        XNetReply m = new XNetReply(x);
-        Assert.assertEquals("length", x.getNumDataElements(), m.getNumDataElements());
-        Assert.assertEquals("0th byte", x.getElement(0), m.getElement(0));
-        Assert.assertEquals("1st byte", x.getElement(1), m.getElement(1));
-        Assert.assertEquals("2nd byte", x.getElement(2), m.getElement(2));
-        Assert.assertEquals("3rd byte", x.getElement(3), m.getElement(3));
-        Assert.assertEquals("4th byte", x.getElement(4), m.getElement(4));
-        Assert.assertEquals("5th byte", x.getElement(5), m.getElement(5));
-        Assert.assertEquals("6th byte", x.getElement(6), m.getElement(6));
-        Assert.assertEquals("7th byte", x.getElement(7), m.getElement(7));
+        msg = new XNetReply(x);
+        Assert.assertEquals("length", x.getNumDataElements(), msg.getNumDataElements());
+        Assert.assertEquals("0th byte", x.getElement(0), msg.getElement(0));
+        Assert.assertEquals("1st byte", x.getElement(1), msg.getElement(1));
+        Assert.assertEquals("2nd byte", x.getElement(2), msg.getElement(2));
+        Assert.assertEquals("3rd byte", x.getElement(3), msg.getElement(3));
+        Assert.assertEquals("4th byte", x.getElement(4), msg.getElement(4));
+        Assert.assertEquals("5th byte", x.getElement(5), msg.getElement(5));
+        Assert.assertEquals("6th byte", x.getElement(6), msg.getElement(6));
+        Assert.assertEquals("7th byte", x.getElement(7), msg.getElement(7));
     }
 
     // Test the XNetMessage constructor.
     @Test
     public void testXNetMessageCtor() {
         XNetMessage x = new XNetMessage("12 34 AB 03 19 06 0B B1");
-        XNetReply m = new XNetReply(x);
-        Assert.assertEquals("length", x.getNumDataElements(), m.getNumDataElements());
-        Assert.assertEquals("0th byte", x.getElement(0)& 0xFF, m.getElement(0)& 0xFF);
-        Assert.assertEquals("1st byte", x.getElement(1)& 0xFF, m.getElement(1)& 0xFF);
-        Assert.assertEquals("2nd byte", x.getElement(2)& 0xFF, m.getElement(2)& 0xFF);
-        Assert.assertEquals("3rd byte", x.getElement(3)& 0xFF, m.getElement(3)& 0xFF);
-        Assert.assertEquals("4th byte", x.getElement(4)& 0xFF, m.getElement(4)& 0xFF);
-        Assert.assertEquals("5th byte", x.getElement(5)& 0xFF, m.getElement(5)& 0xFF);
-        Assert.assertEquals("6th byte", x.getElement(6)& 0xFF, m.getElement(6)& 0xFF);
-        Assert.assertEquals("7th byte", x.getElement(7)& 0xFF, m.getElement(7)& 0xFF);
+        msg = new XNetReply(x);
+        Assert.assertEquals("length", x.getNumDataElements(), msg.getNumDataElements());
+        Assert.assertEquals("0th byte", x.getElement(0)& 0xFF, msg.getElement(0)& 0xFF);
+        Assert.assertEquals("1st byte", x.getElement(1)& 0xFF, msg.getElement(1)& 0xFF);
+        Assert.assertEquals("2nd byte", x.getElement(2)& 0xFF, msg.getElement(2)& 0xFF);
+        Assert.assertEquals("3rd byte", x.getElement(3)& 0xFF, msg.getElement(3)& 0xFF);
+        Assert.assertEquals("4th byte", x.getElement(4)& 0xFF, msg.getElement(4)& 0xFF);
+        Assert.assertEquals("5th byte", x.getElement(5)& 0xFF, msg.getElement(5)& 0xFF);
+        Assert.assertEquals("6th byte", x.getElement(6)& 0xFF, msg.getElement(6)& 0xFF);
+        Assert.assertEquals("7th byte", x.getElement(7)& 0xFF, msg.getElement(7)& 0xFF);
     }
 
     // check parity operations
     @Test
     public void testParity() {
-        XNetReply m;
-        m = new XNetReply("21 21 00");
-        Assert.assertEquals("parity set test 1", 0, m.getElement(2));
-        Assert.assertEquals("parity check test 1", true, m.checkParity());
+        msg = new XNetReply("21 21 00");
+        Assert.assertEquals("parity set test 1", 0, msg.getElement(2));
+        Assert.assertEquals("parity check test 1", true, msg.checkParity());
 
-        m = new XNetReply("21 21 00");
-        m.setElement(0, 0x21);
-        m.setElement(1, ~0x21);
-        m.setParity();
-        Assert.assertEquals("parity set test 2", 0xFF, m.getElement(2));
-        Assert.assertEquals("parity check test 2", true, m.checkParity());
+        msg = new XNetReply("21 21 00");
+        msg.setElement(0, 0x21);
+        msg.setElement(1, ~0x21);
+        msg.setParity();
+        Assert.assertEquals("parity set test 2", 0xFF, msg.getElement(2));
+        Assert.assertEquals("parity check test 2", true, msg.checkParity());
 
-        m = new XNetReply("21 21 00");
-        m.setElement(0, 0x18);
-        m.setElement(1, 0x36);
-        m.setParity();
-        Assert.assertEquals("parity set test 3", 0x2E, m.getElement(2));
-        Assert.assertEquals("parity check test 3", true, m.checkParity());
+        msg = new XNetReply("21 21 00");
+        msg.setElement(0, 0x18);
+        msg.setElement(1, 0x36);
+        msg.setParity();
+        Assert.assertEquals("parity set test 3", 0x2E, msg.getElement(2));
+        Assert.assertEquals("parity check test 3", true, msg.checkParity());
 
-        m = new XNetReply("21 21 00");
-        m.setElement(0, 0x87);
-        m.setElement(1, 0x31);
-        m.setParity();
-        Assert.assertEquals("parity set test 4", 0xB6, m.getElement(2));
-        Assert.assertEquals("parity check test 4", true, m.checkParity());
+        msg = new XNetReply("21 21 00");
+        msg.setElement(0, 0x87);
+        msg.setElement(1, 0x31);
+        msg.setParity();
+        Assert.assertEquals("parity set test 4", 0xB6, msg.getElement(2));
+        Assert.assertEquals("parity check test 4", true, msg.checkParity());
 
-        m = new XNetReply("21 21 00");
-        m.setElement(0, 0x18);
-        m.setElement(1, 0x36);
-        m.setElement(2, 0x0e);
-        Assert.assertEquals("parity check test 5", false, m.checkParity());
+        msg = new XNetReply("21 21 00");
+        msg.setElement(0, 0x18);
+        msg.setElement(1, 0x36);
+        msg.setElement(2, 0x0e);
+        Assert.assertEquals("parity check test 5", false, msg.checkParity());
 
-        m = new XNetReply("21 21 00");
-        m.setElement(0, 0x18);
-        m.setElement(1, 0x36);
-        m.setElement(2, 0x8e);
-        Assert.assertEquals("parity check test 6", false, m.checkParity());
+        msg = new XNetReply("21 21 00");
+        msg.setElement(0, 0x18);
+        msg.setElement(1, 0x36);
+        msg.setElement(2, 0x8e);
+        Assert.assertEquals("parity check test 6", false, msg.checkParity());
     }
 
-// test accessor methods for elements.
+    // test accessor methods for elements.
     // check getOpCodeHex
     @Test
     public void testGetOpCodeHex(){
-       XNetReply m=new XNetReply("63 14 01 04 72");
-       Assert.assertEquals("getOpCodeHex Return Value","0x63",m.getOpCodeHex());
+       msg = new XNetReply("63 14 01 04 72");
+       Assert.assertEquals("getOpCodeHex Return Value","0x63",msg.getOpCodeHex());
     }
 
 
     // check getElementBCD
     @Test
     public void testGetElementBCD(){
-       XNetReply m=new XNetReply("63 14 01 04 72");
-       Assert.assertEquals("getElementBCD Return Value",(long)14,(long)m.getElementBCD(1));
+       msg=new XNetReply("63 14 01 04 72");
+       Assert.assertEquals("getElementBCD Return Value",(long)14,(long)msg.getElementBCD(1));
     }
 
     // check skipPrefix
     @Test
     public void testSkipPrefix(){
-       XNetReply m=new XNetReply("63 14 01 04 72");
+       msg=new XNetReply("63 14 01 04 72");
        // skip prefix currently always returns -1, there is no prefix.
-       Assert.assertEquals("skipPrefix return value",-1, m.skipPrefix(0));
+       Assert.assertEquals("skipPrefix return value",-1, msg.skipPrefix(0));
     }
 
 
-// get information from specific types of messages.
+    // get information from specific types of messages.
 
     // check is service mode response
     @Test
@@ -310,7 +304,6 @@ public class XNetReplyTest {
         // turnout 22 with feedback 
         r = new XNetReply("42 05 24 63");
         Assert.assertEquals("Turnout Message Address", 21, r.getTurnoutMsgAddr() );
-
         // turnout 21 with feedback 
         r = new XNetReply("42 05 22 65");
         Assert.assertEquals("Turnout Message Address", 21, r.getTurnoutMsgAddr() );
@@ -1397,12 +1390,15 @@ public class XNetReplyTest {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
+        m = msg = new XNetReply();
     }
 
     @After
     public void tearDown() {
+	m = msg = null;
         JUnitUtil.tearDown();
     }
 

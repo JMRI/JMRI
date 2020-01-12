@@ -53,13 +53,13 @@ public class RunTrainAction extends Action {
             // this can wait thread
             if (!InstanceManager.getDefault(TrainCustomSwitchList.class).checkProcessReady()) {
                 log.warn(
-                        "Timeout waiting for excel switch list program to complete previous opeation, train ({}), timeout value: {} seconds",
+                        "Timeout waiting for excel switch list program to complete previous operation, train ({}), timeout value: {} seconds",
                         train.getName(), Control.excelWaitTime);
             }
             // this can wait thread
             if (!InstanceManager.getDefault(TrainCustomManifest.class).checkProcessReady()) {
                 log.warn(
-                        "Timeout waiting for excel manifest program to complete previous opeation, train ({}), timeout value: {} seconds",
+                        "Timeout waiting for excel manifest program to complete previous operation, train ({}), timeout value: {} seconds",
                         train.getName(), Control.excelWaitTime);
             }
             if (InstanceManager.getDefault(TrainCustomManifest.class).doesCommonFileExist()) {

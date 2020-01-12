@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Handle configuring a Raspberry Pi layout connection.
- * <P>
+ * <p>
  * This uses the {@link RaspberryPiAdapter} class to do the actual connection.
  *
  * @author Paul Bender Copyright (C) 2015
@@ -36,7 +36,8 @@ public class RaspberryPiConnectionConfig extends jmri.jmrix.AbstractConnectionCo
     }
 
     /**
-     * Ctor for a functional Swing object with no prexisting adapter
+     * Ctor for a connection configuration with no preexisting adapter.
+     * {@link #setInstance()} will fill the adapter member.
      */
     public RaspberryPiConnectionConfig() {
         super();
@@ -45,26 +46,27 @@ public class RaspberryPiConnectionConfig extends jmri.jmrix.AbstractConnectionCo
 
     protected boolean init = false;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void checkInitDone() {
-        if (log.isDebugEnabled()) {
-            log.debug("init called for " + name());
-        }
+        log.debug("init called for {}", name());
         if (init) {
             return;
         }
         if (adapter.getSystemConnectionMemo() != null) {
             systemPrefixField.addActionListener((ActionEvent e) -> {
-                if (!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
-                    JOptionPane.showMessageDialog(null, "System Prefix " + systemPrefixField.getText() + " is already assigned");
+                if (!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) { // not normalized
+                    JOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionPrefixDialog", systemPrefixField.getText()));
                     systemPrefixField.setValue(adapter.getSystemConnectionMemo().getSystemPrefix());
                 }
             });
             systemPrefixField.addFocusListener(new FocusListener() {
                 @Override
                 public void focusLost(FocusEvent e) {
-                    if (!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
-                        JOptionPane.showMessageDialog(null, "System Prefix " + systemPrefixField.getText() + " is already assigned");
+                    if (!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) { // not normalized
+                        JOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionPrefixDialog", systemPrefixField.getText()));
                         systemPrefixField.setValue(adapter.getSystemConnectionMemo().getSystemPrefix());
                     }
                 }
@@ -95,7 +97,6 @@ public class RaspberryPiConnectionConfig extends jmri.jmrix.AbstractConnectionCo
 
         }
         init = true;
-
     }
 
     @Override
@@ -104,13 +105,15 @@ public class RaspberryPiConnectionConfig extends jmri.jmrix.AbstractConnectionCo
             systemPrefixField.setValue(adapter.getSystemConnectionMemo().getSystemPrefix());
             connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
         }
-
     }
 
     @Override
     protected void showAdvancedItems() {
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void loadDetails(final javax.swing.JPanel details) {
         _details = details;
@@ -127,6 +130,9 @@ public class RaspberryPiConnectionConfig extends jmri.jmrix.AbstractConnectionCo
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setInstance() {
         if (adapter == null) {
@@ -155,13 +161,16 @@ public class RaspberryPiConnectionConfig extends jmri.jmrix.AbstractConnectionCo
         return "GPIO";
     }
 
+    String manuf = RaspberryPiConnectionTypeList.PI;
+
     @Override
     public String getManufacturer() {
-        return RaspberryPiConnectionTypeList.PI;
+        return manuf;
     }
 
     @Override
     public void setManufacturer(String manufacturer) {
+        manuf = manufacturer;
     }
 
     @Override
@@ -171,7 +180,7 @@ public class RaspberryPiConnectionConfig extends jmri.jmrix.AbstractConnectionCo
 
     @Override
     public String getConnectionName() {
-        return "Raspberry Pi GPIO";
+        return "Raspberry Pi GPIO"; // NOI18N
     }
 
     @Override
@@ -185,4 +194,5 @@ public class RaspberryPiConnectionConfig extends jmri.jmrix.AbstractConnectionCo
     }
 
     private final static Logger log = LoggerFactory.getLogger(RaspberryPiConnectionConfig.class);
+
 }

@@ -8,7 +8,7 @@ import org.junit.*;
  * Tests for VetoedBell class in the jmri.jmrit.ussctc package
  *
  * @author	Bob Jacobsen Copyright 2007
-  */
+ */
 public class VetoedBellTest {
 
     @Test
@@ -20,6 +20,7 @@ public class VetoedBellTest {
     public void testBellStrokeAllowed() throws JmriException {
         rung = false;
         Bell bell = new Bell(){
+            @Override
             public void ring() {
                 rung = true;
             }
@@ -36,6 +37,7 @@ public class VetoedBellTest {
     public void testBellStrokeNotAllowed() throws JmriException  {
         rung = false;
         Bell bell = new Bell(){
+            @Override
             public void ring() {
                 rung = true;
             }
@@ -56,10 +58,9 @@ public class VetoedBellTest {
     @org.junit.Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
-        JUnitUtil.initShutDownManager();
-        JUnitUtil.resetProfileManager();
         
         veto = InstanceManager.getDefault(SensorManager.class).provideSensor("IS1"); veto.setUserName("veto Sensor");
         bellTurnout = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT1"); bellTurnout.setUserName("Bell output");

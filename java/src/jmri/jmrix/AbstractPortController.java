@@ -179,6 +179,8 @@ abstract public class AbstractPortController implements PortAdapter {
      * @return the option value
      */
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
+    justification = "availability was checked before, should never get here")
     public String getOptionState(String option) {
         if (options.containsKey(option)) {
             return options.get(option).getCurrent();
@@ -187,12 +189,14 @@ abstract public class AbstractPortController implements PortAdapter {
     }
 
     /**
-     * Get a list of the various choices allowed with an given option.
+     * Get a list of the various choices allowed with a given option.
      *
      * @param option the name of the option to query
-     * @return list of valid values for the option
+     * @return list of valid values for the option, null if none are available
      */
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
+    justification = "availability was checked before, should never get here")
     public String[] getOptionChoices(String option) {
         if (options.containsKey(option)) {
             return options.get(option).getOptions();
@@ -201,6 +205,8 @@ abstract public class AbstractPortController implements PortAdapter {
     }
 
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
+    justification = "availability was checked before, should never get here")
     public String getOptionDisplayName(String option) {
         if (options.containsKey(option)) {
             return options.get(option).getDisplayText();

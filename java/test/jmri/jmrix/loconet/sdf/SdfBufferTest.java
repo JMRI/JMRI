@@ -4,9 +4,9 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,8 +16,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright 2007
  */
-public class SdfBufferTest extends TestCase {
+public class SdfBufferTest {
 
+    @Test
     public void testFileCtor() throws java.io.IOException {
         SdfBuffer b = new SdfBuffer("java/test/jmri/jmrix/loconet/sdf/test2.sdf");
 
@@ -48,6 +49,7 @@ public class SdfBufferTest extends TestCase {
         Assert.assertEquals("output as string", g, result);
     }
 
+    @Test
     public void testModify() throws java.io.IOException {
         // get original file
         SdfBuffer original = new SdfBuffer("java/test/jmri/jmrix/loconet/sdf/test2.sdf");
@@ -93,31 +95,13 @@ public class SdfBufferTest extends TestCase {
 
     }
 
-    // from here down is testing infrastructure
-    public SdfBufferTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {SdfBufferTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SdfBufferTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 

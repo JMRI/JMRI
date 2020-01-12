@@ -1,0 +1,103 @@
+<!-- Sidebar -->
+<!-- This is the common sidebar definition for help/doc/Technical (developer) pages -->
+    <hr class="hide">
+
+	<div id="side"> <!-- Block of text on left side of page -->
+	    <div style="text-align: center">Code documentation</div>
+	    <dl>
+
+		<dt><h3>Development tools</h3></dt>
+		<dd>
+			<ul class="navigation">
+			<li><a href="getgitcode.shtml">Getting the code</a></li>
+			<li><a href="gitdeveloper.shtml">Developing with JMRI Code</a></li>
+			<li><a href="GitFAQ.shtml">Git FAQs</a></li>
+			<li>Building with:
+				<ul class="navigation">
+				<li><a href="Ant.shtml">Ant</a></li>
+				<li><a href="NetBeans.shtml">NetBeans</a></li>
+				<li><a href="Eclipse.shtml">Eclipse</a></li>
+				<li><a href="IntelliJ.shtml">IntelliJ IDEA</a></li>
+				</ul>
+			</li>
+			</ul>
+		</dd>
+
+		<dt><h3>Code Structure</h3></dt>
+		<dd>
+			<ul class="navigation">
+			<li><a href="IntroStructure.shtml">Introduction</a></li>
+			<li><a href="Names.shtml">Names and Naming</a></li>
+			<li><a href="AppStructure.shtml">Application Structure</a></li>
+			<li><a href="Patterns.shtml">Code Structure Patterns</a></li>
+			<li><a href="Swing.shtml">Swing Structure</a></li>
+			<li><a href="SystemStructure.shtml">External Connection Structure</a></li>
+			<li><a href="AppPreferences.shtml">Application Preferences</a></li>
+			<li><a href="Threads.shtml">Threading</a></li>
+			<li><a href="XmlUsage.shtml">Use of XML</a>
+				<ul class="navigation">
+			    <li><a href="XmlSchema.shtml">XML Schema</a></li>
+			    <li><a href="XmlView.shtml">XSLT Formatting</a></li>
+			    </ul>
+			<li><a href="WebSite.shtml">Web Site</a></li>
+			
+			<li><a href="/JavaDoc/doc/">Javadocs</a>
+				<ul class="navigation">
+				<li><a href="/JavaDoc/doc/index-files/index-1.html">Name Index</a></li>
+				<li><a href="/JavaDoc/doc/index.html">Packages</a></li>
+				<li><a href="/JavaDoc/doc/allclasses-frame.html">Classes</a></li>
+				</ul>
+			</ul>
+		</dd>
+
+		<dt><h3>Techniques and Standards</h3></dt>
+		<dd>
+			<ul class="navigation">
+			<li><a href="RP.shtml">Recommended Practices</a></li>
+			<li><a href="ContinuousIntegration.shtml">Continuous Integration</a></li>
+			<li><a href="I8N.shtml">Internationalization</a></li>
+			<li><a href="Logging.shtml">Logging &amp; Error Handling</a></li>
+			<li><a href="JUnit.shtml">Unit testing with JUnit</a></li>
+			<li><a href="Javadoc.shtml">Documentation with Javadoc and UML</a></li>
+			<li><a href="SpotBugs.shtml">Run the SpotBugs static analysis tool</a></li>
+			<li><a href="Help.shtml">Providing help with JavaHelp</a></li>
+			<li><a href="FileNames.shtml">Portable Filename Method</a></li>
+			<li><a href="XmlPersistance.shtml">XML Persistance</a></li>
+			</ul>
+		</dd>
+
+		<dt><h3>How To</h3></dt>
+		<dd>
+			<ul class="navigation">
+			<li><a href="plugins.shtml">Extend JMRI</a></li>
+			<li><a href="NewSystem.shtml">Add a New System</a></li>
+			<li><a href="NewType.shtml">Add a New Type</a></li>
+			</ul>
+		</dd>
+
+		<dt><h3>Functional Info</h3></dt>
+		<dd>
+			<ul class="navigation">
+			<li><a href="TurnoutFeedback.shtml">Turnout Feedback</a></li>
+			<li><a href="Networking.shtml">Network Connections</a></li>
+			<li><a href="StartUpScripts.shtml">How the startup scripts work</a></li>
+			</ul>
+		</dd>
+
+		<dt><h3>Background Info</h3></dt>
+		<dd>
+			<ul class="navigation">
+			<li><a href="TechRoadMap.shtml">Technology Roadmap</a></li>
+			<li><a href="JVMCapabilities.shtml">Survey of JVM Capabilities</a></li>
+			<li><a href="Poll2007.shtml">Usage Poll, Spring 2007</a></li>
+			</ul>
+		</dd>
+	</dl>
+	</div> <!-- closes #side -->
+
+	<!-- Sidebar-Tail -->
+	<script type="text/javascript" src="/web/js/jquery-2.0.3.min.js"></script>
+	<script type="text/javascript" src="/web/js/here.js"></script>
+	<!-- /Sidebar-Tail -->
+
+<!-- /Sidebar -->

@@ -10,7 +10,6 @@ import jmri.jmrix.loconet.LnPr2ThrottleManager;
 import jmri.jmrix.loconet.LnTrafficController;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
-import jmri.jmrix.loconet.SlotManager;
 
 /**
  * PowerManager implementation for controlling layout power via PR2.
@@ -27,12 +26,10 @@ public class LnPr2PowerManager extends LnPowerManager {
 
     public LnPr2PowerManager(LocoNetSystemConnectionMemo memo) {
         super(memo);
-        this.sm = memo.getSlotManager();
         this.tc = memo.getLnTrafficController();
         this.memo = memo;
     }
 
-    SlotManager sm;
     LnTrafficController tc;
     LocoNetSystemConnectionMemo memo;
 
@@ -45,7 +42,7 @@ public class LnPr2PowerManager extends LnPowerManager {
             // get current active address
             DccLocoAddress activeAddress = ((LnPr2ThrottleManager) InstanceManager.throttleManagerInstance()).getActiveAddress();
             if (activeAddress != null) {
-                pm = new LnOpsModeProgrammer(sm, memo, activeAddress.getNumber(), activeAddress.isLongAddress());
+                pm = new LnOpsModeProgrammer(memo, activeAddress.getNumber(), activeAddress.isLongAddress());
                 checkOpsProg();
 
                 // set bit 1 in CV 128
@@ -73,7 +70,7 @@ public class LnPr2PowerManager extends LnPowerManager {
             // get current active address
             DccLocoAddress activeAddress = ((LnPr2ThrottleManager) InstanceManager.throttleManagerInstance()).getActiveAddress();
             if (activeAddress != null) {
-                pm = new LnOpsModeProgrammer(sm, memo, activeAddress.getNumber(), activeAddress.isLongAddress());
+                pm = new LnOpsModeProgrammer(memo, activeAddress.getNumber(), activeAddress.isLongAddress());
                 checkOpsProg();
 
                 // reset bit 1 in CV 128
@@ -108,9 +105,14 @@ public class LnPr2PowerManager extends LnPowerManager {
             firePropertyChange("Power", null, null); // NOI18N
         } else if (m.getOpCode() == LnConstants.OPC_GPOFF) {
             power = OFF;
-            timer.stop();
+            if (timer != null) {
+                // Protect against uninitialized timer, for case where some other
+                // LocoNet agent issues OPC_GPOFF before JMRI initializes its timer.
+                // A NPE was seen, before protected added, with the DCS52.
+                timer.stop();
+            }
             firePropertyChange("Power", null, null); // NOI18N
-        } else if (m.getOpCode() == 0xEF) {
+        } else if (m.getOpCode() == LnConstants.OPC_WR_SL_DATA) {
             // if this is a service mode write, drop out of power on mode
             if ((m.getElement(1) == 0x0E)
                     && (m.getElement(2) == 0x7C)
@@ -118,7 +120,9 @@ public class LnPr2PowerManager extends LnPowerManager {
                 // go to power off due to service mode op
                 if (power == ON) {
                     power = OFF;
-                    timer.stop();
+                    if (timer != null) {
+                        timer.stop();
+                    }
                     firePropertyChange("Power", null, null); // NOI18N
                 }
             }
@@ -140,6 +144,15 @@ public class LnPr2PowerManager extends LnPowerManager {
                 }
             }
         }
+    }
+    
+    /**
+     * Returns false to indicate PR2 does not implement an "IDLE" power state.
+     * @return false
+     */
+    @Override
+    public boolean implementsIdle() {
+        return false;
     }
 
     // timer support to send updates & keep power alive

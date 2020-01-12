@@ -15,15 +15,15 @@ import org.slf4j.LoggerFactory;
  *
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @see jmri.jmrit.roster.AbstractRosterItemAction
  * @see jmri.jmrit.XmlFile
@@ -57,7 +57,7 @@ public class ImportRosterItemAction extends AbstractRosterItemAction {
 
         // read the file for the "from" entry, create a new entry, write it out
         // ensure preferences will be found for read
-        FileUtil.createDirectory(LocoFile.getFileLocation());
+        FileUtil.createDirectory(Roster.getDefault().getRosterFilesLocation());
 
         // read it
         LocoFile lf = new LocoFile();  // used as a temporary
@@ -85,7 +85,7 @@ public class ImportRosterItemAction extends AbstractRosterItemAction {
 
         // transfer the contents to a new file
         LocoFile newLocoFile = new LocoFile();
-        File fout = new File(LocoFile.getFileLocation() + mToEntry.getFileName());
+        File fout = new File(Roster.getDefault().getRosterFilesLocation() + mToEntry.getFileName());
         newLocoFile.writeFile(fout, lroot, mToEntry);
 
         return true;

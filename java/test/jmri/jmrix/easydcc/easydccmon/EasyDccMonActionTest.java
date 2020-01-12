@@ -1,37 +1,32 @@
 package jmri.jmrix.easydcc.easydccmon;
 
-import jmri.jmrix.easydcc.EasyDccSystemConnectionMemo;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import jmri.jmrix.easydcc.EasyDccSystemConnectionMemo;
 
 /**
  * JUnit tests for the EasyDccProgrammer class
  *
  * @author	Bob Jacobsen
  */
-public class EasyDccMonActionTest extends TestCase {
+public class EasyDccMonActionTest {
 
+    @Test
     public void testCreate() {
         EasyDccMonAction a = new EasyDccMonAction("Monitor", new EasyDccSystemConnectionMemo("E", "EasyDCC via Serial"));
         Assert.assertNotNull("exists", a);
     }
 
-    public EasyDccMonActionTest(String s) {
-        super(s);
+    @Before
+    public void setUp() {
+        jmri.util.JUnitUtil.setUp();
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {EasyDccMonActionTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
+    @After
+    public void tearDown() {
+        jmri.util.JUnitUtil.tearDown();
     }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(EasyDccMonActionTest.class);
-        return suite;
-    }
-
 }

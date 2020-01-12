@@ -23,14 +23,6 @@ public class WiFiConsistManager extends NmraConsistManager {
         isValid = true;
     }
 
-    /** 
-     * @deprecated since 4.9.6 use @link{jmri.jmrit.withrottle.ConsistController.stringToDcc()} instead.
-     */
-    @Deprecated
-    public DccLocoAddress stringToDcc(String s) {
-        return ConsistController.stringToDcc(s);
-    }
-
     /**
      * Check to see if an address will try to broadcast (0) a programming
      * message.

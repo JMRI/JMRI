@@ -25,7 +25,7 @@
       <label>
         <text>Function Key Controlled Sounds </text>
         <text xml:lang="it">Suoni controllati da Tasti Funzione</text>
-        <text xml:lang="de">Funktions-Sounds</text>
+        <text xml:lang="de">       Funktions-Sounds</text>
         <text xml:lang="cs">Funkční klávesy ovládání zvuků</text>
       </label>
       <label>
@@ -328,9 +328,25 @@
   <row>
     <column>
       <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Percentage Reduction of Driving Sound Volume" layout="above" label=""/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Percentage Reduction of Driving Sound Volume" layout="above" format="hslider"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <label>
         <text>Automatic Sound Levels </text>
         <text xml:lang="it">Livello Automatico Suoni</text>
-        <text xml:lang="de">Ablauf-Sounds</text>
+        <text xml:lang="de">       Ablauf-Sounds</text>
         <text xml:lang="cs">Automatické úrovně zvuků</text>
       </label>
       <label>
@@ -628,7 +644,7 @@
       <label>
         <text>Switch triggered sounds </text>
         <text xml:lang="it">Livello Suoni regolato da Ingresso</text>
-        <text xml:lang="de">Schalteingangs-Sounds</text>
+        <text xml:lang="de">       Schalteingangs-Sounds</text>
         <text xml:lang="cs">Spínač spouští zvuk</text>
       </label>
       <label>
@@ -667,7 +683,7 @@
       <label>
         <text>Randomly generated sounds </text>
         <text xml:lang="it">Suoni Casuali</text>
-        <text xml:lang="de">Zufalls-Sounds</text>
+        <text xml:lang="de">       Zufalls-Sounds</text>
         <text xml:lang="cs">Náhodně generované zvuky</text>
       </label>
       <label>

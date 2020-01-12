@@ -125,12 +125,12 @@
         </turnout>
     </turnouts>
     <lights class="jmri.managers.configurexml.InternalLightManagerXml">
-        <light systemName="LL100" userName="light" minIntensity="0.0" maxIntensity="1.0" transitionTime="0.0">
-            <systemName>LL100</systemName>
+        <light systemName="IL100" userName="light" minIntensity="0.0" maxIntensity="1.0" transitionTime="0.0">
+            <systemName>IL100</systemName>
             <userName>light</userName>
         </light>
-        <light systemName="LL101" userName="otherLight" minIntensity="0.0" maxIntensity="1.0" transitionTime="0.0">
-            <systemName>LL101</systemName>
+        <light systemName="IL101" userName="otherLight" minIntensity="0.0" maxIntensity="1.0" transitionTime="0.0">
+            <systemName>IL101</systemName>
             <userName>otherLight</userName>
         </light>
     </lights>
@@ -198,7 +198,7 @@
         <oblock systemName="OB1" userName="Left" length="0.0" units="false" curve="0" permissive="false" speedNotch="">
             <sensor systemName="IS10" />
             <path pathName="Path" blockName="OB1" toPortal="Portal" fromDirection="0" toDirection="0" />
-            <portal systemName="IP1" portalName="Portal">
+            <portal portalName="Portal">
                 <fromBlock blockName="OB1">
                     <path pathName="Path" blockName="OB1" />
                 </fromBlock>
@@ -210,7 +210,7 @@
         <oblock systemName="OB2" userName="Right" length="0.0" units="false" curve="0" permissive="false" speedNotch="">
             <sensor systemName="IS11" />
             <path pathName="Path" blockName="OB2" toPortal="Portal" fromDirection="0" toDirection="0" />
-            <portal systemName="IP1" portalName="Portal">
+            <portal portalName="Portal">
                 <fromBlock blockName="OB1">
                     <path pathName="Path" blockName="OB1" />
                 </fromBlock>
@@ -227,7 +227,7 @@
             <path pathName="Diverging" blockName="OB3" toPortal="Siding" fromDirection="0" toDirection="0">
                 <setting turnout="IT5" set="4" />
             </path>
-            <portal systemName="IP2" portalName="Siding">
+            <portal portalName="Siding">
                 <fromBlock blockName="OB3">
                     <path pathName="Diverging" blockName="OB3" />
                 </fromBlock>
@@ -235,7 +235,7 @@
                     <path pathName="Diverging" blockName="OB4" />
                 </toBlock>
             </portal>
-            <portal systemName="IP3" portalName="Main">
+            <portal portalName="Main">
                 <fromBlock blockName="OB3">
                     <path pathName="Main" blockName="OB3" />
                 </fromBlock>
@@ -252,7 +252,7 @@
             <path pathName="Main" blockName="OB4" toPortal="Main" fromDirection="0" toDirection="0">
                 <setting turnout="IT6" set="2" />
             </path>
-            <portal systemName="IP2" portalName="Siding">
+            <portal portalName="Siding">
                 <fromBlock blockName="OB3">
                     <path pathName="Diverging" blockName="OB3" />
                 </fromBlock>
@@ -260,7 +260,7 @@
                     <path pathName="Diverging" blockName="OB4" />
                 </toBlock>
             </portal>
-            <portal systemName="IP3" portalName="Main">
+            <portal portalName="Main">
                 <fromBlock blockName="OB3">
                     <path pathName="Main" blockName="OB3" />
                 </fromBlock>
@@ -331,9 +331,9 @@
             <userName>EnableTest</userName>
             <logixConditional systemName="IXEnableTestC1" order="0" />
         </logix>
-        <logix systemName="RTXINITIALIZER" enabled="yes">
-            <systemName>RTXINITIALIZER</systemName>
-            <logixConditional systemName="RTXINITIALIZER1T" order="0" />
+        <logix systemName="IX:RTXINITIALIZER" enabled="yes">
+            <systemName>IX:RTXINITIALIZER</systemName>
+            <logixConditional systemName="IX:RTXINITIALIZER1T" order="0" />
         </logix>
     </logixs>
     <conditionals class="jmri.managers.configurexml.DefaultConditionalManagerXml">
@@ -411,10 +411,10 @@
             <conditionalAction option="1" type="13" systemName="ActionTests" data="-1" delay="0" string="" />
             <conditionalAction option="2" type="14" systemName="ActionTests" data="-1" delay="0" string="" />
         </conditional>
-        <conditional systemName="RTXINITIALIZER1T" userName="Route 1C " antecedent="R1" logicType="3" triggerOnChange="yes">
-            <systemName>RTXINITIALIZER1T</systemName>
+        <conditional systemName="IX:RTXINITIALIZER1T" userName="Route 1C " antecedent="R1" logicType="3" triggerOnChange="yes">
+            <systemName>IX:RTXINITIALIZER1T</systemName>
             <userName>Route 1C</userName>
-            <conditionalStateVariable operator="4" negated="no" type="0" systemName="RTXINITIALIZER" dataString="" num1="0" num2="0" triggersCalc="yes" />
+            <conditionalStateVariable operator="4" negated="no" type="0" systemName="IX:RTXINITIALIZER" dataString="" num1="0" num2="0" triggersCalc="yes" />
             <conditionalAction option="1" type="9" systemName="Occupancy OB1" data="4" delay="0" string="" />
             <conditionalAction option="1" type="9" systemName="Occupancy OB2" data="4" delay="0" string="" />
             <conditionalAction option="1" type="9" systemName="Occupancy OB3" data="4" delay="0" string="" />

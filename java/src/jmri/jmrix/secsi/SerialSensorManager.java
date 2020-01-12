@@ -1,5 +1,7 @@
 package jmri.jmrix.secsi;
 
+import java.util.Locale;
+import javax.annotation.Nonnull;
 import jmri.Sensor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,17 +9,16 @@ import org.slf4j.LoggerFactory;
 /**
  * Manage the system-specific SECSI Sensor implementation.
  * <p>
- * System names are "ViSnnnn", where nnnn is the sensor number without padding.
+ * System names are "VSnnnn", where V is the user configurable system prefix,
+ * nnnn is the sensor number without padding.
  * <p>
  * Sensors are numbered from 1.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @author Dave Duchamp, multi node extensions, 2004
-  */
+ */
 public class SerialSensorManager extends jmri.managers.AbstractSensorManager
         implements SerialListener {
-
-    private SecsiSystemConnectionMemo memo = null;
 
     /**
      * Number of sensors per address in the naming scheme.
@@ -31,17 +32,17 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      */
     static final int SENSORSPERNODE = 1000;
 
-    public SerialSensorManager(SecsiSystemConnectionMemo _memo) {
-        super();
-        memo = _memo;
+    public SerialSensorManager(SecsiSystemConnectionMemo memo) {
+        super(memo);
     }
 
     /**
-     * Return the Secsi system prefix.
+     * {@inheritDoc}
      */
     @Override
-    public String getSystemPrefix() {
-        return memo.getSystemPrefix();
+    @Nonnull
+    public SecsiSystemConnectionMemo getMemo() {
+        return (SecsiSystemConnectionMemo) memo;
     }
 
     // Free resources when no longer used
@@ -50,48 +51,52 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Create a new sensor if all checks are passed. System name is normalized to
-     * ensure uniqueness.
+     * {@inheritDoc}
+     * <p>
+     * System name is normalized to ensure uniqueness.
+     *
+     * @throws IllegalArgumentException when SystemName can't be converted
      */
     @Override
-    public Sensor createNewSensor(String systemName, String userName) {
+    @Nonnull
+    public Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         Sensor s;
         // validate the system name, and normalize it
         String sName = SerialAddress.normalizeSystemName(systemName, getSystemPrefix());
         if (sName.equals("")) {
             // system name is not valid
-            log.error("Invalid Sensor system name - {}", systemName);
-            return null;
+            throw new IllegalArgumentException("Invalid Secsi Sensor system name - " +  // NOI18N
+                    systemName);
         }
         // does this Sensor already exist
         s = getBySystemName(sName);
         if (s != null) {
-            log.error("Sensor with this name already exists - {}", systemName);
-            return null;
+            throw new IllegalArgumentException("Secsi Sensor with this name already exists - " +  // NOI18N
+                    systemName);
         }
         // check under alternate name
         String altName = SerialAddress.convertSystemNameToAlternate(sName, getSystemPrefix());
         s = getBySystemName(altName);
         if (s != null) {
-            log.error("Sensor with name '{}' already exists as '{}'", systemName, altName);
-            return null;
+            throw new IllegalArgumentException("Secsi Sensor with name  " +  // NOI18N
+                    systemName + " already exists as " + altName);
         }
         // check bit number
         int bit = SerialAddress.getBitFromSystemName(sName, getSystemPrefix());
         if ((bit <= 0) || (bit >= SENSORSPERNODE)) {
-            log.error("Sensor bit number '{}' is outside the supported range, 1-{}",
-                    Integer.toString(bit), Integer.toString(SENSORSPERNODE - 1));
-            return null;
+            throw new IllegalArgumentException("Sensor bit number " +  // NOI18N
+                    Integer.toString(bit) + " is outside the supported range 1-" +
+                    Integer.toString(SENSORSPERNODE - 1));
         }
         // Sensor system name is valid and Sensor doesn't exist, make a new one
         if (userName == null) {
-            s = new SerialSensor(sName, memo);
+            s = new SerialSensor(sName, getMemo());
         } else {
-            s = new SerialSensor(sName, userName, memo);
+            s = new SerialSensor(sName, userName, getMemo());
         }
 
         // ensure that a corresponding Serial Node exists
-        SerialNode node = SerialAddress.getNodeFromSystemName(sName, memo.getTrafficController());
+        SerialNode node = SerialAddress.getNodeFromSystemName(sName, getMemo().getTrafficController());
         if (node == null) {
             log.warn("Sensor '{}' refers to an undefined Serial Node.", sName);
             return s;
@@ -102,13 +107,20 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Public method to validate system name format.
-     *
-     * @return 'true' if system name has a valid format, else returns 'false'
+     * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
-        return (SerialAddress.validSystemNameFormat(systemName, 'S', getSystemPrefix()));
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String systemName, @Nonnull Locale locale) {
+        return SerialAddress.validateSystemNameFormat(systemName, getSystemNamePrefix(), locale);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
+        return (SerialAddress.validSystemNameFormat(systemName, typeLetter(), this.getSystemPrefix()));
     }
 
     /**
@@ -126,7 +138,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     public void reply(SerialReply r) {
         // determine which node
         log.debug("received node poll reply '{}'", r.toString());
-        SerialNode node = (SerialNode) memo.getTrafficController().getNodeFromAddress(r.getAddr());
+        SerialNode node = (SerialNode) getMemo().getTrafficController().getNodeFromAddress(r.getAddr());
         if (node != null) {
             node.markChanges(r);
         }
@@ -135,6 +147,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * Register any orphan Sensors when a new Serial Node is created.
      */
+    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     public void registerSensorsForNode(SerialNode node) {
         log.debug("registering node {}", node.getNodeAddress());
         // get list containing all Sensors
@@ -150,7 +163,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
                 log.debug("system name is {}", sName);
                 if ((sName.startsWith(getSystemPrefix())) && (sName.charAt(getSystemPrefix().length()) == 'S')) { // multichar prefix
                     // This is a Sensor
-                    tNode = SerialAddress.getNodeFromSystemName(sName, memo.getTrafficController());
+                    tNode = SerialAddress.getNodeFromSystemName(sName, getMemo().getTrafficController());
                     if (tNode == node) {
                         // This sensor is for this new Serial Node - register it
                         log.debug("register sensor on node {}", node.getNodeAddress());
@@ -163,23 +176,11 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddInputEntryToolTip");
-        return entryToolTip;
-    }
-
-    /**
-     * Static function returning the SerialSensorManager instance to use.
-     *
-     * @return The registered SerialSensorManager instance for general use.
-     * @deprecated since 4.9.7
-     */
-    @Deprecated
-    static public SerialSensorManager instance() {
-        return null;
+        return Bundle.getMessage("AddInputEntryToolTip");
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialSensorManager.class);

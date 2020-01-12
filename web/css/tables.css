@@ -1,0 +1,21 @@
+/* stylesheet for TablesServlet */
+
+.jumbotron {
+    padding: 0;
+    margin-bottom: 0;
+}
+table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after { 
+    content: "\00A0\25AA" 
+}
+table.sortable th:hover {
+	cursor: pointer;
+}
+table.idTag   td.state:hover,
+table.light   td.state:hover,
+table.route   td.state:hover,
+table.sensor  td.state:hover,
+table.turnout td.state:hover {
+	cursor: pointer;
+	background: #ddd;
+	font-weight: bold;
+}

@@ -2,19 +2,19 @@ package jmri;
 
 /**
  * Routes represent a collection of Turnouts that may be set at the same time.
- * <P>
+ * <p>
  * When a user adds a Turnout to a Route, the user specifies whether the Turnout
  * state is to be set to CLOSED or THROWN when the Route is invoked (set).
- * <P>
+ * <p>
  * Initially, Routes will have a fixed maximum number of sensors for simplicity
  * of implementation. We can revise this later to use Java Collections if this
  * becomes a problem.
- * <P>
+ * <p>
  * To allow control via fascia panel pushbuttons, Routes may optionally be
  * invoked by one or more Sensors (up to the maximum allowed).
  * <p>
  * A route can be enabled or not. By default it is enabled, and will act when
- * it's specified input conditions become satisfied. When not enabled (the
+ * its specified input conditions become satisfied. When not enabled (the
  * enabled parameter is false), the route will not act even if the specified
  * input conditions are satisfied. When the route transitions from disabled to
  * enabled, it may act, depending on the conditions: Edge triggered conditions
@@ -22,15 +22,14 @@ package jmri;
  *
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
  *
  * @author Dave Duchamp Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2007
@@ -363,14 +362,14 @@ public interface Route extends NamedBean {
     public int getLockControlTurnoutState();
 
     /**
-     * Set the delay between issuing Turnout commands.
+     * Set the delay between issuing Turnout commands on this route.
      *
      * @param delay the delay in milliseconds
      */
     public void setRouteCommandDelay(int delay);
 
     /**
-     * Get the delay between issuing Turnout commands.
+     * Get the delay between issuing Turnout commands on this route.
      *
      * @return the delay in milliseconds
      */
@@ -395,7 +394,7 @@ public interface Route extends NamedBean {
      * Deactivate the Route.
      * <p>
      * This disconnects the Route from all other objects and stops it from
-     * processing. A Route must be deactivated before it's input and output
+     * processing. A Route must be deactivated before its input and output
      * definitions are changed.
      */
     public void deActivateRoute();

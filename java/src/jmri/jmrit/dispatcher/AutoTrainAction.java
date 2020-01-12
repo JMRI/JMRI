@@ -19,22 +19,22 @@ import org.slf4j.LoggerFactory;
  * traversed by one automatically running train. It is an extension to
  * AutoActiveTrain that handles special actions while its train is running
  * automatically.
- * <P>
+ * <p>
  * This class is linked via its parent AutoActiveTrain object.
- * <P>
+ * <p>
  * When an AutoActiveTrain enters a Section, it passes the TransitSection of the
  * entered Section to this class.
- * <P>
+ * <p>
  * Similarly when an AutoActiveTrain leaves a Section, it passes the
  * TransitSection of the just vacated Section to this class.
- * <P>
+ * <p>
  *
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is open source software; you can redistribute it and/or modify it under
  * the terms of version 2 of the GNU General Public License as published by the
  * Free Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
@@ -90,8 +90,6 @@ public class AutoTrainAction {
                         break;
                     case TransitSectionAction.BLOCKENTRY:
                         // on entry to specified Block in the Section
-                        tsa.setWaitingForBlock(true);
-                        break;
                     case TransitSectionAction.BLOCKEXIT:
                         // on exit from specified Block in the Section
                         tsa.setWaitingForBlock(true);

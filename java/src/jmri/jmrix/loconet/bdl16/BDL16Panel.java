@@ -51,7 +51,9 @@ public class BDL16Panel extends AbstractBoardProgPanel {
     int[] boardNumbers;
     int origAccessBoardNum = 0;
     java.util.ArrayList<Integer> boardNumsEntryValue = new java.util.ArrayList<Integer>();
-    JComboBox<String> comboBox[];
+    
+    @SuppressWarnings("unchecked") // type erasure means can't ask for new JComboBox<String>[48]
+    JComboBox<String> comboBox[] = new JComboBox[48];
     
     /**
      * BDL16x Programming tool.
@@ -62,9 +64,9 @@ public class BDL16Panel extends AbstractBoardProgPanel {
      * @param readOnInit  True to trigger automatic read of the board
      */
     public BDL16Panel(int boardNum, boolean readOnInit) {
-        super(boardNum, readOnInit);
+        super(boardNum, readOnInit,"BDL16");
         setTypeWord(0x71);  // configure BDL16x message type
-                origAccessBoardNum = boardNum;
+        origAccessBoardNum = boardNum;
         boardNumsEntryValue.add(boardNum);
     }
 
@@ -279,9 +281,7 @@ public class BDL16Panel extends AbstractBoardProgPanel {
         readAllButton.setPreferredSize(new java.awt.Dimension((int) (w * 1.1), d.height));
         
         appendLine(addressingPanel);  // add read/write buttons, address
-        
-        comboBox = new JComboBox[48];  // can't use JComboBox<String>[48] as you can't have an array of type-erased types
-        
+                
         JPanel frame1 = new JPanel();
         frame1.setLayout(new BoxLayout(frame1, BoxLayout.PAGE_AXIS));
 
@@ -415,7 +415,7 @@ public class BDL16Panel extends AbstractBoardProgPanel {
      * Create a JLabel for an OpSw.
      *
      * @param n   OpSw number
-     * @param jp  the JPanel into which the Label is placed
+     * @return the JPanel into which the Label is placed
      */
     private JLabel getLabel(int n) {
         String number = Integer.toString(n);
@@ -438,7 +438,7 @@ public class BDL16Panel extends AbstractBoardProgPanel {
      *
      * @param n first OpSw number
      * @param n2 second OpSw number
-     * @param jp the JPanel into which the Label is placed
+     * @return the JPanel into which the Label is placed
      */
     private JLabel getLabel(int n, int n2) {
         String number = Integer.toString(n);
@@ -468,7 +468,7 @@ public class BDL16Panel extends AbstractBoardProgPanel {
      * reported default value.
      * 
      * @param n   OpSw number
-     * @param jp  the JPanel into which the JComboBox is placed
+     * @return  the JPanel into which the JComboBox is placed
      */
     private JComboBox getComboBox(int n) {
         String number = Integer.toString(n);
@@ -498,7 +498,7 @@ public class BDL16Panel extends AbstractBoardProgPanel {
      * 
      * @param n first OpSw number
      * @param n2 second OpSw number
-     * @param jp the JPanel into which the JComboBox is placed
+     * @return the JPanel into which the JComboBox is placed
      */
     private JComboBox getComboBox(int n, int n2) {
         String number = Integer.toString(n);
@@ -531,8 +531,8 @@ public class BDL16Panel extends AbstractBoardProgPanel {
      * Determine the JComboBox index which corresponds to the default value 
      * for a given OpSw.
      * 
-     * @param   n OpSw number
-     * @return  JComboBox index of default choice
+     * @param  n OpSw number
+     * @return index of default choice
      */
     private int getIndexForDefault(int n) {
         switch (n) {

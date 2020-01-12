@@ -10,7 +10,7 @@ import java.util.Set;
  * {@link java.beans.PropertyChangeSupport}. Subclass {@link jmri.beans.Bean} if
  * you need to support property change listeners.
  *
- * @author rhwood
+ * @author Randall Wood
  */
 public abstract class UnboundArbitraryBean extends UnboundBean {
 
@@ -28,7 +28,7 @@ public abstract class UnboundArbitraryBean extends UnboundBean {
      * since the Java introspection methods provide no reliable way to get the
      * size of the indexed property.
      *
-     * @param key   Property array to parse.
+     * @param key Property array to parse.
      * @param index Element to retrieve.
      * @return value of element or null
      */
@@ -44,7 +44,7 @@ public abstract class UnboundArbitraryBean extends UnboundBean {
      * want to use {@link Bean#hasProperty(java.lang.String)} to test that the
      * property exists.
      * <p>
-     * This implementation searches {@link ArbitraryPropertySupport#properties}
+     * This implementation searches the internal property collection
      * and uses introspection to get the property.
      *
      * @param key Property to retrieve.
@@ -60,7 +60,7 @@ public abstract class UnboundArbitraryBean extends UnboundBean {
      * Return a list of property names.
      * <p>
      * This implementation combines the keys in
-     * {@link ArbitraryPropertySupport#properties} with the results of
+     * {@link ArbitraryPropertySupport#getPropertyNames()} with the results of
      * {@link Beans#getIntrospectedPropertyNames(java.lang.Object)}.
      *
      * @return a Set of names
@@ -74,7 +74,7 @@ public abstract class UnboundArbitraryBean extends UnboundBean {
     /**
      * Test if a property exists.
      * <p>
-     * This implementation searches {@link ArbitraryPropertySupport#properties}
+     * This implementation searches the internal property collection
      * and uses introspection to get the property.
      *
      * @param key Property to inspect.
@@ -99,11 +99,11 @@ public abstract class UnboundArbitraryBean extends UnboundBean {
      * that the write method has the following two parameters in order:
      * <code>index</code>, <code>value</code>.
      *
-     * @param key   Property array to use.
+     * @param key Property array to use.
      * @param index Element to write.
      * @param value Value to set.
      * @see BeanInterface#setIndexedProperty(java.lang.String, int,
-     * java.lang.Object)
+     *      java.lang.Object)
      */
     @Override
     public void setIndexedProperty(String key, int index, Object value) {
@@ -114,12 +114,12 @@ public abstract class UnboundArbitraryBean extends UnboundBean {
      * Set property <i>key</i> to <i>value</i>.
      * <p>
      * This implementation checks that a write method is not available for the
-     * property using JavaBeans introspection, and stores the property in
-     * {@link ArbitraryPropertySupport#properties} only if a write method does
-     * not exist. This implementation also fires a PropertyChangeEvent for the
-     * property.
+     * property using JavaBeans introspection, and stores the property using
+     * {@link ArbitraryPropertySupport#setProperty(String, Object)} only if a
+     * write method does not exist. This implementation also fires a
+     * PropertyChangeEvent for the property.
      *
-     * @param key   Property to use.
+     * @param key Property to use.
      * @param value Value to store.
      * @see BeanInterface#setProperty(java.lang.String, java.lang.Object)
      */

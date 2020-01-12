@@ -28,6 +28,7 @@ public class UhlenbrockSlot extends LocoNetSlot {
      * Load functions 9 through 12 from LocoNet Uhlenbrock Intellibox-II
      * implementation to be used only for message with Op code
      * RE_OPC_IB2_F9_F12.
+     * @param m a LocoNet message which contains an iB2 "function control" message.
      */
     public void iB2functionMessage(LocoNetMessage m) {
         // parse for F9-12 functions
@@ -43,6 +44,7 @@ public class UhlenbrockSlot extends LocoNetSlot {
      * Load functions 9 through 28 from LocoNet Uhlenbrock Intellibox-I and -II
      * implementation to be used only for message with Op code
      * RE_OPC_IB2_SPECIAL.
+     * @param m a LocoNet message which contains an iB "function control" message.
      */
     public void iBfunctionMessage(LocoNetMessage m) {
         // parse for which set of functions

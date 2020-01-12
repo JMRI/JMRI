@@ -1,22 +1,24 @@
 package jmri.util.docbook;
 
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 
 /**
  * Tests for the jmri.util.docbook.RevHistory class.
  *
  * @author	Bob Jacobsen Copyright (C) 2010
  */
-public class RevHistoryTest extends TestCase {
+public class RevHistoryTest {
 
+    @Test
     public void testCtor() {
         new RevHistory();
     }
 
+    @Test
     public void testAdd2() {
         RevHistory r = new RevHistory();
         r.addRevision("one");
@@ -31,6 +33,7 @@ public class RevHistoryTest extends TestCase {
         Assert.assertEquals("two", r.list.get(1).revremark);
     }
 
+    @Test
     public void testToString() {
         RevHistory r2 = new RevHistory();
         r2.addRevision(2, "date 2", "initials 2", "remark 2");
@@ -43,31 +46,13 @@ public class RevHistoryTest extends TestCase {
         Assert.assertEquals(expected, result);
     }
 
-    // from here down is testing infrastructure
-    public RevHistoryTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", RevHistoryTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(RevHistoryTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 

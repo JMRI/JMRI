@@ -1,7 +1,5 @@
 package jmri.jmrix.roco.z21;
 
-import jmri.jmrix.lenz.LenzCommandStation;
-import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 import jmri.jmrix.lenz.XNetPortControllerScaffold;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -23,8 +21,8 @@ public class Z21XNetPacketizerTest extends jmri.jmrix.lenz.XNetPacketizerTest {
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        LenzCommandStation lcs = new LenzCommandStation();
-        tc= new Z21XNetPacketizer(lcs) {
+        RocoZ21CommandStation lcs = new RocoZ21CommandStation();
+        tc = new Z21XNetPacketizer(lcs) {
             @Override
             protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg, jmri.jmrix.AbstractMRListener l) {
             }

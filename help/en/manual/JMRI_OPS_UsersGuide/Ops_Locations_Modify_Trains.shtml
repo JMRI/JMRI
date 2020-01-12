@@ -21,10 +21,8 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
 
       <h1>Using JMRI&reg; to Operate Trains</h1>

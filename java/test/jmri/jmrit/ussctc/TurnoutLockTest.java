@@ -9,7 +9,7 @@ import org.junit.*;
  * Tests for OccupancyLock classes in the jmri.jmrit.ussctc package
  *
  * @author	Bob Jacobsen Copyright 2007
-  */
+ */
 public class TurnoutLockTest {
 
     @Test
@@ -64,6 +64,7 @@ public class TurnoutLockTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalSensorManager();
     }

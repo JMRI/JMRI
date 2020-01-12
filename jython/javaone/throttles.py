@@ -22,7 +22,7 @@ class LoadThrottle(jmri.jmrit.automat.AbstractAutomaton) :
         if throttleB == None or throttleA == None :
             warn().display("could not allocate throttles; reset LocoNet and restart")
             # crash off the layout
-            jmri.InstanceManager.powerManagerInstance().setPower(jmri.PowerManager.OFF)
+            jmri.InstanceManager.getDefault(jmri.PowerManager).setPower(jmri.PowerManager.OFF)
             return
         else : return
 

@@ -11,14 +11,13 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
     /**
      * Ctor for an object being created during load process; Swing init is
      * deferred.
+     *
+     * @param p a {@link jmri.jmrix.SerialPortAdapter} object
      */
     public ConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
         super(p);
     }
 
-    /**
-     * Ctor for a functional Swing object with no preexisting adapter
-     */
     public ConnectionConfig() {
         super();
     }
@@ -28,6 +27,9 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
         return "LocoNet Simulator"; // NOI18N
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setInstance() {
         if (adapter == null) {

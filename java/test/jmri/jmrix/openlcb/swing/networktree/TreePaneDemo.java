@@ -87,9 +87,7 @@ public class TreePaneDemo {
             }
         });
 
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // don't bother setting up a frame in headless.
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // Test is really popping a window before doing all else
         frame = new JFrame();
         frame.setTitle("TreePane Test");
@@ -102,11 +100,14 @@ public class TreePaneDemo {
 
     @After
     public void tearDown() {
-        store = null;
         if (!GraphicsEnvironment.isHeadless()) {
             frame.setVisible(false);
+            frame.dispose();
+            new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame to close
         }
+        jmri.util.JUnitUtil.resetWindows(false,false);
         jmri.util.JUnitUtil.tearDown();
+        store = null;
     }
 
     @Test

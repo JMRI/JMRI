@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2011 All rights reserved -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -13,12 +12,14 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <version author="Brett Hoffman bhoffman351@mac.com" version="1" lastUpdated="20111231"/>
+  <version author="Brett Hoffman bhoffman351@mac.com" version="9" lastUpdated="20111231"/>
   <version author="Alain Le Marchand" version="2" lastUpdated="20140608"/>
   <version author="Alain Le Marchand" version="3" lastUpdated="20150406"/>
   <version author="Alain Le Marchand" version="4" lastUpdated="20150524"/>
   <version author="Alain Le Marchand" version="5" lastUpdated="20160522"/>
   <version author="Alain Le Marchand" version="6" lastUpdated="20180103"/>
+  <version author="Marc N Fournier" version="7" lastUpdated="20181018"/>
+  <version author="Marc N Fournier" version="8" lastUpdated="20181227"/>
   <!-- This file contains the definitions for the Bachmann spec'd Sound Value series of decoders	-->
   <!-- version 1	Based on the "Soundtraxx_Tsu files.                                             -->
   <!--			Includes the Alco 2-6-0                                                         -->
@@ -38,6 +39,8 @@
   <!--                  Renamed "Alco 2-6-0" in "2-6-0 Mogul - Alco [HO]"                                   -->
   <!-- version 6        Specific UserID with tooltip indicating version number,
                         from SoundTraxx Product Identification guide Rev.B                                  -->
+  <!-- version 7		Add 2-8-2 Mikado (as per single Soundtraxx doc)										--> 						
+  <!-- version 8		Add 2-8-0 Consolidation, Class J 4-8-4, GS-4 4-8-4 (as per Soundtraxx doc)	        --> 						
   <!-- Note:    Output number for "named" outputs (i.e. when name is not an integer) starts at numOuts+1.
                 Numbering is then incremental in the order of declaration of the named outputs.
                 For these decoders, convention is taken that FX5=output 3, FX6=output 4, Whistle=output 5, etc.
@@ -167,6 +170,71 @@
           <functionlabel num="6" lockable="true">FX6 function</functionlabel>
         </functionlabels>
       </model>
+	  <model model="2-8-0 Consolidation - [HO]" numOuts="2" numFns="14" connector="other" productID="Bald280" formFactor="HO" comment="&lt;html&gt;Baldwin Consolidation 2-8-0 &lt;br&gt;Exhaust Chuff: Medium Steam&lt;br&gt;Air Compressor: Cross Compound&lt;br&gt;&lt;/html&gt;">
+        <versionCV lowVersionID="82"/>
+        <output name="3" label="FX5| Rule 17">
+            <label xml:lang="it">FX5|Regola 17</label>
+        </output>
+        <output name="4" label="FX6|Mode">
+            <label xml:lang="it">FX6|Modo</label>
+        </output>
+        <output name="5" label="Whistle| ">
+            <label xml:lang="it">Fischio| </label>
+        </output>
+        <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+        </output>
+        <output name="7" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="8" label="Short|Whistle">
+            <label xml:lang="it">Breve|Fischio</label>
+        </output>
+        <output name="9" label="Steam|Release">
+            <label xml:lang="it">Rilascio|Vapore</label>
+        </output>
+        <output name="10" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+        </output>
+        <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+        </output>
+        <functionlabels>
+          <functionlabel num="6" lockable="true">FX6 function</functionlabel>
+        </functionlabels>
+      </model>	  
+	  <model model="2-8-2 Mikado - [HO]" numOuts="2" numFns="14" connector="other" productID="Bald282" formFactor="HO" comment="&lt;html&gt;Baldwin Mikado 2-8-2 &lt;br&gt;Exhaust Chuff: Medium Steam&lt;br&gt;Air Compressor: Cross Compound&lt;br&gt;&lt;/html&gt;">
+        <versionCV lowVersionID="82"/>
+        <output name="3" label="FX5| Rule 17">
+            <label xml:lang="it">FX5|Regola 17</label>
+        </output>
+        <output name="4" label="FX6|Mode">
+            <label xml:lang="it">FX6|Modo</label>
+        </output>
+        <output name="5" label="Whistle| ">
+            <label xml:lang="it">Fischio| </label>
+        </output>
+        <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+        </output>
+        <output name="7" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="8" label="Short|Whistle">
+            <label xml:lang="it">Breve|Fischio</label>
+        </output>
+        <output name="9" label="Steam|Release">
+            <label xml:lang="it">Rilascio|Vapore</label>
+        </output>
+        <output name="10" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+        </output>
+        <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+        </output>
+        <functionlabels>
+          <functionlabel num="6" lockable="true">FX6 function</functionlabel>
+        </functionlabels>
+      </model>
+	  
       <!-- keep the initial model entry for compatibility purpose as it has already been released -->
       <model show="no" model="2-8-4 Berkshire" replacementModel="2-8-4 Berkshire - Pere Marquette [HO]" replacementFamily="Tsunami Steam Bachmann Sound Value" numOuts="2" numFns="14" connector="other" productID="Lima284_PM" formFactor="HO" comment="&lt;html&gt;Lima Locomotive Works 2-8-4 (HO scale)&lt;br&gt;Exhaust Chuff: Medium Steam&lt;br&gt;Air Compressor: Cross Compound&lt;br&gt;&lt;/html&gt;">
         <versionCV lowVersionID="82"/>
@@ -392,6 +460,73 @@
           <functionlabel num="6" lockable="true">FX6 function</functionlabel>
         </functionlabels>
       </model>
+	  
+	  <model model="4-8-4 Class J - Norfolk &amp; Western [HO]" numOuts="2" numFns="14" connector="other" productID="CLSJ484" formFactor="HO" comment="&lt;html&gt;Class J 4-8-4, whistles for N&amp;W Class J No.611 &lt;br&gt;Exhaust Chuff: Medium Steam&lt;br&gt;Air Compressor: Cross Compound&lt;br&gt;&lt;/html&gt;">
+        <versionCV lowVersionID="82"/>
+        <output name="3" label="FX5| Rule 17">
+            <label xml:lang="it">FX5|Regola 17</label>
+        </output>
+        <output name="4" label="FX6|Mode">
+            <label xml:lang="it">FX6|Modo</label>
+        </output>
+        <output name="5" label="Whistle| ">
+            <label xml:lang="it">Fischio| </label>
+        </output>
+        <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+        </output>
+        <output name="7" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="8" label="Short|Whistle">
+            <label xml:lang="it">Breve|Fischio</label>
+        </output>
+        <output name="9" label="Steam|Release">
+            <label xml:lang="it">Rilascio|Vapore</label>
+        </output>
+        <output name="10" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+        </output>
+        <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+        </output>
+        <functionlabels>
+          <functionlabel num="6" lockable="true">FX6 function</functionlabel>
+        </functionlabels>
+      </model>
+	  
+	  <model model="4-8-4 GS-4 - Southern Pacific [HO]" numOuts="2" numFns="14" connector="other" productID="GS4484" formFactor="HO" comment="&lt;html&gt;GS-4 4-8-4, whistles for Southern Pacific 6 chime &lt;br&gt;Exhaust Chuff: Medium Steam&lt;br&gt;Air Compressor: Cross Compound&lt;br&gt;&lt;/html&gt;">
+        <versionCV lowVersionID="82"/>
+        <output name="3" label="FX5| Rule 17">
+            <label xml:lang="it">FX5|Regola 17</label>
+        </output>
+        <output name="4" label="FX6|Mode">
+            <label xml:lang="it">FX6|Modo</label>
+        </output>
+        <output name="5" label="Whistle| ">
+            <label xml:lang="it">Fischio| </label>
+        </output>
+        <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+        </output>
+        <output name="7" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="8" label="Short|Whistle">
+            <label xml:lang="it">Breve|Fischio</label>
+        </output>
+        <output name="9" label="Steam|Release">
+            <label xml:lang="it">Rilascio|Vapore</label>
+        </output>
+        <output name="10" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+        </output>
+        <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+        </output>
+        <functionlabels>
+          <functionlabel num="6" lockable="true">FX6 function</functionlabel>
+        </functionlabels>
+      </model>
+
       <functionlabels>
         <functionlabel num="0" lockable="true">Headlight</functionlabel>
         <functionlabel num="1" lockable="true">Bell</functionlabel>
@@ -552,16 +687,9 @@
         <label>CV Lock ID Code (0-7)</label>
       </variable>
       <!-- Consisting Information follows -->
-      <variable CV="19" mask="XVVVVVVV" item="Consist Address" default="0" comment="Stores consist address. Range 0-127 (direction set in bit 7)">
-        <decVal max="127"/>
-        <label>Consist Address (0-127)</label>
-        <comment>Stores consist address. Range 0-127 (direction set in bit 7)</comment>
-      </variable>
-      <variable CV="19" mask="VXXXXXXX" item="Consist Direction" default="0" comment="A consist address over 127 will also set this bit">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
-        <label>Loco Direction In Consist</label>
-        <comment>A consist address over 127 will also set this bit</comment>
-      </variable>
+
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+
       <variable CV="21" mask="XXXXXXXV" item="Consist Address Active For F1" default="0" minFn="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Activation for F1</label>
@@ -1544,11 +1672,15 @@
         <comment>0-15 seconds</comment>
       </variable>
       <!-- End Lighting Configuration -->
+	  <variable CV="63" item="Radio Power Conversion" default="15" include="GS4484,CLSJ484" tooltip="Sets the voltage difference between when the decoder first powers up and when the locomotive starts to move">
+        <decVal/>
+        <label>Analog Mode Motor Start Voltage (0-255)</label>
+      </variable>
       <variable CV="63" item="Radio Power Conversion" default="35" include="Alco260" tooltip="Sets the voltage difference between when the decoder first powers up and when the locomotive starts to move">
         <decVal/>
         <label>Analog Mode Motor Start Voltage (0-255)</label>
       </variable>
-      <variable CV="63" item="Radio Power Conversion" default="25" exclude="Alco260" tooltip="Sets the voltage difference between when the decoder first powers up and when the locomotive starts to move">
+      <variable CV="63" item="Radio Power Conversion" default="25" exclude="Alco260,GS4484,CLSJ484" tooltip="Sets the voltage difference between when the decoder first powers up and when the locomotive starts to move">
         <decVal/>
         <label>Analog Mode Motor Start Voltage (0-255)</label>
       </variable>
@@ -1560,16 +1692,19 @@
         <decVal/>
         <label>Forward Trim (0-255)</label>
       </variable>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <variable CV="95" item="Reverse Trim" default="128" tooltip="&lt;html&gt;Allows the decoders overall throttle response in the reverse direction to be adjusted up or down.&lt;br&gt;      Values 1-127 will decrease motor voltage, 129-255 will increase it.  A value of zero will disable.&lt;br&gt;      Tip: this feature only active when speed tables are enabled.&lt;/html&gt;">
         <decVal/>
         <label>Reverse Trim (0-255)</label>
       </variable>
+	  
       <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUuserId.xml"/>
-      <variable CV="112" mask="XXXXXXXV" item="Sound Option 1" default="0" exclude="440,Baldwin460,PRRK4_N" tooltip="&lt;html&gt;Choose whether the locomotive has one or two air pumps.&lt;br&gt; ! NOT documented for this model - might be disabled !&lt;/html&gt;">
+      
+	  <variable CV="112" mask="XXXXXXXV" item="Sound Option 1" default="1" include="CLSJ484,GS4484" tooltip="&lt;html&gt;Choose whether the locomotive has one or two air pumps.&lt;br&gt; ! NOT documented for this model - might be disabled !&lt;/html&gt;">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumAirPump.xml"/>
+        <label>Air Pump 2 Enable</label>
+      </variable>
+	  <variable CV="112" mask="XXXXXXXV" item="Sound Option 1" default="0" exclude="CLSJ484,GS4484,440,Baldwin460,PRRK4_N" tooltip="&lt;html&gt;Choose whether the locomotive has one or two air pumps.&lt;br&gt; ! NOT documented for this model - might be disabled !&lt;/html&gt;">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumAirPump.xml"/>
         <label>Air Pump 2 Enable</label>
       </variable>
@@ -1585,7 +1720,7 @@
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumCam.xml"/>
         <label>Cam Enable</label>
       </variable>
-      <variable CV="113" item="Sound Group 3 Option 3" default="0" tooltip="&lt;html&gt;When loco has stopped and all functions are turned off, sound effects will turn&lt;br&gt;      off automatically after timeout period has elapsed.  Set to zero to disable.&lt;br&gt; Timeout in seconds = CV value /4&lt;br&gt; ! NOT documented for this model - might be disabled !&lt;/html&gt;">
+      <variable CV="113" item="Sound Group 3 Option 3" default="0" exclude="Bald280,CLSJ484,GS4484" tooltip="&lt;html&gt;When loco has stopped and all functions are turned off, sound effects will turn&lt;br&gt;      off automatically after timeout period has elapsed.  Set to zero to disable.&lt;br&gt; Timeout in seconds = CV value /4&lt;br&gt; ! NOT documented for this model - might be disabled !&lt;/html&gt;">
         <decVal/>
         <label>Quiet Mode Timeout Period</label>
       </variable>
@@ -1597,14 +1732,15 @@
         <decVal max="15"/>
         <label>Bell Ring Rate</label>
       </variable>
-      <variable CV="114" item="Sound Group 3 Option 2" default="6" include="Baldwin460" tooltip="Controls the speed at which the bell rings (higher no. = slower rate">
+      <variable CV="114" item="Sound Group 3 Option 2" default="6" include="Baldwin460,CLSJ484,GS4484" tooltip="Controls the speed at which the bell rings (higher no. = slower rate">
         <decVal max="15"/>
         <label>Bell Ring Rate</label>
       </variable>
-      <variable CV="114" item="Sound Group 3 Option 2" default="7" include="440" tooltip="Controls the speed at which the bell rings (higher no. = slower rate">
+		<variable CV="114" item="Sound Group 3 Option 2" default="11" include="Bald280" tooltip="Controls the speed at which the bell rings (higher no. = slower rate">
         <decVal max="15"/>
         <label>Bell Ring Rate</label>
       </variable>
+	  
       <!-- Whistle Selection follows -->
       <variable CV="115" mask="XXXXVVVV" item="Sound Option 9" default="0" include="440" tooltip="Selects which whistle to use">
         <enumVal>
@@ -1666,7 +1802,37 @@
         <label>Whistle Select</label>
         <comment>Show these whistles for the models (productID) listed in the "include" statement</comment>
       </variable>
-      <variable CV="115" mask="XXXXVVVV" item="Sound Option 9" default="0" include="Lima284_PM,Lima284_PM_N" tooltip="Selects which whistle to use">
+	  <variable CV="115" mask="XXXXVVVV" item="Sound Option 9" default="0" include="Bald280" tooltip="Selects which whistle to use">
+        <enumVal>
+          <enumChoice choice="Baldwin Class B-G4">
+            <choice>Baldwin Class B-G4</choice>
+          </enumChoice>
+          <enumChoice choice="Crosby 3-Chime">
+            <choice>Crosby 3-Chime</choice>
+          </enumChoice>
+          <enumChoice choice="D&amp;RGW 3-Chime">
+            <choice>D&amp;RGW 3-Chime</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Whistle Select</label>
+        <comment>Show these whistles for the models (productID) listed in the "include" statement</comment>
+      </variable>
+	  <variable CV="115" mask="XXXXVVVV" item="Sound Option 9" default="0" include="Bald282" tooltip="Selects which whistle to use">
+        <enumVal>
+          <enumChoice choice="Southern 3-Chime">
+            <choice>Southern 3-Chime</choice>
+          </enumChoice>
+          <enumChoice choice="B&amp;O 3-Chime">
+            <choice>B&amp;O 3-Chime</choice>
+          </enumChoice>
+          <enumChoice choice="Crosby 3-Chime">
+            <choice>Crosby 3-Chime</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Whistle Select</label>
+        <comment>Show these whistles for the models (productID) listed in the "include" statement</comment>
+      </variable>
+	  <variable CV="115" mask="XXXXVVVV" item="Sound Option 9" default="0" include="Lima284_PM,Lima284_PM_N" tooltip="Selects which whistle to use">
         <enumVal>
           <enumChoice choice="D&amp;RGW K-36 No.489 3-Chime">
             <choice>D&amp;RGW K-36 No.489 3-Chime</choice>
@@ -1710,9 +1876,40 @@
         </enumVal>
         <label>Whistle Select</label>
         <comment>Show these whistles for the models (productID) listed in the "include" statement</comment>
-      </variable>
+	  </variable>
+	  <variable CV="115" mask="XXXXVVVV" item="Sound Option 9" default="0" include="CLSJ484" tooltip="Selects which whistle to use">
+        <enumVal>
+          <enumChoice choice="N&amp;W Class J No.611">
+            <choice>N&amp;W Class J No.611</choice>
+          </enumChoice>
+          <enumChoice choice="Southern PS4">
+            <choice>Southern PS4</choice>
+		  </enumChoice>
+          <enumChoice choice="Hancock ST 3-Chime">
+           <choice>Hancock ST 3-Chime</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Whistle Select</label>
+        <comment>Show these whistles for the models (productID) listed in the "include" statement</comment>
+		</variable>
+		<variable CV="115" mask="XXXXVVVV" item="Sound Option 9" default="0" include="GS4484" tooltip="Selects which whistle to use">
+        <enumVal>
+          <enumChoice choice="Southern Pacific 6-Chime">
+            <choice>Southern Pacific 6-Chime</choice>
+          </enumChoice>
+          <enumChoice choice="Southern Pacific No.4449">
+            <choice>Southern Pacific No.4449</choice>
+          </enumChoice>
+          <enumChoice choice="Southern Pacific No.4449 Airhorn">
+            <choice>Southern Pacific No.4449 Airhorn</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Whistle Select</label>
+        <comment>Show these whistles for the models (productID) listed in the "include" statement</comment>
+	    </variable>
       <!-- End Whistle Selection -->
-      <variable CV="116" item="Sound Group 3 Option 4" default="39" include="Alco260" tooltip="&lt;html&gt;For Auto-Exhaust synchronization, the chuff rate will be generated in proportion to the&lt;br&gt;     throttle setting.  Higher values = higher chuff rates; use zero to disable exhaust sound.&lt;/html&gt;">
+      
+	  <variable CV="116" item="Sound Group 3 Option 4" default="39" include="Alco260" tooltip="&lt;html&gt;For Auto-Exhaust synchronization, the chuff rate will be generated in proportion to the&lt;br&gt;     throttle setting.  Higher values = higher chuff rates; use zero to disable exhaust sound.&lt;/html&gt;">
         <decVal max="255"/>
         <label>Engine Exhaust Control</label>
       </variable>
@@ -1720,8 +1917,22 @@
         <decVal max="255"/>
         <label>Engine Exhaust Control</label>
       </variable>
+	  <variable CV="118" item="Motor Option 2" default="204" include="Bald280,CLSJ484,GS4484" >
+        <decVal/>
+        <label>Motor Recovery Speed (0-255)</label>
+        <tooltip>&lt;html&gt;Adjust the motor response following a momentary power glitch
+                &lt;br&gt;0 or 128 = Disabled
+                &lt;br&gt;1-127 = Absolute Limiting (will return to this speed step)
+                &lt;br&gt;129-255 = Proportional Limiting (a percentage of set speed)
+                &lt;/html&gt;</tooltip>
+    </variable>
+	  
       <!-- Volume Controls follow -->
       <variable CV="128" mask="VVVVVVVV" item="Sound Setting 1" default="125" include="440" tooltip="Sets the overall volume of all sound channels">
+        <decVal/>
+        <label>Master Volume Control</label>
+      </variable>
+	  <variable CV="128" mask="VVVVVVVV" item="Sound Setting 1" default="175" include="GS4484" tooltip="Sets the overall volume of all sound channels">
         <decVal/>
         <label>Master Volume Control</label>
       </variable>
@@ -1729,19 +1940,23 @@
         <decVal/>
         <label>Master Volume Control</label>
       </variable>
-      <variable CV="128" mask="VVVVVVVV" item="Sound Setting 1" default="225" exclude="440,Alco260" tooltip="Sets the overall volume of all sound channels">
+      <variable CV="128" mask="VVVVVVVV" item="Sound Setting 1" default="225" exclude="440,Alco260,GS4484" tooltip="Sets the overall volume of all sound channels">
         <decVal/>
         <label>Master Volume Control</label>
+      </variable>
+	  <variable CV="129" mask="VVVVVVVV" item="Sound Setting 5" default="128" include="GS4484" tooltip="Sets the volume of the whistle">
+        <decVal/>
+        <label>Whistle Volume</label>
       </variable>
       <variable CV="129" mask="VVVVVVVV" item="Sound Setting 5" default="150" include="440" tooltip="Sets the volume of the whistle">
         <decVal/>
         <label>Whistle Volume</label>
       </variable>
-      <variable CV="129" mask="VVVVVVVV" item="Sound Setting 5" default="195" include="Baldwin460" tooltip="Sets the volume of the whistle">
+      <variable CV="129" mask="VVVVVVVV" item="Sound Setting 5" default="195" include="Baldwin460,Bald282,CLSJ484" tooltip="Sets the volume of the whistle">
         <decVal/>
         <label>Whistle Volume</label>
       </variable>
-      <variable CV="129" mask="VVVVVVVV" item="Sound Setting 5" default="225" exclude="440,Baldwin460" tooltip="Sets the volume of the whistle">
+      <variable CV="129" mask="VVVVVVVV" item="Sound Setting 5" default="225" exclude="440,Baldwin460,Bald282,CLSJ484,GS4484" tooltip="Sets the volume of the whistle">
         <decVal/>
         <label>Whistle Volume</label>
       </variable>
@@ -1749,19 +1964,27 @@
         <decVal/>
         <label>Bell Volume</label>
       </variable>
-      <variable CV="130" mask="VVVVVVVV" item="Sound Setting 6" default="64" include="Alco260" tooltip="Sets the volume of the bell">
+      <variable CV="130" mask="VVVVVVVV" item="Sound Setting 6" default="64" include="GS4484,Alco260" tooltip="Sets the volume of the bell">
         <decVal/>
         <label>Bell Volume</label>
       </variable>
-      <variable CV="130" mask="VVVVVVVV" item="Sound Setting 6" default="40" exclude="440,Alco260" tooltip="Sets the volume of the bell">
+      <variable CV="130" mask="VVVVVVVV" item="Sound Setting 6" default="40" exclude="GS4484,440,Alco260" tooltip="Sets the volume of the bell">
         <decVal/>
         <label>Bell Volume</label>
+      </variable>
+	  <variable CV="131" mask="VVVVVVVV" item="Sound Setting 7" default="75" include="CLSJ484" tooltip="Sets the volume of the exhaust">
+        <decVal/>
+        <label>Exhaust Volume</label>
       </variable>
       <variable CV="131" mask="VVVVVVVV" item="Sound Setting 7" default="148" include="Alco260" tooltip="Sets the volume of the exhaust">
         <decVal/>
         <label>Exhaust Volume</label>
       </variable>
-      <variable CV="131" mask="VVVVVVVV" item="Sound Setting 7" default="96" exclude="Alco260" tooltip="Sets the volume of the exhaust">
+	  <variable CV="131" mask="VVVVVVVV" item="Sound Setting 7" default="150" include="Bald280" tooltip="Sets the volume of the exhaust">
+        <decVal/>
+        <label>Exhaust Volume</label>
+      </variable>
+      <variable CV="131" mask="VVVVVVVV" item="Sound Setting 7" default="96" exclude="Alco260,Bald280" tooltip="Sets the volume of the exhaust">
         <decVal/>
         <label>Exhaust Volume</label>
       </variable>
@@ -1785,10 +2008,15 @@
         <decVal/>
         <label>Blower Volume</label>
       </variable>
-      <variable CV="136" mask="VVVVVVVV" item="Sound Setting 23" default="128" exclude="440,Baldwin460,PRRK4_N" tooltip="Sets the volume of the steam release (not documented for this model - user feedback)">
+	  <variable CV="136" mask="VVVVVVVV" item="Sound Setting 23" default="96" include="Bald280,CLSJ484,GS4484" tooltip="Sets the volume of the steam release (not documented for this model - user feedback)">
         <decVal/>
         <label>Steam Release Volume</label>
       </variable>
+      <variable CV="136" mask="VVVVVVVV" item="Sound Setting 23" default="128" exclude="CLSJ484,GS4484,440,Bald280,Baldwin460,PRRK4_N" tooltip="Sets the volume of the steam release (not documented for this model - user feedback)">
+        <decVal/>
+        <label>Steam Release Volume</label>
+      </variable>
+	  
       <!-- Automatic Sound Controls (ASC) follow -->
       <variable item="Bell-On Set Point" CV="193" mask="XVVVVVVV" default="5" tooltip="Specifies the throttle speed step where the automatic bell will first turn on">
         <decVal max="127"/>
@@ -1806,7 +2034,15 @@
         <decVal/>
         <label>Grade Crossing Whistle Sensitivity</label>
       </variable>
-      <variable item="Automatic Grade Crossing Whistle Enable (Analog Mode)" CV="197" mask="XXXXXXXV" default="0" tooltip="Enables the Automatic Grade Crossing Whistle in Analog Mode">
+	  <variable item="Brake Squeal Sensitivity" CV="196" mask="VVVVVVVV" default="3" tooltip="Specifies the negative rate of throttle change needed to activate the automatic brake squeal">
+        <decVal/>
+        <label>Brake Squeal Sensitivity</label>
+	  </variable>
+	  <variable item="Automatic Grade Crossing Whistle Enable (Analog Mode)" CV="197" mask="XXXXXXXV" default="0" tooltip="Enables the Automatic Grade Crossing Whistle in Analog Mode">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>Automatic Grade Crossing Whistle Enable (Analog Mode)</label>
+      </variable>
+	  <variable item="Automatic Grade Crossing Whistle Enable (Analog Mode)" CV="197" mask="XXXXXXXV" default="1" include="Bald280,CLSJ484,GS4484" tooltip="Enables the Automatic Grade Crossing Whistle in Analog Mode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Automatic Grade Crossing Whistle Enable (Analog Mode)</label>
       </variable>
@@ -1840,7 +2076,7 @@
         <decVal/>
         <label>Motor Kp Coefficient (0-255)</label>
       </variable>
-      <variable CV="209" mask="VVVVVVVV" item="Advanced Group 2 Option 1" default="60" include="Baldwin460,Lima284_PM,Lima284_NKP,Lima284_CO" tooltip="Specifies a gain factor for the proportional part of the PID motor control equation">
+      <variable CV="209" mask="VVVVVVVV" item="Advanced Group 2 Option 1" default="60" include="CLSJ484,GS4484,Bald280,Baldwin460,Lima284_PM,Lima284_NKP,Lima284_CO,Bald282" tooltip="Specifies a gain factor for the proportional part of the PID motor control equation">
         <decVal/>
         <label>Motor Kp Coefficient (0-255)</label>
       </variable>
@@ -1856,7 +2092,7 @@
         <decVal/>
         <label>Motor Ki Coefficient (0-255)</label>
       </variable>
-      <variable CV="210" mask="VVVVVVVV" item="Advanced Group 2 Option 2" default="30" include="Baldwin460,Lima284_PM,Lima284_NKP,Lima284_CO" tooltip="Specifies a gain factor for the integral part of the PID motor control equation">
+      <variable CV="210" mask="VVVVVVVV" item="Advanced Group 2 Option 2" default="30" include="CLSJ484,GS4484,Bald280,Baldwin460,Lima284_PM,Lima284_NKP,Lima284_CO,Bald282" tooltip="Specifies a gain factor for the integral part of the PID motor control equation">
         <decVal/>
         <label>Motor Ki Coefficient (0-255)</label>
       </variable>
@@ -1872,7 +2108,7 @@
         <decVal max="31"/>
         <label>Motor Control Sample Period (0-31)</label>
       </variable>
-      <variable CV="214" mask="VVVVVVVV" item="Advanced Group 2 Option 5" default="8" include="440,Alco260,Baldwin460,Lima284_PM,Lima284_NKP,Lima284_CO" tooltip="Specifies a gain factor for the derivative part of the PID motor control equation">
+      <variable CV="214" mask="VVVVVVVV" item="Advanced Group 2 Option 5" default="8" include="CLSJ484,GS4484,440,Alco260,Bald280,Baldwin460,Lima284_PM,Lima284_NKP,Lima284_CO,Bald282" tooltip="Specifies a gain factor for the derivative part of the PID motor control equation">
         <decVal/>
         <label>Motor Control Sample Aperture Time (0-255)</label>
       </variable>
@@ -1884,9 +2120,17 @@
         <decVal max="255"/>
         <label>BEMF Reference Voltage</label>
       </variable>
-      <variable CV="216" item="EMF Option 1" default="70" include="Baldwin460,PRRK4_N,Lima284_PM,Lima284_NKP,Lima284_CO" tooltip="Specifies the reference voltage for BEMF">
+      <variable CV="216" item="EMF Option 1" default="70" include="CLSJ484,GS4484,Bald280,Baldwin460,PRRK4_N,Lima284_PM,Lima284_NKP,Lima284_CO,Bald282" tooltip="Specifies the reference voltage for BEMF">
         <decVal max="255"/>
         <label>BEMF Reference Voltage</label>
+      </variable>	  
+	  <variable CV="217" mask="XXXXXXVX" item="EMF option 2" default="1" include="Bald280,CLSJ484,GS4484" tooltip="Enable back-EMF motor control">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>Back-EMF Enable</label>
+      </variable>
+	  <variable CV="218" mask="VVVVVVVV" item="Analog Vstart" default="15" include="Bald280,CLSJ484,GS4484" tooltip="&lt;html&gt;Determines the sound start voltage level applied to the motor in analog mode;&lt;br&gt; The engine sound start voltage is calculated as a fraction of the available supply voltage.&lt;br&gt; Starting Voltage = (CV 218 ÷ 10) + 6V &lt;br&gt; &lt;/html&gt;">
+        <decVal/>
+        <label>Analog,Engine Snd Start Volts (0-255)</label>
       </variable>
     </variables>
     <!-- Reset -->

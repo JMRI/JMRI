@@ -7,6 +7,8 @@
 import jmri
 
 import java
+import java.awt
+import java.awt.event
 import javax.swing
 
 # define a class that has some state
@@ -32,4 +34,3 @@ f.contentPane.add(b)
 
 f.pack()
 f.show()
-

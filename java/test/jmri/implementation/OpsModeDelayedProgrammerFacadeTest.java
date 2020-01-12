@@ -9,11 +9,10 @@ import java.util.regex.Pattern;
 import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.progdebugger.ProgDebugger;
-import junit.framework.TestCase;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +23,7 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright 2014
  *
  */
-public class OpsModeDelayedProgrammerFacadeTest extends TestCase {
+public class OpsModeDelayedProgrammerFacadeTest {
 
     @Test
     public void testWrite4Val12Delay0() throws jmri.ProgrammerException, InterruptedException {
@@ -66,7 +65,6 @@ public class OpsModeDelayedProgrammerFacadeTest extends TestCase {
     transient volatile boolean facProgReplied = false;
 
     // Perform tests with parameters parsed from the name of the calling method.
-    @Ignore
     synchronized void testMethod(int addr, boolean addrType) throws jmri.ProgrammerException, InterruptedException {
         String methodName = "";
         String cv = "";
@@ -120,7 +118,6 @@ public class OpsModeDelayedProgrammerFacadeTest extends TestCase {
     }
 
     // Extract test parameters from test name.
-    @Ignore
     synchronized ArrayList<String> itemsFromMethodName(int methodOffset, int groupReps) {
         StringBuilder sb = new StringBuilder();
         Pattern pattern;
@@ -149,7 +146,6 @@ public class OpsModeDelayedProgrammerFacadeTest extends TestCase {
         return retString;
     }
 
-    @Ignore
     synchronized void facProgWaitReply() throws InterruptedException {
         while (!facProgReplied) {
             wait(10);
@@ -159,13 +155,11 @@ public class OpsModeDelayedProgrammerFacadeTest extends TestCase {
 
     // The minimal setup for log4J
     @Before
-    @Override
     public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
     }
 
     @After
-    @Override
     public void tearDown() throws Exception {
         jmri.util.JUnitUtil.tearDown();
     }

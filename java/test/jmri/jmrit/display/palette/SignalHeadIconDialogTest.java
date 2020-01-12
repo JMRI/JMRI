@@ -1,6 +1,7 @@
 package jmri.jmrit.display.palette;
 
 import java.awt.GraphicsEnvironment;
+import jmri.*;
 import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.EditorScaffold;
@@ -21,12 +22,13 @@ public class SignalHeadIconDialogTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        PickListModel tableModel = PickListModel.turnoutPickModelInstance(); // N11N
-        DisplayFrame df = new DisplayFrame("Indicator TO Icon Dialog Test");
+        PickListModel<SignalHead> tableModel = PickListModel.signalHeadPickModelInstance(); // NOI18N
+        DisplayFrame df = new DisplayFrame("Indicator TO Icon Dialog Test"); // NOI18N
         Editor editor = new EditorScaffold();
-        SignalHeadItemPanel sip = new SignalHeadItemPanel(df,"IS01","",tableModel,editor);
-        SignalHeadIconDialog t = new SignalHeadIconDialog("SignalHead","SignalHead",sip,null);
-        Assert.assertNotNull("exists",t);
+        SignalHeadItemPanel sip = new SignalHeadItemPanel(df,"IS01","",tableModel,editor);  // NOI18N
+        SignalHeadIconDialog t = new SignalHeadIconDialog("SignalHead","SignalHead",sip,null); // NOI18N
+        Assert.assertNotNull("exists",t); // NOI18N
+        JUnitUtil.dispose(t);
         JUnitUtil.dispose(df);
     }
 
@@ -34,6 +36,8 @@ public class SignalHeadIconDialogTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initInternalSignalHeadManager();
     }
 
     @After

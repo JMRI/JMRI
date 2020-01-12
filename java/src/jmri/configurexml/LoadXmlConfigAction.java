@@ -10,9 +10,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Load configuration information from an XML file.
- * <P>
+ * <p>
  * The file context for this is the "config" file chooser.
- * <P>
+ * <p>
  * This will load whatever information types are present in the file. See
  * {@link jmri.ConfigureManager} for information on the various types of
  * information stored in configuration files.

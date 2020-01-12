@@ -214,19 +214,19 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
 
         Attribute a = element.getAttribute("blockname");
         if (a != null) {
-            l.setLayoutBlockByName(a.getValue());
+            l.tBlockAName = a.getValue();
         }
         a = element.getAttribute("blockbname");
         if (a != null) {
-            l.setLayoutBlockBByName(a.getValue());
+            l.tBlockBName = a.getValue();
         }
         a = element.getAttribute("blockcname");
         if (a != null) {
-            l.setLayoutBlockCByName(a.getValue());
+            l.tBlockCName = a.getValue();
         }
         a = element.getAttribute("blockdname");
         if (a != null) {
-            l.setLayoutBlockDByName(a.getValue());
+            l.tBlockDName = a.getValue();
         }
 
         a = element.getAttribute("connectaname");

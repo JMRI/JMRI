@@ -6,9 +6,100 @@
     "properties": {
         "name": {
             "type": "string",
-            "description": "Id of the engine being requested"
+            "description": "Operations id for engine"
+        },
+        "road": {
+            "type": "string",
+            "description": "The engine owning railroad"
+        },
+        "number": {
+            "type": "string",
+            "description": "The engine number"
+        },
+        "built": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "Month and year engine was built in MM-YY, MM-YYYY, or YYYY format"
+        },
+        "color": {
+            "type": "string",
+            "description": "The color of the engine"
+        },
+        "comment": {
+            "type": "string",
+            "description": "Freeform comment concerning engine"
+        },
+        "consist": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "The name of the consist the engine is in"
+        },
+        "destination": {
+            "type": [
+                "object",
+                "null"
+            ],
+            "description": "the current destination of the engine"
+        },
+        "length": {
+            "type": "integer",
+            "description": "Current engine length for available siding calculations"
+        },
+        "location": {
+            "type": [
+                "object",
+                "null"
+            ],
+            "description": "The current location of the engine"
+        },
+        "model": {
+            "type": "string",
+            "description": "The model of engine"
+        },
+        "outOfService": {
+            "type": "boolean",
+            "description": "True if out of service; false otherwise"
+        },
+        "owner": {
+            "type": "string",
+            "description": "The engine owner"
+        },
+        "rfid": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "RFID tag attached to car; null if none"
+        },
+        "carType": {
+            "type": "string",
+            "description": "The engine type"
+        },
+        "weight": {
+            "type": "number",
+            "description": "Weight of car in onces"
+        },
+        "weightTons": {
+            "type": "number",
+            "description": "Weight of car in tons"
         }
     },
     "additionalProperties": false,
-    "required": ["name"]
+    "anyOf": [
+        {
+            "required": [
+                "name"
+            ]
+        },
+        {
+            "required": [
+                "road",
+                "number"
+            ]
+        }
+    ]
 }

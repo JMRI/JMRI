@@ -2,13 +2,13 @@ package jmri.jmrix.easydcc;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
+
 import jmri.AddressedProgrammer;
 import jmri.NmraPacket;
 import jmri.ProgListener;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provide an Ops Mode Programmer via a wrapper that works with the
@@ -30,11 +30,14 @@ public class EasyDccOpsModeProgrammer extends EasyDccProgrammer implements Addre
         mLongAddr = pLongAddr;
     }
 
-    /**
+    /** 
+     * {@inheritDoc}
+     *
      * Forward a write request to an ops-mode write operation.
      */
     @Override
-    public synchronized void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
+    public synchronized void writeCV(String CVname, int val, ProgListener p) throws ProgrammerException {
+        final int CV = Integer.parseInt(CVname);
         log.debug("write CV={} val={}", CV, val);
         // create the message and fill it,
         byte[] contents = NmraPacket.opsCvWriteByte(mAddress, mLongAddr, CV, val);
@@ -61,16 +64,23 @@ public class EasyDccOpsModeProgrammer extends EasyDccProgrammer implements Addre
         startShortTimer();
 
         // send it
-        controller().sendEasyDccMessage(msg, this);
+        tc.sendEasyDccMessage(msg, this);
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    public synchronized void readCV(int CV, ProgListener p) throws ProgrammerException {
+    public synchronized void readCV(String CVname, ProgListener p) throws ProgrammerException {
+        final int CV = Integer.parseInt(CVname);
         log.debug("read CV={}", CV);
         log.error("readCV not available in this protocol");
         throw new ProgrammerException();
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public synchronized void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
         log.debug("confirm CV={}", CV);
@@ -78,17 +88,20 @@ public class EasyDccOpsModeProgrammer extends EasyDccProgrammer implements Addre
         throw new ProgrammerException();
     }
 
-    /**
-     * Types implemented here.
+    /** 
+     * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
         ret.add(ProgrammingMode.OPSBYTEMODE);
         return ret;
     }
 
-    /**
+    /** 
+     * {@inheritDoc}
+     *
      * Can this ops-mode programmer read back values? For now, no, but maybe
      * later.
      *
@@ -99,22 +112,33 @@ public class EasyDccOpsModeProgrammer extends EasyDccProgrammer implements Addre
         return false;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public boolean getLongAddress() {
         return mLongAddr;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public int getAddressNumber() {
         return mAddress;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public String getAddress() {
         return "" + getAddressNumber() + " " + getLongAddress();
     }
 
-    /**
+    /** 
+     * {@inheritDoc}
+     *
      * Ops-mode programming doesn't put the command station in programming mode,
      * so we don't have to send an exit-programming command at end. Therefore,
      * this routine does nothing except to replace the parent routine that does
@@ -125,6 +149,6 @@ public class EasyDccOpsModeProgrammer extends EasyDccProgrammer implements Addre
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(EasyDccOpsModeProgrammer.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EasyDccOpsModeProgrammer.class);
 
 }

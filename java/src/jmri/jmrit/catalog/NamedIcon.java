@@ -10,9 +10,23 @@ import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.MemoryImageSource;
 import java.awt.image.PixelGrabber;
+import java.awt.image.RenderedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+import java.util.Iterator;
 import javax.annotation.CheckForNull;
-import javax.annotation.Nullable;
+import javax.imageio.IIOImage;
+import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
+import javax.imageio.ImageTypeSpecifier;
+import javax.imageio.ImageWriter;
+import javax.imageio.metadata.IIOMetadata;
+import javax.imageio.metadata.IIOMetadataNode;
+import javax.imageio.spi.ImageReaderSpi;
+import javax.imageio.stream.ImageInputStream;
+import javax.imageio.stream.ImageOutputStream;
 import javax.swing.ImageIcon;
 import jmri.jmrit.display.PositionableLabel;
 import jmri.util.FileUtil;
@@ -25,13 +39,15 @@ import org.slf4j.LoggerFactory;
  * provide rotation {@literal &} scaling services.
  * <p>
  * We store both a "URL" for finding the file this was made from (so we can load
- * this later), plus a shorter "name" for display.
+ * this later), plus a shorter (localized) "name" for display in GUI.
  * <p>
- * These can be persisted by storing their name and rotation
+ * These can be persisted by storing their name and rotation.
  *
  * @see jmri.jmrit.display.configurexml.PositionableLabelXml
  * @author Bob Jacobsen Copyright 2002, 2008
  * @author Pete Cressman Copyright (c) 2009, 2010
+ *
+ * Modified by Joe Comuzzi and Larry Allen to rotate animated GIFs
  */
 public class NamedIcon extends ImageIcon {
 
@@ -42,7 +58,7 @@ public class NamedIcon extends ImageIcon {
      *             complete copy of pOld (no transformations done)
      */
     public NamedIcon(NamedIcon pOld) {
-        this(pOld.mURL, pOld.mName);
+        this(pOld.mURL, pOld.mName, pOld.mGifInfo);
     }
 
     /**
@@ -53,7 +69,7 @@ public class NamedIcon extends ImageIcon {
      * @param comp the container the new icon is embedded in
      */
     public NamedIcon(NamedIcon pOld, Component comp) {
-        this(pOld.mURL, pOld.mName);
+        this(pOld.mURL, pOld.mName, pOld.mGifInfo);
         setLoad(pOld._degrees, pOld._scale, comp);
         setRotation(pOld.mRotation, comp);
     }
@@ -68,6 +84,62 @@ public class NamedIcon extends ImageIcon {
      * @param pName Human-readable name for the icon
      */
     public NamedIcon(String pUrl, String pName) {
+        this(pUrl, pName, null);
+
+        // See if this is a GIF file and if it is, see if it's animated. If it is,
+        // breakout the metadata and individual frames. Also collect the max sizes in case the
+        // frames aren't all the same.
+        try {
+            GIFMetadataImages gifState = new GIFMetadataImages();
+            Iterator<ImageReader> rIter = ImageIO.getImageReadersByFormatName("gif");
+            ImageReader gifReader = rIter.next();
+
+            InputStream is = FileUtil.findInputStream(mURL);
+            ImageInputStream iis = ImageIO.createImageInputStream(is);
+            gifReader.setInput(iis, false);
+            
+            ImageReaderSpi spiProv = gifReader.getOriginatingProvider();
+            if (spiProv != null && spiProv.canDecodeInput(iis)) {
+
+                int numFrames = gifReader.getNumImages(true);
+
+                // No need to keep the GIF info if it's not animated, the old code works
+                // in that case.
+                if (numFrames > 1) {
+                    gifState.mStreamMd = gifReader.getStreamMetadata();
+                    gifState.mFrames = new IIOImage[numFrames];
+                    gifState.mWidth = 0;
+                    gifState.mHeight = 0;
+                    for (int i = 0; i < numFrames; i++) {
+                        gifState.mFrames[i] = gifReader.readAll(i, null);
+                        RenderedImage image = gifState.mFrames[i].getRenderedImage();
+                        gifState.mHeight = Math.max(gifState.mHeight, image.getHeight());
+                        gifState.mWidth = Math.max(gifState.mWidth, image.getWidth());
+                    }
+
+                    mGifInfo = gifState;
+                }
+            }
+        } catch (IOException ioe) {
+            // If we get an exception here it's probably because the image isn't really
+            // a GIF. Unfortunately, there's no guarantee that it is a GIF just because
+            // canDecodeInput returns true.
+            log.debug("Exception extracting GIF Info: ", ioe);
+            mGifInfo = null;
+        }
+    }
+
+    /**
+     * Create a named icon that includes an image to be loaded from a URL.
+     * <p>
+     * The default access form is "file:", so a bare pathname to an icon file
+     * will also work for the URL argument.
+     *
+     * @param pUrl  URL of image file to load
+     * @param pName Human-readable name for the icon
+     * @param pGifState  Breakdown of GIF Image metadata and frames
+     */
+    public NamedIcon(String pUrl, String pName, GIFMetadataImages pGifState) {
         super(FileUtil.findURL(pUrl));
         URL u = FileUtil.findURL(pUrl);
         if (u == null) {
@@ -78,6 +150,7 @@ public class NamedIcon extends ImageIcon {
             log.warn("Could not load image from {} (image is null)", pUrl);
         }
         mName = pName;
+        mGifInfo = pGifState;
         mURL = FileUtil.getPortableFilename(pUrl);
         mRotation = 0;
     }
@@ -92,6 +165,11 @@ public class NamedIcon extends ImageIcon {
         this(pUrl.toString(), pName);
     }
 
+    /**
+     * Create a named icon from an Image. N.B. NamedIcon's create
+     * using this constructor can NOT be animated GIFs
+     * @param im Image to use
+     */
     public NamedIcon(Image im) {
         super(im);
         mDefaultImage = getImage();
@@ -130,7 +208,7 @@ public class NamedIcon extends ImageIcon {
      *
      * @param name the new name, can be null
      */
-    public void setName(@Nullable String name) {
+    public void setName(@CheckForNull String name) {
         mName = name;
     }
 
@@ -150,7 +228,7 @@ public class NamedIcon extends ImageIcon {
      *
      * @param url the URL associated with this icon
      */
-    public void setURL(@Nullable String url) {
+    public void setURL(@CheckForNull String url) {
         mURL = url;
     }
 
@@ -196,25 +274,36 @@ public class NamedIcon extends ImageIcon {
 
     private String mName = null;
     private String mURL = null;
-    private Image mDefaultImage;
+    private GIFMetadataImages mGifInfo = null;
+    private final Image mDefaultImage;
+
+    private static class GIFMetadataImages {
+        private int mHeight;
+        private int mWidth;
+        private IIOImage mFrames[] = null;
+        private IIOMetadata mStreamMd;
+    }
+
     /*
      public Image getOriginalImage() {
      return mDefaultImage;
      }*/
 
     /**
-     * Valid values are <UL>
-     * <LI>0 - no rotation
-     * <LI>1 - 90 degrees counter-clockwise
-     * <LI>2 - 180 degrees counter-clockwise
-     * <LI>3 - 270 degrees counter-clockwise
-     * </UL>
+     * Valid values are
+     * <ul>
+     * <li>0 - no rotation
+     * <li>1 - 90 degrees counter-clockwise
+     * <li>2 - 180 degrees counter-clockwise
+     * <li>3 - 270 degrees counter-clockwise
+     * </ul>
      */
     int mRotation;
 
     /**
      * The following was based on a text-rotating applet from David Risner,
      * available at http://www.risner.org/java/rotate_text.html
+     * Page unavailable as at April 2019
      *
      * @param pImage     Image to transform
      * @param pComponent Component containing the image, needed to obtain a
@@ -309,12 +398,10 @@ public class NamedIcon extends ImageIcon {
             setImage(createRotatedImage(mDefaultImage, comp, 0));
             //mRotation = 3;
         }
-        if (d != 0) {
-            rotate(d, comp);
-        }
-        if (s != 1.0) {
-            scale(s, comp);
-        }
+        _scale = s;
+        _transformS = AffineTransform.getScaleInstance(s, s);
+        rotate(d, comp);
+
     }
 
     public void transformImage(int w, int h, AffineTransform t, Component comp) {
@@ -325,6 +412,73 @@ public class NamedIcon extends ImageIcon {
             }
             return;
         }
+        if (mGifInfo == null) {
+            setImage(transformFrame(getImage(), w, h, t, comp));
+        } else {
+            try {
+                String streamFormat = mGifInfo.mStreamMd.getNativeMetadataFormatName();
+                IIOMetadataNode streamTree = (IIOMetadataNode) mGifInfo.mStreamMd.getAsTree(streamFormat);
+                IIOMetadataNode logicalScreenDesc = getNode("LogicalScreenDescriptor", streamTree);
+                logicalScreenDesc.setAttribute("logicalScreenWidth", "" + w);
+                logicalScreenDesc.setAttribute("logicalScreenHeight", "" + h);
+
+                ByteArrayOutputStream oStream = new ByteArrayOutputStream();
+                Iterator<ImageWriter> wIter = ImageIO.getImageWritersByFormatName("gif");
+                ImageWriter writer = wIter.next();
+                ImageOutputStream ios = ImageIO.createImageOutputStream(oStream);
+                writer.setOutput(ios);
+
+                IIOMetadata newStreamMd = writer.getDefaultStreamMetadata(null);
+                newStreamMd.setFromTree(streamFormat, streamTree);
+                writer.prepareWriteSequence(newStreamMd);
+                for (int i = 0; i < mGifInfo.mFrames.length; i++) {
+                    BufferedImage image = (BufferedImage) mGifInfo.mFrames[i].getRenderedImage();
+                    ImageTypeSpecifier imgType = new ImageTypeSpecifier(image);
+                    IIOMetadata imageMd = mGifInfo.mFrames[i].getMetadata();
+
+                    BufferedImage bufIm = transformFrame(image, w, h, t, comp);
+
+                    String imageFormat = imageMd.getNativeMetadataFormatName();
+                    IIOMetadataNode imageMdTree = (IIOMetadataNode) imageMd.getAsTree(imageFormat);
+                    IIOMetadataNode imageDesc = getNode("ImageDescriptor", imageMdTree);
+                    if (imageDesc != null) {
+                        imageDesc.setAttribute("imageWidth", "" + w);
+                        imageDesc.setAttribute("imageHeight", "" + h);
+                    }
+
+                    IIOMetadataNode colorTable = getNode("LocalColorTable", imageMdTree);
+                    if (colorTable != null) {
+                        imageMdTree.removeChild(colorTable);
+                    }
+
+                    IIOMetadata newImageMd = writer.getDefaultImageMetadata(imgType, null);
+                    newImageMd.setFromTree(imageFormat, imageMdTree);
+
+                    IIOImage newImage = new IIOImage(bufIm, null, newImageMd);
+                    writer.writeToSequence(newImage, null);
+                }
+                writer.endWriteSequence();
+                ios.close();
+
+                ImageIcon imageIcon = new ImageIcon(oStream.toByteArray());
+                setImage(imageIcon.getImage());
+            } catch (IOException ioe) {
+                log.error("Exception rotating animated GIF Image: ", ioe);
+            }
+         }
+    }
+
+    /**
+     * Private method which transforms one frame of Image
+     * @param frame  Image frame to transform
+     * @param w  Width
+     * @param h  Height
+     * @param t  Affine Transform
+     * @param comp
+     * @return Transformed image
+     */
+    private BufferedImage transformFrame(Image frame, int w, int h, AffineTransform t, Component comp) {
+
         BufferedImage bufIm = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = bufIm.createGraphics();
         g2d.setRenderingHint(RenderingHints.KEY_RENDERING,
@@ -335,9 +489,24 @@ public class NamedIcon extends ImageIcon {
                 RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
 //         g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,   // Turned off due to poor performance, see Issue #3850 and PR #3855 for background
 //                 RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-        g2d.drawImage(getImage(), t, comp);
-        setImage(bufIm);
+        g2d.drawImage(frame, t, comp);
         g2d.dispose();
+        return bufIm;
+    }
+
+    /**
+     * Private method to manipulate DOM tree that represents image metadata.
+     * @param name  Name of node we're searching for.
+     * @param root  Plate to start search
+     * @return metadata node matching name
+     */
+    private static IIOMetadataNode getNode(String name, IIOMetadataNode root) {
+        for (int i = 0; i < root.getLength(); i++) {
+            if (root.item(i).getNodeName().compareToIgnoreCase(name) == 0) {
+                return (IIOMetadataNode) root.item(i);
+            }
+        }
+        return null;
     }
 
     /*
@@ -360,11 +529,8 @@ public class NamedIcon extends ImageIcon {
      * "+getDescription()); if (s<1) { return; } scale(s/100.0, comp); }
      */
     public void scale(double scale, Component comp) {
-        setImage(mDefaultImage);
         _scale = scale;
-        if (Math.abs(scale - 1.0) > .00001) {
-            _transformS = AffineTransform.getScaleInstance(scale, scale);
-        }
+        _transformS = AffineTransform.getScaleInstance(scale, scale);
         rotate(_degrees, comp);
     }
 
@@ -376,23 +542,26 @@ public class NamedIcon extends ImageIcon {
      */
     public void rotate(int degree, Component comp) {
         setImage(mDefaultImage);
-        if (Math.abs(_scale - 1.0) > .00001) {
-            int w = (int) Math.ceil(_scale * getIconWidth());
-            int h = (int) Math.ceil(_scale * getIconHeight());
-            transformImage(w, h, _transformS, comp);
-        }
+
         mRotation = 0;
         // this _always_ returns a value between 0 and 360...
         // (and yes, it does work properly for negative numbers)
         _degrees = MathUtil.wrap(degree, 0, 360);
+
         if (_degrees == 0) {
+            if (Math.abs(_scale - 1.0) > .00001) {
+                int w = (int) Math.ceil(_scale * getIconWidth());
+                int h = (int) Math.ceil(_scale * getIconHeight());
+                transformImage(w, h, _transformS, comp);
+            }
             return;
         }
         double rad = Math.toRadians(_degrees);
         double w = getIconWidth();
         double h = getIconHeight();
-        int width = (int) Math.ceil(Math.abs(h * Math.sin(rad)) + Math.abs(w * Math.cos(rad)));
-        int heigth = (int) Math.ceil(Math.abs(h * Math.cos(rad)) + Math.abs(w * Math.sin(rad)));
+
+        int width = (int) Math.ceil(Math.abs(h * _scale * Math.sin(rad)) + Math.abs(w * _scale * Math.cos(rad)));
+        int heigth = (int) Math.ceil(Math.abs(h * _scale * Math.cos(rad)) + Math.abs(w * _scale * Math.sin(rad)));
         AffineTransform t;
         if (false) {
             // TODO: Test to see if the "else" case is necessary
@@ -409,6 +578,9 @@ public class NamedIcon extends ImageIcon {
             } else /* if (_degrees < 360) */ {
                 t = AffineTransform.getTranslateInstance(0.0, -w * Math.sin(rad));
             }
+        }
+        if (Math.abs(_scale - 1.0) > .00001) {
+            t.preConcatenate(_transformS);
         }
         AffineTransform r = AffineTransform.getRotateInstance(rad);
         t.concatenate(r);

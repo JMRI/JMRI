@@ -12,16 +12,16 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Models a serial C/MRI node, consisting of a (S)USIC and attached cards.
- * <P>
+ * <p>
  * Nodes are numbered ala the UA number, from 1 to 63. Node number 1 carries
  * sensors 1 to 999, node 2 1001 to 1999 etc.
- * <P>
+ * <p>
  * The array of sensor states is used to update sensor known state only when
  * there's a change on the serial bus. This allows for the sensor state to be
  * updated within the program, keeping this updated state until the next change
  * on the serial bus. E.g. you can manually change a state via an icon, and not
  * have it change back the next time that node is polled.
- * <P>
+ * <p>
  * The SMINI is defined as having 1 input and 2 outputs cards.<br>
  * USIC/SUSIC nodes can have 0-63 inputs and 0-63 output cards, but no more than
  * 64 total cards.
@@ -42,10 +42,10 @@ public class SerialNode extends AbstractNode {
 
     /**
      * Maximum number of sensors a node can carry.
-     * <P>
+     * <p>
      * Note this is less than a current SUSIC motherboard can have, but should
      * be sufficient for all reasonable layouts.
-     * <P>
+     * <p>
      * Must be less than, and is general one less than,
      * {@link SerialSensorManager#SENSORSPERUA}
      */
@@ -1193,8 +1193,8 @@ public class SerialNode extends AbstractNode {
     /**
      * The numbers here are 0 to MAXSENSORS, not 1 to MAXSENSORS.
      *
-     * @param s - Sensor object
-     * @param i - 0 to MAXSENSORS number of sensor's input bit on this node
+     * @param s  Sensor object
+     * @param i  0 to MAXSENSORS number of sensor's input bit on this node
      */
     public void registerSensor(Sensor s, int i) {
         // validate the sensor ordinal

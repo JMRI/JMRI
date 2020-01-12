@@ -1,10 +1,6 @@
 package jmri.util;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 import jmri.web.server.WebServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,14 +27,13 @@ public class MultipartMessageTest {
         // and clean it up in teardown.
         jmri.util.JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
-        jmri.util.JUnitUtil.initShutDownManager();
         jmri.util.JUnitUtil.initDebugPowerManager();
         server = new WebServer(); // a webserver using default preferences.
         server.start();
         jmri.util.JUnitUtil.waitFor(() -> {
             return server.isStarted();
         }, "Server Failed to Start in time");
-        jmri.util.JUnitOperationsUtil.resetOperationsManager();
+        jmri.util.JUnitOperationsUtil.setupOperationsTests();
     }
 
     @After
@@ -61,6 +56,7 @@ public class MultipartMessageTest {
             log.debug("NPE shutting down web server", npe2);
             //Assert.fail("Null Pointer Exception occured during teardown:" + npe2);
         }
+        JUnitUtil.resetZeroConfServiceManager();
         jmri.util.JUnitUtil.tearDown();
     }
 

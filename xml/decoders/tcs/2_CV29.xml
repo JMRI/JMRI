@@ -21,6 +21,10 @@
     <label xml:lang="it">Modo Conversione Analogica</label>
     <tooltip xml:lang="it">'4' bit. Permette alla loco di andare in DC, per default è Off</tooltip>
   </variable>
+  <variable CV="29" mask="XXXXVXXX" default="0" item="Advanced Group 2 Option 11">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Enable RailCom</label>
+  </variable>
   <variable CV="29" mask="XXXVXXXX" item="Speed Table Definition">
     <enumVal>
        <enumChoice choice="Use Vstart, Vmid, Vhigh">

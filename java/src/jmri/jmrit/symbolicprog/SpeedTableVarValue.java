@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,13 +20,13 @@ import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import jmri.jmrit.symbolicprog.tabbedframe.PaneProgPane;
+import jmri.util.CvUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Represent an entire speed table as a single Variable.
- * <P>
+ * <p>
  * This presents as a set of vertically oriented sliders, with numeric values
  * above them. That it turn is done using VarSlider and DecVariableValue objects
  * respectively. VarSlider is an interior class to color a JSlider by state. The
@@ -35,26 +34,27 @@ import org.slf4j.LoggerFactory;
  * underlying CV objects. Changes to CV Values are listened to by this class,
  * which updates the model objects for the VarSliders; the DecVariableValues
  * listen directly.
- * <P>
+ * <p>
  * Color (hence state) of individual sliders (hence CVs) are directly coupled to
  * the state of those CVs.
- * <P>
+ * <p>
  * The state of the entire variable has to be a composite of all the sliders,
  * hence CVs. The mapping is (in order):
- * <UL>
- * <LI>If any CVs are UNKNOWN, its UNKNOWN..
- * <LI>If not, and any are EDITED, its EDITED.
- * <LI>If not, and any are FROMFILE, its FROMFILE.
- * <LI>If not, and any are READ, its READ.
- * <LI>If not, and any are STORED, its STORED.
- * <LI>And if we get to here, something awful has happened.
- * </UL><P>
+ * <ul>
+ * <li>If any CVs are UNKNOWN, its UNKNOWN..
+ * <li>If not, and any are EDITED, its EDITED.
+ * <li>If not, and any are FROMFILE, its FROMFILE.
+ * <li>If not, and any are READ, its READ.
+ * <li>If not, and any are STORED, its STORED.
+ * <li>And if we get to here, something awful has happened.
+ * </ul>
+ * <p>
  * A similar pattern is used for a read or write request. Write writes them all;
  * Read reads any that aren't READ or WRITTEN.
- * <P>
+ * <p>
  * Speed tables can have different numbers of entries; 28 is the default, and
  * also the maximum.
- * <P>
+ * <p>
  * The NMRA specification says that speed table entries cannot be non-monotonic
  * (e.g. cannot decrease when moving from lower to higher CV numbers). In
  * earlier versions of the code, this was enforced any time a value was changed
@@ -63,17 +63,17 @@ import org.slf4j.LoggerFactory;
  * a change in their value which changed their state, so they were read again.
  * To avoid this, the class now only enforces non-monotonicity when the slider
  * is adjusted.
- * <P>
+ * <p>
  * _value is a holdover from the LongAddrVariableValue, which this was copied
  * from; it should be removed.
- * <P>
+ *
  * @author Bob Jacobsen, Alex Shepherd Copyright (C) 2001, 2004, 2013
  * @author Dave Heap Copyright (C) 2012 Added support for Marklin mfx style speed table
  * @author Dave Heap Copyright (C) 2013 Changes to fix mfx speed table issue (Vstart {@literal &} Vhigh not written)
  * @author Dave Heap - generate cvList array to incorporate Vstart {@literal &} Vhigh
  *
  */
-public class SpeedTableVarValue extends VariableValue implements PropertyChangeListener, ChangeListener {
+public class SpeedTableVarValue extends VariableValue implements ChangeListener {
 
     int nValues;
     int numCvs;
@@ -153,7 +153,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 
     /**
      * Called for new values of a slider.
-     * <P>
+     * <p>
      * Sets the CV(s) as needed.
      *
      */
@@ -420,7 +420,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
             Component v = decVal.getCommonRep();
             String start = ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("TextStep")
                     + " " + (i + 1);
-            ((JTextField) v).setToolTipText(PaneProgPane.addCvDescription(start, "CV " + cvList[i], null));
+            ((JTextField) v).setToolTipText(CvUtil.addCvDescription(start, "CV " + cvList[i], null));
             ((JComponent) v).setBorder(null);  // pack tighter
 
             if (mfx && (i == 0 || i == (nValues - 1))) {
@@ -879,7 +879,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 
     /* Internal class extends a JSlider so that its color is consistent with
      * an underlying CV; we return one of these in getNewRep.
-     *<P>
+     * <p>
      * Unlike similar cases elsewhere, this doesn't have to listen to
      * value changes.  Those are handled automagically since we're sharing the same
      * model between this object and others.  And this is listening to
@@ -902,7 +902,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
             // tooltip label
             String start = ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("TextStep")
                     + " " + step;
-            setToolTipText(PaneProgPane.addCvDescription(start, "CV " + var.number(), null));
+            setToolTipText(CvUtil.addCvDescription(start, "CV " + var.number(), null));
             // listen for changes to original state
             _var.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
                 @Override

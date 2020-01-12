@@ -1,9 +1,6 @@
 package jmri.util;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import org.junit.Assert;
+import org.junit.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,39 +9,89 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright 2003, 2009, 2010, 2015
  */
-public class Log4JUtilTest extends TestCase {
+public class Log4JUtilTest {
 
+    @Test
     public void testLog4JWarnMessage() {
-        log.warn("WARN message");
-        jmri.util.JUnitAppender.assertWarnMessage("WARN message");
+        log.warn("WARN message succeeds");
+        jmri.util.JUnitAppender.assertWarnMessage("WARN message succeeds");
 
         log.debug("DEBUG message"); // should be suppressed see tests.lcf
 
         Assert.assertTrue(jmri.util.JUnitAppender.verifyNoBacklog());        
     }
 
+    @Test
     public void testWarnOnceCounts() {
         Assert.assertTrue(Log4JUtil.warnOnce(log, "WARN message")); // string has to be same until further notice
         Assert.assertFalse(Log4JUtil.warnOnce(log, "WARN message"));
         jmri.util.JUnitAppender.assertWarnMessage("WARN message");
         Assert.assertTrue(jmri.util.JUnitAppender.verifyNoBacklog());
         
-        Logger log2 = LoggerFactory.getLogger("Log4JUtilTest-extra-logger");
+        Logger log2 = LoggerFactory.getLogger("Log4JUtilTest-extra-logger"); // same message, different logger
         Assert.assertTrue(Log4JUtil.warnOnce(log2, "WARN message"));
         Assert.assertFalse(Log4JUtil.warnOnce(log2, "WARN message"));
         jmri.util.JUnitAppender.assertWarnMessage("WARN message");
         Assert.assertTrue(jmri.util.JUnitAppender.verifyNoBacklog());
 
-        Assert.assertTrue(Log4JUtil.warnOnce(log, "WARN message 2")); // different string
+        Assert.assertTrue(Log4JUtil.warnOnce(log, "WARN message 2")); // same logger, different message
         jmri.util.JUnitAppender.assertWarnMessage("WARN message 2");        
+        Assert.assertFalse(Log4JUtil.warnOnce(log, "WARN message 2")); // same logger, different message
+        Assert.assertTrue(jmri.util.JUnitAppender.verifyNoBacklog());
+   }
+
+    @Test
+    public void testWarnOnceReset() {
+        Assert.assertTrue(Log4JUtil.warnOnce(log, "WARN message check")); // string has to be same until further notice
+        Log4JUtil.restartWarnOnce();
+        Assert.assertTrue(Log4JUtil.warnOnce(log, "WARN message check"));
+        jmri.util.JUnitAppender.assertWarnMessage("WARN message check");
+        jmri.util.JUnitAppender.assertWarnMessage("WARN message check");
+        Assert.assertTrue(jmri.util.JUnitAppender.verifyNoBacklog());
     }
 
+    @Test
     public void testWarnOnceArguments() {
         Assert.assertTrue(Log4JUtil.warnOnce(log, "Test {} {}", "A", "B"));
         jmri.util.JUnitAppender.assertWarnMessage("Test A B");
         Assert.assertTrue(jmri.util.JUnitAppender.verifyNoBacklog());
     }
     
+    // The following two tests are _identical_.  We run them twice to make
+    // sure that two separate tests are properly detecting deprecation messages
+    @Test
+    public void testDeprecatedWarning1() {
+
+        // on by default
+        Log4JUtil.deprecationWarning(log, "method 1");
+        Log4JUtil.deprecationWarning(log, "method 1");
+        jmri.util.JUnitAppender.assertWarnMessage("method 1 is deprecated, please remove references to it");
+        Assert.assertTrue(jmri.util.JUnitAppender.verifyNoBacklog());
+
+        // logging turned off 
+        Log4JUtil.setDeprecatedLogging(true);
+        Log4JUtil.deprecationWarning(log, "method 1");
+        Log4JUtil.deprecationWarning(log, "method 1");
+        Assert.assertTrue(jmri.util.JUnitAppender.verifyNoBacklog());
+    }
+    @Test
+    public void testDeprecatedWarning2() {
+
+        // on by default
+        Log4JUtil.deprecationWarning(log, "method 1");
+        Log4JUtil.deprecationWarning(log, "method 1");
+        jmri.util.JUnitAppender.assertWarnMessage("method 1 is deprecated, please remove references to it");
+        Assert.assertTrue(jmri.util.JUnitAppender.verifyNoBacklog());
+
+        // logging turned off 
+        Log4JUtil.setDeprecatedLogging(true);
+        Log4JUtil.deprecationWarning(log, "method 1");
+        Log4JUtil.deprecationWarning(log, "method 1");
+        Assert.assertTrue(jmri.util.JUnitAppender.verifyNoBacklog());
+    }
+
+
+    @Test
     public void testSendJavaUtilLogInfoMessage() {
         // test that java.util.logging is getting to Log4J
         java.util.logging.Logger logger =
@@ -56,35 +103,43 @@ public class Log4JUtilTest extends TestCase {
 
         Assert.assertTrue(jmri.util.JUnitAppender.verifyNoBacklog());
     }
-
-    // from here down is testing infrastructure
-    public Log4JUtilTest(String s) {
-        super(s);
+    
+    private IllegalArgumentException getTraceBack() { return new IllegalArgumentException("for test"); }
+    
+    @Test
+    public void testShortenStacktrace() {
+        IllegalArgumentException ex = getTraceBack();
+        Assert.assertTrue("Needs long enough trace for test", ex.getStackTrace().length > 3);
+        
+        Assert.assertEquals(3, Log4JUtil.shortenStacktrace(ex, 3).getStackTrace().length);
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", Log4JUtilTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
+    @Test
+    public void testShortenStacktraceTooLong() {
+        IllegalArgumentException ex = getTraceBack();
+        Assert.assertTrue("Need short enough trace for test", ex.getStackTrace().length < 3000);
+        // make sure it doesn't throw an exception
+        int len = ex.getStackTrace().length;
+        Assert.assertEquals(len, Log4JUtil.shortenStacktrace(ex, 3010).getStackTrace().length);
     }
 
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(Log4JUtilTest.class);
-        return suite;
+    @Test
+    public void testShortenStacktraceNoArg() {
+        IllegalArgumentException ex = getTraceBack();
+        Assert.assertTrue("Needs long enough trace for test", ex.getStackTrace().length > 3);
+        
+        Assert.assertEquals(2, Log4JUtil.shortenStacktrace(ex).getStackTrace().length);
     }
 
     // The minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-        apps.tests.Log4JFixture.setUp();
+    @Before
+    public void setUp() throws Exception {
+        jmri.util.JUnitUtil.setUp();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
-        apps.tests.Log4JFixture.tearDown();
-        super.tearDown();
+    @After
+    public void tearDown() throws Exception {
+        jmri.util.JUnitUtil.tearDown();
     }
 
     private final static Logger log = LoggerFactory.getLogger(Log4JUtilTest.class);

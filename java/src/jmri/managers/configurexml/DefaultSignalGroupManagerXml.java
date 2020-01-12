@@ -1,13 +1,14 @@
 package jmri.managers.configurexml;
 
 import java.util.List;
+import java.util.SortedSet;
+
 import jmri.InstanceManager;
 import jmri.SignalGroup;
 import jmri.SignalGroupManager;
 import jmri.SignalHead;
+
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML configuration for a DefaultSignalGroupManager objects.
@@ -22,41 +23,45 @@ public class DefaultSignalGroupManagerXml
 
     /**
      * Default implementation for storing the contents of a
-     * DefaultSignalGroupManager
+     * DefaultSignalGroupManager.
      *
-     * @param o Object to store, of type TripleTurnoutSignalHead
+     * @param o Object to store, of type SignalGroup
      * @return Element containing the complete info
      */
     @Override
     public Element store(Object o) {
-        SignalGroupManager m = (SignalGroupManager) o;
-
-        Element element = new Element("signalgroups");
-        element.setAttribute("class", this.getClass().getName());
-
-        // include contents
-        List<String> names = m.getSystemNameList();
-        for (int i = 0; i < names.size(); i++) {
-            Element e = new Element("signalgroup");
-            SignalGroup p = m.getSignalGroup(names.get(i));
-            e.addContent(new Element("systemName").addContent(p.getSystemName()));
-            e.addContent(new Element("userName").addContent(p.getUserName()));
-            //storeCommon(p, e); would store comment, now a separate element
-            storeComment(p, e);
-            element.addContent(e);
-            for (int x = 0; x < p.getNumSignalMastAspects(); x++) {
-                Element app = new Element("aspect").setAttribute("valid", p.getSignalMastAspectByIndex(x));
-                e.addContent(app);
+        Element groups = new Element("signalgroups");
+        groups.setAttribute("class", this.getClass().getName());
+        SignalGroupManager sgm = (SignalGroupManager) o;
+        if (sgm != null) {
+            SortedSet<SignalGroup> sgList = sgm.getNamedBeanSet();
+            // don't return an element if there are no SignalGroups to include
+            if (sgList.isEmpty()) {
+                return null;
             }
-            e.setAttribute("signalMast", p.getSignalMastName());
+            for (SignalGroup sg : sgList) {
+                // store the signalgroups
+                String sgName = sg.getSystemName();
+                log.debug("SignalGroup system name is {}", sgName);  // NOI18N
 
-            for (int x = 0; x < p.getNumHeadItems(); x++) {
+                Element e = new Element("signalgroup");
+                e.addContent(new Element("systemName").addContent(sgName));
+                e.addContent(new Element("userName").addContent(sg.getUserName()));
+                // storeCommon(sg, e); previously would store comment, now a separate element
+                storeComment(sg, e);
+                groups.addContent(e);
+                for (int x = 0; x < sg.getNumSignalMastAspects(); x++) {
+                    Element app = new Element("aspect").setAttribute("valid", sg.getSignalMastAspectByIndex(x));
+                    e.addContent(app);
+                }
+                e.setAttribute("signalMast", sg.getSignalMastName());
 
-                storeSignalHead(e, p, x);
-
+                for (int x = 0; x < sg.getNumHeadItems(); x++) {
+                    storeSignalHead(e, sg, x);
+                }
             }
         }
-        return element;
+        return groups;
     }
 
     private void storeSignalHead(Element element, SignalGroup _group, int x) {
@@ -118,7 +123,7 @@ public class DefaultSignalGroupManagerXml
             case SignalHead.DARK:
                 return "DARK";
             default:
-                log.warn("Unexpected appearance: " + mAppearance);
+                log.warn("Unexpected appearance: {}", mAppearance);
                 // go dark
                 return "DARK";
         }
@@ -131,9 +136,8 @@ public class DefaultSignalGroupManagerXml
 
         SignalGroupManager sgm = InstanceManager.getDefault(jmri.SignalGroupManager.class);
 
-        for (int i = 0; i < list.size(); i++) {
-            SignalGroup m;
-            Element e = list.get(i);
+        for (Element e : list) {
+            SignalGroup sg;
             String primary;
             String yesno;
             boolean inverse = false;
@@ -141,88 +145,76 @@ public class DefaultSignalGroupManagerXml
 
             String sys = getSystemName(e);
 
-            m = sgm.newSignalGroup(sys);
+            sg = sgm.provideSignalGroup(sys, getUserName(e));
 
-            if (getUserName(e) != null) {
-                m.setUserName(getUserName(e));
-            }
-
-            //loadCommon(m, e); // would store comment, now a separate element
-            loadComment(m, e);
+            //loadCommon(sg, e); // would store comment, now a separate element
+            loadComment(sg, e);
 
             primary = e.getAttribute("signalMast").getValue();
-            m.setSignalMast(primary);
+            sg.setSignalMast(primary);
 
-            List<Element> appList = e.getChildren("appearance"); // deprecated 4.7.2 for aspect
-            for (int y = 0; y < appList.size(); y++) {
-                String value = appList.get(y).getAttribute("valid").getValue();
-                m.addSignalMastAspect(value);
+            List<Element> appList = e.getChildren("appearance"); // deprecated 4.7.2 for aspect; warning added 4.19.1
+            for (Element app : appList) {
+                String value = app.getAttribute("valid").getValue();
+                jmri.util.Log4JUtil.deprecationWarning(log, "appearance elements in file");
+                sg.addSignalMastAspect(value);
             }
             List<Element> aspList = e.getChildren("aspect");
-            for (int y = 0; y < aspList.size(); y++) {
-                String value = aspList.get(y).getAttribute("valid").getValue();
-                m.addSignalMastAspect(value);
+            for (Element asp : aspList) {
+                String value = asp.getAttribute("valid").getValue();
+                sg.addSignalMastAspect(value);
             }
 
-            List<Element> signalHeadList = list.get(i).getChildren("signalHead");
-            if (signalHeadList.size() > 0) {
-                for (int y = 0; y < signalHeadList.size(); y++) {
-                    String head = signalHeadList.get(y).getAttribute("name").getValue();
-                    SignalHead sigHead = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(head);
-                    m.addSignalHead(sigHead);
-                    yesno = signalHeadList.get(y).getAttribute("sensorTurnoutLogic").getValue();
-                    inverse = false;
-                    if ((yesno != null) && (!yesno.equals(""))) {
-                        if (yesno.equals("AND")) {
-                            inverse = true;
-                        } else if (yesno.equals("OR")) {
-                            inverse = false;
-                        }
-                    }
-                    m.setSensorTurnoutOper(sigHead, inverse);
-
-                    try {
-                        m.setHeadOnState(sigHead, getIntFromColour(signalHeadList.get(y).getAttribute("onAppearance").getValue()));
-                    } catch (NullPointerException ex) {  // considered normal if the attributes are not present
-                    }
-                    try {
-                        m.setHeadOffState(sigHead, getIntFromColour(signalHeadList.get(y).getAttribute("offAppearance").getValue()));
-                    } catch (NullPointerException ex) {  // considered normal if the attributes are not present
-                    }
-                    List<Element> signalTurnoutList = signalHeadList.get(y).getChildren("turnout");
-                    if (signalTurnoutList.size() > 0) {
-                        for (int k = 0; k < signalTurnoutList.size(); k++) {
-                            String tName = signalTurnoutList.get(k).getAttribute("name").getValue();
-                            jmri.Turnout turnout = jmri.InstanceManager.turnoutManagerInstance().getTurnout(tName);
-                            state = 0;
-                            try {
-                                state = signalTurnoutList.get(k).getAttribute("state").getIntValue();
-                            } catch (org.jdom2.DataConversionException ex) {
-                                log.warn("invalid state attribute value");
-                            }
-                            m.setHeadAlignTurnout(sigHead, turnout, state);
-                        }
-                    }
-                    List<Element> signalSensorList = signalHeadList.get(y).getChildren("sensor");
-                    if (signalSensorList.size() > 0) {
-                        for (int k = 0; k < signalSensorList.size(); k++) {
-                            String sName = signalSensorList.get(k).getAttribute("name").getValue();
-                            jmri.Sensor sensor = jmri.InstanceManager.sensorManagerInstance().getSensor(sName);
-                            state = 0;
-                            try {
-                                state = signalSensorList.get(k).getAttribute("state").getIntValue();
-                            } catch (org.jdom2.DataConversionException ex) {
-                                log.warn("invalid style attribute value");
-                            }
-                            m.setHeadAlignSensor(sigHead, sensor, state);
-                        }
+            List<Element> signalHeadList = e.getChildren("signalHead");
+            for (Element sh : signalHeadList) {
+                String head = sh.getAttribute("name").getValue();
+                SignalHead sigHead = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(head);
+                sg.addSignalHead(sigHead);
+                yesno = sh.getAttribute("sensorTurnoutLogic").getValue();
+                inverse = false;
+                if ((yesno != null) && (!yesno.equals(""))) {
+                    if (yesno.equals("AND")) {
+                        inverse = true;
+                    // } else if (yesno.equals("OR")) {
+                    //     inverse = false; // value already assigned as default
                     }
                 }
+                sg.setSensorTurnoutOper(sigHead, inverse);
 
+                try {
+                    sg.setHeadOnState(sigHead, getIntFromColour(sh.getAttribute("onAppearance").getValue()));
+                } catch (NullPointerException ex) {  // considered normal if the attributes are not present
+                }
+                try {
+                    sg.setHeadOffState(sigHead, getIntFromColour(sh.getAttribute("offAppearance").getValue()));
+                } catch (NullPointerException ex) {  // considered normal if the attributes are not present
+                }
+                List<Element> signalTurnoutList = sh.getChildren("turnout");
+                for (Element sgt : signalTurnoutList) {
+                    String tName = sgt.getAttribute("name").getValue();
+                    jmri.Turnout turnout = jmri.InstanceManager.turnoutManagerInstance().getTurnout(tName);
+                    state = 0;
+                    try {
+                        state = sgt.getAttribute("state").getIntValue();
+                    } catch (org.jdom2.DataConversionException ex) {
+                        log.warn("invalid state attribute value");
+                    }
+                    sg.setHeadAlignTurnout(sigHead, turnout, state);
+                }
+                List<Element> signalSensorList = sh.getChildren("sensor");
+                for (Element sgs: signalSensorList) {
+                    String sName = sgs.getAttribute("name").getValue();
+                    jmri.Sensor sensor = jmri.InstanceManager.sensorManagerInstance().getSensor(sName);
+                    state = 0;
+                    try {
+                        state = sgs.getAttribute("state").getIntValue();
+                    } catch (org.jdom2.DataConversionException ex) {
+                        log.warn("invalid style attribute value");
+                    }
+                    sg.setHeadAlignSensor(sigHead, sensor, state);
+                }
             }
-
         }
-
         return true;
     }
 
@@ -231,29 +223,30 @@ public class DefaultSignalGroupManagerXml
         log.error("Invalid method called");
     }
 
-    private int getIntFromColour(String colour) {
-        if (colour.equals("RED")) {
-            return SignalHead.RED;
-        } else if (colour.equals("YELLOW")) {
-            return SignalHead.YELLOW;
-        } else if (colour.equals("GREEN")) {
-            return SignalHead.GREEN;
-        } else if (colour.equals("LUNAR")) {
-            return SignalHead.LUNAR;
-        } else if (colour.equals("DARK")) {
-            return SignalHead.DARK;
-        } else if (colour.equals("FLASHRED")) {
-            return SignalHead.FLASHRED;
-        } else if (colour.equals("FLASHYELLOW")) {
-            return SignalHead.FLASHYELLOW;
-        } else if (colour.equals("FLASHGREEN")) {
-            return SignalHead.FLASHGREEN;
-        } else if (colour.equals("FLASHLUNAR")) {
-            return SignalHead.FLASHLUNAR;
-        } else {
-            log.warn("Unexpected appearance: " + colour);
+    private int getIntFromColour(String color) {
+        switch (color) {
+            case "RED":
+                return SignalHead.RED;
+            case "YELLOW":
+                return SignalHead.YELLOW;
+            case "GREEN":
+                return SignalHead.GREEN;
+            case "LUNAR":
+                return SignalHead.LUNAR;
+            case "DARK":
+                return SignalHead.DARK;
+            case "FLASHRED":
+                return SignalHead.FLASHRED;
+            case "FLASHYELLOW":
+                return SignalHead.FLASHYELLOW;
+            case "FLASHGREEN":
+                return SignalHead.FLASHGREEN;
+            case "FLASHLUNAR":
+                return SignalHead.FLASHLUNAR;
+            default:
+                log.warn("Unexpected appearance: {}", color);
+                return SignalHead.DARK;
         }
-        return SignalHead.DARK;
     }
 
     @Override
@@ -261,5 +254,6 @@ public class DefaultSignalGroupManagerXml
         return InstanceManager.getDefault(jmri.SignalGroupManager.class).getXMLOrder();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultSignalGroupManagerXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultSignalGroupManagerXml.class);
+
 }

@@ -1,15 +1,20 @@
-//DCCppSystemConnectionMemo.java
 package jmri.jmrix.dccpp;
 
+import java.util.Comparator;
 import java.util.ResourceBundle;
+import javax.annotation.Nonnull;
+
 import jmri.CommandStation;
 import jmri.InstanceManager;
 import jmri.LightManager;
 import jmri.MultiMeter;
+import jmri.NamedBean;
 import jmri.PowerManager;
 import jmri.SensorManager;
 import jmri.ThrottleManager;
 import jmri.TurnoutManager;
+import jmri.util.NamedBeanComparator;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,7 +31,7 @@ import org.slf4j.LoggerFactory;
  */
 public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
-    public DCCppSystemConnectionMemo(DCCppTrafficController xt) {
+    public DCCppSystemConnectionMemo(@Nonnull DCCppTrafficController xt) {
         super("D", "DCC++");
         this.xt = xt;
         xt.setSystemConnectionMemo(this);
@@ -55,14 +60,24 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     jmri.jmrix.swing.ComponentFactory cf = null;
 
     /**
-     * Provides access to the TrafficController for this particular connection.
+     * Provide access to the TrafficController for this particular connection.
      */
     public DCCppTrafficController getDCCppTrafficController() {
+        if (xt == null) {
+            setDCCppTrafficController(new DCCppPacketizer(new DCCppCommandStation(this))); // default to DCCppPacketizer TrafficController
+            log.debug("Auto create of DCCppTrafficController for initial configuration");
+        }
         return xt;
     }
+
     private DCCppTrafficController xt;
 
-    public void setDCCppTrafficController(DCCppTrafficController xt) {
+    /**
+     * Set the traffic controller instance associated with this connection memo.
+     *
+     * @param xt the {@link jmri.jmrix.dccpp.DCCppTrafficController} object to use.
+     */
+    public void setDCCppTrafficController(@Nonnull DCCppTrafficController xt) {
         this.xt = xt;
         // in addition to setting the traffic controller in this object,
         // set the systemConnectionMemo in the traffic controller
@@ -100,8 +115,9 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     private ThrottleManager throttleManager;
 
     /*
-     * Provides access to the Power Manager for this particular connection.
+     * Provides access to the PowerManager for this particular connection.
      */
+    @Nonnull
     public PowerManager getPowerManager() {
         if (powerManager == null) {
             powerManager = new DCCppPowerManager(this);
@@ -111,15 +127,15 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     }
 
-    public void setPowerManager(PowerManager p) {
+    public void setPowerManager(@Nonnull PowerManager p) {
         powerManager = p;
     }
 
     private PowerManager powerManager;
 
     /*
-     * Provides access to the Sensor Manager for this particular connection.
-     * NOTE: Sensor manager defaults to NULL
+     * Provides access to the SensorManager for this particular connection.
+     * NOTE: SensorManager defaults to NULL
      */
     public SensorManager getSensorManager() {
         return sensorManager;
@@ -133,8 +149,8 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     private SensorManager sensorManager = null;
 
     /*
-     * Provides access to the Turnout Manager for this particular connection.
-     * NOTE: Turnout manager defaults to NULL
+     * Provides access to the TurnoutManager for this particular connection.
+     * NOTE: TurnoutManager defaults to NULL
      */
     public TurnoutManager getTurnoutManager() {
         return turnoutManager;
@@ -148,7 +164,7 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     private TurnoutManager turnoutManager = null;
 
     /*
-     * Provides access to the Light Manager for this particular connection.
+     * Provides access to the LightManager for this particular connection.
      * NOTE: Light manager defaults to NULL
      */
     public LightManager getLightManager() {
@@ -170,7 +186,7 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         return commandStation;
     }
 
-    public void setCommandStation(CommandStation c) {
+    public void setCommandStation(@Nonnull CommandStation c) {
         commandStation = c;
         ((DCCppCommandStation) c).setTrafficController(xt);
         ((DCCppCommandStation) c).setSystemConnectionMemo(this);
@@ -261,8 +277,14 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     @Override
+    @Nonnull
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.dccpp.DCCppActionListBundle");
+    }
+
+    @Override
+    public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
+        return new NamedBeanComparator<>();
     }
 
     @Override

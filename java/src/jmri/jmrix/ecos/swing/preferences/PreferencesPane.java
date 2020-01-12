@@ -26,7 +26,7 @@ import jmri.swing.PreferencesPanel;
  * Pane to show ECoS preferences
  *
  * @author Kevin Dickerson Copyright (C) 2009
-  */
+ */
 public class PreferencesPane extends javax.swing.JPanel implements PropertyChangeListener, PreferencesPanel {
 
     JPanel throttletabpanel = new JPanel();
@@ -107,15 +107,13 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
         setChoiceType(_addLocoJmri, ep.getAddLocoToJMRI());
         setChoiceType(_removeLocosJmri, ep.getRemoveLocoFromJMRI());
         switch (ep.getAdhocLocoFromEcos()) {
-            case 0:
-                _adhocLocoEcosAsk.setSelected(true);
-                break;
             case 1:
                 _adhocLocoEcosLeave.setSelected(true);
                 break;
             case 2:
                 _adhocLocoEcosRemove.setSelected(true);
                 break;
+            case 0:
             default:
                 _adhocLocoEcosAsk.setSelected(true);
                 break;
@@ -125,15 +123,13 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
         _ecosDescription.setText(ep.getEcosLocoDescription());
 
         switch (ep.getForceControlFromEcos()) {
-            case 0x00:
-                _forceControlLocoEcosAsk.setSelected(true);
-                break;
             case 0x01:
                 _forceControlLocoEcosNever.setSelected(true);
                 break;
             case 0x02:
                 _forceControlLocoEcosAlways.setSelected(true);
                 break;
+            case 0x00:
             default:
                 _forceControlLocoEcosAsk.setSelected(true);
                 break;
@@ -310,15 +306,13 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
         _adhocLocoEcosLeave = new JRadioButton(Bundle.getMessage("ButtonAlwaysLeave"));
         _adhocLocoEcosRemove = new JRadioButton(Bundle.getMessage("ButtonAlwaysRemove"));
         switch (ep.getAdhocLocoFromEcos()) {
-            case 0:
-                _adhocLocoEcosAsk.setSelected(true);
-                break;
             case 1:
                 _adhocLocoEcosLeave.setSelected(true);
                 break;
             case 2:
                 _adhocLocoEcosRemove.setSelected(true);
                 break;
+            case 0:
             default:
                 _adhocLocoEcosAsk.setSelected(true);
                 break;
@@ -347,15 +341,13 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
         _forceControlLocoEcosNever = new JRadioButton(Bundle.getMessage("ButtonControlNeverForce"));
         _forceControlLocoEcosAlways = new JRadioButton(Bundle.getMessage("ButtonControlAlwaysForce"));
         switch (ep.getForceControlFromEcos()) {
-            case 0x00:
-                _forceControlLocoEcosAsk.setSelected(true);
-                break;
             case 0x01:
                 _forceControlLocoEcosNever.setSelected(true);
                 break;
             case 0x02:
                 _forceControlLocoEcosAlways.setSelected(true);
                 break;
+            case 0x00:
             default:
                 _forceControlLocoEcosAsk.setSelected(true);
                 break;

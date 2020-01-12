@@ -7,6 +7,7 @@ import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import jmri.jmrix.loconet.LocoNetListener;
 import jmri.jmrix.loconet.LocoNetMessage;
+import jmri.jmrix.loconet.LocoNetMessageException;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.streamport.LnStreamPortController;
 import org.slf4j.Logger;
@@ -34,6 +35,7 @@ public class Z21LocoNetTunnel implements Z21Listener, LocoNetListener , Runnable
     /**
      * Build a new LocoNet tunnel.
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SC_START_IN_CTOR", justification="done at end, waits for data")
     public Z21LocoNetTunnel(Z21SystemConnectionMemo memo) {
         // save the SystemConnectionMemo.
         _memo = memo;
@@ -55,12 +57,13 @@ public class Z21LocoNetTunnel implements Z21Listener, LocoNetListener , Runnable
         // start a thread to read from the input pipe.
         sourceThread = new Thread(this);
         sourceThread.setName("z21.Z21LocoNetTunnel sourceThread");
+        sourceThread.setDaemon(true);
         sourceThread.start();
 
         // Then use those pipes as the input and output pipes for
         // a new LnStreamPortController object.
         LocoNetSystemConnectionMemo lnMemo = new LocoNetSystemConnectionMemo();
-        setStreamPortController(new LnStreamPortController(lnMemo,pin, pout, "None"));
+        setStreamPortController(new Z21LnStreamPortController(lnMemo,pin, pout, "None"));
 
         // register as a Z21Listener, so we can receive replies
         _memo.getTrafficController().addz21Listener(this);
@@ -92,9 +95,8 @@ public class Z21LocoNetTunnel implements Z21Listener, LocoNetListener , Runnable
         LocoNetMessage msg = null;
         try {
             msg = loadChars();
-        } catch (java.io.IOException e) {
+        } catch (java.io.IOException|LocoNetMessageException e) {
             // should do something meaningful here.
-
         }
         return (msg);
     }
@@ -109,30 +111,86 @@ public class Z21LocoNetTunnel implements Z21Listener, LocoNetListener , Runnable
      * @return filled message
      * @throws IOException when presented by the input source.
      */
-    private LocoNetMessage loadChars() throws java.io.IOException {
-        int i;
-        byte char1;
-        char1 = readByteProtected(inpipe);
-        int len = (char1 & 0x0f) + 2;  // opCode+Nbytes+ECC
-        // The z21 protocol has a special case for
-        // LAN_X_GET_TURNOUT_INFO, which advertises as having
-        // 3 payload bytes, but really only has two.
-        if((char1&0xff)==Z21Constants.LAN_X_GET_TURNOUT_INFO)
-        {
-           len=4;
+    private LocoNetMessage loadChars() throws java.io.IOException,LocoNetMessageException {
+        int opCode;
+        // start by looking for command -  skip if bit not set
+        while (((opCode = (readByteProtected(inpipe) & 0xFF)) & 0x80) == 0) { // the real work is in the loop check
+            log.trace("Skipping: {}", Integer.toHexString(opCode)); // NOI18N
         }
-        LocoNetMessage msg = new LocoNetMessage(len);
-        msg.setElement(0, char1 & 0xFF);
-        for (i = 1; i < len; i++) {
-            char1 = readByteProtected(inpipe);
-            msg.setElement(i, char1 & 0xFF);
+        // here opCode is OK. Create output message
+        log.trace(" (RcvHandler) Start message with opcode: {}", Integer.toHexString(opCode)); // NOI18N
+        LocoNetMessage msg = null;
+        while (msg == null) {
+           try {
+              // Capture 2nd byte, always present
+              int byte2 = readByteProtected(inpipe) & 0xFF;
+              log.trace("Byte2: {}", Integer.toHexString(byte2)); // NOI18N
+              int len = 2;
+              switch ((opCode & 0x60) >> 5) {
+                 case 0:
+                    /* 2 byte message */
+                    len = 2;
+                    break;
+                 case 1:
+                    /* 4 byte message */
+                    len = 4;
+                    break;
+                 case 2:
+                    /* 6 byte message */
+
+                    len = 6;
+                    break;
+                 case 3:
+                    /* N byte message */
+                    if (byte2 < 2) {
+                       log.error("LocoNet message length invalid: " + byte2
+                          + " opcode: " + Integer.toHexString(opCode)); // NOI18N
+                    }
+                    len = byte2;
+                    break;
+                 default:
+                    log.warn("Unhandled code: {}", (opCode & 0x60) >> 5);
+                 break;
+              }
+              msg = new LocoNetMessage(len);
+              // message exists, now fill it
+              msg.setOpCode(opCode);
+              msg.setElement(1, byte2);
+              log.trace("len: {}", len); // NOI18N
+              for (int i = 2; i < len; i++) {
+                 // check for message-blocking error
+                 int b = readByteProtected(inpipe) & 0xFF;
+                 log.trace("char {} is: {}", i, Integer.toHexString(b)); // NOI18N
+                 if ((b & 0x80) != 0) {
+                    log.warn("LocoNet message with opCode: " // NOI18N
+                       + Integer.toHexString(opCode)
+                       + " ended early. Expected length: " + len // NOI18N
+                       + " seen length: " + i // NOI18N
+                       + " unexpected byte: " // NOI18N
+                       + Integer.toHexString(b)); // NOI18N
+                    opCode = b;
+                    throw new LocoNetMessageException();
+                 }
+                 msg.setElement(i, b);
+              }
+           } catch (LocoNetMessageException e) {
+              // retry by destroying the existing message
+              // opCode is set for the newly-started packet
+              msg = null;
+           }
         }
+        // check parity
+        if (!msg.checkParity()) {
+           log.warn("Ignore LocoNet packet with bad checksum: {}", msg);
+           throw new LocoNetMessageException();
+        }
+        // message is complete, dispatch it !!
         return msg;
     }
 
     /**
      * Read a single byte, protecting against various timeouts, etc.
-     * <P>
+     * <p>
      * When a port is set to have a receive timeout (via the
      * enableReceiveTimeout() method), some will return zero bytes or an
      * EOFException at the end of the timeout. In that case, the read should be
@@ -202,7 +260,7 @@ public class Z21LocoNetTunnel implements Z21Listener, LocoNetListener , Runnable
      */
     @Override
     public void message(LocoNetMessage msg) {
-        // when an XpressNet message shows up here, package it in a Z21Message
+        // when an LocoNet message shows up here, package it in a Z21Message
         Z21Message message = new Z21Message(msg);
         log.debug("LocoNet Message {} forwarded to z21 Interface as {}",
                     msg, message);
@@ -231,6 +289,7 @@ public class Z21LocoNetTunnel implements Z21Listener, LocoNetListener , Runnable
 
     }
 
+    @SuppressWarnings("deprecation") // Thread.stop not likely to be removed
     public void dispose(){
        if(lsc != null){
           lsc.dispose();

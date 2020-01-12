@@ -17,8 +17,8 @@ public class NceCmdStationMemory {
      */
     public static class CabMemorySerial {
 
-        public final static int CS_CAB_MEM_PRO = 0x8800; // start of NCE CS cab context page for cab 0, PowerHouse/CS2
-        public final static int CS_COMP_CAB_MEM_PRO = 0xED00; // start of computer cab context page, PowerHouse/CS2
+        public final static int CS_CAB_MEM_PRO = 0x8800; // start of NCE CS cab context page for cab 0, PowerPro/CS2
+        public final static int CS_COMP_CAB_MEM_PRO = 0xED00; // start of computer cab context page, PowerPro/CS2
         public final static int CS_CONSIST_MEM = 0xF500;  // start of NCE CS Consist memory
         public final static int CS_CON_MEM_REAR = 0xF600;  // start of rear consist locos
         public final static int CS_CON_MEM_MID = 0xF700;  // start of mid consist locos

@@ -1,9 +1,13 @@
 package jmri.server.json;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.jmris.json.JsonServerPreferences;
 import org.eclipse.jetty.websocket.api.Session;
@@ -16,7 +20,7 @@ import org.junit.Assert;
  */
 public class JsonMockConnection extends JsonConnection {
 
-    private JsonNode message = null;
+    private final List<JsonNode> messages = new ArrayList<>();
     private boolean open = true;
     private boolean throwIOException = false;
 
@@ -45,40 +49,71 @@ public class JsonMockConnection extends JsonConnection {
     /**
      * {@inheritDoc}
      * <p>
-     * This implementation accepts a null message, and if
-     * {@link #isThrowIOException()} is true throws an {@link IOException}. Note
-     * that after throwing the IOException, {@link #isThrowIOException()} will
-     * return false.
+     * This implementation accepts a null message to reset the list of sent
+     * messages, and if {@link #isThrowIOException()} is true throws an
+     * {@link IOException}. Note that after throwing the IOException,
+     * {@link #isThrowIOException()} will return false.
      */
     @Override
-    public void sendMessage(@Nullable JsonNode message) throws IOException {
-        if (this.throwIOException) {
-            this.throwIOException = false;
+    public void sendMessage(@CheckForNull JsonNode message, JsonRequest request) throws IOException {
+        if (throwIOException) {
+            throwIOException = false;
             throw new IOException();
         }
-        if (message != null && this.preferences.getValidateServerMessages()) {
-            try {
-                this.schemas.validateMessage(message, true, this.getLocale());
-            } catch (JsonException ex) {
-                this.message = ex.getJsonMessage();
-                Assert.fail(ex.getMessage());
+        if (message != null) {
+            if (preferences.getValidateServerMessages()) {
+                try {
+                    schemas.validateMessage(message, true, request);
+                } catch (JsonException ex) {
+                    messages.add(ex.getJsonMessage());
+                    Assert.fail(ex.getMessage());
+                }
             }
+            messages.add(message);
+        } else {
+            // use a null message as the key to clear the list of messages
+            messages.clear();
         }
-        this.message = message;
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * This implementation accepts a null message to reset the list of sent
+     * messages, and if {@link #isThrowIOException()} is true throws an
+     * {@link IOException}. Note that after throwing the IOException,
+     * {@link #isThrowIOException()} will return false.
+     */
+    @Override
+    public void sendMessage(@CheckForNull JsonNode message, int id) throws IOException {
+        sendMessage(message, new JsonRequest(getLocale(), getVersion(), id));
+    }
+
+    @CheckForNull
     public JsonNode getMessage() {
-        return this.message;
+        int i = messages.size() - 1;
+        return (i < 0) ? null : messages.get(i);
+    }
+
+    /**
+     * Get a copy of the list of all messages retained as a JSON array. This
+     * returns a JSON array to facilitate JSON path inspection.
+     *
+     * @return a list of messages, empty array if no message has been sent
+     */
+    @Nonnull
+    public ArrayNode getMessages() {
+        return getObjectMapper().createArrayNode().addAll(messages);
     }
 
     @Override
     public void close() throws IOException {
         super.close();
-        this.open = false;
+        open = false;
     }
 
     public boolean isOpen() {
-        return this.open;
+        return open;
     }
 
     /**
@@ -98,6 +133,6 @@ public class JsonMockConnection extends JsonConnection {
      * @return true to throw on next message; false otherwise
      */
     public boolean isThrowIOException() {
-        return this.throwIOException;
+        return throwIOException;
     }
 }

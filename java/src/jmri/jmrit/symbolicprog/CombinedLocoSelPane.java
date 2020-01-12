@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provide GUI controls to select a known loco and/or new decoder.
- * <P>
+ * <p>
  * When the "open programmer" button is pushed, i.e. the user is ready to
  * continue, the startProgrammer method is invoked. This should be overridden
  * (e.g. in a local anonymous class) to create the programmer frame you're
@@ -39,15 +39,15 @@ import org.slf4j.LoggerFactory;
  * <p>
  * To override this class to use a different decoder-selection GUI, replace
  * members:
- * <UL>
- * <LI>layoutDecoderSelection
- * <LI>updateForDecoderTypeID
- * <LI>updateForDecoderMfgID
- * <LI>updateForDecoderNotID
- * <LI>resetDecoder
- * <LI>isDecoderSelected
- * <LI>selectedDecoderName
- * </UL>
+ * <ul>
+ * <li>layoutDecoderSelection
+ * <li>updateForDecoderTypeID
+ * <li>updateForDecoderMfgID
+ * <li>updateForDecoderNotID
+ * <li>resetDecoder
+ * <li>isDecoderSelected
+ * <li>selectedDecoderName
+ * </ul>
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  */
@@ -392,7 +392,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
             locoBox.setSelectedItem(r);
         } else {
             log.warn("Read address {}, but no such loco in roster", dccAddress);
-            _statusLabel.setText(Bundle.getMessage("READ ADDRESS ") + dccAddress + Bundle.getMessage(", BUT NO SUCH LOCO IN ROSTER"));
+            _statusLabel.setText(Bundle.getMessage("ReadNoSuchLoco",dccAddress));
         }
     }
 

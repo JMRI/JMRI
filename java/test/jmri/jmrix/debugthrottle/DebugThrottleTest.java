@@ -1,6 +1,11 @@
 package jmri.jmrix.debugthrottle;
 
+import jmri.NamedBean;
+import jmri.SpeedStepMode;
 import jmri.util.JUnitUtil;
+
+import java.util.Comparator;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -45,8 +50,8 @@ public class DebugThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testGetSpeedStepMode() {
-        int expResult = 1;
-        int result = instance.getSpeedStepMode();
+        SpeedStepMode expResult = SpeedStepMode.NMRA_DCC_128;
+        SpeedStepMode result = instance.getSpeedStepMode();
         Assert.assertEquals(expResult, result);
     }
 
@@ -206,19 +211,26 @@ public class DebugThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.jmrix.SystemConnectionMemo memo = new jmri.jmrix.SystemConnectionMemo("T","Test"){
-           @Override
-           protected java.util.ResourceBundle getActionModelResourceBundle(){
-              return null;
-           }
+        jmri.jmrix.SystemConnectionMemo memo = new jmri.jmrix.SystemConnectionMemo("T", "Test") {
+            @Override
+            protected java.util.ResourceBundle getActionModelResourceBundle() {
+                return null;
+            }
+
+            @Override
+            public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
+                return null;
+            }
         };
         JUnitUtil.initDebugThrottleManager();
         instance = new DebugThrottle(new jmri.DccLocoAddress(100,true),memo);
     }
 
     @After
+    @Override
     public void tearDown() {
         JUnitUtil.tearDown();
     }

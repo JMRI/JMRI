@@ -23,10 +23,7 @@
   <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
-  <variable item="Speed Table" CV="67">
-	<speedTableVal/>
-	<label>Speed Table</label>
-  </variable>
+  <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
   <variable CV="116" default="0" item="EMF Droop Config" tooltip="BEMF derivative gain">
 	<splitVal highCV="117"/>

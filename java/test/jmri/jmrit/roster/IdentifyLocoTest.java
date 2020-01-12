@@ -1,10 +1,10 @@
 package jmri.jmrit.roster;
 
-import jmri.GlobalProgrammerManager;
-import jmri.InstanceManager;
+import jmri.*;
 import jmri.managers.DefaultProgrammerManager;
 import jmri.progdebugger.ProgDebugger;
 import jmri.util.JUnitUtil;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -115,12 +115,12 @@ public class IdentifyLocoTest {
         // initialize the system
         p = new ProgDebugger() {
             @Override
-            public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
-                cvRead = CV;
+            public void readCV(String CV, jmri.ProgListener p) throws jmri.ProgrammerException {
+                cvRead = Integer.parseInt(CV);
             }
         };
         DefaultProgrammerManager dpm = new DefaultProgrammerManager(p);
-        InstanceManager.setAddressedProgrammerManager(dpm);
+        InstanceManager.store(dpm, AddressedProgrammerManager.class);
         InstanceManager.store(dpm, GlobalProgrammerManager.class);
     }
 

@@ -82,7 +82,9 @@ public class ConnectionsPreferencesPanel extends JTabbedPane implements Managing
                 removeTab(null, i);
             } else if (evt.getOldValue() == null) {
                 for (JmrixConfigPane pane : this.configPanes) {
-                    if (pane.getCurrentObject().equals(evt.getNewValue())) {
+                    if (pane.getCurrentObject() == null ) {
+                        log.error("did not expect pane.getCurrentObject()==null here for {} {} {}", i, evt.getNewValue(), configPanes);
+                    } else if (pane.getCurrentObject().equals(evt.getNewValue())) {
                         return; // don't add the connection again
                     }
                 }
@@ -193,7 +195,7 @@ public class ConnectionsPreferencesPanel extends JTabbedPane implements Managing
 
         this.setToolTipTextAt(tabPosition, title);
 
-        if (ConnectionStatus.instance().isConnectionOk(
+        if (ConnectionStatus.instance().isConnectionOk(null, 
                 configPane.getCurrentProtocolInfo())) {
             tabLabel.setForeground(Color.black);
         } else {

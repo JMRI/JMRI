@@ -102,7 +102,7 @@ public class SimpleServlet extends WebSocketServlet {
             try {
                 this.connection.sendMessage("JMRI " + jmri.Version.name() + " \n");
                 this.connection.sendMessage("RAILROAD " + InstanceManager.getDefault(WebServerPreferences.class).getRailroadName() + " \n");
-                this.connection.sendMessage("NODE " + NodeIdentity.identity() + " \n");
+                this.connection.sendMessage("NODE " + NodeIdentity.networkIdentity() + " \n");
             } catch (IOException e) {
                 log.warn(e.getMessage(), e);
                 this.connection.getSession().close();

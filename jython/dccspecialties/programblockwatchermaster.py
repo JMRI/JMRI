@@ -29,7 +29,7 @@
 # 2. Move the Program Jumper J3 from either [J3-2 J3-3] or [J3-3 J3-4] To [J3-1 J3-2](Program Mode)
 # 3. Turn On Track Power - Again, Use a Throttle or JMRI.
 # 4. VERY IMPORTANT - Wait 30 to 45 Seconds.
-# 5. In JMRI Decoder Pro, Go to Panels > Run Script.  Select the file that corresponds
+# 5. In JMRI DecoderPro, Go to Panels > Run Script.  Select the file that corresponds
 #    to the BlockWatcher you are programming.  Note - Do not have the file open in an editor.
 #
 # Important - This script can take 2 to 6 seconds to run. This depends on the number of 
@@ -54,15 +54,15 @@ class setStartup(jmri.jmrit.automat.AbstractAutomaton) :
 
   def handle(self):
     # Next Two Lines - Reset BlockWatcher to Factory Defaults
-    addressedProgrammers.getAddressedProgrammer(True, 9983).writeCV("63", 42, None)	
+    addressedProgrammers.getAddressedProgrammer(True, 9983).writeCV("63", 42, None) 
     self.waitMsec(750)         # time is in milliseconds
 
     # Next Two Lines - Point BlockWatcher to Receive Primary Address, Not Necessary, However, good practice.
-    addressedProgrammers.getAddressedProgrammer(True, 9983).writeCV("63", 0, None)	
+    addressedProgrammers.getAddressedProgrammer(True, 9983).writeCV("63", 0, None)  
     self.waitMsec(750)
 
     # Next Two Lines - Set Primary Address - Change 1234 to Address Desired
-    turnouts.provideTurnout("1234").setState(CLOSED)				
+    turnouts.provideTurnout("1234").setState(CLOSED)                
     self.waitMsec(750)
 
     # Last Two Lines of this Group - CV53 - Delay in Milliseconds
@@ -70,7 +70,7 @@ class setStartup(jmri.jmrit.automat.AbstractAutomaton) :
     # before the J4 output will turn on. It is also the turn-off delay for the amount
     # of time the block current is below the trip level before the J4 output turns
     # off. The default value is 32 ms.
-    # addressedProgrammers.getAddressedProgrammer(True, 9983).writeCV("53", 32, None)	
+    # addressedProgrammers.getAddressedProgrammer(True, 9983).writeCV("53", 32, None)   
     # self.waitMsec(750)
 
     # Last Two Lines of this Group - CV54 - Average Unoccupied Block Current
@@ -80,13 +80,13 @@ class setStartup(jmri.jmrit.automat.AbstractAutomaton) :
     # a trip current of about 2 mA. The maximum value is 254 � CV55 � 3. 
     # This sets the maximum trip current to about 130 mA. 
     # (With J3 on pins 2-3 this value is set each time power is applied to the detector.)
-    # addressedProgrammers.getAddressedProgrammer(True, 9983).writeCV("54", 0, None)	
+    # addressedProgrammers.getAddressedProgrammer(True, 9983).writeCV("54", 0, None)    
     # self.waitMsec(750)
 
     # Last Two Lines of this Group - CV55 - Hysterisis Between On and Off
     # Sets the hysterisis between on and off (see CV54). Its default value is 1.
     # This keeps the detector fromfluttering when the detected current is near the switching point.
-    # addressedProgrammers.getAddressedProgrammer(True, 9983).writeCV("55", 1, None)	
+    # addressedProgrammers.getAddressedProgrammer(True, 9983).writeCV("55", 1, None)    
     # self.waitMsec(750)
     
     javax.swing.JFrame("Programming Complete!").show()

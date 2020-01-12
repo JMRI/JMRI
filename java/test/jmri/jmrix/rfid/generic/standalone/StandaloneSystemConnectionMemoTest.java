@@ -37,15 +37,17 @@ public class StandaloneSystemConnectionMemoTest extends jmri.jmrix.SystemConnect
         };
         memo.setRfidTrafficController(tc);
         memo.configureManagers(
-            new StandaloneSensorManager(tc, memo.getSystemPrefix()),
-            new StandaloneReporterManager(tc, memo.getSystemPrefix()));
+            new StandaloneSensorManager(memo),
+            new StandaloneReporterManager(memo));
         scm=memo;
     }
 
     @Override
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
 }

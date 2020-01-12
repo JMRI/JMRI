@@ -6,9 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * AcelaLight.java
- * <p>
- * Implementation of the Light Object for Acela
+ * Implementation of the Turnout Object for Acela
  * <p>
  * Based in part on SerialTurnout.java
  *
@@ -51,9 +49,9 @@ public class AcelaTurnout extends AbstractTurnout {
     }
 
     /**
-     * Sets up system dependent instance variables and sets system independent
-     * instance variables to default values Note: most instance variables are in
-     * AbstractLight.java
+     * Set up system dependent instance variables and set system independent
+     * instance variables to default values.
+     * Note: most instance variables are in AbstractTurnout.java
      */
     private void initializeTurnout(String systemName) {
         // Extract the Bit from the name

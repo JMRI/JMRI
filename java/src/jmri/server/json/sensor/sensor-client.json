@@ -16,6 +16,10 @@
             "type": "string",
             "description": "If present, set the comment for the sensor"
         },
+        "inverted": {
+            "type": "boolean",
+            "description": "true if sensor is inverted; false otherwise"
+        },
         "state": {
             "type": "integer",
             "description": "If present, sets the state of the sensor",

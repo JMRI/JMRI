@@ -2,18 +2,19 @@ package jmri.implementation;
 
 import jmri.*;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 
 /**
  * Tests for the Route interface
  *
  * @author	Bob Jacobsen Copyright (C) 2006, 2007
  */
-public class RouteTest extends TestCase {
+public class RouteTest {
 
+    @Test
     public void testSetConstants() {
         Assert.assertTrue("ACTIVE not TOGGLE", Sensor.ACTIVE != Route.TOGGLE);
         Assert.assertTrue("INACTIVE not TOGGLE", Sensor.INACTIVE != Route.TOGGLE);
@@ -24,12 +25,14 @@ public class RouteTest extends TestCase {
     /**
      * The following equalities are needed so that old files can be read
      */
+    @Test
     @SuppressWarnings("all") // to suppress "Comparing identical expressions"
     public void testRouteAndTurnoutConstants() {
         Assert.assertTrue("CLOSED is ONCLOSED", Turnout.CLOSED == Route.ONCLOSED);
         Assert.assertTrue("THROWN is ONTHROWN", Turnout.THROWN == Route.ONTHROWN);
     }
 
+    @Test
     public void testSignalFireConstants() {
         int[] constants = new int[]{Route.ONACTIVE, Route.ONINACTIVE, Route.VETOACTIVE, Route.VETOINACTIVE,
             Route.ONCHANGE};
@@ -49,6 +52,7 @@ public class RouteTest extends TestCase {
         }
     }
 
+    @Test
     public void testTurnoutFireConstants() {
         int[] constants = new int[]{Route.ONCHANGE,
             Route.ONCLOSED, Route.ONTHROWN, Route.VETOCLOSED, Route.VETOTHROWN};
@@ -68,6 +72,7 @@ public class RouteTest extends TestCase {
         }
     }
 
+    @Test
     public void testEnable() {
         Route r = new DefaultRoute("test");
         // get default
@@ -79,6 +84,7 @@ public class RouteTest extends TestCase {
         Assert.assertTrue("set enabled true", r.getEnabled());
     }
 
+    @Test
     public void testIsVetoed() {
         DefaultRoute r = new DefaultRoute("test");
         // check disabled
@@ -89,6 +95,7 @@ public class RouteTest extends TestCase {
         Assert.assertTrue("not vetoed when enabled", !r.isVetoed());
     }
 
+    @Test
     public void testTurnoutsAlignedSensor() {
         DefaultRoute r = new DefaultRoute("test");
         r.setTurnoutsAlignedSensor("IS123");
@@ -97,6 +104,7 @@ public class RouteTest extends TestCase {
         
     }
 
+    @Test
     public void testLockControlTurnout() {
         DefaultRoute r = new DefaultRoute("test");
         r.setLockControlTurnout("IT123");
@@ -109,6 +117,7 @@ public class RouteTest extends TestCase {
     // are "constraints due to implementation", so let's test those here
     //
     @SuppressWarnings("all")
+    @Test
     public void testImplementationConstraint() {
         // check a constraint required by this implementation!
         Assert.assertTrue("ONACTIVE", Route.ONACTIVE == 0);
@@ -117,34 +126,15 @@ public class RouteTest extends TestCase {
         Assert.assertTrue("VETOINACTIVE", Route.VETOINACTIVE == 3);
     }
 
-    // from here down is testing infrastructure
-    public RouteTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {RouteTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(RouteTest.class);
-        return suite;
-    }
-    
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         JUnitUtil.tearDown();
     }
    

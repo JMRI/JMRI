@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Base class for main frame (window) of traditional-style JMRI applications
- * <P>
+ * <p>
  * This is for launching after the system is initialized, so it does none of
  * that.
  *
@@ -71,16 +71,21 @@ public class AppsLaunchFrame extends jmri.util.JmriJFrame {
         // handle window close
         setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
 
-        // pack and center this frame
+        // pack
         pack();
+        
+        // center as default
         Dimension screen = getToolkit().getScreenSize();
         Dimension size = getSize();
         setLocation((screen.width - size.width) / 2, (screen.height - size.height) / 2);
+        
+        // then try to load location and size from preferences
+        setFrameLocation();
     }
 
     /**
      * Add menus to a menu bar.
-     * <P>
+     * <p>
      * This does not include the development menu.
      *
      * @param menuBar the existing menu bar
@@ -102,7 +107,6 @@ public class AppsLaunchFrame extends jmri.util.JmriJFrame {
             operationsMenu(menuBar, wi);
         }
         systemsMenu(menuBar, wi);
-        scriptMenu(menuBar, wi);
         debugMenu(menuBar, wi, pane);
         menuBar.add(new WindowMenu(wi)); // * GT 28-AUG-2008 Added window menu
         helpMenu(menuBar, wi, pane);
@@ -150,7 +154,7 @@ public class AppsLaunchFrame extends jmri.util.JmriJFrame {
         editMenu.add(a);
 
         // prefs
-        prefsAction = new apps.gui3.TabbedPreferencesAction(Bundle.getMessage("MenuItemPreferences"));
+        prefsAction = new apps.gui3.tabbedpreferences.TabbedPreferencesAction(Bundle.getMessage("MenuItemPreferences"));
         // Put prefs in Apple's prefered area on Mac OS X
         if (SystemType.isMacOSX()) {
             Application.getApplication().setPreferencesHandler(new PreferencesHandler() {
@@ -231,13 +235,20 @@ public class AppsLaunchFrame extends jmri.util.JmriJFrame {
 
     }
 
+    /**
+     * Add a script menu to a window menu bar.
+     * 
+     * @param menuBar the menu bar to add the script menu to
+     * @param wi the window interface containing menuBar
+     * @deprecated since 4.17.5 without direct replacement; appears
+     * to have been empty method since 1.2.3
+     */
+    @Deprecated
     protected void scriptMenu(JMenuBar menuBar, WindowInterface wi) {
         // temporarily remove Scripts menu; note that "Run Script"
         // has been added to the Panels menu
         // JMenu menu = new JMenu("Scripts");
         // menuBar.add(menu);
-        // menu.add(new jmri.jmrit.automat.JythonAutomatonAction("Jython script", this));
-        // menu.add(new jmri.jmrit.automat.JythonSigletAction("Jython siglet", this));
     }
 
     protected void developmentMenu(JMenuBar menuBar, WindowInterface wi) {

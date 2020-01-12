@@ -21,7 +21,7 @@
   <!-- V 1 new file - Mark Waters - 27 Dec 2015 -->
   <decoder>
     <family name="Zimo Unified software (version 25+)" mfg="Zimo">
-      <model model="MX634C version 25+" lowVersionID="30" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="240">
+      <model model="MX634C version 25+" lowVersionID="30" highVersionID="31" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="240">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>

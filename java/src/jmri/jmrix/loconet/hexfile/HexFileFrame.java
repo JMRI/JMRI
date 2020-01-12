@@ -3,11 +3,14 @@ package jmri.jmrix.loconet.hexfile;
 import javax.swing.BoxLayout;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
-import jmri.GlobalProgrammerManager;
+
+import jmri.*;
+import jmri.jmrix.debugthrottle.DebugThrottleManager;
 import jmri.jmrix.loconet.LnCommandStationType;
 import jmri.jmrix.loconet.LnPacketizer;
 import jmri.managers.DefaultProgrammerManager;
 import jmri.util.JmriJFrame;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,18 +31,26 @@ public class HexFileFrame extends JmriJFrame {
     javax.swing.JButton jButton1 = new javax.swing.JButton();
     javax.swing.JTextField delayField = new javax.swing.JTextField(5);
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
+    
+    private int connectedAddresses = 0;
 
     // to find and remember the log file
-    final javax.swing.JFileChooser inputFileChooser
-            = jmri.jmrit.XmlFile.userFileChooser("Hex files", "hex"); // NOI18N
+    final javax.swing.JFileChooser inputFileChooser;
 
+    /**
+     * Because this creates a FileChooser, this should be invoked on the
+     * GUI frame.
+     */
+    @InvokeOnGuiThread
     public HexFileFrame() {
         super();
+        inputFileChooser = jmri.jmrit.XmlFile.userFileChooser("Hex files", "hex"); // NOI18N
     }
 
     /**
      * {@inheritDoc}
      */
+    @InvokeOnGuiThread
     @Override
     public void initComponents() {
         if (port == null) {
@@ -111,25 +122,21 @@ public class HexFileFrame extends JmriJFrame {
                 delayFieldActionPerformed(e);
             }
         });
-
-        // create a new Hex file handler, set its delay
-        //port = new LnHexFilePort();
-        //port.setDelay(Integer.valueOf(delayField.getText()).intValue());
-        // and make the connections
-        //configure();
     }
 
     boolean connected = false;
 
     @Override
+    @InvokeOnGuiThread
     public void dispose() {
         // leaves the LocoNet Packetizer (e.g. the simulated connection)
-        // running.
+        // running so that the application can keep pretending to run with the window closed.
         super.dispose();
     }
 
     LnPacketizer packets = null;
 
+    @InvokeOnGuiThread
     public void openHexFileButtonActionPerformed(java.awt.event.ActionEvent e) {
         // select the file
         // start at current file, show dialog
@@ -144,15 +151,16 @@ public class HexFileFrame extends JmriJFrame {
         port.load(inputFileChooser.getSelectedFile());
 
         // wake copy
-        sourceThread.interrupt();
+        sourceThread.interrupt();  // really should be using notifyAll instead....
 
         // reach here while file runs.  Need to return so GUI still acts,
         // but that normally lets the button go back to default.
     }
 
+    @InvokeOnGuiThread
     public void configure() {
         if (port == null) {
-            log.error("initComponents called before adapter has been set");
+            log.error("configure called before adapter has been set");
             return;
         }
         // connect to a packetizing LnTrafficController
@@ -167,11 +175,13 @@ public class HexFileFrame extends JmriJFrame {
         port.getSystemConnectionMemo().configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100, // full featured by default
                 false, false, false);
         port.getSystemConnectionMemo().configureManagers();
-        if (port.getSystemConnectionMemo().getSensorManager() instanceof LnSensorManager) {
-            LnSensorManager LnSensorManager = (LnSensorManager) port.getSystemConnectionMemo().getSensorManager();
-            LnSensorManager.setDefaultSensorState(port.getOptionState("SensorDefaultState")); // NOI18N
-        } else {
-            log.info("Sensor Manager referenced by port is not an LnSensorManager. Have not set the default sensor state.");
+        jmri.SensorManager sm = port.getSystemConnectionMemo().getSensorManager();
+        if (sm != null) {
+            if ( sm instanceof LnSensorManager) {
+                ((LnSensorManager) sm).setDefaultSensorState(port.getOptionState("SensorDefaultState")); // NOI18N
+            } else {
+                log.info("SensorManager referenced by port is not an LnSensorManager. Have not set the default sensor state.");
+            }
         }
 
         // Install a debug programmer, replacing the existing LocoNet one
@@ -187,8 +197,43 @@ public class HexFileFrame extends JmriJFrame {
         jmri.InstanceManager.deregister(ep, jmri.AddressedProgrammerManager.class);
         jmri.InstanceManager.deregister(ep, jmri.GlobalProgrammerManager.class);
 
-        // Install a debug throttle manager, replacing the existing LocoNet one
-        port.getSystemConnectionMemo().setThrottleManager(new jmri.jmrix.debugthrottle.DebugThrottleManager(port.getSystemConnectionMemo()));
+        // Install a debug throttle manager and override 
+        DebugThrottleManager tm = new DebugThrottleManager(port.getSystemConnectionMemo() ) {
+            /**
+             * Only address 128 and above can be a long address
+             */
+            @Override
+            public boolean canBeLongAddress(int address) {
+                return (address >= 128);
+            }
+
+            @Override
+            public void requestThrottleSetup(LocoAddress a, boolean control) {
+                if (!(a instanceof DccLocoAddress)) {
+                    log.error("{} is not a DccLocoAddress",a);
+                    failedThrottleRequest(a, "LocoAddress " + a + " is not a DccLocoAddress");
+                    return;
+                }
+                connectedAddresses++;
+                DccLocoAddress address = (DccLocoAddress) a;
+                //create some testing situations
+                if (connectedAddresses > 5) {
+                    log.warn("SLOT MAX of 5 exceeded");
+                    failedThrottleRequest(address, "SLOT MAX of 5 exceeded");
+                    return;
+                }
+                // otherwise, continue with setup
+                super.requestThrottleSetup(a, control);
+            }
+
+            @Override
+            public boolean disposeThrottle(DccThrottle t, jmri.ThrottleListener l) {
+                connectedAddresses--;
+                return super.disposeThrottle(t, l);
+            }    
+        };
+
+        port.getSystemConnectionMemo().setThrottleManager(tm);
         jmri.InstanceManager.setThrottleManager(
                 port.getSystemConnectionMemo().getThrottleManager());
 
@@ -198,10 +243,12 @@ public class HexFileFrame extends JmriJFrame {
         sourceThread.start();
     }
 
+    @SuppressWarnings("deprecation")  // Thread.suspend() not being removed
     public void filePauseButtonActionPerformed(java.awt.event.ActionEvent e) {
         sourceThread.suspend();
     }
 
+    @SuppressWarnings("deprecation")  // Thread.resume() not being removed
     public void jButton1ActionPerformed(java.awt.event.ActionEvent e) {  // resume button
         sourceThread.resume();
     }
@@ -209,11 +256,11 @@ public class HexFileFrame extends JmriJFrame {
     public void delayFieldActionPerformed(java.awt.event.ActionEvent e) {
         // if the hex file has been started, change its delay
         if (port != null) {
-            port.setDelay(Integer.valueOf(delayField.getText()).intValue());
+            port.setDelay(Integer.parseInt(delayField.getText()));
         }
     }
 
-    private Thread sourceThread;
+    Thread sourceThread;  // tests need access
 
     public void setAdapter(LnHexFilePort adapter) {
         port = adapter;

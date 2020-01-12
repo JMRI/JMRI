@@ -3,20 +3,16 @@ package jmri.jmrit.entryexit;
 import java.awt.GraphicsEnvironment;
 import java.util.HashMap;
 import jmri.InstanceManager;
-import jmri.Sensor;
 import jmri.SensorManager;
-import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
-import jmri.jmrit.entryexit.EntryExitPairs;
 import jmri.util.JUnitUtil;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.netbeans.jemmy.EventTool;
 
 /**
  *
@@ -93,8 +89,9 @@ public class DestinationPointsTest {
     public static void setUp() throws Exception {
         JUnitUtil.setUp();
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        jmri.util.JUnitUtil.resetProfileManager();
         tools = new EntryExitTestTools();
-        panels = tools.getPanels();
+        panels = EntryExitTestTools.getPanels();
         Assert.assertEquals("Get LE panels", 2, panels.size());  // NOI18N
         eep = InstanceManager.getDefault(EntryExitPairs.class);
         lbm = InstanceManager.getDefault(LayoutBlockManager.class);
@@ -106,6 +103,12 @@ public class DestinationPointsTest {
     public static void tearDown() {
         panels.forEach((name, panel) -> JUnitUtil.dispose(panel));
         JUnitUtil.tearDown();
+        tm = null;
+        sm = null;
+        lbm = null;
+        eep = null;
+        panels = null;
+        tools = null;
     }
 
 //     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DestinationPointsTest.class);

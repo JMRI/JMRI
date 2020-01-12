@@ -13,8 +13,6 @@ public class SerialTrafficControlScaffold extends SerialTrafficController {
 
     public SerialTrafficControlScaffold(TmccSystemConnectionMemo memo) {
         super(memo);
-        log.debug("setting instance: {}", this);
-        self = this;
     }
 
     // Override some SerialTrafficController methods for test purposes.

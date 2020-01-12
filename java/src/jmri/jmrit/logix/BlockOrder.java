@@ -8,7 +8,6 @@ package jmri.jmrit.logix;
  * where the warranted train enters a block, the path it takes and
  * where it exits the block.
  * The Engineer is notified when the train enters the block.
- * <P>
  *
  * @author Pete Cressman Copyright (C) 2009
  */
@@ -18,6 +17,7 @@ public class BlockOrder {
     private String _pathName;  // path the train is to take in the block
     private String _entryName; // Name of entry Portal
     private String _exitName;  // Name of exit Portal
+    private float _tempPathLen; // hold user's input for this session
 
     public BlockOrder(OBlock block) {
         _block = block;
@@ -85,10 +85,10 @@ public class BlockOrder {
     protected String getPermissibleExitSpeed() {
         Portal portal = _block.getPortalByName(getEntryName());
         if (portal != null) {
-            return portal.getPermissibleExitSpeed(_block);
+            return portal.getPermissibleSpeed(_block, false);
         }
         // OK if this is first block
-//        log.warn("getPermissibleExitSpeed, no entry portal! "+this.toString());
+//        log.warn("getPermissibleSpeed (Exit), no entry portal! {}", this.toString());
         return null;
     }
 
@@ -99,10 +99,11 @@ public class BlockOrder {
     /**
      * Set Path. Note that the Path's 'fromPortal' and 'toPortal' have no
      * bearing on the BlockOrder's entryPortal and exitPortal.
-     * @param path - Name of the OPath connecting the entry and exit Portals
+     * @param path  Name of the OPath connecting the entry and exit Portals
      */
     protected void setPathName(String path) {
         _pathName = path;
+        _tempPathLen =0.0f;
     }
 
     public String getPathName() {
@@ -122,6 +123,14 @@ public class BlockOrder {
             }
         }
         return msg;
+    }
+    
+    protected void setTempPathLen(float len) {
+        _tempPathLen = len;
+    }
+
+    protected float getTempPathLen() {
+        return _tempPathLen;
     }
 
     protected void setBlock(OBlock block) {
@@ -154,10 +163,10 @@ public class BlockOrder {
     protected String getPermissibleEntranceSpeed() {
         Portal portal = _block.getPortalByName(getEntryName());
         if (portal != null) {
-            return portal.getPermissibleEntranceSpeed(_block);
+            return portal.getPermissibleSpeed(_block, true);
         }
         // OK if this is first block
-        //log.warn("getPermissibleEntranceSpeed, no entry portal! "+this.toString());
+        //log.warn("getPermissibleSpeed (Entrance), no entry portal! {}", this.toString());
         return null;
     }
 
@@ -181,18 +190,13 @@ public class BlockOrder {
         return null;
     }
     
-/* Why is this here?
-    protected String hash() {
-        return _block.getDisplayName() + _pathName + _entryName + _exitName;
-    } */
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("BlockOrder: Block \"");
         sb.append( _block.getDisplayName());
         sb.append("\" has Path \"");
-        sb.append("\" has Path \"");
-        sb.append("\" with Portals entry= \"");
+        sb.append(_pathName);
+        sb.append("\" with Portals, entry= \"");
         sb.append(_entryName);
         sb.append("\" and exit= \"");
         sb.append(_exitName);

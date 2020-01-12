@@ -21,8 +21,14 @@
     <revision>
         <revnumber>1</revnumber>
         <date>2016-12-27</date>
-        <authorinitials>PS</authorinitials>
+        <authorinitials>PŠ</authorinitials>
         <revremark>Initial version</revremark>
+    </revision>    
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2018-09-22</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Panel indicators</revremark>
     </revision>    
   </revhistory>
 
@@ -36,11 +42,15 @@
     <appearance>
       <aspectname>Stůj</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/300_stuj_2h.gif</imagelink>
+      <imagelink type="AŽD zč">../../../resources/icons/smallschematics/aspects/CSD/AZD/00_gr.png</imagelink>
+      <imagelink type="ESP zč">../../../resources/icons/smallschematics/aspects/CSD/ESP/00_gr.png</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Volno</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/301_volno_2h.gif</imagelink>
+      <imagelink type="AŽD zč">../../../resources/icons/smallschematics/aspects/CSD/AZD/01_gr.png</imagelink>
+      <imagelink type="ESP zč">../../../resources/icons/smallschematics/aspects/CSD/ESP/01_gr.png</imagelink>
     </appearance>
 
   </appearances>

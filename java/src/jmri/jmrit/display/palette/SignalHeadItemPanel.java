@@ -16,7 +16,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
-import jmri.NamedBean;
 import jmri.SignalHead;
 import jmri.jmrit.catalog.DragJLabel;
 import jmri.jmrit.catalog.NamedIcon;
@@ -27,14 +26,14 @@ import jmri.jmrit.picker.PickListModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SignalHeadItemPanel extends TableItemPanel { //implements ListSelectionListener {
+public class SignalHeadItemPanel extends TableItemPanel<SignalHead> { 
 
     public SignalHeadItemPanel(DisplayFrame parentFrame, String type, String family, PickListModel<SignalHead> model, Editor editor) {
         super(parentFrame, type, family, model, editor);
     }
 
     @Override
-    protected JPanel initTablePanel(PickListModel model, Editor editor) {
+    protected JPanel initTablePanel(PickListModel<SignalHead> model, Editor editor) {
         _table = model.makePickTable();
         JPanel topPanel = new JPanel();
         topPanel.setLayout(new BorderLayout());
@@ -79,9 +78,8 @@ public class SignalHeadItemPanel extends TableItemPanel { //implements ListSelec
             return;
         }
         int row = _table.getSelectedRow();
-        if (log.isDebugEnabled()) {
-            log.debug("Table valueChanged: row= {}, {}({})", row, _table.getValueAt(row, 0), _table.getValueAt(row, 1));
-        }
+        log.debug("Table valueChanged: row= {}, {}({})",
+                row, _table.getValueAt(row, 0), _table.getValueAt(row, 1));
         if (row >= 0) {
             _updateButton.setEnabled(true);
             _updateButton.setToolTipText(null);
@@ -90,29 +88,21 @@ public class SignalHeadItemPanel extends TableItemPanel { //implements ListSelec
                 HashMap<String, NamedIcon> fullmap = getFilteredIconMap(ItemPanel.makeNewIconMap(_itemType));
                 // icon map of appearances for type of current bean.
                 HashMap<String, NamedIcon> currentmap = (getIconMap());
-                if (log.isDebugEnabled()) {
-                    log.debug("currentmap keys = {}", currentmap.keySet().toString());
-                }
+                log.debug("currentmap keys = {}", currentmap.keySet().toString());
                 // use current images for as many of the fullMap's members as possible
                 HashMap<String, NamedIcon> iconMap = new HashMap<>();
-                Iterator<Entry<String, NamedIcon>> it = fullmap.entrySet().iterator();
-                while (it.hasNext()) {
-                    Entry<String, NamedIcon> entry = it.next();
+                for (Entry<String, NamedIcon> entry : fullmap.entrySet()) {
                     String key = entry.getKey();
                     String newKey = ItemPalette.convertText(key);
-                    if (log.isDebugEnabled()) {
-                        log.debug("fullmap key = {}, converts to {}", key, newKey);
-                    }
+                    log.debug("fullmap key = {}, converts to {}", key, newKey);
                     NamedIcon icon = currentmap.get(newKey);
                     if (icon != null) {
-                        iconMap.put(newKey, icon);                        
+                        iconMap.put(newKey, icon);
                     } else {
                         iconMap.put(newKey, entry.getValue());
                     }
                 }
-                if (log.isDebugEnabled()) {
-                    log.debug("set Signal Head {} map size= {}", _table.getValueAt(row, 0), iconMap.size());
-                }
+                log.debug("set Signal Head {} map size= {}", _table.getValueAt(row, 0), iconMap.size());
                 setIconMap(iconMap);
             }
         } else {
@@ -135,37 +125,27 @@ public class SignalHeadItemPanel extends TableItemPanel { //implements ListSelec
             return allIconsMap;
         }
 
-        SignalHead sh = (SignalHead) getDeviceNamedBean();
+        SignalHead sh = getDeviceNamedBean();
         if (sh != null) {
             String[] states = sh.getValidStateNames();
             if (states.length == 0) {
                 return allIconsMap;
             }
             HashMap<String, NamedIcon> iconMap = new HashMap<>();
-            Iterator<Entry<String, NamedIcon>> it = allIconsMap.entrySet().iterator();
-            while (it.hasNext()) {
-                Entry<String, NamedIcon> entry = it.next();
+            for (Entry<String, NamedIcon> entry : allIconsMap.entrySet()) {
                 String name = entry.getKey();
                 String borderName = ItemPalette.convertText(name);
-                for (int j = 0; j < states.length; j++) {
-                    if (borderName.equals(states[j])
-                            || name.equals("SignalHeadStateDark")
-                            || name.equals(ItemPalette.convertText("SignalHeadStateDark"))
-                            || name.equals("SignalHeadStateHeld")
-                            || name.equals(ItemPalette.convertText("SignalHeadStateHeld"))) {
+                for (String state : states) {
+                    if (borderName.equals(state) || name.equals("SignalHeadStateDark") || name.equals(ItemPalette.convertText("SignalHeadStateDark")) || name.equals("SignalHeadStateHeld") || name.equals(ItemPalette.convertText("SignalHeadStateHeld"))) {
                         iconMap.put(name, entry.getValue());
                         break;
                     }
                 }
             }
-            if (log.isDebugEnabled()) {
-                log.debug("filteredMap size= {}",iconMap.size());
-            }
+            log.debug("filteredMap size= {}", iconMap.size());
             return iconMap;
         }
-        if (log.isDebugEnabled()) {
-            log.debug("Map NOT filtered, size= {}",allIconsMap.size());
-        }
+        log.debug("Map NOT filtered, size= {}", allIconsMap.size());
         return allIconsMap;
     }
 
@@ -187,7 +167,7 @@ public class SignalHeadItemPanel extends TableItemPanel { //implements ListSelec
 
         @Override
         protected boolean okToDrag() {
-            NamedBean bean = getDeviceNamedBean();
+            SignalHead bean = getDeviceNamedBean();
             if (bean == null) {
                 JOptionPane.showMessageDialog(this, Bundle.getMessage("noRowSelected"),
                         Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
@@ -201,7 +181,7 @@ public class SignalHeadItemPanel extends TableItemPanel { //implements ListSelec
             if (!isDataFlavorSupported(flavor)) {
                 return null;
             }
-            NamedBean bean = getDeviceNamedBean();
+            SignalHead bean = getDeviceNamedBean();
             if (bean == null) {
                 return null;
             }

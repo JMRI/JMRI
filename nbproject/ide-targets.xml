@@ -10,4 +10,12 @@
         <antcall target="panelpro"/>
     </target>
 
+    <target depends="debug, runtime-library-selection" description="Debug Single Test" name="debug-test-single.nb">
+        <nbjpdastart addressproperty="jpda.address" name="JMRI" transport="dt_socket">
+            <classpath refid="test.class.path"/>
+        </nbjpdastart>
+        <property name="test-single.jvmargs" value="-Xdebug -Xrunjdwp:transport=dt_socket,server=n,suspend=n,address=${jpda.address}"/>
+        <antcall target="test-single" inheritAll="true"/>
+    </target>
+
 </project>

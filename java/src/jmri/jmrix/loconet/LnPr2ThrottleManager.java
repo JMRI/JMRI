@@ -21,6 +21,7 @@ public class LnPr2ThrottleManager extends AbstractThrottleManager {
 
     /**
      * Constructor, works via superclass.
+     * @param memo the LocoNetSystemConnectionMemo
      */
     public LnPr2ThrottleManager(LocoNetSystemConnectionMemo memo) {
         super(memo);
@@ -28,6 +29,8 @@ public class LnPr2ThrottleManager extends AbstractThrottleManager {
 
     /**
      * PR2 allows only one throttle
+     * <p>
+     * {@inheritDoc}
      */
     @Override
     protected boolean singleUse() {
@@ -100,6 +103,7 @@ public class LnPr2ThrottleManager extends AbstractThrottleManager {
     /**
      * Make the active address available to the power manager, which needs it to
      * turn on and off "neutral mode" in the locomotive
+     * @return a DccLocoAddress
      */
     public DccLocoAddress getActiveAddress() {
         return activeAddress;

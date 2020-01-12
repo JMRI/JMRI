@@ -4,18 +4,17 @@ package jmri.jmrit.beantable.oblock;
  * GUI to define the OPaths within an OBlock.  An OPath is the setting of turnouts 
  * from one Portal to another Portal within an OBlock.  It may also be assigned
  * a length.
- * <P>
+ * <p>
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
  *
  * @author Pete Cressman (C) 2010
  */
@@ -64,9 +63,6 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
         super();
         _block = block;
         _parent = parent;
-    }
-
-    public void init() {
         initTempRow();
         _block.addPropertyChangeListener(this);
     }
@@ -221,8 +217,7 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                             try {
                                 len = IntlUtilities.floatValue(tempRow[LENGTHCOL]);
                             } catch (ParseException e) {
-                                JOptionPane.showMessageDialog(null, Bundle.getMessage("BadNumber", tempRow[LENGTHCOL]),
-                                        Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);                    
+                                msg = Bundle.getMessage("BadNumber", tempRow[LENGTHCOL]);                    
                             }
                             if (tempRow[UNITSCOL].equals((Bundle.getMessage("cm")))) {
                                 path.setLength(len * 10.0f);
@@ -252,10 +247,9 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                             _tempLen *= 25.4f;                            
                         }
                     } catch (ParseException e) {
-                        JOptionPane.showMessageDialog(null, Bundle.getMessage("BadNumber", tempRow[LENGTHCOL]),
-                                Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);                    
+                        msg = Bundle.getMessage("BadNumber", tempRow[LENGTHCOL]);
                     }
-                    return;
+                    break;
                 case UNITSCOL:
                     _units.set(row, (Boolean)value);
                     fireTableRowsUpdated(row, row);
@@ -285,11 +279,8 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                     Portal portal = _block.getPortalByName(strValue);
                     PortalManager portalMgr = InstanceManager.getDefault(PortalManager.class);
                     if (portal == null || portalMgr.getPortal(strValue) == null) {
-                        int response = JOptionPane.showConfirmDialog(null,
-                                Bundle.getMessage("BlockPortalConflict", value, _block.getDisplayName()),
-                                Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION,
-                                JOptionPane.WARNING_MESSAGE);
-                        if (response == JOptionPane.NO_OPTION) {
+                        int val = _parent.verifyWarning(Bundle.getMessage("BlockPortalConflict", value, _block.getDisplayName()));
+                        if (val == 2) {
                             break;
                         }
                         portal = portalMgr.providePortal(strValue);
@@ -298,14 +289,10 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                             break;
                         } else {
                             if (!portal.setFromBlock(_block, false)) {
-                                response = JOptionPane.showConfirmDialog(null,
-                                        Bundle.getMessage("BlockPathsConflict", value, portal.getFromBlockName()),
-                                        Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION,
-                                        JOptionPane.WARNING_MESSAGE);
-                                if (response == JOptionPane.NO_OPTION) {
+                                val = _parent.verifyWarning(Bundle.getMessage("BlockPathsConflict", value, portal.getFromBlockName()));
+                                if (val == 2) {
                                     break;
                                 }
-
                             }
                             portal.setFromBlock(_block, true);
                             _parent.getPortalModel().fireTableDataChanged();
@@ -336,12 +323,9 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                     PortalManager portalMgr = InstanceManager.getDefault(PortalManager.class);
                     Portal portal = _block.getPortalByName(strValue);
                     if (portal == null || portalMgr.getPortal(strValue) == null) {
-                        int response = JOptionPane.showConfirmDialog(null,
-                                Bundle.getMessage("BlockPortalConflict", value, _block.getDisplayName()),
-                                Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION,
-                                JOptionPane.WARNING_MESSAGE);
-                        if (response == JOptionPane.NO_OPTION) {
-                            break;
+                        int val = _parent.verifyWarning(Bundle.getMessage("BlockPortalConflict", value, _block.getDisplayName()));
+                        if (val == 2) {
+                            break;  // no response
                         }
                         portal = portalMgr.providePortal(strValue);
                         if (portal == null) {
@@ -349,14 +333,10 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                             break;
                         } else {
                             if (!portal.setToBlock(_block, false)) {
-                                response = JOptionPane.showConfirmDialog(null,
-                                        Bundle.getMessage("BlockPathsConflict", value, portal.getToBlockName()),
-                                        Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION,
-                                        JOptionPane.WARNING_MESSAGE);
-                                if (response == JOptionPane.NO_OPTION) {
+                                val = _parent.verifyWarning(Bundle.getMessage("BlockPathsConflict", value, portal.getToBlockName()));
+                                if (val == 2) {
                                     break;
                                 }
-
                             }
                             portal.setToBlock(_block, true);
                             _parent.getPortalModel().fireTableDataChanged();
@@ -410,14 +390,11 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
     }
 
     boolean deletePath(OPath path) {
-        if (JOptionPane.showConfirmDialog(null, Bundle.getMessage("DeletePathConfirm",
-                path.getName()), Bundle.getMessage("WarningTitle"),
-                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
-                == JOptionPane.YES_OPTION) {
-            _block.removePath(path);
-            return true;
+        int val = _parent.verifyWarning(Bundle.getMessage("DeletePathConfirm", path.getName()));
+        if (val == 2) {
+            return false;
         }
-        return false;
+        return _block.removeOPath(path);
     }
 
     @Override
@@ -463,8 +440,11 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
             if (log.isDebugEnabled()) {
                 log.debug("propertyChange \"" + property + "\".  source= " + e.getSource());
             }
-            if (property.equals("portalCount") || property.equals("pathCount")) {
+            if (property.equals("portalCount") || 
+                    property.equals("pathCount") || property.equals("pathName")) {
                 fireTableDataChanged();
+            } else if (property.equals("deleted")) {
+                _parent.disposeBlockPathFrame(_block);
             }
         }
     }

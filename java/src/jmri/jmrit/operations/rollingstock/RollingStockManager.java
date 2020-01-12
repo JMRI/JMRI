@@ -1,9 +1,14 @@
 package jmri.jmrit.operations.rollingstock;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
+
+import javax.annotation.OverridingMethodsMustInvokeSuper;
+
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.trains.Train;
@@ -16,7 +21,7 @@ import org.slf4j.LoggerFactory;
  * @author Daniel Boudreau Copyright (C) 2010, 2011
  * @param <T> the type of RollingStock managed by this manager
  */
-public class RollingStockManager<T extends RollingStock> {
+public abstract class RollingStockManager<T extends RollingStock> implements PropertyChangeListener {
 
     public static final String NONE = "";
 
@@ -24,6 +29,8 @@ public class RollingStockManager<T extends RollingStock> {
     protected Hashtable<String, T> _hashTable = new Hashtable<>();
 
     public static final String LISTLENGTH_CHANGED_PROPERTY = "RollingStockListLength"; // NOI18N
+    
+    abstract public RollingStock newRS(String road, String number);
 
     public RollingStockManager() {
     }
@@ -106,9 +113,12 @@ public class RollingStockManager<T extends RollingStock> {
      * @param rs The RollingStock to load.
      */
     public void register(T rs) {
-        int oldSize = _hashTable.size();
-        _hashTable.put(rs.getId(), rs);
-        firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, _hashTable.size());
+        if (!_hashTable.contains(rs)) {
+            int oldSize = _hashTable.size();
+            rs.addPropertyChangeListener(this);
+            _hashTable.put(rs.getId(), rs);
+            firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, _hashTable.size());
+        }
     }
 
     /**
@@ -117,12 +127,24 @@ public class RollingStockManager<T extends RollingStock> {
      * @param rs The RollingStock to delete.
      */
     public void deregister(T rs) {
+        rs.removePropertyChangeListener(this);
         rs.dispose();
         int oldSize = _hashTable.size();
         _hashTable.remove(rs.getId());
         firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, _hashTable.size());
     }
 
+    /**
+     * Change the ID of a RollingStock.
+     * 
+     * @param rs     the rolling stock to change
+     * @param road   the new road name for the rolling stock
+     * @param number the new number for the rolling stock
+     * @deprecated since 4.15.6 without direct replacement; the ID of a
+     * RollingStock is automatically synchronized with changes to the road and
+     * number of the RollingStock
+     */
+    @Deprecated
     public void changeId(T rs, String road, String number) {
         _hashTable.remove(rs.getId());
         rs._id = RollingStock.createId(road, number);
@@ -578,6 +600,19 @@ public class RollingStockManager<T extends RollingStock> {
             out.add(rs);
         });
         return out;
+    }
+
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public void propertyChange(PropertyChangeEvent evt) {
+        if (evt.getPropertyName().equals(Xml.ID)) {
+            @SuppressWarnings("unchecked")
+            T rs = (T) evt.getSource(); // unchecked cast to T  
+            _hashTable.remove(evt.getOldValue());
+            _hashTable.put(rs.getId(), rs);
+            // fire so listeners that rebuild internal lists get signal of change in id, even without change in size
+            firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, _hashTable.size(), _hashTable.size());
+        }
     }
 
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);

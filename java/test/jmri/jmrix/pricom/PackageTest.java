@@ -8,6 +8,7 @@ import org.junit.runners.Suite;
         jmri.jmrix.pricom.pockettester.PackageTest.class,
         jmri.jmrix.pricom.downloader.PackageTest.class,
         PricomMenuTest.class,
+        BundleTest.class,
 })
 
 /**

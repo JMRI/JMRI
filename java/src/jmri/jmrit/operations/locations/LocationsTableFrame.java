@@ -13,6 +13,7 @@ import javax.swing.ScrollPaneConstants;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.schedules.SchedulesTableAction;
+import jmri.jmrit.operations.locations.tools.ExportLocationsRosterAction;
 import jmri.jmrit.operations.locations.tools.LocationCopyAction;
 import jmri.jmrit.operations.locations.tools.ModifyLocationsAction;
 import jmri.jmrit.operations.locations.tools.ModifyLocationsCarLoadsAction;
@@ -92,6 +93,7 @@ public class LocationsTableFrame extends OperationsFrame {
         toolMenu.add(new ModifyLocationsAction(Bundle.getMessage("TitleModifyLocations")));
         toolMenu.add(new ModifyLocationsCarLoadsAction());
         toolMenu.add(new ShowCarsByLocationAction(false, null, null));
+        toolMenu.add(new ExportLocationsRosterAction(Bundle.getMessage("TitleExportLocations")));
         if (Setup.isVsdPhysicalLocationEnabled()) {
             toolMenu.add(new SetPhysicalLocationAction(Bundle.getMessage("MenuSetPhysicalLocation"), null));
         }

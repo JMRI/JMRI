@@ -6,6 +6,7 @@ import java.beans.PropertyChangeListener;
 import java.text.MessageFormat;
 import java.util.Hashtable;
 import java.util.List;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -13,6 +14,10 @@ import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -20,8 +25,6 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.setup.Control;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Table Model for edit of schedules used by operations
@@ -248,11 +251,8 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
             return;
         }
         // use invokeLater so new window appears on top
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                sef = new ScheduleEditFrame(sch, ltp.getTrack());
-            }
+        SwingUtilities.invokeLater(() -> {
+            sef = new ScheduleEditFrame(sch, ltp.getTrack());
         });
     }
 

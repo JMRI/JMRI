@@ -1,5 +1,6 @@
 package jmri.jmrix.sprog;
 
+import jmri.ProgrammingMode;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -11,33 +12,52 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017
  */
-public class SprogProgrammerTest {
+public class SprogProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
 
     private SprogTrafficControlScaffold stcs = null;
-    private SprogProgrammer op = null;
 
     @Test
-    public void testCtor(){
-       Assert.assertNotNull("exists",op);
+    @Override
+    public void testDefault() {
+        Assert.assertEquals("Check Default", ProgrammingMode.DIRECTBITMODE,
+                programmer.getMode());        
+    }
+    
+    @Override
+    @Test
+    public void testDefaultViaBestMode() {
+        Assert.assertEquals("Check Default", ProgrammingMode.DIRECTBITMODE,
+                ((SprogProgrammer)programmer).getBestMode());        
+    }
+
+    @Test(expected = java.lang.IllegalArgumentException.class)
+    @Override
+    public void testSetGetMode() {
+        programmer.setMode(ProgrammingMode.REGISTERMODE);
+        Assert.assertEquals("Check mode matches set", ProgrammingMode.REGISTERMODE,
+                programmer.getMode());        
     }
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         // prepare an interface
         jmri.util.JUnitUtil.resetInstanceManager();
 
         SprogSystemConnectionMemo m = new SprogSystemConnectionMemo(jmri.jmrix.sprog.SprogConstants.SprogMode.SERVICE);
         stcs = new SprogTrafficControlScaffold(m);
         m.setSprogTrafficController(stcs);
-
-        op = new SprogProgrammer(m);
+        m.configureManagers();
+        programmer = new SprogProgrammer(m);
     }
 
     @After
+    @Override
     public void tearDown() {
         stcs.dispose();
+        programmer = null;
         JUnitUtil.tearDown();
     }
 

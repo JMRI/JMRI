@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2012 All rights reserved -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -67,7 +66,7 @@
 	<label xml:lang="de">Motor Timeout bei nicht vorhandenem DCC</label>
 	<comment xml:lang="de">Wertebereich 0-255</comment>
 	<tooltip xml:lang="de">Motor Timeout t = Wert * 16 ms</tooltip>
-	<label xml:lang="cs">Timeout motoru při ztrátě DDC</label>
+	<label xml:lang="cs">Timeout motoru při ztrátě DCC</label>
 	<comment xml:lang="cs">Meze 0-255</comment>
 	<tooltip xml:lang="cs">Timeout motoru t = hodnota * 16 ms</tooltip>
 	<label xml:lang="ca">Timeout del Motor per manca de DCC</label>

@@ -5,6 +5,7 @@
 
 import jmri
 import java
+import java.beans
 
 # Define the listener to play a sound when a sensor goes active
 class SoundListener(java.beans.PropertyChangeListener):

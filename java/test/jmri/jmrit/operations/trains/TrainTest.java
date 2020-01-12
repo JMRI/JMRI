@@ -1,4 +1,3 @@
-// TrainTest.java
 package jmri.jmrit.operations.trains;
 
 import jmri.InstanceManager;
@@ -25,7 +24,6 @@ import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.JUnitOperationsUtil;
-import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -35,33 +33,33 @@ import org.junit.Test;
  * Tests for the Operations Trains class Last manually cross-checked on 20090131
  * <p>
  * Still to do:
- * <P>
+ * <p>
  * Train: DepartureTime, ArrivalTime
- * <P>
+ * <p>
  * Train: numberCarsWorked
- * <P>
+ * <p>
  * Train: isTraininRoute
- * <P>
+ * <p>
  * Train: getBuild, setBuildEnabled, buildIfSelected
- * <P>
+ * <p>
  * Train: printBuildReport, printManifest, printReport
- * <P>
+ * <p>
  * Train: getPrint, setPrint, printIfSelected
- * <P>
+ * <p>
  * Train: setTrainIconCoordinates
- * <P>
+ * <p>
  * Train: terminateIfSelected
- * <P>
+ * <p>
  * Train: load/move/get/create Train Icon
- * <P>
+ * <p>
  * Train: get/set Lead Engine
- * <P>
+ * <p>
  * Train: setIconColor
- * <P>
+ * <p>
  * Train: reset
- * <P>
+ * <p>
  * Train: xml read/write
- * <P>
+ * <p>
  * Train: Most build scenarios.
  * <p>
  * TrainBuilder: Everything. TrainSwitchLists: Everything.
@@ -959,10 +957,10 @@ public class TrainTest extends OperationsTestCase {
         // place two engines in a consist
         Consist con1 = emanager.newConsist("CP");
 
-        Engine e1 = emanager.newEngine("CP", "10");
+        Engine e1 = emanager.newRS("CP", "10");
         e1.setModel("GP30");
         e1.setConsist(con1);
-        Engine e2 = emanager.newEngine("CP", "20");
+        Engine e2 = emanager.newRS("CP", "20");
         e2.setModel("GP30");
         e2.setConsist(con1);
 
@@ -2996,70 +2994,70 @@ public class TrainTest extends OperationsTestCase {
         // place two engines in a consist
         Consist con1 = emanager.newConsist("C1");
 
-        Engine e1 = emanager.newEngine("UP", "1");
+        Engine e1 = emanager.newRS("UP", "1");
         e1.setModel("GP40");
         e1.setConsist(con1);
-        Engine e2 = emanager.newEngine("SP", "2");
+        Engine e2 = emanager.newRS("SP", "2");
         e2.setModel("GP40");
         e2.setConsist(con1);
 
         // Set up three cabooses and six box cars
-        Car c1 = cmanager.newCar("UP", "1");
+        Car c1 = cmanager.newRS("UP", "1");
         c1.setTypeName(Bundle.getMessage("Caboose"));
         c1.setLength("32");
         c1.setMoves(10);
         c1.setCaboose(true);
 
-        Car c2 = cmanager.newCar("SP", "2");
+        Car c2 = cmanager.newRS("SP", "2");
         c2.setTypeName(Bundle.getMessage("Caboose"));
         c2.setLength("30");
         c2.setMoves(5);
         c2.setCaboose(true);
 
-        Car c3 = cmanager.newCar("NH", "3");
+        Car c3 = cmanager.newRS("NH", "3");
         c3.setTypeName(Bundle.getMessage("Caboose"));
         c3.setLength("33");
         c3.setCaboose(true);
 
-        Car c4 = cmanager.newCar("UP", "4");
+        Car c4 = cmanager.newRS("UP", "4");
         c4.setTypeName("Boxcar");
         c4.setLength("40");
         c4.setMoves(16);
         c4.setFred(true);
 
-        Car c5 = cmanager.newCar("SP", "5");
+        Car c5 = cmanager.newRS("SP", "5");
         c5.setTypeName("Boxcar");
         c5.setLength("40");
         c5.setMoves(8);
         c5.setFred(true);
 
-        Car c6 = cmanager.newCar("NH", "6");
+        Car c6 = cmanager.newRS("NH", "6");
         c6.setTypeName("Boxcar");
         c6.setLength("40");
         c6.setMoves(2);
         c6.setFred(true);
 
-        Car c7 = cmanager.newCar("UP", "7");
+        Car c7 = cmanager.newRS("UP", "7");
         c7.setTypeName("Flat");
         c7.setLength("40");
         c7.setMoves(5);
 
-        Car c8 = cmanager.newCar("SP", "8");
+        Car c8 = cmanager.newRS("SP", "8");
         c8.setTypeName("Boxcar");
         c8.setLength("40");
         c8.setMoves(4);
 
-        Car c9 = cmanager.newCar("NH", "9");
+        Car c9 = cmanager.newRS("NH", "9");
         c9.setTypeName("Boxcar");
         c9.setLength("40");
         c9.setMoves(3);
 
-        Car c10 = cmanager.newCar("NH", "10");
+        Car c10 = cmanager.newRS("NH", "10");
         c10.setTypeName("Boxcar");
         c10.setLength("40");
         c10.setMoves(10);
 
-        Car c11 = cmanager.newCar("SP", "11");
+        Car c11 = cmanager.newRS("SP", "11");
         c11.setTypeName("Boxcar");
         c11.setLength("40");
         c11.setMoves(3);
@@ -3495,12 +3493,12 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertEquals("Train 1 After Build 20", true, train1.isBuilt());
 
         // Set the track length too short missing one set of couplers, two engines
-        loc3trk2.setLength(Integer.parseInt(e1.getLength()) + Integer.parseInt(e2.getLength()) + Engine.COUPLER);
+        loc3trk2.setLength(Integer.parseInt(e1.getLength()) + Integer.parseInt(e2.getLength()) + Engine.COUPLERS);
         Assert.assertFalse(train1.build());
         Assert.assertEquals("Train 1 After Build 20.1", false, train1.isBuilt());
 
         // restore track length
-        loc3trk2.setLength(Integer.parseInt(e1.getLength()) + Integer.parseInt(e2.getLength()) + 2 * Engine.COUPLER);
+        loc3trk2.setLength(Integer.parseInt(e1.getLength()) + Integer.parseInt(e2.getLength()) + 2 * Engine.COUPLERS);
         Assert.assertTrue(train1.build());
         Assert.assertEquals("Train 1 After Build 20.2", true, train1.isBuilt());
 
@@ -3589,13 +3587,13 @@ public class TrainTest extends OperationsTestCase {
         // create 2 consists and a single engine for testing
         Consist con1 = emanager.newConsist("C1");
 
-        Engine e1 = emanager.newEngine("UP", "1");
+        Engine e1 = emanager.newRS("UP", "1");
         e1.setModel("GP30");
         e1.setOwner("AT");
         e1.setBuilt("1957");
         e1.setConsist(con1);
         e1.setMoves(5);
-        Engine e2 = emanager.newEngine("SP", "2");
+        Engine e2 = emanager.newRS("SP", "2");
         e2.setModel("GP30");
         e2.setOwner("AT");
         e2.setBuilt("1957");
@@ -3603,20 +3601,20 @@ public class TrainTest extends OperationsTestCase {
         e2.setMoves(5);
 
         // single engine
-        Engine e3 = emanager.newEngine("SP", "3");
+        Engine e3 = emanager.newRS("SP", "3");
         e3.setModel("GP40");
         e3.setOwner("DAB");
         e3.setBuilt("1957");
 
         Consist con2 = emanager.newConsist("C2");
 
-        Engine e4 = emanager.newEngine("UP", "10");
+        Engine e4 = emanager.newRS("UP", "10");
         e4.setModel("GP40");
         e4.setOwner("DAB");
         e4.setBuilt("1944");
         e4.setConsist(con2);
         e4.setMoves(20);
-        Engine e5 = emanager.newEngine("SP", "20");
+        Engine e5 = emanager.newRS("SP", "20");
         e5.setModel("GP40");
         e5.setOwner("DAB");
         e5.setBuilt("1944");
@@ -3626,19 +3624,19 @@ public class TrainTest extends OperationsTestCase {
         // 3 engine consist
         Consist con3 = emanager.newConsist("C3");
 
-        Engine e6 = emanager.newEngine("UP", "100");
+        Engine e6 = emanager.newRS("UP", "100");
         e6.setModel("GP40");
         e6.setOwner("DAB");
         e6.setBuilt("1944");
         e6.setConsist(con3);
         e6.setMoves(2);
-        Engine e7 = emanager.newEngine("SP", "200");
+        Engine e7 = emanager.newRS("SP", "200");
         e7.setModel("GP40");
         e7.setOwner("DAB");
         e7.setBuilt("1944");
         e7.setConsist(con3);
         e7.setMoves(2);
-        Engine e8 = emanager.newEngine("SP", "300");
+        Engine e8 = emanager.newRS("SP", "300");
         e8.setModel("GP40");
         e8.setOwner("DAB");
         e8.setBuilt("1944");
@@ -3646,7 +3644,7 @@ public class TrainTest extends OperationsTestCase {
         e8.setMoves(2);
 
         // Set up three cabooses and six box cars
-        Car c1 = cmanager.newCar("PU", "1");
+        Car c1 = cmanager.newRS("PU", "1");
         c1.setTypeName(Bundle.getMessage("Caboose"));
         c1.setLength("32");
         c1.setMoves(10);
@@ -3654,7 +3652,7 @@ public class TrainTest extends OperationsTestCase {
         c1.setBuilt("1943");
         c1.setCaboose(true);
 
-        Car c2 = cmanager.newCar("SP", "2");
+        Car c2 = cmanager.newRS("SP", "2");
         c2.setTypeName(Bundle.getMessage("Caboose"));
         c2.setLength("30");
         c2.setMoves(5);
@@ -3662,7 +3660,7 @@ public class TrainTest extends OperationsTestCase {
         c2.setBuilt("1957");
         c2.setCaboose(true);
 
-        Car c3 = cmanager.newCar("UP", "3");
+        Car c3 = cmanager.newRS("UP", "3");
         c3.setTypeName(Bundle.getMessage("Caboose"));
         c3.setLength("33");
         c3.setMoves(0);
@@ -3670,7 +3668,7 @@ public class TrainTest extends OperationsTestCase {
         c3.setBuilt("1944");
         c3.setCaboose(true);
 
-        Car c4 = cmanager.newCar("UP", "4");
+        Car c4 = cmanager.newRS("UP", "4");
         c4.setTypeName("Boxcar");
         c4.setLength("40");
         c4.setMoves(16);
@@ -3678,7 +3676,7 @@ public class TrainTest extends OperationsTestCase {
         c4.setBuilt("1958");
         c4.setFred(true);
 
-        Car c5 = cmanager.newCar("SP", "5");
+        Car c5 = cmanager.newRS("SP", "5");
         c5.setTypeName("Boxcar");
         c5.setLength("40");
         c5.setMoves(8);
@@ -3686,7 +3684,7 @@ public class TrainTest extends OperationsTestCase {
         c5.setBuilt("1958");
         c5.setFred(true);
 
-        Car c6 = cmanager.newCar("NH", "6");
+        Car c6 = cmanager.newRS("NH", "6");
         c6.setTypeName("Boxcar");
         c6.setLength("40");
         c6.setMoves(2);
@@ -3694,35 +3692,35 @@ public class TrainTest extends OperationsTestCase {
         c6.setBuilt("1958");
         c6.setFred(true);
 
-        Car c7 = cmanager.newCar("UP", "7");
+        Car c7 = cmanager.newRS("UP", "7");
         c7.setTypeName("Flat");
         c7.setLength("40");
         c7.setMoves(5);
         c7.setOwner("DAB");
         c7.setBuilt("1958");
 
-        Car c8 = cmanager.newCar("SP", "8");
+        Car c8 = cmanager.newRS("SP", "8");
         c8.setTypeName("Boxcar");
         c8.setLength("40");
         c8.setMoves(4);
         c8.setOwner("DAB");
         c8.setBuilt("1958");
 
-        Car c9 = cmanager.newCar("NH", "9");
+        Car c9 = cmanager.newRS("NH", "9");
         c9.setTypeName("Boxcar");
         c9.setLength("40");
         c9.setMoves(3);
         c9.setOwner("DAB");
         c9.setBuilt("1944");
 
-        Car c10 = cmanager.newCar("NH", "10");
+        Car c10 = cmanager.newRS("NH", "10");
         c10.setTypeName("Boxcar");
         c10.setLength("40");
         c10.setMoves(10);
         c10.setOwner("DAB");
         c10.setBuilt("1958");
 
-        Car c11 = cmanager.newCar("SP", "11");
+        Car c11 = cmanager.newRS("SP", "11");
         c11.setTypeName("Boxcar");
         c11.setLength("40");
         c11.setMoves(3);
@@ -3969,13 +3967,13 @@ public class TrainTest extends OperationsTestCase {
         // create 2 consists and a single engine for testing
         Consist con1 = emanager.newConsist("C1");
 
-        Engine e1 = emanager.newEngine("UP", "1");
+        Engine e1 = emanager.newRS("UP", "1");
         e1.setModel("GP30");
         e1.setOwner("AT");
         e1.setBuilt("1957");
         e1.setConsist(con1);
         e1.setMoves(5);
-        Engine e2 = emanager.newEngine("SP", "2");
+        Engine e2 = emanager.newRS("SP", "2");
         e2.setModel("GP30");
         e2.setOwner("AT");
         e2.setBuilt("1957");
@@ -3983,20 +3981,20 @@ public class TrainTest extends OperationsTestCase {
         e2.setMoves(5);
 
         // single engine
-        Engine e3 = emanager.newEngine("SP", "3");
+        Engine e3 = emanager.newRS("SP", "3");
         e3.setModel("GP40");
         e3.setOwner("DAB");
         e3.setBuilt("1957");
 
         Consist con2 = emanager.newConsist("C2");
 
-        Engine e4 = emanager.newEngine("UP", "10");
+        Engine e4 = emanager.newRS("UP", "10");
         e4.setModel("GP40");
         e4.setOwner("DAB");
         e4.setBuilt("1944");
         e4.setConsist(con2);
         e4.setMoves(20);
-        Engine e5 = emanager.newEngine("SP", "20");
+        Engine e5 = emanager.newRS("SP", "20");
         e5.setModel("GP40");
         e5.setOwner("DAB");
         e5.setBuilt("1944");
@@ -4006,19 +4004,19 @@ public class TrainTest extends OperationsTestCase {
         // 3 engine consist
         Consist con3 = emanager.newConsist("C3");
 
-        Engine e6 = emanager.newEngine("UP", "100");
+        Engine e6 = emanager.newRS("UP", "100");
         e6.setModel("GP40");
         e6.setOwner("DAB");
         e6.setBuilt("1944");
         e6.setConsist(con3);
         e6.setMoves(2);
-        Engine e7 = emanager.newEngine("SP", "200");
+        Engine e7 = emanager.newRS("SP", "200");
         e7.setModel("GP40");
         e7.setOwner("DAB");
         e7.setBuilt("1944");
         e7.setConsist(con3);
         e7.setMoves(2);
-        Engine e8 = emanager.newEngine("SP", "300");
+        Engine e8 = emanager.newRS("SP", "300");
         e8.setModel("GP40");
         e8.setOwner("DAB");
         e8.setBuilt("1944");
@@ -4026,7 +4024,7 @@ public class TrainTest extends OperationsTestCase {
         e8.setMoves(2);
 
         // Set up cars
-        Car c1 = cmanager.newCar("PU", "13");
+        Car c1 = cmanager.newRS("PU", "13");
         c1.setTypeName(Bundle.getMessage("Caboose"));
         c1.setLength("32");
         c1.setMoves(10);
@@ -4034,70 +4032,70 @@ public class TrainTest extends OperationsTestCase {
         c1.setBuilt("1943");
         c1.setCaboose(true);
 
-        Car c2 = cmanager.newCar("SP", "23");
+        Car c2 = cmanager.newRS("SP", "23");
         c2.setTypeName("Boxcar");
         c2.setLength("30");
         c2.setMoves(5);
         c2.setOwner("DAB");
         c2.setBuilt("1957");
 
-        Car c3 = cmanager.newCar("UP", "33");
+        Car c3 = cmanager.newRS("UP", "33");
         c3.setTypeName("Boxcar");
         c3.setLength("33");
         c3.setMoves(0);
         c3.setOwner("DAB");
         c3.setBuilt("1944");
 
-        Car c4 = cmanager.newCar("UP", "43");
+        Car c4 = cmanager.newRS("UP", "43");
         c4.setTypeName("Boxcar");
         c4.setLength("40");
         c4.setMoves(16);
         c4.setOwner("DAB");
         c4.setBuilt("1958");
 
-        Car c5 = cmanager.newCar("SP", "53");
+        Car c5 = cmanager.newRS("SP", "53");
         c5.setTypeName("Boxcar");
         c5.setLength("40");
         c5.setMoves(8);
         c5.setOwner("DAB");
         c5.setBuilt("1958");
 
-        Car c6 = cmanager.newCar("NH", "63");
+        Car c6 = cmanager.newRS("NH", "63");
         c6.setTypeName("Boxcar");
         c6.setLength("40");
         c6.setMoves(2);
         c6.setOwner("DAB");
         c6.setBuilt("1958");
 
-        Car c7 = cmanager.newCar("UP", "73");
+        Car c7 = cmanager.newRS("UP", "73");
         c7.setTypeName("Flat");
         c7.setLength("40");
         c7.setMoves(5);
         c7.setOwner("DAB");
         c7.setBuilt("1958");
 
-        Car c8 = cmanager.newCar("SP", "83");
+        Car c8 = cmanager.newRS("SP", "83");
         c8.setTypeName("Boxcar");
         c8.setLength("40");
         c8.setMoves(4);
         c8.setOwner("DAB");
         c8.setBuilt("1958");
 
-        Car c9 = cmanager.newCar("NH", "93");
+        Car c9 = cmanager.newRS("NH", "93");
         c9.setTypeName("Boxcar");
         c9.setLength("40");
         c9.setMoves(3);
         c9.setOwner("DAB");
         c9.setBuilt("1944");
 
-        Car c10 = cmanager.newCar("NH", "103");
+        Car c10 = cmanager.newRS("NH", "103");
         c10.setTypeName("Boxcar");
         c10.setLength("40");
         c10.setMoves(10);
         c10.setOwner("DAB");
         c10.setBuilt("1958");
 
-        Car c11 = cmanager.newCar("SP", "113");
+        Car c11 = cmanager.newRS("SP", "113");
         c11.setTypeName("Boxcar");
         c11.setLength("40");
         c11.setMoves(3);
@@ -4476,13 +4474,13 @@ public class TrainTest extends OperationsTestCase {
 
     private void placeFourEngines(Track track) {
         // place 4 engines at the start of the route
-        Engine e1 = emanager.newEngine("E", "1");
+        Engine e1 = emanager.newRS("E", "1");
         e1.setModel("GP40");
-        Engine e2 = emanager.newEngine("E", "2");
+        Engine e2 = emanager.newRS("E", "2");
         e2.setModel("GP40");
-        Engine e3 = emanager.newEngine("E", "3");
+        Engine e3 = emanager.newRS("E", "3");
         e3.setModel("GP40");
-        Engine e4 = emanager.newEngine("E", "4");
+        Engine e4 = emanager.newRS("E", "4");
         e4.setModel("GP40");
 
         Assert.assertEquals("confirm placement", Track.OKAY, e1.setLocation(track.getLocation(), track));
@@ -4500,10 +4498,11 @@ public class TrainTest extends OperationsTestCase {
     // Ensure minimal setup for log4J
     @Override
     @Before
-    public void setUp() throws Exception {
-        JUnitUtil.setUp();
-
-        JUnitOperationsUtil.resetOperationsManager();
+    public void setUp() {
+        super.setUp();
+//        jmri.util.JUnitUtil.resetProfileManager();
+//
+//        JUnitOperationsUtil.resetOperationsManager();
 
         tmanager = InstanceManager.getDefault(TrainManager.class);
         rmanager = InstanceManager.getDefault(RouteManager.class);
@@ -4528,14 +4527,11 @@ public class TrainTest extends OperationsTestCase {
         Setup.setCarMoves(7); // set default to 7 moves per location
     }
 
-    public TrainTest(String s) {
-        super(s);
-    }
 
     @Override
     @After
-    public void tearDown() throws Exception {
-        JUnitUtil.tearDown();
+    public void tearDown() {
+        super.tearDown();
     }
 
 }

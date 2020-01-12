@@ -13,13 +13,14 @@ public class TrafficRelayTest {
     @Test
     public void testLocked() {
         SignalHeadSection s = new SignalHeadSection() {
+            @Override
             public String getName() {
                 return "";
             }
         };
         s.lastIndication = SignalHeadSection.CODE_LEFT;
 
-        TrafficLock lock = new TrafficLock(s, SignalHeadSection.CODE_LEFT);
+        TrafficRelay lock = new TrafficRelay(s, SignalHeadSection.CODE_LEFT);
 
         Assert.assertTrue(!lock.isLockClear());
     }
@@ -27,13 +28,14 @@ public class TrafficRelayTest {
     @Test
     public void testUnlocked() {
         SignalHeadSection s = new SignalHeadSection() {
+            @Override
             public String getName() {
                 return "";
             }
         };
         s.lastIndication = SignalHeadSection.CODE_RIGHT;
 
-        TrafficLock lock = new TrafficLock(s, SignalHeadSection.CODE_LEFT);
+        TrafficRelay lock = new TrafficRelay(s, SignalHeadSection.CODE_LEFT);
 
         Assert.assertTrue(lock.isLockClear());
     }
@@ -42,6 +44,7 @@ public class TrafficRelayTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initMemoryManager();
     }

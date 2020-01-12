@@ -16,4 +16,12 @@ public interface Message {
     @Override
     String toString();
 
+
+    /*
+     * @return a human readable representation of the message.
+     */
+    public default String toMonitorString(){
+          return toString();
+    }
+
 }

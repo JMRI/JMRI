@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implement a Turnout via NCE communications.
- * <P>
+ * <p>
  * This object doesn't listen to the NCE communications. This is because it
  * should be the only object that is sending messages for this turnout; more
  * than one Turnout object pointing to a single device is not allowed.
@@ -45,7 +45,7 @@ public class NceTurnout extends AbstractTurnout {
 
     private synchronized void initialize() {
         numNtTurnouts++; // increment the total number of NCE turnouts
-        // update feedback modes, MONITORING requires PowerHouse system with new EPROM    
+        // update feedback modes, MONITORING requires PowerPro system with new EPROM    
         if (tc.getCommandOptions() >= NceTrafficController.OPTION_2006 && tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_NONE) {
             if (modeNames == null) {
                 if (_validFeedbackNames.length != _validFeedbackModes.length) {
@@ -150,7 +150,7 @@ public class NceTurnout extends AbstractTurnout {
      * state change (by using a throttle), and that command has
      * already taken effect. Hence we use "newKnownState" to indicate it's taken
      * place.
-     * <P>
+     *
      * @param state Observed state, updated state from command station
      */
     synchronized void setKnownStateFromCS(int state) {

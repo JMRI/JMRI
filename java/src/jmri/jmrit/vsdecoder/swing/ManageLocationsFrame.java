@@ -7,7 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,17 +42,16 @@ import org.slf4j.LoggerFactory;
 /**
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under 
  * the terms of version 2 of the GNU General Public License as published 
  * by the Free Software Foundation. See the "COPYING" file for a copy
  * of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT 
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
  * for more details.
- * <P>
  *
  * @author Mark Underwood Copyright (C) 2011
  */
@@ -299,7 +297,9 @@ public class ManageLocationsFrame extends JmriJFrame {
         for (String s : data.keySet()) {
             log.debug("Reporter: {}, Location: {}", s, data.get(s));
             Reporter r = mgr.getByDisplayName(s);
-            PhysicalLocation.setBeanPhysicalLocation(data.get(s), r);
+            if (r != null) {
+                PhysicalLocation.setBeanPhysicalLocation(data.get(s), r);
+            }
         }
 
         data = blockModel.getDataMap();
@@ -307,7 +307,9 @@ public class ManageLocationsFrame extends JmriJFrame {
         for (String s : data.keySet()) {
             log.debug("Block: {}, Location: {}", s, data.get(s));
             Block b = bmgr.getByDisplayName(s);
-            PhysicalLocation.setBeanPhysicalLocation(data.get(s), b);
+            if (b != null) {
+                PhysicalLocation.setBeanPhysicalLocation(data.get(s), b);
+            }
         }
 
         data = opsModel.getDataMap();

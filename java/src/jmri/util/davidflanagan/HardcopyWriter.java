@@ -1,19 +1,7 @@
 package jmri.util.davidflanagan;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Frame;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.JobAttributes;
+import java.awt.*;
 import java.awt.JobAttributes.DefaultSelectionType;
-import java.awt.PageAttributes;
-import java.awt.PrintJob;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.io.Writer;
@@ -21,15 +9,10 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 import java.util.Vector;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JToolBar;
-import javax.swing.JWindow;
+
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+
 import jmri.util.JmriJFrame;
 
 /**
@@ -353,6 +336,10 @@ public class HardcopyWriter extends Writer {
      * @throws java.io.IOException if unable to write to printer
      */
     public void write(Color c, String s) throws IOException {
+        charoffset = 0;
+        if (page == null) {
+            newpage();         
+        }
         if (page != null) {
             page.setColor(c);
         }
@@ -585,10 +572,10 @@ public class HardcopyWriter extends Writer {
 
     /**
      * Write a graphic to the printout.
-     * <P>
+     * <p>
      * This was not in the original class, but was added afterwards by Bob
      * Jacobsen. Modified by D Miller.
-     * <P>
+     * <p>
      * The image is positioned on the right side of the paper, at the current
      * height.
      *
@@ -613,10 +600,10 @@ public class HardcopyWriter extends Writer {
 
     /**
      * Write a graphic to the printout.
-     * <P>
+     * <p>
      * This was not in the original class, but was added afterwards by Kevin
      * Dickerson. it is a copy of the write, but without the scaling.
-     * <P>
+     * <p>
      * The image is positioned on the right side of the paper, at the current
      * height.
      *
@@ -639,10 +626,10 @@ public class HardcopyWriter extends Writer {
 
     /**
      * A Method to allow a JWindow to print itself at the current line position
-     * <P>
+     * <p>
      * This was not in the original class, but was added afterwards by Dennis
      * Miller.
-     * <P>
+     * <p>
      * Intended to allow for a graphic printout of the speed table, but can be
      * used to print any window. The JWindow is passed to the method and prints
      * itself at the current line and aligned at the left margin. The calling
@@ -675,14 +662,14 @@ public class HardcopyWriter extends Writer {
 
     /**
      * Draw a line on the printout.
-     * <P>
+     * <p>
      * This was not in the original class, but was added afterwards by Dennis
      * Miller.
-     * <P>
+     * <p>
      * colStart and colEnd represent the horizontal character positions. The
      * lines actually start in the middle of the character position to make it
      * easy to draw vertical lines and space them between printed characters.
-     * <P>
+     * <p>
      * rowStart and rowEnd represent the vertical character positions.
      * Horizontal lines are drawn underneath the row (line) number. They are
      * offset so they appear evenly spaced, although they don't take into
@@ -710,7 +697,7 @@ public class HardcopyWriter extends Writer {
 
     /**
      * Get the current linenumber.
-     * <P>
+     * <p>
      * This was not in the original class, but was added afterwards by Dennis
      * Miller.
      *
@@ -724,7 +711,7 @@ public class HardcopyWriter extends Writer {
      * Print vertical borders on the current line at the left and right sides of
      * the page at character positions 0 and chars_per_line + 1. Border lines
      * are one text line in height
-     * <P>
+     * <p>
      * This was not in the original class, but was added afterwards by Dennis
      * Miller.
      */
@@ -735,12 +722,12 @@ public class HardcopyWriter extends Writer {
 
     /**
      * Increase line spacing by a percentage
-     * <P>
+     * <p>
      * This method should be invoked immediately after a new HardcopyWriter is
      * created.
-     * <P>
+     * <p>
      * This method was added to improve appearance when printing tables
-     * <P>
+     * <p>
      * This was not in the original class, added afterwards by DaveDuchamp.
      *
      * @param percent percentage by which to increase line spacing

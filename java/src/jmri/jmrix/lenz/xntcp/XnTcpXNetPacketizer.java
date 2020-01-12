@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 /**
  * This is an extension of the XNetPacketizer to handle the device specific
  * requirements of the XnTcp.
- * <P>
+ * <p>
  * In particular, XnTcpXNetPacketizer counts the number of commands received.
  *
  * @author Giorgio Terdina Copyright (C) 2008-2011, based on LIUSB packetizer by
@@ -25,9 +25,9 @@ public class XnTcpXNetPacketizer extends XNetPacketizer {
 
     /**
      * Get characters from the input source, and fill a message.
-     * <P>
+     * <p>
      * Returns only when the message is complete.
-     * <P>
+     * <p>
      * Only used in the Receive thread.
      *
      * @param msg     message to fill

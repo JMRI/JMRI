@@ -71,7 +71,7 @@ public class SchedulesTableFrame extends OperationsFrame {
         controlPanel.setMaximumSize(new Dimension(Control.panelWidth1025, 50));
         getContentPane().add(controlPanel);
 
-        // setup buttons
+        // set up buttons
         // addButtonAction(addButton);
         addRadioButtonAction(sortByName);
         addRadioButtonAction(sortById);
@@ -82,6 +82,7 @@ public class SchedulesTableFrame extends OperationsFrame {
         toolMenu.add(new ScheduleCopyAction());
         toolMenu.add(new SchedulesByLoadAction(Bundle.getMessage("MenuItemShowSchedulesByLoad")));
         toolMenu.add(new SchedulesResetHitsAction(Bundle.getMessage("MenuItemResetHits")));
+        toolMenu.add(new ExportSchedulesAction(Bundle.getMessage("MenuItemExportSchedules")));
         toolMenu.addSeparator();
         toolMenu.add(new PrintLocationsAction(Bundle.getMessage("MenuItemPrint"), false));
         toolMenu.add(new PrintLocationsAction(Bundle.getMessage("MenuItemPreview"), true));

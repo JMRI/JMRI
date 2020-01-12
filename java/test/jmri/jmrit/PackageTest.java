@@ -4,6 +4,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
+
 @Suite.SuiteClasses({
         jmri.jmrit.AbstractIdentifyTest.class,
         BundleTest.class,
@@ -16,6 +17,7 @@ import org.junit.runners.Suite;
         jmri.jmrit.blockboss.PackageTest.class,
         jmri.jmrit.catalog.PackageTest.class,
         jmri.jmrit.conditional.PackageTest.class,
+        jmri.jmrit.ctc.PackageTest.class,
         jmri.jmrit.decoderdefn.PackageTest.class,
         jmri.jmrit.dispatcher.PackageTest.class,
         jmri.jmrit.display.PackageTest.class,
@@ -39,6 +41,7 @@ import org.junit.runners.Suite;
         jmri.jmrit.withrottle.PackageTest.class,
         jmri.jmrit.ampmeter.PackageTest.class,
         jmri.jmrit.lcdclock.PackageTest.class,
+        jmri.jmrit.pragotronclock.PackageTest.class,
         jmri.jmrit.throttle.PackageTest.class,
         jmri.jmrit.audio.PackageTest.class,
         jmri.jmrit.turnoutoperations.PackageTest.class,
@@ -50,10 +53,12 @@ import org.junit.runners.Suite;
         jmri.jmrit.speedometer.PackageTest.class,
         jmri.jmrit.analogclock.PackageTest.class,
         jmri.jmrit.revhistory.PackageTest.class,
+        jmri.jmrit.sample.PackageTest.class,
         jmri.jmrit.sound.PackageTest.class,
         jmri.jmrit.vsdecoder.PackageTest.class,
         jmri.jmrit.simplelightctrl.PackageTest.class,
         jmri.jmrit.simpleturnoutctrl.PackageTest.class,
+        jmri.jmrit.timetable.PackageTest.class,
         MemoryFrameActionTest.class,
         ToolsMenuTest.class,
         XmlFileLocationActionTest.class,
@@ -62,6 +67,7 @@ import org.junit.runners.Suite;
         DebugMenuTest.class,
         LogixLoadActionTest.class,
         XmlFileCheckActionTest.class,
+        jmri.jmrit.cabsignals.PackageTest.class
 })
 
 /**

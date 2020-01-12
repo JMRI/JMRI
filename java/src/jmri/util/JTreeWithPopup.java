@@ -14,7 +14,7 @@ import javax.swing.tree.TreePath;
 
 /**
  * JTree subclass that supports a popup menu.
- * <P>
+ * <p>
  * From the
  * <A HREF="http://www.java-tips.org/java-se-tips/javax.swing/have-a-popup-attached-to-a-jtree.html">Java
  * Tips</a> web site.

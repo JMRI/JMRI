@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Light implementation for XBee systems.
- * <p>
+ *
  * @author Paul Bender Copyright (C) 2014
  */
 public class XBeeLight extends AbstractLight {
@@ -81,7 +81,7 @@ public class XBeeLight extends AbstractLight {
                           }
                        }
                    }
-                   pin = Integer.valueOf(systemName.substring(seperator + 1)).intValue();
+                   pin = Integer.parseInt(systemName.substring(seperator + 1));
                } catch (NumberFormatException ex) {
                    log.debug("Unable to convert " + systemName + " into the cab and input format of nn:xx");
               }

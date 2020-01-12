@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="64"
+   height="64"
+   viewBox="0 0 16.933333 16.933334"
+   version="1.1"
+   id="svg3719"
+   sodipodi:docname="generic_function_on.svg"
+   inkscape:export-filename="C:\Users\Konrad\OneDrive\JRMI Icons\passanger_car_compartment_lights_off.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)">
+  <defs
+     id="defs3713" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="11.0625"
+     inkscape:cx="14.184972"
+     inkscape:cy="32"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     units="px"
+     inkscape:pagecheckerboard="true"
+     inkscape:window-width="1600"
+     inkscape:window-height="877"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:measure-start="0,0"
+     inkscape:measure-end="0,0" />
+  <metadata
+     id="metadata3716">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-280.06665)">
+    <ellipse
+       style="fill:none;stroke:#000000;stroke-width:0.56499994;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path7962"
+       cx="8.4068737"
+       cy="288.54526"
+       rx="5.6803203"
+       ry="5.8716574" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="5.2617698"
+       y="292.57532"
+       id="text8091"><tspan
+         sodipodi:role="line"
+         id="tspan8089"
+         x="5.2617698"
+         y="292.57532"
+         style="stroke-width:0.26458332">F</tspan></text>
+    <path
+       style="fill:#ffff00;stroke-width:0.09039548"
+       d="M 29.61548,53.016984 C 24.91306,52.447943 20.584502,50.280566 17.311626,46.85625 11.272553,40.537743 9.7111487,30.970552 13.41321,22.969492 16.412947,16.486325 22.354269,12.055771 29.299096,11.12309 c 1.109114,-0.148953 3.491082,-0.168707 4.655367,-0.03861 1.916598,0.214163 4.141746,0.825072 5.902792,1.620597 6.654866,3.006229 11.215323,9.342229 12.137671,16.863283 0.138817,1.131944 0.138904,3.894729 1.81e-4,4.971751 -0.304248,2.361728 -1.043799,4.910435 -1.991146,6.862064 -2.970033,6.118563 -8.446672,10.309445 -14.964729,11.451441 -1.25135,0.219243 -4.222444,0.308734 -5.423729,0.163366 z m -1.943503,-12.69156 v -7.00565 h 6.327684 6.327684 V 31.557062 29.79435 h -6.327684 -6.327684 v -4.067796 -4.067797 h 7.367232 7.367232 v -1.762712 -1.762712 h -9.310735 -9.310734 v 14.59887 14.59887 h 1.943503 1.943502 z"
+       id="path497"
+       inkscape:connector-curvature="0"
+       transform="matrix(0.26458333,0,0,0.26458333,0,280.06665)" />
+  </g>
+</svg>

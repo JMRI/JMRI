@@ -1,0 +1,1292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2019 All rights reserved -->
+
+<variables xmlns:xi="http://www.w3.org/2001/XInclude"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:docbook="http://docbook.org/ns/docbook"
+           xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd"
+           exclude="Essential Sound Unit">
+
+    <variable CV="0.252.257" mask="XXXXXXXV" default="1" item="F0 controls SUSI SF0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F0 controls SF0</label>
+        <tooltip>F0 controls SF0</tooltip>
+    </variable>
+    <variable CV="0.252.257" mask="XXXXXXVX" default="0" item="F0 controls SUSI SF1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F0 controls SF1</label>
+        <tooltip>F0 controls SF1</tooltip>
+    </variable>
+    <variable CV="0.252.257" mask="XXXXXVXX" default="0" item="F0 controls SUSI SF2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F0 controls SF2</label>
+        <tooltip>F0 controls SF2</tooltip>
+    </variable>
+    <variable CV="0.252.257" mask="XXXXVXXX" default="0" item="F0 controls SUSI SF3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F0 controls SF3</label>
+        <tooltip>F0 controls SF3</tooltip>
+    </variable>
+    <variable CV="0.252.257" mask="XXXVXXXX" default="0" item="F0 controls SUSI SF4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F0 controls SF4</label>
+        <tooltip>F0 controls SF4</tooltip>
+    </variable>
+    <variable CV="0.252.257" mask="XXVXXXXX" default="0" item="F0 controls SUSI SF5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F0 controls SF5</label>
+        <tooltip>F0 controls SF5</tooltip>
+    </variable>
+    <variable CV="0.252.257" mask="XVXXXXXX" default="0" item="F0 controls SUSI SF6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F0 controls SF6</label>
+        <tooltip>F0 controls SF6</tooltip>
+    </variable>
+    <variable CV="0.252.257" mask="VXXXXXXX" default="0" item="F0 controls SUSI SF7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F0 controls SF7</label>
+        <tooltip>F0 controls SF7</tooltip>
+    </variable>
+    <variable CV="0.252.258" mask="XXXXXXXV" default="0" item="F0 controls SUSI SF8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F0 controls SF8</label>
+        <tooltip>F0 controls SF8</tooltip>
+    </variable>
+    <variable CV="0.252.258" mask="XXXXXXVX" default="0" item="F0 controls SUSI SF9">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F0 controls SF9</label>
+        <tooltip>F0 controls SF9</tooltip>
+    </variable>
+    <variable CV="0.252.258" mask="XXXXXVXX" default="0" item="F0 controls SUSI SF10">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F0 controls SF10</label>
+        <tooltip>F0 controls SF10</tooltip>
+    </variable>
+    <variable CV="0.252.258" mask="XXXXVXXX" default="0" item="F0 controls SUSI SF11">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F0 controls SF11</label>
+        <tooltip>F0 controls SF11</tooltip>
+    </variable>
+    <variable CV="0.252.258" mask="XXXVXXXX" default="0" item="F0 controls SUSI SF12">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F0 controls SF12</label>
+        <tooltip>F0 controls SF12</tooltip>
+    </variable>
+    <variable CV="0.252.258" mask="XXVXXXXX" default="0" item="F0 controls SUSI SF13">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F0 controls SF13</label>
+        <tooltip>F0 controls SF13</tooltip>
+    </variable>
+    <variable CV="0.252.258" mask="XVXXXXXX" default="0" item="F0 controls SUSI SF14">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F0 controls SF14</label>
+        <tooltip>F0 controls SF14</tooltip>
+    </variable>
+    <variable CV="0.252.258" mask="VXXXXXXX" default="0" item="F0 controls SUSI SF15">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F0 controls SF15</label>
+        <tooltip>F0 controls SF15</tooltip>
+    </variable>
+    <variable CV="0.252.261" mask="XXXXXXXV" default="0" item="F1 controls SUSI SF0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F1 controls SF0</label>
+        <tooltip>F1 controls SF0</tooltip>
+    </variable>
+    <variable CV="0.252.261" mask="XXXXXXVX" default="1" item="F1 controls SUSI SF1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F1 controls SF1</label>
+        <tooltip>F1 controls SF1</tooltip>
+    </variable>
+    <variable CV="0.252.261" mask="XXXXXVXX" default="0" item="F1 controls SUSI SF2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F1 controls SF2</label>
+        <tooltip>F1 controls SF2</tooltip>
+    </variable>
+    <variable CV="0.252.261" mask="XXXXVXXX" default="0" item="F1 controls SUSI SF3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F1 controls SF3</label>
+        <tooltip>F1 controls SF3</tooltip>
+    </variable>
+    <variable CV="0.252.261" mask="XXXVXXXX" default="0" item="F1 controls SUSI SF4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F1 controls SF4</label>
+        <tooltip>F1 controls SF4</tooltip>
+    </variable>
+    <variable CV="0.252.261" mask="XXVXXXXX" default="0" item="F1 controls SUSI SF5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F1 controls SF5</label>
+        <tooltip>F1 controls SF5</tooltip>
+    </variable>
+    <variable CV="0.252.261" mask="XVXXXXXX" default="0" item="F1 controls SUSI SF6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F1 controls SF6</label>
+        <tooltip>F1 controls SF6</tooltip>
+    </variable>
+    <variable CV="0.252.261" mask="VXXXXXXX" default="0" item="F1 controls SUSI SF7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F1 controls SF7</label>
+        <tooltip>F1 controls SF7</tooltip>
+    </variable>
+    <variable CV="0.252.262" mask="XXXXXXXV" default="0" item="F1 controls SUSI SF8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F1 controls SF8</label>
+        <tooltip>F1 controls SF8</tooltip>
+    </variable>
+    <variable CV="0.252.262" mask="XXXXXXVX" default="0" item="F1 controls SUSI SF9">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F1 controls SF9</label>
+        <tooltip>F1 controls SF9</tooltip>
+    </variable>
+    <variable CV="0.252.262" mask="XXXXXVXX" default="0" item="F1 controls SUSI SF10">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F1 controls SF10</label>
+        <tooltip>F1 controls SF10</tooltip>
+    </variable>
+    <variable CV="0.252.262" mask="XXXXVXXX" default="0" item="F1 controls SUSI SF11">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F1 controls SF11</label>
+        <tooltip>F1 controls SF11</tooltip>
+    </variable>
+    <variable CV="0.252.262" mask="XXXVXXXX" default="0" item="F1 controls SUSI SF12">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F1 controls SF12</label>
+        <tooltip>F1 controls SF12</tooltip>
+    </variable>
+    <variable CV="0.252.262" mask="XXVXXXXX" default="0" item="F1 controls SUSI SF13">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F1 controls SF13</label>
+        <tooltip>F1 controls SF13</tooltip>
+    </variable>
+    <variable CV="0.252.262" mask="XVXXXXXX" default="0" item="F1 controls SUSI SF14">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F1 controls SF14</label>
+        <tooltip>F1 controls SF14</tooltip>
+    </variable>
+    <variable CV="0.252.262" mask="VXXXXXXX" default="0" item="F1 controls SUSI SF15">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F1 controls SF15</label>
+        <tooltip>F1 controls SF15</tooltip>
+    </variable>
+    <variable CV="0.252.265" mask="XXXXXXXV" default="0" item="F2 controls SUSI SF0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F2 controls SF0</label>
+        <tooltip>F2 controls SF0</tooltip>
+    </variable>
+    <variable CV="0.252.265" mask="XXXXXXVX" default="0" item="F2 controls SUSI SF1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F2 controls SF1</label>
+        <tooltip>F2 controls SF1</tooltip>
+    </variable>
+    <variable CV="0.252.265" mask="XXXXXVXX" default="1" item="F2 controls SUSI SF2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F2 controls SF2</label>
+        <tooltip>F2 controls SF2</tooltip>
+    </variable>
+    <variable CV="0.252.265" mask="XXXXVXXX" default="0" item="F2 controls SUSI SF3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F2 controls SF3</label>
+        <tooltip>F2 controls SF3</tooltip>
+    </variable>
+    <variable CV="0.252.265" mask="XXXVXXXX" default="0" item="F2 controls SUSI SF4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F2 controls SF4</label>
+        <tooltip>F2 controls SF4</tooltip>
+    </variable>
+    <variable CV="0.252.265" mask="XXVXXXXX" default="0" item="F2 controls SUSI SF5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F2 controls SF5</label>
+        <tooltip>F2 controls SF5</tooltip>
+    </variable>
+    <variable CV="0.252.265" mask="XVXXXXXX" default="0" item="F2 controls SUSI SF6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F2 controls SF6</label>
+        <tooltip>F2 controls SF6</tooltip>
+    </variable>
+    <variable CV="0.252.265" mask="VXXXXXXX" default="0" item="F2 controls SUSI SF7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F2 controls SF7</label>
+        <tooltip>F2 controls SF7</tooltip>
+    </variable>
+    <variable CV="0.252.266" mask="XXXXXXXV" default="0" item="F2 controls SUSI SF8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F2 controls SF8</label>
+        <tooltip>F2 controls SF8</tooltip>
+    </variable>
+    <variable CV="0.252.266" mask="XXXXXXVX" default="0" item="F2 controls SUSI SF9">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F2 controls SF9</label>
+        <tooltip>F2 controls SF9</tooltip>
+    </variable>
+    <variable CV="0.252.266" mask="XXXXXVXX" default="0" item="F2 controls SUSI SF10">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F2 controls SF10</label>
+        <tooltip>F2 controls SF10</tooltip>
+    </variable>
+    <variable CV="0.252.266" mask="XXXXVXXX" default="0" item="F2 controls SUSI SF11">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F2 controls SF11</label>
+        <tooltip>F2 controls SF11</tooltip>
+    </variable>
+    <variable CV="0.252.266" mask="XXXVXXXX" default="0" item="F2 controls SUSI SF12">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F2 controls SF12</label>
+        <tooltip>F2 controls SF12</tooltip>
+    </variable>
+    <variable CV="0.252.266" mask="XXVXXXXX" default="0" item="F2 controls SUSI SF13">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F2 controls SF13</label>
+        <tooltip>F2 controls SF13</tooltip>
+    </variable>
+    <variable CV="0.252.266" mask="XVXXXXXX" default="0" item="F2 controls SUSI SF14">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F2 controls SF14</label>
+        <tooltip>F2 controls SF14</tooltip>
+    </variable>
+    <variable CV="0.252.266" mask="VXXXXXXX" default="0" item="F2 controls SUSI SF15">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F2 controls SF15</label>
+        <tooltip>F2 controls SF15</tooltip>
+    </variable>
+    <variable CV="0.252.269" mask="XXXXXXXV" default="0" item="F3 controls SUSI SF0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F3 controls SF0</label>
+        <tooltip>F3 controls SF0</tooltip>
+    </variable>
+    <variable CV="0.252.269" mask="XXXXXXVX" default="0" item="F3 controls SUSI SF1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F3 controls SF1</label>
+        <tooltip>F3 controls SF1</tooltip>
+    </variable>
+    <variable CV="0.252.269" mask="XXXXXVXX" default="0" item="F3 controls SUSI SF2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F3 controls SF2</label>
+        <tooltip>F3 controls SF2</tooltip>
+    </variable>
+    <variable CV="0.252.269" mask="XXXXVXXX" default="1" item="F3 controls SUSI SF3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F3 controls SF3</label>
+        <tooltip>F3 controls SF3</tooltip>
+    </variable>
+    <variable CV="0.252.269" mask="XXXVXXXX" default="0" item="F3 controls SUSI SF4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F3 controls SF4</label>
+        <tooltip>F3 controls SF4</tooltip>
+    </variable>
+    <variable CV="0.252.269" mask="XXVXXXXX" default="0" item="F3 controls SUSI SF5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F3 controls SF5</label>
+        <tooltip>F3 controls SF5</tooltip>
+    </variable>
+    <variable CV="0.252.269" mask="XVXXXXXX" default="0" item="F3 controls SUSI SF6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F3 controls SF6</label>
+        <tooltip>F3 controls SF6</tooltip>
+    </variable>
+    <variable CV="0.252.269" mask="VXXXXXXX" default="0" item="F3 controls SUSI SF7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F3 controls SF7</label>
+        <tooltip>F3 controls SF7</tooltip>
+    </variable>
+    <variable CV="0.252.270" mask="XXXXXXXV" default="0" item="F3 controls SUSI SF8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F3 controls SF8</label>
+        <tooltip>F3 controls SF8</tooltip>
+    </variable>
+    <variable CV="0.252.270" mask="XXXXXXVX" default="0" item="F3 controls SUSI SF9">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F3 controls SF9</label>
+        <tooltip>F3 controls SF9</tooltip>
+    </variable>
+    <variable CV="0.252.270" mask="XXXXXVXX" default="0" item="F3 controls SUSI SF10">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F3 controls SF10</label>
+        <tooltip>F3 controls SF10</tooltip>
+    </variable>
+    <variable CV="0.252.270" mask="XXXXVXXX" default="0" item="F3 controls SUSI SF11">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F3 controls SF11</label>
+        <tooltip>F3 controls SF11</tooltip>
+    </variable>
+    <variable CV="0.252.270" mask="XXXVXXXX" default="0" item="F3 controls SUSI SF12">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F3 controls SF12</label>
+        <tooltip>F3 controls SF12</tooltip>
+    </variable>
+    <variable CV="0.252.270" mask="XXVXXXXX" default="0" item="F3 controls SUSI SF13">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F3 controls SF13</label>
+        <tooltip>F3 controls SF13</tooltip>
+    </variable>
+    <variable CV="0.252.270" mask="XVXXXXXX" default="0" item="F3 controls SUSI SF14">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F3 controls SF14</label>
+        <tooltip>F3 controls SF14</tooltip>
+    </variable>
+    <variable CV="0.252.270" mask="VXXXXXXX" default="0" item="F3 controls SUSI SF15">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F3 controls SF15</label>
+        <tooltip>F3 controls SF15</tooltip>
+    </variable>
+    <variable CV="0.252.273" mask="XXXXXXXV" default="0" item="F4 controls SUSI SF0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F4 controls SF0</label>
+        <tooltip>F4 controls SF0</tooltip>
+    </variable>
+    <variable CV="0.252.273" mask="XXXXXXVX" default="0" item="F4 controls SUSI SF1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F4 controls SF1</label>
+        <tooltip>F4 controls SF1</tooltip>
+    </variable>
+    <variable CV="0.252.273" mask="XXXXXVXX" default="0" item="F4 controls SUSI SF2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F4 controls SF2</label>
+        <tooltip>F4 controls SF2</tooltip>
+    </variable>
+    <variable CV="0.252.273" mask="XXXXVXXX" default="0" item="F4 controls SUSI SF3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F4 controls SF3</label>
+        <tooltip>F4 controls SF3</tooltip>
+    </variable>
+    <variable CV="0.252.273" mask="XXXVXXXX" default="1" item="F4 controls SUSI SF4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F4 controls SF4</label>
+        <tooltip>F4 controls SF4</tooltip>
+    </variable>
+    <variable CV="0.252.273" mask="XXVXXXXX" default="0" item="F4 controls SUSI SF5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F4 controls SF5</label>
+        <tooltip>F4 controls SF5</tooltip>
+    </variable>
+    <variable CV="0.252.273" mask="XVXXXXXX" default="0" item="F4 controls SUSI SF6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F4 controls SF6</label>
+        <tooltip>F4 controls SF6</tooltip>
+    </variable>
+    <variable CV="0.252.273" mask="VXXXXXXX" default="0" item="F4 controls SUSI SF7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F4 controls SF7</label>
+        <tooltip>F4 controls SF7</tooltip>
+    </variable>
+    <variable CV="0.252.274" mask="XXXXXXXV" default="0" item="F4 controls SUSI SF8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F4 controls SF8</label>
+        <tooltip>F4 controls SF8</tooltip>
+    </variable>
+    <variable CV="0.252.274" mask="XXXXXXVX" default="0" item="F4 controls SUSI SF9">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F4 controls SF9</label>
+        <tooltip>F4 controls SF9</tooltip>
+    </variable>
+    <variable CV="0.252.274" mask="XXXXXVXX" default="0" item="F4 controls SUSI SF10">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F4 controls SF10</label>
+        <tooltip>F4 controls SF10</tooltip>
+    </variable>
+    <variable CV="0.252.274" mask="XXXXVXXX" default="0" item="F4 controls SUSI SF11">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F4 controls SF11</label>
+        <tooltip>F4 controls SF11</tooltip>
+    </variable>
+    <variable CV="0.252.274" mask="XXXVXXXX" default="0" item="F4 controls SUSI SF12">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F4 controls SF12</label>
+        <tooltip>F4 controls SF12</tooltip>
+    </variable>
+    <variable CV="0.252.274" mask="XXVXXXXX" default="0" item="F4 controls SUSI SF13">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F4 controls SF13</label>
+        <tooltip>F4 controls SF13</tooltip>
+    </variable>
+    <variable CV="0.252.274" mask="XVXXXXXX" default="0" item="F4 controls SUSI SF14">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F4 controls SF14</label>
+        <tooltip>F4 controls SF14</tooltip>
+    </variable>
+    <variable CV="0.252.274" mask="VXXXXXXX" default="0" item="F4 controls SUSI SF15">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F4 controls SF15</label>
+        <tooltip>F4 controls SF15</tooltip>
+    </variable>
+    <variable CV="0.252.277" mask="XXXXXXXV" default="0" item="F5 controls SUSI SF0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F5 controls SF0</label>
+        <tooltip>F5 controls SF0</tooltip>
+    </variable>
+    <variable CV="0.252.277" mask="XXXXXXVX" default="0" item="F5 controls SUSI SF1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F5 controls SF1</label>
+        <tooltip>F5 controls SF1</tooltip>
+    </variable>
+    <variable CV="0.252.277" mask="XXXXXVXX" default="0" item="F5 controls SUSI SF2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F5 controls SF2</label>
+        <tooltip>F5 controls SF2</tooltip>
+    </variable>
+    <variable CV="0.252.277" mask="XXXXVXXX" default="0" item="F5 controls SUSI SF3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F5 controls SF3</label>
+        <tooltip>F5 controls SF3</tooltip>
+    </variable>
+    <variable CV="0.252.277" mask="XXXVXXXX" default="0" item="F5 controls SUSI SF4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F5 controls SF4</label>
+        <tooltip>F5 controls SF4</tooltip>
+    </variable>
+    <variable CV="0.252.277" mask="XXVXXXXX" default="1" item="F5 controls SUSI SF5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F5 controls SF5</label>
+        <tooltip>F5 controls SF5</tooltip>
+    </variable>
+    <variable CV="0.252.277" mask="XVXXXXXX" default="0" item="F5 controls SUSI SF6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F5 controls SF6</label>
+        <tooltip>F5 controls SF6</tooltip>
+    </variable>
+    <variable CV="0.252.277" mask="VXXXXXXX" default="0" item="F5 controls SUSI SF7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F5 controls SF7</label>
+        <tooltip>F5 controls SF7</tooltip>
+    </variable>
+    <variable CV="0.252.278" mask="XXXXXXXV" default="0" item="F5 controls SUSI SF8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F5 controls SF8</label>
+        <tooltip>F5 controls SF8</tooltip>
+    </variable>
+    <variable CV="0.252.278" mask="XXXXXXVX" default="0" item="F5 controls SUSI SF9">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F5 controls SF9</label>
+        <tooltip>F5 controls SF9</tooltip>
+    </variable>
+    <variable CV="0.252.278" mask="XXXXXVXX" default="0" item="F5 controls SUSI SF10">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F5 controls SF10</label>
+        <tooltip>F5 controls SF10</tooltip>
+    </variable>
+    <variable CV="0.252.278" mask="XXXXVXXX" default="0" item="F5 controls SUSI SF11">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F5 controls SF11</label>
+        <tooltip>F5 controls SF11</tooltip>
+    </variable>
+    <variable CV="0.252.278" mask="XXXVXXXX" default="0" item="F5 controls SUSI SF12">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F5 controls SF12</label>
+        <tooltip>F5 controls SF12</tooltip>
+    </variable>
+    <variable CV="0.252.278" mask="XXVXXXXX" default="0" item="F5 controls SUSI SF13">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F5 controls SF13</label>
+        <tooltip>F5 controls SF13</tooltip>
+    </variable>
+    <variable CV="0.252.278" mask="XVXXXXXX" default="0" item="F5 controls SUSI SF14">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F5 controls SF14</label>
+        <tooltip>F5 controls SF14</tooltip>
+    </variable>
+    <variable CV="0.252.278" mask="VXXXXXXX" default="0" item="F5 controls SUSI SF15">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F5 controls SF15</label>
+        <tooltip>F5 controls SF15</tooltip>
+    </variable>
+    <variable CV="0.252.281" mask="XXXXXXXV" default="0" item="F6 controls SUSI SF0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F6 controls SF0</label>
+        <tooltip>F6 controls SF0</tooltip>
+    </variable>
+    <variable CV="0.252.281" mask="XXXXXXVX" default="0" item="F6 controls SUSI SF1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F6 controls SF1</label>
+        <tooltip>F6 controls SF1</tooltip>
+    </variable>
+    <variable CV="0.252.281" mask="XXXXXVXX" default="0" item="F6 controls SUSI SF2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F6 controls SF2</label>
+        <tooltip>F6 controls SF2</tooltip>
+    </variable>
+    <variable CV="0.252.281" mask="XXXXVXXX" default="0" item="F6 controls SUSI SF3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F6 controls SF3</label>
+        <tooltip>F6 controls SF3</tooltip>
+    </variable>
+    <variable CV="0.252.281" mask="XXXVXXXX" default="0" item="F6 controls SUSI SF4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F6 controls SF4</label>
+        <tooltip>F6 controls SF4</tooltip>
+    </variable>
+    <variable CV="0.252.281" mask="XXVXXXXX" default="0" item="F6 controls SUSI SF5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F6 controls SF5</label>
+        <tooltip>F6 controls SF5</tooltip>
+    </variable>
+    <variable CV="0.252.281" mask="XVXXXXXX" default="1" item="F6 controls SUSI SF6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F6 controls SF6</label>
+        <tooltip>F6 controls SF6</tooltip>
+    </variable>
+    <variable CV="0.252.281" mask="VXXXXXXX" default="0" item="F6 controls SUSI SF7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F6 controls SF7</label>
+        <tooltip>F6 controls SF7</tooltip>
+    </variable>
+    <variable CV="0.252.282" mask="XXXXXXXV" default="0" item="F6 controls SUSI SF8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F6 controls SF8</label>
+        <tooltip>F6 controls SF8</tooltip>
+    </variable>
+    <variable CV="0.252.282" mask="XXXXXXVX" default="0" item="F6 controls SUSI SF9">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F6 controls SF9</label>
+        <tooltip>F6 controls SF9</tooltip>
+    </variable>
+    <variable CV="0.252.282" mask="XXXXXVXX" default="0" item="F6 controls SUSI SF10">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F6 controls SF10</label>
+        <tooltip>F6 controls SF10</tooltip>
+    </variable>
+    <variable CV="0.252.282" mask="XXXXVXXX" default="0" item="F6 controls SUSI SF11">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F6 controls SF11</label>
+        <tooltip>F6 controls SF11</tooltip>
+    </variable>
+    <variable CV="0.252.282" mask="XXXVXXXX" default="0" item="F6 controls SUSI SF12">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F6 controls SF12</label>
+        <tooltip>F6 controls SF12</tooltip>
+    </variable>
+    <variable CV="0.252.282" mask="XXVXXXXX" default="0" item="F6 controls SUSI SF13">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F6 controls SF13</label>
+        <tooltip>F6 controls SF13</tooltip>
+    </variable>
+    <variable CV="0.252.282" mask="XVXXXXXX" default="0" item="F6 controls SUSI SF14">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F6 controls SF14</label>
+        <tooltip>F6 controls SF14</tooltip>
+    </variable>
+    <variable CV="0.252.282" mask="VXXXXXXX" default="0" item="F6 controls SUSI SF15">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F6 controls SF15</label>
+        <tooltip>F6 controls SF15</tooltip>
+    </variable>
+    <variable CV="0.252.285" mask="XXXXXXXV" default="0" item="F7 controls SUSI SF0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F7 controls SF0</label>
+        <tooltip>F7 controls SF0</tooltip>
+    </variable>
+    <variable CV="0.252.285" mask="XXXXXXVX" default="0" item="F7 controls SUSI SF1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F7 controls SF1</label>
+        <tooltip>F7 controls SF1</tooltip>
+    </variable>
+    <variable CV="0.252.285" mask="XXXXXVXX" default="0" item="F7 controls SUSI SF2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F7 controls SF2</label>
+        <tooltip>F7 controls SF2</tooltip>
+    </variable>
+    <variable CV="0.252.285" mask="XXXXVXXX" default="0" item="F7 controls SUSI SF3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F7 controls SF3</label>
+        <tooltip>F7 controls SF3</tooltip>
+    </variable>
+    <variable CV="0.252.285" mask="XXXVXXXX" default="0" item="F7 controls SUSI SF4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F7 controls SF4</label>
+        <tooltip>F7 controls SF4</tooltip>
+    </variable>
+    <variable CV="0.252.285" mask="XXVXXXXX" default="0" item="F7 controls SUSI SF5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F7 controls SF5</label>
+        <tooltip>F7 controls SF5</tooltip>
+    </variable>
+    <variable CV="0.252.285" mask="XVXXXXXX" default="0" item="F7 controls SUSI SF6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F7 controls SF6</label>
+        <tooltip>F7 controls SF6</tooltip>
+    </variable>
+    <variable CV="0.252.285" mask="VXXXXXXX" default="1" item="F7 controls SUSI SF7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F7 controls SF7</label>
+        <tooltip>F7 controls SF7</tooltip>
+    </variable>
+    <variable CV="0.252.286" mask="XXXXXXXV" default="0" item="F7 controls SUSI SF8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F7 controls SF8</label>
+        <tooltip>F7 controls SF8</tooltip>
+    </variable>
+    <variable CV="0.252.286" mask="XXXXXXVX" default="0" item="F7 controls SUSI SF9">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F7 controls SF9</label>
+        <tooltip>F7 controls SF9</tooltip>
+    </variable>
+    <variable CV="0.252.286" mask="XXXXXVXX" default="0" item="F7 controls SUSI SF10">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F7 controls SF10</label>
+        <tooltip>F7 controls SF10</tooltip>
+    </variable>
+    <variable CV="0.252.286" mask="XXXXVXXX" default="0" item="F7 controls SUSI SF11">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F7 controls SF11</label>
+        <tooltip>F7 controls SF11</tooltip>
+    </variable>
+    <variable CV="0.252.286" mask="XXXVXXXX" default="0" item="F7 controls SUSI SF12">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F7 controls SF12</label>
+        <tooltip>F7 controls SF12</tooltip>
+    </variable>
+    <variable CV="0.252.286" mask="XXVXXXXX" default="0" item="F7 controls SUSI SF13">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F7 controls SF13</label>
+        <tooltip>F7 controls SF13</tooltip>
+    </variable>
+    <variable CV="0.252.286" mask="XVXXXXXX" default="0" item="F7 controls SUSI SF14">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F7 controls SF14</label>
+        <tooltip>F7 controls SF14</tooltip>
+    </variable>
+    <variable CV="0.252.286" mask="VXXXXXXX" default="0" item="F7 controls SUSI SF15">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F7 controls SF15</label>
+        <tooltip>F7 controls SF15</tooltip>
+    </variable>
+    <variable CV="0.252.289" mask="XXXXXXXV" default="0" item="F8 controls SUSI SF0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F8 controls SF0</label>
+        <tooltip>F8 controls SF0</tooltip>
+    </variable>
+    <variable CV="0.252.289" mask="XXXXXXVX" default="0" item="F8 controls SUSI SF1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F8 controls SF1</label>
+        <tooltip>F8 controls SF1</tooltip>
+    </variable>
+    <variable CV="0.252.289" mask="XXXXXVXX" default="0" item="F8 controls SUSI SF2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F8 controls SF2</label>
+        <tooltip>F8 controls SF2</tooltip>
+    </variable>
+    <variable CV="0.252.289" mask="XXXXVXXX" default="0" item="F8 controls SUSI SF3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F8 controls SF3</label>
+        <tooltip>F8 controls SF3</tooltip>
+    </variable>
+    <variable CV="0.252.289" mask="XXXVXXXX" default="0" item="F8 controls SUSI SF4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F8 controls SF4</label>
+        <tooltip>F8 controls SF4</tooltip>
+    </variable>
+    <variable CV="0.252.289" mask="XXVXXXXX" default="0" item="F8 controls SUSI SF5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F8 controls SF5</label>
+        <tooltip>F8 controls SF5</tooltip>
+    </variable>
+    <variable CV="0.252.289" mask="XVXXXXXX" default="0" item="F8 controls SUSI SF6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F8 controls SF6</label>
+        <tooltip>F8 controls SF6</tooltip>
+    </variable>
+    <variable CV="0.252.289" mask="VXXXXXXX" default="0" item="F8 controls SUSI SF7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F8 controls SF7</label>
+        <tooltip>F8 controls SF7</tooltip>
+    </variable>
+    <variable CV="0.252.290" mask="XXXXXXXV" default="1" item="F8 controls SUSI SF8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F8 controls SF8</label>
+        <tooltip>F8 controls SF8</tooltip>
+    </variable>
+    <variable CV="0.252.290" mask="XXXXXXVX" default="0" item="F8 controls SUSI SF9">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F8 controls SF9</label>
+        <tooltip>F8 controls SF9</tooltip>
+    </variable>
+    <variable CV="0.252.290" mask="XXXXXVXX" default="0" item="F8 controls SUSI SF10">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F8 controls SF10</label>
+        <tooltip>F8 controls SF10</tooltip>
+    </variable>
+    <variable CV="0.252.290" mask="XXXXVXXX" default="0" item="F8 controls SUSI SF11">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F8 controls SF11</label>
+        <tooltip>F8 controls SF11</tooltip>
+    </variable>
+    <variable CV="0.252.290" mask="XXXVXXXX" default="0" item="F8 controls SUSI SF12">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F8 controls SF12</label>
+        <tooltip>F8 controls SF12</tooltip>
+    </variable>
+    <variable CV="0.252.290" mask="XXVXXXXX" default="0" item="F8 controls SUSI SF13">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F8 controls SF13</label>
+        <tooltip>F8 controls SF13</tooltip>
+    </variable>
+    <variable CV="0.252.290" mask="XVXXXXXX" default="0" item="F8 controls SUSI SF14">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F8 controls SF14</label>
+        <tooltip>F8 controls SF14</tooltip>
+    </variable>
+    <variable CV="0.252.290" mask="VXXXXXXX" default="0" item="F8 controls SUSI SF15">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F8 controls SF15</label>
+        <tooltip>F8 controls SF15</tooltip>
+    </variable>
+    <variable CV="0.252.293" mask="XXXXXXXV" default="0" item="F9 controls SUSI SF0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F9 controls SF0</label>
+        <tooltip>F9 controls SF0</tooltip>
+    </variable>
+    <variable CV="0.252.293" mask="XXXXXXVX" default="0" item="F9 controls SUSI SF1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F9 controls SF1</label>
+        <tooltip>F9 controls SF1</tooltip>
+    </variable>
+    <variable CV="0.252.293" mask="XXXXXVXX" default="0" item="F9 controls SUSI SF2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F9 controls SF2</label>
+        <tooltip>F9 controls SF2</tooltip>
+    </variable>
+    <variable CV="0.252.293" mask="XXXXVXXX" default="0" item="F9 controls SUSI SF3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F9 controls SF3</label>
+        <tooltip>F9 controls SF3</tooltip>
+    </variable>
+    <variable CV="0.252.293" mask="XXXVXXXX" default="0" item="F9 controls SUSI SF4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F9 controls SF4</label>
+        <tooltip>F9 controls SF4</tooltip>
+    </variable>
+    <variable CV="0.252.293" mask="XXVXXXXX" default="0" item="F9 controls SUSI SF5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F9 controls SF5</label>
+        <tooltip>F9 controls SF5</tooltip>
+    </variable>
+    <variable CV="0.252.293" mask="XVXXXXXX" default="0" item="F9 controls SUSI SF6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F9 controls SF6</label>
+        <tooltip>F9 controls SF6</tooltip>
+    </variable>
+    <variable CV="0.252.293" mask="VXXXXXXX" default="0" item="F9 controls SUSI SF7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F9 controls SF7</label>
+        <tooltip>F9 controls SF7</tooltip>
+    </variable>
+    <variable CV="0.252.294" mask="XXXXXXXV" default="0" item="F9 controls SUSI SF8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F9 controls SF8</label>
+        <tooltip>F9 controls SF8</tooltip>
+    </variable>
+    <variable CV="0.252.294" mask="XXXXXXVX" default="1" item="F9 controls SUSI SF9">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F9 controls SF9</label>
+        <tooltip>F9 controls SF9</tooltip>
+    </variable>
+    <variable CV="0.252.294" mask="XXXXXVXX" default="0" item="F9 controls SUSI SF10">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F9 controls SF10</label>
+        <tooltip>F9 controls SF10</tooltip>
+    </variable>
+    <variable CV="0.252.294" mask="XXXXVXXX" default="0" item="F9 controls SUSI SF11">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F9 controls SF11</label>
+        <tooltip>F9 controls SF11</tooltip>
+    </variable>
+    <variable CV="0.252.294" mask="XXXVXXXX" default="0" item="F9 controls SUSI SF12">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F9 controls SF12</label>
+        <tooltip>F9 controls SF12</tooltip>
+    </variable>
+    <variable CV="0.252.294" mask="XXVXXXXX" default="0" item="F9 controls SUSI SF13">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F9 controls SF13</label>
+        <tooltip>F9 controls SF13</tooltip>
+    </variable>
+    <variable CV="0.252.294" mask="XVXXXXXX" default="0" item="F9 controls SUSI SF14">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F9 controls SF14</label>
+        <tooltip>F9 controls SF14</tooltip>
+    </variable>
+    <variable CV="0.252.294" mask="VXXXXXXX" default="0" item="F9 controls SUSI SF15">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F9 controls SF15</label>
+        <tooltip>F9 controls SF15</tooltip>
+    </variable>
+    <variable CV="0.252.297" mask="XXXXXXXV" default="0" item="F10 controls SUSI SF0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F10 controls SF0</label>
+        <tooltip>F10 controls SF0</tooltip>
+    </variable>
+    <variable CV="0.252.297" mask="XXXXXXVX" default="0" item="F10 controls SUSI SF1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F10 controls SF1</label>
+        <tooltip>F10 controls SF1</tooltip>
+    </variable>
+    <variable CV="0.252.297" mask="XXXXXVXX" default="0" item="F10 controls SUSI SF2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F10 controls SF2</label>
+        <tooltip>F10 controls SF2</tooltip>
+    </variable>
+    <variable CV="0.252.297" mask="XXXXVXXX" default="0" item="F10 controls SUSI SF3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F10 controls SF3</label>
+        <tooltip>F10 controls SF3</tooltip>
+    </variable>
+    <variable CV="0.252.297" mask="XXXVXXXX" default="0" item="F10 controls SUSI SF4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F10 controls SF4</label>
+        <tooltip>F10 controls SF4</tooltip>
+    </variable>
+    <variable CV="0.252.297" mask="XXVXXXXX" default="0" item="F10 controls SUSI SF5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F10 controls SF5</label>
+        <tooltip>F10 controls SF5</tooltip>
+    </variable>
+    <variable CV="0.252.297" mask="XVXXXXXX" default="0" item="F10 controls SUSI SF6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F10 controls SF6</label>
+        <tooltip>F10 controls SF6</tooltip>
+    </variable>
+    <variable CV="0.252.297" mask="VXXXXXXX" default="0" item="F10 controls SUSI SF7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F10 controls SF7</label>
+        <tooltip>F10 controls SF7</tooltip>
+    </variable>
+    <variable CV="0.252.298" mask="XXXXXXXV" default="0" item="F10 controls SUSI SF8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F10 controls SF8</label>
+        <tooltip>F10 controls SF8</tooltip>
+    </variable>
+    <variable CV="0.252.298" mask="XXXXXXVX" default="0" item="F10 controls SUSI SF9">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F10 controls SF9</label>
+        <tooltip>F10 controls SF9</tooltip>
+    </variable>
+    <variable CV="0.252.298" mask="XXXXXVXX" default="1" item="F10 controls SUSI SF10">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F10 controls SF10</label>
+        <tooltip>F10 controls SF10</tooltip>
+    </variable>
+    <variable CV="0.252.298" mask="XXXXVXXX" default="0" item="F10 controls SUSI SF11">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F10 controls SF11</label>
+        <tooltip>F10 controls SF11</tooltip>
+    </variable>
+    <variable CV="0.252.298" mask="XXXVXXXX" default="0" item="F10 controls SUSI SF12">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F10 controls SF12</label>
+        <tooltip>F10 controls SF12</tooltip>
+    </variable>
+    <variable CV="0.252.298" mask="XXVXXXXX" default="0" item="F10 controls SUSI SF13">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F10 controls SF13</label>
+        <tooltip>F10 controls SF13</tooltip>
+    </variable>
+    <variable CV="0.252.298" mask="XVXXXXXX" default="0" item="F10 controls SUSI SF14">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F10 controls SF14</label>
+        <tooltip>F10 controls SF14</tooltip>
+    </variable>
+    <variable CV="0.252.298" mask="VXXXXXXX" default="0" item="F10 controls SUSI SF15">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F10 controls SF15</label>
+        <tooltip>F10 controls SF15</tooltip>
+    </variable>
+    <variable CV="0.252.301" mask="XXXXXXXV" default="0" item="F11 controls SUSI SF0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F11 controls SF0</label>
+        <tooltip>F11 controls SF0</tooltip>
+    </variable>
+    <variable CV="0.252.301" mask="XXXXXXVX" default="0" item="F11 controls SUSI SF1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F11 controls SF1</label>
+        <tooltip>F11 controls SF1</tooltip>
+    </variable>
+    <variable CV="0.252.301" mask="XXXXXVXX" default="0" item="F11 controls SUSI SF2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F11 controls SF2</label>
+        <tooltip>F11 controls SF2</tooltip>
+    </variable>
+    <variable CV="0.252.301" mask="XXXXVXXX" default="0" item="F11 controls SUSI SF3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F11 controls SF3</label>
+        <tooltip>F11 controls SF3</tooltip>
+    </variable>
+    <variable CV="0.252.301" mask="XXXVXXXX" default="0" item="F11 controls SUSI SF4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F11 controls SF4</label>
+        <tooltip>F11 controls SF4</tooltip>
+    </variable>
+    <variable CV="0.252.301" mask="XXVXXXXX" default="0" item="F11 controls SUSI SF5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F11 controls SF5</label>
+        <tooltip>F11 controls SF5</tooltip>
+    </variable>
+    <variable CV="0.252.301" mask="XVXXXXXX" default="0" item="F11 controls SUSI SF6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F11 controls SF6</label>
+        <tooltip>F11 controls SF6</tooltip>
+    </variable>
+    <variable CV="0.252.301" mask="VXXXXXXX" default="0" item="F11 controls SUSI SF7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F11 controls SF7</label>
+        <tooltip>F11 controls SF7</tooltip>
+    </variable>
+    <variable CV="0.252.302" mask="XXXXXXXV" default="0" item="F11 controls SUSI SF8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F11 controls SF8</label>
+        <tooltip>F11 controls SF8</tooltip>
+    </variable>
+    <variable CV="0.252.302" mask="XXXXXXVX" default="0" item="F11 controls SUSI SF9">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F11 controls SF9</label>
+        <tooltip>F11 controls SF9</tooltip>
+    </variable>
+    <variable CV="0.252.302" mask="XXXXXVXX" default="0" item="F11 controls SUSI SF10">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F11 controls SF10</label>
+        <tooltip>F11 controls SF10</tooltip>
+    </variable>
+    <variable CV="0.252.302" mask="XXXXVXXX" default="1" item="F11 controls SUSI SF11">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F11 controls SF11</label>
+        <tooltip>F11 controls SF11</tooltip>
+    </variable>
+    <variable CV="0.252.302" mask="XXXVXXXX" default="0" item="F11 controls SUSI SF12">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F11 controls SF12</label>
+        <tooltip>F11 controls SF12</tooltip>
+    </variable>
+    <variable CV="0.252.302" mask="XXVXXXXX" default="0" item="F11 controls SUSI SF13">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F11 controls SF13</label>
+        <tooltip>F11 controls SF13</tooltip>
+    </variable>
+    <variable CV="0.252.302" mask="XVXXXXXX" default="0" item="F11 controls SUSI SF14">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F11 controls SF14</label>
+        <tooltip>F11 controls SF14</tooltip>
+    </variable>
+    <variable CV="0.252.302" mask="VXXXXXXX" default="0" item="F11 controls SUSI SF15">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F11 controls SF15</label>
+        <tooltip>F11 controls SF15</tooltip>
+    </variable>
+    <variable CV="0.252.305" mask="XXXXXXXV" default="0" item="F12 controls SUSI SF0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F12 controls SF0</label>
+        <tooltip>F12 controls SF0</tooltip>
+    </variable>
+    <variable CV="0.252.305" mask="XXXXXXVX" default="0" item="F12 controls SUSI SF1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F12 controls SF1</label>
+        <tooltip>F12 controls SF1</tooltip>
+    </variable>
+    <variable CV="0.252.305" mask="XXXXXVXX" default="0" item="F12 controls SUSI SF2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F12 controls SF2</label>
+        <tooltip>F12 controls SF2</tooltip>
+    </variable>
+    <variable CV="0.252.305" mask="XXXXVXXX" default="0" item="F12 controls SUSI SF3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F12 controls SF3</label>
+        <tooltip>F12 controls SF3</tooltip>
+    </variable>
+    <variable CV="0.252.305" mask="XXXVXXXX" default="0" item="F12 controls SUSI SF4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F12 controls SF4</label>
+        <tooltip>F12 controls SF4</tooltip>
+    </variable>
+    <variable CV="0.252.305" mask="XXVXXXXX" default="0" item="F12 controls SUSI SF5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F12 controls SF5</label>
+        <tooltip>F12 controls SF5</tooltip>
+    </variable>
+    <variable CV="0.252.305" mask="XVXXXXXX" default="0" item="F12 controls SUSI SF6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F12 controls SF6</label>
+        <tooltip>F12 controls SF6</tooltip>
+    </variable>
+    <variable CV="0.252.305" mask="VXXXXXXX" default="0" item="F12 controls SUSI SF7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F12 controls SF7</label>
+        <tooltip>F12 controls SF7</tooltip>
+    </variable>
+    <variable CV="0.252.306" mask="XXXXXXXV" default="0" item="F12 controls SUSI SF8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F12 controls SF8</label>
+        <tooltip>F12 controls SF8</tooltip>
+    </variable>
+    <variable CV="0.252.306" mask="XXXXXXVX" default="0" item="F12 controls SUSI SF9">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F12 controls SF9</label>
+        <tooltip>F12 controls SF9</tooltip>
+    </variable>
+    <variable CV="0.252.306" mask="XXXXXVXX" default="0" item="F12 controls SUSI SF10">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F12 controls SF10</label>
+        <tooltip>F12 controls SF10</tooltip>
+    </variable>
+    <variable CV="0.252.306" mask="XXXXVXXX" default="0" item="F12 controls SUSI SF11">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F12 controls SF11</label>
+        <tooltip>F12 controls SF11</tooltip>
+    </variable>
+    <variable CV="0.252.306" mask="XXXVXXXX" default="1" item="F12 controls SUSI SF12">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F12 controls SF12</label>
+        <tooltip>F12 controls SF12</tooltip>
+    </variable>
+    <variable CV="0.252.306" mask="XXVXXXXX" default="0" item="F12 controls SUSI SF13">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F12 controls SF13</label>
+        <tooltip>F12 controls SF13</tooltip>
+    </variable>
+    <variable CV="0.252.306" mask="XVXXXXXX" default="0" item="F12 controls SUSI SF14">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F12 controls SF14</label>
+        <tooltip>F12 controls SF14</tooltip>
+    </variable>
+    <variable CV="0.252.306" mask="VXXXXXXX" default="0" item="F12 controls SUSI SF15">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F12 controls SF15</label>
+        <tooltip>F12 controls SF15</tooltip>
+    </variable>
+    <variable CV="0.252.309" mask="XXXXXXXV" default="0" item="F13 controls SUSI SF0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F13 controls SF0</label>
+        <tooltip>F13 controls SF0</tooltip>
+    </variable>
+    <variable CV="0.252.309" mask="XXXXXXVX" default="0" item="F13 controls SUSI SF1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F13 controls SF1</label>
+        <tooltip>F13 controls SF1</tooltip>
+    </variable>
+    <variable CV="0.252.309" mask="XXXXXVXX" default="0" item="F13 controls SUSI SF2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F13 controls SF2</label>
+        <tooltip>F13 controls SF2</tooltip>
+    </variable>
+    <variable CV="0.252.309" mask="XXXXVXXX" default="0" item="F13 controls SUSI SF3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F13 controls SF3</label>
+        <tooltip>F13 controls SF3</tooltip>
+    </variable>
+    <variable CV="0.252.309" mask="XXXVXXXX" default="0" item="F13 controls SUSI SF4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F13 controls SF4</label>
+        <tooltip>F13 controls SF4</tooltip>
+    </variable>
+    <variable CV="0.252.309" mask="XXVXXXXX" default="0" item="F13 controls SUSI SF5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F13 controls SF5</label>
+        <tooltip>F13 controls SF5</tooltip>
+    </variable>
+    <variable CV="0.252.309" mask="XVXXXXXX" default="0" item="F13 controls SUSI SF6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F13 controls SF6</label>
+        <tooltip>F13 controls SF6</tooltip>
+    </variable>
+    <variable CV="0.252.309" mask="VXXXXXXX" default="0" item="F13 controls SUSI SF7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F13 controls SF7</label>
+        <tooltip>F13 controls SF7</tooltip>
+    </variable>
+    <variable CV="0.252.310" mask="XXXXXXXV" default="0" item="F13 controls SUSI SF8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F13 controls SF8</label>
+        <tooltip>F13 controls SF8</tooltip>
+    </variable>
+    <variable CV="0.252.310" mask="XXXXXXVX" default="0" item="F13 controls SUSI SF9">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F13 controls SF9</label>
+        <tooltip>F13 controls SF9</tooltip>
+    </variable>
+    <variable CV="0.252.310" mask="XXXXXVXX" default="0" item="F13 controls SUSI SF10">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F13 controls SF10</label>
+        <tooltip>F13 controls SF10</tooltip>
+    </variable>
+    <variable CV="0.252.310" mask="XXXXVXXX" default="0" item="F13 controls SUSI SF11">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F13 controls SF11</label>
+        <tooltip>F13 controls SF11</tooltip>
+    </variable>
+    <variable CV="0.252.310" mask="XXXVXXXX" default="0" item="F13 controls SUSI SF12">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F13 controls SF12</label>
+        <tooltip>F13 controls SF12</tooltip>
+    </variable>
+    <variable CV="0.252.310" mask="XXVXXXXX" default="1" item="F13 controls SUSI SF13">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F13 controls SF13</label>
+        <tooltip>F13 controls SF13</tooltip>
+    </variable>
+    <variable CV="0.252.310" mask="XVXXXXXX" default="0" item="F13 controls SUSI SF14">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F13 controls SF14</label>
+        <tooltip>F13 controls SF14</tooltip>
+    </variable>
+    <variable CV="0.252.310" mask="VXXXXXXX" default="0" item="F13 controls SUSI SF15">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F13 controls SF15</label>
+        <tooltip>F13 controls SF15</tooltip>
+    </variable>
+    <variable CV="0.252.313" mask="XXXXXXXV" default="0" item="F14 controls SUSI SF0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F14 controls SF0</label>
+        <tooltip>F14 controls SF0</tooltip>
+    </variable>
+    <variable CV="0.252.313" mask="XXXXXXVX" default="0" item="F14 controls SUSI SF1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F14 controls SF1</label>
+        <tooltip>F14 controls SF1</tooltip>
+    </variable>
+    <variable CV="0.252.313" mask="XXXXXVXX" default="0" item="F14 controls SUSI SF2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F14 controls SF2</label>
+        <tooltip>F14 controls SF2</tooltip>
+    </variable>
+    <variable CV="0.252.313" mask="XXXXVXXX" default="0" item="F14 controls SUSI SF3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F14 controls SF3</label>
+        <tooltip>F14 controls SF3</tooltip>
+    </variable>
+    <variable CV="0.252.313" mask="XXXVXXXX" default="0" item="F14 controls SUSI SF4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F14 controls SF4</label>
+        <tooltip>F14 controls SF4</tooltip>
+    </variable>
+    <variable CV="0.252.313" mask="XXVXXXXX" default="0" item="F14 controls SUSI SF5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F14 controls SF5</label>
+        <tooltip>F14 controls SF5</tooltip>
+    </variable>
+    <variable CV="0.252.313" mask="XVXXXXXX" default="0" item="F14 controls SUSI SF6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F14 controls SF6</label>
+        <tooltip>F14 controls SF6</tooltip>
+    </variable>
+    <variable CV="0.252.313" mask="VXXXXXXX" default="0" item="F14 controls SUSI SF7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F14 controls SF7</label>
+        <tooltip>F14 controls SF7</tooltip>
+    </variable>
+    <variable CV="0.252.314" mask="XXXXXXXV" default="0" item="F14 controls SUSI SF8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F14 controls SF8</label>
+        <tooltip>F14 controls SF8</tooltip>
+    </variable>
+    <variable CV="0.252.314" mask="XXXXXXVX" default="0" item="F14 controls SUSI SF9">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F14 controls SF9</label>
+        <tooltip>F14 controls SF9</tooltip>
+    </variable>
+    <variable CV="0.252.314" mask="XXXXXVXX" default="0" item="F14 controls SUSI SF10">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F14 controls SF10</label>
+        <tooltip>F14 controls SF10</tooltip>
+    </variable>
+    <variable CV="0.252.314" mask="XXXXVXXX" default="0" item="F14 controls SUSI SF11">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F14 controls SF11</label>
+        <tooltip>F14 controls SF11</tooltip>
+    </variable>
+    <variable CV="0.252.314" mask="XXXVXXXX" default="0" item="F14 controls SUSI SF12">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F14 controls SF12</label>
+        <tooltip>F14 controls SF12</tooltip>
+    </variable>
+    <variable CV="0.252.314" mask="XXVXXXXX" default="0" item="F14 controls SUSI SF13">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F14 controls SF13</label>
+        <tooltip>F14 controls SF13</tooltip>
+    </variable>
+    <variable CV="0.252.314" mask="XVXXXXXX" default="1" item="F14 controls SUSI SF14">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F14 controls SF14</label>
+        <tooltip>F14 controls SF14</tooltip>
+    </variable>
+    <variable CV="0.252.314" mask="VXXXXXXX" default="0" item="F14 controls SUSI SF15">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F14 controls SF15</label>
+        <tooltip>F14 controls SF15</tooltip>
+    </variable>
+    <variable CV="0.252.317" mask="XXXXXXXV" default="0" item="F15 controls SUSI SF0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F15 controls SF0</label>
+        <tooltip>F15 controls SF0</tooltip>
+    </variable>
+    <variable CV="0.252.317" mask="XXXXXXVX" default="0" item="F15 controls SUSI SF1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F15 controls SF1</label>
+        <tooltip>F15 controls SF1</tooltip>
+    </variable>
+    <variable CV="0.252.317" mask="XXXXXVXX" default="0" item="F15 controls SUSI SF2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F15 controls SF2</label>
+        <tooltip>F15 controls SF2</tooltip>
+    </variable>
+    <variable CV="0.252.317" mask="XXXXVXXX" default="0" item="F15 controls SUSI SF3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F15 controls SF3</label>
+        <tooltip>F15 controls SF3</tooltip>
+    </variable>
+    <variable CV="0.252.317" mask="XXXVXXXX" default="0" item="F15 controls SUSI SF4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F15 controls SF4</label>
+        <tooltip>F15 controls SF4</tooltip>
+    </variable>
+    <variable CV="0.252.317" mask="XXVXXXXX" default="0" item="F15 controls SUSI SF5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F15 controls SF5</label>
+        <tooltip>F15 controls SF5</tooltip>
+    </variable>
+    <variable CV="0.252.317" mask="XVXXXXXX" default="0" item="F15 controls SUSI SF6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F15 controls SF6</label>
+        <tooltip>F15 controls SF6</tooltip>
+    </variable>
+    <variable CV="0.252.317" mask="VXXXXXXX" default="0" item="F15 controls SUSI SF7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F15 controls SF7</label>
+        <tooltip>F15 controls SF7</tooltip>
+    </variable>
+    <variable CV="0.252.318" mask="XXXXXXXV" default="0" item="F15 controls SUSI SF8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F15 controls SF8</label>
+        <tooltip>F15 controls SF8</tooltip>
+    </variable>
+    <variable CV="0.252.318" mask="XXXXXXVX" default="0" item="F15 controls SUSI SF9">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F15 controls SF9</label>
+        <tooltip>F15 controls SF9</tooltip>
+    </variable>
+    <variable CV="0.252.318" mask="XXXXXVXX" default="0" item="F15 controls SUSI SF10">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F15 controls SF10</label>
+        <tooltip>F15 controls SF10</tooltip>
+    </variable>
+    <variable CV="0.252.318" mask="XXXXVXXX" default="0" item="F15 controls SUSI SF11">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F15 controls SF11</label>
+        <tooltip>F15 controls SF11</tooltip>
+    </variable>
+    <variable CV="0.252.318" mask="XXXVXXXX" default="0" item="F15 controls SUSI SF12">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F15 controls SF12</label>
+        <tooltip>F15 controls SF12</tooltip>
+    </variable>
+    <variable CV="0.252.318" mask="XXVXXXXX" default="0" item="F15 controls SUSI SF13">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F15 controls SF13</label>
+        <tooltip>F15 controls SF13</tooltip>
+    </variable>
+    <variable CV="0.252.318" mask="XVXXXXXX" default="0" item="F15 controls SUSI SF14">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F15 controls SF14</label>
+        <tooltip>F15 controls SF14</tooltip>
+    </variable>
+    <variable CV="0.252.318" mask="VXXXXXXX" default="1" item="F15 controls SUSI SF15">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F15 controls SF15</label>
+        <tooltip>F15 controls SF15</tooltip>
+    </variable>
+
+</variables>

@@ -7,20 +7,18 @@ import jmri.ProgrammingMode;
 import jmri.managers.DefaultProgrammerManager;
 
 /**
- * Extend DefaultProgrammerManager to provide programmers on LocoNet
+ * Extend DefaultProgrammerManager to provide programmers on LocoNet.
  *
  * @see jmri.managers.DefaultProgrammerManager
  * @author Bob Jacobsen Copyright (C) 2002
  */
 public class LnProgrammerManager extends DefaultProgrammerManager {
 
-    public LnProgrammerManager(SlotManager pSlotManager, LocoNetSystemConnectionMemo memo) {
-        super(pSlotManager, memo);
-        mSlotManager = pSlotManager;
+    public LnProgrammerManager(LocoNetSystemConnectionMemo memo) {
+        super(new LnDeferProgrammer(memo), memo);
         this.memo = memo;
-    }
+     }
 
-    SlotManager mSlotManager;
     LocoNetSystemConnectionMemo memo;
 
     /**
@@ -39,7 +37,7 @@ public class LnProgrammerManager extends DefaultProgrammerManager {
      */
     @Override
     public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
-        return new LnOpsModeProgrammer(mSlotManager, memo, pAddress, pLongAddress);
+        return new LnOpsModeProgrammer(memo, pAddress, pLongAddress);
     }
 
     /**
@@ -84,7 +82,7 @@ public class LnProgrammerManager extends DefaultProgrammerManager {
         ret.add(ProgrammingMode.OPSBYTEMODE);
         ret.add(LOCONETOPSBOARD);
         ret.add(LOCONETSV2MODE);
-        ret.add(LOCONETSV1MODE); // they show in interface in order listed here
+        ret.add(LOCONETSV1MODE); // they show in the interface in the order listed here
         return ret;
     }
 

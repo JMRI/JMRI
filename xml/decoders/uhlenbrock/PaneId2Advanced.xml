@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <copyright xmlns="http://docbook.org/ns/docbook">
+        <year>2019</year>
+        <holder>JMRI</holder>
+    </copyright>
+    <authorgroup xmlns="http://docbook.org/ns/docbook">
+        <author>
+            <personname>
+                <firstname>Egbert</firstname>
+                <surname>Broerse</surname>
+            </personname>
+        </author>
+    </authorgroup>
+    <revhistory xmlns="http://docbook.org/ns/docbook">
+        <revision>
+            <revnumber>1</revnumber>
+            <date>2019-02-20</date>
+            <authorinitials>EB</authorinitials>
+            <revremark>Initial version, adapted from Uhlenbrock/soundPane7outputs.xml</revremark>
+        </revision>
+        <!-- Valid only for certain Uhlenbrock decoders with IntelliDrive2, Piko Smart 4.1/Sound 4.1 (non exhaustive list) -->
+    </revhistory>
+
+    <name>IntelliDrive2</name>
+    <column>
+        <label>
+            <text>Hardware testing required</text>
+            <text xml:lang="de">Zu Überprüfen mit Decoder</text>
+        </label>
+        <label><text>      </text></label>
+        <label>
+            <text>Decoder Programming Lock</text>
+            <text xml:lang="de">Decoder Programmierschloss</text>
+            <text xml:lang="nl">Decoder Programmeerslot</text>
+        </label>
+        <display item="Decoder Lock ID"/>
+        <display item="Decoder Lock Index"/>
+        <label><text>      </text></label>
+        <!-- CVs 50-51 -->
+        <display item="Use Motorola 2" format="checkbox"/>
+        <display item="Use Motorola 3" format="checkbox"/>
+        <display item="Flip Light Outputs" format="checkbox"/>
+        <display item="Light Frequency"/>
+        <display item="SUSI1 Task"/>
+        <display item="SUSI2 Task"/>
+        <display item="A8 Function"/>
+        <display item="Intellimatic" format="checkbox"/>
+        <label><text>      </text></label>
+        <display item="Motor Control" format="checkbox"/>
+        <display item="Motor Control PIDSX"/>
+        <display item="Dynamic Pulse Duration" format="checkbox"/>
+        <label><text>      </text></label>
+        <label>
+            <text>Motor Management Settings</text>
+            <text xml:lang="de">Motorregelung</text>
+            <text xml:lang="nl">Motorregeling</text>
+        </label>
+        <display item="Motor Management 1"/>
+        <display item="Motor Management 2"/>
+        <display item="Motor Management 3"/>
+        <label><text>      </text></label>
+        <label>
+            <text>Accel/Decel Delays</text>
+            <text xml:lang="de">Anfahrt-/Bremsverzögerung</text>
+            <text xml:lang="nl">Wegrij-/Remvertraging</text>
+        </label>
+        <grid gridy="2" weightx="1" ipadx="4">
+            <griditem gridx="0" gridy="0" anchor="LINE_END">
+                <display item="Accel2"/>
+            </griditem>
+            <griditem gridx="0" gridy="1" anchor="LINE_END">
+                <display item="Decel2"/>
+            </griditem>
+            <griditem gridx="1" gridy="0" anchor="LINE_END">
+                <display item="Accel3"/>
+            </griditem>
+            <griditem gridx="1" gridy="1" anchor="LINE_END">
+                <display item="Decel3"/>
+            </griditem>
+            <griditem gridx="0" gridy="2" anchor="LINE_END">
+                <display item="ABV2 F Key"/>
+            </griditem>
+            <griditem gridx="1" gridy="2" anchor="LINE_END">
+                <display item="ABV3 F Key"/>
+            </griditem>
+        </grid>
+    </column>
+
+    <column>
+        <row>
+            <group exclude="76560">
+                <!-- BEGIN - Function Mapping Shift Grid in IntelliDrive2-->
+                <grid gridy="3" weightx="1" ipadx="1">
+                    <!-- BEGIN - Row 1 (headers)-->
+                    <griditem gridx="0" gridy="0" anchor="LINE_END"><label><text>F0f</text></label></griditem>
+                    <griditem gridx="1" gridy="0" anchor="CENTER"><label><text>F0r</text></label></griditem>
+                    <griditem gridx="2" gridy="0" anchor="CENTER"><label><text>F1</text></label></griditem>
+                    <griditem gridx="3" gridy="0" anchor="CENTER"><label><text>F2</text></label></griditem>
+                    <griditem gridx="4" gridy="0" anchor="CENTER"><label><text>F3</text></label></griditem>
+                    <griditem gridx="5" gridy="0" anchor="CENTER"><label><text>F4</text></label></griditem>
+                    <griditem gridx="6" gridy="0" anchor="CENTER"><label><text>F5</text></label></griditem>
+                    <griditem gridx="7" gridy="0" anchor="CENTER"><label><text>F6</text></label></griditem>
+                    <griditem gridx="8" gridy="0" anchor="CENTER"><label><text>F7</text></label></griditem>
+                    <griditem gridx="9" gridy="0" anchor="CENTER"><label><text>F8</text></label></griditem>
+                    <griditem gridx="10" gridy="0" anchor="CENTER"><label><text>F9</text></label></griditem>
+                    <griditem gridx="11" gridy="0" anchor="CENTER"><label><text>F10</text></label></griditem>
+                    <griditem gridx="12" gridy="0" anchor="CENTER"><label><text>F11</text></label></griditem>
+                    <griditem gridx="13" gridy="0" anchor="CENTER"><label><text>F12</text></label></griditem>
+                    <!-- BEGIN - Row 2 (Slot 1)-->
+                    <griditem gridx="0" gridy="1" anchor="LINE_END">
+                        <display item="Fn Map Shift F0f" format="checkbox">
+                            <label>Fn Mapping Shift:</label>
+                            <label xml:lang="de">Fn Mapping Shift:</label>
+                        </display>
+                    </griditem>
+                    <griditem gridx="1" gridy="1" anchor="CENTER">
+                        <display item="Fn Map Shift F0r" format="checkbox" label=""/>
+                    </griditem>
+                    <griditem gridx="2" gridy="1" anchor="CENTER">
+                        <display item="Fn Map Shift F1" format="checkbox" label=""/>
+                    </griditem>
+                    <griditem gridx="3" gridy="1" anchor="CENTER">
+                        <display item="Fn Map Shift F2" format="checkbox" label=""/>
+                    </griditem>
+                    <griditem gridx="4" gridy="1" anchor="CENTER">
+                        <display item="Fn Map Shift F3" format="checkbox" label=""/>
+                    </griditem>
+                    <griditem gridx="5" gridy="1" anchor="CENTER">
+                        <display item="Fn Map Shift F4" format="checkbox" label=""/>
+                    </griditem>
+                    <griditem gridx="6" gridy="1" anchor="CENTER">
+                        <display item="Fn Map Shift F5" format="checkbox" label=""/>
+                    </griditem>
+                    <griditem gridx="7" gridy="1" anchor="CENTER">
+                        <display item="Fn Map Shift F6" format="checkbox" label=""/>
+                    </griditem>
+                    <griditem gridx="8" gridy="1" anchor="CENTER">
+                        <display item="Fn Map Shift F7" format="checkbox" label=""/>
+                    </griditem>
+                    <griditem gridx="9" gridy="1" anchor="CENTER">
+                        <display item="Fn Map Shift F8" format="checkbox" label=""/>
+                    </griditem>
+                    <griditem gridx="10" gridy="1" anchor="CENTER">
+                        <display item="Fn Map Shift F9" format="checkbox" label=""/>
+                    </griditem>
+                    <griditem gridx="11" gridy="1" anchor="CENTER">
+                        <display item="Fn Map Shift F10" format="checkbox" label=""/>
+                    </griditem>
+                    <griditem gridx="12" gridy="1" anchor="CENTER">
+                        <display item="Fn Map Shift F12" format="checkbox" label=""/>
+                    </griditem>
+                    <griditem gridx="13" gridy="1" anchor="CENTER">
+                        <display item="Fn Map Shift F12" format="checkbox" label=""/>
+                    </griditem>
+                    <!--SUSI Function Key header-->
+                    <griditem gridx="0" gridy="2" anchor="LINE_END"><label><text>F22</text></label></griditem>
+                    <griditem gridx="1" gridy="2" anchor="CENTER"><label><text>F23</text></label></griditem>
+                    <griditem gridx="2" gridy="2" anchor="CENTER"><label><text>F24</text></label></griditem>
+                    <griditem gridx="3" gridy="2" anchor="CENTER"><label><text>F25</text></label></griditem>
+                    <griditem gridx="4" gridy="2" anchor="CENTER"><label><text>F26</text></label></griditem>
+                    <griditem gridx="5" gridy="2" anchor="CENTER"><label><text>F27</text></label></griditem>
+                    <griditem gridx="6" gridy="2" anchor="CENTER"><label><text>F28</text></label></griditem>
+                    <!--SUSI Function Key checkboxes-->
+                    <griditem gridx="0" gridy="4" anchor="LINE_END">
+                        <display item="SUSI F22" format="checkbox">
+                            <label>Activate Function in SUSI:</label>
+                            <label xml:lang="de">Funktion aktivieren in SUSI:</label>
+                            <label xml:lang="nl">Activeer functie in SUSI:</label>
+                        </display>
+                    </griditem>
+                    <griditem gridx="1" gridy="4" anchor="CENTER">
+                        <display item="SUSI F23" format="checkbox" label=""/>
+                    </griditem>
+                    <griditem gridx="2" gridy="4" anchor="CENTER">
+                        <display item="SUSI F24" format="checkbox" label=""/>
+                    </griditem>
+                    <griditem gridx="3" gridy="4" anchor="CENTER">
+                        <display item="SUSI F25" format="checkbox" label=""/>
+                    </griditem>
+                    <griditem gridx="4" gridy="4" anchor="CENTER">
+                        <display item="SUSI F26" format="checkbox" label=""/>
+                    </griditem>
+                    <griditem gridx="5" gridy="4" anchor="CENTER">
+                        <display item="SUSI F27" format="checkbox" label=""/>
+                    </griditem>
+                    <griditem gridx="6" gridy="4" anchor="CENTER">
+                        <display item="SUSI F28" format="checkbox" label=""/>
+                    </griditem>
+                    <!--end Grid-->
+                </grid>
+            </group>
+        </row>
+        <label><text>      </text></label>
+        <separator/>
+        <label><text>      </text></label>
+        <label>
+            <text>Switching Tango</text>
+            <text xml:lang="de">Rangiertango</text>
+            <text xml:lang="nl">Rangeertango</text>
+        </label>
+        <display item="Rangiertango Step"/>
+        <display item="Rangiertango Pushtime"/>
+        <display item="Rangiertango Pulltime"/>
+        <label><text>      </text></label>
+        <separator/>
+        <label><text>      </text></label>
+        <label>
+            <text>Special Light Effects</text>
+        </label>
+        <!-- BEGIN - Advanced Function Mapping Grid Out 1-4 -->
+        <grid gridy="5" weightx="1" ipadx="4">
+            <!-- BEGIN - Row 1 (headers)-->
+            <group exclude="73115">
+                <griditem gridx="0" gridy="0" anchor="LINE_END"><label><text>AUX0</text></label></griditem>
+                <griditem gridx="1" gridy="0" anchor="CENTER"><label><text>AUX1</text></label></griditem>
+                <griditem gridx="2" gridy="0" anchor="CENTER"><label><text>AUX2</text></label></griditem>
+            </group>
+            <group exclude="73115,73145,73405,73415">
+                <griditem gridx="3" gridy="0" anchor="CENTER"><label><text>AUX3</text></label></griditem>
+                <griditem gridx="4" gridy="0" anchor="CENTER"><label><text>AUX4</text></label></griditem>
+            </group>
+            <group exclude="73105,73115,73145,73405,73415">
+                <griditem gridx="5" gridy="0" anchor="CENTER"><label><text>AUX5</text></label></griditem>
+                <griditem gridx="6" gridy="0" anchor="CENTER"><label><text>AUX6</text></label></griditem>
+                <griditem gridx="7" gridy="0" anchor="CENTER"><label><text>AUX7</text></label></griditem>
+            </group>
+            <!-- BEGIN - Row 2 (Blend in/out)-->
+            <griditem gridx="0" gridy="1" anchor="LINE_END">
+                <display item="Light Blend A0" format="checkbox">
+                    <label>Blend In/Blend Out on:</label>
+                    <label xml:lang="de">Eind- u. Ausblenden an:</label>
+                    <label xml:lang="nl">In/-Uitfaden op:</label>
+                </display>
+            </griditem>
+            <griditem gridx="1" gridy="1" anchor="CENTER">
+                <display item="Light Blend A1" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="2" gridy="1" anchor="CENTER">
+                <display item="Light Blend A2" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="3" gridy="1" anchor="CENTER">
+                <display item="Light Blend A3" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="4" gridy="1" anchor="CENTER">
+                <display item="Light Blend A4" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="5" gridy="1" anchor="CENTER">
+                <display item="Light Blend A5" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="6" gridy="1" anchor="CENTER">
+                <display item="Light Blend A6" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="7" gridy="1" anchor="CENTER">
+                <display item="Light Blend A7" format="checkbox" label=""/>
+            </griditem>
+            <!-- BEGIN - Row 3 (Flicker)-->
+            <griditem gridx="0" gridy="2" anchor="LINE_END">
+                <display item="Light Flicker A0" format="checkbox">
+                    <label>Flicker Effect on:</label>
+                    <label xml:lang="de">Feuerbuchsenflackern an:</label>
+                    <label xml:lang="nl">Flakkereffect op:</label>
+                </display>
+            </griditem>
+            <griditem gridx="1" gridy="2" anchor="CENTER">
+                <display item="Light Flicker A1" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="2" gridy="2" anchor="CENTER">
+                <display item="Light Flicker A2" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="3" gridy="2" anchor="CENTER">
+                <display item="Light Flicker A3" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="4" gridy="2" anchor="CENTER">
+                <display item="Light Flicker A4" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="5" gridy="2" anchor="CENTER">
+                <display item="Light Flicker A5" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="6" gridy="2" anchor="CENTER">
+                <display item="Light Flicker A6" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="7" gridy="2" anchor="CENTER">
+                <display item="Light Flicker A7" format="checkbox" label=""/>
+            </griditem>
+            <!-- BEGIN - Row 4 (Energy Save)-->
+            <griditem gridx="0" gridy="3" anchor="LINE_END">
+                <display item="Light Energy A0" format="checkbox">
+                    <label>Energy Save Effect on:</label>
+                    <label xml:lang="de">Energiesparlampeneffekt an:</label>
+                    <label xml:lang="nl">Spaarlampeffect op:</label>
+                </display>
+            </griditem>
+            <griditem gridx="1" gridy="3" anchor="CENTER">
+                <display item="Light Energy A1" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="2" gridy="3" anchor="CENTER">
+                <display item="Light Energy A2" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="3" gridy="3" anchor="CENTER">
+                <display item="Light Energy A3" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="4" gridy="3" anchor="CENTER">
+                <display item="Light Energy A4" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="5" gridy="3" anchor="CENTER">
+                <display item="Light Energy A5" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="6" gridy="3" anchor="CENTER">
+                <display item="Light Energy A6" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="7" gridy="3" anchor="CENTER">
+                <display item="Light Energy A7" format="checkbox" label=""/>
+            </griditem>
+            <!-- BEGIN - Row 5 (Neon)-->
+            <griditem gridx="0" gridy="4" anchor="LINE_END">
+                <display item="Light Neon A0" format="checkbox">
+                    <label>Neon Light Start Effect on:</label>
+                    <label xml:lang="de">Neonröhren Einschalteffekt an:</label>
+                    <label xml:lang="nl">TL-buis inschakeleffect op:</label>
+                </display>
+            </griditem>
+            <griditem gridx="1" gridy="4" anchor="CENTER">
+                <display item="Light Neon A1" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="2" gridy="4" anchor="CENTER">
+                <display item="Light Neon A2" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="3" gridy="4" anchor="CENTER">
+                <display item="Light Neon A3" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="4" gridy="4" anchor="CENTER">
+                <display item="Light Neon A4" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="5" gridy="4" anchor="CENTER">
+                <display item="Light Neon A5" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="6" gridy="4" anchor="CENTER">
+                <display item="Light Neon A6" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="7" gridy="4" anchor="CENTER">
+                <display item="Light Neon A7" format="checkbox" label=""/>
+            </griditem>
+        </grid>
+        <label><text>      </text></label>
+        <grid gridy="3" weightx="1" ipadx="4">
+            <griditem gridx="0" gridy="0" anchor="LINE_END">
+                <display item="Light Blend Time"/>
+            </griditem>
+            <griditem gridx="0" gridy="1" anchor="LINE_END">
+                <display item="Light Flicker Rythm"/>
+            </griditem>
+            <griditem gridx="1" gridy="1" anchor="LINE_END">
+                <display item="Light Flicker Change"/>
+            </griditem>
+            <griditem gridx="2" gridy="1" anchor="LINE_END">
+                <display item="Light Flicker Bright" format="checkbox"/>
+            </griditem>
+            <griditem gridx="0" gridy="2" anchor="LINE_END">
+                <display item="Light Energy Start"/>
+            </griditem>
+            <griditem gridx="1" gridy="2" anchor="LINE_END">
+                <display item="Light Energy Time"/>
+            </griditem>
+            <griditem gridx="0" gridy="3" anchor="LINE_END">
+                <display item="Light Neon Time"/>
+            </griditem>
+            <griditem gridx="1" gridy="3" anchor="LINE_END">
+                <display item="Light Neon Flashes"/>
+            </griditem>
+        </grid>
+        <label><text>      </text></label>
+        <separator/>
+        <label><text>      </text></label>
+        <label>
+            <text>Servo Control</text>
+            <text xml:lang="de">Servosteuerung</text>
+            <text xml:lang="nl">Servobesturing</text>
+        </label>
+        <grid gridy="3" weightx="1" ipadx="4">
+            <griditem gridx="0" gridy="0" anchor="LINE_END">
+                <display item="Servo 1 Pos 1"/>
+            </griditem>
+            <griditem gridx="1" gridy="0" anchor="LINE_END">
+                <display item="Servo 1 Pos 2"/>
+            </griditem>
+            <griditem gridx="2" gridy="0" anchor="LINE_END">
+                <display item="Servo 1 Speed"/>
+            </griditem>
+            <griditem gridx="3" gridy="0" anchor="LINE_END">
+                <display item="Servo 1 F Key"/>
+            </griditem>
+            <griditem gridx="0" gridy="1" anchor="LINE_END">
+                <display item="Servo 2 Pos 1"/>
+            </griditem>
+            <griditem gridx="1" gridy="1" anchor="LINE_END">
+                <display item="Servo 2 Pos 2"/>
+            </griditem>
+            <griditem gridx="2" gridy="1" anchor="LINE_END">
+                <display item="Servo 2 Speed"/>
+            </griditem>
+            <griditem gridx="3" gridy="1" anchor="LINE_END">
+                <display item="Servo 2 F Key"/>
+            </griditem>
+        </grid>
+        <display item="Servo Connection"/>
+
+        <!--More vars here-->
+    </column>
+</pane>

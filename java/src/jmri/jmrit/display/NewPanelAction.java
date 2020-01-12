@@ -6,7 +6,7 @@ import javax.swing.JOptionPane;
 
 /**
  * Start a Panel Editor or a Layout Editor for a new Panel.
- * <P>
+ * <p>
  * Uses the individual LayoutEditorAction or PanelEditorAction to start the
  * editors, to ensure consistent operation.
  *

@@ -16,7 +16,7 @@ public class DuplexGroupInfoPanelTest extends jmri.util.swing.JmriPanelTest {
     public void setUp() {
         JUnitUtil.setUp();
         panel = new DuplexGroupInfoPanel();
-        helpTarget = "package.jmri.jmrix.loconet.duplexgroup.DuplexGroupInfoPanel";
+        helpTarget = "package.jmri.jmrix.loconet.duplexgroup.DuplexGroupTabbedPanel";
         title = "Configure Duplex Group Information"; 
     }
 

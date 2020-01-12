@@ -1,23 +1,24 @@
 package jmri.jmrit.operations.rollingstock;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.Setup;
-import junit.framework.Test;
-import junit.framework.TestSuite;
-import org.junit.Assert;
 
 /**
- * Tests for the Operations RollingStock class Last manually cross-checked on
+ * Tests for the Operations Car class Last manually cross-checked on
  * 20090131
  * <p>
- * Still to do: RollingStock: Location Length change (set) RollingStock:
- * Destination RollingStock: Train, Route
+ * Still to do: Car: Location Length change (set) Car:
+ * Destination Car: Train, Route
  * <p>
- * Note: RollingStock: XML read/write is tested in OperationsEnginesTest and
+ * Note: Car: XML read/write is tested in OperationsEnginesTest and
  * OperationsCarsTest
  *
  * @author	Bob Coleman Copyright (C) 2009
@@ -25,16 +26,18 @@ import org.junit.Assert;
  */
 public class OperationsRollingStockTest extends OperationsTestCase {
 
-    // test constroctors.
+    // test constructors
+    @Test
     public void testCtor() {
         // test the default constructor.
-        RollingStock rs1 = new RollingStock();
+        Car rs1 = new Car();
         Assert.assertNotNull("Default Constructor", rs1);
     }
 
+    @Test
     public void test2ParmCtor() {
         // test the constructor with roadname and roadnumer as parameters.
-        RollingStock rs1 = new RollingStock("TESTROAD", "TESTNUMBER1");
+        Car rs1 = new Car("TESTROAD", "TESTNUMBER1");
         Assert.assertNotNull("Two parameter Constructor", rs1);
 
         Assert.assertEquals("Car Road", "TESTROAD", rs1.getRoadName());
@@ -42,6 +45,7 @@ public class OperationsRollingStockTest extends OperationsTestCase {
         Assert.assertEquals("Car ID", "TESTROAD" + "TESTNUMBER1", rs1.getId());
     }
 
+    @Test
     public void testXmlConstructor() {
         // test the constructor loading this car from an XML element.
 
@@ -76,7 +80,7 @@ public class OperationsRollingStockTest extends OperationsTestCase {
         e.setAttribute(Xml.BLOCKING, "5");
         e.setAttribute(Xml.COMMENT, "Test Comment");
         try {
-            RollingStock rs1 = new RollingStock(e);
+            Car rs1 = new Car(e);
             Assert.assertNotNull("Xml Element Constructor", rs1);
         } catch (java.lang.NullPointerException npe) {
             Assert.fail("Null Pointer Exception while executing Xml Element Constructor");
@@ -86,8 +90,9 @@ public class OperationsRollingStockTest extends OperationsTestCase {
     }
 
     // test creation
+    @Test
     public void testCreate() {
-        RollingStock rs1 = new RollingStock("TESTROAD", "TESTNUMBER1");
+        Car rs1 = new Car("TESTROAD", "TESTNUMBER1");
 
         Assert.assertEquals("Car Road", "TESTROAD", rs1.getRoadName());
         Assert.assertEquals("Car Number", "TESTNUMBER1", rs1.getNumber());
@@ -107,66 +112,69 @@ public class OperationsRollingStockTest extends OperationsTestCase {
         rs1.setRfid("TESTRFID");
         rs1.setMoves(5);
 
-        Assert.assertEquals("RollingStock Type", "TESTTYPE", rs1.getTypeName());
+        Assert.assertEquals("Car Type", "TESTTYPE", rs1.getTypeName());
 
         /* Also need to test location length */
-        Assert.assertEquals("RollingStock Length", "TESTLENGTH", rs1.getLength());
+        Assert.assertEquals("Car Length", "TESTLENGTH", rs1.getLength());
 
-        Assert.assertEquals("RollingStock Color", "TESTCOLOR", rs1.getColor());
+        Assert.assertEquals("Car Color", "TESTCOLOR", rs1.getColor());
         /* More appropriate Weight tests below */
-        Assert.assertEquals("RollingStock Weight", "TESTWEIGHT", rs1.getWeight());
-        Assert.assertEquals("RollingStock WeightTons", "TESTWEIGHTTONS", rs1.getWeightTons());
+        Assert.assertEquals("Car Weight", "TESTWEIGHT", rs1.getWeight());
+        Assert.assertEquals("Car WeightTons", "TESTWEIGHTTONS", rs1.getWeightTons());
 
-        Assert.assertEquals("RollingStock Built", "TESTBUILT", rs1.getBuilt());
-        Assert.assertEquals("RollingStock Owner", "TESTOWNER", rs1.getOwner());
-        Assert.assertEquals("RollingStock Comment", "TESTCOMMENT", rs1.getComment());
-        Assert.assertEquals("RollingStock Rfid", "TESTRFID", rs1.getRfid());
-        Assert.assertEquals("RollingStock Moves", 5, rs1.getMoves());
+        Assert.assertEquals("Car Built", "TESTBUILT", rs1.getBuilt());
+        Assert.assertEquals("Car Owner", "TESTOWNER", rs1.getOwner());
+        Assert.assertEquals("Car Comment", "TESTCOMMENT", rs1.getComment());
+        Assert.assertEquals("Car Rfid", "TESTRFID", rs1.getRfid());
+        Assert.assertEquals("Car Moves", 5, rs1.getMoves());
     }
 
-    // test RollingStock weight and weighttons
-    public void testRollingStockWeight() {
-        RollingStock rs1 = new RollingStock("TESTROAD", "TESTNUMBER1");
-        Assert.assertEquals("RollingStock Road", "TESTROAD", rs1.getRoadName());
-        Assert.assertEquals("RollingStock Number", "TESTNUMBER1", rs1.getNumber());
+    // test Car weight and weighttons
+    @Test
+    public void testCarWeight() {
+        Car rs1 = new Car("TESTROAD", "TESTNUMBER1");
+        Assert.assertEquals("Car Road", "TESTROAD", rs1.getRoadName());
+        Assert.assertEquals("Car Number", "TESTNUMBER1", rs1.getNumber());
 
         Setup.setScale(Setup.N_SCALE);
         rs1.setWeight("20");
-        Assert.assertEquals("RollingStock Weight Real test", "20", rs1.getWeight());
-        Assert.assertEquals("RollingStock WeightTons Real test", "1600", rs1.getWeightTons());
+        Assert.assertEquals("Car Weight Real test", "20", rs1.getWeight());
+        Assert.assertEquals("Car WeightTons Real test", "1600", rs1.getWeightTons());
     }
 
-    // test RollingStock public constants
-    public void testRollingStockConstants() {
-        RollingStock rs1 = new RollingStock("TESTROAD", "TESTNUMBER1");
-        Assert.assertEquals("RollingStock Road", "TESTROAD", rs1.getRoadName());
-        Assert.assertEquals("RollingStock Number", "TESTNUMBER1", rs1.getNumber());
+    // test Car public constants
+    @Test
+    public void testCarConstants() {
+        Car rs1 = new Car("TESTROAD", "TESTNUMBER1");
+        Assert.assertEquals("Car Road", "TESTROAD", rs1.getRoadName());
+        Assert.assertEquals("Car Number", "TESTNUMBER1", rs1.getNumber());
 
-        Assert.assertEquals("RollingStock Constant TRACK_CHANGED_PROPERTY", "rolling stock track location", RollingStock.TRACK_CHANGED_PROPERTY);
-        Assert.assertEquals("RollingStock Constant DESTINATION_CHANGED_PROPERTY", "rolling stock destination", RollingStock.DESTINATION_CHANGED_PROPERTY);
-        Assert.assertEquals("RollingStock Constant DESTINATIONTRACK_CHANGED_PROPERTY", "rolling stock track destination", RollingStock.DESTINATION_TRACK_CHANGED_PROPERTY);
+        Assert.assertEquals("Car Constant TRACK_CHANGED_PROPERTY", "rolling stock track location", Car.TRACK_CHANGED_PROPERTY);
+        Assert.assertEquals("Car Constant DESTINATION_CHANGED_PROPERTY", "rolling stock destination", Car.DESTINATION_CHANGED_PROPERTY);
+        Assert.assertEquals("Car Constant DESTINATIONTRACK_CHANGED_PROPERTY", "rolling stock track destination", Car.DESTINATION_TRACK_CHANGED_PROPERTY);
 
-        Assert.assertEquals("RollingStock Constant COUPLER", 4, RollingStock.COUPLER);
+        Assert.assertEquals("Car Constant COUPLERS", 4, Car.COUPLERS);
     }
 
-    // test RollingStock location and track
-    public void testRollingStockLocation() {
-        RollingStock rs1 = new RollingStock("TESTROAD", "TESTNUMBER1");
+    // test Car location and track
+    @Test
+    public void testCarLocation() {
+        Car rs1 = new Car("TESTROAD", "TESTNUMBER1");
         /* Rolling Stock needs a valid type */
         rs1.setTypeName("TESTTYPE");
         /* Type needs to be in CarTypes or EngineTypes */
         InstanceManager.getDefault(CarTypes.class).addName("TESTTYPE");
 
-        Assert.assertEquals("RollingStock Road", "TESTROAD", rs1.getRoadName());
-        Assert.assertEquals("RollingStock Number", "TESTNUMBER1", rs1.getNumber());
-        Assert.assertEquals("RollingStock Type", "TESTTYPE", rs1.getTypeName());
+        Assert.assertEquals("Car Road", "TESTROAD", rs1.getRoadName());
+        Assert.assertEquals("Car Number", "TESTNUMBER1", rs1.getNumber());
+        Assert.assertEquals("Car Type", "TESTTYPE", rs1.getTypeName());
 
         /* Rolling Stock not placed on layout yet */
-        Assert.assertEquals("RollingStock null Location Name", "", rs1.getLocationName());
-        Assert.assertEquals("RollingStock null Location Id", "", rs1.getLocationId());
-        Assert.assertEquals("RollingStock null Track Name", "", rs1.getTrackName());
-        Assert.assertEquals("RollingStock null Track Id", "", rs1.getTrackId());
-        Assert.assertEquals("RollingStock car length", "0", rs1.getLength());
+        Assert.assertEquals("Car null Location Name", "", rs1.getLocationName());
+        Assert.assertEquals("Car null Location Id", "", rs1.getLocationId());
+        Assert.assertEquals("Car null Track Name", "", rs1.getTrackName());
+        Assert.assertEquals("Car null Track Id", "", rs1.getTrackId());
+        Assert.assertEquals("Car car length", "0", rs1.getLength());
 
         String testresult;
 
@@ -176,19 +184,19 @@ public class OperationsRollingStockTest extends OperationsTestCase {
 
         testtrack1.deleteTypeName("TESTTYPE");
         testresult = rs1.setLocation(testlocation1, testtrack1);
-        Assert.assertEquals("RollingStock null Set Location", "type (TESTTYPE)", testresult);
+        Assert.assertEquals("Car null Set Location", "type (TESTTYPE)", testresult);
 
         /* type needs to be valid for Track */
         testtrack1.addTypeName("TESTTYPE");
         testlocation1.deleteTypeName("TESTTYPE");
         testresult = rs1.setLocation(testlocation1, testtrack1);
-        Assert.assertEquals("RollingStock null Set Location Track type", "type (TESTTYPE)", testresult);
+        Assert.assertEquals("Car null Set Location Track type", "type (TESTTYPE)", testresult);
 
         /* type needs to be valid for Location */
         testlocation1.addTypeName("TESTTYPE");
         rs1.setLength("");
         testresult = rs1.setLocation(testlocation1, testtrack1);
-        Assert.assertEquals("RollingStock null Set Location type", "rolling stock length ()", testresult);
+        Assert.assertEquals("Car null Set Location type", "rolling stock length ()", testresult);
 
         /* track needs to have a defined length */
         rs1.setLength("41");
@@ -204,67 +212,45 @@ public class OperationsRollingStockTest extends OperationsTestCase {
         testtrack1.setLength(44);  // rs length + Coupler == 4
         rs1.setLength("40");
         testresult = rs1.setLocation(testlocation1, testtrack1);
-        Assert.assertEquals("RollingStock null Set Length match", "okay", testresult);
+        Assert.assertEquals("Car null Set Length match", "okay", testresult);
+        
+        // car is now on track, need to remove to continue testing
+        rs1.setLocation(null, null);
 
         /* track needs to accept road */
         testtrack1.setRoadOption(Track.INCLUDE_ROADS);
         testresult = rs1.setLocation(testlocation1, testtrack1);
-        Assert.assertEquals("RollingStock null Set includeroads", "road (TESTROAD)", testresult);
+        Assert.assertEquals("Car null Set includeroads", "road (TESTROAD)", testresult);
 
         /* track needs to accept road */
         testtrack1.setRoadOption(Track.INCLUDE_ROADS);
         testtrack1.addRoadName("TESTROAD");
         testresult = rs1.setLocation(testlocation1, testtrack1);
-        Assert.assertEquals("RollingStock Set includeroads", "okay", testresult);
+        Assert.assertEquals("Car Set includeroads", "okay", testresult);
+        
+        // car is now on track, need to remove to continue testing
+        rs1.setLocation(null, null);
 
         /* track needs to accept road */
         testtrack1.setRoadOption(Track.EXCLUDE_ROADS);
         testresult = rs1.setLocation(testlocation1, testtrack1);
-        Assert.assertEquals("RollingStock Set excluderoads", "road (TESTROAD)", testresult);
+        Assert.assertEquals("Car Set excluderoads", "road (TESTROAD)", testresult);
 
         /* track needs to accept road */
         testtrack1.setRoadOption(Track.ALL_ROADS);
         testresult = rs1.setLocation(testlocation1, testtrack1);
-        Assert.assertEquals("RollingStock Set allroads", "okay", testresult);
+        Assert.assertEquals("Car Set allroads", "okay", testresult);
+        
+        // car is now on track, need to remove to continue testing
+        rs1.setLocation(null, null);
 
         /* track needs to accept road */
         testtrack1.setRoadOption(Track.EXCLUDE_ROADS);
         testtrack1.deleteRoadName("TESTROAD");
         testresult = rs1.setLocation(testlocation1, testtrack1);
-        Assert.assertEquals("RollingStock Set null excluderoads", "okay", testresult);
+        Assert.assertEquals("Car Set null excluderoads", "okay", testresult);
 
         // Normally logged message
         jmri.util.JUnitAppender.assertErrorMessage("Rolling stock (TESTROAD TESTNUMBER1) length () is not valid");
-
-    }
-
-    // Ensure minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
-        super.setUp();
-    }
-
-    public OperationsRollingStockTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", OperationsRollingStockTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(OperationsRollingStockTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
-        apps.tests.Log4JFixture.tearDown();
     }
 }

@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Provides an implementation of ProgrammerManager for the debug programmer. It
  * will consistently return the same ProgDebugger instance for a given request.
- * <P>
+ * <p>
  * It uses the DefaultProgrammerManager to handle the service mode operations.
  *
  * @see jmri.managers.DefaultProgrammerManager

@@ -50,6 +50,7 @@ public class Z21ComponentFactoryTest {
    @After
    public void tearDown(){
         memo=null;
+        tc.terminateThreads();
         tc=null;
         JUnitUtil.tearDown();
    }

@@ -5,8 +5,7 @@ import java.util.NoSuchElementException;
 import jmri.jmrix.loconet.LnPacketizer;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetMessageException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 
 /**
  * Converts Stream-based I/O to/from LocoNet messages. The "LocoNetInterface"
@@ -36,8 +35,8 @@ public class IBLnPacketizer extends LnPacketizer {
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "Only used during system initialization")
     public IBLnPacketizer() {
+        super(new LocoNetSystemConnectionMemo());
         echo = true;
-        //self = this;
     }
 
     /**
@@ -162,7 +161,7 @@ public class IBLnPacketizer extends LnPacketizer {
                     }
                     // check parity
                     if (!msg.checkParity()) {
-                        log.warn("Ignore Loconet packet with bad checksum: " + msg.toString());
+                        log.warn("Ignore LocoNet packet with bad checksum: " + msg.toString());
                         throw new LocoNetMessageException();
                     }
                     // message is complete, dispatch it !!
@@ -293,5 +292,5 @@ public class IBLnPacketizer extends LnPacketizer {
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(IBLnPacketizer.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(IBLnPacketizer.class);
 }

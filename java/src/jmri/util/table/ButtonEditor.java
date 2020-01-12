@@ -16,13 +16,13 @@ import javax.swing.table.TableCellEditor;
 
 /**
  * Make a JButton in a table cell function.
- * <P>
+ * <p>
  * Works with {@link ButtonRenderer}.
- * <P>
+ * <p>
  * This was adapted from Core Swing Advanced Programming, Prentice Hall
- * <P>
+ * <p>
  * Changes: Remove DataWithIcon reference. Change package
- * <P>
+ * <p>
  * This also now implements and registers as a MouseListener, so you can change
  * the mouse-event behavior by overriding the needed methods.
  */

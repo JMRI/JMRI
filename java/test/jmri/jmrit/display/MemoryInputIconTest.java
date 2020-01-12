@@ -1,32 +1,30 @@
 package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
-import jmri.util.JUnitUtil;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class MemoryInputIconTest extends PositionableJPanelTest {
 
     @Test
+    @Override
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertNotNull("exists",p);
+        Assert.assertNotNull("exists", p);
     }
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
-        JUnitUtil.setUp();
+        super.setUp();
         jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
         if (!GraphicsEnvironment.isHeadless()) {
             editor = new EditorScaffold();
-            MemoryInputIcon t = new MemoryInputIcon(5,editor);
+            MemoryInputIcon t = new MemoryInputIcon(5, editor);
             t.setMemory("IM1");
             p = t;
         }

@@ -82,7 +82,7 @@ abstract public class SprogUpdateFrame
     }
 
     protected String title() {
-        return Bundle.getMessage("SprogXFirmwareUpdate", "");
+        return Bundle.getMessage("SprogXFirmwareUpdate");
     }
 
     protected void init() {
@@ -306,13 +306,13 @@ abstract public class SprogUpdateFrame
      * Internal routine to handle a timeout.
      */
     synchronized protected void timeout() {
-        if (bootState == BootState.CRSENT) {
-            if (log.isDebugEnabled()) {
-                log.debug("timeout in CRSENT - assuming boot mode");
-                // we were looking for a SPROG in normal mode but have had no reply
-                // so maybe it was already in boot mode.
-                // Try looking for bootloader
-            }
+        if ((bootState == BootState.CRSENT) || (bootState == BootState.SETBOOTSENT)) {
+            log.debug("timeout in CRSENT - assuming boot mode");
+            // Either:
+            // 1) We were looking for a SPROG in normal mode but have had no reply
+            // so maybe it was already in boot mode.
+            // 2) We sent the b command and had an extected timeout
+            // In both cases, try looking for bootloader version
             requestBoot();
         } else if (bootState == BootState.VERREQSENT) {
             log.error("timeout in VERREQSENT!");

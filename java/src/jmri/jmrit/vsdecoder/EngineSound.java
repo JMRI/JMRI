@@ -10,17 +10,16 @@ import org.slf4j.LoggerFactory;
 /**
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under 
  * the terms of version 2 of the GNU General Public License as published 
  * by the Free Software Foundation. See the "COPYING" file for a copy
  * of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT 
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
  * for more details.
- * <P>
  *
  * @author Mark Underwood Copyright (C) 2011
  * @author Klaus Killinger Copyright (C) 2018
@@ -77,6 +76,7 @@ class EngineSound extends VSDSound {
 
     @Override
     public void stop() {
+        log.info("Emergency Stop called!");
         is_playing = false;
     }
 
@@ -181,6 +181,12 @@ class EngineSound extends VSDSound {
         engine_started = es;
     }
 
+    public void functionKey(String e, boolean v, String n) {
+    }
+
+    public void changeLocoDirection(int d) {
+    }
+
     @Override
     public void shutdown() {
         // do nothing.
@@ -202,6 +208,7 @@ class EngineSound extends VSDSound {
         if (auto_start_engine || is_auto_start) {
             SwingUtilities.invokeLater(() -> {
                 t = newTimer(40, false, new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         if (engine_pane != null && getFirstSpeed()) {
                             engine_pane.startButtonClick();

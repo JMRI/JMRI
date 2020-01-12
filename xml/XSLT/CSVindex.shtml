@@ -8,7 +8,7 @@
 </head>
 <body>
 <div class="nomenu" id="mBody">
-    <a href="http://jmri.org/index.shtml"><img src="http://jmri.org/images/logo-jmri.gif" align="right" width="160" height="135"
+    <a href="https://www.jmri.org/index.shtml"><img src="https://www.jmri.org/images/logo-jmri.gif" align="right" width="160" height="135"
                                hspace="0" vspace="0"></a>
     <div id="mainContent">
     <h1>JMRI Decoder Comma-Separated Values files</h1>

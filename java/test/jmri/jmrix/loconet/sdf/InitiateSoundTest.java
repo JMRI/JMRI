@@ -1,35 +1,17 @@
 package jmri.jmrix.loconet.sdf;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
 
 /**
  * Tests for the jmri.jmrix.loconet.sdf.InitiateSound class.
  *
  * @author	Bob Jacobsen Copyright 2007
-  */
-public class InitiateSoundTest extends TestCase {
+ */
+public class InitiateSoundTest {
 
+    @Test
     public void testCtor() {
         new InitiateSound((byte) 0, (byte) 0);
-    }
-
-    // from here down is testing infrastructure
-    public InitiateSoundTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {InitiateSoundTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(InitiateSoundTest.class);
-        return suite;
     }
 
 }

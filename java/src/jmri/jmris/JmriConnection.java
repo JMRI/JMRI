@@ -3,6 +3,8 @@ package jmri.jmris;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Locale;
+
+import org.eclipse.jetty.websocket.api.RemoteEndpoint;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.WebSocketException;
 import org.slf4j.Logger;
@@ -21,7 +23,8 @@ public class JmriConnection {
     private final Session session;
     private final DataOutputStream dataOutputStream;
     private Locale locale = Locale.getDefault();
-    private final static Logger log = LoggerFactory.getLogger(JmriConnection.class);
+    private static final Logger log = LoggerFactory.getLogger(JmriConnection.class);
+    private static final String EX_SENDING_MSG = "Exception sending message";
 
     /**
      * Create a JmriConnection that sends output to a WebSocket.
@@ -52,15 +55,6 @@ public class JmriConnection {
         return this.session;
     }
 
-    /**
-     * @deprecated see {@link #getSession() }
-     * @return the WebSocket session
-     */
-    @Deprecated
-    public Session getWebSocketConnection() {
-        return this.getSession();
-    }
-
     public DataOutputStream getDataOutputStream() {
         return dataOutputStream;
     }
@@ -79,31 +73,36 @@ public class JmriConnection {
         log.trace("Sending \"{}\"", message);
         if (this.dataOutputStream != null) {
             this.dataOutputStream.writeBytes(message);
-        } else if (this.session != null) {
-            if (this.session.isOpen()) {
-                try {
-                    this.session.getRemote().sendString(message);
-                } catch (WebSocketException ex) {
-                    log.debug("Exception sending message", ex);
-                    // A WebSocketException is most likely a broken socket,
-                    // so rethrow it as an IOException
-                    if (ex.getMessage() == null) {
-                        // provide a generic message if ex has no message
-                        throw new IOException("Exception sending message", ex);
-                    }
-                    throw new IOException(ex);
-                } catch (IOException ex) {
-                    if (ex.getMessage() == null) {
-                        // provide a generic message if ex has no message
-                        throw new IOException("Exception sending message", ex);
-                    }
-                    throw ex; // rethrow if complete
+        } else if (this.session.isOpen()) {
+            try {
+                RemoteEndpoint remote = this.session.getRemote();
+                // The JSON sockets keep an internal state variable and throw an
+                // IllegalStateException if more than one thread attempts to do
+                // sendString at the same time. This function gets normally
+                // called from a mixture of the Layout thread and the
+                // WebServer-NN threads.
+                synchronized (remote) {
+                    remote.sendString(message);
                 }
-            } else {
-                // immediately thrown an IOException to trigger closing
-                // actions up the call chain
-                throw new IOException("Will not send message on non-open session");
+            } catch (WebSocketException ex) {
+                // A WebSocketException is most likely a broken socket,
+                // so rethrow it as an IOException
+                if (ex.getMessage() == null) {
+                    // provide a generic message if ex has no message
+                    throw new IOException(EX_SENDING_MSG, ex);
+                }
+                throw new IOException(ex);
+            } catch (IOException ex) {
+                if (ex.getMessage() == null) {
+                    // provide a generic message if ex has no message
+                    throw new IOException(EX_SENDING_MSG, ex);
+                }
+                throw ex; // rethrow if complete
             }
+        } else {
+            // immediately thrown an IOException to trigger closing
+            // actions up the call chain
+            throw new IOException("Will not send message on non-open session");
         }
     }
 

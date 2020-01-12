@@ -274,12 +274,12 @@ public final class XMLUtil extends Object {
      *
      * <p>
      * Remember that when parsing XML files you often want to set an explicit
-     * entity resolver. For example, consider a file such as this:</p>
+     * entity resolver. For example, consider a file such as this:
      *
      * <pre>
-     * &lt;?<font class="keyword">xml</font> <font class="variable-name">version</font>=<font class="string">"1.0"</font> <font class="variable-name">encoding</font>=<font class="string">"UTF-8"</font>?&gt;
-     * &lt;!<font class="keyword">DOCTYPE</font> <font class="type">root</font> <font class="keyword">PUBLIC</font> <font class="string">"-//NetBeans//DTD Foo 1.0//EN"</font> <font class="string">"http://www.netbeans.org/dtds/foo-1_0.dtd"</font>&gt;
-     * &lt;<font class="function-name">root</font>/&gt;
+     * &lt;?xml version="1.0" encoding="UTF-8"?&gt;
+     * &lt;!DOCTYPE root PUBLIC "-//NetBeans//DTD Foo 1.0//EN" "http://www.netbeans.org/dtds/foo-1_0.dtd"&gt;
+     * &lt;root/&gt;
      * </pre>
      *
      * <p>
@@ -288,32 +288,31 @@ public final class XMLUtil extends Object {
      * this DTD, you will probably find the parse blocking to make a network
      * connection <em>even when you are not validating</em>. That is because
      * DTDs can be used to define entities and other XML oddities, and are not a
-     * pure constraint language like Schema or RELAX-NG.</p>
-     *
+     * pure constraint language like Schema or RELAX-NG.
      * <p>
-     * There are three basic ways to avoid the network connection.</p>
+     * There are three basic ways to avoid the network connection.
      *
      * <ol>
-     *
-     * <li><p>
+
+     * <li>
      * Register the DTD. This is generally the best thing to do. See
      * EntityCatalog's documentation for details, but for example in your layer
-     * use:</p>
-     *
+     * use:
+     * <br>
      * <pre>
-     * &lt;<font class="function-name">filesystem</font>&gt;
-     *   &lt;<font class="function-name">folder</font> <font class="variable-name">name</font>=<font class="string">"xml"</font>&gt;
-     *     &lt;<font class="function-name">folder</font> <font class="variable-name">name</font>=<font class="string">"entities"</font>&gt;
-     *       &lt;<font class="function-name">folder</font> <font class="variable-name">name</font>=<font class="string">"NetBeans"</font>&gt;
-     *         &lt;<font class="function-name">file</font> <font class="variable-name">name</font>=<font class="string">"DTD_Foo_1_0"</font>
-     *               <font class="variable-name">url</font>=<font class="string">"resources/foo-1_0.dtd"</font>&gt;
-     *           &lt;<font class="function-name">attr</font> <font class="variable-name">name</font>=<font class="string">"hint.originalPublicID"</font>
-     *                 <font class="variable-name">stringvalue</font>=<font class="string">"-//NetBeans//DTD Foo 1.0//EN"</font>/&gt;
-     *         &lt;/<font class="function-name">file</font>&gt;
-     *       &lt;/<font class="function-name">folder</font>&gt;
-     *     &lt;/<font class="function-name">folder</font>&gt;
-     *   &lt;/<font class="function-name">folder</font>&gt;
-     * &lt;/<font class="function-name">filesystem</font>&gt;
+     * &lt;filesystem&gt;
+     *   &lt;folder name="xml"&gt;
+     *     &lt;folder name="entities"&gt;
+     *       &lt;folder name="NetBeans"&gt;
+     *         &lt;file name="DTD_Foo_1_0"
+     *               url="resources/foo-1_0.dtd"&gt;
+     *           &lt;attr name="hint.originalPublicID"
+     *                 stringvalue="-//NetBeans//DTD Foo 1.0//EN"/&gt;
+     *         &lt;/file&gt;
+     *       &lt;/folder&gt;
+     *     &lt;/folder&gt;
+     *   &lt;/folder&gt;
+     * &lt;/filesystem&gt;
      * </pre>
      *
      * <p>
@@ -322,29 +321,29 @@ public final class XMLUtil extends Object {
      * mounts the "NetBeans Catalog" in the XML Entity Catalogs node in the
      * Runtime tab will be able to use your local copy of the DTD automatically,
      * for validation, code completion, etc. (The network URL should really
-     * exist, though, for the benefit of other tools!)</p></li>
+     * exist, though, for the benefit of other tools!)</li>
      *
-     * <li><p>
+     * <li>
      * You can also set an explicit entity resolver which maps that particular
      * public ID to some local copy of the DTD, if you do not want to register
      * it globally in the system for some reason. If handed other public IDs,
      * just return null to indicate that the system ID should be
-     * loaded.</p></li>
+     * loaded.</li>
      *
-     * <li><p>
+     * <li>
      * In some cases where XML parsing is very performance-sensitive, and you
      * know that you do not need validation and furthermore that the DTD defines
      * no infoset (there are no entity or character definitions, etc.), you can
      * speed up the parse. Turn off validation, but also supply a custom entity
-     * resolver that does not even bother to load the DTD at all:</p>
+     * resolver that does not even bother to load the DTD at all:<br>
      *
      * <pre>
-     * <font class="keyword">public</font> <font class="type">InputSource</font> <font class="function-name">resolveEntity</font>(<font class="type">String</font> <font class="variable-name">pubid</font>, <font class="type">String</font> <font class="variable-name">sysid</font>)
-     *     <font class="keyword">throws</font> <font class="type">SAXException</font>, <font class="type">IOException</font> {
-     *   <font class="keyword">if</font> (pubid.equals(<font class="string">"-//NetBeans//DTD Foo 1.0//EN"</font>)) {
-     *     <font class="keyword">return</font> <font class="keyword">new</font> <font class="type">InputSource</font>(<font class="keyword">new</font> <font class="type">ByteArrayInputStream</font>(<font class="keyword">new</font> <font class="type">byte</font>[0]));
-     *   } <font class="keyword">else</font> {
-     *     <font class="keyword">return</font> EntityCatalog.getDefault().resolveEntity(pubid, sysid);
+     * public InputSource resolveEntity(String pubid, String sysid)
+     *     throws SAXException, IOException {
+     *   if (pubid.equals("-//NetBeans//DTD Foo 1.0//EN")) {
+     *     return new InputSource(new ByteArrayInputStream(new byte[0]));
+     *   } else {
+     *     return EntityCatalog.getDefault().resolveEntity(pubid, sysid);
      *   }
      * }
      * </pre></li>
@@ -443,7 +442,6 @@ public final class XMLUtil extends Object {
      * level all text is likely to end up in one big CDATA section.
      * <br>
      * For nodes that only have one CDATA section this method should work fine.
-     * </p>
      *
      * @param doc DOM document to be written
      * @param out data sink

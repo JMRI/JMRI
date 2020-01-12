@@ -12,7 +12,7 @@ import jmri.jmrit.catalog.NamedIcon;
 /**
  * Provides a simple editor for selecting N NamedIcons, perhaps for use in
  * creating a panel icon.
- * <P>
+ * <p>
  * See {@link jmri.jmrit.display.SensorIcon} for an item that might want to have
  * that type of information, and
  * {@link jmri.jmrit.display.layoutEditor.LayoutEditor} for an example of how to

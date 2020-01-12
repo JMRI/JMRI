@@ -7,7 +7,8 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Kevin Dickerson 2011 -->
 
-  <title>JMRI: Interlocking</title><!-- Style -->
+  <title>JMRI: Interlocking</title>
+  <!-- Style -->
   <meta name="author" content="Kevin Dickerson">
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -16,14 +17,14 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
 
       <h1>Entry Exit and Interlocking</h1>
@@ -188,7 +189,7 @@
 
       <p>With the <b>Turnout Only</b> interlock type, as no further
       logic or interlocking is done, it is possible to allow the
-      interlock to be set-up no matter which way round the NX
+      interlock to be set up no matter which way round the NX
       buttons are selected. This can be done by selecting the "Both
       Way" flag in the table against an entry. You can then set the
       path in reverse, eg "NX Up Outer" to "NX Bay Mast".</p>

@@ -2,9 +2,9 @@ package jmri.jmrix.tams;
 
 /**
  * Encodes a message to a Tams MasterControl command station.
- * <P>
+ * <p>
  * The {@link TamsReply} class handles the response from the command station.
- * <P>
+ * <p>
  *
  * Based on work by Bob Jacobsen and Kevin Dickerson
  *
@@ -13,7 +13,6 @@ package jmri.jmrix.tams;
 public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
 
     static private final int TamsProgrammingTimeout = 5000;//ms
-    static private final int TamsCommandTimeout = 1000;//ms
 
     //The oneByteReply is used to tell TamsReply if one or more bytes are expected
     //The lastByteReply is gives the value of the last byte to be expected, for sensors this is always 0x00

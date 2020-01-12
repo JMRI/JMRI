@@ -1,70 +1,81 @@
 package jmri.jmrix.internal;
 
+import javax.annotation.Nonnull;
 import jmri.Light;
+import jmri.NamedBean;
 import jmri.implementation.AbstractVariableLight;
+import jmri.util.PreferNumericComparator;
 
 /**
- * Implement a light manager for "Internal" (virtual) lights.
+ * Implement a LightManager for "Internal" (virtual) lights.
  *
  * @author Bob Jacobsen Copyright (C) 2009
  */
 public class InternalLightManager extends jmri.managers.AbstractLightManager {
 
+    public InternalLightManager(InternalSystemConnectionMemo memo) {
+        super(memo);
+    }
+
     /**
      * Create and return an internal (no layout connection) Light
      */
     @Override
-    protected Light createNewLight(String systemName, String userName) {
+    protected Light createNewLight(@Nonnull String systemName, String userName) {
         return new AbstractVariableLight(systemName, userName) {
 
-            //protected void forwardCommandChangeToLayout(int s) {}
             @Override
             protected void sendIntensity(double intensity) {
+                // nothing to do
             }
 
             @Override
             protected void sendOnOffCommand(int newState) {
+                // nothing to do
             }
 
             @Override
             protected int getNumberOfSteps() {
                 return 100;
             }
+
+            @Override
+            public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, NamedBean n) {
+                return (new PreferNumericComparator()).compare(suffix1, suffix2);
+            }
         };
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return "I";
+    @Nonnull
+    public InternalSystemConnectionMemo getMemo() {
+        return (InternalSystemConnectionMemo) memo;
     }
 
     @Override
-    public boolean validSystemNameConfig(String systemName) {
+    public boolean validSystemNameConfig(@Nonnull String systemName) {
         return true;
     }
 
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
-        return NameValidity.VALID;
-    }
-
-    @Override
-    public boolean supportsVariableLights(String systemName) {
+    public boolean supportsVariableLights(@Nonnull String systemName) {
         return true;
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 
     /**
-     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
 }

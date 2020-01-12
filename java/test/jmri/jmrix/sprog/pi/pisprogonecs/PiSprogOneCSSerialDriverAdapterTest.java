@@ -7,9 +7,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * <P>
- * Tests for PiSprogOneCSSerialDriverAdapter
- * </P>
+ * Tests for PiSprogOneCSSerialDriverAdapter.
+ *
  * @author Paul Bender Copyright (C) 2016
  */
 public class PiSprogOneCSSerialDriverAdapterTest {
@@ -18,7 +17,10 @@ public class PiSprogOneCSSerialDriverAdapterTest {
    public void ConstructorTest(){
        PiSprogOneCSSerialDriverAdapter a = new PiSprogOneCSSerialDriverAdapter();
        Assert.assertNotNull(a);
-   }
+ 
+       // clean up
+       a.getSystemConnectionMemo().getSprogTrafficController().dispose();
+  }
 
     // The minimal setup for log4J
     @Before
@@ -30,6 +32,5 @@ public class PiSprogOneCSSerialDriverAdapterTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-
 
 }

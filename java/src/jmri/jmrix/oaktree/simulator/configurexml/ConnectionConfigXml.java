@@ -3,7 +3,6 @@ package jmri.jmrix.oaktree.simulator.configurexml;
 import java.util.List;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.oaktree.SerialNode;
-import jmri.jmrix.oaktree.SerialTrafficController;
 import jmri.jmrix.oaktree.simulator.ConnectionConfig;
 import jmri.jmrix.oaktree.simulator.SimulatorAdapter;
 import jmri.jmrix.oaktree.OakTreeSystemConnectionMemo;
@@ -85,25 +84,6 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             // Trigger initialization of this Node to reflect these parameters
             ((OakTreeSystemConnectionMemo)adapter.getSystemConnectionMemo()).getTrafficController().initializeSerialNode(node);
         }
-    }
-
-    /**
-     * Service routine to look through "parameter" child elements to find a
-     * particular parameter value
-     *
-     * @param e    Element containing parameters
-     * @param name name of desired parameter
-     * @return String value
-     */
-    String findParmValue(Element e, String name) {
-        List<Element> l = e.getChildren("parameter");
-        for (int i = 0; i < l.size(); i++) {
-            Element n = l.get(i);
-            if (n.getAttributeValue("name").equals(name)) {
-                return n.getTextTrim();
-            }
-        }
-        return null;
     }
 
     @Override

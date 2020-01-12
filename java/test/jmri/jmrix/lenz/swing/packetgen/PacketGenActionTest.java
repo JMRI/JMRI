@@ -52,6 +52,7 @@ public class PacketGenActionTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
 
         jmri.jmrix.lenz.XNetInterfaceScaffold t = new jmri.jmrix.lenz.XNetInterfaceScaffold(new jmri.jmrix.lenz.LenzCommandStation());
         memo = new jmri.jmrix.lenz.XNetSystemConnectionMemo(t);
@@ -60,6 +61,7 @@ public class PacketGenActionTest {
     @After
     public void tearDown() {
         memo = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

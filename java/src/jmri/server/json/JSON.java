@@ -1,32 +1,52 @@
 package jmri.server.json;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 /**
- * Common and utility constants used in the JMRI JSON protocol starting with
- * protocol version 4.1.
- *
- * @author Randall Wood (C) 2013, 2014, 2016, 2018
+ * Common and utility constants used in the JMRI JSON protocol.
+ * <p>
+ * <strong>Note</strong> any documented use of a constant is not the exclusive
+ * or sole use of the constant. Review the JSON schemas for all uses of any
+ * given constant.
+ * 
+ * @author Randall Wood (C) 2013, 2014, 2016, 2018, 2019
  */
 public final class JSON {
 
     /**
-     * JMRI JSON protocol version.
-     * <p>
-     * Changes to the major number represent a backwards incompatible change in
-     * the protocol, while changes to the minor number represent an addition to
-     * the protocol.
-     * <p>
-     * Protocol version 4.1 was first introduced in JMRI 4.11.4.
-     * <p>
-     * Protocol version 4.0 was first introduced in JMRI 4.3.4.
-     * <p>
-     * Prior to version 4.0, the JSON servers had a single definition for all
-     * tokens used in JSON communications. As of version 4.0, the JSON servers
-     * use a modular protocol, fixing as constants only the tokens used for the
-     * basic protocol structure as well as some tokens used by multiple modules.
-     * <p>
-     * {@value #JSON_PROTOCOL_VERSION}
+     * JSON protocol version for requesting version 5.x.y protocol. {@value #V5}
      */
-    public static final String JSON_PROTOCOL_VERSION = "4.1"; // NOI18N
+    public static final String V5 = "v5";
+
+    /**
+     * List of supported versions, as used in the HTTP URL paths.
+     * <p>
+     * <strong>Note:</strong> this being a List&lt;String&gt; is not stable API
+     * and is subject to change without notice.
+     */
+    public static final List<String> VERSIONS = Collections.unmodifiableList(Arrays.asList(V5));
+
+    /**
+     * JMRI JSON protocol version 5 complete version. See
+     * {@link jmri.server.json} for the version history. Starting with 5.0.0,
+     * this is a semantic version string; prior to that, it is just an X.Y
+     * version string.
+     */
+    public static final String V5_PROTOCOL_VERSION = "5.3.0"; // NOI18N
+
+    /**
+     * JMRI JSON protocol version. See {@link jmri.server.json} for the version
+     * history. Starting with 5.0.0, this is a semantic version string; prior to
+     * that, it is just an X.Y version string.
+     */
+    public static final String JSON_PROTOCOL_VERSION = V5_PROTOCOL_VERSION; // NOI18N
+
+    /**
+     * {@value #VERSION}
+     */
+    public static final String VERSION = "version"; // NOI18N
 
     /* JSON structure */
     /**
@@ -119,6 +139,14 @@ public final class JSON {
      * {@value #DEFAULT}
      */
     public static final String DEFAULT = "default"; // NOI18N
+    /**
+     * {@value #SPEED}
+     */
+    public static final String SPEED = "speed"; // NOI18N
+    /**
+     * {@value #DIRECTION}
+     */
+    public static final String DIRECTION = "direction"; // NOI18N
 
     /* JSON hello and metadata */
     /**
@@ -140,24 +168,28 @@ public final class JSON {
     /**
      * {@value #NODE}
      * <p>
+     * 
      * @since 1.1
      */
     public static final String NODE = "node"; // NOI18N
     /**
      * {@value #ACTIVE_PROFILE}
      * <p>
+     * 
      * @since 3.0
      */
     public static final String ACTIVE_PROFILE = "activeProfile"; // NOI18N
     /**
      * {@value #FORMER_NODES}
      * <p>
+     * 
      * @since 1.1
      */
     public static final String FORMER_NODES = "formerNodes"; // NOI18N
     /**
      * {@value #LOCALE}
      * <p>
+     * 
      * @since 1.1
      */
     public static final String LOCALE = "locale"; // NOI18N
@@ -188,7 +220,7 @@ public final class JSON {
      */
     public static final String CONFIG_PROFILES = "configProfiles"; // NOI18N
     /**
-     * {@value #UNIQUE_ID}
+     * {@value #CONFIG_PROFILE}
      */
     public static final String CONFIG_PROFILE = "configProfile"; // NOI18N
     /**
@@ -203,6 +235,10 @@ public final class JSON {
      * {@value #IS_AUTO_START}
      */
     public static final String IS_AUTO_START = "isAutoStart"; // NOI18N
+    /**
+     * {@value #IS_NEXT_PROFILE}
+     */
+    public static final String IS_NEXT_PROFILE = "isNextProfile"; // NOI18N
 
     /* JSON data types */
     /**
@@ -384,9 +420,9 @@ public final class JSON {
 
     /* JSON route (operations) tokens */
     /**
-     * {@value #DIRECTION}
+     * {@value #TRAIN_DIRECTION}
      */
-    public static final String DIRECTION = "trainDirection"; // NOI18N
+    public static final String TRAIN_DIRECTION = "trainDirection"; // NOI18N
     /**
      * {@value #SEQUENCE}
      */
@@ -607,10 +643,6 @@ public final class JSON {
 
     /* JSON value types */
     /**
-     * {@value #NULL}
-     */
-    public static final String NULL = "null"; // NOI18N
-    /**
      * {@value #INTEGER}
      */
     public static final String INTEGER = "int"; // NOI18N
@@ -641,12 +673,13 @@ public final class JSON {
      * JSON State (an unsigned integer)
      */
 
- /* Common state */
+    /* Common state */
     /**
      * {@value #UNKNOWN}
      * <p>
      * Note that this value deliberately differs from
-     * {@link jmri.NamedBean#UNKNOWN}.
+     * {@link jmri.NamedBean#UNKNOWN} so that JSON clients can treat all known
+     * states as true, and the unknown state as false.
      */
     public static final int UNKNOWN = 0x00;
 
@@ -779,6 +812,42 @@ public final class JSON {
      * @since 4.1
      */
     public static final String CLIENT = "client"; // NOI18N
+    /**
+     * {@value #FORCE_DELETE}
+     * 
+     * @since 5.0.0
+     */
+    public static final String FORCE_DELETE = "forceDelete"; // NOI18N
+    /**
+     * {@value #CONFLICT}
+     * 
+     * @since 5.0.0
+     */
+    public static final String CONFLICT = "conflict"; // NOI18N
+    /**
+     * {@value #RENAME}
+     * <p>
+     * In a message from a client, carries the new name for the object in the
+     * message; note that some services may bar changing the name of an object,
+     * while other services will change the name based on other values. In a
+     * message from the server, carries the old name for a recently renamed
+     * object in the message.
+     * 
+     * @since 5.0.0
+     */
+    public static final String RENAME = "rename"; // NOI18N
+    /**
+     * {@value #RFID}
+     * 
+     * @since 5.0.0
+     */
+    public static final String RFID = "rfid"; // NOI18N
+    /**
+     * {@value #TIME}
+     * 
+     * @since 5.0.0
+     */
+    public static final String TIME = "time"; // NOI18N
 
     /* ZeroConf support */
     /**

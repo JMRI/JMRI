@@ -24,14 +24,15 @@ public class NceClockControlTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
         tcis = new NceTrafficControlScaffold();
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        tcis = new NceTrafficControlScaffold();
-        apps.tests.Log4JFixture.tearDown();
+        tcis = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(NceClockControlTest.class);

@@ -19,20 +19,19 @@ import org.slf4j.LoggerFactory;
 /**
  * This utility class provides methods that initialise and return a JComboBox
  * containing a specific sub-set of fonts installed on a users system.
- * <P>
+ * <p>
  * Optionally, the JComboBox can be displayed with a preview of the specific
  * font in the drop-down list itself.
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
  *
  * @author Matthew Harris Copyright (C) 2011
  * @since 2.13.1
@@ -235,7 +234,7 @@ public class FontComboUtil {
      * <p>
      * Typical usage:
      * <pre>
-     * JComboBox fontFamily = FontUtil.getFontCombo(FontUtil.MONOSPACED);
+     * JComboBox fontFamily = FontComboUtil.getFontCombo(FontComboUtil.MONOSPACED);
      * fontFamily.addActionListener(new ActionListener() {
      *      public void actionPerformed(ActionEvent e) {
      *          myObject.setFontFamily((String) ((JComboBox)e.getSource()).getSelectedItem());

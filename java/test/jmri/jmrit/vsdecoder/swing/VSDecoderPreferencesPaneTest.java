@@ -1,5 +1,6 @@
 package jmri.jmrit.vsdecoder.swing;
 
+import jmri.*;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -17,6 +18,9 @@ public class VSDecoderPreferencesPaneTest {
     public void testCtor() {
         VSDecoderPreferencesPane frame = new VSDecoderPreferencesPane();
         Assert.assertNotNull("exists", frame );
+    
+        // this created an audio manager, clean that up
+        InstanceManager.getDefault(jmri.AudioManager.class).cleanup();
     }
 
     @Before
@@ -25,7 +29,9 @@ public class VSDecoderPreferencesPaneTest {
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {        
+        JUnitUtil.tearDown();
+    }
 
 
 }

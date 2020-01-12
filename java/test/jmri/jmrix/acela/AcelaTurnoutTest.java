@@ -1,11 +1,7 @@
 package jmri.jmrix.acela;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -92,7 +88,7 @@ public class AcelaTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
     @Before
     @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
 
         tcis = new AcelaTrafficControlScaffold();
         memo = new AcelaSystemConnectionMemo(tcis);
@@ -134,7 +130,9 @@ public class AcelaTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
     private final static Logger log = LoggerFactory.getLogger(AcelaTurnoutTest.class);

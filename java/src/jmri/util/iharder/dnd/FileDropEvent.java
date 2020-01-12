@@ -7,12 +7,10 @@ import java.util.Arrays;
  * {@link FileDropListener#filesDropped filesDropped(...)} method in your
  * {@link FileDropListener} when files are dropped onto a registered drop
  * target.
- *
  * <p>
  * I'm releasing this code into the Public Domain. Enjoy.
- * </p>
  * <p>
- * <em>Original author: Robert Harder, rharder@usa.net</em></p>
+ * <em>Original author: Robert Harder, rharder@usa.net</em>
  *
  * @author Robert Harder
  * @author rharder@usa.net

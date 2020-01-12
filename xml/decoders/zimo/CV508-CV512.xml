@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 1 - for Unified Software -->
+<!-- Ronald Kuhn, 21th Apr 2019 -->
+<!-- from version 37 firmware -->
+<!-- CV's 508-512 control dimming options in swiss mapping -->
+<!-- see Zimo German manual for small decoders, -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+     <qualifier>
+          <variableref>Decoder Version</variableref>
+          <relation>ge</relation>
+          <value>36</value>
+        </qualifier>
+
+      <variable CV="508" item="Swiss Dimming 1" mask="XXXXXVVV">
+       <enumVal>
+        <enumChoice choice="no choice">
+         <choice>no choice</choice>
+         <choice xml:lang="de">keine Auswahl</choice>
+        </enumChoice>
+        <enumChoice choice="Light effect off">
+         <choice>Light effect off</choice>
+         <choice xml:lang="de">unterdrückt den Lichteffekt</choice>
+        </enumChoice>
+        <enumChoice choice="Flashing">
+         <choice>Flashing</choice>
+         <choice xml:lang="de">Blinkeffekt</choice>
+        </enumChoice>
+        <enumChoice choice="inverted flashing" value="4">
+         <choice>inverted flashing</choice>
+         <choice xml:lang="de">Inverser Blinkeffekt</choice>
+        </enumChoice>
+       </enumVal>
+        <label> </label>
+      </variable>
+      <variable CV="509" item="Swiss Dimming 2" mask="XXXXXVVV">
+       <enumVal>
+        <enumChoice choice="no choice">
+         <choice>no choice</choice>
+         <choice xml:lang="de">keine Auswahl</choice>
+        </enumChoice>
+        <enumChoice choice="Light effect off">
+         <choice>Light effect off</choice>
+         <choice xml:lang="de">unterdrückt den Lichteffekt</choice>
+        </enumChoice>
+        <enumChoice choice="Flashing">
+         <choice>Flashing</choice>
+         <choice xml:lang="de">Blinkeffekt</choice>
+        </enumChoice>
+        <enumChoice choice="inverted flashing" value="4">
+         <choice>inverted flashing</choice>
+         <choice xml:lang="de">Inverser Blinkeffekt</choice>
+        </enumChoice>
+       </enumVal>
+        <label> </label>
+      </variable>
+      <variable CV="510" item="Swiss Dimming 3" mask="XXXXXVVV">
+       <enumVal>
+        <enumChoice choice="no choice">
+         <choice>no choice</choice>
+         <choice xml:lang="de">keine Auswahl</choice>
+        </enumChoice>
+        <enumChoice choice="Light effect off">
+         <choice>Light effect off</choice>
+         <choice xml:lang="de">unterdrückt den Lichteffekt</choice>
+        </enumChoice>
+        <enumChoice choice="Flashing">
+         <choice>Flashing</choice>
+         <choice xml:lang="de">Blinkeffekt</choice>
+        </enumChoice>
+        <enumChoice choice="inverted flashing" value="4">
+         <choice>inverted flashing</choice>
+         <choice xml:lang="de">Inverser Blinkeffekt</choice>
+        </enumChoice>
+       </enumVal>
+        <label> </label>
+      </variable>
+      <variable CV="511" item="Swiss Dimming 4" mask="XXXXXVVV">
+       <enumVal>
+        <enumChoice choice="no choice">
+         <choice>no choice</choice>
+         <choice xml:lang="de">keine Auswahl</choice>
+        </enumChoice>
+        <enumChoice choice="Light effect off">
+         <choice>Light effect off</choice>
+         <choice xml:lang="de">unterdrückt den Lichteffekt</choice>
+        </enumChoice>
+        <enumChoice choice="Flashing">
+         <choice>Flashing</choice>
+         <choice xml:lang="de">Blinkeffekt</choice>
+        </enumChoice>
+        <enumChoice choice="inverted flashing" value="4">
+         <choice>inverted flashing</choice>
+         <choice xml:lang="de">Inverser Blinkeffekt</choice>
+        </enumChoice>
+       </enumVal>
+        <label> </label>
+      </variable>
+      <variable CV="512" item="Swiss Dimming 5" mask="XXXXXVVV">
+       <enumVal>
+        <enumChoice choice="no choice">
+         <choice>no choice</choice>
+         <choice xml:lang="de">keine Auswahl</choice>
+        </enumChoice>
+        <enumChoice choice="Light effect off">
+         <choice>Light effect off</choice>
+         <choice xml:lang="de">unterdrückt den Lichteffekt</choice>
+        </enumChoice>
+        <enumChoice choice="Flashing">
+         <choice>Flashing</choice>
+         <choice xml:lang="de">Blinkeffekt</choice>
+        </enumChoice>
+        <enumChoice choice="inverted flashing" value="4">
+         <choice>inverted flashing</choice>
+         <choice xml:lang="de">Inverser Blinkeffekt</choice>
+        </enumChoice>
+       </enumVal>
+        <label> </label>
+      </variable>
+</variables>

@@ -1,13 +1,11 @@
 package jmri.jmrix.xpa;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import jmri.Turnout;
+import org.junit.*;
 
 /**
- * Description:	tests for the jmri.jmrix.xpa.XpaTurnout class
- * <P>
+ * Tests for the jmri.jmrix.xpa.XpaTurnout class.
+ *
  * @author	Paul Bender
  */
 public class XpaTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase  {
@@ -24,14 +22,14 @@ public class XpaTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase 
     public void checkClosedMsgSent() {
         Assert.assertEquals("closed message", "ATDT#3#3;",
                 xnis.outbound.get(xnis.outbound.size() - 1).toString());
-        Assert.assertEquals("CLOSED state", jmri.Turnout.CLOSED, t.getCommandedState());
+        Assert.assertEquals("CLOSED state", t.getInverted()?Turnout.THROWN:Turnout.CLOSED, t.getCommandedState());
     }
 
     @Override
     public void checkThrownMsgSent() {
         Assert.assertEquals("thrown message", "ATDT#3#1;",
                 xnis.outbound.get(xnis.outbound.size() - 1).toString());
-        Assert.assertEquals("THROWN state", jmri.Turnout.THROWN, t.getCommandedState());
+        Assert.assertEquals("THROWN state", t.getInverted()?Turnout.CLOSED:Turnout.THROWN, t.getCommandedState());
     }
 
     @Test
@@ -43,7 +41,7 @@ public class XpaTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase 
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         memo = new XpaSystemConnectionMemo();
         xnis = new XpaTrafficControlScaffold();
         memo.setXpaTrafficController(xnis);
@@ -52,7 +50,7 @@ public class XpaTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase 
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
         memo = null;
         xnis = null;
     }

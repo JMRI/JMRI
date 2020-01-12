@@ -49,28 +49,27 @@ public class DecoderPro3Test {
                 JUnitUtil.initDebugThrottleManager();
             }
 
-            @Override
-            protected void installShutDownManager() {
-                JUnitUtil.initShutDownManager();
-            }
         };
         Assert.assertNotNull(a);
         // shutdown the application
         AppsBase.handleQuit();
         // remove a frame opened by DecoderPro3
-        JUnitUtil.disposeFrame("Decoder Pro Wizard", false, false);
+        JUnitUtil.disposeFrame("DecoderPro Wizard", false, false);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
+        JUnitUtil.setUp();
         JUnitUtil.resetApplication();
+        JUnitUtil.resetProfileManager();
     }
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager();  // eventually want to test ShutDownTasks?
         JUnitUtil.resetApplication();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

@@ -38,6 +38,18 @@
         <authorinitials>PAB</authorinitials>
         <revremark>Add aspect mapping</revremark>
     </revision>    
+    <revision>
+        <revnumber>4</revnumber>
+        <date>2019-03-17</date>
+        <authorinitials>PAB</authorinitials>
+        <revremark>fix image links</revremark>
+    </revision>    
+    <revision>
+        <revnumber>5</revnumber>
+        <date>2019-12-30</date>
+        <authorinitials>BM</authorinitials>
+        <revremark>Fix a typo in aspectmappings</revremark>
+    </revision>
   </revhistory>
 
   <aspecttable>SLSF</aspecttable>
@@ -45,7 +57,7 @@
   <reference> As described in the
 July 1978 Revision of the St. Louis San Francisco Railway Company publication "RULES for the Maintenance of way and Structures" effective July 1,1973, chapter titled Description of Signals.  As noted in the source material, these rules are rules of the Frisco Transportation department.
   </reference>
-  <description>Appearances for a three-searchlight signal head with an A plackard</description>
+  <description>Appearances for a three-searchlight signal head with an A placard.</description>
   
   <appearances>
 
@@ -55,9 +67,7 @@ July 1978 Revision of the St. Louis San Francisco Railway Company publication "R
       <show>red</show>
       <show>red</show>
       <reference>Rule 281</reference>
-      <imagelink>
-      ../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-3-high/rule281.gif
-      </imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-3-high/rule281.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -66,9 +76,7 @@ July 1978 Revision of the St. Louis San Francisco Railway Company publication "R
       <show>yellow</show>
       <show>red</show>
       <reference>Rule 282</reference>
-      <imagelink>
-      ../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-3-high/rule282.gif
-      </imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-3-high/rule282.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -77,9 +85,7 @@ July 1978 Revision of the St. Louis San Francisco Railway Company publication "R
       <show>green</show>
       <show>red</show>
       <reference>Rule 284</reference>
-      <imagelink>
-      ../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-3-high/rule284.gif
-      </imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-3-high/rule284.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -88,9 +94,7 @@ July 1978 Revision of the St. Louis San Francisco Railway Company publication "R
       <show>red</show>
       <show>red</show>
       <reference>Rule 285</reference>
-      <imagelink>
-      ../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-3-high/rule285.gif
-      </imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-3-high/rule285.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -99,9 +103,7 @@ July 1978 Revision of the St. Louis San Francisco Railway Company publication "R
       <show>green</show>
       <show>red</show>
       <reference>Rule 286</reference>
-      <imagelink>
-      ../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-3-high/rule286.gif
-      </imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-3-high/rule286.gif</imagelink>
     </appearance>
 
 
@@ -111,9 +113,7 @@ July 1978 Revision of the St. Louis San Francisco Railway Company publication "R
       <show>yellow</show>
       <show>red</show>
       <reference>Rule 287</reference>
-      <imagelink>
-      ../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-3-high/rule287.gif
-      </imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-3-high/rule287.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -122,40 +122,7 @@ July 1978 Revision of the St. Louis San Francisco Railway Company publication "R
       <show>red</show>
       <show>yellow</show>
       <reference>Rule 288</reference>
-      <imagelink>
-      ../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-3-high/rule288-a.gif
-      </imagelink>
-    </appearance>
-
-    <appearance>
-      <aspectname>Restricting</aspectname>
-      <show>lunar</show>
-      <show>red</show>
-      <show>red</show>
-      <reference>Rule 288</reference>
-      <imagelink></imagelink>
-    </appearance>
-
-    <appearance>
-      <aspectname>Restricting</aspectname>
-      <show>red</show>
-      <show>lunar</show>
-      <show>red</show>
-      <reference>Rule 288</reference>
-      <imagelink>
-      ../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-3-high/rule288-b.gif
-      </imagelink>
-    </appearance>
-
-    <appearance>
-      <aspectname>Restricting</aspectname>
-      <show>red</show>
-      <show>red</show>
-      <show>lunar</show>
-      <reference>Rule 288</reference>
-      <imagelink>
-      ../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-3-high/rule288-c.gif
-      </imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-3-high/rule288-a.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -164,9 +131,7 @@ July 1978 Revision of the St. Louis San Francisco Railway Company publication "R
       <show>red</show>
       <show>red</show>
       <reference>Rule 291</reference>
-      <imagelink>
-      ../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-3-high/rule291.gif
-      </imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-3-high/rule291.gif</imagelink>
     </appearance>
 
   </appearances>
@@ -210,7 +175,7 @@ July 1978 Revision of the St. Louis San Francisco Railway Company publication "R
 
     <aspectMapping>
      <advancedAspect>Diverging Clear</advancedAspect>
-     <ourAspect>Approace Medium</ourAspect>
+     <ourAspect>Approach Medium</ourAspect>
     </aspectMapping>
 
     <aspectMapping>

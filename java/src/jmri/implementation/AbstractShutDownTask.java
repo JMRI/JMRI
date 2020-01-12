@@ -42,12 +42,6 @@ public abstract class AbstractShutDownTask implements ShutDownTask {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
-    public String name() {
-        return this.getName();
-    }
-
-    @Override
     public boolean isParallel() {
         return false;
     }

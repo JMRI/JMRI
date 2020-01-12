@@ -29,6 +29,8 @@ public class PollDataModelTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
         memo = new RpsSystemConnectionMemo();
     }
 

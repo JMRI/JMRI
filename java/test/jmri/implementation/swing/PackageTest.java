@@ -12,7 +12,6 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        SwingShutDownTaskDemo.class,  // Normally a user-invoked demo, but in this case also a test
         BundleTest.class,
         SwingShutDownTaskTest.class,
 })

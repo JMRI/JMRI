@@ -17,21 +17,17 @@ import org.junit.Test;
  * @author	Bob Jacobsen
  * @author  Paul Bender Copyright (C) 2017
  */
-public class SRCPReplyTest {
-
-    @Test
-    public void testCtor() {
-        SRCPReply m = new SRCPReply();
-        Assert.assertNotNull(m);
-    }
+public class SRCPReplyTest extends jmri.jmrix.AbstractMessageTestBase {
+        
+    private SRCPReply msg = null;
 
     // Test the string constructor.
     @Test
     public void testStringCtor() {
         String s = "100 OK REASON GOES HERE\n\r";
-        SRCPReply m = new SRCPReply(s);
+        msg = new SRCPReply(s);
         Assert.assertNotNull(m);
-        Assert.assertTrue("String Constructor Correct", s.equals(m.toString()));
+        Assert.assertTrue("String Constructor Correct", s.equals(msg.toString()));
     }
 
     // Test the parser constructor.
@@ -39,14 +35,14 @@ public class SRCPReplyTest {
     public void testParserCtor() {
         String s = "12345678910 400 ERROR Reason GOES HERE\n\r";
         SRCPClientParser p = new SRCPClientParser(new StringReader(s));
-        SRCPReply m = null;
+        msg = null;
         try {
-            m = new SRCPReply(p.commandresponse());
+            msg = new SRCPReply(p.commandresponse());
         } catch (ParseException pe) {
-            // m is already null if there is an exception parsing the string
+            // msg is already null if there is an exception parsing the string
         }
-        Assert.assertNotNull(m);
-        Assert.assertEquals("Parser Constructor Correct", s, m.toString());
+        Assert.assertNotNull(msg);
+        Assert.assertEquals("Parser Constructor Correct", s, msg.toString());
         //Assert.assertTrue("Parser Constructor Correct", s.equals(m.toString()));
     }
 
@@ -89,12 +85,15 @@ public class SRCPReplyTest {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
+        m = msg = new SRCPReply();
     }
 
     @After
     public void tearDown() {
+	m = msg = null;
         JUnitUtil.tearDown();
     }
 }

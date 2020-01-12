@@ -3,11 +3,7 @@ package jmri.jmrix.ieee802154.xbee;
 import com.digi.xbee.api.RemoteXBeeDevice;
 import com.digi.xbee.api.models.XBee16BitAddress;
 import com.digi.xbee.api.models.XBee64BitAddress;
-import com.digi.xbee.api.models.XBeeProtocol;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * XBeeNodeTest.java
@@ -168,13 +164,17 @@ public class XBeeNodeTest{
     // The minimal setup for log4J
     @Before
     public void setUp() {
+        jmri.util.JUnitUtil.setUp();
         tc = new XBeeInterfaceScaffold();
     }
 
     @After
     public void tearDown() {
         ((XBeeInterfaceScaffold)tc).dispose();
-        tc=null;
+        tc = null;
+        jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        jmri.util.JUnitUtil.tearDown();
+
     }
 
 }

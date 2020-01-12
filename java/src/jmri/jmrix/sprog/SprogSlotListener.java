@@ -8,7 +8,7 @@ package jmri.jmrix.sprog;
  */
 public interface SprogSlotListener extends java.util.EventListener {
 
-    // This and the Loconet equivalent should probably be re-factored
+    // This and the LocoNet equivalent should probably be re-factored
     // to a higher place in the hierarchy
     public void notifyChangedSlot(SprogSlot s);
 }

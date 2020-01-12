@@ -15,6 +15,7 @@ public class StatusActionTest {
     @Test
     public void testCTor() {
         StatusAction t = new StatusAction(){
+            @Override
             void connect(StatusFrame l){
             }
         };

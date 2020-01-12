@@ -5,17 +5,18 @@ import jmri.jmrix.loconet.LocoNetMessage;
 
 /**
  * Manage the communication to/from a LocoIO board.
+ * 
+ * Uses the LOCONETSV1MODE programming mode.
  *
- * TODO: align with DecoderPro SV1/SV2MODE style of messages
- * as currently (4.11.5) this tool does not work on the HDL LocoIO rev 3 boards,
- * even breaking the stored config.
+ * Uses LnProgrammer LOCOIO_PEER_CODE_SV_VER1 message format, comparable to DecoderPro LOCONETSV1MODE
+ * Currently (4.11.6) this tool does not work with the HDL LocoIO rev 3 and newer boards,
+ * with risk of breaking the stored config.
  *
- * @see jmri.jmrix.loconet.LnProgrammerManager#LOCONETSV1MODE
  * @see jmri.jmrix.loconet.LnOpsModeProgrammer#message(LocoNetMessage)
  *
  * Programming SV's
  * <p>
- * The SV's in LocoIO can be programmed using Loconet OPC_PEER_XFER messages.
+ * The SV's in a LocoIO hardware module can be programmed using LocoNet OPC_PEER_XFER messages.
  * <p>
  * Commands for setting SV's:
  * <p>
@@ -32,7 +33,8 @@ import jmri.jmrix.loconet.LocoNetMessage;
  * D3 0x00 0x00
  * D4 0x00 Data to Write PXCT2
  * D5 LocoIO Sub-address
- * D6 0x00 0x00 D7 0x00 0x00
+ * D6 0x00 0x00
+ * D7 0x00 0x00
  * D8 0x00 0x00
  * CHK Checksum Checksum
  * </code></pre>
@@ -57,7 +59,7 @@ import jmri.jmrix.loconet.LocoNetMessage;
  * CHK Checksum Checksum
  * </code></pre>
  *
- * @author John Plocher
+ * @author John Plocher 2006, 2007
  */
 public class LocoIO {
 
@@ -66,9 +68,9 @@ public class LocoIO {
     public static final int LOCOIO_BROADCAST_ADDRESS = 0x1000; // LocoIO broadcast
 
     public static final int LOCOIO_PEER_CODE_7BIT_ADDRS = 0x00;
-    public static final int LOCOIO_PEER_CODE_ANSI_TEXT = 0x00;
+    public static final int LOCOIO_PEER_CODE_ANSI_TEXT = 0x00; // not used
     public static final int LOCOIO_PEER_CODE_SV_VER1 = 0x08;
-    public static final int LOCOIO_PEER_CODE_SV_VER2 = 0x09;
+    public static final int LOCOIO_PEER_CODE_SV_VER2 = 0x09; // not used
 
     /**
      * Create a new instance of LocoIO.
@@ -82,10 +84,10 @@ public class LocoIO {
 
     /**
      * Compose a LocoNet message from the given ingredients for reading
-     * the value of one specific SV from a LocoIO.
+     * the value of one specific SV from a given LocoIO.
      *
      * @param locoIOAddress base address of the LocoIO board to read from
-     * @param locoIOSubAddress subAddress of LocoIO board
+     * @param locoIOSubAddress subAddress of the LocoIO board
      * @param cv the SV index to query
      * @return complete message to send
      */
@@ -99,12 +101,13 @@ public class LocoIO {
                 LOCOIO_PEER_CODE_SV_VER1
         );
     }
+
     /**
      * Compose a LocoNet message from the given ingredients for reading
-     * the value of one specific SV from a LocoIO.
+     * the value of one specific SV from a given LocoIO.
      *
      * @param locoIOAddress base address of the LocoIO board to read from
-     * @param locoIOSubAddress subAddress of LocoIO board
+     * @param locoIOSubAddress subAddress of the LocoIO board
      * @param cv the SV index to change
      * @param data the new value to store in the board's SV
      * @return complete message to send
@@ -124,7 +127,7 @@ public class LocoIO {
      * Compose and send a message out onto LocoNet changing the LocoIO hardware board
      * address of all connected LocoIO boards.
      * <p>
-     * User is warned this is a broadcast type operation in
+     * User is warned beforehand that this is a broadcast type operation in
      * {@link jmri.jmrix.loconet.locoio.LocoIOPanel#cautionAddrSet()}
      *
      * @param address the new base address of the LocoIO board to change

@@ -3,7 +3,6 @@ package jmri.jmrix.dcc4pc.swing;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import jmri.JmriException;
 import jmri.jmrix.dcc4pc.Dcc4PcListener;
 import jmri.jmrix.dcc4pc.Dcc4PcMessage;
 import jmri.jmrix.dcc4pc.Dcc4PcReply;
@@ -97,13 +96,6 @@ public class StatusPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implements 
             Dcc4PcMessage m = new jmri.jmrix.dcc4pc.Dcc4PcMessage(new byte[]{(byte) 0x00});
             nextPacket = 0x00;
             tc.sendDcc4PcMessage(m, this);
-        }
-    }
-
-    @SuppressWarnings("unused")
-    private void checkTC() throws JmriException {
-        if (tc == null) {
-            throw new JmriException("attempt to use DCC4PC Traffic Controller after dispose");
         }
     }
 

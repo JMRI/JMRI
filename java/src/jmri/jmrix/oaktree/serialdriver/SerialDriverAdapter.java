@@ -16,12 +16,12 @@ import purejavacomm.SerialPort;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Provide access to Oak Tree via a serial comm port. Normally controlled by the
+ * Provide access to Oak Tree via a serial com port. Normally controlled by the
  * oaktree.serialdriver.SerialDriverFrame class.
  *
  * @author Bob Jacobsen Copyright (C) 2006
  */
-public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends SerialPortController {
 
     SerialPort activeSerialPort = null;
 
@@ -162,12 +162,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
      */
     protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
-        int baud = 19200;  // default, but also defaulted in the initial value of selectedSpeed
-        for (int i = 0; i < validSpeeds.length; i++) {
-            if (validSpeeds[i].equals(selectedSpeed)) {
-                baud = validSpeedValues[i];
-            }
-        }
+        int baud = currentBaudNumber(mBaudRate);
         activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
                 SerialPort.STOPBITS_2, SerialPort.PARITY_NONE);
 
@@ -176,24 +171,29 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         configureLeadsAndFlowControl(activeSerialPort, flow);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] validBaudRates() {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
     /**
-     * Set the baud rate.
+     * {@inheritDoc}
      */
     @Override
-    public void configureBaudRate(String rate) {
-        log.debug("configureBaudRate: {}", rate);
-        selectedSpeed = rate;
-        super.configureBaudRate(rate);
+    public int[] validBaudNumbers() {
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 
     protected String[] validSpeeds = new String[]{Bundle.getMessage("Baud19200"), Bundle.getMessage("Baud38400")};
     protected int[] validSpeedValues = new int[]{19200, 38400};
-    protected String selectedSpeed = validSpeeds[0];
+
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
+    }
 
     // private control members
     private boolean opened = false;

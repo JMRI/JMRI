@@ -252,16 +252,15 @@ public class CatalogPanel extends JPanel {
     /**
      * Recursively add the branch nodes to the display tree.
      */
-    @SuppressWarnings("unchecked")
     private void addTreeBranch(CatalogTreeNode node) {
         if (log.isDebugEnabled()) {
             log.debug("addTreeBranch called for node= {}, has {} children.",
                     node.toString(), node.getChildCount());
         }
         CatalogTreeNode root = (CatalogTreeNode) _model.getRoot();
-        Enumeration<CatalogTreeNode> e = node.children();
+        Enumeration<TreeNode> e = node.children();
         while (e.hasMoreElements()) {
-            CatalogTreeNode n = e.nextElement();
+            CatalogTreeNode n = (CatalogTreeNode)e.nextElement();
             addNode(root, n);
         }
     }
@@ -269,14 +268,13 @@ public class CatalogPanel extends JPanel {
     /**
      * Clone the node and adds to parent.
      */
-    @SuppressWarnings("unchecked")
     private void addNode(CatalogTreeNode parent, CatalogTreeNode n) {
         CatalogTreeNode node = new CatalogTreeNode((String) n.getUserObject());
         node.setLeaves(n.getLeaves());
         parent.add(node);
-        Enumeration<CatalogTreeNode> e = n.children();
+        Enumeration<TreeNode> e = n.children();
         while (e.hasMoreElements()) {
-            CatalogTreeNode nChild = e.nextElement();
+            CatalogTreeNode nChild = (CatalogTreeNode)e.nextElement();
             addNode(node, nChild);
         }
     }
@@ -303,15 +301,14 @@ public class CatalogPanel extends JPanel {
      * Find the corresponding node in a CatalogTreeManager tree with a displayed
      * node.
      */
-    @SuppressWarnings("unchecked")
     private CatalogTreeNode match(CatalogTreeNode cRoot, TreeNode[] nodes, int idx) {
         if (idx == nodes.length) {
             return cRoot;
         }
-        Enumeration<CatalogTreeNode> e = cRoot.children();
+        Enumeration<TreeNode> e = cRoot.children();
         CatalogTreeNode result = null;
         while (e.hasMoreElements()) {
-            CatalogTreeNode cNode = e.nextElement();
+            CatalogTreeNode cNode = (CatalogTreeNode)e.nextElement();
             if (nodes[idx].toString().equals(cNode.toString())) {
                 result = match(cNode, nodes, idx + 1);
                 break;
@@ -343,15 +340,14 @@ public class CatalogPanel extends JPanel {
      * @param parent the parent of name
      * @return true if the node was inserted
      */
-    @SuppressWarnings("unchecked")
     protected boolean insertNodeIntoModel(String name, CatalogTreeNode parent) {
         if (!nameOK(parent, name)) {
             return false;
         }
         int index = 0;
-        Enumeration<CatalogTreeNode> e = parent.children();
+        Enumeration<TreeNode> e = parent.children();
         while (e.hasMoreElements()) {
-            CatalogTreeNode n = e.nextElement();
+            CatalogTreeNode n = (CatalogTreeNode)e.nextElement();
             if (name.compareTo(n.toString()) < 0) {
                 break;
             }
@@ -479,7 +475,6 @@ public class CatalogPanel extends JPanel {
     /**
      * Create panel element containing a "View on:" drop down list.
      * Employs a normal JComboBox, no Panel Background option.
-     * @see jmri.jmrit.catalog.PreviewDialog#setupPanel()
      *
      * @return the JPanel with label and drop down
      */
@@ -707,9 +702,8 @@ public class CatalogPanel extends JPanel {
         CatalogPanel catalog = new CatalogPanel("catalogs", "selectNode", addButtonPanel);
         catalog.init(treeDrop, dragIcon);
         CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
-        List<String> sysNames = manager.getSystemNameList();
-        for (int i = 0; i < sysNames.size(); i++) {
-            String systemName = sysNames.get(i);
+        for (CatalogTree tree : manager.getNamedBeanSet()) {
+            String systemName = tree.getSystemName();
             if (systemName.charAt(0) == 'I') {
                 catalog.addTree(manager.getBySystemName(systemName));
             }
@@ -769,15 +763,13 @@ public class CatalogPanel extends JPanel {
         if (dx == 0) {
             return sb.toString();
         }
-        if (decimalPlaces > 0) {
-            sb.append('.');
+        sb.append('.');
+        num /= 10;
+        while (num > dx) {
+            sb.append('0');
             num /= 10;
-            while (num > dx) {
-                sb.append('0');
-                num /= 10;
-            }
-            sb.append(dx);
         }
+        sb.append(dx);
         return sb.toString();
     }
 

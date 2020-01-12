@@ -36,7 +36,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
 
     /**
      * Create an action with a specific title.
-     * <P>
+     * <p>
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
@@ -57,7 +57,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
         TableRowSorter<BeanTableDataModel<SignalMastLogic>> sorter = new TableRowSorter<>(m);
         JTable dataTable = m.makeJTable(m.getMasterClassName(), m, sorter);
         // create the frame
-        f = new jmri.jmrit.beantable.BeanTableFrame(m, helpTarget(), dataTable) {
+        f = new jmri.jmrit.beantable.BeanTableFrame<SignalMastLogic>(m, helpTarget(), dataTable) {
         };
         setMenuBar(f);
         setTitle();
@@ -75,7 +75,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
      * @param f the JFrame of this table
      */
     @Override
-    public void setMenuBar(BeanTableFrame f) {
+    public void setMenuBar(BeanTableFrame<SignalMastLogic> f) {
         final jmri.util.JmriJFrame finalF = f;   // needed for anonymous ActionListener class
         JMenuBar menuBar = f.getJMenuBar();
         int pos = menuBar.getMenuCount() - 1; // count the number of menus to insert the TableMenu before 'Window' and 'Help'
@@ -104,7 +104,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
             @Override
             public void actionPerformed(ActionEvent e) {
                 ((jmri.managers.DefaultSignalMastLogicManager) InstanceManager.getDefault(jmri.SignalMastLogicManager.class)).generateSection();
-                JOptionPane.showMessageDialog(null, Bundle.getMessage("SectionGenerationComplete"));
+                JOptionPane.showMessageDialog(finalF, Bundle.getMessage("SectionGenerationComplete"));
             }
         });
     }
@@ -122,6 +122,8 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
             static public final int DELCOL = 5;
             static public final int ENABLECOL = 6;
             static public final int EDITLOGICCOL = 7;
+            static public final int MAXSPEEDCOL = 8;
+            static public final int COLUMNCOUNT = 9;
 
             //We have to set a manager first off, but this gets replaced.
             @Override
@@ -220,7 +222,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
             /**
              * Is this property event announcing a change this table should
              * display?
-             * <P>
+             * <p>
              * Note that events will come both from the NamedBeans and also from
              * the manager
              */
@@ -231,7 +233,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
 
             @Override
             public int getColumnCount() {
-                return EDITLOGICCOL + 1;
+                return COLUMNCOUNT;
             }
 
             @Override
@@ -287,6 +289,8 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
                         return ""; // override default, no title for Edit column
                     case ENABLECOL:
                         return Bundle.getMessage("ColumnHeadEnabled");
+                    case MAXSPEEDCOL:
+                        return Bundle.getMessage("LabelMaxSpeed");
                     default:
                         return "unknown";
                 }
@@ -306,6 +310,8 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
                     case EDITLOGICCOL:
                     case DELCOL:
                         return JButton.class;
+                    case MAXSPEEDCOL:
+                        return Float.class;
                     default:
                         return null;
                 }
@@ -360,6 +366,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
                     case DESTCOL:
                     case DESTAPPCOL:
                     case SOURCEAPPCOL:
+                    case MAXSPEEDCOL:
                         return new JTextField(10).getPreferredSize().width;
                     case COMCOL:
                         return 75;
@@ -448,6 +455,8 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
                         return Bundle.getMessage("ButtonEdit");
                     case ENABLECOL:
                         return (b != null) ? b.isEnabled(getDestMastFromRow(row)) : null;
+                    case MAXSPEEDCOL:
+                        return  b.getMaximumSpeed(getDestMastFromRow(row));
                     default:
                         //log.error("internal state inconsistent with table requst for "+row+" "+col);
                         return null;
@@ -526,10 +535,11 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
 
     void autoCreatePairs(jmri.util.JmriJFrame f) {
         if (!InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
-            int response = JOptionPane.showConfirmDialog(null, Bundle.getMessage("EnableLayoutBlockRouting"));
+            int response = JOptionPane.showConfirmDialog(f, Bundle.getMessage("EnableLayoutBlockRouting"),
+                    Bundle.getMessage("TitleBlockRouting"), JOptionPane.YES_NO_OPTION);
             if (response == 0) {
                 InstanceManager.getDefault(LayoutBlockManager.class).enableAdvancedRouting(true);
-                JOptionPane.showMessageDialog(null, Bundle.getMessage("LayoutBlockRoutingEnabled"));
+                JOptionPane.showMessageDialog(f, Bundle.getMessage("LayoutBlockRoutingEnabled"));
             } else {
                 return;
             }

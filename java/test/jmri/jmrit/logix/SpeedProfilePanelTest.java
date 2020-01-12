@@ -1,12 +1,13 @@
 package jmri.jmrit.logix;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import java.awt.GraphicsEnvironment;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterSpeedProfile;
-import java.util.HashMap;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  *
@@ -16,8 +17,9 @@ public class SpeedProfilePanelTest {
 
     @Test
     public void testCTor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         RosterSpeedProfile rsp = new RosterSpeedProfile(new RosterEntry());
-        SpeedProfilePanel t = new SpeedProfilePanel(rsp,new HashMap<Integer,Boolean>());
+        SpeedProfilePanel t = new SpeedProfilePanel(rsp, true, null);
         Assert.assertNotNull("exists",t);
     }
 

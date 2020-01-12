@@ -3,7 +3,7 @@ package jmri.jmrix.ecos;
 
 /**
  * Encodes a message to an Ecos command station.
- * <P>
+ * <p>
  * The {@link EcosReply} class handles the response from the command station.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008

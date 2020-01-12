@@ -2,8 +2,11 @@ package jmri.jmrit.beantable;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.text.DateFormat;
 import java.util.Date;
+import javax.annotation.Nonnull;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -14,7 +17,6 @@ import jmri.IdTag;
 import jmri.IdTagManager;
 import jmri.InstanceManager;
 import jmri.Manager;
-import jmri.NamedBean;
 import jmri.Reporter;
 import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
@@ -27,25 +29,42 @@ import org.slf4j.LoggerFactory;
  * @author  Matthew Harris Copyright (C) 2011
  * @since 2.11.4
  */
-public class IdTagTableAction extends AbstractTableAction<IdTag> {
+public class IdTagTableAction extends AbstractTableAction<IdTag> implements PropertyChangeListener {
 
     /**
      * Create an action with a specific title.
-     * <P>
+     * <p>
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
      * @param actionName title of the action
      */
-    @SuppressWarnings("OverridableMethodCallInConstructor")
     public IdTagTableAction(String actionName) {
         super(actionName);
+        tagManager.addPropertyChangeListener(this);
+    }
+    
+    @Nonnull
+    protected IdTagManager tagManager = InstanceManager.getDefault(jmri.IdTagManager.class);
 
-        // disable ourself if there is no primary IdTag manager available
-        if (InstanceManager.getNullableDefault(IdTagManager.class) == null) {
-            setEnabled(false);
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setManager(@Nonnull Manager<IdTag> t) {
+        if(tagManager!=null){
+            tagManager.removePropertyChangeListener(this);
         }
-
+        if (t instanceof IdTagManager) {
+            tagManager = (IdTagManager) t;
+            if (m != null) {
+                m.setManager(tagManager);
+            }
+        }
+        // if t is not an instance of IdTagManager, tagManager may not change.
+        if(tagManager!=null){
+            tagManager.addPropertyChangeListener(this);
+        }
     }
 
     public IdTagTableAction() {
@@ -66,38 +85,27 @@ public class IdTagTableAction extends AbstractTableAction<IdTag> {
 
             @Override
             public String getValue(String name) {
-                IdTag tag = InstanceManager.getDefault(IdTagManager.class).getBySystemName(name);
+                IdTag tag = tagManager.getBySystemName(name);
                 if (tag == null) {
                     return "?";
                 }
-                Object t = tag.getTagID();
-                if (t != null) {
-                    return t.toString();
-                } else {
-                    return "";
-                }
+                return tag.getTagID();
             }
 
             @Override
             public Manager<IdTag> getManager() {
-                IdTagManager m = InstanceManager.getDefault(IdTagManager.class);
-                if (!m.isInitialised()) {
-                    m.init();
-                }
-                return m;
+                return tagManager;
             }
 
             @Override
             public IdTag getBySystemName(String name) {
-                return InstanceManager.getDefault(IdTagManager.class).getBySystemName(name);
+                return tagManager.getBySystemName(name);
             }
 
             @Override
             public IdTag getByUserName(String name) {
-                return InstanceManager.getDefault(IdTagManager.class).getByUserName(name);
+                return tagManager.getByUserName(name);
             }
-            /*public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getWarnMemoryInUse(); }
-             public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setWarnMemoryInUse(boo); }*/
 
             @Override
             public void clickOn(IdTag t) {
@@ -242,6 +250,7 @@ public class IdTagTableAction extends AbstractTableAction<IdTag> {
     protected String helpTarget() {
         return "package.jmri.jmrit.beantable.IdTagTable";
     }
+
     JmriJFrame addFrame = null;
     JTextField sysName = new JTextField(12);
     JTextField userName = new JTextField(15);
@@ -280,7 +289,7 @@ public class IdTagTableAction extends AbstractTableAction<IdTag> {
         }
         String sName = sysName.getText();
         try {
-            InstanceManager.getDefault(IdTagManager.class).newIdTag(sName, user);
+            tagManager.newIdTag(sName, user);
         } catch (IllegalArgumentException ex) {
             // user input no good
             handleCreateException(sName);
@@ -303,31 +312,49 @@ public class IdTagTableAction extends AbstractTableAction<IdTag> {
     @Override
     public void addToFrame(BeanTableFrame f) {
         f.addToBottomBox(isStateStored, this.getClass().getName());
-        isStateStored.setSelected(InstanceManager.getDefault(IdTagManager.class).isStateStored());
+        isStateStored.setSelected(tagManager.isStateStored());
         isStateStored.addActionListener((ActionEvent e) -> {
-            InstanceManager.getDefault(IdTagManager.class).setStateStored(isStateStored.isSelected());
+            tagManager.setStateStored(isStateStored.isSelected());
         });
         f.addToBottomBox(isFastClockUsed, this.getClass().getName());
-        isFastClockUsed.setSelected(InstanceManager.getDefault(IdTagManager.class).isFastClockUsed());
+        isFastClockUsed.setSelected(tagManager.isFastClockUsed());
         isFastClockUsed.addActionListener((ActionEvent e) -> {
-            InstanceManager.getDefault(IdTagManager.class).setFastClockUsed(isFastClockUsed.isSelected());
+            tagManager.setFastClockUsed(isFastClockUsed.isSelected());
         });
         log.debug("Added CheckBox in addToFrame method");
     }
 
     @Override
-    public void addToPanel(AbstractTableTabAction f) {
-        f.addToBottomBox(isStateStored, this.getClass().getName());
-        isStateStored.setSelected(InstanceManager.getDefault(IdTagManager.class).isStateStored());
+    public void addToPanel(AbstractTableTabAction<IdTag> f) {
+        String connectionName = tagManager.getMemo().getUserName();
+        if (tagManager instanceof jmri.managers.ProxyIdTagManager) {
+            connectionName = "All";
+        } else if (connectionName == null && (tagManager instanceof jmri.managers.DefaultRailComManager)) {
+            connectionName = "RailCom"; // NOI18N (proper name).
+        }
+        f.addToBottomBox(isStateStored, connectionName);
+        isStateStored.setSelected(tagManager.isStateStored());
         isStateStored.addActionListener((ActionEvent e) -> {
-            InstanceManager.getDefault(IdTagManager.class).setStateStored(isStateStored.isSelected());
+            tagManager.setStateStored(isStateStored.isSelected());
         });
-        f.addToBottomBox(isFastClockUsed, this.getClass().getName());
-        isFastClockUsed.setSelected(InstanceManager.getDefault(IdTagManager.class).isFastClockUsed());
+        f.addToBottomBox(isFastClockUsed, connectionName);
+        isFastClockUsed.setSelected(tagManager.isFastClockUsed());
         isFastClockUsed.addActionListener((ActionEvent e) -> {
-            InstanceManager.getDefault(IdTagManager.class).setFastClockUsed(isFastClockUsed.isSelected());
+            tagManager.setFastClockUsed(isFastClockUsed.isSelected());
         });
-        log.debug("Added CheckBox in addToPanel method");
+        log.debug("Added CheckBox in addToPanel method for system {}", connectionName);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void propertyChange(PropertyChangeEvent e) {
+        if (e.getPropertyName().equals("StateStored")) {
+           isStateStored.setSelected(tagManager.isStateStored());
+        } else if (e.getPropertyName().equals("UseFastClock")) {
+           isFastClockUsed.setSelected(tagManager.isFastClockUsed()); 
+        }
     }
 
     @Override

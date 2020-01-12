@@ -1,9 +1,12 @@
 package jmri.jmrix.secsi;
 
+import java.util.Comparator;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import jmri.jmrix.SystemConnectionMemo;
+import jmri.util.NamedBeanComparator;
 import jmri.LightManager;
+import jmri.NamedBean;
 import jmri.TurnoutManager;
 import jmri.SensorManager;
 import jmri.InstanceManager;
@@ -61,6 +64,11 @@ public class SecsiSystemConnectionMemo extends SystemConnectionMemo {
         return null;
     }
 
+    @Override
+    public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
+        return new NamedBeanComparator<>();
+    }
+
     public void configureManagers() {
         setTurnoutManager(new SerialTurnoutManager(this));
         InstanceManager.setTurnoutManager(getTurnoutManager());
@@ -73,9 +81,9 @@ public class SecsiSystemConnectionMemo extends SystemConnectionMemo {
     }
 
     /**
-     * Provide access to the Sensor Manager for this particular connection.
+     * Provide access to the SensorManager for this particular connection.
      * <p>
-     * NOTE: Sensor manager defaults to NULL
+     * NOTE: SensorManager defaults to NULL
      */
     public SensorManager getSensorManager() {
         return sensorManager;
@@ -90,9 +98,9 @@ public class SecsiSystemConnectionMemo extends SystemConnectionMemo {
 
 
     /**
-     * Provide access to the Turnout Manager for this particular connection.
+     * Provide access to the TurnoutManager for this particular connection.
      * <p>
-     * NOTE: Turnout manager defaults to NULL
+     * NOTE: TurnoutManager defaults to NULL
      */
     public TurnoutManager getTurnoutManager() {
         return turnoutManager;
@@ -106,9 +114,9 @@ public class SecsiSystemConnectionMemo extends SystemConnectionMemo {
     private TurnoutManager turnoutManager = null;
 
     /**
-     * Provide access to the Light Manager for this particular connection.
+     * Provide access to the LightManager for this particular connection.
      * <p>
-     * NOTE: Light manager defaults to NULL
+     * NOTE: LightManager defaults to NULL
      */
     public LightManager getLightManager() {
         return lightManager;

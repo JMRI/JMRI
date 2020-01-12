@@ -198,7 +198,7 @@ public class ConstantValue extends VariableValue {
 
     /**
      * Skip actually reading, but set states and notifications anyway.
-     * <P>
+     * <p>
      * This sets the state to READ so that you can have algorithms like "write
      * all variables that aren't in READ state" This is different from the
      * 'normal' VariableValue objects, which rely on the associated CV objects
@@ -217,7 +217,7 @@ public class ConstantValue extends VariableValue {
 
     /**
      * Skip actually writing, but set states and notifications anyway.
-     * <P>
+     * <p>
      * This sets the state to STORED so that you can have algorithms like "write
      * all variables that aren't in STORED state" This is different from the
      * 'normal' VariableValue objects, which rely on the associated CV objects

@@ -6,7 +6,8 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>DecoderPro&reg; Main Window</title><!-- Style -->
+  <title>DecoderPro&reg; Main Window</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -14,16 +15,16 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
+
       <h1>DecoderPro&reg; Debug Menu</h1>
 
       <h2>Virtual Sound Decoder</h2>
@@ -38,7 +39,7 @@
       <p><span id="product-desc">The <strong>Manage VSD
       Locations</strong> window provides a consolidated location to
       manage and set the apparent physical location of sounds for
-      trains using Virtual Sound Decoder</span></p>The
+      trains using Virtual Sound Decoder</span>.</p>The
       <strong>Manage VSD Locations</strong> window has four tabs:
       Reporters, Blocks, Operations Locations, and Listeners. Each
       tab shows a list of objects, each with a check-box to
@@ -107,9 +108,9 @@
       and would like to help with testing and debug of this
       feature, please contact me on the <a href=
       "https://groups.io/g/jmriusers">
-	  JMRI users Groups.io group</a>. More systems will be added 
-	  in the future. To enable VSD Location Following, 
-	  follow these steps:
+      JMRI users Groups.io group</a>. More systems will be added 
+      in the future. To enable VSD Location Following, 
+      follow these steps:
 
       <ol>
         <li>Follow the directions appropriate to your hardware
@@ -235,7 +236,134 @@
 
       <p>For more information on Operations, see the JMRI&reg;
       Operations User's Guide</p>
-      <hr>
+
+      <a name="advanced_location_following" id=
+      "advanced_location_following"></a>
+
+      <h4>Advanced Location Following</h4>
+
+      <p>With input from locomotive tracking hardware, Virtual Sound Decoder
+      is able to move the apparent source of the locomotive sound to follow
+      the locomotive's position on the layout.</p>
+
+      <p>By adding some geometric layout data, the sound will follow the
+      locomotives continuously (without a "jump").</p>
+
+      <p><em>Note:</em> JMRI Test Release 4.13.2 or newer required.</p>
+
+      <h5>Advanced Location Following Setup</h5>
+
+      <p>A file named VSDGeoData.xml is required, which provides two general
+      attributes and some specific attributes for each location.</p>
+      <p>Here is an example of a VSDGeoData.xml with one location (geodataset):</p>
+
+      <pre>
+        &lt;?xml version="1.0" encoding="UTF-8"?&gt;
+        &lt;vsdecoder-geodata xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
+           &lt;layout-scale>N&lt;/layout-scale&gt;
+           &lt;check-time>2000&lt;/check-time&gt;
+           &lt;setup&gt;
+              &lt;geodataset&gt;
+                 &lt;reporter-systemname&gt;LR1&lt;/reporter-systemname&gt;
+                 &lt;position&gt;(-1.5, 1.1, 0.0)&lt;/position&gt;
+                 &lt;radius&gt;0.0&lt;/radius&gt;
+                 &lt;slope&gt;0.0&lt;/slope&gt;
+                 &lt;length&gt;3.0&lt;/length&gt;
+                 &lt;end-position&gt;(1.5, 1.1, 0.0)&lt;/end-position&gt;
+              &lt;/geodataset&gt;
+           &lt;/setup&gt;
+        &lt;/vsdecoder-geodata&gt;
+      </pre>
+
+      <p>The route in this example is defined as a straight line parallel to the X axis, with a length of three meters.</p>
+
+      <p>The general attributes are:</p>
+      <ul>
+        <li>layout scale (default: N)</li>
+        <li>check time (interval for calculating a new loco position; minimum: 500, maximum: 5000, default: 2000 milliseconds).</li>
+      </ul>
+
+      <p>The attributes for each location are:</p>
+
+      <ul>
+        <li>system name of the Reporter</li>
+        <li>position (starting point) of the location</li>
+        <li>length of the location in meters</li>
+        <li>type of the location (only two types are supported: line or curve)
+         <br>
+         if the location is from type line, a slope value must be provided and the radius must be 0.0<br>
+         if the location is from type curve, a radius value and the circle center
+         point (rotate-xpos value, rotate-ypos value) must be provided</li>
+        <li>end-position (endpoint) of the location (last location only)
+         <br>
+         if the loco is running in a circle, the starting point of the first location and the
+         endpoint must be identical</li>
+      </ul>
+
+      <p>Example for curve attributes:</p>
+
+      <pre>
+        ...
+        &lt;radius&gt;1.18&lt;/radius&gt;
+        &lt;rotate-xpos&gt;0.0&lt;/rotate-xpos&gt;
+        &lt;rotate-ypos&gt;0.83&lt;/rotate-ypos&gt;
+        ...
+      </pre>
+
+      <p>The location (geodataset) sequence defined in VSDGeoData.xml describes a route on a layout.
+      The described route should go away from the left to the right in forward direction, or in case of a
+      circle, in clock-wise forward direction.</p>
+
+      <p>The Advanced Location Following allows up to four locos. Normally only one
+      loco can be detected in a tracking section. If you want to run more than one loco, you may create
+      a JMRI Route (again, up to four for VSD purposes) and add the Route to a Train. Please 
+      choose the predetermined Route names VSDRoute1 (default), VSDRoute2, VSDRoute3 or VSDRoute4.
+      On the "Virtual Sound Decoder Manager" window you'll find an "Option" button on each
+      VSDecoder. There you can select a JMRI Train and accordingly a Route.
+      Please note that you need a setup section in your VSDGeoData.xml for each Route you want to use.
+      </p>
+
+      <p>How to run a test with the <b>JMRI LocoNet Simulator</b> (without a connection to your layout):</p>
+      <ol>
+        <li>Make sure a Reporter named "LR1" is available after PanelPro has started (follow the directions
+          appropriate to your hardware system for <a href="../../html/tools/Reporters.shtml">setting up
+          Reporters</a>)</li>
+        <li>Create a XML file named VSDGeoData.xml (take the example mentioned above)
+         and store the file to the "Users Files Location" (JMRI\&lt;Railroad Name&gt;)<br>
+         <strong><em>Note:</em> Please make sure that there are no leading spaces in the first line of the file!</strong>
+        </li> 
+        <li>Download the VSD file Class64.vsd from <a href="https://github.com/JMRI/vsdecoder">the web</a></li>
+        <li>Make sure your computer's audio system is working</li>
+        <li>Launch PanelPro</li>
+        <li>Open a JMRI throttle: Tools-&gt;Throttle-&gt;New Throttle-&gt;Address:
+         3-&gt;Set</li>
+        <li>Add a VSDecoder: Debug-&gt;Virtual Sound Decoder-&gt;VSDecoder
+          Manager-&gt;Add Decoder-&gt;Manual-&gt;Address: 3-&gt;Set-&gt;Load
+          VSD File-&gt;File name: Class64.vsd-&gt;Select a Profile: Class64-&gt;OK-&gt;Start Engine</li>
+        <li>Simulate an incoming Reporter: LocoNet-&gt;Send LocoNet Packet-&gt;Packet:
+         d0 20 00 7d 03 00-&gt;Send-&gt;close the window</li>
+        <li>Run the loco and hear the sound wandering from the left to the right</li>
+      </ol>
+
+      <p><em>Note:</em> If you choose a Diesel VSD file you might want to add a <strong>top-speed</strong>
+      element in the config.xml. Please see the config.xml of a Steam VSD file for the syntax and
+      the right place.</p>
+
+      <p>During the setting up and test process I recommend to open a JMRI system
+      console, which might provide helpful information: Help &gt; System Console.</p>
+
+      <p>You might also enrich the logging information, by adding the line</p>
+       <pre>   log4j.category.jmri.jmrit.vsdecoder.VSDGeoFile=DEBUG</pre>
+      <p>to the file <strong>default.lcf</strong> as the last line. This file is located in your "Settings Location" (JMRI).</p>
+
+      <p>Once you have a working setup, you can activate an option in your
+      VSD configuration file to print the calculated position points describing the
+      route of your loco. Please see the "Create XY coordinates output in
+      console for a VSDecoder" option
+      <a href="VSD_File_and_Config.shtml#xy">for details</a>.</p>
+
+      <p>For questions, please contact me on the
+      <a href="https://groups.io/g/jmriusers">JMRI users Groups.io group</a>.</p>
 
       <div align="right">
         <p><a href="Main_Debug.shtml#vsdecoder">Back</a></p>

@@ -189,7 +189,7 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
      * in the new window, otherwise it must accept a String defining the group
      * in JmriAbstractAction.setParameter(String, String).
      *
-     * @param action - An action that can work on the current selection
+     * @param action  An action that can work on the current selection
      */
     public void setNewWindowMenuAction(JmriAbstractAction action) {
         if (action != null) {

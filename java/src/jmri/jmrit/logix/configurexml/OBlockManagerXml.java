@@ -1,8 +1,8 @@
 package jmri.jmrit.logix.configurexml;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
+import java.util.SortedSet;
 import javax.swing.JOptionPane;
 import jmri.BeanSetting;
 import jmri.InstanceManager;
@@ -23,14 +23,13 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provides the abstract base and store functionality for configuring the
- * CatalogTreeManager.
- * <P>
- * Typically, a subclass will just implement the load(Element catalogTree)
- * class, relying on implementation here to load the individual CatalogTree
+ * OBlockManager.
+ * <p>
+ * Typically, a subclass will just implement the load(Element oblocks)
+ * class, relying on implementation here to load the individual oblock
  * objects.
  *
  * @author Pete Cressman Copyright: Copyright (c) 2009
- *
  */
 public class OBlockManagerXml // extends XmlFile
         extends jmri.configurexml.AbstractXmlAdapter {
@@ -48,67 +47,68 @@ public class OBlockManagerXml // extends XmlFile
     public Element store(Object o) {
         Element blocks = new Element("oblocks");
         blocks.setAttribute("class", "jmri.jmrit.logix.configurexml.OBlockManagerXml");
-        OBlockManager manager = (OBlockManager) o;
-        Iterator<String> iter = manager.getSystemNameList().iterator();
-        while (iter.hasNext()) {
-            String sname = iter.next();
-            OBlock block = manager.getBySystemName(sname);
-            String uname = block.getUserName();
-            if (log.isDebugEnabled()) {
-                log.debug("OBlock: sysName= {}, userName= {}", sname, uname);
+        OBlockManager obm = (OBlockManager) o;
+        if (obm != null) {
+            SortedSet<OBlock> oblockList = obm.getNamedBeanSet();
+            // don't return an element if there are no oblocks to include
+            if (oblockList.isEmpty()) {
+                return null;
             }
-            Element elem = new Element("oblock");
-            elem.setAttribute("systemName", sname);
-            if (uname != null && uname.length() > 0) {
-                elem.setAttribute("userName", uname); // doing this for compatibility during 2.9.* series
-                elem.addContent(new Element("userName").addContent(uname));
-            }
-            String comment = block.getComment();
-            if (comment != null) {
-                Element c = new Element("comment");
-                c.addContent(comment);
-                elem.addContent(c);
-            }
-            elem.setAttribute("length", "" + block.getLengthMm());
-            elem.setAttribute("units", block.isMetric() ? "true" : "false");
-            elem.setAttribute("curve", "" + block.getCurvature());
-            if (block.getNamedSensor() != null) {
-                Element se = new Element("sensor");
-                se.setAttribute("systemName", block.getNamedSensor().getName());
-                elem.addContent(se);
-            }
-            if (block.getNamedErrorSensor() != null) {
-                Element se = new Element("errorSensor");
-                se.setAttribute("systemName", block.getNamedErrorSensor().getName());
-                elem.addContent(se);
-            }
-            if (block.getReporter() != null) {
-                Element se = new Element("reporter");
-                se.setAttribute("systemName", block.getReporter().getSystemName());
-                se.setAttribute("reportCurrent", block.isReportingCurrent() ? "true" : "false");
-                elem.addContent(se);
-            }
-            elem.setAttribute("permissive", block.getPermissiveWorking() ? "true" : "false");
-            elem.setAttribute("speedNotch", block.getBlockSpeed());
+            for (OBlock block : oblockList) {
+                String sName = block.getSystemName();
+                String uName = block.getUserName();
+                log.debug("OBlock: sysName= {}, userName= {}", sName, uName);
+                Element elem = new Element("oblock");
+                elem.setAttribute("systemName", sName);
+                if (uName != null && !uName.isEmpty()) {
+                    elem.setAttribute("userName", uName); // doing this for compatibility during 2.9.* series
+                    elem.addContent(new Element("userName").addContent(uName));
+                }
+                String comment = block.getComment();
+                if (comment != null && !comment.isEmpty()) {
+                    Element c = new Element("comment");
+                    c.addContent(comment);
+                    elem.addContent(c);
+                }
+                elem.setAttribute("length", "" + block.getLengthMm());
+                elem.setAttribute("units", block.isMetric() ? "true" : "false");
+                elem.setAttribute("curve", "" + block.getCurvature());
+                if (block.getNamedSensor() != null) {
+                    Element se = new Element("sensor");
+                    se.setAttribute("systemName", block.getNamedSensor().getName());
+                    elem.addContent(se);
+                }
+                if (block.getNamedErrorSensor() != null) {
+                    Element se = new Element("errorSensor");
+                    se.setAttribute("systemName", block.getNamedErrorSensor().getName());
+                    elem.addContent(se);
+                }
+                if (block.getReporter() != null) {
+                    Element se = new Element("reporter");
+                    se.setAttribute("systemName", block.getReporter().getSystemName());
+                    se.setAttribute("reportCurrent", block.isReportingCurrent() ? "true" : "false");
+                    elem.addContent(se);
+                }
+                elem.setAttribute("permissive", block.getPermissiveWorking() ? "true" : "false");
+                elem.setAttribute("speedNotch", block.getBlockSpeed());
 
-            List<Path> paths = block.getPaths();
-            for (int j = 0; j < paths.size(); j++) {
-                elem.addContent(storePath((OPath) paths.get(j)));
+                List<Path> paths = block.getPaths();
+                for (Path op : paths) {
+                    elem.addContent(storePath((OPath) op));
+                }
+                List<Portal> portals = block.getPortals();
+                for (Portal po : portals) {
+                    elem.addContent(storePortal(po));
+                }
+                // and put this element out
+                blocks.addContent(elem);
             }
-            List<Portal> portals = block.getPortals();
-            for (int i = 0; i < portals.size(); i++) {
-                elem.addContent(storePortal(portals.get(i)));
-            }
-            // and put this element out
-            blocks.addContent(elem);
         }
-
         return blocks;
-    }   // store
+    }
 
     static private Element storePortal(Portal portal) {
         Element elem = new Element("portal");
-        elem.setAttribute("systemName", portal.getSystemName());
         elem.setAttribute("portalName", portal.getName());
         OBlock block = portal.getFromBlock();
         if (block != null) {
@@ -116,8 +116,7 @@ public class OBlockManagerXml // extends XmlFile
             fromElem.setAttribute("blockName", block.getSystemName());
             List<OPath> paths = portal.getFromPaths();
             if (paths != null) {
-                for (int i = 0; i < paths.size(); i++) {
-                    OPath path = paths.get(i);
+                for (OPath path : paths) {
                     fromElem.addContent(storePathKey(path));
                 }
             }
@@ -138,8 +137,7 @@ public class OBlockManagerXml // extends XmlFile
             toElem.setAttribute("blockName", block.getSystemName());
             List<OPath> paths = portal.getToPaths();
             if (paths != null) {
-                for (int i = 0; i < paths.size(); i++) {
-                    OPath path = paths.get(i);
+                for (OPath path : paths) {
                     toElem.addContent(storePathKey(path));
                 }
             }
@@ -159,7 +157,7 @@ public class OBlockManagerXml // extends XmlFile
 
     /**
      * Key is sufficient to mark the Portal's knowledge of the path. Full path
-     * info will get loaded from the HashMap
+     * info will get loaded from the HashMap.
      */
     static private Element storePathKey(OPath path) {
         Element elem = new Element("path");
@@ -181,10 +179,8 @@ public class OBlockManagerXml // extends XmlFile
             elem.setAttribute("toPortal", portal.getName());
         }
         List<BeanSetting> list = path.getSettings();
-        for (int i = 0; i < list.size(); i++) {
-            BeanSetting bs = list.get(i);
+        for (BeanSetting bs : list) {
             Element e = new Element("setting");
-            //Turnout to = (Turnout)bs.getBean();
             e.setAttribute("turnout", bs.getBeanName());
             e.setAttribute("set", "" + bs.getSetting());
             elem.addContent(e);
@@ -202,12 +198,12 @@ public class OBlockManagerXml // extends XmlFile
      * pass. The unique naming of these objects allows the use of Hashmaps to
      * hold them for update.
      */
-    HashMap<String, OBlock> _blockMap;
-    HashMap<String, OPath> _pathMap;
-    OBlockManager _manager;
-    PortalManager _portalMgr;
+    private HashMap<String, OBlock> _blockMap;
+    private HashMap<String, OPath> _pathMap;
+    private OBlockManager _manager;
+    private PortalManager _portalMgr;
 
-    OBlock getBlock(String sysName) {
+    private OBlock getBlock(String sysName) {
         OBlock block = _blockMap.get(sysName);
         if (block == null) {
             try {
@@ -222,26 +218,13 @@ public class OBlockManagerXml // extends XmlFile
         return block;
     }
 
-    Portal getPortal(String name) {
-        Portal portal = _portalMgr.providePortal(name);
-        if (portal == null) {
-            portal = _portalMgr.createNewPortal(null, name);
-            if (log.isDebugEnabled()) {
-                log.debug("create Portal: ({}, {})", portal.getSystemName(), name);
-            }
-        }
-        return portal;
-    }
-
-    OPath getPath(OBlock block, String name) {
+    private OPath getPath(OBlock block, String name) {
         String key = block.getSystemName() + name;
         OPath path = _pathMap.get(key);
         if (path == null) {
             path = new OPath(block, name);
             _pathMap.put(key, path);
-            if (log.isDebugEnabled()) {
-                log.debug("create OPath: \"{}\" in block {}", name, block.getSystemName());
-            }
+            log.debug("create OPath: \"{}\" in block {}", name, block.getSystemName());
         }
         return path;
     }
@@ -253,17 +236,14 @@ public class OBlockManagerXml // extends XmlFile
         _manager = InstanceManager.getDefault(OBlockManager.class);
         _portalMgr = InstanceManager.getDefault(PortalManager.class);
         List<Element> blockList = shared.getChildren("oblock");
-        if (log.isDebugEnabled()) {
-            log.debug("Found {} OBlock objects", blockList.size());
-        }
-        for (int i = 0; i < blockList.size(); i++) {
-            loadBlock(blockList.get(i));
+        log.debug("Found {} OBlock objects", blockList.size());
+        for (Element bl : blockList) {
+            loadBlock(bl);
         }
         // Build data structure for blocks to know with whom they share turnouts.
         // check whether any turnouts are shared between two blocks;
-        String[] sysNames = _manager.getSystemNameArray();
-        for (int i = 0; i < sysNames.length; i++) {
-            WarrantTableAction.checkSharedTurnouts(_manager.getOBlock(sysNames[i]));
+        for (OBlock oblock : _manager.getNamedBeanSet()) {
+            WarrantTableAction.checkSharedTurnouts(oblock);
         }
         return true;
     }
@@ -273,25 +253,19 @@ public class OBlockManagerXml // extends XmlFile
         log.error("load called. Invalid method.");
     }
 
-    void loadBlock(Element elem) {
+    private void loadBlock(Element elem) {
         if (elem.getAttribute("systemName") == null) {
-            log.error("unexpected null for block systemName elem= ", elem);
+            log.error("unexpected null for block systemName elem = {}", elem);
             return;
         }
-        String sysName = elem.getAttribute("systemName").getValue();
+        String systemName = elem.getAttribute("systemName").getValue();
         String userName = null;
         if (elem.getAttribute("userName") != null) {
             userName = elem.getAttribute("userName").getValue();
         }
-        if (log.isDebugEnabled()) {
-            log.debug("Load block sysName= {},userName= {}", sysName, userName);
-        }
+        log.debug("Load block sysName= {}, userName= {}", systemName, userName);
         // Portal may have already created a skeleton of this block
-        OBlock block = getBlock(sysName);
-        if (block == null) {
-            log.error("Null block!? sysName= {}, userName= {}", sysName, userName);
-            return;
-        }
+        OBlock block = getBlock(systemName); // never null (for a valid systemName)
         block.setUserName(userName);
         String c = elem.getChildText("comment");
         if (c != null) {
@@ -310,7 +284,7 @@ public class OBlockManagerXml // extends XmlFile
         }
         List<Element> sensors = elem.getChildren("sensor");
         if (sensors.size() > 1) {
-            log.error("More than one sensor present: {}",sensors.size());
+            log.error("More than one sensor present: {}", sensors.size());
         }
         if (sensors.size() > 0) {
             // sensor
@@ -355,47 +329,46 @@ public class OBlockManagerXml // extends XmlFile
         }
 
         List<Element> portals = elem.getChildren("portal");
-        for (int k = 0; k < portals.size(); k++) {
-            block.addPortal(loadPortal(portals.get(k)));
+        for (Element po : portals) {
+            Portal portal = loadPortal(po);
+            if (portal != null) {
+                block.addPortal(portal);
+            }
         }
 
         List<Element> paths = elem.getChildren("path");
-        for (int j = 0; j < paths.size(); j++) {
-            if (!block.addPath(loadPath(paths.get(j), block))) {
+        for (Element pa : paths) {
+            if (!block.addPath(loadPath(pa, block))) {
                 log.error("load: block \"{}\" failed to add path \"{}\" in block \"{}\"",
-                        sysName, paths.get(j).getName(), block.getSystemName());
+                        systemName, pa.getName(), block.getSystemName());
             }
         }
     }   // loadBlock
 
-    Portal loadPortal(Element elem) {
-        String sysName = null;
+    private Portal loadPortal(Element elem) {
         String userName = elem.getAttribute("portalName").getValue();
-        if (elem.getAttribute("systemName") == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("Portal systemName is null");
-            }
-        } else {
-            sysName = elem.getAttribute("systemName").getValue();
-        }
         String fromBlockName = null;
         String toBlockName = null;
         // Portals must have user names.
-        Portal portal = _portalMgr.getByUserName(userName);
+        Portal portal = _portalMgr.getPortal(userName);
         if (portal != null) {
-            fromBlockName = portal.getFromBlock().getSystemName();
-            toBlockName = portal.getToBlock().getSystemName();
+            OBlock block = portal.getFromBlock();
+            if (block != null) {
+                fromBlockName = block.getSystemName();
+            }
+            block = portal.getToBlock();
+            if (block != null) {
+                toBlockName = block.getSystemName();
+            }
         } else {
             portal = _portalMgr.providePortal(userName);
         }
         if (portal == null) {
-            log.error("unable to create Portal ({}, {}) elem attrs= {}",
-                    sysName,  userName, elem.getAttributes());
+            log.error("unable to create Portal ({}) elem attrs= {}",
+                    userName, elem.getAttributes());
             return null;
         }
-        if (log.isDebugEnabled()) {
-            log.debug("create Portal: ({}, {})", sysName,  userName);
-        }
+        log.debug("create Portal: ({})", userName);
 
         OBlock fromBlock = null;
         Element eFromBlk = elem.getChild("fromBlock");
@@ -411,19 +384,13 @@ public class OBlockManagerXml // extends XmlFile
                     fromBlock.addPortal(portal);
 
                     List<Element> ePathsFromBlock = eFromBlk.getChildren("path");
-                    for (int i = 0; i < ePathsFromBlock.size(); i++) {
-                        Element e = ePathsFromBlock.get(i);
+                    for (Element e : ePathsFromBlock) {
                         String pathName = e.getAttribute("pathName").getValue();
                         String blockName = e.getAttribute("blockName").getValue();
-                        if (log.isDebugEnabled()) {
-                            log.debug("Load portal= \"{}\" fromBlock= {}, pathName= {}, blockName= {}",
-                                    userName, fromBlock.getSystemName(), pathName, blockName);
-                        }
-                        /*(if (fromBlock.getSystemName().equals(blockName))*/ {
-                            // path is in the fromBlock
-                            OPath path = getPath(fromBlock, pathName);
-                            portal.addPath(path);
-                        }
+                        log.debug("Load portal= \"{}\" fromBlock= {}, pathName= {}, blockName= {}",
+                                userName, fromBlock.getSystemName(), pathName, blockName);
+                        OPath path = getPath(fromBlock, pathName);
+                        portal.addPath(path);
                     }
                 }
             }
@@ -445,19 +412,13 @@ public class OBlockManagerXml // extends XmlFile
                     toBlock.addPortal(portal);
 
                     List<Element> ePathsToBlock = eToBlk.getChildren("path");
-                    for (int i = 0; i < ePathsToBlock.size(); i++) {
-                        Element e = ePathsToBlock.get(i);
-                        String pathName = e.getAttribute("pathName").getValue();
-                        String blockName = e.getAttribute("blockName").getValue();
-                        if (log.isDebugEnabled()) {
-                            log.debug("Load portal= \"{}\" toBlock= {}, pathName= {}, blockName= {}",
-                                    userName, toBlock.getSystemName(), pathName, blockName);
-                        }
-                        /*if (toBlock.getSystemName().equals(blockName))*/ {
-                            // path is in the toBlock
-                            OPath path = getPath(toBlock, pathName);
-                            portal.addPath(path);
-                        }
+                    for (Element ePath : ePathsToBlock) {
+                        String pathName = ePath.getAttribute("pathName").getValue();
+                        String blockName = ePath.getAttribute("blockName").getValue();
+                        log.debug("Load portal= \"{}\" toBlock= {}, pathName= {}, blockName= {}", userName, toBlock.getSystemName(), pathName, blockName);
+                        // path is in the toBlock
+                        OPath path = getPath(toBlock, pathName);
+                        portal.addPath(path);
                     }
                 }
             }
@@ -493,9 +454,7 @@ public class OBlockManagerXml // extends XmlFile
             portal.setProtectSignal(Portal.getSignal(name), length, fromBlock);
         }
 
-        if (log.isDebugEnabled()) {
-            log.debug("End Load portal {}", userName);
-        }
+        log.debug("End Load portal {}", userName);
         return portal;
     }   // loadPortal
 
@@ -517,12 +476,12 @@ public class OBlockManagerXml // extends XmlFile
             }
         } catch (org.jdom2.DataConversionException e) {
             log.error("Could not parse attribute of path \"{}\" in block \"{}\")",
-                    pName,  block.getSystemName());
+                    pName, block.getSystemName());
         }
 
         Attribute attr = elem.getAttribute("fromPortal");
         if (attr != null) {
-            Portal portal = getPortal(attr.getValue());
+            Portal portal = _portalMgr.providePortal(attr.getValue());
             if (portal != null) {
                 path.setFromPortal(portal);
                 portal.addPath(path);
@@ -530,7 +489,7 @@ public class OBlockManagerXml // extends XmlFile
         }
         attr = elem.getAttribute("toPortal");
         if (attr != null) {
-            Portal portal = getPortal(attr.getValue());
+            Portal portal = _portalMgr.providePortal(attr.getValue());
             if (portal != null) {
                 path.setToPortal(portal);
                 portal.addPath(path);
@@ -538,13 +497,10 @@ public class OBlockManagerXml // extends XmlFile
         }
 
         List<Element> settings = elem.getChildren("setting");
-        if (log.isDebugEnabled()) {
-            log.debug("Path \"{}\" has {} settings.", pName, settings.size());
-        }
+        log.debug("Path \"{}\" has {} settings.", pName, settings.size());
         java.util.HashSet<String> turnouts = new java.util.HashSet<>();
         int dups = 0;
-        for (int i = 0; i < settings.size(); i++) {
-            Element setElem = settings.get(i);
+        for (Element setElem : settings) {
             int setting = 0;
             try {
                 setting = setElem.getAttribute("set").getIntValue();
@@ -563,7 +519,7 @@ public class OBlockManagerXml // extends XmlFile
             }
         }
         if (dups > 0) {
-            log.warn(dups + " duplicate settings not loaded for path \"" + pName + "\"");
+            log.warn("{} duplicate settings not loaded for path \"{}\"", dups, pName);
         }
         return path;
     }   // loadPath
@@ -574,4 +530,5 @@ public class OBlockManagerXml // extends XmlFile
     }
 
     private final static Logger log = LoggerFactory.getLogger(OBlockManagerXml.class);
-}   // class OBlockManagerXml
+
+}

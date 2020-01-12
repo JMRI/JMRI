@@ -21,6 +21,7 @@ public class Mx1ThrottleManagerTest extends jmri.managers.AbstractThrottleManage
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         Mx1TrafficController tc = new Mx1TrafficController(){

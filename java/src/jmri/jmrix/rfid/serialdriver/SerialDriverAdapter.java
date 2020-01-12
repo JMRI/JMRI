@@ -30,8 +30,8 @@ import purejavacomm.SerialPort;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Provide access to RFID devices via a serial comm port. Derived from the
- * oaktree code.
+ * Provide access to RFID devices via a serial com port.
+ * Derived from the Oaktree code.
  *
  * @author Bob Jacobsen Copyright (C) 2006, 2007, 2008
  * @author Matthew Harris Copyright (C) 2011
@@ -39,7 +39,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * @author B. Milhaupt Copyright (C) 2017
  * @since 2.11.4
  */
-public class SerialDriverAdapter extends RfidPortController implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends RfidPortController {
 
     SerialPort activeSerialPort = null;
 
@@ -49,10 +49,10 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
         option2Name = "Concentrator-Range"; // NOI18N
         option3Name = "Protocol"; // NOI18N
         option4Name = "Device"; // NOI18N
-        options.put(option1Name, new Option("Adapter:", new String[]{"Generic Stand-alone", "MERG Concentrator"}, false)); // NOI18N
-        options.put(option2Name, new Option("Concentrator range:", new String[]{"A-H", "I-P"}, false)); // NOI18N
-        options.put(option3Name, new Option("Protocol:", new String[]{"CORE-ID", "Olimex", "Parallax", "SeeedStudio", "EM-18"}, false)); // NOI18N
-        options.put(option4Name, new Option("Device Type:", new String[]{"MOD-RFID125", "MOD-RFID1356MIFARE"},false)); // NOI18N
+        options.put(option1Name, new Option(Bundle.getMessage("ConnectionAdapter"), new String[]{"Generic Stand-alone", "MERG Concentrator"}, false)); // NOI18N
+        options.put(option2Name, new Option(Bundle.getMessage("ConnectionConcentratorRange"), new String[]{"A-H", "I-P"}, false)); // NOI18N
+        options.put(option3Name, new Option(Bundle.getMessage("ConnectionProtocol"), new String[]{"CORE-ID", "Olimex", "Parallax", "SeeedStudio", "EM-18"}, false)); // NOI18N
+        options.put(option4Name, new Option(Bundle.getMessage("ConnectionDeviceType"), new String[]{"MOD-RFID125", "MOD-RFID1356MIFARE"}, false)); // NOI18N
         this.manufacturerName = jmri.jmrix.rfid.RfidConnectionTypeList.RFID;
     }
 
@@ -70,25 +70,25 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
             try {
                 setSerialPort();
             } catch (UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage()); // NOI18N
+                log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage()); // NOI18N
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage(); // NOI18N
             }
 
             // set framing (end) character
             try {
-                log.debug("Serial framing was observed as: " + activeSerialPort.isReceiveFramingEnabled() // NOI18N
-                        + " " + activeSerialPort.getReceiveFramingByte()); // NOI18N
+                log.debug("Serial framing was observed as: {} {}", activeSerialPort.isReceiveFramingEnabled(), // NOI18N
+                        activeSerialPort.getReceiveFramingByte()); // NOI18N
             } catch (Exception ef) {
-                log.debug("failed to set serial framing: " + ef); // NOI18N
+                log.debug("failed to set serial framing: {}", ef); // NOI18N
             }
 
             // set timeout; framing should work before this anyway
             try {
                 activeSerialPort.enableReceiveTimeout(10);
-                log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout() // NOI18N
-                        + " " + activeSerialPort.isReceiveTimeoutEnabled()); // NOI18N
+                log.debug("Serial timeout was observed as: {} {}", activeSerialPort.getReceiveTimeout(), // NOI18N
+                        activeSerialPort.isReceiveTimeoutEnabled()); // NOI18N
             } catch (UnsupportedCommOperationException et) {
-                log.info("failed to set serial timeout: " + et); // NOI18N
+                log.info("failed to set serial timeout: {}", et); // NOI18N
             }
 
             // get and save stream
@@ -111,8 +111,8 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
             }
             if (log.isDebugEnabled()) {
                 // report additional status
-                log.debug(" port flow control shows " // NOI18N
-                        + (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control")); // NOI18N
+                log.debug(" port flow control shows {}", // NOI18N
+                        (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control")); // NOI18N
 
                 // log events
                 setPortEventLogging(activeSerialPort);
@@ -131,16 +131,16 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
     }
 
     /**
-     * Can the port accept additional characters? Yes, always
+     * Can the port accept additional characters?
      *
-     * @return True if OK
+     * @return always true
      */
     public boolean okToSend() {
         return true;
     }
 
     /**
-     * set up all of the other objects to operate connected to this port
+     * Set up all of the other objects to operate connected to this port
      */
     @Override
     public void configure() {
@@ -154,26 +154,29 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
                 // create a Generic Stand-alone port controller
                 log.debug("Create Generic Standalone SpecificTrafficController"); // NOI18N
                 control = new StandaloneTrafficController(this.getSystemConnectionMemo());
+                this.getSystemConnectionMemo().setRfidTrafficController(control);
                 this.getSystemConnectionMemo().configureManagers(
-                        new StandaloneSensorManager(control, this.getSystemPrefix()),
-                        new StandaloneReporterManager(control, this.getSystemPrefix()));
+                        new StandaloneSensorManager(this.getSystemConnectionMemo()),
+                        new StandaloneReporterManager(this.getSystemConnectionMemo()));
                 break;
             case "MERG Concentrator": // NOI18N
                 // create a MERG Concentrator port controller
                 log.debug("Create MERG Concentrator SpecificTrafficController"); // NOI18N
                 control = new ConcentratorTrafficController(this.getSystemConnectionMemo(), getOptionState(option2Name));
+                this.getSystemConnectionMemo().setRfidTrafficController(control);
                 this.getSystemConnectionMemo().configureManagers(
-                        new ConcentratorSensorManager(control, this.getSystemPrefix()),
-                        new ConcentratorReporterManager(control, this.getSystemPrefix()));
+                        new ConcentratorSensorManager(this.getSystemConnectionMemo()),
+                        new ConcentratorReporterManager(this.getSystemConnectionMemo()));
                 break;
             default:
                 // no connection at all - warn
-                log.warn("adapter option " + opt1 + " defaults to Generic Stand-alone"); // NOI18N
+                log.warn("adapter option {} defaults to Generic Stand-alone", opt1); // NOI18N
                 // create a Generic Stand-alone port controller
                 control = new StandaloneTrafficController(this.getSystemConnectionMemo());
+                this.getSystemConnectionMemo().setRfidTrafficController(control);
                 this.getSystemConnectionMemo().configureManagers(
-                        new StandaloneSensorManager(control, this.getSystemPrefix()),
-                        new StandaloneReporterManager(control, this.getSystemPrefix()));
+                        new StandaloneSensorManager(this.getSystemConnectionMemo()),
+                        new StandaloneReporterManager(this.getSystemConnectionMemo()));
                 break;
         }
 
@@ -228,7 +231,7 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
                     break;
                 default:
                     // no protocol at all - warn
-                    log.warn("protocol option " + opt3 + " defaults to CORE-ID");
+                    log.warn("protocol option {} defaults to CORE-ID", opt3);
                     // create a coreid protocol
                     protocol = new CoreIdRfidProtocol();
                     break;
@@ -261,7 +264,7 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
         } catch (java.io.IOException e) {
-            log.error("getOutputStream exception: " + e.getMessage());
+            log.error("getOutputStream exception: {}", e.getMessage());
         }
         return null;
     }
@@ -278,7 +281,13 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
      */
     protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
-        int baud = 9600;  // default, but also defaulted in the initial value of selectedSpeed
+        int baud = currentBaudNumber(mBaudRate);
+
+        // the Parallax reader uses 2400 baud, so set that here
+        if (getOptionState(option3Name).equals("Parallax")) {
+            log.debug("Set baud rate to 2400 for Parallax reader");
+            baud = 2400;
+        }
 
         // check for specific port type
         activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
@@ -294,26 +303,29 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
         configureLeadsAndFlowControl(activeSerialPort, flow);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] validBaudRates() {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
     /**
-     * Set the baud rate.
-     *
-     * @param rate the baud rate to set
+     * {@inheritDoc}
      */
     @Override
-    public void configureBaudRate(String rate) {
-        log.debug("configureBaudRate: " + rate);
-        selectedSpeed = rate;
-        super.configureBaudRate(rate);
+    public int[] validBaudNumbers() {
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 
-    protected String[] validSpeeds = new String[]{"(automatic)"};
+    protected String[] validSpeeds = new String[]{Bundle.getMessage("BaudAutomatic")};
     protected int[] validSpeedValues = new int[]{9600};
-    protected String selectedSpeed = validSpeeds[0];
+
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
+    }
 
     // private control members
     private boolean opened = false;

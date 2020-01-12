@@ -9,6 +9,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.Map;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
@@ -22,7 +23,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson Copyright (C) 2001, 2003
  */
-abstract public class AbstractStreamConnectionConfig extends AbstractConnectionConfig {
+abstract public class AbstractStreamConnectionConfig extends AbstractConnectionConfig implements StreamConnectionConfig {
 
     /**
      * Create a connection configuration with a preexisting adapter. This is
@@ -32,7 +33,16 @@ abstract public class AbstractStreamConnectionConfig extends AbstractConnectionC
      * @param p the adapter to create a connection configuration for
      */
     public AbstractStreamConnectionConfig(jmri.jmrix.AbstractStreamPortController p) {
+	super();
         adapter = p;
+    }
+
+    /**
+     * Ctor for a functional object with no preexisting adapter. Expect that the
+     * subclass setInstance() will fill the adapter member.
+     */
+    public AbstractStreamConnectionConfig() {
+        adapter = null;
     }
 
     @Override
@@ -40,17 +50,11 @@ abstract public class AbstractStreamConnectionConfig extends AbstractConnectionC
         return adapter;
     }
 
-    /**
-     * Ctor for a functional object with no prexisting adapter. Expect that the
-     * subclass setInstance() will fill the adapter member.
-     */
-    public AbstractStreamConnectionConfig() {
-        adapter = null;
-    }
-
     protected boolean init = false;
 
-    @SuppressWarnings("unchecked")
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void checkInitDone() {
         log.debug("init called for {}", name());
@@ -103,14 +107,11 @@ abstract public class AbstractStreamConnectionConfig extends AbstractConnectionC
                 public void focusGained(FocusEvent e) {
                 }
             });
-            for (String i : options.keySet()) {
-                final String item = i;
-                if (options.get(i).getComponent() instanceof JComboBox) {
-                    ((JComboBox<?>) options.get(i).getComponent()).addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            adapter.setOptionState(item, options.get(item).getItem());
-                        }
+            for (Map.Entry<String, Option> entry : options.entrySet()) {
+                final String item = entry.getKey();
+                if (entry.getValue().getComponent() instanceof JComboBox) {
+                    ((JComboBox<?>) entry.getValue().getComponent()).addActionListener((ActionEvent e) -> {
+                        adapter.setOptionState(item, options.get(item).getItem());
                     });
                 }
             }
@@ -121,8 +122,8 @@ abstract public class AbstractStreamConnectionConfig extends AbstractConnectionC
 
     @Override
     public void updateAdapter() {
-        for (String i : options.keySet()) {
-            adapter.setOptionState(i, options.get(i).getItem());
+        for (Map.Entry<String, Option> entry : options.entrySet()) {
+            adapter.setOptionState(entry.getKey(), entry.getValue().getItem());
         }
 
         if (!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
@@ -132,13 +133,6 @@ abstract public class AbstractStreamConnectionConfig extends AbstractConnectionC
     }
 
     protected jmri.jmrix.AbstractStreamPortController adapter = null;
-
-    /**
-     * Load the adapter with an appropriate object
-     * <i>unless</I> its already been set.
-     */
-    @Override
-    abstract protected void setInstance();
 
     /**
      * {@inheritDoc}
@@ -152,6 +146,9 @@ abstract public class AbstractStreamConnectionConfig extends AbstractConnectionC
         return Bundle.getMessage("none");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void loadDetails(final JPanel details) {
         _details = details;
@@ -194,6 +191,8 @@ abstract public class AbstractStreamConnectionConfig extends AbstractConnectionC
     }
 
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
+        justification = "Type is checked before casting")
     protected void showAdvancedItems() {
         _details.removeAll();
         cL.anchor = GridBagConstraints.WEST;
@@ -206,23 +205,24 @@ abstract public class AbstractStreamConnectionConfig extends AbstractConnectionC
         int i = 0;
 
         boolean incAdvancedOptions = false;
-        for (String item : options.keySet()) {
-            if (options.get(item).isAdvanced()) {
+        for (Map.Entry<String, Option> entry : options.entrySet()) {
+            if (entry.getValue().isAdvanced()) {
                 incAdvancedOptions = true;
+                break;
             }
         }
 
         i = addStandardDetails(adapter, incAdvancedOptions, i);
 
         if (showAdvanced.isSelected()) {
-            for (String item : options.keySet()) {
-                if (options.get(item).isAdvanced()) {
+            for (Map.Entry<String, Option> entry : options.entrySet()) {
+                if (entry.getValue().isAdvanced()) {
                     cR.gridy = i;
                     cL.gridy = i;
-                    gbLayout.setConstraints(options.get(item).getLabel(), cL);
-                    gbLayout.setConstraints(options.get(item).getComponent(), cR);
-                    _details.add(options.get(item).getLabel());
-                    _details.add(options.get(item).getComponent());
+                    gbLayout.setConstraints(entry.getValue().getLabel(), cL);
+                    gbLayout.setConstraints(entry.getValue().getComponent(), cR);
+                    _details.add(entry.getValue().getLabel());
+                    _details.add(entry.getValue().getComponent());
                     i++;
                 }
             }
@@ -249,6 +249,7 @@ abstract public class AbstractStreamConnectionConfig extends AbstractConnectionC
 
     @Override
     public void setManufacturer(String manufacturer) {
+        setInstance();
         adapter.setManufacturer(manufacturer);
     }
 

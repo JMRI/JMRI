@@ -1,6 +1,6 @@
 package jmri.jmris.srcp;
 
-import org.junit.Assert;
+import org.junit.*;
 import org.junit.Test;
 
 
@@ -25,5 +25,17 @@ public class JmriSRCPProgrammerServerTest{
         Assert.assertNotNull(a);
     }
 
+    @Before
+    public void setUp() {
+        jmri.util.JUnitUtil.setUp();
+        
+        jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
+    }
+
+    @After
+    public void tearDown() {
+        jmri.util.JUnitUtil.tearDown();
+    }
 
 }

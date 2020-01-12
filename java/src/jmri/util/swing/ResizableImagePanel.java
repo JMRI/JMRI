@@ -12,9 +12,12 @@ import java.awt.event.ComponentListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import javax.imageio.ImageIO;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import net.coobird.thumbnailator.ThumbnailParameter;
+import net.coobird.thumbnailator.builders.ThumbnailParameterBuilder;
+import net.coobird.thumbnailator.filters.ImageFilter;
+import net.coobird.thumbnailator.tasks.io.FileImageSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -133,6 +136,31 @@ public class ResizableImagePanel extends JPanel implements ComponentListener {
     }
 
     /**
+     * Read image and handle exif information if it exists in the file.
+     * 
+     * @param file the image file
+     * @return the image
+     * @throws IOException in case of an I/O error
+     */
+    private BufferedImage readImage(File file) throws IOException {
+        ThumbnailParameterBuilder builder = new ThumbnailParameterBuilder();
+        builder.scale(1.0);
+        ThumbnailParameter param = builder.build();
+        
+        FileImageSource fileImageSource = new FileImageSource(file);
+        fileImageSource.setThumbnailParameter(param);
+        
+        BufferedImage img = fileImageSource.read();
+        
+        // Perform the image filters
+        for (ImageFilter filter : param.getImageFilters()) {
+            img = filter.apply(img);
+        }
+        
+        return img;
+    }
+
+    /**
      * Set image file path, display will be updated if passed value is null,
      * blank image
      *
@@ -150,7 +178,7 @@ public class ResizableImagePanel extends JPanel implements ComponentListener {
         log.debug("Image path is now : {}", _imagePath);
         if (_imagePath != null) {
             try {
-                image = ImageIO.read(new File(_imagePath));
+                image = readImage(new File(_imagePath));
             } catch (IOException ex) {
                 log.error("{} is not a valid image file, exception: ", _imagePath, ex);
                 image = null;

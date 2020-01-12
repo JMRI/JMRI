@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2019 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- 																		-->
+<!-- version 1 - include file for Uhlenbrock IntelliSound2 Decoder          -->
+<!--			 RH2400 (diesel) plus German translation from datasheet 	-->
+<!-- 																		-->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <enumChoice choice="None">
+        <choice>No Sound</choice>
+        <choice xml:lang="de">kein Sound</choice>
+    </enumChoice>
+    <enumChoice>
+        <choice>1. Directional lighting</choice>
+    <choice xml:lang="de">1. Licht vorn ein/aus</choice>
+    </enumChoice>
+    <enumChoice choice="Operating sounds of the loco">
+        <choice>2. Engine Sound on/off</choice>
+        <choice xml:lang="de">2. Motorsound</choice>
+    </enumChoice>
+    <enumChoice choice="Operating sounds of the loco">
+        <choice>3. Horn deep</choice>
+        <choice xml:lang="de">3. Horn tief</choice>
+    </enumChoice>
+    <enumChoice choice="Operating sounds of the loco">
+        <choice>4. Horn high</choice>
+        <choice xml:lang="de">4. Horn tief</choice>
+    </enumChoice>
+    <enumChoice choice="Operating sounds of the loco">
+        <choice>5. Double horn (high-deep)</choice>
+        <choice xml:lang="de">5. Doppelhorn (hoch-tief)</choice>
+    </enumChoice>
+    <enumChoice choice="Operating sounds of the loco">
+        <choice>6. Conductors signal</choice>
+        <choice xml:lang="de">6. Schaffnerpfiff</choice>
+    </enumChoice>
+    <enumChoice choice="Operating sounds of the loco">
+        <choice>7. Hand pump - Oil</choice>
+        <choice xml:lang="de">7. Handpumpe - Öl</choice>
+    </enumChoice>
+    <enumChoice choice="Operating sounds of the loco">
+        <choice>8. Shunting mode</choice>
+        <choice xml:lang="de">8. Rangiergang</choice>
+    </enumChoice>
+    <enumChoice choice="Operating sounds of the loco">
+        <choice>9. Hand brake release/set brake</choice>
+        <choice xml:lang="de">9. Handbremse anlegen/lösen</choice>
+    </enumChoice>
+    <enumChoice choice="Operating sounds of the loco">
+        <choice>10. Air Compressor</choice>
+        <choice xml:lang="de">10. Kompressor</choice>
+    </enumChoice>
+    <enumChoice choice="Operating sounds of the loco">
+        <choice>11. Driver cab door open/close</choice>
+        <choice xml:lang="de">11. Führerstandstüre auf/zu</choice>
+    </enumChoice>
+    <enumChoice choice="Operating sounds of the loco">
+        <choice>12. Driver cab window open/close</choice>
+        <choice xml:lang="de">12. Führerstandsfenster auf/zu</choice>
+    </enumChoice>
+    <enumChoice choice="Operating sounds of the loco">
+        <choice>13. Talk #1</choice>
+        <choice xml:lang="de">13. Funk #1</choice>
+    </enumChoice>
+    <enumChoice choice="Operating sounds of the loco">
+        <choice>14. Talk #2</choice>
+        <choice xml:lang="de">14. Funk #2</choice>
+    </enumChoice>
+    <enumChoice choice="Operating sounds of the loco">
+        <choice>15. Shunting Brake</choice>
+        <choice xml:lang="de">15. Rangierbremse</choice>
+    </enumChoice>
+    <enumChoice choice="Operating sounds of the loco">
+        <choice>16. Coupling/Uncoupling</choice>
+        <choice xml:lang="de">16. Kuppeln ab-/ankuppeln</choice>
+    </enumChoice>
+    <enumChoice choice="Operating sounds of the loco">
+        <choice>17. Loco brake apply/release</choice>
+        <choice xml:lang="de">17. Zugbremse anlegen/lösen</choice>
+    </enumChoice>
+    <enumChoice choice="Operating sounds of the loco">
+        <choice>18. Dead Man's Switch</choice>
+        <choice xml:lang="de">18. Totmannschalter (Sifa)</choice>
+    </enumChoice>
+    <enumChoice choice="Operating sounds of the loco">
+        <choice>19. Direction Control Switch</choice>
+        <choice xml:lang="de">19. Fahrtrichtungswender</choice>
+    </enumChoice>
+    <enumChoice choice="Operating sounds of the loco">
+        <choice>20. Sanding</choice>
+        <choice xml:lang="de">20. Sanden</choice>
+    </enumChoice>
+    <enumChoice choice="Operating sounds of the loco">
+        <choice>21. Curve squeal sound on/off</choice>
+        <choice xml:lang="de">21. Kurvenquitschen ein/aus</choice>
+    </enumChoice>
+    <enumChoice choice="Operating sounds of the loco">
+        <choice>22. Rail clank sound on/off</choice>
+        <choice xml:lang="de">22. Schienenstösse ein/aus</choice>
+    </enumChoice>
+    <enumChoice choice="Operating sounds of the loco">
+        <choice>23. Train lights: Loco pushes</choice>
+        <choice xml:lang="de">23. Zugbeleuchtung: Lok schiebt</choice>
+    </enumChoice>
+    <enumChoice choice="Operating sounds of the loco">
+        <choice>24. Train lights: Loco pulls</choice>
+        <choice xml:lang="de">24. Zugbeleuchtung: Lok zieht</choice>
+    </enumChoice>
+    <enumChoice choice="Operating sounds of the loco">
+        <choice>25. Volume Control</choice>
+        <choice xml:lang="de">25. Lautstärkeregelung</choice>
+    </enumChoice>
+    <enumChoice choice="Operating sounds of the loco">
+        <choice>26. Sound Fader</choice>
+        <choice xml:lang="de">26. Soundfader (Tunnelmodus)</choice>
+    </enumChoice>
+</enumVal>

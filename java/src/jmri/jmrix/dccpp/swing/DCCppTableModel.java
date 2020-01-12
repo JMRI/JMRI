@@ -99,7 +99,7 @@ public abstract class DCCppTableModel extends AbstractTableModel {
 
     public void insertData(List<Object> v, boolean isnew) {
         if (!rowData.contains(v)) {
-            v.add("Delete");
+            v.add(Bundle.getMessage("ColumnDelete"));
             v.add(isnew); // is new
             v.add(false); // is dirty (no)
             v.add(false); // is marked for delete (of course not)

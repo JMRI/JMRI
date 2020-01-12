@@ -1,8 +1,6 @@
 package jmri.jmrix.sprog.sprognano;
 
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implements SerialPortAdapter for the Sprog system.
@@ -30,7 +28,7 @@ public class SprogNanoSerialDriverAdapter
     /**
      * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
-    @Deprecated
+    @Deprecated  // will be removed when superclass method is removed due to @Override
     static public SprogNanoSerialDriverAdapter instance() {
         return null;
     }

@@ -1,64 +1,51 @@
 package jmri.util;
 
-import java.util.ArrayList;
-import java.util.List;
-import jmri.ShutDownManager;
-import jmri.ShutDownTask;
+import jmri.managers.DefaultShutDownManager;
 
 /**
  * Mock ShutDownManager for unit testing.
  * <p>
- * To test that a method behaves differently when an application is shutting
- * down or not, call {@link #shutdown()} or {@link #restart()} before invoking
- * the method to test. To clear the state of shutting down, call
- * {@link #resetShuttingDown()}.</p>
+ * To clear the state of shutting down, call
+ * {@link #resetShuttingDown()}.
  * <p>
- * The list of registered tasts is exposed via {@link #shutDownTasks()} to allow
- * verification that a method that registers or deregisters a ShutDownTask as a
- * side effect did so correctly.</p>
+ * This overrides the DefaultShutDownManager with two changes to that manager's behavior:
+ * <ul>
+ * <li>This does not register a shutdown hook with the Runtime to catch SIGTERM, Ctrl-C, and the like.</li>
+ * <li>This does not call System.exit() when {@link #shutdown()} or {@link #restart()} are called.</li>
+ * </ul>
  *
- * @author Randall Wood
+ * @author Randall Wood Copyright 2019
  */
-public class MockShutDownManager implements ShutDownManager {
-
-    private boolean isShuttingDown = false;
-    private final ArrayList<ShutDownTask> tasks = new ArrayList<>();
+public class MockShutDownManager extends DefaultShutDownManager {
 
     public MockShutDownManager() {
+        super();
+        Runtime.getRuntime().removeShutdownHook(shutdownHook);
     }
 
-    @Override
-    public void register(ShutDownTask task) {
-        this.tasks.add(task);
-    }
-
-    @Override
-    public void deregister(ShutDownTask task) {
-        this.tasks.remove(task);
-    }
-
+    /**
+     * {@inheritDoc}
+     * 
+     * This implementation runs all shutdown tasks, but does not actually call
+     * System.exit().
+     */
     @Override
     public boolean restart() {
-        this.isShuttingDown = true;
-        return true;
+        return shutdown(0, false);
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * This implementation runs all shutdown tasks, but does not actually call
+     * System.exit().
+     */
     @Override
     public boolean shutdown() {
-        this.isShuttingDown = true;
-        return true;
-    }
-
-    @Override
-    public boolean isShuttingDown() {
-        return this.isShuttingDown;
+        return shutdown(100, false);
     }
 
     public void resetShuttingDown() {
-        this.isShuttingDown = false;
-    }
-
-    public List<ShutDownTask> shutDownTasks() {
-        return new ArrayList<>(this.tasks);
+        setShuttingDown(false);
     }
 }

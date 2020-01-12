@@ -5,9 +5,7 @@ import javax.swing.JFrame;
 import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.util.JmriJFrame;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Tests for the LocoStatsFrame class
@@ -92,4 +90,13 @@ public class LocoStatsFrameTest {
         f.dispose();
     }
 
+    @Before
+    public void setUp() {
+        jmri.util.JUnitUtil.setUp();
+    }
+
+    @After
+    public void tearDown() {
+        jmri.util.JUnitUtil.tearDown();
+    }
 }

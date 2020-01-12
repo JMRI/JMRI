@@ -5,9 +5,8 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import java.util.ServiceLoader;
-import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import jmri.InstanceManager;
 import jmri.beans.Bean;
 import jmri.jmrix.swing.SystemConnectionAction;
@@ -16,7 +15,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Maintain a list of actions that can be used by
- * {@link apps.startup.AbstractActionModel} and it's descendants. This list is
+ * {@link apps.startup.AbstractActionModel} and its descendants. This list is
  * populated by {@link apps.startup.StartupActionFactory} instances registered
  * with a {@link java.util.ServiceLoader}.
  *
@@ -81,9 +80,9 @@ public class StartupActionModelUtil extends Bean {
     }
 
     @CheckForNull
-    public String getClassName(@Nonnull String name) {
-        this.prepareActionsHashMap();
-        if (!name.isEmpty()) {
+    public String getClassName(@CheckForNull String name) {
+        if (name != null && !name.isEmpty()) {
+            this.prepareActionsHashMap();
             for (Entry<Class<?>, ActionAttributes> entry : this.actions.entrySet()) {
                 if (entry.getValue().name.equals(name)) {
                     return entry.getKey().getName();
@@ -170,7 +169,7 @@ public class StartupActionModelUtil extends Bean {
     }
 
     @CheckForNull
-    public String getOverride(@Nullable String name) {
+    public String getOverride(@CheckForNull String name) {
         this.prepareActionsHashMap();
         if (name != null && this.overrides.containsKey(name)) {
             return this.overrides.get(name).getName();

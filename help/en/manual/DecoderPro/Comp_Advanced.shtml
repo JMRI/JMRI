@@ -15,15 +15,14 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
@@ -47,7 +46,7 @@
       where the manufacturer is pushing the envelope. In this case,
       the CV here controls the Transponding feature of newer
       Digitrax decoders, which allows them to report their location
-      and engine number back to the Loconet.</p>
+      and engine number back to the LocoNet.</p>
 
       <p>There may be one or several of these panes, depending on
       how complex the decoder programming is and the style of the

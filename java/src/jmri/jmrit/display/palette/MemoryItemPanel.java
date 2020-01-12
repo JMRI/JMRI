@@ -15,8 +15,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import jmri.NamedBean;
+import jmri.Memory;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
@@ -28,7 +27,7 @@ import jmri.jmrit.picker.PickListModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class MemoryItemPanel extends TableItemPanel implements ChangeListener, ListSelectionListener {
+public class MemoryItemPanel extends TableItemPanel<Memory> implements ChangeListener {
 
     enum Type {
         READONLY, READWRITE, SPINNER, COMBO
@@ -208,7 +207,7 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
                 _updateButton.setEnabled(true);
                 _updateButton.setToolTipText(null);
             }
-            NamedBean bean = getDeviceNamedBean();
+            Memory bean = getDeviceNamedBean();
             _readMem.setMemory(bean.getDisplayName());
             _writeMem.setMemory(bean.getDisplayName());
             _spinMem.setMemory(bean.getDisplayName());
@@ -250,7 +249,7 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
 
         @Override
         protected boolean okToDrag() {
-            NamedBean bean = getDeviceNamedBean();
+            Memory bean = getDeviceNamedBean();
             if (bean == null) {
                 JOptionPane.showMessageDialog(this, Bundle.getMessage("noRowSelected"),
                         Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
@@ -264,9 +263,9 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
             if (!isDataFlavorSupported(flavor)) {
                 return null;
             }
-            NamedBean bean = getDeviceNamedBean();
+            Memory bean = getDeviceNamedBean();
             if (bean == null) {
-                log.error("IconDragJComponent.getTransferData: NamedBean is null!");
+                log.error("IconDragJComponent.getTransferData: Memory is null!");
                 return null;
             }
 

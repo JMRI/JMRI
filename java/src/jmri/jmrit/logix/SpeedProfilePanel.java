@@ -2,18 +2,24 @@ package jmri.jmrit.logix;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
+import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.TransferHandler;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import jmri.jmrit.roster.RosterSpeedProfile;
@@ -33,18 +39,19 @@ import org.slf4j.LoggerFactory;
  */
 public class SpeedProfilePanel extends JPanel {
 
-    HashMap<String, Boolean> _mergeCandidates;
-    HashMap<String, RosterSpeedProfile> _mergeProfiles;
-    HashMap<String, HashMap<Integer, Boolean>> _anomalies;
     JTable _table;
+    JScrollPane _scrollPane;
     static java.awt.Color myRed = new java.awt.Color(255, 120, 120);
+    static String entryFlavorType =  DataFlavor.javaJVMLocalObjectMimeType + ";class=java.util.AbstractMap";
+    DataFlavor _entryFlavor; 
     
     /**
      * @param speedProfile a RosterSpeedProfile
-     * @param anomalies Map of keys where profile is not monotonic increasing.
+     * @param editable allow editing.
+     * @param anomalies map of entries where speed decreases from previous speed
      */
-    public SpeedProfilePanel(RosterSpeedProfile speedProfile, HashMap<Integer, Boolean> anomalies) {
-        SpeedTableModel model = new SpeedTableModel(speedProfile, anomalies);
+    public SpeedProfilePanel(RosterSpeedProfile speedProfile, boolean editable, HashMap<Integer, Boolean> anomalies) {
+        SpeedTableModel model = new SpeedTableModel(speedProfile, editable, anomalies);
         _table = new JTable(model);
         int tablewidth = 0;
         for (int i = 0; i < model.getColumnCount(); i++) {
@@ -53,13 +60,21 @@ public class SpeedProfilePanel extends JPanel {
             column.setPreferredWidth(width);
             tablewidth += width;
         }
-        if (anomalies != null) {
+        if (editable) {
             _table.addKeyListener(new KeyListener() {
                 @Override
                 public void keyTyped(KeyEvent ke) {
                     char ch = ke.getKeyChar(); 
                     if (ch == KeyEvent.VK_DELETE || ch == KeyEvent.VK_X) {
                         deleteRow();
+                    } else if (ch == KeyEvent.VK_ENTER) {
+                        int row = _table.getEditingRow();
+                        if (row < 0) {
+                            row = _table.getSelectedRow();
+                        }
+                        if (row >= 0) {
+                            rePack(row);
+                        }
                     }
                 }
                 @Override
@@ -70,24 +85,43 @@ public class SpeedProfilePanel extends JPanel {
             _table.getColumnModel().getColumn(SpeedTableModel.FORWARD_SPEED_COL).setCellRenderer(new ColorCellRenderer());
             _table.getColumnModel().getColumn(SpeedTableModel.REVERSE_SPEED_COL).setCellRenderer(new ColorCellRenderer());
         }
-        _table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        JScrollPane pane = new JScrollPane(_table);
-        int barWidth = 5+pane.getVerticalScrollBar().getPreferredSize().width;
+//        _table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+       _scrollPane = new JScrollPane(_table);
+        int barWidth = 5+_scrollPane.getVerticalScrollBar().getPreferredSize().width;
         tablewidth += barWidth;
-        pane.setPreferredSize(new Dimension(tablewidth, tablewidth));
+        _scrollPane.setPreferredSize(new Dimension(tablewidth, tablewidth));
+        try {
+            _entryFlavor = new DataFlavor(entryFlavorType);
+            if (editable) {
+                _table.setTransferHandler(new ImportEntryTranferHandler());                    
+                _table.setDragEnabled(true);
+            } else {
+                _table.setTransferHandler(new ExportEntryTranferHandler());                    
+                _table.setDragEnabled(true);
+            }
+        } catch (ClassNotFoundException cnfe) {
+            log.error("SpeedProfilePanel unable to Drag and Drop" + cnfe);
+        }
+        add(_scrollPane);
         if (anomalies != null) {
-            JScrollBar bar = pane.getVerticalScrollBar();
+            setAnomalies(anomalies);
+        }
+    }
+
+    void setAnomalies(HashMap<Integer, Boolean> anomalies) {
+        SpeedTableModel model = (SpeedTableModel)_table.getModel();
+        model.setAnomaly(anomalies);
+        if (anomalies != null && anomalies.size() > 0) {
+            JScrollBar bar = _scrollPane.getVerticalScrollBar();
             bar.setValue(50);       // important to "prime" the setting for bar.getMaximum()
             int numRows = model.getRowCount();
             Integer key = 1000;
-            Iterator<Integer> iter = anomalies.keySet().iterator();
-            while (iter.hasNext()) {
-                Integer k = iter.next();
+            for (int k : anomalies.keySet()) {
                 if (k < key) {
                     key = k;
                 }
             }
-            TreeMap<Integer, SpeedStep> speeds = speedProfile.getProfileSpeeds();
+            TreeMap<Integer, SpeedStep> speeds = model.getProfileSpeeds();
             Map.Entry<Integer, SpeedStep> entry = speeds.higherEntry(key);
             if (entry == null) {
                 entry = speeds.lowerEntry(key);
@@ -96,11 +130,6 @@ public class SpeedProfilePanel extends JPanel {
             int pos = (int)(((float)row)*bar.getMaximum() / numRows + .5);
             bar.setValue(pos);
         }
-        add(pane);
-    }
-
-    void setEditable(boolean set ) {
-        ((SpeedTableModel)_table.getModel()).setEditable(set);
     }
 
     private void deleteRow() {
@@ -109,7 +138,7 @@ public class SpeedProfilePanel extends JPanel {
             SpeedTableModel model = (SpeedTableModel)_table.getModel();
             Map.Entry<Integer, SpeedStep> entry = model.speedArray.get(row);
             model.speedArray.remove(entry);
-            model.profile.deleteStep(entry.getKey());
+            model._profile.deleteStep(entry.getKey());
             model.fireTableDataChanged();
         }
     }
@@ -125,8 +154,8 @@ public class SpeedProfilePanel extends JPanel {
             if (anomalies == null || anomalies.size() == 0) {
                 c.setBackground(table.getBackground());                                
                 return c;
-            }           
-            Map.Entry<Integer, SpeedStep> entry = model.getEntry(row);
+            }
+            Map.Entry<Integer, SpeedStep> entry = model.getRowEntry(row);
             Boolean direction = anomalies.get(entry.getKey());
             if (direction == null) {
                 c.setBackground(table.getBackground());
@@ -142,6 +171,18 @@ public class SpeedProfilePanel extends JPanel {
         }
     }
 
+    private void rePack(int row) {
+        SpeedTableModel model = (SpeedTableModel)_table.getModel();
+        Map.Entry<Integer, SpeedStep> entry = model.getRowEntry(row);
+        setAnomalies(model.updateAnomaly(entry));
+        model.fireTableDataChanged();
+    }
+
+    private void rePack(Integer key) {
+        SpeedTableModel model = (SpeedTableModel)_table.getModel();
+        setAnomalies(model.updateAnomaly(model.getKeyEntry(key)));
+        model.fireTableDataChanged();
+    }
 
     static class SpeedTableModel extends javax.swing.table.AbstractTableModel {
         static final int STEP_COL = 0;
@@ -152,14 +193,14 @@ public class SpeedProfilePanel extends JPanel {
         
         java.text.DecimalFormat threeDigit = new java.text.DecimalFormat("0.000");
         ArrayList<Map.Entry<Integer, SpeedStep>> speedArray = new  ArrayList<>();
-        RosterSpeedProfile profile;
+        RosterSpeedProfile _profile;
         Boolean _editable;
         HashMap<Integer, Boolean> _anomaly;
         
-        SpeedTableModel(RosterSpeedProfile sp, HashMap<Integer, Boolean> anomaly) {
-            profile = sp;
-            _editable = (anomaly != null); // allow mergeProfile editing
-            _anomaly = anomaly;
+        SpeedTableModel(RosterSpeedProfile sp, boolean editable, HashMap<Integer, Boolean> anomalies) {
+            _profile = sp;
+            _editable = editable; // allow mergeProfile editing
+            _anomaly = anomalies;
             TreeMap<Integer, SpeedStep> speeds = sp.getProfileSpeeds();
             Map.Entry<Integer, SpeedStep> entry = speeds.firstEntry();
             while (entry!=null) {
@@ -168,18 +209,57 @@ public class SpeedProfilePanel extends JPanel {
             }
         }
 
-        void setEditable(boolean set ) {
-            _editable = set;
-        }
-
         HashMap<Integer, Boolean> getAnomalies() {
             return _anomaly;
         }
 
-        Map.Entry<Integer, SpeedStep> getEntry(int row) {
+        void setAnomaly(HashMap<Integer, Boolean> an) {
+            _anomaly = an;
+        }
+        private HashMap<Integer, Boolean> updateAnomaly(Map.Entry<Integer, SpeedStep> entry) {
+            SpeedStep ss = entry.getValue();
+            _profile.setSpeed(entry.getKey(), ss.getForwardSpeed(), ss.getReverseSpeed());
+            _anomaly = MergePrompt.validateSpeedProfile(_profile);
+            log.debug("updateAnomaly size={}", _anomaly.size());
+            return _anomaly;
+        }
+
+        Map.Entry<Integer, SpeedStep> getRowEntry(int row) {
             return speedArray.get(row); 
         }
+
+        Map.Entry<Integer, SpeedStep> getKeyEntry(Integer key) {
+            for (Map.Entry<Integer, SpeedStep> entry : speedArray) {
+                if (entry.getKey().equals(key)) {
+                    return entry;
+                }
+            }
+            return null; 
+        }
+
+        TreeMap<Integer, SpeedStep> getProfileSpeeds() {
+            return _profile.getProfileSpeeds();
+        }
         
+        void setSelectionData(Integer key) {
+            
+        }
+
+        void addEntry( Map.Entry<Integer, SpeedStep> entry) {
+            SpeedStep ss = entry.getValue();
+            Integer key = entry.getKey();
+            _profile.setSpeed(key, ss.getForwardSpeed(), ss.getReverseSpeed());
+            for (int row = 0; row<speedArray.size(); row++) {
+                int k = speedArray.get(row).getKey().intValue();
+                if (key.intValue() < k) {
+                    speedArray.add(row, entry);
+                    log.debug("addEntry _profile size={}, speedArray size={}", _profile.getProfileSize(), speedArray.size());
+                    return;
+                }
+            }
+            speedArray.add(entry);
+        }
+
         int getRow(Map.Entry<Integer, SpeedStep> entry) {
             return speedArray.indexOf(entry);
         }
@@ -285,5 +365,142 @@ public class SpeedProfilePanel extends JPanel {
         }
     }
 
+    class ExportEntryTranferHandler extends TransferHandler {
+
+        @Override
+        public int getSourceActions(JComponent c) {
+            return COPY;
+        }
+
+        @Override
+        public Transferable createTransferable(JComponent c) {
+            JTable table = (JTable) c;
+            int row = table.getSelectedRow();
+            if (row < 0) {
+                return null;
+            }
+            row = table.convertRowIndexToModel(row);
+            SpeedTableModel model = (SpeedTableModel)table.getModel();
+            return new EntrySelection(model.getRowEntry(row));
+        }
+    }
+
+    class ImportEntryTranferHandler extends ExportEntryTranferHandler {
+
+        @Override
+        public boolean canImport(TransferHandler.TransferSupport support) {
+            DataFlavor[] flavors =  support.getDataFlavors();
+            if (flavors == null) {
+                return false;
+            }
+            for (int k = 0; k < flavors.length; k++) {
+                if (_entryFlavor.equals(flavors[k])) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        @Override
+        public boolean importData(TransferHandler.TransferSupport support) {
+            if (!canImport(support)) {
+                return false;
+            }
+            if (!support.isDrop()) {
+                return false;            
+            }
+            TransferHandler.DropLocation loc = support.getDropLocation();
+            if (!(loc instanceof JTable.DropLocation)) {
+                return false;
+            }
+            Component comp = support.getComponent();
+            if (!(comp instanceof JTable)) {
+                return false;            
+            }       
+            JTable table = (JTable)comp;
+            try {
+                Transferable trans = support.getTransferable();
+                Object obj = trans.getTransferData(_entryFlavor);
+                if (!(obj instanceof Map.Entry)) {
+                    return false;
+                }
+                @SuppressWarnings("unchecked")
+                Map.Entry<Integer, SpeedStep> sourceEntry = (Map.Entry<Integer, SpeedStep>)obj;
+                SpeedStep sss = sourceEntry.getValue();
+                SpeedTableModel model = (SpeedTableModel)table.getModel();
+                Integer key = sourceEntry.getKey();
+                Map.Entry<Integer, SpeedStep> entry = model.getKeyEntry(key);
+                if (entry != null ) {
+                    SpeedStep ss = entry.getValue();
+                    if (sss.getForwardSpeed() > 0f) {
+                        if (ss.getForwardSpeed() <= 0f) {
+                            ss.setForwardSpeed(sss.getForwardSpeed());
+                        } else {
+                            ss.setForwardSpeed((sss.getForwardSpeed() + ss.getForwardSpeed()) / 2);
+                        }
+                    }
+                    if (sss.getReverseSpeed() > 0f) {
+                        if (ss.getReverseSpeed() <= 0f) {
+                            ss.setReverseSpeed(sss.getReverseSpeed());
+                        } else {
+                            ss.setReverseSpeed((sss.getReverseSpeed() + ss.getReverseSpeed()) / 2);
+                        }
+                    }
+                } else {
+                    model.addEntry(sourceEntry);
+                }
+                rePack(key);
+
+                return true;
+            } catch (UnsupportedFlavorException ufe) {
+                log.warn("MergeTranferHandler.importData: " + ufe);
+            } catch (IOException ioe) {
+                log.warn("MergeTranferHandler.importData: " + ioe);
+            }
+            return false;
+        }
+    }
+
+    class EntrySelection implements Transferable {
+        Integer _key;
+        SpeedStep _step;
+        public EntrySelection(Map.Entry<Integer, SpeedStep> entry) {
+            _key = entry.getKey();
+            _step = new SpeedStep();
+            SpeedStep step = entry.getValue();
+            _step.setForwardSpeed(step.getForwardSpeed());
+            _step.setReverseSpeed(step.getReverseSpeed());
+        }
+        @Override
+        public DataFlavor[] getTransferDataFlavors() {
+            return new DataFlavor[] {_entryFlavor, DataFlavor.stringFlavor};
+        }
+        @Override
+        public boolean isDataFlavorSupported(DataFlavor flavor) {
+            if (_entryFlavor.equals(flavor)) {
+                return true;
+            } else if (DataFlavor.stringFlavor.equals(flavor)) {
+                return true;
+            }
+            return false;
+        }
+        @Override
+        public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
+            if (_entryFlavor.equals(flavor)) {
+                SimpleEntry<Integer, SpeedStep> entry = new SimpleEntry<>(_key, _step);
+                return entry;
+            } else if (DataFlavor.stringFlavor.equals(flavor)) {
+                StringBuilder  msg = new StringBuilder ();
+                msg.append(_key.toString());
+                msg.append(',');
+                msg.append(_step.getForwardSpeed());
+                msg.append(',');
+                msg.append(_step.getReverseSpeed());
+                return msg.toString();
+            }
+            log.warn("EntrySelection.getTransferData: " + flavor);
+            throw(new UnsupportedFlavorException(flavor));
+        }
+    }
     private final static Logger log = LoggerFactory.getLogger(SpeedProfilePanel.class);
 }

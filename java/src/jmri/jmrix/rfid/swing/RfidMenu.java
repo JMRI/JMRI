@@ -1,6 +1,5 @@
 package jmri.jmrix.rfid.swing;
 
-import java.util.ResourceBundle;
 import javax.swing.JMenu;
 import javax.swing.JSeparator;
 import jmri.jmrix.rfid.RfidSystemConnectionMemo;
@@ -21,12 +20,10 @@ public class RfidMenu extends JMenu {
 
         super();
 
-        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.rfid.RfidBundle");
-
         if (memo != null) {
             setText(memo.getUserName());
         } else {
-            setText(rb.getString("MenuSystem"));
+            setText(Bundle.getMessage("MenuSystem"));
         }
 
         WindowInterface wi = new JmriJFrameInterface();
@@ -35,13 +32,13 @@ public class RfidMenu extends JMenu {
             if (item == null) {
                 add(new JSeparator());
             } else {
-                add(new RfidNamedPaneAction(rb.getString(item.name), wi, item.load, memo));
+                add(new RfidNamedPaneAction(item.name, wi, item.load, memo)); // NOI18N
             }
         }
     }
 
     Item[] panelItems = new Item[]{
-        new Item("MenuItemCommandMonitor", "jmri.jmrix.rfid.swing.serialmon.SerialMonPane")
+        new Item(Bundle.getMessage("MonitorXTitle", "RFID"), "jmri.jmrix.rfid.swing.serialmon.SerialMonPane")
     };
 
     static class Item {

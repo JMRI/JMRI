@@ -161,7 +161,7 @@ public class LocoStatsPanel extends LnPanel implements LocoNetInterfaceStatsList
     /**
      * Configure LocoNet connection
      * 
-     * @param memo - specifies which LocoNet connection is used by this tool
+     * @param memo  specifies which LocoNet connection is used by this tool
      */
     @Override
     public void initComponents(LocoNetSystemConnectionMemo memo) {
@@ -190,7 +190,7 @@ public class LocoStatsPanel extends LnPanel implements LocoNetInterfaceStatsList
      * threading problems.
      */
     public void requestUpdate() {
-        // Invoke the Loconet request send on the layout thread, not the GUI thread!
+        // Invoke the LocoNet request send on the layout thread, not the GUI thread!
         // Note - there is no guarantee that the LocoNet message will be sent 
         // before execution returns to this method (but it might).
         ThreadingUtil.runOnLayoutEventually(()->{  stats.sendLocoNetInterfaceStatusQueryMessage(); });

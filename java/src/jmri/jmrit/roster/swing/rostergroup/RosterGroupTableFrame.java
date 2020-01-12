@@ -10,7 +10,7 @@ import javax.swing.table.TableRowSorter;
 
 /**
  * Provide a JFrame to display the Roster Data Based upon BeanTableFrame.
- * <P>
+ * <p>
  * This frame includes the table itself at the top, plus a "bottom area" for
  * things like an Add... button and checkboxes that control display options.
  * <p>
@@ -22,7 +22,7 @@ import javax.swing.table.TableRowSorter;
  *
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Kevin Dickerson Copyright (C) 2009
-  */
+ */
 public class RosterGroupTableFrame extends jmri.util.JmriJFrame {
 
     RosterGroupTableModel dataModel;
@@ -34,8 +34,6 @@ public class RosterGroupTableFrame extends jmri.util.JmriJFrame {
     Box topBox;  // panel at bottom for extra buttons etc
     int topBoxIndex; // index to insert extra stuff
     static final int topStrutWidth = 20;
-
-//    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
 
     public RosterGroupTableFrame(RosterGroupTableModel model, String helpTarget) {
 
@@ -91,7 +89,6 @@ public class RosterGroupTableFrame extends jmri.util.JmriJFrame {
         // set preferred scrolling options
         dataScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         dataScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-
     }
 
     /**

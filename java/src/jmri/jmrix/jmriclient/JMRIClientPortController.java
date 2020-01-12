@@ -5,7 +5,7 @@ package jmri.jmrix.jmriclient;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008, 2010
  * @author Paul Bender Copyright (C) 2010
-  */
+ */
 public abstract class JMRIClientPortController extends jmri.jmrix.AbstractNetworkPortController {
 
     // base class. Implementations will provide InputStream and OutputStream
@@ -31,6 +31,3 @@ public abstract class JMRIClientPortController extends jmri.jmrix.AbstractNetwor
     }
 
 }
-
-
-

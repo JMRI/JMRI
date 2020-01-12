@@ -2,7 +2,7 @@ package jmri.managers;
 
 import java.util.List;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import jmri.AddressedProgrammer;
 import jmri.AddressedProgrammerManager;
 import jmri.GlobalProgrammerManager;
@@ -27,117 +27,6 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2015, 2016
  */
 public class DefaultProgrammerManager implements AddressedProgrammerManager, GlobalProgrammerManager {
-
-    /**
-     * NMRA "Paged" mode.
-     *
-     * @deprecated since 4.9.5; use {@link ProgrammingMode#PAGEMODE} instead
-     */
-    @Deprecated
-    public static final ProgrammingMode PAGEMODE = ProgrammingMode.PAGEMODE;
-
-    /**
-     * NMRA "Operations" or "Programming on the main" mode, using only the
-     * bit-wise operations.
-     *
-     * @deprecated since 4.9.5; use {@link ProgrammingMode#OPSBITMODE} instead
-     */
-    @Deprecated
-    public static final ProgrammingMode OPSBITMODE = ProgrammingMode.OPSBITMODE;
-
-    /**
-     * NMRA "Programming on the main" mode for stationary decoders, using only
-     * the byte-wise operations and "extended" addressing.
-     *
-     * @deprecated since 4.9.5; use {@link ProgrammingMode#OPSACCEXTBYTEMODE}
-     * instead
-     */
-    @Deprecated
-    public static final ProgrammingMode OPSACCEXTBYTEMODE = ProgrammingMode.OPSACCEXTBYTEMODE;
-
-    /**
-     * NMRA "Programming on the main" mode for stationary decoders, using only
-     * the bit-wise operations. Note that this is defined as using the "normal",
-     * not "extended" addressing.
-     *
-     * @deprecated since 4.9.5; use {@link ProgrammingMode#OPSACCBITMODE}
-     * instead
-     */
-    @Deprecated
-    public static final ProgrammingMode OPSACCBITMODE = ProgrammingMode.OPSACCBITMODE;
-
-    /**
-     * NMRA "Programming on the main" mode for stationary decoders, using only
-     * the bit-wise operations and "extended" addressing.
-     *
-     * @deprecated since 4.9.5; use {@link ProgrammingMode#OPSACCEXTBITMODE}
-     * instead
-     */
-    @Deprecated
-    public static final ProgrammingMode OPSACCEXTBITMODE = ProgrammingMode.OPSACCEXTBITMODE;
-
-    /**
-     * NMRA "Programming on the main" mode for stationary decoders, using only
-     * the byte-wise operations. Note that this is defined as using the
-     * "normal", not "extended" addressing.
-     *
-     * @deprecated since 4.9.5; use {@link ProgrammingMode#OPSACCBYTEMODE}
-     * instead
-     */
-    @Deprecated
-    public static final ProgrammingMode OPSACCBYTEMODE = ProgrammingMode.OPSACCBYTEMODE;
-
-    /**
-     * NMRA "Address-only" mode. Often implemented as a proper subset of
-     * "Register" mode, as the underlying operation is the same.
-     *
-     * @deprecated since 4.9.5; use {@link ProgrammingMode#ADDRESSMODE} instead
-     */
-    @Deprecated
-    public static final ProgrammingMode ADDRESSMODE = ProgrammingMode.ADDRESSMODE;
-
-    /**
-     * NMRA "Operations" or "Programming on the main" mode, using only the
-     * byte-wise operations.
-     *
-     * @deprecated since 4.9.5; use {@link ProgrammingMode#OPSBYTEMODE} instead
-     */
-    @Deprecated
-    public static final ProgrammingMode OPSBYTEMODE = ProgrammingMode.OPSBYTEMODE;
-
-    /**
-     * NMRA "Direct" mode, using only the byte-wise operations.
-     *
-     * @deprecated since 4.9.5; use {@link ProgrammingMode#DIRECTBYTEMODE}
-     * instead
-     */
-    @Deprecated
-    public static final ProgrammingMode DIRECTBYTEMODE = ProgrammingMode.DIRECTBYTEMODE;
-
-    /**
-     * NMRA "Register" mode.
-     *
-     * @deprecated since 4.9.5; use {@link ProgrammingMode#REGISTERMODE} instead
-     */
-    @Deprecated
-    public static final ProgrammingMode REGISTERMODE = ProgrammingMode.REGISTERMODE;
-
-    /**
-     * NMRA "Direct" mode, using only the bit-wise operations.
-     *
-     * @deprecated since 4.9.5; use {@link ProgrammingMode#DIRECTBITMODE}
-     * instead
-     */
-    @Deprecated
-    public static final ProgrammingMode DIRECTBITMODE = ProgrammingMode.DIRECTBITMODE;
-
-    /**
-     * NMRA "Direct" mode, using both the bit-wise and byte-wise operations.
-     *
-     * @deprecated since 4.9.5; use {@link ProgrammingMode#DIRECTMODE} instead
-     */
-    @Deprecated
-    public static final ProgrammingMode DIRECTMODE = ProgrammingMode.DIRECTMODE;
 
     // For the record, these were the original numerical definitions:
     //     public static final ProgrammingMode NONE	    =  new ProgrammingMode("NONE", 0);
@@ -167,7 +56,7 @@ public class DefaultProgrammerManager implements AddressedProgrammerManager, Glo
      * @param programmer the programmer to use; if null, acts as if no
      *                   programmer is available
      */
-    public DefaultProgrammerManager(@Nullable Programmer programmer) {
+    public DefaultProgrammerManager(@CheckForNull Programmer programmer) {
         this.programmer = programmer;
     }
 
@@ -178,7 +67,7 @@ public class DefaultProgrammerManager implements AddressedProgrammerManager, Glo
      *                   programmer is available
      * @param memo       the associated connection
      */
-    public DefaultProgrammerManager(@Nullable Programmer programmer, @Nonnull jmri.jmrix.SystemConnectionMemo memo) {
+    public DefaultProgrammerManager(@CheckForNull Programmer programmer, @Nonnull jmri.jmrix.SystemConnectionMemo memo) {
         this(programmer);
         this.userName = memo.getUserName();
     }

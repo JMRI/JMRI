@@ -1,5 +1,6 @@
 package jmri.jmrix.internal;
 
+import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Before;
@@ -23,8 +24,9 @@ public class InternalReporterManagerTest extends jmri.managers.AbstractReporterM
     @Override
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
         // create and register the manager object
-        l = new InternalReporterManager();
+        l = new InternalReporterManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
     }
 
     @After

@@ -6,7 +6,7 @@ package jmri.jmrix.ecos.utilities;
  * two given character positions.
  *
  * @author Kevin Dickerson Copyright (C) 2009
-  */
+ */
 public class GetEcosObjectNumber {
 
     /**

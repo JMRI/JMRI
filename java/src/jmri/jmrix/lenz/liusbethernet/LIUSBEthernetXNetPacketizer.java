@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 /**
  * This is an extension of the XNetPacketizer to handle the device specific
  * requirements of the LIUSBEthernet.
- * <P>
+ * <p>
  * In particular, LIUSBEthernetXNetPacketizer counts the number of commands
  * received.
  *
@@ -55,9 +55,9 @@ public class LIUSBEthernetXNetPacketizer extends jmri.jmrix.lenz.liusb.LIUSBXNet
 
     /**
      * Get characters from the input source, and file a message.
-     * <P>
+     * <p>
      * Returns only when the message is complete.
-     * <P>
+     * <p>
      * Only used in the Receive thread.
      *
      * @param msg     message to fill

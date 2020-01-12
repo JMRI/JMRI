@@ -1,7 +1,5 @@
 package jmri.jmrix.loconet.streamport;
 
-import java.io.DataInputStream;
-import java.io.OutputStream;
 import java.util.NoSuchElementException;
 import jmri.jmrix.loconet.LnPacketizer;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
@@ -90,7 +88,7 @@ public class LnStreamPortPacketizer extends LnPacketizer {
         @Override
         public void run() {
 
-            while (true) {   // loop permanently
+            while (!threadStopRequest) {   // loop until asked to stop
                 // any input?
                 try {
                     // get content; failure is a NoSuchElementException

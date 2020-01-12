@@ -9,17 +9,7 @@ import org.junit.runners.Suite;
         jmri.jmrit.operations.rollingstock.cars.PackageTest.class,
         jmri.jmrit.operations.rollingstock.engines.PackageTest.class,
         BundleTest.class,
-        ImportRollingStockTest.class,
-        RollingStockAttributeTest.class,
         RollingStockLoggerTest.class,
-        RollingStockManagerTest.class,
-        RollingStockSetFrameTest.class,
-        RollingStockTest.class,
-        XmlTest.class,
-        RollingStockGroupTest.class,
-
-        // Last test, deletes log file if one exists
-        OperationsLoggerTest.class,
 })
 
 /**

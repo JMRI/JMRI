@@ -1,232 +1,71 @@
 package apps.SoundPro;
 
-import java.awt.GraphicsEnvironment;
-import java.io.*;
+import java.io.IOException;
 
-import org.apache.commons.io.*;
-import org.junit.After;
-import org.junit.Assume;
-import org.junit.Before;
+import jmri.util.JUnitAppender;
+
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.Rule;
-import org.junit.rules.TemporaryFolder;
-import org.junit.rules.Timeout;
-import jmri.InstanceManager;
-import jmri.managers.DefaultShutDownManager;
-import jmri.util.JUnitUtil;
-import jmri.util.JmriJFrame;
-import jmri.util.JUnitAppender;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
- * This is more of an acceptance test than a unit test. It confirms that the entire
- * application can start up and configure itself.
+ * This is more of an acceptance test than a unit test, loading a series
+ * of connection user profiles in SoundPro.
+ * <p>
+ * It confirms that the entire application can start up and configure itself.
+ * <p>
+ * When format of user configuration (profile) files is changed, check the
+ * sets in java/test/apps/PanelPro/profiles/ to match or allow for conversion
+ * dialogs.
+ * Also check the required TESTMAXTIME in {@link apps.LaunchJmriAppBase} to
+ * prevent timeouts on app startup tests if structure of data develops.
  * 
  * @author Paul Bender Copyright (C) 2017
  * @author Bob Jacobsen Copyright (C) 2017
  */
-public class SoundProTest {
+@Ignore("Replaced with a Cucumber test")
+public class SoundProTest extends apps.LaunchJmriAppBase {
 
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
-
-    @Rule
-    public Timeout globalTimeout = Timeout.seconds(90); // 90 second timeout for methods in this test class.
-
-
-    @Test
-    public void testLaunchLocoNet() throws IOException {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-                
-        try {
-            // create a custom profile
-            File tempFolder = folder.newFolder();
-            FileUtils.copyDirectory(new File("java/test/apps/PanelPro/profiles/LocoNet_Simulator"), tempFolder);
-            System.setProperty("org.jmri.profile", tempFolder.getAbsolutePath() );
-
-            // launch!
-            SoundPro.main(new String[]{"SoundPro"});
-            log.debug("started LocoNetSim");
-
-            JUnitUtil.waitFor(()->{return JmriJFrame.getFrame("SoundPro") != null;}, "window up");
-        
-            JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("SoundPro version") != null;}, "first Info line seen");
-
-            // maybe have it run a script to indicate that it's really up?
-            
-            // now clean up frames, depending on what's actually left
-            // SoundPro
-
-            // gracefully shutdown, but don't exit
-            ((DefaultShutDownManager)InstanceManager.getDefault(jmri.ShutDownManager.class)).shutdown(0, false);
-            
-        } finally {
-            // wait for threads, etc
-            jmri.util.JUnitUtil.releaseThread(this, 5000);
-        }
+    @Override
+    protected void launch(String[] args) {
+        SoundPro.main(args);
     }
 
     @Test
     public void testLaunchEasyDcc() throws IOException {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-
-        try {
-            // create a custom profile
-            File tempFolder = folder.newFolder();
-            FileUtils.copyDirectory(new File("java/test/apps/PanelPro/profiles/EasyDcc_Simulator"), tempFolder);
-            System.setProperty("org.jmri.profile", tempFolder.getAbsolutePath() );
-
-            // launch!
-            SoundPro.main(new String[]{"SoundPro"});
-            log.debug("started EasyDccSim");
-
-            JUnitUtil.waitFor(()->{return JmriJFrame.getFrame("SoundPro") != null;}, "window up");
-
-            JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("SoundPro version") != null;}, "first Info line seen");
-
-            // gracefully shutdown, but don't exit
-            ((DefaultShutDownManager)InstanceManager.getDefault(jmri.ShutDownManager.class)).shutdown(0, false);
-            
-            // now clean up frames, depending on what's actually left
-            // SoundPro
-        } finally {
-            // wait for threads, etc
-            jmri.util.JUnitUtil.releaseThread(this, 5000);
-        }
+        runOne("EasyDcc_Simulator", "SoundPro", "SoundPro version");
+        // param 1 is profile folder name, param 2 and 3 must match Console output
     }
 
     @Test
     public void testLaunchGrapevine() throws IOException {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        runOne("Grapevine_Simulator", "SoundPro", "SoundPro version");
+        JUnitAppender.suppressWarnMessage("Timeout can't be handled due to missing node (index 1)");
+        JUnitAppender.suppressWarnMessage("Timeout can't be handled due to missing node (index 0)");
+    }
 
-        try {
-            // create a custom profile
-            File tempFolder = folder.newFolder();
-            FileUtils.copyDirectory(new File("java/test/apps/PanelPro/profiles/Grapevine_Simulator"), tempFolder);
-            System.setProperty("org.jmri.profile", tempFolder.getAbsolutePath() );
+    @Test
+    public void testLaunchLocoNet() throws IOException {
+        runOne("LocoNet_Simulator", "SoundPro", "SoundPro version");
+        JUnitAppender.suppressWarnMessage("passing to xmit: unexpected exception:  [LnPowerManager LnTrackStatusUpdateThread] jmri.jmrix.loconet.LnPacketizer.sendLocoNetMessage()");
+        JUnitAppender.suppressWarnMessage("passing to xmit: unexpected exception:  [LnSensorUpdateThread] jmri.jmrix.loconet.LnPacketizer.sendLocoNetMessage()");
+        JUnitAppender.suppressWarnMessage("passing to xmit: unexpected exception:  [LnSensorUpdateThread] jmri.jmrix.loconet.LnPacketizer.sendLocoNetMessage()");
+    }
 
-            // launch!
-            SoundPro.main(new String[]{"SoundPro"});
-            log.debug("started GrapevineSim");
-
-            JUnitUtil.waitFor(()->{return JmriJFrame.getFrame("SoundPro") != null;}, "window up");
-
-            JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("SoundPro version") != null;}, "first Info line seen");
-
-            // gracefully shutdown, but don't exit
-            ((DefaultShutDownManager)InstanceManager.getDefault(jmri.ShutDownManager.class)).shutdown(0, false);
-
-            // now clean up frames, depending on what's actually left
-            // SoundPro
-        } finally {
-            // wait for threads, etc
-            jmri.util.JUnitUtil.releaseThread(this, 5000);
-        }
+    @Test
+    public void testLaunchSprog() throws IOException {
+        runOne("Sprog_Simulator", "SoundPro", "SoundPro version");
     }
 
     @Test
     public void testLaunchTmcc() throws IOException {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-
-        try {
-            // create a custom profile
-            File tempFolder = folder.newFolder();
-            FileUtils.copyDirectory(new File("java/test/apps/PanelPro/profiles/TMCC_Simulator"), tempFolder);
-            System.setProperty("org.jmri.profile", tempFolder.getAbsolutePath() );
-
-            // launch!
-            SoundPro.main(new String[]{"SoundPro"});
-            log.debug("started TmccSim");
-
-            JUnitUtil.waitFor(()->{return JmriJFrame.getFrame("SoundPro") != null;}, "window up");
-
-            JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("SoundPro version") != null;}, "first Info line seen");
-
-            // gracefully shutdown, but don't exit
-            ((DefaultShutDownManager)InstanceManager.getDefault(jmri.ShutDownManager.class)).shutdown(0, false);
-            
-            // now clean up frames, depending on what's actually left
-            // SoundPro
-        } finally {
-            // wait for threads, etc
-            jmri.util.JUnitUtil.releaseThread(this, 5000);
-        }
-    }
-
-    @Test
-    @Ignore
-    public void testLaunchSprog() throws IOException {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-
-        try {
-            // create a custom profile
-            File tempFolder = folder.newFolder();
-            FileUtils.copyDirectory(new File("java/test/apps/PanelPro/profiles/Sprog_Simulator"), tempFolder);
-            System.setProperty("org.jmri.profile", tempFolder.getAbsolutePath() );
-
-            // launch!
-            SoundPro.main(new String[]{"SoundPro"});
-            log.debug("started SprogSim");
-
-            JUnitUtil.waitFor(()->{return JmriJFrame.getFrame("SoundPro") != null;}, "window up");
-
-            JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("SoundPro version") != null;}, "first Info line seen");
-
-            // gracefully shutdown, but don't exit
-            ((DefaultShutDownManager)InstanceManager.getDefault(jmri.ShutDownManager.class)).shutdown(0, false);
-            
-            // now clean up frames, depending on what's actually left
-            // SoundPro
-        } finally {
-            // wait for threads, etc
-            jmri.util.JUnitUtil.releaseThread(this, 5000);
-        }
+        runOne("TMCC_Simulator", "SoundPro", "SoundPro version");
     }
 
     @Test
     public void testLaunchInitLoop() throws IOException {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-                
-        try {
-            // create a custom profile
-            File tempFolder = folder.newFolder();
-            FileUtils.copyDirectory(new File("java/test/apps/PanelPro/profiles/Prevent_Init_Loop"), tempFolder);
-            System.setProperty("org.jmri.profile", tempFolder.getAbsolutePath() );
-
-            // launch!
-            SoundPro.main(new String[]{"SoundPro"});
-
-            JUnitUtil.waitFor(()->{return JmriJFrame.getFrame("SoundPro") != null;}, "window up");
-        
-            JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("SoundPro version") != null;}, "first Info line seen");
-
-            // maybe have it run a script to indicate that it's really up?
-            
-            // gracefully shutdown, but don't exit
-            ((DefaultShutDownManager)InstanceManager.getDefault(jmri.ShutDownManager.class)).shutdown(0, false);
-            
-            // now clean up frames, depending on what's actually left
-            // SoundPro
-        } finally {
-            // wait for threads, etc
-            jmri.util.JUnitUtil.releaseThread(this, 5000);
-        }
+        runOne("Prevent_Init_Loop", "SoundPro", "SoundPro version");
+        JUnitAppender.suppressWarnMessage("passing to xmit: unexpected exception:  [LnPowerManager LnTrackStatusUpdateThread] jmri.jmrix.loconet.LnPacketizer.sendLocoNetMessage()");
+        JUnitAppender.suppressWarnMessage("passing to xmit: unexpected exception:  [LnSensorUpdateThread] jmri.jmrix.loconet.LnPacketizer.sendLocoNetMessage()");
     }
-     
-    // The minimal setup for log4J
-    @Before
-    public void setUp() {
-        JUnitUtil.setUp();
-        JUnitUtil.resetApplication();
-    }
-
-    @After
-    public void tearDown() {
-        JUnitUtil.tearDown();
-    }
-
-    private final static Logger log = LoggerFactory.getLogger(SoundProTest.class);
 
 }

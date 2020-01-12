@@ -27,7 +27,6 @@ import javax.swing.border.Border;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
 import jmri.InstanceManager;
@@ -220,19 +219,6 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
         }
     }
 
-    /**
-     * Return the column model used by the table wrapped by this class.
-     *
-     * @return the column model used by this table
-     * @deprecated since 4.5.4 without replacement; there is no longer a special
-     * need to provide the specific subclass of
-     * {@link javax.swing.table.TableColumnModel}.
-     */
-    @Deprecated
-    public XTableColumnModel getXTableColumnModel() {
-        return columnModel;
-    }
-
     protected void showTableHeaderPopup(MouseEvent e) {
         JPopupMenu popupMenu = new JPopupMenu();
         for (int i = 0; i < columnModel.getColumnCount(false); i++) {
@@ -365,7 +351,7 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
         }
     }
 
-    public class RosterCellEditor extends DefaultCellEditor implements TableCellEditor {
+    public class RosterCellEditor extends DefaultCellEditor {
 
         public RosterCellEditor() {
             super(new JTextField() {

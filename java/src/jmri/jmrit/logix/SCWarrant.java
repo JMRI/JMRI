@@ -1,9 +1,11 @@
 package jmri.jmrit.logix;
 
 import java.util.List;
+import java.util.concurrent.LinkedBlockingQueue;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.NamedBean;
+import jmri.PowerManager;
 import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.implementation.SignalSpeedMap;
@@ -26,14 +28,14 @@ public class SCWarrant extends Warrant {
     private long timeToPlatform = 500;
     private float speedFactor = 0.8f;
     private boolean forward = true;
-    private boolean _allowShallowAllocation = false;
-    
+    private final boolean _allowShallowAllocation = false;
+    private DccThrottle _throttle = null;
     /**
      * Create an object with no route defined. The list of BlockOrders is the
      * route from an Origin to a Destination
      */
     public SCWarrant(String sName, String uName, long TTP) {
-        super(sName.toUpperCase(), uName);
+        super(sName, uName);
         log.debug("new SCWarrant "+uName+" TTP="+TTP);
         timeToPlatform = TTP;
     }
@@ -87,12 +89,12 @@ public class SCWarrant extends Warrant {
         OBlock block = bo.getBlock();
         String message = block.allocate(this);
         if (message != null) {
-           log.info(_trainName+" START-block allocation failed "+ message);
+           log.info("{} START-block allocation failed {} ",_trainName,message);
            return message;
         }
         message = bo.setPath(this);
         if (message != null) {
-           log.info(_trainName+" setting path in START-block failed "+ message);
+           log.info("{} setting path in START-block failed {}",_trainName,message);
            return message;
         }
         return null;
@@ -102,7 +104,7 @@ public class SCWarrant extends Warrant {
      * This method has been overridden in order to avoid allocation of occupied blocks.
      */
     @Override
-     public String setRoute(int delay, List<BlockOrder> orders) {
+     public String setRoute(boolean delay, List<BlockOrder> orders) {
         return allocateStartBlock();
     }
 
@@ -111,22 +113,24 @@ public class SCWarrant extends Warrant {
             OBlock block_i = getBlockOrderAt(i).getBlock();
             OPath  path_i  = getBlockOrderAt(i).getPath();
             if (!path_i.checkPathSet()) {
-                log.debug(_trainName+": turnouts at block "+block_i.getDisplayName()+" are not set yet (in allTurnoutsSet).");
+                log.debug("{}: turnouts at block "+block_i.getDisplayName()+" are not set yet (in allTurnoutsSet).",_trainName);
                 return false;
             }
         }
         return true;
     }
 
-    boolean isRouteFree() {
+    public boolean isRouteFree() {
         for (int i=0; i<getBlockOrders().size(); i++) {
             OBlock block_i = getBlockOrderAt(i).getBlock();
             if ((block_i.getState() & OBlock.ALLOCATED) == OBlock.ALLOCATED) {
-                log.debug(_trainName+": block "+block_i.getDisplayName()+" is allocated to some warrant (in isRouteFree).");
-                return false;
+                log.debug("{}: block "+block_i.getDisplayName()+" is allocated to "+block_i.getAllocatingWarrantName()+" (in isRouteFree).",_trainName);
+                if (!block_i.isAllocatedTo(this)) {
+                    return false;
+                }
             }
             if ( ((block_i.getState() & OBlock.OCCUPIED) == OBlock.OCCUPIED) && (i>0) ) {
-                log.debug(_trainName+": block "+block_i.getDisplayName()+" is not free (in isRouteFree).");
+                log.debug("{}: block "+block_i.getDisplayName()+" is not free (in isRouteFree).",_trainName);
                 return false;
             }
         }
@@ -137,18 +141,19 @@ public class SCWarrant extends Warrant {
         for (int i=0; i<getBlockOrders().size(); i++) {
             OBlock block_i = getBlockOrderAt(i).getBlock();
             if (!block_i.isAllocatedTo(this)) {
-                log.debug(_trainName+": block "+block_i.getDisplayName()+" is not allocated to this warrant (in isRouteAllocated).");
+                log.debug("{}: block {} is not allocated to this warrant (in isRouteAllocated).",_trainName,block_i.getDisplayName());
                 return false;
             }
         }
         return true;
     }
-
+    
     /**
      * Callback from acquireThrottle() when the throttle has become available.sync
      */
     @Override
     public void notifyThrottleFound(DccThrottle throttle) {
+        _throttle = throttle;
         if (throttle == null) {
             abortWarrant("notifyThrottleFound: null throttle(?)!");
             firePropertyChange("throttleFail", null, Bundle.getMessage("noThrottle"));
@@ -160,13 +165,10 @@ public class SCWarrant extends Warrant {
             firePropertyChange("throttleFail", null, Bundle.getMessage("noThrottle"));
             return;
         }
-        log.debug(_trainName+" notifyThrottleFound address= " + throttle.getLocoAddress().toString() + " _runMode= " + _runMode);
+        log.debug("{} notifyThrottleFound address= {} _runMode= {}",_trainName,throttle.getLocoAddress(),_runMode);
         
         startupWarrant();
-        getSpeedUtil().setThrottle(throttle);
-        getSpeedUtil().setOrders(getBlockOrders());
 
-        _engineer = new Engineer(this, throttle);
         firePropertyChange("runMode", Integer.valueOf(MODE_NONE), Integer.valueOf(_runMode));
         runSignalControlledTrain();
     }
@@ -176,9 +178,11 @@ public class SCWarrant extends Warrant {
      **/
     @Override
     synchronized protected String getRunningMessage() {
-        if (_engineer == null) {
+        if (_throttle == null) {
             // The warrant is not active
             return super.getRunningMessage();
+        } else if (_runMode != MODE_RUN) {
+            return ("Idle");
         } else {
             String block = getBlockOrderAt(_idxCurrentOrder).getBlock().getDisplayName();
             String signal = "no signal";
@@ -192,13 +196,12 @@ public class SCWarrant extends Warrant {
                     aspect = ((SignalMast) _nextSignal).getAspect();
                 }
             }
-            return Bundle.getMessage("SCWStatus", block, _idxCurrentOrder, _engineer._throttle.getSpeedSetting(),signal,aspect);
+            return Bundle.getMessage("SCWStatus", block, _idxCurrentOrder, _throttle.getSpeedSetting(),signal,aspect);
         }
     }
 
     /******************************************************************************************************
-     * Use _engineer.setSpeed() to control the train, but do not let the Engineer run its normal set
-     * of commands.
+     * Use _throttle to control the train.
      *
      * Get notified of signals, block occupancy and take care of block allocation status to determine speed.
      *
@@ -232,12 +235,16 @@ public class SCWarrant extends Warrant {
     }
     synchronized protected void waitForStartblockToGetOccupied() {
         while (!isStartBlockOccupied()) {
+            log.debug("{} waiting for start block {} to become occupied",_trainName,getBlockOrderAt(0).getBlock().getDisplayName());
             try {
                 // We will not be woken up by goingActive, since we have not allocated the start block yet.
                 // So do a timed wait.
                 wait(2500);
             } catch (InterruptedException ie) {
-                log.debug(_trainName+" InterruptedException "+ie);
+                log.debug("{} waitForStartblockToGetOccupied InterruptedException {}",_trainName,ie,ie);
+            }
+            catch(Exception e){
+                log.debug("{} waitForStartblockToGetOccupied unexpected exception {}",_trainName,e,e);
             }
         }
     }
@@ -246,7 +253,7 @@ public class SCWarrant extends Warrant {
      * Set this train to run backwards or forwards as specified in the command list.
      */
     public void setTrainDirection () {
-        _engineer._throttle.setIsForward(forward);
+        _throttle.setIsForward(forward);
     }
 
     /**
@@ -269,21 +276,21 @@ public class SCWarrant extends Warrant {
      */
     public void getAndGetNotifiedFromNextSignal() {
         if (_nextSignal != null) {
-            log.debug(_trainName+" getAndGetNotifiedFromNextSignal removing property listener for signal "+_nextSignal.getDisplayName());
+            log.debug("{} getAndGetNotifiedFromNextSignal removing property listener for signal {}",_trainName,_nextSignal.getDisplayName());
             _nextSignal.removePropertyChangeListener(this);
             _nextSignal = null;
         }
         for (int i = _idxCurrentOrder+1; i <= getBlockOrders().size()-1; i++) {
             BlockOrder bo = getBlockOrderAt(i);
             if (bo == null) {
-                log.debug(_trainName+" getAndGetNotifiedFromNextSignal could not find a BlockOrder for index "+i);
+                log.debug("{} getAndGetNotifiedFromNextSignal could not find a BlockOrder for index {}",_trainName,i);
             } else if (bo.getEntryName().equals("")) {
-                log.debug(_trainName+" getAndGetNotifiedFromNextSignal could not find an entry to Block for index "+i);
+                log.debug("{} getAndGetNotifiedFromNextSignal could not find an entry to Block for index {}",_trainName,i);
             } else {
-                log.debug(_trainName+" getAndGetNotifiedFromNextSignal examines block "+bo.getBlock().getDisplayName()+" with entryname = "+bo.getEntryName());
+                log.debug("{} getAndGetNotifiedFromNextSignal examines block {} with entryname = {}",_trainName,bo.getBlock().getDisplayName(),bo.getEntryName());
                 _nextSignal = bo.getSignal();
                 if (_nextSignal != null) {
-                    log.debug(_trainName+" getAndGetNotifiedFromNextSignal found a new signal to listen to: "+_nextSignal.getDisplayName());
+                    log.debug("{} getAndGetNotifiedFromNextSignal found a new signal to listen to: {}",_trainName,_nextSignal.getDisplayName());
                     break;
                 }
             }
@@ -337,23 +344,23 @@ public class SCWarrant extends Warrant {
     public void setSpeedFromNextSignal () {
         String speed = null;
         if (_nextSignal == null) {
-            _engineer.setSpeed(speedFactor*SPEED_UNSIGNALLED);
+            _throttle.setSpeedSetting(speedFactor*SPEED_UNSIGNALLED);
         } else {
             if (_nextSignal instanceof SignalHead) {
                 int appearance = ((SignalHead) _nextSignal).getAppearance();
                 speed = _speedMap.getAppearanceSpeed(((SignalHead) _nextSignal).getAppearanceName(appearance));
-                log.debug(_trainName+" SignalHead "+((SignalHead) _nextSignal).getDisplayName()+" shows appearance "+appearance+" which maps to speed "+speed);
+                log.debug("{} SignalHead {} shows appearance {} which maps to speed {}",_trainName,((SignalHead) _nextSignal).getDisplayName(),appearance,speed);
             } else {
                 String aspect = ((SignalMast) _nextSignal).getAspect();
                 speed = _speedMap.getAspectSpeed(aspect, ((SignalMast) _nextSignal).getSignalSystem());
-                log.debug(_trainName+" SignalMast "+((SignalMast) _nextSignal).getDisplayName()+" shows aspect "+aspect+" which maps to speed "+speed);
+                log.debug(" SignalMast {} shows aspect {} which maps to speed ",_trainName,((SignalMast) _nextSignal).getDisplayName(),aspect,speed);
             }
             float speed_f = (float) (_speedMap.getSpeed(speed) / 125.);
             // Ease the speed, if we are approaching the destination block
             if ((approchingDestination() || inStartBlock()) && (speed_f > SPEED_UNSIGNALLED)) {
                 speed_f = SPEED_UNSIGNALLED;
             }
-            _engineer.setSpeed(speedFactor*speed_f);
+            _throttle.setSpeedSetting(speedFactor*speed_f);
         }
     }
     
@@ -362,29 +369,29 @@ public class SCWarrant extends Warrant {
      * would just cause all signals to go to Stop aspects and thus cause a jerky train movement.
      */
     protected void allocateBlocksAndSetTurnouts(int startIndex) {
-        log.debug(_trainName+" allocateBlocksAndSetTurnouts startIndex="+startIndex+" _orders.size()="+getBlockOrders().size());
+        log.debug("{} allocateBlocksAndSetTurnouts startIndex={} _orders.size()={}",_trainName,startIndex,getBlockOrders().size());
         for (int i = startIndex; i < getBlockOrders().size(); i++) {
-            log.debug(_trainName+" allocateBlocksAndSetTurnouts for loop #"+i);
+            log.debug("{} allocateBlocksAndSetTurnouts for loop #{}",_trainName,i);
             BlockOrder bo = getBlockOrderAt(i);
             OBlock block = bo.getBlock();
             String pathAlreadySet = block.isPathSet(bo.getPathName());
             if (pathAlreadySet == null) {
                 String message = null;
                 if ((block.getState() & OBlock.OCCUPIED) != 0) {
-                    log.info(_trainName+" block allocation failed "+block.getDisplayName() + " not allocated, but Occupied.");
+                    log.info("{} block allocation failed {} not allocated, but Occupied.",_trainName,block.getDisplayName());
                     message = " block allocation failed ";
                 }
                 if (message == null) {
                     message = block.allocate(this);
                     if (message != null) {
-                        log.info(_trainName+" block allocation failed "+ message);
+                        log.info("{} block allocation failed {}",_trainName,message);
                     }
                 }
                 if (message == null) {
                     message = bo.setPath(this);
                 }
                 if (message != null) {
-                    log.debug(_trainName+" path setting failed for "+this.getDisplayName()+" at block "+block.getDisplayName()+"  "+message);
+                    log.debug("{} path setting failed for {} at block {} {}",_trainName,getDisplayName(),block.getDisplayName(),message);
                     if (_stoppingBlock != null) {
                         _stoppingBlock.removePropertyChangeListener(this);
                     }
@@ -396,9 +403,9 @@ public class SCWarrant extends Warrant {
                     return;
                 }
             } else if (pathAlreadySet.equals(this.getDisplayName())) {
-                log.debug(_trainName+" Path "+bo.getPathName()+" already set (and thereby block allocated) for "+pathAlreadySet);
+                log.debug("{} Path {} already set (and thereby block allocated) for {}",_trainName,bo.getPathName(),pathAlreadySet);
             } else {
-                log.info(_trainName+" Block allocation failed: Path "+bo.getPathName()+" already set (and thereby block allocated) for "+pathAlreadySet);
+                log.info("{} Block allocation failed: Path {} already set (and thereby block allocated) for {}",_trainName,bo.getPathName(),pathAlreadySet);
                 return;
             }
         }
@@ -410,25 +417,26 @@ public class SCWarrant extends Warrant {
      * the main loop to find a new throttle setting.
      */
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NN_NAKED_NOTIFY", justification="NotifyAll call triggers recomputation")
     protected void goingActive(OBlock block) {
+        int activeIdx = getIndexOfBlock(block, _idxCurrentOrder);
+        log.debug("{} **Block \"{}\" goingActive. activeIdx= {}"
+                    + ", _idxCurrentOrder= {}" 
+                    + " - warrant= {} _runMode = {} _throttle==null: {}",_trainName,block.getDisplayName(),activeIdx,_idxCurrentOrder,getDisplayName(),_runMode,(_throttle==null));
         if (_runMode != MODE_RUN) {
             // if we are not running, we must not think that we are going to the next block - it must be another train
             return;
         }
-        if (_engineer == null || _engineer._throttle.getSpeedSetting() == SPEED_STOP) {
+        if (_throttle == null || _throttle.getSpeedSetting() == SPEED_STOP) {
             // if we are not running, we must not think that we are going to the next block - it must be another train
             return;
         }
-        int activeIdx = getIndexOfBlock(block, _idxCurrentOrder);
-        log.debug(_trainName+" **Block \"" + block.getDisplayName() + "\" goingActive. activeIdx= "
-                    + activeIdx + ", _idxCurrentOrder= " + _idxCurrentOrder
-                    + " - warrant= " + getDisplayName());
         if (activeIdx <= 0) {
             // The block going active is not part of our route ahead
-            log.debug(_trainName+" Block going active is not part of this trains route forward");
+            log.debug("{} Block going active is not part of this trains route forward",_trainName);
         } else if (activeIdx == _idxCurrentOrder) {
             // Unusual case of current block losing detection, then regaining it.  i.e. dirty track, derail etc.
-            log.debug(_trainName+" Current block becoming active - ignored");
+            log.debug("{} Current block becoming active - ignored",_trainName);
         } else if (activeIdx == _idxCurrentOrder+1) {
             // not necessary: It is done in the main loop in SCTrainRunner.run:  allocateBlocksAndSetTurnouts(_idxCurrentOrder+1);
             // update our present location
@@ -440,7 +448,7 @@ public class SCWarrant extends Warrant {
                 notify();
             }
         } else {
-            log.debug(_trainName+" Rogue occupation of block.");
+            log.debug("{} Rogue occupation of block.",_trainName);
             // now let the main loop stop for a train that is coming in our immediate way.
             synchronized(this) {
                 notify();
@@ -454,27 +462,25 @@ public class SCWarrant extends Warrant {
      * Check if current block has been left (i.e. we have left our route) and stop the train in that case.
      */
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NN_NAKED_NOTIFY", justification="See comment above notify call")
     protected void goingInactive(OBlock block) {
+        int idx = getIndexOfBlock(block, 0);  // if idx >= 0, it is in this warrant
+        log.debug("{} Block \"{}\" goingInactive. idx= {}"
+                    + ", _idxCurrentOrder= {}"
+                    + " - warrant= {}",_trainName,block.getDisplayName(),idx,_idxCurrentOrder,getDisplayName());
         if (_runMode != MODE_RUN) {
             return;
         }
-
-        int idx = getIndexOfBlock(block, 0);  // if idx >= 0, it is in this warrant
-        log.debug(_trainName+" Block \"" + block.getDisplayName() + "\" goingInactive. idx= "
-                    + idx + ", _idxCurrentOrder= " + _idxCurrentOrder
-                    + " - warrant= " + getDisplayName());
         if (idx < _idxCurrentOrder) {
             if (_allowShallowAllocation) {
                 deallocateUpToBlock(idx);
             }
         } else if (idx == _idxCurrentOrder) {
             // train is lost
-            log.debug(_trainName+" LOST TRAIN firePropertyChange(\"blockChange\", " + block.getDisplayName()
-                                + ", null) - warrant= " + getDisplayName());
+            log.debug("{} LOST TRAIN firePropertyChange(\"blockChange\", {}"
+                                + ", null) - warrant= {}",_trainName,block.getDisplayName(),getDisplayName());
 //            firePropertyChange("blockChange", block, null);
-            if (_engineer != null) {
-                _engineer.setSpeed(SPEED_STOP);
-            } 
+//            emergencyStop();
 //            controlRunTrain(ABORT);
         }
         // now let the main loop stop our train if this means that the train is now entirely within the last block.
@@ -483,7 +489,7 @@ public class SCWarrant extends Warrant {
             notify();
         }
     }
-    
+
     /**
      * Deallocate all blocks up to and including idx, but only on these conditions in order to ensure that only a consecutive list of blocks are allocated at any time:
      *     1. Only if our train has left not only this block, but also all previous blocks.
@@ -495,7 +501,7 @@ public class SCWarrant extends Warrant {
             if (block_i.isAllocatedTo(this)) {
                 if ((block_i.getState() & OBlock.UNOCCUPIED) != OBlock.UNOCCUPIED) {
                     //Do not deallocate further blocks, since this one is still allocated to us and not free.
-                    log.debug(_trainName+" Block \"" + block_i.getDisplayName() + " occupied. Not de-allocating any further");
+                    log.debug("{} Block {} occupied. Not de-allocating any further",_trainName,block_i.getDisplayName());
                     return;
                 }
                 boolean deAllocate = true;
@@ -514,7 +520,7 @@ public class SCWarrant extends Warrant {
                     }
                 }
                 if (deAllocate) {
-                    log.debug(_trainName+" De-allocating block \"" + block_i.getDisplayName());
+                    log.debug("{} De-allocating block {}",_trainName,block_i.getDisplayName());
                     block_i.deAllocate(this);
                 }
             }
@@ -529,18 +535,16 @@ public class SCWarrant extends Warrant {
      *     - it is _nextSignal
      * Do not worry about sensors and blocks. They are handled by goingActive and goingInactive.
      */
- @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UW_UNCOND_WAIT", justification = "Unconditional wait is give the warrant that now has _stoppingBlock allocated a little time to deallocate it.  This occurs after this method sets _stoppingBlock to null.")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"UW_UNCOND_WAIT", "NN_NAKED_NOTIFY"}, 
+            justification = "Unconditional wait is give the warrant that now has _stoppingBlock allocated a little time to deallocate it.  This occurs after this method sets _stoppingBlock to null. NotifyAll passing event, not state.")
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
         if (!(evt.getSource() instanceof NamedBean)) {
-            log.debug(_trainName+" propertyChange \""+evt.getPropertyName()+
-                                                "\" old= "+evt.getOldValue()+" new= "+evt.getNewValue());
+            log.debug("{} propertyChange \"{}\" old= {} new= {}",_trainName,evt.getPropertyName(),evt.getOldValue(),evt.getNewValue());
             return;
         }
         String property = evt.getPropertyName();
-        log.debug(_trainName+" propertyChange \"" + property + "\" new= " + evt.getNewValue()
-              + " source= " + ((NamedBean) evt.getSource()).getDisplayName()
-                    + " - warrant= " + getDisplayName());
+        log.debug("{} propertyChange \"{}\" new= {} source= {} - warrant= {}",_trainName,property,evt.getNewValue(),((NamedBean) evt.getSource()).getDisplayName(),getDisplayName());
         if (_nextSignal != null && _nextSignal == evt.getSource()) {
             if (property.equals("Aspect") || property.equals("Appearance")) {
                 // The signal controlling this warrant has changed. Adjust the speed (in runSignalControlledTrain)
@@ -552,11 +556,11 @@ public class SCWarrant extends Warrant {
         }
         synchronized(this) {
             if (_stoppingBlock != null) {
-                log.debug(_trainName+" CHECKING STOPPINGBLOCKEVENT ((NamedBean) evt.getSource()).getDisplayName() = '"+((NamedBean) evt.getSource()).getDisplayName()+"'");
+                log.debug("{} CHECKING STOPPINGBLOCKEVENT ((NamedBean) evt.getSource()).getDisplayName() = '{}' evt.getPropertyName() = '{}' evt.getNewValue() = {} _throttle==null: {}",_trainName,((NamedBean) evt.getSource()).getDisplayName(),evt.getPropertyName(),evt.getNewValue(),(_throttle==null));
                 if (((NamedBean) evt.getSource()).getDisplayName().equals(_stoppingBlock.getDisplayName()) &&
                         evt.getPropertyName().equals("state") &&
                         (((Number) evt.getNewValue()).intValue() & OBlock.UNOCCUPIED) == OBlock.UNOCCUPIED) {
-                    log.debug(_trainName+" being aware that Block "+((NamedBean) evt.getSource()).getDisplayName()+" has become free");
+                    log.debug("{} being aware that Block {} has become free",_trainName,((NamedBean) evt.getSource()).getDisplayName());
                     _stoppingBlock.removePropertyChangeListener(this);
                     _stoppingBlock = null;
                     // we might be waiting for this block to become free
@@ -564,10 +568,27 @@ public class SCWarrant extends Warrant {
                     try {
                         wait(100);
                     } catch (InterruptedException e) {
+                    } catch(Exception e){
+                        log.debug("{} wait unexpected exception {}",_trainName,e,e);
                     }
                     // And then let our main loop continue
                     notify();
                     return;
+                }
+                if (((NamedBean) evt.getSource()).getDisplayName().equals(getBlockOrderAt(0).getBlock().getDisplayName()) &&
+                        evt.getPropertyName().equals("state") &&
+                        (((Number) evt.getOldValue()).intValue() & OBlock.UNOCCUPIED) == OBlock.UNOCCUPIED &&
+                        (((Number) evt.getNewValue()).intValue() & OBlock.UNOCCUPIED) != OBlock.UNOCCUPIED &&
+                        _throttle==null && _runMode==MODE_RUN) {
+                    // We are waiting for the train to arrive at the starting block, and that has just happened now.
+                    log.debug("{} has arrived at starting block",_trainName);
+                    String msg = null;
+                    msg = acquireThrottle();
+                    if (msg != null) {
+                        log.warn("propertyChange of \"{}\" has message: {}", property, msg);
+                        _message = msg;
+                        abortWarrant(msg);
+                    }
                 }
             }
         }
@@ -583,68 +604,147 @@ public class SCWarrant extends Warrant {
             _nextSignal.removePropertyChangeListener(this);
             _nextSignal = null;
         }
-        super.stopWarrant(abort);
+        super.stopWarrant(abort, false);
+        _message = null;
     }
-
+    
+    /**
+     * If we think we might have a runaway train - take the power of the entire layout.
+     */
+    private void emergencyStop() {
+        PowerManager manager = InstanceManager.getNullableDefault(jmri.PowerManager.class);
+        if (manager == null) {
+            log.debug("{} EMERGENCY STOP IMPOSSIBLE: NO POWER MANAGER",_trainName);
+            return;
+        }
+        try {
+            manager.setPower(PowerManager.OFF);
+        } catch (Exception e) {
+            log.debug("{} EMERGENCY STOP FAILED WITH EXCEPTION: {}",_trainName,e,e);
+        }
+        log.debug("{} EMERGENCY STOP",_trainName);
+    }
     
     /*******************************************************************************************************************************
      * The waiting for event must happen in a separate thread.
      * Therefore the main code of runSignalControlledTrain is put in this class.
      *******************************************************************************************************************************/
+    static LinkedBlockingQueue<SCWarrant> waitToRunQ = new LinkedBlockingQueue<>();
     private class SCTrainRunner implements Runnable {
-        Warrant _warrant = null;
-        SCTrainRunner(Warrant warrant) {
+        SCWarrant _warrant = null;
+        SCTrainRunner(SCWarrant warrant) {
             _warrant = warrant;
         }
         
+        /**
+         * When not using shallow allocation, warrants will have to wait until the entire route
+         * is free and allocated to that particular warrant, before strting to run the train.
+         * This method uses the waitToRunQ to ensure that warrants do not just compete about
+         * resources, but waits in line until their route is free and unallocated.
+         */
+        boolean isItOurTurn() {
+            for (SCWarrant e : waitToRunQ) {
+                try { // using another SCWarrant might be dangerous - it might no longer exist
+                    log.debug("{} isItOurTurn is checking {}",_trainName,e.getDisplayName());
+                    if (e.isRouteFree()) {
+                        if (e == _warrant) {
+                            log.debug("{} isItOurTurn: We are first in line",_trainName);
+                            return true;
+                        } else {
+                            log.debug("{} isItOurTurn: An other warrant is before us",_trainName);
+                            return false;
+                        }
+                    } else {
+                        if (e == _warrant) {
+                            log.debug("{} isItOurTurn: our route is not free - keep waiting",_trainName);
+                            return false;
+                        }
+                    }
+                } catch (Exception ex) {
+                    log.debug("{} isItOurTurn exception ignored: {}",_trainName,ex,ex);
+                }
+            }
+            // we should not reach this point, but if we do, we should try to run
+            log.debug("{} isItOurTurn: No warrant with a free route is waiting. Let us try our luck, so that we are not all waiting for each other.",_trainName);
+            return true;
+        }
+
         @Override
         public void run() {
             synchronized(_warrant) {
-                
+
                 // Make sure the entire route is allocated before attemting to start the train
                 if (!_allowShallowAllocation) {
-                    deAllocate();
                     boolean AllocationDone = false;
+                    log.debug("{} ENTERING QUEUE ",_trainName);
+                    try {
+                        waitToRunQ.put(_warrant);
+                    } catch (InterruptedException ie) {
+                        log.debug("{} waitToRunQ.put InterruptedException {}",_trainName,ie,ie);
+                    }
+
                     while (!AllocationDone) {
-                        while (!isRouteFree()) {
-                            log.debug(_trainName+" Waiting for route to become free ....");
+                        log.debug("{} Route is not allocated yet..... ",_trainName);
+                        while (!isItOurTurn()) {
+                            deAllocate();
+                            log.debug("{} Waiting for route to become free ....",_trainName);
                             try {
-                                _warrant.wait(2500);
+                                _warrant.wait(2500 + Math.round(1000*Math.random()));
                             } catch (InterruptedException ie) {
-                                log.debug(_trainName+" InterruptedException "+ie);
+                                log.debug("{} _warrant.wait InterruptedException {}",_trainName,ie,ie);
+                            }
+                            catch(Exception e){
+                                log.debug("{} _warrant.wait unexpected exception {}",_trainName,e,e);
                             }
                         }
                         allocateStartBlock();
                         allocateBlocksAndSetTurnouts(1);
                         AllocationDone = isRouteAllocated();
                         if (!AllocationDone) {
-                            log.debug(_trainName+" Route allocation failed - retrying..... ");
                             deAllocate();
+                            try {
+                                _warrant.wait(10000 + Math.round(1000*Math.random()));
+                            } catch (InterruptedException ie) {
+                                log.debug("{} _warrant.wait !AllocationDone InterruptedException {}",_trainName,ie,ie);
+                            }
+                            catch(Exception e){
+                                log.debug("{} _warrant.wait !AllocationDone unexpected exception {}",_trainName,e,e);
+                            }
                         }
                     }
+
+                    log.debug("{} LEAVING QUEUE ",_trainName);
+                    waitToRunQ.remove(_warrant);
+
                     while (!allTurnoutsSet()) {
-                        log.debug(_trainName+" Waiting for turnouts to settle ....");
+                        log.debug("{} Waiting for turnouts to settle ....",_trainName);
                         try {
                             _warrant.wait(2500);
                         } catch (InterruptedException ie) {
-                            log.debug(_trainName+" InterruptedException "+ie);
+                            log.debug("{} _warrant.wait InterruptedException {}",_trainName,ie,ie);
+                        }
+                        catch(Exception e){
+                            log.debug("{} _warrant.wait unexpected exception {}",_trainName,e,e);
                         }
                     }
                     // And then wait another 3 seconds to make the last turnout settle - just in case the command station is not giving correct feedback
                     try {
                         _warrant.wait(3000);
                     } catch (InterruptedException ie) {
-                        log.debug(_trainName+" InterruptedException "+ie);
+                        log.debug("{} InterruptedException {}",_trainName,ie,ie);
+                    }
+                    catch(Exception e){
+                        log.debug("{} wait unexpected exception {}",_trainName,e,e);
                     }
                 }
-                
+
                 // Do not include the stopping block in this while loop. It will be handled after the loop.
                 List<BlockOrder> orders = getBlockOrders();
-                while (_warrant._idxCurrentOrder < orders.size()-1) {
-                    log.debug(_warrant._trainName+" runSignalControlledTrain entering while loop. _idxCurrentOrder="+_idxCurrentOrder+" _orders.size()="+orders.size());
-                    if (_engineer == null) {
-                        // Warrant was stopped
-                        return;
+                while (_warrant._idxCurrentOrder < orders.size()-1 && _runMode == MODE_RUN) {
+                    log.debug("{} runSignalControlledTrain entering while loop. _idxCurrentOrder={} _orders.size()={}",_warrant._trainName,_idxCurrentOrder,orders.size());
+                    if (_throttle == null) {
+                        // We lost our throttle, so we might have a runaway train
+                        emergencyStop();
                     }
                     if (_allowShallowAllocation) {
                         allocateBlocksAndSetTurnouts(_warrant._idxCurrentOrder);
@@ -652,62 +752,94 @@ public class SCWarrant extends Warrant {
                     if (isNextBlockFreeAndAllocated()) {
                         getAndGetNotifiedFromNextSignal();
                         setSpeedFromNextSignal();
-                        log.debug(_warrant._trainName+" "+_warrant.getDisplayName()+" "+_warrant.getRunningMessage());
                     } else {
-                        log.debug(_warrant._trainName+" runSignalControlledTrain stops train due to block not free: "+getBlockOrderAt(_idxCurrentOrder+1).getBlock().getDisplayName());
-                        if (_engineer == null) { // If the warrant is already aborted, _engineer is gone too
-                            return;
-                        } else {
-                            _engineer.setSpeed(SPEED_STOP);
+                        try {
+                            _throttle.setSpeedSetting(SPEED_STOP);
+                            getBlockOrderAt(_idxCurrentOrder+1).getBlock().addPropertyChangeListener(_warrant);
+                            log.debug("{} runSignalControlledTrain stops train due to block not free: {}",_warrant._trainName,getBlockOrderAt(_idxCurrentOrder+1).getBlock().getDisplayName());
+                        } catch (Exception e) {
+                            emergencyStop();
+                            log.debug("{} exception trying to stop train due to block not free: {}",_warrant._trainName,e,e);
                         }
-                        getBlockOrderAt(_idxCurrentOrder+1).getBlock().addPropertyChangeListener(_warrant);
                     }
+                    log.debug("{} {} before wait {} _idxCurrentOrder: {} orders.size(): {}",_warrant._trainName,_warrant.getDisplayName(),_warrant.getRunningMessage(),_warrant._idxCurrentOrder,orders.size());
                     try {
                         // We do a timed wait for the sake of robustness, even though we will be woken up by all relevant events.
                         _warrant.wait(2000);
                     } catch (InterruptedException ie) {
-                        log.debug(_warrant._trainName+" InterruptedException "+ie);
+                        log.debug("{} InterruptedException {}",_warrant._trainName,ie,ie);
                     }
+                    catch(Exception e){
+                        log.debug("{} wait unexpected exception {}",_trainName,e,e);
+                    }
+                    log.debug("{} {} after wait {} _idxCurrentOrder: {} orders.size(): {}",_warrant._trainName,_warrant.getDisplayName(),_warrant.getRunningMessage(),_warrant._idxCurrentOrder,orders.size());
                 }
                 // We are now in the stop block. Move forward for half a second with half speed until the block before the stop block is free.
-                log.debug(_warrant._trainName+" runSignalControlledTrain out of while loop, i.e. train entered stop block _idxCurrentOrder="+
-                                           _idxCurrentOrder+" orders.size()="+orders.size()+
-                                           "  waiting for train to clear block "+getBlockAt(orders.size()-2).getDisplayName());
-                _engineer.setSpeed(speedFactor*SPEED_TO_PLATFORM);
+                log.debug("{} runSignalControlledTrain out of while loop, i.e. train entered stop block _idxCurrentOrder={}"
+                          + " orders.size()={} waiting for train to clear block {}",
+                          _warrant._trainName,_idxCurrentOrder,orders.size(),getBlockAt(orders.size()-2).getDisplayName());
+                if (_throttle==null) {
+                    emergencyStop();
+                    log.debug("Throttle lost at stop block");
+                } else {
+                    _throttle.setSpeedSetting(speedFactor*SPEED_TO_PLATFORM);
+                }
                 while ((getBlockAt(orders.size()-2).getState()&OBlock.OCCUPIED)==OBlock.OCCUPIED && getBlockAt(orders.size()-2).isAllocatedTo(_warrant)) {
-                    log.debug(_warrant._trainName+" runSignalControlledTrain entering wait. Block "+
-                                     getBlockAt(orders.size()-2).getDisplayName()+
-                                     "   free: "+getBlockAt(orders.size()-2).isFree()+
-                                     "   allocated to this warrant: "+getBlockAt(orders.size()-2).isAllocatedTo(_warrant));
+                    log.debug(" runSignalControlledTrain entering wait. Block {}" 
+                              +"   free: {}   allocated to this warrant: {}",
+                              _warrant._trainName,getBlockAt(orders.size()-2).getDisplayName(),getBlockAt(orders.size()-2).isFree(),getBlockAt(orders.size()-2).isAllocatedTo(_warrant));
                     try {
                         // This does not need to be a timed wait, since we will get interrupted once the block is free
                         // However, the functionality is more robust with a timed wait.
                         _warrant.wait(500);
                     } catch (InterruptedException ie) {
-                        log.debug(_warrant._trainName+" InterruptedException "+ie);
+                        log.debug("{} InterruptedException {}",_warrant._trainName,ie,ie);
                     }
-                    log.debug(_warrant._trainName+" runSignalControlledTrain woken after last wait.... _orders.size()="+orders.size());
+                    catch(Exception e){
+                        log.debug("{} wait unexpected exception {}",_trainName,e,e);
+                    }
+                    log.debug("{} runSignalControlledTrain woken after last wait.... _orders.size()={}",_warrant._trainName,orders.size());
                 }
                 if (timeToPlatform > 100) {
-                    log.debug(_warrant._trainName+" runSignalControlledTrain is now fully into the stopping block. Proceeding for "+timeToPlatform+" miliseconds");
+                    log.debug("{} runSignalControlledTrain is now fully into the stopping block. Proceeding for {} miliseconds",_warrant._trainName,timeToPlatform);
                     long timeWhenDone = System.currentTimeMillis() + timeToPlatform;
                     long remaining;
                     while ((remaining = timeWhenDone - System.currentTimeMillis()) > 0) {
                         try {
-                            log.debug(_warrant._trainName+" running slowly to platform for "+remaining+" miliseconds");
+                            log.debug("{} running slowly to platform for {} miliseconds",_warrant._trainName,remaining);
                             _warrant.wait(remaining);
                         } catch (InterruptedException e) {
-                            log.debug(_warrant._trainName+" InterruptedException "+e);
+                            log.debug("{} InterruptedException {}",_warrant._trainName,e,e);
                         }
                     }
                 }
-                log.debug(_warrant._trainName+" runSignalControlledTrain STOPPING TRAIN IN STOP BLOCK");
-                _engineer.setSpeed(SPEED_STOP);
+                log.debug("{} runSignalControlledTrain STOPPING TRAIN IN STOP BLOCK",_warrant._trainName);
+                if (_throttle==null) {
+                    emergencyStop();
+                    log.debug("Throttle lost after stop block");
+                } else {
+                    _throttle.setSpeedSetting(SPEED_STOP);
+                }
                 stopWarrant(false);
             }
         }
     }
     
+    /* What super does currently is fine. But FindBug reports EQ_DOESNT_OVERRIDE_EQUALS
+     * FindBug wants us to duplicate and override anyway
+     */
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+
+    /* What super does currently is fine. But FindBug reports HE_EQUALS_NO_HASHCODE
+     * FindBug wants us to duplicate and override anyway
+     */
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
     
     /**
      * 

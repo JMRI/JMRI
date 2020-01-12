@@ -6,9 +6,8 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright ($Author$) 2009 -->
-  <!-- $Id$ -->
 
-  <title>JMRI: WiFi Throttle Communications Protocol</title>
+  <title>JMRI: WiThrottle Protocol</title>
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -31,15 +30,16 @@
         color: rgb(145, 188, 122);
         font-weight: bold;
     }
-  </style><!-- /Style -->
+  </style>
+    <!-- /Style -->
 </head>
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>JMRI: WiFi Throttle Communications Protocol</h1>
+
+      <h1>JMRI: WiThrottle Protocol</h1>
 
       <p>This page describes the protocol provided by the <a href=
       "http://jmri.org/JavaDoc/doc/jmri/jmrit/withrottle/package-summary.html">
@@ -58,13 +58,19 @@
       <p>When you first open the connection, JMRI responds with a
       number of lines of text that provide information about the
       JMRI instance to which you've connected. Your application
-      then sends comands to JMRI. Each of these commands is plain
-      text, with a newline character at the end (0A hex). Likewise,
-      lines sent back from JMRI are newline terminated.</p>
+      then sends commands to JMRI. Each of these commands is plain
+      text, with a system-specific newline character at the end (typically 0A hex). Similarly,
+      lines sent back from JMRI are terminated by a system-specific newline.
+      A newline can be a linefeed (0A hex), carriage return (0D hex),
+      or a carriage return followed by a newline. (0D 0A hex)
+      Clients and servers should accept any newline sequence as a command termination.</p>
 
-      <p class="note">Because the Java code calls the println
-      method, you will actually get two newline characters at the
-      end of each line returned.</p>
+      <p>You can see these messages by enabling DEBUG
+      for the JMRI package jmri.jmrit.withrottle.
+      Add the line "<b>log4j.category.jmri.jmrit.withrottle=DEBUG</b>"
+      to your default.lcf file and restart JMRI. All messages (both directions)
+      will be added to your JMRI System Console and the session.log file.
+      </p>
 
       <h2>String Parsing</h2>
 
@@ -92,7 +98,7 @@ RL2<span class="delimiter1">]\[</span>RGS 41<span class=
 
       <h2>Initial Connection</h2>
 
-      <p>When you first open a socket to JMRI, you'll get a
+      <p>When you first open a socket to JMRI, you may get a
       response that will look something like the following:</p>
       <pre class="code">
 VN2.0
@@ -105,15 +111,17 @@ PW12080
 *10
 </pre>
 
-      <p class="note">Each line is actually followed by two newline
-      characters. For brevity, the extra blank line is not
-      shown.</p>
+      <p class="note">Some implementations will not send these initial
+      lines until a command has been sent by the client.  The Digitrax LnWI
+      will send <code>VN2.0</code> in response to an <code>N</code>
+      command, while a more complete block is sent in response to
+      the <code>H</code> command.</p>
 
       <p>Each line contains information for part of JMRI, as
       described below, so your application can show things like
       engines, turnouts, etc.</p>
 
-      <h3>WiThrottle Version</h3>
+      <h3>WiThrottle Protocol Version</h3>
 
       <p>The first string, <code>VN2.0</code>, provides the version
       number of the WiThrottle protocol. In this case the version
@@ -324,6 +332,71 @@ PRL]\[IR:AUTO:0001}|{Rico Main}|{
         </tr>
       </table>
 
+      <h3>Consist List</h3>
+
+      <p>The consist list is somewhat similiar in concept to the roster
+      list. However, there is a separate line for each consist entry.
+      Here is an example of a consist list that contains two entries:</p>
+
+      <pre class="code">
+RCC2
+RCD}|{74(S)}|{74(S)]\[3374(L)}|{true]\[346(L)}|{true
+RCD}|{123(S)}|{123(S)]\[3374(L)}|{true
+</pre>
+
+      <p>The first line marks the start of the consist list, with the
+      number of entries after the "RCC". Subsequent lines start with
+      "RCD}|{" and are followed by information about a single consist
+      entry.</p>
+
+      <p>For whatever reason, consist entries don't follow the same
+      pattern as roster entries. Here is a summary of the Format
+      for each consist entry (with spaces added for readability):</p>
+
+      <pre>
+  RCD }|{ consistAddress }|{ consistId
+    Array: ]\[  loco DCC Address }|{ locoDirection
+</pre>
+
+      <p>Addresses have the format <i>address</i>(S/L). For example,
+      3374(L) is a long address and 74(S) is a short addresses.</p>
+
+      <p>In the example above, here is the information about the
+      first consist entry:</p>
+
+      <table class="data">
+          <tr>
+            <th>Data</th>
+
+            <th>Description</th>
+          </tr>
+
+          <tr>
+            <td>74(S)</td>
+
+            <td>Consist has short DCC address 74</td>
+          </tr>
+
+          <tr>
+              <td>74(S)</td>
+
+              <td>The ID of the consist</td>
+          </tr>
+
+          <tr>
+              <td>3374(L)}|{true</td>
+
+              <td>Loco with long address 3374 in the forward direction</td>
+          </tr>
+
+          <tr>
+              <td>346(L)}|{true</td>
+
+              <td>Loco with long address 346 in the forward direction</td>
+          </tr>
+      </table>
+
+
       <h3>JMRI Web Port</h3>
 
       <p>The final string from the initial reply provides the port
@@ -333,6 +406,33 @@ PW12080
 </pre>
 
       <p>indicates that the web server port is set to 12080.</p>
+
+      <h2>Property Change Notification</h2>
+
+      <p>There are cases where property changes in JMRI cause a
+      message to be sent. These messages are not a response to a
+      command, but rather are sent at any time (from the perspective
+      of your WiThrottle protocol client). For example, if you have a Throttle
+      window open in JMRI and you turn on the light, a property
+      change message will be sent with the function information:</p>
+
+      <pre class="code">
+MTAL341&lt;;&gt;F10
+</pre>
+
+      <p>All property change messages begin with MTA (where 'T' could
+      be a different throttle letter) and then the DCC address of the
+      locomotive. The part after the &lt;;&gt; separator uses the
+      format described below, under the 'F' Function.</p>
+
+      <p>Here is a list of property notifications that can be sent</p>
+
+      <ul>
+        <li>Function state changed</li>
+        <li>Speed</li>
+        <li>Direction</li>
+        <li>Speed step mode</li>
+      </ul>
 
       <h2>Commands</h2>
 
@@ -368,6 +468,17 @@ PW12080
         <li>'Q' indicates the device has quit, close its
         window.</li>
       </ul>
+
+      <h3>'H' Hardware Information</h3>
+
+      <p>Sets the device ID for the client. This could, for example,
+      be the MAC address of the caller, as a string.
+      The syntax is <code>HU<i>identifier</i></code>, where <i>identifier</i>
+      is different for each connected device.
+      This needs to be unique for each device connected to the server, it is
+      used to prevent duplicate connections from the same client.
+      Engine Driver sends device name (see 'N'), so it may or may not be
+      unique. WiThrottle app uses a generated unique identifier.</p>
 
       <h3>'N' Device Name</h3>
 
@@ -433,8 +544,8 @@ NJohn's Throttle
 
       <h3>M - MultiThrottle Controller</h3>
 
-      <p>The 'M' command is for a "multi" throttle, handled by the
-      <a href=
+      <p>The 'M' command is for a "multi" throttle, and is handled
+      by the <a href=
       "https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrit/withrottle/ThrottleController.java">
       ThrottleController</a> class.</p>
 
@@ -491,6 +602,12 @@ MT+L341&lt;;&gt;ED&amp;RGW 341
 
           <td>Remove a locomotive from the throttle</td>
         </tr>
+
+        <tr>
+          <td>S</td>
+
+          <td>Request steal locomotive (see more below)</td>
+        </tr>
       </table>
 
       <p>Each of these operations is described in sections
@@ -509,9 +626,18 @@ MT+S3&lt;;&gt;ED&amp;RGW 341
 
       <p>The first element is "+S3" has the '+' to indicate that
       this is a request to add a locomotive to the multithrottle.
-      The rest of the string looks like an address, but it's
-      actually a key used to identify the engine within the multi
-      throttle. Engine Driver uses the DCC address as the key.</p>
+      The rest of the string is another key, formatted like an address
+      (e.g., "S3" or "L341"), which will be used in future references
+      by MultiThrottle commands.</p>
+
+      <p>The second element is the actual address to select, using
+      either the address directly ("S79" or "L3002") or by referencing
+      a roster entry using the "E" command (such as "ED&amp;RGW 341").</p>
+
+      <p>The key address MUST match the address chosen via the
+      third element of the string (after the &lt;;&gt;).  Any mismatch
+      results in undefined behavior (and is known to vary between
+      implementations).</p>
 
       <p>The reply from this command is quite verbose, and contains
       details about this locomotive as known by JMRI. If the engine
@@ -563,7 +689,7 @@ MTAL341&lt;;&gt;s1
         <li>Current speed step mode</li>
       </ul>
 
-      <p>For all except the function lables, see the appropriate
+      <p>For all except the function labels, see the appropriate
       throttle commands, such as 'V' below, for details.</p>
 
       <p>The function labels are an array of strings, with ]\[ used
@@ -575,7 +701,7 @@ MTAL341&lt;;&gt;s1
       <h5>'-' -- Remove Locomotive</h5>
 
       <p>The '-' command removes an engine from a multithrottle.
-      Engine Driver, for example, sends the following command to 
+      Engine Driver, for example, sends the following command to
       release all locomotives from the 'T' throttle:</p>
       <pre class="code">
 MT-*&lt;;&gt;r
@@ -583,8 +709,8 @@ MT-*&lt;;&gt;r
 
       <p>The first element after the '-' character is the key of
       the locomotive to remove, or '*' to remove <i>all</i>
-      locomotives from the multithrottle instance. The multi
-      throttle instance will loop through all of it's throttle
+      locomotives from the multithrottle instance. The
+      multithrottle instance will loop through all of it's throttle
       instances and send the 'r' command to each one. The 'r'
       command is a release command.</p>
 
@@ -607,39 +733,26 @@ MTA*&lt;;&gt;qR
       <h2>Throttle Controller Commands</h2>
 
       <p>This section describes throttle commands, which are
-      the second element of
-      'Mx' commands (as described above). After the command prefix,
-      the next letter is one of the following:</p>
+      the second element of 'Mx' commands (as described above). After
+      the command prefix, the next letter is one of the following:</p>
 
       <ul>
-        <li>'V' sets the speed (velocity). Format V<i>speed.</i></li>
+        <li>'C' consist</li>
 
-        <li>'X' emergency stop.</li>
+        <li>'c' consist lead from roster entry</li>
+
+        <li>'d' dispatch.</li>
+
+        <li>'E' sets an address from a roster entry. Format
+        E<i>ID</i>.</li>
 
         <li>'F' function key. Format F<i>{0|1}</i><i>Function</i>.</li>
 
         <li>'f' force function</li>
 
-        <li>'R' set direction. Format R<i>{0|1}</i>.</li>
-
-        <li>'r' release.</li>
-
-        <li>'d' dispatch.</li>
-
-        <li>'L' sets a long DCC address.</li>
-
-        <li>'S' sets a short DCC address.</li>
-
-        <li>'E' sets an address from a roster entry. Format
-        E<i>ID</i>.</li>
-
-        <li>'C' consist</li>
-
-        <li>'c' consist lead from roster entry</li>
-
         <li>'I' idle, which sets the speed to 0</li>
 
-        <li>'s' set speed step mode</li>
+        <li>'L' sets a long DCC address.</li>
 
         <li>'m' momentary</li>
 
@@ -647,17 +760,59 @@ MTA*&lt;;&gt;qR
         direction</li>
 
         <li>'Q' quit</li>
+
+        <li>'R' set direction. Format R<i>{0|1}</i>.</li>
+
+        <li>'r' release.</li>
+
+        <li>'S' sets a short DCC address.</li>
+
+        <li>'s' set speed step mode</li>
+
+        <li>'V' sets the speed (velocity). Format V<i>speed.</i></li>
+
+        <li>'X' emergency stop.</li>
       </ul>
 
       <p>Each of the commands is described in a section below when
       it takes additional information. Some commands, such as 'X'
       require no additional information.</p>
 
+      <h3>'C' and 'c' Set lead loco for consist</h3>
+
+      <p>These two commands both allow you to set the lead loco to
+      which function commands will be sent. This is used in cases where
+      you're not using CV21 and CV22 to determine how locos in an
+      advanced consist should respond to functions.</p>
+
+      <pre class="code">
+MTAL341&lt;;&gt;CL346
+</pre>
+
       <h3>'d' Dispatch and 'r' Release</h3>
 
       <p>For most DCC systems, these are the same thing; if in
-      doubt, use release. Device server will then send a 
+      doubt, use release. Device server will then send a
       remove address command to the mobile device.</p>
+
+      <pre class="code">
+MT-L341&lt;;&gt;r
+MT-L341&lt;;&gt;d
+</pre>
+
+      <p>You can also release or dispatch all of the locomotives
+      under control of the current throttle:</p>
+
+      <pre class="code">
+MT-*&lt;;&gt;r
+</pre>
+
+      <p>After sending this command, the WiThrottle Server will
+      typically reply with a removed message</p>
+
+      <pre class="code">
+MT-L341&lt;;&gt;
+</pre>
 
       <h3>'F' Function</h3>
 
@@ -712,7 +867,198 @@ MTA*&lt;;&gt;F012
 MTA*&lt;;&gt;V30
 </pre>
 
-      <p>This is the package/jmri/jmrit/withrottle/Protocol help
+      <p>If the value received from the WiThrottle Server is negative (e.g., during the
+         initialization information when an address is selected), that indicates the
+         address is in Emergency Stop mode.</p>
+
+    <h3>'S' Steal Locomotive</h3>
+
+    <p>Requests stealing a locomotive. This is a feature that is of most
+        interest when working with Digitrax command stations and allows the WiThrottle protocol
+        to support the same steal scenario supported by Digitrax throttles.
+        </p>
+
+        <p>Stealing a loco takes a few steps. Here is the sequence</p>
+
+    <ul>
+      <li>Send a normal (MT+) command to acquire a locomotive</li>
+      <li>
+        WiThrottle Server sends back a steal (MTS) reply, indicating that a
+        steal request is required
+      </li>
+      <li>Send a steal request (MTS) for the locomotive</li>
+    </ul>
+
+    <p>Here is an example</p>
+
+    <table class="data">
+      <tr>
+        <th>From WiThrottle Server (JMRI)</th>
+        <th>From Client</th>
+      </tr>
+      <tr>
+        <td></td>
+        <td>MT+L341&lt;;&gt;L341</td>
+      </tr>
+      <tr>
+        <td>MTSL341&lt;;&gt;L341</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>MTSL341&lt;;&gt;L341</td>
+      </tr>
+      </table>
+
+    <p><b>Note:</b> Steal requires JMRI 4.10 or later</p>
+
+    <h2>Consist Controller Commands</h2>
+
+    <p>The commands in this section are used to work with consists.
+    All the consist commands start with "RC", which stands for
+    Roster Consist.</p>
+
+    <ul>
+      <li>'P' Change order of locos in the consist</li>
+
+      <li>'R' Delete (remove) a consist</li>
+
+      <li>'+' Add loco to a consist and/or set the relative direction</li>
+
+      <li>'-' Remove a loco from the consist</li>
+
+      <li>'F' Program CV21 and CV22 function behavior</li>
+    </ul>
+
+    <h3>'+' Add to Consist</h3>
+
+    <p>Either creates a consist or adds a locomotive to an existing
+    consist. As an example, let's say that consist S74 does <b>not</b>
+    exist. The following commands will create a consist with named
+    "My consist" with two locos:</p>
+
+    <pre class="code">
+RC+&lt;;&gt;S74&lt;;&gt;My consist&lt;:&gt;L341&lt;;&gt;true
+RC+&lt;;&gt;S74&lt;;&gt;My consist&lt;:&gt;L342&lt;;&gt;true
+</pre>
+
+    <p>The parts of this command are as follows:</p>
+
+    <table class="data">
+      <tr>
+        <td>S74</td>
+        <td>The DCC address of the consist</td>
+      </tr>
+      <tr>
+        <td>My consist</td>
+        <td>The JMRI id (name) of the consist</td>
+      </tr>
+      <tr>
+        <td>L341</td>
+        <td>DCC address of the loco to add to the consist</td>
+      </tr>
+      <tr>
+        <td>true</td>
+        <td>Direction is normal (false for reversed)</td>
+      </tr>
+    </table>
+
+    <h3>'-' Remove Loco from Consist</h3>
+
+    <p>Removes a single locomotive from the consist. For example:</p>
+
+    <pre class="code">
+RC-&lt;;&gt;S74&lt;:&gt;L341
+</pre>
+
+    <p>Removes DCC address L341 from the consist with the DCC address
+    of S74.</p>
+
+    <h3>'P' Change Position in Consist</h3>
+
+    <p>This command is used to change the order of locos in a consist.
+    These commands have the following format:</p>
+
+    <pre class="code">
+RCP&lt;;&gt;consistAddress&lt;:&gt;leadLoco&lt;;&gt;nextLoco&lt;;&gt;...* ...&lt;;&gt;nextLoco&lt;;&gt;trailLoco
+</pre>
+
+    <p>Notice that this has no direction infromation--it just has a
+    list of locomotive DCC addresses. For example:</p>
+
+    <pre class="code">
+RCP&lt;;&gt;S74&lt;:&gt;L346&lt;;&gt;L3374
+</pre>
+
+    <p>The example sets the position of the locos in the consist with
+    the DCC address of S74 so that DCC L346 is the lead and L3374 is
+    the trailing loco.</p>
+
+    <h3>'R' Remove Consist</h3>
+
+    <p>Deletes a consist. For example, the following command deletes
+    the consist with DCC address S74.</p>
+
+    <pre class="code">
+RCR&lt;;&gt;S74
+    </pre>
+
+    <h3>Fast Clock Commands</h3>
+
+    <p>The 'PFT' command is used to synchronize the fast clock time.  It is
+    sent periodically from the server, indicating the "now" time and
+    (optionally) the current time ratio.  Examples include:</p>
+
+    <pre class="code">
+PFT65871&lt;;&gt;4
+PFT1550686525&lt;;&gt;4.0
+PFT1550686860
+</pre>
+
+    <p>The first number is an integer number of seconds since 12:00
+    midnight, January 1st, 1970.  This start date is the Unix time epoch,
+    and makes it easy to convert this value using the standard time
+    libraries.  Only the hours and minutes are useful.  JMRI sends a value
+    based on the system time when the fast clock was started, so will
+    return a value near the calendar date.   The Digitrax LnWI returns
+    values within the range 0-86400 (all the values for January 1,
+    1970).</p>
+
+    <p>The second number, if present, is the current fast time ratio.  It
+    may be an integer value (4) or a floating point value (4.0).  If this
+    value is 0 (or 0.0), the clock is stopped.</p>
+
+    <p>JMRI will update the current fast time every 5 real-time minutes,
+    while the LnWI does so much more frequently.</p>
+
+
+    <h3>Unknown commands</h3>
+
+    <p>Any command that is not recognized by a client should be ignored,
+    with processing continuing after the next newlines.</p>
+
+    <h3>Observations</h3>
+
+    <p>The Digitrax LnWI sends multiple instances of the H command as part
+    of the initial information sent after the first command the client sends:</p>
+
+    <pre class="code">
+HTDigitrax
+HtDigitrax LnWi 1.0 Unit=7,Wifi Chnl= 1,Command Station= DCS100
+</pre>
+
+    <p>and after a selection attempt when using a long address for what
+    would be a short address values (say <code>MT+L23&lt;;&gt;L23</code>) the
+    response is:</p>
+
+    <pre class="code">
+HM error - long address &lt; 127 S23
+</pre>
+
+    <p>The LnWI also sends a <code>PFC</code> command.  Its purpose is
+    unknown at this time.</p>
+
+    <p>This is the package/jmri/jmrit/withrottle/Protocol help
       page</p><!--#include virtual="/Footer" -->
     </div>
   </div>

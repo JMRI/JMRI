@@ -28,21 +28,45 @@ public class JsonOperations {
      */
     public static final String ENGINE = "engine"; // NOI18N
     /**
+     * {@value #ENGINES}
+     */
+    public static final String ENGINES = "engines"; // NOI18N
+    /**
      * {@value #LOCATION}
      */
     public static final String LOCATION = "location"; // NOI18N
     /**
+     * {@value #LOCATION_COMMENT}
+     */
+    public static final String LOCATION_COMMENT = "locationComment"; // NOI18N
+    /**
      * {@value #LOCATION_ID}
      */
     public static final String LOCATION_ID = "locationId"; // NOI18N
+    /**
+     * {@value #LOCATION_NAME}
+     */
+    public static final String LOCATION_NAME = "locationName"; // NOI18N
     /**
      * {@value #TRAIN}
      */
     public static final String TRAIN = "train"; // NOI18N
     /**
      * {@value #WEIGHT}
+     * <p>
+     * Used for actual weight of rolling stock in onces or a train's weight in tons
      */
     public static final String WEIGHT = "weight"; // NOI18N
+    /**
+     * {@value #WEIGHT_TONS}
+     * <p>
+     * Used for model weight of rolling stock in tons
+     */
+    public static final String WEIGHT_TONS = "weightTons"; // NOI18N
+    /**
+     * {@value #BUILT}
+     */
+    public static final String BUILT = "built"; // NOI18N
     /**
      * {@value #LEAD_ENGINE}
      */
@@ -51,6 +75,14 @@ public class JsonOperations {
      * {@value #CABOOSE}
      */
     public static final String CABOOSE = "caboose"; // NOI18N
+    /**
+     * {@value #FRED}
+     */
+    public static final String FRED = "fred"; // NOI18N
+    /**
+     * {@value #PASSENGER}
+     */
+    public static final String PASSENGER = "passenger"; // NOI18N
     /**
      * {@value #TERMINATE}
      */
@@ -79,6 +111,34 @@ public class JsonOperations {
      * {@value #LOCATION_TRACK}
      */
     public static final String LOCATION_TRACK = "locationTrack"; // NOI18N
+    /**
+     * {@value #KERNEL}
+     */
+    public static final String KERNEL = "kernel"; // NOI18N
+    /**
+     * {@value #LEAD}
+     */
+    public static final String LEAD = "lead"; // NOI18N
+    /**
+     * {@value #CAR_SUB_TYPE}
+     */
+    public static final String CAR_SUB_TYPE = "carSubType"; // NOI18N
+    /**
+     * {@value #CAR_TYPE}
+     */
+    public static final String CAR_TYPE = "carType"; // NOI18N
+    /**
+     * {@value #CAR_TYPES}
+     */
+    public static final String CAR_TYPES = "carTypes"; // NOI18N
+    /**
+     * {@value #ROLLING_STOCK}
+     */
+    public static final String ROLLING_STOCK = "rollingStock"; // NOI18N
+    /**
+     * {@value #OUT_OF_SERVICE}
+     */
+    public static final String OUT_OF_SERVICE = "outOfService"; // NOI18N
 
     /**
      * Prevent instantiation, since this class only contains static values

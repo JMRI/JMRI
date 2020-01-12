@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- version 1 - 2015-03-05 - PB - Created  -->
+<!-- version 2 - 2019-07-28 - ALM - Add CV144 bits 3 & 4, CV154 and CV155"  -->
 <!-- version 2 - 2018-02-04 - ALM - Add CV65 "Max Speed Braking Section 2"  -->
+<!-- version 1 - 2015-03-05 - PB - Created  -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <column>
     <!-- BEGIN Start options grid(s)  -->
@@ -80,6 +81,40 @@
 					<text> </text>
 			  	</label>
 			  	<display item="Threshold for asymmetric behavior" label="" format="hslider"/>
+			</row>
+		</griditem>
+		<griditem gridx="0" gridy="2" gridwidth="1" anchor="LINE_END">
+			<row>
+			  	<display item="Deceleration forward backward"/>
+			  	<label>
+					<text> </text>
+			  	</label>
+			  	<display item="Deceleration forward backward" label="" format="hslider"/>
+			</row>
+		</griditem>
+		<griditem gridx="0" gridy="3" gridwidth="1" anchor="LINE_END">
+			<row>
+			  	<display item="Deceleration backward"/>
+			  	<label>
+					<text> </text>
+			  	</label>
+			  	<display item="Deceleration backward" label="" format="hslider"/>
+			</row>
+		</griditem>
+		<griditem gridx="0" gridy="4" gridwidth="1" anchor="LINE_END">
+			<row>
+			  	<label>
+					<text> </text>
+			  	</label>
+			</row>
+		</griditem>
+		<griditem gridx="0" gridy="5" gridwidth="1" anchor="LINE_END">
+			<row>
+			  	<display item="Brake Section Output"/>
+			  	<label>
+					<text>     </text>
+			  	</label>
+			  	<display item="Brake with GPIO"/>
 			</row>
 		</griditem>
 		<group>

@@ -175,8 +175,6 @@ public class PreviewDialog extends JDialog {
      * Set up a display panel to display icons. Includes a "View on:" drop down
      * list. Employs a normal JComboBox, no Panel Background option.
      *
-     * @see jmri.jmrit.catalog.CatalogPanel#makeButtonPanel()
-     *
      * @return a JPanel with preview pane and background color drop down
      */
     private JPanel setupPanel() {

@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ServiceLoader;
 import java.util.Set;
+import javax.annotation.Nonnull;
 import jmri.JmriException;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.configurexml.XmlAdapter;
@@ -99,7 +100,7 @@ public class StartupActionsManager extends AbstractPreferencesManager {
                     log.debug("Read {} {} adapter {}", type, name, adapter);
                     try {
                         log.debug("Creating {} {} adapter {}...", type, name, adapter);
-                        ((XmlAdapter) Class.forName(adapter).newInstance()).load(action, null); // no perNode preferences
+                        ((XmlAdapter) Class.forName(adapter).getDeclaredConstructor().newInstance()).load(action, null); // no perNode preferences
                     } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
                         log.error("Unable to create {} for {}", adapter, action, ex);
                         this.addInitializationException(profile, new InitializationException(Bundle.getMessage(Locale.ENGLISH, "StartupActionsCreationError", adapter, name),
@@ -137,6 +138,7 @@ public class StartupActionsManager extends AbstractPreferencesManager {
     }
 
     @Override
+    @Nonnull
     public Set<Class<? extends PreferencesManager>> getRequires() {
         Set<Class<? extends PreferencesManager>> requires = super.getRequires();
         requires.add(ManagerDefaultSelector.class);

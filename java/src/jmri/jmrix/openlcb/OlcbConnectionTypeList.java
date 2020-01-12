@@ -5,7 +5,7 @@ import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Returns a list of valid Connection Types
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
   *
@@ -14,6 +14,7 @@ import org.openide.util.lookup.ServiceProvider;
 public class OlcbConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
     public static final String OPENLCB = "OpenLCB";
+    public static final String LCC = "LCC";
 
     @Override
     public String[] getAvailableProtocolClasses() {
@@ -35,7 +36,7 @@ public class OlcbConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
     @Override
     public String[] getManufacturers() {
-        return new String[]{OPENLCB};
+        return new String[]{OPENLCB, LCC};
     }
 
 }

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2006, 2007, 2008, 2014, 2016 All rights reserved -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -1159,7 +1158,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
         <label>PB1 Mode</label>
       </variable>
- 
+
       <variable item="PB1 Output-Input" CV="195" mask="XVXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
         <label>PB1 Output-Input</label>
@@ -1195,7 +1194,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice1Transition.xml"/>
         <label>PB1 Transition</label>
       </variable>
- 
+
       <variable item="PB1 Paired" CV="194" mask="VVXXXXXX">
         <qualifier>
           <variableref>PB1 Output-Input</variableref>
@@ -2230,7 +2229,7 @@
         <label>PB8 Secondary 2 Type</label>
       </variable>
       <!-- End Outputs -->
-  
+
       <!-- Logic Table entry #1 -->
       <variable item="LT1 Block End" CV="257" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceEnd.xml"/>
@@ -7108,7 +7107,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT27 Var2 Type</label></variable>
       <variable item="LT27 Var2 Event" CV="472" mask="XXXVXXXX" default="0">
         <qualifier>
-          <variableref>LT27 Var22 Mode</variableref>
+          <variableref>LT27 Var2 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
@@ -8025,7 +8024,7 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceAspect.xml"/><label>LT32 Var2 Aspect</label></variable>
- 
+
       <!-- End of Logic Table Variables -->
 
       <!-- Presets for Composite Variables -->

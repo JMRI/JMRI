@@ -1,7 +1,7 @@
 package jmri.jmrit.display.palette;
 
 import java.awt.GraphicsEnvironment;
-import jmri.jmrit.display.EditorScaffold;
+import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -20,21 +20,23 @@ public class DetectionPanelTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        EditorScaffold es = new EditorScaffold();
+        ControlPanelEditor es = new ControlPanelEditor("ED");
         jmri.util.ThreadingUtil.runOnGUI(() -> {
-            ip = ItemPalette.getDefault("Test ItemPalette", new EditorScaffold());
+            ip = ItemPalette.getDefault("Test ItemPalette", es);
             ip.pack();
         });
         TextItemPanel tip = new TextItemPanel(ip, "test", es);
         DetectionPanel t = new DetectionPanel(tip);
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(ip);
+        JUnitUtil.dispose(es);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
     }
 
     @After

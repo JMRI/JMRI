@@ -2,9 +2,7 @@ package jmri.jmrix.maple;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * JUnit tests for the jmri.jmrix.maple.SerialSensor class
@@ -27,6 +25,7 @@ public class SerialSensorTest extends jmri.implementation.AbstractSensorTestBase
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         // prepare an interface
@@ -35,6 +34,7 @@ public class SerialSensorTest extends jmri.implementation.AbstractSensorTestBase
     }
 
     @After
+    @Override
     public void tearDown() {
         t.dispose();
         JUnitUtil.tearDown();

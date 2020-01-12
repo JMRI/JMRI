@@ -1,6 +1,5 @@
 package jmri.jmrix.srcp.swing;
 
-import java.util.ResourceBundle;
 import javax.swing.JMenu;
 import jmri.jmrix.srcp.SRCPSystemConnectionMemo;
 import jmri.jmrix.srcp.swing.packetgen.PacketGenAction;
@@ -21,17 +20,15 @@ public class SystemMenu extends JMenu {
     public SystemMenu(SRCPSystemConnectionMemo memo) {
         super();
 
-        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.JmrixSystemsBundle");
-
         if (memo != null) {
             setText(memo.getUserName());
         } else {
-            setText(rb.getString("MenuItemSRCP"));
+            setText(Bundle.getMessage("MenuItemSRCP"));
         }
 
         if (memo != null) {
-            add(new SRCPMonAction(rb.getString("MenuItemCommandMonitor"), memo));
-            add(new PacketGenAction(rb.getString("MenuItemSendCommand"), memo));
+            add(new SRCPMonAction());
+            add(new PacketGenAction(Bundle.getMessage("MenuItemSendCommand"), memo));
         }
     }
 

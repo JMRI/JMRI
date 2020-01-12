@@ -3,12 +3,11 @@ package jmri.jmrit.operations.setup;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JComboBox;
 import jmri.jmrit.display.LocoIcon;
-import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+import jmri.util.swing.JemmyUtil;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
 import org.junit.Test;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JCheckBoxOperator;
@@ -22,7 +21,7 @@ import org.netbeans.jemmy.operators.JRadioButtonOperator;
  * @author Dan Boudreau Copyright (C) 2009
  * @author Paul Bender Copyright (C) 2017
  */
-public class OperationsSetupFrameTest extends OperationsSwingTestCase {
+public class OperationsSetupFrameTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
@@ -105,11 +104,11 @@ public class OperationsSetupFrameTest extends OperationsSwingTestCase {
         (new JButtonOperator(jfo,Bundle.getMessage("ButtonSave"))).push();
 
         // dialog window should appear regarding train lengths
-        pressDialogButton(f,java.text.MessageFormat.format(
-                    Bundle.getMessage("MaxTrainLengthIncreased"), new Object[]{1234,"feet"}), "OK");
+        JemmyUtil.pressDialogButton(f,java.text.MessageFormat.format(
+                    Bundle.getMessage("MaxTrainLengthIncreased"), new Object[]{1234,"feet"}), Bundle.getMessage("ButtonOK"));
         // dialog window should appear regarding railroad name
         /*pressDialogButton(f,java.text.MessageFormat.format(Bundle
-                    .getMessage("ChangeRailroadName"), new Object[]{"My Jmri Railroad", "Test Railroad Name"}) ,"No");
+                    .getMessage("ChangeRailroadName"), new Object[]{"My Jmri Railroad", "Test Railroad Name"}) ,Bundle.getMessage("ButtonNo"));
         // done*/
         JUnitUtil.dispose(f);
         jfo.dispose();
@@ -155,20 +154,6 @@ public class OperationsSetupFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("local color", LocoIcon.YELLOW, ((JComboBox<?>)(new JLabelOperator(jfo2,Bundle.getMessage("IconLocal")).getLabelFor())).getSelectedItem());
         // done
         JUnitUtil.dispose(frameRead);
-    }
-
-    // The minimal setup for log4J
-    @Before
-    @Override
-    public void setUp() throws Exception{
-        super.setUp();
-        new Setup();
-    }
-
-    @After
-    @Override
-    public void tearDown() throws Exception{
-        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(OperationsSetupFrameTest.class);

@@ -1,8 +1,9 @@
 package jmri.jmrit.symbolicprog;
 
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import org.junit.*;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the jmri.util.AlphanumComparator class.
@@ -40,14 +41,15 @@ public class CVNameComparatorTest extends jmri.util.AlphanumComparatorTest {
     @Before
     @Override
     public void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         ac = new CVNameComparator();
     }
 
     @After
     @Override
     public void tearDown() throws Exception {
-        apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
+
     }
 
 }

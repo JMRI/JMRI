@@ -4,7 +4,7 @@ import jmri.jmrix.can.adapters.gridconnect.GridConnectReply;
 
 /**
  * Class for replies in a MERG GridConnect based message/reply protocol.
- * <P>
+ * <p>
  * The GridConnect protocol encodes messages as an ASCII string of up to 24
  * characters of the form: :ShhhhNd0d1d2d3d4d5d6d7; hhhh is the two byte (11
  * useful bits) header The S indicates a standard CAN frame
@@ -17,11 +17,11 @@ import jmri.jmrix.can.adapters.gridconnect.GridConnectReply;
  * {@code <11 bit SID><0><1><0>< 18 bit EID>}
  * N or R indicates a normal or remote frame, in position 6 or 10 d0 - d7 are
  * the (up to) 8 data bytes
- * <P>
+ * <p>
  *
  * @author Andrew Crosland Copyright (C) 2008
  * @author Bob Jacobsen Copyright (C) 2008
-  */
+ */
 public class MergReply extends GridConnectReply {
 
     public MergReply() {

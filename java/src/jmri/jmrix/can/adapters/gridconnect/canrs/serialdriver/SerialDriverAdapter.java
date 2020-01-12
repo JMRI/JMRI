@@ -8,26 +8,24 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implements SerialPortAdapter for the MERG CAN-RS or CAN-USB.
- * <P>
+ * <p>
  * This connects to the MERG adapter via a serial com port (real or virtual).
  * Normally controlled by the SerialDriverFrame class.
- * <P>
  *
  * @author Andrew Crosland Copyright (C) 2008
  * @author Bob Jacobsen Copyright (C) 2009
-  */
-public class SerialDriverAdapter extends GcSerialDriverAdapter implements jmri.jmrix.SerialPortAdapter {
+ */
+public class SerialDriverAdapter extends GcSerialDriverAdapter {
 
     public SerialDriverAdapter() {
         super();
         option2Name = "CANID";
         options.put(option2Name, new Option("CAN ID for CAN-USB", new String[]{"127", "126", "125", "124", "123", "122", "121", "120"}));
-
     }
 
     /**
-     * set up all of the other objects to operate with a CAN RS adapter
-     * connected to this port
+     * Set up all of the other objects to operate with a CAN RS adapter
+     * connected to this port.
      */
     @Override
     public void configure() {
@@ -52,7 +50,6 @@ public class SerialDriverAdapter extends GcSerialDriverAdapter implements jmri.j
         // do central protocol-specific configuration    
         //jmri.jmrix.can.ConfigurationManager.configure(getOptionState(option1Name));
         this.getSystemConnectionMemo().configureManagers();
-
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);

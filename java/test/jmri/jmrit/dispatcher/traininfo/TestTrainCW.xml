@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/dispatcher-traininfo.xsl" type="text/xsl"?>
+<!DOCTYPE traininfofile SYSTEM "/xml/DTD/dispatcher-traininfo.dtd">
+<traininfofile>
+  <!--Written by JMRI version 4.11.8ish+sg+2018-06-19T15:42:16Z+Recab8a0 on Sat Jun 23 13:15:29 EDT 2018-->
+  <traininfo version="2" transitname="IZ1(SouthPlatform CW)" transitid="IZ1" trainname="1000" dccaddress="1000" trainintransit="yes" startblockname="IB:AUTO:0003(South Platform)-1" startblockid="IB:AUTO:0003" startblockseq="1" endblockname="IB:AUTO:0003(South Platform)-5" endblockid="IB:AUTO:0003" endblockseq="5" trainfromroster="no" trainfromtrains="no" trainfromuser="yes" priority="5" resetwhendone="no" delayedrestart="no" reverseatend="no" terminatewhendone="no" departuretimehr="8" departuretimemin="0" traintype="LOCAL_PASSENGER" autorun="yes" loadatstartup="yes" allocatealltheway="no" allocationmethod="3" speedfactor="1.0" maxspeed="0.6" ramprate="None" resistancewheels="yes" runinreverse="no" sounddecoder="yes" maxtrainlength="200.0" usespeedprofile="no" stopbyspeedprofile="no" stopbyspeedprofileadjust="1.0" />
+</traininfofile>

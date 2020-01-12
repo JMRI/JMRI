@@ -12,6 +12,7 @@ import org.junit.runners.Suite;
         jmri.jmrix.loconet.locomon.PackageTest.class,
         jmri.jmrix.loconet.soundloader.PackageTest.class,
         jmri.jmrix.loconet.spjfile.PackageTest.class,
+        jmri.jmrix.loconet.messageinterp.PackageTest.class,
         SlotManagerTest.class,
         LocoNetSlotTest.class,
         LnOpsModeProgrammerTest.class,
@@ -29,8 +30,12 @@ import org.junit.runners.Suite;
         LnSensorAddressTest.class,
         LnSensorManagerTest.class,
         LnCommandStationTypeTest.class,
+        LnDeferProgrammerTest.class,
         BundleTest.class,
         jmri.jmrix.loconet.pr3.PackageTest.class,
+        jmri.jmrix.loconet.pr4.PackageTest.class,
+        jmri.jmrix.loconet.usb_dcs240.PackageTest.class,
+        jmri.jmrix.loconet.usb_dcs52.PackageTest.class,
         jmri.jmrix.loconet.hexfile.PackageTest.class,
         jmri.jmrix.loconet.lnsvf2.PackageTest.class,
         jmri.jmrix.loconet.downloader.PackageTest.class,
@@ -85,6 +90,9 @@ import org.junit.runners.Suite;
         jmri.jmrix.loconet.streamport.PackageTest.class,
         CsOpSwAccessTest.class,
         LnPacketizerStrictTest.class,
+        TranspondingTagTest.class,
+        TranspondingTagManagerTest.class,
+        LnCabSignalTest.class,
 })
 
 /**

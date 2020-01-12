@@ -1,18 +1,14 @@
 package jmri.managers;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.IdTag;
 import jmri.InstanceManager;
-import jmri.NamedBean;
 import jmri.RailCom;
 import jmri.RailComManager;
-import jmri.Reporter;
 import jmri.implementation.DefaultRailCom;
+import jmri.managers.configurexml.DefaultIdTagManagerXml;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,31 +19,22 @@ import org.slf4j.LoggerFactory;
  * @author Kevin Dickerson Copyright (C) 2012
  * @since 2.99.4
  */
-public class DefaultRailComManager extends AbstractManager<RailCom>
+public class DefaultRailComManager extends DefaultIdTagManager
         implements RailComManager {
 
+    @SuppressWarnings("deprecation")
     public DefaultRailComManager() {
+        super(new jmri.jmrix.ConflictingSystemConnectionMemo("R", "RailCom")); // NOI18N
         InstanceManager.store(this, RailComManager.class);
+        InstanceManager.setIdTagManager(this);
     }
 
     @Override
-    public RailCom provideIdTag(String name) {
-        RailCom t = getIdTag(name);
-        if (t != null) {
-            return t;
-        }
-        if (name.startsWith(getSystemPrefix() + typeLetter())) {
-            return newIdTag(name, null);
-        } else {
-            return newIdTag(makeSystemName(name), null);
-        }
-    }
-
     protected RailCom createNewIdTag(String systemName, String userName) {
         // we've decided to enforce that IdTag system
-        // names start with ID by prepending if not present
-        if (!systemName.startsWith("ID")) {
-            systemName = "ID" + systemName;
+        // names start with RD by prepending if not present
+        if (!systemName.startsWith(getSystemPrefix() + "D")) {
+            systemName = getSystemPrefix() + "D" + systemName;
         }
         return new DefaultRailCom(systemName, userName);
     }
@@ -55,47 +42,43 @@ public class DefaultRailComManager extends AbstractManager<RailCom>
     @SuppressFBWarnings(value="RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE", justification="defensive programming check of @Nonnull argument")
     private void checkSystemName(@Nonnull String systemName, @CheckForNull String userName) {
         if (systemName == null) {
-            log.error("SystemName cannot be null. UserName was "
-                    + ((userName == null) ? "null" : userName));
-            throw new IllegalArgumentException("SystemName cannot be null. UserName was "
+            log.error("SystemName cannot be null. UserName was {}",
+                    (userName == null ? "null" : userName));
+            throw new IllegalArgumentException("SystemName cannot be null. UserName was {}"
                     + ((userName == null) ? "null" : userName));
         }
     }
-    
+
     @Override
-    public RailCom newIdTag(@Nonnull String systemName, @CheckForNull String userName) {
-        if (log.isDebugEnabled()) {
-            log.debug("new IdTag:"
-                    + ((systemName == null) ? "null" : systemName)
-                    + ";" + ((userName == null) ? "null" : userName));
-        }
+    @Nonnull
+    public IdTag newIdTag(@Nonnull String systemName, @CheckForNull String userName) {
+        log.debug("new IdTag: {};{}", systemName, (userName == null ? "null" : userName));
         checkSystemName(systemName, userName);
-        
+
         // return existing if there is one
         RailCom s;
-        if ((userName != null) && ((s = getByUserName(userName)) != null)) {
+        if ((userName != null) && ((s = (RailCom)getByUserName(userName)) != null)) {
             if (getBySystemName(systemName) != s) {
-                log.error("inconsistent user (" + userName + ") and system name (" + systemName + ") results; userName related to (" + s.getSystemName() + ")");
+                log.error("inconsistent user ({}) and system name ({}) results; userName related to ({})",
+                        userName, systemName, s.getSystemName());
             }
             return s;
         }
-        if ((s = getBySystemName(systemName)) != null) {
+        if ((s = (RailCom) getBySystemName(systemName)) != null) {
             if ((s.getUserName() == null) && (userName != null)) {
                 s.setUserName(userName);
             } else if (userName != null) {
-                log.warn("Found IdTag via system name (" + systemName
-                        + ") with non-null user name (" + userName + ")");
+                log.warn("Found IdTag via system name ({}) with non-null user name ({})", systemName, userName);
             }
             return s;
         }
 
         // doesn't exist, make a new one
         s = createNewIdTag(systemName, userName);
-
         // save in the maps
         register(s);
 
-        // if that failed, blame it on the input arguements
+        // if that failed, blame it on the input arguments
         if (s == null) {
             throw new IllegalArgumentException();
         }
@@ -104,119 +87,20 @@ public class DefaultRailComManager extends AbstractManager<RailCom>
     }
 
     @Override
-    public RailCom getIdTag(String name) {
-        RailCom t = getBySystemName(makeSystemName(name));
-        if (t != null) {
-            return t;
+    public void writeIdTagDetails() throws java.io.IOException {
+        if (this.dirty) {
+            new DefaultIdTagManagerXml(this,"RailComIdTags.xml").store();  //NOI18N
+            this.dirty = false;
+            log.debug("...done writing IdTag details");
         }
-
-        t = getByUserName(name);
-        if (t != null) {
-            return t;
-        }
-
-        return getBySystemName(name);
     }
 
     @Override
-    public RailCom getByTagID(String tagID) {
-        return getBySystemName(makeSystemName(tagID));
-    }
-
-    @Override
-    public RailCom getBySystemName(String name) {
-        return _tsys.get(name);
-    }
-
-    @Override
-    public RailCom getByUserName(String key) {
-        return _tuser.get(key);
-    }
-
-    @Override
-    public List<IdTag> getTagsForReporter(Reporter reporter, long threshold) {
-        List<IdTag> out = new ArrayList<>();
-        Date lastWhenLastSeen = new Date(0);
-
-        // First create a list of all tags seen by specified reporter
-        // and record the time most recently seen
-        for (NamedBean n : _tsys.values()) {
-            IdTag t = (IdTag) n;
-            if (t.getWhereLastSeen() == reporter) {
-                out.add(t);
-                if (t.getWhenLastSeen().after(lastWhenLastSeen)) {
-                    lastWhenLastSeen = t.getWhenLastSeen();
-                }
-            }
-        }
-
-        if (out.size() > 0) {
-            // Calculate the threshold time based on the most recently seen tag
-            Date thresholdTime = new Date(lastWhenLastSeen.getTime() - threshold);
-
-            // Now remove from the list all tags seen prior to the threshold time
-            for (IdTag t : out) {
-                if (t.getWhenLastSeen().before(thresholdTime)) {
-                    out.remove(t);
-                }
-            }
-        }
-
-        return out;
-    }
-
-    /**
-     * Don't want to store this information
-     */
-    @Override
-    protected void registerSelf() {
-    }
-
-    @Override
-    public char typeLetter() {
-        return 'D';
-    }
-
-    @Override
-    public String getSystemPrefix() {
-        return "I";
-    }
-
-    @Override
-    public int getXMLOrder() {
-        return jmri.Manager.IDTAGS;
-    }
-
-    @Override
-    public boolean isInitialised() {
-        return true;
-    }
-
-    @Override
-    public void setStateStored(boolean state) {
-    }
-
-    @Override
-    public boolean isStateStored() {
-        return false;
-    }
-
-    @Override
-    public void setFastClockUsed(boolean fastClock) {
-    }
-
-    @Override
-    public boolean isFastClockUsed() {
-        return false;
-    }
-
-    @Override
-    public void init() {
-    }
-
-    @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameReporter");
+    public void readIdTagDetails() {
+        log.debug("reading idTag Details");
+        new DefaultIdTagManagerXml(this,"RailComIdTags.xml").load();  //NOI18N
+        this.dirty = false;
+        log.debug("...done reading IdTag details");
     }
 
     private static final Logger log = LoggerFactory.getLogger(DefaultRailComManager.class);

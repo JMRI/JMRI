@@ -3,18 +3,16 @@ package jmri.jmrit.beantable;
 import apps.gui.GuiLafPreferencesManager;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.Set;
 import javax.imageio.ImageIO;
 import javax.swing.AbstractCellEditor;
 import javax.swing.BoxLayout;
@@ -37,7 +35,6 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import jmri.Block;
-import jmri.BlockManager;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
@@ -88,6 +85,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
             }
         }
         updateSensorList();
+        updateReporterList();
     }
 
     public BlockTableAction() {
@@ -101,6 +99,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
     private String[] curveOptions = {noneText, gradualText, tightText, severeText};
     private java.util.Vector<String> speedList = new java.util.Vector<String>();
     private String[] sensorList;
+    private String[] reporterList;
     private DecimalFormat twoDigit = new DecimalFormat("0.00");
     String defaultBlockSpeedText;
     // for icon state col
@@ -193,7 +192,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                 if (col == DIRECTIONCOL) {
                     return jmri.Path.decodeDirection(b.getDirection());
                 } else if (col == CURVECOL) {
-                    JComboBox<String> c = new JComboBox<String>(curveOptions);
+                    JComboBox<String> c = new JComboBox<>(curveOptions);
                     if (b.getCurvature() == Block.NONE) {
                         c.setSelectedItem(0);
                     } else if (b.getCurvature() == Block.GRADUAL) {
@@ -220,7 +219,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                     if (!speedList.contains(speed)) {
                         speedList.add(speed);
                     }
-                    JComboBox<String> c = new JComboBox<String>(speedList);
+                    JComboBox<String> c = new JComboBox<>(speedList);
                     c.setEditable(true);
                     c.setSelectedItem(speed);
                     return c;
@@ -237,7 +236,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                     }
                 } else if (col == SENSORCOL) {
                     Sensor sensor = b.getSensor();
-                    JComboBox<String> c = new JComboBox<String>(sensorList);
+                    JComboBox<String> c = new JComboBox<>(sensorList);
                     String name = "";
                     if (sensor != null) {
                         name = sensor.getDisplayName();
@@ -245,8 +244,14 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                     c.setSelectedItem(name);
                     return c;
                 } else if (col == REPORTERCOL) {
-                    Reporter r = b.getReporter();
-                    return (r != null) ? r.getDisplayName() : null;
+                    Reporter reporter = b.getReporter();
+                    JComboBox<String> rs = new JComboBox<>(reporterList);
+                    String name = "";
+                    if (reporter != null) {
+                        name = reporter.getDisplayName();
+                    }
+                    rs.setSelectedItem(name);
+                    return rs;
                 } else if (col == CURRENTREPCOL) {
                     return Boolean.valueOf(b.isReportingCurrent());
                 } else if (col == EDITCOL) {  //
@@ -308,17 +313,16 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                     }
                     fireTableRowsUpdated(row, row);
                 } else if (col == REPORTERCOL) {
-                    Reporter r = null;
-                    if (value != null && !value.equals("")) {
-                        r = jmri.InstanceManager.getDefault(jmri.ReporterManager.class).provideReporter((String) value);
-                    }
+                    @SuppressWarnings("unchecked")
+                    String strReporter = (String) ((JComboBox<String>) value).getSelectedItem();
+                    Reporter r = jmri.InstanceManager.getDefault(jmri.ReporterManager.class).getReporter(strReporter);
                     b.setReporter(r);
                     fireTableRowsUpdated(row, row);
                 } else if (col == SENSORCOL) {
                     @SuppressWarnings("unchecked")
                     String strSensor = (String) ((JComboBox<String>) value).getSelectedItem();
                     b.setSensor(strSensor);
-                    return;
+                    fireTableRowsUpdated(row, row);
                 } else if (col == CURRENTREPCOL) {
                     boolean boo = ((Boolean) value);
                     b.setReportingCurrent(boo);
@@ -411,7 +415,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                     }
                 }
                 if (col == REPORTERCOL) {
-                    return String.class;
+                    return JComboBox.class;
                 }
                 if (col == SENSORCOL) {
                     return JComboBox.class;
@@ -498,6 +502,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                 table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
                 table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
                 jmri.InstanceManager.sensorManagerInstance().addPropertyChangeListener(this);
+                jmri.InstanceManager.getDefault(jmri.ReporterManager.class).addPropertyChangeListener(this);
                 configStateColumn(table);
                 super.configureTable(table);
             }
@@ -521,6 +526,11 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                         updateSensorList();
                     }
                 }
+                if (e.getSource() instanceof jmri.ReporterManager) {
+                    if (e.getPropertyName().equals("length") || e.getPropertyName().equals("DisplayListName")) {
+                        updateReporterList();
+                    }
+                }
                 if (e.getPropertyName().equals("DefaultBlockSpeedChange")) {
                     updateSpeedList();
                 } else {
@@ -537,6 +547,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
             synchronized public void dispose() {
                 super.dispose();
                 jmri.InstanceManager.sensorManagerInstance().removePropertyChangeListener(this);
+                jmri.InstanceManager.getDefault(jmri.ReporterManager.class).removePropertyChangeListener(this);
             }
 
             /**
@@ -564,8 +575,6 @@ public class BlockTableAction extends AbstractTableAction<Block> {
              * states). Renderer and Editor are identical, as the cell contents
              * are not actually edited.
              *
-             * @see
-             * jmri.jmrit.beantable.sensor.SensorTableDataModel.ImageIconRenderer
              * @see jmri.jmrit.beantable.TurnoutTableAction#createModel()
              * @see jmri.jmrit.beantable.LightTableAction#createModel()
              */
@@ -608,7 +617,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
 
                 public JLabel updateLabel(String value, int row) {
 //                     if (iconHeight > 0) { // if necessary, increase row height;
-                        //table.setRowHeight(row, Math.max(table.getRowHeight(), iconHeight - 5)); // TODO adjust table row height for Block icons
+                    //table.setRowHeight(row, Math.max(table.getRowHeight(), iconHeight - 5)); // TODO adjust table row height for Block icons
 //                     }
                     if (value.equals(Bundle.getMessage("BlockUnOccupied")) && offIcon != null) {
                         label = new JLabel(offIcon);
@@ -685,20 +694,39 @@ public class BlockTableAction extends AbstractTableAction<Block> {
     }
 
     private void updateSensorList() {
-        String[] nameList = jmri.InstanceManager.sensorManagerInstance().getSystemNameArray();
-        String[] displayList = new String[nameList.length];
-        for (int i = 0; i < nameList.length; i++) {
-            NamedBean nBean = jmri.InstanceManager.sensorManagerInstance().getBeanBySystemName(nameList[i]);
+        Set<Sensor> nameSet = jmri.InstanceManager.sensorManagerInstance().getNamedBeanSet();
+        String[] displayList = new String[nameSet.size()];
+        int i = 0;
+        for (Sensor nBean : nameSet) {
             if (nBean != null) {
-                displayList[i] = nBean.getDisplayName();
+                displayList[i++] = nBean.getDisplayName();
             }
         }
         java.util.Arrays.sort(displayList);
         sensorList = new String[displayList.length + 1];
         sensorList[0] = "";
-        int i = 1;
+        i = 1;
         for (String name : displayList) {
             sensorList[i] = name;
+            i++;
+        }
+    }
+
+    private void updateReporterList() {
+        Set<Reporter> nameSet = jmri.InstanceManager.getDefault(jmri.ReporterManager.class).getNamedBeanSet();
+        String[] displayList = new String[nameSet.size()];
+        int i = 0;
+        for (Reporter nBean : nameSet) {
+            if (nBean != null) {
+                displayList[i++] = nBean.getDisplayName();
+            }
+        }
+        java.util.Arrays.sort(displayList);
+        reporterList = new String[displayList.length + 1];
+        reporterList[0] = "";
+        i = 1;
+        for (String name : displayList) {
+            reporterList[i] = name;
             i++;
         }
     }
@@ -859,10 +887,10 @@ public class BlockTableAction extends AbstractTableAction<Block> {
     JTextField blockSpeed = new JTextField(7);
     JCheckBox checkPerm = new JCheckBox(Bundle.getMessage("BlockPermColName"));
 
-    SpinnerNumberModel rangeSpinner = new SpinnerNumberModel(1, 1, 100, 1); // maximum 100 items
-    JSpinner numberToAdd = new JSpinner(rangeSpinner);
-    JCheckBox range = new JCheckBox(Bundle.getMessage("AddRangeBox"));
-    JCheckBox _autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));
+    SpinnerNumberModel numberToAddSpinnerNumberModel = new SpinnerNumberModel(1, 1, 100, 1); // maximum 100 items
+    JSpinner numberToAddSpinner = new JSpinner(numberToAddSpinnerNumberModel);
+    JCheckBox addRangeCheckBox = new JCheckBox(Bundle.getMessage("AddRangeBox"));
+    JCheckBox _autoSystemNameCheckBox = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));
     JLabel statusBar = new JLabel(Bundle.getMessage("AddBeanStatusEnter"), JLabel.LEADING);
     jmri.UserPreferencesManager pref;
 
@@ -885,7 +913,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                     cancelPressed(e);
                 }
             };
-            addFrame.add(new AddNewBeanPanel(sysName, userName, numberToAdd, range, _autoSystemName, "ButtonCreate", oklistener, cancellistener, statusBar));
+            addFrame.add(new AddNewBeanPanel(sysName, userName, numberToAddSpinner, addRangeCheckBox, _autoSystemNameCheckBox, "ButtonCreate", oklistener, cancellistener, statusBar));
             sysName.setToolTipText(Bundle.getMessage("SysNameToolTip", "B")); // override tooltip with bean specific letter
         }
         sysName.setBackground(Color.white);
@@ -893,15 +921,16 @@ public class BlockTableAction extends AbstractTableAction<Block> {
         statusBar.setText(Bundle.getMessage("AddBeanStatusEnter"));
         statusBar.setForeground(Color.gray);
         if (pref.getSimplePreferenceState(systemNameAuto)) {
-            _autoSystemName.setSelected(true);
+            _autoSystemNameCheckBox.setSelected(true);
         }
+        addRangeCheckBox.setSelected(false);
         addFrame.pack();
         addFrame.setVisible(true);
     }
 
     JComboBox<String> speeds = new JComboBox<String>();
 
-    JPanel additionalAddOption() {
+/*    JPanel additionalAddOption() {
 
         GridLayout additionLayout = new GridLayout(0, 2);
         JPanel mainPanel = new JPanel();
@@ -945,7 +974,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
         });
 
         return mainPanel;
-    }
+    }*/
 
     String systemNameAuto = this.getClass().getName() + ".AutoSystemName";
 
@@ -973,30 +1002,32 @@ public class BlockTableAction extends AbstractTableAction<Block> {
      */
     void okPressed(ActionEvent e) {
 
-        int NumberOfBlocks = 1;
+        int numberOfBlocks = 1;
 
-        if (range.isSelected()) {
-            NumberOfBlocks = (Integer) numberToAdd.getValue();
+        if (addRangeCheckBox.isSelected()) {
+            numberOfBlocks = (Integer) numberToAddSpinner.getValue();
         }
-        if (NumberOfBlocks >= 65) { // limited by JSpinnerModel to 100
+        if (numberOfBlocks >= 65) { // limited by JSpinnerModel to 100
             if (JOptionPane.showConfirmDialog(addFrame,
-                    Bundle.getMessage("WarnExcessBeans", Bundle.getMessage("Blocks"), NumberOfBlocks),
+                    Bundle.getMessage("WarnExcessBeans", Bundle.getMessage("Blocks"), numberOfBlocks),
                     Bundle.getMessage("WarningTitle"),
                     JOptionPane.YES_NO_OPTION) == 1) {
                 return;
             }
         }
-        String user = userName.getText();
-        String uName = user; // keep result separate to prevent recursive manipulation
-        user = NamedBean.normalizeUserName(user);
-        if (user == null || user.length() == 0) {
+        String user = NamedBean.normalizeUserName(userName.getText());
+        if (user == null || user.isEmpty()) {
             user = null;
         }
-        String system = sysName.getText();
+        String uName = user; // keep result separate to prevent recursive manipulation
+        String system = "";
+
+        if (!_autoSystemNameCheckBox.isSelected()) {
+            system = InstanceManager.getDefault(jmri.BlockManager.class).makeSystemName(sysName.getText());
+        }
         String sName = system; // keep result separate to prevent recursive manipulation
-        sName = InstanceManager.getDefault(BlockManager.class).normalizeSystemName(sName);
         // initial check for empty entry using the raw name
-        if (sName.length() < 3 && !_autoSystemName.isSelected()) {  // Using 3 to catch a plain IB
+        if (sName.length() < 3 && !_autoSystemNameCheckBox.isSelected()) {  // Using 3 to catch a plain IB
             statusBar.setText(Bundle.getMessage("WarningSysNameEmpty"));
             statusBar.setForeground(Color.red);
             sysName.setBackground(Color.red);
@@ -1007,27 +1038,38 @@ public class BlockTableAction extends AbstractTableAction<Block> {
 
         // Add some entry pattern checking, before assembling sName and handing it to the blockManager
         String statusMessage = Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameBlock"));
-        StringBuilder b;
 
-        for (int x = 0; x < NumberOfBlocks; x++) {
+        for (int x = 0; x < numberOfBlocks; x++) {
             if (x != 0) { // start at 2nd Block
-                if (user != null) {
-                    b = new StringBuilder(user);
-                    b.append(":");
-                    b.append(Integer.toString(x));
-                    uName = b.toString();
+                if (!_autoSystemNameCheckBox.isSelected()) {
+                    // Find first block with unused system name
+                    while (true) {
+                        system = nextName(system);
+                        // log.warn("Trying " + system);
+                        Block blk = InstanceManager.getDefault(jmri.BlockManager.class).getBySystemName(system);
+                        if (blk == null) {
+                            sName = system;
+                            break;
+                        }
+                    }
                 }
-                if (!_autoSystemName.isSelected()) {
-                    b = new StringBuilder(system);
-                    b.append(":");
-                    b.append(Integer.toString(x));
-                    sName = b.toString();
+                if (user != null) {
+                    // Find first block with unused user name
+                    while (true) {
+                        user = nextName(user);
+                        //log.warn("Trying " + user);
+                        Block blk = InstanceManager.getDefault(jmri.BlockManager.class).getByUserName(user);
+                        if (blk == null) {
+                            uName = user;
+                            break;
+                        }
+                    }
                 }
             }
             Block blk;
             String xName = "";
             try {
-                if (_autoSystemName.isSelected()) {
+                if (_autoSystemNameCheckBox.isSelected()) {
                     blk = InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock(uName);
                     if (blk == null) {
                         xName = uName;
@@ -1071,20 +1113,20 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                 blk.setCurvature(Block.SEVERE);
             }
             // add first and last names to statusMessage user feedback string
-            if (x == 0 || x == NumberOfBlocks - 1) {
+            if (x == 0 || x == numberOfBlocks - 1) {
                 statusMessage = statusMessage + " " + sName + " (" + user + ")";
             }
-            if (x == NumberOfBlocks - 2) {
+            if (x == numberOfBlocks - 2) {
                 statusMessage = statusMessage + " " + Bundle.getMessage("ItemCreateUpTo") + " ";
             }
-            // only mention first and last of range added
-        } // end of for loop creating range of Blocks
+            // only mention first and last of addRangeCheckBox added
+        } // end of for loop creating addRangeCheckBox of Blocks
 
         // provide feedback to user
         statusBar.setText(statusMessage);
         statusBar.setForeground(Color.gray);
 
-        pref.setSimplePreferenceState(systemNameAuto, _autoSystemName.isSelected());
+        pref.setSimplePreferenceState(systemNameAuto, _autoSystemNameCheckBox.isSelected());
     }
 
     void handleCreateException(String sysName) {

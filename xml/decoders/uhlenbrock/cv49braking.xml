@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2014 All rights reserved                            -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2014</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Alain</firstname>
+        <surname>Le Marchand</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2014-05-10</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>Initial version as separate file from Uhlenbrock_76560.xml/363xx/365xx</revremark>
+    </revision>
+  <!-- Uhlenbrock Decoder Configuration CV 49 - advanced bits -->
+  <!-- for 76560.xml/363xx/365xx decoders                     -->
+  </revhistory>
+    <variable item="Braking End" CV="49" mask="XXXXXVXX">
+        <enumVal>
+            <enumChoice choice="to standstill">
+                <choice>to standstill</choice>
+                <choice xml:lang="de">bis auf 0 im Bremsabschnitt</choice>
+                <choice xml:lang="nl">tot 0 in Remsectie</choice>
+            </enumChoice>
+            <enumChoice choice="as def. in braking speed">
+                <choice>as def. in braking speed</choice>
+                <choice xml:lang="de">bis auf gemäß Geschw. Brems</choice>
+                <choice xml:lang="nl">tot ingest. remsnelheid</choice>
+            </enumChoice>
+        </enumVal>
+        <label>Braking End</label>
+        <label xml:lang="de">Bremst bis</label>
+        <label xml:lang="nl">Remt tot</label>
+    </variable>
+    <variable item="Motor Option 1" CV="49" mask="XXXVXXXX">
+        <enumVal>
+            <enumChoice choice="divided by 2">
+                <choice>divided by 2</choice>
+                <choice xml:lang="de">dividiert durch 2</choice>
+                <choice xml:lang="nl">gedeeld door 2</choice>
+            </enumChoice>
+            <enumChoice choice="divided by 3">
+                <choice>divided by 3</choice>
+                <choice xml:lang="de">dividiert durch 3</choice>
+                <choice xml:lang="nl">gedeeld door 3</choice>
+            </enumChoice>
+        </enumVal>
+        <label>Voltage divider load regulation EMF</label>
+        <label xml:lang="de">Spannungsteiler Motorregelung EMK</label>
+        <label xml:lang="nl">Spannungsdeler Motorregeling EMF</label>
+    </variable>
+</variables>

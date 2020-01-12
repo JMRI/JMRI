@@ -45,8 +45,12 @@
         "lastReport": {
             "type": ["string", "null"],
             "description": "The last reported value as a string"
+        },
+        "value": {
+            "type": ["string"],
+            "description": "The current reported value or <no report> or <blank>"
         }
     },
     "additionalProperties": false,
-    "required": ["name", "userName", "comment", "state", "report", "lastReport"]
+    "required": ["name", "userName", "comment", "state", "report", "lastReport", "value"]
 }

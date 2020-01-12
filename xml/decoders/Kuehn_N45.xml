@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2003, 2004, 2014 All rights reserved -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -14,6 +13,10 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
     <version author="ronald@wirkuhns.de" version="1" lastUpdated="2016/04/10"/>
+    <version author="Alain Le Marchand" version="2" lastUpdated="2018/12/23"/>
+    <version author="Alain Le Marchand" version="3" lastUpdated="2019/01/09"/>
+    <!-- Version 2 - Clarify CV55 name and tooltip + added Reset (Alain Le Marchand) -->
+    <!-- Version 3 - Split CV27 in 2 items and fix mask value (Alain Le Marchand) -->
     <decoder>
     <family name="NMRA-DCC/Motorola" mfg="Kuehn Ing.">
     <model model="N45" numOuts="6" numFns="14" maxMotorCurrent="0.8 A" maxTotalCurrent="0.8 A">
@@ -164,49 +167,78 @@
       <comment xml:lang="cs">Meze 0 / 1</comment>
       <tooltip xml:lang="cs">&lt;html&gt;15,6 kHz = Vysoká frekvence pro řízení moderních DC a coreless motorů.&lt;br&gt; 120 Hz = Nízká frekvence pro řízení starších DC motorů a AC/univerzálních motorů.&lt;/html&gt;</tooltip>
     </variable>
-    <variable CV="27" mask="XXVVXXVV" default="16" item="Direction Dependent stops with asymmetrical DCC">
+    <variable CV="27" mask="XXXXXXVV" default="0" item="Direction Dependent stop with asymmetrical DCC">
     <enumVal>
-    <enumChoice choice="Does Not Stop">
-    <choice>Does Not Stop</choice>
-    <choice xml:lang="it">Non si ferma</choice>
-    <choice xml:lang="de">Kein Bremsen</choice>
-    <choice xml:lang="cs">Nezastaví</choice>
+    <enumChoice choice="Does Not Brake">
+        <choice>No Braking</choice>
+        <choice xml:lang="it">Non si ferma</choice>
+        <choice xml:lang="de">Kein Bremsen</choice>
+        <choice xml:lang="cs">Nezastaví</choice>
     </enumChoice>
-    <enumChoice choice="Stops when Right rail is higher voltage">
-    <choice>Stops when Right rail is higher voltage</choice>
-    <choice xml:lang="it">Si ferma se rotaia destra ha tensione più alta</choice>
-    <choice xml:lang="de">Bremsen, wenn rechte Schienenspannung höher</choice>
-    <choice xml:lang="cs">Zastaví pokud pravá kolejnice má vyšší napětí</choice>
+    <enumChoice choice="Brakes when Right rail is higher voltage">
+        <choice>Brakes when Right rail is higher voltage</choice>
+        <choice xml:lang="it">Si ferma se rotaia destra ha tensione più alta</choice>
+        <choice xml:lang="de">Bremsen, wenn rechte Schienenspannung höher</choice>
+        <choice xml:lang="cs">Zastaví pokud pravá kolejnice má vyšší napětí</choice>
     </enumChoice>
-    <enumChoice choice="Stops when Left rail is higher voltage">
-    <choice>Stops when Left rail is higher voltage</choice>
-    <choice xml:lang="it">Si ferma se rotaia sinistra ha tensione più alta</choice>
-    <choice xml:lang="de">Bremsen, wenn linke Schienenspannung höher</choice>
-    <choice xml:lang="cs">Zastaví pokud levá kolejnice má vyšší napětí</choice>
+    <enumChoice choice="Brakes when Left rail is higher voltage">
+        <choice>Brakes when Left rail is higher voltage</choice>
+        <choice xml:lang="it">Si ferma se rotaia sinistra ha tensione più alta</choice>
+        <choice xml:lang="de">Bremsen, wenn linke Schienenspannung höher</choice>
+        <choice xml:lang="cs">Zastaví pokud levá kolejnice má vyšší napětí</choice>
     </enumChoice>
-    <enumChoice choice="Stops in Both Directions">
-    <choice>Stops in Both Directions</choice>
-    <choice xml:lang="it">Si ferma in entrambe le direzioni</choice>
-    <choice xml:lang="de">Bremsen in beiden Richtungen</choice>
-    <choice xml:lang="cs">Zastaví v obou směrech</choice>
-    </enumChoice>
-    <enumChoice choice="On DC contrary" value="16">
-    <choice>On DC contrary</choice>
-    <choice xml:lang="de">Bremsen bei DC entgegen Fahrtrichtung</choice>
-    <choice xml:lang="cs">Zastaví na DC v protisměru jízdy</choice>
-    </enumChoice>
-    <enumChoice choice="On DC in direction" value="32">
-    <choice>On DC in direction</choice>
-    <choice xml:lang="de">Bremsen bei DC in Fahrtrichtung</choice>
-    <choice xml:lang="cs">Zastaví na DC ve směru jízdy</choice>
+    <enumChoice choice="Brakes in Both Directions">
+        <choice>Brakes in Both Directions</choice>
+        <choice xml:lang="it">Si ferma in entrambe le direzioni</choice>
+        <choice xml:lang="de">Bremsen in beiden Richtungen</choice>
+        <choice xml:lang="cs">Zastaví v obou směrech</choice>
     </enumChoice>
     </enumVal>
-      <label>Brake configuration</label>
-      <label xml:lang="de">Bremskonfiguration</label>
-      <label xml:lang="cs">Konfigurace brždění</label>
-      <tooltip>Brake on DC detect</tooltip>
-      <tooltip xml:lang="de">Bremskonfiguration mittels asymmetrischer DCC-Digitalspannung</tooltip>
-      <tooltip xml:lang="cs">Konfigurace brždění v závislosti asymetrického napětí DCC.</tooltip>
+      <label>Brake configuration (asymmetrical DCC)</label>
+      <label xml:lang="de">Bremskonfiguration (asymmetrischer DCC)</label>
+      <label xml:lang="cs">Konfigurace brždění (asymetrický DCC)</label>
+      <tooltip>&lt;html&gt;Brake configuration with asymmetrical DCC. &lt;br&gt; Lenz-ABC default is higher voltage on right rail.&lt;/html&gt;</tooltip>
+      <tooltip xml:lang="de">&lt;html&gt;Bremskonfiguration mittels asymmetrischer DCC-Digitalspannung&lt;br&gt; Lenz-ABC Grundeinstellung ist wenn rechte Schienenspannung höher.&lt;/html&gt;</tooltip>
+      <tooltip xml:lang="cs">&lt;html&gt;Konfigurace brždění v závislosti asymetrického napětí DCC.&lt;br&gt; Lenz-ABC default is higher voltage on right rail.&lt;/html&gt;</tooltip>
+    </variable>
+    <variable CV="27" mask="XXVVXXXX" default="0" item="Direction Dependent stop with DC polarity">
+    <enumVal>
+    <enumChoice choice="In DC contrary">
+        <choice>Brakes in Reverse DC polarity</choice>
+        <choice xml:lang="de">Bremsen bei DC entgegen Fahrtrichtung</choice>
+        <choice xml:lang="cs">Zastaví na DC v protisměru jízdy</choice>
+    </enumChoice>
+    <enumChoice choice="In DC contrary">
+        <choice>Brakes in Reverse DC polarity even after polarity change</choice>
+        <choice xml:lang="de">Bremsen bei Gleichspg. entgegen Fahrtricht.auch nach Spgs.wechsel</choice>
+        <choice xml:lang="cs">Zastaví na DC v protisměru jízdy i po změně napětí</choice>
+    </enumChoice>
+    <enumChoice choice="On DC in direction">
+        <choice>Brakes in Forward DC polarity</choice>
+        <choice xml:lang="de">Bremsen bei Gleichspannung in Fahrtrichtung</choice>
+        <choice xml:lang="cs">Zastaví na DC ve směru jízdy</choice>
+    </enumChoice>
+    <enumChoice choice="On DC both directions">
+        <choice>Brakes with DC in both directions</choice>
+        <choice xml:lang="de">Bremsen bei Gleichspannung in beiden Richtungen</choice>
+        <choice xml:lang="cs">Zastaví na DC v obou směrech</choice>
+    </enumChoice>
+    </enumVal>
+      <label>Brake configuration (DC polarity)</label>
+      <label xml:lang="de">Bremskonfiguration (Gleichspannung)</label>
+      <label xml:lang="cs">Konfigurace brždění (Polarita DC)</label>
+      <tooltip>&lt;html&gt;Brake on DC polarity detection. &lt;br&gt;
+                By braking at DC voltage in both directions, even locomotives &lt;br&gt;
+                in DCC format can safely stop on Märklin® braking distances.&lt;br&gt;
+                &lt;/html&gt;</tooltip>
+      <tooltip xml:lang="de">&lt;html&gt;Bremsen bei Gleichspannung entgegen order in Fahrtrichtung. &lt;br&gt;
+                            Durch das Bremsen bei Gleichspannung in und entgegen der Fahrtrichtung &lt;br&gt;
+                            können auch Loks im DCC-Format auf Märklin®-Bremsstrecken sicher anhalten.&lt;br&gt;
+                            &lt;/html&gt;</tooltip>
+      <tooltip xml:lang="cs">&lt;html&gt;Konfigurace brždění na stejnosměrný proud ve směru jízdy nebo ve směru jízdy. &lt;br&gt;
+                            Brzdným účinkem stejnosměrného proudu ve směru jízdy a proti směru jízdy &lt;br&gt;
+                            se mohou i lokomotivy ve formátu DCC bezpečně zastavit na brzdných vzdálenostech Märklin®.&lt;br&gt;
+                            &lt;/html&gt;</tooltip>
     </variable>
     <variable CV="28" mask="XXXXXXXV" default="0" item="RailCom channel 1 (Broadcast)">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -706,20 +738,20 @@
       <tooltip xml:lang="de">P-Parameter</tooltip>
       <tooltip xml:lang="cs">Úprava regulace EMF složky P</tooltip>
     </variable>
-    <variable CV="55" default="00" item="Global lighting option 2">
+    <variable CV="55" default="0" item="Global lighting option 2">
     <decVal min="00" max="99"/>
-      <label>Cycle Time Effects</label>
-      <label xml:lang="it">Effetti Ciclici</label>
-      <label xml:lang="de">Zykluszeit der Effekte/ Dimmwert</label>
-      <label xml:lang="cs">Doba periody efektů</label>
-      <tooltip>Controls Cycle Time of Effects (for CV49/52): 0=0.5s, 9=4.5s</tooltip>
+      <label>Cycle Time Effects / Dimmer</label>
+      <label xml:lang="it">Effetti Ciclici / Riduzione luce</label>
+      <label xml:lang="de">Zykluszeit der Effekte / Dimmwert</label>
+      <label xml:lang="cs">Doba periody efektů/snížení výstupu</label>
+      <tooltip>&lt;html&gt;Controls Cycle Time of Effects and Dimming value (for CV49/52).&lt;br&gt;Decimal number = Cycle time: 0=0.5s, 9=4.5s&lt;br&gt;Unit number = Dimming: 0=full on, 9=lowest&lt;br&gt;e.g. 64 = cycle 3s (decimal value 6), dimmer value= 4 (unit value =4)&lt;br&gt;&lt;/html&gt;</tooltip>
       <tooltip xml:lang="it">Controlla ciclo di effetti:(per CV 49/52): 0=0.5s, 9=4.5s</tooltip>
-      <tooltip xml:lang="de">&lt;html&gt;Hier können Sie die Zykluszeit der Effekte und den Dimmwert für die Auslösung mit F-Taste oder Geschwindigkeit festlegen.&lt;br&gt;Zehnerstelle = Zykluszeit der Effekte&lt;br&gt;Einerstelle = Dimmwert&lt;br&gt;&lt;/html&gt;</tooltip>
+      <tooltip xml:lang="de">&lt;html&gt;Hier können Sie die Zykluszeit der Effekte und den Dimmwert für die Auslösung mit F-Taste oder Geschwindigkeit festlegen.&lt;br&gt;Zehnerstelle = Zykluszeit der Effekte (0x-9x)&lt;br&gt;Einerstelle = Dimmwert (x0-x9)&lt;br&gt;&lt;/html&gt;</tooltip>
       <tooltip xml:lang="cs">Řízení doby periody efektů (pro CV49 - CV52): 0 = 0,5 s, 9 = 4,5 s</tooltip>
-       <comment>Cycle Time Effects/Output Reduction</comment>
-       <comment xml:lang="it">Effetti ciclici / Riduzione uscita</comment>
-       <comment xml:lang="de">Zykluszeit der Effekte/ Dimmwert</comment>
-       <comment xml:lang="cs">Doba periody efektů/snížení výstupu</comment>
+      <comment>Cycle Time Effects/Output Reduction</comment>
+      <comment xml:lang="it">Effetti ciclici / Riduzione uscita</comment>
+      <comment xml:lang="de">Zykluszeit der Effekte/ Dimmwert</comment>
+      <comment xml:lang="cs">Doba periody efektů/snížení výstupu</comment>
     </variable>
     <variable CV="56" mask="XXXXXXXV" default="0" item="Motor Option 1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -935,13 +967,7 @@
     </variable>
     <!-- Speed Table-->
     <!-- CV#67-94    Standardwerte weichen ab -->
-    <variable item="Speed Table" CV="67">
-    <speedTableVal/>
-      <label>Speed Table</label>
-      <label xml:lang="it">Tabella velocità</label>
-      <label xml:lang="de">Geschwindigkeitstabelle</label>
-      <label xml:lang="cs">Rychlostní tabulka</label>
-    </variable>
+    <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
     <!-- End of Speed Table-->
     <!--variable CV="112" mask="XXXXXXXV" item="Advanced Group 1 Option 1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -1003,6 +1029,12 @@
       <tooltip xml:lang="cs">Podverze dekodéru</tooltip>
     </variable>
     </variables>
+    <resets>
+      <factReset label="Reset All CVs" CV="8" default="8">
+        <label xml:lang="de">Reset - Grundeinstellung des Decoders wiederherstellen</label>
+        <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
+    </resets>
     </decoder>
     <xi:include href="http://jmri.org/xml/decoders/kuehn/PaneABC.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/kuehn/PaneAdvanced.xml"/>

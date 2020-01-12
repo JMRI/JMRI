@@ -103,6 +103,7 @@ public class CatalogPane extends JPanel {
         } else if (((DefaultMutableTreeNode) path.getPathComponent(1)).getUserObject().equals("files")) {
             // process a file
             buf = new StringBuilder(CatalogTreeModel.fileRoot);
+            buf.append(File.separator);   // Separator need between the root and the user directory/file
             buf.append((String) ((DefaultMutableTreeNode) path.getPathComponent(2)).getUserObject());
             for (int i = 3; i < level; i++) {
                 buf.append(File.separator);

@@ -20,12 +20,12 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008 Converted to
  * multiple connection
  * @author kcameron Copyright (C) 2011
-  */
+ */
 public class SerialTurnout extends AbstractTurnout {
 
     /**
      * Create a Turnout object, with both system and user names.
-     * <P>
+     * <p>
      * 'systemName' was previously validated in SerialTurnoutManager
      * @param systemName system name
      * @param tc traffic controller
@@ -94,6 +94,5 @@ public class SerialTurnout extends AbstractTurnout {
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialTurnout.class);
+
 }
-
-

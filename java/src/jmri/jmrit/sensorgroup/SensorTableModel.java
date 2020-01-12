@@ -1,13 +1,18 @@
 package jmri.jmrit.sensorgroup;
 
 import java.beans.PropertyChangeListener;
-import jmri.InstanceManager;
-import jmri.Manager;
+
+import jmri.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Model for a simple Sensor JTable
+ * Model for a simple Sensor JTable.
+ * <p>
+ * Note that this has a very expensive way of handling
+ * changes to the contents of the SensorManager: it recreates
+ * an entire local array instead of using the Manager's accessors.
  *
  * @author Bob Jacobsen Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
@@ -15,6 +20,8 @@ import org.slf4j.LoggerFactory;
  */
 public class SensorTableModel extends BeanTableModel implements PropertyChangeListener {
 
+    // Rework this to use the ordered index from the manager
+    
     String[] _sysNameList;
     Boolean[] _includedSensors;
 
@@ -24,11 +31,13 @@ public class SensorTableModel extends BeanTableModel implements PropertyChangeLi
     }
 
     private void init() {
-        _sysNameList = getManager().getSystemNameArray();
-
-        _includedSensors = new Boolean[_sysNameList.length];
-        for (int i = 0; i < _sysNameList.length; i++) {
+        _sysNameList = new String[getManager().getObjectCount()];
+        _includedSensors = new Boolean[getManager().getObjectCount()];
+        int i = 0;
+        for (Sensor s : getManager().getNamedBeanSet()) {
+            _sysNameList[i] = s.getSystemName();
             _includedSensors[i] = Boolean.FALSE;
+            i++;
         }
     }
 
@@ -37,7 +46,7 @@ public class SensorTableModel extends BeanTableModel implements PropertyChangeLi
     }
 
     @Override
-    public Manager getManager() {
+    public SensorManager getManager() {
         return InstanceManager.sensorManagerInstance();
     }
 

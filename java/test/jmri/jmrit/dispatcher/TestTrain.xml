@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" href="/xml/XSLT/dispatcher-traininfo.xsl"?>
-<!DOCTYPE traininfofile SYSTEM "dispatcher-traininfo.dtd">
-
-<traininfofile>
-    <!--Written by JMRI version 2.9.4+dev on Sat Apr 17 18:12:24 EDT 2010 $Id$-->
-    <traininfo transitname="IZ5( Red Main Loop CW )" trainname="GTW 6418" dccaddress=" " trainintransit="yes" startblockname="IB1( Red Siding )-1" endblockname="IB1( Red Siding )-7" trainfromroster="yes" trainfromtrains="no" trainfromuser="no" priority="7" resetwhendone="no" delayedstart="yes" departuretimehr="08" departuretimemin="10" traintype="THROUGH_FREIGHT" autorun="yes" speedfactor="0.8" maxspeed="0.6" ramprate="RAMP_FAST" resistancewheels="yes" runinreverse="no" sounddecoder="no" maxtrainlength="222.0" />
-</traininfofile>
-

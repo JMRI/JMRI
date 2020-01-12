@@ -1,7 +1,6 @@
 package jmri.managers;
 
 import javax.annotation.Nonnull;
-
 import jmri.Light;
 import jmri.LightManager;
 
@@ -35,7 +34,7 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
      * @return Null if nothing by that name exists
      */
     @Override
-    public Light getLight(String name) {
+    public Light getLight(@Nonnull String name) {
         return super.getNamedBean(name);
     }
 
@@ -44,8 +43,9 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
         return ((LightManager) getMgr(i)).newLight(systemName, userName);
     }
 
-    @Override
     /** {@inheritDoc} */
+    @Override
+    @Nonnull
     public Light provide(@Nonnull String name) throws IllegalArgumentException { return provideLight(name); }
 
     /**
@@ -57,30 +57,9 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
      * @return Never null under normal circumstances
      */
     @Override
-    public Light provideLight(String name) throws IllegalArgumentException {
+    @Nonnull
+    public Light provideLight(@Nonnull String name) throws IllegalArgumentException {
         return super.provideNamedBean(name);
-    }
-
-    /**
-     * Locate an instance based on a system name. Returns null if no instance
-     * already exists.
-     *
-     * @return requested Light object or null if none exists
-     */
-    @Override
-    public Light getBySystemName(String systemName) {
-        return super.getBeanBySystemName(systemName);
-    }
-
-    /**
-     * Locate an instance based on a user name. Returns null if no instance
-     * already exists.
-     *
-     * @return requested Turnout object or null if none exists
-     */
-    @Override
-    public Light getByUserName(String userName) {
-        return super.getBeanByUserName(userName);
     }
 
     /**
@@ -88,21 +67,21 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
      * two calls with the same arguments will get the same instance; there is
      * only one Light object representing a given physical light and therefore
      * only one with a specific system or user name.
-     * <P>
+     * <p>
      * This will always return a valid object reference for a valid request; a
      * new object will be created if necessary. In that case:
-     * <UL>
-     * <LI>If a null reference is given for user name, no user name will be
+     * <ul>
+     * <li>If a null reference is given for user name, no user name will be
      * associated with the Light object created; a valid system name must be
      * provided
-     * <LI>If a null reference is given for the system name, a system name will
+     * <li>If a null reference is given for the system name, a system name will
      * _somehow_ be inferred from the user name. How this is done is system
      * specific. Note: a future extension of this interface will add an
      * exception to signal that this was not possible.
-     * <LI>If both names are provided, the system name defines the hardware
+     * <li>If both names are provided, the system name defines the hardware
      * access of the desired turnout, and the user address is associated with
      * it.
-     * </UL>
+     * </ul>
      * Note that it is possible to make an inconsistent request if both
      * addresses are provided, but the given values are associated with
      * different objects. This is a problem, and we don't have a good solution
@@ -112,24 +91,9 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
      * @return requested Light object (never null)
      */
     @Override
-    public Light newLight(String systemName, String userName) {
+    @Nonnull
+    public Light newLight(@Nonnull String systemName, String userName) {
         return newNamedBean(systemName, userName);
-    }
-
-    /**
-     * Validate system name format. Locate a system specfic LightManager based on
-     * a system name.
-     *
-     * @return if a manager is found, return its determination of validity of
-     * system name format. Return INVALID if no manager exists.
-     */
-    @Override
-    public NameValidity validSystemNameFormat(String systemName) {
-        int i = matchTentative(systemName);
-        if (i >= 0) {
-            return ((LightManager) getMgr(i)).validSystemNameFormat(systemName);
-        }
-        return NameValidity.INVALID;
     }
 
     /**
@@ -141,7 +105,7 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
      * Return false if no manager exists.
      */
     @Override
-    public boolean validSystemNameConfig(String systemName) {
+    public boolean validSystemNameConfig(@Nonnull String systemName) {
         int i = matchTentative(systemName);
         if (i >= 0) {
             return ((LightManager) getMgr(i)).validSystemNameConfig(systemName);
@@ -150,26 +114,13 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
     }
 
     /**
-     * Normalize a system name Locate a system specfic LightManager based on a
-     * system name. Returns "" if no manager exists. If a manager is found,
-     * return its determination of a normalized system name
-     */
-    @Override
-    public String normalizeSystemName(String systemName) {
-        int i = matchTentative(systemName);
-        if (i >= 0) {
-            return ((LightManager) getMgr(i)).normalizeSystemName(systemName);
-        }
-        return "";
-    }
-
-    /**
      * Convert a system name to an alternate format Locate a system specfic
      * LightManager based on a system name. Returns "" if no manager exists. If
      * a manager is found, return its determination of an alternate system name
      */
     @Override
-    public String convertSystemNameToAlternate(String systemName) {
+    @Nonnull
+    public String convertSystemNameToAlternate(@Nonnull String systemName) {
         int i = matchTentative(systemName);
         if (i >= 0) {
             return ((LightManager) getMgr(i)).convertSystemNameToAlternate(systemName);
@@ -194,7 +145,7 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
      * its determination of support for variable lights.
      */
     @Override
-    public boolean supportsVariableLights(String systemName) {
+    public boolean supportsVariableLights(@Nonnull String systemName) {
         int i = matchTentative(systemName);
         if (i >= 0) {
             return ((LightManager) getMgr(i)).supportsVariableLights(systemName);
@@ -205,29 +156,37 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
     /**
      * A method that determines if it is possible to add a range of lights in
      * numerical order eg 11 thru 18, primarily used to show/not show the add
-     * range box in the add Light window
-     *
+     * range box in the add Light window.
      */
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         int i = matchTentative(systemName);
         if (i >= 0) {
             return ((LightManager) getMgr(i)).allowMultipleAdditions(systemName);
         }
         return false;
     }
+
     /**
-     * Provide a connection system agnostic tooltip for the Add new item beantable pane.
+     * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = "Enter a number from 1 to 9999"; // Basic number format help
-        return entryToolTip;
+        return "Enter a number from 1 to 9999"; // Basic number format help
     }
 
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameLight");
+    @Nonnull
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameLights" : "BeanNameLight");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<Light> getNamedBeanClass() {
+        return Light.class;
     }
 
 }

@@ -46,8 +46,9 @@ public class NodeConfigFrameTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        memo = new MapleSystemConnectionMemo();
+        jmri.util.JUnitUtil.resetProfileManager();
 
+        memo = new MapleSystemConnectionMemo();
     }
 
     @After

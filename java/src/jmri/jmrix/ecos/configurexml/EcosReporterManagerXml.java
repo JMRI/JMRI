@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provides load and store functionality for configuring EcosReporterManagers.
- * <P>
+ * <p>
  * Uses the store method from the abstract base class, but provides a load
  * method here.
  *

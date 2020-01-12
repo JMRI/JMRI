@@ -22,7 +22,7 @@ public class MergTrafficControllerTest extends jmri.jmrix.can.adapters.gridconne
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp(); 
+        jmri.util.JUnitUtil.setUp(); 
         JUnitUtil.resetInstanceManager();
         tc = new MergTrafficController();
     }
@@ -31,7 +31,9 @@ public class MergTrafficControllerTest extends jmri.jmrix.can.adapters.gridconne
     @After
     public void tearDown(){
        tc = null;
-        JUnitUtil.tearDown(); 
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.tearDown();
+ 
     }
 
 }

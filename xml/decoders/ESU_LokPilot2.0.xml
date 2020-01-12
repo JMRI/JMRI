@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!--Copyright (C) JMRI 2003, 2004, 2008 All rights reserved -->
-<!--$Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -280,10 +279,7 @@
         <decVal min="0" max="255"/>
         <label>Forward Trim</label>
       </variable>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <variable item="Reverse Trim" CV="95" default="0" tooltip="Divided by 128 results in the factor, with which the motor voltage is multiplied in reverse mode (0-255)">
         <decVal min="0" max="255"/>
         <label>Reverse Trim</label>
@@ -1831,6 +1827,8 @@
       </display>
     </column>
     <name>Function Map</name>
+    <name xml:lang="de">Funktionszuordnung</name>
+    <name xml:lang="nl">Functietoewijzing</name>
   </pane>
   <pane>
     <column>

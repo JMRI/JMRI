@@ -1,18 +1,177 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
-    "title": "jmri-json-hello-client-message",
-    "type": "object",
-    "description": "Schema data object in message from client to JMRI for type \"hello\"",
-    "properties": {
-        "locale": {
-            "type": "string",
-            "description": "The client locale matching a Java Locale string representation"
-        },
-        "client": {
-            "type": "string",
-            "description": "A token the client can use to subscribe to a message stream"
-        }
-    },
-    "additionalProperties": false,
-    "required": ["name"]
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "jmri-json-throttle-client-message",
+	"type": "object",
+	"description": "Data portion of message from client to JMRI for type \"throttle\"",
+	"properties": {
+		"address": {
+			"type": "integer",
+			"description": "DCC Address of the throttle"
+		},
+		"isLongAddress": {
+			"type": "boolean",
+			"description": "true if address must be long; false otherwise"
+		},
+		"rosterEntry": {
+			"type": "string",
+			"description" : "ID of RosterEntry for the throttle"
+		},
+		"json": {
+			"speed": "number",
+			"description": "Throttle speed"
+		},
+		"forward": {
+			"type": "boolean",
+			"description": "true if forward; false otherwise"
+		},
+		"F0": {
+			"type": "boolean",
+			"description": "true if function on; false otherwise"
+		},
+		"F1": {
+			"type": "boolean",
+			"description": "true if function on; false otherwise"
+		},
+		"F2": {
+			"type": "boolean",
+			"description": "true if function on; false otherwise"
+		},
+		"F3": {
+			"type": "boolean",
+			"description": "true if function on; false otherwise"
+		},
+		"F4": {
+			"type": "boolean",
+			"description": "true if function on; false otherwise"
+		},
+		"F5": {
+			"type": "boolean",
+			"description": "true if function on; false otherwise"
+		},
+		"F6": {
+			"type": "boolean",
+			"description": "true if function on; false otherwise"
+		},
+		"F7": {
+			"type": "boolean",
+			"description": "true if function on; false otherwise"
+		},
+		"F8": {
+			"type": "boolean",
+			"description": "true if function on; false otherwise"
+		},
+		"F9": {
+			"type": "boolean",
+			"description": "true if function on; false otherwise"
+		},
+		"F10": {
+			"type": "boolean",
+			"description": "true if function on; false otherwise"
+		},
+		"F11": {
+			"type": "boolean",
+			"description": "true if function on; false otherwise"
+		},
+		"F12": {
+			"type": "boolean",
+			"description": "true if function on; false otherwise"
+		},
+		"F13": {
+			"type": "boolean",
+			"description": "true if function on; false otherwise"
+		},
+		"F14": {
+			"type": "boolean",
+			"description": "true if function on; false otherwise"
+		},
+		"F15": {
+			"type": "boolean",
+			"description": "true if function on; false otherwise"
+		},
+		"F16": {
+			"type": "boolean",
+			"description": "true if function on; false otherwise"
+		},
+		"F17": {
+			"type": "boolean",
+			"description": "true if function on; false otherwise"
+		},
+		"F18": {
+			"type": "boolean",
+			"description": "true if function on; false otherwise"
+		},
+		"F19": {
+			"type": "boolean",
+			"description": "true if function on; false otherwise"
+		},
+		"F20": {
+			"type": "boolean",
+			"description": "true if function on; false otherwise"
+		},
+		"F21": {
+			"type": "boolean",
+			"description": "true if function on; false otherwise"
+		},
+		"F22": {
+			"type": "boolean",
+			"description": "true if function on; false otherwise"
+		},
+		"F23": {
+			"type": "boolean",
+			"description": "true if function on; false otherwise"
+		},
+		"F24": {
+			"type": "boolean",
+			"description": "true if function on; false otherwise"
+		},
+		"F25": {
+			"type": "boolean",
+			"description": "true if function on; false otherwise"
+		},
+		"F26": {
+			"type": "boolean",
+			"description": "true if function on; false otherwise"
+		},
+		"F27": {
+			"type": "boolean",
+			"description": "true if function on; false otherwise"
+		},
+		"F28": {
+			"type": "boolean",
+			"description": "true if function on; false otherwise"
+		},
+		"speedSteps": {
+			"type": "integer",
+			"description": "Number of steps between idle and full throttle"
+		},
+		"clients": {
+			"type": "integer",
+			"description": "Number of clients attempting to control the throttle"
+		},
+		"name": {
+			"type": "string",
+			"description": "The identity of this throttle used for communications between JMRI server and client"
+		},
+		"throttle": {
+			"type": "string",
+			"description": "The identity of this throttle used for communications between JMRI server and client; deprecated in favor of \"name\""
+		},
+		"status": {
+			"type": "null",
+			"description": "Cause the JMRI server responds with the complete status of the throttle"
+		},
+		"release": {
+			"type": "null",
+			"description": "Cause the JMRI server to release the throttle"
+		}
+	},
+	"additionalProperties": false,
+	"oneOf": [
+		{
+			"required": [ "name" ]
+		},
+		{
+			"required": [ "throttle" ]
+		}
+	]
 }

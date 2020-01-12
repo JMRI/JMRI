@@ -8,7 +8,8 @@
   <!-- Copyright Bob Jacobsen 2008 -->
 
   <title>JMRI: DecoderPro User Guide - Creating A Custom Decoder
-  File</title><!-- Style -->
+  File</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -16,17 +17,17 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
-      <h1>JMRI: DecoderPro User Guide</h1>
+
+    <h1>JMRI: DecoderPro User Guide</h1>
 
       <h2>Creating A Custom Decoder File</h2>
 
@@ -67,9 +68,9 @@
           locate it. (See the <a href=
           "Files.shtml#location"><em>configuration files
           page</em></a> for further details about how to find that
-          directory and it's contents)</p>
+          directory and its contents)</p>
 
-          <p>If you're modifying a decoder definition, it's best to
+          <p>If you're modifying a decoder definition, it is best to
           start with the most recent version, which can always be
           found here on the JMRI web site at <a href=
           "http://jmri.org/xml/decoders/">http://jmri.org/xml/decoders/</a>.
@@ -101,7 +102,6 @@
           href="../XSLT/decoder.xsl"?&gt;<br>
           &lt;!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010
           All rights reserved --&gt;<br>
-          &lt;!-- $Id$ --&gt;<br>
           ...<br>
           &lt;decoder-config
           xmlns:xi="http://www.w3.org/2001/XInclude"
@@ -154,7 +154,7 @@
           numFns="2"/&gt;<br>
               &lt;/family&gt;</p>
 
-          <p>The spacing is not important, but its useful to ident
+          <p>The spacing is not important, but it is useful to indent
           the file like this to make it more readable. XML uses
           "elements" and "attributes" to carry information. The
           &lt;model&gt; things are elements; attributes like
@@ -180,11 +180,11 @@
 
           <ul>
             <li><dfn>name</dfn> - the name of the decoder family.
-            Its best if you use the same name here as you used in
+            It's best if you use the same name here as you used in
             the filename.</li>
 
             <li><dfn>mfg</dfn> - the manufacturer of the decoder.
-            Its best if you use the same manufacturer name here as
+            It's best if you use the same manufacturer name here as
             you used in the filename.</li>
 
             <li>
@@ -320,10 +320,28 @@
             <li><dfn>mask</dfn> - A pattern like "XXXVVVXX" which
             controls which bits in the CV make up the variable.
             Each "V" is a bit that's included, and "X" are bits
-            that are not to be included. Its best to have eight
+            that are not to be included. It's best to have eight
             characters, as that makes it clearer what's going on.
             If the variable is a full byte, this attribute can be
-            omitted.</li>
+            omitted.
+            <p>
+            Generally, the V characters should be a contiguous block 
+            of bits as specified in the manufacturer's documentation
+            for the decoder.  In certain rare cases, the
+            layout of the decoder might
+            require a different pattern like XXVVXXVV, but 
+            in those cases please check the operation of the 
+            resulting decoder definition carefully to make sure it 
+            does what you want.
+            
+            <p>
+            As another special case, this can also be used (along with 
+            some other attributes) to handle CVs that are coded in
+            bases other than binary:  Ones that store their 
+            parts as decimal digits, or even base 3 or 5.
+            That's a bit more technical, it's rarely needed, but 
+            if you do need it see the 
+            <a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/symbolicprog/VariableValue.html">javadoc for more details</a>.
 
             <li><dfn>default</dfn> - The default value for this
             variable. This is used for a new decoder, or when you
@@ -337,7 +355,7 @@
           human-comfortable name for this variable. This is
           generally what the decoder manufacturer calls this item,
           even if other manufacturers or the NMRA use a different
-          name for similar things. It's optional, in which case the
+          name for similar things. It is optional, in which case the
           "item" value will be used to label it when it's presented
           to the user.</p>
 
@@ -371,13 +389,13 @@
             allowed.</li>
 
             <li>If you'd rather enter and display values in
-            hexadecimal, use a 'hexVal' element. Its otherwise the
+            hexadecimal, use a 'hexVal' element. It's otherwise the
             same as the 'decVal' element we've already
             discussed.</li>
 
             <li>
               <p>If your decoder supports a long address, you can
-              add a 'longAddress' element. Its perhaps easiest to
+              add a 'longAddress' element. It's perhaps easiest to
               copy this from another file, or from this
               example:</p>
 
@@ -427,10 +445,49 @@
 
               <p class="example">    &lt;enumChoice choice="Blue"
               value="32"/&gt;</p>
+              
             </li>
           </ul>
         </dd>
 
+        <dt class="left">Including fragment files</dt>
+        <dd>
+          <p>Decoder definitions can include "fragment files"
+          which provide common definitions of some CVs.
+          This has the advantage that they're already created and 
+          tested, and often include tooltip text, translations 
+          and other nice features.  See the existing 
+          decoder definitions for 
+          <a href="http://jmri.org/xml/decoders/nmra">examples</a>.  
+          Some key ones:</p>
+
+              <ul>
+                <li>CV1, the primary or short address, 
+                    CV17 and 18, the extended or long address,
+                    and the corresponding CV29 bits can 
+                    be handled by one of these, depending
+                    on what the decode supports:
+                    <ul>
+                    <li>xml/decoders/nmra/shortAddressOnly.xml
+                    <li>xml/decoders/nmra/shortAndLongAddress.xml
+                    </ul>
+                <li>CV19, the consist address and direction, 
+                    can be handled by one of these:
+                    <ul>
+                    <li>xml/decoders/nmra/consistAddr.xml	
+                    <li>xml/decoders/nmra/consistAddrDirection.xml
+                    </ul>
+                 <li>The CV16/CV15 decoder lock feature can be 
+                    handled by the xml/decoders/nmra/decoderLockId16.xml
+                    fragment file. Note that only CV16 is included;
+                    CV15 should not be included in the definition
+                    to prevent it from being changed after decoder
+                    installation.   
+                </ul>
+         
+         <p>You can also use fragment files to include (hence simplify)
+         <a href="http://jmri.org/xml/decoders/parts">common sets of enum choices</a>.</p> 
+        </dd>
         <dt class="left">Checking for syntax errors</dt>
 
         <dd>

@@ -1,29 +1,27 @@
 package jmri.jmrit.operations.trains.tools;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
+import java.io.*;
 import java.text.MessageFormat;
+
 import javax.swing.JOptionPane;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
-import jmri.jmrit.operations.rollingstock.cars.ExportCars;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.TrainManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Exports the train roster into a comma delimited file (CSV). Only trains that
  * have the "Build" checkbox selected are exported. If a train is built, a
  * summary of the train's route and work is provided.
  *
- * @author Daniel Boudreau Copyright (C) 2010, 2011
+ * @author Daniel Boudreau Copyright (C) 2010, 2011, 2019
  *
  */
 public class ExportTrains extends XmlFile {
@@ -39,11 +37,7 @@ public class ExportTrains extends XmlFile {
         del = delimiter;
     }
 
-    /**
-     * Store the all of the operation car objects in the default place,
-     * including making a backup if needed
-     */
-    public void writeOperationsCarFile() {
+    public void writeOperationsTrainsFile() {
         makeBackupFile(defaultOperationsFilename());
         try {
             if (!checkFile(defaultOperationsFilename())) {
@@ -79,7 +73,12 @@ public class ExportTrains extends XmlFile {
             fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8")), // NOI18N
                     true); // NOI18N
         } catch (IOException e) {
-            log.error("Can not open export cars CSV file: " + file.getName());
+            log.error("Can not open export trains CSV file: " + file.getName());
+            JOptionPane.showMessageDialog(null,
+                    MessageFormat.format(Bundle.getMessage("ExportedTrainsToFile"), new Object[]{
+                            0, defaultOperationsFilename()}),
+                    Bundle.getMessage("ExportFailed"),
+                    JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -98,7 +97,19 @@ public class ExportTrains extends XmlFile {
                 del +
                 Bundle.getMessage("Status") +
                 del +
-                Bundle.getMessage("Comment");
+                Bundle.getMessage("Comment") +
+                del +
+                Bundle.getMessage("LocoTypes") +
+                del +
+                Bundle.getMessage("CarTypes") +
+                del +
+                Bundle.getMessage("RoadOption") +
+                del +
+                Bundle.getMessage("Roads") +
+                del +
+                Bundle.getMessage("LoadOption") +
+                del +
+                Bundle.getMessage("Loads");
         fileOut.println(header);
 
         int count = 0;
@@ -140,6 +151,30 @@ public class ExportTrains extends XmlFile {
                     del +
                     ESC +
                     train.getComment() +
+                    ESC +
+                    del +
+                    ESC +
+                    TrainCommon.formatStringToCommaSeparated(train.getLocoTypeNames()) +
+                    ESC +
+                    del +
+                    ESC +
+                    TrainCommon.formatStringToCommaSeparated(train.getCarTypeNames()) +
+                    ESC +
+                    del +
+                    ESC +
+                    getRoadOption(train) +
+                    ESC +
+                    del +
+                    ESC +
+                    getRoads(train) +
+                    ESC +
+                    del +
+                    ESC +
+                    getLoadOption(train) +
+                    ESC +
+                    del +
+                    ESC +
+                    getLoads(train) +
                     ESC;
             fileOut.println(line);
         }
@@ -218,6 +253,47 @@ public class ExportTrains extends XmlFile {
                 Bundle.getMessage("ExportComplete"),
                 JOptionPane.INFORMATION_MESSAGE);
     }
+    
+    private String getRoadOption(Train train) {
+        String roadOption = Bundle.getMessage("AcceptAll");
+ 
+        if (train.getRoadOption().equals(Train.INCLUDE_ROADS)) {
+            roadOption = Bundle.getMessage("AcceptOnly") + " " + train.getRoadNames().length + " "
+                    + Bundle.getMessage("Roads");
+        } else if (train.getRoadOption().equals(Train.EXCLUDE_ROADS)) {
+            roadOption = Bundle.getMessage("Exclude") + " " + train.getRoadNames().length + " "
+                    + Bundle.getMessage("Roads");
+        }
+        return roadOption;
+    }
+    
+    private String getRoads(Train train) {
+        if (train.getRoadOption().equals(Train.ALL_ROADS)) {
+            return "";
+        } else {
+            return TrainCommon.formatStringToCommaSeparated(train.getRoadNames());
+        }
+    }
+    
+    private String getLoadOption (Train train) {
+        String loadOption = Bundle.getMessage("AcceptAll");
+        if (train.getLoadOption().equals(Train.INCLUDE_LOADS)) {
+            loadOption = Bundle.getMessage("AcceptOnly") + " " + train.getLoadNames().length + " "
+                    + Bundle.getMessage("Loads");
+        } else if (train.getLoadOption().equals(Train.EXCLUDE_LOADS)) {
+            loadOption = Bundle.getMessage("Exclude") + " " + train.getLoadNames().length + " "
+                    + Bundle.getMessage("Loads");
+        }
+        return loadOption;
+    }
+    
+    private String getLoads(Train train) {
+        if (train.getLoadOption().equals(Train.ALL_LOADS)) {
+            return "";
+        } else {
+            return TrainCommon.formatStringToCommaSeparated(train.getLoadNames());
+        }
+    }
 
     // Operation files always use the same directory
     public static String defaultOperationsFilename() {
@@ -237,6 +313,6 @@ public class ExportTrains extends XmlFile {
 
     private static String operationsFileName = "ExportOperationsTrainRoster.csv"; // NOI18N
 
-    private final static Logger log = LoggerFactory.getLogger(ExportCars.class);
+    private final static Logger log = LoggerFactory.getLogger(ExportTrains.class);
 
 }

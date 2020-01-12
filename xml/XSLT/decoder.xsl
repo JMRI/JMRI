@@ -5,7 +5,7 @@
 <!-- This XSLT transform is used when a JMRI decoder definition -->
 <!-- file is displayed by a web browser -->
 
-<!-- This file is part of JMRI.  Copyright 2007-2016.                       -->
+<!-- This file is part of JMRI.  Copyright 2007-2018.                       -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -18,15 +18,18 @@
 <!-- for more details.                                                      -->
  
 <xsl:stylesheet	version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:docbook="http://docbook.org/ns/docbook">
-      <xsl:param name="JmriCopyrightYear">
-        2000 - 2016
-      </xsl:param>
 
 <!-- Need to instruct the XSLT processor to use HTML output rules.
      See http://www.w3.org/TR/xslt#output for more details
 -->
 <xsl:output method="html" encoding="ISO-8859-1"/>
 
+<!-- Define the copyright year for the output page
+     In batch work via running Ant, this is defined
+     via the build.xml file. We build it by concatenation
+     because XPath will evaluate '1997 - 2017' to '20'.
+-->
+<xsl:param name="JmriCopyrightYear" select="concat('1997','-','2020')" />
 
 <!-- This first template matches our root element in the input file.
      This will trigger the generation of the HTML skeleton document.
@@ -41,14 +44,14 @@
 <html xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/1999/xhtml" xsl:version="1.0">
   <head>
   </head>
-  <body style="font-family:Arial,helvetica,sans-serif;font-size:12pt;         background-color:#EEEEEE">
+  <body style="font-family:Arial,helvetica,sans-serif;font-size:12pt;background-color:#EEEEEE">
 <!-- display family info -->
     <xsl:for-each select="decoder/family">
     Family: <xsl:value-of select="@name"/><br/>
     Manufacturer: <xsl:value-of select="@mfg"/>
     </xsl:for-each>
 <!-- display old-style version comments -->
-    <p><div style="background-color:gray;color:white;padding:4px"><span style="font-weight:bold;color:white">
+    <div style="background-color:gray;color:white;padding:4px"><span style="font-weight:bold;color:white">
     Definition versions:</span>
       <xsl:for-each select="comment()">
         <br/><xsl:value-of select="."/>
@@ -78,14 +81,13 @@
         </span>
     </xsl:for-each>
 
-    </div>    
-    </p>
+    </div>
 
 
 <p>
 JMRI software, including this file, is distributed under license. That
 license defines the terms under which you can use, modify and/or distribute
-it.  Please see our 
+it. Please see our
 <a href="http://jmri.org/Copyright.html">licensing page</a> 
 for more information.
 </p>
@@ -113,7 +115,7 @@ for more information.
         Form factor: "<xsl:value-of select="@formFactor"/>" (manufacturer's labeling)
         <br/>
 
-        Conenctor: "<xsl:value-of select="@connector"/>"
+        Connector: "<xsl:value-of select="@connector"/>"
         <br/>
 
         Length: <xsl:value-of select="size[last()]/@length"/> <xsl:value-of select="size[last()]/@units"/>
@@ -154,14 +156,14 @@ for more information.
 </xsl:for-each> <!-- end processing each model element-->
     
 
-<HR/>
+<hr/>
 This page was produced by <a href="http://jmri.org">JMRI</a>.
-<P/>Copyright &#169; <xsl:value-of select="$JmriCopyrightYear" /> JMRI Community. 
-<P/>JMRI, DecoderPro, PanelPro, DispatcherPro and associated logos are our trademarks.
-<P/><A href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</A>
-<P/>Site hosted by: <BR/>
-    <a href="http://sourceforge.net/projects/jmri">
-    <img src="https://sourceforge.net/sflogo.php?type=13&amp;group_id=26788" border="0" alt="JMRI Model Railroad Interface at SourceForge.net"/></a>
+<p/>Copyright &#169; <xsl:value-of select="$JmriCopyrightYear" /> JMRI Community.
+<p/>JMRI, DecoderPro, PanelPro, DispatcherPro and associated logos are our trademarks.
+<p/><a href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
+<p/>Site hosted by: <br/>
+    <a href="http://www.tagadab.com/">
+    <img src="https://www.tagadab.com/sites/default/files/logo-tagadab-nostrap.png" height="28" width="103" border="0" alt="Tagadab logo"/></a>
   </body>
 </html>
 

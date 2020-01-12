@@ -42,7 +42,7 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
     JTextField mPacketField[] = new JTextField[MAXSEQUENCE];
     JCheckBox mUseField[] = new JCheckBox[MAXSEQUENCE];
     JSpinner mDelaySpinner[] = new JSpinner[MAXSEQUENCE];
-    JToggleButton mRunButton = new JToggleButton(Bundle.getMessage("ButtonGo"));
+    JToggleButton mRunButton = new JToggleButton(Bundle.getMessage("ButtonStart"));
 
     @Override
     public void initComponents() {
@@ -232,6 +232,8 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
      *
      * @return the packet, with contents filled-in
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
+        justification = "API defined by CommmandStation interface")
     byte[] createPacket(String s) {
         // gather bytes in result
         byte b[] = StringUtil.bytesFromHexString(s);

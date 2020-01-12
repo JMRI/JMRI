@@ -1,7 +1,7 @@
 /**
  * Provides basic interfaces and certain core implementations for the JMRI
  * C/MRI implementation.
- *<p>
+ * <p>
  * The main implementation is for C/MRI serial access, held in the 
  * {@link jmri.jmrix.cmri.serial} package.  Someday, if there's a 
  * C/MRI parallel implementation, there might be a jmri.jmrix.cmri.parallel package

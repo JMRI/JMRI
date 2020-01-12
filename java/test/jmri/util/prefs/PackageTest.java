@@ -9,6 +9,7 @@ import org.junit.runners.Suite.SuiteClasses;
     JmriConfigurationProviderTest.class,
     JmriPreferencesProviderTest.class,
     InitializationExceptionTest.class,
+    HasConnectionButUnableToConnectExceptionTest.class,
     JmriUserInterfaceConfigurationProviderTest.class
 })
 /**

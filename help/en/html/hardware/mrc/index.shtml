@@ -7,22 +7,15 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI Hardware Support - MRC Prodigy Advanced 2</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
   <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+  <div id="mBody">
+    <!--#include virtual="../SidebarUp.shtml" -->
     <div id="mainContent">
+
       <h1>Hardware Support: MRC/GaugeMaster Prodigy
       Advanced<sup>2</sup></h1>
 
@@ -116,7 +109,8 @@
         <li><a href=
         "http://www.modelrectifier.com/train-controls/dcc-prodigy.asp">
         Model Rectifier Corp. Prodigy website</a></li>
-      </ul><!--#include virtual="/Footer" -->
+      </ul>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

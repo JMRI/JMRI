@@ -63,8 +63,8 @@ public class PrintSavedTrainManifestAction extends AbstractAction implements jav
             return;
         }
         String logoURL = Setup.NONE;
-        if (_train != null && !_train.getManifestLogoURL().equals(Train.NONE)) {
-            logoURL = FileUtil.getExternalFilename(_train.getManifestLogoURL());
+        if (_train != null && !_train.getManifestLogoPathName().equals(Train.NONE)) {
+            logoURL = FileUtil.getExternalFilename(_train.getManifestLogoPathName());
         } else if (!Setup.getManifestLogoURL().equals(Setup.NONE)) {
             logoURL = FileUtil.getExternalFilename(Setup.getManifestLogoURL());
         }

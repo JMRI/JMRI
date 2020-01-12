@@ -29,17 +29,23 @@ public class ClientActionsTest {
         canInterface.dispose();
         // terminate the OlcbInterface (and terminate thread)
         iface.dispose();
+        
+        // expected (but not checked) message
+        jmri.util.JUnitAppender.suppressWarnMessage("ool did not terminate");
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ClientActionsTest.class);

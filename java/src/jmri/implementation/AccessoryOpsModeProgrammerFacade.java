@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * <li>OPSACCEXTBYTEMODE
  * <li>OPSACCEXTBITMODE
  * </ul>
- * <P>
+ * <p>
  * Used through the String write/read/confirm interface. Accepts integers as
  * addresses, but then emits NMRA DCC packets through the default CommandStation
  * interface (which must be present)
@@ -75,6 +75,7 @@ public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade i
     ProgrammingMode mode;
 
     @Override
+    @Nonnull
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<>();
         ret.add(ProgrammingMode.OPSACCBYTEMODE);
@@ -178,21 +179,11 @@ public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade i
         }
 
         // set up a delayed completion reply
-        new Thread(new Runnable() {
-            @Override
-            public synchronized void run() {
-                log.debug("delaying {} milliseconds for cv={}, value={}", _delay, Integer.parseInt(cv), val);
-                if (_delay > 0) {
-                    try {
-                        Thread.sleep(_delay);
-                    } catch (InterruptedException ie) {
-                        log.error("Interrupted while sleeping {}", ie);
-                    }
-                }
-                log.debug("            delay elapsed for cv={}, value={}", Integer.parseInt(cv), val);
-                programmingOpReply(val, ProgListener.OK);
-            }
-        }).start();
+        log.debug("delaying {} milliseconds for cv={}, value={}", _delay, Integer.parseInt(cv), val);
+        jmri.util.ThreadingUtil.runOnLayoutDelayed(() -> {
+            log.debug("            delay elapsed for cv={}, value={}", Integer.parseInt(cv), val);
+            programmingOpReply(val, ProgListener.OK);
+        }, _delay);
     }
 
     @Override

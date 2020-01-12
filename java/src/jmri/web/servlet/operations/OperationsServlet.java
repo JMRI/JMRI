@@ -22,7 +22,6 @@ import jmri.jmrit.operations.trains.JsonManifest;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.server.json.JSON;
-import jmri.server.json.JsonException;
 import jmri.server.json.operations.JsonOperations;
 import jmri.server.json.operations.JsonUtil;
 import jmri.util.FileUtil;
@@ -115,13 +114,8 @@ public class OperationsServlet extends HttpServlet {
         if (JSON.JSON.equals(request.getParameter("format"))) {
             response.setContentType(UTF8_APPLICATION_JSON);
             InstanceManager.getDefault(ServletUtil.class).setNonCachingHeaders(response);
-            try {
-                JsonUtil utilities = new JsonUtil(this.mapper);
-                response.getWriter().print(utilities.getTrains(request.getLocale()));
-            } catch (JsonException ex) {
-                int code = ex.getJsonMessage().path(JSON.DATA).path(JsonException.CODE).asInt(200);
-                response.sendError(code, (new ObjectMapper()).writeValueAsString(ex.getJsonMessage()));
-            }
+            JsonUtil utilities = new JsonUtil(this.mapper);
+            response.getWriter().print(utilities.getTrains(request.getLocale()));
         } else if ("html".equals(request.getParameter("format"))) {
             response.setContentType(UTF8_TEXT_HTML);
             InstanceManager.getDefault(ServletUtil.class).setNonCachingHeaders(response);
@@ -222,11 +216,11 @@ public class OperationsServlet extends HttpServlet {
             ((ObjectNode) data).put("format", request.getParameter("format"));
         }
         if (data.path("format").asText().equals("html")) {
-            if (!data.path(JsonOperations.LOCATION).isMissingNode()) {
-                String location = data.path(JsonOperations.LOCATION).asText();
-                if (location.equals(JSON.NULL) || train.getNextLocationName().equals(location)) {
+            JsonNode location = data.path(JsonOperations.LOCATION);
+            if (!location.isMissingNode()) {
+                if (location.isNull() || train.getNextLocationName().equals(location.asText())) {
                     train.move();
-                    return; // done property change will cause update to client
+                    return; // done; property change will cause update to client
                 }
             }
             log.debug("Getting conductor HTML code for train {}", id);

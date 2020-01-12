@@ -8,7 +8,9 @@ import java.io.InputStreamReader;
 import java.util.Collection;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
+import jmri.jmrit.logix.WarrantPreferences;
 import jmri.util.FileUtil;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -27,17 +29,19 @@ import org.slf4j.LoggerFactory;
  * file in a "load" directory by loading it, then storing it, then comparing
  * (with certain lines skipped) against either a file by the same name in the
  * "loadref" directory, or against the original file itself. A minimal test
- * class is: {@code
- * @RunWith(Parameterized.class)
- * public class LoadAndStoreTest extends LoadAndStoreTestBase {
- *
- * @Parameterized.Parameters(name = "{0} (pass={1})")
- * public static Iterable<Object[]> data() { return getFiles(new
- * File("java/test/jmri/configurexml"), false, true); }
- * <p>
- * public LoadAndStoreTest(File file, boolean pass) { super(file, pass); }
- * }
- * }
+ * class is:
+ <pre>
+   @RunWith(Parameterized.class)
+   public class LoadAndStoreTest extends LoadAndStoreTestBase {
+ 
+     @Parameterized.Parameters(name = "{0} (pass={1})")
+     public static Iterable<Object[]> data() { 
+       return getFiles(new File("java/test/jmri/configurexml"), false, true); 
+     }
+  
+     public LoadAndStoreTest(File file, boolean pass) { super(file, pass); }
+   }
+</pre>
  *
  * @author Bob Jacobsen Copyright 2009, 2014
  * @since 2.5.5 (renamed & reworked in 3.9 series)
@@ -55,10 +59,22 @@ public class LoadAndStoreTestBase {
     private SaveType saveType = SaveType.Config;
     private boolean guiOnly = false;
 
-    public LoadAndStoreTestBase(File file, boolean pass, SaveType saveType, boolean isGUIOnly) {
+    /**
+     * Get all XML files in a directory and validate the ability to load and
+     * store them.
+     *
+     * @param file      the file to be tested
+     * @param pass      if true, successful validation will pass; if false,
+     *                  successful validation will fail
+     * @param saveType  the type (i.e. level) of ConfigureXml information being saved
+     * @param isGUI     true for files containing GUI elements, i.e. panels.  These
+     *                  can only be loaded once (others can be loaded twice, and that's
+     *                  tested when this is false), and can't be loaded when running headless.
+     */
+    public LoadAndStoreTestBase(File file, boolean pass, SaveType saveType, boolean isGUI) {
         this.file = file;
         this.saveType = saveType;
-        this.guiOnly = isGUIOnly;
+        this.guiOnly = isGUI;
     }
 
     /**
@@ -146,11 +162,12 @@ public class LoadAndStoreTestBase {
 
             String[] startsWithStrings = {
                 "  <!--Written by JMRI version",
-                "  <timebase", // time changes from timezone to timezone
-                "    <test>", // version changes over time
-                "    <modifier", // version changes over time
-                "    <major", // version changes over time
-                "    <minor", // version changes over time
+                "  <timebase",      // time changes from timezone to timezone
+                "    <test>",       // version changes over time
+                "    <modifier",    // version changes over time
+                "    <major",       // version changes over time
+                "    <minor",       // version changes over time
+                "<layout-config",   // Linux seems to put attributes in different order
                 "<?xml-stylesheet", // Linux seems to put attributes in different order
                 "    <memory systemName=\"IMCURRENTTIME\"", // time varies - old format
                 "    <modifier>This line ignored</modifier>"
@@ -168,7 +185,6 @@ public class LoadAndStoreTestBase {
                     String imcurrenttime = "<systemName>IMCURRENTTIME</systemName>";
                     if (next1.contains(imcurrenttime) && next2.contains(imcurrenttime)) {
                         match = true;
-                        break;
                     }
                 }
             }
@@ -178,7 +194,7 @@ public class LoadAndStoreTestBase {
             }
 
             if (!match) {
-                // if ether line contains a fontname attribute
+                // if either line contains a fontname attribute
                 String fontname_regexe = "( fontname=\"[^\"]*\")";
                 String[] splits1 = line1.split(fontname_regexe);
                 if (splits1.length == 2) {  // (yes) remove it
@@ -208,6 +224,7 @@ public class LoadAndStoreTestBase {
     // load file
     public static void loadFile(File inFile) throws Exception {
         ConfigureManager cm = InstanceManager.getDefault(ConfigureManager.class);
+        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
         boolean good = cm.load(inFile);
         Assert.assertTrue("loadFile(\"" + inFile.getPath() + "\")", good);
         InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
@@ -258,7 +275,7 @@ public class LoadAndStoreTestBase {
             Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         }
 
-        log.debug("Start check file " + this.file.getCanonicalPath());
+        log.debug("Start check file {}", this.file.getCanonicalPath());
 
         loadFile(this.file);
         // Panel sub-classes (with GUI) will fail if you try to load them twice.
@@ -273,26 +290,34 @@ public class LoadAndStoreTestBase {
         if (!compFile.exists()) {
             compFile = this.file;
         }
-        log.debug("   Chose comparison file " + compFile.getCanonicalPath());
+        log.debug("   Chose comparison file {}", compFile.getCanonicalPath());
 
         File outFile = storeFile(this.file, this.saveType);
         checkFile(compFile, outFile);
+        
+        JUnitAppender.suppressErrorMessage("systemName is already registered: ");
     }
 
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initMemoryManager();
+        System.setProperty("jmri.test.no-dialogs", "true");
     }
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager();
+        JUnitUtil.clearBlockBossLogic();
         JUnitUtil.tearDown();
+        System.setProperty("jmri.test.no-dialogs", "false");
     }
 
     private final static Logger log = LoggerFactory.getLogger(LoadAndStoreTest.class);
+
 }

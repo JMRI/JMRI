@@ -1,23 +1,23 @@
 package jmri.progdebugger;
 
-import jmri.GlobalProgrammerManager;
-import jmri.InstanceManager;
-import jmri.Programmer;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import jmri.*;
+
+import org.junit.Test;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 
 /**
  * Test the DebugProgrammerManager class.
  *
  * @author	Bob Jacobsen Copyright 2002
  */
-public class DebugProgrammerManagerTest extends TestCase {
+public class DebugProgrammerManagerTest {
 
     /**
      * Service mode request returns a programmer
      */
+    @Test
     public void testServiceModeRequest() {
         InstanceManager.setDefault(GlobalProgrammerManager.class,
                 new DebugProgrammerManager());
@@ -30,6 +30,7 @@ public class DebugProgrammerManagerTest extends TestCase {
     /**
      * Any service mode request gets the same object
      */
+    @Test
     public void testServiceModeUnique() {
         InstanceManager.setDefault(GlobalProgrammerManager.class,
                 new DebugProgrammerManager());
@@ -43,9 +44,9 @@ public class DebugProgrammerManagerTest extends TestCase {
     /**
      * ops mode request returns a programmer
      */
+    @Test
     public void testOpsModeRequest() {
-        InstanceManager.setAddressedProgrammerManager(
-                new DebugProgrammerManager());
+        InstanceManager.store(new DebugProgrammerManager(), AddressedProgrammerManager.class);
         Programmer p = InstanceManager.getDefault(jmri.AddressedProgrammerManager.class)
                 .getAddressedProgrammer(true, 777);
         Assert.assertTrue("got ops mode", p != null);
@@ -55,9 +56,9 @@ public class DebugProgrammerManagerTest extends TestCase {
     /**
      * Any identical ops mode request gets the same object
      */
+    @Test
     public void testOpsModeUnique() {
-        InstanceManager.setAddressedProgrammerManager(
-                new DebugProgrammerManager());
+        InstanceManager.store(new DebugProgrammerManager(), AddressedProgrammerManager.class);
         Programmer p = InstanceManager.getDefault(jmri.AddressedProgrammerManager.class)
                 .getAddressedProgrammer(true, 777);
         Assert.assertTrue("same ops mode programmer",
@@ -68,9 +69,9 @@ public class DebugProgrammerManagerTest extends TestCase {
     /**
      * Any identical ops mode request gets the same object
      */
+    @Test
     public void testOpsModeDistinct() {
-        InstanceManager.setAddressedProgrammerManager(
-                new DebugProgrammerManager());
+        InstanceManager.store(new DebugProgrammerManager(), AddressedProgrammerManager.class);
         Programmer p = InstanceManager.getDefault(jmri.AddressedProgrammerManager.class)
                 .getAddressedProgrammer(true, 777);
         Assert.assertTrue("different ops mode programmer",
@@ -81,22 +82,14 @@ public class DebugProgrammerManagerTest extends TestCase {
                         .getAddressedProgrammer(true, 777) == p);
     }
 
-    // from here down is testing infrastructure
-    public DebugProgrammerManagerTest(String s) {
-        super(s);
+    @Before
+    public void setUp() {
+        jmri.util.JUnitUtil.setUp();
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {DebugProgrammerManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        apps.tests.AllTest.initLogging();
-        TestSuite suite = new TestSuite(DebugProgrammerManagerTest.class);
-        return suite;
+    @After
+    public void tearDown(){
+        jmri.util.JUnitUtil.tearDown();
     }
 
 }

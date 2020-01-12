@@ -7,7 +7,7 @@ package jmri.jmrix.loconet;
  * the LocoNetListener interface can register here to receive incoming LocoNet
  * messages as events.
  * <p>
- * The jmri.jrmix.loconet.LnTrafficManager provides the first implementation of
+ * The jmri.jrmix.loconet.LnTrafficController provides the first implementation of
  * this interface.
  * <p>
  * How do you locate an implemenation of this interface? That's an interesting
@@ -102,5 +102,19 @@ public interface LocoNetInterface {
      * power
      */
     public static final int POWER = 16;
+
+    /**
+     * Set the system connection memo associated with this connection.
+     *
+     * @param m associated systemConnectionMemo object
+     */
+    public void setSystemConnectionMemo(LocoNetSystemConnectionMemo m);
+
+    /**
+     * Get the system connection memo associated with this connection.
+     *
+     * @return the associated systemConnectionMemo object
+     */
+    public LocoNetSystemConnectionMemo getSystemConnectionMemo();
 
 }

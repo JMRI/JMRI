@@ -1,6 +1,5 @@
 package jmri.configurexml;
 
-import apps.tests.Log4JFixture;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,6 +32,28 @@ public class SchemaTestBase {
         this.file = file;
         this.pass = pass;
     }
+    
+    /**
+     * Configure for handling I/O checks:
+     * <ul>
+     * <li> Files in the load subdirectory will be loaded and stored
+     * <li> Files in the valid subdirectory will be checked for schema validity
+     * <li> Files in the invalid subdirectory will be checked for schema _in_validity
+     * </ul>
+     * @param path the path to this directory
+     * @return the list of files to process
+     */
+    static protected Iterable<Object[]> setTestFilesBelowThisPath(String path) {
+        ArrayList<Object[]> files = new ArrayList<>();
+        // the following are just tested for schema pass/fail, not load/store
+        files.addAll(getFiles(new File(path+"/valid"), true, true));
+        files.addAll(getFiles(new File(path+"/invalid"), true, false));
+        // also tested for load/store
+        files.addAll(getFiles(new File(path+"/load"), true, true));
+
+        Assert.assertTrue("There should be something here; misconfigured?", files.size() > 0);
+        return files;    
+    }
 
     @Test
     public void validate() {
@@ -63,7 +84,6 @@ public class SchemaTestBase {
      *         validate and a boolean matching the pass parameter
      */
     public static Collection<Object[]> getFiles(File directory, boolean recurse, boolean pass) {
-        Log4JFixture.setUp(); // setup logging early so this method can log
         ArrayList<Object[]> files = new ArrayList<>();
         if (directory.isDirectory()) {
             for (File file : directory.listFiles()) {
@@ -96,7 +116,6 @@ public class SchemaTestBase {
      * @throws IllegalArgumentException if directory is a file
      */
     public static Collection<Object[]> getDirectories(File directory, boolean recurse, boolean pass) throws IllegalArgumentException {
-        Log4JFixture.setUp(); // setup logging early so this method can log
         ArrayList<Object[]> files = new ArrayList<>();
         if (directory.isDirectory()) {
             for (File file : directory.listFiles()) {
@@ -111,12 +130,15 @@ public class SchemaTestBase {
     }
 
     @Before
+    @javax.annotation.OverridingMethodsMustInvokeSuper
     public void setUp() throws Exception {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
         this.validate = XmlFile.getDefaultValidate();
     }
 
     @After
+    @javax.annotation.OverridingMethodsMustInvokeSuper
     public void tearDown() throws Exception {
         XmlFile.setDefaultValidate(this.validate);
         JUnitUtil.tearDown();

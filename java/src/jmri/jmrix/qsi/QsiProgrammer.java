@@ -2,10 +2,10 @@ package jmri.jmrix.qsi;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
+
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implements the jmri.Programmer interface via commands for the QSI programmer.
@@ -20,19 +20,11 @@ public class QsiProgrammer extends AbstractProgrammer implements QsiListener {
         _memo = memo;
     }
 
-    /*
-     * method to find the existing QsiProgrammer object, if need be creating one
-     * @deprecated since 4.5.1, use constructor instead.
-     */
-    @Deprecated
-    static public final QsiProgrammer instance() {
-           return null;
-    }
-
-    /**
-     * Types implemented here.
+    /** 
+     * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
         ret.add(ProgrammingMode.PAGEMODE);
@@ -50,12 +42,13 @@ public class QsiProgrammer extends AbstractProgrammer implements QsiListener {
     int _val;	// remember the value being read/written for confirmative reply
     int _cv;	// remember the cv being read/written
 
-    // programming interface
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    public synchronized void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
-        if (log.isDebugEnabled()) {
-            log.debug("writeCV " + CV + " listens " + p);
-        }
+    public synchronized void writeCV(String CVname, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+        final int CV = Integer.parseInt(CVname);
+        log.debug("writeCV {} listens {}", CV, p);
         useProgrammer(p);
         _progRead = false;
         // set commandPending state
@@ -70,16 +63,21 @@ public class QsiProgrammer extends AbstractProgrammer implements QsiListener {
         controller().sendQsiMessage(QsiMessage.getWriteCV(CV, val, getMode()), this);
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public synchronized void confirmCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         readCV(CV, p);
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    public synchronized void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
-        if (log.isDebugEnabled()) {
-            log.debug("readCV " + CV + " listens " + p);
-        }
+    public synchronized void readCV(String CVname, jmri.ProgListener p) throws jmri.ProgrammerException {
+        final int CV = Integer.parseInt(CVname);
+        log.debug("writeCV {} listens {}", CV, p);
         useProgrammer(p);
         _progRead = true;
         // set commandPending state
@@ -92,7 +90,6 @@ public class QsiProgrammer extends AbstractProgrammer implements QsiListener {
         // format and send message to do read
         // QSI programer is in program mode by default but this doesn't do any harm
         controller().sendQsiMessage(QsiMessage.getReadCV(CV, getMode()), this);
-
     }
 
     private jmri.ProgListener _usingProgrammer = null;
@@ -101,9 +98,7 @@ public class QsiProgrammer extends AbstractProgrammer implements QsiListener {
     protected void useProgrammer(jmri.ProgListener p) throws jmri.ProgrammerException {
         // test for only one!
         if (_usingProgrammer != null && _usingProgrammer != p) {
-            if (log.isInfoEnabled()) {
-                log.info("programmer already in use by " + _usingProgrammer);
-            }
+            log.info("programmer already in use by {}", _usingProgrammer);
             throw new jmri.ProgrammerException("programmer in use");
         } else {
             _usingProgrammer = p;
@@ -111,23 +106,25 @@ public class QsiProgrammer extends AbstractProgrammer implements QsiListener {
         }
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public void message(QsiMessage m) {
-        log.error("message received unexpectedly: " + m.toString());
+        log.error("message received unexpectedly: {}", m);
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     synchronized public void reply(QsiReply m) {
         if (progState == NOTPROGRAMMING) {
             // we get the complete set of replies now, so ignore these
-            if (log.isDebugEnabled()) {
-                log.debug("reply in NOTPROGRAMMING state");
-            }
+            log.debug("reply in NOTPROGRAMMING state");
             return;
         } else if (progState == COMMANDSENT) {
-            if (log.isDebugEnabled()) {
-                log.debug("reply in COMMANDSENT state");
-            }
+            log.debug("reply in COMMANDSENT state");
             // operation started, move to next mode
             progState = WAITRESULT;
             startLongTimer();
@@ -143,9 +140,7 @@ public class QsiProgrammer extends AbstractProgrammer implements QsiListener {
             // check for errors
             if (m.getElement(4) != 0) {
                 // status present
-                if (log.isDebugEnabled()) {
-                    log.debug("handle non-zero status in reply " + m);
-                }
+                log.debug("handle non-zero status in reply {}", m);
                 // perhaps no loco present? 
                 // reset status
                 progState = WAITRESETSTATUS;
@@ -159,31 +154,25 @@ public class QsiProgrammer extends AbstractProgrammer implements QsiListener {
                 notifyProgListenerEnd(_val, jmri.ProgListener.OK);
             }
         } else if (progState == WAITRESETSTATUS) {
-            if (log.isDebugEnabled()) {
-                log.debug("reply in WAITRESETSTATUS state");
-            }
+            log.debug("reply in WAITRESETSTATUS state");
             // all done, notify listeners of completion
             progState = NOTPROGRAMMING;
             stopTimer();
             // notify of default error (not timeout)
             notifyProgListenerEnd(-1, jmri.ProgListener.NoLocoDetected);
         } else {
-            if (log.isDebugEnabled()) {
-                log.debug("reply in un-decoded state");
-            }
+            log.debug("reply in un-decoded state");
         }
     }
 
-    /**
-     * Internal routine to handle a timeout
+    /** 
+     * {@inheritDoc}
      */
     @Override
     synchronized protected void timeout() {
         if (progState != NOTPROGRAMMING) {
             // we're programming, time to stop
-            if (log.isDebugEnabled()) {
-                log.debug("timeout!");
-            }
+            log.debug("timeout!");
             // perhaps no loco present? Fail back to end of programming
             progState = NOTPROGRAMMING;
             // send message to clear error
@@ -195,14 +184,12 @@ public class QsiProgrammer extends AbstractProgrammer implements QsiListener {
 
     // internal method to notify of the final result
     protected void notifyProgListenerEnd(int value, int status) {
-        if (log.isDebugEnabled()) {
-            log.debug("notifyProgListenerEnd value " + value + " status " + status);
-        }
+        log.debug("notifyProgListenerEnd value {} status {}", value, status);
         // the programmingOpReply handler might send an immediate reply, so
         // clear the current listener _first_
         jmri.ProgListener temp = _usingProgrammer;
         _usingProgrammer = null;
-        temp.programmingOpReply(value, status);
+        notifyProgListenerEnd(temp, value, status);
     }
 
     QsiTrafficController _controller = null;
@@ -215,6 +202,6 @@ public class QsiProgrammer extends AbstractProgrammer implements QsiListener {
         return _controller;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(QsiProgrammer.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(QsiProgrammer.class);
 
 }

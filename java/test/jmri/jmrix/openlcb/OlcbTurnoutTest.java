@@ -1,20 +1,28 @@
 package jmri.jmrix.openlcb;
 
-import jmri.util.JUnitUtil;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.Iterator;
+import java.util.TreeSet;
 import java.util.regex.Pattern;
-import jmri.Turnout;
-import jmri.jmrix.can.CanMessage;
-import jmri.util.PropertyChangeListenerScaffold;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
 import org.openlcb.EventID;
 import org.openlcb.implementations.EventTable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.JmriException;
+import jmri.Turnout;
+import jmri.jmrix.can.CanMessage;
+import jmri.util.JUnitUtil;
+import jmri.util.NamedBeanComparator;
+import jmri.util.PropertyChangeListenerScaffold;
+import jmri.util.ThreadingUtil;
+
 /**
  * Tests for the jmri.jmrix.openlcb.OlcbTurnout class.
  *
@@ -97,55 +105,6 @@ public class OlcbTurnoutTest {
         Assert.assertEquals("called twice",2,l.getCallCount());
         Assert.assertTrue(s.getCommandedState() == Turnout.CLOSED);
         Assert.assertTrue(new OlcbAddress("1.2.3.4.5.6.7.9").match(t.tc.rcvMessage));
-    }
-
-    @Test
-    public void testDirectFeedback() throws jmri.JmriException {
-        OlcbTurnout s = new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
-        s.setFeedbackMode(Turnout.DIRECT);
-        s.finishLoad();
-
-        s.addPropertyChangeListener(l);
-
-        s.setState(Turnout.THROWN);
-        t.flush();
-        JUnitUtil.waitFor( () -> { return l.getPropertyChanged(); });
-
-        Assert.assertEquals(Turnout.THROWN, s.getCommandedState());
-        Assert.assertEquals(Turnout.THROWN, s.getKnownState());
-
-        s.setState(Turnout.CLOSED);
-        t.flush();
-        JUnitUtil.waitFor( () -> { return l.getPropertyChanged(); });
-
-        Assert.assertEquals(Turnout.CLOSED, s.getCommandedState());
-        Assert.assertEquals(Turnout.CLOSED, s.getKnownState());
-
-        // message for Active and Inactive
-        CanMessage mActive = new CanMessage(
-                new int[]{1, 2, 3, 4, 5, 6, 7, 8},
-                0x195B4000
-        );
-        mActive.setExtended(true);
-
-        CanMessage mInactive = new CanMessage(
-                new int[]{1, 2, 3, 4, 5, 6, 7, 9},
-                0x195B4000
-        );
-        mInactive.setExtended(true);
-
-        l.resetPropertyChanged();
-
-        //  Feedback is ignored. Neither known nor commanded state changes.
-        t.sendMessage(mActive);
-        Assert.assertEquals(Turnout.CLOSED, s.getCommandedState());
-        Assert.assertEquals(Turnout.CLOSED, s.getKnownState());
-        Assert.assertEquals("not called",0,l.getCallCount());
-
-        t.sendMessage(mInactive);
-        Assert.assertEquals(Turnout.CLOSED, s.getCommandedState());
-        Assert.assertEquals(Turnout.CLOSED, s.getKnownState());
-        Assert.assertEquals("not called",0,l.getCallCount());
     }
 
     @Test
@@ -280,6 +239,47 @@ public class OlcbTurnoutTest {
         t.assertNoSentMessages();
     }
 
+    /**
+     * In this test we simulate the following scenario: A turnout R that is being changed locally
+     * by JMRI (e.g. due to a panel icon action), which triggers a Logix, and in that Logix there
+     * is an action that sets a second turnout U.
+     * We check that the messages sent to the layout are in the order of T:=Active, U:=Active.
+    */
+    @Test
+    public void testListenerOutOfOrder() throws JmriException {
+        final OlcbTurnout r = new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
+        final OlcbTurnout u = new OlcbTurnout("M", "1.2.3.4.5.6.7.a;1.2.3.4.5.6.7.b", t.iface);
+        r.finishLoad();
+        u.finishLoad();
+        r.setCommandedState(Turnout.CLOSED);
+        u.setCommandedState(Turnout.CLOSED);
+
+        t.clearSentMessages();
+
+        r.addPropertyChangeListener("KnownState", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
+                Assert.assertEquals(Turnout.THROWN, r.getKnownState());
+                u.setCommandedState(Turnout.THROWN);
+            }
+        });
+
+        ThreadingUtil.runOnLayout(new ThreadingUtil.ThreadAction() {
+            @Override
+            public void run() {
+                r.setCommandedState(Turnout.THROWN);
+            }
+        });
+
+        Assert.assertEquals(Turnout.THROWN, r.getKnownState());
+        Assert.assertEquals(Turnout.THROWN, u.getKnownState());
+
+        // Ensures that the last sent message is U==Active. Particularly important that it is NOT
+        // the message ending with 0708.
+        t.assertSentMessage(":X195B4C4CN010203040506070A;");
+    }
+
+
     @Test
     public void testEventTable() {
         OlcbTurnout s = new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
@@ -372,14 +372,14 @@ public class OlcbTurnoutTest {
     public void testSystemSpecificComparisonOfSpecificFormats() {
 
         // test by putting into a tree set, then extracting and checking order
-        java.util.TreeSet<Turnout> set = new java.util.TreeSet<>(new jmri.util.NamedBeanComparator());
+        TreeSet<Turnout> set = new TreeSet<>(new NamedBeanComparator<>());
         
         set.add(new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface));
         set.add(new OlcbTurnout("M", "X0501010114FF2000;X0501010114FF2011", t.iface));
         set.add(new OlcbTurnout("M", "X0501010114FF2000;X0501010114FF2001", t.iface));
         set.add(new OlcbTurnout("M", "1.2.3.4.5.6.7.9;1.2.3.4.5.6.7.9", t.iface));
         
-        java.util.Iterator<Turnout> it = set.iterator();
+        Iterator<Turnout> it = set.iterator();
         
         Assert.assertEquals("MT1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", it.next().getSystemName());
         Assert.assertEquals("MT1.2.3.4.5.6.7.9;1.2.3.4.5.6.7.9", it.next().getSystemName());
@@ -405,6 +405,8 @@ public class OlcbTurnoutTest {
         l = null;
         t.dispose();
         t = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 }

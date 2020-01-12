@@ -1,4 +1,3 @@
-//LocationTest.java
 package jmri.jmrit.operations.locations;
 
 import java.util.List;
@@ -10,9 +9,9 @@ import jmri.jmrit.operations.locations.schedules.ScheduleManager;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
-import junit.framework.Test;
-import junit.framework.TestSuite;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the Operations Locations class Last manually cross-checked on
@@ -22,13 +21,14 @@ import org.junit.Assert;
  * read/write Track: AcceptsDropTrain, AcceptsDropRoute Track:
  * AcceptsPickupTrain, AcceptsPickupRoute Track: CheckScheduleValid Track: XML
  * read/write Location: Track support <-- I am here Location: XML read/write
- * <p>
+ *
  * @author Bob Coleman Copyright (C) 2008, 2009
  */
 public class LocationTest extends OperationsTestCase {
 
     // test Location Class (part one)
     // test Location creation
+    @Test
     public void testCreate() {
         Location l = new Location("Test id", "Test Name");
         Assert.assertEquals("Location id", "Test id", l.getId());
@@ -40,6 +40,7 @@ public class LocationTest extends OperationsTestCase {
     }
 
     // test Location public constants
+    @Test
     public void testLocationConstants() {
         Location l = new Location("Test id", "Test Name");
         Assert.assertEquals("Location id", "Test id", l.getId());
@@ -72,6 +73,7 @@ public class LocationTest extends OperationsTestCase {
 
     // test Locations class (part two)
     // test length attributes
+    @Test
     public void testLengthAttributes() {
         Location l = new Location("Test id", "Test Name");
         Assert.assertEquals("Location id", "Test id", l.getId());
@@ -85,6 +87,7 @@ public class LocationTest extends OperationsTestCase {
     }
 
     // test operation attributes
+    @Test
     public void testOperationAttributes() {
         Location l = new Location("Test id", "Test Name");
         Assert.assertEquals("Location id", "Test id", l.getId());
@@ -100,6 +103,7 @@ public class LocationTest extends OperationsTestCase {
     }
 
     // test direction attributes
+    @Test
     public void testDirectionAttributes() {
         Location l = new Location("Test id", "Test Name");
         Assert.assertEquals("Location id", "Test id", l.getId());
@@ -129,6 +133,7 @@ public class LocationTest extends OperationsTestCase {
     }
 
     // test car attributes
+    @Test
     public void testCarAttributes() {
         Location l = new Location("Test id", "Test Name");
         Assert.assertEquals("Location id", "Test id", l.getId());
@@ -139,6 +144,7 @@ public class LocationTest extends OperationsTestCase {
     }
 
     // test switchlist attributes
+    @Test
     public void testSwitchlistAttributes() {
         Location l = new Location("Test id", "Test Name");
         Assert.assertEquals("Location id", "Test id", l.getId());
@@ -152,6 +158,7 @@ public class LocationTest extends OperationsTestCase {
     }
 
     // test typename support
+    @Test
     public void testTypeNameSupport() {
         // use LocationManager to allow replace car type to work properly
         Location l = InstanceManager.getDefault(LocationManager.class).newLocation("Test Name");
@@ -251,6 +258,7 @@ public class LocationTest extends OperationsTestCase {
         sm.dispose();
     }
 
+    @Test
     public void testRoadNameSupport() {
         // use LocationManager to allow replace car road to work properly
         Location l = InstanceManager.getDefault(LocationManager.class).newLocation("Test Name 2");
@@ -290,6 +298,7 @@ public class LocationTest extends OperationsTestCase {
     }
 
     // test pickup support
+    @Test
     public void testPickUpSupport() {
         Location l = new Location("Test id", "Test Name");
         Assert.assertEquals("Location id", "Test id", l.getId());
@@ -311,6 +320,7 @@ public class LocationTest extends OperationsTestCase {
     }
 
     // test drop support
+    @Test
     public void testDropSupport() {
         Location l = new Location("Test id", "Test Name");
         Assert.assertEquals("Location id", "Test id", l.getId());
@@ -332,6 +342,7 @@ public class LocationTest extends OperationsTestCase {
     }
 
     // test car support
+    @Test
     public void testCarSupport() {
         Location l = new Location("Test id", "Test Name");
         Assert.assertEquals("Location id", "Test id", l.getId());
@@ -380,6 +391,7 @@ public class LocationTest extends OperationsTestCase {
     }
 
     // test car duplicates support
+    @Test
     public void testCarDuplicatesSupport() {
         Location l = new Location("Test id", "Test Name");
         Assert.assertEquals("Location id", "Test id", l.getId());
@@ -412,6 +424,7 @@ public class LocationTest extends OperationsTestCase {
     }
 
     // test track priority
+    @Test
     public void testTrackPriority() {
         LocationManager locMan = new LocationManager();
         Location l = locMan.newLocation("TestPriority Location");
@@ -502,6 +515,7 @@ public class LocationTest extends OperationsTestCase {
 
     }
 
+    @Test
     public void testPlannedPickUps() {
         LocationManager locMan = new LocationManager();
         Location l = locMan.newLocation("TestPlannedPickUps Location");
@@ -517,13 +531,10 @@ public class LocationTest extends OperationsTestCase {
         testPLannedPickUps(t3);
         testPLannedPickUps(t5);
         testPLannedPickUps(t7);
-
     }
 
     private void testPLannedPickUps(Track t1) {
-
         Location l = t1.getLocation();
-
         t1.setLength(100);
 
         Car c1 = new Car("C", "1");
@@ -666,29 +677,10 @@ public class LocationTest extends OperationsTestCase {
     }
 
     @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() {
         super.setUp();
         InstanceManager.getDefault(jmri.jmrit.operations.rollingstock.cars.CarTypes.class).addName("Boxcar");
     }
 
-    public LocationTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", LocationTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(LocationTest.class);
-        return suite;
-    }
-
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
 }

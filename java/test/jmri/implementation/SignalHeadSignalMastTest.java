@@ -213,6 +213,7 @@ public class SignalHeadSignalMastTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initInternalSignalHeadManager();
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
                 new DefaultSignalHead("IH1") {
                     @Override
@@ -238,8 +239,7 @@ public class SignalHeadSignalMastTest {
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(SignalHeadSignalMastTest.class);

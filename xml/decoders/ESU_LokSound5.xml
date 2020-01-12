@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2019 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+    <!-- ver1 made from the ESU_LokSoundV4_0 file -->
+    <version author="Dave Heap" version="1" lastUpdated="20190507"/>
+    <decoder>
+        <family name="ESU LokSound 5" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
+            <model model="LokSound 5" numOuts="20" maxMotorCurrent="1.5A" extFnsESU="V5" productID="33554582">
+                <size length="30.5" width="15.5" height="5.5" units="mm"/>
+            </model>
+            <model model="LokSound 5 DCC" numOuts="20" maxMotorCurrent="1.5A" extFnsESU="V5" productID="33554588">
+                <size length="30.5" width="15.5" height="5.5" units="mm"/>
+            </model>
+            <model model="LokSound 5 micro" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="33554587">
+                <size length="25.5" width="10.6" height="4.5" units="mm"/>
+            </model>
+            <model model="LokSound 5 micro DCC" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="33554590">
+                <size length="25.5" width="10.6" height="4.5" units="mm"/>
+            </model>
+            <model model="LokSound 5 micro DCC Direct" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="16777370">
+                <size length="21.0" width="10.6" height="4.0" units="mm"/>
+            </model>
+            <model model="LokSound 5 L" numOuts="20" maxMotorCurrent="3A" extFnsESU="V5" productID="33554589">
+                <size length="51.8" width="25.4" height="14" units="mm"/>
+            </model>
+            <model model="LokSound 5 L DCC" numOuts="20" maxMotorCurrent="3A" extFnsESU="V5" productID="33554592">
+                <size length="51.8" width="25.4" height="14" units="mm"/>
+            </model>
+            <model model="LokSound 5 XL" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554591">
+                <size length="51.0" width="40.0" height="14.0" units="mm"/>
+            </model>
+            <xi:include href="http://jmri.org/xml/decoders/esu/v5lsOutputLabels.xml"/>
+            <functionlabels>
+                <functionlabel num="0" lockable="true">
+                    <text>Light</text>
+                    <text xml:lang="de">Licht</text>
+                </functionlabel>
+                <functionlabel num="1" lockable="true">
+                    <text>Bell</text>
+                    <text xml:lang="de">Sound</text>
+                </functionlabel>
+                <functionlabel num="2" lockable="false">
+                    <text>Horn</text>
+                    <text xml:lang="de">Pfeife / Signalhorn</text>
+                </functionlabel>
+            </functionlabels>
+            <soundlabels>
+                <soundlabel num="33">
+                    <text>Automatic brake sound</text>
+                    <text xml:lang="de">automatischer Bremssound</text>
+                </soundlabel>
+                <soundlabel num="34">
+                    <text>Gear shift sound</text>
+                    <text xml:lang="de">Schaltgeräusch</text>
+                </soundlabel>
+            </soundlabels>
+        </family>
+        <programming direct="yes" paged="yes" register="yes" ops="yes">
+            <capability>
+                <name>High Access via Double Index</name>
+                <parameter name="Max Regular CV address">256</parameter>
+                <parameter name="High Address CV">96</parameter>
+                <parameter name="Low Address CV">97</parameter>
+                <parameter name="Access Register CV">99</parameter>
+                <parameter name="Modulo">100</parameter>
+            </capability>
+            <capability>
+                <name>Indexed CV access</name>
+                <parameter name="PI">31</parameter>
+                <parameter name="SI">32</parameter>
+                <parameter name="cvFirst">false</parameter>
+                <parameter name="skipDupIndexWrite">true</parameter>
+            </capability>
+        </programming>
+        <variables>
+            <xi:include href="http://jmri.org/xml/decoders/esu/v5standardCVs.xml"/>
+        </variables>
+        <resets>
+            <factReset label="Reset All CVs." CV="8" default="8"/>
+        </resets>
+    </decoder>
+    <!--   <xi:include href="http://jmri.org/xml/decoders/esu/v4testPane.xml"/> -->
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4basicSpeedControlPane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4speedTablePane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4advancedPane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4lightsPane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4soundPane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4soundLevelsPane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/esu/v5randFuncPane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4fnOutPane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4fnSetPane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/esu/susiMapPane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4infoPane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/esu/v5readMePane.xml"/>
+</decoder-config>

@@ -6,7 +6,7 @@ import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
 
 /**
  * Action to print the information in a VariableTable.
- * <P>
+ * <p>
  * This uses the older style printing, for compatibility with Java 1.1.8 in
  * Macintosh MRJ
  *

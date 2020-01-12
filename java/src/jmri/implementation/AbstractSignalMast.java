@@ -1,13 +1,13 @@
 package jmri.implementation;
 
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Vector;
-import javax.annotation.OverridingMethodsMustInvokeSuper;
+import javax.annotation.*;
 import jmri.InstanceManager;
 import jmri.SignalAppearanceMap;
 import jmri.SignalMast;
 import jmri.SignalSystem;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,7 +30,7 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
     }
 
     @Override
-    public void setAspect(String aspect) {
+    public void setAspect(@Nonnull String aspect) {
         String oldAspect = this.aspect;
         this.aspect = aspect;
         this.speed = (String) getSignalSystem().getProperty(aspect, "speed");
@@ -103,12 +103,11 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
             // notify listeners, if any
             firePropertyChange("Lit", oldLit, newLit);
         }
-
     }
 
     /**
      * Set the held property of the signal mast.
-     * <P>
+     * <p>
      * Note that this does not directly effect the output on the layout; the
      * held property is a local variable which effects the aspect only via
      * higher-level logic.
@@ -153,6 +152,7 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
     ArrayList<String> disabledAspects = new ArrayList<>(1);
 
     @Override
+    @Nonnull
     public Vector<String> getValidAspects() {
         java.util.Enumeration<String> e = map.getAspects();
         // copy List to Vector
@@ -165,6 +165,18 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
         }
         return v;
     }
+
+    /**
+     * {@inheritDoc }
+     */
+    @Override
+    public String getMastType() { return mastType; }
+    @Override
+    public void setMastType(@Nonnull String type) { 
+        Objects.requireNonNull(type, "MastType cannot be null");
+        mastType = type;
+    }
+    String mastType;
 
     /**
      * Get a list of all the known aspects for this mast, including those that

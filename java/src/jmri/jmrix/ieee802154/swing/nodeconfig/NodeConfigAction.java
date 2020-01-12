@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register a NodeConfigFrame object
  *
  * @author Bob Jacobsen Copyright (C) 2001
-  */
+ */
 public class NodeConfigAction extends AbstractAction {
 
     private jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo icm = null;

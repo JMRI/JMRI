@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2006, 2007, 2008, 2015, 2016, 2017 All rights reserved -->
-<!-- $Id$ -->
+<!-- Copyright (C) JMRI 2006, 2007, 2008, 2015, 2016, 2017, 2018 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -13,18 +12,20 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
-  <version author="dick@rr-cirkits.com" version="1.4" lastUpdated="20171205"/>
+  <version author="dick@rr-cirkits.com" version="1.5" lastUpdated="20181220"/>
   <!-- Version 0.01  Working version modified from TowerMan -->
   <!-- Version 1.0   Removed Stepper code references -->
   <!-- Version 1.1   Fixed bugs and added flasher option -->
   <!-- Version 1.2   Fixed boot code errors to prevent shorting output drivers during firmware upgrade, added Inv option to outputs, and added trigger options in logic -->
   <!-- Version 1.3   Fixed initialize error to prevent random lock up of the LocoNet -->
   <!-- Version 1.4   Added code for MotorMan-II -->
+  <!-- Version 1.5   Added code for MotorMan-III -->
 
   <decoder>
     <family name="Decoders" mfg="RR-CirKits" type="stationary" comment="The MotorMan is programmed in OPs mode">
-      <model model="MotorMan" comment="8 Line Output Driver"/>
-      <model model="MotorMan-II" comment="8 Line Output Driver"/>
+      <model model="MotorMan" productID="25" comment="8 Line Output Driver"/>
+      <model model="MotorMan-II" productID="28" comment="8 Line Output Driver"/>
+      <model model="MotorMan-III" productID="29" comment="8 Line Output Driver"/>
     </family>
     <programming direct="no" paged="yes" register="no" ops="no">
         <mode>LOCONETOPSBOARD</mode>
@@ -47,7 +48,7 @@
         <label xml:lang="de">Hersteller ID: </label>
         <label>Manufacturer ID: </label>
       </variable>
-      <variable label="Hardware ID" CV="9" readOnly="yes" item="Hardware ID" default="0" comment="MotorMan ID=25, MotorMan-II ID=28">
+      <variable label="Hardware ID" CV="9" readOnly="yes" item="Hardware ID" default="0" comment="MotorMan ID=25, MotorMan-II ID=28, MotorMan-III ID=29">
         <decVal/>
       </variable>
 		<variable label="Extended Address" CV="17" default="9999" item="Long Address" comment="5 digit address (Range 00001-16383)">
@@ -212,24 +213,28 @@
           <variableref>PA1 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
-        </qualifier><qualifier>
+        </qualifier>
+        <qualifier>
           <variableref>PA1 Length</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTimingA.xml"/></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTimingA.xml"/>
+      </variable>
 
       <variable label="PA1 TimingB" CV="132" mask="XXXXVVVV">
         <qualifier>
           <variableref>PA1 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
-        </qualifier><qualifier>
+        </qualifier>
+        <qualifier>
           <variableref>PA1 Length</variableref>
           <relation>eq</relation>
           <value>1</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTimingB.xml"/></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTimingB.xml"/>
+      </variable>
 
       <variable label="PA1 Secondary 1 Address" CV="133" mask="VVVVVVVV">
         <splitVal highCV="134" upperMask="XXXXVVVV" offset="1"/>
@@ -340,7 +345,8 @@
           <variableref>PA2 Length</variableref>
           <relation>eq</relation>
           <value>0</value>
-        </qualifier><qualifier>
+        </qualifier>
+        <qualifier>
           <variableref>PA2 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
@@ -352,7 +358,8 @@
           <variableref>PA2 Length</variableref>
           <relation>eq</relation>
           <value>1</value>
-        </qualifier><qualifier>
+        </qualifier>
+        <qualifier>
           <variableref>PA2 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
@@ -468,7 +475,8 @@
           <variableref>PA3 Length</variableref>
           <relation>eq</relation>
           <value>0</value>
-        </qualifier><qualifier>
+        </qualifier>
+        <qualifier>
           <variableref>PA3 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
@@ -480,7 +488,8 @@
           <variableref>PA3 Length</variableref>
           <relation>eq</relation>
           <value>1</value>
-        </qualifier><qualifier>
+        </qualifier>
+        <qualifier>
           <variableref>PA3 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
@@ -596,7 +605,8 @@
           <variableref>PA4 Length</variableref>
           <relation>eq</relation>
           <value>0</value>
-        </qualifier><qualifier>
+        </qualifier>
+        <qualifier>
           <variableref>PA4 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
@@ -608,7 +618,8 @@
           <variableref>PA4 Length</variableref>
           <relation>eq</relation>
           <value>1</value>
-        </qualifier><qualifier>
+        </qualifier>
+        <qualifier>
           <variableref>PA4 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
@@ -729,7 +740,8 @@
           <variableref>PA5 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
-        </qualifier><qualifier>
+        </qualifier>
+        <qualifier>
           <variableref>PA5 Length</variableref>
           <relation>eq</relation>
           <value>0</value>
@@ -741,7 +753,8 @@
           <variableref>PA5 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
-        </qualifier><qualifier>
+        </qualifier>
+        <qualifier>
           <variableref>PA5 Length</variableref>
           <relation>eq</relation>
           <value>1</value>
@@ -857,7 +870,8 @@
           <variableref>PA6 Length</variableref>
           <relation>eq</relation>
           <value>0</value>
-        </qualifier><qualifier>
+        </qualifier>
+        <qualifier>
           <variableref>PA6 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
@@ -869,7 +883,8 @@
           <variableref>PA6 Length</variableref>
           <relation>eq</relation>
           <value>1</value>
-        </qualifier><qualifier>
+        </qualifier>
+        <qualifier>
           <variableref>PA6 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
@@ -985,7 +1000,8 @@
           <variableref>PA7 Length</variableref>
           <relation>eq</relation>
           <value>0</value>
-        </qualifier><qualifier>
+        </qualifier>
+        <qualifier>
           <variableref>PA7 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
@@ -997,7 +1013,8 @@
           <variableref>PA7 Length</variableref>
           <relation>eq</relation>
           <value>1</value>
-        </qualifier><qualifier>
+        </qualifier>
+        <qualifier>
           <variableref>PA7 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
@@ -1113,7 +1130,8 @@
           <variableref>PA8 Length</variableref>
           <relation>eq</relation>
           <value>0</value>
-        </qualifier><qualifier>
+        </qualifier>
+        <qualifier>
           <variableref>PA8 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
@@ -1125,7 +1143,8 @@
           <variableref>PA8 Length</variableref>
           <relation>eq</relation>
           <value>1</value>
-        </qualifier><qualifier>
+        </qualifier>
+        <qualifier>
           <variableref>PA8 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
@@ -1161,7 +1180,7 @@
       </variable>
 
       <variable label="PB1 Output-Input" CV="195" mask="XVXXXXXX" default="0">
-        <enumVal> 
+        <enumVal>
           <enumChoice choice="Output"/>
         </enumVal>
       </variable>
@@ -1243,7 +1262,8 @@
           <variableref>PB1 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
-        </qualifier><qualifier>
+        </qualifier>
+        <qualifier>
           <variableref>PB1 Length</variableref>
           <relation>eq</relation>
           <value>0</value>
@@ -1255,7 +1275,8 @@
           <variableref>PB1 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
-        </qualifier><qualifier>
+        </qualifier>
+        <qualifier>
           <variableref>PB1 Length</variableref>
           <relation>eq</relation>
           <value>1</value>
@@ -1289,7 +1310,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
       <variable label="PB2 Output-Input" CV="203" mask="XVXXXXXX" default="0">
-        <enumVal> 
+        <enumVal>
           <enumChoice choice="Output"/>
         </enumVal>
       </variable>
@@ -1368,7 +1389,8 @@
           <variableref>PB2 Length</variableref>
           <relation>eq</relation>
           <value>0</value>
-        </qualifier><qualifier>
+        </qualifier>
+        <qualifier>
           <variableref>PB2 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
@@ -1380,7 +1402,8 @@
           <variableref>PB2 Length</variableref>
           <relation>eq</relation>
           <value>1</value>
-        </qualifier><qualifier>
+        </qualifier>
+        <qualifier>
           <variableref>PB2 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
@@ -1414,7 +1437,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
       <variable label="PB3 Output-Input" CV="211" mask="XVXXXXXX" default="0">
-        <enumVal> 
+        <enumVal>
           <enumChoice choice="Output"/>
         </enumVal>
       </variable>
@@ -1493,7 +1516,8 @@
           <variableref>PB3 Length</variableref>
           <relation>eq</relation>
           <value>0</value>
-        </qualifier><qualifier>
+        </qualifier>
+        <qualifier>
           <variableref>PB3 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
@@ -1505,7 +1529,8 @@
           <variableref>PB3 Length</variableref>
           <relation>eq</relation>
           <value>1</value>
-        </qualifier><qualifier>
+        </qualifier>
+        <qualifier>
           <variableref>PB3 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
@@ -1539,7 +1564,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
       <variable label="PB4 Output-Input" CV="219" mask="XVXXXXXX" default="0">
-        <enumVal> 
+        <enumVal>
           <enumChoice choice="Output"/>
         </enumVal>
       </variable>
@@ -1618,7 +1643,8 @@
           <variableref>PB4 Length</variableref>
           <relation>eq</relation>
           <value>0</value>
-        </qualifier><qualifier>
+        </qualifier>
+        <qualifier>
           <variableref>PB4 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
@@ -1630,7 +1656,8 @@
           <variableref>PB4 Length</variableref>
           <relation>eq</relation>
           <value>1</value>
-        </qualifier><qualifier>
+        </qualifier>
+        <qualifier>
           <variableref>PB4 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
@@ -1666,7 +1693,7 @@
       </variable>
 
       <variable label="PB5 Output-Input" CV="227" mask="XVXXXXXX" default="0">
-        <enumVal> 
+        <enumVal>
           <enumChoice choice="Output"/>
         </enumVal>
       </variable>
@@ -1748,7 +1775,8 @@
           <variableref>PB5 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
-        </qualifier><qualifier>
+        </qualifier>
+        <qualifier>
           <variableref>PB5 Length</variableref>
           <relation>eq</relation>
           <value>0</value>
@@ -1760,7 +1788,8 @@
           <variableref>PB5 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
-        </qualifier><qualifier>
+        </qualifier>
+        <qualifier>
           <variableref>PB5 Length</variableref>
           <relation>eq</relation>
           <value>1</value>
@@ -1794,7 +1823,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
       <variable label="PB6 Output-Input" CV="235" mask="XVXXXXXX" default="0">
-        <enumVal> 
+        <enumVal>
           <enumChoice choice="Output"/>
         </enumVal>
       </variable>
@@ -1873,7 +1902,8 @@
           <variableref>PB6 Length</variableref>
           <relation>eq</relation>
           <value>0</value>
-        </qualifier><qualifier>
+        </qualifier>
+        <qualifier>
           <variableref>PB6 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
@@ -1885,7 +1915,8 @@
           <variableref>PB6 Length</variableref>
           <relation>eq</relation>
           <value>1</value>
-        </qualifier><qualifier>
+        </qualifier>
+        <qualifier>
           <variableref>PB6 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
@@ -1919,7 +1950,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
       <variable label="PB7 Output-Input" CV="243" mask="XVXXXXXX" default="0">
-        <enumVal> 
+        <enumVal>
           <enumChoice choice="Output"/>
         </enumVal>
       </variable>
@@ -1998,7 +2029,8 @@
           <variableref>PB7 Length</variableref>
           <relation>eq</relation>
           <value>0</value>
-        </qualifier><qualifier>
+        </qualifier>
+        <qualifier>
           <variableref>PB7 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
@@ -2010,7 +2042,8 @@
           <variableref>PB7 Length</variableref>
           <relation>eq</relation>
           <value>1</value>
-        </qualifier><qualifier>
+        </qualifier>
+        <qualifier>
           <variableref>PB7 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
@@ -2044,7 +2077,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
       <variable label="PB8 Output-Input" CV="251" mask="XVXXXXXX" default="0">
-        <enumVal> 
+        <enumVal>
           <enumChoice choice="Output"/>
         </enumVal>
       </variable>
@@ -2123,7 +2156,8 @@
           <variableref>PB8 Length</variableref>
           <relation>eq</relation>
           <value>0</value>
-        </qualifier><qualifier>
+        </qualifier>
+        <qualifier>
           <variableref>PB8 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
@@ -2135,7 +2169,8 @@
           <variableref>PB8 Length</variableref>
           <relation>eq</relation>
           <value>1</value>
-        </qualifier><qualifier>
+        </qualifier>
+        <qualifier>
           <variableref>PB8 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
@@ -7040,7 +7075,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT27 Var2 Type</label></variable>
       <variable item="LT27 Var2 Event" CV="472" mask="XXXVXXXX" default="0">
         <qualifier>
-          <variableref>LT27 Var22 Mode</variableref>
+          <variableref>LT27 Var2 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
@@ -7957,9 +7992,9 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceAspect.xml"/><label>LT32 Var2 Aspect</label></variable>
- 
+
       <!-- End of Logic Table Variables -->
- 
+
 
       <!-- Presets for Composite Variables -->
       <variable label="IP1 Type">
@@ -8037,7 +8072,7 @@
             <compositeSetting label="PA1 Type" value="0"/>
             <compositeSetting label="PA1 Timing" value="1"/>
             <compositeSetting label="PA2 Type" value="0"/>
-            <compositeSetting label="PA2 Timing" value="1"/> 
+            <compositeSetting label="PA2 Timing" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Dual Inverted">
             <compositeSetting label="PA1 Output-Input" value="0"/>
@@ -8051,7 +8086,7 @@
             <compositeSetting label="PA1 Type" value="0"/>
             <compositeSetting label="PA1 Timing" value="1"/>
             <compositeSetting label="PA2 Type" value="0"/>
-            <compositeSetting label="PA2 Timing" value="1"/> 
+            <compositeSetting label="PA2 Timing" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Signal">
             <compositeSetting label="PA1 Output-Input" value="0"/>
@@ -8146,7 +8181,7 @@
             <compositeSetting label="PA1 Type" value="0"/>
             <compositeSetting label="PA1 Timing" value="1"/>
             <compositeSetting label="PA2 Type" value="0"/>
-            <compositeSetting label="PA2 Timing" value="1"/> 
+            <compositeSetting label="PA2 Timing" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Dual Inverted">
             <compositeSetting label="PA1 Output-Input" value="0"/>
@@ -8160,7 +8195,7 @@
             <compositeSetting label="PA1 Type" value="0"/>
             <compositeSetting label="PA1 Timing" value="1"/>
             <compositeSetting label="PA2 Type" value="0"/>
-            <compositeSetting label="PA2 Timing" value="1"/> 
+            <compositeSetting label="PA2 Timing" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Signal">
             <compositeSetting label="PA1 Output-Input" value="0"/>
@@ -8255,7 +8290,7 @@
             <compositeSetting label="PA3 Type" value="0"/>
             <compositeSetting label="PA3 Timing" value="1"/>
             <compositeSetting label="PA4 Type" value="0"/>
-            <compositeSetting label="PA4 Timing" value="1"/> 
+            <compositeSetting label="PA4 Timing" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Dual Inverted">
             <compositeSetting label="PA3 Output-Input" value="0"/>
@@ -8269,7 +8304,7 @@
             <compositeSetting label="PA3 Type" value="0"/>
             <compositeSetting label="PA3 Timing" value="1"/>
             <compositeSetting label="PA4 Type" value="0"/>
-            <compositeSetting label="PA4 Timing" value="1"/> 
+            <compositeSetting label="PA4 Timing" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Signal">
             <compositeSetting label="PA3 Output-Input" value="0"/>
@@ -8364,7 +8399,7 @@
             <compositeSetting label="PA3 Type" value="0"/>
             <compositeSetting label="PA3 Timing" value="1"/>
             <compositeSetting label="PA4 Type" value="0"/>
-            <compositeSetting label="PA4 Timing" value="1"/> 
+            <compositeSetting label="PA4 Timing" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Dual Inverted">
             <compositeSetting label="PA3 Output-Input" value="0"/>
@@ -8378,7 +8413,7 @@
             <compositeSetting label="PA3 Type" value="0"/>
             <compositeSetting label="PA3 Timing" value="1"/>
             <compositeSetting label="PA4 Type" value="0"/>
-            <compositeSetting label="PA4 Timing" value="1"/> 
+            <compositeSetting label="PA4 Timing" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Signal">
             <compositeSetting label="PA3 Output-Input" value="0"/>
@@ -8473,7 +8508,7 @@
             <compositeSetting label="PA5 Type" value="0"/>
             <compositeSetting label="PA5 Timing" value="1"/>
             <compositeSetting label="PA6 Type" value="0"/>
-            <compositeSetting label="PA6 Timing" value="1"/> 
+            <compositeSetting label="PA6 Timing" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Dual Inverted">
             <compositeSetting label="PA5 Output-Input" value="0"/>
@@ -8487,7 +8522,7 @@
             <compositeSetting label="PA5 Type" value="0"/>
             <compositeSetting label="PA5 Timing" value="1"/>
             <compositeSetting label="PA6 Type" value="0"/>
-            <compositeSetting label="PA6 Timing" value="1"/> 
+            <compositeSetting label="PA6 Timing" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Signal">
             <compositeSetting label="PA5 Output-Input" value="0"/>
@@ -8582,7 +8617,7 @@
             <compositeSetting label="PA5 Type" value="0"/>
             <compositeSetting label="PA5 Timing" value="1"/>
             <compositeSetting label="PA6 Type" value="0"/>
-            <compositeSetting label="PA6 Timing" value="1"/> 
+            <compositeSetting label="PA6 Timing" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Dual Inverted">
             <compositeSetting label="PA5 Output-Input" value="0"/>
@@ -8596,7 +8631,7 @@
             <compositeSetting label="PA5 Type" value="0"/>
             <compositeSetting label="PA5 Timing" value="1"/>
             <compositeSetting label="PA6 Type" value="0"/>
-            <compositeSetting label="PA6 Timing" value="1"/> 
+            <compositeSetting label="PA6 Timing" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Signal">
             <compositeSetting label="PA5 Output-Input" value="0"/>
@@ -8691,7 +8726,7 @@
             <compositeSetting label="PA7 Type" value="0"/>
             <compositeSetting label="PA7 Timing" value="1"/>
             <compositeSetting label="PA8 Type" value="0"/>
-            <compositeSetting label="PA8 Timing" value="1"/> 
+            <compositeSetting label="PA8 Timing" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Dual Inverted">
             <compositeSetting label="PA7 Output-Input" value="0"/>
@@ -8705,7 +8740,7 @@
             <compositeSetting label="PA7 Type" value="0"/>
             <compositeSetting label="PA7 Timing" value="1"/>
             <compositeSetting label="PA8 Type" value="0"/>
-            <compositeSetting label="PA8 Timing" value="1"/> 
+            <compositeSetting label="PA8 Timing" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Signal">
             <compositeSetting label="PA7 Output-Input" value="0"/>
@@ -8800,7 +8835,7 @@
             <compositeSetting label="PA7 Type" value="0"/>
             <compositeSetting label="PA7 Timing" value="1"/>
             <compositeSetting label="PA8 Type" value="0"/>
-            <compositeSetting label="PA8 Timing" value="1"/> 
+            <compositeSetting label="PA8 Timing" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Dual Inverted">
             <compositeSetting label="PA7 Output-Input" value="0"/>
@@ -8814,7 +8849,7 @@
             <compositeSetting label="PA7 Type" value="0"/>
             <compositeSetting label="PA7 Timing" value="1"/>
             <compositeSetting label="PA8 Type" value="0"/>
-            <compositeSetting label="PA8 Timing" value="1"/> 
+            <compositeSetting label="PA8 Timing" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Signal">
             <compositeSetting label="PA7 Output-Input" value="0"/>
@@ -9440,7 +9475,7 @@
             <compositeSetting label="PA1 Type" value="0"/>
             <compositeSetting label="PA1 Timing" value="1"/>
             <compositeSetting label="PA2 Type" value="0"/>
-            <compositeSetting label="PA2 Timing" value="1"/> 
+            <compositeSetting label="PA2 Timing" value="1"/>
             <compositeSetting label="PA3 Output-Input" value="0"/>
             <compositeSetting label="PA4 Output-Input" value="0"/>
             <compositeSetting label="PA3 Paired" value="2"/>
@@ -9452,7 +9487,7 @@
             <compositeSetting label="PA3 Type" value="0"/>
             <compositeSetting label="PA3 Timing" value="1"/>
             <compositeSetting label="PA4 Type" value="0"/>
-            <compositeSetting label="PA4 Timing" value="1"/> 
+            <compositeSetting label="PA4 Timing" value="1"/>
             <compositeSetting label="PA5 Output-Input" value="0"/>
             <compositeSetting label="PA6 Output-Input" value="0"/>
             <compositeSetting label="PA5 Paired" value="2"/>
@@ -9464,7 +9499,7 @@
             <compositeSetting label="PA5 Type" value="0"/>
             <compositeSetting label="PA5 Timing" value="1"/>
             <compositeSetting label="PA6 Type" value="0"/>
-            <compositeSetting label="PA6 Timing" value="1"/> 
+            <compositeSetting label="PA6 Timing" value="1"/>
             <compositeSetting label="PA7 Output-Input" value="0"/>
             <compositeSetting label="PA8 Output-Input" value="0"/>
             <compositeSetting label="PA7 Paired" value="2"/>
@@ -9476,7 +9511,7 @@
             <compositeSetting label="PA7 Type" value="0"/>
             <compositeSetting label="PA7 Timing" value="1"/>
             <compositeSetting label="PA8 Type" value="0"/>
-            <compositeSetting label="PA8 Timing" value="1"/> 
+            <compositeSetting label="PA8 Timing" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Dual Inverted">
             <compositeSetting label="PA1 Output-Input" value="0"/>
@@ -9490,7 +9525,7 @@
             <compositeSetting label="PA1 Type" value="0"/>
             <compositeSetting label="PA1 Timing" value="1"/>
             <compositeSetting label="PA2 Type" value="0"/>
-            <compositeSetting label="PA2 Timing" value="1"/> 
+            <compositeSetting label="PA2 Timing" value="1"/>
             <compositeSetting label="PA3 Output-Input" value="0"/>
             <compositeSetting label="PA4 Output-Input" value="0"/>
             <compositeSetting label="PA3 Paired" value="2"/>
@@ -9502,7 +9537,7 @@
             <compositeSetting label="PA3 Type" value="0"/>
             <compositeSetting label="PA3 Timing" value="1"/>
             <compositeSetting label="PA4 Type" value="0"/>
-            <compositeSetting label="PA4 Timing" value="1"/> 
+            <compositeSetting label="PA4 Timing" value="1"/>
             <compositeSetting label="PA5 Output-Input" value="0"/>
             <compositeSetting label="PA6 Output-Input" value="0"/>
             <compositeSetting label="PA5 Paired" value="2"/>
@@ -9514,7 +9549,7 @@
             <compositeSetting label="PA5 Type" value="0"/>
             <compositeSetting label="PA5 Timing" value="1"/>
             <compositeSetting label="PA6 Type" value="0"/>
-            <compositeSetting label="PA6 Timing" value="1"/> 
+            <compositeSetting label="PA6 Timing" value="1"/>
             <compositeSetting label="PA7 Output-Input" value="0"/>
             <compositeSetting label="PA8 Output-Input" value="0"/>
             <compositeSetting label="PA7 Paired" value="2"/>
@@ -9526,7 +9561,7 @@
             <compositeSetting label="PA7 Type" value="0"/>
             <compositeSetting label="PA7 Timing" value="1"/>
             <compositeSetting label="PA8 Type" value="0"/>
-            <compositeSetting label="PA8 Timing" value="1"/> 
+            <compositeSetting label="PA8 Timing" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Signal">
             <compositeSetting label="PA1 Output-Input" value="0"/>
@@ -9581,7 +9616,7 @@
           <compositeChoice choice="(Custom)" comment="If no other choice matches"/>
         </compositeVal>
       </variable>
- 
+
       <variable label="IOP2 Port Type">
         <compositeVal>
 
@@ -9749,7 +9784,7 @@
       <row>
         <column>
       	<label label=" "/>
-         <group>      	
+         <group>
            <qualifier>
              <variableref>Hardware ID</variableref>
              <relation>ne</relation>
@@ -9760,9 +9795,14 @@
              <relation>ne</relation>
              <value>28</value>
            </qualifier>
+           <qualifier>
+             <variableref>Hardware ID</variableref>
+             <relation>ne</relation>
+             <value>29</value>
+           </qualifier>
        	  <label label="&lt;html&gt;&lt;span style=&quot;color: red;&quot;&gt;&lt;strong&gt;JMRI 4.8 or later is required to use this definition.&lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;">
            </label>
-           <label label="&lt;html&gt;&lt;span style=&quot;color: red;&quot;&gt;&lt;strong&gt;Warning! Bad Hardware ID! (25 or 28 required) Read full sheet to update.&lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;">
+           <label label="&lt;html&gt;&lt;span style=&quot;color: red;&quot;&gt;&lt;strong&gt;Warning! Bad Hardware ID! (25, 28 or 29 required) Read full sheet to update.&lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;">
            </label>
            <label label="&lt;html&gt;&lt;span style=&quot;color: red;&quot;&gt;&lt;strong&gt;Warning! This unit may not be a MotorMan!&lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;">
            </label>
@@ -9780,6 +9820,13 @@
               <variableref>Hardware ID</variableref>
               <relation>eq</relation>
               <value>28</value>
+            </qualifier>
+         </label>
+      	<label label="&lt;html&gt;&lt;h1&gt;MotorMan-III&lt;/h1&gt;&lt;/html&gt;">
+            <qualifier>
+              <variableref>Hardware ID</variableref>
+              <relation>eq</relation>
+              <value>29</value>
             </qualifier>
          </label>
       	<label label=" "/>
@@ -9845,7 +9892,7 @@
           <display item="Manufacturer ID" tooltip="RR-CirKits, Inc."/>
         </column>
         <column>
-          <display item="Hardware ID" tooltip="MotorMan HW ID=25"/>
+          <display item="Hardware ID" tooltip="MotorMan HW ID=25, 28, 29"/>
         </column>
         <column>
           <display item="Firmware Version" tooltip="Firmware version number"/>
@@ -9860,24 +9907,26 @@
               <relation>eq</relation>
               <value>25</value>
             </qualifier>
-            <qualifier>
-              <variableref>Firmware Version</variableref>
-              <relation>lt</relation>
-              <value>18</value>
-            </qualifier>
-            <label label="&lt;html&gt;&lt;span style=&quot;color: blue;&quot;&gt;&lt;strong&gt;Seeing yellow backgrounds? First do a 'Read full sheet' to validate these values. &lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;">
-            </label>
-            <label label="&lt;html&gt;&lt;span style=&quot;color: red;&quot;&gt;&lt;strong&gt;Note: This unit has a firmware upgrade available that includes important bug fixes and feature upgrades. &lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;">
-            </label>
-            <label label="&lt;html&gt;&lt;span style=&quot;color: red;&quot;&gt;&lt;strong&gt;This upgrade will reset the node to its defaults! Be sure that your roster entries are current for restoration.&lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;">
-            </label>
-            <label label=" ">
-            </label>
-            <label label="&lt;html&gt;&lt;span style=&quot;color: red;&quot;&gt;&lt;strong&gt;Warning! Be SURE to REMOVE power from the X3 connector before installing the 3-4 shunt to prevent board damage!&lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;">
-            </label>
-            <label label="&lt;html&gt;&lt;span style=&quot;color: red;&quot;&gt;&lt;strong&gt;Due to internal changes, check for proper message and logic operation following this upgrade.&lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;">
-            </label>
-          </group>          
+            <group>
+              <qualifier>
+                <variableref>Firmware Version</variableref>
+                <relation>lt</relation>
+                <value>18</value>
+              </qualifier>
+              <label label="&lt;html&gt;&lt;span style=&quot;color: blue;&quot;&gt;&lt;strong&gt;Seeing yellow backgrounds? First do a 'Read full sheet' to validate these values. &lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;">
+              </label>
+              <label label="&lt;html&gt;&lt;span style=&quot;color: red;&quot;&gt;&lt;strong&gt;Note: This unit has a firmware upgrade available that includes important bug fixes and feature upgrades. &lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;">
+              </label>
+              <label label="&lt;html&gt;&lt;span style=&quot;color: red;&quot;&gt;&lt;strong&gt;This upgrade will reset the node to its defaults! Be sure that your roster entries are current for restoration.&lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;">
+              </label>
+              <label label=" ">
+              </label>
+              <label label="&lt;html&gt;&lt;span style=&quot;color: red;&quot;&gt;&lt;strong&gt;Warning! Be SURE to REMOVE power from the X3 connector before installing the 3-4 shunt to prevent board damage!&lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;">
+              </label>
+              <label label="&lt;html&gt;&lt;span style=&quot;color: red;&quot;&gt;&lt;strong&gt;Due to internal changes, check for proper message and logic operation following this upgrade.&lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;">
+              </label>
+            </group>
+          </group>
           <group>
             <qualifier>
               <variableref>Hardware ID</variableref>
@@ -9890,32 +9939,77 @@
               <display label="Total Output Current Limit" item="Total Output Current" tooltip="Sets Total Output Current Limit."/>
               <label label="    (Automatic 5A limit during Dual Coil pulses)"/>
             </column>
-          </group>          
+          </group>
           <group>
             <qualifier>
               <variableref>Hardware ID</variableref>
               <relation>eq</relation>
               <value>28</value>
             </qualifier>
-            <qualifier>
-              <variableref>Firmware Version</variableref>
-              <relation>lt</relation>
-              <value>11</value>
-            </qualifier>
+            <group>
+              <qualifier>
+                <variableref>Firmware Version</variableref>
+                <relation>lt</relation>
+                <value>11</value>
+              </qualifier>
               <label label=" ">
               </label>
               <label label="&lt;html&gt;&lt;span style=&quot;color: blue;&quot;&gt;&lt;strong&gt;Seeing yellow backgrounds? First do a 'Read full sheet' to validate these values. &lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;">
               </label>
               <label label="&lt;html&gt;&lt;span style=&quot;color: red;&quot;&gt;&lt;strong&gt;Note: This unit has a firmware upgrade available that includes important bug fixes and feature upgrades. &lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;">
               </label>
-          </group>          
+            </group>
+          </group>
+          <group>
+            <qualifier>
+              <variableref>Hardware ID</variableref>
+              <relation>eq</relation>
+              <value>29</value>
+            </qualifier>
+            <label label=" ">
+            </label>
+            <column>
+              <label label="    (MotorMan-III Limited to 250 ma. per output.)"/>
+            </column>
+          </group>
+          <group>
+            <qualifier>
+              <variableref>Hardware ID</variableref>
+              <relation>eq</relation>
+              <value>29</value>
+            </qualifier>
+            <group>
+              <qualifier>
+                <variableref>Firmware Version</variableref>
+                <relation>lt</relation>
+                <value>10</value>
+              </qualifier>
+              <label label=" ">
+              </label>
+              <label label="&lt;html&gt;&lt;span style=&quot;color: blue;&quot;&gt;&lt;strong&gt;Seeing yellow backgrounds? First do a 'Read full sheet' to validate these values. &lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;">
+              </label>
+              <label label="&lt;html&gt;&lt;span style=&quot;color: red;&quot;&gt;&lt;strong&gt;Note: This unit has a firmware upgrade available that includes important bug fixes and feature upgrades. &lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;">
+              </label>
+            </group>
+          </group>
+          <group>
+            <qualifier>
+              <variableref>Hardware ID</variableref>
+              <relation>eq</relation>
+              <value>0</value>
+            </qualifier>
+              <label label=" ">
+              </label>
+              <label label="&lt;html&gt;&lt;span style=&quot;color: blue;&quot;&gt;&lt;strong&gt;Seeing yellow backgrounds? First do a 'Read full sheet' to validate these values. &lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;">
+              </label>
+          </group>
         </column>
       </row>
       <row>
         <column>
           <label label=" "/>
-          <label label="Use DecoderPro Version 4.10 or later."/>
-          <label label="Decoder File Version: 1.4"/>
+          <label label="Use DecoderPro Version 4.14 or later."/>
+          <label label="Decoder File Version: 1.5"/>
         </column>
       </row>
     </column>

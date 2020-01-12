@@ -24,10 +24,8 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
       <!-- Page Body -->
 
@@ -229,7 +227,7 @@ Red, Red and Yellow respectively.
         it to have your preferences take effect.<br>
         For more information on launching and configuring PanelPro,
         please see the <a href=
-        "../../apps/PanelPro/PanelPro.shtml">PanelPro help
+        "../../apps/PanelPro/index.shtml">PanelPro help
         page</a>.</li>
 
         <li>Tell the program about your Sensors:
@@ -251,7 +249,7 @@ Red, Red and Yellow respectively.
           </ul>
         </li>
 
-        <li>Save your work by selecting "Save Panels..." from the
+        <li>Save your work by selecting "Store Panels..." from the
         "Panels" menu, typing a filename, and hitting "Save
         Panels". (You might want to do this often!)</li>
 

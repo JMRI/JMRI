@@ -9,7 +9,7 @@ import org.junit.Test;
 
 
 /**
- * Tests for the {@link jmri.jmris.srcp.parser.SRCPTokenizer} class.
+ * Tests for the jmri.jmris.srcp.parser.SRCPTokenizer class.
  *
  * @author Paul Bender Copyright (C) 2012,2017
  */
@@ -262,6 +262,7 @@ public class SRCPTokenizerTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
     @After

@@ -16,22 +16,33 @@ public class SpeedUtilTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        new Warrant("IW0", "AllTestWarrant");
         SpeedUtil t = new SpeedUtil(null);
         Assert.assertNotNull("exists",t);
+    }
+
+    @Test
+    public void testMakeRamp() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        SpeedUtil su = new SpeedUtil(null);
+        Assert.assertNotNull("exists", su);
+        RampData ramp = su.getRampForSpeedChange(.1f, .8f);
+        Assert.assertNotNull("exists",ramp);
+        Assert.assertTrue("upRamp",ramp.isUpRamp());
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
+
         jmri.util.JUnitUtil.resetInstanceManager();
     }
 
     @After
     public void tearDown() {
         jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(SpeedUtilTest.class);

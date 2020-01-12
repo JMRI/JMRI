@@ -1,0 +1,9 @@
+jtermios
+jtermios.freebsd
+jtermios.linux
+jtermios.macosx
+jtermios.solaris
+jtermios.windows
+jtermios.windows.testsuite
+purejavacomm
+purejavacomm.example

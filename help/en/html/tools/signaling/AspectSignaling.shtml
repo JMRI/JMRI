@@ -8,8 +8,9 @@
   <!-- Copyright Bob Jacobsen 2008 -->
 
   <title>JMRI: Aspect Signaling</title>
-  <meta name="Author" content="Bob Jacobsen, Egbert Broerse">
-  <meta name="Date.Modified" content="20151002"><!-- Style -->
+  <meta name="Author" content="Bob Jacobsen, Egbert Broerse, Bob M.">
+  <meta name="Date.Modified" content="20191124">
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -17,17 +18,17 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
-      <h1>JMRI: Aspect Signaling</h1>
+
+    <h1>JMRI: Aspect Signaling</h1>
 
       <p class="subtitle">Controlling model signals in a
       prototypical manner</p><a href="images/Rule282.png"><img src=
@@ -85,7 +86,7 @@
         they can't be changed individually by the user like Turnout
         icons.<br>
         Image on the right: Rule 281 Signal Icons from the AAR-2
-        Signal System. 
+        Signal System.
         <!-- icons from AAR-2 xml appearance definition xml March 2014 -->
          <a href=
         "http://jmri.org/xml/signals/AAR-1946/aspects.xml"><img src="images/AAR-2Clear.png"
@@ -241,14 +242,14 @@
             <a href="../../../../../xml/signals/CSD-1962-mechaniky/index.shtml">CSD-1962-mechaniky</a> &ndash;
             <a href="../../../../../xml/signals/SZDC-2015-zakladni/index.shtml">SZDC-2015-zakladni</a> </dt>
 
-        <dd>&#268;SD &ndash; &#268;eskoslovensk&#233; st&#225;tn&#237; dr&#225;hy &ndash; Czechoslovakia signal definition 1962 <br>  
+        <dd>&#268;SD &ndash; &#268;eskoslovensk&#233; st&#225;tn&#237; dr&#225;hy &ndash; Czechoslovakia signal definition 1962 <br>
             <i>CSD-1962-zakladni &ndash; basic signals &ndash; Set 0</i> <br>
             <i>CSD-1962-cestova &ndash; intermediate signals &ndash; Set 1</i> <br>
             <i>CSD-1962-vlozena &ndash; embedded signals and hump yard signals &ndash; Set 2</i> <br>
             <i>CSD-1962-mechaniky &ndash; mechanical signals &ndash; Set 4</i> <br>
-            S&#381;DC &ndash; Spr&#225;va &#382;elezni&#269;n&#237; dopravn&#237; cesty &ndash; Czech signal definition 2015 <br>  
+            S&#381;DC &ndash; Spr&#225;va &#382;elezni&#269;n&#237; dopravn&#237; cesty &ndash; Czech signal definition 2015 <br>
             <i>SZDC-2015-zakladni &ndash; basic signals &ndash; Set 3</i> </dd>
-        
+
         <dt><a href=
         "../../../../../xml/signals/CSX-1998/index.shtml">CSX-1998</a></dt>
 
@@ -268,6 +269,9 @@
         revision<br>
         (<i>Missing aspect mapping, not finished as of JMRI
         3.10.</i>)</dd>
+
+        <dt><a href="../../../../../xml/signals/DanishSimplified/index.shtml"> Danish (Simplified) signals</a></dt>
+        <dd>Signals based on a Danish prototype</dd>
 
         <dt><a href=
         "../../../../../xml/signals/GWR-1931/index.shtml">GWR-1931</a></dt>
@@ -317,6 +321,8 @@
         <dd>1954 Prorail rule book, still in use in 2015 (the
         Netherlands)</dd>
 
+        <dt><a href="../../../../../xml/signals/PRR-1956/index.shtml">PRR-1956</a></dt>
+        <dd>From the August 1956 version of the PRR publication "RULES FOR CONDUCTING TRANSPORTATION"</dd>
         <dt><a href=
         "../../../../../xml/signals/RG-1965/index.shtml">RG-1965</a></dt>
 
@@ -326,9 +332,7 @@
         "../../../../../xml/signals/SLSF-1973/index.shtml">SLSF-1973</a></dt>
 
         <dd>St. Louis - San Francisco Railroad (Frisco) 1973 rule
-        book<br>
-        (<i>Missing some icons, not finished as of JMRI
-        3.10.</i>)</dd>
+        book<br></dd>
 
         <dt><a href=
         "../../../../../xml/signals/SOU-1981/index.shtml">SOU-1981</a></dt>

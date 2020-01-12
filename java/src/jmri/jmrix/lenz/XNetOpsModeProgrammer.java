@@ -2,12 +2,12 @@ package jmri.jmrix.lenz;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
+
 import jmri.AddressedProgrammer;
 import jmri.ProgListener;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provides an Ops mode programming interface for XpressNet Currently only Byte
@@ -47,11 +47,14 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
         tc.addXNetListener(XNetInterface.COMMINFO | XNetInterface.CS_INFO, this);
     }
 
-    /**
+    /** 
+     * {@inheritDoc}
+     *
      * Send an ops-mode write request to the Xpressnet.
      */
     @Override
-    synchronized public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
+    synchronized public void writeCV(String CVname, int val, ProgListener p) throws ProgrammerException {
+        final int CV = Integer.parseInt(CVname);
         XNetMessage msg = XNetMessage.getWriteOpsModeCVMsg(mAddressHigh, mAddressLow, CV, val);
         tc.sendXNetMessage(msg, this);
         /* we need to save the programer and value so we can send messages 
@@ -63,15 +66,22 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
         restartTimer(msg.getTimeout());
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    synchronized public void readCV(int CV, ProgListener p) throws ProgrammerException {
+    synchronized public void readCV(String CVname, ProgListener p) throws ProgrammerException {
+        final int CV = Integer.parseInt(CVname);
         XNetMessage msg = XNetMessage.getVerifyOpsModeCVMsg(mAddressHigh, mAddressLow, CV, value);
         tc.sendXNetMessage(msg, this);
         /* We can trigger a read to an LRC120, but the information is not
          currently sent back to us via the XpressNet */
-        p.programmingOpReply(CV, jmri.ProgListener.NotImplemented);
+        notifyProgListenerEnd(p,CV,jmri.ProgListener.NotImplemented);
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public void confirmCV(String CVname, int val, ProgListener p) throws ProgrammerException {
         int CV = Integer.parseInt(CVname);
@@ -79,20 +89,25 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
         tc.sendXNetMessage(msg, this);
         /* We can trigger a read to an LRC120, but the information is not
          currently sent back to us via the XpressNet */
-        p.programmingOpReply(val, jmri.ProgListener.NotImplemented);
+        notifyProgListenerEnd(p,val,jmri.ProgListener.NotImplemented);
     }
 
-    /**
+    /** 
+     * {@inheritDoc}
+     *
      * Types implemented here.
      */
     @Override
+    @Nonnull
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
         ret.add(ProgrammingMode.OPSBYTEMODE);
         return ret;
     }
 
-    /**
+    /** 
+     * {@inheritDoc}
+     *
      * Can this ops-mode programmer read back values?
      * Indirectly we can, though this requires an external display 
      * (a Lenz LRC120) and enabling railcom.
@@ -117,6 +132,9 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
     }
 
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     synchronized public void message(XNetReply l) {
         if (progState == NOTPROGRAMMING) {
@@ -131,7 +149,7 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
                 new jmri.util.WaitHandler(this,250);
                 progState = NOTPROGRAMMING;
                 stopTimer();
-                progListener.programmingOpReply(value, jmri.ProgListener.OK);
+                notifyProgListenerEnd(progListener,value,jmri.ProgListener.OK);
             } else {
                 /* this is an error */
                 if (l.isRetransmittableErrorMsg()) {
@@ -141,38 +159,51 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
                         && l.getElement(1) == XNetConstants.CS_NOT_SUPPORTED) {
                     progState = NOTPROGRAMMING;
                     stopTimer();
-                    progListener.programmingOpReply(value, jmri.ProgListener.NotImplemented);
+                    notifyProgListenerEnd(progListener,value,jmri.ProgListener.NotImplemented);
                 } else {
                     /* this is an unknown error */
                     progState = NOTPROGRAMMING;
                     stopTimer();
-                    progListener.programmingOpReply(value, jmri.ProgListener.UnknownError);
+                    notifyProgListenerEnd(progListener,value,jmri.ProgListener.UnknownError);
                 }
             }
         }
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public boolean getLongAddress() {
         return true;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public int getAddressNumber() {
         return mAddress;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public String getAddress() {
         return "" + getAddressNumber() + " " + getLongAddress();
     }
 
-    // listen for the messages to the LI100/LI101
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public synchronized void message(XNetMessage l) {
     }
 
-    /**
+    /** 
+     * {@inheritDoc}
+     *
      * Handle a timeout notification
      */
     @Override
@@ -182,14 +213,27 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
         }
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     synchronized protected void timeout() {
-        progState = NOTPROGRAMMING;
-        stopTimer();
-        progListener.programmingOpReply(value, jmri.ProgListener.FailedTimeout);
+        if (progState != NOTPROGRAMMING) {
+            // we're programming, time to stop
+            if (log.isDebugEnabled()) {
+                log.debug("timeout!");
+            }
+            // perhaps no loco present? Fail back to end of programming
+            progState = NOTPROGRAMMING;
+            if (getCanRead()) {
+               notifyProgListenerEnd(progListener,value,jmri.ProgListener.FailedTimeout);
+            } else {
+               notifyProgListenerEnd(progListener,value,jmri.ProgListener.OK);
+            }
+        }
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(XNetOpsModeProgrammer.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(XNetOpsModeProgrammer.class);
 
 }

@@ -1,16 +1,20 @@
 package jmri.jmrix.lenz;
 
+import java.util.Comparator;
 import java.util.ResourceBundle;
 import jmri.AddressedProgrammerManager;
 import jmri.CommandStation;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
 import jmri.LightManager;
+import jmri.NamedBean;
 import jmri.PowerManager;
 import jmri.SensorManager;
 import jmri.ThrottleManager;
 import jmri.TurnoutManager;
 import jmri.jmrix.SystemConnectionMemo;
+import jmri.util.NamedBeanComparator;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,6 +33,7 @@ public class XNetSystemConnectionMemo extends SystemConnectionMemo {
         super("X", Bundle.getMessage("MenuXpressNet"));
         this.xt = xt;
         xt.setSystemConnectionMemo(this);
+        this.setLenzCommandStation(xt.getCommandStation());
         register(); // registers general type
         InstanceManager.store(this, XNetSystemConnectionMemo.class); // also register as specific type
 
@@ -58,6 +63,7 @@ public class XNetSystemConnectionMemo extends SystemConnectionMemo {
     public XNetTrafficController getXNetTrafficController() {
         return xt;
     }
+
     private XNetTrafficController xt;
 
     public void setXNetTrafficController(XNetTrafficController xt) {
@@ -65,6 +71,8 @@ public class XNetSystemConnectionMemo extends SystemConnectionMemo {
         // in addition to setting the traffic controller in this object,
         // set the systemConnectionMemo in the traffic controller
         xt.setSystemConnectionMemo(this);
+        // and make sure the Lenz command station is set.
+        this.setLenzCommandStation(xt.getCommandStation());
     }
 
     /**
@@ -87,7 +95,12 @@ public class XNetSystemConnectionMemo extends SystemConnectionMemo {
      */
     public ThrottleManager getThrottleManager() {
         if (throttleManager == null) {
-            throttleManager = new XNetThrottleManager(this);
+           if (xt.getCommandStation().getCommandStationType() == 0x10 ||
+               xt.getCommandStation().getCommandStationType() == 0x04 ) {
+              throttleManager = new jmri.jmrix.roco.RocoXNetThrottleManager(this);
+           } else {
+              throttleManager = new XNetThrottleManager(this);
+           }
         }
         return throttleManager;
     }
@@ -99,7 +112,7 @@ public class XNetSystemConnectionMemo extends SystemConnectionMemo {
     private ThrottleManager throttleManager;
 
     /*
-     * Provide access to the Power Manager for this particular connection.
+     * Provide access to the PowerManager for this particular connection.
      */
     public PowerManager getPowerManager() {
         if (powerManager == null) {
@@ -115,9 +128,9 @@ public class XNetSystemConnectionMemo extends SystemConnectionMemo {
     private PowerManager powerManager;
 
     /**
-     * Provide access to the Sensor Manager for this particular connection.
+     * Provide access to the SensorManager for this particular connection.
      * <p>
-     * NOTE: Sensor manager defaults to NULL
+     * NOTE: SensorManager defaults to NULL
      */
     public SensorManager getSensorManager() {
         return sensorManager;
@@ -131,9 +144,9 @@ public class XNetSystemConnectionMemo extends SystemConnectionMemo {
     private SensorManager sensorManager = null;
 
     /**
-     * Provide access to the Turnout Manager for this particular connection.
+     * Provide access to the TurnoutManager for this particular connection.
      * <p>
-     * NOTE: Turnout manager defaults to NULL
+     * NOTE: TurnoutManager defaults to NULL
      */
     public TurnoutManager getTurnoutManager() {
         return turnoutManager;
@@ -147,9 +160,9 @@ public class XNetSystemConnectionMemo extends SystemConnectionMemo {
     private TurnoutManager turnoutManager = null;
 
     /**
-     * Provide access to the Light Manager for this particular connection.
+     * Provide access to the LightManager for this particular connection.
      * <p>
-     * NOTE: Light manager defaults to NULL
+     * NOTE: LightManager defaults to NULL
      */
     public LightManager getLightManager() {
         return lightManager;
@@ -173,13 +186,29 @@ public class XNetSystemConnectionMemo extends SystemConnectionMemo {
 
     public void setCommandStation(CommandStation c) {
         commandStation = c;
-        if (c instanceof LenzCommandStation) {
-            ((LenzCommandStation) c).setTrafficController(xt);
-            ((LenzCommandStation) c).setSystemConnectionMemo(this);
+        if (c instanceof LenzCommandStation && lenzCommandStation == null) {
+            setLenzCommandStation((LenzCommandStation) c);
         }
     }
 
     private CommandStation commandStation = null;
+
+    /**
+     * Provide access to the Lenz Command Station for this particular connection.
+     * <p>
+     * NOTE: Lenz Command Station defaults to NULL
+     */
+    public LenzCommandStation getLenzCommandStation() {
+        return lenzCommandStation;
+    }
+
+    public void setLenzCommandStation(LenzCommandStation c) {
+        lenzCommandStation = c;
+        lenzCommandStation.setTrafficController(xt);
+        lenzCommandStation.setSystemConnectionMemo(this);
+    }
+
+    private LenzCommandStation lenzCommandStation = null;
 
     @Override
     public boolean provides(Class<?> type) {
@@ -209,17 +238,22 @@ public class XNetSystemConnectionMemo extends SystemConnectionMemo {
             return true;
         } else if (type.equals(jmri.ConsistManager.class)) {
             try {
-                return (((LenzCommandStation) getCommandStation()).getCommandStationType() != 0x10);
+               // multimouse doesn't support consists.
+               return (getLenzCommandStation().getCommandStationType()!=0x10 );
             } catch (java.lang.NullPointerException npe) {
-                // if the command station has not been configured yet,
-                // assume true
-                if (log.isTraceEnabled()) {
-                    log.trace("Unconfigured command station", npe);
-                }
+                // initialization may not be complete.  Assume true.
                 return true;
             }
         } else if (type.equals(jmri.CommandStation.class)) {
-            return true;
+            try {
+                // compact/commander do not support the instructions required 
+                // for command station interface.
+                return (getLenzCommandStation().getCommandStationType() != 0x02  && getCommandStation()!=null );
+            } catch (java.lang.NullPointerException npe) {
+                // initialization may not be complete, return false if no 
+                // command station object.
+                return (getCommandStation()!=null);
+            }
         }
         return super.provides(type);
     }
@@ -264,6 +298,11 @@ public class XNetSystemConnectionMemo extends SystemConnectionMemo {
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.lenz.XNetActionListBundle");
+    }
+
+    @Override
+    public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
+        return new NamedBeanComparator<>();
     }
 
     @Override

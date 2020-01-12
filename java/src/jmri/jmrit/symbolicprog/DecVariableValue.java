@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -23,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001
  */
 public class DecVariableValue extends VariableValue
-        implements ActionListener, PropertyChangeListener, FocusListener {
+        implements ActionListener, FocusListener {
 
     public DecVariableValue(String name, String comment, String cvName,
             boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
@@ -76,7 +75,7 @@ public class DecVariableValue extends VariableValue
     }
 
     int textToValue(String s) {
-        return (Integer.valueOf(s));
+        return (Integer.parseInt(s));
     }
 
     String valueToText(int v) {
@@ -129,7 +128,7 @@ public class DecVariableValue extends VariableValue
         } catch (java.lang.NumberFormatException ex) {
             newVal = 0;
         }
-        int newCv = newValue(oldCv, newVal, getMask());
+        int newCv = setValueInCV(oldCv, newVal, getMask(), _maxVal);
         if (oldCv != newCv) {
             cv.setValue(newCv);
         }
@@ -395,7 +394,7 @@ public class DecVariableValue extends VariableValue
         } else if (e.getPropertyName().equals("Value")) {
             // update value of Variable
             CvValue cv = _cvMap.get(getCvNum());
-            int newVal = (cv.getValue() & maskVal(getMask())) >>> offsetVal(getMask());
+            int newVal = getValueInCV(cv.getValue(), getMask(), _maxVal);
             setValue(newVal);  // check for duplicate done inside setVal
         }
     }

@@ -22,8 +22,8 @@ import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.timetable.TrainSchedule;
-import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
+import jmri.jmrit.operations.trains.schedules.TrainSchedule;
+import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import jmri.util.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -100,9 +100,8 @@ public class TrainSwitchLists extends TrainCommon {
 
             String valid = MessageFormat.format(messageFormatText = TrainManifestText.getStringValid(),
                     new Object[]{getDate(true)});
-            if (Setup.isPrintTimetableNameEnabled()) {
-                TrainSchedule sch = InstanceManager.getDefault(TrainScheduleManager.class).getScheduleById(
-                        trainManager.getTrainScheduleActiveId());
+            if (Setup.isPrintTrainScheduleNameEnabled()) {
+                TrainSchedule sch = InstanceManager.getDefault(TrainScheduleManager.class).getActiveSchedule();
                 if (sch != null) {
                     valid = valid + " (" + sch.getName() + ")";
                 }
@@ -240,7 +239,7 @@ public class TrainSwitchLists extends TrainCommon {
 
                     // add route comment
                     if (Setup.isSwitchListRouteLocationCommentEnabled() && !rl.getComment().trim().equals("")) {
-                        newLine(fileOut, rl.getComment());
+                        newLine(fileOut, rl.getFormatedColorComment());
                     }
 
                     // now print out the work for this location
@@ -256,11 +255,11 @@ public class TrainSwitchLists extends TrainCommon {
                         }
                     } else if (Setup.getManifestFormat().equals(Setup.TWO_COLUMN_FORMAT)) {
                         blockLocosTwoColumn(fileOut, engineList, rl, !IS_MANIFEST);
-                        blockCarsByTrackTwoColumn(fileOut, train, carList, routeList, rl, IS_PRINT_HEADER,
+                        blockCarsTwoColumn(fileOut, carList, routeList, rl, IS_PRINT_HEADER,
                                 !IS_MANIFEST);
                     } else {
                         blockLocosTwoColumn(fileOut, engineList, rl, !IS_MANIFEST);
-                        blockCarsByTrackNameTwoColumn(fileOut, train, carList, routeList, rl, IS_PRINT_HEADER,
+                        blockCarsByTrackNameTwoColumn(fileOut, carList, routeList, rl, IS_PRINT_HEADER,
                                 !IS_MANIFEST);
                     }
                     if (Setup.isPrintHeadersEnabled() || !Setup.getManifestFormat().equals(Setup.STANDARD_FORMAT)) {

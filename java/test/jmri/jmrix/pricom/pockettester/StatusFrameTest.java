@@ -1,9 +1,8 @@
 package jmri.jmrix.pricom.pockettester;
 
 import java.awt.GraphicsEnvironment;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
+import jmri.util.JUnitUtil;
+import org.junit.*;
 
 /**
  * JUnit tests for the StatusFrame class
@@ -63,5 +62,16 @@ public class StatusFrameTest {
         f.asciiFormattedMessage(PackageTest.status2);
 
         f.dispose();
+    }
+
+    @Before
+    public void setUp() throws Exception {
+        JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        JUnitUtil.tearDown();
     }
 }

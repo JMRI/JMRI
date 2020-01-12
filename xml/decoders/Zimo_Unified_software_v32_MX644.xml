@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2002, 2005, 2006, 2007 All rights reserved -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -34,7 +33,7 @@
 
   <decoder>
     <family name="Zimo Unified software (version 32+)" mfg="Zimo">
-      <model model="MX644 version 32+" show="no" lowVersionID="32" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="21MTC" numOuts="10" numFns="14" productID="222">
+      <model model="MX644 version 32+" show="no" lowVersionID="32" highVersionID="32" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="21MTC" numOuts="10" numFns="14" productID="222">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -47,7 +46,7 @@
         <output name="10" label="FO 8 (+5v)"/>
         <size length="30" width="15" height="4" units="mm"/>
       </model>
-      <model model="MX644C version 32+" lowVersionID="32" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="21MTC" numOuts="10" numFns="14" productID="222">
+      <model model="MX644C version 32+" lowVersionID="32" highVersionID="32" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="21MTC" numOuts="10" numFns="14" productID="222">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -60,7 +59,7 @@
         <output name="10" label="FO 8 (+5v)"/>
         <size length="30" width="15" height="4" units="mm"/>
       </model>
-      <model model="MX644D version 32+" lowVersionID="32" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="21MTC" numOuts="10" numFns="14" productID="222">
+      <model model="MX644D version 32+" lowVersionID="32" highVersionID="32" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="21MTC" numOuts="10" numFns="14" productID="222">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>

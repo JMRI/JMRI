@@ -1,12 +1,14 @@
-//StagingEditFrameTest.java
 package jmri.jmrit.operations.locations;
 
 import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.OperationsTestCase;
+import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
+import jmri.util.swing.JemmyUtil;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,7 +17,7 @@ import org.junit.Test;
  *
  * @author	Dan Boudreau Copyright (C) 2009
  */
-public class StagingEditFrameTest extends OperationsSwingTestCase {
+public class StagingEditFrameTest extends OperationsTestCase {
 
     final static int ALL = Track.EAST + Track.WEST + Track.NORTH + Track.SOUTH;
 
@@ -27,9 +29,7 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
      */
     @Test
     public void testAddStagingTrackDefaults() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't use Assume in TestCase subclasses
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         StagingEditFrame f = new StagingEditFrame();
         f.setTitle("Test Staging Add Frame");
         f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
@@ -38,7 +38,7 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
         // create one staging tracks
         f.trackNameTextField.setText("new staging track");
         f.trackLengthTextField.setText("34");
-        enterClickAndLeave(f.addTrackButton);
+        JemmyUtil.enterClickAndLeave(f.addTrackButton);
         Track t = l.getTrackByName("new staging track", null);
         Assert.assertNotNull("new staging track", t);
         Assert.assertEquals("staging track length", 34, t.getLength());
@@ -50,7 +50,7 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
         // add a second track
         f.trackNameTextField.setText("2nd staging track");
         f.trackLengthTextField.setText("3456");
-        enterClickAndLeave(f.addTrackButton);
+        JemmyUtil.enterClickAndLeave(f.addTrackButton);
 
         t = l.getTrackByName("2nd staging track", null);
         Assert.assertNotNull("2nd staging track", t);
@@ -62,7 +62,7 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
         // add a third track
         f.trackNameTextField.setText("3rd staging track");
         f.trackLengthTextField.setText("1");
-        enterClickAndLeave(f.addTrackButton);
+        JemmyUtil.enterClickAndLeave(f.addTrackButton);
 
         JUnitUtil.dispose(f);
 
@@ -78,9 +78,7 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
 
     @Test
     public void testSetDirectionUsingChceckbox() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't use Assume in TestCase subclasses
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         StagingEditFrame f = new StagingEditFrame();
         f.setTitle("Test Staging Add Frame");
         f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
@@ -88,7 +86,7 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
 
         f.trackNameTextField.setText("4th staging track");
         f.trackLengthTextField.setText("12");
-        enterClickAndLeave(f.addTrackButton);
+        JemmyUtil.enterClickAndLeave(f.addTrackButton);
 
         Track t = l.getTrackByName("4th staging track", null);
         Assert.assertNotNull("4th staging track", t);
@@ -96,11 +94,11 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("Direction All before Change", ALL, t.getTrainDirections());
 
         // deselect east, west and south check boxes
-        enterClickAndLeave(f.northCheckBox);
-        enterClickAndLeave(f.westCheckBox);
-        enterClickAndLeave(f.southCheckBox);
+        JemmyUtil.enterClickAndLeave(f.northCheckBox);
+        JemmyUtil.enterClickAndLeave(f.westCheckBox);
+        JemmyUtil.enterClickAndLeave(f.southCheckBox);
 
-        enterClickAndLeave(f.saveTrackButton);
+        JemmyUtil.enterClickAndLeave(f.saveTrackButton);
 
         Assert.assertEquals("only east", Track.EAST, t.getTrainDirections());
 
@@ -109,9 +107,7 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
 
     @Test
     public void testAddCloseAndReload() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't use Assume in TestCase subclasses
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         StagingEditFrame f = new StagingEditFrame();
         f.setTitle("Test Staging Add Frame");
         f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
@@ -120,26 +116,26 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
         // create four staging tracks
         f.trackNameTextField.setText("new staging track");
         f.trackLengthTextField.setText("34");
-        enterClickAndLeave(f.addTrackButton);
+        JemmyUtil.enterClickAndLeave(f.addTrackButton);
 
         f.trackNameTextField.setText("2nd staging track");
         f.trackLengthTextField.setText("3456");
-        enterClickAndLeave(f.addTrackButton);
+        JemmyUtil.enterClickAndLeave(f.addTrackButton);
 
         f.trackNameTextField.setText("3rd staging track");
         f.trackLengthTextField.setText("1");
-        enterClickAndLeave(f.addTrackButton);
+        JemmyUtil.enterClickAndLeave(f.addTrackButton);
 
         f.trackNameTextField.setText("4th staging track");
         f.trackLengthTextField.setText("12");
-        enterClickAndLeave(f.addTrackButton);
+        JemmyUtil.enterClickAndLeave(f.addTrackButton);
 
         // deselect east, west and south check boxes
-        enterClickAndLeave(f.northCheckBox);
-        enterClickAndLeave(f.westCheckBox);
-        enterClickAndLeave(f.southCheckBox);
+        JemmyUtil.enterClickAndLeave(f.northCheckBox);
+        JemmyUtil.enterClickAndLeave(f.westCheckBox);
+        JemmyUtil.enterClickAndLeave(f.southCheckBox);
 
-        enterClickAndLeave(f.saveTrackButton);
+        JemmyUtil.enterClickAndLeave(f.saveTrackButton);
 
         JUnitUtil.dispose(f);
 
@@ -166,22 +162,22 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
     // Ensure minimal setup for log4J
     @Override
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         super.setUp();
 
-        loadLocations();
+        JUnitOperationsUtil.loadFiveLocations();
         
         lManager = InstanceManager.getDefault(LocationManager.class);
         l = lManager.getLocationByName("Test Loc C");
         
-        loadTrain(l);
+        JUnitOperationsUtil.loadTrain(l);
 
         jmri.jmrit.operations.setup.Setup.setRfidEnabled(false); // turn off the ID Tag Reader field by default.
     }
 
     @Override
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         super.tearDown();
 
         lManager = null;

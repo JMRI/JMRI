@@ -37,12 +37,14 @@ public class XNetInitializationManagerTest {
         jmri.util.JUnitAppender.assertWarnMessage("Command Station disconnected, or powered down assuming LZ100/LZV100 V3.x");
     }
 
-@Before
-public void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After public void tearDown() throws Exception {
+    @After 
+    public void tearDown() throws Exception {
+	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

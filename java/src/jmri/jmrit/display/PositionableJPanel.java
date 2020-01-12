@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * <a href="doc-files/Heirarchy.png"><img src="doc-files/Heirarchy.png" alt="UML class diagram for package" height="33%" width="33%"></a>
  * @author Bob Jacobsen copyright (C) 2009
  */
 public class PositionableJPanel extends JPanel implements Positionable, MouseListener, MouseMotionListener {
@@ -410,9 +411,9 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
     public void updateSize() {
         invalidate();
         setSize(maxWidth(), maxHeight());
-        if (log.isDebugEnabled()) {
-//            javax.swing.JTextField text = (javax.swing.JTextField)_popupUtil._textComponent;
-            log.debug("updateSize: {}, text: w={} h={}",
+        if (log.isTraceEnabled()) {
+            // the following fails when run on Jenkins under Xvfb with an NPE in non-JMRI code
+            log.trace("updateSize: {}, text: w={} h={}",
                     _popupUtil.toString(),
                     getFontMetrics(_popupUtil.getFont()).stringWidth(_popupUtil.getText()),
                     getFontMetrics(_popupUtil.getFont()).getHeight());

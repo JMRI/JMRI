@@ -71,16 +71,32 @@ Top Level Elements not brought over from DTD
   <xs:element name="vsdecoder-preferences">
     <xs:complexType>
       <xs:sequence>
-	<xs:element name="preferences">
-	  <xs:complexType>
-	    <xs:sequence>
-	      <xs:element name="DefaultVSDFilePath" type="xs:string"/>
-	      <xs:element name="DefaultVSDFileName" type="xs:string"/>
-	    </xs:sequence>
-	    <xs:attribute name="isAutoStartingEngine" type="xs:boolean" use="required"/>
-	    <xs:attribute name="isAutoLoadingDefaultVSDFile" type="xs:boolean" use="required"/>
-	  </xs:complexType>
-	</xs:element> <!-- preferences -->
+        <xs:element name="VSDecoderPreferences">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="DefaultVSDFilePath" type="xs:string" />
+              <xs:element name="DefaultVSDFileName" type="xs:string" />
+              <xs:element name="ListenerPosition">
+                <xs:complexType>
+                  <xs:attribute name="name" type="xs:string" use="required" />
+                  <xs:attribute name="location" type="xs:string" use="required" />
+                  <xs:attribute name="up" type="xs:string" use="required" />
+                  <xs:attribute name="look_at" type="xs:string" use="required" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="AudioMode">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:enumeration value="RoomAmbient" />
+                    <xs:enumeration value="Headphones" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="isAutoStartingEngine" type="xs:boolean" use="required" />
+            <xs:attribute name="isAutoLoadingDefaultVSDFile" type="xs:boolean" use="required" />
+          </xs:complexType>
+        </xs:element> <!-- VSDecoderPreferences -->
       </xs:sequence>
     </xs:complexType>
   </xs:element> <!-- vsdecoder-preferences -->

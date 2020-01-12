@@ -23,7 +23,20 @@ public class TreeModelTest {
     @Test
     public void testInstance() throws InterruptedException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertNotNull("exists", TreeModel.instance());
+        try {
+            Assert.assertNotNull("exists", TreeModel.instance());
+        } catch (Throwable e) {
+            log.warn("TreeModelTest caught "+e);
+            if (e instanceof UnsatisfiedLinkError) {
+                log.info("TreeModel.instance threw UnsatisfiedLinkError, which means we can't test on this platform");
+                return;
+            } else if (e instanceof ClassNotFoundException) {
+                log.info("TreeModel.instance threw ClassNotFoundException, which means we can't test on this platform");
+                return;
+            } else {
+                Assert.fail("instance threw "+e);
+            }
+        }
         // then kill the thread
         TreeModel.instance().terminateThreads();
     }
@@ -34,5 +47,9 @@ public class TreeModelTest {
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {        
+        JUnitUtil.tearDown();
+    }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TreeModelTest.class);
 }

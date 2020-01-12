@@ -2,13 +2,11 @@ package jmri.jmrix.lenz.li100;
 
 import jmri.JmriException;
 import jmri.ProgrammingMode;
+import jmri.util.JUnitUtil;
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetReply;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import org.junit.Assert;
+import org.junit.*;
 
 /**
  * LI100XNetProgrammerTest.java
@@ -17,32 +15,15 @@ import org.junit.Assert;
  *
  * @author	Paul Bender
  */
-public class LI100XNetProgrammerTest extends TestCase {
+public class LI100XNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest {
 
     static final int RESTART_TIME = 20;
 
-    public void testCtor() {
-// infrastructure objects
-        XNetInterfaceScaffold t = new XNetInterfaceScaffold(new LenzCommandStation());
-
-        LI100XNetProgrammer p = new LI100XNetProgrammer(t);
-        Assert.assertNotNull(p);
-    }
-
+    @Test
+    @Override
     public void testWriteCvSequence() throws JmriException {
-        // infrastructure objects
-        XNetInterfaceScaffold t = new XNetInterfaceScaffold(new LenzCommandStation());
-        jmri.ProgListenerScaffold l = new jmri.ProgListenerScaffold();
-
-        LI100XNetProgrammer p = new LI100XNetProgrammer(t) {
-            @Override
-            protected synchronized void restartTimer(int delay) {
-                super.restartTimer(RESTART_TIME);
-            }
-        };
-
         // and do the write
-        p.writeCV(29, 34, l);
+        p.writeCV("29", 34, l);
         // check "prog mode" message sent
         Assert.assertEquals("mode message sent", 1, t.outbound.size());
         Assert.assertEquals("write message contents", "23 16 1D 22 0A", t.outbound.elementAt(0).toString());
@@ -84,23 +65,14 @@ public class LI100XNetProgrammerTest extends TestCase {
         Assert.assertEquals("Direct mode received value", 34, l.getRcvdValue());
     }
 
+    @Test
+    @Override
     public void testWriteRegisterSequence() throws JmriException {
-        // infrastructure objects
-        XNetInterfaceScaffold t = new XNetInterfaceScaffold(new LenzCommandStation());
-        jmri.ProgListenerScaffold l = new jmri.ProgListenerScaffold();
-
-        LI100XNetProgrammer p = new LI100XNetProgrammer(t) {
-            @Override
-            protected synchronized void restartTimer(int delay) {
-                super.restartTimer(RESTART_TIME);
-            }
-        };
-
         // set register mode
         p.setMode(ProgrammingMode.REGISTERMODE);
 
         // and do the write
-        p.writeCV(29, 12, l);
+        p.writeCV("29", 12, l);
         // check "prog mode" message sent
         Assert.assertEquals("read message sent", 1, t.outbound.size());
         Assert.assertEquals("write message contents", "23 12 05 0C 38", t.outbound.elementAt(0).toString());
@@ -145,20 +117,11 @@ public class LI100XNetProgrammerTest extends TestCase {
 
     }
 
+    @Test
+    @Override
     public void testReadCvSequence() throws JmriException {
-        // infrastructure objects
-        XNetInterfaceScaffold t = new XNetInterfaceScaffold(new LenzCommandStation());
-        jmri.ProgListenerScaffold l = new jmri.ProgListenerScaffold();
-
-        LI100XNetProgrammer p = new LI100XNetProgrammer(t) {
-            @Override
-            protected synchronized void restartTimer(int delay) {
-                super.restartTimer(RESTART_TIME);
-            }
-        };
-
         // and do the read
-        p.readCV(29, l);
+        p.readCV("29", l);
         // check "prog mode" message sent
         Assert.assertEquals("mode message sent", 1, t.outbound.size());
         Assert.assertEquals("read message contents", "22 15 1D 2A", t.outbound.elementAt(0).toString());
@@ -203,23 +166,14 @@ public class LI100XNetProgrammerTest extends TestCase {
 
     }
 
+    @Test
+    @Override
     public void testReadRegisterSequence() throws JmriException {
-        // infrastructure objects
-        XNetInterfaceScaffold t = new XNetInterfaceScaffold(new LenzCommandStation());
-        jmri.ProgListenerScaffold l = new jmri.ProgListenerScaffold();
-
-        LI100XNetProgrammer p = new LI100XNetProgrammer(t) {
-            @Override
-            protected synchronized void restartTimer(int delay) {
-                super.restartTimer(RESTART_TIME);
-            }
-        };
-
         // set register mode
         p.setMode(ProgrammingMode.REGISTERMODE);
 
         // and do the read
-        p.readCV(29, l);
+        p.readCV("29", l);
         // check "prog mode" message sent
         Assert.assertEquals("mode message sent", 1, t.outbound.size());
         Assert.assertEquals("read message contents", "22 11 05 36", t.outbound.elementAt(0).toString());
@@ -265,20 +219,11 @@ public class LI100XNetProgrammerTest extends TestCase {
     // this test is the same as the testWriteCvSequence test, but
     // it checks the sequence for CVs greater than 255, which use
     // different XpressNet commands.
+    @Test
+    @Override
     public void testWriteHighCvSequence() throws JmriException {
-        // infrastructure objects
-        XNetInterfaceScaffold t = new XNetInterfaceScaffold(new LenzCommandStation());
-        jmri.ProgListenerScaffold l = new jmri.ProgListenerScaffold();
-
-        LI100XNetProgrammer p = new LI100XNetProgrammer(t) {
-            @Override
-            protected synchronized void restartTimer(int delay) {
-                super.restartTimer(RESTART_TIME);
-            }
-        };
-
         // and do the write
-        p.writeCV(300, 34, l);
+        p.writeCV("300", 34, l);
         // check "prog mode" message sent
         Assert.assertEquals("mode message sent", 1, t.outbound.size());
         Assert.assertEquals("write message contents", "23 1D 2C 22 30", t.outbound.elementAt(0).toString());
@@ -323,20 +268,11 @@ public class LI100XNetProgrammerTest extends TestCase {
     // this test is the same as the testReadCvSequence test, but
     // it checks the sequence for CVs greater than 256, which use
     // different XpressNet commands.
+    @Test
+    @Override
     public void testReadHighCvSequence() throws JmriException {
-        // infrastructure objects
-        XNetInterfaceScaffold t = new XNetInterfaceScaffold(new LenzCommandStation());
-        jmri.ProgListenerScaffold l = new jmri.ProgListenerScaffold();
-
-        LI100XNetProgrammer p = new LI100XNetProgrammer(t) {
-            @Override
-            protected synchronized void restartTimer(int delay) {
-                super.restartTimer(RESTART_TIME);
-            }
-        };
-
         // and do the read
-        p.readCV(300, l);
+        p.readCV("300", l);
         // check "prog mode" message sent
         Assert.assertEquals("mode message sent", 1, t.outbound.size());
         Assert.assertEquals("read message contents", "22 19 2C 17", t.outbound.elementAt(0).toString());
@@ -381,34 +317,31 @@ public class LI100XNetProgrammerTest extends TestCase {
 
     }
 
-    // from here down is testing infrastructure
-    public LI100XNetProgrammerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", LI100XNetProgrammerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(LI100XNetProgrammerTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
     @Override
-    protected void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
-        super.setUp();
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
+        // infrastructure objects
+        t = new XNetInterfaceScaffold(new LenzCommandStation());
+        l = new jmri.ProgListenerScaffold();
+
+        p = new LI100XNetProgrammer(t) {
+            @Override
+            protected synchronized void restartTimer(int delay) {
+                super.restartTimer(RESTART_TIME);
+            }
+        };
+	    programmer = p;
     }
 
     @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
-        apps.tests.Log4JFixture.tearDown();
+    @After
+    public void tearDown() {
+        t = null;
+        l = null;
+        programmer = p = null;
+	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.tearDown();
     }
 
 }

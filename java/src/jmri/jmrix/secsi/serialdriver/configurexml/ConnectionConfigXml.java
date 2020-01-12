@@ -85,25 +85,6 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         }
     }
 
-    /**
-     * Service routine to look through "parameter" child elements to find a
-     * particular parameter value
-     *
-     * @param e    Element containing parameters
-     * @param name name of desired parameter
-     * @return String value
-     */
-    String findParmValue(Element e, String name) {
-        List<Element> l = e.getChildren("parameter");
-        for (int i = 0; i < l.size(); i++) {
-            Element n = l.get(i);
-            if (n.getAttributeValue("name").equals(name)) {
-                return n.getTextTrim();
-            }
-        }
-        return null;
-    }
-
     @Override
     protected void register() {
         this.register(new ConnectionConfig(adapter));

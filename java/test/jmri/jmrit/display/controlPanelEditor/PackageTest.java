@@ -11,12 +11,16 @@ import org.junit.runners.Suite;
     ControlPanelEditorTest.class,
     ControlPanelEditorActionTest.class,
     PortalIconTest.class,
-    CircuitBuilderTest.class,
     PortalListTest.class,
+    SchemaTest.class,
+    LengthPanelTest.class,
+    CircuitBuilderTest.class,
     EditPortalFrameTest.class,
     EditPortalDirectionTest.class,
     EditCircuitPathsTest.class,
+    EditSignalFrameTest.class,
     EditCircuitFrameTest.class,
+    ConvertDialogTest.class,
 })
 
 /**
@@ -24,6 +28,7 @@ import org.junit.runners.Suite;
  *
  * @author	Bob Jacobsen Copyright 2008, 2009, 2010, 2015
  * @author	Paul Bender Copyright 2017
+ * @author Pete Cressman Copyright (C) 2019   
  */
 public class PackageTest {
 

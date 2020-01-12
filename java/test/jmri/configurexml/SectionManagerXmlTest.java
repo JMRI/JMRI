@@ -10,20 +10,21 @@ import jmri.Path;
 import jmri.Section;
 import jmri.Sensor;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 
 /**
  * Tests for SectionManagerXml.
- * <P>
+ * <p>
  * Just tests Elements, not actual files.
  *
  * @author Bob Coleman Copyright 2012
  */
-public class SectionManagerXmlTest extends TestCase {
+public class SectionManagerXmlTest {
 
+    @Test
     public void testLoadCurrent() throws Exception {
         // load file
         JUnitUtil.resetInstanceManager();
@@ -40,7 +41,7 @@ public class SectionManagerXmlTest extends TestCase {
         // Note: This test assumes that BlockManagerXMLTest passes and more importantly (weakly)
         //       that LoadSectionManagerFileText.xml and LoadBlockManagerFileText.xml refer to the
         //       same block / section layout definition.
-        // check existance of sections
+        // check existence of sections
         Assert.assertNotNull(InstanceManager.getDefault(jmri.SectionManager.class).getSection("IY:AUTO:0001"));
         Assert.assertNull(InstanceManager.getDefault(jmri.SectionManager.class).getSection("no section"));
         Assert.assertNotNull(InstanceManager.getDefault(jmri.SectionManager.class).getSection("IY:AUTO:0002"));
@@ -67,7 +68,7 @@ public class SectionManagerXmlTest extends TestCase {
         Assert.assertNotNull(InstanceManager.getDefault(jmri.SectionManager.class).getSection("West"));
         Assert.assertNotNull(InstanceManager.getDefault(jmri.SectionManager.class).getSection("WestSiding"));
 
-        // check existance of a couple of blocks just to be sure 
+        // check existence of a couple of blocks just to be sure
         //       that LoadSectionManagerFileText.xml and LoadBlockManagerFileText.xml refer to the
         //       same block / section layout definition.
         Assert.assertNotNull(InstanceManager.getDefault(jmri.BlockManager.class).getBlock("IB1"));
@@ -80,7 +81,7 @@ public class SectionManagerXmlTest extends TestCase {
         //Assert.assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("blocknorthwest"));
         //Assert.assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("blockwestsiding"));
 
-        // check existance of a couple of turmouts just to be sure
+        // check existence of a couple of turmouts just to be sure
         //       that LoadSectionManagerFileText.xml and LoadBlockManagerFileText.xml refer to the
         //       same block / section layout definition.
         Assert.assertNotNull(InstanceManager.turnoutManagerInstance().getTurnout("IT1"));
@@ -88,7 +89,7 @@ public class SectionManagerXmlTest extends TestCase {
         Assert.assertNotNull(InstanceManager.turnoutManagerInstance().getTurnout("IT2"));
         Assert.assertNotNull(InstanceManager.turnoutManagerInstance().getTurnout("IT8"));
 
-        // check existance of a couple of memories just to be sure        
+        // check existence of a couple of memories just to be sure
         //       that LoadSectionManagerFileText.xml and LoadBlockManagerFileText.xml refer to the
         //       same block / section layout definition.
         Assert.assertNotNull(InstanceManager.memoryManagerInstance().getMemory("IM:AUTO:0001"));
@@ -98,7 +99,7 @@ public class SectionManagerXmlTest extends TestCase {
         Assert.assertNotNull(InstanceManager.memoryManagerInstance().getMemory("blocknorthwestmemory"));
         Assert.assertNotNull(InstanceManager.memoryManagerInstance().getMemory("blockwestsidingmemory"));
 
-        // check existance of a couple of sensors just to be sure
+        // check existence of a couple of sensors just to be sure
         //       that LoadSectionManagerFileText.xml and LoadBlockManagerFileText.xml refer to the
         //       same block / section layout definition.
         Assert.assertNotNull(InstanceManager.sensorManagerInstance().getSensor("ISBO1"));
@@ -108,7 +109,7 @@ public class SectionManagerXmlTest extends TestCase {
         Assert.assertNotNull(InstanceManager.sensorManagerInstance().getSensor("blocknorthwestoccupied"));
         Assert.assertNotNull(InstanceManager.sensorManagerInstance().getSensor("blockwestsidingoccupied"));
 
-        // check existance of a couple of paths between blocks just to be sure
+        // check existence of a couple of paths between blocks just to be sure
         //       that LoadSectionManagerFileText.xml and LoadBlockManagerFileText.xml refer to the
         //       same block / section layout definition.
         Block[] blockstotest;
@@ -246,8 +247,8 @@ public class SectionManagerXmlTest extends TestCase {
             int expectedcentrepaths = expectedpreviouspaths[testblockfocus] + expectednextpaths[testblockfocus];
             Block focusBlock = blockstotest[testblockfocus];
             Memory expectedtestmemory = InstanceManager.memoryManagerInstance().getMemory("blocknorthmemory");
-            expectedtestmemory.setValue("Memory test: " + testblockfocus);
             Assert.assertNotNull(expectedtestmemory);
+            expectedtestmemory.setValue("Memory test: " + testblockfocus);
 // TODO: BOB C: Memory Test
 //            Memory actualtestmemory = (Memory) focusBlock.getValue();
 //            Assert.assertNotNull(actualtestmemory);
@@ -480,7 +481,7 @@ public class SectionManagerXmlTest extends TestCase {
         expectedReverseStoppingSensors[11] = InstanceManager.sensorManagerInstance().getSensor("ISSSTOPR12");
 
         for (int testsectionfocus = 0; testsectionfocus < 12; testsectionfocus++) {  // Set to one greater than above
-            // check existance of sections
+            // check existence of sections
             Section testsection = sectionstotest[testsectionfocus];
             List<Block> blockList = testsection.getBlockList();
             Assert.assertEquals("Section size where Focus was: " + testsectionfocus, expectedsectionblocklistsize[testsectionfocus], blockList.size());
@@ -530,31 +531,14 @@ public class SectionManagerXmlTest extends TestCase {
 
     }
 
-    // from here down is testing infrastructure
-    public SectionManagerXmlTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading",SectionManagerXmlTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SectionManagerXmlTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 

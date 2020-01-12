@@ -18,15 +18,15 @@ import org.slf4j.LoggerFactory;
 /**
  * JTable editor for cells representing CV values. This is a somewhat
  * unconventional thing in several ways:
- * <UL>
- * <LI>The returned value is not the String edited into the cell, but an Integer
+ * <ul>
+ * <li>The returned value is not the String edited into the cell, but an Integer
  * value. It is not clear how that arose, and it should probably be changed at
  * some point.
- * <LI>This is also a focus listener. People are not used to having to hit
+ * <li>This is also a focus listener. People are not used to having to hit
  * return/enter to "set" their value in place, and are rather expecting that the
  * value they typed will be in effect as soon as they type it. We use a
  * focusListener to do that.
- * </UL>
+ * </ul>
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */

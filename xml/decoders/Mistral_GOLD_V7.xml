@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2002, 20013 All rights reserved -->
-<!-- $Id$             -->
+<!--             -->
 <!--  for SW release 7 or higher, this version includes comments on new CVs      -->
 <!--  (many unavailable yet), for SW release 5 & 6 you can use Mistral_Gold_V6   -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -688,10 +688,7 @@
         <decVal max="255"/>
         <label>Forward Trim</label>
       </variable>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <variable item="CV67(Range 0 - 255)" CV="67" default="9">
         <decVal max="255"/>
         <label>CV67(Range 0 - 255)</label>

@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * @see jmri.jmrix.pricom.pockettester.StatusFrame
  *
  * @author	Bob Jacobsen Copyright (C) 2002,2004, 2005
-  */
+ */
 public abstract class StatusAction extends AbstractAction {
 
     public StatusAction(String s) {
@@ -19,9 +19,7 @@ public abstract class StatusAction extends AbstractAction {
     }
 
     public StatusAction() {
-        java.util.ResourceBundle rb
-                = java.util.ResourceBundle.getBundle("jmri.jmrix.pricom.pockettester.TesterBundle");
-        putValue(javax.swing.Action.NAME, rb.getString("ActionStatus"));
+        putValue(javax.swing.Action.NAME, Bundle.getMessage("ActionStatus"));
     }
 
     @Override

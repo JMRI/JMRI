@@ -34,6 +34,7 @@ public class TrackNodeTest {
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
     }
 
     @After

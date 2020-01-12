@@ -1,0 +1,47 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright Bob Jacobsen 2008 -->
+
+  <title>JMRI: Select DCS52 USB Mode</title>
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+      <h2>JMRI: Select DCS52 USB Mode</h2>A <a href=
+      "../../../../../../html/hardware/loconet/DCS52.shtml">Digitrax
+      DCS52</a> USB interface can act either as a stand-alone programmer, or as an
+      interface to a LocoNet, but it can only do one at a time.
+      Normally, you choose the USB mode as part of <a href=
+      "../../../../../../html/hardware/loconet/PR3.shtml">setting
+      the JMRI connection preferences</a>.
+
+      <p>In some cases, you might want to quickly change the mode
+      during debugging. This tool provides two buttons to allow you
+      to change the DCS52 USB mode immediately. <em>Note that this may
+      result in unusual (and usually bad) behavior from the
+      program!</em> It's generally better to switch mode by
+      changing the JMRI preferences and restarting the program.</p>
+
+      <p>For more information on the DCS52, please see its <a href=
+      "../../../../../../html/hardware/loconet/DCS52.shtml">JMRI
+      reference page</a>.</p>
+      <!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

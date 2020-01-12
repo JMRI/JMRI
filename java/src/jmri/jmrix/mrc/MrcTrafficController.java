@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * message.
  *
  * @author Bob Jacobsen Copyright (C) 2001
-  */
+ */
 public abstract class MrcTrafficController implements MrcInterface {
 
     /**
@@ -121,7 +121,7 @@ public abstract class MrcTrafficController implements MrcInterface {
     /**
      * Is there a backlog of information for the outbound link? This includes
      * both in the program (e.g. the outbound queue) and in the command station
-     * interface (e.g. flow control from the port)
+     * interface (e.g. flow control from the port).
      *
      * @return true if busy, false if nothing waiting to send
      */
@@ -129,7 +129,7 @@ public abstract class MrcTrafficController implements MrcInterface {
 
     /**
      * Reset statistics (received message count, transmitted message count,
-     * received byte count)
+     * received byte count).
      */
     public void resetStatistics() {
         receivedMsgCount = 0;
@@ -140,6 +140,7 @@ public abstract class MrcTrafficController implements MrcInterface {
     /**
      * Monitor the number of MRC messaages received across the interface. This
      * includes the messages this client has sent.
+     *
      * @return count of messages received
      */
     public int getReceivedMsgCount() {
@@ -150,6 +151,7 @@ public abstract class MrcTrafficController implements MrcInterface {
     /**
      * Monitor the number of bytes in MRC messaages received across the
      * interface. This includes the messages this client has sent.
+     *
      * @return count of bytes in received messages
      */
     public int getReceivedByteCount() {
@@ -158,13 +160,18 @@ public abstract class MrcTrafficController implements MrcInterface {
     protected int receivedByteCount = 0;
 
     /**
-     * Monitor the number of MRC messaages transmitted across the interface.
+     * Monitor the number of MRC messages transmitted across the interface.
+     *
      * @return count of messages sent
      */
     public int getTransmittedMsgCount() {
         return transmittedMsgCount;
     }
     protected int transmittedMsgCount = 0;
+
+    public MrcSystemConnectionMemo getAdapterMemo() {
+        return adaptermemo;
+    }
 
     public void setAdapterMemo(MrcSystemConnectionMemo memo) {
         adaptermemo = memo;
@@ -181,13 +188,11 @@ public abstract class MrcTrafficController implements MrcInterface {
 
     public String getSystemPrefix() {
         if (adaptermemo == null) {
-            return "MR"; //IN18N
+            return "M"; //IN18N
         }
         return adaptermemo.getSystemPrefix();
     }
 
     private final static Logger log = LoggerFactory.getLogger(MrcTrafficController.class);
+
 }
-
-
-

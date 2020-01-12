@@ -60,8 +60,8 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
         curFrame = this;
     }
   
-   public void initComponents()
-    {
+   @Override
+   public void initComponents() {
         // For the class
         setTitle(Bundle.getMessage("MetricsWindowTitle") + Bundle.getMessage("WindowConnectionMemo") +_memo.getUserName()); // NOI18N
         setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -213,8 +213,8 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
         saveMetricsButton.setVisible(true); 
         saveMetricsButton.setEnabled(true);
         saveMetricsButton.setToolTipText(Bundle.getMessage("SaveMetricsButtonText") );
-	saveMetricsButton.addActionListener(new java.awt.event.ActionListener()
-        {
+	    saveMetricsButton.addActionListener(new java.awt.event.ActionListener() {
+	        @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
 					saveMetricsButtonActionPerformed(e);
 				}
@@ -223,8 +223,8 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
         
         resetAllMetricsButton.setVisible(true);
         resetAllMetricsButton.setToolTipText(Bundle.getMessage("ResetAllMetricsButtonText") );
-	resetAllMetricsButton.addActionListener(new java.awt.event.ActionListener()
-        {
+	    resetAllMetricsButton.addActionListener(new java.awt.event.ActionListener() {
+	        @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
 					resetAllMetricsButtonActionPerformed(e);
 				}
@@ -233,8 +233,8 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
 
         doneButton.setVisible(true);
         doneButton.setToolTipText(Bundle.getMessage("DoneButtonTip") );
-	doneButton.addActionListener(new java.awt.event.ActionListener()
-        {
+	    doneButton.addActionListener(new java.awt.event.ActionListener() {
+	        @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
 					doneButtonActionPerformed();
 				}
@@ -243,7 +243,7 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
         mainButtons.setVisible(true);
         add(mainButtons);
         
-        addHelpMenu("package.jmri.jmrix.cmri.serial.serialmon.CMRInetMetricsFrame", true);
+        addHelpMenu("package.jmri.jmrix.cmri.serial.cmrinetmanager.CMRInetMetricsFrame", true);
 
         // pack for display
         //-----------------
@@ -253,6 +253,7 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
        //-------------------------------------------------
         metricsData = _memo.getTrafficController().getMetricsData();       
     }
+    
     /**
      * ----------------------------
      * Network statistics window
@@ -263,6 +264,8 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
         dispose();
     }
     
+     volatile PrintStream logStream = null;
+    
     /**
      * 
      * Save Metrics button handler
@@ -270,8 +273,6 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
      * The file is text lines, one for each metric displayed and the count
      * 
      */
-     volatile PrintStream logStream = null;
-    
      public void saveMetricsButtonActionPerformed(ActionEvent e) {
         String fileName = "CMRInetMetrics_";
         DateFormat df = new SimpleDateFormat("yyyyMMdd_HHmmss");
@@ -283,24 +284,20 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
         metricsSaveChooser.setSelectedFile(new File(fileName));
         
         int retVal = metricsSaveChooser.showSaveDialog(null);
-        if (retVal == JFileChooser.APPROVE_OPTION)
-        {
-            try 
-            {
+        if (retVal == JFileChooser.APPROVE_OPTION) {
+            try {
               // Open the file and write the metric data
               //----------------------------------------
               logStream = new PrintStream (new FileOutputStream(metricsSaveChooser.getSelectedFile()));
               logStream.println("-----  CMRInet Error Metrics  -----");
-              for (int i=0; i!=CMRInetMetricsData.CMRInetMetricErrLAST; i++)
-              {
+              for (int i=0; i!=CMRInetMetricsData.CMRInetMetricErrLAST; i++) {
                 logStream.println(String.format("%-30s %d",
                                   CMRInetMetricsData.CMRInetMetricErrName[i],
                                   metricsData.getMetricErrValue(i)));
               }
               logStream.print("\n"+"\n");
               logStream.println("-----  CMRInet Data Metrics  -----");
-              for (int i=0; i!=CMRInetMetricsData.CMRInetMetricDataLAST; i++)
-              {
+              for (int i=0; i!=CMRInetMetricsData.CMRInetMetricDataLAST; i++) {
                 logStream.println(String.format("%-30s %d",
                                   CMRInetMetricsData.CMRInetMetricDataName[i],
                                   metricsData.getMetricDataValue(i)));
@@ -308,14 +305,12 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
               
               // Close the metrics log file
               //---------------------------
-              synchronized (logStream)
-              {
+              synchronized (logStream) {
                 logStream.flush();
                 logStream.close();
               }   
 
-            } catch (Exception ex)
-            {
+            } catch (RuntimeException | java.io.IOException ex) {
                 log.error("exception "+ex);
             }
         }
@@ -336,10 +331,10 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
     /**
      * Set up table for displaying the Error metrics
      */
-    public class NetMetricsTableModel extends AbstractTableModel
-    {
-        
+    public class NetMetricsTableModel extends AbstractTableModel {
+        @Override
         public String getColumnName(int c) {return CMRInetMetricsErrColumnsNames[c];}
+        
         public Class<?> getColumnClass(int r,int c) {
             switch (c) {
                 case ERRORNAME_COLUMN :
@@ -352,13 +347,16 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
                     return Object.class;
             }
         }
-	public boolean isCellEditable(int r,int c) { return false;}
+        
+        @Override
+	    public boolean isCellEditable(int r,int c) { return false;}
+        @Override
         public int getColumnCount () {return NUMCOLUMNS;}
+        @Override
         public int getRowCount () {return CMRInetMetricsData.CMRInetMetricErrName.length;}
-        public Object getValueAt (final int r,int c)
-        {           
-            switch (c)
-            {
+        @Override
+        public Object getValueAt (final int r,int c) {           
+            switch (c) {
                 case ERRORNAME_COLUMN :
                     return CMRInetMetricsData.CMRInetMetricErrName[r]; 
                 case ERRORCOUNT_COLUMN :
@@ -366,8 +364,8 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
                 case ERRORRESET_COLUMN :
                     final JButton button = new JButton(CMRInetMetricsErrColumnsNames[c]);
                     button.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent arg0) 
-                        {
+                        @Override
+                        public void actionPerformed(ActionEvent arg0)  {
                           metricsData.zeroMetricErrValue( r );
                         }
                     });
@@ -381,12 +379,12 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
             
         }
         
-	public void setValueAt(int value, int r, int c)
-        {
-            switch (c)
+	    public void setValueAt(int value, int r, int c) {
+            switch (c)  // leave this as a switch in case other columns get added
             {
                 case ERRORCOUNT_COLUMN :
                     metricsData.setMetricErrorValue(r,value);
+                    break;
                 default:
             }
             fireTableDataChanged();
@@ -399,6 +397,7 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
         public static final int NUMCOLUMNS = ERRORRESET_COLUMN+1;
                        
     }
+    
 	private static class ErrMetricButtonRenderer implements TableCellRenderer {		
 		@Override public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
 			JButton button = (JButton)value;
@@ -423,15 +422,14 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
 			this.table = table;
 		}
 
+		@Override
 		public void mouseClicked(MouseEvent e) {
 			int column = table.getColumnModel().getColumnIndexAtX(e.getX());
 			int row    = e.getY()/table.getRowHeight(); 
 
-			if (row < table.getRowCount() && row >= 0 && column < table.getColumnCount() && column >= 0)
-                        {
+			if (row < table.getRowCount() && row >= 0 && column < table.getColumnCount() && column >= 0) {
 			    Object value = table.getValueAt(row, column);
-			    if (value instanceof JButton)
-                            {
+			    if (value instanceof JButton) {
 			    	((JButton)value).doClick();
 			    }
 			}
@@ -441,10 +439,12 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
             /**
      * Set up table for displaying the Error metrics
      */
-    public class NetMetricsDataTableModel extends AbstractTableModel
-    {
+    public class NetMetricsDataTableModel extends AbstractTableModel {
         
-        public String getColumnName(int c) {return CMRInetMetricsDataColumnsNames[c];}
+        @Override
+        public String getColumnName(int c) {
+            return CMRInetMetricsDataColumnsNames[c];
+        }
         public Class<?> getColumnClass(int r,int c) {
             switch (c) {
                 case DATANAME_COLUMN :
@@ -457,13 +457,19 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
                     return Object.class;
             }
         }
-	public boolean isCellEditable(int r,int c) { return false;}
+        
+        @Override
+        public boolean isCellEditable(int r,int c) { return false;}
+        
+        @Override
         public int getColumnCount () {return DATANUMCOLUMNS;}
+        
+        @Override
         public int getRowCount () {return CMRInetMetricsData.CMRInetMetricDataName.length;}
-        public Object getValueAt (final int r,int c)
-        {           
-            switch (c)
-            {
+        
+        @Override
+        public Object getValueAt (final int r,int c) {           
+            switch (c) {
                 case DATANAME_COLUMN :
                     return CMRInetMetricsData.CMRInetMetricDataName[r]; 
                 case DATACOUNT_COLUMN :
@@ -471,6 +477,7 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
                 case DATARESET_COLUMN :
                     final JButton button = new JButton(CMRInetMetricsDataColumnsNames[c]);
                     button.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent arg0) 
                         {
                           metricsData.zeroMetricDataValue( r );
@@ -486,16 +493,15 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
             
         }
         
-	public void setValueAt(int value, int r, int c)
-        {
-            switch (c)
-            {
+	    public void setValueAt(int value, int r, int c) {
+            switch (c)  { // leave this as a switch in case other columns get added
                 case DATACOUNT_COLUMN :
                     metricsData.setMetricDataValue(r,value);
+                    break;
                 default:
             }
             fireTableDataChanged();
-         }
+        }
 
         public static final int DATANAME_COLUMN   = 0;
         public static final int DATACOUNT_COLUMN  = 1;
@@ -503,20 +509,18 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
         public static final int DATARESET_COLUMN  = 3;
         public static final int DATANUMCOLUMNS = DATARESET_COLUMN+1;
                        
-}
+    }
 
 	private static class DataButtonRenderer implements TableCellRenderer {		
 		@Override public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
 			JButton button = (JButton)value;
-			if (isSelected)
-                        {
-                            button.setForeground(table.getSelectionForeground());
-                            button.setBackground(table.getSelectionBackground());
-                        } else 
-                        {
-                            button.setForeground(table.getForeground());
-                            button.setBackground(UIManager.getColor("Button.background"));
-                        }
+			if (isSelected) {
+                button.setForeground(table.getSelectionForeground());
+                button.setBackground(table.getSelectionBackground());
+            } else {
+                button.setForeground(table.getForeground());
+                button.setBackground(UIManager.getColor("Button.background"));
+            }
                         
 			return button;	
 		}
@@ -529,15 +533,14 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
 			this.table = table;
 		}
 
+        @Override
 		public void mouseClicked(MouseEvent e) {
 			int column = table.getColumnModel().getColumnIndexAtX(e.getX());
 			int row    = e.getY()/table.getRowHeight(); 
 
-			if (row < table.getRowCount() && row >= 0 && column < table.getColumnCount() && column >= 0)
-                        {
+			if (row < table.getRowCount() && row >= 0 && column < table.getColumnCount() && column >= 0) {
 			    Object value = table.getValueAt(row, column);
-			    if (value instanceof JButton)
-                            {
+			    if (value instanceof JButton) {
 			    	((JButton)value).doClick();
 			    }
 			}

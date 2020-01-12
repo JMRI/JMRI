@@ -21,11 +21,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
+
       <h1>Using DecoderPro&reg;</h1>
 
       <a name="Setting_Up" id="Setting_Up"></a>
@@ -85,7 +84,7 @@
       Bar</a></strong><br>
       3. <a href="dp3_rosterTable.shtml"><strong>The Roster
       Table</strong></a> a list of all the decoders in your roster
-      that are part of the active roster group. To set-up a roster
+      that are part of the active roster group. To set up a roster
       group in addition to the default group of <strong>All
       Entries</strong> see <strong><a href=
       "dp3_settings_rosterGroups.shtml">Settings for Roster

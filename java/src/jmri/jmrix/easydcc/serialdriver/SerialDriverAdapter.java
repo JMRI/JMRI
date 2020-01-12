@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import jmri.jmrix.easydcc.EasyDccPortController;
 import jmri.jmrix.easydcc.EasyDccSystemConnectionMemo;
-import jmri.jmrix.easydcc.EasyDccTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import purejavacomm.CommPortIdentifier;
@@ -26,7 +25,7 @@ import purejavacomm.UnsupportedCommOperationException;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  */
-public class SerialDriverAdapter extends EasyDccPortController implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends EasyDccPortController {
 
     public SerialDriverAdapter() {
         super(new EasyDccSystemConnectionMemo("E", "EasyDCC via Serial")); // pass customized user name
@@ -47,7 +46,7 @@ public class SerialDriverAdapter extends EasyDccPortController implements jmri.j
                 return handlePortBusy(p, portName, log);
             }
 
-            // try to set it for comunication via SerialDriver
+            // try to set it for communication via SerialDriver
             try {
                 activeSerialPort.setSerialPortParams(9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
             } catch (UnsupportedCommOperationException e) {
@@ -99,13 +98,13 @@ public class SerialDriverAdapter extends EasyDccPortController implements jmri.j
      */
     @Override
     public void configure() {
-        // connect to the traffic controller
+        // connect to the traffic controller, which is provided via the memo
         log.debug("set tc for memo {}", getSystemConnectionMemo().getUserName());
-        EasyDccTrafficController control = new EasyDccTrafficController(getSystemConnectionMemo());
-        control.connectPort(this);
-        this.getSystemConnectionMemo().setEasyDccTrafficController(control);
+
+        getSystemConnectionMemo().getTrafficController().connectPort(this);
+
         // do the common manager config
-        this.getSystemConnectionMemo().configureManagers();
+        getSystemConnectionMemo().configureManagers();
     }
 
     // Base class methods for the EasyDccPortController interface
@@ -147,23 +146,30 @@ public class SerialDriverAdapter extends EasyDccPortController implements jmri.j
     }
 
     /**
-     * Get an array of valid baud rates. This is currently only 9,600 bps.
+     * {@inheritDoc}
+     * Currently only 9,600 bps.
      */
     @Override
     public String[] validBaudRates() {
         return new String[]{Bundle.getMessage("Baud9600")};
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return new int[]{9600};
+    }
+
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
+    }
+
     // private control members
     private boolean opened = false;
     InputStream serialStream = null;
-
-    /**
-     * @deprecated JMRI Since 4.9.5 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    static public SerialDriverAdapter instance() {
-        return null;
-    }
 
     private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
 

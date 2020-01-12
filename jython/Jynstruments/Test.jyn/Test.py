@@ -2,6 +2,7 @@
 # Will go anywhere
 
 import java
+import java.awt
 import jmri
 import jmri.jmrit.jython.Jynstrument as Jynstrument
 import java.awt.CardLayout as CardLayout

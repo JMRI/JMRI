@@ -1,0 +1,57 @@
+<!-- Sidebar -->
+<!-- This is the common sidebar definition for tools/uss pages -->
+          <hr class="hide">
+
+	  <div id="side"> <!-- Block of text on left side of page -->
+	  <div style="text-align: center">JMRI is...</div>
+	  <dl>
+
+		<dt><h3><a href="../index.shtml">Tools</a></h3></dt>
+		<dd>JMRI provides powerful tools for working with your
+		layout.
+			<ul>
+			<li><a href="../Turnouts.shtml">Turnouts</a>
+			<li><a href="../Lights.shtml">Lights</a>
+			<li><a href="../Sensors.shtml">Sensors</a>
+			<li><a href="../throttle/ThrottleMain.shtml">Throttles</a>
+			<li><a href="../consisttool/ConsistTool.shtml">Consisting</a>
+			<li><a href="../signaling/index.shtml">Signaling</a>
+			<li><a href="../Blocks.shtml">Blocks</a>
+			<li><a href="../Reporters.shtml">Reporters</a>
+			<li><a href="../Memories.shtml">Memory Variables</a>
+			<li><a href="../Routes.shtml">Routes</a>
+			<li><a href="../LRoutes.shtml">LRoutes</a>
+	        <li><a href="../Sections.shtml">Sections</a>
+	        <li><a href="../Transits.shtml">Transits</a>
+			<li><a href="../Logix.shtml">Logix</a>
+			<li><a href="../fastclock/index.shtml">Fast Clocks</a>
+			<li><a href="../speedometer/index.shtml">Speedometer</a>
+			<li><a href="../Audio.shtml">Audio</a>
+			<li><a href="../IdTags.shtml">ID Tags</a>
+			<li><a href="../TimeTable.shtml">Timetable</a>
+	
+	    <li><a href="../index.shtml#systemSpecificTools">System-specific...</a>
+	    </ul>
+		</dd>
+
+		<dt><h3><a href="../automation/index.shtml">Layout Automation</a></h3></dt>
+		<dd>JMRI can be used to automate parts 
+		of your layout, from simply controlling a crossing gate
+		to running trains in the background.
+	    <ul>
+	    <li><a href="../signaling/index.shtml">Signaling</a>
+		<li><a href="../EntryExit.shtml">Entry Exit (NX)</a>
+		<li><a href="../../../package/jmri/jmrit/logix/Warrant.shtml">Warrants</a>
+        <li><a href="../../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher</a>
+		<li><a href="../Routes.shtml">Routes</a>
+	    <li><a href="../fastclock/index.shtml">Fast Clocks</a>
+	    <li class="here">USS CTC
+	    <li><a href="../scripting/index.shtml">Scripting</a>
+	    </ul>
+		</dd>
+
+	  </dl>
+
+	</div> <!-- closes #side -->
+
+<!-- /Sidebar -->

@@ -1,6 +1,8 @@
 package jmri.configurexml;
 
 import java.util.List;
+import java.util.SortedSet;
+
 import jmri.Block;
 import jmri.EntryPoint;
 import jmri.InstanceManager;
@@ -11,8 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provides the functionality for persistence of a SectionManager
- * <P>
+ * Provides the functionality for persistence of a SectionManager.
  *
  * @author Dave Duchamp Copyright (c) 2008
  */
@@ -22,7 +23,7 @@ public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedB
     }
 
     /**
-     * Implementation for storing the contents of a SectionManager
+     * Implementation for storing the contents of a SectionManager.
      *
      * @param o Object to store, of type SectionManager
      * @return Element containing the complete info
@@ -31,98 +32,99 @@ public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedB
     public Element store(Object o) {
         Element sections = new Element("sections");
         setStoreElementClass(sections);
-        SectionManager tm = (SectionManager) o;
-        if (tm != null) {
-            java.util.Iterator<String> iter
-                    = tm.getSystemNameList().iterator();
-
-            // don't return an element if there are not Sections to include
-            if (!iter.hasNext()) {
+        SectionManager sctm = (SectionManager) o;
+        if (sctm != null) {
+            SortedSet<Section> sctList = sctm.getNamedBeanSet();
+            // don't return an element if there are no Sections to include
+            if (sctList.isEmpty()) {
                 return null;
             }
 
-            // store the Section
-            while (iter.hasNext()) {
-                String sname = iter.next();
-                if (sname == null) {
-                    log.error("System name null during store");
-                } else {
-                    log.debug("Section system name is " + sname);
-                    Section x = tm.getBySystemName(sname);
-                    if (x.getSectionType() != Section.DYNAMICADHOC) {
-                        Element elem = new Element("section");
-                        elem.addContent(new Element("systemName").addContent(sname));
+            // store the Sections
+            for (Section x : sctList) {
+                if (x == null) {
+                    log.error("Memory null during store, skipped");
+                    break;
+                }
+                String sName = x.getSystemName();
+                log.debug("Section system name is {}", sName);
 
-                        // As a work-around for backward compatibility, store systemName and username as attribute.
-                        // Remove this in e.g. JMRI 4.11.1 and then update all the loadref comparison files
-                        elem.setAttribute("systemName", sname);
-                        String uname = x.getUserName();
-                        if (uname !=null && !uname.equals("")) elem.setAttribute("userName", uname);
-                            
-                        // store common part
-                        storeCommon(x, elem);
-                        String txt = "userdefined";
-                        if (x.getSectionType() == Section.SIGNALMASTLOGIC) {
-                            txt = "signalmastlogic";
-                        }
-                        elem.setAttribute("creationtype", txt);
-                        txt = x.getForwardStoppingSensorName();
-                        if ((txt != null) && (!txt.equals(""))) {
-                            elem.setAttribute("fstopsensorname", txt);
-                        }
-                        txt = x.getReverseStoppingSensorName();
-                        if ((txt != null) && (!txt.equals(""))) {
-                            elem.setAttribute("rstopsensorname", txt);
-                        }
-                        txt = x.getForwardBlockingSensorName();
-                        if ((txt != null) && (!txt.equals(""))) {
-                            elem.setAttribute("fsensorname", txt);
-                        }
-                        txt = x.getReverseBlockingSensorName();
-                        if ((txt != null) && (!txt.equals(""))) {
-                            elem.setAttribute("rsensorname", txt);
-                        }
-                        if (x.getSectionType() == Section.USERDEFINED) {
-                            // save child block entries
-                            int index = 0;
-                            Block b = x.getBlockBySequenceNumber(index);
-                            Element bElem = null;
-                            while (b != null) {
-                                bElem = new Element("blockentry");
-                                bElem.setAttribute("sName", b.getSystemName());
-                                bElem.setAttribute("order", Integer.toString(index));
-                                elem.addContent(bElem);
-                                index++;
-                                b = x.getBlockBySequenceNumber(index);
-                            }
-                            // save child entry points
-                            List<EntryPoint> epList = x.getEntryPointList();
-                            Element epElem = null;
-                            EntryPoint ep = null;
-                            for (int i = 0; i < epList.size(); i++) {
-                                ep = epList.get(i);
-                                if (ep != null) {
-                                    epElem = new Element("entrypoint");
-                                    // add some protection against a reading problem
-                                    if (ep.getFromBlock() == null) {
-                                        log.error("Unexpected null getFromBlock while storing ep " + i + " in Section " + sname + ", skipped");
-                                        break;
-                                    }
-                                    epElem.setAttribute("fromblock", ep.getFromBlock().getSystemName());
-                                    if (ep.getBlock() == null) {
-                                        log.error("Unexpected null getBlock while storing ep " + i + " in Section " + sname + ", skipped");
-                                        break;
-                                    }
-                                    epElem.setAttribute("toblock", ep.getBlock().getSystemName());
-                                    epElem.setAttribute("direction", Integer.toString(ep.getDirection()));
-                                    epElem.setAttribute("fixed", "" + (ep.isFixed() ? "yes" : "no"));
-                                    epElem.setAttribute("fromblockdirection", "" + ep.getFromBlockDirection());
-                                    elem.addContent(epElem);
-                                }
-                            }
-                        }
-                        sections.addContent(elem);
+                if (x.getSectionType() != Section.DYNAMICADHOC) {
+                    Element elem = new Element("section");
+                    elem.addContent(new Element("systemName").addContent(sName));
+
+                    // As a work-around for backward compatibility, store systemName and username as attribute.
+                    // TODO Remove this in e.g. JMRI 4.11.1 and then update all the loadref comparison files
+                    elem.setAttribute("systemName", sName);
+                    String uname = x.getUserName();
+                    if (uname != null && !uname.equals("")) {
+                        elem.setAttribute("userName", uname);
                     }
+
+                    // store common part
+                    storeCommon(x, elem);
+
+                    String txt = "userdefined";
+                    if (x.getSectionType() == Section.SIGNALMASTLOGIC) {
+                        txt = "signalmastlogic";
+                    }
+                    elem.setAttribute("creationtype", txt);
+                    txt = x.getForwardStoppingSensorName();
+                    if ((txt != null) && (!txt.equals(""))) {
+                        elem.setAttribute("fstopsensorname", txt);
+                    }
+                    txt = x.getReverseStoppingSensorName();
+                    if ((txt != null) && (!txt.equals(""))) {
+                        elem.setAttribute("rstopsensorname", txt);
+                    }
+                    txt = x.getForwardBlockingSensorName();
+                    if ((txt != null) && (!txt.equals(""))) {
+                        elem.setAttribute("fsensorname", txt);
+                    }
+                    txt = x.getReverseBlockingSensorName();
+                    if ((txt != null) && (!txt.equals(""))) {
+                        elem.setAttribute("rsensorname", txt);
+                    }
+                    if (x.getSectionType() == Section.USERDEFINED) {
+                        // save child block entries
+                        int index = 0;
+                        Block b = x.getBlockBySequenceNumber(index);
+                        Element bElem = null;
+                        while (b != null) {
+                            bElem = new Element("blockentry");
+                            bElem.setAttribute("sName", b.getSystemName());
+                            bElem.setAttribute("order", Integer.toString(index));
+                            elem.addContent(bElem);
+                            index++;
+                            b = x.getBlockBySequenceNumber(index);
+                        }
+                        // save child entry points
+                        List<EntryPoint> epList = x.getEntryPointList();
+                        Element epElem = null;
+                        int i = 0;
+                        for (EntryPoint ep : epList) {
+                            if (ep != null) {
+                                epElem = new Element("entrypoint");
+                                // add some protection against a reading problem
+                                if (ep.getFromBlock() == null) {
+                                    log.error("Unexpected null getFromBlock while storing ep {} in Section {}, skipped", i, sName);
+                                    break;
+                                }
+                                epElem.setAttribute("fromblock", ep.getFromBlock().getSystemName());
+                                if (ep.getBlock() == null) {
+                                    log.error("Unexpected null getBlock while storing ep {} in Section {}, skipped", i, sName);
+                                    break;
+                                }
+                                epElem.setAttribute("toblock", ep.getBlock().getSystemName());
+                                epElem.setAttribute("direction", Integer.toString(ep.getDirection()));
+                                epElem.setAttribute("fixed", "" + (ep.isFixed() ? "yes" : "no"));
+                                epElem.setAttribute("fromblockdirection", "" + ep.getFromBlockDirection());
+                                elem.addContent(epElem);
+                                i++;
+                            }
+                        }
+                    }
+                    sections.addContent(elem);
                 }
             }
         }
@@ -171,58 +173,53 @@ public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedB
      */
     public void loadSections(Element sharedSections, Element perNodeSections) {
         List<Element> sectionList = sharedSections.getChildren("section");
-        if (log.isDebugEnabled()) {
-            log.debug("Found " + sectionList.size() + " sections");
-        }
-        SectionManager tm = InstanceManager.getDefault(jmri.SectionManager.class);
-        tm.setDataListenerMute(true);
+        log.debug("Found {} Sections", sectionList.size());
+        SectionManager sctm = InstanceManager.getDefault(jmri.SectionManager.class);
+        sctm.setDataListenerMute(true);
         
-        for (int i = 0; i < sectionList.size(); i++) {
-            String sysName = getSystemName(sectionList.get(i));
-            String userName = getUserName(sectionList.get(i));
-            Section x = tm.createNewSection(sysName, userName);
+        for (Element s : sectionList) {
+            String sysName = getSystemName(s);
+            String userName = getUserName(s);
+            Section x = sctm.createNewSection(sysName, userName);
             if (x != null) {
                 // load common part
-                loadCommon(x, (sectionList.get(i)));
+                loadCommon(x, (s));
 
-                if (sectionList.get(i).getAttribute("creationtype") != null) {
-                    String creationType = sectionList.get(i).getAttribute("creationtype").getValue();
+                if (s.getAttribute("creationtype") != null) {
+                    String creationType = s.getAttribute("creationtype").getValue();
                     if (creationType.equals("userdefined")) {
                         x.setSectionType(Section.USERDEFINED);
                     } else if (creationType.equals("signalmastlogic")) {
                         x.setSectionType(Section.SIGNALMASTLOGIC);
                     }
                 }
-
-                if (sectionList.get(i).getAttribute("fsensorname") != null) {
-                    String forName = (sectionList.get(i)).getAttribute("fsensorname").getValue();
+                if (s.getAttribute("fsensorname") != null) {
+                    String forName = s.getAttribute("fsensorname").getValue();
                     x.delayedSetForwardBlockingSensorName(forName);
                 }
-                if (sectionList.get(i).getAttribute("rsensorname") != null) {
-                    String revName = sectionList.get(i).getAttribute("rsensorname").getValue();
+                if (s.getAttribute("rsensorname") != null) {
+                    String revName = s.getAttribute("rsensorname").getValue();
                     x.delayedSetReverseBlockingSensorName(revName);
                 }
-                if (sectionList.get(i).getAttribute("fstopsensorname") != null) {
-                    String forName = sectionList.get(i).getAttribute("fstopsensorname").getValue();
+                if (s.getAttribute("fstopsensorname") != null) {
+                    String forName = s.getAttribute("fstopsensorname").getValue();
                     x.delayedSetForwardStoppingSensorName(forName);
                 }
-                if (sectionList.get(i).getAttribute("rstopsensorname") != null) {
-                    String revName = sectionList.get(i).getAttribute("rstopsensorname").getValue();
+                if (s.getAttribute("rstopsensorname") != null) {
+                    String revName = s.getAttribute("rstopsensorname").getValue();
                     x.delayedSetReverseStoppingSensorName(revName);
                 }
 
                 // load block entry children
-                List<Element> sectionBlockList = sectionList.get(i).getChildren("blockentry");
-                for (int n = 0; n < sectionBlockList.size(); n++) {
-                    Element elem = sectionBlockList.get(n);
+                List<Element> sectionBlockList = s.getChildren("blockentry");
+                for (Element elem : sectionBlockList) {
                     x.delayedAddBlock(elem.getAttribute("sName").getValue());
-// insert code here to verify sequence number if needed in the future
+                    // insert code here to verify sequence number if needed in the future
                 }
 
                 // load entry point children
-                List<Element> sectionEntryPointList = sectionList.get(i).getChildren("entrypoint");
-                for (int n = 0; n < sectionEntryPointList.size(); n++) {
-                    Element elem = sectionEntryPointList.get(n);
+                List<Element> sectionEntryPointList = s.getChildren("entrypoint");
+                for (Element elem : sectionEntryPointList) {
                     String blockName = elem.getAttribute("toblock").getValue();
                     String fromBlockName = elem.getAttribute("fromblock").getValue();
                     String fromBlockDirection = "";
@@ -230,11 +227,10 @@ public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedB
                         fromBlockDirection = elem.getAttribute("fromblockdirection").getValue();
                     }
                     EntryPoint ep = new EntryPoint(blockName, fromBlockName, fromBlockDirection);
-                    //if (ep!=null) {
                     try {
                         ep.setDirection(elem.getAttribute("direction").getIntValue());
                     } catch (Exception e) {
-                        log.error("Data Conversion Exception when loading direction of entry point - " + e);
+                        log.error("Data Conversion Exception when loading direction of entry point - ", e);
                     }
                     boolean fixed = true;
                     if (elem.getAttribute("fixed").getValue().equals("no")) {
@@ -246,12 +242,10 @@ public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedB
                     } else if (ep.isReverseType()) {
                         x.addToReverseList(ep);
                     }
-                    //}
                 }
             }
         }
-
-        tm.setDataListenerMute(false);
+        sctm.setDataListenerMute(false);
     }
 
     @Override
@@ -260,4 +254,5 @@ public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedB
     }
 
     private final static Logger log = LoggerFactory.getLogger(SectionManagerXml.class);
+
 }

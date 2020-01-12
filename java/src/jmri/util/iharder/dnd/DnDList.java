@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
  * An extension of {@link javax.swing.JList} that supports drag and drop to
  * rearrange its contents and to move objects in and out of the list. The
  * objects in the list will be passed either as a String by calling the object's
- * <tt>toString()</tt> object, or if your drag and drop target accepts the
+ * {@code toString()} object, or if your drag and drop target accepts the
  * {@link TransferableObject#DATA_FLAVOR} data flavor then the actual object
  * will be passed.
  * <p>
@@ -189,7 +189,6 @@ public class DnDList<E>
         }
     }   // end drop
 
-    @SuppressWarnings("unused") // FIXME: Why is this logger hidden way down here and unused?
     private final static Logger log = LoggerFactory.getLogger(DnDList.class);
 
 }   // end class DnDList

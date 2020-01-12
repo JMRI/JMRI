@@ -1,4 +1,3 @@
-//ChangeTrackTypeAction.java
 package jmri.jmrit.operations.locations.tools;
 
 import java.awt.Dimension;
@@ -36,7 +35,6 @@ class ChangeTrackFrame extends OperationsFrame {
     JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     private TrackEditFrame _tef;
-    String _trackType = "";
 
     public ChangeTrackFrame(TrackEditFrame tef) {
         super(Bundle.getMessage("MenuItemChangeTrackType"));
@@ -64,17 +62,16 @@ class ChangeTrackFrame extends OperationsFrame {
         p2.add(saveButton);
 
         // group and set current track type
-        _trackType = tef._track.getTrackType();
         group.add(spurRadioButton);
         group.add(yardRadioButton);
         group.add(interchangeRadioButton);
 
-        spurRadioButton.setSelected(_trackType.equals(Track.SPUR));
-        yardRadioButton.setSelected(_trackType.equals(Track.YARD));
-        interchangeRadioButton.setSelected(_trackType.equals(Track.INTERCHANGE));
+        spurRadioButton.setSelected(tef._track.isSpur());
+        yardRadioButton.setSelected(tef._track.isYard());
+        interchangeRadioButton.setSelected(tef._track.isInterchange());
 
         // Can not change staging tracks!
-        saveButton.setEnabled(!_trackType.equals(Track.STAGING));
+        saveButton.setEnabled(!tef._track.isStaging());
 
         // button action
         addButtonAction(saveButton);
@@ -92,11 +89,11 @@ class ChangeTrackFrame extends OperationsFrame {
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == saveButton) {
             // check to see if button has changed
-            if (spurRadioButton.isSelected() && !_trackType.equals(Track.SPUR)) {
+            if (spurRadioButton.isSelected() && !_tef._track.isSpur()) {
                 changeTrack(Track.SPUR);
-            } else if (yardRadioButton.isSelected() && !_trackType.equals(Track.YARD)) {
+            } else if (yardRadioButton.isSelected() && !_tef._track.isYard()) {
                 changeTrack(Track.YARD);
-            } else if (interchangeRadioButton.isSelected() && !_trackType.equals(Track.INTERCHANGE)) {
+            } else if (interchangeRadioButton.isSelected() && !_tef._track.isInterchange()) {
                 changeTrack(Track.INTERCHANGE);
             }
         }

@@ -21,7 +21,7 @@ public class SignalHeadItemPanelTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        PickListModel<jmri.SignalHead> tableModel = PickListModel.signalHeadPickModelInstance(); // N11N
+        PickListModel<jmri.SignalHead> tableModel = PickListModel.signalHeadPickModelInstance();
         DisplayFrame df = new DisplayFrame("SignalHead Item Panel Test");
         Editor editor = new EditorScaffold();
         SignalHeadItemPanel t = new SignalHeadItemPanel(df,"IH01","",tableModel,editor);
@@ -33,6 +33,8 @@ public class SignalHeadItemPanelTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initInternalSignalHeadManager();
     }
 
     @After

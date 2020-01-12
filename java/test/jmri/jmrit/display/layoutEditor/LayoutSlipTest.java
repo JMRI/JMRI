@@ -6,14 +6,8 @@ import java.awt.geom.Rectangle2D;
 import jmri.JmriException;
 import jmri.util.JUnitUtil;
 import jmri.util.MathUtil;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
+import jmri.util.junit.annotations.*;
+import org.junit.*;
 
 /**
  * Test simple functioning of LayoutSlip
@@ -212,6 +206,7 @@ public class LayoutSlipTest {
 
     @Test
     @Ignore("No Test yet")
+    @ToDo("finish initialization of test and write code to test activation of turnouts")
     public void testActivateTurnout() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
@@ -223,6 +218,7 @@ public class LayoutSlipTest {
 
     @Test
     @Ignore("No Test yet")
+    @ToDo("finish initialization of test and write code to test deactivation of turnouts")
     public void testDeactivateTurnout() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
@@ -564,7 +560,7 @@ public class LayoutSlipTest {
         try {
             // test invalid connection type
             Assert.assertNull("lts.getConnection(invalid type) is null",
-                    lts.getConnection(LayoutEditor.NONE));
+                    lts.getConnection(LayoutTrack.NONE));
             Assert.fail("No exception thrown on lts.getConnection(invalid type)");
         } catch (JmriException ex) {
         }
@@ -573,7 +569,7 @@ public class LayoutSlipTest {
         try {
             // test invalid connection type
             Assert.assertNull("ltd.getConnection(invalid type) is null",
-                    ltd.getConnection(LayoutEditor.NONE));
+                    ltd.getConnection(LayoutTrack.NONE));
             Assert.fail("No exception thrown on ltd.getConnection(invalid type)");
         } catch (JmriException ex) {
         }
@@ -590,28 +586,28 @@ public class LayoutSlipTest {
         try {
             // test valid connection type (null value)
             Assert.assertNull("lts.getConnection(valid type) is null",
-                    lts.getConnection(LayoutEditor.SLIP_A));
+                    lts.getConnection(LayoutTrack.SLIP_A));
         } catch (JmriException ex) {
             Assert.fail("Exception thrown on lts.getConnection(valid type)");
         }
         try {
             // test valid connection type (null value)
             Assert.assertNull("ltd.getConnection(valid type) is null",
-                    ltd.getConnection(LayoutEditor.SLIP_B));
+                    ltd.getConnection(LayoutTrack.SLIP_B));
         } catch (JmriException ex) {
             Assert.fail("Exception thrown on ltd.getConnection(valid type)");
         }
         try {
             // test valid connection type (null value)
             Assert.assertNull("lts.getConnection(valid type) is null",
-                    lts.getConnection(LayoutEditor.SLIP_C));
+                    lts.getConnection(LayoutTrack.SLIP_C));
         } catch (JmriException ex) {
             Assert.fail("Exception thrown on lts.getConnection(valid type)");
         }
         try {
             // test valid connection type (null value)
             Assert.assertNull("ltd.getConnection(valid type) is null",
-                    ltd.getConnection(LayoutEditor.SLIP_D));
+                    ltd.getConnection(LayoutTrack.SLIP_D));
         } catch (JmriException ex) {
             Assert.fail("Exception thrown on ltd.getConnection(valid type)");
         }
@@ -626,14 +622,14 @@ public class LayoutSlipTest {
 
         try {
             // test invalid connection type
-            lts.setConnection(LayoutEditor.NONE, null, LayoutEditor.NONE);
+            lts.setConnection(LayoutTrack.NONE, null, LayoutTrack.NONE);
             Assert.fail("No exception thrown on lts.setConnection(invalid connection type)");
         } catch (JmriException ex) {
         }
         jmri.util.JUnitAppender.assertErrorMessage("Invalid Connection Type 0");
         try {
             // test invalid connection type
-            ltd.setConnection(LayoutEditor.NONE, null, LayoutEditor.NONE);
+            ltd.setConnection(LayoutTrack.NONE, null, LayoutTrack.NONE);
             Assert.fail("No exception thrown on ltd.setConnection(invalid connection type)");
         } catch (JmriException ex) {
         }
@@ -641,14 +637,14 @@ public class LayoutSlipTest {
 
         try {
             // test invalid object type
-            lts.setConnection(LayoutEditor.SLIP_A, null, LayoutEditor.POS_POINT);
+            lts.setConnection(LayoutTrack.SLIP_A, null, LayoutTrack.POS_POINT);
             Assert.fail("No exception thrown on lts.setConnection(invalid object type)");
         } catch (JmriException ex) {
         }
         jmri.util.JUnitAppender.assertErrorMessage("unexpected type of connection to layoutslip - 1");
         try {
             // test invalid object type
-            ltd.setConnection(LayoutEditor.SLIP_B, null, LayoutEditor.POS_POINT);
+            ltd.setConnection(LayoutTrack.SLIP_B, null, LayoutTrack.POS_POINT);
             Assert.fail("No exception thrown on ltd.setConnection(invalid object type)");
         } catch (JmriException ex) {
         }
@@ -656,13 +652,13 @@ public class LayoutSlipTest {
 
         try {
             // test valid types
-            lts.setConnection(LayoutEditor.SLIP_C, null, LayoutEditor.NONE);
+            lts.setConnection(LayoutTrack.SLIP_C, null, LayoutTrack.NONE);
         } catch (JmriException ex) {
             Assert.fail("Exception thrown on lts.setConnection(valid types)");
         }
         try {
             // test valid types
-            ltd.setConnection(LayoutEditor.SLIP_D, null, LayoutEditor.NONE);
+            ltd.setConnection(LayoutTrack.SLIP_D, null, LayoutTrack.NONE);
         } catch (JmriException ex) {
             Assert.fail("Exception thrown on ltd.setConnection(valid types)");
         }
@@ -677,31 +673,31 @@ public class LayoutSlipTest {
 
         // First, try miss
         int hitType = lts.findHitPointType(MathUtil.zeroPoint2D, true, false);
-        Assert.assertTrue("lts.findHitPointType equals NONE", hitType == LayoutEditor.NONE);
+        Assert.assertTrue("lts.findHitPointType equals NONE", hitType == LayoutTrack.NONE);
 
         // now try hit getCoordsLeft -> SLIP_LEFT
         hitType = lts.findHitPointType(lts.getCoordsLeft(), true, false);
-        Assert.assertTrue("lts.findHitPointType equals SLIP_LEFT", hitType == LayoutEditor.SLIP_LEFT);
+        Assert.assertTrue("lts.findHitPointType equals SLIP_LEFT", hitType == LayoutTrack.SLIP_LEFT);
 
         // now try hit getCoordsRight -> SLIP_RIGHT
         hitType = lts.findHitPointType(lts.getCoordsRight(), false, false);
-        Assert.assertTrue("lts.findHitPointType equals SLIP_RIGHT", hitType == LayoutEditor.SLIP_RIGHT);
+        Assert.assertTrue("lts.findHitPointType equals SLIP_RIGHT", hitType == LayoutTrack.SLIP_RIGHT);
 
         // now try hit getCoordsA -> SLIP_A
         hitType = lts.findHitPointType(lts.getCoordsA(), false, true);
-        Assert.assertTrue("lts.findHitPointType equals SLIP_A", hitType == LayoutEditor.SLIP_A);
+        Assert.assertTrue("lts.findHitPointType equals SLIP_A", hitType == LayoutTrack.SLIP_A);
 
         // now try hit getCoordsB -> SLIP_B
         hitType = lts.findHitPointType(lts.getCoordsB(), false, true);
-        Assert.assertTrue("lts.findHitPointType equals SLIP_B", hitType == LayoutEditor.SLIP_B);
+        Assert.assertTrue("lts.findHitPointType equals SLIP_B", hitType == LayoutTrack.SLIP_B);
 
         // now try hit getCoordsC -> SLIP_C
         hitType = lts.findHitPointType(lts.getCoordsC(), false, true);
-        Assert.assertTrue("lts.findHitPointType equals SLIP_C", hitType == LayoutEditor.SLIP_C);
+        Assert.assertTrue("lts.findHitPointType equals SLIP_C", hitType == LayoutTrack.SLIP_C);
 
         // now try hit getCoordsD -> SLIP_D
         hitType = lts.findHitPointType(lts.getCoordsD(), false, true);
-        Assert.assertTrue("lts.findHitPointType equals SLIP_D", hitType == LayoutEditor.SLIP_D);
+        Assert.assertTrue("lts.findHitPointType equals SLIP_D", hitType == LayoutTrack.SLIP_D);
     }
 
     // from here down is testing infrastructure
@@ -709,6 +705,7 @@ public class LayoutSlipTest {
     public static void beforeClass() {
         JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
+            JUnitUtil.resetProfileManager();
             layoutEditor = new LayoutEditor();
         }
     }
@@ -718,12 +715,13 @@ public class LayoutSlipTest {
         if (layoutEditor != null) {
             JUnitUtil.dispose(layoutEditor);
         }
+        layoutEditor = null;
         JUnitUtil.tearDown();
     }
 
     @Before
-    public void setUp() throws Exception {
-        JUnitUtil.setUp();
+    public void setUp() {
+        jmri.util.JUnitUtil.resetProfileManager();
         if (!GraphicsEnvironment.isHeadless()) {
             lts = new LayoutSlip("single", new Point2D.Double(50.0, 100.0), +45.0, layoutEditor, LayoutTurnout.SINGLE_SLIP);
             ltd = new LayoutSlip("double", new Point2D.Double(100.0, 50.0), -45.0, layoutEditor, LayoutTurnout.DOUBLE_SLIP);
@@ -731,12 +729,17 @@ public class LayoutSlipTest {
     }
 
     @After
-    public void tearDown() throws Exception {
-        lts = null;
-        ltd = null;
-
-        // reset the instance manager.
-        JUnitUtil.tearDown();
+    public void tearDown() {
+        if(lts!=null) {
+           lts.remove();
+           lts.dispose();
+           lts = null;
+        }
+        if(ltd!=null) {
+           ltd.remove();
+           ltd.dispose();
+           ltd = null;
+        }
     }
     //private final static Logger log = LoggerFactory.getLogger(LayoutSlipTest.class);
 }

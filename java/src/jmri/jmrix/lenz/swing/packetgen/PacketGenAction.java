@@ -3,7 +3,7 @@
  * object
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002
-  */
+ */
 package jmri.jmrix.lenz.swing.packetgen;
 
 import java.awt.event.ActionEvent;

@@ -1,11 +1,10 @@
 package jmri.jmrix.pricom.downloader;
 
-import java.util.ResourceBundle;
 import jmri.util.JmriJFrame;
 
 /**
  * Frame for downloading (mangled) .hex files
- *
+ * <p>
  * This is just an enclosure for the LoaderPane, which does the real work.
  *
  * @author	Bob Jacobsen Copyright (C) 2005
@@ -16,7 +15,7 @@ public class LoaderFrame extends JmriJFrame {
     LoaderPane pane = new LoaderPane();
 
     public LoaderFrame() {
-        super(ResourceBundle.getBundle("jmri.jmrix.pricom.downloader.Loader").getString("TitleLoader"));
+        super(Bundle.getMessage("TitleLoader"));
         // general GUI config
 
         // install items in GUI
@@ -30,4 +29,5 @@ public class LoaderFrame extends JmriJFrame {
         pane.dispose();
         super.dispose();
     }
+
 }

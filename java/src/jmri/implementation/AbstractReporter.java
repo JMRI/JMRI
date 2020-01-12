@@ -4,9 +4,9 @@ import jmri.Reporter;
 
 /**
  * Abstract base for the Reporter interface.
- * <P>
+ * <p>
  * Implements the parameter binding support.
- * <P>
+ * <p>
  * Note that we consider it an error for there to be more than one object that
  * corresponds to a particular physical Reporter on the layout.
  *
@@ -19,11 +19,11 @@ import jmri.Reporter;
 public abstract class AbstractReporter extends AbstractNamedBean implements Reporter {
 
     public AbstractReporter(String systemName) {
-        super(systemName.toUpperCase());
+        super(systemName);
     }
 
     public AbstractReporter(String systemName, String userName) {
-        super(systemName.toUpperCase(), userName);
+        super(systemName, userName);
     }
 
     @Override
@@ -62,7 +62,7 @@ public abstract class AbstractReporter extends AbstractNamedBean implements Repo
     }
 
     // internal data members
-    private Object _lastReport = null;
-    private Object _currentReport = null;
+    protected Object _lastReport = null;
+    protected Object _currentReport = null;
 
 }

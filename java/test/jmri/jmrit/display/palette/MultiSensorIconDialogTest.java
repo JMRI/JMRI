@@ -1,6 +1,7 @@
 package jmri.jmrit.display.palette;
 
 import java.awt.GraphicsEnvironment;
+import jmri.Sensor;
 import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.EditorScaffold;
@@ -21,12 +22,13 @@ public class MultiSensorIconDialogTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        PickListModel tableModel = PickListModel.turnoutPickModelInstance(); // N11N
-        DisplayFrame df = new DisplayFrame("Indicator TO Icon Dialog Test");
+        PickListModel<Sensor> tableModel = PickListModel.sensorPickModelInstance(); // NOI18N
+        DisplayFrame df = new DisplayFrame("Indicator TO Icon Dialog Test"); // NOI18N
         Editor editor = new EditorScaffold();
         MultiSensorItemPanel mip = new MultiSensorItemPanel(df,"IS01","",tableModel,editor);
-        MultiSensorIconDialog t = new MultiSensorIconDialog("MultiSensor","MultiSensor",mip,null);
-        Assert.assertNotNull("exists",t);
+        MultiSensorIconDialog t = new MultiSensorIconDialog("MultiSensor","MultiSensor",mip,null); // NOI18N
+        Assert.assertNotNull("exists",t); // NOI18N
+        JUnitUtil.dispose(t);
         JUnitUtil.dispose(df);
     }
 
@@ -34,6 +36,7 @@ public class MultiSensorIconDialogTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
     @After

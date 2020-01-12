@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2002, 2005, 2006, 2007 All rights reserved -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -32,7 +31,7 @@
 
   <decoder>
     <family name="Zimo Unified software (version 36+)" mfg="Zimo">
-      <model  model="MX658N18 version 36+" lowVersionID="36" highVersionID="40" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="Next18" numOuts="6" numFns="14" productID="246">
+      <model  model="MX658N18 version 36+" lowVersionID="36" highVersionID="36" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="Next18" numOuts="6" numFns="14" productID="246">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -114,6 +113,7 @@
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneInputMapping.xml"/>
   <!-- Begin sound-only panes -->
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSoundLevels.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSoundSamples.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSound.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSound-ElectricLoco.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSound-DieselLoco.xml"/>

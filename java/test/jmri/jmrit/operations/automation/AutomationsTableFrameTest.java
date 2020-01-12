@@ -2,16 +2,14 @@ package jmri.jmrit.operations.automation;
 
 import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
 import org.junit.Test;
 
-public class AutomationsTableFrameTest extends OperationsSwingTestCase {
+public class AutomationsTableFrameTest extends OperationsTestCase {
 
     @Test
     public void testFrameCreation() {
@@ -29,26 +27,11 @@ public class AutomationsTableFrameTest extends OperationsSwingTestCase {
         // now create the add automation frame
         f.addButton.doClick();
         // the following fails on a 13" laptop
-        //enterClickAndLeave(f.addButton);
+        //JemmyUtil.enterClickAndLeave(f.addButton);
         addAutomationFrame = JmriJFrame.getFrame(Bundle.getMessage("TitleAutomationAdd"));
         Assert.assertNotNull(addAutomationFrame);
 
         JUnitUtil.dispose(addAutomationFrame);
         JUnitUtil.dispose(f);
-    }
-
-    // Ensure minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() throws Exception {
-        super.setUp();
-    }
-
-    // The minimal setup for log4J
-    @Override
-    @After
-    public void tearDown() throws Exception {
-        // apps.tests.Log4JFixture.tearDown();
-        super.tearDown();
     }
 }

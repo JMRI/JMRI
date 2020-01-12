@@ -5,11 +5,7 @@ import java.io.DataOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -245,7 +241,13 @@ public class NceTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContro
 
         @Override
         public String[] validBaudRates() {
-            return null;
+            return new String[] {};
+        }
+
+        //@Override
+        @Override
+        public int[] validBaudNumbers() {
+            return new int[] {};
         }
 
         protected NcePortControllerScaffold() throws Exception {
@@ -287,13 +289,15 @@ public class NceTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContro
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         tc  = new NceTrafficController();
     }
 
     @Override
     @After
     public void tearDown() {
+        tc = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

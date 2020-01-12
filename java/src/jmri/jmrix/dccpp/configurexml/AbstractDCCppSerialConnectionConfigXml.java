@@ -8,7 +8,7 @@ import jmri.jmrix.dccpp.AbstractDCCppSerialConnectionConfig;
  * by persistening an DCC++Serial Adapter (and connections). Note this is
  * named as the XML version of an AbstractDCCppSerialConnectionConfig object,
  * but it's actually persisting the DCC++ Serial Adapter.
- * <P>
+ * <p>
  * This class is invoked from jmrix.JmrixConfigPaneXml on write,
  * as that class is the one actually registered. Reads are brought
  * here directly via the class attribute in the XML.
@@ -18,7 +18,7 @@ import jmri.jmrix.dccpp.AbstractDCCppSerialConnectionConfig;
  *
  * Based on AbstractXNetSerialConnectionConfigXml by Paul Bender
  */
-abstract public class AbstractDCCppSerialConnectionConfigXml extends AbstractSerialConnectionConfigXml {
+public abstract class AbstractDCCppSerialConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
     public AbstractDCCppSerialConnectionConfigXml() {
         super();

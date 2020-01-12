@@ -1,52 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <name>Information</name>
-  <column>
-    <separator/>
-    <label>
-      <text>Decoder Information</text>
-      <text xml:lang="it">Informazioni Decoder</text>
-    </label>
-    <label>
-      <text> </text>
-    </label>
-    <display item="Firmware Major Version"/>
-    <display item="Firmware Minor Version"/>
-    <display item="Firmware Build Number"/>
-<!--     <xi:include href="http://jmri.org/xml/decoders/esu/v4decoderInfoDisplay.xml"/> -->
-  </column>
-  <column>
-    <separator/>
-    <label>
-      <text>Locomotive Information</text>
-      <text xml:lang="it">Informazioni Locomotiva</text>
-      <text xml:lang="de">Lokomotive Information</text>
-      <text xml:lang="ca">Informació de la locomotora</text>
-    </label>
-    <label>
-      <text> </text>
-    </label>
-    <label>
-      <text>(coming soon)</text>
-      <text xml:lang="it">in arrivo</text>
-      <text xml:lang="de">demnächst hier</text>
-      <text xml:lang="ca">Properament</text>
-    </label>
-    <separator/>
-    <label>
-      <text>Project Information</text>
-      <text xml:lang="it">Informazioni Progetto</text>
-      <text xml:lang="de">Projekt Information</text>
-      <text xml:lang="ca">Informació del projecte</text>
-    </label>
-    <label>
-      <text> </text>
-    </label>
-    <label>
-      <text>(coming soon)</text>
-      <text xml:lang="it">in arrivo</text>
-      <text xml:lang="de">demnächst hier</text>
-      <text xml:lang="ca">Properament</text>
-    </label>
-  </column>
+    <name>Information</name>
+    <column>
+        <separator/>
+        <label>
+            <text>Decoder Information</text>
+            <text xml:lang="it">Informazioni Decoder</text>
+        </label>
+        <label>
+            <text> </text>
+        </label>
+        <display item="Firmware Major Version"/>
+        <display item="Firmware Minor Version"/>
+        <display item="Firmware Build Number"/>
+        <xi:include href="http://jmri.org/xml/decoders/esu/v4decoderInfoDisplay.xml"/>
+    </column>
+    <column>
+        <separator/>
+        <label>
+            <text>Locomotive Information</text>
+            <text xml:lang="it">Informazioni Locomotiva</text>
+            <text xml:lang="de">Lokomotive Information</text>
+            <text xml:lang="ca">Informació de la locomotora</text>
+        </label>
+        <label>
+            <text> </text>
+        </label>
+        <label>
+            <text>(more coming soon)</text>
+            <text xml:lang="it">in arrivo</text>
+            <text xml:lang="de">demnächst hier</text>
+            <text xml:lang="ca">Properament</text>
+        </label>
+        <separator/>
+        <label>
+            <text>Project Information</text>
+            <text xml:lang="it">Informazioni Progetto</text>
+            <text xml:lang="de">Projekt Information</text>
+            <text xml:lang="ca">Informació del projecte</text>
+        </label>
+        <label>
+            <text> </text>
+        </label>
+        <label>
+            <text>(more coming soon)</text>
+            <text xml:lang="it">in arrivo</text>
+            <text xml:lang="de">demnächst hier</text>
+            <text xml:lang="ca">Properament</text>
+        </label>
+        <label>
+            <text> </text>
+        </label>
+        <xi:include href="http://jmri.org/xml/decoders/esu/v4projectInfoDisplay.xml"/>
+    </column>
 </pane>

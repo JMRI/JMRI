@@ -74,7 +74,7 @@ public class ScheduleCopyFrame extends OperationsFrame implements java.beans.Pro
         // add help menu to window
         addHelpMenu("package.jmri.jmrit.operations.Operations_Schedules", true); // NOI18N
 
-        // setup buttons
+        // set up buttons
         addButtonAction(copyButton);
  
         scheduleBox.setSelectedItem(schedule);

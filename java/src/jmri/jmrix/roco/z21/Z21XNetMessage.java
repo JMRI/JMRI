@@ -1,6 +1,6 @@
 package jmri.jmrix.roco.z21;
 
-import java.io.Serializable;
+import jmri.SpeedStepMode;
 import jmri.jmrix.lenz.XNetConstants;
 import jmri.jmrix.lenz.XNetMessage;
 
@@ -14,9 +14,7 @@ import jmri.jmrix.lenz.XNetMessage;
  * @author	Bob Jacobsen Copyright (C) 2002
  * @author	Paul Bender Copyright (C) 2003-2010
  */
-public class Z21XNetMessage extends jmri.jmrix.lenz.XNetMessage implements Serializable {
-
-//    static private int _nRetries = 5;
+public class Z21XNetMessage extends jmri.jmrix.lenz.XNetMessage {
 
     /**
      * Constructor, just pass on to the supperclass.
@@ -126,8 +124,27 @@ public class Z21XNetMessage extends jmri.jmrix.lenz.XNetMessage implements Seria
         }
         msg.setElement(4, functionbyte);
         msg.setParity();
+        msg.setBroadcastReply();
         return (msg);
     }
+
+    /**
+     * Generate a Z21 message to change the speed/direction of a locomotive.
+     *
+     * @param address the locomotive address
+     * @param speedMode the speedstep mode see @jmri.DccThrottle
+     *                       for possible values.
+     * @param speed a normalized speed value (a floating point number between 0
+     *              and 1).  A negative value indicates emergency stop.
+     * @param isForward true for forward, false for reverse.
+     */
+    public static XNetMessage getZ21LanXSetLocoDriveMsg(int address, SpeedStepMode speedMode, float speed, boolean isForward) {
+        XNetMessage msg = XNetMessage.getSpeedAndDirectionMsg(address,
+                        speedMode,speed,isForward);
+        msg.setBroadcastReply();
+        return (msg);
+    }
+
 
     /**
      * Given a turnout address, generate a message to request the state.

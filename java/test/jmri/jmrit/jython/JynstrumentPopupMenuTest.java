@@ -24,6 +24,7 @@ public class JynstrumentPopupMenuTest {
            public void init(){
            }
 
+           @Override
            protected void quit(){
            }
         };

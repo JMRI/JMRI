@@ -40,22 +40,19 @@ public class AcelaTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTes
 
         Turnout o = t.newTurnout("AT11", "my name");
 
-        if (log.isDebugEnabled()) {
-            log.debug("received turnout value " + o);
-        }
-        Assert.assertTrue(null != (AcelaTurnout) o);
+        log.debug("received turnout value {}", o);
+        Assert.assertNotNull(o);
 
         // make sure loaded into tables
         if (log.isDebugEnabled()) {
-            log.debug("by system name: " + t.getBySystemName("AT11"));
+            log.debug("by system name: {}", t.getBySystemName("AT11"));
         }
         if (log.isDebugEnabled()) {
-            log.debug("by user name:   " + t.getByUserName("my name"));
+            log.debug("by user name:   {}", t.getByUserName("my name"));
         }
 
-        Assert.assertTrue(null != t.getBySystemName("AT11"));
-        Assert.assertTrue(null != t.getByUserName("my name"));
-
+        Assert.assertNotNull(t.getBySystemName("AT11"));
+        Assert.assertNotNull(t.getByUserName("my name"));
     }
 
     AcelaNode a0, a1, a2, a3;
@@ -65,7 +62,7 @@ public class AcelaTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTes
     @Before
     public void setUp() {
         JUnitUtil.setUp();
- 
+
         tcis = new AcelaTrafficControlScaffold();
         memo = new AcelaSystemConnectionMemo(tcis);
 
@@ -107,7 +104,9 @@ public class AcelaTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTes
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
     private final static Logger log = LoggerFactory.getLogger(AcelaTurnoutManagerTest.class);

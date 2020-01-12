@@ -3,6 +3,7 @@ package jmri.jmrit.operations.locations.schedules;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -18,6 +19,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
@@ -29,8 +34,6 @@ import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.swing.JTablePersistenceManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for user edit of a schedule
@@ -182,17 +185,17 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
         getContentPane().add(p3);
         getContentPane().add(pB);
 
-        // setup buttons
+        // set up buttons
         addButtonAction(addTypeButton);
         addButtonAction(deleteScheduleButton);
         addButtonAction(addScheduleButton);
         addButtonAction(saveScheduleButton);
 
-        // setup radio buttons
+        // set up radio buttons
         addRadioButtonAction(sequentialRadioButton);
         addRadioButtonAction(matchRadioButton);
 
-        // setup combobox
+        // set up combobox
         loadTypeComboBox();
 
         // build menu
@@ -391,10 +394,10 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
         InstanceManager.getDefault(CarTypes.class).removePropertyChangeListener(this);
         _location.removePropertyChangeListener(this);
         _track.removePropertyChangeListener(this);
-        scheduleModel.dispose();
         InstanceManager.getOptionalDefault(JTablePersistenceManager.class).ifPresent(tpm -> {
             tpm.stopPersisting(scheduleTable);
         });
+        scheduleModel.dispose();
         super.dispose();
     }
 

@@ -18,7 +18,7 @@ public class SRCPMonActionTest {
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertNotNull("SRCPMonAction exists",new SRCPMonAction("Test",memo) );
+        Assert.assertNotNull("SRCPMonAction exists",new SRCPMonAction() );
     }
 
     // The minimal setup for log4J

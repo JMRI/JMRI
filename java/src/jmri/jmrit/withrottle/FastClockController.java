@@ -5,15 +5,13 @@ import java.beans.PropertyChangeListener;
 import java.util.TimeZone;
 import jmri.InstanceManager;
 import jmri.Timebase;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Fast Clock interface for Wi-Fi throttles.
- * <P>
+ * <p>
  * Fast Clock display on devices will be synchronized with hardware or software
  * clock. Time is UTC seconds on Wi-Fi devices, Local milliseconds in JMRI.
- * <P>
+ *
  * @author Brett Hoffman Copyright (C) 2018
  */
 public class FastClockController extends AbstractController {
@@ -48,14 +46,9 @@ public class FastClockController extends AbstractController {
             }
         };
         
-        if (fastClock == null) {
-            log.info("No fast clock manager instance.");
-            isValid = false;
-            return;
-        } else {
-            isValid = true;
-        }
-        updateMinsSetpoint = (short)(fastClock.userGetRate() * UPDATE_MINUTES);
+        isValid = true;
+        
+        updateMinsSetpoint((short)(fastClock.userGetRate() * UPDATE_MINUTES));
         setReSyncSetpoint();
         // request callback to update time
         fastClock.addMinuteChangeListener(minuteListener);
@@ -68,7 +61,7 @@ public class FastClockController extends AbstractController {
     }
 
     @Override
-    void handleMessage(String message) {
+    void handleMessage(String message, DeviceServer deviceServer) {
         throw new UnsupportedOperationException("Not used.");
     }
 
@@ -87,7 +80,7 @@ public class FastClockController extends AbstractController {
     
     /**
      * Fast clock should not have a time zone.
-     * <P>
+     * <p>
      * Remove the offset to give straight UTC value.
      * @return Time with offset removed
      */
@@ -97,7 +90,7 @@ public class FastClockController extends AbstractController {
     
     /**
      * Send just time.
-     * <P>
+     * <p>
      * Use to synchronize time on Wi-Fi devices to nearest second. Send no rate.
      */
     public void sendFastTime() {
@@ -114,7 +107,7 @@ public class FastClockController extends AbstractController {
     
     /**
      * Send Time and Rate.
-     * <P>
+     * <p>
      * Time on device will update to the value that is sent and rate will allow 
      * Fast Clock to keep its own time. A rate == 0 will tell the device to 
      * stop the clock.
@@ -125,7 +118,7 @@ public class FastClockController extends AbstractController {
             for (ControllerInterface listener : listeners) {
                 listener.sendPacketToDevice("PFT" + getAdjustedTime() + "<;>" + fastClock.userGetRate());
             }
-            if (fastClock.getRun() == false) {
+            if (!fastClock.getRun()) {
                 //  Not running, send rate of 0
                 //  This will stop a running clock without changing stored rate
                 for (ControllerInterface listener : listeners) {
@@ -134,10 +127,14 @@ public class FastClockController extends AbstractController {
             }
         }
     }
-    
-    private void setReSyncSetpoint() {
-        updateMinsSetpoint = (short)(fastClock.userGetRate() * UPDATE_MINUTES);
+
+    private static void updateMinsSetpoint(short newVal) {
+        updateMinsSetpoint = newVal;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(FastClockController.class);
+    private void setReSyncSetpoint() {
+        updateMinsSetpoint((short)(fastClock.userGetRate() * UPDATE_MINUTES));
+    }
+
+    // private final static Logger log = LoggerFactory.getLogger(FastClockController.class);
 }

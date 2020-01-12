@@ -1,13 +1,18 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
+
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableCellEditor;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.setup.Control;
@@ -15,8 +20,6 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Table Model for edit of cars used by operations
@@ -82,7 +85,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     List<Car> carList = null; // list of cars
     boolean showAllCars = true; // when true show all cars
     String locationName = null; // only show cars with this location
-    String trackName = null; // only show cars with this track
+    public String trackName = null; // only show cars with this track
     JTable _table;
     CarsTableFrame _frame;
 
@@ -198,15 +201,9 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         }
     }
 
-    // keep show checkboxes consistent during a session
-    private static boolean isSelectVisible = false;
-
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "GUI ease of use") // NOI18N
     public void toggleSelectVisible() {
         XTableColumnModel tcm = (XTableColumnModel) _table.getColumnModel();
-        isSelectVisible = !tcm.isColumnVisible(tcm.getColumnByModelIndex(SELECT_COLUMN));
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(SELECT_COLUMN), isSelectVisible);
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(SELECT_COLUMN), !tcm.isColumnVisible(tcm.getColumnByModelIndex(SELECT_COLUMN)));
     }
 
     public void resetCheckboxes() {
@@ -411,7 +408,6 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         _frame.loadTableDetails(_table);
 
         // turn off columns
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(SELECT_COLUMN), isSelectVisible);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(COLOR_COLUMN), false);
 
         tcm.setColumnVisible(tcm.getColumnByModelIndex(FINAL_DESTINATION_COLUMN), false);
@@ -567,7 +563,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                 return car.getTypeName() + car.getTypeExtensions();
             }
             case KERNEL_COLUMN: {
-                if (car.getKernel() != null && car.getKernel().isLead(car)) {
+                if (car.isLead()) {
                     return car.getKernelName() + "*";
                 }
                 return car.getKernelName();
@@ -656,13 +652,10 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                     csf.dispose();
                 }
                 // use invokeLater so new window appears on top
-                SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        csf = new CarSetFrame();
-                        csf.initComponents();
-                        csf.loadCar(car);
-                    }
+                SwingUtilities.invokeLater(() -> {
+                    csf = new CarSetFrame();
+                    csf.initComponents();
+                    csf.loadCar(car);
                 });
                 break;
             case EDIT_COLUMN:
@@ -671,13 +664,10 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                     cef.dispose();
                 }
                 // use invokeLater so new window appears on top
-                SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        cef = new CarEditFrame();
-                        cef.initComponents();
-                        cef.loadCar(car);
-                    }
+                SwingUtilities.invokeLater(() -> {
+                    cef = new CarEditFrame();
+                    cef.initComponents();
+                    cef.load(car);
                 });
                 break;
             case MOVES_COLUMN:

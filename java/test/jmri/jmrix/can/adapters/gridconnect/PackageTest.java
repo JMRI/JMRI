@@ -15,6 +15,7 @@ import org.junit.runners.Suite;
         GcPortControllerTest.class,
         GcTrafficControllerTest.class,
         GcSerialDriverAdapterTest.class,
+        BundleTest.class,
 })
 
 /**

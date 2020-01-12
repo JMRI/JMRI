@@ -1,14 +1,3 @@
-// This file is part of JMRI.
-//
-// JMRI is free software; you can redistribute it and/or modify it under 
-// the terms of version 2 of the GNU General Public License as published 
-// by the Free Software Foundation. See the "COPYING" file for a copy
-// of this license.
-// 
-// JMRI is distributed in the hope that it will be useful, but WITHOUT 
-// ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
-// FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
-// for more details.
 package jmri.implementation;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -23,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * These decoders can display up to 8 aspects. One position of a turnout is
  * associated with one signal aspect. The class assigns turnout positions to all
  * 7 JMRI signal aspects.
- * <P>
+ * <p>
  * For more info on the signals, see
  * <A HREF="http://www.ldt-infocenter.com">http://www.ldt-infocenter.com</a>.
  *

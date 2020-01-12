@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2014 All rights reserved                            -->
-<!-- $Id$             -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -24,6 +23,12 @@
         <surname>Le Marchand</surname>
       </personname>
     </author>
+	<author>
+		<personname>
+		  <firstname>Egbert</firstname>
+		  <surname>Broerse</surname>
+		</personname>
+	</author>
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
@@ -32,36 +37,61 @@
       <authorinitials>ALM</authorinitials>
       <revremark>Initial version</revremark>
     </revision>
+	  <revision>
+		  <revnumber>2</revnumber>
+		  <date>2019-02-12</date>
+		  <authorinitials>EBR</authorinitials>
+		  <revremark>Added A2-A7</revremark>
+	  </revision>
   <!-- Uhlenbrock Decoder Configuration CV 107/108 - independent control of A1/A2 outputs -->
-  <!--            valid for 73100, 73140, 75330, 76425, 76560
+  <!-- valid for 73100, 73140, 75330, 76425, 76560 (IntelliSound4); 73105, 73235, 73405, PIKO41RH2400 (IntelliDrive2)
                            (to be declared explicitly with include)                       -->  
   </revhistory>
- <variable item="Output 1 effect generated" CV="107" default="0" mask="VVVVXXXX" minOut="3" include="73100,73140,75330,76425,76560">
+ <variable item="Output 1 effect generated" CV="107" default="0" mask="VVVVXXXX" minOut="3" include="73100,73140,75330,76425,76560,73105,73235,73405,74120,PIKO41RH2400">
+	<!--repeat include= below-->
 	<enumVal>
-	  <enumChoice choice="Deactivated">
-            <choice>Deactivated</choice>
-            <choice xml:lang="de">deaktiviert</choice>
-            <choice xml:lang="it">Disattivata</choice>
-	  </enumChoice>
-	  <enumChoice choice="A1">
-            <choice>A1</choice>
-            <choice xml:lang="de">A1</choice>
-            <choice xml:lang="it">A1</choice>
-	  </enumChoice>
-	  <enumChoice choice="A2">
-            <choice xml:lang="de">A2</choice>
-            <choice xml:lang="it">A2</choice>
-            <choice>A2</choice>
-	  </enumChoice>
+		<enumChoice choice="Deactivated">
+			<choice>Deactivated</choice>
+			<choice xml:lang="de">deaktiviert</choice>
+			<choice xml:lang="it">Disattivato</choice>
+		</enumChoice>
+		<enumChoiceGroup exclude="73115">
+			<enumChoice choice="A1">
+				<choice>A1</choice>
+			</enumChoice>
+			<enumChoice choice="A2">
+				<choice>A2</choice>
+			</enumChoice>
+		</enumChoiceGroup>
+		<enumChoiceGroup exclude="73115,73145,73405,73415,74120">
+			<enumChoice choice="A3">
+				<choice>A3</choice>
+			</enumChoice>
+			<enumChoice choice="A4">
+				<choice>A4</choice>
+			</enumChoice>
+		</enumChoiceGroup>
+		<enumChoiceGroup exclude="73105,73115,73145,73405,73415,74120">
+			<enumChoice choice="A5">
+				<choice>A5</choice>
+			</enumChoice>
+			<enumChoice choice="A6">
+				<choice>A6</choice>
+			</enumChoice>
+			<enumChoice choice="A7">
+				<choice>A7</choice>
+			</enumChoice>
+		</enumChoiceGroup>
 	</enumVal>
 	<label>Front Light Off - Output</label>
-	<label xml:lang="de">Licht vorne aus - Ausgang</label>
-        <label xml:lang="it">Luci frontali off - uscita</label>
+	<label xml:lang="de">Licht vorne Aus - Ausgang</label>
+    <label xml:lang="it">Luci frontali off - uscita</label>
+	<label xml:lang="nl">Frontlicht Uit - Uitgang</label>
 	<tooltip>Deactivated - will deactivate BOTH Front and Rear light switch off option</tooltip>
-	<tooltip xml:lang="de">Ist eine der Licht vorne oder hinten aus option deaktiviert, so gilt die zwei als deaktiviert</tooltip>
-        <tooltip xml:lang="it">Disattivata - saranno disattivate entrambe le opzioni di spegnimento luci frontali e posteriori</tooltip>
+	<tooltip xml:lang="de">Ist eine der Licht vorne oder hinten AUS option deaktiviert, so gilt die zwei als deaktiviert</tooltip>
+    <tooltip xml:lang="it">Disattivata - saranno disattivate entrambe le opzioni di spegnimento luci frontali e posteriori</tooltip>
   </variable>
-  <variable item="Output 1 behavior" CV="107" default="0" mask="XXXXVVVV" minOut="3" include="73100,73140,75330,76425,76560">
+  <variable item="Output 1 behavior" CV="107" default="0" mask="XXXXVVVV" minOut="3" include="73100,73140,75330,76425,76560,73105,73235,73405,74120,PIKO41RH2400">
 	<enumVal>
 	  <enumChoice choice="None">
             <choice>None</choice>
@@ -106,38 +136,57 @@
 	  </enumChoice>
 	</enumVal>
 	<label>Front Light Off - Function</label>
-	<label xml:lang="de">Licht vorne aus - Funktion</label>
-        <label xml:lang="it">Luci anteriori off - Funzione</label>
+	<label xml:lang="de">Licht vorne Aus - Funktion</label>
+    <label xml:lang="it">Luci anteriori off - Funzione</label>
+	<label xml:lang="nl">Frontlicht Uit - Functieknop</label>
 	<tooltip>Selected function must not be used for other purpose with the function mapping</tooltip>
 	<tooltip xml:lang="de">Die hier eingetragenen Funktionsnummern müssen über das Function-Mapping keine anderen Ausgänge einschalten</tooltip>
-        <tooltip xml:lang="it">La funzione selezionata non deve essere usata per altri scopi con la mappa funzioni</tooltip>
+    <tooltip xml:lang="it">La funzione selezionata non deve essere usata per altri scopi con la mappa funzioni</tooltip>
   </variable>
-  <variable item="Output 2 effect generated" CV="108" default="0" mask="VVVVXXXX" minOut="4" include="73100,73140,75330,76425,76560">
+  <variable item="Output 2 effect generated" CV="108" default="0" mask="VVVVXXXX" minOut="4" include="73100,73140,75330,76425,76560,73105,73115,73235,73405,PIKO41RH2400">
 	<enumVal>
-	  <enumChoice choice="Deactivated">
+	    <enumChoice choice="Deactivated">
             <choice>Deactivated</choice>
             <choice xml:lang="de">deaktiviert</choice>
             <choice xml:lang="it">Disattivato</choice>
-	  </enumChoice>
-	  <enumChoice choice="A1">
-            <choice>A1</choice>
-            <choice xml:lang="de">A1</choice>
-            <choice xml:lang="it">A1</choice>
-	  </enumChoice>
-	  <enumChoice choice="A2">
-            <choice>A2</choice>
-            <choice xml:lang="de">A2</choice>
-            <choice xml:lang="it">A2</choice>
-	  </enumChoice>
+	    </enumChoice>
+		<enumChoiceGroup exclude="73115">
+			<enumChoice choice="A1">
+				<choice>A1</choice>
+			</enumChoice>
+			<enumChoice choice="A2">
+				<choice>A2</choice>
+			</enumChoice>
+		</enumChoiceGroup>
+		<enumChoiceGroup exclude="73105,73115,73145,73405,73415,74120">
+			<enumChoice choice="A3">
+				<choice>A3</choice>
+			</enumChoice>
+			<enumChoice choice="A4">
+				<choice>A4</choice>
+			</enumChoice>
+		</enumChoiceGroup>
+		<enumChoiceGroup exclude="73105,73115,73145,73405,73415,74120">
+			<enumChoice choice="A5">
+				<choice>A5</choice>
+			</enumChoice>
+			<enumChoice choice="A6">
+				<choice>A6</choice>
+			</enumChoice>
+			<enumChoice choice="A7">
+				<choice>A7</choice>
+			</enumChoice>
+		</enumChoiceGroup>
 	</enumVal>
 	<label>Rear Light Off - Output</label>
-	<label xml:lang="de">Licht hinten aus - Ausgang</label>
-        <label xml:lang="it">Luci posteriori off - Uscita</label>
+	<label xml:lang="de">Licht hinten Aus - Ausgang</label>
+    <label xml:lang="it">Luci posteriori off - Uscita</label>
+	<label xml:lang="nl">Sluitlichten Uit - Uitgang</label>
 	<tooltip>Deactivated - will deactivate BOTH Front and Rear light switch off option</tooltip>
-	<tooltip xml:lang="de">Ist eine der Licht vorne oder hinten aus option deaktiviert, so gilt die zwei als deaktiviert</tooltip>
-        <tooltip xml:lang="it">Disattivata - saranno disattivate entrambe le opzioni di spegnimento luci frontali e posteriori</tooltip>
+	<tooltip xml:lang="de">Ist eine der Licht vorne oder hinten AUS option deaktiviert, so gilt die zwei als deaktiviert</tooltip>
+    <tooltip xml:lang="it">Disattivata - saranno disattivate entrambe le opzioni di spegnimento luci frontali e posteriori</tooltip>
   </variable>
-  <variable item="Output 2 behavior" CV="108" default="0" mask="XXXXVVVV" minOut="4" include="73100,73140,75330,76425,76560">
+  <variable item="Output 2 behavior" CV="108" default="0" mask="XXXXVVVV" minOut="4" include="73100,73140,75330,76425,76560,73105,73115,73235,73405,74120,PIKO41RH2400">
 	<enumVal>
 	  <enumChoice choice="None">
             <choice>None</choice>
@@ -182,10 +231,11 @@
 	  </enumChoice>
 	</enumVal>
 	<label>Rear Light Off - Function</label>
-	<label xml:lang="de">Licht hinten aus - Funktion</label>
-        <label xml:lang="it">Luci posteriori off - Funzione</label>
+	<label xml:lang="de">Licht hinten Aus - Funktion</label>
+    <label xml:lang="it">Luci posteriori off - Funzione</label>
+	<label xml:lang="nl">Sluitlichten Uit - Functieknop</label>
 	<tooltip>Selected function must not be used for other purpose with the function mapping</tooltip>
 	<tooltip xml:lang="de">Die hier eingetragenen Funktionsnummern müssen über das Function-Mapping keine anderen Ausgänge einschalten</tooltip>
-        <tooltip xml:lang="it">La funzione selezionata non deve essere usata per altri scopi con la mappa funzioni</tooltip>
+    <tooltip xml:lang="it">La funzione selezionata non deve essere usata per altri scopi con la mappa funzioni</tooltip>
   </variable>
 </variables>

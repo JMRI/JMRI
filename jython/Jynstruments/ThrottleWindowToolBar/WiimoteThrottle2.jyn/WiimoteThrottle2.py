@@ -29,6 +29,10 @@ valueSpeedTimerRepeat = 25 # repeat time in ms for speed set task
 valueSpeedIncrement = 0.01
 
 import java
+import java.awt
+import java.awt.event
+import java.beans
+import java.util
 import java.beans.PropertyChangeListener as PropertyChangeListener
 import java.awt.event.ActionListener as ActionListener
 import java.util.Calendar as Calendar
@@ -185,13 +189,13 @@ class WiimoteThrottle2(Jynstrument, PropertyChangeListener, AddressListener, Wii
         pass
     def combinedInputReceived(self, evt):
         pass
-    def	extensionConnected(self, extension):
+    def extensionConnected(self, extension):
         pass          
-    def	extensionDisconnected(self, extension):
+    def extensionDisconnected(self, extension):
         pass          
     def extensionInputReceived(self, evt):
         pass
-    def	extensionPartiallyInserted(self):
+    def extensionPartiallyInserted(self):
         pass
     def extensionUnknown(self):
         pass

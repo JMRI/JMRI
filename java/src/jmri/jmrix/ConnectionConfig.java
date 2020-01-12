@@ -34,7 +34,8 @@ public interface ConnectionConfig {
      * content specific to this Connection type.
      * The JPanel contents need to handle their own
      * gets/sets to the underlying Connection content.
-     * @param details The specific Swing object to be configured and filled.
+     *
+     * @param details the specific Swing object to be configured and filled
      */
     public void loadDetails(JPanel details);
 

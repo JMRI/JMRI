@@ -32,6 +32,4 @@ public class MarklinSensor extends AbstractSensor {
     public void requestUpdateFromLayout() {
     }
 
-    static String[] modeNames = null;
-    static int[] modeValues = null;
 }

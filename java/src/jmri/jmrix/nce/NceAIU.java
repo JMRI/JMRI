@@ -7,10 +7,10 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Model an NCE AIU
- * <P>
+ * <p>
  * These AIUs are numbered ala the cab bus, from 1 to 63. AIU number 1 carries
  * sensors 1 to 14; AIU 2 from 17 to 30, etc.
- * <P>
+ * <p>
  * The array of sensor states is used to update sensor known state only when
  * there's a change on the cab bus. This allows for the sensor state to be
  * updated within the program, keeping this updated state until the next change
@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * have it change back the next time that AIU is polled.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2005
-  */
+ */
 public class NceAIU {
 
     public NceAIU() {

@@ -30,6 +30,7 @@ import org.junit.runners.Suite;
         ErrorMemoTest.class,
         ClassMigrationManagerTest.class,
         DefaultClassMigrationTest.class,
+        ScaleConfigXMLTest.class,
 })
 
 /**

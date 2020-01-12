@@ -124,6 +124,11 @@ public class MemoryIconXml extends PositionableLabelXml {
             l.setSelectable(false);
         }
 
+        a = element.getAttribute("defaulticon");
+        if (a != null) {
+            l.setDefaultIcon(NamedIcon.getIconByName(a.getValue()));
+        }
+        
         a = element.getAttribute("updateBlockValue");
         if (a != null && a.getValue().equals("yes")) {
             l.updateBlockValueOnChange(true);

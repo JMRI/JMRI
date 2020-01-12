@@ -9,6 +9,7 @@ import org.junit.runners.Suite;
         DCCppEthernetPacketizerTest.class,
         ConnectionConfigTest.class,
         jmri.jmrix.dccpp.network.configurexml.PackageTest.class,
+	BundleTest.class
 })
 
 /**

@@ -6,7 +6,8 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI: Getting Started with Scripting</title><!-- Style -->
+  <title>JMRI: Getting Started with Scripting</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -14,21 +15,43 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
-<body>
+<body id="StartTopOfPage">
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
       <!-- Page Body -->
 
       <h1>JMRI: Getting Started with Scripting</h1>
 
-      <h2>Running "Hello World"</h2>There are several ways to use
+	  <p>The easiest way to learn how to use scripts in JMRI is to study the simplest examples first
+      and work your way into more complex details. The sections below discuss various aspects of scripting
+      that will help you to understand the more complex scripts found in the <a href="Examples.shtml" target="_blank">
+      JMRI examples library</a> included in the distribution and online:</p>
+	  
+      <ul>
+	  <li><a href="#helloworld">Running "Hello World"</a></li>
+      <li><a href="#debugging">Basic debugging tools in JMRI</a></li>
+      <li><a href="#layoutcommands">Sample layout commands</a></li>
+	  <li><a href="#objects">Access to JMRI Objects</a></li>
+	  <li><a href="#scripts">Script files, listeners, and classes</a></li>
+	  </ul>
+      
+	  <h4>CAUTION: Python and its Jython variant do not use braces, brackets, or parentheses to
+	  indicate program structure, but rather rely on formatting, specifically indentation.  To avoid 
+	  confusion, it is STRONGLY recommended that you DO NOT USE TABS but rather use spaces (four is typical)
+	  to show statements that part of a class or controlled structure where you might have used some bracketing.
+	  Most program editors have a setting to automatically changes tabs to a set number of spaces to make this easier.</h4>
+	  
+      <h2><a id="helloworld">Running "Hello World"</a></h2>
+      
+      <div class="para">
+      
+      There are several ways to use
       Python scripts with JMRI. The easiest is to use the built-in
       support in the standard JMRI applications: PanelPro,
       DecoderPro, etc.<br>
@@ -80,8 +103,43 @@ something like:
         </li>
       </ul>
 
-      <h2>Sample layout commands</h2>
-      <pre>
+    <p><a href="#StartTopOfPage">[Go to top of page]</a></p>
+    </div>  
+  
+      <h2><a id="debugging">Basic debugging tools in JMRI</a></h2>
+      <!--Section added by Jerry Grochow 2018-10-18 based on comments found in the JMRI Users online forum from 
+      Cliff in BajaSoCal and Bob Jacobson-->
+      
+      <div class="para">
+      <p>JMRI does not provide a full "development environment," but it does provide some basic information
+      that can help with debugging your scripts.</p>  
+      
+      <p>Open the JMRI System Console window (Help->System Console).
+      This will give you instant information pertaining to WARN and ERROR messages. Text can be copied to a
+      text editor for further review.</p>
+      
+      <p>Open the Script Output window (Panels->Script Output).  This will display the results of any
+      "print" statements in your script as well as some error messages (NOTE that some errors go here and
+      some to the System Console so you you should have both windows open when you are debugging).
+       Text can be copied to a text editor for further review.
+
+      <p>Investigate the information found in the  
+      <a href="http://jmri.org/help/en/html/doc/Technical/Logging.shtml" target="_blank">technical reference</a>
+      to be better able to insert more of your own DEBUG and INFO messages into the session.log file, 
+      and also the JMRI System Console window.  You might also investigate the "default.lcf" file that is
+      described in that link.</p>
+      
+      <p>Note to Mac OS users: BBEdit and similar tools do some syntax checking. For PC users, Notepad++
+      is a good tool for getting indentation correct.</p>
+
+      <p><a href="#StartTopOfPage">[Go to top of page]</a></p>      
+      </div>
+      
+	  
+      <h2><a id="layoutcommands">Sample layout commands</a></h2>
+      
+      <div class="para">
+     <pre>
 
 &gt;&gt;&gt; lt1 = turnouts.provideTurnout("1")
 
@@ -98,33 +156,46 @@ something like:
 &gt;&gt;&gt; turnouts.provideTurnout("1").getCommandedState()
 1
 
-</pre>Note that this is running a complete version of the JMRI
-application; all of the windows and menus are presented the same
-way, configuration is done by the preferences panel, etc. What the
-Jython connection adds is a command line from which you can
-directly manipulate things.
+    </pre>
+
+      <p>Note that this is running a complete version of the JMRI
+      application; all of the windows and menus are presented the same
+      way, configuration is done by the preferences panel, etc. What the
+      Jython connection adds is a command line from which you can
+      directly manipulate things.
 
       <p>This also shows some of the simplifications that Jython
       and the Python language brings to using JMRI code. The Java
       member function:</p>
-      <pre>
+      
+    <pre>
         turnout.SetCommandedState(jmri.Turnout.CLOSED);
-</pre>can also be expressed in Jython as:
-      <pre>
+    </pre>
+      
+      can also be expressed in Jython as:
+      
+     <pre>
         turnout.commandedState = CLOSED
-</pre>
+    </pre>
 
       <p>This results in much easier-to-read code.</p>
 
       <p>There are a lot of useful Python books and online
       tutorials. For more information on the Jython language and
       it's relations with Java, the best reference is the <a href=
-      "http://www.oreilly.com/catalog/jythoness/">Jython
+      "http://www.oreilly.com/catalog/jythoness/" target="_blank">Jython
       Essentials</a> book published by O'Reilly. The <a href=
-      "http://www.jython.org/">jython.org web site</a> is also very
+      "http://www.jython.org/" target="_blank">jython.org web site</a> is also very
       useful.</p>
 
-      <h3>Access to JMRI</h3>JMRI uses the factory-pattern
+      <p><a href="#StartTopOfPage">[Go to top of page]</a></p>
+      </div>
+      
+      <h2><a id="objects">Access to JMRI Objects</a></h2>
+	  
+      <div class="para">
+      
+      JMRI uses the factory-pattern
       extensively to get access to objects. In Java this results in
       verbose code like
       <pre>
@@ -133,7 +204,7 @@ directly manipulate things.
 </pre>Jython simplifies that by allowing us to provide useful
 variables, and by shortening certain method calls.
 
-      <p>To get access to the SignalHead, Sensor and Turnout
+      <p>To get easier access to the SignalHead, Sensor and Turnout
       managers and the CommandStation object, several shortcut
       variables are defined:</p>
 
@@ -158,13 +229,21 @@ variables, and by shortening certain method calls.
 
         <li>powermanager</li>
 
-        <li>programmers</li>
+        <li>addressedProgrammers</li>
+        <li>globalProgrammers</li>
 
         <li>dcc (current command station)</li>
 
-        <li>shutdown (current shutdown manager)</li>
-
         <li>audio</li>
+
+        <li>shutdown (current shutdown manager)</li>
+        
+        <li>layoutblocks</li>
+
+        <li>warrants</li>
+
+        <li>entryExitPairs <span class="since">since 4.19.2</span></li>
+        
       </ul>These can then be referenced directly in Jython as
       <pre>
    t2 = turnouts.provideTurnout("12");
@@ -205,12 +284,23 @@ You can also use the symbols "True" and "False" respectively.
 </pre>This sends that three-byte packet four times, and then
 returns to the command line.
 
-      <h3>Script files, listeners, and classes</h3>Scripting would
+    <p><a href="#StartTopOfPage">[Go to top of page]</a></p>
+    
+     </div>
+
+      <h2><a id="scripts">Script files, listeners, and classes</a></h2>
+	  
+      <div class="para">
+      
+      <p>[See also <a href="HowTo.shtml" target="_blank">the scripting "How To" page</a> for more information
+      on these topics.]</p>
+      
+      <p>Scripting would
       not be very interesting if you had to type the commands each
       time. So you can put scripts in a text file and execute them
       by selecting the "Run Script..." menu item, or by using the
       "Advanced Preferences" to run the script file when the
-      program starts.
+      program starts.</p>
 
       <p>Although the statements we showed above were so fast you
       couldn't see it, the rest of the program was waiting while
@@ -241,6 +331,11 @@ returns to the command line.
       you a way to have independent code to run inside the program.
       But don't worry about this until you've got some more
       experience with scripting.</p>
+
+      <p><a href="#StartTopOfPage">[Go to top of page]</a></p>
+
+      </div>
+      
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

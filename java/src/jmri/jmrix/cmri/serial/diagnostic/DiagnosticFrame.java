@@ -8,7 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -341,7 +340,6 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         testSelectBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                    SerialTrafficController stc = _memo.getTrafficController();
                     selTestType = testSelectBox.getSelectedIndex(); 
                     switch(selTestType)
                     {
@@ -357,7 +355,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
                         stopButton.setEnabled(true);
                         continueButton.setVisible(false);
                         displayNodeInfo(testNodeID);
-                      break;
+                        break;
                       case testType_Wraparound:
                         testEquip.setText(Bundle.getMessage("WrapTestEquipment"));
                         panel21.setVisible(true);
@@ -372,7 +370,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
                         continueButton.setVisible(true);
                         invertWrapButton.setSelected(testNodeType == SerialNode.CPNODE);
                         displayNodeInfo(testNodeID);
-                      break;
+                        break;
                       case testType_SendCommand:
                         testEquip.setText(Bundle.getMessage("SendCommandEquipment"));
                         panel21.setVisible(false);
@@ -385,7 +383,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
                         stopButton.setEnabled(false);
                         continueButton.setVisible(false);
                         displayNodeInfo(testNodeID);
-                     break;
+                        break;
                       case testType_WriteBytes:
                         testEquip.setText(Bundle.getMessage("WriteBytesEquipment"));
                         panel21.setVisible(false);
@@ -395,7 +393,9 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
                         panel24.setVisible(false);
                         panel25.setVisible(true);
                         displayNodeInfo(testNodeID);
-                      break;
+                        break;
+                      default:
+                        log.debug("default case in testSelectBox switch");
                     }
                }
             });
@@ -643,19 +643,18 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
             case testType_Outputs:
                 outTest = true;
                 wrapTest= false;
-            break;
+                break;
             case testType_Wraparound:
                 outTest = false;
                 wrapTest= true;
-            break;
+                break;
             case testType_SendCommand:
-                outTest = false;
-                wrapTest= false;
-            break;
             case testType_WriteBytes:
                 outTest = false;
                 wrapTest= false;
-            break;
+                break;
+            default:
+                log.debug("default case in testSelectBox switch");
         }
         
         // get the SerialNode corresponding to this node address
@@ -1250,7 +1249,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
             if (!testNode.isOutputCard(outCardNum)) {
              statusText1.setText(Bundle.getMessage("DiagnosticError6"));
              return;                          
-            };
+            }
             begOutByte = (testNode.getOutputCardIndex(outCardNum)) * portsPerCard;
         }
         else

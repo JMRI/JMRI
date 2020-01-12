@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -105,6 +104,7 @@
         <label xml:lang="it">Versione Decoder: </label>
         <label xml:lang="fr">Version décodeur: </label>
         <label xml:lang="de">Decoder Version: </label>
+        <label xml:lang="nl">Versie van decoder: </label>
       </variable>
       <variable CV="8" readOnly="yes" item="Manufacturer" default="85">
         <decVal/>
@@ -112,6 +112,7 @@
         <label xml:lang="it">ID Costruttore: </label>
         <label xml:lang="fr">ID constructeur: </label>
         <label xml:lang="de">Hersteller ID: </label>
+        <label xml:lang="nl">Fabrikant-ID: </label>
       </variable>
       <variable CV="13" mask="XXXXXXXV" default="0" item="Analog Mode Function Status - F1" tooltip="(On if value set)">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -350,7 +351,7 @@
       <variable item="F1-F8 Control" CV="49" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="NMRA-DDC">
-            <choice>NMRA-DDC</choice>
+            <choice>NMRA-DCC</choice>
           </enumChoice>
           <enumChoice choice="LGB">
             <choice>LGB</choice>
@@ -361,7 +362,7 @@
       <variable item="A1 Output" CV="49" mask="XXXXXVXX">
         <enumVal>
           <enumChoice choice="via NMRA-DDC CV33-38">
-            <choice>via NMRA-DDC CV33-38</choice>
+            <choice>via NMRA-DCC CV33-38</choice>
           </enumChoice>
           <enumChoice choice="LGB-Pulse Sequence for external modules">
             <choice>LGB-Pulse Sequence for external modules</choice>
@@ -383,18 +384,18 @@
       <variable item="Data Format DDC" CV="49" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="Motorola and DDC">
-            <choice>Motorola and DDC</choice>
+            <choice>Motorola and DCC</choice>
           </enumChoice>
           <enumChoice choice="DDC Only">
-            <choice>DDC Only</choice>
+            <choice>DCC Only</choice>
           </enumChoice>
         </enumVal>
-        <label>Data Format DDC</label>
+        <label>Data Format DCC</label>
       </variable>
       <variable item="Data Format Motorola" CV="49" mask="XXVXXXXX">
         <enumVal>
           <enumChoice choice="Motorola and DDC">
-            <choice>Motorola and DDC</choice>
+            <choice>Motorola and DCC</choice>
           </enumChoice>
           <enumChoice choice="Motorola Only">
             <choice>Motorola Only</choice>
@@ -411,7 +412,7 @@
             <choice>reverse</choice>
           </enumChoice>
         </enumVal>
-        <label>Lightplugs</label>
+        <label>Light plugs</label>
       </variable>
       <variable item="Braking with" CV="49" mask="VXXXXXXX">
         <enumVal>
@@ -504,14 +505,11 @@
         <decVal/>
         <label>Offset Register</label>
       </variable>
-      <variable item="Page Register" CV="64" default="0" readOnly="yes" tooltip="Used with DDC paged mode programming">
+      <variable item="Page Register" CV="64" default="0" readOnly="yes" tooltip="Used with DCC paged mode programming">
         <decVal/>
         <label>Page Register</label>
       </variable>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <variable item="Special function 1 switched off when traveling forwards" CV="96" mask="XXXXXXXV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Special function 1 switched off when traveling forwards</label>
@@ -835,11 +833,7 @@
         <label>LISSY</label>
       </variable>
     </variables>
-    <resets>
-      <factReset label="Reset All CVs" CV="59" default="1">
-         <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
-      </factReset>
-    </resets>
+    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/factReset.xml"/>
   </decoder>
   <pane>
     <column>

@@ -49,7 +49,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2003, 2007, 2008
  * @author David Duchamp Copyright (C) 2004, 2007
  * @author Dan Boudreau Copyright (C) 2007
-  */
+ */
 public class SerialTurnout extends AbstractTurnout {
 
     private MapleSystemConnectionMemo _memo = null;

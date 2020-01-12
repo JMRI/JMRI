@@ -9,10 +9,9 @@ sCnt = 0
 chgCnt = 0
 
 # loop thru defined sensors, if UNKNOWN, set to INACTIVE
-list = sensors.getSystemNameList()
-for i in range(list.size()) :
+list = sensors.getNamedBeanSet()
+for s in list :
     sCnt += 1
-    s = sensors.getSensor(list.get(i))
     cs = s.getKnownState()
     if cs == UNKNOWN :
       chgCnt += 1

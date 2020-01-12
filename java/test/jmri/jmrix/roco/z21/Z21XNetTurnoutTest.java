@@ -89,7 +89,7 @@ public class Z21XNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest {
         // prepare an interface
         jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.initInternalSensorManager();
-        t = new Z21XNetTurnout("XT", 21, lnis);
+        t = new Z21XNetTurnout("X", 21, lnis);
 
         // set thrown
         try {
@@ -134,13 +134,15 @@ public class Z21XNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest {
         // prepare an interface
         lnis = new XNetInterfaceScaffold(new RocoZ21CommandStation());
 
-        t = new Z21XNetTurnout("XT", 21, lnis);
+        t = new Z21XNetTurnout("X", 21, lnis);
         jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
     }
 
     @After
     @Override
     public void tearDown() {
+        lnis.terminateThreads();
+        lnis = null;
         JUnitUtil.tearDown();
     }
 

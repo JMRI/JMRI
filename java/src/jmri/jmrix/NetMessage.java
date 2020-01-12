@@ -6,11 +6,11 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Represents a single general command or response.
- * <P>
+ * <p>
  * Content is represented with ints to avoid the problems with sign-extension
  * that bytes have, and because a Java char is actually a variable number of
  * bytes in Unicode.
- * <P>
+ * <p>
  * Both a set of indexed contents, an opcode, and a length field are available.
  * Different implementations will map the opcode and length into the contents in
  * different ways. They may not appear at all...

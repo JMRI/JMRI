@@ -4,7 +4,7 @@ import java.io.DataOutputStream;
 
 /*
  * Test scaffold to be used when a JmriConnection object is required.
- * <P>
+ *
  * @author Paul Bender Copyright (C) 2016
  */
 public class JmriConnectionScaffold extends JmriConnection {

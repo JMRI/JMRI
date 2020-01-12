@@ -22,6 +22,7 @@ public class RosterConfigPaneTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         jmri.InstanceManager.setDefault(RosterConfigManager.class,new RosterConfigManager());
     }
 

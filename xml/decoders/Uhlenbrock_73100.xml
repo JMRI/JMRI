@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2014 All rights reserved-->
-<!-- $Id$ -->
 <!-- -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under-->
 <!-- the terms of version 2 of the GNU General Public License as published-->
@@ -62,45 +61,12 @@
         <label xml:lang="fr">ID constructeur: </label>
         <label xml:lang="de">Hersteller ID: </label>
       </variable>
-      <variable item="Analog Mode Function Status - FL" CV="13" default="1" mask="XXXXXXXV">
-	<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>Function in Analog - Lights</label>
-        <label xml:lang="de">Funktion im Analogbetrieb - Licht</label>
-      </variable>
-      <variable item="Analog Mode Function Status - F1" CV="13" default="0" mask="XXXXXXVX" minOut="3">
-	<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>Function in Analog - A1</label>
-        <label xml:lang="de">Funktion im Analogbetrieb - A1</label>
-      </variable>
-      <variable item="Analog Mode Function Status - F2" CV="13" default="0" mask="XXXXXVXX" minOut="4">
-	<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>Function in Analog - A2</label>
-        <label xml:lang="de">Funktion im Analogbetrieb - A2</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv13analogfunction.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv29analog.xml"/>
-      <variable item="Speed Table Definition" CV="29" default="0" mask="XXXVXXXX">
-        <enumVal>
-          <enumChoice choice="Use Vstart, Vmid, Vhigh">
-            <choice>Use Vstart, Vmid, Vhigh</choice>
-            <choice xml:lang="it">Usa Tensione  (Vstart, Vmid, Vhigh)</choice>
-            <choice xml:lang="fr">Utiliser V démarrage (Vstart, Vmid, Vhigh)</choice>
-            <choice xml:lang="de">Anfahr-, Mitten-, Höchst-geschwindigkeit nutzen</choice>
-          </enumChoice>
-          <!--
-          <enumChoice choice="(Not supported) Use table in CVs 67 through 94">
-            <choice>(Not supported) Use table in CVs 67 through 94</choice>
-            <choice xml:lang="de">(Nicht unterstützt) Geschwindigkeitskennlinie nutzen</choice>
-          </enumChoice>
-	  -->
-        </enumVal>
-        <label>Speed Table Definition - Not Used</label>
-        <label xml:lang="de">Geschwindigkeitskennlinie - Nicht belegt</label>
-        <label xml:lang="fr">Tableau de vitesse=no</label>
-        <label xml:lang="it">Tabella Velocità non usata</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv29speedTableNotUsed.xml"/>
       <!-- Include function mapping -->
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/functionmap2outputs.xml"/>
       <!-- End function mapping -->
@@ -150,22 +116,22 @@
       <variable item="EMF Option 1" CV="53" default="40">
         <decVal max="63"/>
         <label>Repetition rate</label>
-	<label xml:lang="de">Wiederholrate der Motorregelung</label>
-	<tooltip>Lower if the locomotive does not run smoothly</tooltip>
-	<tooltip xml:lang="de">verkleinern, wenn Lok ungleichmäßig läuft</tooltip>
+	    <label xml:lang="de">Wiederholrate der Motorregelung</label>
+	    <tooltip>Lower if the locomotive does not run smoothly</tooltip>
+	    <tooltip xml:lang="de">verkleinern, wenn Lok ungleichmäßig läuft</tooltip>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv54motorReg.xml"/>
       <variable item="EMF Option 2" CV="58" default="8">
         <decVal max="63"/>
         <label>Time slot for AD measurement</label>
-	<label xml:lang="de">Zeitschlitz für AD Wandlermessung</label>
-	<tooltip>Increase if loc does not run smoothly at low speeds - Decrease if the top speed is too low after CV53 has been lowered</tooltip>
-	<tooltip xml:lang="de">vergrößern, wenn Lok bei geringer Geschwindigkeit ungleichmäßig läuft; verkleinern, wenn bei heruntergesetztem CV 53 Höchstgeschwindigkeit der Lok zu gering ist</tooltip>
+	    <label xml:lang="de">Zeitschlitz für AD Wandlermessung</label>
+	    <tooltip>Increase if loc does not run smoothly at low speeds - Decrease if the top speed is too low after CV53 has been lowered</tooltip>
+	    <tooltip xml:lang="de">vergrößern, wenn Lok bei geringer Geschwindigkeit ungleichmäßig läuft; verkleinern, wenn bei heruntergesetztem CV 53 Höchstgeschwindigkeit der Lok zu gering ist</tooltip>
       </variable>
       <variable item="Short circuit supervision" CV="60" default="28" readOnly="yes">
         <decVal max="28"/>
         <label>Short circuit supervision</label>
-	<label xml:lang="de">Kurzschlussüberwachung</label>
+	    <label xml:lang="de">Kurzschlussüberwachung</label>
         <tooltip>Do not change! 0=deactivated - 28=activated</tooltip>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv65.66registers.xml"/>
@@ -175,18 +141,10 @@
       <!--   <label>Speed Table</label> -->
       <!-- </variable> -->
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv100error.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv107.108indepOutputs.xml"/>	  
-      <variable item="LISSY Train Category" CV="115" default="1" tooltip="Value 1 - 4">
-        <decVal max="4"/>
-        <label>LISSY Train Category</label>
-	<label xml:lang="de">LISSY Zugkategorie</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv107.108indepOutputs.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv115lissy.xml"/>
     </variables>
-    <resets>
-      <factReset label="Reset All CVs" CV="59" default="1">
-         <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
-      </factReset>
-    </resets>
+    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/factReset.xml"/>
   </decoder>
   <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/PaneUhlenbrock.xml"/>
 </decoder-config>

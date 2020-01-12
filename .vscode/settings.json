@@ -1,0 +1,25 @@
+{
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "java.dependency.packagePresentation": "hierarchical",
+    "java.test.config": [
+        {
+            "name": "JMRI",
+            "workingDirectory": "${workspaceFolder}",
+            "vmargs": [
+                "-Duser.language=en",
+                "-Duser.region=US",
+                "-Djmri.prefsdir=${workspaceFolder}/temp",
+                "-Djmri.shutdownmanager=jmri.util.MockShutDownManager"
+            ]
+        }
+    ],
+    "java.test.defaultConfig": "JMRI",
+    "java.format.settings.profile": "JMRI",
+    "java.format.settings.url": ".settings/org.eclipse.jdt.core.prefs",
+    "files.exclude": {
+        "**/.classpath": true,
+        "**/.project": true,
+        "**/.settings": true,
+        "**/.factorypath": true
+    }
+}

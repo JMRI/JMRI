@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2004 All rights reserved -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -177,13 +176,7 @@
         <label xml:lang="cs">DC brzdné zpomalení</label>
         <comment xml:lang="cs">Určuje jak bude lokomotiva reagovat na DC kolejovém obvodu</comment>
       </variable>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal entries="15" max="63"/>
-        <label>Speed Table</label>
-        <label xml:lang="it">Tabella velocità</label>
-        <label xml:lang="de">Speed Table</label>
-        <label xml:lang="cs">Rychlostní tabulka</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <!-- Define the fixed Function-Output mapping -->
       <constant item="FL(f) controls output 1" minOut="1" default="1"/>
       <constant item="FL(r) controls output 2" minOut="2" default="1"/>

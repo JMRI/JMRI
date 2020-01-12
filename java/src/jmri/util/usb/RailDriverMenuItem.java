@@ -1,6 +1,5 @@
 package jmri.util.usb;
 
-import static java.lang.Float.NaN;
 
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
@@ -33,7 +32,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * RailDriver support
- * <p>
+ *
  * @author George Warner Copyright (c) 2017-2018
  */
 public class RailDriverMenuItem extends JMenuItem
@@ -56,8 +55,8 @@ public class RailDriverMenuItem extends JMenuItem
 
         super();
 
-        //TODO: remove " (build in)" if/when this replaces Raildriver script
-        setText("RailDriver Throttle (built in)");
+        // TODO: remove "(built in)" if/when this replaces Raildriver script
+        setText(Bundle.getMessage("RdBuiltIn"));
 
         addPropertyChangeListener(this);
 
@@ -70,7 +69,7 @@ public class RailDriverMenuItem extends JMenuItem
             // Open the device device by Vendor ID, Product ID and serial number
             HidDevice hidDevice = hidServices.getHidDevice(VENDOR_ID, PRODUCT_ID, SERIAL_NUMBER);
             if (hidDevice != null) {
-                log.info("Got RailDriver hidDevice: " + hidDevice);
+                log.info("Got RailDriver hidDevice: {}", hidDevice);
                 // Consider overriding dropReportIdZero on Windows
                 // if you see "The parameter is incorrect"
                 // HidApi.dropReportIdZero = true;
@@ -112,26 +111,22 @@ public class RailDriverMenuItem extends JMenuItem
             //
             if (!invokeOnMenuOnly) {
                 // start the HID services
-                InstanceManager.getOptionalDefault(ShutDownManager.class).ifPresent(sdMgr -> {
-                    // if we're going to start, we have to also stop
-                    sdMgr.register(new AbstractShutDownTask("RailDriverMenuItem shutdown HID") {
-                        public boolean execute() {
-                            System.err.println("stop start");
-                            hidServices.stop();
-                            System.err.println("stop stop");
-                            return true;
-                        }
-                    });
-                    log.debug("Starting HID services.");
-                    System.err.println("start start");
-                    hidServices.start();
-                    System.err.println("start stop");
-                });
+                InstanceManager.getDefault(ShutDownManager.class)
+                        .register(new AbstractShutDownTask("RailDriverMenuItem shutdown HID") {
+                            // if we're going to start, we have to also stop
+                            @Override
+                            public boolean execute() {
+                                hidServices.stop();
+                                return true;
+                            }
+                        });
+                log.debug("Starting HID services.");
+                hidServices.start();
 
                 // Open the device device by Vendor ID, Product ID and serial number
                 HidDevice hidDevice = hidServices.getHidDevice(VENDOR_ID, PRODUCT_ID, SERIAL_NUMBER);
                 if (hidDevice != null) {
-                    log.info("Got RailDriver hidDevice: " + hidDevice);
+                    log.info("Got RailDriver hidDevice: {}", hidDevice);
                     // Consider overriding dropReportIdZero on Windows
                     // if you see "The parameter is incorrect"
                     // HidApi.dropReportIdZero = true;
@@ -219,7 +214,7 @@ public class RailDriverMenuItem extends JMenuItem
                         byte[] buff_new = new byte[14];	// read buffer
                         int ret = hidDevice.read(buff_new);
                         if (ret >= 0) {
-                            //log.debug("hidDevice.read: " + buff_new);
+                            //log.debug("hidDevice.read: {}", buff_new);
                             for (int i = 0; i < buff_new.length; i++) {
                                 if (buff_old[i] != buff_new[i]) {
                                     if (i < 7) {    // analog values
@@ -253,7 +248,7 @@ public class RailDriverMenuItem extends JMenuItem
                         } else {
                             String error = hidDevice.getLastErrorMessage();
                             if (error != null) {
-                                log.error("hidDevice.read error: " + error);
+                                log.error("hidDevice.read error: {}", error);
                             }
                         }
                     }
@@ -462,9 +457,9 @@ public class RailDriverMenuItem extends JMenuItem
         try {
             int ret = hidDevice.write(message, message.length, reportID);
             if (ret >= 0) {
-                log.debug("hidDevice.write returned: " + ret);
+                log.debug("hidDevice.write returned: {}", ret);
             } else {
-                log.error("hidDevice.write error: " + hidDevice.getLastErrorMessage());
+                log.error("hidDevice.write error: {}", hidDevice.getLastErrorMessage());
             }
         } catch (IllegalStateException ex) {
             log.error("hidDevice.write Exception : " + ex);
@@ -568,7 +563,7 @@ public class RailDriverMenuItem extends JMenuItem
         } else if (event.getPropertyName().equals("Value")) {
             String oldValue = event.getOldValue().toString();
             String newValue = event.getNewValue().toString();
-            //log.info("propertyChange \"Value\" old: " + oldValue + ", new: " + newValue);
+            //log.info("propertyChange \"Value\" old: {}, new: {}", oldValue, newValue);
 
             double value;
             try {
@@ -596,7 +591,7 @@ public class RailDriverMenuItem extends JMenuItem
                 // values close to 1.0), values near 0.0 are at the center position
                 // (idle/coasting), and values (much) less than 0.0 are for dynamic
                 // braking, with values aproaching -1.0 for full dynamic braking.
-                log.info("THROTTLE value: " + value);
+                log.info("THROTTLE value: {}", value);
 
                 if (controlPanel != null) {
                     JSlider slider = controlPanel.getSpeedSlider();
@@ -617,7 +612,7 @@ public class RailDriverMenuItem extends JMenuItem
                             setLEDs("DBr");
                         } else {
                             String speed = String.format("%03d", setting);
-                            //log.info("••••    speed: " + speed);
+                            //log.info("speed: " + speed);
                             setLEDs(speed);
                         }
                     }
@@ -625,22 +620,22 @@ public class RailDriverMenuItem extends JMenuItem
             } else if (oldValue.equals("Axis 2")) {
                 // AUTOBRAKE is the state of the Automatic (trainline) brake.  Large
                 // values for no braking, small values for more braking.
-                log.info("AUTOBRAKE value: " + value);
+                log.info("AUTOBRAKE value: {}", value);
             } else if (oldValue.equals("Axis 3")) {
                 // INDEPENDBRK is the state of the Independent (engine only) brake.
                 // Like the Automatic brake: large values for no braking, small
                 // values for more braking.
-                log.info("INDEPENDBRK value: " + value);
+                log.info("INDEPENDBRK value: {}", value);
             } else if (oldValue.equals("Axis 4")) {
                 // BAILOFF is the Independent brake 'bailoff', this is the spring
                 // loaded right movement of the Independent brake lever.  Larger
                 // values mean the lever has been shifted right.
-                log.info("BAILOFF value: " + value);
+                log.info("BAILOFF value: {}", value);
             } else if (oldValue.equals("Axis 5")) {
                 // HEADLIGHT is the state of the headlight switch.  A value below 0.5
                 // is off, a value near 0.5 is dim, and a number much larger than 0.5
                 // is full. This is an analog input w/detents, not a switch!
-                log.info("HEADLIGHT value: " + value);
+                log.info("HEADLIGHT value: {}", value);
             } else if (oldValue.equals("Axis 6")) {
                 // WIPER is the state of the wiper switch.  Much like the headlight
                 // switch, this is also an analog input w/detents, not a switch!
@@ -807,6 +802,8 @@ public class RailDriverMenuItem extends JMenuItem
             } // if (oldValue.equals(...) {} else...
         }   // if event.getPropertyName().equals("Value")
     }   // propertyChange
+
     //initialize logging
     private transient final static Logger log = LoggerFactory.getLogger(RailDriverMenuItem.class);
+
 }

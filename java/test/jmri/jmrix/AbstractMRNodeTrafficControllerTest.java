@@ -26,11 +26,9 @@ public class AbstractMRNodeTrafficControllerTest extends AbstractMRTrafficContro
     @Before
     @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp(); 
+        JUnitUtil.setUp(); 
         JUnitUtil.resetInstanceManager();
         tc = new AbstractMRNodeTrafficController(){
-           @Override
-           protected void setInstance() {}
            @Override
            protected void forwardMessage(AbstractMRListener client, AbstractMRMessage m){
            }
@@ -55,7 +53,9 @@ public class AbstractMRNodeTrafficControllerTest extends AbstractMRTrafficContro
     @Override
     public void tearDown(){
        tc = null;
-        JUnitUtil.tearDown(); 
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.tearDown();
+ 
     }
 
 }

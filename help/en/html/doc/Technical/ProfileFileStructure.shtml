@@ -1,0 +1,202 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+  <head>
+        <title>
+            JMRI: Profile Directory Tutorial
+        </title>
+        <meta name="author" content="YOUR NAME HERE">
+        <meta name="keywords" content="SOME KEYWORDS">
+
+        <!--#include virtual="/Style.shtml" -->
+  </head>
+  <body>
+        <!--#include virtual="/Header.shtml" -->
+        <div id="mBody">
+            <!--#include virtual="Sidebar.shtml" --> <!-- select the local or global Sidebar file -->
+            <div id="mainContent">
+
+      <h1>JMRI: Profile Directory Tutorial</h1>
+
+                <p>
+                    This page is a tutorial on how JMRI stores and accesses
+                    preference and profile information.
+
+
+                <h2>Locations and contents</h2>
+                <dl>
+                    <dt>Settings Location (portable name = "settings:")</dt>
+                    <dd>
+                        This is the only fixed location and is determined by the underlying operating system type and your logged-in-username.
+                        It's a known place the JMRI program can always look and find essential settings files that tell it where everything else is located.
+                        <p>The following files/folders are always located here:</p>
+                        <dl>
+                            <dt>nodeIdentity.xml</dt>
+                            <dd>
+                                This file contains a unique nodeIdentity string that is generated the first time JMRI uses this Settings Location,
+                                doesn't change and serves to distinguish between other possible Settings Locations
+                                (such as under another username, on a different operating system partition or another computer).
+                            </dd>
+                            <dt>profiles.xml</dt>
+                            <dd>
+                                This file lists the name of every Profile Folder known to this instance of JMRI and its location.
+                                It also has a list of all paths you wish to search for profiles and which path is the default for newly-created profiles.
+                                "settings:" is always searched but it doesn't have to be the default.
+                            </dd>
+                            <dt>preferences</dt>
+                            <dd>
+                                This directory contains preferences that are retained on the computer for use in all JMRI application profiles.
+                                If it is not present, no preferences that apply to all profiles have been written.
+                            </dd>
+                            <dt>log</dt>
+                            <dd>This folder contains the "session.log" and "messages.log" files, plus several previous versions of these files.
+                            </dd>
+                            <dt>DecoderProConfig3.properties</dt>
+                            <dt>PanelProConfig2.properties</dt>
+                            <dt>SoundProConfig2.properties</dt>
+                            <dd>
+                                These files are created the first time each of the apps are run and simply contain three pieces of information:
+                                <ul>
+                                    <li>The name of the Profile Folder last used by this app.
+                                    <li>Whether you want the app to autostart with the last-used Profile Folder
+                                    <li>How long to display the Profile Selector box if you choose not to autostart.
+                                </ul></dd>
+                            <dt>Other files/folders:</dt>
+                            <dd>The following may be present, but do not have to be:
+                                <ul>
+                                    <li>Various Profile Folders you have created. From V4.13.4 on, newly-created Profile Folders will have a ".jmri" extension.
+                                    <li>Your User Files - panels etc.
+                                    <li>Your "roster" folder and its (recreatable) roster.xml file.
+                                </ul></dd>
+                        </dl></dd>
+
+                    <dt>Profile Location (portable name = "profile:")</dt>
+                    <dd>This folder is the one chosen by the Profile Selector mechanism for the current JMRI session.
+                        <p>
+                            The "profile" folder at the profile: location contains the "profile.xml" and "profile.properties"
+                            files and one or more node specific folders that start with "jmri-".
+                        </p>
+                        <p>
+                            The node specific folders contain local versions of "profile.xml", "profile.properties" and "user-interface.xml".
+                            The "user-interface.xml" file contains information on window size and positions, column widths, etc.
+                        </p>
+
+                        <p>Other files/folders:
+                        <ul>
+                            <li>Other specific preference folders (throttle, etc.)
+                        </ul>
+                        The following may be present, but do not have to be:
+                        <ul>
+                            <li>Your User Files - panels etc.
+                            <li>Your "roster" folder and its (recreatable) roster.xml file.
+                        </ul>
+                    </dd>
+
+                    <dt>User Files Location (portable name = "preference:")</dt>
+                    <dd>This location contains:
+                        <ul>
+                            <li>Your User Files - panels etc.
+                        </ul>
+                        The following may be present, but does not have to be:
+                        <ul>
+                            <li>Your "roster" folder and its (recreatable) roster.xml file.
+                        </ul>
+                        <p>You are free to change the User Files Location as you like (Preferences->File Locations).</p>
+                    </dd>
+
+                    <dt>Roster Location</dt>
+                    <dd>This location contains:
+                        <ul>
+                            <li>
+                                A "roster.xml" file, which is a (recreatable) index of the XML files in the "roster" folder.
+                                You should create/recreate "roster.xml" (Actions->Recreate Roster Index) if it is missing or you are experiencing roster problems.
+                            </li>
+                            <li>
+                                Your "roster" folder. This contains:
+                                <ul>
+                                    <li>An XML file for each loco entry in your roster, with stored CV values, etc.</li>
+                                    <li>".bak" files, which are backup versions of entries in your roster.</li>
+                                    <li>A "consist" folder, which stores information on consists you have created using the Consist tools in JMRI.</li>
+                                    <li>
+                                        Copies of media files you have added to roster entries, throttles etc.
+                                        <br>(Older JMRI versions stored roster images in a "resources" folder in the User Files Location.
+                                        If you have been using JMRI for a long time, you may have roster images in both locations.)
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <p>By default the Roster Location is the same as (and follows) the User Files location unless you explicitly set a different location.</p>
+                        <p>You are free to change the Roster Location as you like (Preferences->Roster->Roster->Location Set/Reset).
+                            The Reset button causes the Roster Location to again follow the User Files location.
+                        </p>
+                    </dd>
+
+                    <dt>Scripts Location (portable name = "scripts:")</dt>
+                    <dd>This location defaults to the "jython" sample scripts folder located within your JMRI Program Location. You should never store user-created files anywhere within your Program Location, they are likely to be lost in a JMRI upgrade. 
+                        <p>If you are creating your own scripts you may wish to change the Scripts Location (Preferences->Locations).
+                    </dd>
+
+                    <dt>Program Location (portable name = "program:")</dt>
+                    <dd>This location is set when JMRI is installed and can only be changed when installing the software.
+                        You should never store user-created files anywhere within your Program Location, they are likely to be lost in a JMRI upgrade.
+                    </dd>
+                </dl>
+
+                <h2>User Files Location defaults and implications</h2>
+                Depending when you first installed JMRI on your computer, the default User Files Location will differ:<ul>
+                    <li>Before the advent of Profiles (JMRI V3.8),the default User Files Location was the same as the Settings. This arrangement stayed in place with the upgrade.
+                    <li>After the implementation of Profiles (JMRI V3.8),the default User Files Location for new installations is the same as the Profile Location.
+                </ul>
+
+                <h3>Implications of User Files Location with Profiles</h3>
+                <ul>
+                    <li>If you create a new profile, User Files Location = Profile Location. This means the profile will have an initially-empty set of User Files.
+                    <li>If you create a copy of a profile that has User Files Location within the Profile Location, the new profile will have a new private copy of User Files from the source profile. The two sets will be unconnected and changes to one will not affect the other.
+                    <li>If you create a copy of a profile that has User Files Location anywhere on the computer outside the Profile Location, the new profile will share User Files with the source profile. So changes will be seen by both profiles.
+                </ul>
+
+                <h3>Implications of Separating User Files Location and  Roster Location</h3>
+                If you separate User Files Location from Roster Location (as documented above), you can implement differing sharing/separation of the two, e.g a single roster shared between two different layouts (each with its own profile).
+
+                <h3>Sharing User Files between Computers</h3>
+                Since User Files can be relocated completely outside of the user's JMRI file system, sharing of User Files between computers is easy:
+                <h4>Use of simple file sharing or using a local NAS or other file server</h4>
+                This approach seems appealing at first sight. However there are considerable disadvantages and risks.
+                <ul>
+                    <li>The host computer or server must always be on line when using JMRI on any computer.
+                    <li>Use of JMRI on a laptop away from home or Internet access will not be possible.
+                    <li>JMRI is not designed for simultaneous file access. The risk of file corruption is very high.
+                    <li>Recovery from a file corruption may be difficult or impossible unless a very comprehensive incremental backup strategy is in use and even the there is likely to be some data loss.
+                </ul>
+                See the link below for further information on issues with simple file sharing: 
+                <h4>Use of a cloud-synced sharing solution</h4>
+                Note that in this context we are not talking about a Cloud Server approach where your files only exist on a remote server. We are talking about a service such as Dropbox, Google Drive, OneDrive where full local copies exist on each computer and each copy is kept in sync with the central Cloud copy.
+                <p>There are considerable advantages with this approach.
+                <ul>
+                    <li>Only one computer needs to be switched on at a time.
+                    <li>Use of JMRI on a laptop away from home or Internet access is fine. The file changes will be synced next time you are connected.
+                    <li>These services generally do not usually use simultaneous file access. The risk of file corruption is much lower. 
+                    <li>Recovery from unintended file changes is much easier. For example Dropbox keeps every saved change you have made in the past 30 days (even if you only have one computer) and allows easy reversion.
+                </ul>
+                We tend to talk about Dropbox because that is the one that seems to be most used by JMRI developers and users, some of whom have been doing so for many years. For more information and setup instructions (also applicable to competing services) see
+                the 
+                <a href="http://jmri.org/help/en/html/setup/Dropbox.shtml">JMRI page on Dropbox use</a>.
+
+                <h3>Sharing Profiles between Computers</h3>
+                In the same way that User Files can be relocated completely outside of the user's JMRI file system and shared between computers, so can entire Profiles. In Preferences->Config Profiles->Search Paths you can add a search path in a synced/shared location and set that to be the default for newly-created profiles. It's then simply a matter of manually moving each Profile Folder from the Settings Location to your new shared folder. When you first use a shared profile on a different computer JMRI creates a node-specific folder for storing overrides of settings (see above) that are machine-specific (e.g. COM port names).
+                <p>
+                    I have been using both of shared User Files (a "JMRI" folder in my Dropbox folder) for many years and a shared Profiles (a "JMRI Config Profiles" folder in my Dropbox folder) for more than a year now (and tweaked some JMRI code to improve node differentiation) across more than a dozen machines/virtual machines, running Mac, Windows and Linux.
+
+                <h2>Portable File Access in JMRI</h2>
+                The success of file and profile sharing in JMRI is very dependent on the use of our Portable File Access specification in XML files.
+                <p>Briefly, this consists of pseudo-URL prefixes (portable names mentioned above) that replace machine-specific directory paths in file specifications with a set of prefixes relative to known JMRI and machine locations. These are expanded by the local JMRI instance to create a machine-specific file specification. The component separators are standardised as "/" and converted locally.
+                <p>For more information see
+                    <a href="http://jmri.org/help/en/html/doc/Technical/FileNames.shtml">the FileNames page</a>.
+                    For a full list of prefixes, see
+                    <a href="http://jmri.org/JavaDoc/doc/jmri/util/FileUtil.html#getExternalFilename-java.lang.String-">the JavaDocs for the FileUtil class</a>.
+
+                    <!--#include virtual="/Footer.shtml" -->
+
+            </div><!-- closes #mainContent-->
+        </div> <!-- closes #mBody, from before Sidebar -->
+    </body>
+</html>

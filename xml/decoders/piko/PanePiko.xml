@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2019 All rights reserved -->
+<!-- version 1 - Created as a separate file from PaneUhlenbrock.xml  -->
+<!-- 					Egbert Broerse (28-01-2019)  				 -->
+<!-- 	Valid for 4.1 Sound families (non exhaustive list)           -->
+<!-- 																 -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Piko</name>
+  <column>
+    <separator/>
+    <label>
+      <text>Piko configuration</text>
+      <text xml:lang="de">Piko Konfiguration</text>
+      <text xml:lang="nl">Piko Configuratie</text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+      <display item="Advanced Function Mapping" format="checkbox"/> <!-- Piko -->
+    <label>
+      <text> </text>
+    </label>
+      <display item="RailCom" format="checkbox"/>	  
+      <display item="RailCom broadcast"/>
+      <display item="RailCom data transmission"/>	  
+    <label>
+      <text> </text>
+    </label>
+      <display item="Digital format"/>
+      <display item="Motorola address 2"/>	  
+    <label>
+      <text> </text>
+    </label>
+    <separator/>
+    <label>
+      <text>Braking parameters</text>
+      <text xml:lang="de">Bremsparameter</text>
+      <text xml:lang="nl">Remparameters</text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Braking condition"/>
+    <display item="Braking End"/>
+    <display item="End braking speed"/>
+    </column>
+    <column>
+      <display item="Coupling option 1"/>
+      <display item="Coupling option 2"/>
+      <display item="Coupling option 3"/>
+      <display item="Coupling option 4"/>
+      <display item="Coupling option 5"/>
+      <display item="Coupling option 6"/>
+    <label>
+      <text> </text>
+    </label>  
+      <display item="Smoke generator option 1" format="checkbox"/>
+      <display item="Smoke generator option 2" format="checkbox"/>
+      <display item="Smoke generator option 3"/>
+      <display item="Smoke generator option 4"/>
+      <display item="Smoke generator option 5"/>
+      <display item="Smoke generator option 6"/>
+      <display item="Smoke generator option 7"/>
+    </column>
+    <column>
+      <separator/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Outputs monitoring off 1" format="checkbox"/>
+      <display item="Outputs monitoring off 2" format="checkbox"/>
+      <display item="Outputs monitoring off 3" format="checkbox"/>
+      <display item="Cv51 bit0" format="checkbox"/><!-- Piko -->
+      <display item="Cv51 bit1" format="checkbox"/><!-- Piko -->
+      <display item="Cv51 bit2" format="checkbox"/><!-- Piko -->
+    <label>
+      <text> </text>
+    </label>
+      <separator/>		  
+      <label>
+        <text>Errors or Information (Read-Only)</text>
+        <text xml:lang="de">Fehler oder Information (Read-Only)</text>
+        <text xml:lang="it">Informazioni o Errori (Solo-Lettura)</text>
+        <text xml:lang="nl">Fouten of Informatie (Alleen Lezen)</text>
+      </label>
+    <label>
+      <text> </text>
+    </label>
+      <display item="Shutdown Temperature"/>	  
+      <display item="Short circuit supervision"/>
+      <display item="Lights Short circuit supervision"/>
+      <display item="Short circuit supervision 1" format="checkbox"/>
+      <display item="Short circuit supervision 2" format="checkbox"/>
+      <display item="Short circuit supervision 3" format="checkbox"/>	  
+      <display item="Error register"/>
+    <label>
+      <text> </text>
+    </label>
+      <display item="Offset Register"/>
+      <display item="Page Register"/>
+  </column>
+</pane>

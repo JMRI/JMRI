@@ -1,5 +1,6 @@
 package jmri.jmrit.vsdecoder.swing;
 
+import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,22 +28,20 @@ import org.slf4j.LoggerFactory;
 /**
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under 
  * the terms of version 2 of the GNU General Public License as published 
  * by the Free Software Foundation. See the "COPYING" file for a copy
  * of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT 
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
  * for more details.
- * <P>
  *
  * @author Mark Underwood Copyright (C) 2011
  * @author Klaus Killinger Copyright (C) 2018
  */
-@SuppressWarnings("serial")
 public class DieselPane extends EnginePane {
 
     static final int THROTTLE_MIN = 1;
@@ -53,7 +52,7 @@ public class DieselPane extends EnginePane {
     JToggleButton start_button;
 
     Integer throttle_setting;
-    Boolean engine_started;
+    private boolean engine_is_started;
 
     private Timer timer;
     int dtime = 1;
@@ -68,7 +67,7 @@ public class DieselPane extends EnginePane {
         super(n);
         initComponents();
         throttle_setting = THROTTLE_INIT;
-        engine_started = start_button.isSelected();
+        engine_is_started = start_button.isSelected();
     }
 
     /**
@@ -93,10 +92,12 @@ public class DieselPane extends EnginePane {
     }
 
     // Lock the start/stop-button until the start/stop-sound has finished
+    // Skip the timer if there is no start/stop-sound
     void startDelayTimer() {
         if (dtime > 1) {
             start_button.setEnabled(false);
             timer = newTimer(dtime, false, new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     start_button.setEnabled(true);
                 }
@@ -161,11 +162,25 @@ public class DieselPane extends EnginePane {
         boolean armed = buttonModel.isArmed();
         boolean pressed = buttonModel.isPressed();
         boolean selected = buttonModel.isSelected();
-        if (armed && pressed && selected && (lastSpeed > 0.0f) && (!engine_started)) {
+        if (armed && pressed && selected && (lastSpeed > 0.0f) && (!engine_is_started)) {
             buttonModel.setArmed(false);
             buttonModel.setPressed(false);
             buttonModel.setSelected(false);
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("EngineStartSpeedMessage"));
+            if (GraphicsEnvironment.isHeadless()) {
+                log.info(Bundle.getMessage("EngineStartSpeedMessage"));
+            } else {
+                JOptionPane.showMessageDialog(null, Bundle.getMessage("EngineStartSpeedMessage"));
+            }
+        }
+
+        if (armed && pressed && selected && (lastSpeed > 0.0f) && (engine_is_started) && (getStopOption())) {
+            buttonModel.setArmed(false);
+            buttonModel.setPressed(false);
+            if (GraphicsEnvironment.isHeadless()) {
+                log.info(Bundle.getMessage("EngineStopSpeedMessage"));
+            } else {
+                JOptionPane.showMessageDialog(null, Bundle.getMessage("EngineStopSpeedMessage"));
+            }
         }
     }
 
@@ -183,10 +198,10 @@ public class DieselPane extends EnginePane {
      */
     public void startButtonChange(ActionEvent e) {
         firePropertyChangeEvent(new PropertyChangeEvent(this, "start", // NOI18N
-                engine_started,
+                engine_is_started,
                 start_button.isSelected()));
-        engine_started = start_button.isSelected();
-        if (engine_started) { // switch button name to make the panel more responsive
+        engine_is_started = start_button.isSelected();
+        if (engine_is_started) { // switch button name to make the panel more responsive
             start_button.setText(Bundle.getMessage("ButtonEngineStop"));
         } else {
             start_button.setText(Bundle.getMessage("ButtonEngineStart"));
@@ -226,6 +241,6 @@ public class DieselPane extends EnginePane {
         lastSpeed = s;
     }
 
-    // private static final Logger log = LoggerFactory.getLogger(DieselPane.class);
+    private static final Logger log = LoggerFactory.getLogger(DieselPane.class);
 
 }

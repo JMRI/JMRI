@@ -2,6 +2,3 @@ This is the README file for the jmrix.nce.ncemon package.
 
 The jmrix Java package defines implementations for the JMRI interfaces. This part
 of the package defines "NCE monitoring" classes.
-	
-	
-

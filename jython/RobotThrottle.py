@@ -91,6 +91,9 @@
 
 import jmri
 import java
+import java.awt
+import java.awt.event
+import java.beans
 import javax.swing
 
 # set up a throttle with the loco address
@@ -171,7 +174,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                 return to.getUserName()
     
     # Isolate the callback handling from the didWeMove processing
-    #	this makes dealing with multiple events simpler
+    #   this makes dealing with multiple events simpler
     def callBackFromChange(self, event) :
         #self.msgText("callBackFromChange...start routine...counter = " + self.didWeMoveCounter.toString() + " ...incrementing counter\n")
         self.didWeMoveCounter = self.didWeMoveCounter + 1
@@ -181,7 +184,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         return
         
     # This handles tracking how many overlapping events happened
-    #	and insures we run the didWeMove the right number of times
+    #   and insures we run the didWeMove the right number of times
     def didWeMoveCounterCheck(self, event) :
         #self.msgText("didWeMoveCounterCheck: start of routine...counter = " + self.didWeMoveCounter.toString() + "\n")
         while (self.didWeMoveCounter > 0) :
@@ -193,7 +196,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         return
  
     # figure out if we moved and where
-    #	this is the real core of the beast
+    #   this is the real core of the beast
     def didWeMove(self, event) :
         if (self.isRunning == False) :
             #self.msgText("didWeMove called while isRunning was false\n")
@@ -304,7 +307,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         return
 
     # release all listeners
-    #	important to reduce the load when using multiple throttles
+    #   important to reduce the load when using multiple throttles
     def releaseAllListeners(self, event) :
         i = 0
         while(len(self.listenerBlockListeners) > i) :
@@ -516,8 +519,8 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         return
 
     # enable the button when OK
-    #	this is the real test that we have all the right data and
-    #	conditions to allow us to start
+    #   this is the real test that we have all the right data and
+    #   conditions to allow us to start
     def whenLocoChanged(self, event) : 
         # keep track of whether both fields have been changed
         if (self.isRunning) :
@@ -553,13 +556,13 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         return
             
     # handle the horn button on
-    #	this should look for a mouse in type event
+    #   this should look for a mouse in type event
     def whenLocoHornOn(self, event) :
         self.whenLocoHorn(event, True)
         return
 
     # handle the horn button off
-    #	this should look for a mouse out (focus lost) type event
+    #   this should look for a mouse out (focus lost) type event
     def whenLocoHornOff(self, event) :
         self.whenLocoHorn(event, False)
         return
@@ -602,7 +605,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         return foundStart
         
     # define what button does when clicked and attach
-	#	that routine to the button
+    #   that routine to the button
     def whenStartButtonClicked(self, event) :
         self.msgText("Run started\n")     # add text
         if (self.testIfBlockNameValid(self.blockStart.text) == False) :
@@ -660,8 +663,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
     def findCurrentBlocks(self) :
         # search the block list for the matching loco
         blockList = []
-        for x in blocks.getSystemNameList().toArray() :
-            b = blocks.getBySystemName(x)
+        for b in blocks.getNamedBeanSet() :
             if (b.getValue() == self.locoAddress.text and b.getState() == ACTIVE) :
                 blockList.append(b)
         return blockList
@@ -753,7 +755,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         return
     
     # setup the user interface
-    #	all the GUI stuff
+    #   all the GUI stuff
     def setup(self) :
         # start to initialise the GUI
         # create buttons and define action

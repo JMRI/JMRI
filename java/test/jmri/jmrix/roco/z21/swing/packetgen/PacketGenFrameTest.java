@@ -43,6 +43,7 @@ public class PacketGenFrameTest {
    @After
    public void tearDown(){
         memo=null;
+        tc.terminateThreads();
         tc=null;
         JUnitUtil.tearDown();
    }

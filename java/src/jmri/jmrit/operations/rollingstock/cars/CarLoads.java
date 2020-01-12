@@ -4,14 +4,17 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
+
 import javax.swing.JComboBox;
-import jmri.InstanceManager;
-import jmri.InstanceManagerAutoDefault;
-import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
+
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.InstanceManager;
+import jmri.InstanceManagerAutoDefault;
+import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
 
 /**
  * Represents the loads that cars can have.
@@ -420,17 +423,20 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
     @Override
     public int getMaxNameLength() {
         if (maxNameLength == 0) {
+            maxName = "";
             maxNameLength = MIN_NAME_LENGTH;
             Enumeration<String> en = listCarLoads.keys();
             while (en.hasMoreElements()) {
                 String key = en.nextElement();
                 List<CarLoad> loads = listCarLoads.get(key);
                 for (CarLoad load : loads) {
-                    if (load.getName().length() > maxNameLength) {
-                        maxNameLength = load.getName().length();
+                    if (load.getName().split("-")[0].length() > maxNameLength) {
+                        maxName = load.getName().split("-")[0];
+                        maxNameLength = load.getName().split("-")[0].length();
                     }
                 }
             }
+            log.info("Max car load name ({}) length {}", maxName, maxNameLength);
         }
         return maxNameLength;
     }
@@ -542,7 +548,6 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
                 _emptyName = a.getValue();
             }
         }
-        @SuppressWarnings("unchecked")
         List<Element> eLoads = e.getChild(Xml.LOADS).getChildren(Xml.LOAD);
         log.debug("readFile sees {} car loads", eLoads.size());
         for (Element eLoad : eLoads) {
@@ -561,7 +566,6 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
                     }
                 }
                 // new style load and comments
-                @SuppressWarnings("unchecked")
                 List<Element> eCarLoads = eLoad.getChildren(Xml.CAR_LOAD);
                 log.debug("{} car loads for type: {}", eCarLoads.size(), type);
                 for (Element eCarLoad : eCarLoads) {

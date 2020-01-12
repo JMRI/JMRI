@@ -30,7 +30,9 @@ public class AppsLaunchFrameTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        JUnitUtil.setUp();        jmri.util.JUnitUtil.initConnectionConfigManager();
+        JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initConnectionConfigManager();
     }
 
     @After

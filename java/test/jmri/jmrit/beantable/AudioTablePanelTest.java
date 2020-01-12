@@ -28,11 +28,14 @@ public class AudioTablePanelTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        JUnitUtil.setUp();        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.setUp();        
+        JUnitUtil.initDefaultUserMessagePreferences();
     }
 
     @After
     public void tearDown() {
+        // this created an audio manager, clean that up
+        jmri.InstanceManager.getDefault(jmri.AudioManager.class).cleanup();
         JUnitUtil.tearDown();
     }
 

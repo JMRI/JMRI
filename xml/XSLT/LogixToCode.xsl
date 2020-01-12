@@ -4,7 +4,7 @@
 
 <!-- Used by default when the panel file is displayed in a web browser-->
 
-<!-- This file is part of JMRI.  Copyright 2007-2011.                       -->
+<!-- This file is part of JMRI.  Copyright 2007-2018.                       -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -17,7 +17,13 @@
 <!-- for more details.                                                      -->
  
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-      <xsl:param name="JmriCopyrightYear"/>
+
+<!-- Define the copyright year for the output page
+     In batch work via running Ant, this is defined
+     via the build.xml file. We build it by concatenation
+     because XPath will evaluate '1997 - 2017' to '20'.
+-->
+<xsl:param name="JmriCopyrightYear" select="concat('1997','-','2020')" />
 
 <!-- Need to instruct the XSLT processor to use HTML output rules.
      See http://www.w3.org/TR/xslt#output for more details
@@ -44,15 +50,14 @@
 
                 <xsl:apply-templates/>
 
-<HR/>
+<hr/>
 This page was produced by <a href="http://jmri.org">JMRI</a>.
-<P/>Copyright &#169; <xsl:value-of select="$JmriCopyrightYear" /> JMRI Community. 
-<P/>JMRI, DecoderPro, PanelPro, DispatcherPro and associated logos are our trademarks.
-<P/><A href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</A>
-<P/>Site hosted by: <BR/>
-    <a href="http://sourceforge.net/projects/jmri">
-    <img src="https://sourceforge.net/sflogo.php?type=13&amp;group_id=26788" border="0" alt="JMRI Model Railroad Interface at SourceForge.net"/></a>
-
+<p/>Copyright &#169; <xsl:value-of select="$JmriCopyrightYear"/> JMRI Community.
+<p/>JMRI, DecoderPro, PanelPro, DispatcherPro and associated logos are our trademarks.
+<p/><a href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
+<p/>Site hosted by: <br/>
+        <a href="http://www.tagadab.com/">
+        <img src="https://www.tagadab.com/sites/default/files/logo-tagadab-nostrap.png" height="28" width="103" border="0" alt="Tagadab logo"/></a>
     </body>
 </html>
 

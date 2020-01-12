@@ -7,7 +7,7 @@ import jmri.NamedBean;
 /**
  * Helper functions used by multiple implementations but specific to JMRI to not go to the
  * OpenLCB.jar.
- * <p>
+ *
  * @author Balazs Racz Copyright (C) 2018
  */
 

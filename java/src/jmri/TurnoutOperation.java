@@ -1,7 +1,5 @@
 package jmri;
 
-import java.util.Iterator;
-import java.util.List;
 import javax.annotation.Nonnull;
 import jmri.implementation.AbstractTurnout;
 
@@ -58,31 +56,35 @@ import jmri.implementation.AbstractTurnout;
  * <b>Extensibility</b>
  * <p>
  * To write a new type of operation:
- * <p>
- * 1. Create the xxxTurnoutOperation class 2. Create the xxxTurnoutOperator
- * class, including the logic for what you're trying to do 3. Create the
- * xxxTurnoutOperationConfig class - the CommonTurnoutOperationConfig class can
- * be used as a reference 4. Create the xxxTurnoutOperationXml class - again the
- * Common... class can be used as a reference 5. Add the prefix to the class
- * name (e.g. "Tortoise") to the list
- * AbstractTurnoutManager.validOperationTypes, otherwise it will not be
- * instantiated at startup and hence will not be available
+ * <ol>
+ *  <li>Create the xxxTurnoutOperation class</li>
+ *  <li>Create the xxxTurnoutOperator class, including the logic for what
+ *  you're trying to do</li>
+ *  <li>Create the xxxTurnoutOperationConfig class - the
+ *  CommonTurnoutOperationConfig class can be used as a reference</li>
+ *  <li>Create the xxxTurnoutOperationXml class - again the Common... class can
+ *  be used as a reference</li>
+ *  <li>Add the prefix to the class name (e.g. "Tortoise") to the list
+ *  AbstractTurnoutManager.validOperationTypes, otherwise it will not be
+ *  instantiated at startup and hence will not be available</li>
+ * </ol>
  * <p>
  * To change the behavior for a particular system type:
  * <p>
  * There are some functions which can be overridden in the system-specific
  * subclasses to change default behaviour if desired. These mechanisms are
  * orthogonal to the operation subclasses.
- * <p>
- * 1. Override AbstractTurnoutManager.getValidOperationTypes to change the
- * operation types allowed for this system. 2. Override
- * AbstractTurnout.getFeedbackModeForOperation to map system-specific feedback
- * modes into modes that the general classes know about. 3. Override
- * AbstractTurnout.getTurnoutOperator if you want to do something <i>really</i>
- * different.
+ * <ol>
+ *  <li>Override AbstractTurnoutManager.getValidOperationTypes to change the
+ *  operation types allowed for this system</li>
+ *  <li>Override AbstractTurnout.getFeedbackModeForOperation to map
+ *  system-specific feedback modes into modes that the general classes know
+ *  about</li>
+ *  <li>Override AbstractTurnout.getTurnoutOperator if you want to do
+ *  something <i>really</i> different</li>
+ * </ol>
  *
  * @author John Harper Copyright 2005
- *
  */
 public abstract class TurnoutOperation implements Comparable<Object> {
 
@@ -92,12 +94,12 @@ public abstract class TurnoutOperation implements Comparable<Object> {
 
     TurnoutOperation(@Nonnull String n) {
         name = n;
-        TurnoutOperationManager.getInstance().addOperation(this);
+        InstanceManager.getDefault(TurnoutOperationManager.class).addOperation(this);
     }
 
     /**
-     * factory to make a copy of an operation identical in all respects except
-     * the name
+     * Factory to make a copy of an operation identical in all respects except
+     * the name.
      *
      * @param n name for new copy
      * @return TurnoutOperation of same concrete class as this
@@ -105,8 +107,8 @@ public abstract class TurnoutOperation implements Comparable<Object> {
     public abstract TurnoutOperation makeCopy(@Nonnull String n);
 
     /**
-     * set feedback modes - part of construction but done separately for
-     * ordering problems
+     * Set feedback modes - part of construction but done separately for
+     * ordering problems.
      *
      * @param fm valid feedback modes for this class
      */
@@ -115,16 +117,17 @@ public abstract class TurnoutOperation implements Comparable<Object> {
     }
 
     /**
-     * get the descriptive name of the operation
+     * Get the descriptive name of the operation.
      *
      * @return name
      */
+    @Nonnull
     public String getName() {
         return name;
     }
 
     /**
-     * Ordering by name so operations can be sorted on name
+     * Ordering by name so operations can be sorted on name.
      *
      * @param other other TurnoutOperation object
      * @return usual compareTo return values
@@ -135,7 +138,7 @@ public abstract class TurnoutOperation implements Comparable<Object> {
     }
 
     /**
-     * The identity of an operation is its name
+     * The identity of an operation is its name.
      */
     @Override
     public boolean equals(Object ro) {
@@ -160,7 +163,7 @@ public abstract class TurnoutOperation implements Comparable<Object> {
     public abstract boolean equivalentTo(TurnoutOperation other);
 
     /**
-     * rename an operation
+     * Rename an operation.
      *
      * @param newName new name to use for rename attempt
      * @return true if the name was changed to the new value - otherwise name
@@ -168,7 +171,7 @@ public abstract class TurnoutOperation implements Comparable<Object> {
      */
     public boolean rename(@Nonnull String newName) {
         boolean result = false;
-        TurnoutOperationManager mgr = TurnoutOperationManager.getInstance();
+        TurnoutOperationManager mgr = InstanceManager.getDefault(TurnoutOperationManager.class);
         if (!isDefinitive() && mgr.getOperation(newName) == null) {
             mgr.removeOperation(this);
             name = newName;
@@ -180,7 +183,7 @@ public abstract class TurnoutOperation implements Comparable<Object> {
     }
 
     /**
-     * get the definitive operation for this parameter variation
+     * Get the definitive operation for this parameter variation.
      *
      * @return definitive operation
      */
@@ -188,7 +191,7 @@ public abstract class TurnoutOperation implements Comparable<Object> {
         String[] myClass = this.getClass().getName().split("\\.");
         String finalClass = myClass[myClass.length - 1];
         String mySubclass = finalClass.substring(0, finalClass.indexOf("TurnoutOperation"));
-        return TurnoutOperationManager.getInstance().getOperation(mySubclass);
+        return InstanceManager.getDefault(TurnoutOperationManager.class).getOperation(mySubclass);
     }
 
     /**
@@ -214,13 +217,12 @@ public abstract class TurnoutOperation implements Comparable<Object> {
     public abstract TurnoutOperator getOperator(@Nonnull AbstractTurnout t);
 
     /**
-     * delete all knowledge of this operation. Reset any turnouts using it to
-     * the default
-     *
+     * Delete all knowledge of this operation. Reset any turnouts using it to
+     * the default.
      */
     public void dispose() {
         if (!isDefinitive()) {
-            TurnoutOperationManager.getInstance().removeOperation(this);
+            InstanceManager.getDefault(TurnoutOperationManager.class).removeOperation(this);
             name = "*deleted";
             pcs.firePropertyChange("Deleted", null, null);  // this will remove all dangling references
         }
@@ -231,23 +233,18 @@ public abstract class TurnoutOperation implements Comparable<Object> {
     }
 
     /**
-     * see if operation is in use (needed by the UI)
+     * See if operation is in use (needed by the UI).
      *
      * @return true iff any turnouts are using it
      */
     public boolean isInUse() {
-        boolean result = false;
         TurnoutManager tm = InstanceManager.turnoutManagerInstance();
-        List<String> turnouts = tm.getSystemNameList();
-        Iterator<String> iter = turnouts.iterator();
-        while (iter.hasNext()) {
-            Turnout t = tm.getBySystemName(iter.next());
+        for (Turnout t : tm.getNamedBeanSet()) {
             if (t != null && t.getTurnoutOperation() == this) {
-                result = true;
-                break;
+                return true;
             }
         }
-        return result;
+        return false;
     }
 
     /**
@@ -263,7 +260,7 @@ public abstract class TurnoutOperation implements Comparable<Object> {
 
     public void setNonce(boolean n) {
         nonce = n;
-        TurnoutOperationManager.getInstance().firePropertyChange("Content", null, null);
+        InstanceManager.getDefault(TurnoutOperationManager.class).firePropertyChange("Content", null, null);
     }
 
     public TurnoutOperation makeNonce(Turnout t) {
@@ -293,4 +290,5 @@ public abstract class TurnoutOperation implements Comparable<Object> {
     public boolean matchFeedbackMode(int mode) {
         return (mode & feedbackModes) != 0;
     }
+
 }

@@ -1,11 +1,7 @@
 package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
-import jmri.util.JUnitUtil;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Test simple functioning of IndicatorTrackIcon
@@ -15,6 +11,7 @@ import org.junit.Test;
 public class IndicatorTrackIconTest extends PositionableIconTest {
 
     @Test
+    @Override
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("IndicatorTrackIcon Constructor",p);
@@ -23,10 +20,10 @@ public class IndicatorTrackIconTest extends PositionableIconTest {
     @Override
     @Before
     public void setUp() {
-        JUnitUtil.setUp();
+        super.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
-           editor = new EditorScaffold();
-           p = new IndicatorTrackIcon(editor);
+            editor = new EditorScaffold();
+            p = new IndicatorTrackIcon(editor);
         }
     }
 

@@ -11,6 +11,7 @@
     <display item="Pulse Chain Recognition (LGB)"/>
     <display item="NMRA"/>
     <display item="Loco Number Recognition"/>
+    <display item="Emergency Delay"/>
     <label>
       <text> </text>
     </label>
@@ -57,20 +58,44 @@
        <label xml:lang="it">Tasto funzione per disabilitare controllo segnale HLU</label>
        <label xml:lang="cs">Nastavení funkční klávesy pro znepřístupnění řízení signálem HLU</label-->
     </display>
-    <display item="Distance controlled stopping"/>
     <label>
       <text> </text>
     </label>
     <row>
       <column>
-        <display item="Distance controlled stopping Distance"/>
-        <display item="Distance controlled stopping speed correction (HLU)"/>
+    <label>
+      <text> </text>
+    </label>
       </column>
       <column>
-        <display item="Distance controlled stopping Distance" label="" format="hslider">
+    <label>
+      <text> </text>
+    </label>
+      </column>
+    </row>
+    <row>
+      <column>
+       <label>
+        <text>                                                   </text>
+       </label>
+      </column>
+      <column>
+        <display item="stopping distance fwd high"/>
+        <display item="stopping distance fwd low"/>
+        <display item="stopping distance rev high"/>
+        <display item="stopping distance rev low"/>
+      </column>
+      <column>
+        <display item="stopping distance fwd high" label="" format="hslider">
           <label/>
         </display>
-        <display item="Distance controlled stopping speed correction (HLU)" label="" format="hslider">
+        <display item="stopping distance fwd low" label="" format="hslider">
+          <label/>
+        </display>
+        <display item="stopping distance rev high" label="" format="hslider">
+          <label/>
+        </display>
+        <display item="stopping distance rev low" label="" format="hslider">
           <label/>
         </display>
       </column>

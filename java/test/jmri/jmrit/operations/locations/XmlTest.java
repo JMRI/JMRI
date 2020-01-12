@@ -1,4 +1,3 @@
-//XmlTest.java
 package jmri.jmrit.operations.locations;
 
 import java.io.File;
@@ -10,9 +9,9 @@ import jmri.jmrit.operations.locations.schedules.ScheduleItem;
 import jmri.jmrit.operations.locations.schedules.ScheduleManager;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
-import junit.framework.Test;
-import junit.framework.TestSuite;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the Operations Locations/Xml class Last manually cross-checked on
@@ -29,6 +28,7 @@ public class XmlTest extends OperationsTestCase {
      *
      * @throws Exception exception
      */
+    @Test
     public void testXMLCreate() throws Exception {
         LocationManager manager = InstanceManager.getDefault(LocationManager.class);
         manager.dispose();
@@ -376,29 +376,9 @@ public class XmlTest extends OperationsTestCase {
     // TODO: Add test to create xml file
     // TODO: Add test to read xml file
     @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() {
         super.setUp();
         InstanceManager.getDefault(jmri.jmrit.operations.rollingstock.cars.CarTypes.class).addName("Boxcar");
-    }
-
-    public XmlTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", XmlTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(XmlTest.class);
-        return suite;
-    }
-
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
     }
 }

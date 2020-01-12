@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * Action to create and load a JmriPanel from just its name.
  *
  * @author Bob Jacobsen Copyright (C) 2010
-  */
+ */
 public class EcosNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
 
     /**

@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2002, 20013 All rights reserved -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details. -->
+<!--  Embedded 3 Functions decoder for Rear End red lights and Passengers lights   -->
+<!--  this decoder is dedicated to the DCC XR trailer car                                         -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <version author="Bob Jacobsen" version="2" lastUpdated="20190727"/> <!-- xinclude for CV19 -->
+	<version author="Alain CARASSO" version="1" lastUpdated="20180905"/>
+<decoder>
+	<family name="MISTRAL XR" mfg="Mistral Train Models" lowVersionID="20" highVersionID="255">
+		<model model="XR Trailer"></model>
+	<functionlabels>
+		<functionlabel num="1" lockable="true">C1 End red light</functionlabel>
+		<functionlabel num="2" lockable="true">C2 End red light</functionlabel>
+		<functionlabel num="3" lockable="true">Passengers Light</functionlabel>
+	</functionlabels>
+	</family>
+	<programming direct="yes" paged="no" 
+	      register="yes" ops="yes">
+    </programming>
+<variables>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+	<variable label="Manufacturer Version No: " CV="7" readOnly="yes" item="Decoder Version" default="20" tooltip="The manufacturer's version number (read only)">
+			<decVal/>
+	</variable>
+	<variable label="Manufacturer ID: " CV="8"  readOnly="yes" comment="8 to reset" item="Manufacturer" default="29" tooltip="The manufacturer's ID number (read only)">
+			<decVal/>
+	</variable>
+<!--  Analog Function Status            -->
+	<variable label="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV" default="0" >
+		<enumVal>
+			<enumChoice choice="off"/>
+			<enumChoice choice="on"/>
+		</enumVal>
+	</variable>
+	<variable label="Analog Mode Function Status - F2" CV="13" mask="XXXXXXVX" default="0" >
+		<enumVal>
+			<enumChoice choice="off"/>
+			<enumChoice choice="on"/>
+		</enumVal>
+	</variable>
+	<variable label="Analog Mode Function Status - F3" CV="13" mask="XXXXXVXX" default="1" >
+		<enumVal>
+			<enumChoice choice="off"/>
+			<enumChoice choice="on"/>
+		</enumVal>
+	</variable>
+	<variable label="Analog Mode Function Status - F4" CV="13" mask="XXXXVXXX" default="0" >
+		<enumVal>
+			<enumChoice choice="off"/>
+			<enumChoice choice="on"/>
+		</enumVal>
+	</variable>
+	<variable label="Analog Mode Function Status - F5" CV="13" mask="XXXVXXXX" default="0" >
+		<enumVal>
+			<enumChoice choice="off"/>
+			<enumChoice choice="on"/>
+		</enumVal>
+	</variable>
+	<variable label="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX" default="0" >
+		<enumVal>
+			<enumChoice choice="off"/>
+			<enumChoice choice="on"/>
+		</enumVal>
+	</variable>
+	<variable label="Analog Mode Function Status - F7" CV="13" mask="XVXXXXXX" default="0" >
+		<enumVal>
+			<enumChoice choice="off"/>
+			<enumChoice choice="on"/>
+		</enumVal>
+	</variable>
+	<variable label="Analog Mode Function Status - F8" CV="13" mask="VXXXXXXX" default="0" >
+		<enumVal>
+			<enumChoice choice="off"/>
+			<enumChoice choice="on"/>
+		</enumVal>
+	</variable>
+	<variable label="Analog Mode Function Status - F0(f)" CV="14" mask="XXXXXXXV" default="1" >
+		<enumVal>
+			<enumChoice choice="off"/>
+			<enumChoice choice="on"/>
+		</enumVal>
+	</variable>
+	<variable label="Analog Mode Function Status - F0(r)" CV="14" mask="XXXXXXVX" default="1" >
+		<enumVal>
+			<enumChoice choice="off"/>
+			<enumChoice choice="on"/>
+		</enumVal>
+	</variable>
+<!--  Long address and Consist address            -->
+
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+
+<!--  CV29            -->
+	<variable label="Locomotive Direction" CV="29" mask="XXXXXXXV">
+		<enumVal>
+			<enumChoice choice="normal"/>
+			<enumChoice choice="reversed"/>
+			</enumVal></variable>
+		<variable label="14/28 steps" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
+		<enumVal>
+			<enumChoice choice="14 speed step format"/>
+			<enumChoice choice="28 speed step format"/>
+			</enumVal>
+	</variable>
+	<variable label="Power Source Conversion" CV="29" 	mask="XXXXXVXX" item="Analog (DC) Operation" default="1">
+		<enumVal>
+			<enumChoice choice="NMRA Digital only"/>
+			<enumChoice choice="DC conversion enabled"/>
+			</enumVal>
+	</variable>
+	<variable label="Address Format" CV="29" mask="XXVXXXXX">
+		<enumVal>
+			<enumChoice choice="One byte (short) address"/>
+			<enumChoice choice="Two byte (extended) address"/>
+			</enumVal>
+	</variable>
+<!--  Function Mapping definition for the 3 outputs available            -->
+	<variable label="F0(f) controls output 1" CV="33" 	mask="XXXXXXXV" minOut="1" default="1">
+		<enumVal> 
+			<enumChoice choice="No"/>
+			<enumChoice choice="Yes"/>
+		</enumVal>
+	</variable>
+	<variable label="F0(f) controls output 2" CV="33" 	mask="XXXXXXVX" minOut="2">
+		<enumVal> 
+			<enumChoice choice="No"/>
+			<enumChoice choice="Yes"/>
+		</enumVal>
+	</variable>
+	<variable label="F0(f) controls output 3" CV="33" 	mask="XXVXXXXX" minOut="3">
+		<enumVal> 
+			<enumChoice choice="No"/>
+			<enumChoice choice="Yes"/>
+		</enumVal>
+	</variable>
+	<variable label="F0(r) controls output 1" CV="34" 	mask="XXXXXXXV" minOut="1">
+		<enumVal>
+			<enumChoice choice="No"/>
+			<enumChoice choice="Yes"/>
+		</enumVal>
+	</variable>
+	<variable label="F0(r) controls output 2" CV="34" 	mask="XXXXXXVX" minOut="2" default="1">
+		<enumVal> 
+			<enumChoice choice="No"/>
+			<enumChoice choice="Yes"/>
+		</enumVal>
+	</variable>
+	<variable label="F0(r) controls output 3" CV="34" 	mask="XXVXXXXX" minOut="3">
+		<enumVal> 
+			<enumChoice choice="No"/>
+			<enumChoice choice="Yes"/>
+		</enumVal>
+	</variable>
+	<variable label="F1 controls output 1" CV="35" mask="XXXXXXXV" 	minOut="1" minFn="1">
+		<enumVal> 
+			<enumChoice choice="No"/>
+			<enumChoice choice="Yes"/>
+		</enumVal>
+	</variable>
+	<variable label="F1 controls output 2" CV="35" mask="XXXXXXVX" 	minOut="2" minFn="1">
+		<enumVal> 
+			<enumChoice choice="No"/>
+			<enumChoice choice="Yes"/>
+		</enumVal>
+	</variable>
+	<variable label="F1 controls output 3" CV="35" mask="XXVXXXXX" 	minOut="3" minFn="1">
+		<enumVal> 
+			<enumChoice choice="No"/>
+			<enumChoice choice="Yes"/>
+		</enumVal>
+	</variable>
+	<variable label="F2 controls output 1" CV="36" mask="XXXXXXXV" 	minOut="1" minFn="2">
+		<enumVal> 
+			<enumChoice choice="No"/>
+			<enumChoice choice="Yes"/>
+		</enumVal>
+	</variable>
+	<variable label="F2 controls output 2" CV="36" mask="XXXXXXVX" 	minOut="2" minFn="2">
+		<enumVal> 
+			<enumChoice choice="No"/>
+			<enumChoice choice="Yes"/>
+		</enumVal>
+	</variable>
+	<variable label="F2 controls output 3" CV="36" mask="XXVXXXXX" 	minOut="3" minFn="2">
+		<enumVal> 
+			<enumChoice choice="No"/>
+			<enumChoice choice="Yes"/>
+		</enumVal>
+	</variable>
+	<variable label="F3 controls output 1" CV="37" mask="XXXXXXXV" 	minOut="1" minFn="3">
+		<enumVal> 
+			<enumChoice choice="No"/>
+			<enumChoice choice="Yes"/>
+		</enumVal>
+	</variable>
+	<variable label="F3 controls output 2" CV="37" mask="XXXXXXVX" 	minOut="2" minFn="3">
+		<enumVal> 
+			<enumChoice choice="No"/>
+			<enumChoice choice="Yes"/>
+		</enumVal>
+	</variable>
+	<variable label="F3 controls output 3" CV="37" mask="XXVXXXXX" 	minOut="3" minFn="3" default="1">
+		<enumVal> 
+			<enumChoice choice="No"/>
+			<enumChoice choice="Yes"/>
+		</enumVal>
+	</variable>
+	<variable label="F4 controls output 1" CV="38" mask="XXXXXXXV" 	minOut="1" minFn="4" default="0">
+		<enumVal> 
+			<enumChoice choice="No"/>
+			<enumChoice choice="Yes"/>
+		</enumVal>
+	</variable>
+	<variable label="F4 controls output 2" CV="38" mask="XXXXXXVX" 	minOut="2" minFn="4">
+		<enumVal> 
+			<enumChoice choice="No"/>
+			<enumChoice choice="Yes"/>
+		</enumVal>
+	</variable>
+	<variable label="F4 controls output 3" CV="38" mask="XXVXXXXX" 	minOut="3" minFn="4">
+		<enumVal>
+			<enumChoice choice="No"/>
+			<enumChoice choice="Yes"/>
+		</enumVal>
+	</variable>
+	<variable label="F5 controls output 1" CV="39" mask="XXXXXXXV" 	minOut="1" minFn="5" default="0">
+		<enumVal> 
+			<enumChoice choice="No"/>
+			<enumChoice choice="Yes"/>
+		</enumVal>
+	</variable>
+	<variable label="F5 controls output 2" CV="39" mask="XXXXXXVX" 	minOut="2" minFn="5">
+		<enumVal> 
+			<enumChoice choice="No"/>
+			<enumChoice choice="Yes"/>
+		</enumVal>
+	</variable>
+	<variable label="F5 controls output 3" CV="39" mask="XXVXXXXX" 	minOut="3" minFn="5">
+		<enumVal> 
+			<enumChoice choice="No"/>
+			<enumChoice choice="Yes"/>
+		</enumVal>
+	</variable>
+	<variable label="F6 controls output 1" CV="40" mask="XXXXXXXV" 	minOut="1" minFn="6" default="0">
+		<enumVal> 
+			<enumChoice choice="No"/>
+			<enumChoice choice="Yes"/>
+		</enumVal>
+	</variable>
+	<variable label="F6 controls output 2" CV="40" mask="XXXXXXVX" 	minOut="2" minFn="6">
+		<enumVal> 
+			<enumChoice choice="No"/>
+			<enumChoice choice="Yes"/>
+		</enumVal>
+	</variable>
+	<variable label="F6 controls output 3" CV="40" mask="XXVXXXXX" 	minOut="3" minFn="6">
+		<enumVal> 
+			<enumChoice choice="No"/>
+			<enumChoice choice="Yes"/>
+		</enumVal>
+	</variable>
+	<variable label="F7 controls output 1" CV="41" mask="XXXXXXXV" 	minOut="1" minFn="7" default="0">
+		<enumVal> 
+			<enumChoice choice="No"/>
+			<enumChoice choice="Yes"/>
+		</enumVal>
+	</variable>
+	<variable label="F7 controls output 2" CV="41" mask="XXXXXXVX" 	minOut="2" minFn="7">
+		<enumVal> 
+			<enumChoice choice="No"/>
+			<enumChoice choice="Yes"/>
+		</enumVal>
+	</variable>
+	<variable label="F7 controls output 3" CV="41" mask="XXVXXXXX" 	minOut="3" minFn="7">
+		<enumVal> 
+			<enumChoice choice="No"/>
+			<enumChoice choice="Yes"/>
+		</enumVal>
+	</variable>
+	<variable label="F8 controls output 1" CV="42" mask="XXXXXXXV" 	minOut="1" minFn="8" default="0">
+		<enumVal> 
+			<enumChoice choice="No"/>
+			<enumChoice choice="Yes"/>
+		</enumVal>
+	</variable>
+	<variable label="F8 controls output 2" CV="42" mask="XXXXXXVX" 	minOut="2" minFn="8">
+		<enumVal> 
+			<enumChoice choice="No"/>
+			<enumChoice choice="Yes"/>
+		</enumVal>
+	</variable>
+	<variable label="F8 controls output 3" CV="42" mask="XXVXXXXX" 	minOut="3" minFn="8">
+		<enumVal> 
+			<enumChoice choice="No"/>
+			<enumChoice choice="Yes"/>
+		</enumVal>
+	</variable>
+</variables>
+        <resets>
+            <factReset label="Reset All CVs" CV="8" default="8">
+            </factReset>
+        </resets>
+</decoder>
+ <pane>
+    <name>ReadMe</name>
+    <column>
+       <label>
+        <text> ================ XR Trailer Car Output Definition profile ================ </text>
+      </label>
+      <label>
+        <text> Output 1 = switch C1 = Red Ligh End 1</text>
+      </label>
+      <label>
+        <text> Output 2 = switch C2 = Red Ligh End 2</text>
+      </label>
+      <label>
+        <text> Output 3 = Interior passenger light </text>
+      </label>
+       <label>
+        <text> =============================================================== </text>
+      </label>
+    </column>
+  </pane>
+ </decoder-config>

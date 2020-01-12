@@ -16,25 +16,25 @@ class LocoSelector(jmri.jmrit.automat.AbstractAutomaton) :
     # init() is called exactly once at the beginning to do
     # any necessary configuration.
     def init(self):
-		# initialisation
-		return
+        # initialisation
+        return
         
     # handle() will only execute once here, to run a single test
     #
     # Modify this to do your calculation.
     def handle(self):
-		return 0	
-		# use return 1 for an infinite loop, or return 0 for once through !
+        return 0    
+        # use return 1 for an infinite loop, or return 0 for once through !
 
 
     # define what button does when clicked and attach that routine to the button
     def whenMyButtonClicked(self,event) :
-		# Use this to perform actions from the "start" button. 
-		# In this case we print the chosen loco's address
-		mem = self.memory.getSelectedBean()
-		mem.setValue(self.box.getSelectedItem())
-		return
-	
+        # Use this to perform actions from the "start" button. 
+        # In this case we print the chosen loco's address
+        mem = self.memory.getSelectedBean()
+        mem.setValue(self.box.getSelectedItem())
+        return
+    
     # routine to show the panel, starting the whole process     
     def setup(self):
         # create a frame to hold the button, set up for nice layout
@@ -50,7 +50,7 @@ class LocoSelector(jmri.jmrit.automat.AbstractAutomaton) :
         temppanel1.add(javax.swing.JLabel("Locomotive "))
 
         # create the drop-box from the roster, 
-		# getEntriesWithAttributeKeyValue(String key, String value) 
+        # getEntriesWithAttributeKeyValue(String key, String value) 
         self.roster = jmri.jmrit.roster.Roster.getDefault()
         self.box = jmri.jmrit.roster.swing.GlobalRosterEntryComboBox()
 
@@ -65,7 +65,7 @@ class LocoSelector(jmri.jmrit.automat.AbstractAutomaton) :
         temppanel3 = javax.swing.JPanel()
         # create the start button to perform actions.
         self.startButton = javax.swing.JButton("Allocate")
-        self.startButton.actionPerformed = self.whenMyButtonClicked	
+        self.startButton.actionPerformed = self.whenMyButtonClicked 
         temppanel3.add(self.startButton)
 
 

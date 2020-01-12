@@ -3,6 +3,7 @@ package jmri.jmrix.mqtt;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttClient;
@@ -13,13 +14,15 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author lionel
+ * @author Lionel Jeanson
  */
 public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implements MqttCallback {
 
     private final static String PROTOCOL = "tcp://";
     private final static String CLID = "JMRI";
-    private final static String BASETOPIC = "/trains/";
+    private final static String DEFAULT_BASETOPIC = "/trains/";
+    
+    public String baseTopic = DEFAULT_BASETOPIC;
 
     HashMap<String, ArrayList<MqttEventListener>> mqttEventListeners;
 
@@ -27,8 +30,9 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
 
     public MqttAdapter() {
         super(new MqttSystemConnectionMemo());
+        log.debug("Doing ctor...");
         option2Name = "MQTTchannel";
-        options.put(option2Name, new Option("MQTT channel :", new String[]{BASETOPIC + "+"}));
+        options.put(option2Name, new Option("MQTT channel :", new String[]{baseTopic}));
         allowConnectionRecovery = true;
     }
 
@@ -43,8 +47,20 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
 
     @Override
     public void connect() throws IOException {
-        log.debug("Doing connect...");
+        log.debug("Doing connect with MQTTchannel = \"{}\"", getOptionState("MQTTchannel"));
+        
+        
         try {
+            if (! getOptionState("MQTTchannel").trim().isEmpty()) {
+                baseTopic = getOptionState("MQTTchannel");
+            }
+
+            // have to make that a valid choice, overriding the original above. This
+            // is ugly and temporary.
+            if (! DEFAULT_BASETOPIC.equals(baseTopic)) {
+                options.put(option2Name, new Option("MQTT channel :", new String[]{baseTopic, DEFAULT_BASETOPIC}));
+            }
+
             String clientID = CLID + "-" + this.getUserName();
             mqttClient = new MqttClient(PROTOCOL + getCurrentPortName(), clientID);
             mqttClient.connect();
@@ -52,7 +68,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
             throw new IOException("Can't create MQTT client", ex);
         }
     }
-
+    
     @Override
     public MqttSystemConnectionMemo getSystemConnectionMemo() {
         return (MqttSystemConnectionMemo) super.getSystemConnectionMemo();
@@ -64,7 +80,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
             return;
         }
         try {
-            String fullTopic = BASETOPIC + topic;
+            String fullTopic = baseTopic + topic;
             if (mqttEventListeners.containsKey(fullTopic)) {
                 if (!mqttEventListeners.get(fullTopic).contains(mel)) {
                     mqttEventListeners.get(fullTopic).add(mel);
@@ -81,7 +97,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
     }
 
     public void unsubscribe(String topic, MqttEventListener mel) {
-        String fullTopic = BASETOPIC + topic;
+        String fullTopic = baseTopic + topic;
         mqttEventListeners.get(fullTopic).remove(mel);
         if (mqttEventListeners.get(fullTopic).isEmpty()) {
             try {
@@ -101,7 +117,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
 
     public void publish(String topic, byte[] payload) {
         try {
-            String fullTopic = BASETOPIC + topic;
+            String fullTopic = baseTopic + topic;
             mqttClient.publish(fullTopic, payload, 2, true);
         } catch (MqttException ex) {
             log.error("Can't publish : ", ex);
@@ -133,7 +149,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
 
     @Override
     public void messageArrived(String topic, MqttMessage mm) throws Exception {
-        log.debug("Message reveiced, topic : {}", topic);
+        log.debug("Message received, topic : {}", topic);
         if (!mqttEventListeners.containsKey(topic)) {
             log.error("No one subscribed to {}", topic);
             throw new Exception("No subscriber for MQTT topic " + topic);
@@ -149,4 +165,5 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
     }
 
     private final static Logger log = LoggerFactory.getLogger(MqttAdapter.class);
+
 }

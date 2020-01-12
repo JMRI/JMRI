@@ -6,6 +6,7 @@
 
 import jmri
 import java
+import java.beans
 
 # The sensor number used to indicate the power status is hardcoded
 # below as "100". Change this if you want to use some other sensor.
@@ -17,7 +18,7 @@ import java
 class PowerListener(java.beans.PropertyChangeListener):
   def propertyChange(self, event):
     # here, power has changed. Find new state
-    power = jmri.InstanceManager.powerManagerInstance().getPower()
+    power = jmri.InstanceManager.getDefault(jmri.PowerManager).getPower()
     if (power == jmri.PowerManager.ON) :
        state = ACTIVE   
     else :
@@ -27,7 +28,7 @@ class PowerListener(java.beans.PropertyChangeListener):
 
 # Second, attach that listener to the PowerManager. The variable m
 # is used to remember the listener so we can remove it later
-p = jmri.InstanceManager.powerManagerInstance()
+p = jmri.InstanceManager.getDefault(jmri.PowerManager)
 m = PowerListener()
 p.addPropertyChangeListener(m)
 

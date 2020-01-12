@@ -1,48 +1,47 @@
-//AutomationItemTest.java
 package jmri.jmrit.operations.automation;
+
+import org.junit.Assert;
+import org.junit.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.automation.actions.ActionCodes;
-import jmri.jmrit.operations.automation.actions.ActivateTimetableAction;
-import jmri.jmrit.operations.automation.actions.BuildTrainAction;
-import jmri.jmrit.operations.automation.actions.GotoAction;
-import jmri.jmrit.operations.automation.actions.RunAutomationAction;
-import jmri.jmrit.operations.automation.actions.WaitTrainAction;
+import jmri.jmrit.operations.automation.actions.*;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.trains.Train;
-import jmri.jmrit.operations.trains.timetable.TrainSchedule;
-import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
-import junit.framework.Test;
-import junit.framework.TestSuite;
-import org.junit.Assert;
+import jmri.jmrit.operations.trains.schedules.TrainSchedule;
+import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 
 public class AutomationItemTest extends OperationsTestCase {
 
+    @Test
     public void testDefaults() {
         AutomationItem automationItem = new AutomationItem("TestId");
         Assert.assertNotNull("test creation", automationItem);
         Assert.assertEquals("test id", "TestId", automationItem.getId());
         Assert.assertEquals("test id", "TestId", automationItem.toString());
         Assert.assertEquals(ActionCodes.NO_ACTION, automationItem.getActionCode());
-        Assert.assertEquals("Do Nothing", automationItem.getAction().getName());
-        Assert.assertEquals("Do Nothing", automationItem.getActionByCode(0x0000).getName()); // there isn't a code 0x0000 action
+        Assert.assertEquals("Do Nothing", automationItem.getAction().getName());      
         Assert.assertEquals("Do Nothing", automationItem.getActionName());
         Assert.assertEquals("", automationItem.getMessage());
         Assert.assertEquals("", automationItem.getMessageFail());
         Assert.assertEquals(0, automationItem.getSequenceId());
         Assert.assertEquals("", automationItem.getStatus());
         Assert.assertEquals("", automationItem.getTrainScheduleId());
-        Assert.assertEquals("Number of actions", 29, automationItem.getActionComboBox().getItemCount());
-        Assert.assertEquals("Number of actions", 29, automationItem.getActionList().size());
+        
         Assert.assertEquals(null, automationItem.getAutomationToRun());
         Assert.assertEquals(null, automationItem.getGotoAutomationItem());
         Assert.assertEquals(null, automationItem.getRouteLocation());
         Assert.assertEquals(null, automationItem.getTrain());
         Assert.assertEquals(null, automationItem.getTrainSchedule());
+        
+        // static tests
+        Assert.assertEquals("Do Nothing", AutomationItem.getActionByCode(0x0000).getName()); // there isn't a code 0x0000 action
+        Assert.assertEquals("Number of actions", 31, AutomationItem.getActionComboBox().getItemCount());
+        Assert.assertEquals("Number of actions", 31, AutomationItem.getActionList().size());
     }
 
+    @Test
     public void testMessages() {
         AutomationItem automationItem = new AutomationItem("TestId");
         Assert.assertNotNull("test creation", automationItem);
@@ -57,6 +56,7 @@ public class AutomationItemTest extends OperationsTestCase {
         Assert.assertEquals("Test Fail message", automationItem.getMessageFail());
     }
 
+    @Test
     public void testAutomationToRun() {
         AutomationItem automationItem = new AutomationItem("TestId");
         Assert.assertNotNull("test creation", automationItem);
@@ -81,6 +81,7 @@ public class AutomationItemTest extends OperationsTestCase {
         Assert.assertEquals(automation, automationItem.getAutomationToRun());
     }
 
+    @Test
     public void testGotoAutomationItem() {
         AutomationManager manager = InstanceManager.getDefault(AutomationManager.class);
         Automation automation = manager.newAutomation("testAutomationGoto");
@@ -100,6 +101,7 @@ public class AutomationItemTest extends OperationsTestCase {
         Assert.assertEquals(item2, item1.getGotoAutomationItem());
     }
 
+    @Test
     public void testRouteLocation() {
         AutomationItem automationItem = new AutomationItem("TestId");
         Assert.assertNotNull("test creation", automationItem);
@@ -113,6 +115,7 @@ public class AutomationItemTest extends OperationsTestCase {
         Assert.assertEquals(rl, automationItem.getRouteLocation());
     }
 
+    @Test
     public void testTrain() {
         AutomationItem automationItem = new AutomationItem("TestId");
         Assert.assertNotNull("test creation", automationItem);
@@ -126,6 +129,7 @@ public class AutomationItemTest extends OperationsTestCase {
         Assert.assertEquals("Build train action", train, automationItem.getTrain());
     }
 
+    @Test
     public void testTrainSchedule() {
         AutomationItem automationItem = new AutomationItem("TestId");
         Assert.assertNotNull("test creation", automationItem);
@@ -135,7 +139,7 @@ public class AutomationItemTest extends OperationsTestCase {
         automationItem.setTrainSchedule(trainSchedule);
 
         Assert.assertEquals("Do nothing action can't have a train schedule assignment", null, automationItem.getTrainSchedule());
-        automationItem.setAction(new ActivateTimetableAction());
+        automationItem.setAction(new ActivateTrainScheduleAction());
         Assert.assertEquals(trainSchedule, automationItem.getTrainSchedule());
 
         automationItem.setTrainSchedule(null);
@@ -143,31 +147,5 @@ public class AutomationItemTest extends OperationsTestCase {
 
         automationItem.setOther(trainSchedule);
         Assert.assertEquals(trainSchedule, automationItem.getTrainSchedule());
-    }
-
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
-
-    public AutomationItemTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", AutomationItemTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(AutomationItemTest.class);
-        return suite;
-    }
-
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
     }
 }

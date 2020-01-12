@@ -13,20 +13,19 @@ import org.slf4j.LoggerFactory;
  * MrcClockControl.java
  *
  * Implementation of the Hardware Fast Clock for Mrc
- * <P>
+ * <p>
  * This module is based on the NCE version.
- * <BR>
+ * <br>
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * </P><P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * </P>
  *
  * @author Ken Cameron Copyright (C) 2014
  * @author Dave Duchamp Copyright (C) 2007
@@ -346,38 +345,9 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
         tc.sendMrcMessage(cmdMrc);
     }
 
-    @SuppressWarnings("unused")
-    private void issueClock1224(boolean mode) {
-        if (mode != mrcLast1224) {
-            MrcMessage cmdMrc = jmri.jmrix.mrc.MrcMessage.setClockAmPm();
-            tc.sendMrcMessage(cmdMrc);
-        }
-    }
-
     private void issueClockTime(int hh, int mm) {
         MrcMessage cmdMrc = jmri.jmrix.mrc.MrcMessage.setClockTime(hh, mm);
         tc.sendMrcMessage(cmdMrc);
-    }
-
-    @SuppressWarnings({"deprecation", "unused"})
-    private Date getMrcDate() {
-        Date now = internalClock.getTime();
-        if (lastClockReadPacket != null) {
-            now.setHours(lastClockReadPacket.getElement(CS_CLOCK_HOURS));
-            now.setMinutes(lastClockReadPacket.getElement(CS_CLOCK_MINUTES));
-            now.setSeconds(0);
-        }
-        return (now);
-    }
-
-    @SuppressWarnings("unused")
-    private double getMrcTime() {
-        double mrcTime = 0;
-        if (lastClockReadPacket != null) {
-            mrcTime = (lastClockReadPacket.getElement(CS_CLOCK_HOURS) * 3600)
-                    + (lastClockReadPacket.getElement(CS_CLOCK_MINUTES) * 60);
-        }
-        return (mrcTime);
     }
 
     private final static Logger log = LoggerFactory.getLogger(MrcClockControl.class);

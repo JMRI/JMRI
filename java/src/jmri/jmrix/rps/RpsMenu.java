@@ -4,7 +4,7 @@ import javax.swing.JMenu;
 import javax.swing.JSeparator;
 
 /**
- * Create an "RPS" menu containing the Jmri RPS-specific tools.
+ * Create an "RPS" menu containing the JMRI RPS-specific tools.
  *
  * @author	Bob Jacobsen Copyright 2006, 2007, 2008
  */
@@ -20,9 +20,12 @@ public class RpsMenu extends JMenu {
     public RpsMenu(RpsSystemConnectionMemo memo) {
 
         super();
+        if (memo != null) {
+            setText(memo.getUserName());
+        } else {
+            setText(Bundle.getMessage("MenuSystem"));
+        }
         _memo = memo;
-
-        setText("RPS");  // Product name, not translated.
 
         // tools that work
         add(new jmri.jmrix.rps.rpsmon.RpsMonAction(_memo));

@@ -6,6 +6,7 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     BundleTest.class,
+    AbstractPanelServletTest.class,
     ControlPanelServletTest.class,
     LayoutPanelServletTest.class,
     SwitchboardServletTest.class,

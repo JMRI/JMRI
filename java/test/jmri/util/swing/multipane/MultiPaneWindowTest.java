@@ -64,6 +64,8 @@ public class MultiPaneWindowTest {
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager();
     }
 
     @After

@@ -1,0 +1,2152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2010 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+	<version author="Michael Mosher" version="1" lastUpdated="20190408"/>
+	<!-- new file, based on Wow diesel sound set 4 -->
+	<version author="Michael Mosher" version="2" lastUpdated="20191111"/>
+	<!-- Add CV 177-181 & new bit in CV182 -->
+	<decoder>
+		<family name="WOW Diesel Sound Set 4 Prime" mfg="Train Control Systems" >
+			<model model="WOW Diesel 101 SS4 Prime" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" connector="9pin"
+				lowVersionID="4" highVersionID="4" productID="170">
+				<output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
+				<output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
+				<output name="3" label="Green" connection="wire" maxcurrent="100 mA"/>
+				<output name="4" label="Purple" connection="wire" maxcurrent="100 mA"/>
+				<output name="5" label="Brown" connection="wire" maxcurrent="100 mA"/>
+				<output name="6" label="Pink" connection="wire" maxcurrent="100 mA"/>
+				<output name="Dim"/>
+				<output name="Ditch"/>
+				<output name="Motor"/>
+				<output name="Brake"/>
+				<size length="1.35" width="0.66" height="0.22" units="inches"/>
+			</model>
+			<model model="WOW Diesel 121 SS4 Prime" numOuts="8" numFns="14" maxMotorCurrent="1.3A (peak=2A)" connector="21pin"
+				lowVersionID="4" highVersionID="4" productID="171">
+				<output name="1" label="White" connection="plug" maxcurrent="100 mA"/>
+				<output name="2" label="Yellow" connection="plug" maxcurrent="100 mA"/>
+				<output name="3" label="Green" connection="plug" maxcurrent="100 mA"/>
+				<output name="4" label="Purple" connection="plug" maxcurrent="100 mA"/>
+				<output name="5" label="Brown" connection="plug" maxcurrent="logic"/>
+				<output name="6" label="Pink" connection="plug" maxcurrent="logic"/>
+				<output name="7" label="Pnk/Pur" connection="plug" maxcurrent="logic"/>
+				<output name="8" label="Grn/Brn" connection="plug" maxcurrent="logic"/>
+				<output name="Dim"/>
+				<output name="Ditch"/>
+				<output name="Motor"/>
+				<output name="Brake"/>
+				<size length="1.28" width="0.69" height="0.22" units="inches"/>
+			</model>
+			<model model="WOW Diesel 501 SS4 Prime" numOuts="8" numFns="14" maxMotorCurrent="5A" formFactor="screw"
+				lowVersionID="4" highVersionID="4" productID="172">
+				<output name="1" label="White" connection="other"/>
+				<output name="2" label="Yellow" connection="other"/>
+				<output name="3" label="Green" connection="other"/>
+				<output name="4" label="Purple" connection="other"/>
+				<output name="5" label="Brown" connection="other"/>
+				<output name="6" label="Pink" connection="other"/>
+				<output name="7" label="Pnk/Pur" connection="other"/>
+				<output name="8" label="Grn/Brn" connection="other"/>
+				<output name="Dim"/>
+				<output name="Ditch"/>
+				<output name="Motor"/>
+				<output name="Brake"/>
+				<size length="3.00" width="1.45" units="inches"/>
+			</model>
+			<functionlabels>
+				<functionlabel num="0" lockable="true">Headlight</functionlabel>
+				<functionlabel num="1" lockable="true">Bell</functionlabel>
+				<functionlabel num="2" lockable="false">Horn Long</functionlabel>
+				<functionlabel num="3" lockable="true">Horn Short</functionlabel>
+				<functionlabel num="4" lockable="true">Horn Quill</functionlabel>
+				<functionlabel num="5" lockable="true">Dynamic Brake</functionlabel>
+				<functionlabel num="6" lockable="true">Brake Release</functionlabel>
+				<functionlabel num="7" lockable="true">Train Brake</functionlabel>
+				<functionlabel num="8" lockable="true">Mute</functionlabel>
+				<functionlabel num="9" lockable="true">Rotate Horn/Bell</functionlabel>
+				<functionlabel num="10" lockable="true">Manual Notch Up</functionlabel>
+				<functionlabel num="11" lockable="true">Manual Notch Down</functionlabel>
+				<functionlabel num="12" lockable="true">Prime Mover</functionlabel>
+				<functionlabel num="13" lockable="true">Coupling</functionlabel>
+				<functionlabel num="14" lockable="true">Uncoupling</functionlabel>
+				<functionlabel num="15" lockable="true">Mainline/Switching Momentum</functionlabel>
+				<functionlabel num="16" lockable="true">Crew Alert</functionlabel>
+				<functionlabel num="17" lockable="true">Windshield Wipers</functionlabel>
+				<functionlabel num="18" lockable="true">Air Spitter</functionlabel>
+			</functionlabels>
+		</family>
+		<programming direct="yes" paged="yes" register="yes" ops="yes">
+			<capability>
+				<name>TCS 4 CV access</name>
+			</capability>
+		</programming>
+		<variables>
+			<xi:include href="http://jmri.org/xml/decoders/tcs/CV1_CV99_wow.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/tcs/CV100_CV187_wow.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/tcs/CV177_CV182_wow.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/tcs/CV249_CV252_FW86.xml" />
+			<xi:include href="http://jmri.org/xml/decoders/tcs/wowDieselCV.xml" />
+			<variable item="Sound Option 3" CV="248" default="4" readOnly="yes">
+				<decVal/>
+				<label>Sound Set</label>
+			</variable>
+			<!-- Sound function mapping -->
+			<variable item="Function 0 Sound" CV="T2CV.1.00" default="65535" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumDiesel04Prime.xml"/>  
+			</variable>
+			<variable item="Function 1 Sound" CV="T2CV.1.01" default="12" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumDiesel04Prime.xml"/>
+			</variable>
+			<variable item="Function 2 Sound" CV="T2CV.1.02" default="144" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumDiesel04Prime.xml"/>
+			</variable>
+			<variable item="Function 3 Sound" CV="T2CV.1.03" default="304" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumDiesel04Prime.xml"/>
+			</variable>
+			<variable item="Function 4 Sound" CV="T2CV.1.04" default="184" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumDiesel04Prime.xml"/>
+			</variable>
+			<variable item="Function 5 Sound" CV="T2CV.1.05" default="100" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumDiesel04Prime.xml"/>
+			</variable>
+			<variable item="Function 6 Sound" CV="T2CV.1.06" default="63" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumDiesel04Prime.xml"/>
+			</variable>
+			<variable item="Function 7 Sound" CV="T2CV.1.07" default="65" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumDiesel04Prime.xml"/>
+			</variable>
+			<variable item="Function 8 Sound" CV="T2CV.1.08" default="348" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumDiesel04Prime.xml"/>
+			</variable>
+			<variable item="Function 9 Sound" CV="T2CV.1.09" default="1833" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumDiesel04Prime.xml"/>
+			</variable>
+			<variable item="Function 10 Sound" CV="T2CV.1.10" default="345" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumDiesel04Prime.xml"/>
+			</variable>
+			<variable item="Function 11 Sound" CV="T2CV.1.11" default="344" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumDiesel04Prime.xml"/>
+			</variable>
+			<variable item="Function 12 Sound" CV="T2CV.1.12" default="1755" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumDiesel04Prime.xml"/>
+			</variable>
+			<variable item="Function 13 Sound" CV="T2CV.1.13" default="95" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumDiesel04Prime.xml"/>
+			</variable>
+			<variable item="Function 14 Sound" CV="T2CV.1.14" default="96" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumDiesel04Prime.xml"/>
+			</variable>
+			<variable item="Function 15 Sound" CV="T2CV.1.15" default="346" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumDiesel04Prime.xml"/>
+			</variable>
+			<variable item="Function 16 Sound" CV="T2CV.1.16" default="99" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumDiesel04Prime.xml"/>
+			</variable>
+			<variable item="Function 17 Sound" CV="T2CV.1.17" default="1913" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumDiesel04Prime.xml"/>
+			</variable>
+			<variable item="Function 18 Sound" CV="T2CV.1.18" default="7" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumDiesel04Prime.xml"/>
+			</variable>
+			<variable item="Function 19 Sound" CV="T2CV.1.19" default="65535" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumDiesel04Prime.xml"/>
+			</variable>
+			<variable item="Function 20 Sound" CV="T2CV.1.20" default="65535" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumDiesel04Prime.xml"/>
+			</variable>
+			<variable item="Function 21 Sound" CV="T2CV.1.21" default="65535" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumDiesel04Prime.xml"/>
+			</variable>
+			<variable item="Function 22 Sound" CV="T2CV.1.22" default="65535" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumDiesel04Prime.xml"/>
+			</variable>
+			<variable item="Function 23 Sound" CV="T2CV.1.23" default="65535" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumDiesel04Prime.xml"/>
+			</variable>
+			<variable item="Function 24 Sound" CV="T2CV.1.24" default="65535" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumDiesel04Prime.xml"/>
+			</variable>
+			<variable item="Function 25 Sound" CV="T2CV.1.25" default="65535" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumDiesel04Prime.xml"/>
+			</variable>
+			<variable item="Function 26 Sound" CV="T2CV.1.26" default="65535" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumDiesel04Prime.xml"/>
+			</variable>
+			<variable item="Function 27 Sound" CV="T2CV.1.27" default="65535" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumDiesel04Prime.xml"/>
+			</variable>
+			<variable item="Function 28 Sound" CV="T2CV.1.28" default="65535" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumDiesel04Prime.xml"/>
+			</variable>
+			<variable item="Random 1 Sound" CV="T2CV.1.29" default="3" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumDiesel04Prime.xml"/>
+			</variable>
+			<variable item="Random 2 Sound" CV="T2CV.1.30" default="6" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumDiesel04Prime.xml"/>
+			</variable>
+			<variable item="Random 3 Sound" CV="T2CV.1.31" default="65535" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumDiesel04Prime.xml"/>
+			</variable>
+			<variable item="Random 4 Sound" CV="T2CV.1.32" default="65535" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumDiesel04Prime.xml"/>
+			</variable>
+			<variable item="Aux Input Sound" CV="T2CV.1.34" default="166" mask="VVVVVVVVVVVVVVVV" include="172">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumDiesel04Prime.xml"/>
+			</variable>
+			
+			<!-- Individual volume -->
+			<variable item="Volume 0-0" CV="T3CV.2.0.0" default="100">
+				<decVal max="100"/>
+				<label>ALCO 251 compressor #503</label>
+			</variable>
+			<variable item="Volume 0-1" CV="T3CV.2.0.1" default="100">
+				<decVal max="100"/>
+				<label>EMD645 non turbo SW1500 #1567 Phillipsburg Air Compressor</label>
+			</variable>
+			<variable item="Volume 0-2" CV="T3CV.2.0.2" default="100">
+				<decVal max="100"/>
+				<label>EMD645 non turbo SW1500 #1567 Phillipsburg Air Compressor 2</label>
+			</variable>
+			<variable item="Volume 0-3" CV="T3CV.2.0.3" default="100">
+				<decVal max="100"/>
+				<label>GE Whooping Air Compressor</label>
+			</variable>
+			<variable item="Volume 0-4" CV="T3CV.2.0.4" default="100">
+				<decVal max="100"/>
+				<label>Air Compressor</label>
+			</variable>
+			<variable item="Volume 0-5" CV="T3CV.2.0.5" default="100">
+				<decVal max="100"/>
+				<label>VO 1000 Air Compressor</label>
+			</variable>
+			<variable item="Volume 0-6" CV="T3CV.2.0.6" default="100">
+				<decVal max="100"/>
+				<label>Air Spitter 1</label>
+			</variable>
+			<variable item="Volume 0-7" CV="T3CV.2.0.7" default="100">
+				<decVal max="100"/>
+				<label>Air Spitter 2</label>
+			</variable>
+			<variable item="Volume 0-8" CV="T3CV.2.0.8" default="100">
+				<decVal max="100"/>
+				<label>Air Spitter 3</label>
+			</variable>
+			<variable item="Volume 0-9" CV="T3CV.2.0.9" default="100">
+				<decVal max="100"/>
+				<label>Air Spitter 4</label>
+			</variable>
+			<variable item="Volume 0-10" CV="T3CV.2.0.10" default="100">
+				<decVal max="100"/>
+				<label>Air Spitter 5</label>
+			</variable>
+			<variable item="Volume 0-11" CV="T3CV.2.0.11" default="100">
+				<decVal max="100"/>
+				<label>Air Spitter 6</label>
+			</variable>
+			<variable item="Volume 0-12" CV="T3CV.2.0.12" default="100">
+				<decVal max="100"/>
+				<label>Bell Electric E-Bell</label>
+			</variable>
+			<variable item="Volume 0-13" CV="T3CV.2.0.13" default="100">
+				<decVal max="100"/>
+				<label>Bell Fairbanks Morse Bell</label>
+			</variable>
+			<variable item="Volume 0-14" CV="T3CV.2.0.14" default="100">
+				<decVal max="100"/>
+				<label>Bell Galloping Goose #3 Bell</label>
+			</variable>
+			<variable item="Volume 0-15" CV="T3CV.2.0.15" default="100">
+				<decVal max="100"/>
+				<label>Bell GE 45 tonner Bell</label>
+			</variable>
+			<variable item="Volume 0-16" CV="T3CV.2.0.16" default="100">
+				<decVal max="100"/>
+				<label>Bell Western Pacific GP20 #2100 Bell</label>
+			</variable>
+			<variable item="Volume 0-17" CV="T3CV.2.0.17" default="100">
+				<decVal max="100"/>
+				<label>Bell PRR GG1 Bell</label>
+			</variable>
+			<variable item="Volume 0-18" CV="T3CV.2.0.18" default="100">
+				<decVal max="100"/>
+				<label>Bell Niles Canyon Mongo speeder Bell</label>
+			</variable>
+			<variable item="Volume 0-19" CV="T3CV.2.0.19" default="100">
+				<decVal max="100"/>
+				<label>Bell John Bull Replica Hand Powered Bell</label>
+			</variable>
+			<variable item="Volume 0-20" CV="T3CV.2.0.20" default="100">
+				<decVal max="100"/>
+				<label>Bell Quincy RR SW8 #1100 Bell</label>
+			</variable>
+			<variable item="Volume 0-21" CV="T3CV.2.0.21" default="100">
+				<decVal max="100"/>
+				<label>Bell Richmond Pacific SW900 Bell</label>
+			</variable>
+			<variable item="Volume 0-22" CV="T3CV.2.0.22" default="100">
+				<decVal max="100"/>
+				<label>Bell RSD1 #1956 Bell</label>
+			</variable>
+			<variable item="Volume 0-23" CV="T3CV.2.0.23" default="100">
+				<decVal max="100"/>
+				<label>Bell RSD12 #2958 Bell</label>
+			</variable>
+			<variable item="Volume 0-24" CV="T3CV.2.0.24" default="100">
+				<decVal max="100"/>
+				<label>Bell Santa Catalina JLA2 Critter #103 Bell</label>
+			</variable>
+			<variable item="Volume 0-25" CV="T3CV.2.0.25" default="100">
+				<decVal max="100"/>
+				<label>Bell SMS AS616 #554 Bell</label>
+			</variable>
+			<variable item="Volume 0-26" CV="T3CV.2.0.26" default="100">
+				<decVal max="100"/>
+				<label>Bell Southern Pacific #1423 Bell</label>
+			</variable>
+			<variable item="Volume 0-27" CV="T3CV.2.0.27" default="100">
+				<decVal max="100"/>
+				<label>Bell Southern Pacific #3100 Bell</label>
+			</variable>
+			<variable item="Volume 0-28" CV="T3CV.2.0.28" default="100">
+				<decVal max="100"/>
+				<label>Bell Southern Pacific #5472 Bell</label>
+			</variable>
+			<variable item="Volume 0-29" CV="T3CV.2.0.29" default="100">
+				<decVal max="100"/>
+				<label>Bell Southern Pacific #5623 Bell</label>
+			</variable>
+			<variable item="Volume 0-30" CV="T3CV.2.0.30" default="100">
+				<decVal max="100"/>
+				<label>Bell VO 1000 Bell</label>
+			</variable>
+			<variable item="Volume 0-31" CV="T3CV.2.0.31" default="100">
+				<decVal max="100"/>
+				<label>Bell Western Pacific #713 Bell</label>
+			</variable>
+			<variable item="Volume 0-32" CV="T3CV.2.0.32" default="100">
+				<decVal max="100"/>
+				<label>Bell Western Pacific 918D F unit Bell</label>
+			</variable>
+			<variable item="Volume 0-33" CV="T3CV.2.0.33" default="100">
+				<decVal max="100"/>
+				<label>Bell C&amp;amp;O Bell</label>
+			</variable>
+			<variable item="Volume 0-34" CV="T3CV.2.0.34" default="100">
+				<decVal max="100"/>
+				<label>Bell C&amp;amp;T #484 Bell</label>
+			</variable>
+			<variable item="Volume 0-35" CV="T3CV.2.0.35" default="100">
+				<decVal max="100"/>
+				<label>Bell Leetonia Railroad Shay #1 Bell</label>
+			</variable>
+			<variable item="Volume 0-36" CV="T3CV.2.0.36" default="100">
+				<decVal max="100"/>
+				<label>Bell PRR 2-8-0 H3 1187 Hand Powered Bell</label>
+			</variable>
+			<variable item="Volume 0-37" CV="T3CV.2.0.37" default="100">
+				<decVal max="100"/>
+				<label>Bell Unknown Bell from Strasburg museum floor</label>
+			</variable>
+			<variable item="Volume 0-38" CV="T3CV.2.0.38" default="100">
+				<decVal max="100"/>
+				<label>Bell Lehigh Coal and Navigation Co #1 Bell</label>
+			</variable>
+			<variable item="Volume 0-39" CV="T3CV.2.0.39" default="100">
+				<decVal max="100"/>
+				<label>Bell Lehigh Valley Bell</label>
+			</variable>
+			<variable item="Volume 0-40" CV="T3CV.2.0.40" default="100">
+				<decVal max="100"/>
+				<label>Bell Lehigh Valley Pacific Bell</label>
+			</variable>
+			<variable item="Volume 0-41" CV="T3CV.2.0.41" default="100">
+				<decVal max="100"/>
+				<label>Bell Strasburg #89 Air Powered Bell</label>
+			</variable>
+			<variable item="Volume 0-42" CV="T3CV.2.0.42" default="100">
+				<decVal max="100"/>
+				<label>Bell Philadelphia and Reading Co Camelback #592 Bell</label>
+			</variable>
+			<variable item="Volume 0-43" CV="T3CV.2.0.43" default="100">
+				<decVal max="100"/>
+				<label>Bell PRR 2-8-0 H3 2846 Air Powered Bell</label>
+			</variable>
+			<variable item="Volume 0-44" CV="T3CV.2.0.44" default="100">
+				<decVal max="100"/>
+				<label>Bell Heisler Class 53833 #4 Hand Powered bell</label>
+			</variable>
+			<variable item="Volume 0-45" CV="T3CV.2.0.45" default="100">
+				<decVal max="100"/>
+				<label>Bell PRR #1223 American 4-4-0 D16SB Hand Powered Bell</label>
+			</variable>
+			<variable item="Volume 0-46" CV="T3CV.2.0.46" default="100">
+				<decVal max="100"/>
+				<label>Bell PRR Bell</label>
+			</variable>
+			<variable item="Volume 0-47" CV="T3CV.2.0.47" default="100">
+				<decVal max="100"/>
+				<label>Bell Conrail #2233 GP30 Air Powered Bell</label>
+			</variable>
+			<variable item="Volume 0-48" CV="T3CV.2.0.48" default="100">
+				<decVal max="100"/>
+				<label>Bell Virginia Truckee Railroad 2-6-0 Hand Powered Bell</label>
+			</variable>
+			<variable item="Volume 0-49" CV="T3CV.2.0.49" default="100">
+				<decVal max="100"/>
+				<label>Bell Reading Bell 1</label>
+			</variable>
+			<variable item="Volume 0-50" CV="T3CV.2.0.50" default="100">
+				<decVal max="100"/>
+				<label>Bell Reading Bell 2</label>
+			</variable>
+			<variable item="Volume 0-51" CV="T3CV.2.0.51" default="100">
+				<decVal max="100"/>
+				<label>Bell Reading Bell 3</label>
+			</variable>
+			<variable item="Volume 0-52" CV="T3CV.2.0.52" default="100">
+				<decVal max="100"/>
+				<label>Bell Richland Fredricksburg &amp;amp; Potomac Bell</label>
+			</variable>
+			<variable item="Volume 0-53" CV="T3CV.2.0.53" default="100">
+				<decVal max="100"/>
+				<label>Bell Richmond Pacific SW900 Bell</label>
+			</variable>
+			<variable item="Volume 0-54" CV="T3CV.2.0.54" default="100">
+				<decVal max="100"/>
+				<label>Bell Strasburg #475 Air Powered bell</label>
+			</variable>
+			<variable item="Volume 0-55" CV="T3CV.2.0.55" default="100">
+				<decVal max="100"/>
+				<label>Bell Strasburg #475 Hand Powered bell</label>
+			</variable>
+			<variable item="Volume 0-56" CV="T3CV.2.0.56" default="100">
+				<decVal max="100"/>
+				<label>Bell Strasburg #90 Hand Powered Bell (Variation)</label>
+			</variable>
+			<variable item="Volume 0-57" CV="T3CV.2.0.57" default="100">
+				<decVal max="100"/>
+				<label>Bell Strasburg #90 hand powered double hit Bell</label>
+			</variable>
+			<variable item="Volume 0-58" CV="T3CV.2.0.58" default="100">
+				<decVal max="100"/>
+				<label>Bell Baldwin ten wheeler #12 Bell</label>
+			</variable>
+			<variable item="Volume 0-59" CV="T3CV.2.0.59" default="100">
+				<decVal max="100"/>
+				<label>Bell Unknown Bell</label>
+			</variable>
+			<variable item="Volume 0-60" CV="T3CV.2.0.60" default="100">
+				<decVal max="100"/>
+				<label>Bell Williams Grove PRR #643 0-6-0 Bell</label>
+			</variable>
+			<variable item="Volume 0-61" CV="T3CV.2.0.61" default="100">
+				<decVal max="100"/>
+				<label>Bell PRR 4-4-2 #7002 Hand Powered Bell</label>
+			</variable>
+			<variable item="Volume 0-62" CV="T3CV.2.0.62" default="100">
+				<decVal max="100"/>
+				<label>Bell Strasburg #90 Hand Powered Bell</label>
+			</variable>
+			<variable item="Volume 0-63" CV="T3CV.2.0.63" default="100">
+				<decVal max="100"/>
+				<label>Brake Release 1</label>
+			</variable>
+			<variable item="Volume 0-64" CV="T3CV.2.0.64" default="100">
+				<decVal max="100"/>
+				<label>Brake Release 2</label>
+			</variable>
+			<variable item="Volume 0-65" CV="T3CV.2.0.65" default="100">
+				<decVal max="100"/>
+				<label>Brake Squeal 1</label>
+			</variable>
+			<variable item="Volume 0-66" CV="T3CV.2.0.66" default="100">
+				<decVal max="100"/>
+				<label>Brake Squeal 2</label>
+			</variable>
+			<variable item="Volume 0-67" CV="T3CV.2.0.67" default="100">
+				<decVal max="100"/>
+				<label>Brake Squeal 3</label>
+			</variable>
+			<variable item="Volume 0-68" CV="T3CV.2.0.68" default="100">
+				<decVal max="100"/>
+				<label>Brake Squeal 4</label>
+			</variable>
+			<variable item="Volume 0-69" CV="T3CV.2.0.69" default="100">
+				<decVal max="100"/>
+				<label>Brake Squeal 5</label>
+			</variable>
+			<variable item="Volume 0-70" CV="T3CV.2.0.70" default="100">
+				<decVal max="100"/>
+				<label>Brake Squeal 6</label>
+			</variable>
+			<variable item="Volume 0-71" CV="T3CV.2.0.71" default="100">
+				<decVal max="100"/>
+				<label>Brake Squeal 7</label>
+			</variable>
+			<variable item="Volume 0-72" CV="T3CV.2.0.72" default="100">
+				<decVal max="100"/>
+				<label>Brake Squeal 8</label>
+			</variable>
+			<variable item="Volume 0-73" CV="T3CV.2.0.73" default="100">
+				<decVal max="100"/>
+				<label>Brake Squeal 9</label>
+			</variable>
+			<variable item="Volume 0-74" CV="T3CV.2.0.74" default="100">
+				<decVal max="100"/>
+				<label>Brake Squeal 10</label>
+			</variable>
+			<variable item="Volume 0-75" CV="T3CV.2.0.75" default="100">
+				<decVal max="100"/>
+				<label>Brake Squeal 11</label>
+			</variable>
+			<variable item="Volume 0-76" CV="T3CV.2.0.76" default="100">
+				<decVal max="100"/>
+				<label>Brake Squeal 12</label>
+			</variable>
+			<variable item="Volume 0-77" CV="T3CV.2.0.77" default="100">
+				<decVal max="100"/>
+				<label>Brake Squeal 13</label>
+			</variable>
+			<variable item="Volume 0-78" CV="T3CV.2.0.78" default="100">
+				<decVal max="100"/>
+				<label>Brake Squeal 14</label>
+			</variable>
+			<variable item="Volume 0-79" CV="T3CV.2.0.79" default="100">
+				<decVal max="100"/>
+				<label>Brake Squeal 15</label>
+			</variable>
+			<variable item="Volume 0-80" CV="T3CV.2.0.80" default="100">
+				<decVal max="100"/>
+				<label>Brake Squeal 16</label>
+			</variable>
+			<variable item="Volume 0-81" CV="T3CV.2.0.81" default="100">
+				<decVal max="100"/>
+				<label>Brake Squeal 17</label>
+			</variable>
+			<variable item="Volume 0-82" CV="T3CV.2.0.82" default="100">
+				<decVal max="100"/>
+				<label>Brake Squeal 18</label>
+			</variable>
+			<variable item="Volume 0-83" CV="T3CV.2.0.83" default="100">
+				<decVal max="100"/>
+				<label>Brake Squeal 19</label>
+			</variable>
+			<variable item="Volume 0-84" CV="T3CV.2.0.84" default="100">
+				<decVal max="100"/>
+				<label>Brake Squeal 20</label>
+			</variable>
+			<variable item="Volume 0-85" CV="T3CV.2.0.85" default="100">
+				<decVal max="100"/>
+				<label>Brake Squeal 21</label>
+			</variable>
+			<variable item="Volume 0-86" CV="T3CV.2.0.86" default="100">
+				<decVal max="100"/>
+				<label>Brake Squeal 22</label>
+			</variable>
+			<variable item="Volume 0-87" CV="T3CV.2.0.87" default="100">
+				<decVal max="100"/>
+				<label>Brake Squeal 23</label>
+			</variable>
+			<variable item="Volume 0-88" CV="T3CV.2.0.88" default="100">
+				<decVal max="100"/>
+				<label>Brake Squeal 24</label>
+			</variable>
+			<variable item="Volume 0-89" CV="T3CV.2.0.89" default="100">
+				<decVal max="100"/>
+				<label>Brake Squeal 25</label>
+			</variable>
+			<variable item="Volume 0-90" CV="T3CV.2.0.90" default="100">
+				<decVal max="100"/>
+				<label>Brake Squeal 26</label>
+			</variable>
+			<variable item="Volume 0-91" CV="T3CV.2.0.91" default="100">
+				<decVal max="100"/>
+				<label>Brake Squeal 27</label>
+			</variable>
+			<variable item="Volume 0-92" CV="T3CV.2.0.92" default="100">
+				<decVal max="100"/>
+				<label>Brake Squeal 28</label>
+			</variable>
+			<variable item="Volume 0-93" CV="T3CV.2.0.93" default="100">
+				<decVal max="100"/>
+				<label>Brake Squeal 29</label>
+			</variable>
+			<variable item="Volume 0-94" CV="T3CV.2.0.94" default="100">
+				<decVal max="100"/>
+				<label>Brake Squeal 30</label>
+			</variable>
+			<variable item="Volume 0-95" CV="T3CV.2.0.95" default="100">
+				<decVal max="100"/>
+				<label>VO 1000 coupler clank closed</label>
+			</variable>
+			<variable item="Volume 0-96" CV="T3CV.2.0.96" default="100">
+				<decVal max="100"/>
+				<label>VO 1000 coupler clank open</label>
+			</variable>
+			<variable item="Volume 0-97" CV="T3CV.2.0.97" default="100">
+				<decVal max="100"/>
+				<label>Coupling</label>
+			</variable>
+			<variable item="Volume 0-98" CV="T3CV.2.0.98" default="100">
+				<decVal max="100"/>
+				<label>Uncoupling</label>
+			</variable>
+			<variable item="Volume 0-99" CV="T3CV.2.0.99" default="100">
+				<decVal max="100"/>
+				<label>Crew Alert</label>
+			</variable>
+			<variable item="Volume 0-100" CV="T3CV.2.0.100" default="100">
+				<decVal max="100"/>
+				<label>Dynamic brakes low</label>
+			</variable>
+			<variable item="Volume 0-101" CV="T3CV.2.0.101" default="100">
+				<decVal max="100"/>
+				<label>Dynamic brakes medium</label>
+			</variable>
+			<variable item="Volume 0-102" CV="T3CV.2.0.102" default="100">
+				<decVal max="100"/>
+				<label>Dynamic brakes high</label>
+			</variable>
+			<variable item="Volume 0-103" CV="T3CV.2.0.103" default="100">
+				<decVal max="100"/>
+				<label>Exhaust Fan</label>
+			</variable>
+			<variable item="Volume 0-104" CV="T3CV.2.0.104" default="100">
+				<decVal max="100"/>
+				<label>Horn Forward SMS AS616 #554</label>
+			</variable>
+			<variable item="Volume 0-105" CV="T3CV.2.0.105" default="100">
+				<decVal max="100"/>
+				<label>Horn Forward SMS DS44 750 #102</label>
+			</variable>
+			<variable item="Volume 0-106" CV="T3CV.2.0.106" default="100">
+				<decVal max="100"/>
+				<label>Horn Forward SMS S12 #303</label>
+			</variable>
+			<variable item="Volume 0-107" CV="T3CV.2.0.107" default="100">
+				<decVal max="100"/>
+				<label>Horn Forward VO 1000 Single Chime</label>
+			</variable>
+			<variable item="Volume 0-108" CV="T3CV.2.0.108" default="100">
+				<decVal max="100"/>
+				<label>Horn Forward Fairbanks Morris</label>
+			</variable>
+			<variable item="Volume 0-109" CV="T3CV.2.0.109" default="100">
+				<decVal max="100"/>
+				<label>Horn Forward GE 45 tonner</label>
+			</variable>
+			<variable item="Volume 0-110" CV="T3CV.2.0.110" default="100">
+				<decVal max="100"/>
+				<label>Horn Forward GE 80 tonner</label>
+			</variable>
+			<variable item="Volume 0-111" CV="T3CV.2.0.111" default="100">
+				<decVal max="100"/>
+				<label>Horn Forward Southern Pacific 3100</label>
+			</variable>
+			<variable item="Volume 0-112" CV="T3CV.2.0.112" default="100">
+				<decVal max="100"/>
+				<label>Horn Forward Hancock Air Whistle</label>
+			</variable>
+			<variable item="Volume 0-113" CV="T3CV.2.0.113" default="100">
+				<decVal max="100"/>
+				<label>Horn Forward Leslie 125</label>
+			</variable>
+			<variable item="Volume 0-114" CV="T3CV.2.0.114" default="100">
+				<decVal max="100"/>
+				<label>Horn Forward Leslie 200</label>
+			</variable>
+			<variable item="Volume 0-115" CV="T3CV.2.0.115" default="100">
+				<decVal max="100"/>
+				<label>Horn Forward Leslie 3 Chime</label>
+			</variable>
+			<variable item="Volume 0-116" CV="T3CV.2.0.116" default="100">
+				<decVal max="100"/>
+				<label>Horn Forward Leslie RS3</label>
+			</variable>
+			<variable item="Volume 0-117" CV="T3CV.2.0.117" default="100">
+				<decVal max="100"/>
+				<label>Horn Forward Leslie RS3L</label>
+			</variable>
+			<variable item="Volume 0-118" CV="T3CV.2.0.118" default="100">
+				<decVal max="100"/>
+				<label>Horn Forward Leslie RS5T</label>
+			</variable>
+			<variable item="Volume 0-119" CV="T3CV.2.0.119" default="100">
+				<decVal max="100"/>
+				<label>Horn Forward Nathan K3</label>
+			</variable>
+			<variable item="Volume 0-120" CV="T3CV.2.0.120" default="100">
+				<decVal max="100"/>
+				<label>Horn Forward Nathan K3H</label>
+			</variable>
+			<variable item="Volume 0-121" CV="T3CV.2.0.121" default="100">
+				<decVal max="100"/>
+				<label>Horn Forward Nathan K3H_1</label>
+			</variable>
+			<variable item="Volume 0-122" CV="T3CV.2.0.122" default="100">
+				<decVal max="100"/>
+				<label>Horn Forward Nathan K3LA</label>
+			</variable>
+			<variable item="Volume 0-123" CV="T3CV.2.0.123" default="100">
+				<decVal max="100"/>
+				<label>Horn Forward Nathan K3LL</label>
+			</variable>
+			<variable item="Volume 0-124" CV="T3CV.2.0.124" default="100">
+				<decVal max="100"/>
+				<label>Horn Forward Nathan K5H</label>
+			</variable>
+			<variable item="Volume 0-125" CV="T3CV.2.0.125" default="100">
+				<decVal max="100"/>
+				<label>Horn Forward Nathan K5HL</label>
+			</variable>
+			<variable item="Volume 0-126" CV="T3CV.2.0.126" default="100">
+				<decVal max="100"/>
+				<label>Horn Forward Nathan K5LA ACS64 Vers 1</label>
+			</variable>
+			<variable item="Volume 0-127" CV="T3CV.2.0.127" default="100">
+				<decVal max="100"/>
+				<label>Horn Forward Nathan K5LA ACS64 Vers 2</label>
+			</variable>
+			<variable item="Volume 0-128" CV="T3CV.2.0.128" default="100">
+				<decVal max="100"/>
+				<label>Horn Forward Nathan K5LA ACS64 Vers 3</label>
+			</variable>
+			<variable item="Volume 0-129" CV="T3CV.2.0.129" default="100">
+				<decVal max="100"/>
+				<label>Horn Forward Nathan K5LA</label>
+			</variable>
+			<variable item="Volume 0-130" CV="T3CV.2.0.130" default="100">
+				<decVal max="100"/>
+				<label>Horn Forward Strasburg 8618 SW8 Nathan K5LA</label>
+			</variable>
+			<variable item="Volume 0-131" CV="T3CV.2.0.131" default="100">
+				<decVal max="100"/>
+				<label>Horn Forward Nathan K5LLA</label>
+			</variable>
+			<variable item="Volume 0-132" CV="T3CV.2.0.132" default="100">
+				<decVal max="100"/>
+				<label>Horn Forward Nathan M3 C.P. 1</label>
+			</variable>
+			<variable item="Volume 0-133" CV="T3CV.2.0.133" default="100">
+				<decVal max="100"/>
+				<label>Horn Forward Nathan M3 C.P. 2</label>
+			</variable>
+			<variable item="Volume 0-134" CV="T3CV.2.0.134" default="100">
+				<decVal max="100"/>
+				<label>Horn Forward Nathan M3 C.P. 3</label>
+			</variable>
+			<variable item="Volume 0-135" CV="T3CV.2.0.135" default="100">
+				<decVal max="100"/>
+				<label>Horn Forward Nathan M3 Tilt</label>
+			</variable>
+			<variable item="Volume 0-136" CV="T3CV.2.0.136" default="100">
+				<decVal max="100"/>
+				<label>Horn Forward Nathan M5</label>
+			</variable>
+			<variable item="Volume 0-137" CV="T3CV.2.0.137" default="100">
+				<decVal max="100"/>
+				<label>Horn Forward Nathan P3</label>
+			</variable>
+			<variable item="Volume 0-138" CV="T3CV.2.0.138" default="100">
+				<decVal max="100"/>
+				<label>Horn Forward Nathan P5 Chime (Australia)</label>
+			</variable>
+			<variable item="Volume 0-139" CV="T3CV.2.0.139" default="100">
+				<decVal max="100"/>
+				<label>Horn Forward Nathan P5A</label>
+			</variable>
+			<variable item="Volume 0-140" CV="T3CV.2.0.140" default="100">
+				<decVal max="100"/>
+				<label>Horn Forward Quincy RR SW8 #1100</label>
+			</variable>
+			<variable item="Volume 0-141" CV="T3CV.2.0.141" default="100">
+				<decVal max="100"/>
+				<label>Horn Forward RSD12 #2958</label>
+			</variable>
+			<variable item="Volume 0-142" CV="T3CV.2.0.142" default="100">
+				<decVal max="100"/>
+				<label>Horn Forward Galloping Goose #3</label>
+			</variable>
+			<variable item="Volume 0-143" CV="T3CV.2.0.143" default="100">
+				<decVal max="100"/>
+				<label>Horn Forward Wabco E2 3 Chime</label>
+			</variable>
+			<variable item="Volume 0-144" CV="T3CV.2.0.144" default="100">
+				<decVal max="100"/>
+				<label>Horn Long SMS AS616 #554</label>
+			</variable>
+			<variable item="Volume 0-145" CV="T3CV.2.0.145" default="100">
+				<decVal max="100"/>
+				<label>Horn Long SMS DS44 750 #102</label>
+			</variable>
+			<variable item="Volume 0-146" CV="T3CV.2.0.146" default="100">
+				<decVal max="100"/>
+				<label>Horn Long SMS S12 #303</label>
+			</variable>
+			<variable item="Volume 0-147" CV="T3CV.2.0.147" default="100">
+				<decVal max="100"/>
+				<label>Horn Long VO 1000 Single Chime</label>
+			</variable>
+			<variable item="Volume 0-148" CV="T3CV.2.0.148" default="100">
+				<decVal max="100"/>
+				<label>Horn Long Fairbanks Morse</label>
+			</variable>
+			<variable item="Volume 0-149" CV="T3CV.2.0.149" default="100">
+				<decVal max="100"/>
+				<label>Horn Long GE 45 tonner</label>
+			</variable>
+			<variable item="Volume 0-150" CV="T3CV.2.0.150" default="100">
+				<decVal max="100"/>
+				<label>Horn Long GE 80 tonner</label>
+			</variable>
+			<variable item="Volume 0-151" CV="T3CV.2.0.151" default="100">
+				<decVal max="100"/>
+				<label>Horn Long GE U-Boat</label>
+			</variable>
+			<variable item="Volume 0-152" CV="T3CV.2.0.152" default="100">
+				<decVal max="100"/>
+				<label>Horn Long Hancock Air Whistle</label>
+			</variable>
+			<variable item="Volume 0-153" CV="T3CV.2.0.153" default="100">
+				<decVal max="100"/>
+				<label>Horn Long Leslie 125</label>
+			</variable>
+			<variable item="Volume 0-154" CV="T3CV.2.0.154" default="100">
+				<decVal max="100"/>
+				<label>Horn Long Leslie 200</label>
+			</variable>
+			<variable item="Volume 0-155" CV="T3CV.2.0.155" default="100">
+				<decVal max="100"/>
+				<label>Horn Long Leslie 3 Chime</label>
+			</variable>
+			<variable item="Volume 0-156" CV="T3CV.2.0.156" default="100">
+				<decVal max="100"/>
+				<label>Horn Long Leslie RS3</label>
+			</variable>
+			<variable item="Volume 0-157" CV="T3CV.2.0.157" default="100">
+				<decVal max="100"/>
+				<label>Horn Long Leslie RS3L</label>
+			</variable>
+			<variable item="Volume 0-158" CV="T3CV.2.0.158" default="100">
+				<decVal max="100"/>
+				<label>Horn Long Leslie RS5T</label>
+			</variable>
+			<variable item="Volume 0-159" CV="T3CV.2.0.159" default="100">
+				<decVal max="100"/>
+				<label>Horn Long Nathan K3</label>
+			</variable>
+			<variable item="Volume 0-160" CV="T3CV.2.0.160" default="100">
+				<decVal max="100"/>
+				<label>Horn Long Nathan K3H #1</label>
+			</variable>
+			<variable item="Volume 0-161" CV="T3CV.2.0.161" default="100">
+				<decVal max="100"/>
+				<label>Horn Long Nathan K3H #2</label>
+			</variable>
+			<variable item="Volume 0-162" CV="T3CV.2.0.162" default="100">
+				<decVal max="100"/>
+				<label>Horn Long Nathan K3LA</label>
+			</variable>
+			<variable item="Volume 0-163" CV="T3CV.2.0.163" default="100">
+				<decVal max="100"/>
+				<label>Horn Long Nathan K3LL</label>
+			</variable>
+			<variable item="Volume 0-164" CV="T3CV.2.0.164" default="100">
+				<decVal max="100"/>
+				<label>Horn Long Nathan K5H</label>
+			</variable>
+			<variable item="Volume 0-165" CV="T3CV.2.0.165" default="100">
+				<decVal max="100"/>
+				<label>Horn Long Nathan K5HL</label>
+			</variable>
+			<variable item="Volume 0-166" CV="T3CV.2.0.166" default="100">
+				<decVal max="100"/>
+				<label>Horn Long Nathan K5LA ACS64 Vers 1</label>
+			</variable>
+			<variable item="Volume 0-167" CV="T3CV.2.0.167" default="100">
+				<decVal max="100"/>
+				<label>Horn Long Nathan K5LA ACS64 Vers 2</label>
+			</variable>
+			<variable item="Volume 0-168" CV="T3CV.2.0.168" default="100">
+				<decVal max="100"/>
+				<label>Horn Long Nathan K5LA ACS64 Vers 3</label>
+			</variable>
+			<variable item="Volume 0-169" CV="T3CV.2.0.169" default="100">
+				<decVal max="100"/>
+				<label>Horn Long Nathan K5LA</label>
+			</variable>
+			<variable item="Volume 0-170" CV="T3CV.2.0.170" default="100">
+				<decVal max="100"/>
+				<label>Horn Long Strasburg #8618 SW8 Nathan K5LA</label>
+			</variable>
+			<variable item="Volume 0-171" CV="T3CV.2.0.171" default="100">
+				<decVal max="100"/>
+				<label>Horn Long Nathan K5LLA</label>
+			</variable>
+			<variable item="Volume 0-172" CV="T3CV.2.0.172" default="100">
+				<decVal max="100"/>
+				<label>Horn Long Nathan M3 #1</label>
+			</variable>
+			<variable item="Volume 0-173" CV="T3CV.2.0.173" default="100">
+				<decVal max="100"/>
+				<label>Horn Long Nathan M3 #2</label>
+			</variable>
+			<variable item="Volume 0-174" CV="T3CV.2.0.174" default="100">
+				<decVal max="100"/>
+				<label>Horn Long Nathan M3 #3</label>
+			</variable>
+			<variable item="Volume 0-175" CV="T3CV.2.0.175" default="100">
+				<decVal max="100"/>
+				<label>Horn Long Nathan M3 Tilt</label>
+			</variable>
+			<variable item="Volume 0-176" CV="T3CV.2.0.176" default="100">
+				<decVal max="100"/>
+				<label>Horn Long Nathan M5</label>
+			</variable>
+			<variable item="Volume 0-177" CV="T3CV.2.0.177" default="100">
+				<decVal max="100"/>
+				<label>Horn Long Nathan P3</label>
+			</variable>
+			<variable item="Volume 0-178" CV="T3CV.2.0.178" default="100">
+				<decVal max="100"/>
+				<label>Horn Long Nathan P5 Chime (Australia)</label>
+			</variable>
+			<variable item="Volume 0-179" CV="T3CV.2.0.179" default="100">
+				<decVal max="100"/>
+				<label>Horn Long Nathan P5A</label>
+			</variable>
+			<variable item="Volume 0-180" CV="T3CV.2.0.180" default="100">
+				<decVal max="100"/>
+				<label>Horn Long Quincy RR SW8 #1100</label>
+			</variable>
+			<variable item="Volume 0-181" CV="T3CV.2.0.181" default="100">
+				<decVal max="100"/>
+				<label>Horn Long RSD12 #2958</label>
+			</variable>
+			<variable item="Volume 0-182" CV="T3CV.2.0.182" default="100">
+				<decVal max="100"/>
+				<label>Horn Long Galloping Goose #3</label>
+			</variable>
+			<variable item="Volume 0-183" CV="T3CV.2.0.183" default="100">
+				<decVal max="100"/>
+				<label>Horn Long Wabco E2 3 Chime</label>
+			</variable>
+			<variable item="Volume 0-184" CV="T3CV.2.0.184" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill SMS AS616 #554</label>
+			</variable>
+			<variable item="Volume 0-185" CV="T3CV.2.0.185" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill SMS AS616 #554 Medium</label>
+			</variable>
+			<variable item="Volume 0-186" CV="T3CV.2.0.186" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill SMS AS616 #554 Long</label>
+			</variable>
+			<variable item="Volume 0-187" CV="T3CV.2.0.187" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill SMS DS44 750 #102</label>
+			</variable>
+			<variable item="Volume 0-188" CV="T3CV.2.0.188" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill SMS DS44 750 #102 Medium</label>
+			</variable>
+			<variable item="Volume 0-189" CV="T3CV.2.0.189" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill SMS DS44 750 #102 Long</label>
+			</variable>
+			<variable item="Volume 0-190" CV="T3CV.2.0.190" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill SMS S12 #303</label>
+			</variable>
+			<variable item="Volume 0-191" CV="T3CV.2.0.191" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill SMS S12 #303 Medium</label>
+			</variable>
+			<variable item="Volume 0-192" CV="T3CV.2.0.192" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill SMS S12 #303 Long</label>
+			</variable>
+			<variable item="Volume 0-193" CV="T3CV.2.0.193" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill VO 1000 Single Chime</label>
+			</variable>
+			<variable item="Volume 0-194" CV="T3CV.2.0.194" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill VO 1000 Single Chime Medium</label>
+			</variable>
+			<variable item="Volume 0-195" CV="T3CV.2.0.195" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill VO 1000 Single Chime Long</label>
+			</variable>
+			<variable item="Volume 0-196" CV="T3CV.2.0.196" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Fairbanks Morse 1</label>
+			</variable>
+			<variable item="Volume 0-197" CV="T3CV.2.0.197" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Fairbanks Morse 2</label>
+			</variable>
+			<variable item="Volume 0-198" CV="T3CV.2.0.198" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Fairbanks Morse 3</label>
+			</variable>
+			<variable item="Volume 0-199" CV="T3CV.2.0.199" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill GE 45 tonner 1</label>
+			</variable>
+			<variable item="Volume 0-200" CV="T3CV.2.0.200" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill GE 45 tonner 2</label>
+			</variable>
+			<variable item="Volume 0-201" CV="T3CV.2.0.201" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill GE 45 tonner 3</label>
+			</variable>
+			<variable item="Volume 0-202" CV="T3CV.2.0.202" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill GE 80 tonner 1</label>
+			</variable>
+			<variable item="Volume 0-203" CV="T3CV.2.0.203" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill GE 80 tonner 2</label>
+			</variable>
+			<variable item="Volume 0-204" CV="T3CV.2.0.204" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill GE 80 tonner 3</label>
+			</variable>
+			<variable item="Volume 0-205" CV="T3CV.2.0.205" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill GE U-Boat 1</label>
+			</variable>
+			<variable item="Volume 0-206" CV="T3CV.2.0.206" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill GE U-Boat 2</label>
+			</variable>
+			<variable item="Volume 0-207" CV="T3CV.2.0.207" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill GE U-Boat 3</label>
+			</variable>
+			<variable item="Volume 0-208" CV="T3CV.2.0.208" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Hancock Air Whistle</label>
+			</variable>
+			<variable item="Volume 0-209" CV="T3CV.2.0.209" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Hancock Air Whistle Medium</label>
+			</variable>
+			<variable item="Volume 0-210" CV="T3CV.2.0.210" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Hancock Air Whistle Long</label>
+			</variable>
+			<variable item="Volume 0-211" CV="T3CV.2.0.211" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Leslie 125 Grade Crossing</label>
+			</variable>
+			<variable item="Volume 0-212" CV="T3CV.2.0.212" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Leslie 125 Grade Crossing Medium</label>
+			</variable>
+			<variable item="Volume 0-213" CV="T3CV.2.0.213" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Leslie 125 Grade Crossing Long</label>
+			</variable>
+			<variable item="Volume 0-214" CV="T3CV.2.0.214" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Leslie 200 Grade Crossing</label>
+			</variable>
+			<variable item="Volume 0-215" CV="T3CV.2.0.215" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Leslie 200 Grade Crossing Medium</label>
+			</variable>
+			<variable item="Volume 0-216" CV="T3CV.2.0.216" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Leslie 200 Grade Crossing Long</label>
+			</variable>
+			<variable item="Volume 0-217" CV="T3CV.2.0.217" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Leslie 3 Chime Grade Crossing</label>
+			</variable>
+			<variable item="Volume 0-218" CV="T3CV.2.0.218" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Leslie 3 Chime Grade Crossing Medium</label>
+			</variable>
+			<variable item="Volume 0-219" CV="T3CV.2.0.219" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Leslie 3 Chime Grade Crossing Long</label>
+			</variable>
+			<variable item="Volume 0-220" CV="T3CV.2.0.220" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Leslie RS3 Grade Crossing</label>
+			</variable>
+			<variable item="Volume 0-221" CV="T3CV.2.0.221" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Leslie RS3 Grade Crossing Medium</label>
+			</variable>
+			<variable item="Volume 0-222" CV="T3CV.2.0.222" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Leslie RS3 Grade Crossing Long</label>
+			</variable>
+			<variable item="Volume 0-223" CV="T3CV.2.0.223" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Leslie RS3L Grade Crossing</label>
+			</variable>
+			<variable item="Volume 0-224" CV="T3CV.2.0.224" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Leslie RS3L Grade Crossing Medium</label>
+			</variable>
+			<variable item="Volume 0-225" CV="T3CV.2.0.225" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Leslie RS3L Grade Crossing Long</label>
+			</variable>
+			<variable item="Volume 0-226" CV="T3CV.2.0.226" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Leslie RS5T Grade Crossing</label>
+			</variable>
+			<variable item="Volume 0-227" CV="T3CV.2.0.227" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Leslie RS5T Grade Crossing Medium</label>
+			</variable>
+			<variable item="Volume 0-228" CV="T3CV.2.0.228" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Leslie RS5T Grade Crossing Long</label>
+			</variable>
+			<variable item="Volume 0-229" CV="T3CV.2.0.229" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan K3 Grade Crossing</label>
+			</variable>
+			<variable item="Volume 0-230" CV="T3CV.2.0.230" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan K3 Grade Crossing Medium</label>
+			</variable>
+			<variable item="Volume 0-231" CV="T3CV.2.0.231" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan K3 Grade Crossing Long</label>
+			</variable>
+			<variable item="Volume 0-232" CV="T3CV.2.0.232" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan K3H 1 Grade Crossing</label>
+			</variable>
+			<variable item="Volume 0-233" CV="T3CV.2.0.233" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan K3H 1 Grade Crossing Medium</label>
+			</variable>
+			<variable item="Volume 0-234" CV="T3CV.2.0.234" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan K3H 1 Grade Crossing Long</label>
+			</variable>
+			<variable item="Volume 0-235" CV="T3CV.2.0.235" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan K3H 2 Grade Crossing</label>
+			</variable>
+			<variable item="Volume 0-236" CV="T3CV.2.0.236" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan K3H 2 Grade Crossing Medium</label>
+			</variable>
+			<variable item="Volume 0-237" CV="T3CV.2.0.237" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan K3H 2 Grade Crossing Long</label>
+			</variable>
+			<variable item="Volume 0-238" CV="T3CV.2.0.238" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan K3LA Grade Crossing</label>
+			</variable>
+			<variable item="Volume 0-239" CV="T3CV.2.0.239" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan K3LA Grade Crossing Medium</label>
+			</variable>
+			<variable item="Volume 0-240" CV="T3CV.2.0.240" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan K3LA Grade Crossing Long</label>
+			</variable>
+			<variable item="Volume 0-241" CV="T3CV.2.0.241" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan K3LL Grade Crossing</label>
+			</variable>
+			<variable item="Volume 0-242" CV="T3CV.2.0.242" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan K3LL Grade Crossing Medium</label>
+			</variable>
+			<variable item="Volume 0-243" CV="T3CV.2.0.243" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan K3LL Grade Crossing Long</label>
+			</variable>
+			<variable item="Volume 0-244" CV="T3CV.2.0.244" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan K5H Grade Crossing</label>
+			</variable>
+			<variable item="Volume 0-245" CV="T3CV.2.0.245" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan K5H Grade Crossing Medium</label>
+			</variable>
+			<variable item="Volume 0-246" CV="T3CV.2.0.246" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan K5H Grade Crossing Long</label>
+			</variable>
+			<variable item="Volume 0-247" CV="T3CV.2.0.247" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan K5HL Grade Crossing</label>
+			</variable>
+			<variable item="Volume 0-248" CV="T3CV.2.0.248" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan K5HL Grade Crossing Medium</label>
+			</variable>
+			<variable item="Volume 0-249" CV="T3CV.2.0.249" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan K5HL Grade Crossing Long</label>
+			</variable>
+			<variable item="Volume 0-250" CV="T3CV.2.0.250" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan K5LA ACS64 Vers 1</label>
+			</variable>
+			<variable item="Volume 0-251" CV="T3CV.2.0.251" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan K5LA ACS64 Vers 1 Medium</label>
+			</variable>
+			<variable item="Volume 0-252" CV="T3CV.2.0.252" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan K5LA ACS64 Vers 1 Long</label>
+			</variable>
+			<variable item="Volume 0-253" CV="T3CV.2.0.253" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan K5LA ACS64 Vers 1</label>
+			</variable>
+			<variable item="Volume 0-254" CV="T3CV.2.0.254" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan K5LA ACS64 Vers 2 Medium</label>
+			</variable>
+			<variable item="Volume 0-255" CV="T3CV.2.0.255" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan K5LA ACS64 Vers 3 Long</label>
+			</variable>
+			<variable item="Volume 1-0" CV="T3CV.2.1.0" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan K5LA ACS64 Vers 3</label>
+			</variable>
+			<variable item="Volume 1-1" CV="T3CV.2.1.1" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan K5LA ACS64 Vers 3 Medium</label>
+			</variable>
+			<variable item="Volume 1-2" CV="T3CV.2.1.2" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan K5LA ACS64 Vers 3 Long</label>
+			</variable>
+			<variable item="Volume 1-3" CV="T3CV.2.1.3" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan K5LA Grade Crossing</label>
+			</variable>
+			<variable item="Volume 1-4" CV="T3CV.2.1.4" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan K5LA Grade Crossing Medium</label>
+			</variable>
+			<variable item="Volume 1-5" CV="T3CV.2.1.5" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan K5LA Grade Crossing Long</label>
+			</variable>
+			<variable item="Volume 1-6" CV="T3CV.2.1.6" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Strasburg #8618 SW8 Nathan K5LA 1</label>
+			</variable>
+			<variable item="Volume 1-7" CV="T3CV.2.1.7" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Strasburg #8618 SW8 Nathan K5LA 2</label>
+			</variable>
+			<variable item="Volume 1-8" CV="T3CV.2.1.8" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Strasburg #8618 SW8 Nathan K5LA 3</label>
+			</variable>
+			<variable item="Volume 1-9" CV="T3CV.2.1.9" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan K5LLA Grade Crosing</label>
+			</variable>
+			<variable item="Volume 1-10" CV="T3CV.2.1.10" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan K5LLA Grade Crosing Medium</label>
+			</variable>
+			<variable item="Volume 1-11" CV="T3CV.2.1.11" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan K5LLA Grade Crosing Long</label>
+			</variable>
+			<variable item="Volume 1-12" CV="T3CV.2.1.12" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan M3 1 Grade Crossing</label>
+			</variable>
+			<variable item="Volume 1-13" CV="T3CV.2.1.13" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan M3 1 Grade Crossing Medium</label>
+			</variable>
+			<variable item="Volume 1-14" CV="T3CV.2.1.14" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan M3 1 Grade Crossing Long</label>
+			</variable>
+			<variable item="Volume 1-15" CV="T3CV.2.1.15" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan M3 2 Grade Crossing</label>
+			</variable>
+			<variable item="Volume 1-16" CV="T3CV.2.1.16" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan M3 2 Grade Crossing Medium</label>
+			</variable>
+			<variable item="Volume 1-17" CV="T3CV.2.1.17" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan M3 2 Grade Crossing Long</label>
+			</variable>
+			<variable item="Volume 1-18" CV="T3CV.2.1.18" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan M3 3 Grade Crossing</label>
+			</variable>
+			<variable item="Volume 1-19" CV="T3CV.2.1.19" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan M3 3 Grade Crossing Medium</label>
+			</variable>
+			<variable item="Volume 1-20" CV="T3CV.2.1.20" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan M3 3 Grade Crossing Long</label>
+			</variable>
+			<variable item="Volume 1-21" CV="T3CV.2.1.21" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan M3 Tilt Grade Crossing</label>
+			</variable>
+			<variable item="Volume 1-22" CV="T3CV.2.1.22" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan M3 Tilt Grade Crossing Medium</label>
+			</variable>
+			<variable item="Volume 1-23" CV="T3CV.2.1.23" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan M3 Tilt Grade Crossing Long</label>
+			</variable>
+			<variable item="Volume 1-24" CV="T3CV.2.1.24" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan M5 Grade Crossing</label>
+			</variable>
+			<variable item="Volume 1-25" CV="T3CV.2.1.25" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan M5 Grade Crossing Medium</label>
+			</variable>
+			<variable item="Volume 1-26" CV="T3CV.2.1.26" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan M5 Grade Crossing Long</label>
+			</variable>
+			<variable item="Volume 1-27" CV="T3CV.2.1.27" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan P3 Grade Crossing</label>
+			</variable>
+			<variable item="Volume 1-28" CV="T3CV.2.1.28" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan P3 Grade Crossing Medium</label>
+			</variable>
+			<variable item="Volume 1-29" CV="T3CV.2.1.29" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan P3 Grade Crossing Long</label>
+			</variable>
+			<variable item="Volume 1-30" CV="T3CV.2.1.30" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan P5 Chime (Australia)</label>
+			</variable>
+			<variable item="Volume 1-31" CV="T3CV.2.1.31" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan P5 Chime Medium (Australia)</label>
+			</variable>
+			<variable item="Volume 1-32" CV="T3CV.2.1.32" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan P5 Chime Long (Australia)</label>
+			</variable>
+			<variable item="Volume 1-33" CV="T3CV.2.1.33" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan P5A Grade Crossing</label>
+			</variable>
+			<variable item="Volume 1-34" CV="T3CV.2.1.34" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan P5A Grade Crossing Medium</label>
+			</variable>
+			<variable item="Volume 1-35" CV="T3CV.2.1.35" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Nathan P5A Grade Crossing Long</label>
+			</variable>
+			<variable item="Volume 1-36" CV="T3CV.2.1.36" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Quincy RR SW8 #1100 1</label>
+			</variable>
+			<variable item="Volume 1-37" CV="T3CV.2.1.37" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Quincy RR SW8 #1100 2</label>
+			</variable>
+			<variable item="Volume 1-38" CV="T3CV.2.1.38" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Quincy RR SW8 #1100 3</label>
+			</variable>
+			<variable item="Volume 1-39" CV="T3CV.2.1.39" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill RSD12 #2958 1</label>
+			</variable>
+			<variable item="Volume 1-40" CV="T3CV.2.1.40" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill RSD12 #2958 2</label>
+			</variable>
+			<variable item="Volume 1-41" CV="T3CV.2.1.41" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill RSD12 #2958 3</label>
+			</variable>
+			<variable item="Volume 1-42" CV="T3CV.2.1.42" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Galloping Goose #3 1</label>
+			</variable>
+			<variable item="Volume 1-43" CV="T3CV.2.1.43" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Galloping Goose #3 2</label>
+			</variable>
+			<variable item="Volume 1-44" CV="T3CV.2.1.44" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Galloping Goose #3 3</label>
+			</variable>
+			<variable item="Volume 1-45" CV="T3CV.2.1.45" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Wabco E2 3 Chime Grade Crossing</label>
+			</variable>
+			<variable item="Volume 1-46" CV="T3CV.2.1.46" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Wabco E2 3 Chime Grade Crossing Medium</label>
+			</variable>
+			<variable item="Volume 1-47" CV="T3CV.2.1.47" default="100">
+				<decVal max="100"/>
+				<label>Horn Quill Wabco E2 3 Chime Grade Crossing Long</label>
+			</variable>
+			<variable item="Volume 1-48" CV="T3CV.2.1.48" default="100">
+				<decVal max="100"/>
+				<label>Horn Short SMS AS616 #554</label>
+			</variable>
+			<variable item="Volume 1-49" CV="T3CV.2.1.49" default="100">
+				<decVal max="100"/>
+				<label>Horn Short SMS DS44 750 #102</label>
+			</variable>
+			<variable item="Volume 1-50" CV="T3CV.2.1.50" default="100">
+				<decVal max="100"/>
+				<label>Horn Short SMS S12 #303</label>
+			</variable>
+			<variable item="Volume 1-51" CV="T3CV.2.1.51" default="100">
+				<decVal max="100"/>
+				<label>Horn Short VO 1000 Single Chime</label>
+			</variable>
+			<variable item="Volume 1-52" CV="T3CV.2.1.52" default="100">
+				<decVal max="100"/>
+				<label>Horn Short Fairbanks Morse</label>
+			</variable>
+			<variable item="Volume 1-53" CV="T3CV.2.1.53" default="100">
+				<decVal max="100"/>
+				<label>Horn Short GE 45 tonner</label>
+			</variable>
+			<variable item="Volume 1-54" CV="T3CV.2.1.54" default="100">
+				<decVal max="100"/>
+				<label>Horn Short GE 80 tonner</label>
+			</variable>
+			<variable item="Volume 1-55" CV="T3CV.2.1.55" default="100">
+				<decVal max="100"/>
+				<label>Horn Short GE U-Boat</label>
+			</variable>
+			<variable item="Volume 1-56" CV="T3CV.2.1.56" default="100">
+				<decVal max="100"/>
+				<label>Horn Short Hancock Air Whistle</label>
+			</variable>
+			<variable item="Volume 1-57" CV="T3CV.2.1.57" default="100">
+				<decVal max="100"/>
+				<label>Horn Short Leslie 125</label>
+			</variable>
+			<variable item="Volume 1-58" CV="T3CV.2.1.58" default="100">
+				<decVal max="100"/>
+				<label>Horn Short Leslie 200</label>
+			</variable>
+			<variable item="Volume 1-59" CV="T3CV.2.1.59" default="100">
+				<decVal max="100"/>
+				<label>Horn Short Leslie 3 Chime</label>
+			</variable>
+			<variable item="Volume 1-60" CV="T3CV.2.1.60" default="100">
+				<decVal max="100"/>
+				<label>Horn Short Leslie RS3</label>
+			</variable>
+			<variable item="Volume 1-61" CV="T3CV.2.1.61" default="100">
+				<decVal max="100"/>
+				<label>Horn Short Leslie RS3L</label>
+			</variable>
+			<variable item="Volume 1-62" CV="T3CV.2.1.62" default="100">
+				<decVal max="100"/>
+				<label>Horn Short Leslie RS5T</label>
+			</variable>
+			<variable item="Volume 1-63" CV="T3CV.2.1.63" default="100">
+				<decVal max="100"/>
+				<label>Horn Short Nathan K3</label>
+			</variable>
+			<variable item="Volume 1-64" CV="T3CV.2.1.64" default="100">
+				<decVal max="100"/>
+				<label>Horn Short Nathan K3H 1</label>
+			</variable>
+			<variable item="Volume 1-65" CV="T3CV.2.1.65" default="100">
+				<decVal max="100"/>
+				<label>Horn Short Nathan K3H 2</label>
+			</variable>
+			<variable item="Volume 1-66" CV="T3CV.2.1.66" default="100">
+				<decVal max="100"/>
+				<label>Horn Short Nathan K3LA</label>
+			</variable>
+			<variable item="Volume 1-67" CV="T3CV.2.1.67" default="100">
+				<decVal max="100"/>
+				<label>Horn Short Nathan K3LL</label>
+			</variable>
+			<variable item="Volume 1-68" CV="T3CV.2.1.68" default="100">
+				<decVal max="100"/>
+				<label>Horn Short Nathan K5H</label>
+			</variable>
+			<variable item="Volume 1-69" CV="T3CV.2.1.69" default="100">
+				<decVal max="100"/>
+				<label>Horn Short Nathan K5HL</label>
+			</variable>
+			<variable item="Volume 1-70" CV="T3CV.2.1.70" default="100">
+				<decVal max="100"/>
+				<label>Horn Short Nathan K5LA ACS64 Vers 1</label>
+			</variable>
+			<variable item="Volume 1-71" CV="T3CV.2.1.71" default="100">
+				<decVal max="100"/>
+				<label>Horn Short Nathan K5LA ACS64 Vers 2</label>
+			</variable>
+			<variable item="Volume 1-72" CV="T3CV.2.1.72" default="100">
+				<decVal max="100"/>
+				<label>Horn Short Nathan K5LA ACS64 Vers 3</label>
+			</variable>
+			<variable item="Volume 1-73" CV="T3CV.2.1.73" default="100">
+				<decVal max="100"/>
+				<label>Horn Short Nathan K5LA</label>
+			</variable>
+			<variable item="Volume 1-74" CV="T3CV.2.1.74" default="100">
+				<decVal max="100"/>
+				<label>Horn Short Strasburg 8618 SW8 Nathan K5LA</label>
+			</variable>
+			<variable item="Volume 1-75" CV="T3CV.2.1.75" default="100">
+				<decVal max="100"/>
+				<label>Horn Short Nathan K5LLA</label>
+			</variable>
+			<variable item="Volume 1-76" CV="T3CV.2.1.76" default="100">
+				<decVal max="100"/>
+				<label>Horn Short Nathan M3 C.P. 1</label>
+			</variable>
+			<variable item="Volume 1-77" CV="T3CV.2.1.77" default="100">
+				<decVal max="100"/>
+				<label>Horn Short Nathan M3 C.P. 2</label>
+			</variable>
+			<variable item="Volume 1-78" CV="T3CV.2.1.78" default="100">
+				<decVal max="100"/>
+				<label>Horn Short Nathan M3 C.P. 3</label>
+			</variable>
+			<variable item="Volume 1-79" CV="T3CV.2.1.79" default="100">
+				<decVal max="100"/>
+				<label>Horn Short Nathan M3 Tilt</label>
+			</variable>
+			<variable item="Volume 1-80" CV="T3CV.2.1.80" default="100">
+				<decVal max="100"/>
+				<label>Horn Short Nathan M5</label>
+			</variable>
+			<variable item="Volume 1-81" CV="T3CV.2.1.81" default="100">
+				<decVal max="100"/>
+				<label>Horn Short Nathan P3</label>
+			</variable>
+			<variable item="Volume 1-82" CV="T3CV.2.1.82" default="100">
+				<decVal max="100"/>
+				<label>Horn Short Nathan P5 Chime (Australia)</label>
+			</variable>
+			<variable item="Volume 1-83" CV="T3CV.2.1.83" default="100">
+				<decVal max="100"/>
+				<label>Horn Short Nathan P5A</label>
+			</variable>
+			<variable item="Volume 1-84" CV="T3CV.2.1.84" default="100">
+				<decVal max="100"/>
+				<label>Horn Short Quincy RR SW8 #1100</label>
+			</variable>
+			<variable item="Volume 1-85" CV="T3CV.2.1.85" default="100">
+				<decVal max="100"/>
+				<label>Horn Short RSD12 #2958</label>
+			</variable>
+			<variable item="Volume 1-86" CV="T3CV.2.1.86" default="100">
+				<decVal max="100"/>
+				<label>Horn Short Galloping Goose #3</label>
+			</variable>
+			<variable item="Volume 1-87" CV="T3CV.2.1.87" default="100">
+				<decVal max="100"/>
+				<label>Horn Short Wabco E2 3 Chime</label>
+			</variable>
+			<variable item="Volume 1-88" CV="T3CV.2.1.88" default="100">
+				<decVal max="100"/>
+				<label>Manual Notch Down 1</label>
+			</variable>
+			<variable item="Volume 1-89" CV="T3CV.2.1.89" default="100">
+				<decVal max="100"/>
+				<label>Manual Notch Up 1</label>
+			</variable>
+			<variable item="Volume 1-90" CV="T3CV.2.1.90" default="100">
+				<decVal max="100"/>
+				<label>Switching/Mainline Momentum Function</label>
+			</variable>
+			<variable item="Volume 1-92" CV="T3CV.2.1.92" default="100">
+				<decVal max="100"/>
+				<label>Mute Function</label>
+			</variable>
+			<variable item="Volume 6-219" CV="T3CV.2.6.219" default="100">
+				<decVal max="100"/>
+				<label>Prime mover ignition (on/off)</label>
+			</variable>
+			<variable item="Volume 7-1" CV="T3CV.2.7.1" default="100">
+				<decVal max="100"/>
+				<label>Horn Reverse SMS AS616 #554</label>
+			</variable>
+			<variable item="Volume 7-2" CV="T3CV.2.7.2" default="100">
+				<decVal max="100"/>
+				<label>Horn Reverse SMS DS44 750 #102</label>
+			</variable>
+			<variable item="Volume 7-3" CV="T3CV.2.7.3" default="100">
+				<decVal max="100"/>
+				<label>Horn Reverse SMS S12 #303</label>
+			</variable>
+			<variable item="Volume 7-4" CV="T3CV.2.7.4" default="100">
+				<decVal max="100"/>
+				<label>Horn Reverse VO 1000 Single Chime</label>
+			</variable>
+			<variable item="Volume 7-5" CV="T3CV.2.7.5" default="100">
+				<decVal max="100"/>
+				<label>Horn Reverse Fairbanks Morris</label>
+			</variable>
+			<variable item="Volume 7-6" CV="T3CV.2.7.6" default="100">
+				<decVal max="100"/>
+				<label>Horn Reverse GE 45 tonner</label>
+			</variable>
+			<variable item="Volume 7-7" CV="T3CV.2.7.7" default="100">
+				<decVal max="100"/>
+				<label>Horn Reverse GE 80 tonner</label>
+			</variable>
+			<variable item="Volume 7-8" CV="T3CV.2.7.8" default="100">
+				<decVal max="100"/>
+				<label>Horn Reverse Southern Pacific 3100</label>
+			</variable>
+			<variable item="Volume 7-9" CV="T3CV.2.7.9" default="100">
+				<decVal max="100"/>
+				<label>Horn Reverse Hancock Air Whistle</label>
+			</variable>
+			<variable item="Volume 7-10" CV="T3CV.2.7.10" default="100">
+				<decVal max="100"/>
+				<label>Horn Reverse Leslie 125</label>
+			</variable>
+			<variable item="Volume 7-11" CV="T3CV.2.7.11" default="100">
+				<decVal max="100"/>
+				<label>Horn Reverse Leslie 200</label>
+			</variable>
+			<variable item="Volume 7-12" CV="T3CV.2.7.12" default="100">
+				<decVal max="100"/>
+				<label>Horn Reverse Leslie 3 Chime</label>
+			</variable>
+			<variable item="Volume 7-13" CV="T3CV.2.7.13" default="100">
+				<decVal max="100"/>
+				<label>Horn Reverse Leslie RS3</label>
+			</variable>
+			<variable item="Volume 7-14" CV="T3CV.2.7.14" default="100">
+				<decVal max="100"/>
+				<label>Horn Reverse Leslie RS3L</label>
+			</variable>
+			<variable item="Volume 7-15" CV="T3CV.2.7.15" default="100">
+				<decVal max="100"/>
+				<label>Horn Reverse Leslie RS5T</label>
+			</variable>
+			<variable item="Volume 7-16" CV="T3CV.2.7.16" default="100">
+				<decVal max="100"/>
+				<label>Horn Reverse Nathan K3</label>
+			</variable>
+			<variable item="Volume 7-17" CV="T3CV.2.7.17" default="100">
+				<decVal max="100"/>
+				<label>Horn Reverse Nathan K3H</label>
+			</variable>
+			<variable item="Volume 7-18" CV="T3CV.2.7.18" default="100">
+				<decVal max="100"/>
+				<label>Horn Reverse Nathan K3H_1</label>
+			</variable>
+			<variable item="Volume 7-19" CV="T3CV.2.7.19" default="100">
+				<decVal max="100"/>
+				<label>Horn Reverse Nathan K3LA</label>
+			</variable>
+			<variable item="Volume 7-20" CV="T3CV.2.7.20" default="100">
+				<decVal max="100"/>
+				<label>Horn Reverse Nathan K3LL</label>
+			</variable>
+			<variable item="Volume 7-21" CV="T3CV.2.7.21" default="100">
+				<decVal max="100"/>
+				<label>Horn Reverse Nathan K5H</label>
+			</variable>
+			<variable item="Volume 7-22" CV="T3CV.2.7.22" default="100">
+				<decVal max="100"/>
+				<label>Horn Reverse Nathan K5HL</label>
+			</variable>
+			<variable item="Volume 7-23" CV="T3CV.2.7.23" default="100">
+				<decVal max="100"/>
+				<label>Horn Reverse Nathan K5LA ACS64 Vers 1</label>
+			</variable>
+			<variable item="Volume 7-24" CV="T3CV.2.7.24" default="100">
+				<decVal max="100"/>
+				<label>Horn Reverse Nathan K5LA ACS64 Vers 2</label>
+			</variable>
+			<variable item="Volume 7-25" CV="T3CV.2.7.25" default="100">
+				<decVal max="100"/>
+				<label>Horn Reverse Nathan K5LA ACS64 Vers 3</label>
+			</variable>
+			<variable item="Volume 7-26" CV="T3CV.2.7.26" default="100">
+				<decVal max="100"/>
+				<label>Horn Reverse Nathan K5LA</label>
+			</variable>
+			<variable item="Volume 7-27" CV="T3CV.2.7.27" default="100">
+				<decVal max="100"/>
+				<label>Horn Reverse Strasburg 8618 SW8 Nathan K5LA</label>
+			</variable>
+			<variable item="Volume 7-28" CV="T3CV.2.7.28" default="100">
+				<decVal max="100"/>
+				<label>Horn Reverse Nathan K5LLA</label>
+			</variable>
+			<variable item="Volume 7-29" CV="T3CV.2.7.29" default="100">
+				<decVal max="100"/>
+				<label>Horn Reverse Nathan M3 C.P. 1</label>
+			</variable>
+			<variable item="Volume 7-30" CV="T3CV.2.7.30" default="100">
+				<decVal max="100"/>
+				<label>Horn Reverse Nathan M3 C.P. 2</label>
+			</variable>
+			<variable item="Volume 7-31" CV="T3CV.2.7.31" default="100">
+				<decVal max="100"/>
+				<label>Horn Reverse Nathan M3 C.P. 3</label>
+			</variable>
+			<variable item="Volume 7-32" CV="T3CV.2.7.32" default="100">
+				<decVal max="100"/>
+				<label>Horn Reverse Nathan M3 Tilt</label>
+			</variable>
+			<variable item="Volume 7-33" CV="T3CV.2.7.33" default="100">
+				<decVal max="100"/>
+				<label>Horn Reverse Nathan M5</label>
+			</variable>
+			<variable item="Volume 7-34" CV="T3CV.2.7.34" default="100">
+				<decVal max="100"/>
+				<label>Horn Reverse Nathan P3</label>
+			</variable>
+			<variable item="Volume 7-35" CV="T3CV.2.7.35" default="100">
+				<decVal max="100"/>
+				<label>Horn Reverse Nathan P5 Chime (Australia)</label>
+			</variable>
+			<variable item="Volume 7-36" CV="T3CV.2.7.36" default="100">
+				<decVal max="100"/>
+				<label>Horn Reverse Nathan P5A</label>
+			</variable>
+			<variable item="Volume 7-37" CV="T3CV.2.7.37" default="100">
+				<decVal max="100"/>
+				<label>Horn Reverse Quincy RR SW8 #1100</label>
+			</variable>
+			<variable item="Volume 7-38" CV="T3CV.2.7.38" default="100">
+				<decVal max="100"/>
+				<label>Horn Reverse RSD12 #2958</label>
+			</variable>
+			<variable item="Volume 7-39" CV="T3CV.2.7.39" default="100">
+				<decVal max="100"/>
+				<label>Horn Reverse Galloping Goose #3</label>
+			</variable>
+			<variable item="Volume 7-40" CV="T3CV.2.7.40" default="100">
+				<decVal max="100"/>
+				<label>Horn Reverse Wabco E2 3 Chime</label>
+			</variable>
+			<variable item="Volume 7-41" CV="T3CV.2.7.41" default="100">
+				<decVal max="100"/>
+				<label>Audio Assist Baldwin AS616</label>
+			</variable>
+			<variable item="Volume 7-81" CV="T3CV.2.7.81" default="100">
+				<decVal max="100"/>
+				<label>Horn Stop SMS AS616 #554</label>
+			</variable>
+			<variable item="Volume 7-82" CV="T3CV.2.7.82" default="100">
+				<decVal max="100"/>
+				<label>Horn Stop SMS DS44 750 #102</label>
+			</variable>
+			<variable item="Volume 7-83" CV="T3CV.2.7.83" default="100">
+				<decVal max="100"/>
+				<label>Horn Stop SMS S12 #303</label>
+			</variable>
+			<variable item="Volume 7-84" CV="T3CV.2.7.84" default="100">
+				<decVal max="100"/>
+				<label>Horn Stop VO 1000 Single Chime</label>
+			</variable>
+			<variable item="Volume 7-85" CV="T3CV.2.7.85" default="100">
+				<decVal max="100"/>
+				<label>Horn Stop Fairbanks Morris</label>
+			</variable>
+			<variable item="Volume 7-86" CV="T3CV.2.7.86" default="100">
+				<decVal max="100"/>
+				<label>Horn Stop GE 45 tonner</label>
+			</variable>
+			<variable item="Volume 7-87" CV="T3CV.2.7.87" default="100">
+				<decVal max="100"/>
+				<label>Horn Stop GE 80 tonner</label>
+			</variable>
+			<variable item="Volume 7-88" CV="T3CV.2.7.88" default="100">
+				<decVal max="100"/>
+				<label>Horn Stop Southern Pacific 3100</label>
+			</variable>
+			<variable item="Volume 7-89" CV="T3CV.2.7.89" default="100">
+				<decVal max="100"/>
+				<label>Horn Stop Hancock Air Whistle</label>
+			</variable>
+			<variable item="Volume 7-90" CV="T3CV.2.7.90" default="100">
+				<decVal max="100"/>
+				<label>Horn Stop Leslie 125</label>
+			</variable>
+			<variable item="Volume 7-91" CV="T3CV.2.7.91" default="100">
+				<decVal max="100"/>
+				<label>Horn Stop Leslie 200</label>
+			</variable>
+			<variable item="Volume 7-92" CV="T3CV.2.7.92" default="100">
+				<decVal max="100"/>
+				<label>Horn Stop Leslie 3 Chime</label>
+			</variable>
+			<variable item="Volume 7-93" CV="T3CV.2.7.93" default="100">
+				<decVal max="100"/>
+				<label>Horn Stop Leslie RS3</label>
+			</variable>
+			<variable item="Volume 7-94" CV="T3CV.2.7.94" default="100">
+				<decVal max="100"/>
+				<label>Horn Stop Leslie RS3L</label>
+			</variable>
+			<variable item="Volume 7-95" CV="T3CV.2.7.95" default="100">
+				<decVal max="100"/>
+				<label>Horn Stop Leslie RS5T</label>
+			</variable>
+			<variable item="Volume 7-96" CV="T3CV.2.7.96" default="100">
+				<decVal max="100"/>
+				<label>Horn Stop Nathan K3</label>
+			</variable>
+			<variable item="Volume 7-97" CV="T3CV.2.7.97" default="100">
+				<decVal max="100"/>
+				<label>Horn Stop Nathan K3H</label>
+			</variable>
+			<variable item="Volume 7-98" CV="T3CV.2.7.98" default="100">
+				<decVal max="100"/>
+				<label>Horn Stop Nathan K3H_1</label>
+			</variable>
+			<variable item="Volume 7-99" CV="T3CV.2.7.99" default="100">
+				<decVal max="100"/>
+				<label>Horn Stop Nathan K3LA</label>
+			</variable>
+			<variable item="Volume 7-100" CV="T3CV.2.7.100" default="100">
+				<decVal max="100"/>
+				<label>Horn Stop Nathan K3LL</label>
+			</variable>
+			<variable item="Volume 7-101" CV="T3CV.2.7.101" default="100">
+				<decVal max="100"/>
+				<label>Horn Stop Nathan K5H</label>
+			</variable>
+			<variable item="Volume 7-102" CV="T3CV.2.7.102" default="100">
+				<decVal max="100"/>
+				<label>Horn Stop Nathan K5HL</label>
+			</variable>
+			<variable item="Volume 7-103" CV="T3CV.2.7.103" default="100">
+				<decVal max="100"/>
+				<label>Horn Stop Nathan K5LA ACS64 Vers 1</label>
+			</variable>
+			<variable item="Volume 7-104" CV="T3CV.2.7.104" default="100">
+				<decVal max="100"/>
+				<label>Horn Stop Nathan K5LA ACS64 Vers 2</label>
+			</variable>
+			<variable item="Volume 7-105" CV="T3CV.2.7.105" default="100">
+				<decVal max="100"/>
+				<label>Horn Stop Nathan K5LA ACS64 Vers 3</label>
+			</variable>
+			<variable item="Volume 7-106" CV="T3CV.2.7.106" default="100">
+				<decVal max="100"/>
+				<label>Horn Stop Nathan K5LA</label>
+			</variable>
+			<variable item="Volume 7-107" CV="T3CV.2.7.107" default="100">
+				<decVal max="100"/>
+				<label>Horn Stop Strasburg 8618 SW8 Nathan K5LA</label>
+			</variable>
+			<variable item="Volume 7-108" CV="T3CV.2.7.108" default="100">
+				<decVal max="100"/>
+				<label>Horn Stop Nathan K5LLA</label>
+			</variable>
+			<variable item="Volume 7-109" CV="T3CV.2.7.109" default="100">
+				<decVal max="100"/>
+				<label>Horn Stop Nathan M3 C.P. 1</label>
+			</variable>
+			<variable item="Volume 7-110" CV="T3CV.2.7.110" default="100">
+				<decVal max="100"/>
+				<label>Horn Stop Nathan M3 C.P. 2</label>
+			</variable>
+			<variable item="Volume 7-111" CV="T3CV.2.7.111" default="100">
+				<decVal max="100"/>
+				<label>Horn Stop Nathan M3 C.P. 3</label>
+			</variable>
+			<variable item="Volume 7-112" CV="T3CV.2.7.112" default="100">
+				<decVal max="100"/>
+				<label>Horn Stop Nathan M3 Tilt</label>
+			</variable>
+			<variable item="Volume 7-113" CV="T3CV.2.7.113" default="100">
+				<decVal max="100"/>
+				<label>Horn Stop Nathan M5</label>
+			</variable>
+			<variable item="Volume 7-114" CV="T3CV.2.7.114" default="100">
+				<decVal max="100"/>
+				<label>Horn Stop Nathan P3</label>
+			</variable>
+			<variable item="Volume 7-115" CV="T3CV.2.7.115" default="100">
+				<decVal max="100"/>
+				<label>Horn Stop Nathan P5 Chime (Australia)</label>
+			</variable>
+			<variable item="Volume 7-116" CV="T3CV.2.7.116" default="100">
+				<decVal max="100"/>
+				<label>Horn Stop Nathan P5A</label>
+			</variable>
+			<variable item="Volume 7-117" CV="T3CV.2.7.117" default="100">
+				<decVal max="100"/>
+				<label>Horn Stop Quincy RR SW8 #1100</label>
+			</variable>
+			<variable item="Volume 7-118" CV="T3CV.2.7.118" default="100">
+				<decVal max="100"/>
+				<label>Horn Stop RSD12 #2958</label>
+			</variable>
+			<variable item="Volume 7-119" CV="T3CV.2.7.119" default="100">
+				<decVal max="100"/>
+				<label>Horn Stop Galloping Goose #3</label>
+			</variable>
+			<variable item="Volume 7-120" CV="T3CV.2.7.120" default="100">
+				<decVal max="100"/>
+				<label>Horn Stop Wabco E2 3 Chime</label>
+			</variable>
+			<variable item="Volume 7-121" CV="T3CV.2.7.121" default="100">
+				<decVal max="100"/>
+				<label>Windshield Wiper</label>
+			</variable>
+			<!-- sound CVs -->
+			<variable item="Sound Group 6 Checkbox 5" CV="T2CV.4.1" default="1" mask="XXXXXXXXXXXXXXXV">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+				<label>Play Short Quill</label>
+			</variable>
+			<variable item="Sound Group 6 Checkbox 6" CV="T2CV.4.1" default="1" mask="XXXXXXXXXXXXXXVX">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+				<label>Play Medium Quill</label>
+			</variable>
+			<variable item="Sound Group 6 Checkbox 7" CV="T2CV.4.1" default="1" mask="XXXXXXXXXXXXXVXX">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+				<label>Play Long Quill</label>
+			</variable>
+			<variable item="Sound Group 6 Checkbox 8" CV="T2CV.4.1" default="0" mask="XXXXXXXXVXXXXXXX">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+				<label>Play Quills in Random Order</label>
+				<tooltip>If checked, each secessive press of quill button with play random quill sound, unchecked will play in order</tooltip>
+			</variable>
+		  <variable item="First" CV="222" default="0" infoOnly="yes" mask="XXXXXXXV">
+			<enumVal>
+				<enumChoice choice="SMS AS616 #554"/>
+			</enumVal>
+			<label>For diesel sound set 4, the first horn is named</label>
+		  </variable>
+				<variable item="Sound Option 1" CV="T2CV.4.8" default="0" tooltip="Rotate horn function will change this setting">
+					<enumVal>
+                        <enumChoice choice="SMS AS616 #554"/>
+                        <enumChoice choice="SMS DS44 750 #102"/>
+                        <enumChoice choice="SMS S12 #303"/>
+                        <enumChoice choice="VO 1000 Single Chime"/>
+                        <enumChoice choice="Fairbanks Morse"/>
+                        <enumChoice choice="GE 45 tonner"/>
+                        <enumChoice choice="GE 80 tonner"/>
+                        <enumChoice choice="GE U-Boat"/>
+                        <enumChoice choice="Hancock Air Whistle"/>
+                        <enumChoice choice="Leslie 125"/>
+                        <enumChoice choice="Leslie 200"/>
+                        <enumChoice choice="Leslie 3 Chime"/>
+                        <enumChoice choice="Leslie RS3"/>
+                        <enumChoice choice="Leslie RS3L"/>
+                        <enumChoice choice="Leslie RS5T"/>
+                        <enumChoice choice="Nathan K3"/>
+                        <enumChoice choice="Nathan K3H #1"/>
+                        <enumChoice choice="Nathan K3H #2"/>
+                        <enumChoice choice="Nathan K3LA"/>
+                        <enumChoice choice="Nathan K3LL"/>
+                        <enumChoice choice="Nathan K5H"/>
+                        <enumChoice choice="Nathan K5HL"/>
+                        <enumChoice choice="Nathan K5LA ACS64 Vers 1"/>
+                        <enumChoice choice="Nathan K5LA ACS64 Vers 2"/>
+                        <enumChoice choice="Nathan K5LA ACS64 Vers 3"/>
+                        <enumChoice choice="Nathan K5LA"/>
+                        <enumChoice choice="Strasburg #8618 SW8 Nathan K5LA"/>
+                        <enumChoice choice="Nathan K5LLA"/>
+                        <enumChoice choice="Nathan M3 #1"/>
+                        <enumChoice choice="Nathan M3 #2"/>
+                        <enumChoice choice="Nathan M3 #3"/>
+                        <enumChoice choice="Nathan M3 Tilt"/>
+                        <enumChoice choice="Nathan M5"/>
+                        <enumChoice choice="Nathan P3"/>
+                        <enumChoice choice="Nathan P5 Chime (Australia)"/>
+                        <enumChoice choice="Nathan P5A"/>
+                        <enumChoice choice="Quincy RR SW8 #1100"/>
+                        <enumChoice choice="RSD12 #2958"/>
+                        <enumChoice choice="Galloping Goose #3"/>
+                        <enumChoice choice="Wabco E2 3 Chime"/>
+				</enumVal>
+				<label>Default Horn Set</label>
+			</variable>
+			<variable item="Sound Option 2" CV="T2CV.4.11" default="18">
+				<enumVal>
+					<enumChoice choice="Alco 244"/>
+					<enumChoice choice="Alco 251 #1"/>
+					<enumChoice choice="Alco 251 #2"/>
+					<enumChoice choice="Alco 539"/>
+					<enumChoice choice="Baldwin 8-VO"/>
+					<enumChoice choice="Baldwin 606-A"/>
+					<enumChoice choice="Baldwin 606-NA"/>
+					<enumChoice choice="Baldwin 608-A"/>
+					<enumChoice choice="EMD 567 non turbo"/>
+					<enumChoice choice="EMD 567 turbo"/>
+					<enumChoice choice="EMD 645 non turbo #1"/>
+					<enumChoice choice="EMD 645 non turbo #2"/>
+					<enumChoice choice="EMD 645 non turbo #3"/>
+					<enumChoice choice="EMD 645 turbo"/>
+					<enumChoice choice="EMD 710 turbo"/>
+					<enumChoice choice="GE FDL16"/>
+					<enumChoice choice="GE 7FDL16 #1"/>
+					<enumChoice choice="GE 7FDL16 #2"/>
+					<enumChoice choice="GE GEVO"/>
+				</enumVal>
+				<label>Primemover type</label>
+			</variable>
+			<variable item="Sound Option 9" CV="T2CV.4.19" default="0" mask="XXXXVXXXXXXXXXXX">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enum-primemover.xml"/>
+				<label>Switching Mode Primemover</label>
+			</variable>
+			<variable item="Sound Option 10" CV="T2CV.4.19" default="1" mask="XXXVXXXXXXXXXXXX">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enum-primemover.xml"/>
+				<label>Mainline Mode Primemover</label>
+			</variable>
+			<variable item="First Bell" CV="222" default="0" infoOnly="yes" mask="XXXXXXVX">
+				<enumVal>
+					<enumChoice choice="Electric E-Bell"/>
+				</enumVal>
+				<label>For diesel sound set 4, the first bell is named</label>
+			</variable>
+			<variable item="Sound Option 6" CV="T2CV.4.23" default="18" tooltip="Rotate bell function will change this setting">
+				<enumVal>
+                    <enumChoice choice="Electric E-Bell"/>
+                    <enumChoice choice="Fairbanks Morse Bell"/>
+                    <enumChoice choice="Galloping Goose #3 Bell"/>
+                    <enumChoice choice="GE 45 tonner Bell"/>
+                    <enumChoice choice="Western Pacific GP20 #2100 Bell"/>
+                    <enumChoice choice="PRR GG1 Bell"/>
+                    <enumChoice choice="Niles Canyon Mongo speeder Bell"/>
+                    <enumChoice choice="John Bull Replica Hand Powered Bell"/>
+                    <enumChoice choice="Quincy RR SW8 #1100 Bell"/>
+                    <enumChoice choice="Richmond Pacific SW900 Bell"/>
+                    <enumChoice choice="RSD1 #1956 Bell"/>
+                    <enumChoice choice="RSD12 #2958 Bell"/>
+                    <enumChoice choice="Santa Catalina JLA2 Critter #103 Bell"/>
+                    <enumChoice choice="SMS AS616 #554 Bell"/>
+                    <enumChoice choice="Southern Pacific #1423 Bell"/>
+                    <enumChoice choice="Southern Pacific #3100 Bell"/>
+                    <enumChoice choice="Southern Pacific #5472 Bell"/>
+                    <enumChoice choice="Southern Pacific #5623 Bell"/>
+                    <enumChoice choice="VO 1000 Bell"/>
+                    <enumChoice choice="Western Pacific #713 Bell"/>
+                    <enumChoice choice="Western Pacific 918D F unit Bell"/>
+                    <enumChoice choice="C&amp;O Bell"/>
+                    <enumChoice choice="C&amp;T #484 Bell"/>
+                    <enumChoice choice="Leetonia Railroad Shay #1 Bell"/>
+                    <enumChoice choice="PRR 2-8-0 H3 1187 Hand Powered Bell"/>
+                    <enumChoice choice="Unknown Bell from Strasburg museum floor"/>
+                    <enumChoice choice="Lehigh Coal and Navigation Co #1 Bell"/>
+                    <enumChoice choice="Lehigh Valley Bell"/>
+                    <enumChoice choice="Lehigh Valley Pacific Bell"/>
+                    <enumChoice choice="Strasburg #89 Air Powered Bell"/>
+                    <enumChoice choice="Philadelphia and Reading Co Camelback #592 Bell"/>
+                    <enumChoice choice="PRR 2-8-0 H3 2846 Air Powered Bell"/>
+                    <enumChoice choice="Heisler Class 53833 #4 Hand Powered bell"/>
+                    <enumChoice choice="PRR #1223 American 4-4-0 D16SB Hand Powered Bell"/>
+                    <enumChoice choice="PRR Bell"/>
+                    <enumChoice choice="Conrail #2233 GP30 Air Powered Bell"/>
+                    <enumChoice choice="Virginia Truckee Railroad 2-6-0 Hand Powered Bell"/>
+                    <enumChoice choice="Reading Bell 1"/>
+                    <enumChoice choice="Reading Bell 2"/>
+                    <enumChoice choice="Reading Bell 3"/>
+                    <enumChoice choice="Richland Fredricksburg &amp; Potomac Bell"/>
+                    <enumChoice choice="Richmond Pacific SW900 Bell"/>
+                    <enumChoice choice="Strasburg #475 Air Powered bell"/>
+                    <enumChoice choice="Strasburg #475 Hand Powered bell"/>
+                    <enumChoice choice="Strasburg #90 Hand Powered Bell (Variation)"/>
+                    <enumChoice choice="Strasburg #90 hand powered double hit Bell"/>
+                    <enumChoice choice="Baldwin ten wheeler #12 Bell"/>
+                    <enumChoice choice="Unknown Bell"/>
+                    <enumChoice choice="Williams Grove PRR #643 0-6-0 Bell"/>
+                    <enumChoice choice="PRR 4-4-2 #7002 Hand Powered Bell"/>
+                    <enumChoice choice="Strasburg #90 Hand Powered Bell"/>
+				</enumVal>
+				<label>Bell type</label>
+			</variable>
+      <variable item="Sound Group 3 Option 1" CV="T2CV.4.40" default="42" include="172" mask="VVVVVVVVVVVVVVVV">
+        <decVal max="65535"/>
+        <label>Aux Input Loop Timer</label>
+        <tooltip>Controls how long a loop sound is allowed to play when triggered by the aux input (reed switch input) a value of 42 gives about a 3 second loop time</tooltip>
+      </variable>
+      <variable item="Output 7 options" CV="T2CV.4.41" default="0" include="172" mask="XXXXXXXXXVVVVVVV">
+        <decVal/>
+        <label>Smoke unit on time adjustment</label>
+        <tooltip>adjusts the amount of time the fan is on for the smoke unit</tooltip>
+      </variable>
+      <variable item="Output 7 option 1" CV="T2CV.4.41" default="0" include="172" mask="XXXXXXXXVXXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-PositiveNegative.xml"/>
+        <label>Smoke unit on time adjustment sign</label>
+        <tooltip>Positive adds time, negative subtracts time</tooltip>
+      </variable>
+      <variable item="Output 8 options" CV="T2CV.4.41" default="0" include="172" mask="XXXXXXXXXVVVVVVV">
+        <decVal/>
+        <label>Smoke unit off time adjustment</label>
+        <tooltip>adjusts the amount of time the fan is off for the smoke unit</tooltip>
+      </variable>
+      <variable item="Output 8 option 1" CV="T2CV.4.41" default="0" include="172" mask="XXXXXXXXVXXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-PositiveNegative.xml"/>
+        <label>Smoke unit off time adjustment sign</label>
+        <tooltip>Positive adds time, negative subtracts time</tooltip>
+      </variable>
+		</variables>
+		<resets>
+      <mode>PAGEMODE</mode>
+      <mode>DIRECTMODE</mode>
+      <mode>OPSBYTEMODE</mode>
+			<factReset label="Entire decoder (except speed table)" CV="8" default="2"/>
+			<factReset label="Entire decoder (except address and speed table)" CV="T2CV.5.0" default="2"/>
+			<factReset label="All sound settings" CV="T2CV.5.0" default="3"/>
+			<factReset label="Sound Function mappings" CV="T2CV.5.0" default="4"/>
+			<factReset label="Sound CV's" CV="T2CV.5.0" default="6"/>
+			<factReset label="Sound type volumes" CV="T2CV.5.0" default="7"/>
+			<factReset label="User Preset 1" CV="T2CV.5.0" default="8"/>
+			<factReset label="User Preset 2" CV="T2CV.5.0" default="9"/>
+			<factReset label="User Preset 3" CV="T2CV.5.0" default="10"/>
+			<factReset label="Quick Lighting Preset: Standard Ditch Lights" CV="8" default="10"/>
+			<factReset label="Quick Lighting Preset: Standard Trolley" CV="8" default="11"/>
+			<factReset label="Quick Lighting Preset: Modified Trilley" CV="8" default="12"/>
+		</resets>
+	</decoder>
+    <xi:include href="http://jmri.org/xml/programmers/parts/BasicSpeedControlTrimPane.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_Momentum.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_Brake.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_TCS.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_wow_snd.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_wow_vol_grp.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_wow_vol0.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_wow_vol1.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_wow_vol6.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_wow_vol7.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_wow_4cv.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/tcs/paneWowReadMe.xml"/>
+</decoder-config>

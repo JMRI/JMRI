@@ -2,31 +2,26 @@ package jmri.jmrix;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class AbstractMRMessageTest {
-
-    @Test
-    public void testCTor() {
-        AbstractMRMessage t = new AbstractMRMessage(5){
-        };
-        Assert.assertNotNull("exists",t);
-    }
+public class AbstractMRMessageTest extends AbstractMessageTestBase {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
+        m = new AbstractMRMessage(5){
+        };
     }
 
     @After
     public void tearDown() {
+	m = null;
         JUnitUtil.tearDown();
     }
 

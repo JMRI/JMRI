@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2014 All rights reserved                            -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2018</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Alain</firstname>
+        <surname>Le Marchand</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2014-05-11</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>Initial version as separate file from cv13analogfunction.xml</revremark>
+    </revision>
+  <!-- 	Uhlenbrock Decoder CV 14									-->
+  <!-- 	valid for certain decoder types only  :              		-->    
+  <!-- 		73105, 73115, 73145, 73405, 73415 (not exhaustive)   	-->
+  </revhistory>
+    <variable item="Analog Mode Function Status - F0" CV="14" default="1" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Function in Analog - Lights</label>
+        <label xml:lang="de">Funktion im Analogbetrieb - Licht</label>
+        <label xml:lang="nl">Functie bij Analoogbedrijf - Licht</label>
+    </variable>
+    <!-- bits 1-3 not used -->
+    <variable item="Analog Mode Function Status - F9" CV="14" default="0" mask="XXXVXXXX" minOut="11">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Function in Analog - A9</label>
+        <label xml:lang="de">Funktion im Analogbetrieb - A9</label>
+        <label xml:lang="nl">Functie bij Analoogbedrijf - A9</label>
+    </variable>
+    <variable item="Analog Mode Function Status - F10" CV="14" default="0" mask="XXVXXXXX" minOut="12">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Function in Analog - A10</label>
+        <label xml:lang="de">Funktion im Analogbetrieb - A10</label>
+        <label xml:lang="nl">Functie bij Analoogbedrijf - A10</label>
+    </variable>
+    <variable item="Analog Mode Function Status - F11" CV="14" default="0" mask="XVXXXXXX" minOut="13">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Function in Analog - A11</label>
+        <label xml:lang="de">Funktion im Analogbetrieb - A11</label>
+        <label xml:lang="nl">Functie bij Analoogbedrijf - A11</label>
+    </variable>
+    <variable item="Analog Mode Function Status - F12" CV="14" default="0" mask="VXXXXXXX" minOut="14">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Function in Analog - A12</label>
+        <label xml:lang="de">Funktion im Analogbetrieb - A12</label>
+        <label xml:lang="nl">Functie bij Analoogbedrijf - A12</label>
+    </variable>
+</variables>

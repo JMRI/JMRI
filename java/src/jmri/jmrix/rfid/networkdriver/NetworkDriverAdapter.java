@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implements PortAdapter for a network connection.
- * <P>
+ * <p>
  * This connects via a telnet connection. Normally
  * controlled by the NetworkDriverFrame class.
  *
@@ -35,10 +35,10 @@ public class NetworkDriverAdapter extends RfidNetworkPortController {
         option2Name = "Concentrator-Range"; // NOI18N
         option3Name = "Protocol"; // NOI18N
         option4Name = "Device"; // NOI18N
-        options.put(option1Name, new Option("Adapter:", new String[]{"Generic Stand-alone", "MERG Concentrator"}, false)); // NOI18N
-        options.put(option2Name, new Option("Concentrator range:", new String[]{"A-H", "I-P"}, false)); // NOI18N
-        options.put(option3Name, new Option("Protocol:", new String[]{"CORE-ID", "Olimex", "Parallax", "SeeedStudio"}, false)); // NOI18N
-        options.put(option4Name, new Option("Device Type:", new String[] {"MOD-RFID125", "MOD-RFID1356MIFARE"}, false)); // NOI18N
+        options.put(option1Name, new Option(Bundle.getMessage("ConnectionAdapter"), new String[]{"Generic Stand-alone", "MERG Concentrator"}, false)); // NOI18N
+        options.put(option2Name, new Option(Bundle.getMessage("ConnectionConcentratorRange"), new String[]{"A-H", "I-P"}, false)); // NOI18N
+        options.put(option3Name, new Option(Bundle.getMessage("ConnectionProtocol"), new String[]{"CORE-ID", "Olimex", "Parallax", "SeeedStudio"}, false)); // NOI18N
+        options.put(option4Name, new Option(Bundle.getMessage("ConnectionDeviceType"), new String[] {"MOD-RFID125", "MOD-RFID1356MIFARE"}, false)); // NOI18N
         setManufacturer(jmri.jmrix.rfid.RfidConnectionTypeList.RFID);
     }
 
@@ -57,26 +57,29 @@ public class NetworkDriverAdapter extends RfidNetworkPortController {
                 // create a Generic Stand-alone port controller
                 log.debug("Create Generic Standalone SpecificTrafficController"); // NOI18N
                 control = new StandaloneTrafficController(this.getSystemConnectionMemo());
+                this.getSystemConnectionMemo().setRfidTrafficController(control);
                 this.getSystemConnectionMemo().configureManagers(
-                        new StandaloneSensorManager(control, this.getSystemPrefix()),
-                        new StandaloneReporterManager(control, this.getSystemPrefix()));
+                        new StandaloneSensorManager(this.getSystemConnectionMemo()),
+                        new StandaloneReporterManager(this.getSystemConnectionMemo()));
                 break;
             case "MERG Concentrator": // NOI18N
                 // create a MERG Concentrator port controller
                 log.debug("Create MERG Concentrator SpecificTrafficController"); // NOI18N
                 control = new ConcentratorTrafficController(this.getSystemConnectionMemo(), getOptionState(option2Name));
+                this.getSystemConnectionMemo().setRfidTrafficController(control);
                 this.getSystemConnectionMemo().configureManagers(
-                        new ConcentratorSensorManager(control, this.getSystemPrefix()),
-                        new ConcentratorReporterManager(control, this.getSystemPrefix()));
+                        new ConcentratorSensorManager(this.getSystemConnectionMemo()),
+                        new ConcentratorReporterManager(this.getSystemConnectionMemo()));
                 break;
             default:
                 // no connection at all - warn
                 log.warn("adapter option " + opt1 + " defaults to Generic Stand-alone"); // NOI18N
                 // create a Generic Stand-alone port controller
                 control = new StandaloneTrafficController(this.getSystemConnectionMemo());
+                this.getSystemConnectionMemo().setRfidTrafficController(control);
                 this.getSystemConnectionMemo().configureManagers(
-                        new StandaloneSensorManager(control, this.getSystemPrefix()),
-                        new StandaloneReporterManager(control, this.getSystemPrefix()));
+                        new StandaloneSensorManager(this.getSystemConnectionMemo()),
+                        new StandaloneReporterManager(this.getSystemConnectionMemo()));
                 break;
         }
 

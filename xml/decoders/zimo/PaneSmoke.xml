@@ -5,6 +5,7 @@
                  - made item name for CV 133 more generic
 -->
 <!-- version 1.2 - Ronald Kuhn - add german translation -->
+<!-- version 1.3 - Ronald Kuhn - add v37 options -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <name>Smoke</name>
   <name xml:lang="it">Fumo</name>
@@ -84,6 +85,7 @@
       <column>
         <display item="Smoke Fan Speed at Steady Speed"/>
         <display item="Smoke Fan Speed at Startup and Acceleration"/>
+        <display item="Second exhaust Fan"/>
       </column>
       <column>
         <display item="Smoke Fan Speed at Steady Speed" format="hslider" label="">

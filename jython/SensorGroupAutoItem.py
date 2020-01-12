@@ -12,6 +12,7 @@
 
 import jmri
 import java
+import java.beans
 
 # Define the listener. 
 class SensorGroupAutoItem(java.beans.PropertyChangeListener):

@@ -9,6 +9,8 @@ import org.junit.runners.Suite;
         jmri.jmrix.roco.z21.PackageTest.class,
         BundleTest.class,
         RocoCommandStationTest.class,
+        RocoXNetThrottleTest.class,
+        RocoXNetThrottleManagerTest.class,
 })
 
 /**

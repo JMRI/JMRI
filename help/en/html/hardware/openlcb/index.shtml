@@ -6,7 +6,8 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI Hardware Support - OpenLCB</title><!-- Style -->
+  <title>JMRI Hardware Support - OpenLCB</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -14,14 +15,16 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
   <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
+
       <h1>Hardware Support: OpenLCB</h1><em>The support on this
       page is rapidly evolving; the actual code might be ahead or
       behind the documentation on any given day.</em>
@@ -92,6 +95,14 @@
       except JMRI is emitting the OpenLCB frames instead of
       receiving them, and the type letter is "T" instead of "S",
       e.g. "<code>MT1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9</code>".</p>
+
+      <h4>Signals</h4>
+      
+      <p>OpenLCB connections can use many of the usual forms of 
+      SignalHeads and SignalMasts that are based on 
+      Turnouts.  In addition, there's an 
+      <a href="OlcbSignalMast.shtml">OpenLCB-specific form of SignalMast</a>
+      that uses Events to change from one aspect to another.
 
       <h3>Wiring</h3>
 

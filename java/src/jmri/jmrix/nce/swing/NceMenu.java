@@ -20,7 +20,7 @@ public class NceMenu extends JMenu {
      *
      * @param memo the system connection memo to associate menu items with
      */
-    // Need to Sort out the NCE server menu items;
+    // TODO Need to Sort out the NCE server menu items
     public NceMenu(@Nonnull NceSystemConnectionMemo memo) {
         super();
 
@@ -44,7 +44,7 @@ public class NceMenu extends JMenu {
             }
         }
 
-        // do we have a NceTrafficController?
+        // do we have an NceTrafficController?
         setEnabled(memo.getNceTrafficController() != null); // disable menu, no connection, no tools!
 
         add(new javax.swing.JSeparator());

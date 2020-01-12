@@ -1,27 +1,26 @@
 package jmri.managers;
 
-import java.text.DecimalFormat;
-import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
+import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.Route;
 import jmri.RouteManager;
 import jmri.implementation.DefaultRoute;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Basic Implementation of a RouteManager.
- * <P>
+ * <p>
  * Note that this does not enforce any particular system naming convention
  *
  * @author Dave Duchamp Copyright (C) 2004
  */
-public class DefaultRouteManager extends AbstractManager<Route>
-        implements RouteManager, java.beans.PropertyChangeListener, java.beans.VetoableChangeListener {
+public class DefaultRouteManager extends AbstractManager<Route> implements RouteManager {
 
-    public DefaultRouteManager() {
-        super();
+    public DefaultRouteManager(InternalSystemConnectionMemo memo) {
+        super(memo);
         jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
         jmri.InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
     }
@@ -32,20 +31,17 @@ public class DefaultRouteManager extends AbstractManager<Route>
     }
 
     @Override
-    public String getSystemPrefix() {
-        return "I";
-    }
-
-    @Override
     public char typeLetter() {
-        return 'R';
+        return 'O';
     }
 
     /**
-     * Method to provide a Route whether or not is already exists.
+     * {@inheritDoc}
      */
     @Override
-    public Route provideRoute(String systemName, String userName) {
+    @Nonnull
+    public Route provideRoute(@Nonnull String systemName, String userName) {
+        log.debug("provideRoute({})", systemName);
         Route r;
         r = getByUserName(systemName);
         if (r != null) {
@@ -56,52 +52,26 @@ public class DefaultRouteManager extends AbstractManager<Route>
             return r;
         }
         // Route does not exist, create a new route
-        r = new DefaultRoute(systemName, userName);
+        r = new DefaultRoute(validateSystemNameFormat(systemName), userName);
         // save in the maps
         register(r);
-        /*The following keeps track of the last created auto system name.
-         currently we do not reuse numbers, although there is nothing to stop the
-         user from manually recreating them*/
-        if (systemName.startsWith("IR:AUTO:")) {
-            try {
-                int autoNumber = Integer.parseInt(systemName.substring(8));
-                if (autoNumber > lastAutoRouteRef) {
-                    lastAutoRouteRef = autoNumber;
-                }
-            } catch (NumberFormatException e) {
-                log.warn("Auto generated SystemName " + systemName + " is not in the correct format");
-            }
-        }
+
+        // Keep track of the last created auto system name
+        updateAutoNumber(systemName);
+
         return r;
     }
 
-    @Override
-    public Route newRoute(String userName) {
-        int nextAutoRouteRef = lastAutoRouteRef + 1;
-        StringBuilder b = new StringBuilder("IR:AUTO:");
-        String nextNumber = paddedNumber.format(nextAutoRouteRef);
-        b.append(nextNumber);
-        return provideRoute(b.toString(), userName);
-    }
-
-    DecimalFormat paddedNumber = new DecimalFormat("0000");
-
-    int lastAutoRouteRef = 0;
-
     /**
      * {@inheritDoc}
-     *
-     * Forces upper case and trims leading and trailing whitespace.
-     * The IR prefix is added if necessary.
+     * <p>
+     * Calls {@link #provideRoute(String, String)} with the result of
+     * {@link #getAutoSystemName()} as the system name.
      */
-    @CheckReturnValue
     @Override
-    public @Nonnull
-    String normalizeSystemName(@Nonnull String inputName) {
-        if (inputName.length() < 3 || !inputName.startsWith("IR")) {
-            inputName = "IR" + inputName;
-        }
-        return inputName.toUpperCase().trim();
+    @Nonnull
+    public Route newRoute(@Nonnull String userName) {
+        return provideRoute(getAutoSystemName(), userName);
     }
 
     /**
@@ -109,7 +79,7 @@ public class DefaultRouteManager extends AbstractManager<Route>
      * invoking this.
      */
     @Override
-    public void deleteRoute(Route r) {
+    public void deleteRoute(@Nonnull Route r) {
         deregister(r);
     }
 
@@ -119,7 +89,7 @@ public class DefaultRouteManager extends AbstractManager<Route>
      * both fail, returns null.
      */
     @Override
-    public Route getRoute(String name) {
+    public Route getRoute(@Nonnull String name) {
         Route r = getByUserName(name);
         if (r != null) {
             return r;
@@ -127,29 +97,37 @@ public class DefaultRouteManager extends AbstractManager<Route>
         return getBySystemName(name);
     }
 
+    /**
+     * @return the default instance of DefaultRouteManager
+     * @deprecated since 4.17.3; use
+     *             {@link jmri.InstanceManager#getDefault(java.lang.Class)}
+     *             instead
+     */
+    @Deprecated
+    public static DefaultRouteManager instance() {
+        return InstanceManager.getDefault(DefaultRouteManager.class);
+    }
+
+    @Nonnull
     @Override
-    public Route getBySystemName(String name) {
-        return _tsys.get(name);
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameRoutes" : "BeanNameRoute");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<Route> getNamedBeanClass() {
+        return Route.class;
     }
 
     @Override
-    public Route getByUserName(String key) {
-        return _tuser.get(key);
+    @Nonnull
+    public Route provide(@Nonnull String name) {
+        return provideRoute(name, null);
     }
 
-    static DefaultRouteManager _instance = null;
+    private static final Logger log = LoggerFactory.getLogger(DefaultRouteManager.class);
 
-    static public DefaultRouteManager instance() {
-        if (_instance == null) {
-            _instance = new DefaultRouteManager();
-        }
-        return (_instance);
-    }
-
-    @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameRoute");
-    }
-
-    private final static Logger log = LoggerFactory.getLogger(DefaultRouteManager.class);
 }

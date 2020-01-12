@@ -10,12 +10,16 @@ junit*.properties
 findbugs.xml
 findbugs.html
 spotbugs.xml
+spotbugs-check.xml
 spotbugs.html
+spotbugs-check.html
 jacoco.exec
 jmri-fb.html
 coveragereport
 tests.log
 cucumber-results.xml
+cucumber-results.json
+failed_files.txt
 
 # runtime artifacts
 messages.log*
@@ -39,9 +43,11 @@ session.log
 /xml/XSLT/pages
 .run.sh
 hs_err_pid*.log
+nohup.out
 
 # private / per-user configuration files
 /nbproject/private
+/nbproject/nbjdk.properties
 /web/app/nbproject/private
 /scripts/config-portable/nbproject/private
 /.idea/workspace.xml
@@ -51,6 +57,8 @@ local.properties
 *.original~
 .metadata
 RemoteSystemsTempFiles
+.idea/libraries/**
+.idea/sonarlint/issuestore
 
 # user-installed components
 /web/TrainCrew

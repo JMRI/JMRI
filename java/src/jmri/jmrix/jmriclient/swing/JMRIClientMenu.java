@@ -1,6 +1,5 @@
 package jmri.jmrix.jmriclient.swing;
 
-import java.util.ResourceBundle;
 import javax.swing.JMenu;
 
 /**
@@ -18,17 +17,15 @@ public class JMRIClientMenu extends JMenu {
     public JMRIClientMenu(jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo memo) {
         super();
 
-        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.JmrixSystemsBundle");
-
         if (memo != null) {
             setText(memo.getUserName());
         } else {
-            setText(rb.getString("MenuItemJMRIClient"));
+            setText(Bundle.getMessage("MenuItemJMRIClient"));
         }
 
         if (memo != null) {
-            add(new jmri.jmrix.jmriclient.swing.mon.JMRIClientMonAction(rb.getString("MenuItemCommandMonitor"), memo));
-            add(new jmri.jmrix.jmriclient.swing.packetgen.PacketGenAction(rb.getString("MenuItemSendCommand"), memo));
+            add(new jmri.jmrix.jmriclient.swing.mon.JMRIClientMonAction());
+            add(new jmri.jmrix.jmriclient.swing.packetgen.PacketGenAction(Bundle.getMessage("MenuItemSendCommand"), memo));
         }
     }
 

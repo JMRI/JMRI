@@ -12,13 +12,15 @@ package jmri;
  *
  * @author Bob Jacobsen Copyright (C) 2005
  */
+@javax.annotation.concurrent.Immutable
 public class DccLocoAddress implements LocoAddress {
 
     public DccLocoAddress(int number, boolean isLong) {
         this.number = number;
-        protocol = LocoAddress.Protocol.DCC_SHORT;
         if (isLong) {
             protocol = LocoAddress.Protocol.DCC_LONG;
+        } else {
+            protocol = LocoAddress.Protocol.DCC_SHORT;
         }
     }
 
@@ -114,6 +116,6 @@ public class DccLocoAddress implements LocoAddress {
     public int getNumber() {
         return (int) number;
     }
-    protected long number;
-    protected LocoAddress.Protocol protocol = LocoAddress.Protocol.DCC;
+    final protected long number;
+    final protected LocoAddress.Protocol protocol;
 }

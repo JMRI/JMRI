@@ -10,7 +10,7 @@ import jmri.managers.DefaultProgrammerManager;
  *
  * @see jmri.managers.DefaultProgrammerManager
  * @author Bob Jacobsen Copyright (C) 2002
-  */
+ */
 public class EasyDccProgrammerManager extends DefaultProgrammerManager {
 
     private EasyDccSystemConnectionMemo _memo = null;

@@ -5,7 +5,7 @@ package jmri.jmrix.powerline.cp290;
  *
  * @author Bob Jacobsen Copyright (C) 2008
  * @author Ken Cameron, (C) 2009, add sensors from poll replies
-  */
+ */
 public class Constants {
 
     public static final int CMD_ON = 0x02;
@@ -235,6 +235,5 @@ public class Constants {
         }
         return val;
     }
+
 }
-
-

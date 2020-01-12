@@ -7,7 +7,7 @@ import javax.swing.AbstractAction;
  * Swing action to create and register a NixieClockFrame object
  *
  * @author Bob Jacobsen Copyright (C) 2004
-  */
+ */
 public class NixieClockAction extends AbstractAction {
 
     public NixieClockAction() {
@@ -23,9 +23,6 @@ public class NixieClockAction extends AbstractAction {
 
         NixieClockFrame f = new NixieClockFrame();
         f.setVisible(true);
-
     }
 
 }
-
-

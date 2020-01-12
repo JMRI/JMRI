@@ -7,7 +7,7 @@ import java.awt.event.MouseEvent;
 import java.util.Hashtable;
 import java.util.List;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
@@ -69,10 +69,10 @@ public class EcosLocoTableAction extends AbstractTableAction<NamedBean> {
     public void actionPerformed(ActionEvent e) {
         // create the JTable model, with changes for specific NamedBean
         createModel();
-        TableRowSorter<BeanTableDataModel> sorter = new TableRowSorter<>(m);
+        TableRowSorter<BeanTableDataModel<NamedBean>> sorter = new TableRowSorter<>(m);
         JTable dataTable = m.makeJTable(getClassName(), m, sorter);
         // create the frame
-        f = new jmri.jmrit.beantable.BeanTableFrame(m, helpTarget(), dataTable) {
+        f = new jmri.jmrit.beantable.BeanTableFrame<NamedBean>(m, helpTarget(), dataTable) {
         };
         setMenuBar(f);
         setTitle();
@@ -231,7 +231,7 @@ public class EcosLocoTableAction extends AbstractTableAction<NamedBean> {
             }
 
             @Override
-            public JTable makeJTable(@Nonnull String name, @Nonnull TableModel model, @Nullable RowSorter<? extends TableModel> sorter) {
+            public JTable makeJTable(@Nonnull String name, @Nonnull TableModel model, @CheckForNull RowSorter<? extends TableModel> sorter) {
                 return this.configureJTable(name, this.makeJTable(model), sorter);
             }
 
@@ -305,7 +305,7 @@ public class EcosLocoTableAction extends AbstractTableAction<NamedBean> {
             /**
              * Is this property event announcing a change this table should
              * display?
-             * <P>
+             * <p>
              * Note that events will come both from the
              * jmri.jmrix.ecos.EcosLocoAddressManagers and also from the manager
              */

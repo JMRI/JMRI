@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * <li>OPSACCEXTBYTEMODE
  * <li>OPSACCEXTBITMODE
  * </ul>
- * <P>
+ * <p>
  * Used through the String write/read/confirm interface. Accepts integers as
  * addresses, but then emits NMRA DCC packets through the default CommandStation
  * interface (which must be present)
@@ -144,27 +144,18 @@ public class OpsModeDelayedProgrammerFacade extends AbstractProgrammerFacade imp
                 state = ProgState.NOTPROGRAMMING;
         }
 
-        new Thread(new Runnable() {
-            @Override
-            public synchronized void run() {
-                if (_delay > 0) {
-                    log.debug("delaying {} milliseconds", _delay);
-                    try {
-                        Thread.sleep(_delay);
-                    } catch (InterruptedException ie) {
-                        log.error("Interrupted while sleeping {}", ie);
-                    }
-                }
-                // the programmingOpReply handler might send an immediate reply, so
-                // clear the current listener _first_
-                log.debug("going NOTPROGRAMMING after value {}, status={}", value, status);
-                jmri.ProgListener temp = _usingProgrammer;
-                _usingProgrammer = null; // done
-                state = ProgState.NOTPROGRAMMING;
-                log.debug("notifying value " + value + " status " + status);
-                temp.programmingOpReply(value, status);
-            }
-        }).start();
+        log.debug("delaying {} milliseconds", _delay);
+        jmri.util.ThreadingUtil.runOnLayoutDelayed(() -> {
+            // the programmingOpReply handler might send an immediate reply, so
+            // clear the current listener _first_
+            log.debug("going NOTPROGRAMMING after value {}, status={}", value, status);
+            jmri.ProgListener temp = _usingProgrammer;
+            _usingProgrammer = null; // done
+            state = ProgState.NOTPROGRAMMING;
+            log.debug("notifying value " + value + " status " + status);
+            temp.programmingOpReply(value, status);
+        }, _delay);
+
     }
 
     private final static Logger log = LoggerFactory.getLogger(OpsModeDelayedProgrammerFacade.class);

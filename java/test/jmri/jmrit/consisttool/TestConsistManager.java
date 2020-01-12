@@ -12,8 +12,14 @@ import jmri.implementation.DccConsist;
  */
 public class TestConsistManager extends jmri.implementation.AbstractConsistManager {
 
+    // package protected integers for tests to use
+    int addCalls; // records the number of times addToAdvancedConsist is called
+    int removeCalls; // records the  number of times removeFromAdancedConsist is called.
+
     public TestConsistManager() {
         super();
+	addCalls = 0;
+	removeCalls = 0;
     }
 
     /**
@@ -30,9 +36,14 @@ public class TestConsistManager extends jmri.implementation.AbstractConsistManag
         DccConsist consist = new DccConsist((DccLocoAddress) address,null){
            @Override
            protected void addToAdvancedConsist(DccLocoAddress LocoAddress, boolean directionNormal){
-           }
+                addCalls +=1;
+	   }
            @Override
            protected void removeFromAdvancedConsist(DccLocoAddress LocoAddress){
+                 removeCalls += 1;
+	   }
+           @Override
+           public void dispose(){
            }
         };
         consistTable.put(address, consist);

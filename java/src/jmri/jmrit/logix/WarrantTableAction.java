@@ -24,6 +24,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import jmri.BeanSetting;
 import jmri.InstanceManager;
+import jmri.InvokeOnGuiThread;
 import jmri.NamedBean;
 import jmri.Path;
 import jmri.ShutDownTask;
@@ -36,18 +37,17 @@ import org.slf4j.LoggerFactory;
  * a train to proceed from an Origin to a Destination. WarrantTableAction
  * provides the menu for panels to List, Edit and Create Warrants. It launches
  * the appropriate frame for each action.
- * <BR>
+ * <br>
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * </P><P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * </P>
  *
  * @author Pete Cressman Copyright (C) 2009, 2010
  */
@@ -55,8 +55,8 @@ public class WarrantTableAction extends AbstractAction {
 
     static int STRUT_SIZE = 10;
     static JMenu _warrantMenu;
-    private static final HashMap<String, Warrant> _warrantMap = new HashMap<String, Warrant>();
-    protected static TrackerTableAction _trackerTable;
+    private static final HashMap<String, Warrant> _warrantMap = new HashMap<>();
+    
     private static JTextArea _textArea;
     private static boolean _hasErrors = false;
     private static JDialog _errorDialog;
@@ -66,13 +66,9 @@ public class WarrantTableAction extends AbstractAction {
     private static boolean _edit;
     static ShutDownTask _shutDownTask = null;
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "until deprecated TrackerTableAction.getInstance removed")
     protected WarrantTableAction(String menuOption) {
         super(Bundle.getMessage(menuOption));
-        _trackerTable = TrackerTableAction.getInstance();
-    }
-
-    static WarrantTableAction getInstance() {
-        return getDefault();
     }
 
     public static WarrantTableAction getDefault() {
@@ -82,6 +78,7 @@ public class WarrantTableAction extends AbstractAction {
     }
 
     @Override
+    @InvokeOnGuiThread
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
         if (Bundle.getMessage("ShowWarrants").equals(command)) {
@@ -97,9 +94,7 @@ public class WarrantTableAction extends AbstractAction {
         }
         initPathPortalCheck();
         OBlockManager manager = InstanceManager.getDefault(OBlockManager.class);
-        String[] sysNames = manager.getSystemNameArray();
-        for (String sysName : sysNames) {
-            OBlock block = manager.getBySystemName(sysName);
+        for (OBlock block : manager.getNamedBeanSet()) {
             checkPathPortals(block);
         }
         if (_edit) {
@@ -115,7 +110,7 @@ public class WarrantTableAction extends AbstractAction {
      * @return a menu containing warrant actions
      */
     synchronized public static JMenu makeWarrantMenu(boolean edit) {
-        if (jmri.InstanceManager.getDefault(OBlockManager.class).getSystemNameList().size() > 1) {
+        if (jmri.InstanceManager.getDefault(OBlockManager.class).getNamedBeanSet().size() > 1) {
             _edit = edit;
             _warrantMenu = new JMenu(Bundle.getMessage("MenuWarrant"));
             updateWarrantMenu();
@@ -124,24 +119,24 @@ public class WarrantTableAction extends AbstractAction {
         return null;
     }
 
+    @InvokeOnGuiThread
     synchronized protected static void updateWarrantMenu() {
         _warrantMenu.removeAll();
-        _warrantMenu.add(getInstance());
+        _warrantMenu.add(getDefault());
         JMenu editWarrantMenu = new JMenu(Bundle.getMessage("EditWarrantMenu"));
         _warrantMenu.add(editWarrantMenu);
         ActionListener editWarrantAction = (ActionEvent e) -> {
             openWarrantFrame(e.getActionCommand());
         };
         WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
-        String[] sysNames = manager.getSystemNameArray();
-        if (sysNames.length == 0) { // when there are no Warrants, enter the word "None" to the submenu
+        if (manager.getObjectCount() == 0) { // when there are no Warrants, enter the word "None" to the submenu
             JMenuItem _noWarrants = new JMenuItem(Bundle.getMessage("None"));
             editWarrantMenu.add(_noWarrants);
             // disable it
             _noWarrants.setEnabled(false);
         } else { // when there are Warrents, add them to the submenu
-            for (String sysName : sysNames) {
-                Warrant warrant = manager.getBySystemName(sysName);
+            for (Warrant warrant : manager.getNamedBeanSet()) {
+                // Warrant warrent = (Warrant) object;
                 JMenuItem mi = new JMenuItem(warrant.getDisplayName());
                 mi.setActionCommand(warrant.getDisplayName());
                 mi.addActionListener(editWarrantAction);
@@ -149,7 +144,7 @@ public class WarrantTableAction extends AbstractAction {
             }
         }
         _warrantMenu.add(new WarrantTableAction("CreateWarrant")); // NOI18N
-        _warrantMenu.add(_trackerTable);
+        _warrantMenu.add(InstanceManager.getDefault(TrackerTableAction.class));
         _warrantMenu.add(new AbstractAction(Bundle.getMessage("CreateNXWarrant")) {
 
             @Override
@@ -159,7 +154,7 @@ public class WarrantTableAction extends AbstractAction {
         });
         _warrantMenu.add(makeLogMenu());
 
-        log.debug("updateMenu to {} warrants.", sysNames.length);
+        log.debug("updateMenu to {} warrants.", manager.getObjectCount());
     }
 
     protected static JMenuItem makeLogMenu() {
@@ -184,6 +179,11 @@ public class WarrantTableAction extends AbstractAction {
                 updateWarrantMenu();
             });
         } else {
+            mi = new JMenuItem(Bundle.getMessage("flushLog"));
+            mi.addActionListener((ActionEvent e) -> {
+                OpSessionLog.flush();
+            });
+            _warrantMenu.add(mi);
             mi = new JMenuItem(Bundle.getMessage("stopLog"));
             mi.addActionListener((ActionEvent e) -> {
                 OpSessionLog.close();
@@ -202,6 +202,7 @@ public class WarrantTableAction extends AbstractAction {
         }
     }
 
+    @InvokeOnGuiThread
     synchronized protected static void closeNXFrame(NXFrame frame) {
         if (frame != null) {
             if (frame.equals(_nxFrame)) {
@@ -259,43 +260,6 @@ public class WarrantTableAction extends AbstractAction {
         }
     }
 
-    synchronized protected static void portalNameChange(String oldName, String newName) {
-        WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
-        List<String> systemNameList = manager.getSystemNameList();
-        Iterator<String> iter = systemNameList.iterator();
-        while (iter.hasNext()) {
-            Warrant w = manager.getBySystemName(iter.next());
-            List<BlockOrder> orders = w.getBlockOrders();
-            Iterator<BlockOrder> it = orders.iterator();
-            while (it.hasNext()) {
-                BlockOrder bo = it.next();
-                if (oldName.equals(bo.getEntryName())) {
-                    bo.setEntryName(newName);
-                }
-                if (oldName.equals(bo.getExitName())) {
-                    bo.setExitName(newName);
-                }
-            }
-        }
-    }
-
-    synchronized protected static void pathNameChange(OBlock block, String oldName, String newName) {
-        WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
-        List<String> systemNameList = manager.getSystemNameList();
-        Iterator<String> iter = systemNameList.iterator();
-        while (iter.hasNext()) {
-            Warrant w = manager.getBySystemName(iter.next());
-            List<BlockOrder> orders = w.getBlockOrders();
-            Iterator<BlockOrder> it = orders.iterator();
-            while (it.hasNext()) {
-                BlockOrder bo = it.next();
-                if (bo.getBlock().equals(block) && bo.getPathName().equals(oldName)) {
-                    bo.setPathName(newName);
-                }
-            }
-        }
-    }
-
     /*    synchronized public static WarrantFrame getWarrantFrame(String key) {
         return _frameMap.get(key);
     }*/
@@ -314,9 +278,7 @@ public class WarrantTableAction extends AbstractAction {
             return;
         }
 
-        if (_trackerTable != null) {
-            InstanceManager.getDefault(TrackerTableAction.class).mouseClickedOnBlock(block);
-        }
+        InstanceManager.getDefault(TrackerTableAction.class).mouseClickedOnBlock(block);
     }
 
     /* ****************** Error checking ************************/
@@ -454,16 +416,14 @@ public class WarrantTableAction extends AbstractAction {
     public static boolean checkSharedTurnouts(OBlock block) {
         boolean hasShared = false;
         OBlockManager manager = InstanceManager.getDefault(OBlockManager.class);
-        String[] sysNames = manager.getSystemNameArray();
         List<Path> pathList = block.getPaths();
         Iterator<Path> iter = pathList.iterator();
         while (iter.hasNext()) {
             OPath path = (OPath) iter.next();
-            for (String sysName : sysNames) {
-                if (block.getSystemName().equals(sysName)) {
+            for (OBlock b : manager.getNamedBeanSet()) {
+                if (block.getSystemName().equals(b.getSystemName())) {
                     continue;
                 }
-                OBlock b = manager.getBySystemName(sysName);
                 Iterator<Path> it = b.getPaths().iterator();
                 while (it.hasNext()) {
                     boolean shared = sharedTO(path, (OPath) it.next());
@@ -496,16 +456,8 @@ public class WarrantTableAction extends AbstractAction {
                     OBlock myBlock = (OBlock) myPath.getBlock();
                     int state = set.getSetting();
                     OBlock block = (OBlock) path.getBlock();
-//                  String note = "WARNING: ";
                     if (myState != state) {
                         ret = myBlock.addSharedTurnout(myPath, block, path);
-                        /*                       _textArea.append(note+Bundle.getMessage("sharedTurnout", myPath.getName(), myBlock.getDisplayName(),
-                             myTO.getDisplayName(), (myState==jmri.Turnout.CLOSED ? "Closed":"Thrown"),
-                             path.getName(), block.getDisplayName(), to.getDisplayName(),
-                             (state==jmri.Turnout.CLOSED ? "Closed":"Thrown")));
-                      _textArea.append("\n");
-                    } else {
-                        note = "Note: "; */
                     }
                 }
             }
@@ -678,9 +630,8 @@ public class WarrantTableAction extends AbstractAction {
         }
 
         private void makeWarrant() {
-            String sysName = _sysNameBox.getText().trim();
-            String userName = _userNameBox.getText().trim();
-            sysName = sysName.toUpperCase();
+            String sysName = _sysNameBox.getText();
+            String userName = _userNameBox.getText();
             if (!sysName.startsWith("IW")) {
                 sysName = "IW" + sysName;
             }
@@ -715,4 +666,5 @@ public class WarrantTableAction extends AbstractAction {
     }
 
     private final static Logger log = LoggerFactory.getLogger(WarrantTableAction.class);
+
 }

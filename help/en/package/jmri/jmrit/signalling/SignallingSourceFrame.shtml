@@ -21,8 +21,7 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
-<div class="nomenu" id="mBody">
+  <div class="nomenu" id="mBody">
   <div id="mainContent">
 
       <h1>JMRI: Signal Logic Source Frame</h1>

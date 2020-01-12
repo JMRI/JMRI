@@ -10,7 +10,7 @@ import org.junit.runners.Suite;
         HexFileFrameTest.class,
         HexFileServerTest.class,
         LnHexFilePortTest.class,
-        LocoNetSystemConnectionMemoTest.class,
+        HexFileSystemConnectionMemoTest.class,
         LnHexFileActionTest.class,
         LnSensorManagerTest.class,
 })

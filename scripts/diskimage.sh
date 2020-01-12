@@ -54,7 +54,7 @@ rm -f temp.dmg $IMAGEFILE
 # create disk image and mount
 
 jmrisize=`du -ms "$INPUT" | awk '{print $1}'`
-imagesize=`expr $jmrisize + 10`
+imagesize=`expr $jmrisize + 30`
 
 if [ "$SYSTEM" = "MACOSX" ]
 then

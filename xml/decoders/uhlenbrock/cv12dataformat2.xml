@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2014 All rights reserved                            -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2014</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Alain</firstname>
+        <surname>Le Marchand</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2014-05-11</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>Initial version as separate file from cv49dataformat.xml</revremark>
+    </revision>
+  <!-- 	Uhlenbrock IntelliDrive2 (2018-) Decoder CV 12				-->
+  <!-- 	valid for certain decoder types only  :              		-->
+  <!-- 				73xx5, PIKO 4.1 RH2400  (not exhaustive)   		-->
+  </revhistory>
+  <variable item="Digital format" CV="12" comment="DC, AC, DCC, Motorola" default="15" mask="XXXXVVVV">
+	<enumVal>
+        <enumChoice choice="Disabled">
+            <choice>Disabled</choice>
+            <choice xml:lang="fr">Désactivé</choice>
+            <choice xml:lang="it">Disabilitato</choice>
+            <choice xml:lang="de">Deaktiviert</choice>
+        </enumChoice>
+        <enumChoice choice="DC only">
+            <choice>Analog DC only</choice>
+            <choice xml:lang="de">Analog DC</choice>
+            <choice xml:lang="it">solo DC</choice>
+        </enumChoice>
+        <enumChoice choice="AC only">
+            <choice>Analog AC only</choice>
+            <choice xml:lang="de">Analog Wechselstrom</choice>
+            <choice xml:lang="it">solo AC</choice>
+        </enumChoice>
+        <enumChoice choice="DC and AC">
+            <choice>AC and DC</choice>
+            <choice xml:lang="de">Analog AC + DC</choice>
+            <choice xml:lang="it">AC + DC</choice>
+        </enumChoice>
+        <enumChoice choice="DCC only">
+            <choice>DCC only</choice>
+            <choice xml:lang="de">nur DCC</choice>
+            <choice xml:lang="it">solo DCC</choice>
+        </enumChoice>
+        <enumChoice choice="DCC and DC">
+            <choice>DCC and DC</choice>
+            <choice xml:lang="de">DCC + DC</choice>
+            <choice xml:lang="it">DCC + DC</choice>
+        </enumChoice>
+        <enumChoice choice="DCC and AC">
+            <choice>DCC and AC</choice>
+            <choice xml:lang="de">DCC + AC</choice>
+            <choice xml:lang="it">DCC + AC</choice>
+        </enumChoice>
+        <enumChoice choice="DCC, DC and AC">
+            <choice>DCC, DC and AC</choice>
+            <choice xml:lang="de">DCC + DC + AC</choice>
+            <choice xml:lang="it">DCC + DC + AC</choice>
+        </enumChoice>
+        <enumChoice choice="Motorola only">
+            <choice>Motorola only</choice>
+            <choice xml:lang="de">nur Motorola</choice>
+            <choice xml:lang="it">solo Motorola</choice>
+        </enumChoice>
+        <enumChoice choice="DCC and Motorola" value="12">
+            <choice>DCC and Motorola</choice>
+            <choice xml:lang="de">DCC und Motorola</choice>
+            <choice xml:lang="it">DCC e Motorola</choice>
+        </enumChoice>
+        <enumChoice choice="All Formats" value="15">
+            <choice>All of these</choice>
+            <choice xml:lang="de">Alle</choice>
+            <choice xml:lang="it">Tutti</choice>
+        </enumChoice>
+	</enumVal>
+	<label>Data format</label>
+	<label xml:lang="de">Datenformat</label>			
+	<tooltip>If Disabled, the decoder will no longer accept commands and can only be programmed</tooltip>
+	<tooltip xml:lang="de">Wenn deaktiviert, erhält der Decoder keine Fahrbefehle mehr und kann nur noch programmiert werden</tooltip>
+	<tooltip xml:lang="it">Se disabilitato, non accetta comandi e può essere solo programmato</tooltip>
+  </variable>
+</variables>

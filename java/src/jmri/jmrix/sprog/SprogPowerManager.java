@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2001
  */
 public class SprogPowerManager extends jmri.managers.AbstractPowerManager
-        implements PowerManager, SprogListener {
+        implements SprogListener {
 
     SprogTrafficController trafficController = null;
 

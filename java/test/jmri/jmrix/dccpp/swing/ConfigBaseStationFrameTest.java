@@ -7,43 +7,34 @@ import jmri.jmrix.dccpp.DCCppSensorManager;
 import jmri.jmrix.dccpp.DCCppSystemConnectionMemo;
 import jmri.jmrix.dccpp.DCCppTurnoutManager;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
-
+import org.junit.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
-public class ConfigBaseStationFrameTest {
-
-    @Test
-    public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        // infrastructure objects
-        DCCppInterfaceScaffold tc = new DCCppInterfaceScaffold(new DCCppCommandStation());
-
-        DCCppSystemConnectionMemo memo = new DCCppSystemConnectionMemo(tc);
-
-        ConfigBaseStationFrame t = new ConfigBaseStationFrame(new DCCppSensorManager(tc,memo.getSystemPrefix()),new DCCppTurnoutManager(tc,memo.getSystemPrefix()),tc);
-        Assert.assertNotNull("exists",t);
-        t.dispose();
-    }
+public class ConfigBaseStationFrameTest extends jmri.util.JmriJFrameTestBase {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
+        // infrastructure objects
+        DCCppInterfaceScaffold tc = new DCCppInterfaceScaffold(new DCCppCommandStation());
+        DCCppSystemConnectionMemo memo = new DCCppSystemConnectionMemo(tc);
+        if (!GraphicsEnvironment.isHeadless()) {
+            frame = new ConfigBaseStationFrame(new DCCppSensorManager(memo), new DCCppTurnoutManager(memo), tc);
+        }
+
     }
 
     @After
+    @Override
     public void tearDown() {
-        JUnitUtil.tearDown();
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ConfigBaseStationFrameTest.class);
-
 }

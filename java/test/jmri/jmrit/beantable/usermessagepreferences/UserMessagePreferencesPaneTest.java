@@ -21,7 +21,9 @@ public class UserMessagePreferencesPaneTest {
 
     @Before
     public void setUp() {
-        JUnitUtil.setUp();        JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.initDefaultUserMessagePreferences();
     }
 
     @After

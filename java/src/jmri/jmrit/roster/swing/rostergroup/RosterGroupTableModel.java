@@ -7,9 +7,9 @@ import jmri.jmrit.roster.RosterEntry;
 
 /**
  * Table data model for display of Rosters entries to a specific Roster Group.
- * <P>
+ * <p>
  * Any desired ordering, etc, is handled outside this class.
- * <P>
+ * <p>
  * The initial implementation doesn't automatically update when roster entries
  * change, it only allows the setting of a roster entry, to a roster group.
  * Based Upon RosterTableModel

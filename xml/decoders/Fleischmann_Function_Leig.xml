@@ -14,444 +14,1056 @@
 <!-- for more details.-->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
 	<version author="Xavier Chazelle" version="1.0" lastUpdated="2012/12/08"/>
+	<version author="Wouter Kok" version="2.0" lastUpdated="2019/02/07"/>
+	<!-- Version 1.00 - Initial version                                       -->
+	<!-- Version 2.00 - corrections and German and Dutch translating inserted -->
 	<decoder>
 		<family name="Fleischmann function decoders" mfg="Fleischmann">
-			<model model="Leig Einheit: 2 specific decoders">
+			<model model="Leig Einheit: 2 specific decoders" lowVersionID="110" highVersionID="110" maxInputVolts="20V" formFactor="N" numOuts="3" numFns="22">
+				<output name="6" label="Light inside">
+					<label xml:lang="de">Licht innen</label>
+					<label xml:lang="nl">Binnenligt</label>
+				</output>
+				<output name="7" label="Door right">
+					<label xml:lang="de">Tür rechts</label>
+					<label xml:lang="nl">Rechter deur</label>
+				</output>
+				<output name="8" label="Door left">
+					<label xml:lang="de">Tür links</label>
+					<label xml:lang="nl">Linker deur</label>
+				</output>
 			</model>
 		</family>
 		<programming direct="yes" paged="yes" register="yes" ops="yes"/>
 		<variables>
-			<variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="04" readOnly="yes">
-				<shortAddressVal/>
-			</variable>
-			<variable label="Decoder Lock Feature" CV="15" item="Decoder Lock Feature" comment="Adressed van for programming" default="01" mask="XXXXXXVV">
-				<enumVal>
-					<enumChoice choice="no decoder selected - locked"/>
-					<enumChoice choice="brake van selected nr1"/>
-					<enumChoice choice="non-brake van selected nr2"/>
-				</enumVal>
-			</variable>
-			<variable label="Manufacturer Version No: " CV="7" item="Decoder Version" default="110" readOnly="yes">
+			<xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+			<variable CV="7" item="Decoder Version" default="110" readOnly="yes">
 				<decVal/>
+				<label>Decoder Version :</label>
+				<label xml:lang="it">Versione Decoder: </label>
+				<label xml:lang="fr">Version décodeur: </label>
+				<label xml:lang="de">Decoder Version: </label>
+				<label xml:lang="nl">Decoder versie: </label>
 			</variable>
-			<variable label="Manufacturer ID: " CV="8" item="Manufacturer" default="155" readOnly="yes">
+			<variable CV="8" item="Manufacturer" default="155" readOnly="yes">
 				<decVal/>
+				<label>Manufacturer ID:</label>
+				<label xml:lang="it">ID Costruttore: </label>
+				<label xml:lang="fr">ID constructeur: </label>
+				<label xml:lang="de">Hersteller ID: </label>
+				<label xml:lang="nl">Fabrikanten ID: </label>
+				<tooltip>&lt;html&gt;ID 155 = Fleischmann&lt;br&gt; https://https://www.fleischmann.de/en/home/index.html&lt;br&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;ID 155 = Fleischmann&lt;br&gt;https://www.fleischmann.de/de/home/index.html&lt;br&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;ID 155 = Fleischmann&lt;br&gt;www.fleischmann.de/de/home/index.html&lt;br&gt;</tooltip>
 			</variable>
-			<variable label="Extended Address" CV="17" comment="4 digit address (Range 128-10240)" item="Long Address">
-				<longAddressVal/>
-				<label>Long Address</label>
-				<tooltip>Long Address: Each van should get the same address see Leig pane</tooltip>
-				<comment>4 digit address (Range 128-10240) van selected trhough CV 15</comment>
-			</variable>
-			<variable label="Speed Steps" CV="29" mask="XXXXXXVX" default="1" item="Speed Step Mode" tooltip="Sets the speed step mode default 28/128">
+			<variable CV="12" default="64" item="protocol">
 				<enumVal>
-					<enumChoice choice="14">
-						<choice>14</choice>
+					<enumChoice choice="DCC protocol active" value = "64">
+						<choice>DCC protocol active</choice>
+						<choice xml:lang="de">DCC Protokoll aktiv</choice>
+						<choice xml:lang="nl">DCC-protocol actief</choice>
 					</enumChoice>
-					<enumChoice choice="28/128">
-						<choice>28/128</choice>
+					<enumChoice choice="SX2 protocol active" value = "8">
+						<choice>SX2 (selecrix-2) protocol active</choice>
+						<choice xml:lang="de">SX2 (selecrix-2) Protokoll aktiv</choice>
+						<choice xml:lang="nl">SX2 (selecrix-2) protocol actief</choice>
+					</enumChoice>
+						<enumChoice choice="DCC and SX2 active" value = "72">
+						<choice>DCC and SX2 active</choice>
+						<choice xml:lang="de">DCC und SX2 aktiv</choice>
+						<choice xml:lang="nl">DCC en SX2 actief</choice>
 					</enumChoice>
 				</enumVal>
+				<label>protocol  </label>
+				<label xml:lang="de">Protokoll  </label>
+				<label xml:lang="nl">protocol  </label>
+				<tooltip>&lt;html&gt; No protocol active: Analog active &lt;br&gt;DCC protocol active: DCC protocol and analog is active &lt;br&gt;SX2 (selecrix-2) protocol active: SX2 protocol and analog is active &lt;br&gt;DCC and SX2 active: DCC-, SX2 protocol and analog is active &lt;br&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt; Kein Protokoll aktiv: Analog aktiv &lt;br&gt;DCC Protokoll aktiv: DCC Protokoll and Analog ist aktiv &lt;br&gt;SX2 (selecrix-2) Protokoll aktiv: SX2 Protokoll and Analog ist aktiv &lt;br&gt;DCC en SX2 aktiv: DCC-, SX2 Protokoll and Analog ist aktiv &lt;br&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;Geen protocol actief: Analoog is actief &lt;br&gt;DCC-protocol actief: DCC-protocol en analoog is actief &lt;br&gt;SX2 (selecrix-2) protocol actief: SX2-protocol en analoog is actief &lt;br&gt;DCC en SX2 actief: DCC-, SX2-protocol en analoog is actief &lt;br&gt;</tooltip>
 			</variable>
-			<variable label="Protocol" CV="29" default="1" mask="XXXXXVXX" comment="automatic detection see CV 12">
+			<variable CV="15" mask="XXXXXXVV" item="Decoder Lock" comment="Adressed van for programming" default="01">
 				<enumVal>
-					<enumChoice choice="DCC only"/>
-					<enumChoice choice="automatic detection"/>
+					<enumChoice choice="Decoder protected" value = "0">
+						<choice>Decoder is read/write protected</choice>
+						<choice xml:lang="de">Decoder ist Lese/Schreibgeschützt</choice>
+						<choice xml:lang="nl">Decoder is beveiligd tegen lesen/schrijven</choice>
+					</enumChoice>
+					<enumChoice choice="Car 1 (brakeman‘s cab car) can be programmed/reading" value = "1">
+						<choice>Car 1 (brakeman‘s cab car) can be programmed/reading</choice>
+						<choice xml:lang="de">Wagen 1 (Bremserhauswagen) kann programmiert/gelesen werden</choice>
+						<choice xml:lang="nl">Wagen 1 (remmershuiswagen) kan gelezen/geprogrammeerd worden</choice>
+					</enumChoice>
+					<enumChoice choice="Car 2 function car" value = "2">
+						<choice>Car 2 (function car) can be programmed/reading</choice>
+						<choice xml:lang="de">Wagen 2 (Funktionswagen) kann programmiert/gelesen werden</choice>
+						<choice xml:lang="nl">Wagen 2 (functie wagen) kan gelezen/geprogrammeerd worden</choice>
+					</enumChoice>
 				</enumVal>
+				<label>Decoder Lock  </label>
+				<label xml:lang="de">Decoder Freigabe  </label>
+				<label xml:lang="nl">Decoder release  </label>
+				<tooltip>&lt;html&gt;This CV defines, which car can be programmed. &lt;br&gt;You must first this CV programming for the one of &lt;br&gt;the cars that you can program. &lt;br&gt;&lt;b&gt;&lt;u&gt;Attention:&lt;/b&gt;&lt;/u&gt; the address of both cars must be equal. &lt;br&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;Diese CV bestimmt, welches wagen programmiert werden kann. &lt;br&gt;Sie müssen zuerst diese CV-Programmierung für das sie ein &lt;br&gt;von dem Wagen, programmieren können. &lt;br&gt;&lt;b&gt;&lt;u&gt;Achtung:&lt;/b&gt;&lt;/u&gt; Die Adresse des beiden Wägens muss gleich sein. &lt;br&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;Deze CV bepaalt, welke wagen geprogrammeerd kan worden. &lt;br&gt;U moet eerst deze CV programmeren voor dat u de een van &lt;br&gt;de wagens kan programmeren. &lt;br&gt;&lt;b&gt;&lt;u&gt;Pasop:&lt;/b&gt;&lt;/u&gt; Het adres van beide wagens moeten gelijk zijn. &lt;br&gt;</tooltip>
 			</variable>
-			<variable label="Address Format" CV="29" default="0" mask="XXVXXXXX">
+			<xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+			<variable CV="29" mask="XXXXXVXX" item="Analog (DC) Operation" default="1">
 				<enumVal>
-					<enumChoice choice="One byte (short) address"/>
-					<enumChoice choice="Two byte (extended) address"/>
+					<enumChoice choice="NMRA Digital only">
+						<choice>NMRA Digital only</choice>
+						<choice xml:lang="it">Solo NMRA Digitale</choice>
+						<choice xml:lang="fr">Digital NMRA seulement</choice>
+						<choice xml:lang="ca">NMRA Digital only (ca)</choice>
+						<choice xml:lang="de">Nur Digital nach NMRA</choice>
+						<choice xml:lang="cs">Pouze digitál NMRA</choice>
+						<choice xml:lang="nl">Alleen digitaal volgens NMRA</choice>
+					</enumChoice>
+					<enumChoice choice="DC conversion enabled">
+						<choice>DC conversion enabled</choice>
+						<choice xml:lang="it">Alim.Analogica Abilitata (DCC+Analogico)</choice>
+						<choice xml:lang="fr">Mode analogique activé</choice>
+						<choice xml:lang="ca">DC conversion enabled (ca)</choice>
+						<choice xml:lang="de">Analogbetrieb Aktiviert</choice>
+						<choice xml:lang="cs">Povolena konverze DC</choice>
+						<choice xml:lang="nl">Analoog modus ingeschakeld</choice>
+					</enumChoice>
 				</enumVal>
+				<label>Power Source Conversion</label>
+				<label xml:lang="it">Conversione Sorgente Alimentazione</label>
+				<label xml:lang="fr">Conversion source d'alimentation</label>
+				<label xml:lang="ca">Power Source Conversion(ca)</label>
+				<label xml:lang="de">Stromquelle Konversion</label>
+				<label xml:lang="cs">Konverze napájení</label>
+				<label xml:lang="nl">Stroombron-omschakeling</label>
+				<tooltip>&lt;html&gt;NMRA Digital only: DCC Operation Only.&lt;br&gt;DC conversion enabled: Analog and CV12 active&lt;br&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;Nur Digital nach NMRA: Funktioniert nur auf das DCC-Protokoll&lt;br&gt;Analogbetrieb Aktiviert: Analog und CV12 ist Aktiv&lt;br&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;Alleen digitaal volgens NMRA: Werkt alleen op het DCC-protocol&lt;br&gt;Analoog modus ingeschakeld: Analoog en CV12 is actief&lt;br&gt;</tooltip>
 			</variable>
-			<variable label="SX2 protocol" CV="12" mask="XXXXVXXX" default="1" item="SX protocol" tooltip="Sets on SX2 protocol">
+			<variable CV="33" mask="XXVXXXXX" minOut="1" item="FL(f) controls output 6" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>FL(f) Light inside</label>
+				<label xml:lang="de">FL(f) Licht innen</label>
+				<label xml:lang="nl">FL(f) Binnenligt</label>
+			</variable>
+			<variable CV="33" mask="XVXXXXXX" minOut="1" item="FL(f) controls output 7" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>FL(f) Door right</label>
+				<label xml:lang="de">FL(f) Tür rechts</label>
+				<label xml:lang="nl">FL(f) Rechter deur</label>
+			</variable>
+			<variable CV="33" mask="VXXXXXXX" minOut="1" item="FL(f) controls output 8" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>FL(f) Door left</label>
+				<label xml:lang="de">FL(f) Tür links</label>
+				<label xml:lang="nl">FL(f) Linker deur</label>
+			</variable>
+			<variable CV="34" mask="XXVXXXXX" minOut="1" item="FL(r) controls output 6" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>FL(r) Light inside</label>
+				<label xml:lang="de">FL(r) Licht innen</label>
+				<label xml:lang="nl">FL(r) Binnenligt</label>
+			</variable>
+			<variable CV="34" mask="XVXXXXXX" minOut="1" item="FL(r) controls output 7" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>FL(r) Door right</label>
+				<label xml:lang="de">FL(r) Tür rechts</label>
+				<label xml:lang="nl">FL(r) Rechter deur</label>
+			</variable>
+			<variable CV="34" mask="VXXXXXXX" minOut="1" item="FL(r) controls output 8" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>FL(r) Door left</label>
+				<label xml:lang="de">FL(r) Tür links</label>
+				<label xml:lang="nl">FL(r) Linker deur</label>
+			</variable>
+			<variable CV="35" mask="XXVXXXXX" minOut="1" item="F1 controls output 6" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F1 Light inside</label>
+				<label xml:lang="de">F1 Licht innen</label>
+				<label xml:lang="nl">F1 Binnenligt</label>
+			</variable>
+			<variable CV="35" mask="XVXXXXXX" minOut="1" item="F1 controls output 7" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F1 Door right</label>
+				<label xml:lang="de">F1 Tür rechts</label>
+				<label xml:lang="nl">F1 Rechter deur</label>
+			</variable>
+			<variable CV="35" mask="VXXXXXXX" minOut="1" item="F1 controls output 8" default="1">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F1 Door left</label>
+				<label xml:lang="de">F1 Tür links</label>
+				<label xml:lang="nl">F1 Linker deur</label>
+			</variable>
+			<variable CV="36" mask="XXVXXXXX" minOut="1" item="F2 controls output 6" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F2 Light inside</label>
+				<label xml:lang="de">F2 Licht innen</label>
+				<label xml:lang="nl">F2 Binnenligt</label>
+			</variable>
+			<variable CV="36" mask="XVXXXXXX" minOut="1" item="F2 controls output 7" default="1">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F2 Door right</label>
+				<label xml:lang="de">F2 Tür rechts</label>
+				<label xml:lang="nl">F2 Rechter deur</label>
+			</variable>
+			<variable CV="36" mask="VXXXXXXX" minOut="1" item="F2 controls output 8" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F2 Door left</label>
+				<label xml:lang="de">F2 Tür links</label>
+				<label xml:lang="nl">F2 Linker deur</label>
+			</variable>
+			<variable CV="37" mask="XXVXXXXX" minOut="1" item="F3 controls output 6" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F3 Light inside</label>
+				<label xml:lang="de">F3 Licht innen</label>
+				<label xml:lang="nl">F3 Binnenligt</label>
+			</variable>
+			<variable CV="37" mask="XVXXXXXX" minOut="1" item="F3 controls output 7" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F3 Door right</label>
+				<label xml:lang="de">F3 Tür rechts</label>
+				<label xml:lang="nl">F3 Rechter deur</label>
+			</variable>
+			<variable CV="37" mask="VXXXXXXX" minOut="1" item="F3 controls output 8" default="1">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F3 Door left</label>
+				<label xml:lang="de">F3 Tür links</label>
+				<label xml:lang="nl">F3 Linker deur</label>
+			</variable>
+			<variable CV="38" mask="XXVXXXXX" minOut="1" item="F4 controls output 6" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F3 Light inside</label>
+				<label xml:lang="de">F3 Licht innen</label>
+				<label xml:lang="nl">F3 Binnenligt</label>
+			</variable>
+			<variable CV="38" mask="XVXXXXXX" minOut="1" item="F4 controls output 7" default="1">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F4 Door right</label>
+				<label xml:lang="de">F4 Tür rechts</label>
+				<label xml:lang="nl">F4 Rechter deur</label>
+			</variable>
+			<variable CV="38" mask="VXXXXXXX" minOut="1" item="F4 controls output 8" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F4 Door left</label>
+				<label xml:lang="de">F4 Tür links</label>
+				<label xml:lang="nl">F4 Linker deur</label>
+			</variable>
+			<variable CV="39" mask="XXVXXXXX" minOut="1" item="F5 controls output 6" default="1">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F5 Light inside</label>
+				<label xml:lang="de">F5 Licht innen</label>
+				<label xml:lang="nl">F5 Binnenligt</label>
+			</variable>
+			<variable CV="39" mask="XVXXXXXX" minOut="1" item="F5 controls output 7" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F5 Door right</label>
+				<label xml:lang="de">F5 Tür rechts</label>
+				<label xml:lang="nl">F5 Rechter deur</label>
+			</variable>
+			<variable CV="39" mask="VXXXXXXX" minOut="1" item="F5 controls output 8" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F5 Door left</label>
+				<label xml:lang="de">F5 Tür links</label>
+				<label xml:lang="nl">F5 Linker deur</label>
+			</variable>
+			<variable CV="40" mask="XXVXXXXX" minOut="1" item="F6 controls output 6" default="1">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F6 Light inside</label>
+				<label xml:lang="de">F6 Licht innen</label>
+				<label xml:lang="nl">F6 Binnenligt</label>
+			</variable>
+			<variable CV="40" mask="XVXXXXXX" minOut="1" item="F6 controls output 7" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F6 Door right</label>
+				<label xml:lang="de">F6 Tür rechts</label>
+				<label xml:lang="nl">F6 Rechter deur</label>
+			</variable>
+			<variable CV="40" mask="VXXXXXXX" minOut="1" item="F6 controls output 8" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F6 Door left</label>
+				<label xml:lang="de">F6 Tür links</label>
+				<label xml:lang="nl">F6 Linker deur</label>
+			</variable>
+			<variable CV="41" mask="XXVXXXXX" minOut="1" item="F7 controls output 6" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F7 Light inside</label>
+				<label xml:lang="de">F7 Licht innen</label>
+				<label xml:lang="nl">F7 Binnenligt</label>
+			</variable>
+			<variable CV="41" mask="XVXXXXXX" minOut="1" item="F7 controls output 7" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F7 Door right</label>
+				<label xml:lang="de">F7 Tür rechts</label>
+				<label xml:lang="nl">F7 Rechter deur</label>
+			</variable>
+			<variable CV="41" mask="VXXXXXXX" minOut="1" item="F7 controls output 8" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F7 Door left</label>
+				<label xml:lang="de">F7 Tür links</label>
+				<label xml:lang="nl">F7 Linker deur</label>
+			</variable>
+			<variable CV="42" mask="XXVXXXXX" minOut="1" item="F8 controls output 6" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F8 Light inside</label>
+				<label xml:lang="de">F8 Licht innen</label>
+				<label xml:lang="nl">F8 Binnenligt</label>
+			</variable>
+			<variable CV="42" mask="XVXXXXXX" minOut="1" item="F8 controls output 7" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F8 Door right</label>
+				<label xml:lang="de">F8 Tür rechts</label>
+				<label xml:lang="nl">F8 Rechter deur</label>
+			</variable>
+			<variable CV="42" mask="VXXXXXXX" minOut="1" item="F8 controls output 8" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F8 Door left</label>
+				<label xml:lang="de">F8 Tür links</label>
+				<label xml:lang="nl">F8 Linker deur</label>
+			</variable>
+			<variable CV="43" mask="XVXXXXXX" minOut="1" item="F9 controls output 7" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F9 Door right</label>
+				<label xml:lang="de">F9 Tür rechts</label>
+				<label xml:lang="nl">F9 Rechter deur</label>
+			</variable>
+			<variable CV="43" mask="VXXXXXXX" minOut="1" item="F9 controls output 8" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F9 Door left</label>
+				<label xml:lang="de">F9 Tür links</label>
+				<label xml:lang="nl">F9 Linker deur</label>
+			</variable>
+			<variable CV="44" mask="XVXXXXXX" minOut="1" item="F10 controls output 7" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F10 Door right</label>
+				<label xml:lang="de">F10 Tür rechts</label>
+				<label xml:lang="nl">F10 Rechter deur</label>
+			</variable>
+			<variable CV="44" mask="VXXXXXXX" minOut="1" item="F10 controls output 8" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F10 Door left</label>
+				<label xml:lang="de">F10 Tür links</label>
+				<label xml:lang="nl">F10 Linker deur</label>
+			</variable>
+			<variable CV="45" mask="XVXXXXXX" minOut="1" item="F11 controls output 7" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F11 Door right</label>
+				<label xml:lang="de">F11 Tür rechts</label>
+				<label xml:lang="nl">F11 Rechter deur</label>
+			</variable>
+			<variable CV="45" mask="VXXXXXXX" minOut="1" item="F11 controls output 8" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F11 Door left</label>
+				<label xml:lang="de">F11 Tür links</label>
+				<label xml:lang="nl">F11 Linker deur</label>
+			</variable>
+			<variable CV="46" mask="XVXXXXXX" minOut="1" item="F12 controls output 7" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F12 Door right</label>
+				<label xml:lang="de">F12 Tür rechts</label>
+				<label xml:lang="nl">F12 Rechter deur</label>
+			</variable>
+			<variable CV="46" mask="VXXXXXXX" minOut="1" item="F12 controls output 8" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F12 Door left</label>
+				<label xml:lang="de">F12 Tür links</label>
+				<label xml:lang="nl">F12 Linker deur</label>
+			</variable>
+			<variable CV="47" mask="XXVXXXXX" minOut="1" item="F13 controls output 6" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F13 Light inside</label>
+				<label xml:lang="de">F13 Licht innen</label>
+				<label xml:lang="nl">F13 Binnenligt</label>
+			</variable>
+			<variable CV="47" mask="XVXXXXXX" minOut="1" item="F13 controls output 7" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F13 Door right</label>
+				<label xml:lang="de">F13 Tür rechts</label>
+				<label xml:lang="nl">F13 Rechter deur</label>
+			</variable>
+			<variable CV="47" mask="VXXXXXXX" minOut="1" item="F13 controls output 8" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F13 Door left</label>
+				<label xml:lang="de">F13 Tür links</label>
+				<label xml:lang="nl">F13 Linker deur</label>
+			</variable>
+			<variable CV="48" mask="XXVXXXXX" minOut="1" item="F14 controls output 6" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F14 Light inside</label>
+				<label xml:lang="de">F14 Licht innen</label>
+				<label xml:lang="nl">F14 Binnenligt</label>
+			</variable>
+			<variable CV="48" mask="XVXXXXXX" minOut="1" item="F14 controls output 7" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F14 Door right</label>
+				<label xml:lang="de">F14 Tür rechts</label>
+				<label xml:lang="nl">F14 Rechter deur</label>
+			</variable>
+			<variable CV="48" mask="VXXXXXXX" minOut="1" item="F14 controls output 8" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F14 Door left</label>
+				<label xml:lang="de">F14 Tür links</label>
+				<label xml:lang="nl">F14 Linker deur</label>
+			</variable>
+			<variable CV="49" mask="XXVXXXXX" minOut="1" item="F15 controls output 6" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F15 Light inside</label>
+				<label xml:lang="de">F15 Licht innen</label>
+				<label xml:lang="nl">F15 Binnenligt</label>
+			</variable>
+			<variable CV="49" mask="XVXXXXXX" minOut="1" item="F15 controls output 7" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F15 Door right</label>
+				<label xml:lang="de">F15 Tür rechts</label>
+				<label xml:lang="nl">F15 Rechter deur</label>
+			</variable>
+			<variable CV="49" mask="VXXXXXXX" minOut="1" item="F15 controls output 8" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F15 Door left</label>
+				<label xml:lang="de">F15 Tür links</label>
+				<label xml:lang="nl">F15 Linker deur</label>
+			</variable>
+			<variable CV="50" mask="XXVXXXXX" minOut="1" item="F16 controls output 6" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F16 Light inside</label>
+				<label xml:lang="de">F16 Licht innen</label>
+				<label xml:lang="nl">F16 Binnenligt</label>
+			</variable>
+			<variable CV="50" mask="XVXXXXXX" minOut="1" item="F16 controls output 7" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F16 Door right</label>
+				<label xml:lang="de">F16 Tür rechts</label>
+				<label xml:lang="nl">F16 Rechter deur</label>
+			</variable>
+			<variable CV="50" mask="VXXXXXXX" minOut="1" item="F16 controls output 8" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F16 Door left</label>
+				<label xml:lang="de">F16 Tür links</label>
+				<label xml:lang="nl">F16 Linker deur</label>
+			</variable>
+			<variable CV="51" mask="XXVXXXXX" minOut="1" item="F17 controls output 6" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F17 Light inside</label>
+				<label xml:lang="de">F17 Licht innen</label>
+				<label xml:lang="nl">F17 Binnenligt</label>
+			</variable>
+			<variable CV="51" mask="XVXXXXXX" minOut="1" item="F17 controls output 7" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F17 Door right</label>
+				<label xml:lang="de">F17 Tür rechts</label>
+				<label xml:lang="nl">F17 Rechter deur</label>
+			</variable>
+			<variable CV="51" mask="VXXXXXXX" minOut="1" item="F17 controls output 8" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F17 Door left</label>
+				<label xml:lang="de">F17 Tür links</label>
+				<label xml:lang="nl">F17 Linker deur</label>
+			</variable>
+			<variable CV="52" mask="XXVXXXXX" minOut="1" item="F18 controls output 6" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F18 Light inside</label>
+				<label xml:lang="de">F18 Licht innen</label>
+				<label xml:lang="nl">F18 Binnenligt</label>
+			</variable>
+			<variable CV="52" mask="XVXXXXXX" minOut="1" item="F18 controls output 7" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F18 Door right</label>
+				<label xml:lang="de">F18 Tür rechts</label>
+				<label xml:lang="nl">F18 Rechter deur</label>
+			</variable>
+			<variable CV="52" mask="VXXXXXXX" minOut="1" item="F18 controls output 8" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F18 Door left</label>
+				<label xml:lang="de">F18 Tür links</label>
+				<label xml:lang="nl">F18 Linker deur</label>
+			</variable>
+			<variable CV="53" mask="XXVXXXXX" minOut="1" item="F19 controls output 6" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F19 Light inside</label>
+				<label xml:lang="de">F19 Licht innen</label>
+				<label xml:lang="nl">F19 Binnenligt</label>
+			</variable>
+			<variable CV="53" mask="XVXXXXXX" minOut="1" item="F19 controls output 7" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F19 Door right</label>
+				<label xml:lang="de">F19 Tür rechts</label>
+				<label xml:lang="nl">F19 Rechter deur</label>
+			</variable>
+			<variable CV="53" mask="VXXXXXXX" minOut="1" item="F19 controls output 8" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F19 Door left</label>
+				<label xml:lang="de">F19 Tür links</label>
+				<label xml:lang="nl">F19 Linker deur</label>
+			</variable>
+			<variable CV="54" mask="XXVXXXXX" minOut="1" item="F20 controls output 6" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F20 Light inside</label>
+				<label xml:lang="de">F20 Licht innen</label>
+				<label xml:lang="nl">F20 Binnenligt</label>
+			</variable>
+			<variable CV="54" mask="XVXXXXXX" minOut="1" item="F20 controls output 7" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F20 Door right</label>
+				<label xml:lang="de">F20 Tür rechts</label>
+				<label xml:lang="nl">F20 Rechter deur</label>
+			</variable>
+			<variable CV="54" mask="VXXXXXXX" minOut="1" item="F20 controls output 8" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F20 Door left</label>
+				<label xml:lang="de">F20 Tür links</label>
+				<label xml:lang="nl">F20 Linker deur</label>
+			</variable>
+			<!-- Specific variables definition for doors and light-->
+			<variable CV="62" mask="XXXXXXXV" item="Doors operation mode" default="1">
 				<enumVal>
-					<enumChoice choice="not SX2"/>
-					<enumChoice choice="SX2"/>
+					<enumChoice choice="Throttle control" value = "0">
+						<choice>Throttle control</choice>
+						<choice xml:lang="de">Fahrtregler-modus</choice>
+						<choice xml:lang="nl">Snelheids-controlemodus</choice>
+					</enumChoice>
+					<enumChoice choice="Function button" value = "1">
+						<choice>Function button mode</choice>
+						<choice xml:lang="de">Funktionstaste-Modus</choice>
+						<choice xml:lang="nl">Functieknop-modus</choice>
+					</enumChoice>
 				</enumVal>
+				<label>Doors operation mode  </label>
+				<label xml:lang="de">Betriebsart der Türen:  </label>
+				<label xml:lang="nl">Bedieningsmodus van de deuren  </label>
+				<tooltip>&lt;html&gt;Here you define how you want to control the doors.&lt;br&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;Hier definieren Sie, wie Sie die Türen zu steuern möchten.&lt;br&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;Hier mee bepaalt u hoe u de deuren wilt aansturen.&lt;br&gt;</tooltip>
 			</variable>
-			<variable label="DCC protocol" CV="12" mask="XVXXXXXX" default="1" item="DCC protocol" tooltip="Sets on DCC protocol">
-				<enumVal>
-					<enumChoice choice="not DCC"/>
-					<enumChoice choice="DCC"/>
-				</enumVal>
+			<variable CV="63" item="Interior lighting" default="1">
+				<decVal min="1" max="16"/>
+				<label>Setting brightness (1-16)  </label>
+				<label xml:lang="de">Helligkeitseinstellung (1-16)  </label>
+				<label xml:lang="nl">Instelling helderheid (1-16)  </label>
+				<tooltip>&lt;html&gt;Here, you determine the brightness of LED lighting. &lt;br&gt;1:   Minimum brightness. &lt;br&gt;16: Maximum brightness.&lt;br&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;Hier bestimmen Sie die Helligkeit der LED-beleuchtung. &lt;br&gt;1:   Minimale helderheid. &lt;br&gt;16: Maximale Helligkeit. &lt;br&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;Hier bepaalt u de helderheid van de Ledverlichting. &lt;br&gt;1:   Minimale helderheid. &lt;br&gt;16: Maximale helderheid. &lt;br&gt;</tooltip>
 			</variable>
-			<!-- Specific variables definition for doors and light of  Leig Einheit-->
-			<variable label="Doors operation mode" CV="62" mask="XXXXXXXV" default="1">
-				<enumVal>
-					<enumChoice choice="Throttle control"/>
-					<enumChoice choice="Fn button control"/>
-				</enumVal>
+			<variable CV="64" item="Doors movement speed" default="8">
+				<decVal min="2" max="16"/>
+				<label>Doors movement speed (2-16)  </label>
+				<label xml:lang="de">Die Geschwindigkeit der Türen (2-16)  </label>
+				<label xml:lang="nl">Die snelheid van de deuren (2-16)  </label>
+				<tooltip>&lt;html&gt;Here you define how you want to control the doors.&lt;br&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;Hier legen Sie fest, wie schnell die Türen gehen.&lt;br&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;Hier mee bepaalt u hoe snel de deuren gaan.&lt;br&gt;</tooltip>
 			</variable>
-			<variable label="Doors movement speed" CV="64" tooltip="min=2, max=16" default="8">
-				<decVal max="16" min="2"/>
-			</variable>
-			<variable label="Doors moving time" CV="65" tooltip="min=10, max=127" default="25">
-				<decVal max="127" min="10"/>
-			</variable>
-			<variable label="Internal light intensity" CV="63" tooltip="min=1, max=16" default="10">
-				<decVal max="16" min="1"/>
-			</variable>
-			<!-- Specific variables definition for doors and light of  Leig Einheit-->
-			<variable label="FL(f) controls light" CV="33" mask="XXVXXXXX" default="0">
-				<enumVal>
-					<enumChoice choice="No"/>
-					<enumChoice choice="Yes"/>
-				</enumVal>
-			</variable>
-			<variable label="FL(f) controls right door" CV="33" mask="XVXXXXXX" default="0">
-				<enumVal>
-					<enumChoice choice="No"/>
-					<enumChoice choice="Yes"/>
-				</enumVal>
-			</variable>
-			<variable label="FL(f) controls left door" CV="33" mask="VXXXXXXX" default="0">
-				<enumVal>
-					<enumChoice choice="No"/>
-					<enumChoice choice="Yes"/>
-				</enumVal>
-			</variable>
-			<variable label="FL(r) controls light" CV="34" mask="XXVXXXXX" default="0">
-				<enumVal>
-					<enumChoice choice="No"/>
-					<enumChoice choice="Yes"/>
-				</enumVal>
-			</variable>
-			<variable label="FL(r) controls right door" CV="34" mask="XVXXXXXX" default="0">
-				<enumVal>
-					<enumChoice choice="No"/>
-					<enumChoice choice="Yes"/>
-				</enumVal>
-			</variable>
-			<variable label="FL(r) controls left door" CV="34" mask="VXXXXXXX" default="0">
-				<enumVal>
-					<enumChoice choice="No"/>
-					<enumChoice choice="Yes"/>
-				</enumVal>
-			</variable>
-			<!--		F1 Button dedicated to van 1 only - brake van-->
-			<variable label="F1 controls light" CV="35" mask="XXVXXXXX" default="0">
-				<enumVal>
-					<enumChoice choice="No"/>
-					<enumChoice choice="Yes"/>
-				</enumVal>
-			</variable>
-			<variable label="F1 controls right door" CV="35" mask="XVXXXXXX" default="0">
-				<enumVal>
-					<enumChoice choice="No"/>
-					<enumChoice choice="Yes"/>
-				</enumVal>
-			</variable>
-			<variable label="F1 controls left door" CV="35" mask="VXXXXXXX" default="1">
-				<enumVal>
-					<enumChoice choice="No"/>
-					<enumChoice choice="Yes"/>
-				</enumVal>
-			</variable>
-			<!--		F2 Button dedicated to van 1 only - brake van-->
-			<variable label="F2 controls light" CV="36" mask="XXVXXXXX" default="0">
-				<enumVal>
-					<enumChoice choice="No"/>
-					<enumChoice choice="Yes"/>
-				</enumVal>
-			</variable>
-			<variable label="F2 controls right door" CV="36" mask="XVXXXXXX" default="1">
-				<enumVal>
-					<enumChoice choice="No"/>
-					<enumChoice choice="Yes"/>
-				</enumVal>
-			</variable>
-			<variable label="F2 controls left door" CV="36" mask="VXXXXXXX" default="0">
-				<enumVal>
-					<enumChoice choice="No"/>
-					<enumChoice choice="Yes"/>
-				</enumVal>
-			</variable>
-			<!--		F3 Button dedicated to van 2 only - non-brake van-->
-			<variable label="F3 controls light" CV="37" mask="XXVXXXXX" default="0">
-				<enumVal>
-					<enumChoice choice="No"/>
-					<enumChoice choice="Yes"/>
-				</enumVal>
-			</variable>
-			<variable label="F3 controls right door" CV="37" mask="XVXXXXXX" default="0">
-				<enumVal>
-					<enumChoice choice="No"/>
-					<enumChoice choice="Yes"/>
-				</enumVal>
-			</variable>
-			<variable label="F3 controls left door" CV="37" mask="VXXXXXXX" default="1">
-				<enumVal>
-					<enumChoice choice="No"/>
-					<enumChoice choice="Yes"/>
-				</enumVal>
-			</variable>
-			<!--		F4 Button dedicated to van 2 only - non-brake van-->
-			<variable label="F4 controls light" CV="38" mask="XXXXXVXX" default="0">
-				<enumVal>
-					<enumChoice choice="No"/>
-					<enumChoice choice="Yes"/>
-				</enumVal>
-			</variable>
-			<variable label="F4 controls right door" CV="38" mask="XXXXVXXX" default="1">
-				<enumVal>
-					<enumChoice choice="No"/>
-					<enumChoice choice="Yes"/>
-				</enumVal>
-			</variable>
-			<variable label="F4 controls left door" CV="38" mask="XXXVXXXX" default="0">
-				<enumVal>
-					<enumChoice choice="No"/>
-					<enumChoice choice="Yes"/>
-				</enumVal>
-			</variable>
-			<!--		F5 Button dedicated to van 1 only - brake van-->
-			<variable label="F5 controls light" CV="39" mask="XXXXXVXX" default="1">
-				<enumVal>
-					<enumChoice choice="No"/>
-					<enumChoice choice="Yes"/>
-				</enumVal>
-			</variable>
-			<variable label="F5 controls right door" CV="39" mask="XXXXVXXX" default="0">
-				<enumVal>
-					<enumChoice choice="No"/>
-					<enumChoice choice="Yes"/>
-				</enumVal>
-			</variable>
-			<variable label="F5 controls left door" CV="39" mask="XXXVXXXX" default="0">
-				<enumVal>
-					<enumChoice choice="No"/>
-					<enumChoice choice="Yes"/>
-				</enumVal>
-			</variable>
-			<!--		F6 Button dedicated to van 2 only - non-brake van-->
-			<variable label="F6 controls light" CV="40" mask="XXXXXVXX" default="1">
-				<enumVal>
-					<enumChoice choice="No"/>
-					<enumChoice choice="Yes"/>
-				</enumVal>
-			</variable>
-			<variable label="F6 controls right door" CV="40" mask="XXXXVXXX" default="0">
-				<enumVal>
-					<enumChoice choice="No"/>
-					<enumChoice choice="Yes"/>
-				</enumVal>
-			</variable>
-			<variable label="F6 controls left door" CV="40" mask="XXXVXXXX" default="0">
-				<enumVal>
-					<enumChoice choice="No"/>
-					<enumChoice choice="Yes"/>
-				</enumVal>
-			</variable>
-			<variable label="F7 controls light" CV="41" mask="XXXXXVXX" default="0">
-				<enumVal>
-					<enumChoice choice="No"/>
-					<enumChoice choice="Yes"/>
-				</enumVal>
-			</variable>
-			<variable label="F7 controls right door" CV="41" mask="XXXXVXXX" default="0">
-				<enumVal>
-					<enumChoice choice="No"/>
-					<enumChoice choice="Yes"/>
-				</enumVal>
-			</variable>
-			<variable label="F7 controls left door" CV="41" mask="XXXVXXXX" default="0">
-				<enumVal>
-					<enumChoice choice="No"/>
-					<enumChoice choice="Yes"/>
-				</enumVal>
-			</variable>
-			<variable label="F8 controls light" CV="42" mask="XXXXXVXX" default="0">
-				<enumVal>
-					<enumChoice choice="No"/>
-					<enumChoice choice="Yes"/>
-				</enumVal>
-			</variable>
-			<variable label="F8 controls right door" CV="42" mask="XXXXVXXX" default="0">
-				<enumVal>
-					<enumChoice choice="No"/>
-					<enumChoice choice="Yes"/>
-				</enumVal>
-			</variable>
-			<variable label="F8 controls left door" CV="42" mask="XXXVXXXX" default="0">
-				<enumVal>
-					<enumChoice choice="No"/>
-					<enumChoice choice="Yes"/>
-				</enumVal>
-			</variable>
-			<variable label="F9 controls right door" CV="43" mask="XXXXXXXV" default="0">
-				<enumVal>
-					<enumChoice choice="No"/>
-					<enumChoice choice="Yes"/>
-				</enumVal>
-			</variable>
-			<variable label="F9 controls left door" CV="43" mask="XXXXXXVX" default="0">
-				<enumVal>
-					<enumChoice choice="No"/>
-					<enumChoice choice="Yes"/>
-				</enumVal>
-			</variable>
-			<variable label="F10 controls right door" CV="44" mask="XXXXXXXV" default="0">
-				<enumVal>
-					<enumChoice choice="No"/>
-					<enumChoice choice="Yes"/>
-				</enumVal>
-			</variable>
-			<variable label="F10 controls left door" CV="44" mask="XXXXXXVX" default="0">
-				<enumVal>
-					<enumChoice choice="No"/>
-					<enumChoice choice="Yes"/>
-				</enumVal>
+			<variable CV="65" item="Doors moving time" default="25">
+				<decVal min="10" max="127"/>
+				<label>The Time for door movement (10-127)  </label>
+				<label xml:lang="de">Die Zeit für Türbewegung (10-127)  </label>
+				<label xml:lang="nl">De Tijd voor beweging van de deur (10-127)  </label>
+				<tooltip>&lt;html&gt;Here you define how long the doors move.&lt;br&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;Hier legen Sie fest, Die Zeit der Türenbewegung.&lt;br&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;Hier definieert u hoe lang de deuren zich bewegen&lt;br&gt;</tooltip>
 			</variable>
 		</variables>
 		<resets>
-			<factReset label="Reset All CVs - selected unit dependent" CV="8" default="8"/>
+			<factReset label="Reset All CVs - selected unit dependent" CV="8" default="8">
+				<label>Reset to factory values</label>
+				<label xml:lang="de">Reset auf Werks-werte</label>
+				<label xml:lang="nl">Reset op de fabriek waarde</label>
+			</factReset>
 		</resets>
 	</decoder>
-	<pane>
-	    <name>Function Map</name>
+	<pane nameFmt="label"> <!-- Function Map -->
+		<name>Function Map</name>
+		<name xml:lang="ca">Mapejat de funcions</name>
+		<name xml:lang="cs">Přiřazení funkcí</name>
+		<name xml:lang="da">Funktions Indstillinger</name>
+		<name xml:lang="de">Funktionszuordnung</name>
+		<name xml:lang="fr">Carte des Fonctions</name>
+		<name xml:lang="it">Mappa Funzioni</name>
+		<name xml:lang="nl">Funktietoewijzing</name>
 		<column>
 			<row>
 				<column>
-					<label label="Each decoder must be programmed separately See Leig Einheit Specific pane"/>
-					<label label="Functions F1,F2,F5 work only for brake van - F3,F4,F6 for non-brake van - are display accordingly"/>
-					<label label=" "/>
-				</column>
-			</row>
-			<separator/>
-			<separator/>
-			<row>
-				<column>
-					<label label="Lighting"/>
-					<label label=" "/>
-					<display item="FL(f) controls light" tooltip="CV 33, Bit 6" format="checkbox"/>
-					<display item="FL(r) controls light" tooltip="CV 34, Bit 6" format="checkbox"/>
-					<display item="F1 controls light" tooltip="CV 35, Bit 6" format="checkbox"/>
-					<label label=" "/>
-					<display item="F2 controls light" tooltip="CV 36, Bit 6" format="checkbox"/>
-					<label label=" "/>
-					<display item="F3 controls light" tooltip="CV 37, Bit 6" format="checkbox"/>
-					<label label=" "/>
-					<display item="F4 controls light" tooltip="CV 38, Bit 3" format="checkbox"/>
-					<label label=" "/>
-					<display item="F5 controls light" tooltip="CV 39, Bit 3" format="checkbox"/>
-					<label label=" "/>
-					<display item="F6 controls light" tooltip="CV 40, Bit 3" format="checkbox"/>
-					<label label=" "/>
-					<display item="F7 controls light" tooltip="CV 41, Bit 3" format="checkbox"/>
-					<display item="F8 controls light" tooltip="CV 42, Bit 3" format="checkbox"/>
-					<label label=" "/>
-					<label label=" "/>
-					<label label=" "/>
-				</column>
-				<column>
-					<label label="Right Door"/>
-					<label label=" "/>
-					<display item="FL(f) controls right door" tooltip="CV 33, Bit 7" format="checkbox"/>
-					<display item="FL(r) controls right door" tooltip="CV 34, Bit 7" format="checkbox"/>
-					<display item="F1 controls right door" tooltip="CV 35, Bit 7" format="checkbox"/>
-					<label label="                      F1: brake van only"/>
-					<display item="F2 controls right door" tooltip="CV 36, Bit 7" format="checkbox"/>
-					<label label="                      F2: brake van only"/>
-					<display item="F3 controls right door" tooltip="CV 37, Bit 7" format="checkbox"/>
-					<label label="                   F3: non-brake van only"/>
-					<display item="F4 controls right door" tooltip="CV 38, Bit 4" format="checkbox"/>
-					<label label="                   F4: non-brake van only"/>
-					<display item="F5 controls right door" tooltip="CV 39, Bit 4" format="checkbox"/>
-					<label label="                      F5: brake van only"/>
-					<display item="F6 controls right door" tooltip="CV 40, Bit 4" format="checkbox"/>
-					<label label="                   F6: non-brake van only"/>
-					<display item="F7 controls right door" tooltip="CV 41, Bit 4" format="checkbox"/>
-					<display item="F8 controls right door" tooltip="CV 42, Bit 4" format="checkbox"/>
-					<display item="F9 controls right door" tooltip="CV 43, Bit 1" format="checkbox"/>
-					<display item="F10 controls right door" tooltip="CV 44, Bit 1" format="checkbox"/>
+					<row>
+						<column>
+							<label>
+								<text>&lt;html&gt;&lt;strong&gt;&lt;u&gt;Use this sheet to determine which functions will control which outputs</text>
+								<text xml:lang="ca">&lt;html&gt;&lt;strong&gt;&lt;u&gt;Usa aquesta pestanya per establir quina funció controla cada sortida</text>
+								<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;&lt;u&gt;Použijte tento list pro určení která funkce bude řídit který výstup</text>
+								<text xml:lang="de">&lt;html&gt;&lt;strong&gt;&lt;u&gt;Hier einstellen, welche Funktion welchen Ausgang steuert</text>
+								<text xml:lang="fr">&lt;html&gt;&lt;strong&gt;&lt;u&gt;Utiliser cette feuille pour déterminer quelles fonctions contrôlent quelles entrées</text>
+								<text xml:lang="it">&lt;html&gt;&lt;strong&gt;&lt;u&gt;Usa questo foglio per programmare quale Funzione contolla quale uscita</text>
+								<text xml:lang="nl">&lt;html&gt;&lt;strong&gt;&lt;u&gt;hier instellen, welke functie welke uitgang aanstuurt</text>
+							</label>
+							<label>
+							<text> </text>
+							</label>
+						</column>
+					</row>
+				<fnmapping/>
+					<row>
+						<label>
+							<text> </text>
+						</label>
+					</row>
+					<row>
+						<column>
+							<display item="Function Map Option 1"/>
+							<display item="Function Map Option 2"/>
+							<display item="Function Map Option 3"/>
+							<display item="Function Map Option 4"/>
+							<display item="Function Map Option 5"/>
+						</column>
+					</row>
 				</column>
 				<column>
-					<label label="Left Door"/>
-					<label label=" "/>
-					<display item="FL(f) controls left door" tooltip="CV 33, Bit 8" format="checkbox"/>
-					<display item="FL(r) controls left door" tooltip="CV 34, Bit 8" format="checkbox"/>
-					<display item="F1 controls left door" tooltip="CV 35, Bit 8" format="checkbox"/>
-					<label label=" "/>
-					<display item="F2 controls left door" tooltip="CV 36, Bit 8" format="checkbox"/>
-					<label label=" "/>
-					<display item="F3 controls left door" tooltip="CV 37, Bit 8" format="checkbox"/>
-					<label label=" "/>
-					<display item="F4 controls left door" tooltip="CV 38, Bit 5" format="checkbox"/>
-					<label label=" "/>
-					<display item="F5 controls left door" tooltip="CV 39, Bit 5" format="checkbox"/>
-					<label label=" "/>
-					<display item="F6 controls left door" tooltip="CV 40, Bit 5" format="checkbox"/>
-					<label label=" "/>
-					<display item="F7 controls left door" tooltip="CV 41, Bit 5" format="checkbox"/>
-					<display item="F8 controls left door" tooltip="CV 42, Bit 5" format="checkbox"/>
-					<display item="F9 controls left door" tooltip="CV 43, Bit 1" format="checkbox"/>
-					<display item="F10 controls left door" tooltip="CV 44, Bit 1" format="checkbox"/>
+					<row>
+						<column>
+							<label>
+								<text>     </text>
+							</label>
+						</column>
+					</row>
+				</column>
+				<separator/>
+				<column>
+					<row>
+						<column>
+							<label>
+								<text>     </text>
+							</label>
+						</column>
+					</row>
+				</column>
+				<column>
+					<label>
+						<text>&lt;html&gt;You can switch several functions with one function key. &lt;br&gt;For example, it is possible to open the door with F1 functions &lt;br&gt;key and turn on the light at the same time. &lt;br&gt;It should be noted, however, that the functions F1, F2 and F5&lt;br&gt;are working only with brakeman‘s cab cars, the functions F3, F4&lt;br&gt;and F6 are working only with function cars. The remaining unused&lt;br&gt;function keys work on both cars. So, if you program the left door&lt;br&gt;to use function key F7, now both left doors are opened &lt;br&gt;simultaneously by pressing F7.</text>
+						<text xml:lang="de">&lt;html&gt;Sie können mit einer Funktionstaste mehrere Funktionen schalten. &lt;br&gt;Es ist zum Beispiel möglich mit Funktionstaste F1 die Tür zu öffnen&lt;br&gt;und gleichzeitig das Licht einzuschalten&lt;br&gt;&lt;br&gt;Es ist aber zu beachten: Die Funktionen F1, F2 und F5 funktionieren&lt;br&gt;nur beim Bremserhauswagen, die Funktionen F3, F4 und F6 nur beim&lt;br&gt;Funktionswagen. &lt;br&gt;Alle anderen, jetzt noch nicht verwendeten Funktionstasten funktionieren&lt;br&gt;bei beiden Wagen. Wenn Sie also für F7 linker Tür programmieren, &lt;br&gt;können durch F7 jetzt beide linken Türen gleichzeitig geöffnet werden.</text>
+						<text xml:lang="nl">&lt;html&gt;U kunt verschillende functies met één functietoets bedienen. &lt;br&gt;Het is bijvoorbeeld mogelijk om de deur met de functietoets F1 &lt;br&gt;te open en het licht op hetzelfde moment in te schakelen. &lt;br&gt; &lt;br&gt;Hierbij moet echter worden opgemerkt: De functies F1, F2 en F5 &lt;br&gt;werkt alleen bij het remmershuiswagen, de functies F3, F4 en F6 werkt &lt;br&gt;alleen bij de functie wagen. Alle andere, nu ongebruikte functietoetsen &lt;br&gt;werken bij beide wagens. Dus, als u op functietoets F7 de linker deur &lt;br&gt;programmeert, gaan nu beide linker deuren open</text>
+					</label>
+					<label>
+						<text>  </text>
+					</label>
 				</column>
 			</row>
 		</column>
 	</pane>
-	<pane>
-	    <name>Leig Einheit Specific</name>
+	<pane nameFmt="label"> <!-- Leig-car unit specific -->
+		<name>Leig-car unit specific</name>
+		<name xml:lang="de">Leig-Wageneinheit Specific</name>
+		<name xml:lang="nl">Leig-wagen-eenheid specifieke</name>
 		<column>
-			<row>
-				<column>
-					<label label="Leig Einheit include one decoder per van. Both decoders are identical and have the same address."/>
-					<label label=" "/>
-					<label label="             IMPORTANT: Each decoder must be separately programmed for all CVs"/>
-					<label label=" "/>
-				</column>
-			</row>
-			<row>
-				<column>
-					<label label="CV15 defines which decoder is programmed"/>
-					<label label="CV16 has a different value in each decoder and is compared to CV15 to allow programmation or lock"/>
-					<label label="Van 1 (brake van) defined as 1 in CV16  -  Van 2 (van without brake-house) defined as 2 in CV16"/>
-					<label label=" "/>
-					<label label="It is preferable to use the MULTIPLE DECODER TOOL to select CV15 value"/>
-					<label label=" "/>
-					<display item="Decoder Lock Feature"/>
-					<label label="when using this command, write it alone and immediately"/>
-				</column>
-			</row>
 			<separator/>
 			<separator/>
 			<row>
 				<column>
-					<label label="light intensity value: (min:1 max:16)"/>
-					<display item="Internal light intensity" tooltip="CV 63, value between 1 and 16"/>
-				</column>
-				<column>
-					<label label="                                "/>
+					<grid gridy="NEXT" weightx="1" ipadx="10">
+						<griditem gridx="0" gridy="0" gridwidth="0" anchor="LINE_START">
+							<label>
+								<text>&lt;html&gt;&lt;h1&gt;&lt;u&gt;Programming</text>
+								<text xml:lang="de">&lt;html&gt;&lt;h1&gt;&lt;u&gt;Programmieren</text>
+								<text xml:lang="nl">&lt;html&gt;&lt;h1&gt;&lt;u&gt;Programmieren</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="1" gridwidth="1">
+							<label>
+								<text>  </text>
+							</label>
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="2" gridwidth="1">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="3" gridwidth="1">
+							<display item="Decoder Lock" format="radiobuttons"/>
+						</griditem>
+						<griditem gridx="0" gridy="4" gridwidth="1">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="5" gridwidth="1">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="6" gridwidth="1" anchor="LINE_START">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="7" gridwidth="1">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+					</grid>
 				</column>
 				<separator/>
 				<column>
-					<label label="            "/>
-				</column>
-				<column>
-					<label label="Numeric Protocol SX2 or DCC or both"/>
-					<display item="SX2 protocol" tooltip="CV 12"/>
-					<display item="DCC protocol" tooltip="CV 12"/>
-					<display item="Protocol" tooltip="CV 12"/>
+					<grid gridy="NEXT" weightx="1" ipadx="10">
+						<griditem gridx="0" gridy="1" gridwidth="1" anchor="LINE_START">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="1" gridwidth="4" anchor="LINE_START">
+							<label>
+								<text>&lt;html&gt;This CV can be set, to decide which of the two cars can be programmed or readout.&lt;br&gt;Also, the programming / reading of the Leig car unit can be switched off completely by this CV.</text>
+								<text xml:lang="de">&lt;html&gt;Mit dieser CV kann eingestellt werden, welcher der beiden Wagen programmiert/gelesen werden kann.&lt;br&gt; Auch kann das Programmieren/Lesen der Leig-Einheit komplett ausgeschaltet werden.</text>
+								<text xml:lang="nl">&lt;html&gt;Met dit CV kan worden ingesteld, welke van de twee voertuigen geprogrammeerd/gelezen worden kan.&lt;br&gt; Het programmering/lezing van de Leig eenheid kan ook volledig worden uitgezet.</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="2" gridwidth="0" anchor="LINE_START">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="3" gridwidth="1" anchor="LINE_START">
+							<label>
+								<text>0:</text>
+							</label>
+						</griditem>
+						<griditem gridx="2" gridy="3" gridwidth="0" anchor="LINE_START">
+							<label>
+								<text>&lt;html&gt;No car can be accessed (read / write protection)</text>
+								<text xml:lang="de">&lt;html&gt;Kein Wagen kann angesprochen werden (Lese-Schreibschutz)</text>
+								<text xml:lang="nl">&lt;html&gt;Geen wagen kan aan gesproken worden (lezen, schrijven)</text>
+							</label>
+						</griditem>
+						<griditem gridx="2" gridy="4" gridwidth="0" anchor="LINE_START">
+							<label>
+								<text>&lt;html&gt;&lt;u&gt;&lt;b&gt;Attention:&lt;/u&gt;&lt;/b&gt; The programming / reading of a CV fails and the car seems to be out of order!</text>
+								<text xml:lang="de">&lt;html&gt;&lt;u&gt;&lt;b&gt;L:&lt;/u&gt;&lt;/b&gt; Das Programmieren/Lesen einer CV schlägt fehl und der Wagen scheint defekt zu sein!</text>
+								<text xml:lang="nl">&lt;html&gt;&lt;u&gt;&lt;b&gt;Let op:&lt;/u&gt;&lt;/b&gt; Programmering/lezen een CV zal mislukken en de wagen lijkt defect te zijn!</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="5" gridwidth="0" anchor="LINE_START">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="6" gridwidth="1" anchor="LINE_START">
+							<label>
+								<text>1:</text>
+							</label>
+						</griditem>
+						<griditem gridx="2" gridy="6" gridwidth="0" anchor="LINE_START">
+							<label>
+								<text>&lt;html&gt;Car 1 (brakeman‘s cab car) can be programmed or readout</text>
+								<text xml:lang="de">&lt;html&gt;Wagen 1 (Bremserhauswagen) kann programmiert/gelesen werden</text>
+								<text xml:lang="nl">&lt;html&gt;Wagen 1 (remmershuiswagen) kan gelezen/geprogrammeerd worden</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="7" gridwidth="0" anchor="LINE_START">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="8" gridwidth="1" anchor="LINE_START">
+							<label>
+								<text>2:</text>
+							</label>
+						</griditem>
+						<griditem gridx="2" gridy="8" gridwidth="0" anchor="LINE_START">
+							<label>
+								<text>&lt;html&gt;Car 2 (function car) can be programmed or readout</text>
+								<text xml:lang="de">&lt;html&gt;Wagen 2 (Funktionswagen) kann programmiert/gelesen werden</text>
+								<text xml:lang="nl">&lt;html&gt;Wagen 2 (functiewagen) kan gelezen/geprogrammeerd worden</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="9" gridwidth="1" anchor="LINE_START">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="10" gridwidth="4" anchor="LINE_START">
+							<label>
+								<text>&lt;html&gt;(This CV should first and only be programmed for programing the car.)</text>
+								<text xml:lang="de">&lt;html&gt;(Dieser CV sollte erst und alleine programmiert werden, für das man der Wagen programmiert.)</text>
+								<text xml:lang="nl">&lt;html&gt;(Deze CV moet als eerste en alleen geprogrammeerd worden voor dat men een wagen programmeert.)</text>
+							</label>
+						</griditem>
+					</grid>
 				</column>
 			</row>
 			<separator/>
+			<separator/>
 			<row>
 				<column>
-					<label label="                                                                         DOORS"/>
-					<label label="Doors movement control: "/>
-					<label label="by Fn buttons in on/off mode or by throttle for movement direction (can generate a conflict if a loc has the same address)"/>
-					<display item="Doors operation mode" tooltip="change only if mandatory"/>
-					<label label=" "/>
-					<label label="Doors movement speed: (minimal speed:2) (maximal speed: 16) "/>
-					<display item="Doors movement speed"/>
-					<label label=" "/>
-					<label label="Doors closing or opening time: (min:10 max:127) - 50ms per unit i.e. 25 represents 1.25s"/>
-					<label label="a too large value can damage the friction mecanism - has to be considered with speed value"/>
-					<display item="Doors moving time" tooltip="avoid too long time - damage danger"/>
+					<grid gridy="NEXT" weightx="1" ipadx="10">
+						<griditem gridx="5" gridy="1" gridwidth="1">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="1" gridwidth="3" anchor="LINE_START">
+							<label>
+								<text>&lt;html&gt;&lt;h1&gt;Protocol</text>
+								<text xml:lang="de">&lt;html&gt;&lt;h1&gt;&lt;u&gt;Protokoll</text>
+								<text xml:lang="nl">&lt;html&gt;&lt;h1&gt;&lt;u&gt;Protocol</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="2" gridwidth="1">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="3" gridwidth="1" anchor="LINE_START">
+							<label>
+								<text>CV29 bit 2 </text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="3" gridwidth="1" anchor="LINE_START">
+							<display item="Analog (DC) Operation" format="radiobuttons" label=""/>
+						</griditem>
+						<griditem gridx="2" gridy="3" gridwidth="1" anchor="LINE_START">
+							<label>
+								<text>    </text>
+							</label>
+						</griditem>
+						<griditem gridx="3" gridy="3" gridwidth="1" anchor="LINE_START">
+							<label>
+								<text>protocol (CV12)  </text>
+								<text xml:lang="de">Protokoll (CV12) </text>
+								<text xml:lang="nl">protocol (CV12)  </text>
+							</label>
+						</griditem>
+						<griditem gridx="4" gridy="3" gridwidth="1" anchor="LINE_START">
+							<display item="protocol" format="radiobuttons" label=""/>
+						</griditem>
+						<griditem gridx="0" gridy="4" gridwidth="1">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="5" gridwidth="4" anchor="LINE_START">
+							<label>
+								<text>CV12 must be unlocked via CV29 Bit2 (CV29 Bit2 on Analog modus)</text>
+								<text xml:lang="de">CV12 muss über CV29 Bit2 freigeschalten werden (CV29 Bit2 auf Analogmodus)</text>
+								<text xml:lang="nl">CV12 moet worden geactiveerd via CV29 Bit2 (CV29 Bit2 op Analoog modus)</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="6" gridwidth="1">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+					</grid>
+				</column>
+				<separator/>
+				<separator/>
+				<column>
+					<grid gridy="NEXT" weightx="1" ipadx="10">
+						<griditem gridx="0" gridy="0" gridwidth="1">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="1" gridwidth="3" anchor="LINE_START">
+							<label>
+								<text>&lt;html&gt;&lt;h1&gt;Interior lighting</text>
+								<text xml:lang="de">&lt;html&gt;&lt;h1&gt;&lt;u&gt;Innenbeleuchtung</text>
+								<text xml:lang="nl">&lt;html&gt;&lt;h1&gt;&lt;u&gt;Binnenverlichting</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="2" gridwidth="1">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="3" gridwidth="1">
+							<row>
+								<display item="Interior lighting"/>
+								<display item="Interior lighting" format="hslider" label=""/>
+							</row>
+						</griditem>
+						<griditem gridx="1" gridy="4" gridwidth="1">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="5" gridwidth="1">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="6" gridwidth="1">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="7" gridwidth="1">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="8" gridwidth="1">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="9" gridwidth="1">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+					</grid>
 				</column>
 			</row>
+			<separator/>
+			<separator/>
+			<row>
+				<column>
+					<grid gridy="NEXT" weightx="1" ipadx="10">
+						
+						<griditem gridx="0" gridy="0" gridwidth="3" anchor="LINE_START">
+							<label>
+								<text>&lt;html&gt;&lt;h1&gt;Doors</text>
+								<text xml:lang="de">&lt;html&gt;&lt;h1&gt;&lt;u&gt;Türen</text>
+								<text xml:lang="nl">&lt;html&gt;&lt;h1&gt;&lt;u&gt;Deuren</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="2" gridwidth="1">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="2" gridy="2" gridwidth="1">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="3" gridwidth="1">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="4" gridwidth="1" anchor="LINE_START">
+							<label>
+								<text>Doors operation mode  </text>
+								<text xml:lang="de">Betriebsart der Türen:  </text>
+								<text xml:lang="nl">Bedieningsmodus van de deuren  </text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="4" gridwidth="1" anchor="LINE_START">
+							<display item="Doors operation mode" format="radiobuttons" label=""/>
+						</griditem>
+						<griditem gridx="0" gridy="5" gridwidth="1">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="6" gridwidth="1">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="7" gridwidth="1">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="8" gridwidth="1">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="9" gridwidth="1">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="10" gridwidth="1">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="11" gridwidth="1" anchor="LINE_START">
+							<label>
+								<text> Doors movement speed (2-16)  </text>
+								<text xml:lang="de">Die Geschwindigkeit der Türen (2-16)  </text>
+								<text xml:lang="nl">Die snelheid van de deuren (2-16)  </text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="11" gridwidth="1" anchor="LINE_START">
+							<row>
+								<display item="Doors movement speed" label=""/>
+								<display item="Doors movement speed" format="hslider" label=""/>
+							</row>
+						</griditem>
+						<griditem gridx="0" gridy="12" gridwidth="1">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="13" gridwidth="1" anchor="LINE_START">
+							<label>
+								<text>The Time for door movement (10-127)  </text>
+								<text xml:lang="de">Die Zeit für Türbewegung (10-127)  </text>
+								<text xml:lang="nl">De Tijd voor beweging van de deur (10-127)  </text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="13" gridwidth="1" anchor="LINE_START">
+							<row>
+								<display item="Doors moving time" label=""/>
+								<display item="Doors moving time" format="hslider" label=""/>
+							</row>
+						</griditem>
+						<griditem gridx="0" gridy="14" gridwidth="1">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+					</grid>
+				</column>
+				<separator/>
+				<column>
+					<grid gridy="NEXT" weightx="1" ipadx="10">
+						<griditem gridx="0" gridy="0" gridwidth="1">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="1" gridwidth="1" anchor="LINE_START">
+							<label>
+								<text>&lt;html&gt;&lt;u&gt;&lt;b&gt;Throttle control:&lt;/u&gt;&lt;/b&gt;&lt;br&gt;Using this mode, the direction of the door movement is specified by the speed control knob of the&lt;br&gt; control unit. The doors are selected by function keys F1 to F4 in the same way as in switch mode.&lt;br&gt; Turning right the rotary knob opens the related door.&lt;br&gt; Turning left the rotary knob closes the door again.</text>
+								<text xml:lang="de">&lt;html&gt;&lt;u&gt;&lt;b&gt;Drehrad-Modus:&lt;/u&gt;&lt;/b&gt;&lt;br&gt;In diesem Modus wird die Bewegungsrichtung der Türen mit dem Fahrtregler des Steuergerätes&lt;br&gt;vorgegeben. Die Türen werden wie beim Schalter-Modus mit F1 bis F4 gewählt.&lt;br&gt;Wird das Drehrad nach rechts gedreht, dann öffnet sich die entsprechende Tür.&lt;br&gt;Wird das Drehrad nach links gedreht, dann wird die Tür wieder geschlossen.</text>
+								<text xml:lang="nl">&lt;html&gt;&lt;u&gt;&lt;b&gt;Snelheids-controlemodus:&lt;/u&gt;&lt;/b&gt;&lt;br&gt; In deze modus, is de richting van de beweging van de deuren met de snelheid regelaar te bedienen.&lt;br&gt; De deuren worden geselecteerd met de functietoetsen F1 t.e.m. F4.&lt;br&gt;Wordt de snelheid regelaar naar rechts gedraaid, dan gaat de overeenkomstige deur open.&lt;br&gt;Wordt de snelheid regelaar naar links gedraaid, dan gaat de deur weer dicht.</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="2" gridwidth="1" anchor="LINE_START">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="3" gridwidth="1" anchor="LINE_START">
+							<label>
+								<text>&lt;html&gt;&lt;u&gt;&lt;b&gt;Function button mode:&lt;/u&gt;&lt;/b&gt;&lt;br&gt;Using the function keys F1 and F2, the doors of the brakeman‘s cab car are controlled and using&lt;br&gt; the function keys F3 and F4, the doors of the function car (without brakeman‘s cab) are controlled.&lt;br&gt; When switching on the function key, the door is opening.&lt;br&gt; When switching off the function key, the related door is closing.</text>
+								<text xml:lang="de">&lt;html&gt; &lt;u&gt;&lt;b&gt;Schalter-Modus:&lt;/u&gt;&lt;/b&gt;&lt;br&gt;Mit den Funktionstasten F1 und F2 werden die Türen des Bremserhauswagens gesteuert und mit&lt;br&gt;den FunktionstastenF3 und F4 die Türen des Wagens ohne Bremserhaus (Funktionswagen).&lt;br&gt;Beim Einschalten einer Funktionstaste werden die Türen geöffnet.&lt;br&gt;Wenn eine Funktionstaste ausgeschaltet wird, schließt sich die entsprechende Tür.</text>
+								<text xml:lang="nl">&lt;html&gt;&lt;u&gt;&lt;b&gt;Functieknop-modus:&lt;/u&gt;&lt;/b&gt;&lt;br&gt;Met de functietoetsen F1 en F2 worden de deuren van den remmershuiswagen geschakeld,&lt;br&gt; met behulp van de functie F3 en F4 de deuren van de functiewagen.&lt;br&gt;Wanneer een functietoets ingeschakeld wordt, worden de deuren geopend.&lt;br&gt;Wanneer een functietoets uitgeschakeld wordt, gaat de bijbehorende deur dicht.</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="4" gridwidth="1" anchor="LINE_START">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="5" gridwidth="1" anchor="LINE_START">
+							<label>
+								<text>&lt;html&gt;The time period for door movement can be adjusted in increments of 50 ms. I.e. value 10: 0,5 s,&lt;br&gt; value 127: 6,35 s. The factory setting of this value is appointed that the doors are completely&lt;br&gt; opened or closed unless the default setting of CV64 is not changed. If desired, the doors can be&lt;br&gt; opened only partially by setting a shorter time.&lt;br&gt; &lt;u&gt;&lt;b&gt;Attention:&lt;/u&gt;&lt;/b&gt; Selecting a too large time period results in driving the door against the limit stop.&lt;br&gt; In the long run, the friction clutch maybe perish.</text>
+								<text xml:lang="de">&lt;html&gt;Die Zeit der Türenbewegung kann in 50ms-Schritten eingestellt werden: z. B. Wert 10: 0,5 s, Wert&lt;br&gt; 127: 6,35 s. Dieser Wert ist werksseitig so eingestellt, dass die Türen ganz geöffnet oder geschlossen&lt;br&gt; werden, solange die Werkseinstellung von CV64 nicht geändert wird. Durch Einstellung kürzerer&lt;br&gt; Zeiten können die Türen je nach Wunsch auch nur teilweise geöffnet werden. &lt;br&gt; &lt;u&gt;&lt;b&gt;Achtung:&lt;/u&gt;&lt;/b&gt; Eine zu große Zeit lässt den Motor gegen den Anschlag fahren.&lt;br&gt; Die Rutschkupplung kann auf Dauer verschleißen.</text>
+								<text xml:lang="nl">&lt;html&gt;De tijd van de beweging van de deur kan worden ingesteld in stappen van 50 MS: bijvoorbeeld de&lt;br&gt; waarde 10: 0,5 s, waarde 127: 6.35 s. Deze waarde is de fabrieksinstelling, zodat de deuren volledig&lt;br&gt; worden geopend of gesloten zolang de standaardinstelling niet veranderd is in CV64. Door het instellen &lt;br&gt;van kortere tijd, kunnen de deuren gedeeltelijk worden geopend afhankelijk van de tijdsinstelling.&lt;br&gt; &lt;u&gt;&lt;b&gt; Let op:&lt;/u&gt;&lt;/b&gt; Een te lange tijd, laad de motor tegen de aanslag komen. &lt;br&gt;De vertragingskoppeling kan daar door op de lange termijn slijten.</text>
+							</label>
+						</griditem>
+					</grid>
+					<label>
+						<text>  </text>
+					</label>
+				</column>
+			</row>
+			<separator/>
+			<separator/>
 		</column>
 	</pane>
 </decoder-config>

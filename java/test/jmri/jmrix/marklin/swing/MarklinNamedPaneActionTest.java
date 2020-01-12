@@ -28,6 +28,7 @@ public class MarklinNamedPaneActionTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
     }
 
     @After

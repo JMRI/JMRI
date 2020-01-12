@@ -41,12 +41,19 @@ public class TrainsTableSetColorFrame extends OperationsFrame implements java.be
 
     // combo boxes
     JComboBox<Train> trainBox = InstanceManager.getDefault(TrainManager.class).getTrainComboBox();
+    
+    @SuppressWarnings("deprecation") // JColorChooser is replacement for getRowColorComboBox, but has different layout
     JComboBox<String> colorBox = InstanceManager.getDefault(TrainManager.class).getRowColorComboBox();
+    @SuppressWarnings("deprecation") // JColorChooser is replacement for getRowColorComboBox, but has different layout
     JComboBox<String> colorResetBox = InstanceManager.getDefault(TrainManager.class).getRowColorComboBox();
 
+    @SuppressWarnings("deprecation") // JColorChooser is replacement for getRowColorComboBox, but has different layout
     JComboBox<String> colorBuiltBox = InstanceManager.getDefault(TrainManager.class).getRowColorComboBox();
+    @SuppressWarnings("deprecation") // JColorChooser is replacement for getRowColorComboBox, but has different layout
     JComboBox<String> colorBuildFailedBox = InstanceManager.getDefault(TrainManager.class).getRowColorComboBox();
+    @SuppressWarnings("deprecation") // JColorChooser is replacement for getRowColorComboBox, but has different layout
     JComboBox<String> colorTrainEnRouteBox = InstanceManager.getDefault(TrainManager.class).getRowColorComboBox();
+    @SuppressWarnings("deprecation") // JColorChooser is replacement for getRowColorComboBox, but has different layout
     JComboBox<String> colorTerminatedBox = InstanceManager.getDefault(TrainManager.class).getRowColorComboBox();
 
     // display panels based on which option is selected

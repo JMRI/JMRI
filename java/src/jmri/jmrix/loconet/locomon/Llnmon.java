@@ -21,6 +21,11 @@ import org.slf4j.LoggerFactory;
 /**
  * A utility class for formatting LocoNet packets into human-readable text.
  * <p>
+ * Rather than using this formatter class, use 
+ * {@link LocoNetMessage#toMonitorString(String)} (preferred) or 
+ * {@link LocoNetMessage#toMonitorString()}
+ * for each individual LocoNet message instead.
+ * <p>
  * Much of this file is a Java-recoding of the display.c file from the llnmon
  * package of John Jabour. Some of the conversions involve explicit decoding of
  * structs defined in loconet.h in that same package. Those parts are (C)
@@ -52,10 +57,16 @@ import org.slf4j.LoggerFactory;
  * and throttle semaphore message was provided by B. Milhaupt, used with
  * permission.
  *
- * @author Bob Jacobsen Copyright 2001, 2002, 2003
+ * @author Bob Jacobsen Copyright 2001, 2002, 2003, 2018
  * @author B. Milhaupt Copyright 2015, 2016, 2018
  * @author Randall Wood Copyright 2016
+ *
+ * @deprecated since 4.13.5; use the 
+ * {@link LocoNetMessage#toMonitorString(String)} (preferred) or
+ * {@link LocoNetMessage#toMonitorString()}
+ * for each individual LocoNet message instead of creating a formatter.
  */
+@Deprecated
 public class Llnmon {
 
     /**
@@ -64,33 +75,15 @@ public class Llnmon {
     private boolean showOpCode = false;
 
     /**
-     * Most recent track status value.
-     */
-    private int trackStatus = -1;
-
-    /**
      * Global flag to indicate the message was not fully parsed, so the hex
      * should be included.
      */
     protected boolean forceHex = false;
 
-    /**
-     * Create a LocoNet Message Formatter. When using this constructor, {@link #setLocoNetReporterManager(jmri.ReporterManager)
-     * }, {@link #setLocoNetSensorManager(jmri.SensorManager) }, and {@link #setLocoNetTurnoutManager(jmri.TurnoutManager)
-     * } may need to be called manually to set the correct device managers.
-     *
-     * @deprecated since 4.5.6; use
-     * {@link #Llnmon(jmri.jmrix.loconet.LocoNetSystemConnectionMemo)} or
-     * {@link #Llnmon(jmri.TurnoutManager, jmri.SensorManager, jmri.ReporterManager)}
-     * instead
-     */
-    @Deprecated
-    public Llnmon() {
-        // prevent NPEs using managers, even if manager is wrong manager
-        this(InstanceManager.getDefault(TurnoutManager.class),
-                InstanceManager.getDefault(SensorManager.class),
-                InstanceManager.getDefault(ReporterManager.class));
-    }
+    private String turnoutPrefix;
+    private String sensorPrefix;
+    private String reporterPrefix;
+
 
     /**
      * Create a LocoNet Message Formatter. Use the system connection memo to get
@@ -98,19 +91,14 @@ public class Llnmon {
      * included in messages with the system names.
      *
      * @param memo the system connection memo
+     * @deprecated since 4.13.5; use the
+     * {@link LocoNetMessage#toMonitorString(String)} (preferred) or
+     * {@link LocoNetMessage#toMonitorString()}
+     * for each individual LocoNet message instead of creating a formatter.
      */
+    @Deprecated
     public Llnmon(LocoNetSystemConnectionMemo memo) {
-        this(); // set default managers
-        // override default managers with correct managers
-        if (memo.provides(TurnoutManager.class)) {
-            this.setLocoNetTurnoutManager(memo.get(TurnoutManager.class));
-        }
-        if (memo.provides(SensorManager.class)) {
-            this.setLocoNetSensorManager(memo.get(SensorManager.class));
-        }
-        if (memo.provides(ReporterManager.class)) {
-            this.setLocoNetReporterManager(memo.get(ReporterManager.class));
-        }
+        this(memo.getSystemPrefix()); // set default managers
     }
 
     /**
@@ -120,11 +108,40 @@ public class Llnmon {
      * @param turnoutManager  turnout manager
      * @param sensorManager   sensor manager
      * @param reporterManager reporter manager
+     *
+     * @deprecated since 4.13.5; use the 
+     * {@link LocoNetMessage#toMonitorString(String)} (preferred) or
+     * {@link LocoNetMessage#toMonitorString()}
+     * for each individual LocoNet message instead of creating a formatter.
      */
-    public Llnmon(@Nonnull TurnoutManager turnoutManager, @Nonnull SensorManager sensorManager, @Nonnull ReporterManager reporterManager) {
-        this.setLocoNetTurnoutManager(turnoutManager);
-        this.setLocoNetSensorManager(sensorManager);
-        this.setLocoNetReporterManager(reporterManager);
+    @Deprecated
+    public Llnmon(@Nonnull TurnoutManager turnoutManager, 
+            @Nonnull SensorManager sensorManager, 
+            @Nonnull ReporterManager reporterManager) {
+        this(turnoutManager.getSystemPrefix());
+        jmri.util.Log4JUtil.deprecationWarning(log, "Llnmon");        
+        this.setLocoNetSensorManager(sensorManager); // a hack to set the sensor prefix
+        this.setLocoNetReporterManager(reporterManager);  // a hack to set the reporter prefix
+    }
+
+    /**
+     * Create a LocoNet Message Formatter. The managers allow the user names of
+     * managed devices to be included in messages with the system names.
+     *
+     * @param prefix  system connection prefix (i.e. "L")
+     *
+     * @deprecated since 4.13.5; use the 
+     * {@link LocoNetMessage#toMonitorString(String)} (preferred) or
+     * {@link LocoNetMessage#toMonitorString()}
+     * for each individual LocoNet message instead of creating a formatter.
+     */
+    @Deprecated
+    public Llnmon(@Nonnull String prefix) {
+        jmri.util.Log4JUtil.deprecationWarning(log, "Llnmon");        
+        turnoutPrefix = prefix+"T";
+        sensorPrefix = prefix+"S";
+        reporterPrefix = prefix+"R";
+
     }
 
     /**
@@ -324,8 +341,8 @@ public class Llnmon {
     /**
      * Return a string which is formatted by a bundle Resource Name.
      *
-     * @param hour   - fast-clock hour
-     * @param minute - fast-clock minute
+     * @param hour    fast-clock hour
+     * @param minute  fast-clock minute
      * @return a formatted string containing the time
      */
     private String fcTimeToString(int hour, int minute) {
@@ -1182,22 +1199,20 @@ public class Llnmon {
         return s;
     }
 
-    private TurnoutManager turnoutManager;
-    private SensorManager sensorManager;
-    private ReporterManager reporterManager;
-    private String locoNetTurnoutPrefix = "";
-    private String locoNetSensorPrefix = "";
-    private String locoNetReporterPrefix = "";
-
     /**
      * Set the LocoNet turnout manager used to find turnout "user names" from
      * turnout "system names"
      *
      * @param turnoutManager the manager
+     * @deprecated since 4.13.5; use the {@link LocoNetMessage#toMonitorString(String)} (preferred) 
+     * or {@link LocoNetMessage#toMonitorString()}
+     * for each individual LocoNet message instead of creating a formatter and 
+     * using this method.
      */
+    @Deprecated
     public final void setLocoNetTurnoutManager(@Nonnull TurnoutManager turnoutManager) {
-        this.turnoutManager = turnoutManager;
-        this.locoNetTurnoutPrefix = turnoutManager.getSystemPrefix() + "T";
+        jmri.util.Log4JUtil.deprecationWarning(log, "setLocoNetTurnoutManager");        
+        turnoutPrefix = turnoutManager.getSystemPrefix()+"T";
     }
 
     /**
@@ -1205,10 +1220,16 @@ public class Llnmon {
      * sensor "system names".
      *
      * @param sensorManager the manager
+     * @deprecated since 4.13.5; use the 
+     * {@link LocoNetMessage#toMonitorString(String)} (preferred) or
+     * {@link LocoNetMessage#toMonitorString()}
+     * for each individual LocoNet message instead of creating a formatter and 
+     * using this method.
      */
+    @Deprecated
     public final void setLocoNetSensorManager(@Nonnull SensorManager sensorManager) {
-        this.sensorManager = sensorManager;
-        this.locoNetSensorPrefix = sensorManager.getSystemPrefix() + "S";
+        jmri.util.Log4JUtil.deprecationWarning(log, "setLocoNetSensorManager");        
+        sensorPrefix = sensorManager.getSystemPrefix()+"S";
     }
 
     /**
@@ -1216,10 +1237,16 @@ public class Llnmon {
      * reporter "system names".
      *
      * @param reporterManager the manager
+     * @deprecated since 4.13.5; use the 
+     * {@link LocoNetMessage#toMonitorString(String)} (preferred) or
+     * {@link LocoNetMessage#toMonitorString()}
+     * for each individual LocoNet message instead of creating a formatter and 
+     * using this method.
      */
+    @Deprecated
     public final void setLocoNetReporterManager(@Nonnull ReporterManager reporterManager) {
-        this.reporterManager = reporterManager;
-        this.locoNetReporterPrefix = reporterManager.getSystemPrefix() + "R";
+        jmri.util.Log4JUtil.deprecationWarning(log, "setLocoNetReporterManager");        
+        reporterPrefix = reporterManager.getSystemPrefix()+"R";
     }
 
     private String interpretOpcPeerXfer20_1(LocoNetMessage l) {
@@ -1719,7 +1746,7 @@ public class Llnmon {
          * <DI_Ss1> <DI_Ss2> <DI_Ss3> <CHK> * where:
          * <p>
          * <DI_Hmf> DigiIPL-capable Host device manufacturer number. This is not
-         * * the same as an NMRA Manufacturer ID. * 0x00 Digitrax * Others No
+         * the same as an NMRA Manufacturer ID. * 0x00 Digitrax * Others No
          * other Host device manufacturer * numbers have been reverse- *
          * engineered
          * <p>
@@ -1735,7 +1762,7 @@ public class Llnmon {
          * <DI_Slv> encodes the DigiIPL-capable Slave device type as follows: *
          * When
          * <DI_Smf> = 0x00 * 0x00 (0 decimal) Report for all Slave device types
-         * * 0x18 (24 decimal) RF24 * Others No other Slave device types have
+         * 0x18 (24 decimal) RF24 * Others No other Slave device types have
          * been * reverse-engineered
          * <p>
          * <DI_Smf> DigiIPL-capable Slave device manufacturer number. This is
@@ -1785,7 +1812,7 @@ public class Llnmon {
          * <p>
          * <DI_Ss3> encodes 7 bits of the 32 bit Slave device serial number: *
          * bit 7 always 0 * bits 6-3 Bits 30-24 of Slave device serial number *
-         * * Information reverse-engineered by B. Milhaupt and used with
+         * Information reverse-engineered by B. Milhaupt and used with
          * permission *
          * **********************************************************************************
          */
@@ -2116,7 +2143,7 @@ public class Llnmon {
                  * address.
                  * <p>
                  * <AD_L> contains the least significant 7 bits of the 14 or 7
-                 * bit address. * * Information reverse-engineered by B.
+                 * bit address. * Information reverse-engineered by B.
                  * Milhaupt and used with permission *
                  * **********************************************************************************
                  */
@@ -2153,7 +2180,7 @@ public class Llnmon {
                  * the Detection Section * bits 3-1 encode the Transponding Zone
                  * as shown below * 000b Zone A * 001b Zone B * 010b Zone C *
                  * 011b Zone D * 100b Zone E * 101b Zone F * 110b Zone G * 111b
-                 * Zone H * bit 0 always 0 * * Information reverse-engineered by
+                 * Zone H * bit 0 always 0 * Information reverse-engineered by
                  * B. Milhaupt and used with permission *
                  * **********************************************************************************
                  */
@@ -2194,10 +2221,10 @@ public class Llnmon {
                 }
 
                 // get system and user names
-                String reporterSystemName = locoNetReporterPrefix
+                String reporterSystemName = reporterPrefix
                         + ((l.getElement(5) & 0x1F) * 128 + l.getElement(6) + 1);
 
-                Reporter reporter = reporterManager.provideReporter(reporterSystemName);
+                Reporter reporter = InstanceManager.getDefault(ReporterManager.class).provideReporter(reporterSystemName);
 
                 String uname = reporter.getUserName();
                 if ((uname != null) && (!uname.isEmpty())) {
@@ -2535,17 +2562,17 @@ public class Llnmon {
              * Device type report * The message bytes as assigned as follows:
              * <p>
              * <0xD0> <DQT_REQ> <DQT_BRD> <DQT_B3> <DQT_B4>
-             * <CHK> * * where:
+             * <CHK> * where:
              * <p>
              * <DQT_REQ> contains the device query request, * encoded as: * bits
              * 7-4 always 0110b * bits 3-1 always 001b * bit 0 (BoardID-1)<7>
              * <p>
              * <DQT_BRD> contains most the device board ID number, * encoded as:
-             * * bit 7 always 0b * bits 6-0 (BoardID-1)<6:0>
+             * bit 7 always 0b * bits 6-0 (BoardID-1)<6:0>
              * <p>
              * <DQT_B3> contains the board type identification, * encoded as: *
              * bits 7-4 always 0000b * bits 3-0 contain the encoded device type,
-             * * encoded as: * 0000b PM4x device * 0001b BDL16x device * 0010b
+             * encoded as: * 0000b PM4x device * 0001b BDL16x device * 0010b
              * SE8C device * 0011b DS64 device * others Unknown device type
              * <p>
              * <DQT_B4> contains device version number: * bit 7 always 0b * bits
@@ -2635,7 +2662,8 @@ public class Llnmon {
         String reporterSystemName;
         String reporterUserName;
         String zone;
-        switch (l.getElement(2) & 0x0E) { // ignore bit 0 which seems to provide some unknown info from the BXP88
+        int bxp88Zone = 1 + (l.getElement(2) & 0x07);
+        switch (l.getElement(2) & 0x0f) { // ignore bit 0 which seems to provide some unknown info from the BXP88
             case 0x00:
                 zone = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_ZONEA");
                 break;
@@ -2667,15 +2695,17 @@ public class Llnmon {
         }
         int type = l.getElement(1) & LnConstants.OPC_MULTI_SENSE_MSG;
 
-        reporterSystemName = locoNetReporterPrefix
+        reporterSystemName = reporterPrefix
                 + ((l.getElement(1) & 0x1F) * 128 + l.getElement(2) + 1);
 
-        Reporter reporter = reporterManager.provideReporter(reporterSystemName);
+                Reporter reporter = InstanceManager.getDefault(ReporterManager.class).provideReporter(reporterSystemName);
         reporterUserName = "";
         String uname = reporter.getUserName();
         if ((uname != null) && (!uname.isEmpty())) {
             reporterUserName = uname;
         }
+        int bxpa1Number = 1 + l.getElement(2) + (l.getElement(1) & 0x1F) * 128;
+        int bxp88Number = 1 + (l.getElement(2)/8) + (l.getElement(1) & 0x1F) * 16;
         int section = 1 + (l.getElement(2) / 16) + (l.getElement(1) & 0x1F) * 8;
 
         String locoAddr = convertToMixed(l.getElement(4), l.getElement(3));
@@ -2683,9 +2713,15 @@ public class Llnmon {
                 ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_HELPER_IS_PRESENT")
                 : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_HELPER_IS_ABSENT");
 
-        return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_REPORT",
-                locoAddr, transpActivity, reporterSystemName,
-                reporterUserName, section, zone);
+        if ((l.getElement(2) & 0x1) == 0) {
+            return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_REPORT_WITH_BXP88",
+                    locoAddr, transpActivity, reporterSystemName,
+                    reporterUserName, section, zone, bxp88Number, bxp88Zone, bxpa1Number);
+        } else {
+            return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_REPORT_NOT_BDL16X",
+                    locoAddr, transpActivity, reporterSystemName,
+                    reporterUserName, bxp88Number, bxp88Zone, bxpa1Number);
+        }
     }
 
     private String interpretOpcWrSlDataOpcSlRdData(LocoNetMessage l) {
@@ -2702,12 +2738,6 @@ public class Llnmon {
             mode = Bundle.getMessage("LN_MSG_SLOT_HELPER_ACCESS_TYPE_REQUEST");
         } else {
             mode = Bundle.getMessage("LN_MSG_SLOT_HELPER_ACCESS_TYPE_RESPONSE");
-        }
-
-        int track_stat = l.getElement(7);
-        /* check track status value and display */
-        if (trackStatus != track_stat) {
-            trackStatus = track_stat;
         }
 
         switch (slot) {
@@ -2760,9 +2790,9 @@ public class Llnmon {
         int in2 = l.getElement(2);
         int contactNum = ((SENSOR_ADR(in1, in2) - 1) * 2 + ((in2 & LnConstants.OPC_INPUT_REP_SW) != 0 ? 2 : 1));
         // get system and user names
-        String sensorSystemName = locoNetSensorPrefix + contactNum;
+        String sensorSystemName = sensorPrefix + contactNum;
         String sensorUserName = "";
-        Sensor sensor = sensorManager.provideSensor(sensorSystemName);
+        Sensor sensor = InstanceManager.getDefault(SensorManager.class).provideSensor(sensorSystemName);
         sensorUserName = "";
         String uname = sensor.getUserName();
         if ((uname != null) && (!uname.isEmpty())) {
@@ -2805,12 +2835,12 @@ public class Llnmon {
         int sn1 = l.getElement(1);
         int sn2 = l.getElement(2);
         // get system and user names
-        String turnoutSystemName;
         String turnoutUserName = "";
-        turnoutSystemName = locoNetTurnoutPrefix
-                + SENSOR_ADR(sn1, sn2);
 
-        Turnout turnout = turnoutManager.provideTurnout(turnoutSystemName);
+        String turnoutSystemName = turnoutPrefix
+                + SENSOR_ADR(sn1, sn2);
+        Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).provideTurnout(turnoutSystemName);
+
         String uname = turnout.getUserName();
         if ((uname != null) && (!uname.isEmpty())) {
             turnoutUserName = uname;
@@ -2844,15 +2874,17 @@ public class Llnmon {
             return "";
         }
         // get system and user names
-        String turnoutSystemName = "";
         String turnoutUserName = "";
-        turnoutSystemName = locoNetTurnoutPrefix
-                + SENSOR_ADR(l.getElement(1), l.getElement(2));
 
-        Turnout turnout = turnoutManager.provideTurnout(turnoutSystemName);
+        String turnoutSystemName = turnoutPrefix
+                + SENSOR_ADR(l.getElement(1), l.getElement(2));
+        Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).provideTurnout(turnoutSystemName);
+
         String uname = turnout.getUserName();
         if ((uname != null) && (!uname.isEmpty())) {
             turnoutUserName = uname;
+        } else {
+            turnoutUserName = "";
         }
 
         String pointsDirection = ((sw2 & LnConstants.OPC_SW_ACK_CLOSED) != 0
@@ -2870,16 +2902,18 @@ public class Llnmon {
         if ((l.getElement(2) & 0x40) != 0x00) {
             return "";
         }
-        String turnoutSystemName;
         String turnoutUserName = "";
-        turnoutSystemName = locoNetTurnoutPrefix
+        String turnoutSystemName = turnoutPrefix
                 + SENSOR_ADR(l.getElement(1), l.getElement(2));
-        Turnout turnout = turnoutManager.provideTurnout(turnoutSystemName);
-        String uname = "";
-        uname = turnout.getUserName();
+        Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).provideTurnout(turnoutSystemName);
+
+        String uname = turnout.getUserName();
         if ((uname != null) && (!uname.isEmpty())) {
             turnoutUserName = uname;
+        } else {
+            turnoutUserName = "";
         }
+
         return Bundle.getMessage("LN_MSG_SW_STATE", turnoutSystemName,
                 turnoutUserName);
     }
@@ -3033,15 +3067,19 @@ public class Llnmon {
             // ordinary form, LPU V1.0 page 9
             // handle cases which are not "stationary decoder interrogate" messages
             // get system and user names
-            String turnoutSystemName = "";
             String turnoutUserName = "";
-            turnoutSystemName = locoNetTurnoutPrefix
+
+            String turnoutSystemName = turnoutPrefix
                     + SENSOR_ADR(l.getElement(1), l.getElement(2));
-            Turnout turnout = turnoutManager.provideTurnout(turnoutSystemName);
+            Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).provideTurnout(turnoutSystemName);
+
             String uname = turnout.getUserName();
             if ((uname != null) && (!uname.isEmpty())) {
                 turnoutUserName = uname;
+            } else {
+                turnoutUserName = "";
             }
+
             String pointsDirection = ((sw2 & LnConstants.OPC_SW_ACK_CLOSED) != 0
                     ? Bundle.getMessage("LN_MSG_SW_POS_CLOSED")
                     : Bundle.getMessage("LN_MSG_SW_POS_THROWN"));
@@ -3853,7 +3891,7 @@ public class Llnmon {
          * normal slot read/write message - see info above *
          * ************************************************
          */
-        trackStatus = l.getElement(7); // track status
+        int trackStatus = l.getElement(7); // track status
         int stat = l.getElement(3); // slot status
         int adr = l.getElement(4); // loco address
         int spd = l.getElement(5); // command speed
@@ -4054,10 +4092,11 @@ public class Llnmon {
             int[] packetInt = new int[len];
             packet[0] = (byte) (im1 + ((dhi & 0x01) != 0 ? 0x80 : 0));
             packetInt[0] = (im1 + ((dhi & 0x01) != 0 ? 0x80 : 0));
-            if (len >= 2) {
-                packet[1] = (byte) (im2 + ((dhi & 0x02) != 0 ? 0x80 : 0));
-                packetInt[1] = (im2 + ((dhi & 0x02) != 0 ? 0x80 : 0));
-            }
+
+            // len >= 2 always true at this point
+            packet[1] = (byte) (im2 + ((dhi & 0x02) != 0 ? 0x80 : 0));
+            packetInt[1] = (im2 + ((dhi & 0x02) != 0 ? 0x80 : 0));
+
             if (len >= 3) {
                 packet[2] = (byte) (im3 + ((dhi & 0x04) != 0 ? 0x80 : 0));
                 packetInt[2] = (im3 + ((dhi & 0x04) != 0 ? 0x80 : 0));

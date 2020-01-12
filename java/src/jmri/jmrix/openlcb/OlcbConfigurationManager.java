@@ -1,10 +1,14 @@
 package jmri.jmrix.openlcb;
 
+import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import jmri.ClockControl;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
 import jmri.jmrix.can.CanListener;
@@ -12,6 +16,9 @@ import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficController;
+import jmri.profile.ProfileManager;
+import jmri.util.ThreadingUtil;
+
 import org.openlcb.Connection;
 import org.openlcb.LoaderClient;
 import org.openlcb.MessageDecoder;
@@ -27,6 +34,7 @@ import org.openlcb.can.MessageBuilder;
 import org.openlcb.can.OpenLcbCanFrame;
 import org.openlcb.implementations.DatagramService;
 import org.openlcb.implementations.MemoryConfigurationService;
+import org.openlcb.protocols.TimeProtocol;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,6 +45,48 @@ import org.slf4j.LoggerFactory;
  */
 public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManager {
 
+    // Constants for the protocol options keys. These option keys are used to save configuration
+    // in the profile.xml and set on a per-connection basis in the connection preferences.
+
+    // Protocol key for node identification
+    public static final String OPT_PROTOCOL_IDENT = "Ident";
+
+    // Option key for Node ID
+    public static final String OPT_IDENT_NODEID = "NodeId";
+    // Option key for User Name, used for the Simple Node Ident Protocol
+    public static final String OPT_IDENT_USERNAME = "UserName";
+    // Option key for User Description, used for the Simple Node Ident Protocol
+    public static final String OPT_IDENT_DESCRIPTION = "UserDescription";
+
+    // Protocol key for fast clock
+    public static final String OPT_PROTOCOL_FASTCLOCK = "FastClock";
+
+    // Option key for fast clock mode
+    public static final String OPT_FASTCLOCK_ENABLE = "EnableMode";
+    // Option value for setting fast clock to disabled.
+    public static final String OPT_FASTCLOCK_ENABLE_OFF = "disabled";
+    // Option value for setting fast clock to clock generator/producer/master.
+    public static final String OPT_FASTCLOCK_ENABLE_GENERATOR = "generator";
+    // Option value for setting fast clock to clock consumer/slave.
+    public static final String OPT_FASTCLOCK_ENABLE_CONSUMER = "consumer";
+
+    // Option key for setting the clock identifier.
+    public static final String OPT_FASTCLOCK_ID = "ClockId";
+    // Option value for using the well-known clock id "default clock"
+    public static final String OPT_FASTCLOCK_ID_DEFAULT = "default";
+    // Option value for using the well-known clock id "default real-time clock"
+    public static final String OPT_FASTCLOCK_ID_DEFAULT_RT = "realtime";
+    // Option value for using the well-known clock id "alternate clock 1"
+    public static final String OPT_FASTCLOCK_ID_ALT_1 = "alt1";
+    // Option value for using the well-known clock id "alternate clock 2"
+    public static final String OPT_FASTCLOCK_ID_ALT_2 = "alt2";
+    // Option value for using a custom clock ID
+    public static final String OPT_FASTCLOCK_ID_CUSTOM = "custom";
+
+    // Option key for setting the clock identifier to a custom value. Must set ClockId==custom in
+    // order to be in effect. The custom clock id is in node ID format.
+    public static final String OPT_FASTCLOCK_CUSTOM_ID = "ClockCustomId";
+
     public OlcbConfigurationManager(CanSystemConnectionMemo memo) {
         super(memo);
 
@@ -46,6 +96,48 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
     }
 
     jmri.jmrix.swing.ComponentFactory cf = null;
+
+    private void initializeFastClock() {
+        boolean isMaster = true;
+        String enableOption = adapterMemo.getProtocolOption(OPT_PROTOCOL_FASTCLOCK, OPT_FASTCLOCK_ENABLE);
+        if (OPT_FASTCLOCK_ENABLE_GENERATOR.equals(enableOption)) {
+            isMaster = true;
+        } else if (OPT_FASTCLOCK_ENABLE_CONSUMER.equals(enableOption)) {
+            isMaster = false;
+        } else {
+            // no clock needed.
+            return;
+        }
+
+        NodeID clockId = null;
+        String clockIdSetting = adapterMemo.getProtocolOption(OPT_PROTOCOL_FASTCLOCK, OPT_FASTCLOCK_ID);
+        if (OPT_FASTCLOCK_ID_DEFAULT.equals(clockIdSetting)) {
+            clockId = TimeProtocol.DEFAULT_CLOCK;
+        } else if (OPT_FASTCLOCK_ID_DEFAULT_RT.equals(clockIdSetting)) {
+            clockId = TimeProtocol.DEFAULT_RT_CLOCK;
+        } else if (OPT_FASTCLOCK_ID_ALT_1.equals(clockIdSetting)) {
+            clockId = TimeProtocol.ALT_CLOCK_1;
+        } else if (OPT_FASTCLOCK_ID_ALT_2.equals(clockIdSetting)) {
+            clockId = TimeProtocol.ALT_CLOCK_2;
+        } else if (OPT_FASTCLOCK_ID_CUSTOM.equals(clockIdSetting)) {
+            String customId = adapterMemo.getProtocolOption(OPT_PROTOCOL_FASTCLOCK, OPT_FASTCLOCK_CUSTOM_ID);
+            if (customId == null || customId.isEmpty()) {
+                log.error("OpenLCB clock initialize: User selected custom clock, but did not provide a Custom Clock ID. Using default clock.");
+            } else {
+                try {
+                    clockId = new NodeID(customId);
+                } catch (IllegalArgumentException e) {
+                    log.error("OpenLCB clock initialize: Custom Clock ID '{}' is in illegal format. Use dotted hex notation like 05.01.01.01.DD.EE", customId);
+                }
+            }
+        }
+        if (clockId == null) {
+            clockId = TimeProtocol.DEFAULT_CLOCK;
+        }
+        log.debug("Creating olcb clock with id {} is_master {}", clockId, isMaster);
+        clockControl = new OlcbClockControl(getInterface(), clockId, isMaster);
+        InstanceManager.setDefault(ClockControl.class, clockControl);
+    }
 
     @Override
     public void configureManagers() {
@@ -67,6 +159,10 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
 
         InstanceManager.setThrottleManager(
                 getThrottleManager());
+        
+        InstanceManager.setLightManager(
+                getLightManager()
+        );
 
         if (getProgrammerManager().isAddressedModePossible()) {
             InstanceManager.store(getProgrammerManager(), jmri.AddressedProgrammerManager.class);
@@ -85,6 +181,8 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         iface.registerMessageListener(loaderClient);
 
         iface.registerMessageListener(new SimpleNodeIdentInfoHandler());
+
+        initializeFastClock();
 
         aliasMap = new AliasMap();
         tc.addCanListener(new CanListener() {
@@ -111,6 +209,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
     TrafficController tc;
     NodeID nodeID;
     LoaderClient loaderClient;
+    OlcbClockControl clockControl;
 
     OlcbInterface getInterface() {
         return olcbCanInterface.getInterface();
@@ -143,6 +242,9 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         if (type.equals(jmri.TurnoutManager.class)) {
             return true;
         }
+        if (type.equals(jmri.LightManager.class)) {
+            return true;
+        }
         if (type.equals(AliasMap.class)) {
             return true;
         }
@@ -170,6 +272,9 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         if (type.equals(CanInterface.class)) {
             return true;
         }
+        if (type.equals(ClockControl.class)) {
+            return clockControl != null;
+        }
         return false; // nothing, by default
     }
 
@@ -187,6 +292,9 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         }
         if (T.equals(jmri.TurnoutManager.class)) {
             return (T) getTurnoutManager();
+        }
+        if (T.equals(jmri.LightManager.class)) {
+            return (T) getLightManager();
         }
         if (T.equals(AliasMap.class)) {
             return (T) aliasMap;
@@ -218,6 +326,9 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         if (T.equals(CanInterface.class)) {
             return (T) olcbCanInterface;
         }
+        if (T.equals(ClockControl.class)) {
+            return (T) clockControl;
+        }
         return null; // nothing, by default
     }
 
@@ -240,7 +351,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             return null;
         }
         if (throttleManager == null) {
-            throttleManager = new OlcbThrottleManager(adapterMemo, this);
+            throttleManager = new OlcbThrottleManager(adapterMemo);
         }
         return throttleManager;
     }
@@ -277,38 +388,77 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         if (sensorManager != null) {
             InstanceManager.deregister(sensorManager, jmri.jmrix.openlcb.OlcbSensorManager.class);
         }
+        if (lightManager != null) {
+            InstanceManager.deregister(lightManager, jmri.jmrix.openlcb.OlcbLightManager.class);
+        }
         if (cf != null) {
             InstanceManager.deregister(cf, jmri.jmrix.swing.ComponentFactory.class);
         }
         InstanceManager.deregister(this, OlcbConfigurationManager.class);
+
+        if (clockControl != null) {
+            clockControl.dispose();
+            InstanceManager.deregister(clockControl, ClockControl.class);
+        }
+    }
+
+    protected OlcbLightManager lightManager;
+    
+    public OlcbLightManager getLightManager() {
+        if (adapterMemo.getDisabled()) {
+            return null;
+        }
+        if (lightManager == null) {
+            lightManager = new OlcbLightManager(adapterMemo);
+        }
+        return lightManager;
     }
 
     class SimpleNodeIdentInfoHandler extends MessageDecoder {
+        /**
+         * Helper function to add a string value to the sequence of bytes to send for SNIP
+         * response content.
+         *
+         * @param value    string to render into byte stream
+         * @param contents represents the byte stream that will be sent.
+         */
+        private void  addStringPart(String value, List<Byte> contents) {
+            if (value == null || value.isEmpty()) {
+                contents.add((byte)0);
+            } else {
+                byte[] bb;
+
+                try {
+                    bb = value.getBytes("UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    bb = new byte[] {'?'};
+                }
+                for (byte b : bb) {
+                    contents.add(b);
+                }
+                // terminating null byte.
+                contents.add((byte)0);
+            }
+        }
 
         SimpleNodeIdentInfoHandler() {
-            byte[] part1 = new byte[]{1, 'J', 'M', 'R', 'I', 0, 'P', 'a', 'n', 'e', 'l', 'P', 'r', 'o', 0}; // NOI18N
-            byte[] part2 = new byte[]{0};
-            byte[] part3;
-            try {
-                part3 = jmri.Version.name().getBytes("UTF-8");  // OpenLCB is UTF-8           // NOI18N
-            } catch (java.io.UnsupportedEncodingException e) {
-                log.error("Cannot proceed if UTF-8 not supported?");
-                part3 = new byte[]{'?'};                                                      // NOI18N
+            List<Byte> l = new ArrayList<>(256);
+            l.add((byte)4); // version byte
+            addStringPart("JMRI", l);
+            addStringPart("PanelPro", l);
+            String name = ProfileManager.getDefault().getActiveProfileName();
+            if (name != null) {
+                addStringPart("Profile " + name, l); // hardware version
+            } else {
+                addStringPart("", l); // hardware version
             }
-            byte[] part4 = new byte[]{0, ' ', 0, ' ', 0};                                         // NOI18N
-            content = new byte[part1.length + part2.length + part3.length + part4.length];
-            int i = 0;
-            for (int j = 0; j < part1.length; j++) {
-                content[i++] = part1[j];
-            }
-            for (int j = 0; j < part2.length; j++) {
-                content[i++] = part2[j];
-            }
-            for (int j = 0; j < part3.length; j++) {
-                content[i++] = part3[j];
-            }
-            for (int j = 0; j < part4.length; j++) {
-                content[i++] = part4[j];
+            addStringPart(jmri.Version.name(), l); // software version
+            l.add((byte)2); // version byte
+            addStringPart(adapterMemo.getProtocolOption(OPT_PROTOCOL_IDENT, OPT_IDENT_USERNAME), l);
+            addStringPart(adapterMemo.getProtocolOption(OPT_PROTOCOL_IDENT, OPT_IDENT_DESCRIPTION), l);
+            content = new byte[l.size()];
+            for (int i = 0; i < l.size(); ++i) {
+                content[i] = l.get(i);
             }
         }
         private final byte[] content;
@@ -335,6 +485,15 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
      * bytes of PID. That changes each time, which isn't perhaps what's wanted.
      */
     protected void getOurNodeID() {
+        String userOption = adapterMemo.getProtocolOption(OPT_PROTOCOL_IDENT, OPT_IDENT_NODEID);
+        if (userOption != null && !userOption.isEmpty()) {
+            try {
+                nodeID = new NodeID(userOption);
+                return;
+            } catch (IllegalArgumentException e) {
+                log.error("User set node ID protocol option which is in invalid format ({}). Expected dotted hex notation like 02.01.12.FF.EE.DD", userOption);
+            }
+        }
         List<NodeID> previous = InstanceManager.getList(NodeID.class);
         if (!previous.isEmpty()) {
             nodeID = previous.get(0);
@@ -404,6 +563,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
                 olcbIf.frameInput().send(convertFromCan(m));
             }
         });
+        olcbIf.getInterface().setLoopbackThread((Runnable r)->ThreadingUtil.runOnLayout(r::run));
         return olcbIf;
     }
 
@@ -444,6 +604,10 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
                 @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     new Thread(() -> {
+                        // N.B. during JUnit testing, the following call tends to hang
+                        // on semaphore acquisition in org.openlcb.can.CanInterface.initialize()
+                        // near line 109 in openlcb lib 0.7.22, which leaves
+                        // the thread hanging around forever.
                         olcbCanInterface.initialize();
                     }, "olcbCanInterface.initialize").start();
                 }

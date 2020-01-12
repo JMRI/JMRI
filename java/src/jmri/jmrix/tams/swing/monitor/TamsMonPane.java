@@ -1,6 +1,5 @@
 package jmri.jmrix.tams.swing.monitor;
 
-import java.util.ResourceBundle;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import jmri.jmrix.tams.TamsListener;
@@ -10,7 +9,7 @@ import jmri.jmrix.tams.TamsSystemConnectionMemo;
 import jmri.jmrix.tams.swing.TamsPanelInterface;
 
 /**
- * Swing action to create and register a MonFrame object
+ * Swing action to create and register a MonFrame object.
  *
  * Based on work by Bob Jacobsen
  *
@@ -18,7 +17,7 @@ import jmri.jmrix.tams.swing.TamsPanelInterface;
  */
 public class TamsMonPane extends jmri.jmrix.AbstractMonPane implements TamsListener, TamsPanelInterface {
 
-    private TamsMessage tm; //Keeping a local copy of the latest TamsMessage for helping with decoding
+    private TamsMessage tm; // Keeping a local copy of the latest TamsMessage for helping with decoding
 
     public TamsMonPane() {
         super();
@@ -31,7 +30,7 @@ public class TamsMonPane extends jmri.jmrix.AbstractMonPane implements TamsListe
 
     @Override
     public String getTitle() {
-        return ResourceBundle.getBundle("jmri.jmrix.tams.TamsBundle").getString("CommandMonitor");
+        return Bundle.getMessage("CommandMonitor");
     }
 
     @Override
@@ -69,9 +68,9 @@ public class TamsMonPane extends jmri.jmrix.AbstractMonPane implements TamsListe
     public void initComponents() {
         super.initComponents();
         JPanel check = new JPanel();
-        disablePollingCheckBox.setText("Disable Polling");
+        disablePollingCheckBox.setText(Bundle.getMessage("DisablePollingBoxLabel"));
         disablePollingCheckBox.setVisible(true);
-        disablePollingCheckBox.setToolTipText("If checked, this will disable the polling messages");
+        disablePollingCheckBox.setToolTipText(Bundle.getMessage("DisablePollingToolTip"));
         disablePollingCheckBox.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -85,12 +84,11 @@ public class TamsMonPane extends jmri.jmrix.AbstractMonPane implements TamsListe
     }
 
     @Override
-    public synchronized void message(TamsMessage l) {  // receive a message and log it
-        tm = l;
+    public synchronized void message(TamsMessage tm) {  // receive a message and log it
         if (tm.isBinary()) {
-            nextLine("Binary cmd: " + tm.toString() + "\n", null);
+            logMessage("Binary cmd: ", tm);
         } else {
-            nextLine("ASCII cmd: " + tm.toString() + "\n", null);
+            logMessage("ASCII cmd: ", tm);
         }
     }
 
@@ -104,12 +102,12 @@ public class TamsMonPane extends jmri.jmrix.AbstractMonPane implements TamsListe
             raw = jmri.util.StringUtil.appendTwoHexFromInt(l.getElement(i) & 0xFF, raw);
         }
         if (l.isUnsolicited()) {
-            nextLine("msg: \"" + l.toString() + "\"\n", raw);
+            logMessage("msg: ", l);
         } else {
             if (tm.isBinary()){
-                nextLine("Binary rep: \"" + l.toString() + "\"\n", raw);
+                logMessage("Binary rep: ", l);
             } else {
-                nextLine("ASCII rep: \"" + l.toString() + "\"\n", raw);
+                logMessage("ASCII rep: " , l);
             }
         }
     }
@@ -120,7 +118,7 @@ public class TamsMonPane extends jmri.jmrix.AbstractMonPane implements TamsListe
     static public class Default extends jmri.jmrix.tams.swing.TamsNamedPaneAction {
 
         public Default() {
-            super(ResourceBundle.getBundle("jmri.jmrix.tams.TamsBundle").getString("CommandMonitor"),
+            super(Bundle.getMessage("CommandMonitor"),
                     new jmri.util.swing.sdi.JmriJFrameInterface(),
                     TamsMonPane.class.getName(),
                     jmri.InstanceManager.getDefault(TamsSystemConnectionMemo.class));

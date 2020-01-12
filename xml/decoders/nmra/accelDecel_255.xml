@@ -43,10 +43,11 @@
   <variable CV="3" item="Accel" default="0" comment="Range 0-255">
     <decVal max="255"/>
     <label>Acceleration Rate</label>
-    <label xml:lang="it">Accellerazione (0-255)</label>
+    <label xml:lang="it">Accellerazione</label>
     <label xml:lang="cs">Míra zrychlení</label>
-    <label xml:lang="fr">Accelération (0-255)</label>
+    <label xml:lang="fr">Accelération</label>
     <label xml:lang="de">Anfahrverzögerung</label>
+    <label xml:lang="nl">Versnelling</label>
     <comment>Range 0-255</comment>
     <comment xml:lang="it">Valori 0-255</comment>
     <comment xml:lang="cs">Meze 0-255</comment>
@@ -57,9 +58,9 @@
   <variable CV="4" item="Decel" default="0" comment="Range 0-255">
     <decVal max="255"/>
     <label>Deceleration Rate</label>
-    <label xml:lang="it">Decellerazione (0-255)</label>
+    <label xml:lang="it">Decellerazione</label>
     <label xml:lang="cs">Míra zpomalení</label>
-    <label xml:lang="fr">Décélération (0-255)</label>
+    <label xml:lang="fr">Décélération</label>
     <label xml:lang="de">Bremszeit</label>
     <label xml:lang="nl">Remvertraging</label>
     <comment>Range 0-255</comment>

@@ -15,14 +15,13 @@ import java.util.prefs.AbstractPreferences;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import jmri.Version;
 import jmri.profile.Profile;
+import jmri.profile.ProfileUtils;
 import jmri.util.FileUtil;
 import jmri.util.OrderedProperties;
 import jmri.util.node.NodeIdentity;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provides instances of {@link java.util.prefs.Preferences} backed by a
@@ -37,9 +36,12 @@ import org.slf4j.LoggerFactory;
  * the Railroad Name preference.</li>
  * <li><code>&lt;node-identity&gt;/profile.properties</code> preferences that
  * are specific to the profile running on a specific host (&lt;node-identity&gt;
- * is the identity returned by {@link jmri.util.node.NodeIdentity#identity()}).
+ * is the identity returned by {@link jmri.util.node.NodeIdentity#storageIdentity()}).
  * An example of such a preference would be a file location.</li>
  * </ul>
+ * <p>
+ * Non-profile specific configuration that applies to all profiles is stored in
+ * the file <code>settings:preferences/preferences.properties</code>.
  *
  * @author Randall Wood 2015
  */
@@ -53,23 +55,23 @@ public final class JmriPreferencesProvider {
 
     private static final HashMap<File, JmriPreferencesProvider> SHARED_PROVIDERS = new HashMap<>();
     private static final HashMap<File, JmriPreferencesProvider> PRIVATE_PROVIDERS = new HashMap<>();
+    // retained for reference
     //private static final String INVALID_KEY_CHARACTERS = "_.";
-    private static final Logger log = LoggerFactory.getLogger(JmriPreferencesProvider.class);
-
+    
     /**
-     * Get the JmriPreferencesProvider for the specified profile path. Use of
+     * Get the JmriPreferencesProvider for the specified profile path.
      *
      * @param path   The root path of a {@link jmri.profile.Profile}. This is
      *               most frequently the path returned by
      *               {@link jmri.profile.Profile#getPath()}.
      * @param shared True if the preferences apply to the profile at path
-     *               irregardless of host. If false, the preferences only apply
+     *               regardless of host. If false, the preferences only apply
      *               to this computer.
      * @return The shared or private JmriPreferencesProvider for the project at
      *         path.
      */
     @Nonnull
-    static synchronized JmriPreferencesProvider findProvider(@Nullable File path, boolean shared) {
+    static synchronized JmriPreferencesProvider findProvider(@CheckForNull File path, boolean shared) {
         if (shared) {
             if (SHARED_PROVIDERS.get(path) == null) {
                 SHARED_PROVIDERS.put(path, new JmriPreferencesProvider(path, shared));
@@ -90,18 +92,20 @@ public final class JmriPreferencesProvider {
      * @param project The profile. This is most often the profile returned by
      *                the {@link jmri.profile.ProfileManager#getActiveProfile()}
      *                method of the ProfileManager returned by
-     *                {@link jmri.profile.ProfileManager#getDefault()}
+     *                {@link jmri.profile.ProfileManager#getDefault()}. If null,
+     *                preferences apply to all profiles on the computer and the
+     *                value of shared is ignored.
      * @param clazz   The class requesting preferences. Note that the
      *                preferences returned are for the package containing the
      *                class.
-     * @param shared  True if the preferences apply to this profile irregardless
+     * @param shared  True if the preferences apply to this profile regardless
      *                of host. If false, the preferences only apply to this
-     *                computer.
+     *                computer. Ignored if the value of project is null.
      * @return The shared or private Preferences node for the package containing
      *         clazz for project.
      */
     @Nonnull
-    public static Preferences getPreferences(@Nullable final Profile project, @Nullable final Class<?> clazz, final boolean shared) {
+    public static Preferences getPreferences(@CheckForNull final Profile project, @CheckForNull final Class<?> clazz, final boolean shared) {
         if (project != null) {
             return findProvider(project.getPath(), shared).getPreferences(clazz);
         } else {
@@ -116,11 +120,13 @@ public final class JmriPreferencesProvider {
      * @param project The profile. This is most often the profile returned by
      *                the {@link jmri.profile.ProfileManager#getActiveProfile()}
      *                method of the ProfileManager returned by
-     *                {@link jmri.profile.ProfileManager#getDefault()}
+     *                {@link jmri.profile.ProfileManager#getDefault()}. If null,
+     *                preferences apply to all profiles on the computer and the
+     *                value of shared is ignored.
      * @param pkg     The package requesting preferences.
-     * @param shared  True if the preferences apply to this profile irregardless
+     * @param shared  True if the preferences apply to this profile regardless
      *                of host. If false, the preferences only apply to this
-     *                computer.
+     *                computer. Ignored if the value of project is null.
      * @return The shared or private Preferences node for the package.
      * @deprecated Not for removal. Use of
      * {@link #getPreferences(jmri.profile.Profile, java.lang.Class, boolean)}
@@ -128,7 +134,8 @@ public final class JmriPreferencesProvider {
      * non-existent package or class.
      */
     @Nonnull
-    public static Preferences getPreferences(@Nullable final Profile project, @Nullable final String pkg, final boolean shared) {
+    @Deprecated
+    public static Preferences getPreferences(@CheckForNull final Profile project, @CheckForNull final String pkg, final boolean shared) {
         if (project != null) {
             return findProvider(project.getPath(), shared).getPreferences(pkg);
         } else {
@@ -142,11 +149,13 @@ public final class JmriPreferencesProvider {
      *
      * @param path   The path to a profile. This is most often the result of
      *               {@link jmri.profile.Profile#getPath()} for a given Profile.
+     *               If null, preferences apply to all profiles on the computer
+     *               and the value of shared is ignored.
      * @param clazz  The class requesting preferences. Note that the preferences
      *               returned are for the package containing the class.
-     * @param shared True if the preferences apply to this profile irregardless
+     * @param shared True if the preferences apply to this profile regardless
      *               of host. If false, the preferences only apply to this
-     *               computer.
+     *               computer. Ignored if the value of path is null.
      * @return The shared or private Preferences node for the package containing
      *         clazz for project.
      * @deprecated Not for removal. Use of
@@ -154,7 +163,8 @@ public final class JmriPreferencesProvider {
      * is preferred and recommended unless being used to during the construction
      * of a Profile object.
      */
-    public static Preferences getPreferences(@Nullable final File path, @Nullable final Class<?> clazz, final boolean shared) {
+    @Deprecated
+    public static Preferences getPreferences(@CheckForNull final File path, @CheckForNull final Class<?> clazz, final boolean shared) {
         return findProvider(path, shared).getPreferences(clazz);
     }
 
@@ -166,7 +176,7 @@ public final class JmriPreferencesProvider {
      * @return The shared or private Preferences node for the package containing
      *         clazz.
      */
-    Preferences getPreferences(@Nullable final Class<?> clazz) {
+    Preferences getPreferences(@CheckForNull final Class<?> clazz) {
         if (clazz == null) {
             return this.root;
         }
@@ -179,14 +189,14 @@ public final class JmriPreferencesProvider {
      * @param pkg The package for which preferences are needed.
      * @return The shared or private Preferences node for the package.
      */
-    Preferences getPreferences(@Nullable final String pkg) {
+    Preferences getPreferences(@CheckForNull final String pkg) {
         if (pkg == null) {
             return this.root;
         }
         return this.root.node(pkg);
     }
 
-    JmriPreferencesProvider(@Nullable File path, boolean shared) {
+    JmriPreferencesProvider(@CheckForNull File path, boolean shared) {
         this.path = path;
         this.shared = shared;
         this.firstUse = !this.getPreferencesFile().exists();
@@ -259,13 +269,22 @@ public final class JmriPreferencesProvider {
         } else {
             dir = new File(this.path, Profile.PROFILE);
             if (!this.shared) {
-                File nodeDir = new File(dir, NodeIdentity.identity());
-                if (!nodeDir.exists()) {
-                    NodeIdentity.copyFormerIdentity(dir, nodeDir);
+                if (Profile.isProfile(this.path)) { // protect against testing a new profile
+                    try {
+                        Profile profile = new Profile(this.path);
+                        File nodeDir = new File(dir, NodeIdentity.storageIdentity(profile));
+                        if (!nodeDir.exists()) {
+                            if (!ProfileUtils.copyPrivateContentToCurrentIdentity(profile)) {
+                                log.debug("Starting profile with new private preferences.");
+                            }
+                        }
+                    } catch (IOException ex) {
+                        log.debug("Copying existing private configuration failed.");
+                    }
                 }
-                dir = new File(dir, NodeIdentity.identity());
-                }
+                dir = new File(dir, NodeIdentity.storageIdentity());
             }
+        }
         FileUtil.createDirectory(dir);
         return dir;
     }
@@ -286,10 +305,8 @@ public final class JmriPreferencesProvider {
 
     private class JmriPreferences extends AbstractPreferences {
 
-        private final Logger log = LoggerFactory.getLogger(JmriPreferences.class);
-
-        private Map<String, String> root;
-        private Map<String, JmriPreferences> children;
+        private final Map<String, String> root;
+        private final Map<String, JmriPreferences> children;
         private boolean isRemoved = false;
 
         public JmriPreferences(AbstractPreferences parent, String name) {
@@ -466,6 +483,8 @@ public final class JmriPreferencesProvider {
                 }
             }
         }
+        private final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JmriPreferences.class);
     }
 
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JmriPreferencesProvider.class);
 }

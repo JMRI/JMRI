@@ -17,6 +17,7 @@ public class JmriSRCPSensorServerTest extends jmri.jmris.AbstractSensorServerTes
     /**
      * {@inhertDoc} 
      */
+    @Override
     public void checkErrorStatusSent(){
          Assert.assertTrue("Active Message Sent", sb.toString().endsWith("499 ERROR unspecified error\n\r"));
     }
@@ -24,6 +25,7 @@ public class JmriSRCPSensorServerTest extends jmri.jmris.AbstractSensorServerTes
     /**
      * {@inhertDoc} 
      */
+    @Override
     public void checkSensorActiveSent(){
          Assert.assertTrue("Active Message Sent", sb.toString().endsWith("100 INFO 0 FB 1 1\n\r"));
     }
@@ -31,6 +33,7 @@ public class JmriSRCPSensorServerTest extends jmri.jmris.AbstractSensorServerTes
     /**
      * {@inhertDoc} 
      */
+    @Override
     public void checkSensorInActiveSent(){
          Assert.assertTrue("Active Message Sent", sb.toString().endsWith("100 INFO 0 FB 1 0\n\r"));
     }
@@ -38,6 +41,7 @@ public class JmriSRCPSensorServerTest extends jmri.jmris.AbstractSensorServerTes
     /**
      * {@inhertDoc} 
      */
+    @Override
     public void checkSensorUnknownSent(){
          Assert.assertTrue("Active Message Sent", sb.toString().endsWith("411 ERROR unknown value\n\r"));
     }

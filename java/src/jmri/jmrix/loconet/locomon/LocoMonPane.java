@@ -1,8 +1,6 @@
 package jmri.jmrix.loconet.locomon;
 
 import jmri.InstanceManager;
-import jmri.ReporterManager;
-import jmri.SensorManager;
 import jmri.TurnoutManager;
 import jmri.jmrix.loconet.LocoNetListener;
 import jmri.jmrix.loconet.LocoNetMessage;
@@ -18,15 +16,18 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2008, 2010
  */
 public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetListener, LnPanelInterface {
+    private final static Logger log = LoggerFactory.getLogger(LocoMonPane.class);
+
+    private String systemConnectionPrefix;
+    LocoNetSystemConnectionMemo memo;
 
     public LocoMonPane() {
         super();
-        // provide temporary default Llnmon instance - this will be replaced with the
-        // correct style in #initComponents(LocoNetSystemConnectionMemo)
+        // Temporarily pre-initialize the system connection prefix based on the 
+        // default turnout manager's system name prefix.  This will be replaced 
+        // with the correct style in #initComponents(LocoNetSystemConnectionMemo)
         // but is needed here for Unit Testing
-        this.llnmon = new Llnmon(InstanceManager.getDefault(TurnoutManager.class),
-                InstanceManager.getDefault(SensorManager.class),
-                InstanceManager.getDefault(ReporterManager.class));
+        systemConnectionPrefix = InstanceManager.getDefault(TurnoutManager.class).getSystemPrefix();
     }
 
     @Override
@@ -62,7 +63,6 @@ public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetLi
     public void init() {
     }
 
-    LocoNetSystemConnectionMemo memo;
 
     @Override
     public void initContext(Object context) {
@@ -80,7 +80,7 @@ public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetLi
             return;
         }
         memo.getLnTrafficController().addLocoNetListener(~0, this);
-        this.llnmon = new Llnmon(memo);
+        systemConnectionPrefix = memo.getSystemPrefix();
     }
 
     @Override
@@ -88,7 +88,7 @@ public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetLi
         // send the raw data, to display if requested
         String raw = l.toString();
         // format the message text, expect it to provide consistent \n after each line
-        String formatted = llnmon.displayMessage(l);
+        String formatted = l.toMonitorString(systemConnectionPrefix);
 
         // display the formatted data in the monitor pane
         nextLine(formatted, raw);
@@ -96,8 +96,6 @@ public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetLi
         // include LocoNet monitoring in session.log if TRACE enabled
         if (log.isTraceEnabled()) log.trace(formatted.substring(0, formatted.length() - 1));  // remove trailing newline
     }
-
-    Llnmon llnmon;
 
     /**
      * Get hex opcode for filtering.
@@ -107,7 +105,7 @@ public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetLi
      */
     @Override
     protected String getOpCodeForFilter(String raw) {
-        // note: Loconet raw is formatted like "BB 01 00 45", so extract the correct bytes from it (BB) for comparison
+        // note: LocoNet raw is formatted like "BB 01 00 45", so extract the correct bytes from it (BB) for comparison
         if (raw != null && raw.length() >= 2) {
             return raw.substring(0, 2);
         } else {
@@ -128,6 +126,5 @@ public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetLi
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocoMonPane.class);
 
 }

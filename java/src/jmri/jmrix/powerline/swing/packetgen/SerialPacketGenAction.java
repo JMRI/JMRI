@@ -7,12 +7,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Swing action to create and register a SerialPacketGenFrame object
+ * Swing action to create and register a SerialPacketGenFrame object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2007, 2008 Converted to multiple
  * connection
  * @author kcameron Copyright (C) 2011
-  */
+ */
 public class SerialPacketGenAction extends AbstractAction {
 
     public SerialPacketGenAction(String s, SerialTrafficController tc) {
@@ -21,7 +21,7 @@ public class SerialPacketGenAction extends AbstractAction {
     }
 
     public SerialPacketGenAction(SerialTrafficController tc) {
-        this("Send powerline device message", tc);
+        this(Bundle.getMessage("SendPacketTitle"), tc);
         this.tc = tc;
     }
 
@@ -33,9 +33,11 @@ public class SerialPacketGenAction extends AbstractAction {
         try {
             f.initComponents();
         } catch (Exception ex) {
-            log.error("Exception: " + ex.toString());
+            log.error("Exception: ", ex);
         }
         f.setVisible(true);
     }
+
     private final static Logger log = LoggerFactory.getLogger(SerialPacketGenAction.class);
+
 }

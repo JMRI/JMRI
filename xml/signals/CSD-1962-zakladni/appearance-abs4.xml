@@ -21,8 +21,14 @@
     <revision>
         <revnumber>1</revnumber>
         <date>2016-11-19</date>
-        <authorinitials>PS</authorinitials>
+        <authorinitials>PŠ</authorinitials>
         <revremark>Initial version</revremark>
+    </revision>    
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2019-02-20</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Aspect 26 Unlit</revremark>
     </revision>    
   </revhistory>
 
@@ -82,12 +88,20 @@
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/025_opo80_ab4.gif</imagelink>
     </appearance>
 
+    <appearance>
+      <aspectname>Zhasnuto</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/026_zhasnuto_ab4.gif</imagelink>
+    </appearance>
+
   </appearances>
 
   <specificappearances>
       <permissive>
           <aspect>Stůj</aspect>
       </permissive>
+      <dark>
+          <aspect>Zhasnuto</aspect>
+      </dark>
   </specificappearances>  
   
   <aspectMappings>
@@ -101,17 +115,17 @@
       <ourAspect>Opakovaná výstraha</ourAspect>
     </aspectMapping>
     <aspectMapping>
-      <advancedAspect>40 a výstraha</advancedAspect>
+      <advancedAspect>Rychlost 40 a výstraha</advancedAspect>
       <ourAspect>Očekávej 40</ourAspect>
       <ourAspect>Opakovaná očekávej 40</ourAspect>
     </aspectMapping>
     <aspectMapping>
-      <advancedAspect>60 a výstraha</advancedAspect>
+      <advancedAspect>Rychlost 60 a výstraha</advancedAspect>
       <ourAspect>Očekávej 60</ourAspect>
       <ourAspect>Opakovaná očekávej 60</ourAspect>
     </aspectMapping>
     <aspectMapping>
-      <advancedAspect>80 a výstraha</advancedAspect>
+      <advancedAspect>Rychlost 80 a výstraha</advancedAspect>
       <ourAspect>Očekávej 80</ourAspect>
       <ourAspect>Opakovaná očekávej 80</ourAspect>
     </aspectMapping>

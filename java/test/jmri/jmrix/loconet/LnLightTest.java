@@ -8,16 +8,18 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class LnLightTest {
 
     @Test
     public void testCTor() {
-        LnTrafficController lnis = new LocoNetInterfaceScaffold();
-        LnLightManager lm = new LnLightManager(lnis,"L");
-        LnLight t = new LnLight("LL1",lnis,lm);
-        Assert.assertNotNull("exists",t);
+        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo();
+        LnTrafficController lnis = new LocoNetInterfaceScaffold(memo);
+        memo.setLnTrafficController(lnis);
+        LnLightManager lm = new LnLightManager(memo);
+        LnLight t = new LnLight("LL1", lnis, lm);
+        Assert.assertNotNull("exists", t);
     }
 
     @Before
@@ -31,5 +33,4 @@ public class LnLightTest {
     }
 
     // private final static Logger log = LoggerFactory.getLogger(LnLightTest.class);
-
 }

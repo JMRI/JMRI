@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
  * positionable labels This class has been generalized to provide popup edit
  * dialogs for positionable item properties when TextFields are needed to input
  * data.
- * <P>
+ * <p>
  * The class name no longer identifies the full purpose of the class, However
  * the name is retained because coordinate editing was the genesis. The current
  * list of properties served for editing is:

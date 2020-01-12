@@ -18,8 +18,6 @@ import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.event.AncestorEvent;
-import javax.swing.event.AncestorListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -38,7 +36,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dan Boudreau Copyright (C) 2008, 2012
  */
-public class OperationsPanel extends JPanel implements AncestorListener {
+public class OperationsPanel extends JPanel {
 
     public static final String NEW_LINE = "\n"; // NOI18N
     public static final String NONE = ""; // NOI18N
@@ -68,25 +66,25 @@ public class OperationsPanel extends JPanel implements AncestorListener {
         this.add(c, gc);
     }
 
-    protected void addItemLeft(JComponent c, int x, int y) {
-        GridBagConstraints gc = new GridBagConstraints();
-        gc.gridx = x;
-        gc.gridy = y;
-        gc.weightx = 100.0;
-        gc.weighty = 100.0;
-        gc.anchor = GridBagConstraints.WEST;
-        this.add(c, gc);
-    }
+//    protected void addItemLeft(JComponent c, int x, int y) {
+//        GridBagConstraints gc = new GridBagConstraints();
+//        gc.gridx = x;
+//        gc.gridy = y;
+//        gc.weightx = 100.0;
+//        gc.weighty = 100.0;
+//        gc.anchor = GridBagConstraints.WEST;
+//        this.add(c, gc);
+//    }
 
-    protected void addItemWidth(JComponent c, int width, int x, int y) {
-        GridBagConstraints gc = new GridBagConstraints();
-        gc.gridx = x;
-        gc.gridy = y;
-        gc.gridwidth = width;
-        gc.weightx = 100.0;
-        gc.weighty = 100.0;
-        this.add(c, gc);
-    }
+//    protected void addItemWidth(JComponent c, int width, int x, int y) {
+//        GridBagConstraints gc = new GridBagConstraints();
+//        gc.gridx = x;
+//        gc.gridy = y;
+//        gc.gridwidth = width;
+//        gc.weightx = 100.0;
+//        gc.weighty = 100.0;
+//        this.add(c, gc);
+//    }
 
     protected void addItem(JPanel p, JComponent c, int x, int y) {
         GridBagConstraints gc = new GridBagConstraints();
@@ -318,39 +316,40 @@ public class OperationsPanel extends JPanel implements AncestorListener {
         OperationsXml.save();
     }
 
-    protected String lineWrap(String s) {
-        return this.lineWrap(s, this.getPreferredSize());
-    }
+//    protected String lineWrap(String s) {
+//        return this.lineWrap(s, this.getPreferredSize());
+//    }
 
-    protected String lineWrap(String s, Dimension size) {
-        int numberChar = 80;
-        if (size != null) {
-            JLabel X = new JLabel("X");
-            numberChar = size.width / X.getPreferredSize().width;
-        }
+//    protected String lineWrap(String s, Dimension size) {
+//        int numberChar = 80;
+//        if (size != null) {
+//            JLabel X = new JLabel("X");
+//            numberChar = size.width / X.getPreferredSize().width;
+//        }
+//
+//        String[] sa = s.split(NEW_LINE);
+//        StringBuilder so = new StringBuilder();
+//
+//        for (int i = 0; i < sa.length; i++) {
+//            if (i > 0) {
+//                so.append(NEW_LINE);
+//            }
+//            StringBuilder sb = new StringBuilder(sa[i]);
+//            int j = 0;
+//            while (j + numberChar < sb.length() && (j = sb.lastIndexOf(" ", j + numberChar)) != -1) {
+//                sb.replace(j, j + 1, NEW_LINE);
+//            }
+//            so.append(sb);
+//        }
+//        return so.toString();
+//    }
 
-        String[] sa = s.split(NEW_LINE);
-        StringBuilder so = new StringBuilder();
+    
+//    protected JPanel pad; // used to pad out lower part of window to fix horizontal scrollbar issue
 
-        for (int i = 0; i < sa.length; i++) {
-            if (i > 0) {
-                so.append(NEW_LINE);
-            }
-            StringBuilder sb = new StringBuilder(sa[i]);
-            int j = 0;
-            while (j + numberChar < sb.length() && (j = sb.lastIndexOf(" ", j + numberChar)) != -1) {
-                sb.replace(j, j + 1, NEW_LINE);
-            }
-            so.append(sb);
-        }
-        return so.toString();
-    }
-
-    // Kludge fix for horizontal scrollbar encroaching buttons at bottom of a scrollable window.
-    protected JPanel pad; // used to pad out lower part of window to fix horizontal scrollbar issue
-
+ // Kludge fix for horizontal scrollbar encroaching buttons at bottom of a scrollable window.
     protected void addHorizontalScrollBarKludgeFix(JScrollPane pane, JPanel panel) {
-        pad = new JPanel(); // kludge fix for horizontal scrollbar
+        JPanel pad = new JPanel(); // kludge fix for horizontal scrollbar
         pad.add(new JLabel(" "));
         panel.add(pad);
 
@@ -359,30 +358,30 @@ public class OperationsPanel extends JPanel implements AncestorListener {
         pane.setMaximumSize(new Dimension(2000, 170));
         pane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-        pane.addAncestorListener(this); // used to determine if scrollbar is showing
+//        pane.addAncestorListener(this); // used to determine if scrollbar is showing
     }
 
-    @Override
-    public void ancestorAdded(AncestorEvent event) {
-//  log.debug("Ancestor Added");
-        // do nothing
-    }
-
-    @Override
-    public void ancestorRemoved(AncestorEvent event) {
-//  log.debug("Ancestor Removed");
-        // do nothing
-    }
-
-    @Override
-    public void ancestorMoved(AncestorEvent event) {
-        if (pad != null) {
-            if (pad.isVisible() ^ ((JScrollPane) event.getSource()).getHorizontalScrollBar().isShowing()) {
-                pad.setVisible(((JScrollPane) event.getSource()).getHorizontalScrollBar().isShowing());
+//    @Override
+//    public void ancestorAdded(AncestorEvent event) {
+////  log.debug("Ancestor Added");
+//        // do nothing
+//    }
+//
+//    @Override
+//    public void ancestorRemoved(AncestorEvent event) {
+////  log.debug("Ancestor Removed");
+//        // do nothing
+//    }
+//
+//    @Override
+//    public void ancestorMoved(AncestorEvent event) {
+//        if (pad != null) {
+//            if (pad.isVisible() ^ ((JScrollPane) event.getSource()).getHorizontalScrollBar().isShowing()) {
+//                pad.setVisible(((JScrollPane) event.getSource()).getHorizontalScrollBar().isShowing());
 //    log.debug("Scrollbar visible: {}", pad.isVisible());
-            }
-        }
-    }
+//            }
+//        }
+//    }
 
     protected String getWindowFrameRef() {
         Container c = this.getTopLevelAncestor();

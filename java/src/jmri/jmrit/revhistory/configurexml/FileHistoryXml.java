@@ -30,7 +30,7 @@ public class FileHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
      * <p>
      * If no RevHistory already present in InstanceManager, creates one and adds
      * this.
-     * <P>
+     * <p>
      * Then adds, instead of replacing, the history information
      */
     public boolean loadDirectly(Element e) {
@@ -90,7 +90,7 @@ public class FileHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
     /**
      * Create a set of configured objects from their XML description, using an
      * auxiliary object.
-     * <P>
+     * <p>
      * For example, the auxilary object o might be a manager or GUI of some type
      * that needs to be informed as each object is created.
      *

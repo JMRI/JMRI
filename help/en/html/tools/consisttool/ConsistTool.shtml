@@ -20,7 +20,7 @@
 <body>
 <!--#include virtual="/Header" -->
 <div id="mBody">
-<!--#include virtual="Sidebar" -->
+<!--#include virtual="Sidebar.shtml" -->
 <div id="mainContent">
 
 	<h1>JMRI: Consisting Tool</h1>
@@ -250,7 +250,10 @@
 	<img src="images/Preferences-ConsistManagerSelection-Annotated.png" alt="Annotated User Preferences window" />
 
         <p>
-        Once the preferences are loaded, the choices for the consist manager will be selectable in the "Consists" column (inside the box labeled 1 in the figure above).  Here we see two choices, one for a Loconet connection, labeled A and one for the Internal connection labeled B.  If you have more system connections available, other options may be available as well.
+        Once the preferences are loaded, the choices for the consist manager will be selectable in the "Consists" column
+		(inside the box labeled 1 in the figure above).  Here we see two choices, one for a LocoNet connection, labeled A
+		and one for the Internal connection labeled B.<br>
+		If you have more system connections available, other options may be available as well.
         </p>
 
         <p>
@@ -275,6 +278,48 @@
         selected in Column 3.  This selection will cause consists to be created
         using Operations Mode Programming.  Note that if the Internal system 
         is selected in this case, no consists will be created.
+        </p>
+
+	<h4>Consists and the JMRI Roster</h4>
+
+        <p>
+        JMRI users sometimes create Advanced Consists using the programmer to 
+        set the value of CV19.  Begining with JMRI Version 4.17.3, the JMRI 
+        consisting tools provide some tools to synchronize the advanced 
+        consists created by programming with those of the  advanced 
+        </p>
+
+        <h5>Import From Roster</h5>
+
+        <p>
+        Users can import consists created with the programmer into the 
+        Consist Manager by selecting the <i>Scan Roster for Consists</i> 
+        option in the Consist Control's <i>File</i> menu.
+        </p>
+
+	    <img src="images/ConsistTool-ScanForConsists.png" alt="The Scan For Consists Option is a Choice in the Consist Control Window's file Menu" />
+
+        <p>
+        Once the scan completes, any consists discovered will be added to the 
+        list of consists available to the Consist Control.  Please note that 
+        this tool does not write the consists to the DCC system.
+        </p>
+
+        <h5>Keeping the Roster Synchronized</h5>
+        <p>
+        Users may choose to have JMRI update consist information in their roster
+        when creating and removing locomotives from Advanced Consists.  This 
+        optin is activated by checking the <i>Update CV19 in roster when 
+        modifying advanced consists</i> box in the <i>Consist Control</i> 
+        section of the JMRI preferences.
+        </p>
+
+	    <img src="images/ConsistControl-Preferences.png" alt="Preferences for the Consist Control" />
+
+        <p>
+        Selecting this option may cause a performance impact when modifying 
+        rosters, due to reading and writing the roster file.  This option is
+        disabled by default.
         </p>
 
 	<a name="tool" id="tool">

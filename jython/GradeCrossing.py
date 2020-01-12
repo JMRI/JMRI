@@ -18,6 +18,10 @@
 # Part of the JMRI distribution
 #
 import java
+import java.awt
+import java.awt.event
+import java.beans
+import java.util
 import java.util.ArrayList as ArrayList
 import jmri
 import javax.swing.Timer as Timer

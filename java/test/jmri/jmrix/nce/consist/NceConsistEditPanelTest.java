@@ -15,6 +15,8 @@ public class NceConsistEditPanelTest extends jmri.util.swing.JmriPanelTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
         panel = new NceConsistEditPanel();
         helpTarget="package.jmri.jmrix.nce.consist.NceConsistEditFrame";
         title="NCE_: Edit NCE Consist";

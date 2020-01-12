@@ -3,20 +3,18 @@ package jmri.jmrit.vsdecoder;
 /*
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under 
  * the terms of version 2 of the GNU General Public License as published 
  * by the Free Software Foundation. See the "COPYING" file for a copy
  * of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT 
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
  * for more details.
- * <P>
  *
  * @author   Mark Underwood Copyright (C) 2011
- * 
  */
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -209,7 +207,6 @@ public class SoundEvent implements PropertyChangeListener {
         this.setXml(el, null);
     }
 
-    @SuppressWarnings("cast")
     protected void addXmlTrigger(Element te, VSDFile vf) {
         String tts;
         Trigger.TriggerType tt;
@@ -356,6 +353,7 @@ public class SoundEvent implements PropertyChangeListener {
                 });
                 break;
             case NOTHING:
+            case STOP_AT_ZERO:
                 // Used for when the target sound is missing.
                 //log.debug("NOTHING");
                 t.setCallback(new TriggerListener() {

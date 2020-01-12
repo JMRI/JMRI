@@ -23,7 +23,7 @@ public class PanelEditorTest {
     public void testShow() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // load and display
-        File f = new File("java/test/jmri/jmrit/display/verify/PanelEditorTest1.xml");
+        File f = new File("java/test/jmri/jmrit/display/valid/PanelEditorTest1.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
     }
 
@@ -49,6 +49,7 @@ public class PanelEditorTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initConfigureManager();
@@ -56,6 +57,7 @@ public class PanelEditorTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
 

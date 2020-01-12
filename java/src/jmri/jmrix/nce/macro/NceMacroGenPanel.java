@@ -12,12 +12,11 @@ import jmri.jmrix.nce.NceSystemConnectionMemo;
 import jmri.jmrix.nce.NceTrafficController;
 
 /**
- * Pane for user input of Nce macros
+ * Pane for user input of NCE macros.
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Dan Boudreau Copyright (C) 2007 Cloned into a Panel by
  * @author kcameron
- *
  */
 public class NceMacroGenPanel extends jmri.jmrix.nce.swing.NcePanel implements jmri.jmrix.nce.NceListener {
 
@@ -92,6 +91,7 @@ public class NceMacroGenPanel extends jmri.jmrix.nce.swing.NcePanel implements j
                 .getMaximumSize().width, packetTextField.getPreferredSize().height));
 
         setLayout(new GridBagLayout());
+        setPreferredSize(new Dimension(300, 100));
 
         addItem(jLabel1, 0, 0);
         addItem(packetTextField, 2, 0);
@@ -204,7 +204,7 @@ public class NceMacroGenPanel extends jmri.jmrix.nce.swing.NcePanel implements j
             return null;
         }
 
-        // NCE responds with okay (!) if macro exist, (0) if not
+        // NCE responds with okay (!) if macro exist, ('0') if not
         NceMessage m = new NceMessage(2);
         m.setElement(0, NceMessage.MACRO_CMD); // Macro cmd
         m.setElement(1, macroNum); // Macro #
@@ -223,7 +223,7 @@ public class NceMacroGenPanel extends jmri.jmrix.nce.swing.NcePanel implements j
     }
 
     /**
-     * Nested class to create one of these using old-style defaults
+     * Nested class to create one of these using old-style defaults.
      */
     static public class Default extends jmri.jmrix.nce.swing.NceNamedPaneAction {
 
@@ -234,4 +234,5 @@ public class NceMacroGenPanel extends jmri.jmrix.nce.swing.NcePanel implements j
                     jmri.InstanceManager.getDefault(NceSystemConnectionMemo.class));
         }
     }
+
 }

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2012 All rights reserved -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -58,12 +57,5 @@
     </revision>
   </revhistory>
   <!-- Add Your the "includes" here -->
-  <variable item="Speed Table" CV="67">
-	<speedTableVal/>
-	<label>Speed Table</label>
-	<label xml:lang="it">Tabella velocità</label>
-	<label xml:lang="de">Geschwindikeitskennlinie</label>
-    <label xml:lang="cs">Rychlostní tabulka</label>
-    <label xml:lang="ca">Taula de Velocitats</label>
-  </variable>
+  <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
 </variables>

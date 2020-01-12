@@ -24,10 +24,10 @@ class AutoLayoutPowerOff(jmri.jmrit.automat.AbstractAutomaton) :
     def init(self) :
         # set the timeout
         self.timeout = timeOutInMinutes
-        # get the list of sensors in use as block occupancy detectors
-        self.blocklist = blocks.getNamedBeanList()
+        # get the set of sensors in use as block occupancy detectors
+        self.blockset = blocks.getNamedBeanSet()
         self.blockOccupancySensors = []
-        for b in self.blocklist :
+        for b in self.blockset :
             s = b.getSensor()
             if s != None :
                 self.blockOccupancySensors.append(s)

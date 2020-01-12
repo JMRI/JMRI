@@ -7,6 +7,7 @@
 <!-- manual hints that control of sound in slot, looping etc. is possible, but gives no details -->
 <!-- see Zimo German manual for small decoders, -->
   <!-- v1.1,  Added CVs for Sound Sample selection.   Mark Waters, 11 Mar 2016 -->
+  <!-- v1.2,  Include CVs 508-512 for Blinking by Swiss Mapping.   Ronald Kuhn, 26 Apr 2019 -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <!-- include this CV to put it onto the Sound Levels pane -->
   <variable CV="266" item="Zimo Sound Setting 1">
@@ -16,6 +17,7 @@
     <label xml:lang="de">Gesamtlautstärke</label>
     <label xml:lang="cs">Celková hlasitost</label>
   </variable>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/CV508-CV512.xml"/>
   <variable CV="570" item="F0 Sound Sample">
     <decVal/>
     <label>F0</label>
@@ -27,11 +29,11 @@
     <label xml:lang="de">Lautstärke von F0</label>
     <label xml:lang="cs">Hlasitost na tlačítko F0</label>
   </variable>
-  <variable item="F0 Sound Loop" CV="572" mask="XXXXVXXX">
+  <variable CV="572" item="F0 Sound Loop" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label> </label>
   </variable>
-  <variable item="F0 Sound Short" CV="572" mask="XVXXXXXX">
+  <variable CV="572" item="F0 Sound Short" mask="XVXXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label> </label>
   </variable>
@@ -46,11 +48,11 @@
     <label xml:lang="de">Lautstärke von F1</label>
     <label xml:lang="cs">Hlasitost na tlačítko F1</label>
   </variable>
-  <variable item="F1 Sound Loop" CV="515" mask="XXXXVXXX">
+  <variable CV="515" item="F1 Sound Loop" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label> </label>
   </variable>
-  <variable item="F1 Sound Short" CV="515" mask="XVXXXXXX">
+  <variable CV="515" item="F1 Sound Short" mask="XVXXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label> </label>
   </variable>
@@ -65,11 +67,11 @@
     <label xml:lang="de">Lautstärke von F2</label>
     <label xml:lang="cs">Hlasitost na tlačítko F2</label>
   </variable>
-  <variable item="F2 Sound Loop" CV="518" mask="XXXXVXXX">
+  <variable CV="518" item="F2 Sound Loop" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label> </label>
   </variable>
-  <variable item="F2 Sound Short" CV="518" mask="XVXXXXXX">
+  <variable CV="518" item="F2 Sound Short" mask="XVXXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label> </label>
   </variable>
@@ -84,11 +86,11 @@
     <label xml:lang="de">Lautstärke von F3</label>
     <label xml:lang="cs">Hlasitost na tlačítko F3</label>
   </variable>
-  <variable item="F3 Sound Loop" CV="521" mask="XXXXVXXX">
+  <variable CV="521" item="F3 Sound Loop" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label> </label>
   </variable>
-  <variable item="F3 Sound Short" CV="521" mask="XVXXXXXX">
+  <variable CV="521" item="F3 Sound Short" mask="XVXXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label> </label>
   </variable>
@@ -103,11 +105,11 @@
     <label xml:lang="de">Lautstärke von F4</label>
     <label xml:lang="cs">Hlasitost na tlačítko F4</label>
   </variable>
-  <variable item="F4 Sound Loop" CV="524" mask="XXXXVXXX">
+  <variable CV="524" item="F4 Sound Loop" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label> </label>
   </variable>
-  <variable item="F4 Sound Short" CV="524" mask="XVXXXXXX">
+  <variable CV="524" item="F4 Sound Short" mask="XVXXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label> </label>
   </variable>
@@ -122,11 +124,11 @@
     <label xml:lang="de">Lautstärke von F5</label>
     <label xml:lang="cs">Hlasitost na tlačítko F5</label>
   </variable>
-  <variable item="F5 Sound Loop" CV="527" mask="XXXXVXXX">
+  <variable CV="527" item="F5 Sound Loop" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label> </label>
   </variable>
-  <variable item="F5 Sound Short" CV="527" mask="XVXXXXXX">
+  <variable CV="527" item="F5 Sound Short" mask="XVXXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label> </label>
   </variable>
@@ -141,11 +143,11 @@
     <label xml:lang="de">Lautstärke von F6</label>
     <label xml:lang="cs">Hlasitost na tlačítko F6</label>
   </variable>
-  <variable item="F6 Sound Loop" CV="530" mask="XXXXVXXX">
+  <variable CV="530" item="F6 Sound Loop" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label> </label>
   </variable>
-  <variable item="F6 Sound Short" CV="530" mask="XVXXXXXX">
+  <variable CV="530" item="F6 Sound Short" mask="XVXXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label> </label>
   </variable>
@@ -160,11 +162,11 @@
     <label xml:lang="de">Lautstärke von F7</label>
     <label xml:lang="cs">Hlasitost na tlačítko F7</label>
   </variable>
-  <variable item="F7 Sound Loop" CV="533" mask="XXXXVXXX">
+  <variable CV="533" item="F7 Sound Loop" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label> </label>
   </variable>
-  <variable item="F7 Sound Short" CV="533" mask="XVXXXXXX">
+  <variable CV="533" item="F7 Sound Short" mask="XVXXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label> </label>
   </variable>
@@ -179,11 +181,11 @@
     <label xml:lang="de">Lautstärke von F8</label>
     <label xml:lang="cs">Hlasitost na tlačítko F8</label>
   </variable>
-  <variable item="F8 Sound Loop" CV="536" mask="XXXXVXXX">
+  <variable CV="536" item="F8 Sound Loop" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label> </label>
   </variable>
-  <variable item="F8 Sound Short" CV="536" mask="XVXXXXXX">
+  <variable CV="536" item="F8 Sound Short" mask="XVXXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label> </label>
   </variable>
@@ -198,11 +200,11 @@
     <label xml:lang="de">Lautstärke von F9</label>
     <label xml:lang="cs">Hlasitost na tlačítko F9</label>
   </variable>
-  <variable item="F9 Sound Loop" CV="539" mask="XXXXVXXX">
+  <variable CV="539" item="F9 Sound Loop" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label> </label>
   </variable>
-  <variable item="F9 Sound Short" CV="539" mask="XVXXXXXX">
+  <variable CV="539" item="F9 Sound Short" mask="XVXXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label> </label>
   </variable>
@@ -217,11 +219,11 @@
     <label xml:lang="de">Lautstärke von F10</label>
     <label xml:lang="cs">Hlasitost na tlačítko F10</label>
   </variable>
-  <variable item="F10 Sound Loop" CV="542" mask="XXXXVXXX">
+  <variable CV="542" item="F10 Sound Loop" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label> </label>
   </variable>
-  <variable item="F10 Sound Short" CV="542" mask="XVXXXXXX">
+  <variable CV="542" item="F10 Sound Short" mask="XVXXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label> </label>
   </variable>
@@ -236,11 +238,11 @@
     <label xml:lang="de">Lautstärke von F11</label>
     <label xml:lang="cs">Hlasitost na tlačítko F11</label>
   </variable>
-  <variable item="F11 Sound Loop" CV="545" mask="XXXXVXXX">
+  <variable CV="545" item="F11 Sound Loop" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label> </label>
   </variable>
-  <variable item="F11 Sound Short" CV="545" mask="XVXXXXXX">
+  <variable CV="545" item="F11 Sound Short" mask="XVXXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label> </label>
   </variable>
@@ -255,11 +257,11 @@
     <label xml:lang="de">Lautstärke von F12</label>
     <label xml:lang="cs">Hlasitost na tlačítko F12</label>
   </variable>
-  <variable item="F12 Sound Loop" CV="548" mask="XXXXVXXX">
+  <variable CV="548" item="F12 Sound Loop" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label> </label>
   </variable>
-  <variable item="F12 Sound Short" CV="548" mask="XVXXXXXX">
+  <variable CV="548" item="F12 Sound Short" mask="XVXXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label> </label>
   </variable>
@@ -274,11 +276,11 @@
     <label xml:lang="de">Lautstärke von F13</label>
     <label xml:lang="cs">Hlasitost na tlačítko F13</label>
   </variable>
-  <variable item="F13 Sound Loop" CV="551" mask="XXXXVXXX">
+  <variable CV="551" item="F13 Sound Loop" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label> </label>
   </variable>
-  <variable item="F13 Sound Short" CV="551" mask="XVXXXXXX">
+  <variable CV="551" item="F13 Sound Short" mask="XVXXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label> </label>
   </variable>
@@ -293,11 +295,11 @@
     <label xml:lang="de">Lautstärke von F14</label>
     <label xml:lang="cs">Hlasitost na tlačítko F14</label>
   </variable>
-  <variable item="F14 Sound Loop" CV="554" mask="XXXXVXXX">
+  <variable CV="554" item="F14 Sound Loop" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label> </label>
   </variable>
-  <variable item="F14 Sound Short" CV="554" mask="XVXXXXXX">
+  <variable CV="554" item="F14 Sound Short" mask="XVXXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label> </label>
   </variable>
@@ -312,11 +314,11 @@
     <label xml:lang="de">Lautstärke von F15</label>
     <label xml:lang="cs">Hlasitost na tlačítko F15</label>
   </variable>
-  <variable item="F15 Sound Loop" CV="557" mask="XXXXVXXX">
+  <variable CV="557" item="F15 Sound Loop" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label> </label>
   </variable>
-  <variable item="F15 Sound Short" CV="557" mask="XVXXXXXX">
+  <variable CV="557" item="F15 Sound Short" mask="XVXXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label> </label>
   </variable>
@@ -331,11 +333,11 @@
     <label xml:lang="de">Lautstärke von F16</label>
     <label xml:lang="cs">Hlasitost na tlačítko F16</label>
   </variable>
-  <variable item="F16 Sound Loop" CV="560" mask="XXXXVXXX">
+  <variable CV="560" item="F16 Sound Loop" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label> </label>
   </variable>
-  <variable item="F16 Sound Short" CV="560" mask="XVXXXXXX">
+  <variable CV="560" item="F16 Sound Short" mask="XVXXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label> </label>
   </variable>
@@ -350,11 +352,11 @@
     <label xml:lang="de">Lautstärke von F17</label>
     <label xml:lang="cs">Hlasitost na tlačítko F17</label>
   </variable>
-  <variable item="F17 Sound Loop" CV="563" mask="XXXXVXXX">
+  <variable CV="563" item="F17 Sound Loop" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label> </label>
   </variable>
-  <variable item="F17 Sound Short" CV="563" mask="XVXXXXXX">
+  <variable CV="563" item="F17 Sound Short" mask="XVXXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label> </label>
   </variable>
@@ -369,11 +371,11 @@
     <label xml:lang="de">Lautstärke von F18</label>
     <label xml:lang="cs">Hlasitost na tlačítko F18</label>
   </variable>
-  <variable item="F18 Sound Loop" CV="566" mask="XXXXVXXX">
+  <variable CV="566" item="F18 Sound Loop" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label> </label>
   </variable>
-  <variable item="F18 Sound Short" CV="566" mask="XVXXXXXX">
+  <variable CV="566" item="F18 Sound Short" mask="XVXXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label> </label>
   </variable>
@@ -388,11 +390,11 @@
     <label xml:lang="de">Lautstärke von F19</label>
     <label xml:lang="cs">Hlasitost na tlačítko F19</label>
   </variable>
-  <variable item="F19 Sound Loop" CV="569" mask="XXXXVXXX">
+  <variable CV="569" item="F19 Sound Loop" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label> </label>
   </variable>
-  <variable item="F19 Sound Short" CV="569" mask="XVXXXXXX">
+  <variable CV="569" item="F19 Sound Short" mask="XVXXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label> </label>
   </variable>
@@ -473,14 +475,14 @@
     <decVal/>
     <label>Drain Valves (Steam)</label>
     <label xml:lang="it">Valvola Spurgo (Vapore)</label>
-    <label xml:lang="de">Entwässerung“</label>
+    <label xml:lang="de">Entwässerung</label>
     <label xml:lang="cs">Vypouštěcí ventil (pára)</label>
   </variable>
   <variable CV="584" item="Zimo Sound Setting 36">
     <decVal/>
     <label>Drain Valves (Steam)</label>
     <label xml:lang="it">Valvola Spurgo (Vapore)</label>
-    <label xml:lang="de">Entwässerung“</label>
+    <label xml:lang="de">Entwässerung</label>
     <label xml:lang="cs">Vypouštěcí ventil (pára)</label>
   </variable>
   <variable CV="585" item="Electric Motor Sample">

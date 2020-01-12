@@ -1,7 +1,6 @@
 package jmri.jmrit.sensorgroup;
 
 import java.util.ArrayList;
-import java.util.List;
 import jmri.InstanceManager;
 import jmri.Route;
 import jmri.RouteManager;
@@ -12,13 +11,13 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Object for representing, creating and editing sensor groups.
- * <P>
+ * <p>
  * Sensor groups are implemented by (groups) of Routes, not by any other object.
  * <p>
  * They are not (currently) NamedBean objects.
  *
  * @author Bob Jacobsen Copyright (C) 2007
-  */
+ */
 public class SensorGroup {
 
     /**
@@ -39,13 +38,12 @@ public class SensorGroup {
         this.name = name;
         // find suitable 
         RouteManager rm = InstanceManager.getDefault(jmri.RouteManager.class);
-        String group = name.toUpperCase();
-        List<String> l = rm.getSystemNameList();
-        String prefix = (namePrefix + group + nameDivider).toUpperCase();
+        String group = name;
+        String prefix = (namePrefix + group + nameDivider);
 
         sensorList = new ArrayList<String>();
-        for (int i = 0; i < l.size(); i++) {
-            String routeName = l.get(i);
+        for (Route route : rm.getNamedBeanSet()) {
+            String routeName = route.getSystemName();
             if (routeName.startsWith(prefix)) {
                 String sensor = routeName.substring(prefix.length());
                 // remember that sensor
@@ -57,17 +55,15 @@ public class SensorGroup {
     void addPressed() {
         log.debug("start with " + sensorList.size() + " lines");
         RouteManager rm = InstanceManager.getDefault(jmri.RouteManager.class);
-        String group = name.toUpperCase();
+        String group = name;
 
         // remove the old routes
-        List<String> l = rm.getSystemNameList();
-        String prefix = (namePrefix + group + nameDivider).toUpperCase();
+        String prefix = (namePrefix + group + nameDivider);
 
-        for (int i = 0; i < l.size(); i++) {
-            String routeName = l.get(i);
+        for (Route r : rm.getNamedBeanSet()) {
+            String routeName = r.getSystemName();
             if (routeName.startsWith(prefix)) {
                 // OK, kill this one
-                Route r = rm.getBySystemName(l.get(i));
                 r.deActivateRoute();
                 rm.deleteRoute(r);
             }

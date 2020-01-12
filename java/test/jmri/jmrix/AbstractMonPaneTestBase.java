@@ -27,6 +27,7 @@ public abstract class AbstractMonPaneTestBase extends jmri.util.swing.JmriPanelT
     // implementing classes must override setUp and tearDown.
     // to set pane.
     @Before
+    @Override
     public void setUp() {
         pane = new AbstractMonPane() {
             @Override
@@ -41,6 +42,7 @@ public abstract class AbstractMonPaneTestBase extends jmri.util.swing.JmriPanelT
     }
 
     @After
+    @Override
     public void tearDown() {
         pane = null;
     }

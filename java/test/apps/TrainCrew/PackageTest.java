@@ -5,7 +5,8 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        InstallFromURLTest.class
+        InstallFromURLTest.class,
+        BundleTest.class
 })
 /**
  * Invoke complete set of tests for the apps.TrainCrew package

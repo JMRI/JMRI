@@ -45,7 +45,6 @@ public class Dcc4PcReply extends AbstractMRReply {
      *
      * @param m the Dcc4PcReply to copy
      */
-    @SuppressWarnings("null")
     public Dcc4PcReply(Dcc4PcReply m) {
         this();
         if (m == null) {

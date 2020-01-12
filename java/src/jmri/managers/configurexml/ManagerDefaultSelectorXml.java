@@ -9,7 +9,7 @@ import org.jdom2.Element;
 
 /**
  * Handle XML persistence of ManagerDefaultSelector
- * <P>
+ * <p>
  * This class is named as being the persistent form of the
  * ManagerDefaultSelector class, but there's no object of that form created or
  * used.
@@ -80,5 +80,7 @@ public class ManagerDefaultSelectorXml extends AbstractXmlAdapter {
     @Override
     public void load(Element element, Object o) {
     }
+
+    //private final static Logger log = LoggerFactory.getLogger(ManagerDefaultSelectorXml.class);
 
 }

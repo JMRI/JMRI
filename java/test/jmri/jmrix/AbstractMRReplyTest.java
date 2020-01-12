@@ -1,35 +1,26 @@
 package jmri.jmrix;
 
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
- * Tests for AbstractMRReply
+ * Tests for AbstractMRReply.
  *
  * @author	Bob Jacobsen
-  */
-public class AbstractMRReplyTest extends TestCase {
+ */
+public class AbstractMRReplyTest extends AbstractMessageTestBase {
 
     AbstractMRReply testMsg;
 
-    public AbstractMRReplyTest(String s) {
-        super(s);
-    }
-
+    @Test
     public void testSimpleMatch1() {
-        testMsg = new AbstractMRReply("foo") {
-            @Override
-            protected int skipPrefix(int index) {
-                return 0;
-            }
-        };
-
         Assert.assertEquals("match", 0, testMsg.match("foo"));
     }
 
+    @Test
     public void testSimpleMatch2() {
         testMsg = new AbstractMRReply("foo1") {
             @Override
@@ -41,6 +32,7 @@ public class AbstractMRReplyTest extends TestCase {
         Assert.assertEquals("match", 0, testMsg.match("foo"));
     }
 
+    @Test
     public void testSimpleMatch3() {
         testMsg = new AbstractMRReply("ffffffff") {
             @Override
@@ -52,6 +44,7 @@ public class AbstractMRReplyTest extends TestCase {
         Assert.assertEquals("match", 0, testMsg.match("f"));
     }
 
+    @Test
     public void testDelaySimpleMatch1() {
         testMsg = new AbstractMRReply("123 foo") {
             @Override
@@ -63,6 +56,7 @@ public class AbstractMRReplyTest extends TestCase {
         Assert.assertEquals("match", 4, testMsg.match("foo"));
     }
 
+    @Test
     public void testDelaySimpleMatch2() {
         testMsg = new AbstractMRReply("123 foo 123") {
             @Override
@@ -74,6 +68,7 @@ public class AbstractMRReplyTest extends TestCase {
         Assert.assertEquals("match", 4, testMsg.match("foo"));
     }
 
+    @Test
     public void testOverlapMatch() {
         testMsg = new AbstractMRReply("1fo foo 123") {
             @Override
@@ -85,27 +80,22 @@ public class AbstractMRReplyTest extends TestCase {
         Assert.assertEquals("match", 4, testMsg.match("foo"));
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {AbstractMRReplyTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(AbstractMRReplyTest.class);
-        return suite;
-
-    }
-
     // The minimal setup for log4J
     @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
+        m = testMsg = new AbstractMRReply("foo") {
+            @Override
+            protected int skipPrefix(int index) {
+                return 0;
+            }
+        };
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
+	m = testMsg = null;
         JUnitUtil.tearDown();
     }
 

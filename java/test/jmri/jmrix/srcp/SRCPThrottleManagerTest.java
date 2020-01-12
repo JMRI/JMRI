@@ -18,7 +18,7 @@ public class SRCPThrottleManagerTest extends jmri.managers.AbstractThrottleManag
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         SRCPBusConnectionMemo sm = new SRCPBusConnectionMemo(new SRCPTrafficController() {
             @Override
             public void sendSRCPMessage(SRCPMessage m, SRCPListener reply) {
@@ -30,6 +30,7 @@ public class SRCPThrottleManagerTest extends jmri.managers.AbstractThrottleManag
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 }

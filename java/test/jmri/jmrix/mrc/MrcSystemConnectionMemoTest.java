@@ -14,6 +14,7 @@ public class MrcSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemo
     jmri.jmrix.mrc.MrcSystemConnectionMemo memo = null;
 
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initDefaultUserMessagePreferences();
@@ -25,5 +26,6 @@ public class MrcSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemo
     }
 
     @After
+    @Override
     public void tearDown() {        JUnitUtil.tearDown();    }
 }

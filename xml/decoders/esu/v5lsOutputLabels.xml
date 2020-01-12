@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2019 All rights reserved -->
+
+<outputs xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:docbook="http://docbook.org/ns/docbook"
+         xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+
+    <output name="1,36" label="|"/> <!-- suppress reserved item -->
+
+    <output name="3,1" label="Optional Load"/>
+    <output name="3,2" label="Shunting Mode">
+        <label xml:lang="ca">Mode de Maniobra</label>
+        <label xml:lang="cs">Režim posunu</label>
+        <label xml:lang="da">Shunting Mode</label>
+        <label xml:lang="nl">Shunting Mode</label>
+    </output>
+    <output name="3,3" label="Brake 1">
+        <label xml:lang="ca">Fre 1</label>
+        <label xml:lang="cs">Brzda 1</label>
+        <label xml:lang="da">Brake 1</label>
+        <label xml:lang="nl">Brake 1</label>
+    </output>
+    <output name="3,4" label="Brake 2">
+        <label xml:lang="ca">Fre 2</label>
+        <label xml:lang="cs">Brzda 2</label>
+        <label xml:lang="da">Brake 2</label>
+        <label xml:lang="nl">Brake 2</label>
+    </output>
+    <output name="3,5" label="Brake 3">
+        <label xml:lang="ca">Fre 3</label>
+        <label xml:lang="cs">Brzda 3</label>
+        <label xml:lang="da">Brake 3</label>
+        <label xml:lang="nl">Brake 3</label>
+    </output>
+    <output name="3,6" label="Primary Load">
+        <label xml:lang="ca">Càrrega Primary</label>
+        <label xml:lang="cs">Primary náklad</label>
+        <label xml:lang="da">Primary Load</label>
+        <label xml:lang="nl">Primary Load</label>
+    </output>
+    <output name="3,7" label="Uncoupling cycle">
+        <label xml:lang="ca">Desacoplament</label>
+        <label xml:lang="cs">Cyklus rozpojení</label>
+        <label xml:lang="da">Uncoupling cycle</label>
+        <label xml:lang="nl">Uncoupling cycle</label>
+    </output>
+    <output name="3,8" label="Drive Hold"/>
+    <output name="3,9" label="Firebox">
+        <label xml:lang="ca">Caixa de Llums</label>
+        <label xml:lang="cs">Topeniště</label>
+        <label xml:lang="da">Firebox</label>
+        <label xml:lang="nl">Firebox</label>
+    </output>
+    <output name="3,10" label="Dim lights">
+        <label xml:lang="ca">Llums Ajustables</label>
+        <label xml:lang="cs">Svítící světla</label>
+        <label xml:lang="da">Dim lights</label>
+        <label xml:lang="nl">Dim lights</label>
+    </output>
+    <output name="3,11" label="Grade crossing">
+        <label xml:lang="ca">Grade crossing</label>
+        <label xml:lang="cs">Úrovňové křižování</label>
+        <label xml:lang="da">Grade crossing</label>
+        <label xml:lang="nl">Grade crossing</label>
+    </output>
+    <output name="3,12" label="Momentum off">
+        <label xml:lang="ca">Apagat off</label>
+        <label xml:lang="cs">Hybnost vypnout</label>
+        <label xml:lang="da">Momentum off</label>
+        <label xml:lang="nl">Momentum off</label>
+    </output>
+    <output name="3,13" label="ESU smoke unit">
+        <label xml:lang="ca">Fumígen ESU</label>
+        <label xml:lang="cs">ESU kouřová jednotka</label>
+        <label xml:lang="da">ESU smoke unit</label>
+        <label xml:lang="nl">ESU smoke unit</label>
+    </output>
+    <output name="3,14" label="Sound fade">
+        <label xml:lang="ca">Esvaiment del Sò</label>
+        <label xml:lang="cs">Slábnoucí zvuk</label>
+        <label xml:lang="da">Sound fade</label>
+        <label xml:lang="nl">Sound fade</label>
+    </output>
+    <output name="3,15" label="Disable brake sound">
+        <label xml:lang="ca">Deshabilita sò del Fre</label>
+        <label xml:lang="cs">Zakázat zvuk brzdy</label>
+        <label xml:lang="da">Disable brake sound</label>
+        <label xml:lang="nl">Disable brake sound</label>
+    </output>
+    <output name="3,16" label="Volume &amp; Mute">
+        <label xml:lang="ca">Volum i Silenci</label>
+        <label xml:lang="cs">Hlasitost &amp; Ztlumení</label>
+        <label xml:lang="da">Volume &amp; Mute</label>
+        <label xml:lang="nl">Volume &amp; Mute</label>
+    </output>
+    <output name="3,17" label="Shift Mode 1">
+        <label xml:lang="ca">Mode de Canvi 1</label>
+        <label xml:lang="cs">Režim posunu 1</label>
+        <label xml:lang="da">Shift Mode 1</label>
+        <label xml:lang="nl">Shift Mode 1</label>
+    </output>
+    <output name="3,18" label="Shift Mode 2">
+        <label xml:lang="ca">Mode de Canvi 2</label>
+        <label xml:lang="cs">Režim posunu 2</label>
+        <label xml:lang="da">Shift Mode 2</label>
+        <label xml:lang="nl">Shift Mode 2</label>
+    </output>
+    <output name="3,19" label="Shift Mode 3">
+        <label xml:lang="ca">Mode de Canvi 3</label>
+        <label xml:lang="cs">Režim posunu 3</label>
+        <label xml:lang="da">Shift Mode 3</label>
+        <label xml:lang="nl">Shift Mode 3</label>
+    </output>
+    <output name="3,20" label="Shift Mode 4">
+        <label xml:lang="ca">Mode de Canvi 4</label>
+        <label xml:lang="cs">Režim posunu 4</label>
+        <label xml:lang="da">Shift Mode 4</label>
+        <label xml:lang="nl">Shift Mode 4</label>
+    </output>
+    <output name="3,21" label="Shift Mode 5">
+        <label xml:lang="ca">Mode de Canvi 5</label>
+        <label xml:lang="cs">Režim posunu 5</label>
+        <label xml:lang="da">Shift Mode 5</label>
+        <label xml:lang="nl">Shift Mode 5</label>
+    </output>
+    <output name="3,22" label="Shift Mode 6">
+        <label xml:lang="ca">Mode de Canvi 6</label>
+        <label xml:lang="cs">Režim posunu 6</label>
+        <label xml:lang="da">Shift Mode 6</label>
+        <label xml:lang="nl">Shift Mode 6</label>
+    </output>
+    <output name="3,23" label="|" />
+    <output name="3,24" label="|" />
+
+</outputs>

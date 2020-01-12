@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
  * This is made more complex because we want it to appear easier. Some DCC
  * systems allow addresses like 112 to be either long (extended) or short;
  * others default to one or the other.
- * <P>
+ * <p>
  * When locked (the default), the short/long selection is forced to stay in
  * synch with what's available from the current ThrottleManager. If unlocked,
  * this can differ if it's been explicity specified via the GUI (e.g. you can
@@ -78,7 +78,7 @@ public class DccLocoAddressSelector extends JPanel {
 
     /*
      * Get the currently selected DCC address.
-     * <P>
+     * <p>
      * This is the primary output of this class.
      * @return DccLocoAddress object containing GUI choices, or null if no entries in GUI
      */
@@ -133,8 +133,7 @@ public class DccLocoAddressSelector extends JPanel {
     }
 
     /* Get a JPanel containing the combined selector.
-     *
-     * <P>
+     * <p>
      * Because Swing only allows a component to be inserted in one
      * container, this can only be done once
      */
@@ -245,7 +244,7 @@ public class DccLocoAddressSelector extends JPanel {
     /*
      * Get the text field for entering the number as a separate
      * component.  
-     * <P>
+     * <p>
      * Because Swing only allows a component to be inserted in one
      * container, this can only be done once
      */

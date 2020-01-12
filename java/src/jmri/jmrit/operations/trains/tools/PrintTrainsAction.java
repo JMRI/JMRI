@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Action to print a summary of each train in operations.
- * <P>
+ * <p>
  * This uses the older style printing, for compatibility with Java 1.1.8 in
  * Macintosh MRJ
  *
@@ -35,18 +35,22 @@ public class PrintTrainsAction extends PrintTrainAction {
 
     public static final int MAX_NAME_LENGTH = Control.max_len_string_train_name - 10;
 
-    public PrintTrainsAction(String actionName, Frame mframe, boolean preview, TrainsTableFrame frame) {
-        super(actionName, mframe, preview);
+    public PrintTrainsAction(String actionName, boolean preview, TrainsTableFrame frame) {
+        super(actionName, preview);
         trainsTableFrame = frame;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        printTrains();
+    }
+    
+    public void printTrains() {
 
         // obtain a HardcopyWriter to do this
         HardcopyWriter writer = null;
         try {
-            writer = new HardcopyWriter(mFrame, Bundle.getMessage("TitleTrainsTable"), Control.reportFontSize, .5, .5, .5, .5, isPreview);
+            writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleTrainsTable"), Control.reportFontSize, .5, .5, .5, .5, isPreview);
         } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print cancelled");
             return;

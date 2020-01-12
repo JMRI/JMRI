@@ -1,15 +1,21 @@
 package jmri.beans;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
-import junit.framework.TestCase;
+
+import org.junit.Test;
 
 /**
  *
  * @author rhwood
  */
-public class ArbitraryPropertySupportTest extends TestCase {
+public class ArbitraryPropertySupportTest {
 
     private static final String CLASS = "class";
     private static final String PROPERTY_NAMES = "propertyNames";
@@ -22,23 +28,10 @@ public class ArbitraryPropertySupportTest extends TestCase {
     private static final String OLD_VALUE = "old";
     private static final String NEW_VALUE = "new";
 
-    public ArbitraryPropertySupportTest(String testName) {
-        super(testName);
-    }
-
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
-
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
-
     /**
      * Test of getIndexedProperty method, of class UnboundBean.
      */
+    @Test
     public void testGetIndexedProperty() {
         ArbitraryPropertySupport instance = (new UnboundBeanImpl()).aps();
         assertEquals(null, instance.getIndexedProperty(NOT_A_PROPERTY, 0));
@@ -59,6 +52,7 @@ public class ArbitraryPropertySupportTest extends TestCase {
     /**
      * Test of getProperty method, of class UnboundBean.
      */
+    @Test
     public void testGetProperty() {
         ArbitraryPropertySupport instance = (new UnboundBeanImpl()).aps();
         assertEquals(null, instance.getProperty(NOT_A_PROPERTY));
@@ -69,6 +63,7 @@ public class ArbitraryPropertySupportTest extends TestCase {
     /**
      * Test of getPropertyNames method, of class UnboundBean.
      */
+    @Test
     public void testGetPropertyNames() {
         ArbitraryPropertySupport instance = (new UnboundBeanImpl()).aps();
         Set<String> expResult = new HashSet<>(6);
@@ -85,6 +80,7 @@ public class ArbitraryPropertySupportTest extends TestCase {
     /**
      * Test of hasProperty method, of class UnboundBean.
      */
+    @Test
     public void testHasProperty() {
         ArbitraryPropertySupport instance = (new UnboundBeanImpl()).aps();
         assertTrue(instance.hasProperty(STRING_PROPERTY));
@@ -94,6 +90,7 @@ public class ArbitraryPropertySupportTest extends TestCase {
         assertFalse(instance.hasProperty(NOT_A_PROPERTY));
     }
 
+    @Test
     public void testHasIndexedProperty() {
         ArbitraryPropertySupport instance = (new UnboundBeanImpl()).aps();
         assertFalse(instance.hasIndexedProperty(STRING_PROPERTY));
@@ -106,6 +103,7 @@ public class ArbitraryPropertySupportTest extends TestCase {
     /**
      * Test of setIndexedProperty method, of class UnboundBean.
      */
+    @Test
     public void testSetIndexedProperty() {
         ArbitraryPropertySupport instance = (new UnboundBeanImpl()).aps();
         instance.setIndexedProperty(INDEXED_PROPERTY, 1, NEW_VALUE);
@@ -126,6 +124,7 @@ public class ArbitraryPropertySupportTest extends TestCase {
     /**
      * Test of setProperty method, of class UnboundBean.
      */
+    @Test
     public void testSetProperty() {
         ArbitraryPropertySupport instance = (new UnboundBeanImpl()).aps();
         instance.setProperty(STRING_PROPERTY, NEW_VALUE);

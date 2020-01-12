@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2010</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Ronald</firstname>
+        <surname>Kuhn</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2018-03-02</date>
+      <authorinitials>RK</authorinitials>
+      <revremark>Initial for CV835 (FW 37)</revremark>
+    </revision>
+  </revhistory>
+  <variable CV="835" item="Quick Select Shift key" exclude="130,195,197,199,201,211,218,240">
+    <decVal max="32"/>
+    <label>Quick Select Shift key</label>
+    <label xml:lang="de">Set+1 Taste erweitern</label>
+    <tooltip>Shift key to switch between sound sets.</tooltip>
+    <tooltip xml:lang="de">Set+1 Taste erweitern.</tooltip>
+  </variable>
+</variables>

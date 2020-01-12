@@ -1,56 +1,56 @@
 package jmri.jmrix.tams;
 
+import javax.annotation.Nonnull;
 import jmri.Turnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Implement turnout manager for Tams systems. Reworked to support binary
- * commands and polling of command station
- * <P>
- *
- * Based on work by Bob Jacobsen and Kevin Dickerson
+ * commands and polling of command station.
+ * <p>
+ * Based on work by Bob Jacobsen and Kevin Dickerson.
  *
  * @author  Jan Boen
  */
 public class TamsTurnoutManager extends jmri.managers.AbstractTurnoutManager implements TamsListener {
 
     public TamsTurnoutManager(TamsSystemConnectionMemo memo) {
-        adaptermemo = memo;
-        prefix = adaptermemo.getSystemPrefix();
-        tc = adaptermemo.getTrafficController();
+        super(memo);
         //Request status of turnout changes
         TamsMessage m = TamsMessage.getXEvtTrn();
-        tc.sendTamsMessage(m, this);
-        tc.addPollMessage(m, this);
+        memo.getTrafficController().sendTamsMessage(m, this);
+        memo.getTrafficController().addPollMessage(m, this);
     }
 
-    TamsTrafficController tc;
-    TamsSystemConnectionMemo adaptermemo;
-
-    String prefix;
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    @Nonnull
+    public TamsSystemConnectionMemo getMemo() {
+        return (TamsSystemConnectionMemo) memo;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Turnout createNewTurnout(String systemName, String userName) {
+    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
         int addr;
         try {
-            addr = Integer.valueOf(systemName.substring(getSystemPrefix().length() + 1)).intValue();
+            addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
         } catch (java.lang.NumberFormatException e) {
-            log.error("failed to convert systemName " + systemName + " to a turnout address");
+            log.error("failed to convert systemName {} to a turnout address", systemName);
             return null;
         }
-        Turnout t = new TamsTurnout(addr, getSystemPrefix(), tc);
+        Turnout t = new TamsTurnout(addr, getSystemPrefix(), getMemo().getTrafficController());
         t.setUserName(userName);
         return t;
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 
@@ -61,31 +61,13 @@ public class TamsTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
         //TamsMessages are ignored
     }
 
-    // to hear of changes - copied from PowerManager
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-
-    @Override
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    @Override
-    protected void firePropertyChange(String p, Object old, Object n) {
-        pcs.firePropertyChange(p, old, n);
-    }
-
-    @Override
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-    }
-
     @Override
     public void reply(TamsReply r) {//To listen for Turnout status changes
         //TamsMessage tm = TamsMessage.getXEvtTrn();
         if (TamsTrafficController.replyType == 'T') {//Only handle Turnout events
             log.debug("*** Tams Turnout Reply ***");
             if (TamsTrafficController.replyBinary) {//Typical polling message
-                log.debug("Reply to binary command = " + r.toString());
+                log.debug("Reply to binary command = {}", r.toString());
                 if ((r.getNumDataElements() > 1) && (r.getElement(0) > 0x00) && (r.getElement(0) != 'T')) {
                     //Here we break up a long turnout related TamsReply into individual turnout status'
                     for (int i = 1; i < r.getNumDataElements() - 1; i = i + 2) {
@@ -94,14 +76,14 @@ public class TamsTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
                         tr.setBinary(TamsTrafficController.replyBinary);
                         tr.setElement(0, r.getElement(i));
                         tr.setElement(1, r.getElement(i + 1));
-                        log.debug("Going to pass this to the decoder = " + tr.toString());
+                        log.debug("Going to pass this to the decoder = {}", tr.toString());
                         //The decodeTurnoutState will do the actual decoding of each individual turnout
-                        decodeTurnoutState(tr, prefix, tc);
+                        decodeTurnoutState(tr, getSystemPrefix(), getMemo().getTrafficController());
                     }
                 }
             } else {//xSR is an ASCII message
                 //Nothing to do really
-                log.debug("Reply to ASCII command = " + r.toString());
+                log.debug("Reply to ASCII command = {}", r.toString());
             }
         }
     }
@@ -120,8 +102,8 @@ public class TamsTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
         int lowerByte = r.getElement(0) & 0xff;
         int upperByte = r.getElement(1) & 0xff;
         log.debug("Decoding turnout");
-        //log.debug("Lower Byte: " + lowerByte);
-        //log.debug("Upper Byte: " + upperByte);
+        //log.debug("Lower Byte: {}", lowerByte);
+        //log.debug("Upper Byte: {}", upperByte);
         //Core logic to be added here
         int turnoutAddress = (upperByte & 0x07) * 256 + lowerByte;
         String turnoutName = prefix + "T" + Integer.toString(turnoutAddress);
@@ -129,7 +111,7 @@ public class TamsTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
         if ((upperByte & 0x80) == 0x80) {//Only need bit #7
             turnoutState = Turnout.CLOSED;
         }
-        log.debug("Turnout Address: -" + turnoutName + "-, state: " + turnoutState);
+        log.debug("Turnout Address: -{}-, state: {}", turnoutName, turnoutState);
 
         //OK. Now how do we get the turnout to update in JMRI?
         //Next line provided via JMRI dev's

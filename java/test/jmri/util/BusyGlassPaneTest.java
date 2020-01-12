@@ -35,6 +35,7 @@ public class BusyGlassPaneTest {
     @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
     @After

@@ -6,7 +6,8 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>DecoderPro&reg; Main Window</title><!-- Style -->
+  <title>DecoderPro&reg; Main Window</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -14,16 +15,16 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
+
       <h1>DecoderPro&reg; Debug Menu</h1>
 
       <h2>Virtual Sound Decoder</h2>
@@ -51,13 +52,13 @@
 
       <h4>Configuration File</h4>
 
-      <p>The config.xml file can be created or edited using a
+      <p>The <strong>config.xml</strong> file can be created or edited using a
        standard text editor or a
         <a href="http://jmri.org/help/en/html/doc/Technical/XmlEditors.shtml">
         XML editor</a>.
-	  </p>
+      </p>
       <p>A value in XML is described as a <strong>tag</strong>, e.g.
-	    <code>&lt;gain&gt;0.8&lt;/gain&gt;</code>.
+        <code>&lt;gain&gt;0.8&lt;/gain&gt;</code>.
       </p>
       <p>The following sections present some optional configuration features.
         They are documented as tags, so you can copy and paste it into your 
@@ -102,6 +103,53 @@
       &lt;/trigger&gt;
       </pre>
 
+      <p>Action "STOP_AT_ZERO":<br>
+      With the example above you can stop the engine at any speed.
+      Using the action "STOP_AT_ZERO" instead of "NOTHING" prevents
+      the engine from stopping if the speed is not zero.<br>
+      <em>Since JMRI 4.19.2</em></p>
+
+      <h5>More throttle key functions: Brake-Key, Half-Speed-Key and Coast-Key</h5>
+
+      <p>Description:<br>
+      Trigger name for Brake-Key: BRAKE_KEY<br>
+      Trigger name for Half-Speed: HALF_SPEED<br>
+      Trigger name for Coast-Key: COAST<br>
+      All these Triggers are intended for Engine type "steam1".<br>
+      Optional. Must be declared in the tag
+      <strong>sound-event name="ENGINE"</strong>.<br>
+      <em>Since JMRI 4.13.3</em></p>
+
+      <p>Important note on Brake-Key and Half-speed: Please setup those keys in
+      Virtual Sound Decoder only, if your DCC decoder supports such features and
+      can be set likewise.<br>
+      Using a Brake-Key depends on the specification of your DCC decoder. Some
+      DCC decoder support a brake time, which is an optional deceleration-rate
+      and lower than the original one. I recommend to use a throttle key with
+      momentum behavior as the Brake-Key. Don't forget to set the
+      deceleration-rate (both in VSD and in your DCC decoder) to a high value,
+      e.g. 250. If you want to define a brake time in VSD, please do declare
+     (e.g.):</p>
+      <pre>
+      &lt;brake-time&gt;30&lt;/brake-time&gt;
+      </pre>
+
+      <h5>Acceleration-Rate and Deceleration-Rate</h5>
+
+      <p>Description:<br>
+      Allows to set an acceleration-rate and a deceleration-rate for Engine type
+      "steam1". Please note that it is necessary to set the accel-/decel-rates for
+      your DCC-Decoder likewise.<br>
+      Optional. Must be declared in the tag <strong>sound name="ENGINE"
+      type="steam1"</strong>. Default value: 35 / 18<br>
+      <em>Since JMRI 4.13.3</em></p>
+
+      <p>Example:</p>
+      <pre>
+      &lt;accel-rate&gt;35&lt;/accel-rate&gt;
+      &lt;decel-rate&gt;18&lt;/decel-rate&gt;
+      </pre>
+
       <h5>Reference Distance</h5>
 
       <p>Description:<br>
@@ -112,7 +160,7 @@
       volume of the Audio Source will be as defined by the gain
       setting.<br>
       Optional. Must be declared in the tag <strong>sound</strong>
-	  previous to a gain value. Default value: 1.0<br>
+      previous to a gain value. Default value: 1.0<br>
       <em>Since JMRI 4.11.4</em></p>
 
       <p>Example:</p>
@@ -135,6 +183,32 @@
       <p>Example:</p>
       <pre>
       &lt;engine-gain&gt;0.6&lt;/engine-gain&gt;
+      </pre>
+
+      <h5><a name="xy">Create XY coordinates output in console for a VSDecoder</a></h5>
+
+      <p>Description:<br>
+      Helpfull option to verify the setup of your VSDGeoData.xml file
+      (see <a href="VSD_LocationsMgr.shtml#advanced_location_following">Advanced Location Following</a>).<br>
+      The JMRI System Console output can be copied and edited for printing a route curve.
+      I have tested this with "LibreOffice Calc" and "Gnuplot".<br>
+      Optional. Must be declared right after the
+      <code>&lt;profile&gt;</code> tag.<br>
+      Default value: "no"<br>
+      <em>Since JMRI 4.13.2</em></p>
+
+      <p>Example:</p>
+      <pre>
+      &lt;create-xy-series&gt;yes&lt;/create-xy-series&gt;
+      </pre>
+
+      <p>Console output:<br></p>
+      <pre>
+       vsdecoder.VSDecoder      INFO  - 3(S): -1.5     1.1 [AWT-EventQueue-0]
+       vsdecoder.VSDecoder      INFO  - 3(S): -1.489   1.1 [AWT-EventQueue-0]
+       vsdecoder.VSDecoder      INFO  - 3(S): -1.4173  1.1 [AWT-EventQueue-0]
+       vsdecoder.VSDecoder      INFO  - 3(S): -1.3456  1.1 [AWT-EventQueue-0]
+       ...
       </pre>
 
       <div align="right">

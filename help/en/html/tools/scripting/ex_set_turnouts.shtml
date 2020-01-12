@@ -6,7 +6,6 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
-  <!-- $Id$ -->
 
   <title>JMRI: Scripting Example - Setting Turnouts</title>
   <!-- Style -->
@@ -17,15 +16,14 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+    <!-- /Style -->
 </head>
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
       <!-- Page Body -->
 
@@ -113,7 +111,12 @@ setStartup().start()          # create one of these, and start it running
 
         <p>It is VERY IMPORTANT that you keep the formatting of the
         script the way it is -- with leading tabs. The Python
-        language uses tabs as part of its command structure.</p>
+        language uses indentation as part of its command structure. 
+        [While this script is made with leading tabs, it is recommended
+        that scripts used with JMRI use four spaces instead as tabs sometimes
+        cause confusion.  And NEVER mix the use of tabs and spaces for
+        indentation as it will definitely cause confusion with program 
+        indentation and structure.] </p>
 
         <p>This first part of the script you should include "as
         is". No changes are necessary:</p>

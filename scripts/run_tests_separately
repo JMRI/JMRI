@@ -1,0 +1,25 @@
+#! /bin/bash
+# 
+# Run each test individually. 
+#
+# Argument, if present, is a starting _directory_ under java/test, e.g. "jmri/managers"
+#  
+# The list of test files that fail goes into /failed_files.txt
+#
+# Assumes that a build step i.e. "ant tests" has already taken place, so that 
+# individual test classes are ready to run. 
+#
+
+rm -f ./failed_files.txt
+touch ./failed_files.txt
+
+for jmri_test in $( find java/test/$1 -name \*Test.java ! -name AllTest.java ! -name HeadLessTest.java ! -name PackageTest.java ! -name FailTest.java) 
+    do jmri_test=${jmri_test#java/test/} 
+        jmri_test=${jmri_test%\.java}
+        date
+        echo ${jmri_test}
+        ./runtest.csh ${jmri_test} || echo ${jmri_test} >> ./failed_files.txt
+done
+
+# error exit if any failed
+if [ -s ./failed_files.txt ]; then echo "The following files failed"; cat ./failed_files.txt; exit 1; fi

@@ -54,14 +54,14 @@ public class TrainCsvManifest extends TrainCsvCommon {
         // build header
         addLine(fileOut, HEADER);
         addLine(fileOut, RN + ESC + Setup.getRailroadName() + ESC);
-        addLine(fileOut, TN + train.getName());
+        addLine(fileOut, TN + ESC + train.getName() + ESC);
         addLine(fileOut, TM + ESC + train.getDescription() + ESC);
         addLine(fileOut, PRNTR + ESC
                 + locationManager.getLocationByName(train.getTrainDepartsName()).getDefaultPrinterName() + ESC);
         // add logo
         String logoURL = FileUtil.getExternalFilename(Setup.getManifestLogoURL());
-        if (!train.getManifestLogoURL().equals(Train.NONE)) {
-            logoURL = FileUtil.getExternalFilename(train.getManifestLogoURL());
+        if (!train.getManifestLogoPathName().equals(Train.NONE)) {
+            logoURL = FileUtil.getExternalFilename(train.getManifestLogoPathName());
         }
         if (!logoURL.equals("")) {
             addLine(fileOut, LOGO + logoURL);

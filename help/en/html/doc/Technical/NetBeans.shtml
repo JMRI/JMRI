@@ -8,6 +8,7 @@
 
   <title>JMRI: Building with NetBeans</title>
     <meta name="author" content="Bob Jacobsen">
+    <meta name="author" content="B. Milhaupt">
   <meta name="keywords" content="JMRI technical code NetBeans">
   <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
   <!-- are an arbitrary design pattern used by the update.pl script to -->
@@ -28,19 +29,22 @@
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-
-  <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+<div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
+
       <h1>JMRI Code: Building with NetBeans</h1>
 
     <div class="toc">
-      <ul>
+     <ul>
         <li><a href="#intro">Introduction</a></li>
 
         <li><a href="#installing">Getting and Installing
-        NetBeans</a></li>
+        NetBeans</a>
+        <ul>
+        <li><a href="#windowsUsers">Important note for Windows users</a></li>
+        <li><a href="#heap">Java "Heap" and "low memory" notifications</a></li>
+        </ul></li>
 
         <li><a href="#checkout">Checking out code</a></li>
 
@@ -60,6 +64,8 @@
 
         <li><a href="#compileIndividualFile">NetBeans and compiling
         individual files</a></li>
+	<li><a href="#fetch">Loading a Specific Branch from 
+	GitHub</a></li>
 
         <li><a href="#patch">Making a Patch File</a></li>
       </ul><a href="#SeeAlso">See Also</a>
@@ -70,7 +76,7 @@
       <p>NetBeans 8 (available at <a href=
       "http://www.netbeans.org">www.netbeans.org</a>) makes a great
       platform for working with JMRI. The JMRI code is set up to
-      work with NetBeans with almost no additional set-up. (The
+      work with NetBeans with almost no additional setup. (The
       description below is accurate for the Windows version of
       NetBeans 8. NetBeans is <i>supposed</i> to be identical
       across platforms, but this hasn't been checked on anything
@@ -102,7 +108,7 @@
       software repositories - search your package manager for
       NetBeans.</p>
 
-      <h3>Important note for Windows users</h3>
+      <h3><a id="windowsUsers" name="windowsUsers"></a>Important note for Windows users</h3>
 
       <p>Due to different handling of Line Endings characters
       (<code>LF / CR LF</code>) between Windows and other systems -
@@ -181,6 +187,23 @@
       line-endings to the configured form and saves the file. If
       "CANCEL" is selected, the file will be saved WITHOUT changing
       any line-endings.</p>
+
+      <h3><a id="heap" name="heap"></a>Java "Heap" size and "low memory" notifications.</h3>
+
+      <p>Netbeans may provide notification of "Low Memory" situations 
+      when perfroming some operations, including running certain JMRI
+      "targets" within the build.xml file.  Netbeans can become 
+      <strong>very</strong> sluggish when it encounters these low memory 
+      conditions.  This can happen regardless of the amount of memory 
+      your machine has, unless you take steps to re-configure Netbeans.</p>
+
+      <p>By default, Netbeans uses a strategy to allocate a given 
+      amount of "Heap" space which is insufficient for projects
+      which are as large as JMRI.  JMRI developers who use Netbeans are 
+      encouraged to increase the Netbeans default Heap allocation which
+      is made when Netbeans is launched.  This is generally done via
+      a change to the "netbeans.conf" file.  See <a href="http://wiki.netbeans.org/FaqSettingHeapSize">
+      FaqSettingHeapSize</a> for details.</p>
 
       <h2><a id="gituse" name="gituse"></a>Using NetBeans with
       JMRI's Git Code Repository</h2>
@@ -319,14 +342,27 @@
           A new JMRI checkout should build cleanly. If not, please
           check with the JMRIusers or jmri-developers mailings
           lists for help.</p>
-
+          <a href="images/NetBeansContextLaunch.png"><img src="images/NetBeansContextLaunch.png" height="319" width="147" align="right"></a>
           <ul>
             <li>[Run] -&gt; [Run Project (JMRI)] will compile and
             invoke DecoderPro</li>
 
             <li>You can choose other targets (i.e. PanelPro...) by
-            changing [File]-&gt;[Project Properties
-            (JMRI)]-&gt;[Build and Run]-&gt;[Run Project]</li>
+            right-clicking (or control clicking) to get the 
+            project contextual menu.  This works in 
+            various places, but most certainly on the 
+            "JMRI" icon under Projects in the left side-bar.
+            In the middle of that menu are 
+            items for launching PanelPro, launching DecoderPro
+            and doing other build steps.</li>
+            
+            <li>The "Debug" target is a special case.
+            Which program (PanelPro vs DecoderPro) 
+            is defined by a line near the end of the
+            nbproject/ide-targets.xml file in the 
+            JMRI source directory. Perhaps 
+            somebody can some day figure out a 
+            better way to configure that...
           </ul>
 
           <p>If you want to run the program under the NetBeans
@@ -370,12 +406,13 @@
           includes the NSIS executable, such as:</p>
 
           <p style="font-family: monospace">nsis.home=C:/Program
-          Files (x86)/NSIS</p>
+          Files (x86)/NSIS/</p>
 
           <p>or</p>
 
           <p style="font-family: monospace">
           nsis.home=/opt/nsis/nsis-2.46/</p>
+          <p><em>Note:</em> Make sure the trailing / is present.</p>
 
           <p>If you will be installing the SpotBugs tool, you will
               also define spotbugs.home in this file. You may also
@@ -406,7 +443,7 @@
           JMRI branches, whichever branch you add the catalog from,
           that branch's schema is what is used.</p>
 
-          <h2><a id="spotbugs" name="spotbugs">Running
+          <h2><a id="SpotBugs" name="SpotBugs">Running
                   SpotBugs</a></h2>
 
           <p>The SpotBugs tool is a static code analysis tool which
@@ -433,12 +470,12 @@
           executable, such as:</p>
 
           <p style="font-family: monospace">
-              spotbugs.home=C:/spotbugs-3.1.1</p>
+              spotbugs.home=C:/spotbugs-3.1.1/</p>
 
           <p>or</p>
 
           <p style="font-family: monospace">
-              spotbugs.home=/opt/spotbugs-3.1.1</p>
+              spotbugs.home=/opt/spotbugs-3.1.1/</p>
 
           <p>To run the SpotBugs tool on JMRI code, execute the ant
               target "spotbugs" which is defined in build.xml. Within
@@ -478,22 +515,6 @@
           shortcomings of the configuration information found in
           the files in the project's nbproject/ directory.</p>
 
-          <h2><a id="SeeAlso" name="SeeAlso">See Also</a></h2>
-
-          <ul>
-            <li><a href="http://netbeans.org/">The NetBeans.org
-            Integrated Development Environment web site</a></li>
-
-            <li><a href="http://subversion.apache.org/">The
-            Apache.org Subversion project web site</a></li>
-
-            <li><a href="http://sourceforge.net/projects/nsis">The
-            NSIS project web site</a></li>
-
-            <li><a href="https://spotbugs.github.io">The
-                    SpotBugs web site</a></li>
-          </ul>
-
         <h2><a id="fetch" name="fetch"></a>Loading a Specific Branch from GitHub</h2>
         
         The process for building from a branch (i.e. the one where someone has put a change) 
@@ -502,20 +523,20 @@
         <ul>
         <li>Under "Team" -> "Remote" select "Fetch" (not Fetch from Upstream)
         <br><a href="images/38030695-285ba828-324e-11e8-8e73-7ff0f6c32125.png">
-            <img src="images/38030695-285ba828-324e-11e8-8e73-7ff0f6c32125.png" height="212" width="236"></a>
+            <img src="images/38030695-285ba828-324e-11e8-8e73-7ff0f6c32125.png" height="212" width="236"></a></li>
 
         <li>Fill out the form to specify the correct user's repository 
         (After the 1st time you do this, you'll be able to select by name in the top choice)
         <br><a href="images/38030828-932040d8-324e-11e8-933f-cee0bf6f45e2.png">
-            <img src="images/38030828-932040d8-324e-11e8-933f-cee0bf6f45e2.png" height="147" width="247"></a>
+            <img src="images/38030828-932040d8-324e-11e8-933f-cee0bf6f45e2.png" height="147" width="247"></a></li>
 
         <li>On the next screen to select a branch, you can either select all of them (there's a button) 
         or find and select just the name of the branch that holds the desired change:
 
         <br><a href="images/38030974-fa9a7b52-324e-11e8-86f2-23c0c8735c9c.png">
-            <img src="images/38030974-fa9a7b52-324e-11e8-86f2-23c0c8735c9c.png" height="101" width="339"></a>
+            <img src="images/38030974-fa9a7b52-324e-11e8-86f2-23c0c8735c9c.png" height="101" width="339"></a></li>
 
-        <li>Click "Finish"
+        <li>Click "Finish"</li>
         </ul>
 
         At this point, you've pulled my changes onto your local machine, but you're not using them yet.  
@@ -525,16 +546,16 @@
         <li>Back on the main menu, select "Team" -> "Checkout" -> "Checkout Revision...". 
         On the window you get, click "Select":
         <br><a href="images/38031217-94948748-324f-11e8-8d61-8451af389d2e.png">
-            <img src="images/38031217-94948748-324f-11e8-8d61-8451af389d2e.png" height="208" width="268"></a>
+            <img src="images/38031217-94948748-324f-11e8-8d61-8451af389d2e.png" height="208" width="268"></a></li>
 
         <li>In the upper left, find the imported branch you want, which in the example is "bobjacobsen/ast-clock-power-bit". 
         Either click to highlight (show) and then click "Select", or just double click on it.  
         (Don't worry about the upper right or the lower box, they'll be automatically set right)
         <br><a href="images/38031418-024b9f92-3250-11e8-9d52-aca1db8d4435.png">
-            <img src="images/38031418-024b9f92-3250-11e8-9d52-aca1db8d4435.png" height="259" width="321"></a>
+            <img src="images/38031418-024b9f92-3250-11e8-9d52-aca1db8d4435.png" height="259" width="321"></a></li>
 
         <li>Back on the "Checkout Revision ..." window, make sure the "Checkout as New Branch" 
-            is <u>not</u> checked, and then click "Checkout"
+            is <u>not</u> checked, and then click "Checkout"</li>
         </ul>
         
     Now you've got a copy of my changes as your checked-out source.  
@@ -568,6 +589,22 @@
             <li>After it finishes calculating the diffs, the file
             you selected will contain the patches, along with an
             information header.</li>
+          </ul>
+
+          <h2><a id="SeeAlso" name="SeeAlso">See Also</a></h2>
+
+          <ul>
+            <li><a href="http://netbeans.org/">The NetBeans.org
+            Integrated Development Environment web site</a></li>
+
+            <li><a href="http://subversion.apache.org/">The
+            Apache.org Subversion project web site</a></li>
+
+            <li><a href="http://sourceforge.net/projects/nsis">The
+            NSIS project web site</a></li>
+
+            <li><a href="https://spotbugs.github.io">The
+                    SpotBugs web site</a></li>
           </ul>
 
 

@@ -17,16 +17,16 @@ import org.slf4j.LoggerFactory;
 
 /**
  * TreeModel represents the USB controllers and components
- * <P>
+ * <p>
  * Accessed via the instance() member, as we expect to have only one of these
  * models talking to the USB subsystem.
- * <P>
+ * <p>
  * The tree has three levels below the uninteresting root:
  * <ol>
  * <li>USB controller
  * <li>Components (input, axis)
  * </ol>
- * <P>
+ * <p>
  * jinput requires that there be only one of these for a given USB system in a
  * given JVM so we use a pseudo-singlet "instance" approach
  * <p>
@@ -101,7 +101,7 @@ public final class TreeModel extends DefaultTreeModel {
     }
 
     // intended for test routines only
-    void terminateThreads() throws InterruptedException {
+    public void terminateThreads() throws InterruptedException {
         if (runner == null) {
             return;
         }
@@ -242,6 +242,8 @@ public final class TreeModel extends DefaultTreeModel {
     /**
      * @return true for success
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SF_SWITCH_NO_DEFAULT",
+                    justification = "This is due to a documented false-positive source")
     boolean loadSystem() {
         // Get a list of the controllers JInput knows about and can interact with
         log.debug("start looking for controllers");
@@ -255,6 +257,7 @@ public final class TreeModel extends DefaultTreeModel {
                 switch (SystemType.getType()) {
                     case SystemType.WINDOWS :
                         log.error("Failed to find expected library", ex);
+                        //$FALL-THROUGH$
                     default:
                         log.info("Did not find an implementation of a class needed for the interface; not proceeding");
                         log.info("This is normal, because support isn't available for {}", SystemType.getOSName());

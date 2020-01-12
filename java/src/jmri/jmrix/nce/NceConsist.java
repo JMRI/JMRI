@@ -10,14 +10,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * NceConsist.java
- *
- * This is the Consist definition for a consist on a NCE system. it uses the NCE
+ * The Consist definition for a consist on an NCE system. It uses the NCE
  * specific commands to build a consist.
  *
  * @author Paul Bender Copyright (C) 2011
  * @author Daniel Boudreau Copyright (C) 2012
- *
  */
 public class NceConsist extends jmri.implementation.DccConsist implements jmri.jmrix.nce.NceListener {
 
@@ -153,10 +150,14 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
             }
             // send remove loco from consist to NCE command station
             removeLocoFromConsist(locoAddress.getNumber(), locoAddress.isLongAddress());
+            //reset the value in the roster entry for CV19
+            resetRosterEntryCVValue(locoAddress);
+
             // remove from lists
+            consistRoster.remove(locoAddress);
+            consistPosition.remove(locoAddress);
             consistDir.remove(locoAddress);
             consistList.remove(locoAddress);
-            consistPosition.remove(locoAddress);
             notifyConsistListeners(locoAddress, ConsistListener.OPERATION_SUCCESS);
         } else {
             log.error("Loco " + locoAddress + " is not part of this consist " + getConsistAddress());
@@ -193,6 +194,7 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
         }
     }
 
+    @SuppressWarnings("deprecation") // Thread.stop not likely to be removed
     private void stopReadNCEconsistThread() {
         if (mb != null) {
             try {

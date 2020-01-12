@@ -1,6 +1,5 @@
 package jmri.jmrix.lenz.swing.lzv100;
 
-import junit.framework.TestCase;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -15,5 +14,5 @@ import org.junit.runners.Suite;
     LZV100ActionTest.class,
     BundleTest.class
 })
-public class PackageTest extends TestCase {
+public class PackageTest {
 }

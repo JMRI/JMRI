@@ -11,18 +11,18 @@ import javax.annotation.Nonnull;
  *
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ *
  * @see jmri.Programmer
  * @author	Bob Jacobsen Copyright (C) 2008, 2014
-  */
+ */
 public class ProgrammerScaffold implements Programmer {
 
     ProgrammingMode matchesMode;
@@ -34,31 +34,13 @@ public class ProgrammerScaffold implements Programmer {
     }
 
     @Override
-    public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
-    }
+    public void writeCV(String CV, int val, ProgListener p) throws ProgrammerException {}
 
     @Override
-    public void readCV(int CV, ProgListener p) throws ProgrammerException {
-    }
+    public void readCV(String CV, ProgListener p) throws ProgrammerException {}
 
     @Override
-    public void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException {
-    }
-
-    @Override
-    public void writeCV(String CV, int val, ProgListener p) throws ProgrammerException {
-        writeCV(Integer.parseInt(CV), val, p);
-    }
-
-    @Override
-    public void readCV(String CV, ProgListener p) throws ProgrammerException {
-        readCV(Integer.parseInt(CV), p);
-    }
-
-    @Override
-    public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
-        confirmCV(Integer.parseInt(CV), val, p);
-    }
+    public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {}
 
     @Override
     public void setMode(ProgrammingMode p) {
@@ -116,6 +98,3 @@ public class ProgrammerScaffold implements Programmer {
     }
 
 }
-
-
-

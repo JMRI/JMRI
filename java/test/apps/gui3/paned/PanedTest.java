@@ -1,7 +1,6 @@
 package apps.gui3.paned;
 
 import apps.AppsBase;
-import apps.tests.Log4JFixture;
 import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
@@ -52,28 +51,27 @@ public class PanedTest {
                 JUnitUtil.initDebugThrottleManager();
             }
 
-            @Override
-            protected void installShutDownManager() {
-                JUnitUtil.initShutDownManager();
-            }
         };
         Assert.assertNotNull(a);
         // shutdown the application
         AppsBase.handleQuit();
-        JUnitUtil.disposeFrame("Decoder Pro Wizard", true, true);
+        JUnitUtil.disposeFrame("DecoderPro Wizard", true, true);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
+
         JUnitUtil.resetApplication();
+        JUnitUtil.resetProfileManager();
     }
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager();  // eventually want to test ShutDownTasks?
         JUnitUtil.resetApplication();
-        Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(PanedTest.class);

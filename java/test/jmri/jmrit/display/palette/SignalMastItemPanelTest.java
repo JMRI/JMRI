@@ -21,7 +21,7 @@ public class SignalMastItemPanelTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        PickListModel<jmri.SignalMast> tableModel = PickListModel.signalMastPickModelInstance(); // N11N
+        PickListModel<jmri.SignalMast> tableModel = PickListModel.signalMastPickModelInstance();
         DisplayFrame df = new DisplayFrame("SignalMast Item Panel Test");
         Editor editor = new EditorScaffold();
         SignalMastItemPanel t = new SignalMastItemPanel(df,"IM01","",tableModel,editor);
@@ -33,6 +33,7 @@ public class SignalMastItemPanelTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
     @After

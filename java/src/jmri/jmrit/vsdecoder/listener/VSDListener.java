@@ -1,98 +1,80 @@
 package jmri.jmrit.vsdecoder.listener;
 
-import java.util.List;
 import javax.vecmath.Vector3f;
-import jmri.AudioException;
 import jmri.AudioManager;
+import jmri.jmrit.audio.AudioFactory;
 import jmri.jmrit.audio.AudioListener;
-import jmri.util.PhysicalLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * <hr>
+ * This file is part of JMRI.
+ * <p>
+ * JMRI is free software; you can redistribute it and/or modify it under 
+ * the terms of version 2 of the GNU General Public License as published 
+ * by the Free Software Foundation. See the "COPYING" file for a copy
+ * of this license.
+ * <p>
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT 
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * for more details.
+ *
+ * @author Mark Underwood Copyright (C) 2012
+ * @author Klaus Killinger Copyright (C) 2018
+ */
 public class VSDListener {
 
-    //public final static String ListenerSysNamePrefix = "IAL$VSD:";
     // Only one Audio Listener can exist, and it is already present in the Audio Table
     public final static String ListenerSysName = "IAL$";
 
-    private AudioListener _listener;
-    private String _sysname;
-    private String _username;
-    private ListeningSpot _location;
-
-    //public VSDListener(String sname) {
-    //    this(sname, sname);
-    //}
-
-    //public VSDListener(String sname, String uname) {
-    //    _sysname = ListenerSysNamePrefix + sname;
-    //    _username = uname;
-
-    //    AudioManager am = jmri.InstanceManager.getDefault(jmri.AudioManager.class);
-    //    try {
-    //        _listener = (AudioListener) am.provideAudio(ListenerSysNamePrefix + _sysname);
-    //        log.debug("Listener Created: " + _listener);
-    //    } catch (AudioException | IllegalArgumentException ae) {
-    //        log.warn("Exception creating Listener: " + ae);
-    //        // Do nothing?
-    //    }
-    //}
-
-    public VSDListener(AudioListener l) {
-        _listener = l;
-        _sysname = l.getSystemName();
-        _username = l.getUserName();
-    }
+    private AudioFactory af;
+    private AudioListener listener;
+    private String sysname;
+    private String username;
+    private ListeningSpot location;
 
     public VSDListener() {
         // Initialize the AudioManager (if it isn't already) and get the Listener.
         AudioManager am = jmri.InstanceManager.getDefault(jmri.AudioManager.class);
         am.init();
-        _listener = am.getActiveAudioFactory().getActiveAudioListener();
-
-        List<String> names = am.getSystemNameList('L');
-        if (names.size() == 0) {
-            log.debug("No Listener yet. Creating one.");
+        af = am.getActiveAudioFactory();
+        if (af != null) {
+            listener = af.getActiveAudioListener();
+            log.debug("Default listener: {}, system name: {}", listener, listener.getSystemName());
+            setSystemName(listener.getSystemName());
+            setUserName(listener.getUserName());
         } else {
-            log.debug("Found name: " + names.get(0));
+            log.warn("AudioFactory not available");
         }
-        _sysname = _listener.getSystemName();
-        _username = _listener.getUserName();
     }
 
     public String getSystemName() {
-        return (_sysname);
+        return sysname;
     }
 
     public String getUserName() {
-        return (_username);
+        return username;
     }
 
     public ListeningSpot getLocation() {
-        return (_location);
+        return location;
     }
 
-    public void setSystemName(String s) {
-        _sysname = s;
+    void setSystemName(String s) {
+        sysname = s;
     }
 
-    public void setUserName(String u) {
-        _username = u;
+    void setUserName(String u) {
+        username = u;
     }
 
     public void setLocation(ListeningSpot l) {
-        _location = l;
-        _listener.setPosition(new Vector3f(l.getLocation()));
-        _listener.setOrientation(new Vector3f(l.getLookAtVector()), new Vector3f(l.getUpVector()));
+        location = l;
+        listener.setPosition(new Vector3f(l.getLocation()));
+        listener.setOrientation(new Vector3f(l.getLookAtVector()), new Vector3f(l.getUpVector()));
         // Set position here
-    }
-
-    public void setPosition(PhysicalLocation p) {
-        if (_location == null) {
-            _location = new ListeningSpot();
-        }
-        _location.setLocation(p);
-        _listener.setPosition(p);
     }
 
     private final static Logger log = LoggerFactory.getLogger(VSDListener.class);

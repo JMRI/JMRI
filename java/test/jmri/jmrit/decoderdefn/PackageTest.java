@@ -24,7 +24,7 @@ import org.junit.runners.Suite;
  * Tests for the jmrit.decoderdefn package
  *
  * @author	Bob Jacobsen
-  */
+ */
 public class PackageTest {
 
 }

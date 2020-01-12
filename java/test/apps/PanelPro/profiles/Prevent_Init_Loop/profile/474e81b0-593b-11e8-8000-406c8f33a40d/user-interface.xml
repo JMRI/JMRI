@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<auxiliary-configuration xmlns="http://www.netbeans.org/ns/auxiliary-configuration/1">
+    <classPreferences xmlns="http://jmri.org/xml/schema/auxiliary-configuration/class-preferences-4-3-5.xsd">
+        <preferences xmlns="" class="jmri.jmrit.beantable.SignalMastTableAction"/>
+        <preferences xmlns="" class="jmri.jmrit.beantable.LogixTableAction"/>
+        <preferences xmlns="" class="jmri.jmrit.beantable.LRouteTableAction"/>
+        <preferences xmlns="" class="jmri.managers.JmriUserPreferencesManager"/>
+        <preferences xmlns="" class="jmri.jmrit.beantable.SensorTableAction"/>
+        <preferences xmlns="" class="jmri.jmrit.beantable.SignalHeadTableAction"/>
+        <preferences xmlns="" class="jmri.jmrit.beantable.BlockTableAction"/>
+        <preferences xmlns="" class="jmri.jmrit.beantable.AudioTableAction"/>
+        <preferences xmlns="" class="jmri.jmrit.beantable.SignalGroupTableAction"/>
+        <preferences xmlns="" class="jmri.jmrit.beantable.LightTableAction"/>
+        <preferences xmlns="" class="jmri.jmrit.beantable.TransitTableAction"/>
+        <preferences xmlns="" class="jmri.jmrit.beantable.ReporterTableAction"/>
+        <preferences xmlns="" class="jmri.jmrit.beantable.RouteTableAction"/>
+        <preferences xmlns="" class="jmri.jmrit.beantable.MemoryTableAction"/>
+    </classPreferences>
+    <comboBoxLastValue xmlns="http://jmri.org/xml/schema/auxiliary-configuration/combobox-4-3-5.xsd">
+        <comboBox xmlns="" lastSelected="Internal" name="jmri.jmrit.beantable.SensorTableAction.SystemSelected"/>
+        <comboBox xmlns="" lastSelected="LocoNet LocoBuffer" name="Digitrax"/>
+    </comboBoxLastValue>
+    <settings xmlns="http://jmri.org/xml/schema/auxiliary-configuration/settings-4-3-5.xsd">
+        <setting xmlns="">jmri.jmrit.beantable.RouteTableAction.AutoSystemName</setting>
+        <setting xmlns="">jmri.jmrit.display.layoutEditor.LayoutEditor:rotate text test.toolBarThin</setting>
+        <setting xmlns="">jmri.jmrit.display.layoutEditor.LayoutEditor:A.toolBarThin</setting>
+        <setting xmlns="">jmri.jmrit.display.layoutEditor.LayoutEditor:B.toolBarThin</setting>
+        <setting xmlns="">apps.gui3.dp3.DecoderPro3Window.hideGroups</setting>
+    </settings>
+    <tableDetails xmlns="http://jmri.org/xml/schema/auxiliary-configuration/table-details-4-3-5.xsd"/>
+    <windowDetails xmlns="http://jmri.org/xml/schema/auxiliary-configuration/window-details-4-3-5.xsd">
+        <window xmlns="" class="apps.gui3.dp3.DecoderPro3Window:DecoderPro" height="600.0" locX="896.0" locY="480.0" width="1024.0">
+            <properties>
+                <property>
+                    <key>selectedProgrammer</key>
+                    <value class="java.lang.String">service</value>
+                </property>
+            </properties>
+        </window>
+        <window xmlns="" class="+Roseville-Colfax" height="428.0" locX="15.0" locY="15.0" width="1024.0"/>
+        <window xmlns="" class="EastColfax-Summit" height="425.0" locX="45.0" locY="45.0" width="1023.0"/>
+        <window xmlns="" class="JMRI System Console" height="366.0" locX="0.0" locY="23.0" width="961.0"/>
+        <window xmlns="" class="jmri.jmrit.display.layoutEditor.LayoutEditor:STRR Modular Layout" locX="143.0" locY="11.0"/>
+        <window xmlns="" class="Boca" height="273.0" locX="180.0" locY="180.0" width="417.0"/>
+        <window xmlns="" class="jmri.jmrit.roster.Roster" locX="0.0" locY="0.0"/>
+        <window xmlns="" class="jmri.jmrit.sensorgroup.SensorGroupFrame" height="543.0" locX="0.0" locY="0.0" width="595.0"/>
+        <window xmlns="" class="Applegate-EastColfax" height="426.0" locX="30.0" locY="30.0" width="1024.0"/>
+        <window xmlns="" class="Champion-Boca" height="426.0" locX="105.0" locY="105.0" width="1124.0"/>
+        <window xmlns="" class="Colfax" height="638.0" locX="210.0" locY="210.0" width="818.0"/>
+        <window xmlns="" class="jmri.jmrit.display.panelEditor.PanelEditor:Panel" locX="20.0" locY="20.0"/>
+        <window xmlns="" class="Verdi" height="232.0" locX="315.0" locY="315.0" width="424.0"/>
+        <window xmlns="" class="Truckee" height="443.0" locX="300.0" locY="300.0" width="916.0"/>
+        <window xmlns="" class="Sparks" height="670.0" locX="285.0" locY="285.0" width="719.0"/>
+        <window xmlns="" class="jmri.jmrit.display.layoutEditor.LayoutEditor:B" height="722.0" locX="1005.0" locY="30.0" width="915.0">
+            <properties>
+                <property>
+                    <key>DropDownListsDisplayOrder.Enter name of Block for new turnout, level crossing, or track segment.</key>
+                    <value class="java.lang.String">DISPLAYNAME</value>
+                </property>
+                <property>
+                    <key>DropDownListsDisplayOrder.Enter name of occupancy sensor for this block; no entry means don't change.</key>
+                    <value class="java.lang.String">DISPLAYNAME</value>
+                </property>
+                <property>
+                    <key>DropDownListsDisplayOrder</key>
+                    <value class="java.lang.String">DISPLAYNAME</value>
+                </property>
+                <property>
+                    <key>DropDownListsDisplayOrder.Enter name of physical turnout.</key>
+                    <value class="java.lang.String">DISPLAYNAME</value>
+                </property>
+                <property>
+                    <key>DropDownListsDisplayOrder.Enter name of second physical turnout.</key>
+                    <value class="java.lang.String">DISPLAYNAME</value>
+                </property>
+                <property>
+                    <key>DropDownListsDisplayOrder.Enter name of memory variable to be displayed in a new memory label.</key>
+                    <value class="java.lang.String">DISPLAYNAME</value>
+                </property>
+                <property>
+                    <key>DropDownListsDisplayOrder.Enter name of Sensor represented by a new Sensor icon.</key>
+                    <value class="java.lang.String">DISPLAYNAME</value>
+                </property>
+                <property>
+                    <key>toolBarFontSize</key>
+                    <value class="java.lang.Float">17.0</value>
+                </property>
+                <property>
+                    <key>DropDownListsDisplayOrder.Select to add a Block label when next clicking with shift down.</key>
+                    <value class="java.lang.String">DISPLAYNAME</value>
+                </property>
+                <property>
+                    <key>DropDownListsDisplayOrder.Enter name of Signal Head represented by a new signal head icon.</key>
+                    <value class="java.lang.String">DISPLAYNAME</value>
+                </property>
+            </properties>
+        </window>
+        <window xmlns="" class="apps.gui3.TabbedPreferencesAction$1:Preferences" height="506.0" locX="453.0" locY="293.0" width="992.0"/>
+        <window xmlns="" class="jmri.jmrit.display.layoutEditor.LayoutEditor:rotate text test" height="364.0" locX="566.0" locY="379.0" width="1354.0">
+            <properties>
+                <property>
+                    <key>DropDownListsDisplayOrder.Enter name of Block for new turnout, level crossing, or track segment.</key>
+                    <value class="java.lang.String">DISPLAYNAME</value>
+                </property>
+                <property>
+                    <key>DropDownListsDisplayOrder.Enter name of occupancy sensor for this block; no entry means don't change.</key>
+                    <value class="java.lang.String">DISPLAYNAME</value>
+                </property>
+                <property>
+                    <key>DropDownListsDisplayOrder</key>
+                    <value class="java.lang.String">DISPLAYNAME</value>
+                </property>
+                <property>
+                    <key>DropDownListsDisplayOrder.Enter name of physical turnout.</key>
+                    <value class="java.lang.String">DISPLAYNAME</value>
+                </property>
+                <property>
+                    <key>DropDownListsDisplayOrder.Enter name of second physical turnout.</key>
+                    <value class="java.lang.String">DISPLAYNAME</value>
+                </property>
+                <property>
+                    <key>DropDownListsDisplayOrder.Enter name of memory variable to be displayed in a new memory label.</key>
+                    <value class="java.lang.String">DISPLAYNAME</value>
+                </property>
+                <property>
+                    <key>DropDownListsDisplayOrder.Enter name of Sensor represented by a new Sensor icon.</key>
+                    <value class="java.lang.String">DISPLAYNAME</value>
+                </property>
+                <property>
+                    <key>toolBarFontSize</key>
+                    <value class="java.lang.Float">17.0</value>
+                </property>
+                <property>
+                    <key>DropDownListsDisplayOrder.Select to add a Block label when next clicking with shift down.</key>
+                    <value class="java.lang.String">DISPLAYNAME</value>
+                </property>
+                <property>
+                    <key>DropDownListsDisplayOrder.Enter name of Signal Head represented by a new signal head icon.</key>
+                    <value class="java.lang.String">DISPLAYNAME</value>
+                </property>
+            </properties>
+        </window>
+        <window xmlns="" class="jmri.jmrit.display.layoutEditor.LayoutEditor:A" height="722.0" locX="0.0" locY="23.0" width="915.0">
+            <properties>
+                <property>
+                    <key>DropDownListsDisplayOrder.Enter name of Block for new turnout, level crossing, or track segment.</key>
+                    <value class="java.lang.String">DISPLAYNAME</value>
+                </property>
+                <property>
+                    <key>DropDownListsDisplayOrder.Enter name of occupancy sensor for this block; no entry means don't change.</key>
+                    <value class="java.lang.String">DISPLAYNAME</value>
+                </property>
+                <property>
+                    <key>DropDownListsDisplayOrder</key>
+                    <value class="java.lang.String">DISPLAYNAME</value>
+                </property>
+                <property>
+                    <key>DropDownListsDisplayOrder.Enter name of physical turnout.</key>
+                    <value class="java.lang.String">DISPLAYNAME</value>
+                </property>
+                <property>
+                    <key>DropDownListsDisplayOrder.Enter name of second physical turnout.</key>
+                    <value class="java.lang.String">DISPLAYNAME</value>
+                </property>
+                <property>
+                    <key>DropDownListsDisplayOrder.Enter name of memory variable to be displayed in a new memory label.</key>
+                    <value class="java.lang.String">DISPLAYNAME</value>
+                </property>
+                <property>
+                    <key>DropDownListsDisplayOrder.Enter name of Sensor represented by a new Sensor icon.</key>
+                    <value class="java.lang.String">DISPLAYNAME</value>
+                </property>
+                <property>
+                    <key>toolBarFontSize</key>
+                    <value class="java.lang.Float">17.0</value>
+                </property>
+                <property>
+                    <key>DropDownListsDisplayOrder.Select to add a Block label when next clicking with shift down.</key>
+                    <value class="java.lang.String">DISPLAYNAME</value>
+                </property>
+                <property>
+                    <key>DropDownListsDisplayOrder.Enter name of Signal Head represented by a new signal head icon.</key>
+                    <value class="java.lang.String">DISPLAYNAME</value>
+                </property>
+            </properties>
+        </window>
+        <window xmlns="" class="Champion" height="241.0" locX="195.0" locY="195.0" width="423.0"/>
+        <window xmlns="" class="PanelPro" height="309.0" locX="1153.0" locY="20.0" width="654.0"/>
+        <window xmlns="" class="jmri.jmrit.display.palette.ItemPalette:Item Palette" height="650.0" locX="699.0" locY="128.0" width="679.0"/>
+        <window xmlns="" class="jmri.jmrit.logix.NXFrame" locX="45.0" locY="45.0"/>
+        <window xmlns="" class="apps.gui3.tabbedpreferences.TabbedPreferencesFrame:Preferences" height="528.0" locX="22.0" locY="24.0" width="1165.0"/>
+        <window xmlns="" class="Roseville" height="630.0" locX="270.0" locY="270.0" width="653.0"/>
+        <window xmlns="" class="jmri.jmrit.beantable.ListedTableAction$1$1:Sensors" height="600.0" locX="589.0" locY="250.0" width="1241.0"/>
+        <window xmlns="" class="Add New Sensor" height="175.0" locX="45.0" locY="45.0" width="881.0"/>
+        <window xmlns="" class="jmri.jmrit.display.controlPanelEditor.ControlPanelEditor:ControlPanel1" height="297.0" locX="20.0" locY="20.0" width="428.0"/>
+        <window xmlns="" class="Stanford-Truckee" height="425.0" locX="90.0" locY="90.0" width="1023.0"/>
+        <window xmlns="" class="jmri.jmrit.display.controlPanelEditor.ControlPanelEditor:ControlPanel2" height="336.0" locX="25.0" locY="406.0" width="534.0"/>
+        <window xmlns="" class="EastSummit-Stanford" height="426.0" locX="75.0" locY="75.0" width="1022.0"/>
+        <window xmlns="" class="Lawton-WestSparks" height="426.0" locX="135.0" locY="135.0" width="1025.0"/>
+        <window xmlns="" class="jmri.jmrit.beantable.ListedTableAction$1$1:Logix" height="600.0" locX="0.0" locY="45.0" width="1920.0"/>
+        <window xmlns="" class="jmri.jmrit.display.panelEditor.PanelEditor:Reno" locX="1235.0" locY="117.0"/>
+        <window xmlns="" class="jmri.jmrix.loconet.hexfile.HexFileFrame" height="106.0" locX="13.0" locY="881.0" width="276.0"/>
+        <window xmlns="" class="jmri.jmrit.display.Editor$JFrameItem:Sensor" height="502.0" locX="220.0" locY="235.0" width="428.0"/>
+        <window xmlns="" class="Reno-Sparks+" height="425.0" locX="150.0" locY="150.0" width="1022.0"/>
+        <window xmlns="" class="EmigrantGap" height="259.0" locX="225.0" locY="225.0" width="528.0"/>
+        <window xmlns="" class="Cisco-Eder" height="425.0" locX="60.0" locY="60.0" width="1024.0"/>
+        <window xmlns="" class="JMRI System Console" height="988.0" locX="32.0" locY="23.0" width="1654.0"/>
+        <window xmlns="" class="PanelThing2" height="261.0" locX="1054.0" locY="31.0" width="393.0"/>
+        <window xmlns="" class="Add/Edit Route" locX="100.0" locY="30.0"/>
+        <window xmlns="" class="PanelThing1" height="278.0" locX="488.0" locY="30.0" width="430.0"/>
+        <window xmlns="" class="Panel" height="403.0" locX="960.0" locY="540.0" width="440.0"/>
+        <window xmlns="" class="Reno" height="282.0" locX="255.0" locY="255.0" width="845.0"/>
+        <window xmlns="" class="Norden &amp; Eder" height="297.0" locX="240.0" locY="240.0" width="912.0"/>
+        <window xmlns="" class="Mainlines thru Yards" height="419.0" locX="165.0" locY="165.0" width="923.0"/>
+        <window xmlns="" class="jmri.jmrit.beantable.ListedTableAction$1$1:Turnouts" height="600.0" locX="0.0" locY="0.0" width="1920.0"/>
+        <window xmlns="" class="EastTruckee-Lawton" height="426.0" locX="120.0" locY="120.0" width="1026.0"/>
+    </windowDetails>
+</auxiliary-configuration>

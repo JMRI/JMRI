@@ -19,12 +19,12 @@ import purejavacomm.SerialPort;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Provide access to XpressNet via a LIUSB on an FTDI Virtual Comm Port.
+ * Provide access to XpressNet via a LIUSB on an FTDI Virtual Com Port.
  * Normally controlled by the lenz.liusb.LIUSBFrame class.
  *
  * @author Paul Bender Copyright (C) 2005-2010
  */
-public class LIUSBAdapter extends XNetSerialPortController implements jmri.jmrix.SerialPortAdapter {
+public class LIUSBAdapter extends XNetSerialPortController {
 
     public LIUSBAdapter() {
         super();
@@ -150,36 +150,44 @@ public class LIUSBAdapter extends XNetSerialPortController implements jmri.jmrix
      */
     protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
-        int baud = validSpeedValues[0];  // default, but also defaulted in the initial value of selectedSpeed
-        for (int i = 0; i < validSpeeds.length; i++) {
-            if (validSpeeds[i].equals(mBaudRate)) {
-                baud = validSpeedValues[i];
-            }
-        }
+        int baud = currentBaudNumber(mBaudRate);
         SerialUtil.setSerialPortParams(activeSerialPort, baud,
                 SerialPort.DATABITS_8,
                 SerialPort.STOPBITS_1,
                 SerialPort.PARITY_NONE);
 
         // find and configure flow control
-        int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; // default, but also deftaul for getOptionState(option1Name)
+        int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; // default, but also default for getOptionState(option1Name)
         if (!getOptionState(option1Name).equals(validOption1[0])) {
             flow = 0;
         }
 
         configureLeadsAndFlowControl(activeSerialPort, flow);
-
-        //if (getOptionState(option2Name).equals(validOption2[0]))
-        //    checkBuffer = true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] validBaudRates() {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
+    }
+
     protected String[] validSpeeds = new String[]{Bundle.getMessage("Baud57600")};
     protected int[] validSpeedValues = new int[]{57600};
+
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
+    }
 
     // meanings are assigned to these above, so make sure the order is consistent
     protected String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionHwRecomm23150")

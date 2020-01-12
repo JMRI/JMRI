@@ -15,7 +15,7 @@ import org.junit.Test;
  * JUnit tests for the rps.Reading class.
  *
  * @author	Bob Jacobsen Copyright 2006
-  */
+ */
 public class RpsPositionIconTest {
 
     @Test
@@ -44,9 +44,11 @@ public class RpsPositionIconTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
         JUnitUtil.initDefaultUserMessagePreferences();
     }
 
     @After
     public void tearDown() {        JUnitUtil.tearDown();    }
+
 }

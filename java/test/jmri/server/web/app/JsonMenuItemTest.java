@@ -6,7 +6,6 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import apps.tests.Log4JFixture;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Locale;
@@ -24,12 +23,14 @@ public class JsonMenuItemTest {
 
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
+
     }
 
     @After
     public void tearDown() {
-        Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
+
     }
 
     @Test

@@ -1,11 +1,12 @@
 package jmri.jmrit.operations.setup;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Controls for operations developers. Debug Property changes and instance
@@ -19,7 +20,6 @@ public class Control {
 
     // debug flags
     public static final boolean SHOW_PROPERTY = false;
-    public static final boolean SHOW_INSTANCE = false;
 
     // Default panel width
     public static final int panelWidth1025 = 1025;
@@ -95,6 +95,8 @@ public class Control {
     public static String reportFontName = ""; // use default
     
     public static int excelWaitTime = 120; // in seconds
+    
+    public static boolean disablePrintingIfCustom = false;
 
     // must synchronize changes with operation-config.dtd
     public static Element store() {
@@ -137,6 +139,9 @@ public class Control {
         // actions
         e.addContent(values = new Element(Xml.ACTIONS));
         values.setAttribute(Xml.EXCEL_WAIT_TIME, Integer.toString(excelWaitTime));
+        // print control
+        e.addContent(values = new Element(Xml.PRINT_OPTIONS));
+        values.setAttribute(Xml.DISABLE_PRINT_IF_CUSTOM, disablePrintingIfCustom ? Xml.TRUE : Xml.FALSE);
         
         return e;
     }
@@ -228,6 +233,13 @@ public class Control {
                 } catch (DataConversionException e1) {
                     log.error("Excel wait time ({}) isn't a number", a.getValue());
                 }
+            }
+        }
+        Element ePrintOptions = eControl.getChild(Xml.PRINT_OPTIONS);
+        if (ePrintOptions != null) {
+            Attribute format;
+            if ((format = ePrintOptions.getAttribute(Xml.DISABLE_PRINT_IF_CUSTOM)) != null) {
+                disablePrintingIfCustom = format.getValue().equals(Xml.TRUE);
             }
         }
     }

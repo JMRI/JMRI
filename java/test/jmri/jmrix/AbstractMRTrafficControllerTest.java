@@ -56,11 +56,10 @@ public class AbstractMRTrafficControllerTest {
 
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp(); 
+        JUnitUtil.setUp(); 
         JUnitUtil.resetInstanceManager();
         tc = new AbstractMRTrafficController(){
-           @Override
-           protected void setInstance() {}
+
            @Override
            protected void forwardMessage(AbstractMRListener client, AbstractMRMessage m){
            }
@@ -84,7 +83,9 @@ public class AbstractMRTrafficControllerTest {
     @After
     public void tearDown(){
         tc = null;
-        JUnitUtil.tearDown(); 
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.tearDown();
+ 
     }
 
 }

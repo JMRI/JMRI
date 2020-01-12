@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Checks that a NCE message is valid for the connection type. Throws an
  * exception if message isn't appropriate for the connection type.
- * <P>
+ *
  * @author Dan Boudreau Copyright (C) 2010
  * @author ken cameron Copyright (C) 2013
   *

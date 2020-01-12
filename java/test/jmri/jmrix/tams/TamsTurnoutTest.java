@@ -1,10 +1,7 @@
 package jmri.jmrix.tams;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  *
@@ -31,14 +28,9 @@ public class TamsTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
                 tnis.outbound.elementAt(tnis.outbound.size() - 1).toString());
     }
 
-
-    @Test
-    public void testCTor() {
-        Assert.assertNotNull("exists",t);
-    }
-
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         tnis = new TamsInterfaceScaffold();
@@ -48,6 +40,7 @@ public class TamsTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

@@ -5,12 +5,11 @@ package jmri.jmrix.jmriclient;
  * communications link.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2004, 2008
-  */
+ */
 public interface JMRIClientListener extends jmri.jmrix.AbstractMRListener {
 
     public void message(JMRIClientMessage m);
 
     public void reply(JMRIClientReply m);
+
 }
-
-

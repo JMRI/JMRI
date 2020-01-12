@@ -507,11 +507,15 @@ hr {
 	padding: 0 0 0.3em 11px;
 }
 
+#side .here {
+	background: #fff;	   /* white to highlight */
+	text-decoration: none; /* already here       */
+}
 
 
 /*header*/
 #header {
-	background: #AAC;
+	background: #AAC;	/* light purple */
 }
 #header img {			/* Used for the JMRI logo */
 	float: left;
@@ -527,7 +531,7 @@ hr {
 	padding:20px 0 0 0;	/* location of text in the box */
 	width: auto;		/* resize with window width */
 	height: 89px;		/* how much box below the text? */
-	text-align: right;	/* memu aligns to the right */
+	text-align: right;	/* menu aligns to the right */
 	border: solid 3px #AAE;
 	border-bottom-color: #88E;
 	border-right-color: #88E;

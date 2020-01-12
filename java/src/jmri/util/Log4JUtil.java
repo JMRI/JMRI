@@ -1,12 +1,17 @@
 package jmri.util;
 
 import apps.SystemConsole;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.*;
+
+import javax.annotation.Nonnull;
+
 import jmri.util.exceptionhandler.UncaughtExceptionHandler;
+
 import org.apache.log4j.Appender;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.FileAppender;
@@ -18,7 +23,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Common utility methods for working with Log4J.
- * <P>
+ * <p>
  * Two system properties influence how logging is configured in JMRI:
  * <dl>
  * <dt>jmri.log</dt><dd>The logging control file. If this file is not an
@@ -30,7 +35,7 @@ import org.slf4j.LoggerFactory;
  * <i>default.lcf</i> is used, following the above search order to find it.
  * </dd>
  * <dt>jmri.log.path</dt><dd>The directory for storing logs. If not specified,
- * logs are stored in the JMRI settings directory.</dd>
+ * logs are stored in the JMRI preferences directory.</dd>
  * </dl>
  *
  * @author Bob Jacobsen Copyright 2009, 2010
@@ -48,27 +53,84 @@ public class Log4JUtil {
      */
     // Goal is to be lightweight and fast; this will only be used in a few places,
     // and only those should appear in data structure.
-    static public boolean warnOnce(Logger log, String msg, Object... args) {
+    static public boolean warnOnce(@Nonnull Logger logger, @Nonnull String msg, Object... args) {
         // the  Map<String, Boolean> is just being checked for existence; it's never False
-        Map<String, Boolean> loggerMap = warnedOnce.get(log);
-        if (loggerMap == null) {
+        Map<String, Boolean> loggerMap = warnedOnce.get(logger);
+        if (loggerMap == null) {  // if it exists, there was a prior warning given
             loggerMap = new HashMap<>();
-            warnedOnce.put(log, loggerMap);
+            warnedOnce.put(logger, loggerMap);
         } else {
-            if (loggerMap.get(msg) == Boolean.TRUE) return false;
+            if (Boolean.TRUE.equals(loggerMap.get(msg))) return false;
         }
+        warnOnceHasWarned = true;
         loggerMap.put(msg, Boolean.TRUE);
-        log.warn(msg, args);
+        logger.warn(msg, args);
         return true;
     }
     static private Map<Logger, Map<String, Boolean>> warnedOnce = new HashMap<>();
+    static private boolean warnOnceHasWarned = false;
     
+    /**
+     * Restart the "once" part of {@link #warnOnce} so that the 
+     * nextInvocation will log, even if it already has.
+     * <p>
+     * Should only be used by test code. We denote this
+     * by marking it deprecated, but we don't intend to remove it.
+     * @deprecated - do not remove
+     */
+    @Deprecated // do not remove
+    static public void restartWarnOnce() {
+        // be a bit more efficient
+        if (warnOnceHasWarned) {
+            warnedOnce = new HashMap<>();
+            warnOnceHasWarned = false;
+        }
+    }
+    
+    /**
+     * Warn that a deprecated method has been invoked.
+     * Can also be used to warn of some deprecated condition, i.e.
+     * obsolete-format input data.
+     * <p>
+     * Thie logging is turned off by default during testing to
+     * simplify updating tests when warnings are added.
+     */
+     static public void deprecationWarning(@Nonnull Logger logger, @Nonnull String methodName) {
+        if (logDeprecations) {
+            warnOnce(logger, "{} is deprecated, please remove references to it", methodName, shortenStacktrace(new Exception("traceback")));
+        }
+     }
+     
+    static private boolean logDeprecations = true;
+    
+    /**
+     * Control logging of deprecation warnings.
+     * <p> 
+     * Should only be used by test code. We denote this
+     * by marking it deprecated, but we don't intend to remove it.
+     * (Might have to if we start removing deprecated references from test code)
+     * @deprecated - do not remove
+     */
+    @Deprecated // do not remove
+    public static void setDeprecatedLogging(boolean log) {logDeprecations = log;}
+
+    /**
+     * Determine whether deprecation warnings are logged.
+     * <p> 
+     * Should only be used by test code. We denote this
+     * by marking it deprecated, but we don't intend to remove it.
+     * (Might have to if we start removing deprecated references from test code)
+     * @deprecated - do not remove
+     */
+    @Deprecated // do not remove
+    public static boolean getDeprecatedLogging() { return logDeprecations;}
+     
     /**
      * Initialize logging from a default control file.
      * <p>
      * Primary functions:
      * <ul>
-     * <li>Initialize the JMRI system console
+     * <li>Initialize the JMRI System Console
      * <li>Set up the slf4j j.u.logging to log4J bridge
      * <li>Start log4j
      * <li>Initialize some default exception handlers (to feed the logs?)
@@ -86,7 +148,7 @@ public class Log4JUtil {
      *
      * @param controlfile the logging control file
      */
-    static public void initLogging(String controlfile) {
+    static public void initLogging(@Nonnull String controlfile) {
         initLog4J(controlfile);
     }
 
@@ -102,14 +164,14 @@ public class Log4JUtil {
      * @see jmri.util.FileUtil#getPreferencesPath()
      * @see jmri.util.FileUtil#getProgramPath()
      */
-    static void initLog4J(String logFile) {
+    static void initLog4J(@Nonnull String logFile) {
         if (log4JSetUp) {
             log.debug("initLog4J already initialized!");
             return;
         }
         // Initialise JMRI System Console
         // Need to do this before initialising log4j so that the new
-        // stdout and stderr streams are set-up and usable by the ConsoleAppender
+        // stdout and stderr streams are set up and usable by the ConsoleAppender
         SystemConsole.create();
         log4JSetUp = true;
 
@@ -148,7 +210,7 @@ public class Log4JUtil {
     }
 
     @SuppressWarnings("unchecked")
-    static public String startupInfo(String program) {
+    static public @Nonnull String startupInfo(@Nonnull String program) {
         log.info(jmriLog);
         Enumeration<org.apache.log4j.Logger> e = org.apache.log4j.Logger.getRootLogger().getAllAppenders();
         while (e.hasMoreElements()) {
@@ -171,13 +233,13 @@ public class Log4JUtil {
      * Configure Log4J using the specified properties file.
      * <p>
      * This method sets the system property <i>jmri.log.path</i> to the JMRI
-     * settings directory if not specified.
+     * preferences directory if not specified.
      *
      * @see jmri.util.FileUtil#getPreferencesPath()
      */
-    static private void configureLogging(String config) throws IOException {
+    static private void configureLogging(@Nonnull String configFile) throws IOException {
         Properties p = new Properties();
-        try (FileInputStream f = new FileInputStream(config)) {
+        try (FileInputStream f = new FileInputStream(configFile)) {
             p.load(f);
         }
 
@@ -196,4 +258,42 @@ public class Log4JUtil {
         PropertyConfigurator.configure(p);
     }
 
+    /**
+     * Shorten this stack trace in a Throwable to start with the first JMRI method.  
+     * <p>
+     * If you then pass it to 
+     * Log4J for logging, it'll take up less space.
+     * @param t The Throwable to truncate and return
+     * @return The original object with truncated stack trace
+     */
+    public  @Nonnull static <T extends Throwable> T shortenStacktrace(@Nonnull T t) {
+        StackTraceElement[]	originalTrace = t.getStackTrace();
+        int i;
+        for (i = originalTrace.length-1; i>0; i--) { // search from deepest
+            String name = originalTrace[i].getClassName();
+            if (name.equals("jmri.util.junit.TestClassMainMethod")) continue; // special case to ignore high up in stack
+            if (name.equals("apps.tests.AllTest")) continue;                 // special case to ignore high up in stack
+            if (name.equals("jmri.HeadLessTest")) continue;                 // special case to ignore high up in stack
+            if (name.startsWith("jmri") || name.startsWith("apps")) break;  // keep those
+        }
+        return shortenStacktrace(t, i+1);
+    }
+
+    /**
+     * Shorten this stack trace in a Throwable to a fixed length.
+     * <p>
+     * If you then pass it to 
+     * Log4J for logging, it'll take up less space.
+     * @param t The Throwable to truncate and return
+     * @param len The number of stack trace entries to keep.
+     * @return The original object with truncated stack trace
+     */
+    public  @Nonnull static <T extends Throwable> T shortenStacktrace(@Nonnull T t, int len) {
+        StackTraceElement[]	originalTrace = t.getStackTrace();
+        int newLen = Math.min(len, originalTrace.length);
+        StackTraceElement[] newTrace = new StackTraceElement[newLen];
+        for (int i = 0; i < newLen; i++) newTrace[i] = originalTrace[i];
+        t.setStackTrace(newTrace);
+        return t;
+    }
 }

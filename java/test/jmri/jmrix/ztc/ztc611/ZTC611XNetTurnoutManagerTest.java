@@ -30,7 +30,7 @@ public class ZTC611XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutM
     public void testAsAbstractFactory() {
         lnis = new XNetInterfaceScaffold(new LenzCommandStation());
         // create and register the manager object
-        ZTC611XNetTurnoutManager l = new ZTC611XNetTurnoutManager(lnis, "X");
+        ZTC611XNetTurnoutManager l = new ZTC611XNetTurnoutManager(lnis.getSystemConnectionMemo());
         jmri.InstanceManager.setTurnoutManager(l);
 
         // ask for a Turnout, and check type
@@ -56,9 +56,23 @@ public class ZTC611XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutM
 
     }
 
+    @Test
+    @Override
+    public void testThrownText(){
+         Assert.assertEquals("thrown text","Thrown (+)",l.getThrownText());
+    }
+
+    @Test
+    @Override
+    public void testClosedText(){
+         Assert.assertEquals("closed text","Closed (-)",l.getClosedText());
+    }
+
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
     @Override
@@ -69,7 +83,7 @@ public class ZTC611XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutM
         // prepare an interface, register
         lnis = new XNetInterfaceScaffold(new LenzCommandStation());
         // create and register the manager object
-        l = new ZTC611XNetTurnoutManager(lnis, "X");
+        l = new ZTC611XNetTurnoutManager(lnis.getSystemConnectionMemo());
         jmri.InstanceManager.setTurnoutManager(l);
     }
 

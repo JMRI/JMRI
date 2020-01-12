@@ -13,14 +13,14 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Traffic controller for the GridConnect protocol.
- * <P>
+ * <p>
  * GridConnect uses messages transmitted as an ASCII string of up to 24
  * characters of the form: :ShhhhNd0d1d2d3d4d5d6d7; The S indicates a standard
  * CAN frame hhhh is the two byte header (11 useful bits) N or R indicates a
  * normal or remote frame d0 - d7 are the (up to) 8 data bytes
  *
  * @author Andrew Crosland Copyright (C) 2008
-  */
+ */
 public class GcTrafficController extends TrafficController {
 
     public GcTrafficController() {
@@ -54,9 +54,7 @@ public class GcTrafficController extends TrafficController {
 
     public void setgcState(int s) {
         gcState = s;
-        if (log.isDebugEnabled()) {
-            log.debug("Setting gcState " + s);
-        }
+        log.debug("Setting gcState " + s);
     }
 
     public boolean isBootMode() {
@@ -70,6 +68,15 @@ public class GcTrafficController extends TrafficController {
     public void sendCanMessage(CanMessage m, CanListener reply) {
         log.debug("GcTrafficController sendCanMessage() " + m.toString());
         sendMessage(m, reply);
+    }
+
+    /**
+     * Forward a preformatted reply to the actual interface.
+     */
+    @Override
+    public void sendCanReply(CanReply r, CanListener reply) {
+        log.debug("TrafficController sendCanReply() " + r.toString());
+        notifyReply(r, reply);
     }
 
     /**
@@ -108,8 +115,13 @@ public class GcTrafficController extends TrafficController {
      */
     @Override
     public CanReply decodeFromHardware(AbstractMRReply m) {
+        GridConnectReply gc = new GridConnectReply();
         log.debug("Decoding from hardware");
-        GridConnectReply gc = (GridConnectReply) m;
+        try {
+            gc = (GridConnectReply) m;
+        } catch(java.lang.ClassCastException cce){
+            log.error("{} cannot cast to a GridConnectReply",m);
+        }
         CanReply ret = gc.createReply();
         return ret;
     }
@@ -159,13 +171,13 @@ public class GcTrafficController extends TrafficController {
 
     /**
      * Get characters from the input source, and file a message.
-     * <P>
+     * <p>
      * Returns only when the message is complete.
-     * <P>
+     * <p>
      * This is over-ridden from AbstractMRTrafficController so we can add
      * suppression of the characters before ':'. We can't use
      * waitForStartOfReply() because that strips the 1st character also.
-     * <P>
+     * <p>
      * Handles timeouts on read by ignoring zero-length reads.
      *
      * @param msg     message to fill
@@ -208,6 +220,3 @@ public class GcTrafficController extends TrafficController {
 
     private final static Logger log = LoggerFactory.getLogger(GcTrafficController.class);
 }
-
-
-

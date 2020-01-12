@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2003, 2004, 2014 All rights reserved -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -15,12 +14,14 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="peter.brandenburg@t-online.de" version="1" lastUpdated="2006/01/30"/>
   <version author="Alain Le Marchand" version="2" lastUpdated="2014/03/02"/>
-  <version author="Alain Le Marchand" version="3" lastUpdated="2014/07/20"/>  
-  <version author="ronald@wirkuhns.de" version="4" lastUpdated="2016/05/07"/>  
+  <version author="Alain Le Marchand" version="3" lastUpdated="2014/07/20"/>
+  <version author="ronald@wirkuhns.de" version="4" lastUpdated="2016/05/07"/>
+  <version author="Alain Le Marchand" version="5" lastUpdated="2018/12/203"/>
   <!-- Version 2 - Fixed manufacturer label from "Kuehn" to "Kuehn Ing." as per current decoderIndex.xml file (Alain Le Marchand) -->
   <!-- Version 3 - Refactoring (xinclude and standard panes) + fix CV55 interpretation (Alain Le Marchand) -->
   <!-- Version 3.1 - add translation (Enzo Fortuna) -->
   <!-- Version 4 - add translation to german and split some pane (Ronald Kuhn) -->
+  <!-- Version 5 - Fixed CV55 interpretation (again) + added Reset (Alain Le Marchand) -->
   <decoder>
     <family name="NMRA-DCC/Motorola" mfg="Kuehn Ing.">
       <model model="N025" numOuts="2" numFns="10" maxMotorCurrent="0.7 A" maxTotalCurrent="1 A">
@@ -327,6 +328,7 @@
         <label xml:lang="it">Uscita A-Luce smorzata</label>
         <label xml:lang="de">Ausgang A dimmen</label>
         <label xml:lang="cs">Tlumené světlo A</label>
+        <tooltip>Permanent Dimming</tooltip>
         <comment>Effects Output A White</comment>
         <comment xml:lang="it">Effetti uscita A (bianco)</comment>
         <comment xml:lang="cs">Efekt pro výstup A Bílá</comment>
@@ -436,6 +438,7 @@
         <label>B Dim Light</label>
         <label xml:lang="it">Uscita B-Luce smorzata</label>
         <label xml:lang="de">Ausgang B dimmen</label>
+        <tooltip>Permanent Dimming</tooltip>
         <comment>Effects Output B Yellow</comment>
         <comment xml:lang="it">Effetti uscita B (giallo)</comment>
         <label xml:lang="cs">Tlumené světlo B</label>
@@ -527,7 +530,7 @@
         <comment>Effects Output C Green</comment>
         <comment xml:lang="it">Effetti uscita C (verde)</comment>
       </variable>
-      <variable CV="51" mask="XXXXXVXX" default="0" minOut="4" item="C Blink Phase B">      
+      <variable CV="51" mask="XXXXXVXX" default="0" minOut="4" item="C Blink Phase B">
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>C Blink Phase B</label>
         <label xml:lang="it">Uscita C-Luce Lampeggiante fase B</label>
@@ -546,6 +549,7 @@
         <label>C Dim Light</label>
         <label xml:lang="it">Uscita C-Luce smorzata</label>
         <label xml:lang="de">Ausgang C dimmen</label>
+        <tooltip>Permanent Dimming</tooltip>
         <comment>Effects Output C Green</comment>
         <comment xml:lang="it">Effetti uscita C (verde)</comment>
         <label xml:lang="cs">Tlumené světlo C</label>
@@ -610,7 +614,7 @@
           <enumChoice choice="Blink Phase A" value="8">
             <choice>Blink Phase A</choice>
             <choice xml:lang="it">Lampeggiante fase A</choice>
-            <choice xml:lang="de">Blinken Phase A</choice>    
+            <choice xml:lang="de">Blinken Phase A</choice>
             <choice xml:lang="cs">Blikající fáze A</choice>
           </enumChoice>
         </enumVal>
@@ -625,7 +629,7 @@
       </variable>
       <!--variable CV="52" mask="XXXXXXXV" default="0" minOut="4" item="D Pulsing Light">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>D Pulsing Light</label>        
+        <label>D Pulsing Light</label>
         <label xml:lang="de">Effects Output D Violett</label>
         <label xml:lang="it">Effetti uscita D (viola)</label>
       </variable>
@@ -638,7 +642,7 @@
       </variable>
       <variable CV="52" mask="XXXXXVXX" default="0" minOut="4" item="D Blink Phase B">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>D Blink Phase B</label>        
+        <label>D Blink Phase B</label>
         <label xml:lang="it">Uscita D-Luce Lampeggiante fase B</label>
         <comment>Effects Output D Violet</comment>
         <comment xml:lang="it">Effetti uscita D (viola)</comment>
@@ -655,6 +659,7 @@
         <label>D Dim Light</label>
         <label xml:lang="it">Uscita D-Luce smorzata</label>
         <label xml:lang="de">Ausgang D dimmen</label>
+        <tooltip>Permanent Dimming</tooltip>
         <comment>Effects Output D Violet</comment>
         <comment xml:lang="it">Effetti uscita D (viola)</comment>
         <label xml:lang="cs">Tlumené světlo D</label>
@@ -715,29 +720,46 @@
         <comment xml:lang="cs">Meze 1-63</comment>
         <tooltip xml:lang="cs">Úprava regulace EMF složky P</tooltip>
       </variable>
-      <!--variable CV="55" mask="XXXXVVVV" default="0" item="Global lighting option 1">
+      <!--
+      <variable CV="55" mask="XXXXXVVV" default="0" item="Global lighting option 1">
         <decVal min="0" max="7"/>
         <label>Function output voltage reduction</label>
         <label xml:lang="it">Riduzione tensione in uscita</label>
-        <tooltip>Controls function output voltage: 0=full on, 7=lowest</tooltip>
+        <tooltip>Dimming: Controls function output voltage: 0=full on, 7=lowest</tooltip>
         <tooltip xml:lang="it">Controlla tensione uscita: 0=più alta, 7=più bassa</tooltip>
-        <comment>Cycle Time Effects/Output Reduction</comment>
-        <comment xml:lang="it">Effetti ciclici / Riduzione uscita</comment>
-      </variable-->
-      <variable CV="55" mask="VVVVXXXX" default="00" item="Global lighting option 2">
+        <comment>Lighting Output Reduction</comment>
+        <comment xml:lang="it">Luce Riduzione uscita</comment>
+      </variable>
+      -->
+      <variable CV="55" mask="VVVVVVVV" default="0" item="Global lighting option 2">
         <decVal min="00" max="97"/>
-        <label>Cycle Time Effects</label>
-        <label xml:lang="it">Effetti Ciclici</label>
-        <label xml:lang="de">Zykluszeit der Effekte/ Dimmwert</label>
-        <tooltip>Controls Cycle Time of Effects (for CV49/52): 0=0.5s, 9=4.5s</tooltip>
+        <label>Cycle Time Effects / Dimmer</label>
+        <label xml:lang="it">Effetti Ciclici / Riduzione luce</label>
+        <label xml:lang="de">Zykluszeit der Effekte / Dimmwert</label>
+        <label xml:lang="cs">Doba periody efektů/snížení výstupu</label>
+        <tooltip>&lt;html&gt;Controls Cycle Time of Effects and Dimming value (for CV49/52).&lt;br&gt;Decimal number = Cycle time: 0=0.5s, 9=4.5s&lt;br&gt;Unit number = Dimming: 0=full on, 7=lowest&lt;br&gt;e.g. 64 = cycle 3s (decimal value 6), dimmer value= 4 (unit value =4)&lt;br&gt;&lt;/html&gt;</tooltip>
         <tooltip xml:lang="it">Controlla ciclo di effetti:(per CV 49/52): 0=0.5s, 9=4.5s</tooltip>
-        <tooltip xml:lang="de">&lt;html&gt;Hier können Sie die Zykluszeit der Effekte und den Dimmwert für die Auslösung mit F-Taste oder Geschwindigkeit festlegen.&lt;br&gt;Zehnerstelle = Zykluszeit der Effekte&lt;br&gt;Einerstelle = Dimmwert&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Hier können Sie die Zykluszeit der Effekte und den Dimmwert für die Auslösung mit F-Taste oder Geschwindigkeit festlegen.&lt;br&gt;Zehnerstelle = Zykluszeit der Effekte (0x-9x)&lt;br&gt;Einerstelle = Dimmwert (x0-x7)&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">Řízení doby periody efektů (pro CV49 - CV52): 0 = 0,5 s, 9 = 4,5 s</tooltip>
         <comment>Cycle Time Effects/Output Reduction</comment>
         <comment xml:lang="it">Effetti ciclici / Riduzione uscita</comment>
         <comment xml:lang="de">Zykluszeit der Effekte/ Dimmwert</comment>
-        <label xml:lang="cs">Doba periody efektů</label>
         <comment xml:lang="cs">Doba periody efektů/snížení výstupu</comment>
-        <tooltip xml:lang="cs">Řízení doby periody efektů (pro CV49 - CV52): 0 = 0,5 s, 9 = 4,5 s</tooltip>
+      </variable>
+      <variable CV="55" mask="XXXXXVVV" default="0" item="Global lighting option 1">
+        <qualifier>
+          <variableref>Global lighting option 2</variableref>
+          <relation>le</relation>
+          <value>7</value>
+        </qualifier>
+        <decVal min="0" max="7"/>
+        <label>Dimming Rate</label>
+        <label xml:lang="de">Dimmwert</label>
+        <label xml:lang="it">valore di attenuazione</label>
+        <tooltip>Dimming: Controls function output voltage: 0=full on, 7=lowest</tooltip>
+        <tooltip xml:lang="it">Oscuramento della luce: 0=più alta, 7=più bassa</tooltip>
+        <comment>Lighting Dimmer</comment>
+        <comment xml:lang="it">Oscuramento della luce</comment>
       </variable>
       <variable CV="56" mask="XXXXXXXV" default="0" item="Directional Headlights">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -952,16 +974,16 @@
       </variable>
       <!-- End of function map -->
       <!-- Speed Table-->
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-        <label xml:lang="it">Tabella velocità</label>
-        <label xml:lang="de">Geschwindigkeitstabelle</label>
-        <label xml:lang="cs">Rychlostní tabulka</label>
-      </variable>      
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
     </variables>
+    <resets>
+      <factReset label="Reset All CVs" CV="8" default="8">
+        <label xml:lang="de">Reset - Grundeinstellung des Decoders wiederherstellen</label>
+        <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
+    </resets>
   </decoder>
   <!-- panel no more in use = all information now on standard Lights panel
   <pane>
@@ -1024,7 +1046,7 @@
     <name>Output Handling</name>
   </pane>
   -->
-  <!-- panel no more in use = all information now on standard Lights and Motor panels  
+  <!-- panel no more in use = all information now on standard Lights and Motor panels
   <pane>
     <column>
       <label>

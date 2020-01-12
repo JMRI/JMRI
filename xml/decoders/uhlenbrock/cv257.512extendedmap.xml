@@ -1,0 +1,1167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2019 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- 																		-->
+<!-- version 1 - include file for Uhlenbrock IntelliDrive2 Decoder          -->
+<!-- Extended Function Mapping                                              -->
+<!-- 																		-->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <copyright xmlns="http://docbook.org/ns/docbook">
+        <year>2019</year>
+        <holder>JMRI</holder>
+    </copyright>
+    <authorgroup xmlns="http://docbook.org/ns/docbook">
+        <author>
+            <personname>
+                <firstname>Egbert</firstname>
+                <surname>Broerse</surname>
+            </personname>
+        </author>
+    </authorgroup>
+    <revhistory xmlns="http://docbook.org/ns/docbook">
+        <revision>
+            <revnumber>1</revnumber>
+            <date>2019-02-10</date>
+            <authorinitials>EBR</authorinitials>
+            <revremark>Initial version for Uhlenbrock_73xx5.xml.
+                Based on Piko help desk supplied datasheet</revremark>
+        </revision>
+        <!-- Uhlenbrock IntelliDrive2 Extended Function Mapping -->
+    </revhistory>
+
+    <!-- Declaration of the "switch" CVs -->
+    <variable item="Bank switch 1" CV="31" default="0">
+        <enumVal>
+            <enumChoice choice="Banks Off" value="0">
+                <choice>Banks Off</choice>
+                <choice xml:lang="de">Banks Aus</choice>
+                <choice xml:lang="nl">Banken UIT</choice>
+            </enumChoice>
+            <enumChoice choice="Banks Program" value="8">
+                <choice>Program</choice>
+                <choice xml:lang="de">Programmieren</choice>
+                <choice xml:lang="nl">Programmeren</choice>
+            </enumChoice>
+            <enumChoice choice="Banks Unknown" value="1">
+                <choice>Unknown</choice>
+                <choice xml:lang="de">Unbekannt</choice>
+                <choice xml:lang="nl">Onbekend</choice>
+            </enumChoice>
+        </enumVal>
+        <label>State</label>
+        <label xml:lang="de">Zustand</label>
+        <tooltip>Reset to Off after programming</tooltip>
+    </variable>
+
+    <variable item="Bank switch 2" CV="32" default="255">
+        <enumVal>
+            <enumChoice choice="Extended Function Mapping 1-16" value="0">
+                <choice>1. Extended Function Mapping 1-16</choice>
+                <choice xml:lang="de">1. Erweitertes Fkt.-Mapping 1-16</choice>
+            </enumChoice>
+            <enumChoice choice="Extended Function Mapping 17-32" value="1">
+                <choice>2. Extended Function Mapping 17-32</choice>
+                <choice xml:lang="de">2. Erweitertes Fkt.-Mapping 17-32</choice>
+            </enumChoice>
+            <enumChoice choice="PWM Modulation 1-4" value="3">
+                <choice>3. PWM Modulation 1-4</choice>
+                <choice xml:lang="de">3. PWM Modulationen 1-4</choice>
+            </enumChoice>
+            <enumChoice choice="PWM Modulation 5-8" value="4">
+                <choice>4. PWM Modulation 5-8</choice>
+                <choice xml:lang="de">4. PWM Modulationen 5-8</choice>
+            </enumChoice>
+            <enumChoice choice="Intellimatic" value="5">
+                <choice>5. Intellimatic</choice>
+            </enumChoice>
+            <enumChoice choice="None" value="255">
+                <choice>None</choice>
+                <choice xml:lang="de">Keine</choice>
+            </enumChoice>
+        </enumVal>
+        <label>Bank</label>
+        <label xml:lang="de">Bank</label>
+    </variable>
+
+    <!-- Bank 1 CVs Extended Function Mapping rows 1-16 (Index CV 32 = 0) -->
+    <!-- group hides/shows with CV 32 choice = 0 -->
+    <!--Mapping Line 1-->
+    <!--Line 1 Mapping conditions On-->
+    <variable item="Z1 Direction Fw" CV="257.0" mask="VXXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Forward</label>
+        <label xml:lang="de">Vorwärts</label>
+    </variable>
+    <variable item="Z1 Moving Yes" CV="257.0" mask="XVXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Moving</label>
+        <label xml:lang="de">Fahrend</label>
+    </variable>
+    <!--Line 1 Function Buttons On-->
+    <variable item="Z1 F0 Cond On" CV="257.0" mask="XXXVXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F1 Cond On" CV="257.0" mask="XXXXXXXV" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F2 Cond On" CV="257.0" mask="XXXXXXVX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F3 Cond On" CV="257.0" mask="XXXXXVXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F4 Cond On" CV="257.0" mask="XXXXVXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F5 Cond On" CV="258.0" mask="XXXXXXXV" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F6 Cond On" CV="258.0" mask="XXXXXXVX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F7 Cond On" CV="258.0" mask="XXXXXVXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F8 Cond On" CV="258.0" mask="XXXXVXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F9 Cond On" CV="258.0" mask="XXXVXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F10 Cond On" CV="258.0" mask="XXVXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F11 Cond On" CV="258.0" mask="XVXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F12 Cond On" CV="258.0" mask="VXXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F13 Cond On" CV="259.0" mask="XXXXXXXV" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F14 Cond On" CV="259.0" mask="XXXXXXVX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F15 Cond On" CV="259.0" mask="XXXXXVXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F16 Cond On" CV="259.0" mask="XXXXVXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F17 Cond On" CV="259.0" mask="XXXVXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F18 Cond On" CV="259.0" mask="XXVXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F19 Cond On" CV="259.0" mask="XVXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F20 Cond On" CV="259.0" mask="VXXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F21 Cond On" CV="260.0" mask="XXXXXXXV" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F22 Cond On" CV="260.0" mask="XXXXXXVX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F23 Cond On" CV="260.0" mask="XXXXXVXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F24 Cond On" CV="260.0" mask="XXXXVXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F25 Cond On" CV="260.0" mask="XXXVXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F26 Cond On" CV="260.0" mask="XXVXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F27 Cond On" CV="260.0" mask="XVXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F28 Cond On" CV="260.0" mask="VXXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <!--Line 1 Mapping conditions Off-->
+    <variable item="Z1 Direction Rv" CV="263.0" mask="VXXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Reverse</label>
+        <label xml:lang="de">Rückwärts</label>
+    </variable>
+    <variable item="Z1 Moving No" CV="263.0" mask="XVXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Not moving</label>
+        <label xml:lang="de">Stehend</label>
+    </variable>
+    <!--Line 1 Function Buttons Off-->
+    <variable item="Z1 F0 Cond Off" CV="263.0" mask="XXXVXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F1 Cond Off" CV="263.0" mask="XXXXXXXV" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F2 Cond Off" CV="263.0" mask="XXXXXXVX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F3 Cond Off" CV="263.0" mask="XXXXXVXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F4 Cond Off" CV="263.0" mask="XXXXVXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F5 Cond Off" CV="264.0" mask="XXXXXXXV" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F6 Cond Off" CV="264.0" mask="XXXXXXVX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F7 Cond Off" CV="264.0" mask="XXXXXVXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F8 Cond Off" CV="264.0" mask="XXXXVXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F9 Cond Off" CV="264.0" mask="XXXVXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F10 Cond Off" CV="264.0" mask="XXVXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F11 Cond Off" CV="264.0" mask="XVXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F12 Cond Off" CV="264.0" mask="VXXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F13 Cond Off" CV="265.0" mask="XXXXXXXV" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F14 Cond Off" CV="265.0" mask="XXXXXXVX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F15 Cond Off" CV="265.0" mask="XXXXXVXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F16 Cond Off" CV="265.0" mask="XXXXVXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F17 Cond Off" CV="265.0" mask="XXXVXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F18 Cond Off" CV="265.0" mask="XXVXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F19 Cond Off" CV="265.0" mask="XVXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F20 Cond Off" CV="265.0" mask="VXXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F21 Cond Off" CV="266.0" mask="XXXXXXXV" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F22 Cond Off" CV="266.0" mask="XXXXXXVX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F23 Cond Off" CV="266.0" mask="XXXXXVXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F24 Cond Off" CV="266.0" mask="XXXXVXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F25 Cond Off" CV="266.0" mask="XXXVXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F26 Cond Off" CV="266.0" mask="XXVXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F27 Cond Off" CV="266.0" mask="XVXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 F28 Cond Off" CV="266.0" mask="VXXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <!--Line 1 Mapping Output 1-->
+    <variable item="Z1 Out1 A1" CV="269.0" default="0" mask="XXXXXXXV" minOut="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 Out1 A2" CV="269.0" default="0" mask="XXXXXXVX" minOut="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 Out1 A3" CV="269.0" default="0" mask="XXXXXVXX" minOut="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 Out1 A4" CV="269.0" default="0" mask="XXXXVXXX" minOut="8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 Out1 A5" CV="269.0" default="0" mask="XXXVXXXX" minOut="9">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 Out1 A6" CV="269.0" default="0" mask="XXVXXXXX" minOut="10">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 Out1 A7" CV="269.0" default="0" mask="XVXXXXXX" minOut="11">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 Out1 A8" CV="269.0" default="0" mask="VXXXXXXX" minOut="12">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <!--Line 1 Mapping Output 2-->
+    <variable item="Z1 Out2 Staging" CV="270.0" mask="VXXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Shunting Mode</label>
+        <label xml:lang="de">Rangiergang</label>
+    </variable>
+    <variable item="Z1 Out2 Braking" CV="270.0" mask="XVVVXXXX">
+        <enumVal>
+            <enumChoice choice="None">
+                <choice>None</choice>
+                <choice xml:lang="it">Non si ferma</choice>
+                <choice xml:lang="cs">Nezastavuje</choice>
+                <choice xml:lang="de">Keine</choice>
+            </enumChoice>
+            <enumChoice choice="Brake 1">
+                <choice>Brake step 1</choice>
+                <choice xml:lang="de">Stufe 1</choice>
+            </enumChoice>
+            <enumChoice choice="Brake 2" value="2">
+                <choice>Brake step 2</choice>
+                <choice xml:lang="de">Stufe 2</choice>
+            </enumChoice>
+            <enumChoice choice="Brake 3" value="4">
+                <choice>Brake step 3</choice>
+                <choice xml:lang="de">Stufe 3</choice>
+            </enumChoice>
+        </enumVal>
+        <label>Braking:</label>
+        <label xml:lang="de">Bremsverzögerung:</label>
+        <tooltip>Activate braking step 1-3</tooltip>
+        <tooltip xml:lang="de">Bremsstufe 1 - 3 aktivieren</tooltip>
+    </variable>
+    <variable item="Z1 Out2 Aux0_Front" CV="270.0" mask="XXXXXXXV" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 Out2 Aux0_Rear" CV="270.0" mask="XXXXXXVX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 Out2 SUSI_CLK" CV="270.0" mask="XXXXXVXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>SUSI CLK:</label>
+    </variable>
+    <variable item="Z1 Out2 SUSI_DATA" CV="270.0" mask="XXXXVXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>SUSI DATA:</label>
+    </variable>
+    <!--Line 1 Mapping Output 3 2nd Dimming-->
+    <variable item="Z1 Out3 A1" CV="271.0" default="0" mask="XXXXXXXV" minOut="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 Out3 A2" CV="271.0" default="0" mask="XXXXXXVX" minOut="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 Out3 A3" CV="271.0" default="0" mask="XXXXXVXX" minOut="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 Out3 A4" CV="271.0" default="0" mask="XXXXVXXX" minOut="8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 Out3 A5" CV="271.0" default="0" mask="XXXVXXXX" minOut="9">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 Out3 A6" CV="271.0" default="0" mask="XXVXXXXX" minOut="10">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 Out3 A7" CV="271.0" default="0" mask="XVXXXXXX" minOut="11">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 Out3 A8" CV="271.0" default="0" mask="VXXXXXXX" minOut="12">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <!--Line 1 Mapping Output 4-->
+    <variable item="Z1 Out4 Cross" CV="272.0" mask="XXXXXXXV" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Cross</label>
+    </variable>
+    <!--Line 1 SUSI Function Key-->
+    <variable item="Z1 SUSI F22" CV="272.0" mask="XXXXXXVX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 SUSI F23" CV="272.0" mask="XXXXXVXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 SUSI F24" CV="272.0" mask="XXXXVXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 SUSI F25" CV="272.0" mask="XXXVXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 SUSI F26" CV="272.0" mask="XXVXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 SUSI F27" CV="272.0" mask="XVXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z1 SUSI F28" CV="272.0" mask="VXXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <!--end of Line 1-->
+    
+    <!--Mapping Line 2-->
+    <!--Line 2 Mapping conditions On-->
+    <variable item="Z2 Direction Fw" CV="273.0" mask="VXXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Forward</label>
+        <label xml:lang="de">Vorwärts</label>
+    </variable>
+    <variable item="Z2 Moving Yes" CV="273.0" mask="XVXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Moving</label>
+        <label xml:lang="de">Fahrend</label>
+    </variable>
+    <!--Line 2 Function Buttons On-->
+    <variable item="Z2 F0 Cond On" CV="273.0" mask="XXXVXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F1 Cond On" CV="273.0" mask="XXXXXXXV" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F2 Cond On" CV="273.0" mask="XXXXXXVX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F3 Cond On" CV="273.0" mask="XXXXXVXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F4 Cond On" CV="273.0" mask="XXXXVXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F5 Cond On" CV="274.0" mask="XXXXXXXV" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F6 Cond On" CV="274.0" mask="XXXXXXVX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F7 Cond On" CV="274.0" mask="XXXXXVXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F8 Cond On" CV="274.0" mask="XXXXVXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F9 Cond On" CV="274.0" mask="XXXVXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F10 Cond On" CV="274.0" mask="XXVXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F11 Cond On" CV="274.0" mask="XVXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F12 Cond On" CV="274.0" mask="VXXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F13 Cond On" CV="275.0" mask="XXXXXXXV" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F14 Cond On" CV="275.0" mask="XXXXXXVX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F15 Cond On" CV="275.0" mask="XXXXXVXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F16 Cond On" CV="275.0" mask="XXXXVXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F17 Cond On" CV="275.0" mask="XXXVXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F18 Cond On" CV="275.0" mask="XXVXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F19 Cond On" CV="275.0" mask="XVXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F20 Cond On" CV="275.0" mask="VXXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F21 Cond On" CV="276.0" mask="XXXXXXXV" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F22 Cond On" CV="276.0" mask="XXXXXXVX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F23 Cond On" CV="276.0" mask="XXXXXVXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F24 Cond On" CV="276.0" mask="XXXXVXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F25 Cond On" CV="276.0" mask="XXXVXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F26 Cond On" CV="276.0" mask="XXVXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F27 Cond On" CV="276.0" mask="XVXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F28 Cond On" CV="276.0" mask="VXXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <!--Line 2 Mapping conditions Off-->
+    <variable item="Z2 Direction Rv" CV="279.0" mask="VXXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Reverse</label>
+        <label xml:lang="de">Rückwärts</label>
+    </variable>
+    <variable item="Z2 Moving No" CV="279.0" mask="XVXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Not moving</label>
+        <label xml:lang="de">Stehend</label>
+    </variable>
+    <!--Line 2 Function Buttons Off-->
+    <variable item="Z2 F0 Cond Off" CV="279.0" mask="XXXVXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F1 Cond Off" CV="279.0" mask="XXXXXXXV" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F2 Cond Off" CV="279.0" mask="XXXXXXVX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F3 Cond Off" CV="279.0" mask="XXXXXVXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F4 Cond Off" CV="279.0" mask="XXXXVXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F5 Cond Off" CV="280.0" mask="XXXXXXXV" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F6 Cond Off" CV="280.0" mask="XXXXXXVX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F7 Cond Off" CV="280.0" mask="XXXXXVXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F8 Cond Off" CV="280.0" mask="XXXXVXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F9 Cond Off" CV="280.0" mask="XXXVXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F10 Cond Off" CV="280.0" mask="XXVXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F11 Cond Off" CV="280.0" mask="XVXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F12 Cond Off" CV="280.0" mask="VXXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F13 Cond Off" CV="281.0" mask="XXXXXXXV" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F14 Cond Off" CV="281.0" mask="XXXXXXVX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F15 Cond Off" CV="281.0" mask="XXXXXVXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F16 Cond Off" CV="281.0" mask="XXXXVXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F17 Cond Off" CV="281.0" mask="XXXVXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F18 Cond Off" CV="281.0" mask="XXVXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F19 Cond Off" CV="281.0" mask="XVXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F20 Cond Off" CV="281.0" mask="VXXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F21 Cond Off" CV="282.0" mask="XXXXXXXV" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F22 Cond Off" CV="282.0" mask="XXXXXXVX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F23 Cond Off" CV="282.0" mask="XXXXXVXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F24 Cond Off" CV="282.0" mask="XXXXVXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F25 Cond Off" CV="282.0" mask="XXXVXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F26 Cond Off" CV="282.0" mask="XXVXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F27 Cond Off" CV="282.0" mask="XVXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 F28 Cond Off" CV="282.0" mask="VXXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <!--Line 2 Mapping Output 1-->
+    <variable item="Z2 Out1 A1" CV="285.0" default="0" mask="XXXXXXXV" minOut="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 Out1 A2" CV="285.0" default="0" mask="XXXXXXVX" minOut="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 Out1 A3" CV="285.0" default="0" mask="XXXXXVXX" minOut="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 Out1 A4" CV="285.0" default="0" mask="XXXXVXXX" minOut="8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 Out1 A5" CV="285.0" default="0" mask="XXXVXXXX" minOut="9">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 Out1 A6" CV="285.0" default="0" mask="XXVXXXXX" minOut="10">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 Out1 A7" CV="285.0" default="0" mask="XVXXXXXX" minOut="11">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 Out1 A8" CV="285.0" default="0" mask="VXXXXXXX" minOut="12">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <!--Line 2 Mapping Output 2-->
+    <variable item="Z2 Out2 Staging" CV="286.0" mask="VXXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Shunting Mode</label>
+        <label xml:lang="de">Rangiergang</label>
+    </variable>
+    <variable item="Z2 Out2 Braking" CV="286.0" mask="XVVVXXXX">
+        <enumVal>
+            <enumChoice choice="None">
+                <choice>None</choice>
+                <choice xml:lang="it">Non si ferma</choice>
+                <choice xml:lang="cs">Nezastavuje</choice>
+                <choice xml:lang="de">Keine</choice>
+            </enumChoice>
+            <enumChoice choice="Brake 1">
+                <choice>Brake step 1</choice>
+                <choice xml:lang="de">Stufe 1</choice>
+            </enumChoice>
+            <enumChoice choice="Brake 2" value="2">
+                <choice>Brake step 2</choice>
+                <choice xml:lang="de">Stufe 2</choice>
+            </enumChoice>
+            <enumChoice choice="Brake 3" value="4">
+                <choice>Brake step 3</choice>
+                <choice xml:lang="de">Stufe 3</choice>
+            </enumChoice>
+        </enumVal>
+        <label>Braking:</label>
+        <label xml:lang="de">Bremsverzögerung:</label>
+        <tooltip>Activate braking step 1-3</tooltip>
+        <tooltip xml:lang="de">Bremsstufe 1 - 3 aktivieren</tooltip>
+    </variable>
+    <variable item="Z2 Out2 Aux0_Front" CV="286.0" mask="XXXXXXXV" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 Out2 Aux0_Rear" CV="286.0" mask="XXXXXXVX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 Out2 SUSI_CLK" CV="286.0" mask="XXXXXVXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>SUSI CLK:</label>
+    </variable>
+    <variable item="Z2 Out2 SUSI_DATA" CV="286.0" mask="XXXXVXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>SUSI DATA:</label>
+    </variable>
+    <!--Line 2 Mapping Output 3 2nd Dimming-->
+    <variable item="Z2 Out3 A1" CV="287.0" default="0" mask="XXXXXXXV" minOut="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 Out3 A2" CV="287.0" default="0" mask="XXXXXXVX" minOut="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 Out3 A3" CV="287.0" default="0" mask="XXXXXVXX" minOut="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 Out3 A4" CV="287.0" default="0" mask="XXXXVXXX" minOut="8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 Out3 A5" CV="287.0" default="0" mask="XXXVXXXX" minOut="9">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 Out3 A6" CV="287.0" default="0" mask="XXVXXXXX" minOut="10">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 Out3 A7" CV="287.0" default="0" mask="XVXXXXXX" minOut="11">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 Out3 A8" CV="287.0" default="0" mask="VXXXXXXX" minOut="12">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <!--Line 2 Mapping Output 4-->
+    <variable item="Z2 Out4 Cross" CV="288.0" mask="XXXXXXXV" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Cross</label>
+    </variable>
+    <!--Line 2 SUSI Function Key-->
+    <variable item="Z2 SUSI F22" CV="288.0" mask="XXXXXXVX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 SUSI F23" CV="288.0" mask="XXXXXVXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 SUSI F24" CV="288.0" mask="XXXXVXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 SUSI F25" CV="288.0" mask="XXXVXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 SUSI F26" CV="288.0" mask="XXVXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 SUSI F27" CV="288.0" mask="XVXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="Z2 SUSI F28" CV="288.0" mask="VXXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <!--end of Line 2-->
+
+    <!-- Bank 2 CVs Extended Function Mapping rows 17-32 (Index CV 32 = 1) -->
+    <!-- group hides/shows with CV 32 choice = 1 -->
+    <variable item="Z17 Direction Fw" CV="257.1" mask="VXXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Forward</label>
+        <label xml:lang="de">Vorwärts</label>
+    </variable>
+    <variable item="Z17 Moving Yes" CV="257.1" mask="XVXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Moving</label>
+        <label xml:lang="de">Fahrend</label>
+    </variable>
+
+    <!-- Test with only 1 series TODO enter remaining CVs 259.1 - 512.1 -->
+    <variable item="Z32 Direction Fw" CV="497.1" mask="VXXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Forward</label>
+        <label xml:lang="de">Vorwärts</label>
+    </variable>
+    <variable item="Z32 Moving Yes" CV="497.1" mask="XVXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Moving</label>
+        <label xml:lang="de">Fahrend</label>
+    </variable>
+    <!-- End Bank 2 -->
+
+    <!-- Bank 3 CVs PWM Modulation 1-4 (Index CV 32 = 3) -->
+    <!-- group hides/shows with CV 32 choice = 3 -->
+    <!--1-16-->
+    <variable item="Bank3 PWM Seq1.1" CV="257.2" default="3">
+        <decVal min="0" max="63"/>
+        <label>Sq 1</label>
+        <tooltip>PWM Sequence 1 value 1</tooltip>
+        <tooltip xml:lang="de">PWM Modulation 1 Wert 1</tooltip>
+        <tooltip xml:lang="nl">PWM Cyclus 1 waarde 1</tooltip>
+    </variable>
+    <variable item="Bank3 PWM Seq1.2" CV="258.2" default="8">
+        <decVal min="0" max="63"/>
+        <label>Sq 1</label>
+        <tooltip>PWM Sequence 1 value 2</tooltip>
+    </variable>
+    <variable item="Bank3 PWM Seq1.3" CV="259.2" default="16">
+        <decVal min="0" max="63"/>
+        <label>Sq 1</label>
+        <tooltip>PWM Sequence 1 value 3</tooltip>
+    </variable>
+    <variable item="Bank3 PWM Seq1.4" CV="260.2" default="24">
+        <decVal min="0" max="63"/>
+        <label>Sq 1</label>
+        <tooltip>PWM Sequence 1 value 4</tooltip>
+    </variable>
+    <variable item="Bank3 PWM Seq1.5" CV="261.2" default="32">
+        <decVal min="0" max="63"/>
+        <label>Sq 1</label>
+        <tooltip>PWM Sequence 1 value 5</tooltip>
+    </variable>
+    <variable item="Bank3 PWM Seq1.6" CV="262.2" default="48">
+        <decVal min="0" max="63"/>
+        <label>Sq 1</label>
+        <tooltip>PWM Sequence 1 value 6</tooltip>
+    </variable>
+    <variable item="Bank3 PWM Seq1.7" CV="263.2" default="63">
+        <decVal min="0" max="63"/>
+        <label>Sq 1</label>
+        <tooltip>PWM Sequence 1 value 7</tooltip>
+    </variable>
+    <variable item="Bank3 PWM Seq1.8" CV="264.2" default="63">
+        <decVal min="0" max="63"/>
+        <label>Sq 1</label>
+        <tooltip>PWM Sequence 1 value 8</tooltip>
+    </variable>
+    <variable item="Bank3 PWM Seq1.9" CV="265.2" default="63">
+        <decVal min="0" max="63"/>
+        <label>Sq 1</label>
+        <tooltip>PWM Sequence 1 value 9</tooltip>
+    </variable>
+    <variable item="Bank3 PWM Seq1.10" CV="266.2" default="63">
+        <decVal min="0" max="63"/>
+        <label>Sq 1</label>
+        <tooltip>PWM Sequence 1 value 10</tooltip>
+    </variable>
+    <variable item="Bank3 PWM Seq1.11" CV="267.2" default="48">
+        <decVal min="0" max="63"/>
+        <label>Sq 1</label>
+        <tooltip>PWM Sequence 1 value 11</tooltip>
+    </variable>
+    <variable item="Bank3 PWM Seq1.12" CV="268.2" default="32">
+        <decVal min="0" max="63"/>
+        <label>Sq 1</label>
+        <tooltip>PWM Sequence 1 value 12</tooltip>
+    </variable>
+    <variable item="Bank3 PWM Seq1.13" CV="269.2" default="24">
+        <decVal min="0" max="63"/>
+        <label>Sq 1</label>
+        <tooltip>PWM Sequence 1 value 13</tooltip>
+    </variable>
+    <variable item="Bank3 PWM Seq1.14" CV="270.2" default="16">
+        <decVal min="0" max="63"/>
+        <label>Sq 1</label>
+        <tooltip>PWM Sequence 1 value 14</tooltip>
+    </variable>
+    <variable item="Bank3 PWM Seq1.15" CV="271.2" default="8">
+        <decVal min="0" max="63"/>
+        <label>Sq 1</label>
+        <tooltip>PWM Sequence 1 value 15</tooltip>
+    </variable>
+    <variable item="Bank3 PWM Seq1.16" CV="272.2" default="3">
+        <decVal min="0" max="63"/>
+        <label>Sq 1</label>
+        <tooltip>PWM Sequence 1 value 16</tooltip>
+    </variable>
+    <!--17-32-->
+    <variable item="Bank3 PWM Seq1.17" CV="273.2" default="3">
+        <decVal min="0" max="63"/>
+        <label>Sq 1</label>
+        <tooltip>PWM Sequence 1 value 17</tooltip>
+    </variable>
+    <variable item="Bank3 PWM Seq1.18" CV="274.2" default="8">
+        <decVal min="0" max="63"/>
+        <label>Sq 1</label>
+        <tooltip>PWM Sequence 1 value 18</tooltip>
+    </variable>
+    <variable item="Bank3 PWM Seq1.19" CV="275.2" default="16">
+        <decVal min="0" max="63"/>
+        <label>Sq 1</label>
+        <tooltip>PWM Sequence 1 value 19</tooltip>
+    </variable>
+    <variable item="Bank3 PWM Seq1.20" CV="276.2" default="24">
+        <decVal min="0" max="63"/>
+        <label>Sq 1</label>
+        <tooltip>PWM Sequence 1 value 20</tooltip>
+    </variable>
+    <variable item="Bank3 PWM Seq1.21" CV="277.2" default="32">
+        <decVal min="0" max="63"/>
+        <label>Sq 1</label>
+        <tooltip>PWM Sequence 1 value 21</tooltip>
+    </variable>
+    <variable item="Bank3 PWM Seq1.22" CV="278.2" default="48">
+        <decVal min="0" max="63"/>
+        <label>Sq 1</label>
+        <tooltip>PWM Sequence 1 value 22</tooltip>
+    </variable>
+    <variable item="Bank3 PWM Seq1.23" CV="279.2" default="63">
+        <decVal min="0" max="63"/>
+        <label>Sq 1</label>
+        <tooltip>PWM Sequence 1 value 23</tooltip>
+    </variable>
+    <variable item="Bank3 PWM Seq1.24" CV="280.2" default="63">
+        <decVal min="0" max="63"/>
+        <label>Sq 1</label>
+        <tooltip>PWM Sequence 1 value 24</tooltip>
+    </variable>
+    <variable item="Bank3 PWM Seq1.25" CV="281.2" default="63">
+        <decVal min="0" max="63"/>
+        <label>Sq 1</label>
+        <tooltip>PWM Sequence 1 value 25</tooltip>
+    </variable>
+    <variable item="Bank3 PWM Seq1.26" CV="282.2" default="63">
+        <decVal min="0" max="63"/>
+        <label>Sq 1</label>
+        <tooltip>PWM Sequence 1 value 26</tooltip>
+    </variable>
+    <variable item="Bank3 PWM Seq1.27" CV="283.2" default="48">
+        <decVal min="0" max="63"/>
+        <label>Sq 1</label>
+        <tooltip>PWM Sequence 1 value 27</tooltip>
+    </variable>
+    <variable item="Bank3 PWM Seq1.28" CV="284.2" default="32">
+        <decVal min="0" max="63"/>
+        <label>Sq 1</label>
+        <tooltip>PWM Sequence 1 value 28</tooltip>
+    </variable>
+    <variable item="Bank3 PWM Seq1.29" CV="285.2" default="24">
+        <decVal min="0" max="63"/>
+        <label>Sq 1</label>
+        <tooltip>PWM Sequence 1 value 29</tooltip>
+    </variable>
+    <variable item="Bank3 PWM Seq1.30" CV="286.2" default="16">
+        <decVal min="0" max="63"/>
+        <label>Sq 1</label>
+        <tooltip>PWM Sequence 1 value 30</tooltip>
+    </variable>
+    <variable item="Bank3 PWM Seq1.31" CV="287.2" default="8">
+        <decVal min="0" max="63"/>
+        <label>Sq 1</label>
+        <tooltip>PWM Sequence 1 value 31</tooltip>
+    </variable>
+    <variable item="Bank3 PWM Seq1.32" CV="288.2" default="3">
+        <decVal min="0" max="63"/>
+        <label>Sq 1</label>
+        <tooltip>PWM Sequence 1 value 32</tooltip>
+    </variable>
+    <!--33-48-->
+    <variable item="Bank3 PWM Seq1.33" CV="289.2" default="3">
+        <decVal min="0" max="63"/>
+        <label>Sq 1</label>
+        <tooltip>PWM Sequence 1 value 33</tooltip>
+    </variable>
+    <variable item="Bank3 PWM Seq1.34" CV="290.2" default="8">
+        <decVal min="0" max="63"/>
+        <label>Sq 1</label>
+        <tooltip>PWM Sequence 1 value 34</tooltip>
+    </variable>
+    <variable item="Bank3 PWM Seq1.35" CV="291.2" default="16">
+        <decVal min="0" max="63"/>
+        <label>Sq 1</label>
+        <tooltip>PWM Sequence 1 value 35</tooltip>
+    </variable>
+    <variable item="Bank3 PWM Seq1.36" CV="292.2" default="24">
+        <decVal min="0" max="63"/>
+        <label>Sq 1</label>
+        <tooltip>PWM Sequence 1 value 36</tooltip>
+    </variable>
+    <variable item="Bank3 PWM Seq1.37" CV="293.2" default="32">
+        <decVal min="0" max="63"/>
+        <label>Sq 1</label>
+        <tooltip>PWM Sequence 1 value 37</tooltip>
+    </variable>
+    <variable item="Bank3 PWM Seq1.38" CV="294.2" default="48">
+        <decVal min="0" max="63"/>
+        <label>Sq 1</label>
+        <tooltip>PWM Sequence 1 value 38</tooltip>
+    </variable>
+    <variable item="Bank3 PWM Seq1.39" CV="295.2" default="63">
+        <decVal min="0" max="63"/>
+        <label>Sq 1</label>
+        <tooltip>PWM Sequence 1 value 39</tooltip>
+    </variable>
+    <variable item="Bank3 PWM Seq1.40" CV="296.2" default="63">
+        <decVal min="0" max="63"/>
+        <label>Sq 1</label>
+        <tooltip>PWM Sequence 1 value 40</tooltip>
+    </variable>
+    <variable item="Bank3 PWM Seq1.41" CV="297.2" default="63">
+        <decVal min="0" max="63"/>
+        <label>Sq 1</label>
+        <tooltip>PWM Sequence 1 value 41</tooltip>
+    </variable>
+    <variable item="Bank3 PWM Seq1.42" CV="298.2" default="63">
+        <decVal min="0" max="63"/>
+        <label>Sq 1</label>
+        <tooltip>PWM Sequence 1 value 42</tooltip>
+    </variable>
+    <variable item="Bank3 PWM Seq1.43" CV="299.2" default="48">
+        <decVal min="0" max="63"/>
+        <label>Sq 1</label>
+        <tooltip>PWM Sequence 1 value 43</tooltip>
+    </variable>
+    <variable item="Bank3 PWM Seq1.44" CV="300.2" default="32">
+        <decVal min="0" max="63"/>
+        <label>Sq 1</label>
+        <tooltip>PWM Sequence 1 value 44</tooltip>
+    </variable>
+    <variable item="Bank3 PWM Seq1.45" CV="301.2" default="24">
+        <decVal min="0" max="63"/>
+        <label>Sq 1</label>
+        <tooltip>PWM Sequence 1 value 45</tooltip>
+    </variable>
+    <variable item="Bank3 PWM Seq1.46" CV="302.2" default="16">
+        <decVal min="0" max="63"/>
+        <label>Sq 1</label>
+        <tooltip>PWM Sequence 1 value 46</tooltip>
+    </variable>
+    <variable item="Bank3 PWM Seq1.47" CV="303.2" default="8">
+        <decVal min="0" max="63"/>
+        <label>Sq 1</label>
+        <tooltip>PWM Sequence 1 value 47</tooltip>
+    </variable>
+    <variable item="Bank3 PWM Seq1.48" CV="304.2" default="3">
+        <decVal min="0" max="63"/>
+        <label>Sq 1</label>
+        <tooltip>PWM Sequence 1 value 48</tooltip>
+    </variable>
+
+    <!-- Test with only 1 series and a bit TODO enter remaining CVs 275.2 - 512.2 -->
+    <variable item="Bank3 PWM Seq2.1" CV="321.2" default="0">
+        <decVal min="0" max="63"/>
+        <label>Sq 2</label>
+        <tooltip>PWM Sequence 2 value 1</tooltip>
+        <tooltip xml:lang="de">PWM Modulation 2 Wert 1</tooltip>
+        <tooltip xml:lang="nl">PWM Cyclus 2 waarde 1</tooltip>
+    </variable>
+    <variable item="Bank3 PWM Seq2.2" CV="322.2" default="0">
+        <decVal min="0" max="63"/>
+        <label>Sq 2</label>
+        <tooltip>PWM Sequence 2 value 2</tooltip>
+        <tooltip xml:lang="de">PWM Modulation 2 Wert 2</tooltip>
+        <tooltip xml:lang="nl">PWM Cyclus 2 waarde 2</tooltip>
+    </variable>
+    <!-- End Bank 3 -->
+
+    <!-- Bank 4 CVs PWM Modulation 5-8 (Index CV 32 = 4) -->
+    <!-- group hides/shows with CV 32 choice = 4 -->
+    <variable item="Bank4 PWM Seq5.1" CV="257.3" default="3">
+        <decVal min="0" max="63"/>
+        <label>Sq 5</label>
+        <tooltip>PWM Sequence 5 value 1</tooltip>
+        <tooltip xml:lang="de">PWM Modulation 5 Wert 1</tooltip>
+        <tooltip xml:lang="nl">PWM Cyclus 5 waarde 1</tooltip>
+    </variable>
+    <variable item="Bank4 PWM Seq5.2" CV="258.3" default="8">
+        <decVal min="0" max="63"/>
+        <label>Sq 5</label>
+        <tooltip>PWM Sequence 5 value 2</tooltip>
+        <tooltip xml:lang="de">PWM Modulation 5 Wert 2</tooltip>
+        <tooltip xml:lang="nl">PWM Cyclus 5 waarde 2</tooltip>
+    </variable>
+    <!-- Test with only 1 series TODO enter remaining CVs 259.3 - 512.3 -->
+
+    <variable item="Bank4 PWM Seq6.1" CV="321.3" default="1">
+        <decVal min="0" max="63"/>
+        <label>Sq 6</label>
+        <tooltip>PWM Sequence 6 value 1</tooltip>
+        <tooltip xml:lang="de">PWM Modulation 6 Wert 1</tooltip>
+        <tooltip xml:lang="nl">PWM Cyclus 6 waarde 1</tooltip>
+    </variable>
+    <variable item="Bank4 PWM Seq6.2" CV="322.3" default="2">
+        <decVal min="0" max="63"/>
+        <label>Sq 6</label>
+        <tooltip>PWM Sequence 6 value 2</tooltip>
+        <tooltip xml:lang="de">PWM Modulation 6 Wert 2</tooltip>
+        <tooltip xml:lang="nl">PWM Cyclus 6 waarde 2</tooltip>
+    </variable>
+    <!-- End Bank 4 -->
+
+    <!-- Bank 5 CVs Intellimatic (Index CV 32 = 5) -->
+    <!-- group hides/shows with CV 32 choice = 5 -->
+    <!--Macro block 1-->
+    <variable item="Bank5 Intellimatic 1.1" CV="257.4" default="0">
+        <decVal/>
+        <label>1 </label>
+        <tooltip>Action 1.</tooltip>
+        <tooltip xml:lang="de">Handlung 1.</tooltip>
+        <tooltip xml:lang="nl">Actie 1.</tooltip>
+    </variable>
+    <variable item="Bank5 Intellimatic 1.1 enum" CV="257.4" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumIntellimatic.xml"/>
+        <tooltip>Next enter value if choice ends with ":"</tooltip>
+        <tooltip xml:lang="de">Wert folgt wenn Option endet in ":"</tooltip>
+        <tooltip xml:lang="nl">Vul hierna een waarde in als keuze eindigt op ":"</tooltip>
+    </variable>
+    <variable item="Bank5 Intellimatic 1.2" CV="258.4" default="0">
+        <decVal/>
+        <label>2 </label>
+        <tooltip>Action/value 2</tooltip>
+        <tooltip xml:lang="de">Handlung/Wert 2</tooltip>
+        <tooltip xml:lang="nl">Actie/Waarde 2</tooltip>
+    </variable>
+    <variable item="Bank5 Intellimatic 1.2 enum" CV="258.4" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumIntellimatic.xml"/>
+    </variable>
+    <variable item="Bank5 Intellimatic 1.3" CV="259.4" default="0">
+        <decVal/>
+        <label>3 </label>
+    </variable>
+    <variable item="Bank5 Intellimatic 1.3 enum" CV="259.4" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumIntellimatic.xml"/>
+    </variable>
+    <variable item="Bank5 Intellimatic 1.4" CV="260.4" default="0">
+        <decVal/>
+        <label>4 </label>
+    </variable>
+    <variable item="Bank5 Intellimatic 1.4 enum" CV="260.4" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumIntellimatic.xml"/>
+    </variable>
+    <variable item="Bank5 Intellimatic 1.5" CV="261.4" default="0">
+        <decVal/>
+        <label>5 </label>
+    </variable>
+    <variable item="Bank5 Intellimatic 1.5 enum" CV="261.4" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumIntellimatic.xml"/>
+    </variable>
+    <variable item="Bank5 Intellimatic 1.6" CV="262.4" default="0">
+        <decVal/>
+        <label>6 </label>
+    </variable>
+    <variable item="Bank5 Intellimatic 1.6 enum" CV="262.4" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumIntellimatic.xml"/>
+    </variable>
+    <variable item="Bank5 Intellimatic 1.7" CV="263.4" default="0">
+        <decVal/>
+        <label>7 </label>
+    </variable>
+    <variable item="Bank5 Intellimatic 1.7 enum" CV="263.4" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumIntellimatic.xml"/>
+    </variable>
+    <variable item="Bank5 Intellimatic 1.8" CV="264.4" default="0">
+        <decVal/>
+        <label>8 </label>
+    </variable>
+    <variable item="Bank5 Intellimatic 1.8 enum" CV="264.4" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumIntellimatic.xml"/>
+    </variable>
+    <!-- Test with only 1 series TODO enter remaining CVs 264.4 - 272.4 -->
+    <!--Macro block 2-->
+    <variable item="Bank5 Intellimatic 2.1" CV="273.4" default="0">
+        <decVal/>
+        <label>1 </label>
+        <tooltip>Action 1.</tooltip>
+        <tooltip xml:lang="de">Handlung 1.</tooltip>
+        <tooltip xml:lang="nl">Actie 1.</tooltip>
+    </variable>
+    <variable item="Bank5 Intellimatic 2.1 enum" CV="273.4" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumIntellimatic.xml"/>
+        <tooltip>Next enter value if choice ends with ":"</tooltip>
+        <tooltip xml:lang="de">Wert folgt wenn Option endet in ":"</tooltip>
+        <tooltip xml:lang="nl">Vul hierna een waarde in als keuze eindigt op ":"</tooltip>
+    </variable>
+    <variable item="Bank5 Intellimatic 2.2" CV="274.4" default="0">
+        <decVal/>
+        <label>2 </label>
+        <tooltip>Action/value 2</tooltip>
+        <tooltip xml:lang="de">Handlung/Wert 2</tooltip>
+        <tooltip xml:lang="nl">Actie/Waarde 2</tooltip>
+    </variable>
+    <variable item="Bank5 Intellimatic 2.2 enum" CV="274.4" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumIntellimatic.xml"/>
+    </variable>
+    <!--TODO add remaining CVs up to 512.4-->
+    <!-- End Bank 5 -->
+
+</variables>

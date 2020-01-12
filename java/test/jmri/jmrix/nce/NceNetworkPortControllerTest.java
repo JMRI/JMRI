@@ -5,8 +5,7 @@ import org.junit.After;
 import org.junit.Before;
 
 /**
- * JUnit tests for the NceNetworkPortController class
- * <p>
+ * JUnit tests for the NceNetworkPortController class.
  *
  * @author      Paul Bender Copyright (C) 2016
  */
@@ -28,6 +27,7 @@ public class NceNetworkPortControllerTest extends jmri.jmrix.AbstractNetworkPort
     @Override
     @After
     public void tearDown(){
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
        JUnitUtil.tearDown();
     }
 }

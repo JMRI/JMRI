@@ -2,7 +2,6 @@ package jmri.jmrix.loconet.downloader;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import javax.swing.BoxLayout;
@@ -41,7 +40,7 @@ import org.slf4j.LoggerFactory;
  * @author B. Milhaupt Copyright (C) 2013, 2014, 2017
  */
 public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
-        implements ActionListener, jmri.jmrix.loconet.swing.LnPanelInterface {
+        implements jmri.jmrix.loconet.swing.LnPanelInterface {
 
     /**
      * LnPanelInterface implementation makes "memo" object available as convenience
@@ -466,7 +465,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
                         Bundle.getMessage("ErrorTitle"),
                         JOptionPane.ERROR_MESSAGE);
                 this.disableDownloadVerifyButtons();
-                log.warn("Invalid dmf file 'Options' value {0}",text);
+                log.warn("Invalid dmf file 'Options' value {}",text);
                 return;
             }
         }
@@ -495,7 +494,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
             }
             
             if (interpretationProblem == true) {
-                log.warn("Invalid dmf file 'Erase Blk Size' value {0}",text);
+                log.warn("Invalid dmf file 'Erase Blk Size' value {}",text);
                 JOptionPane.showMessageDialog(this,
                         Bundle.getMessage("ErrorInvalidEraseBlkSize", text, "Erase Blk Size"), // NOI18N
                         Bundle.getMessage("ErrorTitle"), // NOI18N
@@ -512,7 +511,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
 
     /**
      * Add filter(s) for possible types to the input file chooser.
-     * @param chooser - a JFileChooser to which the filter is to be added
+     * @param chooser  a JFileChooser to which the filter is to be added
      */
     @Override
     protected void addChooserFilters(JFileChooser chooser) {

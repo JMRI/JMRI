@@ -3,7 +3,7 @@ package jmri.jmrit.roster.swing;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Date;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -20,9 +20,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Table data model for display of Roster variable values.
- * <P>
+ * <p>
  * Any desired ordering, etc, is handled outside this class.
- * <P>
+ * <p>
  * The initial implementation doesn't automatically update when roster entries
  * change, doesn't allow updating of the entries, and only shows some of the
  * fields. But it's a start....
@@ -62,7 +62,7 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
      * @param group the roster group to show; if null, behaves the same as
      *              {@link #RosterTableModel()}
      */
-    public RosterTableModel(@Nullable RosterGroup group) {
+    public RosterTableModel(@CheckForNull RosterGroup group) {
         this(false);
         if (group != null) {
             this.setRosterGroup(group.getName());

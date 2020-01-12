@@ -19,6 +19,10 @@ import sys
 import thread
 
 import java
+import java.awt
+import java.awt.event
+import java.beans
+import java.util
 import jmri
 import java.beans.PropertyChangeListener as PropertyChangeListener
 import java.util.Calendar as Calendar
@@ -28,7 +32,7 @@ import javax.swing.JCheckBoxMenuItem as JCheckBoxMenuItem
 import javax.swing.Timer as Timer
 import jmri.jmrit.jython.Jynstrument as Jynstrument
 import jmri.jmrit.throttle.AddressListener as AddressListener
-import org.jdom.Element as Element
+import org.jdom2.Element as Element
 
 # Some default speeds that will be used in the program
 speedMaxSpeed = 1
@@ -538,7 +542,7 @@ class ControllerItemListener( java.awt.event.ItemListener):
 
     def itemStateChanged(self, evt):
         if (evt.getStateChange() == java.awt.event.ItemEvent.SELECTED ):
-            self.jyns.setSelectedController( self.ctrl, evt.getItem() )		
+            self.jyns.setSelectedController( self.ctrl, evt.getItem() )     
                 
 # Speed timer class, to increase speed regularly once button pushed, thread stopped on button release
 class SpeedAction( java.awt.event.ActionListener):

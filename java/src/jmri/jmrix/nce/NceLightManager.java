@@ -1,36 +1,36 @@
 package jmri.jmrix.nce;
 
+import java.util.Locale;
+import javax.annotation.Nonnull;
 import jmri.Light;
+import jmri.NmraPacket;
 import jmri.managers.AbstractLightManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement light manager for NCE systems
- * <P>
- * System names are "NLnnnnn", where nnnnn is the stationary decoder address.
- * <P>
+ * Implement LightManager for NCE systems
+ * <p>
+ * System names are "NLnnnnn", where N is the user configurable system prefix,
+ * nnnnn is the stationary decoder address.
+ * <p>
  * Based in part on SerialLightManager.java
  *
  * @author Dave Duchamp Copyright (C) 2010
  */
 public class NceLightManager extends AbstractLightManager {
 
-    public NceLightManager(NceTrafficController tc, String prefix) {
-        super();
-        _trafficController = tc;
-        this.prefix = prefix;
+    public NceLightManager(NceSystemConnectionMemo memo) {
+        super(memo);
     }
 
-    NceTrafficController _trafficController = null;
-    String prefix = "N";
-
     /**
-     * Returns the system prefix for this NCE
+     * {@inheritDoc}
      */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    @Nonnull
+    public NceSystemConnectionMemo getMemo() {
+        return (NceSystemConnectionMemo) memo;
     }
 
     /**
@@ -49,7 +49,7 @@ public class NceLightManager extends AbstractLightManager {
         // Normalize the systemName
         String sName = getSystemPrefix() + "L" + bitNum;   // removes any leading zeros
         // make the new Light object
-        lgt = new NceLight(sName, userName, _trafficController, this);
+        lgt = new NceLight(sName, userName, getMemo().getNceTrafficController(), this);
         return lgt;
     }
 
@@ -63,24 +63,24 @@ public class NceLightManager extends AbstractLightManager {
         // validate the system Name leader characters
         if ((!systemName.startsWith(getSystemPrefix())) || (!systemName.startsWith(getSystemPrefix() + "L"))) {
             // here if an illegal nce light system name 
-            log.error("illegal character in header field of nce light system name: " + systemName);
+            log.error("illegal character in header field of nce light system name: {}", systemName);
             return (0);
         }
         // name must be in the NLnnnnn format (N is user configurable)
         int num = 0;
         try {
-            num = Integer.valueOf(systemName.substring(
+            num = Integer.parseInt(systemName.substring(
                     getSystemPrefix().length() + 1, systemName.length())
-            ).intValue();
-        } catch (Exception e) {
-            log.debug("illegal character in number field of system name: " + systemName);
+                  );
+        } catch (NumberFormatException e) {
+            log.debug("illegal character in number field of system name: {}", systemName);
             return (0);
         }
-        if (num <= 0) {
-            log.error("invalid nce light system name: " + systemName);
+        if (num < NmraPacket.accIdLowLimit) {
+            log.error("invalid nce light system name: {}", systemName);
             return (0);
-        } else if (num > 4096) {
-            log.warn("bit number out of range in nce light system name: " + systemName);
+        } else if (num > NmraPacket.accIdHighLimit) {
+            log.warn("bit number out of range in nce light system name: {}", systemName);
             return (0);
         }
         return (num);
@@ -92,17 +92,24 @@ public class NceLightManager extends AbstractLightManager {
      * range box in the add Light window
      */
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 
     /**
-     * Public method to validate system name format.
-     *
-     * @return 'true' if system name has a valid format, else returns 'false'
+     * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
+        return super.validateNmraAccessorySystemNameFormat(name, locale);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
     }
 
@@ -114,17 +121,16 @@ public class NceLightManager extends AbstractLightManager {
      * Abstract Light class.
      */
     @Override
-    public boolean validSystemNameConfig(String systemName) {
+    public boolean validSystemNameConfig(@Nonnull String systemName) {
         return (true);
     }
 
     /**
-     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
     private final static Logger log = LoggerFactory.getLogger(NceLightManager.class);

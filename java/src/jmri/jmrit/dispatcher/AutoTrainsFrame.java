@@ -27,16 +27,16 @@ import org.slf4j.LoggerFactory;
 /**
  * AutoTrainsFrame provides a user interface to trains that are running
  * automatically under Dispatcher.
- * <P>
+ * <p>
  * There is only one AutoTrains window. AutoTrains are added and deleted from
  * this window as they are added or terminated.
- * <P>
+ * <p>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is open source software; you can redistribute it and/or modify it under
  * the terms of version 2 of the GNU General Public License as published by the
  * Free Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
@@ -142,19 +142,19 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
             }
         }
         else {
-            log.info("No Throttle[{}]",aat.getActiveTrain().getActiveTrainName());
+            log.debug("{}: No Throttle (yet)",aat.getActiveTrain().getTrainName());
         }
     }
 
     private void handleThrottleChange(java.beans.PropertyChangeEvent e) {
-        if (!e.getPropertyName().equals("SpeedSetting") && !e.getPropertyName().equals("IsForward")) {
+        if (!e.getPropertyName().equals(Throttle.SPEEDSETTING) && !e.getPropertyName().equals(Throttle.ISFORWARD)) {
             return; //ignore if not speed or direction
         }
         int index = _throttles.indexOf(e.getSource());
         if (index == -1) {
             jmri.Throttle waThrottle1 =  (Throttle) e.getSource();
             int DDCAddress =  waThrottle1.getLocoAddress().getNumber() ;
-            log.debug("handleThrottleChange - using locoaddress [" + DDCAddress + "]");
+            log.trace("handleThrottleChange - using locoaddress [" + DDCAddress + "]");
             for (jmri.Throttle waThrottle  : _throttles ) {
                 if (waThrottle != null) {
                     if ( DDCAddress == waThrottle.getLocoAddress().getNumber()) {
@@ -176,7 +176,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
             return;
         }
         jmri.DccLocoAddress addy = (jmri.DccLocoAddress) _throttles.get(index).getLocoAddress();
-        updateStatusLabel(status, jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(addy, "SpeedSetting"), jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(addy, "IsForward"));
+        updateStatusLabel(status, jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(addy, Throttle.SPEEDSETTING), jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(addy, Throttle.ISFORWARD));
     }
 
     private void updateStatusLabel(JLabel status, Object speed, Object forward) {
@@ -189,13 +189,8 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
         } else {
             sb.append("(rev)");
         }
-        //Only repack if the text size has increased.
-        if (status.getText().length() < sb.toString().length()) {
-            status.setText(sb.toString());
-            autoTrainsFrame.pack();
-        } else {
-            status.setText(sb.toString());
-        }
+        status.setText(sb.toString());
+        autoTrainsFrame.pack();
     }
 
     private void addThrottleListener(AutoActiveTrain aat) {
@@ -207,7 +202,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
             jmri.DccLocoAddress addy = (jmri.DccLocoAddress) _throttles.get(index).getLocoAddress();
             jmri.InstanceManager.throttleManagerInstance().attachListener(addy, _throttleListeners.get(index));
             JLabel status = _throttleStatus.get(index);
-            updateStatusLabel(status, jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(addy, "SpeedSetting"), jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(addy, "IsForward"));
+            updateStatusLabel(status, jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(addy, Throttle.SPEEDSETTING), jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(addy, Throttle.ISFORWARD));
         }
     }
 

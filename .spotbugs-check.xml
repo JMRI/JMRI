@@ -1,0 +1,87 @@
+<FindBugsFilter>
+
+    <!-- This first section is used to fail CI if any unexpected bugs appear.
+         We accept certain types of bugs at certain levels until we get them
+         all cleared out. -->
+         
+    <!-- Suppress high bugs which we _don't_ want to fail CI until we can get them removed -->
+
+    <!-- Suppress medium bugs which we _don't_ want to fail CI until we can get them removed -->
+     <Match>
+        <Confidence value="2" /> <!-- 3 is low priority, 2 is medium priority, 1 is high priority -->
+        <Or>
+           <Bug pattern="IS2_INCONSISTENT_SYNC" />
+           <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
+        </Or>
+     </Match>
+
+    <!-- Suppress low priority bugs which we _don't_ want to fail CI until we can get them removed -->
+     <Match>
+        <Confidence value="3" /> <!-- 3 is low priority, 2 is medium priority, 1 is high priority -->
+        <Or>
+           <Bug pattern="BC_UNCONFIRMED_CAST" />
+           <Bug pattern="BC_UNCONFIRMED_CAST_OF_RETURN_VALUE" />
+           <Bug pattern="IS2_INCONSISTENT_SYNC" />
+           <Bug pattern="LI_LAZY_INIT_STATIC" />
+           <Bug pattern="NO_NOTIFY_NOT_NOTIFYALL" />
+           <Bug pattern="RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE" />
+           <Bug pattern="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD" />
+           <Bug pattern="UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR" />
+           <Bug pattern="UW_UNCOND_WAIT" />
+           <Bug pattern="WA_NOT_IN_LOOP" />
+        </Or>
+     </Match>
+
+
+    <!-- what follows should be kept in sync with .spotbugs.xml -->
+
+    <!-- The following section is used to suppress notifications about
+          specific bugs and categories that we don't think are
+          worth the effort -->
+
+     <Match>
+       <!-- Minor clarity issue -->
+       <Bug pattern="RI_REDUNDANT_INTERFACES" />
+     </Match>
+
+     <Match>
+       <!-- Design issue -->
+       <Bug pattern="SIC_INNER_SHOULD_BE_STATIC_ANON" />
+     </Match>
+
+     <Match>
+       <!-- Design issue -->
+       <Bug pattern="SIC_INNER_SHOULD_BE_STATIC_NEEDS_THIS" />
+     </Match>
+
+     <Match>
+       <!-- Most of these are non-I18N, internal changes of case.
+            We should find the I18N ones, but it seems excessive
+            to track down and annotate all the others first thing -->
+       <Bug pattern="DM_CONVERT_CASE" />
+     </Match>
+
+     <Match>
+       <!-- Most of these are non-I18N, JMRI-specific file operations.
+            We should find the I18N ones, but it seems excessive
+            to track down and annotate all the others first thing.
+            Suppressed for now to focus attention on
+            other high-priority items.  -->
+       <Bug pattern="DM_DEFAULT_ENCODING" />
+     </Match>
+
+     <Match>
+       <!-- JMRI code is often written to trust weird from other classes,
+            so the question of "malicious" is complicated. The rules in
+            this category should be restored in small batches   -->
+       <Bug category="MALICIOUS_CODE" />
+     </Match>
+
+    <!-- items we're unlikely to restore -->
+
+     <Match>
+       <!-- JMRI does not use serialization, permanently ignore -->
+       <Bug code="Se,SnVI" />
+     </Match>
+
+</FindBugsFilter>

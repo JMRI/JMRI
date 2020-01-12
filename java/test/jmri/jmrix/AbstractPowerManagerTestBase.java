@@ -8,14 +8,15 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Abstract base class for PowerManager tests in specific jmrix. packages
+ * Abstract base class for PowerManager tests in specific jmrix. packages.
  *
  * This is not itself a test class, e.g. should not be added to a suite.
  * Instead, this forms the base for test classes, including providing some
- * common tests
+ * common tests.
+ *
  * @author	Bob Jacobsen Copyright 2007
  * @author	Bob Jacobsen Copyright (C) 2017
-  */
+ */
 public abstract class AbstractPowerManagerTestBase {
 
     // required setup routine, must set p to an appropriate value.
@@ -27,9 +28,13 @@ public abstract class AbstractPowerManagerTestBase {
 
     protected abstract void hearOff();
 
+    protected abstract void hearIdle();
+
     protected abstract void sendOnReply();	  // get a reply to On command from layout
 
     protected abstract void sendOffReply();   // get a reply to Off command from layout
+    
+    protected abstract void sendIdleReply();
 
     protected abstract int numListeners();
 
@@ -38,6 +43,8 @@ public abstract class AbstractPowerManagerTestBase {
     protected abstract boolean outboundOnOK(int index);
 
     protected abstract boolean outboundOffOK(int index);
+
+    protected abstract boolean outboundIdleOK(int index);
 
     protected PowerManager p = null;	// holds objects under test
 
@@ -86,6 +93,22 @@ public abstract class AbstractPowerManagerTestBase {
     }
 
     @Test
+    public void testSetPowerIdle() throws JmriException {
+        if (p.implementsIdle()) {
+            Assert.assertTrue("LocoNet implements IDLE", p.implementsIdle());
+            int initialSent = outboundSize();
+            p.setPower(PowerManager.IDLE);
+            // check one message sent, correct form, unknown state
+            Assert.assertEquals("messages sent", initialSent + 1, outboundSize());
+            Assert.assertTrue("message type IDLE O.K.", outboundIdleOK(initialSent));
+            Assert.assertEquals("state before reply ", PowerManager.UNKNOWN, p.getPower());
+            // arrange for reply
+            sendIdleReply();
+            Assert.assertEquals("state after reply ", PowerManager.IDLE, p.getPower());
+        }
+    }
+
+    @Test
     public void testStateOn() throws JmriException {
         hearOn();
         Assert.assertEquals("power state", PowerManager.ON, p.getPower());
@@ -95,6 +118,14 @@ public abstract class AbstractPowerManagerTestBase {
     public void testStateOff() throws JmriException {
         hearOff();
         Assert.assertEquals("power state", PowerManager.OFF, p.getPower());
+    }
+
+    @Test
+    public void testStateIdle() throws JmriException {
+        if (p.implementsIdle()) {
+            hearIdle();
+            Assert.assertEquals("power state", PowerManager.IDLE, p.getPower());
+        }
     }
 
     @Test
@@ -145,6 +176,13 @@ public abstract class AbstractPowerManagerTestBase {
             return;
         }
         Assert.fail("Should have thrown exception after dispose()");
+    }
+
+    @Test
+    public void testImplementsIdle() {
+        // assumes that Idle is not implemented; override this test for cases
+        // where idle is implemented.
+        Assert.assertFalse(p.implementsIdle());
     }
 
 }

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2012 All rights reserved -->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+      <enumChoice choice="Not active">
+        <choice>Not active</choice>
+        <choice xml:lang="it">Non Attivo</choice>
+        <choice xml:lang="cs">Neaktivní</choice>
+        <choice xml:lang="de">nicht aktiv</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F1 key">
+        <choice>Controlled by F1 key</choice>
+        <choice xml:lang="it">Controllato da F1</choice>
+        <choice xml:lang="cs">Řízeno klávesou F1</choice>
+        <choice xml:lang="de">gesteuert mit F1</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F2 key">
+        <choice>Controlled by F2 key</choice>
+        <choice xml:lang="it">Controllato da F2</choice>
+        <choice xml:lang="cs">Řízeno klávesou F2</choice>
+        <choice xml:lang="de">gesteuert mit F2</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F3 key">
+        <choice>Controlled by F3 key</choice>
+        <choice xml:lang="it">Controllato da F3</choice>
+        <choice xml:lang="cs">Řízeno klávesou F3</choice>
+        <choice xml:lang="de">gesteuert mit F3</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F4 key">
+        <choice>Controlled by F4 key</choice>
+        <choice xml:lang="it">Controllato da F4</choice>
+        <choice xml:lang="cs">Řízeno klávesou F4</choice>
+        <choice xml:lang="de">gesteuert mit F4</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F5 key">
+        <choice>Controlled by F5 key</choice>
+        <choice xml:lang="it">Controllato da F5</choice>
+        <choice xml:lang="cs">Řízeno klávesou F5</choice>
+        <choice xml:lang="de">gesteuert mit F5</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F6 key">
+        <choice>Controlled by F6 key</choice>
+        <choice xml:lang="it">Controllato da F6</choice>
+        <choice xml:lang="cs">Řízeno klávesou F6</choice>
+        <choice xml:lang="de">gesteuert mit F6</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F7 key">
+        <choice>Controlled by F7 key</choice>
+        <choice xml:lang="it">Controllato da F7</choice>
+        <choice xml:lang="cs">Řízeno klávesou F7</choice>
+        <choice xml:lang="de">gesteuert mit F7</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F8 key">
+        <choice>Controlled by F8 key</choice>
+        <choice xml:lang="it">Controllato da F8</choice>
+        <choice xml:lang="cs">Řízeno klávesou F8</choice>
+        <choice xml:lang="de">gesteuert mit F8</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F9 key">
+        <choice>Controlled by F9 key</choice>
+        <choice xml:lang="it">Controllato da F9</choice>
+        <choice xml:lang="cs">Řízeno klávesou F9</choice>
+        <choice xml:lang="de">gesteuert mit F9</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F10 key">
+        <choice>Controlled by F10 key</choice>
+        <choice xml:lang="it">Controllato da F10</choice>
+        <choice xml:lang="cs">Řízeno klávesou F10</choice>
+        <choice xml:lang="de">gesteuert mit F10</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F11 key">
+        <choice>Controlled by F11 key</choice>
+        <choice xml:lang="it">Controllato da F11</choice>
+        <choice xml:lang="cs">Řízeno klávesou F11</choice>
+        <choice xml:lang="de">gesteuert mit F11</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F12 key">
+        <choice>Controlled by F12 key</choice>
+        <choice xml:lang="it">Controllato da F12</choice>
+        <choice xml:lang="cs">Řízeno klávesou F12</choice>
+        <choice xml:lang="de">gesteuert mit F12</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F13 key">
+        <choice>Controlled by F13 key</choice>
+        <choice xml:lang="it">Controllato da F13</choice>
+        <choice xml:lang="cs">Řízeno klávesou F13</choice>
+        <choice xml:lang="de">gesteuert mit F13</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F14 key">
+        <choice>Controlled by F14 key</choice>
+        <choice xml:lang="it">Controllato da F14</choice>
+        <choice xml:lang="cs">Řízeno klávesou F14</choice>
+        <choice xml:lang="de">gesteuert mit F14</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F15 key">
+        <choice>Controlled by F15 key</choice>
+        <choice xml:lang="it">Controllato da F15</choice>
+        <choice xml:lang="cs">Řízeno klávesou F15</choice>
+        <choice xml:lang="de">gesteuert mit F15</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F16 key">
+        <choice>Controlled by F16 key</choice>
+        <choice xml:lang="it">Controllato da F16</choice>
+        <choice xml:lang="cs">Řízeno klávesou F16</choice>
+        <choice xml:lang="de">gesteuert mit F16</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F17 key">
+        <choice>Controlled by F17 key</choice>
+        <choice xml:lang="it">Controllato da F17</choice>
+        <choice xml:lang="cs">Řízeno klávesou F17</choice>
+        <choice xml:lang="de">gesteuert mit F17</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F18 key">
+        <choice>Controlled by F18 key</choice>
+        <choice xml:lang="it">Controllato da F18</choice>
+        <choice xml:lang="cs">Řízeno klávesou F18</choice>
+        <choice xml:lang="de">gesteuert mit F18</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F19 key">
+        <choice>Controlled by F19 key</choice>
+        <choice xml:lang="it">Controllato da F19</choice>
+        <choice xml:lang="cs">Řízeno klávesou F19</choice>
+        <choice xml:lang="de">gesteuert mit F19</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F20 key">
+        <choice>Controlled by F20 key</choice>
+        <choice xml:lang="it">Controllato da F20</choice>
+        <choice xml:lang="cs">Řízeno klávesou F20</choice>
+        <choice xml:lang="de">gesteuert mit F20</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F21 key">
+        <choice>Controlled by F21 key</choice>
+        <choice xml:lang="it">Controllato da F21</choice>
+        <choice xml:lang="cs">Řízeno klávesou F21</choice>
+        <choice xml:lang="de">gesteuert mit F21</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F22 key">
+        <choice>Controlled by F22 key</choice>
+        <choice xml:lang="it">Controllato da F22</choice>
+        <choice xml:lang="cs">Řízeno klávesou F22</choice>
+        <choice xml:lang="de">gesteuert mit F22</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F23 key">
+        <choice>Controlled by F23 key</choice>
+        <choice xml:lang="it">Controllato da F23</choice>
+        <choice xml:lang="cs">Řízeno klávesou F23</choice>
+        <choice xml:lang="de">gesteuert mit F23</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F24 key">
+        <choice>Controlled by F24 key</choice>
+        <choice xml:lang="it">Controllato da F24</choice>
+        <choice xml:lang="cs">Řízeno klávesou F24</choice>
+        <choice xml:lang="de">gesteuert mit F24</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F25 key">
+        <choice>Controlled by F25 key</choice>
+        <choice xml:lang="it">Controllato da F25</choice>
+        <choice xml:lang="cs">Řízeno klávesou F25</choice>
+        <choice xml:lang="de">gesteuert mit F25</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F26 key">
+        <choice>Controlled by F26 key</choice>
+        <choice xml:lang="it">Controllato da F26</choice>
+        <choice xml:lang="cs">Řízeno klávesou F26</choice>
+        <choice xml:lang="de">gesteuert mit F26</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F27 key">
+        <choice>Controlled by F27 key</choice>
+        <choice xml:lang="it">Controllato da F27</choice>
+        <choice xml:lang="cs">Řízeno klávesou F27</choice>
+        <choice xml:lang="de">gesteuert mit F27</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F28 key">
+        <choice>Controlled by F28 key</choice>
+        <choice xml:lang="it">Controllato da F28</choice>
+        <choice xml:lang="cs">Řízeno klávesou F28</choice>
+        <choice xml:lang="de">gesteuert mit F28</choice>
+      </enumChoice>
+</enumVal>

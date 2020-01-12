@@ -1,10 +1,8 @@
 package jmri.jmrix.jmriclient;
 
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import org.junit.Assert;
+import org.junit.After;
+import org.junit.Before;
 
 /**
  * JMRIClientReplyTest.java
@@ -13,38 +11,19 @@ import org.junit.Assert;
  *
  * @author	Bob Jacobsen
  */
-public class JMRIClientReplyTest extends TestCase {
-
-    public void testCtor() {
-        JMRIClientReply m = new JMRIClientReply();
-        Assert.assertNotNull(m);
-    }
-
-    // from here down is testing infrastructure
-    public JMRIClientReplyTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", JMRIClientReplyTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(JMRIClientReplyTest.class);
-        return suite;
-    }
+public class JMRIClientReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
     // The minimal setup for log4J
     @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
+        m = new JMRIClientReply();
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
+	m = null;
         JUnitUtil.tearDown();
     }
 

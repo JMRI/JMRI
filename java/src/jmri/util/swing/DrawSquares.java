@@ -23,7 +23,6 @@ public class DrawSquares {
      * @param color1 background color
      * @param color2 contrasting fill color
      * @return the image with a grid of squares
-     * @see jmri.jmrit.catalog.PreviewDialog#setupPanel()
      */
     public static BufferedImage getImage(int width, int height, int dim, Color color1, Color color2) {
         Color sqColor = new Color(235, 235, 235); // light gray

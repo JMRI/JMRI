@@ -66,11 +66,11 @@ public abstract class AbstractAlmImplementation implements LocoNetListener {
     @Override
     public void message(LocoNetMessage msg) {
         // sort on opcode and ALM number
-        if (msg.getOpCode() == 0xEE && msg.getElement(2) == mNumber) {
+        if ((msg.getOpCode() == LnConstants.OPC_IMM_PACKET_2) && msg.getElement(2) == mNumber) {
             writeMsg(msg);
-        } else if (msg.getOpCode() == 0xE6 && msg.getElement(2) == mNumber) {
+        } else if ((msg.getOpCode() == LnConstants.OPC_ALM_READ) && msg.getElement(2) == mNumber) {
             readMsg(msg);
-        } else if (msg.getOpCode() == 0xB4 && msg.getElement(1) == 0x6E) {
+        } else if ((msg.getOpCode() == LnConstants.OPC_LONG_ACK) && msg.getElement(1) == 0x6E) {
             lackMsg(msg);
         }
     }
@@ -205,24 +205,28 @@ public abstract class AbstractAlmImplementation implements LocoNetListener {
 
     /**
      * Notify possible subclass that a block has changed.
+     * @param block  something about a block
      */
     public void noteChanged(int block) {
     }
 
     /**
      * Notify possible subclass that a read cmd is being handled
+     * @param block  something about a block
      */
     public void noteReadCmd(int block) {
     }
 
     /**
      * Notify possible subclass that a read reply is being handled
+     * @param block  something about a block
      */
     public void noteReadReply(int block) {
     }
 
     /**
      * Notify possible subclass that a write operation is complete
+     * @param block  something about a block
      */
     public void noteWriteComplete(int block) {
     }
@@ -235,6 +239,7 @@ public abstract class AbstractAlmImplementation implements LocoNetListener {
      * <p>
      * If we're not an image, we just sent this, so we'll ignore it.
      *
+     * @param msg a LocoNet message
      */
     void readMsg(LocoNetMessage msg) {
         // sort out the ATASK

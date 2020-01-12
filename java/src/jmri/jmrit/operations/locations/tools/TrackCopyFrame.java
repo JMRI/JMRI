@@ -216,7 +216,7 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
                 return; // failed
             }
             // only copy tracks that are okay with the location
-            if (fromTrack.getTrackType().equals(Track.STAGING) ^ _destination.isStaging()) {
+            if (fromTrack.isStaging() ^ _destination.isStaging()) {
                 JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("TrackTypeWrong"),
                         new Object[]{fromTrack.getTrackType(), _destination.getName()}), MessageFormat.format(Bundle
                                 .getMessage("CanNotCopy"), new Object[]{fromTrack.getName()}), JOptionPane.ERROR_MESSAGE);

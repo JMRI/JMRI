@@ -38,6 +38,12 @@
       <authorinitials>MJM</authorinitials>
       <revremark>New file, initial TSU2 OEM Athearn Diesel file.</revremark>
     </revision>
+    <revision>
+      <revnumber>2</revnumber>
+      <date>2019-01-16</date>
+      <authorinitials>MJM</authorinitials>
+      <revremark>Add new horns</revremark>
+    </revision>
   </revhistory>
     <enumChoice>
           <choice>Nathan K3LA (1)</choice>
@@ -153,4 +159,10 @@
     <enumChoice>
           <choice>Leslie S4T</choice>
     </enumChoice>
+    <enumChoice>
+          <choice>Leslie S3LR</choice>
+    </enumChoice>
+    <enumChoice>
+          <choice>Leslie RS3K</choice>
+    </enumChoice>    
 </enumChoiceGroup>

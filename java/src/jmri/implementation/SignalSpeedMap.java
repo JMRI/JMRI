@@ -252,11 +252,6 @@ public class SignalSpeedMap extends Bean implements InstanceManagerAutoDefault, 
         return null;
     }
 
-    @Deprecated
-    public boolean isRatioOfNormalSpeed() {
-        return (_interpretation == PERCENT_NORMAL);
-    }
-
     public int getInterpretation() {
         return _interpretation;
     }
@@ -267,11 +262,6 @@ public class SignalSpeedMap extends Bean implements InstanceManagerAutoDefault, 
 
     public float getStepIncrement() {
         return _stepIncrement;
-    }
-
-    @Deprecated
-    public int getNumSteps() {
-        return _numSteps;
     }
 
     public void setAspects(@Nonnull HashMap<String, Float> map, int interpretation) {

@@ -3,7 +3,6 @@ package jmri.jmrix.pi;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
-
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
    RaspberryPiConnectionConfigTest.class,
@@ -23,12 +22,4 @@ import org.junit.runners.Suite;
  * @author Paul Bender Copyright (C) 2016
  */
 public class PackageTest {
-
-    // Main entry point
-    static public void main(String[] args) {
-        org.junit.runner.JUnitCore.main(PackageTest.class.getName());
-    }
-
-    // private final static Logger log = LoggerFactory.getLogger(PackageTest.class);
-
 }

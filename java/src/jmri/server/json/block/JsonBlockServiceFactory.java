@@ -10,7 +10,7 @@ import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
- * @author mstevetodd Copyright (C) 2016
+ * @author mstevetodd Copyright (C) 2018
  * @author Randall Wood Copyright 2018
  */
 @ServiceProvider(service = JsonServiceFactory.class)
@@ -18,17 +18,17 @@ public class JsonBlockServiceFactory implements JsonServiceFactory<JsonBlockHttp
 
 
     @Override
-    public String[] getTypes() {
+    public String[] getTypes(String version) {
         return new String[]{BLOCK, BLOCKS};
     }
 
     @Override
-    public JsonBlockSocketService getSocketService(JsonConnection connection) {
+    public JsonBlockSocketService getSocketService(JsonConnection connection, String version) {
         return new JsonBlockSocketService(connection);
     }
 
     @Override
-    public JsonBlockHttpService getHttpService(ObjectMapper mapper) {
+    public JsonBlockHttpService getHttpService(ObjectMapper mapper, String version) {
         return new JsonBlockHttpService(mapper);
     }
 

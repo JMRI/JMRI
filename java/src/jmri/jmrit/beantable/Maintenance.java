@@ -67,6 +67,7 @@ public class Maintenance {
      *
      * @param parent Frame to check
      */
+    @SuppressWarnings("deprecation") // requires JUnit tests before can reliably redo getSystemNameList-using algorithms
     public static void findOrphansPressed(Frame parent) {
         Vector<String> display = new Vector<String>();
         Vector<String> names = new Vector<String>();
@@ -173,43 +174,57 @@ public class Maintenance {
                         if (s == null) {
                             s = InstanceManager.sensorManagerInstance().getBySystemName(names[1]);
                         }
-                        InstanceManager.sensorManagerInstance().deregister(s);
+                        if (s != null) {
+                            InstanceManager.sensorManagerInstance().deregister(s);
+                        }
                     } else if (names[0].equals("Turnout")) { // NOI18N
                         Turnout t = InstanceManager.turnoutManagerInstance().getBySystemName(names[2]);
                         if (t == null) {
                             t = InstanceManager.turnoutManagerInstance().getBySystemName(names[1]);
                         }
-                        InstanceManager.turnoutManagerInstance().deregister(t);
+                        if (t != null) {
+                            InstanceManager.turnoutManagerInstance().deregister(t);
+                        }
                     } else if (names[0].equals("SignalHead")) { // NOI18N
                         SignalHead sh = InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(names[2]);
                         if (sh == null) {
                             sh = InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(names[1]);
                         }
-                        InstanceManager.getDefault(jmri.SignalHeadManager.class).deregister(sh);
+                        if (sh != null) {
+                            InstanceManager.getDefault(jmri.SignalHeadManager.class).deregister(sh);
+                        }
                     } else if (names[0].equals("Light")) { // NOI18N
                         Light l = InstanceManager.lightManagerInstance().getBySystemName(names[2]);
                         if (l == null) {
                             l = InstanceManager.lightManagerInstance().getBySystemName(names[1]);
                         }
-                        InstanceManager.lightManagerInstance().deregister(l);
+                        if (l != null) {
+                            InstanceManager.lightManagerInstance().deregister(l);
+                        }
                     } else if (names[0].equals("Conditional")) { // NOI18N
                         Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).getBySystemName(names[2]);
                         if (c == null) {
                             c = InstanceManager.getDefault(jmri.ConditionalManager.class).getBySystemName(names[1]);
                         }
-                        InstanceManager.getDefault(jmri.ConditionalManager.class).deregister(c);
+                        if (c != null) {
+                            InstanceManager.getDefault(jmri.ConditionalManager.class).deregister(c);
+                        }
                     } else if (names[0].equals("Section")) { // NOI18N
                         jmri.Section sec = InstanceManager.getDefault(jmri.SectionManager.class).getBySystemName(names[2]);
                         if (sec == null) {
                             sec = InstanceManager.getDefault(jmri.SectionManager.class).getBySystemName(names[1]);
                         }
-                        InstanceManager.getDefault(jmri.SectionManager.class).deregister(sec);
+                        if (sec != null) {
+                            InstanceManager.getDefault(jmri.SectionManager.class).deregister(sec);
+                        }
                     } else if (names[0].equals("Block")) { // NOI18N
                         jmri.Block b = InstanceManager.getDefault(jmri.BlockManager.class).getBySystemName(names[2]);
                         if (b == null) {
                             b = InstanceManager.getDefault(jmri.BlockManager.class).getBySystemName(names[1]);
                         }
-                        InstanceManager.getDefault(jmri.BlockManager.class).deregister(b);
+                        if (b != null) {
+                            InstanceManager.getDefault(jmri.BlockManager.class).deregister(b);
+                        }
                     }
                     model.remove(index);
                     n.remove(index);
@@ -235,6 +250,7 @@ public class Maintenance {
      *
      * @param parent Frame to check
      */
+    @SuppressWarnings("deprecation") // requires JUnit tests before can reliably redo getSystemNameList-using algorithms
     public static void findEmptyPressed(Frame parent) {
         Vector<String> display = new Vector<String>();
         Vector<String> names = new Vector<String>();
@@ -325,57 +341,57 @@ public class Maintenance {
      * Searches each Manager for a reference to the "name".
      *
      * @param name string (name base) to look for
-     * @return 4 element String array: {Type, userName, sysName, numListeners}
+     * @return 4 element String array: {Type, userName, sysName, numListeners}  - 
+     * This should probably return an instance of a custom type rather than a bunch of string names
      */
     @Nonnull
     static String[] getTypeAndNames(@Nonnull String name) {
         log.debug("getTypeAndNames for \"{}\"", name);
-        
+
         String[] result;
-        
+
         result = checkForOneTypeAndNames(InstanceManager.getDefault(SensorManager.class), "Sensor", name);
         if (result != null) return result;
-        
+
         result = checkForOneTypeAndNames(InstanceManager.getDefault(TurnoutManager.class), "Turnout", name);
         if (result != null) return result;
-        
+
         result = checkForOneTypeAndNames(InstanceManager.getDefault(LightManager.class), "Light", name);
         if (result != null) return result;
-        
+
         result = checkForOneTypeAndNames(InstanceManager.getDefault(SignalHeadManager.class), "SignalHead", name);
         if (result != null) return result;
-        
+
         result = checkForOneTypeAndNames(InstanceManager.getDefault(ConditionalManager.class), "Conditional", name);
         if (result != null) return result;
-        
+
         result = checkForOneTypeAndNames(InstanceManager.getDefault(BlockManager.class), "Block", name);
         if (result != null) return result;
-        
+
         result = checkForOneTypeAndNames(InstanceManager.getDefault(SectionManager.class), "Section", name);  // old code has "Block" for type
         if (result != null) return result;
-        
+
         result = checkForOneTypeAndNames(InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class), "OBlock", name);
         if (result != null) return result;
-        
+
 
         return new String[]{"", name, name, "0"};
-        
+
     }
     // captive for above
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
+        justification = "null return for normal (no error) case is easy to check, and this is a really wierd array")
+    // This should probably return an instance of a custom type rather than a bunch of string names
     static private String[] checkForOneTypeAndNames( @Nonnull Manager<? extends NamedBean> manager, @Nonnull String type, @Nonnull String beanName) {
-        NamedBean bean = manager.getBeanBySystemName(beanName);
-        if (bean != null) return new String[]{type, bean.getUserName(), bean.getSystemName(), Integer.toString(bean.getNumPropertyChangeListeners())};
-        
-        // special case  - check for upper case system name - not recommended, but here for historical reasons
-        bean = manager.getBeanBySystemName(beanName.toUpperCase());
+        NamedBean bean = manager.getBySystemName(beanName);
         if (bean != null) return new String[]{type, bean.getUserName(), bean.getSystemName(), Integer.toString(bean.getNumPropertyChangeListeners())};
 
-        bean = manager.getBeanByUserName(beanName);
+        bean = manager.getByUserName(beanName);
         if (bean != null) return new String[]{type, bean.getUserName(), bean.getSystemName(), Integer.toString(bean.getNumPropertyChangeListeners())};
 
         return null;
     }
-    
+
     /**
      * Check if a given string is either a user or a system name.
      *
@@ -417,6 +433,7 @@ public class Maintenance {
      * @param text body of the message to be displayed reporting the result
      * @return true if name is found at least once as a bean name
      */
+    @SuppressWarnings("deprecation") // requires JUnit tests before can reliably redo getSystemNameList-using algorithms
     static boolean search(String name, JTextArea text) {
         String[] names = getTypeAndNames(name);
         if (log.isDebugEnabled()) {
@@ -434,7 +451,7 @@ public class Maintenance {
         String sysName = names[2];
         String userName = names[1];
         int referenceCount = 0;
-        StringBuilder tempText = new StringBuilder();
+        StringBuilder tempText;
         boolean found = false;
         boolean empty = true;
         // search for references among each class known to be listeners
@@ -502,7 +519,6 @@ public class Maintenance {
             }
             if (text != null && found) {
                 text.append(tempText.toString());
-                tempText = new StringBuilder();
                 found = false;
                 empty = false;
             }
@@ -721,7 +737,7 @@ public class Maintenance {
         found = false;
         empty = true;
         jmri.SectionManager sectionManager = InstanceManager.getDefault(jmri.SectionManager.class);
-        java.util.List<String> sysNameList = sectionManager.getSystemNameList();
+        java.util.List<String> sysNameList = new java.util.ArrayList<>(sectionManager.getSystemNameList());
 
         transitManager = InstanceManager.getDefault(jmri.TransitManager.class);
         iter1 = transitManager.getSystemNameList().iterator();
@@ -818,7 +834,7 @@ public class Maintenance {
         found = false;
         empty = true;
         jmri.BlockManager blockManager = InstanceManager.getDefault(jmri.BlockManager.class);
-        sysNameList = blockManager.getSystemNameList();
+        sysNameList = new java.util.ArrayList<>(blockManager.getSystemNameList());
 
         sectionManager = InstanceManager.getDefault(jmri.SectionManager.class);
         iter1 = sectionManager.getSystemNameList().iterator();
@@ -836,6 +852,9 @@ public class Maintenance {
             // get the next Logix
             String sName = iter1.next();
             jmri.Block b = blockManager.getBySystemName(sName);
+            if (b == null) {
+                continue;
+            }
             String uName = b.getUserName();
             String line1 = MessageFormat.format(rbm.getString("ReferenceTitle"),
                     new Object[]{" ", Bundle.getMessage("BeanNameBlock"), uName, sName});
@@ -1013,7 +1032,7 @@ public class Maintenance {
         found = false;
         empty = true;
         jmri.ConditionalManager conditionalManager = InstanceManager.getDefault(jmri.ConditionalManager.class);
-        sysNameList = conditionalManager.getSystemNameList();
+        sysNameList = new java.util.ArrayList<>(conditionalManager.getSystemNameList());
 
         iter1 = InstanceManager.getDefault(jmri.LogixManager.class).getSystemNameList().iterator();
         while (iter1.hasNext()) {
@@ -1257,7 +1276,10 @@ public class Maintenance {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                _w.dispose();
+                // dispose on the GUI thread _later_
+                jmri.util.ThreadingUtil.runOnGUIEventually( ()->{ 
+                    _w.dispose();
+                });
             }
         }
         ok.addActionListener(new myListener(dialog));
@@ -1279,7 +1301,10 @@ public class Maintenance {
         dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         dialog.setLocationRelativeTo(parent);
         dialog.pack();
-        dialog.setVisible(true);
+        // dispose on the GUI thread _later_
+        jmri.util.ThreadingUtil.runOnGUIEventually( ()->{ 
+            dialog.setVisible(true);
+        });
     }
 
     private final static Logger log = LoggerFactory.getLogger(Maintenance.class);

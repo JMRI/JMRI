@@ -51,12 +51,13 @@ import org.junit.runners.Suite;
     NotchTransitionTest.class,
     VSDFileTest.class,
     VSDecoderPaneTest.class,
+    VSDGeoFileTest.class,
 })
 
 /**
  * Tests for the jmri.jmrit.vsdecoder package.
  *
- * @author	Mark Underwood Copyright (C) 2011
+ * @author Mark Underwood Copyright (C) 2011
  */
 public class PackageTest {
 }

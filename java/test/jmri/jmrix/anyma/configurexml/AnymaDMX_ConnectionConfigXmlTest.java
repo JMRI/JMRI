@@ -1,10 +1,7 @@
 package jmri.jmrix.anyma.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * AnymaDMX_ConnectionConfigXmlTest.java
@@ -14,21 +11,26 @@ import org.junit.Test;
  * @author George Warner Copyright (C) 2017
  * @since 4.9.6
  */
-public class AnymaDMX_ConnectionConfigXmlTest {
-
-    @Test
-    public void testCtor() {
-        Assert.assertNotNull("AnymaDMX_ConnectionConfigXml constructor", new AnymaDMX_ConnectionConfigXml());
-    }
+public class AnymaDMX_ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractUsbConnectionConfigXmlTestBase {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
+        xmlAdapter = new AnymaDMX_ConnectionConfigXml();
+        /* setting up the adapter through getInstance() makes calls to libusb
+           which doesn't work right on CI servers.
+           commenting out the creation of cc causes the tests that use it to not
+           run in the parent class. */
+        //cc = new AnymaDMX_ConnectionConfig();
     }
 
     @After
+    @Override
     public void tearDown() {
+        xmlAdapter = null;
+        cc = null;
         JUnitUtil.tearDown();
     }
 }

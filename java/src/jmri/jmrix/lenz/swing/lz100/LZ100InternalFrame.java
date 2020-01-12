@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
  * statup mode (automatic or manual) and to reset the command station.
  *
  * @author Paul Bender Copyright (C) 2005-2010
-  */
+ */
 public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XNetListener {
 
     private boolean autoMode = false; // holds Auto/Manual Startup Mode.

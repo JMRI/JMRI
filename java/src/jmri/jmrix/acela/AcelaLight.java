@@ -80,7 +80,7 @@ public class AcelaLight extends AbstractLight {
     int mBit = -1;                // global address from 0
 
     /**
-     * Set the current state of this Light This routine requests the hardware to
+     * Set the current state of this Light. This routine requests the hardware to
      * change. If this is really a change in state of this bit (tested in
      * AcelaNode), a Transmit packet will be sent before this Node is next
      * polled.

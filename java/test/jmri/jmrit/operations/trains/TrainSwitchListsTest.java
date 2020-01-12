@@ -3,6 +3,7 @@ package jmri.jmrit.operations.trains;
 import java.io.BufferedReader;
 import java.io.File;
 import jmri.InstanceManager;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
@@ -15,9 +16,8 @@ import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
+import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import jmri.util.JUnitOperationsUtil;
-import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -30,7 +30,7 @@ import org.junit.Test;
  * 
  *         TODO data check of switch list files
  */
-public class TrainSwitchListsTest {
+public class TrainSwitchListsTest extends OperationsTestCase {
 
     private TrainManager tmanager;
     private RouteManager rmanager;
@@ -507,51 +507,50 @@ public class TrainSwitchListsTest {
         yardAA.setLength(400);
 
         // place 6 cars
-        Car c1 = cmanager.newCar("AA", "1");
+        Car c1 = cmanager.newRS("AA", "1");
         c1.setLength("40");
         c1.setTypeName("Boxcar");
         Assert.assertEquals("Place car on track", Track.OKAY, c1.setLocation(locationA, spurA));
 
-        Car c2 = cmanager.newCar("AA", "2");
+        Car c2 = cmanager.newRS("AA", "2");
         c2.setLength("40");
         c2.setTypeName("Boxcar");
         Assert.assertEquals("Place car on track", Track.OKAY, c2.setLocation(locationA, spurA));
 
-        Car c3 = cmanager.newCar("AA", "3");
+        Car c3 = cmanager.newRS("AA", "3");
         c3.setLength("40");
         c3.setTypeName("Boxcar");
         Assert.assertEquals("Place car on track", Track.OKAY, c3.setLocation(locationA, spurA));
 
         // 3 on yard tracks
-        Car c4 = cmanager.newCar("AA", "4");
+        Car c4 = cmanager.newRS("AA", "4");
         c4.setLength("40");
         c4.setTypeName("Boxcar");
         Assert.assertEquals("Place car on track", Track.OKAY, c4.setLocation(locationA, yardA));
 
-        Car c5 = cmanager.newCar("AA", "5");
+        Car c5 = cmanager.newRS("AA", "5");
         c5.setLength("40");
         c5.setTypeName("Boxcar");
         Assert.assertEquals("Place car on track", Track.OKAY, c5.setLocation(locationA, yardA));
 
-        Car c6 = cmanager.newCar("AA", "6");
+        Car c6 = cmanager.newRS("AA", "6");
         c6.setLength("40");
         c6.setTypeName("Boxcar");
         c6.setUtility(true); // make this car a utility car for better test coverage
         c6.setMoves(20); // make the last car to get pulled
         Assert.assertEquals("Place car on track", Track.OKAY, c6.setLocation(locationA, yardA));
 
-        Engine e1 = emanager.newEngine("NYC", "1");
+        Engine e1 = emanager.newRS("NYC", "1");
         e1.setModel("E8");
         Assert.assertEquals("Place engine on track", Track.OKAY, e1.setLocation(locationA, yardA));
 
     }
 
     // The minimal setup for log4J
+    @Override
     @Before
     public void setUp() {
-        JUnitUtil.setUp();
-
-        JUnitOperationsUtil.resetOperationsManager();
+        super.setUp();
         // setup new managers
         tmanager = InstanceManager.getDefault(TrainManager.class);
         rmanager = InstanceManager.getDefault(RouteManager.class);
@@ -563,7 +562,7 @@ public class TrainSwitchListsTest {
         tmanager.setBuildMessagesEnabled(false);
         // disable build reports
         tmanager.setBuildReportEnabled(false);
-        
+
         Setup.setBuildAggressive(false);
         Setup.setTrainIntoStagingCheckEnabled(true);
         Setup.setMaxTrainLength(1000);
@@ -581,17 +580,18 @@ public class TrainSwitchListsTest {
 
         // improve test coverage
         Setup.setSwitchListAllTrainsEnabled(false);
-        Setup.setPrintTimetableNameEnabled(true);
+        Setup.setPrintTrainScheduleNameEnabled(true);
         Setup.setSwitchListRouteLocationCommentEnabled(true);
 
         TrainScheduleManager tsmanager = InstanceManager.getDefault(TrainScheduleManager.class);
-        tmanager.setTrainSecheduleActiveId(tsmanager.getSchedulesByIdList().get(0).getId());
+        tsmanager.setTrainScheduleActiveId(tsmanager.getSchedulesByIdList().get(0).getId());
 
     }
 
+    @Override
     @After
     public void tearDown() {
-        JUnitUtil.tearDown();
+        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TrainSwitchListsTest.class);

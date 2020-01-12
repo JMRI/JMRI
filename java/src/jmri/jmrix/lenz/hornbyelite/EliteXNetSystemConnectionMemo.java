@@ -1,4 +1,3 @@
-//EliteXNetSystemConnectionMemo.java
 package jmri.jmrix.lenz.hornbyelite;
 
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;

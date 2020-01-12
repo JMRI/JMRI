@@ -1,17 +1,17 @@
 package jmri.jmrix.sprog;
 
 import java.util.*;
+import javax.annotation.Nonnull;
+
 import jmri.*;
 import jmri.jmrix.AbstractProgrammer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implement the jmri.Programmer interface via commands for the Sprog
  * programmer. This provides a service mode programmer.
  *
  * @author Bob Jacobsen Copyright (C) 2001
-  */
+ */
 public class SprogProgrammer extends AbstractProgrammer implements SprogListener {
 
     private SprogSystemConnectionMemo _memo = null;
@@ -20,10 +20,13 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
          _memo = memo;
     }
 
-    /**
+    /** 
+     * {@inheritDoc}
+     *
      * Implemented Types.
      */
     @Override
+    @Nonnull
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
         ret.add(ProgrammingMode.DIRECTBITMODE);
@@ -31,6 +34,9 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
         return ret;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public boolean getCanRead() {
         if (getMode().equals(ProgrammingMode.PAGEMODE)) return true;
@@ -47,9 +53,12 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
     static final int COMMANDSENT = 2;       // read/write command sent, waiting reply
     int _val;	// remember the value being read/written for confirmative reply
 
-    // programming interface
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    synchronized public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+    synchronized public void writeCV(String CVname, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+        final int CV = Integer.parseInt(CVname);
         if (log.isDebugEnabled()) {
             log.debug("writeCV " + CV + " mode " + getMode() + " listens " + p);
         }
@@ -58,13 +67,20 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
         startProgramming(_val, CV);
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     synchronized public void confirmCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         readCV(CV, p);
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    synchronized public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
+    synchronized public void readCV(String CVname, jmri.ProgListener p) throws jmri.ProgrammerException {
+        final int CV = Integer.parseInt(CVname);
         if (log.isDebugEnabled()) {
             log.debug("readCV " + CV + " mode " + getMode() + " listens " + p);
         }
@@ -90,7 +106,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
             controller().sendSprogMessage(progTaskStart(getMode(), val, CV), this);
         } catch (Exception e) {
             // program op failed, go straight to end
-            log.error("program operation failed, exception " + e);
+            log.error("program operation failed, exception {}",e);
             progState = NOTPROGRAMMING;
         }
     }
@@ -123,10 +139,16 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
         }
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public void notifyMessage(SprogMessage m) {
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     synchronized public void notifyReply(SprogReply reply) {
 
@@ -170,7 +192,9 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
         }
     }
 
-    /**
+    /** 
+     * {@inheritDoc}
+     *
      * Internal routine to handle a timeout
      */
     @Override
@@ -191,13 +215,9 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
         log.debug("notifyProgListenerEnd value " + value + " status " + status);
         // the programmingOpReply handler might send an immediate reply, so
         // clear the current listener _first_
-        if (_usingProgrammer == null) {
-            log.error("No listener to notify");
-        } else {
-            jmri.ProgListener temp = _usingProgrammer;
-            _usingProgrammer = null;
-            temp.programmingOpReply(value, status);
-        }
+        jmri.ProgListener temp = _usingProgrammer;
+        _usingProgrammer = null;
+        notifyProgListenerEnd(temp, value, status);
     }
 
     SprogTrafficController _controller = null;
@@ -210,6 +230,6 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
         return _controller;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SprogProgrammer.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SprogProgrammer.class);
 
 }

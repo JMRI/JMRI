@@ -2,9 +2,7 @@ package jmri.jmrix.dcc4pc;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
@@ -29,7 +27,7 @@ public class Dcc4PcSensorTest extends jmri.implementation.AbstractSensorTestBase
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        t = new Dcc4PcSensor("DS1","test");
+        t = new Dcc4PcSensor("DS0:1","test");
     }
 
     @Override

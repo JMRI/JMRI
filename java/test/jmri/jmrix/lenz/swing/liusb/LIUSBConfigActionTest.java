@@ -52,6 +52,7 @@ public class LIUSBConfigActionTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
 
         t = new jmri.jmrix.lenz.XNetInterfaceScaffold(new jmri.jmrix.lenz.LenzCommandStation());
         memo = new jmri.jmrix.lenz.XNetSystemConnectionMemo(t);
@@ -61,6 +62,7 @@ public class LIUSBConfigActionTest {
     public void tearDown() {
         t = null;
         memo = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

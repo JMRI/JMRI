@@ -5,9 +5,9 @@ import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 import jmri.jmrix.loconet.LnPacketizer;
-import jmri.jmrix.loconet.LocoNetInterface;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetMessageException;
+import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,12 +35,12 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2010
  */
-public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterface {
+public class UhlenbrockPacketizer extends LnPacketizer {
 
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "Only used during system initialization")
     public UhlenbrockPacketizer() {
-        super();
+        super(new LocoNetSystemConnectionMemo());
         log.debug("UhlenbrockPacketizer instantiated");
     }
 
@@ -53,7 +53,7 @@ public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterfa
      * Forward a preformatted LocoNetMessage to the actual interface.
      *
      * Checksum is computed and overwritten here, then the message is converted
-     * to a byte array and queued for transmission
+     * to a byte array and queued for transmission.
      *
      * @param m Message to send; will be updated with CRC
      */
@@ -84,7 +84,7 @@ public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterfa
                 xmtHandler.notify();
             }
         } catch (RuntimeException e) {
-            log.warn("passing to xmit: unexpected exception: " + e);
+            log.warn("passing to xmit: unexpected exception: ", e);
         }
     }
 
@@ -104,7 +104,7 @@ public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterfa
     class RcvHandler implements Runnable {
 
         /**
-         * Remember the LnPacketizer object
+         * Remember the LnPacketizer object.
          */
         LnPacketizer trafficController;
 
@@ -203,7 +203,7 @@ public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterfa
                     }
                     // check parity
                     if (!msg.checkParity()) {
-                        log.warn("Ignore Loconet packet with bad checksum: " + msg.toString());
+                        log.warn("Ignore LocoNet packet with bad checksum: " + msg.toString());
                         throw new LocoNetMessageException();
                     }
 
@@ -218,7 +218,7 @@ public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterfa
                     // message is complete, dispatch it !!
                     {
                         log.debug("queue message for notification");
-//log.info("-------------------Uhlenbrock IB-COM Loconet message RECEIVED: "+msg.toString());
+//log.info("-------------------Uhlenbrock IB-COM LocoNet message RECEIVED: "+msg.toString());
                         final LocoNetMessage thisMsg = msg;
                         final LnPacketizer thisTc = trafficController;
                         // return a notification via the queue to ensure end
@@ -237,7 +237,7 @@ public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterfa
                     // done with this one
                 } catch (LocoNetMessageException e) {
                     // just let it ride for now
-                    log.warn("run: unexpected LocoNetMessageException: " + e);
+                    log.warn("run: unexpected LocoNetMessageException: ", e);
                 } catch (java.io.EOFException e) {
                     // posted from idle port when enableReceiveTimeout used
                     log.debug("EOFException, is LocoNet serial I/O using timeouts?");
@@ -277,7 +277,7 @@ public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterfa
                         lastMessage = xmtLocoNetList.removeFirst();
                         msg = xmtList.removeFirst();
                     }
-//log.info("-------------------Uhlenbrock IB-COM Loconet message to SEND: "+msg.toString());
+//log.info("-------------------Uhlenbrock IB-COM LocoNet message to SEND: "+msg.toString());
 
                     // input - now send
                     try {
@@ -300,7 +300,7 @@ public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterfa
                             log.warn("sendLocoNetMessage: no connection established");
                         }
                     } catch (java.io.IOException e) {
-                        log.warn("sendLocoNetMessage: IOException: " + e.toString());
+                        log.warn("sendLocoNetMessage: IOException: {}", e.toString());
                     }
                 } catch (NoSuchElementException e) {
                     // message queue was empty, wait for input
@@ -335,7 +335,7 @@ public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterfa
                 log.error("transmitLoop interrupted");
             }
         }
-        log.debug("Timeout in transmitWait, mCurrentState:" + mCurrentState);
+        log.debug("Timeout in transmitWait, mCurrentState: {}", mCurrentState);
     }
 
     volatile protected int mCurrentState;
@@ -358,7 +358,7 @@ public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterfa
             xmtHandler = new XmtHandler();
         }
         Thread xmtThread = new Thread(xmtHandler, "LocoNet Uhlenbrock transmit handler");
-        log.debug("Xmt thread starts at priority " + xmtpriority);
+        log.debug("Xmt thread starts at priority {}", xmtpriority);
         xmtThread.setDaemon(true);
         xmtThread.setPriority(Thread.MAX_PRIORITY - 1);
         xmtThread.start();

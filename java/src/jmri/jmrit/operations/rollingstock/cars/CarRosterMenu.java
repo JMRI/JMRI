@@ -1,14 +1,18 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
-import java.awt.Frame;
 import javax.swing.AbstractAction;
 import javax.swing.JMenu;
+import jmri.jmrit.operations.rollingstock.cars.tools.DeleteCarRosterAction;
+import jmri.jmrit.operations.rollingstock.cars.tools.ExportCarRosterAction;
+import jmri.jmrit.operations.rollingstock.cars.tools.ImportCarRosterAction;
+import jmri.jmrit.operations.rollingstock.cars.tools.PrintCarRosterAction;
+import jmri.jmrit.operations.rollingstock.cars.tools.ResetCarMovesAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Provides a context-specific menu for handling the Roster.
- * <P>
+ * <p>
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @author Dennis Miller Copyright (C) 2005
@@ -41,9 +45,9 @@ public class CarRosterMenu extends JMenu {
      *
      * @param pMenuName Name for the menu
      * @param pMenuType Select where the menu will be used, hence the right set
-     *                  of items to be enabled.
-     * @param carsTableFrame      The Component using this menu, used to ensure that
-     *                  dialog boxes will pop in the right place.
+     *            of items to be enabled.
+     * @param carsTableFrame The Component using this menu, used to ensure that
+     *            dialog boxes will pop in the right place.
      */
     public CarRosterMenu(String pMenuName, int pMenuType, CarsTableFrame carsTableFrame) {
         super(pMenuName);
@@ -61,13 +65,11 @@ public class CarRosterMenu extends JMenu {
                 Bundle.getMessage("MenuItemResetMoves"), carsTableFrame);
         resetMovesAction.setEnabled(false);
 
-        // Need a frame here, but are not passed one
-        Frame newFrame = new Frame();
         AbstractAction printAction = new PrintCarRosterAction(Bundle.getMessage("MenuItemPrint"),
-                newFrame, false, carsTableFrame);
+                false, carsTableFrame);
         printAction.setEnabled(false);
         AbstractAction previewAction = new PrintCarRosterAction(
-                Bundle.getMessage("MenuItemPreview"), newFrame, true, carsTableFrame);
+                Bundle.getMessage("MenuItemPreview"), true, carsTableFrame);
         previewAction.setEnabled(false);
         add(importAction);
         add(exportAction);

@@ -1,147 +1,151 @@
 <?xml version="1.0" encoding="utf-8"?>
-<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
-  <name>Speed Table</name>
-  <name xml:lang="ca">Taula de velocitat</name>
-  <name xml:lang="it">Tabella Velocità</name>
-  <name xml:lang="de">Geschwindigkeitskennlinie</name>
-  <column>
-      <grid gridx="0" gridy="NEXT">
-        <griditem gridwidth="REMAINDER">
-          <column>
-            <row>
-              <column>
-                <display item="Speed Table Definition" format="onradiobutton" layout="above" label="Select this button to use a Speed Table for Speed Control">
-                  <label xml:lang="it">Seleziona questo Pulsante per usare la Tabella Velocità per il controllo Velocità</label>
-                  <label xml:lang="ca">Selecciona aquest botó per fer servir taula de velocitats</label>
-                  <label xml:lang="de">Um diese Geschwindigkeitskennlinie zu benutzen, diesen Knopf markieren</label>
-                </display>
-                <label>
-                    <qualifier>
-                        <variableref>Speed Table Definition</variableref>
-                        <relation>exists</relation>
-                        <value>1</value>
-                    </qualifier>
-                  <text>            To turn off, use Basic Speed Control pane</text>
-                  <text xml:lang="de">Zum Ausschalten, die Lasche Einfache Geschwindigkeitseinstellung benutzen</text>
-                  <text xml:lang="it">            per disabilitare, Usa il pannello di controllo Basic</text>
-                  <text xml:lang="ca">Per anul·lar usa el panell Control Bàsic de Velocitat</text>
+<!-- Copyright (C) JMRI 2019 All rights reserved -->
 
-                </label>
-              </column>
-            </row>
-            <row>
-              <label>
-                <text> </text>
-              </label>
-            </row>
-            <row>
-              <label>
-                <text> </text>
-              </label>
-            </row>
-            <row>
-              <column>
-                <label>
-                  <text> </text>
-                </label>
-                <display item="Speed Table Selection" tooltip="Select manufacturer's speed table or user table">
-                  <tooltip xml:lang="it">Seleziona Tabella Velocità del Costruttore o Tabella Personalizzata</tooltip>
-                  <tooltip xml:lang="ca">Selecciona taula de velocitats del fabricant o de l'usuari</tooltip>
-                  <tooltip xml:lang="de">Die Geschwindigkeitskennlinie des Herstellers oder die des Benutzers verwenden</tooltip>
-                </display>
-              </column>
-            </row>
-            <row>
-              <column>
-                <display item="Speed Table" layout="above"/>
-                <label>
-                  <text> </text>
-                </label>
-              </column>
-            </row>
-          </column>
-        </griditem>
-        <group include="ESU LokSound V4.0,ESU LokSound Select,ESU LokPilot V4.0">
-            <griditem weightx="0" anchor="LINE_START">
-              <display item="Vstart" tooltip="Sets the starting voltage at throttle speed step 1">
-                <tooltip xml:lang="it">Imposta Tensione Motore iniziale a Velocità 1</tooltip>
-                <tooltip xml:lang="ca">Estableix el voltatge inicial al pas 1</tooltip>
-                <tooltip xml:lang="de">Geschwindigkeit bei niedrigster Fahrstufe einstellen</tooltip>
-              </display>
+<pane xmlns:xi="http://www.w3.org/2001/XInclude"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+    <name>Speed Table</name>
+    <name xml:lang="ca">Taula de velocitat</name>
+    <name xml:lang="it">Tabella Velocità</name>
+    <name xml:lang="de">Geschwindigkeitskennlinie</name>
+    <column>
+        <grid gridx="0" gridy="NEXT">
+            <griditem gridwidth="REMAINDER">
+                <column>
+                    <row>
+                        <column>
+                            <display item="Speed Table Definition" format="onradiobutton" layout="above" label="Select this button to use a Speed Table for Speed Control">
+                                <label xml:lang="it">Seleziona questo Pulsante per usare la Tabella Velocità per il controllo Velocità</label>
+                                <label xml:lang="ca">Selecciona aquest botó per fer servir taula de velocitats</label>
+                                <label xml:lang="de">Um diese Geschwindigkeitskennlinie zu benutzen, diesen Knopf markieren</label>
+                            </display>
+                            <label>
+                                <qualifier>
+                                    <variableref>Speed Table Definition</variableref>
+                                    <relation>exists</relation>
+                                    <value>1</value>
+                                </qualifier>
+                                <text>            To turn off, use Basic Speed Control pane</text>
+                                <text xml:lang="de">Zum Ausschalten, die Lasche Einfache Geschwindigkeitseinstellung benutzen</text>
+                                <text xml:lang="it">            per disabilitare, Usa il pannello di controllo Basic</text>
+                                <text xml:lang="ca">Per anul·lar usa el panell Control Bàsic de Velocitat</text>
+
+                            </label>
+                        </column>
+                    </row>
+                    <row>
+                        <label>
+                            <text> </text>
+                        </label>
+                    </row>
+                    <row>
+                        <label>
+                            <text> </text>
+                        </label>
+                    </row>
+                    <row>
+                        <column>
+                            <label>
+                                <text> </text>
+                            </label>
+                            <display item="Speed Table Selection" tooltip="Select manufacturer's speed table or user table">
+                                <tooltip xml:lang="it">Seleziona Tabella Velocità del Costruttore o Tabella Personalizzata</tooltip>
+                                <tooltip xml:lang="ca">Selecciona taula de velocitats del fabricant o de l'usuari</tooltip>
+                                <tooltip xml:lang="de">Die Geschwindigkeitskennlinie des Herstellers oder die des Benutzers verwenden</tooltip>
+                            </display>
+                        </column>
+                    </row>
+                    <row>
+                        <column>
+                            <display item="Speed Table" layout="above"/>
+                            <label>
+                                <text> </text>
+                            </label>
+                        </column>
+                    </row>
+                </column>
             </griditem>
-            <griditem gridx="NEXT" gridy="CURRENT" weightx="1" anchor="CENTER">
-              <label>
-                <text>&lt;html&gt;
+            <group include="ESU LokSound V4.0,ESU LokSound Select,ESU LokPilot V4.0,ESU LokSound 5,Essential Sound Unit">
+                <griditem weightx="0" anchor="LINE_START">
+                    <display item="Vstart" tooltip="Sets the starting voltage at throttle speed step 1">
+                        <tooltip xml:lang="it">Imposta Tensione Motore iniziale a Velocità 1</tooltip>
+                        <tooltip xml:lang="ca">Estableix el voltatge inicial al pas 1</tooltip>
+                        <tooltip xml:lang="de">Geschwindigkeit bei niedrigster Fahrstufe einstellen</tooltip>
+                    </display>
+                </griditem>
+                <griditem gridx="NEXT" gridy="CURRENT" weightx="1" anchor="CENTER">
+                    <label>
+                        <text>&lt;html&gt;
                    &lt;h2&gt;&lt;strong&gt;Special Note: Vstart &amp; Vhigh are &lt;em&gt;always&lt;/em&gt; active in these decoders.&lt;/h2&gt;
-                   All the values in the table above are scaled to fit between Vstart and Vhigh.&lt;br/&gt;
-                   The end-points cannot be altered. Keep a smooth curve beween them.&lt;br/&gt;
+                            All the values in the table above are scaled to fit between Vstart and Vhigh.&lt;br/&gt;
+                            The end-points cannot be altered. Keep a smooth curve beween them.&lt;br/&gt;
                    &lt;br/&gt;
                    &lt;strong&gt;&lt;em&gt;If speed matching locos, set Vstart &amp; Vhigh before setting any table mid-points.&lt;/em&gt;
                 &lt;/html&gt;</text>
-                <text xml:lang="de">&lt;html&gt;
+                        <text xml:lang="de">&lt;html&gt;
                    &lt;h2&gt;&lt;strong&gt;Wichtiger Hinweis: Vstart &amp; Vhigh sind in diesen Decodern &lt;em&gt;immer&lt;/em&gt; aktiv.&lt;/h2&gt;
-                   Alle Werte in der oberen Tabelle sind zwischen Vstart und Vhigh skaliert.&lt;br/&gt;
-                   Der Endpunkt kann nicht verändert werden. Gestalten Sie eine gleichmässige Kurve zwischen ihnen.&lt;br/&gt;
+                            Alle Werte in der oberen Tabelle sind zwischen Vstart und Vhigh skaliert.&lt;br/&gt;
+                            Der Endpunkt kann nicht verändert werden. Gestalten Sie eine gleichmässige Kurve zwischen ihnen.&lt;br/&gt;
                    &lt;br/&gt;
                    &lt;strong&gt;&lt;em&gt;Wenn Loks zu schnell fahren setzen Sie zuerst Vstart &amp; Vhigh bevor Sie Werte in der Tabelle ändern&lt;/em&gt;
                 &lt;/html&gt;</text>
-                <text xml:lang="ca">&lt;html&gt;
+                        <text xml:lang="ca">&lt;html&gt;
                    &lt;h2&gt;&lt;strong&gt;Nota: El voltatge inicial &amp; Voltatge alt són &lt;em&gt;sempre&lt;/em&gt; actius en aquest decòder.&lt;/h2&gt;
-                   Tots els valors són extrapolats enter VInicial i VAlt.&lt;br/&gt;
-				   Els punts finals no es poden modificar. Manté una corba suau entre ells.&lt;br/&gt;
+                            Tots els valors són extrapolats enter VInicial i VAlt.&lt;br/&gt;
+                            Els punts finals no es poden modificar. Manté una corba suau entre ells.&lt;br/&gt;
                    &lt;br/&gt;
                    &lt;strong&gt;&lt;em&gt;If speed matching locos, set Vstart &amp; Vhigh before setting any table mid-points.&lt;/em&gt;
                 &lt;/html&gt;</text>
-              </label>
+                    </label>
+                </griditem>
+                <griditem gridx="NEXT" gridy="CURRENT" weightx="0" anchor="LINE_END">
+                    <display item="Vhigh" tooltip="Sets the maximum voltage at full throttle">
+                        <tooltip xml:lang="it">Imposta Tensione Motore a Velocità Massima</tooltip>
+                        <tooltip xml:lang="ca">Estableix el voltatge amb el regulador al m‡xim</tooltip>
+                        <tooltip xml:lang="de">Geschwindigkeit bei höchster Fahrstufe einstellen</tooltip>
+                    </display>
+                </griditem>
+                <griditem gridwidth="REMAINDER">
+                    <label>
+                        <text> </text>
+                    </label>
+                </griditem>
+            </group>
+            <griditem gridwidth="REMAINDER">
+                <row>
+                    <column>
+                        <label>
+                            <text> </text>
+                        </label>
+                        <display item="Forward Trim" tooltip="Fine tune the forward voltage levels">
+                            <tooltip xml:lang="it">Impostazione Fine della tensione motore in Avanti</tooltip>
+                            <tooltip xml:lang="ca">Ajustament fi de voltatge marxa enreda</tooltip>
+                            <tooltip xml:lang="de">Feineinstellung der Geschwindigkeitskennlinie "Vorwärts"</tooltip>
+                        </display>
+                        <label>
+                            <text> </text>
+                        </label>
+                    </column>
+                    <column>
+                        <label>
+                            <text>     </text>
+                        </label>
+                    </column>
+                    <column>
+                        <label>
+                            <text> </text>
+                        </label>
+                        <display item="Reverse Trim" tooltip="Fine tune the reverse voltage levels">
+                            <tooltip xml:lang="it">Impostazione Fine della tensione motore in Indietro</tooltip>
+                            <tooltip xml:lang="ca">Ajustament fi de voltatge marxa enreda</tooltip>
+                            <tooltip xml:lang="de">Feineinstellung der Geschwindigkeitskennlinie "Rückwärts"</tooltip>
+                        </display>
+                        <label>
+                            <text> </text>
+                        </label>
+                    </column>
+                </row>
             </griditem>
-            <griditem gridx="NEXT" gridy="CURRENT" weightx="0" anchor="LINE_END">
-              <display item="Vhigh" tooltip="Sets the maximum voltage at full throttle">
-                <tooltip xml:lang="it">Imposta Tensione Motore a Velocità Massima</tooltip>
-                <tooltip xml:lang="ca">Estableix el voltatge amb el regulador al m‡xim</tooltip>
-                <tooltip xml:lang="de">Geschwindigkeit bei höchster Fahrstufe einstellen</tooltip>
-              </display>
-            </griditem>
-        <griditem gridwidth="REMAINDER">
-          <label>
-              <text> </text>
-          </label>
-        </griditem>
-        </group>
-        <griditem gridwidth="REMAINDER">
-          <row>
-            <column>
-              <label>
-                <text> </text>
-              </label>
-              <display item="Forward Trim" tooltip="Fine tune the forward voltage levels">
-                <tooltip xml:lang="it">Impostazione Fine della tensione motore in Avanti</tooltip>
-                <tooltip xml:lang="ca">Ajustament fi de voltatge marxa enreda</tooltip>
-                <tooltip xml:lang="de">Feineinstellung der Geschwindigkeitskennlinie "Vorwärts"</tooltip>
-              </display>
-              <label>
-                <text> </text>
-              </label>
-            </column>
-            <column>
-              <label>
-                <text>     </text>
-              </label>
-            </column>
-            <column>
-              <label>
-                <text> </text>
-              </label>
-              <display item="Reverse Trim" tooltip="Fine tune the reverse voltage levels">
-                <tooltip xml:lang="it">Impostazione Fine della tensione motore in Indietro</tooltip>
-                <tooltip xml:lang="ca">Ajustament fi de voltatge marxa enreda</tooltip>
-                <tooltip xml:lang="de">Feineinstellung der Geschwindigkeitskennlinie "Rückwärts"</tooltip>
-              </display>
-              <label>
-                <text> </text>
-              </label>
-            </column>
-          </row>
-        </griditem>
-      </grid>
-  </column>
+        </grid>
+    </column>
 </pane>

@@ -38,6 +38,9 @@ public class Log4JTreePaneTest extends jmri.util.swing.JmriPanelTest {
     @Override
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.resetProfileManager();
+
         panel = new Log4JTreePane();
         title=Bundle.getMessage("MenuItemLogTreeAction");
         helpTarget="package.jmri.jmrit.log.Log4JTreePane";
@@ -46,6 +49,10 @@ public class Log4JTreePaneTest extends jmri.util.swing.JmriPanelTest {
     @After
     @Override
     public void tearDown() {
+        panel = null;
+        title = null;
+        helpTarget = null;
+        
         JUnitUtil.tearDown();
     }
 

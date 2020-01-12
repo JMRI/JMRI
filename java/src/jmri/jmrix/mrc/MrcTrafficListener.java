@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * MrcTrafficListener provides the call-back interface for notification when a
  * new Mrc message arrives from the layout.
- * <P>
+ * <p>
  * In contrast to MrcListener this interface defines separate methods to notify
  * transmitted or received mrc messages. Further, the actual time stamp when a
  * message was passed to the hardware interface or was first seen is provided.

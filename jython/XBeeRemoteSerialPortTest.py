@@ -29,7 +29,7 @@ class XBeeRemoteSerialPortTest(jmri.jmrit.automat.AbstractAutomaton) :
         self.cm = jmri.InstanceManager.getDefault(jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo)
         self.tc = self.cm.getTrafficController()
         self.Xbee = self.tc.getNodeFromAddress(3) # change the address to that of a suitable node.
-        self.xbeestream = jmri.jmrix.ieee802154.xbee.XBeeIOStream(self.Xbee,self.tc)
+        self.xbeestream = self.Xbee.getIOStream() 
 
         # get I/O connections for later
         self.inputStream = self.xbeestream.getInputStream()

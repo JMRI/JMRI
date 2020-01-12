@@ -21,8 +21,14 @@
     <revision>
         <revnumber>1</revnumber>
         <date>2016-11-19</date>
-        <authorinitials>PS</authorinitials>
+        <authorinitials>PŠ</authorinitials>
         <revremark>Initial version</revremark>
+    </revision>    
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2018-09-22</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Panel indicators</revremark>
     </revision>    
   </revhistory>
 
@@ -35,31 +41,43 @@
     <appearance>
       <aspectname>Stůj</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/200_stuj_3vl.gif</imagelink>
+      <imagelink type="AŽD b">../../../resources/icons/smallschematics/aspects/CSD/AZD/27_w.png</imagelink>
+      <imagelink type="ESP b">../../../resources/icons/smallschematics/aspects/CSD/ESP/27_w.png</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Stůj s modrou</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/206_stuj2_3vl.gif</imagelink>
+      <imagelink type="AŽD b">../../../resources/icons/smallschematics/aspects/CSD/AZD/27_w.png</imagelink>
+      <imagelink type="ESP b">../../../resources/icons/smallschematics/aspects/CSD/ESP/27_w.png</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Odjezdové návěstidlo dovoluje jízdu</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/205_ondj_3vl.gif</imagelink>
+      <imagelink type="AŽD b">../../../resources/icons/smallschematics/aspects/CSD/AZD/28_w.png</imagelink>
+      <imagelink type="ESP b">../../../resources/icons/smallschematics/aspects/CSD/ESP/28_w.png</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Posun zakázán</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/227_pz_3vl.gif</imagelink>
+      <imagelink type="AŽD b">../../../resources/icons/smallschematics/aspects/CSD/AZD/28_w.png</imagelink>
+      <imagelink type="ESP b">../../../resources/icons/smallschematics/aspects/CSD/ESP/28_w.png</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Posun dovolen</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/228_pd_3vl.gif</imagelink>
+      <imagelink type="AŽD b">../../../resources/icons/smallschematics/aspects/CSD/AZD/28_w.png</imagelink>
+      <imagelink type="ESP b">../../../resources/icons/smallschematics/aspects/CSD/ESP/28_w.png</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Posun dovolen - nezabezpečený</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/229_npd_3vl.gif</imagelink>
+      <imagelink type="AŽD b">../../../resources/icons/smallschematics/aspects/CSD/AZD/28_w.png</imagelink>
+      <imagelink type="ESP b">../../../resources/icons/smallschematics/aspects/CSD/ESP/28_w.png</imagelink>
     </appearance>
 
   </appearances>

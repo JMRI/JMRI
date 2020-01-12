@@ -2,8 +2,6 @@ package jmri.jmrix.loconet.locoio;
 
 import java.util.Vector;
 import jmri.jmrix.loconet.LnConstants;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Manage the set of valid modes for a particular LocoIO port,
@@ -194,8 +192,8 @@ public class LocoIOModeList {
      *
      * @param opcode coded value for message type
      * @param sv first SV value, ignored
-     * @param v1 second value (high bit)
-     * @param v1 second value (high bit)
+     * @param v1 second value (upper bits)
+     * @param v2 second value (lower bits)
      * @return address (int) of the port
      */
     protected int valuesToAddress(int opcode, int sv, int v1, int v2) {

@@ -6,7 +6,7 @@ import jmri.util.StringUtil;
 
 /**
  * Contains the data payload of a serial packet.
- * <P>
+ * <p>
  * The transmission protocol can come in one of several forms:
  * <ul>
  * <li>If the interlocked parameter is false (default), the packet is just sent.
@@ -18,7 +18,7 @@ import jmri.util.StringUtil;
  *
  * @author Bob Jacobsen Copyright (C) 2001,2003, 2006, 2007, 2008, 2009
  * @author Ken Cameron Copyright (C) 2010
-  */
+ */
 public class SpecificMessage extends SerialMessage {
     // is this logically an abstract class?
 
@@ -287,5 +287,3 @@ public class SpecificMessage extends SerialMessage {
     }
 
 }
-
-

@@ -1,11 +1,7 @@
 package apps;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  *
@@ -14,7 +10,6 @@ import org.junit.Test;
 public class ManagerDefaultsConfigPaneTest {
 
     @Test
-    @Ignore("needs more set-up")
     public void testCTor() {
         ManagerDefaultsConfigPane t = new ManagerDefaultsConfigPane();
         Assert.assertNotNull("exists",t);
@@ -24,6 +19,9 @@ public class ManagerDefaultsConfigPaneTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetPreferencesProviders();
+        JUnitUtil.initConfigureManager();
     }
 
     @After

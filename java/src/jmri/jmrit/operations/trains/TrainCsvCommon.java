@@ -25,8 +25,8 @@ public class TrainCsvCommon extends TrainCommon {
     protected final static String DEL = ","; // delimiter // NOI18N
     protected final static String ESC = "\""; // escape // NOI18N
 
-    protected final static String HEADER = Bundle.getMessage("csvOperator") + DEL + Bundle.getMessage("csvDescription")
-            + DEL + Bundle.getMessage("csvParameters");
+    protected final static String HEADER = Bundle.getMessage(
+            "csvOperator") + DEL + Bundle.getMessage("csvDescription") + DEL + Bundle.getMessage("csvParameters");
 
     protected final static String AH = "AH" + DEL + Bundle.getMessage("csvAddHelpers"); // NOI18N
     protected final static String AT = "AT" + DEL + Bundle.getMessage("csvArrivalTime") + DEL; // NOI18N
@@ -146,25 +146,83 @@ public class TrainCsvCommon extends TrainCommon {
         }
         String carFinalDestinationName = car.getFinalDestinationName();
         if (carFinalDestinationName.contains(DEL)) {
-            log.debug("Car (" + car.toString() + ") has delimiter in final destination field: "
-                    + carFinalDestinationName);
+            log.debug("Car (" +
+                    car.toString() +
+                    ") has delimiter in final destination field: " +
+                    carFinalDestinationName);
             carFinalDestinationName = ESC + carFinalDestinationName + ESC;
         }
         String carFinalDestinationTrackName = car.getFinalDestinationTrackName();
         if (carFinalDestinationTrackName.contains(DEL)) {
-            log.debug("Car (" + car.toString() + ") has delimiter in final destination track field: "
-                    + carFinalDestinationTrackName);
+            log.debug("Car (" +
+                    car.toString() +
+                    ") has delimiter in final destination track field: " +
+                    carFinalDestinationTrackName);
             carFinalDestinationTrackName = ESC + carFinalDestinationTrackName + ESC;
         }
 
-        addLine(fileOut, operation + DEL + carRoad + DEL + car.getNumber() + DEL + carType + DEL + car.getLength()
-                + DEL + carLoad + DEL + carColor + DEL + carLocationName + DEL + carTrackName + DEL + carDestName + DEL
-                + carDestTrackName + DEL + carOwner + DEL + carKernelName + DEL + ESC + car.getComment() + ESC + DEL
-                + ESC + car.getPickupComment() + ESC + DEL + ESC + car.getDropComment() + ESC + DEL
-                + (car.isCaboose() ? "C" : "") + DEL + (car.hasFred() ? "F" : "") + DEL
-                + (car.isHazardous() ? "H" : "") + DEL + ESC + car.getRfid() + ESC + DEL + carRWEDestName + DEL
-                + carRWETrackName + DEL + (car.isUtility() ? "U" : "") + DEL + count + DEL + carFinalDestinationName
-                + DEL + carFinalDestinationTrackName);
+        addLine(fileOut,
+                operation +
+                        DEL +
+                        carRoad +
+                        DEL +
+                        car.getNumber() +
+                        DEL +
+                        carType +
+                        DEL +
+                        car.getLength() +
+                        DEL +
+                        carLoad +
+                        DEL +
+                        carColor +
+                        DEL +
+                        carLocationName +
+                        DEL +
+                        carTrackName +
+                        DEL +
+                        carDestName +
+                        DEL +
+                        carDestTrackName +
+                        DEL +
+                        carOwner +
+                        DEL +
+                        carKernelName +
+                        DEL +
+                        ESC +
+                        car.getComment() +
+                        ESC +
+                        DEL +
+                        ESC +
+                        car.getPickupComment() +
+                        ESC +
+                        DEL +
+                        ESC +
+                        car.getDropComment() +
+                        ESC +
+                        DEL +
+                        (car.isCaboose() ? "C" : "") +
+                        DEL +
+                        (car.hasFred() ? "F" : "") +
+                        DEL +
+                        (car.isHazardous() ? "H" : "") +
+                        DEL +
+                        ESC +
+                        car.getRfid() +
+                        ESC +
+                        DEL +
+                        carRWEDestName +
+                        DEL +
+                        carRWETrackName +
+                        DEL +
+                        (car.isUtility() ? "U" : "") +
+                        DEL +
+                        count +
+                        DEL +
+                        carFinalDestinationName +
+                        DEL +
+                        carFinalDestinationTrackName +
+                        DEL +
+                        car.getLoadType());
     }
 
     protected void fileOutCsvEngine(PrintWriter fileOut, Engine engine, String operation) {
@@ -201,8 +259,10 @@ public class TrainCsvCommon extends TrainCommon {
         }
         String engineDestTrackName = engine.getDestinationTrackName();
         if (engineDestTrackName.contains(DEL)) {
-            log.debug("Engine (" + engine.toString() + ") has delimiter in destination track field: "
-                    + engineDestTrackName);
+            log.debug("Engine (" +
+                    engine.toString() +
+                    ") has delimiter in destination track field: " +
+                    engineDestTrackName);
             engineDestTrackName = ESC + engine.getDestinationTrackName() + ESC;
         }
         String engineOwner = engine.getOwner();
@@ -216,14 +276,45 @@ public class TrainCsvCommon extends TrainCommon {
             engineConsistName = ESC + engineConsistName + ESC;
         }
         String engineIsLead = "";
-        if (engine.getConsist() != null && engine.getConsist().isLead(engine)) {
+        if (engine.isLead()) {
             engineIsLead = "Lead loco"; // NOI18N
         }
-        addLine(fileOut, operation + DEL + engineRoad + DEL + engine.getNumber() + DEL + engineModel + DEL
-                + engine.getLength() + DEL + engineType + DEL + engine.getHp() + DEL + engineLocationName + DEL
-                + engineTrackName + DEL + engineDestName + DEL + engineDestTrackName + DEL + engineOwner + DEL
-                + engineConsistName + DEL + engineIsLead + DEL + ESC + engine.getComment() + ESC + DEL + ESC
-                + engine.getRfid() + ESC);
+        addLine(fileOut,
+                operation +
+                        DEL +
+                        engineRoad +
+                        DEL +
+                        engine.getNumber() +
+                        DEL +
+                        engineModel +
+                        DEL +
+                        engine.getLength() +
+                        DEL +
+                        engineType +
+                        DEL +
+                        engine.getHp() +
+                        DEL +
+                        engineLocationName +
+                        DEL +
+                        engineTrackName +
+                        DEL +
+                        engineDestName +
+                        DEL +
+                        engineDestTrackName +
+                        DEL +
+                        engineOwner +
+                        DEL +
+                        engineConsistName +
+                        DEL +
+                        engineIsLead +
+                        DEL +
+                        ESC +
+                        engine.getComment() +
+                        ESC +
+                        DEL +
+                        ESC +
+                        engine.getRfid() +
+                        ESC);
     }
 
     protected void checkForEngineOrCabooseChange(PrintWriter fileOut, Train train, RouteLocation rl) {
@@ -249,8 +340,8 @@ public class TrainCsvCommon extends TrainCommon {
         if ((legOptions & Train.HELPER_ENGINES) == Train.HELPER_ENGINES) {
             addLine(fileOut, AH);
         }
-        if ((legOptions & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE
-                || (legOptions & Train.ADD_CABOOSE) == Train.ADD_CABOOSE) {
+        if ((legOptions & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE ||
+                (legOptions & Train.ADD_CABOOSE) == Train.ADD_CABOOSE) {
             addLine(fileOut, CC);
         }
         if ((legOptions & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES) {
@@ -270,8 +361,9 @@ public class TrainCsvCommon extends TrainCommon {
                     if (car.getRouteLocation() == rl && car.getTrack() != null && car.getTrack() == track) {
                         pickup = true;
                     }
-                    if (car.getRouteDestination() == rl && car.getDestinationTrack() != null
-                            && car.getDestinationTrack() == track) {
+                    if (car.getRouteDestination() == rl &&
+                            car.getDestinationTrack() != null &&
+                            car.getDestinationTrack() == track) {
                         setout = true;
                     }
                 }
@@ -280,17 +372,17 @@ public class TrainCsvCommon extends TrainCommon {
                 if (pickup && setout && !track.getCommentBoth().equals(Track.NONE)) {
                     String[] comments = track.getCommentBoth().split(NEW_LINE);
                     for (String comment : comments) {
-                        addLine(fileOut, TKCB + comment);
+                        addLine(fileOut, TKCB + ESC + comment + ESC);
                     }
                 } else if (pickup && !setout && !track.getCommentPickup().equals(Track.NONE)) {
                     String[] comments = track.getCommentPickup().split(NEW_LINE);
                     for (String comment : comments) {
-                        addLine(fileOut, TKCP + comment);
+                        addLine(fileOut, TKCP + ESC + comment + ESC);
                     }
                 } else if (!pickup && setout && !track.getCommentSetout().equals(Track.NONE)) {
                     String[] comments = track.getCommentSetout().split(NEW_LINE);
                     for (String comment : comments) {
-                        addLine(fileOut, TKCS + comment);
+                        addLine(fileOut, TKCS + ESC + comment + ESC);
                     }
                 }
             }

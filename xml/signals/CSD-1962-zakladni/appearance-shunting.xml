@@ -21,8 +21,14 @@
     <revision>
         <revnumber>1</revnumber>
         <date>2016-07-02</date>
-        <authorinitials>PS</authorinitials>
+        <authorinitials>PŠ</authorinitials>
         <revremark>Initial version</revremark>
+    </revision>    
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2018-09-21</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Panel indicators</revremark>
     </revision>    
   </revhistory>
 
@@ -35,11 +41,15 @@
     <appearance>
       <aspectname>Posun zakázán</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/027_pz_sn.gif</imagelink>
+      <imagelink type="AŽD b">../../../resources/icons/smallschematics/aspects/CSD/AZD/27_w.png</imagelink>
+      <imagelink type="ESP b">../../../resources/icons/smallschematics/aspects/CSD/ESP/27_w.png</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Posun dovolen</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/028_pd_sn.gif</imagelink>
+      <imagelink type="AŽD b">../../../resources/icons/smallschematics/aspects/CSD/AZD/28_w.png</imagelink>
+      <imagelink type="ESP b">../../../resources/icons/smallschematics/aspects/CSD/ESP/28_w.png</imagelink>
     </appearance>
 
   </appearances>

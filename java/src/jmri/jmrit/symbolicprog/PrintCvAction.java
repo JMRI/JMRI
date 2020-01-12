@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Action to print the information in the CV table.
- * <P>
+ * <p>
  * This uses the older style printing, for compatibility with Java 1.1.8 in
  * Macintosh MRJ
  *

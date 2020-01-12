@@ -31,16 +31,15 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import jmri.UserPreferencesManager;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.TextAreaFIFO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Class to direct standard output and standard error to a JTextArea. This
- * allows for easier clipboard operations etc.
+ * Class to direct standard output and standard error to a ( JTextArea ) TextAreaFIFO . 
+ * This allows for easier clipboard operations etc.
  * <hr>
  * This file is part of JMRI.
  * <p>
@@ -62,7 +61,7 @@ public final class SystemConsole extends JTextArea {
     private static final int STD_ERR = 1;
     private static final int STD_OUT = 2;
 
-    private final JTextArea console;
+    private final TextAreaFIFO console;
 
     private final PrintStream originalOut;
     private final PrintStream originalErr;
@@ -108,6 +107,8 @@ public final class SystemConsole extends JTextArea {
     private final String alwaysScrollCheck = this.getClass().getName() + ".alwaysScroll"; //NOI18N
     private final String alwaysOnTopCheck = this.getClass().getName() + ".alwaysOnTop";   //NOI18N
 
+    final public int MAX_CONSOLE_LINES = 5000;  // public, not static so can be modified via a script
+
     /**
      * Initialise the system console ensuring both System.out and System.err
      * streams are re-directed to the consoles JTextArea
@@ -132,7 +133,7 @@ public final class SystemConsole extends JTextArea {
         originalErr = System.err;
 
         // Create the console text area
-        console = new JTextArea();
+        console = new TextAreaFIFO(MAX_CONSOLE_LINES);
 
         // Setup the console text area
         console.setRows(20);
@@ -213,8 +214,18 @@ public final class SystemConsole extends JTextArea {
         JScrollPane scroll = new JScrollPane(console);
         frame.add(scroll, BorderLayout.CENTER);
 
-        // Add button to allow copy to clipboard
+
         JPanel p = new JPanel();
+        
+        // Add button to clear display
+        JButton clear = new JButton(Bundle.getMessage("ButtonClear"));
+        clear.addActionListener((ActionEvent event) -> {
+            console.setText("");
+        });
+        clear.setToolTipText(Bundle.getMessage("ButtonClearTip"));
+        p.add(clear);        
+        
+        // Add button to allow copy to clipboard        
         JButton copy = new JButton(Bundle.getMessage("ButtonCopyClip"));
         copy.addActionListener((ActionEvent event) -> {
             StringSelection text = new StringSelection(console.getText());
@@ -226,6 +237,7 @@ public final class SystemConsole extends JTextArea {
         JButton close = new JButton(Bundle.getMessage("ButtonClose"));
         close.addActionListener((ActionEvent event) -> {
             frame.setVisible(false);
+            console.dispose();
             frame.dispose();
         });
         p.add(close);
@@ -240,8 +252,9 @@ public final class SystemConsole extends JTextArea {
         // Use the inverted SimplePreferenceState to default as enabled
         p.add(autoScroll = new JCheckBox(Bundle.getMessage("CheckBoxAutoScroll"),
                 !pref.getSimplePreferenceState(alwaysScrollCheck)));
+        console.setAutoScroll(autoScroll.isSelected());
         autoScroll.addActionListener((ActionEvent event) -> {
-            doAutoScroll(console, autoScroll.isSelected());
+            console.setAutoScroll(autoScroll.isSelected());
             pref.setSimplePreferenceState(alwaysScrollCheck, !autoScroll.isSelected());
         });
 
@@ -324,30 +337,6 @@ public final class SystemConsole extends JTextArea {
         console.addMouseListener(popupListener);
         frame.addMouseListener(popupListener);
 
-        // Add document listener to scroll to end when modified if required
-        console.getDocument().addDocumentListener(new DocumentListener() {
-
-            // References to the JTextArea and JCheckBox
-            // of this instantiation
-            JTextArea ta = console;
-            JCheckBox chk = autoScroll;
-
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                doAutoScroll(ta, chk.isSelected());
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                doAutoScroll(ta, chk.isSelected());
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                doAutoScroll(ta, chk.isSelected());
-            }
-        });
-
         // Add the button panel to the frame & then arrange everything
         frame.add(p, BorderLayout.SOUTH);
         frame.pack();
@@ -371,26 +360,6 @@ public final class SystemConsole extends JTextArea {
         // As append method is thread safe, we don't need to run this on
         // the Swing dispatch thread
         console.append(text);
-        
-        // but we do have to run this on the Swing thread
-        jmri.util.ThreadingUtil.runOnGUIEventually( ()->{ truncateTextArea(); } );
-    }
-
-    /**
-     * Method to position caret at end of JTextArea ta when scroll true.
-     *
-     * @param ta     Reference to JTextArea
-     * @param scroll True to move to end
-     */
-    private void doAutoScroll(final JTextArea ta, final boolean scroll) {
-        SwingUtilities.invokeLater(() -> {
-            int len = ta.getText().length();
-            if (scroll) {
-                ta.setCaretPosition(len);
-            } else if (ta.getCaretPosition() == len && len > 0) {
-                ta.setCaretPosition(len - 1);
-            }
-        });
     }
 
     /**
@@ -430,20 +399,6 @@ public final class SystemConsole extends JTextArea {
         System.setErr(this.getErrorStream());
     }
 
-    final public int MAX_CONSOLE_LINES = 5000;  // public, not static so can be modified via a script
-    public void truncateTextArea() {
-        int numLinesToRemove = console.getLineCount() -1 - MAX_CONSOLE_LINES; // There's a blank at the end
-        if(numLinesToRemove > 0) {
-            try {
-                int posOfLastLineToRemove = console.getLineEndOffset(numLinesToRemove - 1);
-                console.replaceRange("",0,posOfLastLineToRemove);
-            }
-            catch (javax.swing.text.BadLocationException ex) {
-                log.error("trouble truncating SystemConsole window", ex);
-            }
-        }
-    }
-    
     /**
      * Set the console wrapping style to one of the following:
      *

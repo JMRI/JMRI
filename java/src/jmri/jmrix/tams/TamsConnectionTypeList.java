@@ -5,7 +5,7 @@ import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Returns a list of valid ESU Tams Connection Types
- * <P>
+ *
  * @author Kevin Dickerson Copyright (C) 2012
  *
  */

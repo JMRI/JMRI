@@ -111,7 +111,6 @@ public class RosterToEcos implements EcosListener {
         String[] lines = msg.split("\n");
         if (m.getResultCode() == 0) {
             if (lines[0].startsWith("<REPLY create(10, addr")) {
-                //System.out.println(msg);
                 for (int i = 1; i < lines.length - 1; i++) {
                     if (lines[i].contains("10 id[")) {
 

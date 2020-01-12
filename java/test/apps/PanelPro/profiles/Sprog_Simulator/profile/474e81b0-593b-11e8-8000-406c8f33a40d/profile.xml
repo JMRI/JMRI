@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<auxiliary-configuration xmlns="http://www.netbeans.org/ns/auxiliary-configuration/1">
+    <connections xmlns="http://jmri.org/xml/schema/auxiliary-configuration/connections-2-9-6.xsd">
+        <connection xmlns="" class="jmri.jmrix.sprog.simulator.configurexml.ConnectionConfigXml" disabled="no" manufacturer="SPROG DCC" port="(none selected)" speed="" systemPrefix="S" userName="SPROG Simulator">
+            <options>
+                <option>
+                    <name>OperatingMode</name>
+                    <value>SPROG Programmer</value>
+                </option>
+            </options>
+        </connection>
+    </connections>
+    <startup xmlns="http://jmri.org/xml/schema/auxiliary-configuration/startup-4-3-5.xsd"/>
+</auxiliary-configuration>

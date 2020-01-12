@@ -105,7 +105,10 @@ public class SourceTest {
     @BeforeClass
     static public void setUp() throws Exception {
         JUnitUtil.setUp();
+
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        jmri.util.JUnitUtil.resetProfileManager();
+
         tools = new EntryExitTestTools();
         panels = EntryExitTestTools.getPanels();
         Assert.assertEquals("Get LE panels", 2, panels.size());  // NOI18N

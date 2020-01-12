@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 /**
  * TreeModel used by CatalogPanel to create a tree of resources. This model is
  * for trees that can be permanently stored to and reloaded from an XML file.
- * <P>
+ * <p>
  * Source of the tree content is an XML file.
  *
  * @author Pete Cressman Copyright 2009

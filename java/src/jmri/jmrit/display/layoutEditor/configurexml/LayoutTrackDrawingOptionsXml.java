@@ -1,12 +1,11 @@
 package jmri.jmrit.display.layoutEditor.configurexml;
 
 import java.awt.Color;
+import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import jmri.configurexml.AbstractXmlAdapter;
-import jmri.jmrit.display.layoutEditor.LayoutEditor;
-import jmri.jmrit.display.layoutEditor.LayoutTrackDrawingOptions;
+import jmri.jmrit.display.layoutEditor.*;
 import jmri.util.ColorUtil;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -126,7 +125,7 @@ public class LayoutTrackDrawingOptionsXml extends AbstractXmlAdapter {
     }	// load
 
     @CheckReturnValue
-    private Color getElementColor(@Nonnull Element el, @Nonnull String child, @Nullable Color defVal) {
+    private Color getElementColor(@Nonnull Element el, @Nonnull String child, @CheckForNull Color defVal) {
         Element c = el.getChild(child);
         if (c != null) {
             String val = c.getText();

@@ -87,7 +87,6 @@ public class LoadXmlThrottlesLayoutAction extends AbstractAction {
      *
      * @param f The XML file containing throttles.
      */
-    @SuppressWarnings("unchecked")
     public boolean loadThrottlesLayout(java.io.File f) throws java.io.IOException {
         try {
             ThrottlePrefs prefs = new ThrottlePrefs();

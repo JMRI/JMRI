@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Action to print a summary of a train
- * <P>
+ * <p>
  * This uses the older style printing, for compatibility with Java 1.1.8 in
  * Macintosh MRJ
  *
@@ -29,23 +29,17 @@ public class PrintTrainAction extends AbstractAction {
     static final String NEW_LINE = "\n"; // NOI18N
     static final String TAB = "\t"; // NOI18N
 
-    public PrintTrainAction(String actionName, Frame mFrame, boolean isPreview, TrainEditFrame frame) {
+    public PrintTrainAction(String actionName, boolean isPreview, TrainEditFrame frame) {
         super(actionName);
-        this.mFrame = mFrame;
         this.isPreview = isPreview;
         this.trainEditFrame = frame;
     }
     
-    public PrintTrainAction(String actionName, Frame mFrame, boolean isPreview) {
+    public PrintTrainAction(String actionName, boolean isPreview) {
         super(actionName);
-        this.mFrame = mFrame;
         this.isPreview = isPreview;
     }
 
-    /**
-     * Frame hosting the printing
-     */
-    Frame mFrame;
     TrainEditFrame trainEditFrame;
     /**
      * Variable to set whether this is to be printed or previewed
@@ -62,7 +56,7 @@ public class PrintTrainAction extends AbstractAction {
         // obtain a HardcopyWriter to do this
         HardcopyWriter writer = null;
         try {
-            writer = new HardcopyWriter(mFrame, MessageFormat.format(Bundle.getMessage("TitleTrain"),
+            writer = new HardcopyWriter(new Frame(), MessageFormat.format(Bundle.getMessage("TitleTrain"),
                     new Object[]{train.getName()}), Control.reportFontSize, .5, .5, .5, .5, isPreview);
         } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print cancelled");

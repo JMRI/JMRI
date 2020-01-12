@@ -1,5 +1,3 @@
-// CMRInetMetricsAction.java
-
 package jmri.jmrix.cmri.serial.cmrinetmanager;
 
 import java.awt.event.ActionEvent;
@@ -27,6 +25,7 @@ public class CMRInetMetricsAction extends AbstractAction {
         this(Bundle.getMessage("MetricsWindowTitle"), memo);
     }
 
+        @Override
     public void actionPerformed(ActionEvent e) {
 		// create a CMRInetMetricsAction
 		CMRInetMetricsFrame f = new CMRInetMetricsFrame(_memo);
@@ -42,6 +41,3 @@ public class CMRInetMetricsAction extends AbstractAction {
         private final static Logger log = LoggerFactory.getLogger(CMRInetMetricsAction.class.getName());
 
 }
-
-
-/* @(#)CMRInetStatsAction.java */

@@ -14,7 +14,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Tests for the SignalAppearanceMap interface
+ * Tests for the SignalAppearanceMap interface.
  *
  * @author	Bob Jacobsen Copyright (C) 2009
  */
@@ -79,7 +79,7 @@ public class DefaultSignalAppearanceMapTest {
         Assert.assertEquals("Approach", e.nextElement());
         Assert.assertEquals("Clear", e.nextElement());
 
-        Assert.assertTrue(!e.hasMoreElements());
+        Assert.assertFalse(e.hasMoreElements());
     }
 
     @Test
@@ -128,7 +128,9 @@ public class DefaultSignalAppearanceMapTest {
 
     @Before
     public void setUp() {
-        JUnitUtil.setUp();        h1 = new DefaultSignalHead("IH1", "head1") {
+        JUnitUtil.setUp();        
+        JUnitUtil.initInternalSignalHeadManager();
+        h1 = new DefaultSignalHead("IH1", "head1") {
             @Override
             protected void updateOutput() {
             }
@@ -151,8 +153,13 @@ public class DefaultSignalAppearanceMapTest {
     public void tearDown() {
         InstanceManager.getDefault(jmri.SignalHeadManager.class).deregister(h1);
         h1.dispose();
+        h1 = null;
         InstanceManager.getDefault(jmri.SignalHeadManager.class).deregister(h2);
         h2.dispose();
-        apps.tests.Log4JFixture.tearDown();
+        h2 = null;
+        l1 = null;
+        l2 = null;
+        JUnitUtil.tearDown();
     }
+    
 }

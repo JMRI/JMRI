@@ -1,9 +1,12 @@
 package jmri.jmrix.loconet;
 
 import java.io.Serializable;
+import java.util.Objects;
+import javax.annotation.Nonnull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import jmri.jmrix.AbstractMessage;
+import jmri.jmrix.loconet.messageinterp.LocoNetMessageInterpret;
 /**
  * Represents a single command or response on the LocoNet.
  * <p>
@@ -19,6 +22,18 @@ import org.slf4j.LoggerFactory;
  * Note that many specific message types are created elsewhere. In general, if
  * more than one tool will need to use a particular format, it's useful to
  * refactor it to here.
+ * <hr>
+ * This file is part of JMRI.
+ * <p>
+ * JMRI is free software; you can redistribute it and/or modify it under
+ * the terms of version 2 of the GNU General Public License as published
+ * by the Free Software Foundation. See the "COPYING" file for a copy
+ * of this license.
+ * <p>
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+ * for more details.
  * <p>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
@@ -27,102 +42,191 @@ import org.slf4j.LoggerFactory;
  * Inc for separate permission.
  *
  * @author Bob Jacobsen Copyright (C) 2001
+ * @author B. Milhaupt Copyright (C) 2018
  * @see jmri.jmrix.nce.NceMessage
+ * @see jmri.jmrix.AbstractMessage
  */
-public class LocoNetMessage implements Serializable {
+public class LocoNetMessage extends AbstractMessage implements Serializable {
     // Serializable, serialVersionUID used by jmrix.loconet.locormi, please do not remove
     static final long serialVersionUID = -7904918731667071828L;
 
     /**
+     * Create a LocoNetMessage object without providing any
+     * indication of its size or contents.
+     * <p>
+     * Because a LocoNet message requires at least a size, if
+     * not actual contents, this constructor always logs an error.
+     *
+     */
+    public LocoNetMessage() {
+        _nDataChars = 0;
+        _dataChars = new int[1];
+        log.error("LocoNetMessage does not allow a constructor with no argument"); // NOI18N
+
+    }
+
+    /**
      * Create a new object, representing a specific-length message.
+     * <p>
+     * Logs an error if len is less than 2
      *
      * @param len Total bytes in message, including opcode and error-detection
      *            byte.
      */
     public LocoNetMessage(int len) {
-        if (len < 1) {
-            log.error("invalid length in call to ctor: {}", len);
+        if (len < 2) {
+            _nDataChars = 0;
+            _dataChars = new int[1];
+            log.error("LocoNetMessage does not allow object creation if length is less than 2."); // NOI18N
+            return;
         }
-        _nDataBytes = len;
-        _dataBytes = new int[len];
+        _nDataChars = len;
+        _dataChars = new int[len];
+    }
+
+    /**
+     * Create a LocoNetMessage from a String
+     * <p>
+     * Because it is difficult to create a complete LocoNet object using a string,
+     * this method of AbstractMessage is not supported.
+     * <p>
+     * This constructor always logs an error
+     * @param s an unused parameter
+     */
+    public LocoNetMessage(String s) {
+        _nDataChars = 0;
+        _dataChars = new int[1];
+        log.error("LocoNetMessage does not allow a constructor with a 'String' argument"); // NOI18N
     }
 
     /**
      * Create a message with specified contents.
+     * <p>
+     * This method logs an error and returns if the contents are too short to
+     * represent a valid LocoNet message.
      *
      * @param contents The array of contents for the message. The error check
      *                 word must be present, e.g. a 4-byte message must have
      *                 four values in the array
      */
     public LocoNetMessage(int[] contents) {
-        this(contents.length);
+        if (contents.length < 2) {
+            _nDataChars = 0;
+            _dataChars = new int[1];
+            log.error("Cannot create a LocoNet message of length shorter than two."); // NOI18N
+        }
+        _nDataChars = contents.length;
+        _dataChars = new int[contents.length];
         for (int i = 0; i < contents.length; i++) {
             this.setElement(i, contents[i]);
         }
     }
 
+    /**
+     * Create a message with specified contents.  Each element is forced into an
+     * 8-bit value.
+     * <p>
+     * This method logs an error and returns if the message length is too short
+     * to represent a valid LocoNet message.
+     *
+     * @param contents The array of contents for the message. The error check
+     *                 word must be present, e.g. a 4-byte message must have
+     *                 four values in the array
+     */
     public LocoNetMessage(byte[] contents) {
-        this(contents.length);
+        if (contents.length < 2) {
+            _nDataChars = 0;
+            _dataChars = new int[1];
+            log.error("Cannot create a LocoNet message of length shorter than two."); // NOI18N
+        }
+        _nDataChars = contents.length;
+        _dataChars = new int[contents.length];
         for (int i = 0; i < contents.length; i++) {
-            this.setElement(i, contents[i] & 0xFF);
+            _dataChars[i] = contents[i] & 0xFF;
         }
     }
 
     public LocoNetMessage(LocoNetMessage original) {
-        this(original._dataBytes);
+        Objects.requireNonNull(original,
+                "Unable to create message by copying a null message"); // NOI18N
+
+        _nDataChars = original.getNumDataElements();
+        _dataChars = new int[_nDataChars];
+
+        for (int i = 0; i < original.getNumDataElements(); i++) {
+            _dataChars[i] = original._dataChars[i];
+        }
     }
 
     public void setOpCode(int i) {
-        _dataBytes[0] = i;
+        _dataChars[0] = i;
     }
 
     public int getOpCode() {
-        return _dataBytes[0];
+        return _dataChars[0];
     }
 
     /**
      * Get a String representation of the op code in hex.
+     *
+     * @return string containing a hexadecimal representation of the message OpCode
      */
     public String getOpCodeHex() {
         return "0x" + Integer.toHexString(getOpCode()); // NOI18N
     }
 
     /**
-     * Get length, including op code and error-detection byte.
+     * Get a specific byte from the message
+     * <p>
+     * Logs an error and aborts if the index is beyond the length of the message.
+     *
+     * @param n  the byte index within the message
+     * @return integer value of the byte at the index within the message
      */
-    public int getNumDataElements() {
-        return _nDataBytes;
-    }
-
+    @Override
     public int getElement(int n) {
-        if (n < 0 || n >= _dataBytes.length) {
-            log.error("reference element {} in message of {} elements: ", // NOI18N
-                    n, _dataBytes.length, this.toString()); // NOI18N
+        if (n < 0 || n >= _dataChars.length) {
+            log.error("reference element {} in message of {} elements: {}", // NOI18N
+                    n, _dataChars.length, this.toString()); // NOI18N
+            return -1;
         }
-        return _dataBytes[n] & 0xFF;
+        return _dataChars[n] & 0xFF;
     }
 
+    /**
+     * set a specific byte at a specific index in the message
+     * <p>
+     * Logs an error and aborts if the index is beyond the length of the message.
+     *
+     * @param n  the byte index within the message
+     * @param v  the value to be set
+     */
+    @Override
     public void setElement(int n, int v) {
-        if (n < 0 || n >= _dataBytes.length) {
-            log.error("reference element {} in message of {} elements: ", // NOI18N
-                    n, _dataBytes.length, this.toString()); // NOI18N
+        if (n < 0 || n >= _dataChars.length) {
+            log.error("reference element {} in message of {} elements: {}", // NOI18N
+                    n, _dataChars.length, this.toString()); // NOI18N
+            return;
         }
-        _dataBytes[n] = v;
+        _dataChars[n] = v & 0xFF;
     }
 
     /**
      * Get a String representation of the entire message in hex.
+     *
+     * @return a string representation containing a space-delimited set of hexadecimal
+     *      values.
      */
     @Override
     public String toString() {
         int val;
         StringBuffer sb = new StringBuffer();
-        for (int i = 0; i < _nDataBytes; i++) {
+        for (int i = 0; i < _nDataChars; i++) {
             if (i > 0) {
                 sb.append(' ');
             }
 
-            val = _dataBytes[i] & 0xFF;
+            val = _dataChars[i] & 0xFF;
             sb.append(hexChars[val >> 4]);
             sb.append(hexChars[val & 0x0F]);
         }
@@ -130,11 +234,11 @@ public class LocoNetMessage implements Serializable {
     }
 
     /**
-     * Set the parity byte(s) of this message.
+     * Set the checksum byte(s) of this message.
      */
     public void setParity() {
         // check for the D3 special case
-        if (getOpCode() == 0xD3 && getNumDataElements() > 6) {
+        if ((getOpCode() == LnConstants.RE_OPC_PR3_MODE) && (getNumDataElements() > 6)) {
             // sum the D3 header separately
             int sum = 0xFF;
             for (int i = 0; i < 5; i++) {
@@ -163,7 +267,9 @@ public class LocoNetMessage implements Serializable {
     }
 
     /**
-     * Check whether the message has a valid parity.
+     * Check whether the message has a valid checksum.
+     *
+     * @return true if checksum is correct, else false
      */
     public boolean checkParity() {
         int len = getNumDataElements();
@@ -172,7 +278,7 @@ public class LocoNetMessage implements Serializable {
         int loop;
 
         // check for the D3 special case
-        if (getOpCode() == 0xD3 && len > 6) {
+        if ((getOpCode() == LnConstants.RE_OPC_PR3_MODE) && (len > 6)) {
             // sum the D3 header separately
             int sum = 0xFF;
             for (loop = 0; loop < 5; loop++) {
@@ -208,13 +314,17 @@ public class LocoNetMessage implements Serializable {
      */
     public int[] getPeerXfrData() {
         if (getOpCode() != LnConstants.OPC_PEER_XFER) {
-            log.error("getPeerXfrData called with wrong opcode {}", getOpCode());
+            log.error("getPeerXfrData called with wrong opcode {}", // NOI18N
+                    getOpCode());
         }
         if (getElement(1) != 0x10) {
-            log.error("getPeerXfrData called with wrong secondary code {}", getElement(1));
+            log.error("getPeerXfrData called with wrong secondary code {}", // NOI18N
+                    getElement(1));
         }
         if (getNumDataElements() != 16) {
-            log.error("getPeerXfrData called with wrong length {}", getNumDataElements());
+            log.error("getPeerXfrData called with wrong length {}",  // NOI18N
+                    getNumDataElements());
+            return new int[] {0};
         }
 
         int[] data = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
@@ -246,17 +356,17 @@ public class LocoNetMessage implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (o == null) {
-            return false;
+            return false;   // basic contract
         }
         if (!(o instanceof LocoNetMessage)) {
             return false;
         }
         LocoNetMessage m = (LocoNetMessage) o;
-        if (m._nDataBytes != this._nDataBytes) {
+        if (m._nDataChars != this._nDataChars) {
             return false;
         }
-        for (int i = 0; i < _nDataBytes - 1; i++) {
-            if ((m._dataBytes[i] & 0xFF) != (this._dataBytes[i] & 0xFF)) {
+        for (int i = 0; i < _nDataChars - 1; i++) {
+            if ((m._dataChars[i] & 0xFF) != (this._dataChars[i] & 0xFF)) {
                 return false;
             }
         }
@@ -265,17 +375,82 @@ public class LocoNetMessage implements Serializable {
 
     @Override
     public int hashCode() {
-        int r = _nDataBytes;
-        if (_nDataBytes > 0) {
-            r += _dataBytes[0];
+        int r = _nDataChars;
+        if (_nDataChars > 0) {
+            r += _dataChars[0];
         }
-        if (_nDataBytes > 1) {
-            r += _dataBytes[1] * 128;
+        if (_nDataChars > 1) {
+            r += _dataChars[1] * 128;
         }
-        if (_nDataBytes > 2) {
-            r += _dataBytes[2] * 128 * 128;
+        if (_nDataChars > 2) {
+            r += _dataChars[2] * 128 * 128;
         }
         return r;
+    }
+
+    @Override
+    /**
+     * Interprets a LocoNet message into a string describing the
+     * message.
+     * <p>
+     * Where appropriate, this method presents both the JMRI "System Name" and
+     * the JMRI "User Name" (where available) for messages which contain control 
+     * or status information for a Turnout, Sensor or Reporter.
+     * <p>
+     * Display of "User Name" information is acquired from the appropriate "manager",
+     * via a reference to an object with an assembled "System Name".  This method 
+     * assumes a system connection "prefix" of "L" when assembling that system name.
+     * The remainder of the assembled system name depends on the message contents - 
+     * message type determines which JMRI object type letter to add - "T" for turnouts,
+     * "S" for sensors, and "R" for transponding reporters.
+     * <p>
+     * If the appropriate manager already has an object for the system name being
+     * referenced, the method requests the associated user name.  If a user name is
+     * returned, then the method uses that user name as part of the message.  If 
+     * there is no associated JMRI object configured, or if the associated JMRI
+     * object does not have a user name assigned, then the method does not display 
+     * a user name.
+     * <p>
+     * The method is not appropriate when the user has multiple LocoNet connections
+     * or when the user has a single LocoNet connection but has changed the connection
+     * prefix to something other than the default of "L".
+     *
+     * @return a human readable representation of the message.
+     */
+    public String toMonitorString(){
+          return toMonitorString("L"); // NOI18N
+    }
+
+    /**
+     * Interprets a LocoNet message into a string describing the
+     * message when a specific connection prefix is known.
+     * <p>
+     * Where appropriate, this method presents both the JMRI "System Name" and
+     * the JMRI "User Name" (where available) for messages which contain control 
+     * or status information for a Turnout, Sensor or Reporter.
+     * <p>
+     * Display of "User Name" information is acquired from the appropriate "manager",
+     * via a reference to an object with an assembled "System Name".  This method 
+     * uses system connection "prefix" as specified in the "prefix" argument when 
+     * assembling that system name.  The remainder of the assembled system name 
+     * depends on the message contents.  Message type determines which JMRI 
+     * object type letter is added after the "prefix" - "T" for turnouts, * "S" 
+     * for sensors, and "R" for transponding reporters.  The item number 
+     * specified in the LocoNet message is appended to finish the system name. 
+     * <p>
+     * If the appropriate manager already has an object for the system name being
+     * referenced, the method requests the associated user name.  If a user name is
+     * returned, then the method uses that user name as part of the message.  If 
+     * there is no associated JMRI object configured, or if the associated JMRI
+     * object does not have a user name assigned, then the method does not display 
+     * a user name.
+     *
+     * @param prefix  the "System Name" prefix denoting the connection
+     * @return a human readable representation of the message.
+     */
+    public String toMonitorString(@Nonnull String prefix){
+          return LocoNetMessageInterpret.interpretMessage(this, 
+                  prefix+"T", prefix+"S", prefix+"R");
     }
 
     /**
@@ -351,11 +526,12 @@ public class LocoNetMessage implements Serializable {
      * Check if a high bit is set, usually used to store it in some other
      * location (LocoNet does not allow the high bit to be set in data bytes).
      *
+     * @param val  value to be checked
      * @return True if the argument has the high bit set
      */
     static protected boolean highBit(int val) {
         if ((val & (~0xFF)) != 0) {
-            log.error("highBit called with too large value: 0x{}",
+            log.error("highBit called with too large value: 0x{}", // NOI18N
                     Integer.toHexString(val));
         }
         return (0 != (val & 0x80));
@@ -367,16 +543,17 @@ public class LocoNetMessage implements Serializable {
 
     static protected int highByte(int val) {
         if ((val & (~0xFFFF)) != 0) {
-            log.error("highByte called with too large value: {}",
+            log.error("highByte called with too large value: {}", // NOI18N
                     Integer.toHexString(val));
         }
         return (val & 0xFF00) / 256;
     }
 
     /**
-     * Sensor-format 0-n address
+     * Extract sensor address from a sensor message.  Does not verify
+     * that the message is a sensor message.
      *
-     * @return 0 to n-1 address
+     * @return address (in range 0 to n-1)
      */
     public int sensorAddr() {
         int sw1 = getElement(1);
@@ -390,7 +567,7 @@ public class LocoNetMessage implements Serializable {
     /**
      * If this is an OPC_INPUT_REP, get the 0-n address, else -1
      *
-     * @return 0 to n-1 address
+     * @return address (in range 0 to n-1)
      */
     public int inputRepAddr() {
         if (getOpCode() == LnConstants.OPC_INPUT_REP) {
@@ -401,9 +578,10 @@ public class LocoNetMessage implements Serializable {
     }
 
     /**
-     * Get the 1-N turnout address
+     * Get turnout address.  Does not check to see that the message is
+     * a turnout message.
      *
-     * @return 1-N address
+     * @return address (in range 1 to n )
      */
     public int turnoutAddr() {
         int a1 = getElement(1);
@@ -411,9 +589,6 @@ public class LocoNetMessage implements Serializable {
         return (((a2 & 0x0f) * 128) + (a1 & 0x7f)) + 1;
     }
 
-    // contents (private)
-    private int _nDataBytes = 0;
-    private int _dataBytes[] = null;
 
     // Hex char array for toString conversion
     static char[] hexChars = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};

@@ -1,7 +1,7 @@
 package jmri.implementation;
 
-import java.util.Enumeration;
-import java.util.Hashtable;
+import java.util.*;
+
 import jmri.SignalSystem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,9 +58,8 @@ public class DefaultSignalSystem extends AbstractNamedBean implements SignalSyst
         if (obj == null) {
             return null;
         }
-        Enumeration<String> aspectKeys = aspects.keys();
-        while (aspectKeys.hasMoreElements()) {
-            String aspect = aspectKeys.nextElement();
+        Set<String> aspectKeys = aspects.keySet();
+        for (String aspect : aspectKeys) {
             if (getTable(aspect).containsKey(key)) {
                 if (getTable(aspect).get(key).equals(obj)) {
                     return aspect;
@@ -81,7 +80,7 @@ public class DefaultSignalSystem extends AbstractNamedBean implements SignalSyst
 
     @Override
     public Enumeration<String> getAspects() {
-        return aspects.keys();
+        return new Vector<String>(aspects.keySet()).elements();  // this will be greatly simplified when we can just return keySet
     }
 
     @Override
@@ -171,8 +170,8 @@ public class DefaultSignalSystem extends AbstractNamedBean implements SignalSyst
         return maximumLineSpeed;
     }
 
-    protected java.util.Hashtable<String, Hashtable<String, Object>> aspects
-            = new jmri.util.OrderedHashtable<>();
+    protected java.util.HashMap<String, Hashtable<String, Object>> aspects
+            = new java.util.LinkedHashMap<>();
 
     protected java.util.Vector<String> keys = new java.util.Vector<>();
 
@@ -202,6 +201,28 @@ public class DefaultSignalSystem extends AbstractNamedBean implements SignalSyst
     @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNameSignalSystem");
+    }
+    
+    @Override
+    /**
+     * {@inheritDoc}
+     */
+    public String summary() {
+        StringBuilder retval = new StringBuilder();
+        retval.append(toString());
+        retval.append("\n  BeanType: "+getBeanType());
+        
+        retval.append("\n  keys:");
+        for (String key : keys) retval.append("\n    "+key);
+        
+        retval.append("\n  aspects:");
+        Set<String> values = aspects.keySet();
+        for (String value : values) 
+            retval.append("\n    "+value);
+        
+        retval.append("\n  maximumLineSpeed = "+getMaximumLineSpeed());
+        
+        return new String(retval);
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultSignalSystem.class);

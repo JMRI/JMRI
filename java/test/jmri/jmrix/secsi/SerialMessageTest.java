@@ -1,46 +1,38 @@
 package jmri.jmrix.secsi;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
+import org.junit.*;
 
 /**
  * JUnit tests for the SerialMessage class.
  *
  * @author	Bob Jacobsen Copyright 2003, 2007, 2008
  */
-public class SerialMessageTest extends TestCase {
+public class SerialMessageTest extends jmri.jmrix.AbstractMessageTestBase {
 
-    public void testCreate() {
-        SerialMessage m = new SerialMessage(4);
-        Assert.assertNotNull("exists", m);
-    }
+    private SerialMessage msg = null;
 
+    @Test
     public void testBytesToString() {
-        SerialMessage m = new SerialMessage(4);
-        m.setOpCode(0x81);
-        m.setElement(1, (byte) 0x02);
-        m.setElement(2, (byte) 0xA2);
-        m.setElement(3, (byte) 0x00);
-        Assert.assertEquals("string compare ", "81 02 A2 00", m.toString());
+        msg = new SerialMessage(4);
+        msg.setOpCode(0x81);
+        msg.setElement(1, (byte) 0x02);
+        msg.setElement(2, (byte) 0xA2);
+        msg.setElement(3, (byte) 0x00);
+        Assert.assertEquals("string compare ", "81 02 A2 00", msg.toString());
     }
 
-    // from here down is testing infrastructure
-    public SerialMessageTest(String s) {
-        super(s);
+    // The minimal setup for log4J
+    @Before
+    @Override
+    public void setUp() {
+        JUnitUtil.setUp();
+        m = msg = new SerialMessage(4);
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {SerialMessageTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
+    @After
+    public void tearDown() {
+        m = msg = null;
+        JUnitUtil.tearDown();
     }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SerialMessageTest.class);
-        return suite;
-    }
-
 }

@@ -1,23 +1,13 @@
 package apps.TrainCrew;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.event.ActionEvent;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.URL;
 import javax.swing.Icon;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import jmri.jmrit.XmlFile;
-import jmri.util.FileUtil;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
-import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,7 +35,7 @@ public class InstallFromURL extends JmriAbstractAction {
     }
 
     public InstallFromURL() {
-        super("Install TrainCrew Application");
+        super(Bundle.getMessage("TrainCrewInstallMenu"));
     }
 
     JPanel _who;
@@ -73,10 +63,10 @@ public class InstallFromURL extends JmriAbstractAction {
                 
                 log.info("Complete!");
             } catch (java.io.IOException ex) {
-                log. error("Error in transfer", ex);
+                log.error("Error in transfer", ex);
             }
         } catch (java.net.MalformedURLException ex) {
-            log. error("Invalid URL", ex);
+            log.error("Invalid URL", ex);
         }
     }
 
@@ -88,4 +78,5 @@ public class InstallFromURL extends JmriAbstractAction {
 
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(InstallFromURL.class);
+
 }

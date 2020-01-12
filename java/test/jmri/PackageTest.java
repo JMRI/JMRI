@@ -5,6 +5,8 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+    ArchitectureTest.class,
+    AnalogIOTest.class,
     BeanSettingTest.class,
     BundleTest.class,
     NamedBeanHandleManagerTest.class,
@@ -16,6 +18,7 @@ import org.junit.runners.Suite;
     LightTest.class,
     ManagerTest.class,
     NmraPacketTest.class,
+    ConditionalTest.class,
     ConditionalVariableTest.class,
     PathTest.class,
     PathLengthTest.class,
@@ -23,6 +26,7 @@ import org.junit.runners.Suite;
     SectionTest.class,
     SignalGroupTest.class,
     SignalMastLogicTest.class,
+    StringIOTest.class,
     TransitTest.class,
     TransitSectionTest.class,
     TransitSectionActionTest.class,
@@ -61,14 +65,14 @@ import org.junit.runners.Suite;
     NoFeedbackTurnoutOperationTest.class,
     RawTurnoutOperationTest.class,
     ScaleTest.class,
+    ScaleManagerTest.class,
     SectionManagerTest.class,
     SensorTurnoutOperationTest.class,
     TransitManagerTest.class,
     TurnoutOperationManagerTest.class,
     EntryPointTest.class,
     NamedBeanPropertyDescriptorTest.class,
-    BooleanPropertyDescriptorTest.class,
-    RunCucumberTest.class,})
+    BooleanPropertyDescriptorTest.class})
 
 /**
  * Invoke complete set of tests for the Jmri package

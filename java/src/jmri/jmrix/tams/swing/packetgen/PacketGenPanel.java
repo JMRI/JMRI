@@ -36,7 +36,7 @@ public class PacketGenPanel extends jmri.jmrix.tams.swing.TamsPanel implements T
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         // the following code sets the frame's initial state
         {
-            jLabel1.setText("Command: ");
+            jLabel1.setText("Command: "); // TODO I18N using Bundle.getMessage("key") - many keys available in JmrixBundle
             jLabel1.setVisible(true);
 
             sendButton.setText("Send");

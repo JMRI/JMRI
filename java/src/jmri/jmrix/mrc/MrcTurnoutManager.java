@@ -1,42 +1,42 @@
 package jmri.jmrix.mrc;
 
+import javax.annotation.Nonnull;
 import jmri.Turnout;
 
 /**
- * New MRC Turnout Manager
- * <P>
- * System names are "PTnnn", where nnn is the turnout number without padding.
+ * New MRC TurnoutManager
+ * <p>
+ * System names are "PTnnn", where P is the user configurable system prefix,
+ * nnn is the turnout number without padding.
  *
  * @author Paul Bender Copyright (C) 2004
  * @author Martin Wade Copyright (C) 2014
- * 
  */
 public class MrcTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
-    public MrcTurnoutManager(MrcTrafficController tc, String prefix) {
-        super();
-        this.prefix = prefix;
-        this.tc = tc;
+    public MrcTurnoutManager(MrcSystemConnectionMemo memo) {
+        super(memo);
+        this.tc = memo.getMrcTrafficController();
     }
 
-    String prefix = "";
     MrcTrafficController tc = null;
 
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    @Nonnull
+    public MrcSystemConnectionMemo getMemo() {
+        return (MrcSystemConnectionMemo) memo;
     }
 
     @Override
-    public Turnout createNewTurnout(String systemName, String userName) {
-        int addr = Integer.valueOf(systemName.substring(getSystemPrefix().length() + 1)).intValue();
+    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
+        int addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
         Turnout t = new MrcTurnout(addr, tc, getSystemPrefix());
         t.setUserName(userName);
         return t;
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 

@@ -10,7 +10,7 @@ import jmri.jmrix.nce.serialdriver.SerialDriverAdapter;
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
-    public final static String NAME = "Serial";
+    public final static String NAME = Bundle.getMessage("TypeSerial");
 
     /**
      * Create a connection configuration with a preexisting adapter.
@@ -22,7 +22,8 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     }
 
     /**
-     * Create a connection configuration with no preexisting adapter.
+     * Ctor for a connection configuration with no preexisting adapter.
+     * {@link #setInstance()} will fill the adapter member.
      */
     public ConnectionConfig() {
         super();
@@ -33,10 +34,14 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         return NAME;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new SerialDriverAdapter();
         }
     }
+
 }

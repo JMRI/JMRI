@@ -23,6 +23,7 @@ import org.junit.runners.Suite.SuiteClasses;
     BundleTest.class,
     jmri.server.json.block.PackageTest.class,
     jmri.server.json.consist.PackageTest.class,
+    jmri.server.json.idtag.PackageTest.class,
     jmri.server.json.layoutblock.PackageTest.class,
     jmri.server.json.light.PackageTest.class,
     jmri.server.json.memory.PackageTest.class,
@@ -34,8 +35,8 @@ import org.junit.runners.Suite.SuiteClasses;
     jmri.server.json.roster.PackageTest.class,
     jmri.server.json.sensor.PackageTest.class,
     jmri.server.json.schema.PackageTest.class,
-    jmri.server.json.signalHead.PackageTest.class,
-    jmri.server.json.signalMast.PackageTest.class,
+    jmri.server.json.signalhead.PackageTest.class,
+    jmri.server.json.signalmast.PackageTest.class,
     jmri.server.json.time.PackageTest.class,
     jmri.server.json.turnout.PackageTest.class,
     jmri.server.json.throttle.PackageTest.class,
@@ -45,8 +46,14 @@ import org.junit.runners.Suite.SuiteClasses;
     JsonConnectionTest.class,
     JsonExceptionTest.class,
     JsonHttpServiceTest.class,
+    JsonNamedBeanHttpServiceTest.class,
     JsonSocketServiceTest.class,
-    JsonWebSocketTest.class
+    JsonWebSocketTest.class,
+    JsonServerActionTest.class,
+    JsonServerPreferencesPanelTest.class,
+    JsonServerPreferencesTest.class,
+    JsonServerTest.class,
+    JsonServerStartupActionFactoryTest.class
 })
 public class PackageTest {
 }

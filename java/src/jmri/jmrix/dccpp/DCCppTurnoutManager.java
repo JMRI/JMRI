@@ -1,11 +1,15 @@
 package jmri.jmrix.dccpp;
 
+import static jmri.jmrix.dccpp.DCCppConstants.MAX_TURNOUT_ADDRESS;
+
+import java.util.Locale;
+import javax.annotation.Nonnull;
 import jmri.Turnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement Turnout Manager for DCC++ systems.
+ * Implement TurnoutManager for DCC++ systems.
  * <p>
  * System names are "DxppTnnn", where Dx is the system prefix and nnn is the turnout number without padding.
  *
@@ -16,31 +20,35 @@ import org.slf4j.LoggerFactory;
 public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager implements DCCppListener {
 
     protected DCCppTrafficController tc = null;
-    protected String prefix = null;
 
     /**
-     * Create an new DCC++ TurnoutManager.
+     * Create a new DCC++ TurnoutManager.
      * Has to register for DCC++ events.
      *
-     * @param controller the TrafficController to connect the TurnoutManager to
-     * @param prefix the system connection prefix string as set for this connection in SystemConnectionMemo
+     * @param memo the supporting system connection memo
      */
-    public DCCppTurnoutManager(DCCppTrafficController controller, String prefix) {
-        super();
-        tc = controller;
-        this.prefix = prefix;
+    public DCCppTurnoutManager(DCCppSystemConnectionMemo memo) {
+        super(memo);
+        tc = memo.getDCCppTrafficController();
         tc.addDCCppListener(DCCppInterface.FEEDBACK, this);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    @Nonnull
+    public DCCppSystemConnectionMemo getMemo() {
+        return (DCCppSystemConnectionMemo) memo;
     }
 
     // DCCpp-specific methods
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Turnout createNewTurnout(String systemName, String userName) {
+    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
         Turnout t = null;
         // check if the output bit is available
         int bitNum = getBitFromSystemName(systemName);
@@ -48,12 +56,15 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
             return null;
         }
         // make the new Turnout object
-        t = new DCCppTurnout(prefix, bitNum, tc);
+        t = new DCCppTurnout(getSystemPrefix(), bitNum, tc);
         t.setUserName(userName);
         return t;
     }
 
-    // listen for turnouts, creating them as needed
+    /**
+     * {@inheritDoc}
+     * Listen for turnouts, creating them as needed.
+     */
     @Override
     public void message(DCCppReply l) {
         if (log.isDebugEnabled()) {
@@ -65,12 +76,10 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
             if (addr >= 0) {
                 // check to see if the address has been operated before
                 // continuing.
-                if (log.isDebugEnabled()) {
-                    log.debug("message has address: {}", addr);
-                }
+                log.debug("message has address: {}", addr);
                 // reach here for switch command; make sure we know 
                 // about this one
-                String s = prefix + typeLetter() + addr;
+                String s = getSystemNamePrefix() + addr;
                 if (null == getBySystemName(s)) {
                     // need to create a new one, and send the message on 
                     // to the newly created object.
@@ -88,12 +97,10 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
             if (addr >= 0) {
                 // check to see if the address has been operated before
                 // continuing.
-                if (log.isDebugEnabled()) {
-                    log.debug("message has address: {}", addr);
-                }
+                log.debug("message has address: {}", addr);
                 // reach here for switch command; make sure we know 
                 // about this one
-                String s = prefix + typeLetter() + addr;
+                String s = getSystemNamePrefix() + addr;
                 if (null == getBySystemName(s)) {
                     // need to create a new one, and send the message on 
                     // to the newly created object.
@@ -114,6 +121,7 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
      * represent the Turnout.CLOSED state.
      */
     @Override
+    @Nonnull
     public String getClosedText() {
         return Bundle.getMessage("TurnoutStateClosed");
     }
@@ -124,6 +132,7 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
      * represent the Turnout.THROWN state.
      */
     @Override
+    @Nonnull
     public String getThrownText() {
         return Bundle.getMessage("TurnoutStateThrown");
     }
@@ -145,67 +154,49 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
         }
     }
 
+    /** {@inheritDoc} */
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
+        return (getBitFromSystemName(systemName) != -1) ? NameValidity.VALID : NameValidity.INVALID;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String systemName, @Nonnull Locale locale) {
+        return validateIntegerSystemNameFormat(systemName, 0, MAX_TURNOUT_ADDRESS, locale);
+    }
+
+    /**
      * Get the bit address from the system name.
-     * @return -1 for failure
+     *
+     * @param systemName a valid LocoNet-based Turnout System Name
+     * @return the turnout number extracted from the system name
      */
     public int getBitFromSystemName(String systemName) {
-        // validate the system Name leader characters
-        if ((!systemName.startsWith(getSystemPrefix() + typeLetter()))) {
-            // here if an illegal DCC++ turnout system name
-            log.error("illegal character in header field of DCC++ turnout system name: {} prefix {} type {}",
-                    systemName, getSystemPrefix(), typeLetter());
-            return -1;
-        }
-        // name must be in the DCCppTnnnnn format (DCCPP is user configurable)
-        int num = 0;
         try {
-            num = Integer.valueOf(systemName.substring(
-                    getSystemPrefix().length() + 1, systemName.length())).intValue();
-        } catch (Exception e) {
-            log.error("invalid character in number field of system name: {}", systemName);
+            validateSystemNameFormat(systemName, Locale.getDefault());
+        } catch (IllegalArgumentException ex) {
             return -1;
         }
-        if (num < 0) {
-            log.error("invalid DCC++ turnout system name: {}", systemName);
-            return -1;
-        } else if (num > DCCppConstants.MAX_ACC_DECODER_JMRI_ADDR) {
-            log.error("bit number out of range in DCC++ turnout system name: {}", systemName);
-            return -1;
-        }
-        return num;
+        return Integer.parseInt(systemName.substring(getSystemNamePrefix().length()));
     }
 
-    /**
-     * Validate system name format.
-     *
-     * @return VALID if system name has a valid format, else return INVALID
-     */
-    @Override
-    public NameValidity validSystemNameFormat(String systemName) {
-        return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
-    }
-
-    /**
-     * Provide a manager-specific tooltip for the Add new item beantable pane.
-     */
+    /** {@inheritDoc} */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddOutputEntryToolTip");
     }
-
-    @Deprecated
-    static public DCCppTurnoutManager instance() {
-        //if (_instance == null) _instance = new DCCppTurnoutManager();
-        return _instance;
-    }
-    static DCCppTurnoutManager _instance = null;
 
     private final static Logger log = LoggerFactory.getLogger(DCCppTurnoutManager.class);
 

@@ -1,15 +1,15 @@
 #! /bin/bash
 # scan the help files for HMTL errors, used in 'ant html'
-# if an argument is provided, i.e. "help/en/*/" scan there, otherwise scan all the help
+# if an argument is provided, i.e. "help/en/*/*" scan there, otherwise scan all the help
 
 if [[ "$@" == "" ]] ; then
-    WHERE=help/*/*/
+    WHERE=help/*/*
 else
     WHERE=$@
 fi
 
-# first, scan for whether there's an issue
-find ${WHERE} -name \*html -exec echo Filename: {} \;  ! -exec tidy -eq -access 0 {} \; 2>&1 | grep -v '<table> lacks "summary" attribute' | grep -v '<img> lacks "alt" attribute' | awk -f scripts/tidy.awk | grep Warning 1>&2
+# first, scan for whether there's an issue (omitting known fragment files)
+find ${WHERE} -name \*html -exec grep -q DOCTYPE {} \; -exec echo Filename: {} \;  ! -exec tidy -eq -access 0 {} \; 2>&1 | grep -v '<table> lacks "summary" attribute' | grep -v '<img> lacks "alt" attribute' | awk -f scripts/tidy.awk | grep Warning 1>&2
 
 # swap return code from grep
 if [ $? -eq 0 ]; then

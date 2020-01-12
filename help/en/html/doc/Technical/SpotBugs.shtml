@@ -22,15 +22,17 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
-</head><!--#include virtual="/Header.shtml" -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
+</head>
 
 <body>
-  <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
-        <h1>JMRI Code: Static Analysis with SpotBugs</h1>
+
+    <h1>JMRI Code: Static Analysis with SpotBugs</h1>
         SpotBugs is a
         tool that can examine code to find possible problems. It does
       a "static analysis", looking through the code to find certain
@@ -43,24 +45,28 @@
       is changed, keeps the code from slowly getting worse and
       worse without anybody noticing until it's too late.
 
+        <a href="http://jmri.tagadab.com/jenkins/job/Development/job/SpotBugs/">
+            <img src="http://jmri.tagadab.com/jenkins/job/Development/job/SpotBugs/findbugs/trendGraph/png?url=PRIORITY" align="right"/></a>
       <p>For more information on SpotBugs, see <a href=
                                                   "https://spotbugs.github.io">the SpotBugs home
               page</a>.</p>
 
-      <p>We routinely run SpotBugs as part of our <a href=
-                                                     "ContinuousIntegration.shtml">continuous integration
-      process</a>. You can see the results of the most recent build
-      online <a href=
-      "https://jmri.ci.cloudbees.com/job/Development/job/SpotBugs/lastBuild/">
-      here</a>.</p>
+      <p>We routinely run SpotBugs as part of our 
+      <a href="ContinuousIntegration.shtml">continuous integration process</a>. 
+      You can see the 
+      <a href="http://jmri.tagadab.com/jenkins/job/Development/job/SpotBugs/lastBuild/findbugsResult/">detailed results of the most recent (daily) run</a>
+      along with 
+      <a href="http://jmri.tagadab.com/jenkins/job/Development/job/SpotBugs/">recent progress trend</a>
+      online.</p>
 
       <p>If SpotBugs is finding a false positive, a bug that's not
           really a bug, you can turn it off with an annotation such
       as:</p>
 <pre style="font-family: monospace;">
-@edu.umd.cs.findbugs.annotations.SuppressFBWarnings("FE_FLOATING_POINT_EQUALITY","OK to compare floats, as even tiny differences should trigger update")
+import edu.umd.cs.findbugs.annotations;
+@SuppressFBWarnings("FE_FLOATING_POINT_EQUALITY", "Even tiny differences should trigger update")
 </pre>
-      Note that this should be all on one line. Although Java
+      Although Java
       itself considers it optional, we require the second "justification"
       argument. Explaining why you've added this annotation to suppress a
       message will help whoever comes after you and is trying to
@@ -68,15 +74,16 @@
       understand the cause of the underlying bug report: Sometimes what
       seems a false positive really isn't. Annotations without a
       justification clause will periodically be removed.
+      Note that the @SuppressFBWarnings contents in this form should be all on one line
+      so that automated scanners can more reliably see it. 
 
-      <p>For clarity, this annotation also supports the form:</p>
+      <p>For clarity, this annotation also supports a form that lets you be more verbose:</p>
 <pre style="font-family: monospace;">
-@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "OK to compare floats, as even tiny differences should trigger update")
-
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", 
+        justification = "OK to compare floats, as even tiny differences should trigger update")
 </pre>
     This can make it easier to see what is what when quickly
 scanning through the code.
-
       <p>If you need to put more than one message type in an
       annotation, use array syntax:</p>
 <pre style="font-family: monospace;">
@@ -97,6 +104,7 @@ scanning through the code.
       "https://docs.oracle.com/javase/tutorial/java/annotations/">Java
       annotations tutorial</a>.</p>
 
+      <a name="annotations" id="annotations" />
       <p>It can be useful to mark code with one of the following
           annotations so that SpotBugs does a good job of reasoning
           about it:</p>
@@ -176,6 +184,20 @@ scanning through the code.
         generally assumes this, but it's good to put it on a class
         that's intended to be thread-safe as a reminder to future
         developers.</li>
+
+        <li><a href=
+        "http://jcip.net/annotations/doc/net/jcip/annotations/GuardedBy.html">
+        <code>net.jcip.annotations.GuardedBy</code></a> - 
+        "The field or method to which this annotation is applied can only be accessed 
+        when holding a particular lock, which may be a built-in (synchronization) lock, 
+        or may be an explicit java.util.concurrent.Lock."
+        <p>
+        Your code should ensure that the synchronization is done
+        around references to the annotated field or method.
+        SpotBugs will (sometimes) check that.
+        </li>
+        
+        
       </ul>For more information about these annotations, please see
       links above and
 
@@ -196,14 +218,15 @@ scanning through the code.
       <p>We do not use these annotations:</p>
 
       <ul>
-        <li><a href=
+        <li><a name="nullable" id="nullable"></a>
+            <a href=
                "http://findbugs.sourceforge.net/manual/annotations.html"><code>
                     javax.annotation.Nullable</code></a> - This doesn't really
-        mean what people think it does, as SpotBugs doesn't really
-        check anything when this is used. From the SpotBugs documentation:
-        <blockquote>
-              SpotBugs will treat the annotated items as though they had
-              no annotation. In practice this annotation is useful only
+                mean what people think it does, as SpotBugs doesn't really
+                check anything when this is used. From the SpotBugs documentation:
+          <blockquote>
+            SpotBugs will treat the annotated items as though they had
+            no annotation. In practice this annotation is useful only
             for overriding an overarching NonNull annotation. Use
             javax.annotation.ParametersAreNullableByDefault to set it
             for an entire class. Prefer the use of
@@ -212,7 +235,66 @@ scanning through the code.
         </li>
       </ul>
 
-      <h3>Suppressed Warnings</h3>We have turned off the routine
+
+      <h3>Running SpotBugs</h3>
+      
+      SpotBugs is automatically run by 
+      <a href="ContinuousIntegration.shtml#travis">Travis CI</a> as part of the 
+      <a href="gitdeveloper.shtml">Pull Request</a>
+      process, and by 
+      <a href="ContinuousIntegration.shtml#jenkins">Jenkins</a>
+      as part of the 
+      <a href="http://jmri.tagadab.com/jenkins/job/Development/job/SpotBugs/lastBuild/findbugsResult/">daily builds</a>.
+      If new errors appear during CI, the job will (usually) fail.  You can look at
+      the Jenkins output to see where there are existing errors to work on.
+      
+      <p>
+      To run it locally:
+      <ul>
+      <li>Install a local copy of SpotBugs. There
+        are multiple ways to do this, see the
+        <a href="https://spotbugs.github.io">SpotBugs web site</a>.
+      <li>You have to tell the JMRI build systems where that installation
+        is.  You can do that with various environment variables, etc, 
+        but the most straight-forward is to add a line like the 
+        following to your 
+        <a href="StartUpScripts.shtml">local.properties</a> file:
+    <pre style="font-family: monospace;">
+    spotbugs.home = /Users/jake/.spotbugs/spotbugs-3.1.7
+    </pre>
+      <li>Then run SpotBugs in ant via:
+    <pre style="font-family: monospace;">
+    ant spotbugs
+    </pre>
+    which will create a <code>spotbugs.html</code> 
+    file that you can open in a browser.
+    </ul>
+    
+    The <code>ant spotbugs-ci</code> target is similar,
+    except it creates the output as a 
+    <code>spotbugs.xml</code> XML file that 
+    Jenkins uses to track which items have been fixed, etc.
+    <p>
+    The
+    <a href="https://github.com/JMRI/JMRI/blob/master/.spotbugs.xml">.spotbugs.xml</a> 
+    file specifies which items in
+    SpotBugs reports are suppressed for the JMRI project's 
+    <a href="http://jmri.tagadab.com/jenkins/job/Development/job/SpotBugs/lastBuild/findbugsResult/">usual reporting via Jenkins</a>. 
+    The
+    <a href="https://github.com/JMRI/JMRI/blob/master/.spotbugs-check.xml">.spotbugs-check.xml</a> 
+    file is a super-set which identifies which are significant enough to fail CI.
+    (This is specified two places in the <code>pom.xml</code>, which is 
+    used by the <code>scripts/travis.sh</code> to control Maven running, which
+    in turn is used by the <code>.travis.yml</code> file as the Travis run-time script)
+    
+
+      <h3>Background</h3>
+
+      <p>Simon White added FindBugs support to our Ant-based build
+      chain during the development of JMRI 2.5.5.</p>
+
+      <h4>Suppressed Warnings</h4>
+      We have turned off the routine
       SpotBugs checking of certain kinds of conditions:
 
       <dl>
@@ -243,18 +325,16 @@ scanning through the code.
         improvement. We have enough of them that we've turned off
         the warning, and will come back to it some later time.</dd>
 
-        <dt><a href=
-               "http://spotbugs.readthedocs.io/en/latest/bugDescriptions.html#pzla-consider-returning-a-zero-length-array-rather-than-null-pzla-prefer-zero-length-arrays">
-                PZLA_PREFER_ZERO_LENGTH_ARRAYS</a></dt>
+        <dt>
+            <a href="https://spotbugs.readthedocs.io/en/latest/bugDescriptions.html#dm-consider-using-locale-parameterized-version-of-invoked-method-dm-convert-case">DM_CONVERT_CASE</a>,
+            <a href="https://spotbugs.readthedocs.io/en/latest/bugDescriptions.html#dm-reliance-on-default-encoding-dm-default-encoding">DM_DEFAULT_ENCODING</a>,
+            </dt>
 
-        <dd>What should a method that returns an array of values do
-        when there aren't any? Returning "null", as opposed to an
-        empty array, requires all the calling code to handle a
-        special case. In many cases, returning an empty array makes
-        the code simpler. But for existing code, that
-        simplification is marginal. As this is a design issue, but
-        it crops up a lot, we've suppressed these for now just to
-        focus on more pressing problems.</dd>
+        <dd>These cover aspects of handling characters in non-Western
+        languages. Most of our String handling doesn't have anything to do
+        with this, so it would be a huge number of annotations for
+        only a small amount of I18N gain.  Perhaps we'll revisit these
+        later.</dd>
 
         <dt>Malicious Code</dt>
 
@@ -265,12 +345,6 @@ scanning through the code.
         people trying to break it, as these changes are a lower
         priority.</dd>
 
-        <dt>Nm</dt>
-
-        <dd>The convention is that class names start with a capital
-        letter, and method names (data and code) with a small
-        letter.</dd>
-
         <dt>Se,SvVI</dt>
 
         <dd>This is a large class of warnings associated with Java
@@ -279,96 +353,27 @@ scanning through the code.
         raise the average quality of the issued warnings.</dd>
       </dl>
 
-      <h3>Background</h3>
-
-      <p>Simon White added FindBugs support to our Ant-based build
-      chain during the development of JMRI 2.5.5. His note on this
-      follows.</p>
-
-      <p>As per feature request 1716873, I've added an ant task to
-          run SpotBugs. This will produce a report in HTML in the same
-          location as the JMRI jar (i.e. the top level project dir).
-      Note the new task first runs ant dist because SpotBugs
-      examines the jmri.jar file.</p>
-
-      <p>To run the task:</p>
-
-      <ul>
-          <li>Install SpotBugs (for me I put this in
-              C:/spotbugs-3.1.1)</li>
-
-          <li>either run
-              <pre style="font-family: monospace;">
-ant -Dspotbugs.home=C:/spotbugs-3.1.1 spotbugs  (replacing the parameter with your install location)
-              </pre>
-            or edit the local.properties file and add the line
-            <pre style="font-family: monospace;">spotbugs.home=C:/spotbugs-3.1.1</pre>
-            setting spotbugs.home to your install location and then run
-            <pre style="font-family: monospace;">
-ant spotbugs
-            </pre>
-        </li>
-      </ul>On my old machine this takes about 20 minutes but your
-      mileage may vary.
-
-      <p>Note that in the build.xml I have set the maximum memory
-          -Xmx setting for the spotbugs task to 1024m. If your system
-          has more memory, boosting this may speed things up.</p>
-
-      <p>Running this on JMRI 2.5.4 produced the following:</p>
+     <h4>Status and Counts</h4>
+      <p>We've been making slow but continuous progress on removing these:</p>
 
       <table border="1">
-        <tr>
-          <td>Bad practice Warnings</td>
+        <tr><th>Category</th><th>JMRI 2.5.4</th><th>JMRI 4.13.3</th><th>JMRI 4.17.3</th></tr>
+        <tr><td>Bad practice Warnings</td><td>164</td><td>13</td><td></td></tr>
+        <tr><td>Correctness Warnings</td><td>77</td><td></td><td></td></tr>
+        <tr><td>Experimental Warnings</td><td>7</td><td></td><td></td></tr>
+        <tr><td>Malicious code vulnerability Warnings</td><td>221</td><td>(disabled)</td><td></td></tr>
+        <tr><td>Multithreaded correctness Warnings</td><td>90</td><td>175</td><td>165</td></tr>
+        <tr><td>Performance Warnings</td><td>459</td><td>15</td><td>1</td></tr>
+        <tr><td>Style / Dodgy Code Warnings</td><td>304</td><td>406</td><td>127</td></tr>
 
-          <td>164</td>
-        </tr>
-
-        <tr>
-          <td>Correctness Warnings</td>
-
-          <td>77</td>
-        </tr>
-
-        <tr>
-          <td>Experimental Warnings</td>
-
-          <td>7</td>
-        </tr>
-
-        <tr>
-          <td>Malicious code vulnerability Warnings</td>
-
-          <td>221</td>
-        </tr>
-
-        <tr>
-          <td>Multithreaded correctness Warnings</td>
-
-          <td>90</td>
-        </tr>
-
-        <tr>
-          <td>Performance Warnings</td>
-
-          <td>459</td>
-        </tr>
-
-        <tr>
-          <td>Dodgy Warnings</td>
-
-          <td>304</td>
-        </tr>
-
-        <tr>
-          <th>Total</th>
-
-          <th>1322</th>
-        </tr>
+        <tr><th>Total</th><th>1322</th><th>636</th><th>293</th></tr>
+        <tr><th>Medium Priority</th><th></th><th>199</th><th>79</th></tr>
+        <tr><th>Low Priority</th><th></th><th>437</th><th>214</th></tr>
+        <tr><th>@SuppressFBWarnings<br>Lines</th><th></th><th></th><th>868</th></tr>
       </table>
 
-      <p>A lot of work has gone into JMRI during the 2.12 release
-      cycle to bring the bug count down to zero. The <a href=
+      <p>A lot of work has gone into JMRI
+      cycle to bring the bug count down. The <a href=
       "ContinuousIntegration.shtml">Continuous Integration
           server</a> runs SpotBugs twice a day, which helps developers
       see the results of their coding without having to set up to
@@ -377,6 +382,7 @@ ant spotbugs
       <p>If you are checking code in to the JMRI repository, please
       check the CI server and make sure that your changes do not
       introduce new errors.</p>
+            
        <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

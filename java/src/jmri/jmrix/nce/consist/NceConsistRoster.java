@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComboBox;
+import jmri.InstanceManager;
+import jmri.InstanceManagerAutoDefault;
+import jmri.InstanceManagerAutoInitialize;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.roster.Roster;
 import org.jdom2.Document;
@@ -16,25 +19,25 @@ import org.slf4j.LoggerFactory;
 
 /**
  * NCE Consist Roster manages and manipulates a roster of consists.
- * <P>
+ * <p>
  * It works with the "consist-roster-config" XML DTD to load and store its
  * information.
- * <P>
+ * <p>
  * This is an in-memory representation of the roster xml file (see below for
  * constants defining name and location). As such, this class is also
  * responsible for the "dirty bit" handling to ensure it gets written. As a
  * temporary reliability enhancement, all changes to this structure are now
  * being written to a backup file, and a copy is made when the file is opened.
- * <P>
+ * <p>
  * Multiple Roster objects don't make sense, so we use an "instance" member to
  * navigate to a single one.
- * <P>
+ * <p>
  * This predates the "XmlFile" base class, so doesn't use it. Not sure whether
  * it should...
- * <P>
+ * <p>
  * The only bound property is the list of s; a PropertyChangedEvent is fired
  * every time that changes.
- * <P>
+ * <p>
  * The entries are stored in an ArrayList, sorted alphabetically. That sort is
  * done manually each time an entry is added.
  *
@@ -42,43 +45,18 @@ import org.slf4j.LoggerFactory;
  * @author Daniel Boudreau (C) 2008
  * @see NceConsistRosterEntry
  */
-public class NceConsistRoster extends XmlFile {
-
-    /**
-     * record the single instance of Roster *
-     */
-    private static NceConsistRoster _instance = null;
-
-    public synchronized static void resetInstance() {
-        _instance = null;
+public class NceConsistRoster extends XmlFile implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize {
+    
+    public NceConsistRoster() {
     }
 
     /**
-     * Locate the single instance of Roster, loading it if need be
-     *
-     * @return The valid Roster object
+     * @return The NCE consist roster object
      * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
     @Deprecated
     public static synchronized NceConsistRoster instance() {
-        if (_instance == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("ConsistRoster creating instance");
-            }
-            // create and load
-            _instance = new NceConsistRoster();
-            if (_instance.checkFile(defaultNceConsistRosterFilename())) {
-                try {
-                    _instance.readFile(defaultNceConsistRosterFilename());
-                } catch (IOException | JDOMException e) {
-                    log.error("Exception during ConsistRoster reading: {}", e.getMessage());
-                }
-            }
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("ConsistRoster returns instance " + _instance);
-        }
-        return _instance;
+        return InstanceManager.getDefault(NceConsistRoster.class);
     }
 
     /**
@@ -92,8 +70,7 @@ public class NceConsistRoster extends XmlFile {
         }
         int i = _list.size() - 1;// Last valid index
         while (i >= 0) {
-            // compareToIgnoreCase not present in Java 1.1.8
-            if (e.getId().toUpperCase().compareTo(_list.get(i).getId().toUpperCase()) > 0) {
+            if (e.getId().compareTo(_list.get(i).getId())> 0) {
                 break; // I can never remember whether I want break or continue here
             }
             i--;
@@ -127,7 +104,7 @@ public class NceConsistRoster extends XmlFile {
 
     /**
      * Return a combo box containing the entire ConsistRoster.
-     * <P>
+     * <p>
      * This is based on a single model, so it can be updated when the
      * ConsistRoster changes.
      * @return combo box of whole roster
@@ -451,10 +428,10 @@ public class NceConsistRoster extends XmlFile {
      * Store the roster in the default place, including making a backup if
      * needed
      */
-    public static void writeRosterFile() {
-        NceConsistRoster.instance().makeBackupFile(defaultNceConsistRosterFilename());
+    public void writeRosterFile() {
+        makeBackupFile(defaultNceConsistRosterFilename());
         try {
-            NceConsistRoster.instance().writeFile(defaultNceConsistRosterFilename());
+            writeFile(defaultNceConsistRosterFilename());
         } catch (IOException e) {
             log.error("Exception while writing the new ConsistRoster file, may not be complete: {}", e.getMessage());
         }
@@ -469,7 +446,7 @@ public class NceConsistRoster extends XmlFile {
         _list.clear();
         // and read new
         try {
-            _instance.readFile(defaultNceConsistRosterFilename());
+            readFile(defaultNceConsistRosterFilename());
         } catch (IOException | JDOMException e) {
             log.error("Exception during ConsistRoster reading: {}", e.getMessage());
         }
@@ -526,6 +503,18 @@ public class NceConsistRoster extends XmlFile {
 
         firePropertyChange("change", null, r);
     }
+    
+    @Override
+    public void initialize() {
+        if (checkFile(defaultNceConsistRosterFilename())) {
+            try {
+                readFile(defaultNceConsistRosterFilename());
+            } catch (IOException | JDOMException e) {
+                log.error("Exception during ConsistRoster reading: {}", e.getMessage());
+            }
+        }
+    }
+    
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(NceConsistRoster.class);
 

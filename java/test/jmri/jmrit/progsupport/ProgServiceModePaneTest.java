@@ -1,14 +1,13 @@
-package jmri.jmrit.progsupport;
+ package jmri.jmrit.progsupport;
 
 import java.awt.GraphicsEnvironment;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
-import jmri.InstanceManager;
-import jmri.ProgrammerScaffold;
-import jmri.ProgrammingMode;
+import jmri.*;
 import jmri.managers.DefaultProgrammerManager;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -39,8 +38,8 @@ public class ProgServiceModePaneTest {
     public void testCreateHorizontalDIRECTBYTEMODE() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // add dummy DCC
-        InstanceManager.setAddressedProgrammerManager(new DefaultProgrammerManager(
-                (new ProgrammerScaffold(ProgrammingMode.DIRECTBYTEMODE))));
+        InstanceManager.store(new DefaultProgrammerManager(
+                (new ProgrammerScaffold(ProgrammingMode.DIRECTBYTEMODE))), AddressedProgrammerManager.class);
         Assert.assertNotNull("programer manager available", InstanceManager.getDefault(jmri.AddressedProgrammerManager.class));
         // create and show
         JmriJFrame f = new JmriJFrame("Horizontal DIRECTBYTEMODE");
@@ -69,6 +68,7 @@ public class ProgServiceModePaneTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
     @After

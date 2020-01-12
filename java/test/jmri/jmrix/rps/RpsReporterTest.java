@@ -1,32 +1,31 @@
 package jmri.jmrix.rps;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class RpsReporterTest {
+public class RpsReporterTest extends jmri.implementation.AbstractReporterTestBase {
 
-    @Test
-    public void testCTor() {
-        RpsReporter t = new RpsReporter("RR(0,0,0);(1,0,0);(1,1,0);(0,1,0)");
-
-        Assert.assertNotNull("exists",t);
+    @Override
+    protected Object generateObjectToReport(){
+        return "3";
     }
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
+        r = new RpsReporter("RR(0,0,0);(1,0,0);(1,1,0);(0,1,0)", "R");
     }
 
     @After
+    @Override
     public void tearDown() {
+	    r = null;
         JUnitUtil.tearDown();
     }
 

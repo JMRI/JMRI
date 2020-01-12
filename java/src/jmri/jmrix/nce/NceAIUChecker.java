@@ -1,4 +1,3 @@
-//NceAIUChecker.java
 package jmri.jmrix.nce;
 
 import javax.swing.JOptionPane;
@@ -72,6 +71,7 @@ public class NceAIUChecker implements NceListener {
             if (AIUstatus == 1) {
                 log.warn("AIU broadcasts are enabled");
                 ConnectionStatus.instance().setConnectionState(
+                        tc.getUserName(),
                         tc.getPortName(),
                         ConnectionStatus.CONNECTION_DOWN);
                 JOptionPane.showMessageDialog(null,

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010 All rights reserved -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -72,7 +71,7 @@
         <choice xml:lang="ca">NMRA Digital only (ca)</choice>
         <choice xml:lang="de">Nur Digital nach NMRA</choice>
         <choice xml:lang="cs">Pouze digitál NMRA</choice>
-        <choice xml:lang="nl">Alleen digitaal naar NMRA</choice>
+        <choice xml:lang="nl">Alleen digitaal vlg. NMRA</choice>
       </enumChoice>
       <enumChoice choice="DC conversion enabled">
         <choice>DC conversion enabled</choice>
@@ -84,13 +83,13 @@
         <choice xml:lang="nl">Analogmodus ingeschakeld</choice>
       </enumChoice>
     </enumVal>
+    <label>Power Source Conversion</label>
     <label xml:lang="it">Conversione Sorgente Alimentazione</label>
     <label xml:lang="fr">Conversion source d'alimentation</label>
     <label xml:lang="ca">Power Source Conversion(ca)</label>
     <label xml:lang="de">Stromquelle Konversion</label>
     <label xml:lang="cs">Konverze napájení</label>
-    <label xml:lang="nl">Stroombron conversie</label>
-    <label>Power Source Conversion</label>
+    <label xml:lang="nl">Stroombron-omschakeling</label>
     <tooltip>&lt;html&gt;NMRA Digital only: Digital Operation Only.&lt;br&gt; DC conversion enabled: both Digital + Analog, default is both&lt;br&gt;</tooltip>
     <tooltip xml:lang="it">&lt;html&gt;'4' bit.&lt;br&gt; Permette alla loco di andare in DC, per default è On&lt;br&gt;</tooltip>
     <tooltip xml:lang="fr">&lt;html&gt;Digital NMRA seulement: fonctionne uniquement en Digital&lt;br&gt; Mode analogique activé: fonctionne à la fois en Digital et en analogique&lt;br&gt;Les deux par défaut.&lt;br&gt;</tooltip>

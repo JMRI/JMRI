@@ -1,0 +1,581 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+  <jmriversion>
+    <major>4</major>
+    <minor>15</minor>
+    <test>4</test>
+    <modifier>ish</modifier>
+  </jmriversion>
+  <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
+    <defaultInitialState>unknown</defaultInitialState>
+    <sensor inverted="false">
+      <systemName>ISCLOCKRUNNING</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS1</systemName>
+      <userName>East2</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS2</systemName>
+      <userName>East1</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS3</systemName>
+      <userName>EastTurnoutOS</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS4</systemName>
+      <userName>Mainline</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS5</systemName>
+      <userName>Siding</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS6</systemName>
+      <userName>WestTurnoutOS</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS7</systemName>
+      <userName>West1</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS8</systemName>
+      <userName>West2</userName>
+    </sensor>
+  </sensors>
+  <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">
+    <operations automate="false">
+      <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+      <operation name="Raw" class="jmri.configurexml.turnoutoperations.RawTurnoutOperationXml" interval="300" maxtries="1" />
+      <operation name="Sensor" class="jmri.configurexml.turnoutoperations.SensorTurnoutOperationXml" interval="300" maxtries="3" />
+    </operations>
+    <defaultclosedspeed>Normal</defaultclosedspeed>
+    <defaultthrownspeed>Restricted</defaultthrownspeed>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT1</systemName>
+      <userName>EastTurnout</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT2</systemName>
+      <userName>WestTurnout</userName>
+    </turnout>
+  </turnouts>
+  <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
+    <memory value="11:26 PM">
+      <systemName>IMCURRENTTIME</systemName>
+    </memory>
+    <memory value="1.0">
+      <systemName>IMRATEFACTOR</systemName>
+    </memory>
+  </memories>
+  <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml">
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:AAR-1946:PL-1-high-abs($0004)</systemName>
+      <userName>SidingToEastTurnout</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:AAR-1946:PL-1-high-abs($0005)</systemName>
+      <userName>MainlineToEastTurnout</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:AAR-1946:PL-1-high-abs($0006)</systemName>
+      <userName>SidingToWestTurnout</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:AAR-1946:PL-1-high-abs($0007)</systemName>
+      <userName>MainlineToWestTurnout</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:AAR-1946:PL-1-high-pbs($0001)</systemName>
+      <userName>East2ToEast1</userName>
+      <properties>
+        <property>
+          <key>intermediateSignal</key>
+          <value class="java.lang.Boolean">true</value>
+        </property>
+      </properties>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:AAR-1946:PL-1-high-pbs($0002)</systemName>
+      <userName>East1ToEast2</userName>
+      <properties>
+        <property>
+          <key>intermediateSignal</key>
+          <value class="java.lang.Boolean">true</value>
+        </property>
+      </properties>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:AAR-1946:PL-1-high-pbs($0009)</systemName>
+      <userName>West1toWest2</userName>
+      <properties>
+        <property>
+          <key>intermediateSignal</key>
+          <value class="java.lang.Boolean">true</value>
+        </property>
+      </properties>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:AAR-1946:PL-1-high-pbs($0010)</systemName>
+      <userName>West2ToWest1</userName>
+      <properties>
+        <property>
+          <key>intermediateSignal</key>
+          <value class="java.lang.Boolean">true</value>
+        </property>
+      </properties>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:AAR-1946:SL-2-high-abs($0003)</systemName>
+      <userName>East1ToEastTurnout</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:AAR-1946:SL-2-high-abs($0008)</systemName>
+      <userName>West1ToWestTurnout</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+  </signalmasts>
+  <signalgroups class="jmri.managers.configurexml.DefaultSignalGroupManagerXml" />
+  <blocks class="jmri.configurexml.BlockManagerXml">
+    <defaultspeed>Normal</defaultspeed>
+    <block systemName="IB:AUTO:0001">
+      <systemName>IB:AUTO:0001</systemName>
+      <userName>East2Block</userName>
+    </block>
+    <block systemName="IB:AUTO:0002">
+      <systemName>IB:AUTO:0002</systemName>
+      <userName>East1Block</userName>
+    </block>
+    <block systemName="IB:AUTO:0003">
+      <systemName>IB:AUTO:0003</systemName>
+      <userName>EastTurnoutOSBlock</userName>
+    </block>
+    <block systemName="IB:AUTO:0004">
+      <systemName>IB:AUTO:0004</systemName>
+      <userName>SidingBlock</userName>
+    </block>
+    <block systemName="IB:AUTO:0005">
+      <systemName>IB:AUTO:0005</systemName>
+      <userName>MainlineBlock</userName>
+    </block>
+    <block systemName="IB:AUTO:0006">
+      <systemName>IB:AUTO:0006</systemName>
+      <userName>WestTurnoutOSBlock</userName>
+    </block>
+    <block systemName="IB:AUTO:0007">
+      <systemName>IB:AUTO:0007</systemName>
+      <userName>West1Block</userName>
+    </block>
+    <block systemName="IB:AUTO:0008">
+      <systemName>IB:AUTO:0008</systemName>
+      <userName>West2Block</userName>
+    </block>
+    <block systemName="IB:AUTO:0001" length="0.0" curve="0">
+      <systemName>IB:AUTO:0001</systemName>
+      <userName>East2Block</userName>
+      <permissive>no</permissive>
+      <occupancysensor>East2</occupancysensor>
+      <path todir="64" fromdir="128" block="IB:AUTO:0002" />
+      <path todir="64" fromdir="128" block="IB:AUTO:0008" />
+    </block>
+    <block systemName="IB:AUTO:0002" length="0.0" curve="0">
+      <systemName>IB:AUTO:0002</systemName>
+      <userName>East1Block</userName>
+      <permissive>no</permissive>
+      <occupancysensor>East1</occupancysensor>
+      <path todir="64" fromdir="128" block="IB:AUTO:0003" />
+      <path todir="128" fromdir="64" block="IB:AUTO:0001" />
+    </block>
+    <block systemName="IB:AUTO:0003" length="0.0" curve="0">
+      <systemName>IB:AUTO:0003</systemName>
+      <userName>EastTurnoutOSBlock</userName>
+      <permissive>no</permissive>
+      <occupancysensor>EastTurnoutOS</occupancysensor>
+      <path todir="64" fromdir="128" block="IB:AUTO:0005">
+        <beansetting setting="2">
+          <turnout systemName="EastTurnout" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB:AUTO:0004">
+        <beansetting setting="4">
+          <turnout systemName="EastTurnout" />
+        </beansetting>
+      </path>
+      <path todir="128" fromdir="64" block="IB:AUTO:0002" />
+    </block>
+    <block systemName="IB:AUTO:0004" length="0.0" curve="0">
+      <systemName>IB:AUTO:0004</systemName>
+      <userName>SidingBlock</userName>
+      <permissive>no</permissive>
+      <occupancysensor>Siding</occupancysensor>
+      <path todir="128" fromdir="64" block="IB:AUTO:0003">
+        <beansetting setting="4">
+          <turnout systemName="EastTurnout" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB:AUTO:0006">
+        <beansetting setting="4">
+          <turnout systemName="WestTurnout" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB:AUTO:0005" length="0.0" curve="0">
+      <systemName>IB:AUTO:0005</systemName>
+      <userName>MainlineBlock</userName>
+      <permissive>no</permissive>
+      <occupancysensor>Mainline</occupancysensor>
+      <path todir="128" fromdir="64" block="IB:AUTO:0003">
+        <beansetting setting="2">
+          <turnout systemName="EastTurnout" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB:AUTO:0006">
+        <beansetting setting="2">
+          <turnout systemName="WestTurnout" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB:AUTO:0006" length="0.0" curve="0">
+      <systemName>IB:AUTO:0006</systemName>
+      <userName>WestTurnoutOSBlock</userName>
+      <permissive>no</permissive>
+      <occupancysensor>WestTurnoutOS</occupancysensor>
+      <path todir="128" fromdir="64" block="IB:AUTO:0005">
+        <beansetting setting="2">
+          <turnout systemName="WestTurnout" />
+        </beansetting>
+      </path>
+      <path todir="128" fromdir="64" block="IB:AUTO:0004">
+        <beansetting setting="4">
+          <turnout systemName="WestTurnout" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB:AUTO:0007" />
+    </block>
+    <block systemName="IB:AUTO:0007" length="0.0" curve="0">
+      <systemName>IB:AUTO:0007</systemName>
+      <userName>West1Block</userName>
+      <permissive>no</permissive>
+      <occupancysensor>West1</occupancysensor>
+      <path todir="128" fromdir="64" block="IB:AUTO:0006" />
+      <path todir="64" fromdir="128" block="IB:AUTO:0008" />
+    </block>
+    <block systemName="IB:AUTO:0008" length="0.0" curve="0">
+      <systemName>IB:AUTO:0008</systemName>
+      <userName>West2Block</userName>
+      <permissive>no</permissive>
+      <occupancysensor>West2</occupancysensor>
+      <path todir="128" fromdir="64" block="IB:AUTO:0007" />
+      <path todir="128" fromdir="64" block="IB:AUTO:0001" />
+    </block>
+  </blocks>
+  <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml" />
+  <layoutblocks class="jmri.jmrit.display.layoutEditor.configurexml.LayoutBlockManagerXml" blockrouting="yes">
+    <layoutblock systemName="ILB1" occupancysensor="EastTurnoutOS" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB1</systemName>
+      <userName>EastTurnoutOSBlock</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB2" occupancysensor="WestTurnoutOS" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB2</systemName>
+      <userName>WestTurnoutOSBlock</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB3" occupancysensor="Mainline" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB3</systemName>
+      <userName>MainlineBlock</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB4" occupancysensor="Siding" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB4</systemName>
+      <userName>SidingBlock</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB5" occupancysensor="East1" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB5</systemName>
+      <userName>East1Block</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB6" occupancysensor="East2" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB6</systemName>
+      <userName>East2Block</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB7" occupancysensor="West1" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB7</systemName>
+      <userName>West1Block</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB8" occupancysensor="West2" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB8</systemName>
+      <userName>West2Block</userName>
+    </layoutblock>
+  </layoutblocks>
+  <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml" />
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>10</logicDelay>
+    <signalmastlogic source="SidingToEastTurnout">
+      <sourceSignalMast>SidingToEastTurnout</sourceSignalMast>
+      <destinationMast destination="East1ToEast2">
+        <destinationSignalMast>East1ToEast2</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <associatedSection>SidingToEastTurnout:East1ToEast2</associatedSection>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="MainlineToEastTurnout">
+      <sourceSignalMast>MainlineToEastTurnout</sourceSignalMast>
+      <destinationMast destination="East1ToEast2">
+        <destinationSignalMast>East1ToEast2</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <associatedSection>MainlineToEastTurnout:East1ToEast2</associatedSection>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="SidingToWestTurnout">
+      <sourceSignalMast>SidingToWestTurnout</sourceSignalMast>
+      <destinationMast destination="West1toWest2">
+        <destinationSignalMast>West1toWest2</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <associatedSection>SidingToWestTurnout:West1toWest2</associatedSection>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="MainlineToWestTurnout">
+      <sourceSignalMast>MainlineToWestTurnout</sourceSignalMast>
+      <destinationMast destination="West1toWest2">
+        <destinationSignalMast>West1toWest2</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <associatedSection>MainlineToWestTurnout:West1toWest2</associatedSection>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="East2ToEast1">
+      <sourceSignalMast>East2ToEast1</sourceSignalMast>
+      <destinationMast destination="East1ToEastTurnout">
+        <destinationSignalMast>East1ToEastTurnout</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <associatedSection>East2ToEast1:East1ToEastTurnout</associatedSection>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="East1ToEast2">
+      <sourceSignalMast>East1ToEast2</sourceSignalMast>
+      <destinationMast destination="West2ToWest1">
+        <destinationSignalMast>West2ToWest1</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <associatedSection>East1ToEast2:West2ToWest1</associatedSection>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="West1toWest2">
+      <sourceSignalMast>West1toWest2</sourceSignalMast>
+      <destinationMast destination="East2ToEast1">
+        <destinationSignalMast>East2ToEast1</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <associatedSection>West1toWest2:East2ToEast1</associatedSection>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="West2ToWest1">
+      <sourceSignalMast>West2ToWest1</sourceSignalMast>
+      <destinationMast destination="West1ToWestTurnout">
+        <destinationSignalMast>West1ToWestTurnout</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <associatedSection>West2ToWest1:West1ToWestTurnout</associatedSection>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="East1ToEastTurnout">
+      <sourceSignalMast>East1ToEastTurnout</sourceSignalMast>
+      <destinationMast destination="MainlineToWestTurnout">
+        <destinationSignalMast>MainlineToWestTurnout</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <associatedSection>East1ToEastTurnout:MainlineToWestTurnout</associatedSection>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+      <destinationMast destination="SidingToWestTurnout">
+        <destinationSignalMast>SidingToWestTurnout</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <associatedSection>East1ToEastTurnout:SidingToWestTurnout</associatedSection>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="West1ToWestTurnout">
+      <sourceSignalMast>West1ToWestTurnout</sourceSignalMast>
+      <destinationMast destination="SidingToEastTurnout">
+        <destinationSignalMast>SidingToEastTurnout</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <associatedSection>West1ToWestTurnout:SidingToEastTurnout</associatedSection>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+      <destinationMast destination="MainlineToEastTurnout">
+        <destinationSignalMast>MainlineToEastTurnout</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <associatedSection>West1ToWestTurnout:MainlineToEastTurnout</associatedSection>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+    </signalmastlogic>
+  </signalmastlogics>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Wed Feb 20 22:57:24 EST 2019" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="Cab Signal Test" x="0" y="0" height="960" width="1900" windowheight="1053" windowwidth="1920" panelheight="960" panelwidth="1900" sliders="no" scrollable="none" editable="no" positionable="yes" controlling="yes" animating="yes" showhelpbar="yes" drawgrid="yes" snaponadd="no" snaponmove="yes" antialiasing="no" turnoutcircles="no" tooltipsnotedit="no" tooltipsinedit="yes" mainlinetrackwidth="4" xscale="1.0" yscale="1.0" sidetrackwidth="2" defaulttrackcolor="darkGray" defaultoccupiedtrackcolor="red" defaultalternativetrackcolor="white" defaulttextcolor="black" turnoutcirclecolor="black" turnoutcirclesize="4" turnoutdrawunselectedleg="yes" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="10.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" autoblkgenerate="no" redBackground="192" greenBackground="192" blueBackground="192" gridSize="10" gridSize2nd="10" openDispatcher="no" useDirectTurnoutControl="no">
+    <layoutTrackDrawingOptions name="Cab Signal Test" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTrackDrawingOptionsXml">
+      <mainBallastColor>#000000</mainBallastColor>
+      <mainBallastWidth>0</mainBallastWidth>
+      <mainBlockLineDashPercentageX10>0</mainBlockLineDashPercentageX10>
+      <mainBlockLineWidth>4</mainBlockLineWidth>
+      <mainRailColor>#404040</mainRailColor>
+      <mainRailCount>1</mainRailCount>
+      <mainRailGap>0</mainRailGap>
+      <mainRailWidth>2</mainRailWidth>
+      <mainTieColor>#000000</mainTieColor>
+      <mainTieGap>0</mainTieGap>
+      <mainTieLength>0</mainTieLength>
+      <mainTieWidth>0</mainTieWidth>
+      <sideBallastColor>#000000</sideBallastColor>
+      <sideBallastWidth>0</sideBallastWidth>
+      <sideBlockLineDashPercentageX10>0</sideBlockLineDashPercentageX10>
+      <sideBlockLineWidth>2</sideBlockLineWidth>
+      <sideRailColor>#404040</sideRailColor>
+      <sideRailCount>1</sideRailCount>
+      <sideRailGap>0</sideRailGap>
+      <sideRailWidth>1</sideRailWidth>
+      <sideTieColor>#000000</sideTieColor>
+      <sideTieGap>0</sideTieGap>
+      <sideTieLength>0</sideTieLength>
+      <sideTieWidth>0</sideTieWidth>
+    </layoutTrackDrawingOptions>
+    <signalmasticon signalmast="East1ToEastTurnout" x="296" y="105" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" degrees="92" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <tooltip>East1ToEastTurnout (IF$vsm:AAR-1946:SL-2-high-abs($0003))</tooltip>
+    </signalmasticon>
+    <signalmasticon signalmast="MainlineToEastTurnout" x="388" y="75" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="SidingToEastTurnout" x="385" y="125" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <tooltip>SidingToEastTurnout (IF$vsm:AAR-1946:PL-1-high-abs($0004))</tooltip>
+    </signalmasticon>
+    <signalmasticon signalmast="West1ToWestTurnout" x="523" y="80" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" degrees="268" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <tooltip>West1ToWestTurnout (IF$vsm:AAR-1946:SL-2-high-abs($0008))</tooltip>
+    </signalmasticon>
+    <signalmasticon signalmast="MainlineToWestTurnout" x="425" y="74" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" degrees="89" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <tooltip>MainlineToWestTurnout (IF$vsm:AAR-1946:PL-1-high-abs($0007))</tooltip>
+    </signalmasticon>
+    <signalmasticon signalmast="SidingToWestTurnout" x="418" y="124" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" degrees="90" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <tooltip>SidingToWestTurnout (IF$vsm:AAR-1946:PL-1-high-abs($0006))</tooltip>
+    </signalmasticon>
+    <signalmasticon signalmast="East2ToEast1" x="177" y="103" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" degrees="89" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <tooltip>East2ToEast1 (IF$vsm:AAR-1946:PL-1-high-pbs($0001))</tooltip>
+    </signalmasticon>
+    <signalmasticon signalmast="East1ToEast2" x="235" y="72" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" degrees="271" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <tooltip>East1ToEast2 (IF$vsm:AAR-1946:PL-1-high-pbs($0002))</tooltip>
+    </signalmasticon>
+    <signalmasticon signalmast="West1toWest2" x="607" y="105" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" degrees="87" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <tooltip>West1toWest2 (IF$vsm:AAR-1946:PL-1-high-pbs($0009))</tooltip>
+    </signalmasticon>
+    <signalmasticon signalmast="West2ToWest1" x="665" y="75" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <tooltip>West2ToWest1 (IF$vsm:AAR-1946:PL-1-high-pbs($0010))</tooltip>
+    </signalmasticon>
+    <layoutturnout ident="TO1" type="1" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="363.0" ycen="101.0" xa="343.0" ya="101.0" xb="383.0" yb="101.0" xc="380.0" yc="120.0" xd="343.0" yd="101.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTurnoutXml" turnoutname="EastTurnout" blockname="EastTurnoutOSBlock" connectaname="T3" connectbname="T1" connectcname="T2">
+      <signalAMast>East1ToEastTurnout</signalAMast>
+      <signalBMast>MainlineToEastTurnout</signalBMast>
+      <signalCMast>SidingToEastTurnout</signalCMast>
+    </layoutturnout>
+    <layoutturnout ident="TO3" type="2" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="500.0" ycen="103.0" xa="520.0" ya="106.0" xb="480.0" yb="100.0" xc="470.0" yc="120.0" xd="520.0" yd="106.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTurnoutXml" turnoutname="WestTurnout" blockname="WestTurnoutOSBlock" connectaname="T7" connectbname="T1" connectcname="T2">
+      <signalAMast>West1ToWestTurnout</signalAMast>
+      <signalBMast>MainlineToWestTurnout</signalBMast>
+      <signalCMast>SidingToWestTurnout</signalCMast>
+    </layoutturnout>
+    <tracksegment ident="T1" blockname="MainlineBlock" connect1name="TO1" type1="3" connect2name="TO3" type2="3" dashed="no" mainline="yes" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T2" blockname="SidingBlock" connect1name="TO1" type1="4" connect2name="TO3" type2="4" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T3" blockname="East1Block" connect1name="A1" type1="1" connect2name="TO1" type2="2" dashed="no" mainline="yes" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T4" blockname="East2Block" connect1name="A2" type1="1" connect2name="A1" type2="1" dashed="no" mainline="yes" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T5" blockname="East2Block" connect1name="A2" type1="1" connect2name="A5" type2="1" dashed="yes" mainline="yes" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T6" blockname="East2Block" connect1name="A5" type1="1" connect2name="A6" type2="1" dashed="yes" mainline="yes" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T7" blockname="West1Block" connect1name="TO3" type1="2" connect2name="A3" type2="1" dashed="no" mainline="yes" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T8" blockname="West2Block" connect1name="A3" type1="1" connect2name="A4" type2="1" dashed="no" mainline="yes" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T9" blockname="West2Block" connect1name="A4" type1="1" connect2name="A7" type2="1" dashed="yes" mainline="yes" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T10" blockname="West2Block" connect1name="A7" type1="1" connect2name="A6" type2="1" dashed="yes" mainline="yes" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <positionablepoint ident="A1" type="1" x="230.0" y="98.0" connect1name="T3" connect2name="T4" eastboundsignalmast="East2ToEast1" westboundsignalmast="East1ToEast2" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A2" type="1" x="99.0" y="99.0" connect1name="T4" connect2name="T5" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A3" type="1" x="660.0" y="100.0" connect1name="T7" connect2name="T8" eastboundsignalmast="West1toWest2" westboundsignalmast="West2ToWest1" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A4" type="1" x="800.0" y="100.0" connect1name="T8" connect2name="T9" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A5" type="1" x="98.0" y="197.0" connect1name="T5" connect2name="T6" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A6" type="1" x="385.0" y="200.0" connect1name="T6" connect2name="T10" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A7" type="1" x="800.0" y="200.0" connect1name="T9" connect2name="T10" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+  </LayoutEditor>
+  <filehistory>
+    <operation>
+      <type>app</type>
+      <date>Wed Feb 20 22:57:23 EST 2019</date>
+      <filename>JMRI program</filename>
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Wed Feb 20 23:26:27 EST 2019</date>
+      <filename />
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 4.15.4ish+Paul+20190221T0357Z+R9ad4a161ed on Wed Feb 20 23:26:27 EST 2019-->
+</layout-config>

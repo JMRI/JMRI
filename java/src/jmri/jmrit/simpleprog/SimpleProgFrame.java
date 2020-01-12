@@ -17,7 +17,7 @@ import jmri.jmrit.symbolicprog.SymbolicProgBundle;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2007
  * @author Giorgio Terdina Copyright (C) 2007
-  */
+ */
 public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgListener {
 
     /**
@@ -144,9 +144,9 @@ public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgLi
     private int getNewVal() {
         try {
             if (decButton.isSelected()) {
-                return Integer.valueOf(valField.getText()).intValue();
+                return Integer.parseInt(valField.getText());
             } else {
-                return Integer.valueOf(valField.getText(), 16).intValue();
+                return Integer.parseInt(valField.getText(), 16);
             }
         } catch (java.lang.NumberFormatException e) {
             valField.setText("");
@@ -241,7 +241,7 @@ public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgLi
                 value = Integer.valueOf(valField.getText(), 16).intValue();
             } else // convert from dec to hex
             {
-                value = Integer.valueOf(valField.getText()).intValue();
+                value = Integer.parseInt(valField.getText());
             }
         } catch (java.lang.NumberFormatException ee) {
             resultsField.setText(Bundle.getMessage("ErrorTitle"));

@@ -19,7 +19,7 @@ import javax.swing.JPanel;
  * </ul>
  *
  * @author Paul Bender Copyright (C) 2003,2005
-  */
+ */
 public class LZV100Frame extends jmri.util.JmriJFrame {
 
     public LZV100Frame(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {

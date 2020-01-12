@@ -1,6 +1,7 @@
 package jmri.jmrix.marklin;
 
 import java.util.Hashtable;
+import javax.annotation.Nonnull;
 import javax.swing.JOptionPane;
 import jmri.JmriException;
 import jmri.Sensor;
@@ -11,8 +12,9 @@ import org.slf4j.LoggerFactory;
  * Implement sensor manager for Marklin systems. The Manager handles all the
  * state changes.
  * <p>
- * System names are "USnnn:yy", where nnn is the Marklin Object Number for a
- * given s88 Bus Module and yy is the port on that module.
+ * System names are "USnnn:yy", where U is the user configurable system prefix,
+ * nnn is the Marklin Object Number for a given s88 Bus Module and
+ * yy is the port on that module.
  *
  * @author Kevin Dickerson Copyright (C) 2009
  */
@@ -20,24 +22,34 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
         implements MarklinListener {
 
     public MarklinSensorManager(MarklinSystemConnectionMemo memo) {
-        this.memo = memo;
+        super(memo);
         tc = memo.getTrafficController();
         // connect to the TrafficManager
         tc.addMarklinListener(this);
     }
 
-    MarklinSystemConnectionMemo memo;
     MarklinTrafficController tc;
     //The hash table simply holds the object number against the MarklinSensor ref.
     private Hashtable<Integer, Hashtable<Integer, MarklinSensor>> _tmarklin = new Hashtable<Integer, Hashtable<Integer, MarklinSensor>>();   // stores known Marklin Obj
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return memo.getSystemPrefix();
+    @Nonnull
+    public MarklinSystemConnectionMemo getMemo() {
+        return (MarklinSystemConnectionMemo) memo;
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * System name is normalized to ensure uniqueness.
+     * @throws IllegalArgumentException when SystemName can't be converted
+     */
     @Override
-    public Sensor createNewSensor(String systemName, String userName) {
+    @Nonnull
+    public Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         MarklinSensor s = new MarklinSensor(systemName, userName);
         if (systemName.contains(":")) {
             int board = 0;
@@ -46,33 +58,35 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
             String curAddress = systemName.substring(getSystemPrefix().length() + 1, systemName.length());
             int seperator = curAddress.indexOf(":");
             try {
-                board = Integer.valueOf(curAddress.substring(0, seperator)).intValue();
+                board = Integer.parseInt(curAddress.substring(0, seperator));
                 if (!_tmarklin.containsKey(board)) {
                     _tmarklin.put(board, new Hashtable<Integer, MarklinSensor>());
                     MarklinMessage m = MarklinMessage.sensorPollMessage(board);
                     tc.sendMarklinMessage(m, this);
                 }
             } catch (NumberFormatException ex) {
-                log.error("Unable to convert " + curAddress + " into the Module and port format of nn:xx");
-                return null;
+                throw new IllegalArgumentException("Unable to convert " +  // NOI18N
+                        curAddress +
+                        " into the Module and port format of nn:xx"); // NOI18N
             }
             Hashtable<Integer, MarklinSensor> sensorList = _tmarklin.get(board);
             try {
-                channel = Integer.valueOf(curAddress.substring(seperator + 1)).intValue();
+                channel = Integer.parseInt(curAddress.substring(seperator + 1));
                 if (!sensorList.containsKey(channel)) {
                     sensorList.put(channel, s);
                 }
             } catch (NumberFormatException ex) {
-                log.error("Unable to convert " + curAddress + " into the Module and port format of nn:xx");
-                return null;
+                throw new IllegalArgumentException("Unable to convert " +  // NOI18N
+                        curAddress +
+                        " into the Module and port format of nn:xx"); // NOI18N
             }
         }
-
         return s;
     }
 
     @Override
-    public String createSystemName(String curAddress, String prefix) throws JmriException {
+    @Nonnull
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         if (!curAddress.contains(":")) {
             log.error("Unable to convert {} into the Module and port format of nn:xx", curAddress);
             JOptionPane.showMessageDialog(null, Bundle.getMessage("WarningModuleAddress"),
@@ -84,13 +98,13 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
         //Address format passed is in the form of board:channel or T:turnout address
         int seperator = curAddress.indexOf(":");
         try {
-            board = Integer.valueOf(curAddress.substring(0, seperator)).intValue();
+            board = Integer.parseInt(curAddress.substring(0, seperator));
         } catch (NumberFormatException ex) {
             log.error("First part of {} in front of : should be a number", curAddress);
             throw new JmriException("Module Address passed should be a number");
         }
         try {
-            port = Integer.valueOf(curAddress.substring(seperator + 1)).intValue();
+            port = Integer.parseInt(curAddress.substring(seperator + 1));
         } catch (NumberFormatException ex) {
             log.error("Second part of {} after : should be a number", curAddress);
             throw new JmriException("Port Address passed should be a number");
@@ -113,13 +127,13 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
         return sb.toString();
     }
 
-    int board = 0;
-    int port = 0;
+    private int board = 0;
+    private int port = 0;
 
     @Override
-    public String getNextValidAddress(String curAddress, String prefix) {
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) {
 
-        String tmpSName = "";
+        String tmpSName;
 
         try {
             tmpSName = createSystemName(curAddress, prefix);
@@ -128,7 +142,7 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
                     showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorConvertNumberX", curAddress), "" + ex, "", true, false);
             return null;
         }
-        if (tmpSName == null) { return null;}
+
         // Check to determine if the System Name is in use, return null if it is,
         // otherwise return the next valid address.
         Sensor s = getBySystemName(tmpSName);
@@ -212,7 +226,7 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
                     return;
                 }
                 log.error("state not found " + ms.getDisplayName() + " " + r.getElement(9) + " " + r.getElement(10));
-                log.error(r.toHexString());
+                log.error(r.toString());
             } else {
                 int s88Module = r.getElement(9);
                 if (_tmarklin.containsKey(s88Module)) {

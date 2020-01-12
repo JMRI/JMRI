@@ -3,12 +3,7 @@ package jmri.jmrit.display;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
 import jmri.jmrit.display.panelEditor.PanelEditor;
-import jmri.util.JUnitUtil;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * IndicatorTurnoutIconTest.java
@@ -37,10 +32,9 @@ public class IndicatorTurnoutIconTest extends PositionableIconTest {
     }
 
     @Test
+    @Override
     public void testClone() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't Assume in TestCase
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JFrame jf = new JFrame();
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
 
@@ -56,8 +50,9 @@ public class IndicatorTurnoutIconTest extends PositionableIconTest {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
-        JUnitUtil.setUp();
+        super.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
             editor = new PanelEditor("Test IndicatorTurnoutIcon Panel");
             IndicatorTurnoutIcon to = new IndicatorTurnoutIcon(editor);

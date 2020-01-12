@@ -43,30 +43,29 @@ import org.slf4j.LoggerFactory;
 /*
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under
  * the terms of version 2 of the GNU General Public License as published
  * by the Free Software Foundation. See the "COPYING" file for a copy
  * of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
- * <P>
  *
  * @author   Mark Underwood Copyright (C) 2011
  */
 public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener {
 
     // Map of Mnemonic KeyEvent values to GUI Components
-    private static final Map<String, Integer> Mnemonics = new HashMap<String, Integer>();
+    private static final Map<String, Integer> Mnemonics = new HashMap<>();
 
     static {
         Mnemonics.put("SensorTab", KeyEvent.VK_E); // NOI18N
         Mnemonics.put("TurnoutTab", KeyEvent.VK_T); // NOI18N
         Mnemonics.put("OutputTab", KeyEvent.VK_O); // NOI18N
-        Mnemonics.put("AddButton", KeyEvent.VK_A); // NOI18N
+        Mnemonics.put("ButtonAdd", KeyEvent.VK_A); // NOI18N
         Mnemonics.put("CloseButton", KeyEvent.VK_O); // NOI18N
         Mnemonics.put("SaveButton", KeyEvent.VK_S); // NOI18N
     }
@@ -119,20 +118,20 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
         sensorPanel = new JPanel();
         sensorPanel.setLayout(new GridBagLayout());
 
-        JButton addButton = new JButton(Bundle.getMessage("ButtonAddSensor"));
+        JButton addButton = new JButton(Bundle.getMessage("ButtonAddX", Bundle.getMessage("BeanNameSensor")));
         addButton.setToolTipText(Bundle.getMessage("ToolTipButtonMSFAdd"));
-        addButton.setMnemonic(Mnemonics.get("AddButton")); // NOI18N
+        addButton.setMnemonic(Mnemonics.get("ButtonAdd")); // NOI18N
         addButton.addActionListener((ActionEvent e) -> {
             addButtonPressed(e);
         });
 
         JButton closeButton = new JButton(Bundle.getMessage("ButtonClose"));
-        closeButton.setToolTipText(Bundle.getMessage("ToolTipButtonMSFClose"));
+        closeButton.setToolTipText(Bundle.getMessage("ToolTipButtonClose"));
         closeButton.setMnemonic(Mnemonics.get("CloseButton")); // NOI18N
         closeButton.addActionListener((ActionEvent e) -> {
             closeButtonPressed(e);
         });
-        JButton saveButton = new JButton(Bundle.getMessage("ButtonSaveSensors"));
+        JButton saveButton = new JButton(Bundle.getMessage("ButtonSaveX", Bundle.getMessage("Sensors")));
         saveButton.setToolTipText(Bundle.getMessage("ToolTipButtonMSFSave"));
         saveButton.setMnemonic(Mnemonics.get("SaveButton")); // NOI18N
         saveButton.addActionListener((ActionEvent e) -> {
@@ -145,7 +144,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
         sensorTable.setFillsViewportHeight(true);
         sensorScrollPanel.getViewport().add(sensorTable);
         sensorTable.setPreferredScrollableViewportSize(new Dimension(520, 200));
-        sensorTable.getColumn(Bundle.getMessage("FieldTableDeleteColumn")).setCellRenderer(new ButtonRenderer());
+        sensorTable.getColumn(Bundle.getMessage("ColumnDelete")).setCellRenderer(new ButtonRenderer());
         sensorTable.removeColumn(sensorTable.getColumn("isNew"));
         sensorTable.removeColumn(sensorTable.getColumn("isDirty"));
         sensorTable.removeColumn(sensorTable.getColumn("isDelete"));
@@ -159,11 +158,10 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
         sensorSorter = new TableRowSorter<>(sensorTable.getModel());
         sensorTable.setRowSorter(sensorSorter);
         List<RowSorter.SortKey> sensorSortKeys = new ArrayList<>();
-        //int columnIndexToSort = 1;
         sensorSortKeys.add(new RowSorter.SortKey(sensorTable.getColumn(Bundle.getMessage("FieldTableIndexColumn")).getModelIndex(), SortOrder.ASCENDING));
         sensorSorter.setSortKeys(sensorSortKeys);
         sensorSorter.sort();
-        sensorSorter.setSortable(sensorTable.getColumn(Bundle.getMessage("FieldTableDeleteColumn")).getModelIndex(), false);
+        sensorSorter.setSortable(sensorTable.getColumn(Bundle.getMessage("ColumnDelete")).getModelIndex(), false);
 
         JScrollPane turnoutScrollPanel = new JScrollPane();
         turnoutModel = new TurnoutTableModel();
@@ -171,7 +169,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
         turnoutTable.setFillsViewportHeight(true);
         turnoutScrollPanel.getViewport().add(turnoutTable);
         turnoutTable.setPreferredScrollableViewportSize(new Dimension(520, 200));
-        turnoutTable.getColumn(Bundle.getMessage("FieldTableDeleteColumn")).setCellRenderer(new ButtonRenderer());
+        turnoutTable.getColumn(Bundle.getMessage("ColumnDelete")).setCellRenderer(new ButtonRenderer());
         turnoutTable.removeColumn(turnoutTable.getColumn("isNew"));
         turnoutTable.removeColumn(turnoutTable.getColumn("isDirty"));
         turnoutTable.removeColumn(turnoutTable.getColumn("isDelete"));
@@ -185,10 +183,9 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
         turnoutSorter = new TableRowSorter<>(turnoutTable.getModel());
         turnoutTable.setRowSorter(turnoutSorter);
         List<RowSorter.SortKey> turnoutSortKeys = new ArrayList<>();
-        //int columnIndexToSort = 1;
         turnoutSortKeys.add(new RowSorter.SortKey(sensorTable.getColumn(Bundle.getMessage("FieldTableIndexColumn")).getModelIndex(), SortOrder.ASCENDING));
         turnoutSorter.setSortKeys(turnoutSortKeys);
-        turnoutSorter.setSortable(sensorTable.getColumn(Bundle.getMessage("FieldTableDeleteColumn")).getModelIndex(), false);
+        turnoutSorter.setSortable(sensorTable.getColumn(Bundle.getMessage("ColumnDelete")).getModelIndex(), false);
         turnoutSorter.sort();
 
         JScrollPane outputScrollPanel = new JScrollPane();
@@ -197,7 +194,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
         outputTable.setFillsViewportHeight(true);
         outputScrollPanel.getViewport().add(outputTable);
         outputTable.setPreferredScrollableViewportSize(new Dimension(520, 200));
-        outputTable.getColumn(Bundle.getMessage("FieldTableDeleteColumn")).setCellRenderer(new ButtonRenderer());
+        outputTable.getColumn(Bundle.getMessage("ColumnDelete")).setCellRenderer(new ButtonRenderer());
         outputTable.removeColumn(outputTable.getColumn("isNew"));
         outputTable.removeColumn(outputTable.getColumn("isDirty"));
         outputTable.removeColumn(outputTable.getColumn("isDelete"));
@@ -211,17 +208,16 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
         outputSorter = new TableRowSorter<>(outputTable.getModel());
         outputTable.setRowSorter(outputSorter);
         List<RowSorter.SortKey> outputSortKeys = new ArrayList<>();
-        //int columnIndexToSort = 1;
         outputSortKeys.add(new RowSorter.SortKey(sensorTable.getColumn(Bundle.getMessage("FieldTableIndexColumn")).getModelIndex(), SortOrder.ASCENDING));
         outputSorter.setSortKeys(outputSortKeys);
-        outputSorter.setSortable(sensorTable.getColumn(Bundle.getMessage("FieldTableDeleteColumn")).getModelIndex(), false);
+        outputSorter.setSortable(sensorTable.getColumn(Bundle.getMessage("ColumnDelete")).getModelIndex(), false);
         outputSorter.sort();
 
         tabbedPane = new JTabbedPane();
-        tabbedPane.addTab(Bundle.getMessage("FieldSensorsTabTitle"), sensorScrollPanel);
+        tabbedPane.addTab(Bundle.getMessage("Sensors"), sensorScrollPanel);
         tabbedPane.setToolTipTextAt(0, Bundle.getMessage("ToolTipSensorTab"));
         tabbedPane.setMnemonicAt(0, Mnemonics.get("SensorTab")); // NOI18N
-        tabbedPane.addTab(Bundle.getMessage("FieldTurnoutsTabTitle"), turnoutScrollPanel);
+        tabbedPane.addTab(Bundle.getMessage("Turnouts"), turnoutScrollPanel);
         tabbedPane.setToolTipTextAt(0, Bundle.getMessage("ToolTipTurnoutTab"));
         tabbedPane.setMnemonicAt(0, Mnemonics.get("TurnoutTab")); // NOI18N
         tabbedPane.addTab(Bundle.getMessage("FieldOutputsTabTitle"), outputScrollPanel);
@@ -234,23 +230,23 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
                 case 2:
                     // Set Add to "Add Output"
                     cTab = CurrentTab.OUTPUT;
-                    addButton.setText(Bundle.getMessage("ButtonAddOutput"));
-                    saveButton.setText(Bundle.getMessage("ButtonSaveOutputs"));
+                    addButton.setText(Bundle.getMessage("ButtonAddX", Bundle.getMessage("Output")));
+                    saveButton.setText(Bundle.getMessage("ButtonSaveX", Bundle.getMessage("FieldOutputsTabTitle")));
                     log.debug("Current Tab is: {}", tabbedPane.getSelectedIndex());
                     break;
                 case 1:
                     // Set Add to "Add Turnout"
                     cTab = CurrentTab.TURNOUT;
-                    addButton.setText(Bundle.getMessage("ButtonAddTurnout"));
-                    saveButton.setText(Bundle.getMessage("ButtonSaveTurnouts"));
+                    addButton.setText(Bundle.getMessage("ButtonAddX", Bundle.getMessage("BeanNameTurnout")));
+                    saveButton.setText(Bundle.getMessage("ButtonSaveX", Bundle.getMessage("Turnouts")));
                     log.debug("Current Tab is: {}", tabbedPane.getSelectedIndex());
                     break;
                 case 0:
                 default:
                     // Set Add to "Add Sensor"
                     cTab = CurrentTab.SENSOR;
-                    addButton.setText(Bundle.getMessage("ButtonAddSensor"));
-                    saveButton.setText(Bundle.getMessage("ButtonSaveSensors"));
+                    addButton.setText(Bundle.getMessage("ButtonAddX", Bundle.getMessage("BeanNameSensor")));
+                    saveButton.setText(Bundle.getMessage("ButtonSaveX", Bundle.getMessage("Sensors")));
                     log.debug("Current Tab is: {}", tabbedPane.getSelectedIndex());
             }
         });
@@ -273,14 +269,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
     private void buildMenu() {
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
 
-        //fileMenu.add(new LoadVSDFileAction(Bundle.getMessage("MenuItemLoadVSDFile")));
-        //fileMenu.add(new StoreXmlVSDecoderAction(Bundle.getMessage("MenuItemSaveProfile")));
-        //fileMenu.add(new LoadXmlVSDecoderAction(Bundle.getMessage("MenuItemLoadProfile")));
         JMenu editMenu = new JMenu(Bundle.getMessage("MenuEdit"));
-        //editMenu.add(new VSDPreferencesAction(Bundle.getMessage("MenuItemEditPreferences")));
-
-        //fileMenu.getItem(1).setEnabled(false); // disable XML store
-        //fileMenu.getItem(2).setEnabled(false); // disable XML load
         menuList = new ArrayList<>(3);
 
         menuList.add(fileMenu);
@@ -290,7 +279,6 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
         this.getJMenuBar().add(fileMenu);
         this.getJMenuBar().add(editMenu);
         //this.addHelpMenu("package.jmri.jmrit.vsdecoder.swing.ManageLocationsFrame", true); // NOI18N
-
     }
 
     // DCCppListener Methods
@@ -303,7 +291,6 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
             v.add(r.getSensorDefNumInt());
             v.add(r.getSensorDefPinInt());
             v.add(r.getSensorDefPullupBool());
-            //v.add("Delete");
             sensorModel.insertData(v, false);
             sensorSorter.sort();
         } else if (r.isTurnoutDefReply()) {
@@ -320,7 +307,6 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
             v.add((r.getOutputListIFlagInt() & 0x01) == 1); // (bool) Invert
             v.add((r.getOutputListIFlagInt() & 0x02) == 2); // (bool) Restore State
             v.add((r.getOutputListIFlagInt() & 0x04) == 4); // (bool) Force High
-            //v.add(r.getOutputListStateInt());
             outputModel.insertData(v, false);
             outputSorter.sort();
         }
@@ -355,27 +341,31 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
             // This is a row delete action.  Handle it as such.
             int sel = table.convertRowIndexToModel(row);
             int idx = (int) model.getValueAt(sel, 0);
-            int value = JOptionPane.showConfirmDialog(null, "Delete ID " + Integer.toString(idx) + "\nAre you sure?",
-                    "Delete Item",
+            log.debug("idx = {}", sel);
+            int value = JOptionPane.showConfirmDialog(null, Bundle.getMessage("DeleteWarningMessage", Integer.toString(idx)),
+                    Bundle.getMessage("WarningTitle"),
                     JOptionPane.OK_CANCEL_OPTION);
             if (value == JOptionPane.OK_OPTION) {
                if (null != cTab) {
-                  switch (cTab) {
-                     case SENSOR:
-                       tc.sendDCCppMessage(DCCppMessage.makeSensorDeleteMsg(idx), this);
-                       model.removeRow(sel);
-                       log.debug("Delete sensor {}", idx);
-                       break;
-                      case TURNOUT:
-                        String m = "T " + Integer.toString(idx);
-                        tc.sendDCCppMessage(DCCppMessage.parseDCCppMessage(m), this);
-                        log.debug("Sending: {}", m);
-                        turnoutModel.getRowData().remove(row);
-                        break;
-                      case OUTPUT:
-                        tc.sendDCCppMessage(DCCppMessage.makeOutputDeleteMsg(idx), this);
-                        outputModel.getRowData().remove(row);
-                        break;
+                    switch (cTab) {
+                        case SENSOR:
+                            tc.sendDCCppMessage(DCCppMessage.makeSensorDeleteMsg(idx), this);
+                            sensorModel.removeRow(sel);
+                            log.debug("Delete sensor {}", idx);
+                            break;
+                        case TURNOUT:
+                            String m = "T " + Integer.toString(idx);
+                            tc.sendDCCppMessage(DCCppMessage.parseDCCppMessage(m), this);
+                            log.debug("Sending: {}", m);
+                            turnoutModel.removeRow(sel);
+                            break;
+                        case OUTPUT:
+                            tc.sendDCCppMessage(DCCppMessage.makeOutputDeleteMsg(idx), this);
+                            outputModel.removeRow(sel);
+                            break;
+                        default:
+                            jmri.util.Log4JUtil.warnOnce(log, "Unexpected cTab value = {}", cTab);
+                            break;
                    }
                 }
             }
@@ -431,7 +421,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
      */
     private void saveButtonPressed(ActionEvent e) {
         int value = JOptionPane.showConfirmDialog(null, Bundle.getMessage("FieldMCFSaveDialogConfirmMessage"),
-                Bundle.getMessage("FieldMCFSaveDialogTitle"),
+                Bundle.getMessage("ConfirmSaveDialogTitle"),
                 JOptionPane.YES_NO_OPTION);
         if (sensorTable.getCellEditor() != null) {
             sensorTable.getCellEditor().stopCellEditing();
@@ -444,12 +434,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
         }
         if (value == JOptionPane.YES_OPTION) {
             saveTableValues();
-            //OperationsXml.save();
         }
-        // TODO: Disabled? Why? Can this go away?
-        /*if (Setup.isCloseWindowOnSaveEnabled()) {
-            dispose();
-        }*/
     }
 
     /**
@@ -466,27 +451,21 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
                         boolean isdirty = (boolean) r.get(5);
                         boolean isdelete = (boolean) r.get(6);
                         int row = sensorModel.getRowData().indexOf(r);
-                        //if (sensorModel.isNewRow(row)) {
                         if (isnew) {
                             tc.sendDCCppMessage(DCCppMessage.makeSensorAddMsg((int) r.get(0),
                                     (int) r.get(1),
                                     ((boolean) r.get(2) ? 1 : 0)), this);
                             sensorModel.setNewRow(row, false);
-                            //} else if (sensorModel.isMarkedForDelete(row)) {
                         } else if (isdelete) {
                             tc.sendDCCppMessage(DCCppMessage.makeSensorDeleteMsg((int) r.get(0)), this);
-                            //log.debug("Sending: " + m);
                             sensorModel.getRowData().remove(r);
-                            //} else if (sensorModel.isDirtyRow(row)) {
                         } else if (isdirty) {
                             // Send a Delete, then an Add (for now).
                             tc.sendDCCppMessage(DCCppMessage.makeSensorDeleteMsg((int) r.get(0)), this);
-                            //log.debug("Sending: " + m);
                             // WARNING: Conversions here are brittle. Be careful.
                             tc.sendDCCppMessage(DCCppMessage.makeSensorAddMsg((int) r.get(0),
                                     (int) r.get(1),
                                     ((boolean) r.get(2) ? 1 : 0)), this);
-                            //log.debug("Sending: " + m);
                             sensorModel.setNewRow(row, false);
                             sensorModel.setDirtyRow(row, false);
                         }
@@ -500,19 +479,16 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
                         boolean isdirty = (boolean) r.get(5);
                         boolean isdelete = (boolean) r.get(6);
                         int row = turnoutModel.getRowData().indexOf(r);
-                        //if (sensorModel.isNewRow(row)) {
                         if (isnew) {
                             // WARNING: Conversions here are brittle. Be careful.
                             tc.sendDCCppMessage(DCCppMessage.makeTurnoutAddMsg((int) r.get(0),
                                     (int) r.get(1), (int) r.get(2)), this);
                             turnoutModel.setNewRow(row, false);
-                            //} else if (sensorModel.isMarkedForDelete(row)) {
                         } else if (isdelete) {
                             String m = "T " + Integer.toString((int) r.get(0));
                             tc.sendDCCppMessage(DCCppMessage.parseDCCppMessage(m), this);
                             log.debug("Sending: {}", m);
                             turnoutModel.getRowData().remove(r);
-                            //} else if (sensorModel.isDirtyRow(row)) {
                         } else if (isdirty) {
                             tc.sendDCCppMessage(DCCppMessage.makeTurnoutDeleteMsg((int) r.get(0)), this);
                             // Send a Delete, then an Add (for now).
@@ -532,7 +508,6 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
                         boolean isdirty = (boolean) r.get(7);
                         boolean isdelete = (boolean) r.get(8);
                         int row = outputModel.getRowData().indexOf(r);
-                        //if (sensorModel.isNewRow(row)) {
                         if (isnew) {
                             // WARNING: Conversions here are brittle. Be careful.
                             int f = ((boolean) r.get(2) ? 1 : 0); // Invert
@@ -541,11 +516,9 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
                             tc.sendDCCppMessage(DCCppMessage.makeOutputAddMsg((int) r.get(0),
                                     (int) r.get(1), f), this);
                             outputModel.setNewRow(row, false);
-                            //} else if (sensorModel.isMarkedForDelete(row)) {
                         } else if (isdelete) {
                             tc.sendDCCppMessage(DCCppMessage.makeOutputDeleteMsg((int) r.get(0)), this);
                             outputModel.getRowData().remove(r);
-                            //} else if (sensorModel.isDirtyRow(row)) {
                         } else if (isdirty) {
                             // Send a Delete, then an Add (for now).
                             tc.sendDCCppMessage(DCCppMessage.makeOutputDeleteMsg((int) r.get(0)), this);
@@ -600,7 +573,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
         // the option of saving.
         if (sensorModel.isDirty() || turnoutModel.isDirty() || outputModel.isDirty()) {
             int value = JOptionPane.showConfirmDialog(null, Bundle.getMessage("FieldMCFSaveDialogConfirmMessage"),
-                    Bundle.getMessage("FieldMCFSaveDialogTitle"),
+                    Bundle.getMessage("ConfirmSaveDialogTitle"),
                     JOptionPane.YES_NO_OPTION);
             if (value == JOptionPane.YES_OPTION) {
                 saveTableValues();
@@ -628,9 +601,8 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
     private final static Logger log = LoggerFactory.getLogger(ConfigBaseStationFrame.class);
 
     /**
-     * Private class to serve as TableModel for Sensors
+     * Private class to serve as TableModel for Sensors.
      */
-    @SuppressWarnings("unused")
     private static class SensorTableModel extends DCCppTableModel {
 
         public SensorTableModel() {
@@ -640,7 +612,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
             columnNames[0] = Bundle.getMessage("FieldTableIndexColumn");
             columnNames[1] = Bundle.getMessage("FieldTablePinColumn");
             columnNames[2] = Bundle.getMessage("FieldTablePullupColumn");
-            columnNames[3] = Bundle.getMessage("FieldTableDeleteColumn");
+            columnNames[3] = Bundle.getMessage("ColumnDelete");
             columnNames[4] = "isNew";       // hidden column // NOI18N
             columnNames[5] = "isDirty";     // hidden column // NOI18N
             columnNames[6] = "isDelete";    // hidden column // NOI18N
@@ -667,9 +639,8 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
     }
 
     /**
-     * Private class to serve as TableModel for Reporters and Ops Locations
+     * Private class to serve as TableModel for Reporters and Ops Locations.
      */
-    @SuppressWarnings("unused")
     private static class TurnoutTableModel extends DCCppTableModel {
 
         public TurnoutTableModel() {
@@ -677,9 +648,9 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
             // Use i18n-ized column titles.
             columnNames = new String[7];
             columnNames[0] = Bundle.getMessage("FieldTableIndexColumn");
-            columnNames[1] = Bundle.getMessage("FieldTableAddressColumn");
+            columnNames[1] = Bundle.getMessage("AddressCol");
             columnNames[2] = Bundle.getMessage("FieldTableSubaddrColumn");
-            columnNames[3] = Bundle.getMessage("FieldTableDeleteColumn");
+            columnNames[3] = Bundle.getMessage("ColumnDelete");
             columnNames[4] = "isNew";        // hidden column // NOI18N
             columnNames[5] = "isDirty";      // hidden column // NOI18N
             columnNames[6] = "isDelete";     // hidden column // NOI18N
@@ -705,9 +676,8 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
     }
 
     /**
-     * Private class to serve as TableModel for Reporters and Ops Locations
+     * Private class to serve as TableModel for Reporters and Ops Locations.
      */
-    @SuppressWarnings("unused")
     private static class OutputTableModel extends DCCppTableModel {
 
         public OutputTableModel() {
@@ -719,7 +689,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
             columnNames[2] = Bundle.getMessage("FieldTableInvertColumn");
             columnNames[3] = Bundle.getMessage("FieldTableOutputRestoreStateColumn");
             columnNames[4] = Bundle.getMessage("FieldTableOutputForceToColumn");
-            columnNames[5] = Bundle.getMessage("FieldTableDeleteColumn");
+            columnNames[5] = Bundle.getMessage("ColumnDelete");
             columnNames[6] = "isNew";        // hidden column // NOI18N
             columnNames[7] = "isDirty";      // hidden column // NOI18N
             columnNames[8] = "isDelete";     // hidden column // NOI18N

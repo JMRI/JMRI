@@ -18,23 +18,23 @@ public class JmriPanelTest {
 
     @Test
     public void testCTor() {
-        Assert.assertNotNull("exists",panel);
+        Assert.assertNotNull("exists", panel);
     }
 
     @Test
     public void testInitComponents() throws Exception{
-        // for now, just makes ure there isn't an exception.
+        // for now, just make sure there isn't an exception.
         panel.initComponents();
     }
 
     @Test
     public void testGetHelpTarget(){
-        Assert.assertEquals("help target",helpTarget,panel.getHelpTarget());
+        Assert.assertEquals("help target", helpTarget, panel.getHelpTarget());
     }
 
     @Test
     public void testGetTitle(){
-        Assert.assertEquals("title",title,panel.getTitle());
+        Assert.assertEquals("title", title, panel.getTitle());
     }
 
     // The minimal setup for log4J
@@ -47,6 +47,12 @@ public class JmriPanelTest {
 
     @After
     public void tearDown() {
+        if(panel!=null) {
+           panel.dispose();
+        }
+        panel = null;
+        helpTarget = null;
+        title = null;
         JUnitUtil.tearDown();
     }
 

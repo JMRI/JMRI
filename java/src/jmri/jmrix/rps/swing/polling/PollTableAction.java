@@ -21,7 +21,7 @@ public class PollTableAction extends AbstractAction {
     }
 
     public PollTableAction(RpsSystemConnectionMemo _memo) {
-        this("RPS Polling Control",_memo);
+        this("RPS Polling Control", _memo);
     }
 
     PollTableFrame f = null;
@@ -40,12 +40,8 @@ public class PollTableAction extends AbstractAction {
             }
         }
         f.setVisible(true);
-
     }
 
     private final static Logger log = LoggerFactory.getLogger(PollTableAction.class);
 
 }
-
-
-

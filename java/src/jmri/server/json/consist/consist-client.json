@@ -12,7 +12,7 @@
             "type": "boolean",
             "description": "true if address is long, false if short"
         },
-        "id": {
+        "name": {
             "type": "string",
             "description": "Id for consist"
         },

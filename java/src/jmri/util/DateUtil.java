@@ -5,7 +5,6 @@ import java.util.GregorianCalendar;
 
 /**
  * Common utility methods for working with Calendar and Date objects.
- * <P>
  *
  * @author Paul Bender Copyright 2014
  */

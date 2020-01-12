@@ -29,6 +29,9 @@ public class PollTablePaneTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
+        jmri.util.JUnitUtil.initRosterConfigManager();
+
         memo = new RpsSystemConnectionMemo();
     }
 

@@ -28,7 +28,7 @@
 <body>
 <!--#include virtual="/Header.shtml" -->
     <div id="mBody">
-<!--#include virtual="Sidebar" -->
+<!--#include virtual="Sidebar.shtml" -->
 
 <div id="mainContent">
 

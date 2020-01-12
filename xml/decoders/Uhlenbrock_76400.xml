@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2006, 2014 All rights reserved -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -22,7 +21,7 @@
 					and used generic items on standard panes (motor, lights, analog) as much as possible
 	                Using English/German terms as defined in official Uhlenbrock documentation								-->
 	<!-- 			Add 76200, 76425																						-->
-  <!-- WARNING: output names fully linked to function mapping include file - do not change independently -->
+    <!-- WARNING: output names fully linked to function mapping include file - do not change independently -->
 <decoder>
     <family name="Multi-Protocol Decoder" mfg="Uhlenbrock Elektronik" lowVersionID="9" comment="Decoders not sorted (necessarily) in numerical order">
       <model model="76200" highVersionID="40" numOuts="4" numFns="8" maxMotorCurrent="1.2A" formFactor="HO" productID="76200" comment="HO-Scale, wired, for universal (Märklin) motors">
@@ -132,7 +131,8 @@
         <label>Speed Correction Reverse</label>
         <label xml:lang="de">Geschw.-korrektur rückwärts</label>
         <tooltip>Factor = Value/128</tooltip>
-      </variable>	  
+      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv47.48trim.xml"/>
       <!-- CV49 Uhlenbrock decoder configuration - common bits -->
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv49common.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv49dataformat.xml"/>
@@ -179,12 +179,6 @@
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv51analog.xml"/>
       <variable item="End braking speed" CV="52" default="30" include="76200,76400,76420">
-        <decVal/>
-        <label>End braking speed</label>
-        <label xml:lang="de">Geschw. am Ende Bremsstrecke</label>
-        <tooltip>Valid when CV49 Bit 2=1 (Braking end) and Bit 7=1 (Braking analog)</tooltip>
-      </variable>
-      <variable item="End braking speed" CV="64" default="30" include="76425">
         <decVal/>
         <label>End braking speed</label>
         <label xml:lang="de">Geschw. am Ende Bremsstrecke</label>
@@ -324,6 +318,12 @@
         <label>Temperature Error</label>
         <label xml:lang="de">Fehler Temperatur</label>
       </variable>
+      <variable item="End braking speed" CV="64" default="30" include="76425">
+        <decVal/>
+        <label>End braking speed</label>
+        <label xml:lang="de">Geschw. am Ende Bremsstrecke</label>
+        <tooltip>Valid when CV49 Bit 2=1 (Braking end) and Bit 7=1 (Braking analog)</tooltip>
+      </variable>
       <!-- End braking speed CV64 for 76425 : see above CV52 for 76400, 76420 -->	  
       <variable item="Forward Trim" CV="64" default="128" include="76400">
         <decVal/>
@@ -331,18 +331,13 @@
         <label xml:lang="de">Geschw.-korrektur vorwärts</label>
         <tooltip>Factor = Value/128</tooltip>
       </variable>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-        <label xml:lang="de">Geschwindigkeitskennlinie</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <variable item="Reverse Trim" CV="95" default="1" include="76400">
         <decVal/>
         <label>Speed Correction Reverse</label>
         <label xml:lang="de">Geschw.-korrektur rückwärts</label>
         <tooltip>Factor = Value/128</tooltip>
       </variable>
-      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv65.66registers.xml"/>
       <variable item="Function 1 option 1" CV="98" default="0" mask="XXXXXXVV" include="76420,76425">
         <enumVal>
           <enumChoice choice="A1/A2 have no time limit" value="0">
@@ -391,11 +386,7 @@
         <tooltip>Value 1 - 4</tooltip>           
       </variable>
     </variables>
-    <resets>
-      <factReset label="Reset All CVs" CV="59" default="1">
-         <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
-      </factReset>
-    </resets>
+    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/factReset.xml"/>
   </decoder>
   <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/PaneUhlenbrock.xml"/>
 </decoder-config>

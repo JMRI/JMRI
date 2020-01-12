@@ -12,6 +12,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Bob Jacobsen" version="2" lastUpdated="20190727"/> <!-- xinclude for CV19 -->
   <version author="Peter MacKenzie" version="1" lastUpdated="20150319"/>
   <!-- Version 1.0 - based on DCC Concepts decoders by Nigel Cliffe & John Stather -->
   <decoder>
@@ -109,21 +110,9 @@
         <longAddressVal/>
         <label>Long Address</label>
       </variable>
-      <variable label="Consist Address" CV="19" mask="XVVVVVVV" item="Consist Address">
-        <decVal/>
-        <label>Consist Address</label>
-      </variable>
-      <variable label="Consist Direction" CV="19" mask="VXXXXXXX" tooltip="CV19, This loco runs Normal(default) or Reversed(address+128) when in the consist">
-        <enumVal>
-          <enumChoice choice="Normal">
-            <choice>Normal</choice>
-          </enumChoice>
-          <enumChoice choice="Reversed">
-            <choice>Reversed</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Consist Direction</label>
-      </variable>
+
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+
       <variable label="Consist Address Active For Green" CV="21" mask="XXXXXXXV" minOut="3" default="1" item="Consist Address Active For F1">
         <enumVal>
           <enumChoice choice="Locomotive Address Only">

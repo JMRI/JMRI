@@ -312,13 +312,9 @@ public class SlipIconAdder extends IconAdder {
             dim = panel.getPreferredSize();
         }
         while ((cnt % 2) != 0) {
-            try {
-                rowPanel.add(Box.createRigidArea(dim));
-                cnt++;
-            } catch (NullPointerException npe) {
-                /* never */
-
-            }
+            java.util.Objects.requireNonNull(rowPanel, "rowPanel should have been non-null in this case");
+            rowPanel.add(Box.createRigidArea(dim));
+            cnt++;
         }
         if (rowPanel != null) {
             _iconPanel.add(rowPanel);
@@ -329,13 +325,13 @@ public class SlipIconAdder extends IconAdder {
         rowPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
         JPanel panel = null;
         cnt = 0;
-        for (int i = _order.size() - 1; i >= 0; i--) {
+        for (int i = _iconOrderList.size() - 1; i >= 0; i--) {
             if (panel == null) {
                 panel = new JPanel();
                 panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
                 panel.add(Box.createHorizontalStrut(STRUT_SIZE));
             }
-            String key = _order.get(i);
+            String key = _iconOrderList.get(i);
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
             p.add(new JLabel(Bundle.getMessage(key)));
@@ -541,16 +537,16 @@ public class SlipIconAdder extends IconAdder {
     }
 
     void delete(int index) {
-        if (index >= _order.size()) {
+        if (index >= _iconOrderList.size()) {
             return;
         }
-        String key = _order.get(index);
+        String key = _iconOrderList.get(index);
         if (log.isDebugEnabled()) {
             log.debug("delete(" + index + ") Sizes: _iconMap= " + _iconMap.size()
-                    + ", _order= " + _order.size());
+                    + ", _iconOrderList= " + _iconOrderList.size());
         }
         _iconMap.remove(key);
-        _order.remove(index);
+        _iconOrderList.remove(index);
     }
 
     /**
@@ -561,7 +557,7 @@ public class SlipIconAdder extends IconAdder {
      * @return Unique object
      */
     public NamedIcon getIcon(int index) {
-        return (NamedIcon) _iconMap.get(_order.get(index)).getIcon();
+        return (NamedIcon) _iconMap.get(_iconOrderList.get(index)).getIcon();
     }
 
     /**

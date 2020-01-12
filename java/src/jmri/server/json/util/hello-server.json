@@ -10,7 +10,11 @@
         },
         "json": {
             "type": "string",
-            "description": "JSON protocol version"
+            "description": "JSON protocol version in major.minor.patch form; provides more detail than \"version\", but cannot be used to set preferred version"
+        },
+        "version": {
+            "type": "string",
+            "description": "JSON protocol version in the API form"
         },
         "heartbeat": {
             "type": "integer",
@@ -25,8 +29,8 @@
             "description": "The current node identity"
         },
         "activeProfile": {
-            "type": "string",
-            "description": "The name of the current profile"
+            "type": ["string", "null"],
+            "description": "The name of the current profile or null if no profile is active"
         }
     },
     "additionalProperties": false,

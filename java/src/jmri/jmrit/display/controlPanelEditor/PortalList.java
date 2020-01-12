@@ -2,15 +2,23 @@ package jmri.jmrit.display.controlPanelEditor;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.AbstractListModel;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Portal;
 
 /**
- * <P>
+ *
  * @author Pete Cressman Copyright: Copyright (c) 2014
  *
  */
@@ -18,9 +26,9 @@ public class PortalList extends JList<Portal> {
 
     private PortalListModel _portalListModel;
 
-    PortalList(OBlock block) {
+    PortalList(OBlock block, EditFrame parent) {
         super();
-        _portalListModel = new PortalListModel(block);
+        _portalListModel = new PortalListModel(block, parent);
         setModel(_portalListModel);
         setCellRenderer(new PortalCellRenderer());
         setPreferredSize(new Dimension(300, 120));
@@ -31,7 +39,7 @@ public class PortalList extends JList<Portal> {
         _portalListModel.dataChange();
     }
 
-    private static class PortalCellRenderer extends JLabel implements ListCellRenderer<Portal> {
+    private static class PortalCellRenderer extends JLabel implements ListCellRenderer<Portal>{
 
         @Override
         public Component getListCellRendererComponent(
@@ -57,12 +65,27 @@ public class PortalList extends JList<Portal> {
         }
     }
 
-    static class PortalListModel extends AbstractListModel<Portal> {
+    static class PortalListModel extends AbstractListModel<Portal> implements PropertyChangeListener {
 
         OBlock _homeBlock;
+        private EditFrame _parent;
+        List<Portal> _list = new ArrayList<>();
 
-        PortalListModel(OBlock block) {
+        PortalListModel(OBlock block, EditFrame parent) {
             _homeBlock = block;
+            _parent = parent;
+            _homeBlock.addPropertyChangeListener(this);
+            makeList();
+        }
+        
+        private void makeList() {
+            for (Portal p : _list) {
+                p.removePropertyChangeListener(this);
+            }
+            _list = _homeBlock.getPortals();
+            for (Portal p : _list) {
+                p.addPropertyChangeListener(this);
+            }
         }
 
         @Override
@@ -81,5 +104,24 @@ public class PortalList extends JList<Portal> {
         public void dataChange() {
             fireContentsChanged(this, 0, 0);
         }
+
+        public void propertyChange(PropertyChangeEvent e) {
+            Object source = e.getSource();
+            String property = e.getPropertyName();
+            if (log.isDebugEnabled()) {
+                log.debug("property = {} source= {}", property, source.getClass().getName());                
+            }
+            if (source instanceof OBlock && property.equals("deleted")) {
+                _homeBlock.removePropertyChangeListener(this);
+                _parent.closingEvent(true);
+            } else {
+                makeList();
+                fireContentsChanged(this, 0, 0);
+                if (property.equals("signalChange") || property.equals("NameChange")) {
+                    _parent.clearListSelection();
+                }
+            }
+        }
     }
+    private final static Logger log = LoggerFactory.getLogger(PortalList.class);
 }

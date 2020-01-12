@@ -302,18 +302,6 @@
       <systemName>IB1</systemName>
       <userName>blocknorthwest</userName>
     </block>
-    <block systemName="IB10">
-      <systemName>IB10</systemName>
-      <userName>blocksouthwest</userName>
-    </block>
-    <block systemName="IB11">
-      <systemName>IB11</systemName>
-      <userName>blockwest</userName>
-    </block>
-    <block systemName="IB12">
-      <systemName>IB12</systemName>
-      <userName>blockwestsiding</userName>
-    </block>
     <block systemName="IB2">
       <systemName>IB2</systemName>
       <userName>blocknorth</userName>
@@ -346,6 +334,18 @@
       <systemName>IB9</systemName>
       <userName>blocksouthsiding</userName>
     </block>
+    <block systemName="IB10">
+      <systemName>IB10</systemName>
+      <userName>blocksouthwest</userName>
+    </block>
+    <block systemName="IB11">
+      <systemName>IB11</systemName>
+      <userName>blockwest</userName>
+    </block>
+    <block systemName="IB12">
+      <systemName>IB12</systemName>
+      <userName>blockwestsiding</userName>
+    </block>
     <block systemName="IB1" length="0.0" curve="0">
       <systemName>IB1</systemName>
       <userName>blocknorthwest</userName>
@@ -367,64 +367,6 @@
         </beansetting>
       </path>
       <path todir="32" fromdir="16" block="IB12">
-        <beansetting setting="4">
-          <turnout systemName="IT8" />
-        </beansetting>
-      </path>
-    </block>
-    <block systemName="IB10" length="0.0" curve="0">
-      <systemName>IB10</systemName>
-      <userName>blocksouthwest</userName>
-      <permissive>no</permissive>
-      <occupancysensor>blocksouthwestoccupied</occupancysensor>
-      <path todir="64" fromdir="128" block="IB8">
-        <beansetting setting="2">
-          <turnout systemName="IT6" />
-        </beansetting>
-      </path>
-      <path todir="64" fromdir="128" block="IB9">
-        <beansetting setting="4">
-          <turnout systemName="IT6" />
-        </beansetting>
-      </path>
-      <path todir="16" fromdir="32" block="IB11">
-        <beansetting setting="2">
-          <turnout systemName="IT7" />
-        </beansetting>
-      </path>
-      <path todir="16" fromdir="32" block="IB12">
-        <beansetting setting="4">
-          <turnout systemName="IT7" />
-        </beansetting>
-      </path>
-    </block>
-    <block systemName="IB11" length="0.0" curve="0">
-      <systemName>IB11</systemName>
-      <userName>blockwest</userName>
-      <permissive>no</permissive>
-      <occupancysensor>blockwestoccupied</occupancysensor>
-      <path todir="32" fromdir="16" block="IB10">
-        <beansetting setting="2">
-          <turnout systemName="IT7" />
-        </beansetting>
-      </path>
-      <path todir="16" fromdir="32" block="IB1">
-        <beansetting setting="2">
-          <turnout systemName="IT8" />
-        </beansetting>
-      </path>
-    </block>
-    <block systemName="IB12" length="0.0" curve="0">
-      <systemName>IB12</systemName>
-      <userName>blockwestsiding</userName>
-      <permissive>no</permissive>
-      <occupancysensor>blockwestsidingoccupied</occupancysensor>
-      <path todir="32" fromdir="16" block="IB10">
-        <beansetting setting="4">
-          <turnout systemName="IT7" />
-        </beansetting>
-      </path>
-      <path todir="16" fromdir="32" block="IB1">
         <beansetting setting="4">
           <turnout systemName="IT8" />
         </beansetting>
@@ -575,6 +517,64 @@
       <path todir="128" fromdir="64" block="IB10">
         <beansetting setting="4">
           <turnout systemName="IT6" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB10" length="0.0" curve="0">
+      <systemName>IB10</systemName>
+      <userName>blocksouthwest</userName>
+      <permissive>no</permissive>
+      <occupancysensor>blocksouthwestoccupied</occupancysensor>
+      <path todir="64" fromdir="128" block="IB8">
+        <beansetting setting="2">
+          <turnout systemName="IT6" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB9">
+        <beansetting setting="4">
+          <turnout systemName="IT6" />
+        </beansetting>
+      </path>
+      <path todir="16" fromdir="32" block="IB11">
+        <beansetting setting="2">
+          <turnout systemName="IT7" />
+        </beansetting>
+      </path>
+      <path todir="16" fromdir="32" block="IB12">
+        <beansetting setting="4">
+          <turnout systemName="IT7" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB11" length="0.0" curve="0">
+      <systemName>IB11</systemName>
+      <userName>blockwest</userName>
+      <permissive>no</permissive>
+      <occupancysensor>blockwestoccupied</occupancysensor>
+      <path todir="32" fromdir="16" block="IB10">
+        <beansetting setting="2">
+          <turnout systemName="IT7" />
+        </beansetting>
+      </path>
+      <path todir="16" fromdir="32" block="IB1">
+        <beansetting setting="2">
+          <turnout systemName="IT8" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB12" length="0.0" curve="0">
+      <systemName>IB12</systemName>
+      <userName>blockwestsiding</userName>
+      <permissive>no</permissive>
+      <occupancysensor>blockwestsidingoccupied</occupancysensor>
+      <path todir="32" fromdir="16" block="IB10">
+        <beansetting setting="4">
+          <turnout systemName="IT7" />
+        </beansetting>
+      </path>
+      <path todir="16" fromdir="32" block="IB1">
+        <beansetting setting="4">
+          <turnout systemName="IT8" />
         </beansetting>
       </path>
     </block>

@@ -7,22 +7,18 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI Hardware Support - Maple Systems</title>
-  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <meta name="keywords" content="JMRI help Maple hardware">
+  <!--#include virtual="/Style" -->
 </head>
 
 <body>
   <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+  <div id="mBody">
+    <!--#include virtual="../SidebarUp.shtml" -->
     <div id="mainContent">
+
       <h1>Hardware Support: Maple Systems</h1><a href=
       "http://www.maplesystems.com/images/silverseries/SilverSeries_7-16-07.jpg"><img src="http://www.maplesystems.com/images/silverseries/SilverSeries_7-16-07.jpg"
       align="right" height="93" width="173"></a><br>
@@ -67,9 +63,10 @@
       support, and as of JMRI version 2.3.7 the migration is not
       complete.</p>
 
+      <a name="naming" id="naming"></a>
       <h4>Naming</h4>
 
-      <p>The system letter for Maple connections in JMRI is
+      <p>The default system letter for Maple connections in JMRI is
       "K".</p>
 
       <p>You configure the Maple Systems device to use one of the
@@ -137,13 +134,25 @@
       by Egbert Broerse @silverailscolo July 2017 -->
 
       <p><strong>It is very likely that we will rework and improve
-      the addressing soon.</strong>
+      the addressing soon.</strong></p>
 
-      <a name="tools" id="tools"></a></p>
+      <a name="tools" id="tools"></a>
+      <h2>JMRI Maple Systems Tools</h2>
+      <ul>
+        <li>Maple network traffic can be viewed with <a href=
+          "../../../package/jmri/jmrix/maple/serialmon/SerialMonFrame.shtml">
+          Maple Monitor</a></li>
 
-      <h2>JMRI Maple Systems Tools</h2>N/A <a name="documentation"
-      id="documentation"></a>
+        <li>The <a href=
+          "../../../package/jmri/jmrix/maple/assignment/ListFrame.shtml">
+          Maple List Tool</a> lets you assign Maple Inputs and Outputs</li>
 
+        <li>Nodes can be configured with the <a href=
+          "../../../package/jmri/jmrix/maple/nodeconfig/NodeConfigFrame.shtml">
+          Configure Nodes</a> tool</li>
+      </ul>
+
+      <a name="documentation" id="documentation"></a>
       <h2>Documentation</h2>
 
       <h3>Third Party info</h3>

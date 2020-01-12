@@ -49,4 +49,5 @@ public class RfidNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
     }
 
     private static final Logger log = LoggerFactory.getLogger(RfidNamedPaneAction.class);
+
 }

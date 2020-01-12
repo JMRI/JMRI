@@ -2,6 +2,8 @@ package jmri.jmrix.mrc;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
+
 import jmri.ProgListener;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
@@ -11,7 +13,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Provide an Ops Mode Programmer via a wrapper what works with the MRC command
  * station object.
- * <P>
+ * <p>
  * Functionally, this just creates packets to send via the command station.
  *
  * @see jmri.Programmer
@@ -24,8 +26,8 @@ public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.Addresse
     int mAddress;
     boolean mLongAddr;
 
-    public MrcOpsModeProgrammer(MrcTrafficController tc, int pAddress, boolean pLongAddr) {
-        super(tc);
+    public MrcOpsModeProgrammer(MrcSystemConnectionMemo memo, int pAddress, boolean pLongAddr) {
+        super(memo);
         log.debug("MRC ops mode programmer " + pAddress + " " + pLongAddr); //IN18N
         if (pLongAddr) {
             addressLo = pAddress;
@@ -39,11 +41,14 @@ public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.Addresse
     int addressLo = 0x00;
     int addressHi = 0x00;
 
-    /**
+    /** 
+     * {@inheritDoc}
+     *
      * Forward a write request to an ops-mode write operation
      */
     @Override
-    public synchronized void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
+    public synchronized void writeCV(String CVname, int val, ProgListener p) throws ProgrammerException {
+        final int CV = Integer.parseInt(CVname);
         log.debug("write CV={} val={}", CV, val); //IN18N
         MrcMessage msg = MrcMessage.getPOM(addressLo, addressHi, CV, val);
 
@@ -56,16 +61,23 @@ public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.Addresse
         // start the error timer
         startShortTimer();
 
-        tc.sendMrcMessage(msg);
+        memo.getMrcTrafficController().sendMrcMessage(msg);
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    public synchronized void readCV(int CV, ProgListener p) throws ProgrammerException {
+    public synchronized void readCV(String CVname, ProgListener p) throws ProgrammerException {
+        final int CV = Integer.parseInt(CVname);
         log.debug("read CV={}", CV);
         log.error("readCV not available in this protocol"); //IN18N
         throw new ProgrammerException();
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public synchronized void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
         log.debug("confirm CV={}", CV);
@@ -73,6 +85,9 @@ public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.Addresse
         throw new ProgrammerException();
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     // add 200mSec between commands, so MRC command station queue doesn't get overrun
     @Override
     protected void notifyProgListenerEnd(int value, int status) {
@@ -85,17 +100,22 @@ public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.Addresse
         super.notifyProgListenerEnd(value, status);
     }
 
-    /**
+    /** 
+     * {@inheritDoc}
+     *
      * Types implemented here.
      */
     @Override
+    @Nonnull
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
         ret.add(ProgrammingMode.OPSBYTEMODE);
         return ret;
     }
 
-    /**
+    /** 
+     * {@inheritDoc}
+     *
      * Can this ops-mode programmer read back values? For now, no, but maybe
      * later.
      *
@@ -106,22 +126,33 @@ public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.Addresse
         return false;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public boolean getLongAddress() {
         return mLongAddr;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public int getAddressNumber() {
         return mAddress;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public String getAddress() {
         return "" + getAddressNumber() + " " + getLongAddress();
     }
 
-    /**
+    /** 
+     * {@inheritDoc}
+     *
      * Ops-mode programming doesn't put the command station in programming mode,
      * so we don't have to send an exit-programming command at end. Therefore,
      * this routine does nothing except to replace the parent routine that does

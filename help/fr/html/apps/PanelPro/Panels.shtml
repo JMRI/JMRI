@@ -3,7 +3,6 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!--  $Id$ -->
 <!--Updated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-07-04 -->
 <title>JMRI: Creating Control Panels </title>
 
@@ -18,17 +17,19 @@
 
 <body>
 <!--#include virtual="/Header" -->
+<div id="mBody">
+	<!--#include virtual="Sidebar" -->
 
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
-
+	<div id="mainContent">
+		<!-- Page Body -->
 
 <h1>JMRI:Cr&#233;ation Panneaux de Commandes</h1>
 Les librairies JMRI contiennent un syst&#232;me de cr&#233;ation de panneaux de commandes. Il est grandement personnalisable, et vous 
 permet ce commander votre r&#233;seau directement depuis le panneau.
 
 <h2>Contenu d'un panneau</h2>
-<img src="../../../images/PiecedPanel.gif" alt="Screen shot of panel" align=RIGHT width="292" height="107" hspace="0" vspace="0">
+<img src="../../../images/PiecedPanel.gif" alt="Screen shot of panel" align="right" width="292" height="107" hspace="0"
+vspace="0">
 
 <p>
 Cliquer sur un symbole d'aiguillage le bascule de droit &#224; d&#233;vi&#233; et vice-versa.
@@ -55,7 +56,7 @@ Les panneaux sont r&#233;alis&#233;s avec un "&#201;diteur de Panneau", qui vous
 aiguillages, les capteurs (sur certains syst&#232;mes) et les voies.
 
 <p>
-Vous d&#233;marrez l'&#233;diteur en s&#233;lectionnant  "Nouveau Panneau...", puis "&#201:diteur de Panneau" depuis le menu "Panneau" sur 
+Vous d&#233;marrez l'&#233;diteur en s&#233;lectionnant  "Nouveau Panneau...", puis "&#201;diteur de Panneau" depuis le menu "Panneau" sur
 la fen&#234;tre principale.  
 Vous obtiendrez un panneau de commande vierge, plus la 
 fen&#234;tre de l'&#233;diteur:
@@ -103,7 +104,7 @@ le menu "Panneaux" pour l'&#233;crire dans un fichier XML.
 L'&#233;diteur de panneau est &#224; base d'ic&#244;ne. La librairie JMRI contient beaucoup d'ic&#244;nes de contribution pour 
 repr&#233;senter les panneaux CTC, LED, etc. Vous pouvez naviguer &#224; travers elles avec l'arbre dans le bas de l'&#233;diteur de 
 cadre. Peut-&#234;tre que le meilleur moyen de voir ce que &#224; quoi chacune ressemble est de la s&#233;lectionner dans l'arbre,puis 
-cliquez sur l'ic&#244;ne &#224; c&#244;t&#233; du bouton "Ajouter icÃ´ne". Ce qui la chargera. .
+cliquez sur l'ic&#244;ne &#224; c&#244;t&#233; du bouton "Ajouter icône". Ce qui la chargera. .
 <p>
 Pour des petits bouts de voie, exemple pour connecter des aiguillages, vous pourriez vouloir 
 <pre>
@@ -135,10 +136,10 @@ Ou ce pourrait &#234;tre un glisser-droit.  D&#233;sol&#233;, je n'ai pas de mac
 +clic droit.
 <p>
 Il y a aussi un menu d&#233;roulant(ctrl - clic sur un Mac) qui vous permet de pivoter l'ic&#244;ne afin qu'elle pointe dans la 
-direction que vous voulez.
-    
+direction que vous voulez.</p>
+
 <!--#include virtual="/Footer" -->
   </div><!-- closes #mainContent-->
  </div> <!-- closes #mBody-->
 </body>
-</html
+</html>

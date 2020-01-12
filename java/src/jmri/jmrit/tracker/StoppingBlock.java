@@ -8,28 +8,28 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Stop a train in a block if required.
- * <P>
- * Watches a Block object that is passing around a Throttle object as it's
+ * <p>
+ * Watches a Block object that is passing around a Throttle object as its
  * value. When the Block goes OCCUPIED, check whether a signal is telling the
  * train to stop; if so, force the Throttle to zero speed.
- * <P>
+ * <p>
  * This contains multiple SignalHead objects, each associated with a Path that
  * contains one or more BeanSettings (e.g. Turnout positions) and directions.
- * When needed, this consults the paths to see which one is active (has it's
+ * When needed, this consults the paths to see which one is active (has its
  * Turnouts set) and corresponds to the current direction of the block. There
  * should be exactly one of these, which will then identify which signal to
  * monitor.
- * <P>
+ * <p>
  * Limitations:
- * <UL>
- * <LI>Current implementation does not protect against changing direction and
+ * <ul>
+ * <li>Current implementation does not protect against changing direction and
  * backing out of the block
- * <LI>Should track speed at time of stop and restore it on restart (or should
+ * <li>Should track speed at time of stop and restore it on restart (or should
  * it not restart? Optional restart?)
- * </UL>
+ * </ul>
  *
  * @author Bob Jacobsen Copyright (C) 2006
-  */
+ */
 public class StoppingBlock {
 
     public StoppingBlock(Block b) {
@@ -183,4 +183,5 @@ public class StoppingBlock {
     float fast = 0.6f;
 
     private final static Logger log = LoggerFactory.getLogger(StoppingBlock.class);
+
 }

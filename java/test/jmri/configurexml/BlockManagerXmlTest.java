@@ -11,21 +11,22 @@ import jmri.Sensor;
 import jmri.SignalMast;
 import jmri.implementation.AbstractSensor;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 
 /**
  * Tests for BlockManagerXml.
- * <P>
+ * <p>
  * Just tests Elements, not actual files. Based upon a stub by Bob Jacobsen
  * Copyright 2008
- * <P>
+ *
  * @author Bob Coleman Copyright 2012
-  */
-public class BlockManagerXmlTest extends TestCase {
+ */
+public class BlockManagerXmlTest {
 
+    @Test
     public void testLoadCurrent() throws Exception {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initConfigureManager();
@@ -38,7 +39,7 @@ public class BlockManagerXmlTest extends TestCase {
         InstanceManager.getDefault(ConfigureManager.class)
                 .load(new java.io.File("java/test/jmri/configurexml/load/BlockManagerXmlTest.xml"));
 
-        // check existance of blocks
+        // check existence of blocks
         Assert.assertNotNull(InstanceManager.getDefault(jmri.BlockManager.class).getBlock("IB1"));
         Assert.assertNull(InstanceManager.getDefault(jmri.BlockManager.class).getBlock("no block"));
         Assert.assertNotNull(InstanceManager.getDefault(jmri.BlockManager.class).getBlock("IB2"));
@@ -89,7 +90,7 @@ public class BlockManagerXmlTest extends TestCase {
 //         Assert.assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("blockwest"));
 //         Assert.assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("blockwestsiding"));
 
-        // check existance of turmouts
+        // check existence of turmouts
         Assert.assertNotNull(InstanceManager.turnoutManagerInstance().getTurnout("IT1"));
         Assert.assertNull(InstanceManager.turnoutManagerInstance().getTurnout("no turnout"));
         Assert.assertNotNull(InstanceManager.turnoutManagerInstance().getTurnout("IT2"));
@@ -100,7 +101,7 @@ public class BlockManagerXmlTest extends TestCase {
         Assert.assertNotNull(InstanceManager.turnoutManagerInstance().getTurnout("IT7"));
         Assert.assertNotNull(InstanceManager.turnoutManagerInstance().getTurnout("IT8"));
 
-        // check existance of memories        
+        // check existence of memories
         Assert.assertNotNull(InstanceManager.memoryManagerInstance().getMemory("IM:AUTO:0001"));
         Assert.assertNull(InstanceManager.memoryManagerInstance().getMemory("no memory"));
         Assert.assertNotNull(InstanceManager.memoryManagerInstance().getMemory("IM:AUTO:0002"));
@@ -127,7 +128,7 @@ public class BlockManagerXmlTest extends TestCase {
         Assert.assertNotNull(InstanceManager.memoryManagerInstance().getMemory("blockwestmemory"));
         Assert.assertNotNull(InstanceManager.memoryManagerInstance().getMemory("blockwestsidingmemory"));
 
-        // check existance of sensors
+        // check existence of sensors
         Assert.assertNotNull(InstanceManager.sensorManagerInstance().getSensor("ISBO1"));
         Assert.assertNull(InstanceManager.sensorManagerInstance().getSensor("no sensor"));
         Assert.assertNotNull(InstanceManager.sensorManagerInstance().getSensor("ISBO2"));
@@ -154,7 +155,7 @@ public class BlockManagerXmlTest extends TestCase {
         Assert.assertNotNull(InstanceManager.sensorManagerInstance().getSensor("blockwestoccupied"));
         Assert.assertNotNull(InstanceManager.sensorManagerInstance().getSensor("blockwestsidingoccupied"));
 
-        // check existance of paths between blocks
+        // check existence of paths between blocks
         Block[] blockstotest;
         Sensor[] occupiedsensor;
         int[] expectedpreviouspaths;
@@ -170,9 +171,9 @@ public class BlockManagerXmlTest extends TestCase {
         passnexttest = new Boolean[4];        //Make sure this is bigger than needed
 
         Block[][] previousblock;
-        previousblock = new Block[12][4];         //Make sure this is bigger than the list below
+        previousblock = new Block[12][4];     //Make sure this is bigger than the list below
         Block[][] nextblock;
-        nextblock = new Block[12][4];             //Make sure this is bigger than the list below
+        nextblock = new Block[12][4];         //Make sure this is bigger than the list below
 
         //  This matches up with the test file, ...
         blockstotest[0] = InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blocknorthwest");
@@ -286,6 +287,7 @@ public class BlockManagerXmlTest extends TestCase {
             int expectedcentrepaths = expectedpreviouspaths[testblockfocus] + expectednextpaths[testblockfocus];
             Block focusBlock = blockstotest[testblockfocus];
             Memory expectedtestmemory = InstanceManager.memoryManagerInstance().getMemory("blocknorthmemory");
+            Assert.assertNotNull(expectedtestmemory);
             expectedtestmemory.setValue("Memory test: " + testblockfocus);
             Assert.assertNotNull(expectedtestmemory);
 // TODO: BOB C: Memory Test
@@ -329,7 +331,10 @@ public class BlockManagerXmlTest extends TestCase {
     /**
      * This test checks that the store operation runs, but doesn't check the
      * output for correctness.
+     * 
+     * @throws jmri.JmriException if unanticipated exception is thrown
      */
+    @Test
     public void testStore() throws jmri.JmriException {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initConfigureManager();
@@ -342,7 +347,7 @@ public class BlockManagerXmlTest extends TestCase {
         Block b1 = InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock("SystemNameb1", "");
 
         Block b2 = InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock("SystemNameb2", "");
-
+        Assert.assertNotNull(b2);
         Sensor s2 = new AbstractSensor("IS2") {
             @Override
             public void requestUpdateFromLayout() {
@@ -371,6 +376,7 @@ public class BlockManagerXmlTest extends TestCase {
         //BlockManagerXml tb = new BlockManagerXml();
     }
 
+    @Test
     public void testBlockAndSignalMastTest() throws Exception {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initConfigureManager();
@@ -423,31 +429,16 @@ public class BlockManagerXmlTest extends TestCase {
 
     }
 
-    // from here down is testing infrastructure
-    public BlockManagerXmlTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading",BlockManagerXmlTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(BlockManagerXmlTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
+
 }

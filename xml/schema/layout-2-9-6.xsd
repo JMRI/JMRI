@@ -113,6 +113,7 @@ signals - obsolete, EMPTY, never used
             <xs:complexType>
                 <xs:attribute name="LAFclass" type="xs:string"/>
                 <xs:attribute name="class" type="classType" use="required" />
+                <xs:attribute name="fontsize" type="xs:integer" />
                 <xs:attribute name="LocaleLanguage" type="xs:string"/>
                 <xs:attribute name="LocaleCountry" type="xs:string"/>
                 <xs:attribute name="LocaleVariant" type="xs:string"/>

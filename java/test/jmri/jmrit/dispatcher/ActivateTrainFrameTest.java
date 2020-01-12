@@ -31,6 +31,8 @@ public class ActivateTrainFrameTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initDebugThrottleManager();
     }
 
     @After

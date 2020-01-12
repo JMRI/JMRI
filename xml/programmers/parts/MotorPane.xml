@@ -22,7 +22,7 @@
       <tooltip xml:lang="it">Imposta grado di accellerazione (ritardo)</tooltip>
     </display>
     <display item="Decel" tooltip="Sets the deceleration rate (delay)">
-      <tooltip xml:lang="ca"> Estableix la taxa de desacceleració (retard)</tooltip>
+      <tooltip xml:lang="ca">Estableix la taxa de desacceleració (retard)</tooltip>
       <tooltip xml:lang="cs">Nastavení míry zpomalení (zpoždění)</tooltip>
       <tooltip xml:lang="de">Bremsverzögerung einstellen</tooltip>
       <tooltip xml:lang="fr">Régle le taux de décélération (retard)</tooltip>
@@ -75,7 +75,7 @@
     <display item="Load Control"/>
     <display item="EMF Enable"/>
     <display item="EMF Control Reference" tooltip="If the engine doesn't reach maximum speed, reduce this value">
-      <tooltip xml:lang="ca">Si la locomotora no arriba a la velocitat m‡xima, reduir aquest valor</tooltip>
+      <tooltip xml:lang="ca">Si la locomotora no arriba a la velocitat máxima, reduir aquest valor</tooltip>
       <tooltip xml:lang="cs">Pokud motor nedosáhne maximální rychlosti snižte tuto hodnotu</tooltip>
       <tooltip xml:lang="de">Verkleinern, falls die Lok nicht ihre Höchstgeschwindigkeit erreicht value</tooltip>
       <tooltip xml:lang="fr">Si la loco n'atteint pas sa vitese maximum, baisser cette valeur</tooltip>
@@ -113,9 +113,24 @@
     <display item="EMF Option 2"/>
     <display item="EMF Option 3"/>
     <display item="EMF Option 4"/>
+    <display item="EMF Option 5"/>
+    <display item="EMF Option 6"/>
+    <display item="EMF Option 7"/>
+    <display item="EMF Option 8"/>
+    <display item="EMF Option 9"/>
+    <display item="EMF Option 10"/>
+    <label>
+      <text> </text>
+    </label>
     <display item="Motor Option 1"/>
     <display item="Motor Option 2"/>
     <display item="Motor Option 3"/>
     <display item="Motor Option 4"/>
+    <display item="Motor Option 5"/>
+    <display item="Motor Option 6"/>
+    <display item="Motor Option 7"/>
+    <display item="Motor Option 8"/>
+    <display item="Motor Option 9"/>
+    <display item="Motor Option 10"/>
   </column>
 </pane>

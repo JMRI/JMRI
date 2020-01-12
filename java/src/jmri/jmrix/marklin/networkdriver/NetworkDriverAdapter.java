@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2008
  * @author Kevin Dickerson Copyright (C) 2012
  */
-public class NetworkDriverAdapter extends MarklinPortController implements jmri.jmrix.NetworkPortAdapter {
+public class NetworkDriverAdapter extends MarklinPortController {
 
     protected DatagramSocket datagramSocketConn = null;
 
@@ -54,19 +54,19 @@ public class NetworkDriverAdapter extends MarklinPortController implements jmri.
             log.error("a error opening network connection: " + e);
             if (m_port != 0) {
                 ConnectionStatus.instance().setConnectionState(
-                        m_HostName + ":" + m_port, ConnectionStatus.CONNECTION_DOWN);
+                        null, m_HostName + ":" + m_port, ConnectionStatus.CONNECTION_DOWN);
             } else {
                 ConnectionStatus.instance().setConnectionState(
-                        m_HostName, ConnectionStatus.CONNECTION_DOWN);
+                        null, m_HostName, ConnectionStatus.CONNECTION_DOWN);
             }
             throw (e);
         }
         if (opened && m_port != 0) {
             ConnectionStatus.instance().setConnectionState(
-                    m_HostName + ":" + m_port, ConnectionStatus.CONNECTION_UP);
+                    null, m_HostName + ":" + m_port, ConnectionStatus.CONNECTION_UP);
         } else if (opened) {
             ConnectionStatus.instance().setConnectionState(
-                    m_HostName, ConnectionStatus.CONNECTION_UP);
+                    null, m_HostName, ConnectionStatus.CONNECTION_UP);
         }
     }
 
@@ -76,10 +76,10 @@ public class NetworkDriverAdapter extends MarklinPortController implements jmri.
             log.error("getInputStream called before load(), stream not available");
             if (m_port != 0) {
                 ConnectionStatus.instance().setConnectionState(
-                        m_HostName + ":" + m_port, ConnectionStatus.CONNECTION_DOWN);
+                        null, m_HostName + ":" + m_port, ConnectionStatus.CONNECTION_DOWN);
             } else {
                 ConnectionStatus.instance().setConnectionState(
-                        m_HostName, ConnectionStatus.CONNECTION_DOWN);
+                        null, m_HostName, ConnectionStatus.CONNECTION_DOWN);
             }
         }
         try {
@@ -101,10 +101,10 @@ public class NetworkDriverAdapter extends MarklinPortController implements jmri.
             log.error("getOutputStream exception", e);
             if (m_port != 0) {
                 ConnectionStatus.instance().setConnectionState(
-                        m_HostName + ":" + m_port, ConnectionStatus.CONNECTION_DOWN);
+                        null, m_HostName + ":" + m_port, ConnectionStatus.CONNECTION_DOWN);
             } else {
                 ConnectionStatus.instance().setConnectionState(
-                        m_HostName, ConnectionStatus.CONNECTION_DOWN);
+                        null, m_HostName, ConnectionStatus.CONNECTION_DOWN);
             }
         }
         return null;

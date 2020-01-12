@@ -13,10 +13,6 @@ public class EasyDccTrafficControlScaffold extends EasyDccTrafficController {
 
     public EasyDccTrafficControlScaffold(EasyDccSystemConnectionMemo memo) {
         super(memo);
-        if (log.isDebugEnabled()) {
-            log.debug("setting instance: " + this);
-        }
-        self = this;
     }
 
     // override some EasyDccTrafficController methods for test purposes

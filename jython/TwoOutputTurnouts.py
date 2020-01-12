@@ -20,6 +20,7 @@
 
 import jmri
 import java
+import java.beans
 
 # First, define the listener that does everything
 class MainTurnoutListener(java.beans.PropertyChangeListener):

@@ -1,11 +1,8 @@
 package jmri.jmrix.sprog;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import jmri.util.junit.annotations.*;
+import org.junit.*;
 
 /**
  * Tests for SprogPowerManager.
@@ -36,6 +33,17 @@ public class SprogPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBa
     protected void hearOff() {
        stc.sendTestReply(new SprogReply("-"));
     }
+    
+    @Override
+    protected void sendIdleReply() {
+        return;
+    }
+
+    @Override
+    protected void hearIdle() {
+        return;
+    }
+
     @Override
     protected int numListeners() {
         return stc.numListeners();
@@ -56,15 +64,20 @@ public class SprogPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBa
         return ((stc.outbound.elementAt(index))).toString().equals("-");
     }
 
+    @Override
+    protected boolean outboundIdleOK(int index) {
+        return true;
+    }
+
     @Test
     @Override
-    @Ignore("unsolicited state changes are currently ignored")
+    @NotApplicable("unsolicited state changes are currently ignored")
     public void testStateOn(){
     }
 
     @Test
     @Override
-    @Ignore("unsolicited state changes are currently ignored")
+    @NotApplicable("unsolicited state changes are currently ignored")
     public void testStateOff(){
     }
 
@@ -90,7 +103,7 @@ public class SprogPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBa
     @Before
     @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
         SprogSystemConnectionMemo m = new SprogSystemConnectionMemo();
         stc = new SprogTrafficControlScaffold(m);
         stc.setTestReplies(true);

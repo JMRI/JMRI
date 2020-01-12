@@ -42,7 +42,7 @@ public class PickSinglePanelDemo implements ListSelectionListener {
         m.provideSensor("8");
         m.provideSensor("9");
 
-        tableModel = PickListModel.sensorPickModelInstance(); // N11N
+        tableModel = PickListModel.sensorPickModelInstance();
         panel = new PickSinglePanel<Sensor>(tableModel);
 
         // add a listener

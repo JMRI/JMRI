@@ -6,8 +6,7 @@ import jmri.LocoAddress;
 import jmri.Throttle;
 import jmri.jmrix.AbstractThrottle;
 import jmri.jmrix.SystemConnectionMemo;
-import org.openlcb.MimicNodeStore;
-import org.openlcb.implementations.DatagramService;
+import org.openlcb.OlcbInterface;
 import org.openlcb.implementations.throttle.ThrottleImplementation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,15 +17,15 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2012
  */
 public class OlcbThrottle extends AbstractThrottle {
-
+        
     /**
      * Constructor
      * @param address Dcc loco address
      * @param memo system connection memo
-     * @param mgr config manager
      */
-    public OlcbThrottle(DccLocoAddress address, SystemConnectionMemo memo, OlcbConfigurationManager mgr) {
+    public OlcbThrottle(DccLocoAddress address, SystemConnectionMemo memo) {
         super(memo);
+        OlcbInterface iface = memo.get(OlcbInterface.class);
 
         // cache settings. It would be better to read the
         // actual state, but I don't know how to do this
@@ -49,24 +48,24 @@ public class OlcbThrottle extends AbstractThrottle {
         this.address = address;
 
         // create OpenLCB library object that does the magic & activate
-        if (mgr.get(MimicNodeStore.class) == null) {
+        if (iface.getNodeStore() == null) {
             log.error("Failed to access Mimic Node Store");
         }
-        if (mgr.get(DatagramService.class) == null) {
+        if (iface.getDatagramService() == null) {
             log.error("Failed to access Datagram Service");
         }
         if (address instanceof OpenLcbLocoAddress) {
             oti = new ThrottleImplementation(
                     ((OpenLcbLocoAddress) address).getNode(),
-                    (MimicNodeStore) mgr.get(MimicNodeStore.class),
-                    (DatagramService) mgr.get(DatagramService.class)
+                    iface.getNodeStore(),
+                    iface.getDatagramService()
             );
         } else {
             oti = new ThrottleImplementation(
                     this.address.getNumber(),
                     this.address.isLongAddress(),
-                    (MimicNodeStore) mgr.get(MimicNodeStore.class),
-                    (DatagramService) mgr.get(DatagramService.class)
+                    iface.getNodeStore(),
+                    iface.getDatagramService()
             );
         }
         oti.start();
@@ -88,7 +87,7 @@ public class OlcbThrottle extends AbstractThrottle {
 
     /**
      * Set the speed {@literal &} direction
-     * <P>
+     * <p>
      * This intentionally skips the emergency stop value of 1.
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop
@@ -111,7 +110,7 @@ public class OlcbThrottle extends AbstractThrottle {
 
         // notify 
         if (oldSpeed != this.speedSetting) {
-            notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting);
+            notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
         }
         record(speed);
     }
@@ -122,7 +121,7 @@ public class OlcbThrottle extends AbstractThrottle {
         isForward = forward;
         setSpeedSetting(speedSetting);  // send the command
         if (old != isForward) {
-            notifyPropertyChangeListener("IsForward", old, isForward);
+            notifyPropertyChangeListener(ISFORWARD, old, isForward);
         }
     }
 

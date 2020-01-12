@@ -5,25 +5,26 @@ import java.io.DataOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.util.Vector;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
+import org.junit.Before;
 import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Description:	JUnit tests for the QsiTrafficController class
+ * JUnit tests for the QsiTrafficController class.
  *
  * @author	Bob Jacobsen
  */
-public class QsiTrafficControllerTest extends TestCase {
+public class QsiTrafficControllerTest {
 
+    @Test
     public void testCreate() {
         QsiTrafficController m = new QsiTrafficController();
         Assert.assertNotNull("exists", m);
     }
 
+    @Test
     public void testSendAscii() throws Exception {
         QsiTrafficController c = new QsiTrafficController() {
             // skip timeout message
@@ -54,6 +55,7 @@ public class QsiTrafficControllerTest extends TestCase {
         Assert.assertEquals("remaining ", 0, tostream.available());
     }
 
+    @Test
     public void testMonitor() throws Exception {
         QsiTrafficController c = new QsiTrafficController() {
             // skip timeout message
@@ -93,6 +95,7 @@ public class QsiTrafficControllerTest extends TestCase {
         Assert.assertEquals("remaining ", 0, tostream.available());
     }
 
+    @Test
     public void testRcvReply() throws Exception {
         QsiTrafficController c = new QsiTrafficController() {
             // skip timeout message
@@ -185,7 +188,12 @@ public class QsiTrafficControllerTest extends TestCase {
 
         @Override
         public String[] validBaudRates() {
-            return null;
+            return new String[] {};
+        }
+
+        @Override
+        public int[] validBaudNumbers() {
+            return new int[] {};
         }
 
         protected QsiPortControllerScaffold() throws Exception {
@@ -231,20 +239,9 @@ public class QsiTrafficControllerTest extends TestCase {
         }
     }
 
-    public QsiTrafficControllerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {QsiTrafficControllerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(QsiTrafficControllerTest.class);
-        return suite;
+    @Before
+    public void setUp() {
+        jmri.util.JUnitUtil.setUp();
     }
 
     private final static Logger log = LoggerFactory.getLogger(QsiTrafficControllerTest.class);

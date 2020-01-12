@@ -2,19 +2,17 @@ package jmri.jmrix.srcp.networkdriver;
 
 import jmri.jmrix.srcp.SRCPPortController;
 import jmri.jmrix.srcp.SRCPTrafficController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implements SerialPortAdapter for the SRCP system network connection.
- * <P>
+ * <p>
  * This connects an SRCP server (daemon) via a telnet connection. Normally
  * controlled by the NetworkDriverFrame class.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2008
  * @author	Paul Bender Copyright (C) 2010
  */
-public class NetworkDriverAdapter extends SRCPPortController implements jmri.jmrix.NetworkPortAdapter {
+public class NetworkDriverAdapter extends SRCPPortController {
 
     public NetworkDriverAdapter() {
         super(new jmri.jmrix.srcp.SRCPSystemConnectionMemo());
@@ -42,15 +40,6 @@ public class NetworkDriverAdapter extends SRCPPortController implements jmri.jmr
     // private control members
     private boolean opened = false;
 
-    /*
-     * @deprecated since 4.3.5
-     */
-    @Deprecated
-    static public NetworkDriverAdapter instance() {
-        log.error("Deprecated instance() method called");
-        return null;
-    }
-
-    private final static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class);
+    // private final static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class);
 
 }

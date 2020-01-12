@@ -2,7 +2,6 @@ package jmri.jmrix.secsi.nodeconfig;
 
 import java.awt.Container;
 import java.awt.FlowLayout;
-import java.util.ResourceBundle;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
@@ -218,14 +217,6 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
         // all ready, create the new node
         curNode = new SerialNode(nodeAddress, nodeType, memo.getTrafficController());
-        if (curNode == null) {
-            statusText1.setText(Bundle.getMessage("Error3"));
-            statusText1.setVisible(true);
-            log.error("Error creating Serial Node, constructor returned null");
-            errorInStatus1 = true;
-            resetNotes2();
-            return;
-        }
         // configure the new node
         setNodeParameters();
         // register any orphan sensors that this node may have

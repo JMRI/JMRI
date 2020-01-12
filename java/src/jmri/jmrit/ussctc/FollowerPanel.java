@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 /**
  * User interface frame for creating and editing "Follower" logic on USS CTC
  * machines.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2007
  */
 public class FollowerPanel extends BasePanel {
@@ -37,34 +37,34 @@ public class FollowerPanel extends BasePanel {
         // add output name field
         JPanel p3 = new JPanel();
 
-        label = new JLabel(rb.getString("LabelOutputName"));
-        label.setToolTipText(rb.getString("ToolTipFollowerOutput"));
+        label = new JLabel(Bundle.getMessage("LabelOutputName")); //NOI18N
+        label.setToolTipText(Bundle.getMessage("ToolTipFollowerOutput")); //NOI18N
         p3.add(label);
         outputName = new JTextField(12);
-        outputName.setToolTipText(rb.getString("ToolTipFollowerOutput"));
+        outputName.setToolTipText(Bundle.getMessage("ToolTipFollowerOutput")); //NOI18N
         p3.add(outputName);
         p2xs.add(p3);
 
         // add sensor name field
         p3 = new JPanel();
-        label = new JLabel(rb.getString("LabelSensorName"));
-        label.setToolTipText(rb.getString("ToolTipFollowerSensor"));
+        label = new JLabel(Bundle.getMessage("LabelSensorName")); //NOI18N
+        label.setToolTipText(Bundle.getMessage("ToolTipFollowerSensor")); //NOI18N
         p3.add(label);
         sensorName = new JTextField(12);
-        sensorName.setToolTipText(rb.getString("ToolTipFollowerSensor"));
+        sensorName.setToolTipText(Bundle.getMessage("ToolTipFollowerSensor")); //NOI18N
         p3.add(sensorName);
         p2xs.add(p3);
-        invert = new JCheckBox(rb.getString("ButtonInvert"));
-        invert.setToolTipText(rb.getString("ToolTipFollowerInvert"));
+        invert = new JCheckBox(Bundle.getMessage("ButtonInvert")); //NOI18N
+        invert.setToolTipText(Bundle.getMessage("ToolTipFollowerInvert")); //NOI18N
         p2xs.add(invert);
 
         // add veto name field
         p3 = new JPanel();
-        label = new JLabel(rb.getString("LabelVetoName"));
-        label.setToolTipText(rb.getString("ToolTipFollowerVeto"));
+        label = new JLabel(Bundle.getMessage("LabelVetoName")); //NOI18N
+        label.setToolTipText(Bundle.getMessage("ToolTipFollowerVeto")); //NOI18N
         p3.add(label);
         vetoName = new JTextField(12);
-        vetoName.setToolTipText(rb.getString("ToolTipFollowerVeto"));
+        vetoName.setToolTipText(Bundle.getMessage("ToolTipFollowerVeto")); //NOI18N
         p3.add(vetoName);
         p2xs.add(p3);
 
@@ -74,7 +74,7 @@ public class FollowerPanel extends BasePanel {
         p2xs = new JPanel();
         p2xs.setLayout(new BoxLayout(p2xs, BoxLayout.Y_AXIS));
 
-        viewButton = new JButton(rb.getString("ButtonView"));
+        viewButton = new JButton(Bundle.getMessage("ButtonView")); //NOI18N
         viewButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -82,7 +82,7 @@ public class FollowerPanel extends BasePanel {
             }
         });
         p2xs.add(viewButton);
-        addButton = new JButton(rb.getString("ButtonAddUpdate"));
+        addButton = new JButton(Bundle.getMessage("ButtonAddUpdate")); //NOI18N
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -98,7 +98,7 @@ public class FollowerPanel extends BasePanel {
         // validate
         ok &= validateTurnout(outputName.getText());
         ok &= validateSensor(sensorName.getText());
-        if (!vetoName.getText().equals("")) {
+        if (!vetoName.getText().isEmpty()) {
             ok &= validateSensor(vetoName.getText());
         }
 
@@ -118,7 +118,7 @@ public class FollowerPanel extends BasePanel {
             invert.setSelected(o.getInvert());
             vetoName.setText(o.getVetoName());
         } catch (jmri.JmriException e) {
-            log.error("Exception trying to find existing OS Indicator: " + e);
+            log.error("Exception trying to find existing OS Indicator: " + e); //NOI18N
         }
     }
 

@@ -5,7 +5,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import jmri.JmriException;
 import jmri.jmrix.ecos.EcosListener;
 import jmri.jmrix.ecos.EcosMessage;
 import jmri.jmrix.ecos.EcosReply;
@@ -18,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * Panel to show ECoS status
  *
  * @author Bob Jacobsen Copyright (C) 2008
-  */
+ */
 public class StatusPanel extends jmri.jmrix.ecos.swing.EcosPanel implements EcosListener {
 
     JPanel statusPanel = new JPanel();
@@ -95,13 +94,6 @@ public class StatusPanel extends jmri.jmrix.ecos.swing.EcosPanel implements Ecos
             tc.sendEcosMessage(m, null);
         } catch (NullPointerException npe) {
             log.warn("Could not connect to ECoS connection {}", memo);
-        }
-    }
-
-    @SuppressWarnings("unused")
-    private void checkTC() throws JmriException {
-        if (tc == null) {
-            throw new JmriException("attempt to use EcosPowerManager after dispose");
         }
     }
 

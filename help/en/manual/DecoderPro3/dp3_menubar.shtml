@@ -21,10 +21,8 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
       <a name="Top"></a>
 
@@ -54,7 +52,7 @@
             Opens another instance of Main DecoderPro
             <strong>Roster</strong> window.</li>
 
-            <li><strong>Import Roster</strong><br>
+            <li><strong>Import Complete Roster</strong><br>
             Imports Roster into DecoderPro</li>
 
             <li><strong>Import Roster Entry</strong><br>

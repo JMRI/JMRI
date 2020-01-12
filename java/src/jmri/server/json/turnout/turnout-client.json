@@ -16,6 +16,10 @@
             "type": "string",
             "description": "If present, set the comment for the turnout"
         },
+        "inverted": {
+            "type": "boolean",
+            "description": "true if turnout is inverted; false otherwise"
+        },
         "state": {
             "type": "integer",
             "description": "If present, sets the state of the turnout",

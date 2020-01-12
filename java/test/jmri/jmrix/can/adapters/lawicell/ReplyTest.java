@@ -2,19 +2,20 @@ package jmri.jmrix.can.adapters.lawicell;
 
 import jmri.jmrix.can.CanReply;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the jmri.jmrix.can.adapters.lawicell.Reply class
  *
  * @author Bob Jacobsen Copyright 2008, 2009
  */
-public class ReplyTest extends TestCase {
+public class ReplyTest extends jmri.jmrix.AbstractMessageTest {
 
     // t123412345678
+    @Test
     public void testOne() {
 
         Reply g = new Reply("t123412345678\r");
@@ -32,6 +33,7 @@ public class ReplyTest extends TestCase {
     }
 
     // T0000F00D0
+    @Test
     public void testTwo() {
 
         Reply g = new Reply("T0000F00D0\r");
@@ -44,6 +46,7 @@ public class ReplyTest extends TestCase {
         Assert.assertEquals("num elements", 0, r.getNumDataElements());
     }
 
+    @Test
     public void testThree() {
 
         Reply g = new Reply("T00000123412345678\r");
@@ -61,33 +64,18 @@ public class ReplyTest extends TestCase {
         Assert.assertEquals("el 3", 0x78, r.getElement(3));
     }
 
-    // from here down is testing infrastructure
-    public ReplyTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        apps.tests.AllTest.initLogging();
-        String[] testCaseName = {"-noloading", ReplyTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        apps.tests.AllTest.initLogging();
-        TestSuite suite = new TestSuite(ReplyTest.class);
-        return suite;
-    }
-
     // The minimal setup for log4J
     @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
+        m = new Reply("t123412345678\r");
     }
 
+    @After
     @Override
-    protected void tearDown() {
+    public void tearDown() {
+	m = null;
         JUnitUtil.tearDown();
     }
 }

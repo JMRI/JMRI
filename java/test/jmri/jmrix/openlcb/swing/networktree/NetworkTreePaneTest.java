@@ -26,6 +26,7 @@ public class NetworkTreePaneTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
 
         memo  = new jmri.jmrix.openlcb.OlcbSystemConnectionMemo();
         TestTrafficController tc = new TestTrafficController();
@@ -35,6 +36,8 @@ public class NetworkTreePaneTest {
     @After
     public void tearDown() {
         jmri.util.JUnitUtil.resetWindows(false, false);
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 }

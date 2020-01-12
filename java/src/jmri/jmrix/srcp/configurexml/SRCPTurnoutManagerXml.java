@@ -1,13 +1,12 @@
 package jmri.jmrix.srcp.configurexml;
 
-import jmri.jmrix.srcp.SRCPTurnoutManager;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Provides load and store functionality for configuring SRCPTurnoutManagers.
- * <P>
+ * <p>
  * Uses the store method from the abstract base class, but provides a load
  * method here.
  *
@@ -31,8 +30,6 @@ public class SRCPTurnoutManagerXml extends jmri.managers.configurexml.AbstractTu
 
     @Override
     public boolean load(Element shared, Element perNode) {
-        // create the master object
-        SRCPTurnoutManager.instance();
         // load individual turnouts
         return loadTurnouts(shared, perNode);
     }

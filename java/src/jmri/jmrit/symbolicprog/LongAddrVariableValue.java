@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 import javax.annotation.Nonnull;
 import javax.swing.JLabel;
@@ -22,7 +21,7 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class LongAddrVariableValue extends VariableValue
-        implements ActionListener, PropertyChangeListener, FocusListener {
+        implements ActionListener, FocusListener {
 
     public LongAddrVariableValue(@Nonnull String name, @Nonnull String comment, @Nonnull String cvName,
             boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
@@ -89,8 +88,8 @@ public class LongAddrVariableValue extends VariableValue
     void exitField() {
         // this _can_ be invoked after dispose, so protect
         if (_value != null && !oldContents.equals(_value.getText())) {
-            int newVal = Integer.valueOf(_value.getText()).intValue();
-            int oldVal = Integer.valueOf(oldContents).intValue();
+            int newVal = Integer.parseInt(_value.getText());
+            int oldVal = Integer.parseInt(oldContents);
             updatedTextField();
             prop.firePropertyChange("Value", Integer.valueOf(oldVal), Integer.valueOf(newVal));
         }
@@ -107,7 +106,7 @@ public class LongAddrVariableValue extends VariableValue
         // no masking involved for long address
         int newVal;
         try {
-            newVal = Integer.valueOf(_value.getText()).intValue();
+            newVal = Integer.parseInt(_value.getText());
         } catch (java.lang.NumberFormatException ex) {
             newVal = 0;
         }
@@ -130,7 +129,7 @@ public class LongAddrVariableValue extends VariableValue
         if (log.isDebugEnabled()) {
             log.debug("actionPerformed");
         }
-        int newVal = Integer.valueOf(_value.getText()).intValue();
+        int newVal = Integer.parseInt(_value.getText());
         updatedTextField();
         prop.firePropertyChange("Value", null, Integer.valueOf(newVal));
     }
@@ -168,7 +167,7 @@ public class LongAddrVariableValue extends VariableValue
 
     @Override
     public int getIntValue() {
-        return Integer.valueOf(_value.getText()).intValue();
+        return Integer.parseInt(_value.getText());
     }
 
     @Override
@@ -190,7 +189,7 @@ public class LongAddrVariableValue extends VariableValue
     public void setValue(int value) {
         int oldVal;
         try {
-            oldVal = Integer.valueOf(_value.getText()).intValue();
+            oldVal = Integer.parseInt(_value.getText());
         } catch (java.lang.NumberFormatException ex) {
             oldVal = -999;
         }

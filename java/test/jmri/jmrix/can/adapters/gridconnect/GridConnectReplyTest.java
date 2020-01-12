@@ -2,19 +2,20 @@ package jmri.jmrix.can.adapters.gridconnect;
 
 import jmri.jmrix.can.CanReply;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the jmri.jmrix.can.adapters.gridconnect.GridConnectReply class
  *
  * @author Bob Jacobsen Copyright 2008, 2009
  */
-public class GridConnectReplyTest extends TestCase {
+public class GridConnectReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
     // :S123N12345678;
+    @Test
     public void testOne() {
 
         GridConnectReply g = new GridConnectReply(":S123N12345678;");
@@ -32,6 +33,7 @@ public class GridConnectReplyTest extends TestCase {
     }
 
     // :XF00DN;
+    @Test
     public void testTwo() {
 
         GridConnectReply g = new GridConnectReply(":XF00DN;");
@@ -44,6 +46,7 @@ public class GridConnectReplyTest extends TestCase {
         Assert.assertEquals("num elements", 0, r.getNumDataElements());
     }
 
+    @Test
     public void testThree() {
 
         GridConnectReply g = new GridConnectReply(":X123R12345678;");
@@ -60,6 +63,7 @@ public class GridConnectReplyTest extends TestCase {
         Assert.assertEquals("el 3", 0x78, r.getElement(3));
     }
 
+    @Test
     public void testThreeAlt() {
 
         GridConnectReply g = new GridConnectReply(":X0000123R12345678;");
@@ -76,6 +80,7 @@ public class GridConnectReplyTest extends TestCase {
         Assert.assertEquals("el 3", 0x78, r.getElement(3));
     }
 
+    @Test
     public void testThreeBis() {
 
         GridConnectReply g = new GridConnectReply(":X000123R12345678;");
@@ -92,6 +97,7 @@ public class GridConnectReplyTest extends TestCase {
         Assert.assertEquals("el 3", 0x78, r.getElement(3));
     }
 
+    @Test
     public void testFour() {
 
         GridConnectReply g = new GridConnectReply(":X1FFFFFFFR63;");
@@ -105,6 +111,7 @@ public class GridConnectReplyTest extends TestCase {
         Assert.assertEquals("el 1", 0x63, r.getElement(0));
     }
 
+    @Test
     public void testNotNegative() {
 
         // remnant of Arduino CAN2USBino startup message
@@ -117,34 +124,18 @@ public class GridConnectReplyTest extends TestCase {
         Assert.assertEquals("header", 0x0, r.getHeader());
         Assert.assertEquals("num elements", 0, r.getNumDataElements());
     }
-    // from here down is testing infrastructure
-
-    public GridConnectReplyTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        apps.tests.AllTest.initLogging();
-        String[] testCaseName = {"-noloading", GridConnectReplyTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        apps.tests.AllTest.initLogging();
-        TestSuite suite = new TestSuite(GridConnectReplyTest.class);
-        return suite;
-    }
 
     // The minimal setup for log4J
     @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
+        m = new GridConnectReply(":S123N12345678;");
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
+	m = null;
         JUnitUtil.tearDown();
     }
 }

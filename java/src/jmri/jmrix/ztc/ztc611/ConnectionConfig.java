@@ -3,7 +3,7 @@ package jmri.jmrix.ztc.ztc611;
 /**
  * Handle configuring an XpressNet layout connection via a ZTC Controls ZTC611
  * command station.
- * <P>
+ * <p>
  * This uses the {@link ZTC611Adapter} class to do the actual connection.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
@@ -45,10 +45,14 @@ public class ConnectionConfig extends jmri.jmrix.lenz.AbstractXNetSerialConnecti
         manufacturerName = manu;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new ZTC611Adapter();
         }
     }
+
 }

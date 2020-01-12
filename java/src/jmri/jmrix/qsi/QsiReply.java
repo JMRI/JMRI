@@ -167,4 +167,5 @@ public class QsiReply extends jmri.jmrix.AbstractMessage {
 
     // contents (private)
     private boolean _isBoot = false;
+
 }

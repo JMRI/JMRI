@@ -2,30 +2,25 @@ package jmri.jmrix.tams;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class TamsReplyTest {
-
-    @Test
-    public void testCTor() {
-        TamsReply t = new TamsReply();
-        Assert.assertNotNull("exists",t);
-    }
+public class TamsReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
+        m = new TamsReply();
     }
 
     @After
     public void tearDown() {
+	m = null;
         JUnitUtil.tearDown();
     }
 

@@ -31,6 +31,7 @@
         </label>
         <display item="Analog (DC) Operation" tooltip="Determines whether loco can operate on conventional DC current (enables Power Source Conversion)">
           <tooltip xml:lang="it">Determina se la Loco può operare in DC (analogica)</tooltip>
+          <tooltip xml:lang="fr">Détermine si une locomotive peut fonctionner en courant alternatif</tooltip>
           <tooltip xml:lang="ca">Estableix que la locomotora pot circular en analògic [CC] (analògica)</tooltip>
           <tooltip xml:lang="de">Legt fest, ob die Lok auch analog (DC) fahren kann</tooltip>
           <tooltip xml:lang="cs">Určuje zdali lokomotiva může být provozována se stejnosměrným (DC) napájením (povoluje změnu napájecího zdroje)</tooltip>

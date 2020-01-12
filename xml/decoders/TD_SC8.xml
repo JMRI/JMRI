@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2003, 2004, 2008, 2014 All rights reserved -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -13,15 +12,23 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Michael Mosher" version="1.5" lastUpdated="20200109"/>
+  <version author="Alain Le Marchand" version="1.4" lastUpdated="20190111"/>
+  <version author="B. Milhaupt" version="1.3" lastUpdated="20180823"/>
   <version author="td@teamdigital1.com" version="1.2" lastUpdated="20120221"/>
   <!-- Version 1 initial release 2/18/11-->
   <!-- Version 1.1 release 3/14/11 corrected ops mode enable and speed to position-->
   <!-- Version 1.2 release 2/21/12 corrected CV28 options and added startup delay-->
+  <!-- Version 1.3 release, added "LOCONETOPSBOARD" programming token to allow LocoNet-connected boards to read CV values -->
+  <!-- Version 1.3 corrected mask CV82, 83, 84 2019/01/11 -->
+  <!-- Version 1.5 change mfg to match name in NMRA.xml -->
   <decoder>
-    <family name="Stationary Decoder" mfg="Team Digital" type="stationary">
+    <family name="Stationary Decoder" mfg="Team Digital, LLC" type="stationary">
       <model model="SC8" lowVersionID="1" comment="SC8 is a stationary decoder, but it can be programmed in the usual way"/>
     </family>
-    <programming direct="yes" paged="yes" register="no" ops="yes"/>
+    <programming direct="yes" paged="yes" register="no" ops="yes">
+        <mode>LOCONETOPSBOARD</mode>
+    </programming>
     <variables>
       <variable item="Servo 1 Address" CV="1" mask="VVVVVVVV" default="1" tooltip="Range 1-2040">
         <splitVal highCV="9" upperMask="XXXXVVVV"/>
@@ -934,7 +941,7 @@
         </enumVal>
         <label>Reverse</label>
       </variable>
-      <variable item="Beh2" CV="82" mask="VXXXXXVX" default="0">
+      <variable item="Beh2" CV="82" mask="XXXXXXVX" default="0">
         <enumVal>
           <enumChoice choice="no">
           </enumChoice>
@@ -952,7 +959,7 @@
         </enumVal>
         <label>Reverse</label>
       </variable>
-      <variable item="Beh3" CV="83" mask="VXXXXXVX" default="0">
+      <variable item="Beh3" CV="83" mask="XXXXXXVX" default="0">
         <enumVal>
           <enumChoice choice="no">
           </enumChoice>
@@ -970,7 +977,7 @@
         </enumVal>
         <label>Reverse</label>
       </variable>
-      <variable item="Beh4" CV="84" mask="VXXXXXVX" default="0">
+      <variable item="Beh4" CV="84" mask="XXXXXXVX" default="0">
         <enumVal>
           <enumChoice choice="no">
           </enumChoice>

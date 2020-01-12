@@ -1,6 +1,5 @@
 package jmri.jmrix;
 
-import apps.tests.Log4JFixture;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -50,14 +49,14 @@ public class ConnectionConfigManagerTest {
 
     @Before
     public void setUp() throws Exception {
-        Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         this.workspace = Files.createTempDirectory(this.getClass().getSimpleName());
         JUnitUtil.resetInstanceManager();
     }
 
     @After
     public void tearDown() throws Exception {
-        Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
         JUnitUtil.resetFileUtilSupport();
@@ -257,4 +256,5 @@ public class ConnectionConfigManagerTest {
             return this.getClass().getName();
         }
     }
+
 }

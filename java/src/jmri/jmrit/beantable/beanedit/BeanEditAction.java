@@ -33,7 +33,13 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.AbstractTableModel;
+
+import jmri.InstanceManager;
 import jmri.NamedBean;
+import jmri.NamedBeanHandleManager;
+import jmri.NamedBean.DisplayOptions;
+import jmri.jmrit.display.layoutEditor.LayoutBlock;
+import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,10 +47,12 @@ import org.slf4j.LoggerFactory;
 /**
  * Provides the basic information and structure for for a editing the details of
  * a bean object.
+ * 
+ * @param <B> the type of supported NamedBean
  *
  * @author Kevin Dickerson Copyright (C) 2011
  */
-abstract class BeanEditAction extends AbstractAction {
+public abstract class BeanEditAction<B extends NamedBean> extends AbstractAction {
 
     public BeanEditAction(String s) {
         super(s);
@@ -54,9 +62,9 @@ abstract class BeanEditAction extends AbstractAction {
         super("Bean Edit");
     }
 
-    NamedBean bean;
+    B bean;
 
-    public void setBean(jmri.NamedBean bean) {
+    public void setBean(B bean) {
         this.bean = bean;
     }
 
@@ -145,14 +153,14 @@ abstract class BeanEditAction extends AbstractAction {
         bei.add(usage);
         return usage;
     }
-    BeanPropertiesTableModel propertiesModel;
+    BeanPropertiesTableModel<B> propertiesModel;
 
     BeanItemPanel propertiesDetails() {
         BeanItemPanel properties = new BeanItemPanel();
         properties.setName(Bundle.getMessage("Properties"));
         properties.addItem(new BeanEditItem(null, null, Bundle.getMessage("NamedBeanPropertiesTableDescription")));
         properties.setLayout(new BoxLayout(properties, BoxLayout.Y_AXIS));
-        propertiesModel = new BeanPropertiesTableModel();
+        propertiesModel = new BeanPropertiesTableModel<>();
         JTable jtAttributes = new JTable();
         jtAttributes.setModel(propertiesModel);
         JScrollPane jsp = new JScrollPane(jtAttributes);
@@ -373,7 +381,7 @@ abstract class BeanEditAction extends AbstractAction {
 
     public void save() {
         String feedback = Bundle.getMessage("ItemUpdateFeedback", Bundle.getMessage("BeanNameTurnout"))
-                + " " + bean.getSystemName() + " (" + bean.getUserName() + ")";
+                + " " + bean.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
         // provide feedback to user, can be overwritten by save action error handler
         statusBar.setText(feedback);
         statusBar.setForeground(Color.gray);
@@ -393,11 +401,11 @@ abstract class BeanEditAction extends AbstractAction {
         return true;
     }
 
-    jmri.NamedBeanHandleManager nbMan = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
+    NamedBeanHandleManager nbMan = InstanceManager.getDefault(NamedBeanHandleManager.class);
 
     abstract protected String getBeanType();
 
-    abstract protected NamedBean getByUserName(String name);
+    abstract protected B getByUserName(String name);
 
     /**
      * Generic method to change the user name of a Bean.
@@ -405,7 +413,8 @@ abstract class BeanEditAction extends AbstractAction {
      * @param _newName string to use as the new user name
      */
     public void renameBean(String _newName) {
-        NamedBean nBean = bean;
+        if (!allowBlockNameChange("Rename", _newName)) return;  // NOI18N
+        B nBean = bean;
         String oldName = nBean.getUserName();
 
         String value = _newName;
@@ -414,7 +423,7 @@ abstract class BeanEditAction extends AbstractAction {
             //name not changed.
             return;
         } else {
-            NamedBean nB = getByUserName(value);
+            B nB = getByUserName(value);
             if (nB != null) {
                 log.error("User name is not unique " + value); // NOI18N
                 String msg;
@@ -461,6 +470,7 @@ abstract class BeanEditAction extends AbstractAction {
      * Generic method to remove the user name from a bean.
      */
     public void removeName() {
+        if (!allowBlockNameChange("Remove", "")) return;  // NOI18N
         String msg = java.text.MessageFormat.format(Bundle.getMessage("UpdateToSystemName"),
                 new Object[]{getBeanType()});
         int optionPane = JOptionPane.showConfirmDialog(null,
@@ -472,6 +482,44 @@ abstract class BeanEditAction extends AbstractAction {
         bean.setUserName(null);
     }
 
+    /*
+     * Determine whether it is safe to rename/remove a Block user name.
+     * <p>The user name is used by the LayoutBlock to link to the block and
+     * by Layout Editor track components to link to the layout block.
+     * @oaram changeType This will be Remove or Rename.
+     * @param newName For Remove this will be empty, for Rename it will be the new user name.
+     * @return true to continue with the user name change.
+     */
+    boolean allowBlockNameChange(String changeType, String newName) {
+        if (!bean.getBeanType().equals("Block")) return true;  // NOI18N
+
+        // If there is no layout block or the block has no user name, Block rename and remove are ok without notification.
+        String oldName = bean.getUserName();
+        if (oldName == null) return true;
+        LayoutBlock layoutBlock = jmri.InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(oldName);
+        if (layoutBlock == null) return true;
+
+        // Remove is not allowed if there is a layout block
+        if (changeType.equals("Remove")) {
+            log.warn("Cannot remove user name for block {}", oldName);  // NOI18N
+                JOptionPane.showMessageDialog(null,
+                        Bundle.getMessage("BlockRemoveUserNameWarning", oldName),  // NOI18N
+                        Bundle.getMessage("WarningTitle"),  // NOI18N
+                        JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+
+        // Confirmation dialog
+        int optionPane = JOptionPane.showConfirmDialog(null,
+                Bundle.getMessage("BlockChangeUserName", oldName, newName),  // NOI18N
+                Bundle.getMessage("QuestionTitle"),  // NOI18N
+                JOptionPane.YES_NO_OPTION);
+        if (optionPane == JOptionPane.YES_OPTION) {
+            return true;
+        }
+        return false;
+    }
+
     /**
      * TableModel for edit of Bean properties.
      * <p>
@@ -479,7 +527,7 @@ abstract class BeanEditAction extends AbstractAction {
      * not to add them. Changing properties is possible but only for strings.
      * Based upon the code from the RosterMediaPane
      */
-    private static class BeanPropertiesTableModel extends AbstractTableModel {
+    private static class BeanPropertiesTableModel<B extends NamedBean> extends AbstractTableModel {
 
         Vector<KeyValueModel> attributes;
         String titles[];
@@ -501,7 +549,7 @@ abstract class BeanEditAction extends AbstractAction {
             titles[1] = Bundle.getMessage("NamedBeanPropertyValue");
         }
 
-        public void setModel(NamedBean nb) {
+        public void setModel(B nb) {
             attributes = new Vector<KeyValueModel>(nb.getPropertyKeys().size());
             Iterator<String> ite = nb.getPropertyKeys().iterator();
             while (ite.hasNext()) {
@@ -512,7 +560,7 @@ abstract class BeanEditAction extends AbstractAction {
             wasModified = false;
         }
 
-        public void updateModel(NamedBean nb) {
+        public void updateModel(B nb) {
             if (!wasModified()) {
                 return; //No changed made
             }   // add and update keys

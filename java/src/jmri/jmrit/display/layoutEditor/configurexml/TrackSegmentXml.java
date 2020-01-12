@@ -1,5 +1,6 @@
 package jmri.jmrit.display.layoutEditor.configurexml;
 
+import java.awt.Color;
 import java.awt.geom.Point2D;
 import java.util.HashMap;
 import java.util.List;
@@ -20,7 +21,7 @@ import org.slf4j.LoggerFactory;
  * LayoutEditor.
  *
  * @author David Duchamp Copyright (c) 2007
- * @author George Warner Copyright (c) 2017-2018
+ * @author George Warner Copyright (c) 2017-2019
  */
 public class TrackSegmentXml extends AbstractXmlAdapter {
 
@@ -83,7 +84,7 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
 
         // store decorations
         Map<String, String> decorations = p.getDecorations();
-        if ((decorations != null) && (decorations.size() > 0)) {
+        if (decorations.size() > 0) {
             Element decorationsElement = new Element("decorations");
             for (Map.Entry<String, String> entry : decorations.entrySet()) {
                 String name = entry.getKey();
@@ -373,7 +374,12 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
                         }
                         a = decorationElement.getAttribute("color");
                         if (a != null) {
-                            l.setArrowColor(ColorUtil.stringToColor(a.getValue()));
+                            try {
+                                l.setArrowColor(ColorUtil.stringToColor(a.getValue()));
+                            } catch (IllegalArgumentException e) {
+                                l.setArrowColor(Color.BLACK);
+                                log.error("Invalid color {}; using black", a.getValue());
+                            }
                         }
                         a = decorationElement.getAttribute("linewidth");
                         if (a != null) {
@@ -429,7 +435,12 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
 
                         a = decorationElement.getAttribute("color");
                         if (a != null) {
-                            l.setBridgeColor(ColorUtil.stringToColor(a.getValue()));
+                            try {
+                                l.setBridgeColor(ColorUtil.stringToColor(a.getValue()));
+                            } catch (IllegalArgumentException e) {
+                                l.setBridgeColor(Color.BLACK);
+                                log.error("Invalid color {}; using black", a.getValue());
+                            }
                         }
 
                         a = decorationElement.getAttribute("linewidth");
@@ -471,7 +482,12 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
 
                         a = decorationElement.getAttribute("color");
                         if (a != null) {
-                            l.setBumperColor(ColorUtil.stringToColor(a.getValue()));
+                            try {
+                                l.setBumperColor(ColorUtil.stringToColor(a.getValue()));
+                            } catch (IllegalArgumentException e) {
+                                l.setBumperColor(Color.BLACK);
+                                log.error("Invalid color {}; using black", a.getValue());
+                            }
                         }
 
                         a = decorationElement.getAttribute("linewidth");
@@ -530,7 +546,12 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
 
                         a = decorationElement.getAttribute("color");
                         if (a != null) {
-                            l.setTunnelColor(ColorUtil.stringToColor(a.getValue()));
+                            try {
+                                l.setTunnelColor(ColorUtil.stringToColor(a.getValue()));
+                            } catch (IllegalArgumentException e) {
+                                l.setTunnelColor(Color.BLACK);
+                                log.error("Invalid color {}; using black", a.getValue());
+                            }
                         }
 
                         a = decorationElement.getAttribute("linewidth");
@@ -574,7 +595,7 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
         // get remaining attribute
         Attribute a = element.getAttribute("blockname");
         if (a != null) {
-            l.tBlockName = a.getValue();
+            l.tLayoutBlockName = a.getValue();
         }
 
         p.getLayoutTracks().add(l);

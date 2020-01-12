@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
 /**
  *
  * Pane to show a 2D representation of the RPS Model and Measurements.
- * <p>
+ *
  * @see jmri.jmrix.rps.Model
  * @see jmri.jmrix.rps.Measurement
  *
@@ -218,13 +218,11 @@ public class RpsTrackingPanel extends javax.swing.JPanel
         TransmitterStatus transmitter = transmitters.get(id);
         double xend = m.getX();
         double yend = m.getY();
-        if (log.isDebugEnabled()) {
-            log.debug("notify " + xend + "," + yend);
-        }
+        log.debug("notify {},{}", xend, yend);
         if (transmitter == null) {
             // create Transmitter status with current measurement
             // so we can draw line next time
-            log.debug("create new TransmitterStatus for " + m.getId());
+            log.debug("create new TransmitterStatus for {}", m.getId());
             transmitter = new TransmitterStatus();
             transmitter.measurement = m;
             transmitter.color = nextColor();
@@ -319,5 +317,7 @@ public class RpsTrackingPanel extends javax.swing.JPanel
         Shape rep2;
         Measurement measurement;
     }
+
     private final static Logger log = LoggerFactory.getLogger(RpsTrackingPanel.class);
+
 }

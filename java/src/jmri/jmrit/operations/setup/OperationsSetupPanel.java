@@ -372,7 +372,7 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
         add(pIconPane);
         add(pControl);
 
-        // setup buttons
+        // set up buttons
         addButtonAction(backupButton);
         addButtonAction(restoreButton);
         addButtonAction(saveButton);

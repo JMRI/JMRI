@@ -46,16 +46,15 @@
                     </div>
                     <div class="col-md-10">
                         <div class="row text-right">
-                            <button data-toggle="collapse" data-target="#uploadRoster">Uahrát Evidence Soubory</button>
+                            <button data-toggle="collapse" data-target="#uploadRoster">Nahrát soubory evidence</button>
                         </div>
                         <div id="uploadRoster" class="row collapse">
                             <div class="col-md-3">
                                 <label class="btn btn-default btn-file">vyberte soubory... <input id="fileupload"
                                     type="file" name="files[]" data-url="roster" multiple style="display: none;">
                                 </label>
-                                <div id="dropzone" class="fade well">-nebo- pokles souborů zde</div>
-                                <label><input id="fileReplace" type="checkbox" value="">vyměnit, pokud
-                                    existuje?</label>
+                                <div id="dropzone" class="fade well">-nebo- Přetáhněte soubory sem</div>
+                                <label><input id="fileReplace" type="checkbox" value="">vyměnit, pokud existuje?</label>
                                 <div id="progress" class="progress">
                                     <div class="bar"></div>
                                 </div>
@@ -68,7 +67,7 @@
                     </div>
                 </div>
     
-                <div id="activity-alert" class="alert alert-info alert-dismissable">Získání evidence...</div>
+                <div id="activity-alert" class="alert alert-info alert-dismissable">Získávání evidence...</div>
                 <div id="warning-roster-no-entries" class="alert alert-warning alert-dismissable hidden">Evidence je prázdná.</div>
                 <div id="warning-group-no-entries" class="alert alert-warning alert-dismissable hidden">Skupina evidence %5$s je prázdná.</div>
                 <div id="error-listing-roster" class="alert alert-error hidden">Chyba výpisu evidence:<br></div>

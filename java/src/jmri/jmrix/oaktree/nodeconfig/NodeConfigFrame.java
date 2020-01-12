@@ -64,7 +64,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         super();
         _memo = memo;
 
-//        addHelpMenu("package.jmri.jmrix.oaktree.nodeconfig.NodeConfigFrame", true); // please write a help file first
+        addHelpMenu("package.jmri.jmrix.oaktree.nodeconfig.NodeConfigFrame", true); // please write this help file
     }
 
     /**
@@ -220,14 +220,6 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
         // all ready, create the new node
         curNode = new SerialNode(nodeAddress, nodeType, _memo);
-        if (curNode == null) {
-            statusText1.setText(Bundle.getMessage("Error3"));
-            statusText1.setVisible(true);
-            log.error("Error creating Serial Node, constructor returned null");
-            errorInStatus1 = true;
-            resetNotes2();
-            return;
-        }
         // configure the new node
         setNodeParameters();
         log.debug("config node {} ready", nodeAddress);

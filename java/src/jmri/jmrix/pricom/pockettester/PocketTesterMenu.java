@@ -1,6 +1,5 @@
 package jmri.jmrix.pricom.pockettester;
 
-import java.util.ResourceBundle;
 import javax.swing.JMenu;
 
 /**
@@ -19,9 +18,7 @@ public class PocketTesterMenu extends JMenu {
 
         super();
 
-        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.pricom.pockettester.TesterBundle");
-
-        setText(rb.getString("MenuPocketTester"));
+        setText(Bundle.getMessage("MenuPocketTester"));
 
         add(new jmri.jmrix.pricom.pockettester.DataSourceAction());
 

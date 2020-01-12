@@ -4,11 +4,11 @@ import jmri.util.SystemType;
 
 /**
  * Handle configuring a DCC++ layout connection via a Serial adaptor.
- * <P>
+ * <p>
  * This uses the {@link DCCppAdapter} class to do the actual connection.
  *
  * @author Mark Underwood Copyright (C) 2015
-  *
+ *
  * @see DCCppAdapter
  *
  * Based on jmri.jmrix.lenz.liusb.ConnectionConfig by Paul Bender
@@ -24,7 +24,8 @@ public class ConnectionConfig extends jmri.jmrix.dccpp.AbstractDCCppSerialConnec
     }
 
     /**
-     * Ctor for a functional Swing object with no prexisting adapter
+     * Ctor for a connection configuration with no preexisting adapter.
+     * {@link #setInstance()} will fill the adapter member.
      */
     public ConnectionConfig() {
         super();
@@ -43,10 +44,14 @@ public class ConnectionConfig extends jmri.jmrix.dccpp.AbstractDCCppSerialConnec
         return new String[]{};
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new DCCppAdapter();
         }
     }
+
 }

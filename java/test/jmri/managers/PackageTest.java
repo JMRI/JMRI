@@ -10,15 +10,12 @@ import org.junit.runners.Suite;
     DefaultLogixManagerTest.class,
     LogixSystemTest.class,
     DefaultSignalSystemManagerTest.class,
-    InternalLightManagerTest.class,
-    InternalSensorManagerTest.class,
     ProxyLightManagerTest.class,
     ProxySensorManagerTest.class,
     ProxyTurnoutManagerTest.class,
     JmriUserPreferencesManagerTest.class,
     BundleTest.class,
     jmri.managers.configurexml.PackageTest.class,
-    InternalReporterManagerTest.class,
     ProxyReporterManagerTest.class,
     ManagerDefaultSelectorTest.class,
     AbstractSignalHeadManagerTest.class,
@@ -32,8 +29,7 @@ import org.junit.runners.Suite;
     DefaultSignalGroupManagerTest.class,
     DefaultSignalMastLogicManagerTest.class,
     DefaultSignalMastManagerTest.class,
-    DeferringProgrammerManagerTest.class,
-    InternalTurnoutManagerTest.class
+    DeferringProgrammerManagerTest.class
 })
 
 /**

@@ -20,7 +20,7 @@ import jmri.util.prefs.InitializationException;
  * implementation that is ready to extend.
  *
  * @see jmri.util.prefs.AbstractPreferencesManager
- * @author Randall Wood 2015
+ * @author Randall Wood 2015, 2019
  */
 public interface PreferencesManager extends JmriServiceProviderInterface {
 
@@ -36,13 +36,16 @@ public interface PreferencesManager extends JmriServiceProviderInterface {
      * throwing an InitializationException to ensure that the provider is not
      * repeatedly initialized.
      *
-     * @param profile the configuration profile used for this initialization
+     * @param profile the configuration profile used for this initialization;
+     *                    may be null to initialize for this user regardless of
+     *                    profile
      * @throws jmri.util.prefs.InitializationException if the user needs to be
-     *                                                 notified of an issue that
-     *                                                 prevents regular use of
-     *                                                 the application
+     *                                                     notified of an issue
+     *                                                     that prevents regular
+     *                                                     use of the
+     *                                                     application
      */
-    public void initialize(@Nonnull Profile profile) throws InitializationException;
+    public void initialize(Profile profile) throws InitializationException;
 
     /**
      * Test if the PreferencesManager is initialized without errors for the
@@ -51,10 +54,12 @@ public interface PreferencesManager extends JmriServiceProviderInterface {
      * if isInitializedWithExceptions(Profile) returns true, this method must
      * return false.
      *
-     * @param profile the configuration profile to test against
+     * @param profile the configuration profile to test against; may be null to
+     *                    test for exceptions thrown when initializing for this
+     *                    user regardless of profile
      * @return true if the provider is initialized without exceptions
      */
-    public boolean isInitialized(@Nonnull Profile profile);
+    public boolean isInitialized(Profile profile);
 
     /**
      * Test if the PreferencesManager is initialized, but threw an
@@ -63,21 +68,25 @@ public interface PreferencesManager extends JmriServiceProviderInterface {
      * {@link #isInitialized(jmri.profile.Profile)} can be false, if
      * isInitialized(Profile) returns true, this method must return false.
      *
-     * @param profile the configuration profile to test against
+     * @param profile the configuration profile to test against; may be null to
+     *                    test for exceptions thrown when initializing for this
+     *                    user regardless of profile
      * @return true if the provide is initialized with exceptions
      */
-    public boolean isInitializedWithExceptions(@Nonnull Profile profile);
+    public boolean isInitializedWithExceptions(Profile profile);
 
     /**
      * Get the set of exceptions thrown during initialization for the provided
      * Profile.
      *
-     * @param profile the configuration profile to test against
+     * @param profile the configuration profile to test against; may be null to
+     *                    test for exceptions thrown when initializing for this
+     *                    user regardless of profile
      * @return A list of exceptions. If there are no exceptions, return an empty
      *         set instead of null.
      */
     @Nonnull
-    List<Exception> getInitializationExceptions(@Nonnull Profile profile);
+    List<Exception> getInitializationExceptions(Profile profile);
 
     /**
      * Get the set of PreferencesProviders that must be initialized prior to
@@ -107,8 +116,10 @@ public interface PreferencesManager extends JmriServiceProviderInterface {
     /**
      * Save the preferences that this provider manages for the provided Profile.
      *
-     * @param profile the profile associated with the preferences to save
+     * @param profile the profile associated with the preferences to save; may
+     *                    be null to save preferences that apply to the current
+     *                    user regardless of profile
      */
-    public void savePreferences(@Nonnull Profile profile);
+    public void savePreferences(Profile profile);
 
 }

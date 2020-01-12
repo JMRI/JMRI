@@ -1,21 +1,20 @@
 package jmri.jmrix.pricom.downloader;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import org.junit.Assert;
+import org.junit.*;
 
 /**
- * JUnit tests for the LoaderPane class
+ * JUnit tests for the LoaderPane class.
  *
  * @author	Bob Jacobsen Copyright 2005
-  */
-public class LoaderPaneTest extends TestCase {
+ */
+public class LoaderPaneTest {
 
+    @Test
     public void testCreate() {
         new LoaderPane();
     }
 
+    @Test
     public void testCRC() {
         LoaderPane p = new LoaderPane();
 
@@ -44,9 +43,9 @@ public class LoaderPaneTest extends TestCase {
         p.CRC_block(bytes);
         Assert.assertEquals("1st CRC byte msg 5", 0x58, bytes[bytes.length - 2] & 0xFF);
         Assert.assertEquals("2nd CRC byte msg 5", 0x93, bytes[bytes.length - 1] & 0xFF);
-
     }
 
+    @Test
     public void testIsUploadReady() {
         LoaderPane p = new LoaderPane();
 
@@ -55,9 +54,9 @@ public class LoaderPaneTest extends TestCase {
 
         bytes = jmri.util.StringUtil.bytesFromHexString("1F 20 1E 42 6F 6F 74 65 72 20 56 31 2E 30 BC CE");
         Assert.assertEquals("2nd message", false, p.isUploadReady(bytes));
-
     }
 
+    @Test
     public void testLength() {
         LoaderPane p = new LoaderPane();
 
@@ -66,24 +65,15 @@ public class LoaderPaneTest extends TestCase {
 
         bytes = jmri.util.StringUtil.bytesFromHexString("1F 20 63 00 2D 00 00");
         Assert.assertEquals("length", 128, p.getDataSize(bytes));
-
     }
 
-    // from here down is testing infrastructure
-    public LoaderPaneTest(String s) {
-        super(s);
+    @Before
+    public void setUp() throws Exception {
+        jmri.util.JUnitUtil.setUp();
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {LoaderPaneTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
+    @After
+    public void tearDown() {
+        jmri.util.JUnitUtil.tearDown();
     }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(LoaderPaneTest.class);
-        return suite;
-    }
-
 }

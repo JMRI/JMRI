@@ -19,7 +19,6 @@ package jmri.util.javamail;
  */
 
 /*
- * @(#)msgsend.java 1.20 07/07/06
  *
  * Copyright 1997-2007 Sun Microsystems, Inc. All Rights Reserved.
  *
@@ -71,7 +70,7 @@ import org.slf4j.LoggerFactory;
 /*
  * Demo app that shows how to construct and send an RFC822
  * (singlepart) message.
- * *
+ *
  * @author Max Spivak
  * @author Bill Shannon
  */

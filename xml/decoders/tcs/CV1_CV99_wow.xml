@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2002, 2005, 2006, 2007, 2013 All rights reserved -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -14,6 +13,7 @@
 <!-- for more details.                                                      -->
 <!-- version 1 - for Wow sound, based on CV1_CV99_FW86 -->
 <!-- version 2 - remove dither vars -->
+<!-- version 3 - fix bug in CV22 -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
   <variable CV="2" item="Vstart" default="0" tooltip="sets the motor voltage at Speed Step 1, range 0(default)-255" comment="Range 0-255, 0 in CV 2, 6, 5 produces straight line acceleration">
@@ -141,16 +141,16 @@
   <variable CV="22" mask="XXXXXXVX" item="Consist Address Active For FL in Reverse">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
   </variable>
-  <variable CV="22" mask="XXXXXXVX" item="Consist Address Active For F9">
+  <variable CV="22" mask="XXXXXVXX" item="Consist Address Active For F9">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
   </variable>
-  <variable CV="22" mask="XXXXXXVX" item="Consist Address Active For F10">
+  <variable CV="22" mask="XXXXVXXX" item="Consist Address Active For F10">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
   </variable>
-  <variable CV="22" mask="XXXXXXVX" item="Consist Address Active For F11">
+  <variable CV="22" mask="XXXVXXXX" item="Consist Address Active For F11">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
   </variable>
-  <variable CV="22" mask="XXXXXXVX" item="Consist Address Active For F12">
+  <variable CV="22" mask="XXVXXXXX" item="Consist Address Active For F12">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
   </variable>
   <variable item="Consist Acceleration Adjustment" CV="23" tooltip="Values above 128 increase adjustment, below 128 decrease adjustment">
@@ -1105,45 +1105,6 @@
     <label>Pink Wire Timing</label>
     <label xml:lang="it">Temporizzazioni filo Rosa</label>
   </variable>
-  <variable CV="55" mask="XVXXXXXX" minOut="7" item="Output 7 options" default="0">
-    <enumVal>
-      <enumChoice choice="Group 0">
-          <choice xml:lang="it">Gruppo 0</choice>
-      </enumChoice>
-      <enumChoice choice="Group 1">
-          <choice xml:lang="it">Gruppo 1</choice>
-      </enumChoice>
-    </enumVal>
-    <label>Pink/Purple Wire Effect Group</label>
-    <label xml:lang="it">Gruppo Effetti filo Rosa/Porpora</label>
-  </variable>
-  <variable CV="55" mask="XXXXVVVV" minOut="7" item="Output 7 effect generated">
-        <qualifier>
-      <variableref>Pink/Purple Wire Effect Group</variableref>
-      <relation>eq</relation>
-      <value>1</value>
-    </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_light_short.xml"/><label>Pink/Purple Wire Effect 1</label><label xml:lang="it">Gruppo 1 Effetti filo Rosa/Porpora</label></variable>
-  <variable CV="55" mask="XXXXVVVV" minOut="7" item="Output 7 behavior">
-        <qualifier>
-      <variableref>Pink/Purple Wire Effect Group</variableref>
-      <relation>eq</relation>
-      <value>0</value>
-    </qualifier>
-        <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constantbright.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Momentarypulse.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_BlinkingditchAB.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_AutoMarsBrake.xml"/>
-    <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_SingleStrobe2.xml"/>
-    </enumVal><label>Pink/Purple Wire Effect 0</label><label xml:lang="it">Gruppo 0 Effetti filo Rosa/Porpora</label></variable>
-  <variable CV="55" mask="XXVVXXXX" minOut="7" default="2" item="Output 7 option 1">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-frw_rev_both.xml"/>
-    <label>Pink/Purple Wire Timing</label>
-    <label xml:lang="it">Temporizzazioni filo Rosa/Porpora</label>
-  </variable>
   <variable CV="58" minOut="8" item="Output 7 effect generated" default="0" include="132,172">
     <enumVal>
       <enumChoice choice="F5 and F6 on/off constant bright">
@@ -1152,51 +1113,6 @@
       </enumChoice>
     </enumVal>
     <label>Outputs 7 and 8 effect generated</label>
-  </variable>
-  <variable CV="58" mask="XVXXXXXX" minOut="8" item="Output 8 options" default="0" exclude="132,172">
-    <enumVal>
-      <enumChoice choice="Group 0">
-          <choice xml:lang="it">Gruppo 0</choice>
-      </enumChoice>
-      <enumChoice choice="Group 1">
-          <choice xml:lang="it">Gruppo 1</choice>
-      </enumChoice>
-    </enumVal>
-    <label>Green/Brown Wire Effect Group</label>
-    <label xml:lang="it">Gruppo Effetti filo Verde/Marrone</label>
-  </variable>
-  <variable CV="58" mask="XXXXVVVV" minOut="8" item="Output 8 effect generated" exclude="132,172">
-    <qualifier>
-      <variableref>Green/Brown Wire Effect Group</variableref>
-      <relation>eq</relation>
-      <value>1</value>
-    </qualifier>
-    <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_light_short.xml"/>
-    <label>Green/Brown Wire Effect 1</label>
-    <label xml:lang="it">Gruppo 1 Effetti filo Verde/Marrone</label>
-  </variable>
-  <variable CV="58" mask="XXXXVVVV" minOut="8" item="Output 8 behavior" exclude="132,172">
-    <qualifier>
-      <variableref>Green/Brown Wire Effect Group</variableref>
-      <relation>eq</relation>
-      <value>0</value>
-    </qualifier>
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constantbright.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Momentarypulse.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_BlinkingditchAB.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_AutoMarsBrake.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_SingleStrobe2.xml"/>
-    </enumVal>
-    <label>Green/Brown Wire Effect 0</label>
-    <label xml:lang="it">Gruppo 0 Effetti filo Verde/Marrone</label>
-  </variable>
-  <variable CV="58" mask="XXVVXXXX" minOut="8" default="2" item="Output 8 option 1" exclude="132,172">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-frw_rev_both.xml"/>
-    <label>Green/Brown Wire Timing</label>
-    <label xml:lang="it">Temporizzazioni filo Verde/Marrone</label>
   </variable>
   <variable CV="61" mask="XXXXXXXV" default="1" item="EMF Enable" tooltip="BEMF always enabled, Dither disabled">
   <enumVal>
@@ -1256,7 +1172,7 @@
 	<label xml:lang="it">Impulso Momentaneo</label>
 	<tooltip xml:lang="it">1 secondo = 60 a 4 secondi = 255</tooltip>
   </variable>
-  <variable CV="63" default="100" item="Function 2 effect generated" tooltip="1 second = about 12" exclude="220">
+  <variable CV="63" default="63" item="Function 2 effect generated" tooltip="1 second = about 12" exclude="220">
 	<decVal/>
 	<label>Ditch Light Blink Holdover Time</label>
 	<label xml:lang="it">Tempo strascico lampeggio Luce Ditch </label>
@@ -1275,10 +1191,6 @@
 	<tooltip xml:lang="it">16 = 50% per bulbi incandescenti, 2-6 per LEDs</tooltip>
   </variable>
   <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim128.xml"/>
-  <variable item="Speed Table" CV="67">
-	<speedTableVal/>
-	<label>Speed Table</label>
-	<label xml:lang="it">Tabella Velocità</label>
-  </variable>
+  <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim128.xml"/>
 </variables>

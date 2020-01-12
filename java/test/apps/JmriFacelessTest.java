@@ -47,7 +47,7 @@ public class JmriFacelessTest {
 
             @Override
             protected void installShutDownManager() {
-                JUnitUtil.initShutDownManager();
+                // done automatically now as part of InstanceManager default handling
             }
         };
         Assert.assertNotNull(a);
@@ -58,13 +58,16 @@ public class JmriFacelessTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
+        JUnitUtil.setUp();
         JUnitUtil.resetApplication();
+        JUnitUtil.resetProfileManager();
     }
 
     @After
     public void tearDown() {
         JUnitUtil.resetApplication();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.clearShutDownManager();
+        JUnitUtil.tearDown();
     }
 
 }

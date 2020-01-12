@@ -3,16 +3,24 @@ package jmri.util;
 import java.io.PipedReader;
 import java.io.PipedWriter;
 import javax.swing.JTextArea;
+
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.Timeout;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
 public class PipeListenerTest {
+
+    static final int TESTMAXTIME = 10;    // seconds - not too long, so job doesn't hang
+    @Rule
+    public Timeout globalTimeout = Timeout.seconds(TESTMAXTIME);
 
     @Test
     public void testCTor() throws java.io.IOException {
@@ -28,12 +36,15 @@ public class PipeListenerTest {
         PipedWriter wr = new PipedWriter();
         PipedReader pr = new PipedReader(wr,1);
         PipeListener t = new PipeListener(pr,jta);
+        t.setName("PipeListenerTest thread");
         t.start();
-        wr.write("Test String");
+        
+        String testString = "Test String";
+        wr.write(testString);
         wr.flush();
-        jmri.util.JUnitUtil.waitFor(()->{return !(pr.ready());},"buffer empty");
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100); // pause to let the JTextArea catch up.
-        Assert.assertEquals("text after character write","Test String",jta.getText());
+        JUnitUtil.waitFor(()->{return !(pr.ready());},"buffer empty");
+
+        JUnitUtil.waitFor(()->{return testString.equals(jta.getText());}, "find text after character write");
         t.stop();
     }
 

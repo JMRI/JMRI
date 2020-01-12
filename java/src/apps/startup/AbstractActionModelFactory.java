@@ -2,6 +2,7 @@ package apps.startup;
 
 import apps.StartupActionsManager;
 import java.awt.Component;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Optional;
 import javax.swing.Action;
 import javax.swing.BoxLayout;
@@ -106,7 +107,7 @@ abstract public class AbstractActionModelFactory implements StartupModelFactory 
                     String className = StartupActionModelUtil.getDefault().getClassName(name);
                     if (className != null && StartupActionModelUtil.getDefault().isSystemConnectionAction(className)) {
                         try {
-                            Action action = (Action) Class.forName(className).newInstance();
+                            Action action = (Action) Class.forName(className).getDeclaredConstructor().newInstance();
                             if (SystemConnectionAction.class.isAssignableFrom(action.getClass())) {
                                 ((SystemConnectionAction) action).getSystemConnectionMemoClasses().stream().forEach((clazz) -> {
                                     InstanceManager.getList(SystemConnectionMemo.class).stream().forEach((memo) -> {
@@ -118,7 +119,7 @@ abstract public class AbstractActionModelFactory implements StartupModelFactory 
                                     });
                                 });
                             }
-                        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
+                        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException ex) {
                             log.error("Unable to create Action", ex);
                         }
                     }

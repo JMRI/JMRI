@@ -43,6 +43,11 @@ public class NotchSoundTest {
     @After
     public void tearDown() {
         uut = null;
+
+        // this created an audio manager, clean that up
+        jmri.InstanceManager.getDefault(jmri.AudioManager.class).cleanup();
+
+        jmri.util.JUnitAppender.suppressErrorMessage("Unhandled audio format type 0");
         JUnitUtil.tearDown();
     }
 }

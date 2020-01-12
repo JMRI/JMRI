@@ -33,9 +33,6 @@ public class XBeeComponentFactoryTest {
         JUnitUtil.setUp();
         tc = new XBeeTrafficController() {
             @Override
-            public void setInstance() {
-            }
-            @Override
             protected jmri.jmrix.AbstractMRReply newReply() {
                 return null;
             }
@@ -51,6 +48,8 @@ public class XBeeComponentFactoryTest {
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();        tc = null;
+    public void tearDown() {        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.tearDown();
+        tc = null;
     }
 }

@@ -6,8 +6,7 @@ import jmri.jmrit.Sound;
 
 /**
  * The consequent of the antecedent of the conditional proposition. The data for
- * the action to be taken when a Conditional calculates to True
- * <P>
+ * the action to be taken when a Conditional calculates to True.
  *
  * @author Pete Cressman Copyright (C) 2009
  */
@@ -54,7 +53,7 @@ public interface ConditionalAction {
      *
      * @return the type
      */
-    int getType();
+    Conditional.Action getType();
 
     /**
      * @return String name of this consequent type
@@ -83,7 +82,7 @@ public interface ConditionalAction {
      */
     void setType(String type);
 
-    void setType(int type);
+    void setType(Conditional.Action type);
 
     public String description(boolean triggerType);
 

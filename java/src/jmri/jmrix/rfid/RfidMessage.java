@@ -2,7 +2,7 @@ package jmri.jmrix.rfid;
 
 /**
  * Contains the data payload of a serial packet.
- * <P>
+ * <p>
  * The transmission protocol can come in one of several forms:
  * <ul>
  * <li>If the interlocked parameter is false (default), the packet is just sent.
@@ -88,12 +88,5 @@ abstract public class RfidMessage extends jmri.jmrix.AbstractMRMessage {
     public int getResponseLength() {
         return responseLength;
     }
-
-    /**
-     * Returns a string representation of this message to use in a monitor
-     *
-     * @return monitor string
-     */
-    abstract public String toMonitorString();
 
 }

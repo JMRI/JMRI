@@ -7,6 +7,7 @@
 
 import jmri
 import java
+import java.beans
 
 # Define routine to map status numbers to text
 def stateMap(state) :
@@ -44,18 +45,18 @@ listener = SensorListener()
 # and new sensors)
 class ManagerListener(java.beans.PropertyChangeListener):
   def propertyChange(self, event):
-    list = event.source.getSystemNameList()
-    for i in range(list.size()) :
-        event.source.getSensor(list.get(i)).removePropertyChangeListener(listener)
-        event.source.getSensor(list.get(i)).addPropertyChangeListener(listener)
+    list = event.source.getNamedBeanSet()
+    for sensor in list :
+        sensor.removePropertyChangeListener(listener)
+        sensor.addPropertyChangeListener(listener)
 
 # Attach the sensor manager listener
 sensors.addPropertyChangeListener(ManagerListener())
 
 # For the sensors that exist, attach a sensor listener
-list = sensors.getSystemNameList()
-for i in range(list.size()) :
-    sensors.getSensor(list.get(i)).addPropertyChangeListener(listener)
+list = sensors.getNamedBeanSet()
+for sensor in list:
+    sensor.addPropertyChangeListener(listener)
 
 
  

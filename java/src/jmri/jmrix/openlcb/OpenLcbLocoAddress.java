@@ -6,13 +6,13 @@ import org.openlcb.NodeID;
 /**
  * Encapsulate information for an OpenLCB Locomotive Decoder Address.
  *
- * The address information is an OpenLCB node ID
+ * The address information is an OpenLCB node ID.
  *
  * This should not be a child of DccLocoAddress, but rather of LocoAddress. But
  * the code isn't up to that right now.
  *
  * @author Bob Jacobsen Copyright (C) 2012
-  */
+ */
 public class OpenLcbLocoAddress extends DccLocoAddress {
 
     public OpenLcbLocoAddress(NodeID node) {
@@ -45,6 +45,3 @@ public class OpenLcbLocoAddress extends DccLocoAddress {
     NodeID node;
 
 }
-
-
-

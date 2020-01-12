@@ -68,16 +68,18 @@ public class CMRISystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMem
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         scm = new CMRISystemConnectionMemo();
     }
    
     @After
+    @Override
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        scm = null;
+        jmri.util.JUnitUtil.tearDown();
     }
 
 }

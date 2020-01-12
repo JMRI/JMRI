@@ -5,7 +5,7 @@ import java.beans.PropertyChangeListener;
 
 /**
  * Test utility class that allows verification for beans PropertyChange events.
- * <p>
+ *
  * @author Balazs Racz Copyright (C) 2017
  * @author Paul Bender Copyright (C) 2018
  */
@@ -14,10 +14,14 @@ public class PropertyChangeListenerScaffold implements PropertyChangeListener {
 
     private boolean propertyChanged;
     private int callCount;
+    private String lastChange;
+    private Object lastValue;
 
     public PropertyChangeListenerScaffold() {
        propertyChanged = false;
        callCount = 0;
+       lastChange = "";
+       lastValue = null;
     }
 
     public void resetPropertyChanged(){
@@ -33,7 +37,17 @@ public class PropertyChangeListenerScaffold implements PropertyChangeListener {
        return callCount;
     }
 
+    public String getLastProperty(){
+       return lastChange;
+    }
+
+    public Object getLastValue(){
+       return lastValue;
+    }
+
     public void onChange(String property, Object newValue){
+       lastChange = property;
+       lastValue = newValue;
     }
 
     @Override
@@ -42,4 +56,5 @@ public class PropertyChangeListenerScaffold implements PropertyChangeListener {
        onChange(propertyChangeEvent.getPropertyName(), propertyChangeEvent.getNewValue());
        callCount++;
     }
+
 }

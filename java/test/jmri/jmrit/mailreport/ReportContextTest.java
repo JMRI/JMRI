@@ -33,13 +33,14 @@ public class ReportContextTest {
         Assert.assertNotNull("exists",t);
         
         String output = t.getReport(false);
-        Assert.assertTrue(output.contains("JMRI Node ID:"));
+        Assert.assertTrue(output.contains("JMRI Network ID:"));
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
     }
 
     @After

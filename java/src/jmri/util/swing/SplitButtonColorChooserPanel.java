@@ -1,7 +1,6 @@
 package jmri.util.swing;
 
 import com.alexandriasoftware.swing.JSplitButton;
-import com.alexandriasoftware.swing.action.SplitButtonActionListener;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
@@ -9,7 +8,6 @@ import java.awt.image.BufferedImage;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JColorChooser;
-import javax.swing.JLabel;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
 
 /**
@@ -62,25 +60,20 @@ public class SplitButtonColorChooserPanel extends AbstractColorChooserPanel {
         g.dispose();
 
         setButton = new JSplitButton(Bundle.getMessage("SetColor") + "      ",icon);  // NOI18N
-        setButton.addSplitButtonActionListener(new SplitButtonActionListener(){
-            @Override
-            public void buttonClicked(ActionEvent e){
-               Color desiredColor = JColorChooser.showDialog(setButton.getParent(),
-                                 Bundle.getMessage("SetColor"),  // NOI18N
-                                 getColorFromModel());
-               if (desiredColor!=null) {
-                   getColorSelectionModel().setSelectedColor(desiredColor);
-               }
+        setButton.addButtonClickedActionListener((ActionEvent e) -> {
+            Color desiredColor = JColorChooser.showDialog(setButton.getParent(),
+                    Bundle.getMessage("SetColor"), // NOI18N
+                    getColorFromModel());
+            if (desiredColor != null) {
+                getColorSelectionModel().setSelectedColor(desiredColor);
             }
-
-            @Override
-            public void splitButtonClicked(ActionEvent e){
+        });
+        setButton.addSplitButtonClickedActionListener((ActionEvent e) -> {
             //Color desiredColor = JColorChooser.showDialog(this,
             //                     Bundle.getMessage("SetColor"),
             //                     getColorFromModel());
             //if (desiredColor!=null) {
             //    getColorSelectionModel().setSelectedColor(desiredColor);
-            }
         });
 
         //setButton.setImage(image);

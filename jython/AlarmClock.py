@@ -5,6 +5,7 @@
 # Part of the JMRI distribution
 
 import java
+import java.beans
 import jmri
 
 # Change the next line to the name of the turnout you want to

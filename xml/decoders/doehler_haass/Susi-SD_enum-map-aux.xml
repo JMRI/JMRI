@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2015 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -46,75 +46,71 @@
   <enumChoice choice="F28"/>
   <enumChoice choice="F0"/>
   <enumChoice choice="Driving sound">
-    <choice xml:lang="Son de marche">-</choice>
-    <choice xml:lang="Fahrgeräusch">-</choice>
+    <choice xml:lang="fr">Son de marche</choice>
+    <choice xml:lang="de">Fahrgeräusch</choice>
   </enumChoice>
   <enumChoice choice="Background sound">
-    <choice xml:lang="Son annexee">-</choice>
-    <choice xml:lang="Nebengeräusch">-</choice>
+    <choice xml:lang="fr">Son ambiant</choice>
+    <choice xml:lang="de">Nebengeräusch</choice>
   </enumChoice>
   <enumChoice choice="Gear shifting sound">
-    <choice xml:lang="Son boite de vitesse">-</choice>
-    <choice xml:lang="Schaltgeräusch">-</choice>
+    <choice xml:lang="fr">Son boite vitesse</choice>
+    <choice xml:lang="de">Schaltgeräusch</choice>
   </enumChoice>
   <enumChoice choice="Brake sound">
-    <choice xml:lang="Son freinage">-</choice>
-    <choice xml:lang="Bremsgeräusch">-</choice>
-  </enumChoice>
-  <enumChoice choice="Sound container 3">
-    <choice xml:lang="Son 3">-</choice>
-    <choice xml:lang="Soundablauf 3">-</choice>
+    <choice xml:lang="fr">Son freinage</choice>
+    <choice xml:lang="de">Bremsgeräusch</choice>
   </enumChoice>
   <enumChoice choice="Sound container 4">
-    <choice xml:lang="Son 4">-</choice>
-    <choice xml:lang="Soundablauf 4">-</choice>
+    <choice xml:lang="fr">Son 4</choice>
+    <choice xml:lang="de">Soundablauf 4</choice>
   </enumChoice>
   <enumChoice choice="Sound container 5">
-    <choice xml:lang="Son 5">-</choice>
-    <choice xml:lang="Soundablauf 5">-</choice>
+    <choice xml:lang="fr">Son 5</choice>
+    <choice xml:lang="de">Soundablauf 5</choice>
   </enumChoice>
   <enumChoice choice="Sound container 6">
-    <choice xml:lang="Son 6">-</choice>
-    <choice xml:lang="Soundablauf 6">-</choice>
+    <choice xml:lang="fr">Son 6</choice>
+    <choice xml:lang="de">Soundablauf 6</choice>
   </enumChoice>
   <enumChoice choice="Sound container 7">
-    <choice xml:lang="Son 7">-</choice>
-    <choice xml:lang="Soundablauf 7">-</choice>
+    <choice xml:lang="fr">Son 7</choice>
+    <choice xml:lang="de">Soundablauf 7</choice>
   </enumChoice>
   <enumChoice choice="Sound container 8">
-    <choice xml:lang="Son 8">-</choice>
-    <choice xml:lang="Soundablauf 8">-</choice>
+    <choice xml:lang="fr">Son 8</choice>
+    <choice xml:lang="de">Soundablauf 8</choice>
   </enumChoice>
   <enumChoice choice="Sound container 9">
-    <choice xml:lang="Son 9">-</choice>
-    <choice xml:lang="Soundablauf 9">-</choice>
+    <choice xml:lang="fr">Son 9</choice>
+    <choice xml:lang="de">Soundablauf 9</choice>
   </enumChoice>
   <enumChoice choice="Sound container 10">
-    <choice xml:lang="Son 10">-</choice>
-    <choice xml:lang="Soundablauf 10">-</choice>
+    <choice xml:lang="fr">Son 10</choice>
+    <choice xml:lang="de">Soundablauf 10</choice>
   </enumChoice>
   <enumChoice choice="Sound container 11">
-    <choice xml:lang="Son 11">-</choice>
-    <choice xml:lang="Soundablauf 11">-</choice>
+    <choice xml:lang="fr">Son 11</choice>
+    <choice xml:lang="de">Soundablauf 11</choice>
   </enumChoice>
   <enumChoice choice="Sound container 12">
-    <choice xml:lang="Son 12">-</choice>
-    <choice xml:lang="Soundablauf 12">-</choice>
+    <choice xml:lang="fr">Son 12</choice>
+    <choice xml:lang="de">Soundablauf 12</choice>
   </enumChoice>
   <enumChoice choice="Sound container 13">
-    <choice xml:lang="Son 13">-</choice>
-    <choice xml:lang="Soundablauf 13">-</choice>
+    <choice xml:lang="fr">Son 13</choice>
+    <choice xml:lang="de">Soundablauf 13</choice>
   </enumChoice>
   <enumChoice choice="Sound container 14">
-    <choice xml:lang="Son 14">-</choice>
-    <choice xml:lang="Soundablauf 14">-</choice>
+    <choice xml:lang="fr">Son 14</choice>
+    <choice xml:lang="de">Soundablauf 14</choice>
   </enumChoice>
   <enumChoice choice="Sound container 15">
-    <choice xml:lang="Son 15">-</choice>
-    <choice xml:lang="Soundablauf 15">-</choice>
+    <choice xml:lang="fr">Son 15</choice>
+    <choice xml:lang="de">Soundablauf 15</choice>
   </enumChoice>
   <enumChoice choice="Sound container 16">
-    <choice xml:lang="Son 16">-</choice>
-    <choice xml:lang="Soundablauf 16">-</choice>
+    <choice xml:lang="fr">Son 16</choice>
+    <choice xml:lang="de">Soundablauf 16</choice>
   </enumChoice>
 </enumVal>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>CFBundleName</key>
+        <string>@NAME@</string>
+        <key>CFBundleIdentifier</key>
+        <string>jmri.@NAME@</string>
+        <key>CFBundleIconFile</key>
+        <string>@NAME@.icns</string>
+        <key>CFBundleShortVersionString</key>
+        <string>@VERSION@</string>
+        <key>CFBundleLongVersionString</key>
+        <string>@VERSION@, Copyright @COPYRIGHT_YEAR@ JMRI Project</string>
+        <key>CFBundleGetInfoString</key>
+        <string>@NAME@ @VERSION@, Copyright @COPYRIGHT_YEAR@ JMRI Project</string>
+        <key>CFBundlePackageType</key>
+        <string>APPL</string>
+        <key>CFBundleExecutable</key>
+        <string>StartJMRI</string>
+        <key>CFBundleDevelopmentRegion</key>
+        <string>English</string>
+        <key>CFBundleVersion</key>
+        <string>@VERSION@</string>
+        <key>CFBundleInfoDictionaryVersion</key>
+        <string>6.0</string>
+    </dict>
+</plist>

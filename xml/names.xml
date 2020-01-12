@@ -1,6 +1,5 @@
-<?xml version="1.0"?>
-<!DOCTYPE names-config SYSTEM "names-config.dtd">
-<names-config>
+<?xml version="1.0" encoding="UTF-8"?>
+<names-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/names-4-19-1.xsd">
    <!-- This file defines the proper values for "item" attributes in JMRI   -->
    <!-- DecoderPro programmer and decoder definition files.  As such, it    -->
    <!-- should _NOT_ be translated to other languages. The "item"           -->
@@ -20,6 +19,12 @@
     <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
     <!-- for more details.                                                      -->
 
+		<version author="Michael Mosher"
+			 version="16" lastUpdated="20190904"/>
+		<version author="Dave Heap"
+			 version="15" lastUpdated="20190505"/>
+		<version author="Egbert Broerse"
+			 version="14" lastUpdated="20190222"/>
 		<version author="Alain Le Marchand"
 			version="13" lastUpdated="20150430"/>
 		<version author="Dave Heap"
@@ -41,6 +46,7 @@
    <!-- Version 11 - added additional lighting options to functions 3 and 4	-->
    <!-- Version 12 - added Function Map Option 1 to Function Map pane	-->
    <!-- Version 13 - added more Function Map Options to Function Map pane	-->
+   <!-- Version 16 - added User ID #3 for TCS	-->
 
 	<!-- Note 1: NMRA-standard variables show a CV value -->
 	<!-- Note 2: The CV29 control bits are now spread to the relevant -->
@@ -76,32 +82,31 @@
 
 		<definition item="Long Address"/>
 
-		<definition item="Advanced Ack" CV="29" mask="XXXXVXXXX" />
-		<definition item="Address Format" CV="29" mask="XXVXXXXX" />
+		<definition item="Advanced Ack" />
+		<definition item="Address Format"  />
 	</definitiongroup>
-
 
 	<!-- Speed and motor-related variables -->
 
 	<definitiongroup name="Speed And Motor">
-		<definition item="Vstart" CV="2" />
-		<definition item="Vmid" CV="6" />
-		<definition item="Vhigh" CV="5" />
+		<definition item="Vstart" />
+		<definition item="Vmid" />
+		<definition item="Vhigh" />
 
-		<definition item="Accel" CV="3" />
-		<definition item="Decel" CV="4" />
+		<definition item="Accel" />
+		<definition item="Decel" />
 
-		<definition item="Speed Table/Mid Range Cab Speed Step" CV="25" />
+		<definition item="Speed Table/Mid Range Cab Speed Step" />
 
-		<definition item="Locomotive Direction" CV="29" mask="XXXXXXXV" />
-		<definition item="Speed Step Mode" CV="29" mask="XXXXXXVX" />
-		<definition item="Speed Table Definition" CV="29" mask="XXXVXXXX" />
+		<definition item="Locomotive Direction" />
+		<definition item="Speed Step Mode" />
+		<definition item="Speed Table Definition" />
 		<definition item="Speed Table Selection" />
 
-		<definition item="Kick Start" CV="65" />
-		<definition item="Forward Trim" CV="66" />
-		<definition item="Speed Table" CV="67" />
-		<definition item="Reverse Trim" CV="95" />
+		<definition item="Kick Start" />
+		<definition item="Forward Trim" />
+		<definition item="Speed Table" />
+		<definition item="Reverse Trim"  />
 
 	</definitiongroup>
 
@@ -120,11 +125,11 @@
 		<definition item="Analog (AC) Vstart" />
 		<definition item="Analog (AC) Vhigh" />
 
-		<definition item="Analog Power Conversion" CV="12" mask="XXXXXXXV" />
-		<definition item="Radio Power Conversion" CV="12" mask="XXXXXXVX" />
-		<definition item="Zero-1 Power Conversion" CV="12" mask="XXXXXVXX" />
-		<definition item="Trix Power Conversion" CV="12" mask="XXXXVXXX" />
-		<definition item="CTC/Railcommand Power Conversion" CV="12" mask="XXXVXXXX" />
+		<definition item="Analog Power Conversion" />
+		<definition item="Radio Power Conversion" />
+		<definition item="Zero-1 Power Conversion" />
+		<definition item="Trix Power Conversion" />
+		<definition item="CTC/Railcommand Power Conversion" />
 
 		<definition item="FMZ(Fleischmann)" />
 
@@ -215,17 +220,31 @@
 		<definition item="Analog Mode Automatic Effects - FWDS" />
 		<definition item="Analog Mode Automatic Effects - REVS" />
 
+		<definition item="Analog Control option 1" />
+		<definition item="Analog Control option 2" />
+		<definition item="Analog Control option 3" />
+		<definition item="Analog Control option 4" />
+		<definition item="Analog Control check 1" />
+		<definition item="Analog Control check 2" />
+		<definition item="Analog Control check 3" />
+		<definition item="Analog Control check 4" />
+		<definition item="Analog Control slider 1" />
+		<definition item="Analog Control slider 2" />
+		<definition item="Analog Control slider 3" />
+		<definition item="Analog Control slider 4" />
+
 	</definitiongroup>
 
 	<!-- Identification -->
 
 	<definitiongroup name="Identification">
 
-		<definition item="User Id #1" CV="105" />
-		<definition item="User Id #2" CV="106" />
+		<definition item="User Id #1" />
+		<definition item="User Id #2" />
+		<definition item="User Id #3"/>
 
-		<definition item="Decoder Version" CV="7" />
-		<definition item="Manufacturer" CV="8" />
+		<definition item="Decoder Version" />
+		<definition item="Manufacturer" />
 
 		<definition item="Product Number" />
 
@@ -234,24 +253,24 @@
 	<!-- Consisting variables -->
 
 	<definitiongroup name="Consisting">
-		<definition item="Consist Address" CV="19" />
+		<definition item="Consist Address" />
 		<definition item="Consist Direction"/>
 
 		<definition item="Consist Function"/>
 		<definition item="Consist Function Mode"/>
 
-		<definition item="Consist Address Active For FL in Forward" CV="22" mask="XXXXXXXV" />
-		<definition item="Consist Address Active For FL in Reverse" CV="22" mask="XXXXXXVX" />
+		<definition item="Consist Address Active For FL in Forward" />
+		<definition item="Consist Address Active For FL in Reverse" />
 
 		<definition item="Consist Address Active For F0" />
-		<definition item="Consist Address Active For F1" CV="21" mask="XXXXXXXV" />
-		<definition item="Consist Address Active For F2" CV="21" mask="XXXXXXVX" />
-		<definition item="Consist Address Active For F3" CV="21" mask="XXXXXVXX" />
-		<definition item="Consist Address Active For F4" CV="21" mask="XXXXVXXX" />
-		<definition item="Consist Address Active For F5" CV="21" mask="XXXVXXXX" />
-		<definition item="Consist Address Active For F6" CV="21" mask="XXVXXXXX" />
-		<definition item="Consist Address Active For F7" CV="21" mask="XVXXXXXX" />
-		<definition item="Consist Address Active For F8" CV="21" mask="VXXXXXXX" />
+		<definition item="Consist Address Active For F1" />
+		<definition item="Consist Address Active For F2" />
+		<definition item="Consist Address Active For F3" />
+		<definition item="Consist Address Active For F4" />
+		<definition item="Consist Address Active For F5" />
+		<definition item="Consist Address Active For F6" />
+		<definition item="Consist Address Active For F7" />
+		<definition item="Consist Address Active For F8" />
 
 		<definition item="Consist Address Active For F9" />
 		<definition item="Consist Address Active For F9 in Forward" />
@@ -281,10 +300,10 @@
 		<definition item="Consist Address Active For F27" />
 		<definition item="Consist Address Active For F28" />
 
-		<definition item="Consist Acceleration Adjustment" CV="23" mask="XVVVVVVV" />
-		<definition item="Consist Acceleration Adjustment Sign" CV="23" mask="VXXXXXXX" />
-		<definition item="Consist Deceleration Adjustment" CV="24" mask="XVVVVVVV" />
-		<definition item="Consist Deceleration Adjustment Sign" CV="24" mask="VXXXXXXX" />
+		<definition item="Consist Acceleration Adjustment" />
+		<definition item="Consist Acceleration Adjustment Sign" />
+		<definition item="Consist Deceleration Adjustment" />
+		<definition item="Consist Deceleration Adjustment Sign" />
 
 		<definition item="Consist Adjustments Active"/>
 
@@ -310,7 +329,7 @@
 		<definition item="Dither option" />
 
         <definition item="EMF Enable"/>
-		<definition item="EMF Feedback Cutout" CV="10" /> <!-- NMRA -->
+		<definition item="EMF Feedback Cutout" /> <!-- NMRA -->
 		<definition item="EMF Static Config" />
 		<definition item="EMF Dynamic Config" />
 		<definition item="EMF Droop Config" />
@@ -320,12 +339,23 @@
         <definition item="EMF Option 2"/>
         <definition item="EMF Option 3"/>
         <definition item="EMF Option 4"/>
+        <definition item="EMF Option 5"/>
+        <definition item="EMF Option 6"/>
+        <definition item="EMF Option 7"/>
+        <definition item="EMF Option 8"/>
+        <definition item="EMF Option 9"/>
+        <definition item="EMF Option 10"/>
 
         <definition item="Motor Option 1"/>
         <definition item="Motor Option 2"/>
         <definition item="Motor Option 3"/>
         <definition item="Motor Option 4"/>
-
+        <definition item="Motor Option 5"/>
+        <definition item="Motor Option 6"/>
+        <definition item="Motor Option 7"/>
+        <definition item="Motor Option 8"/>
+        <definition item="Motor Option 9"/>
+        <definition item="Motor Option 10"/>
 
 	</definitiongroup>
 
@@ -560,14 +590,14 @@
 		<!-- element, so their names are somewhat fixed          -->
 	<definitiongroup name="Function mapping">
 
-		<definition item="FL(f) controls output 1" CV="33" mask="XXXXXXXV" />
-		<definition item="FL(f) controls output 2" CV="33" mask="XXXXXXVX" />
-		<definition item="FL(f) controls output 3" CV="33" mask="XXXXXVXX" />
-		<definition item="FL(f) controls output 4" CV="33" mask="XXXXVXXX" />
-		<definition item="FL(f) controls output 5" CV="33" mask="XXXVXXXX" />
-		<definition item="FL(f) controls output 6" CV="33" mask="XXVXXXXX" />
-		<definition item="FL(f) controls output 7" CV="33" mask="XVXXXXXX" />
-		<definition item="FL(f) controls output 8" CV="33" mask="VXXXXXXX" />
+		<definition item="FL(f) controls output 1"  />
+		<definition item="FL(f) controls output 2"  />
+		<definition item="FL(f) controls output 3"  />
+		<definition item="FL(f) controls output 4"  />
+		<definition item="FL(f) controls output 5"  />
+		<definition item="FL(f) controls output 6"  />
+		<definition item="FL(f) controls output 7"  />
+		<definition item="FL(f) controls output 8"  />
 		<definition item="FL(f) controls output 9" />
 		<definition item="FL(f) controls output 10" />
 		<definition item="FL(f) controls output 11" />
@@ -575,14 +605,14 @@
 		<definition item="FL(f) controls output 13" />
 		<definition item="FL(f) controls output 14" />
 
-		<definition item="FL(r) controls output 1" CV="34" mask="XXXXXXXV" />
-		<definition item="FL(r) controls output 2" CV="34" mask="XXXXXXVX" />
-		<definition item="FL(r) controls output 3" CV="34" mask="XXXXXVXX" />
-		<definition item="FL(r) controls output 4" CV="34" mask="XXXXVXXX" />
-		<definition item="FL(r) controls output 5" CV="34" mask="XXXVXXXX" />
-		<definition item="FL(r) controls output 6" CV="34" mask="XXVXXXXX" />
-		<definition item="FL(r) controls output 7" CV="34" mask="XVXXXXXX" />
-		<definition item="FL(r) controls output 8" CV="34" mask="VXXXXXXX" />
+		<definition item="FL(r) controls output 1"  />
+		<definition item="FL(r) controls output 2"  />
+		<definition item="FL(r) controls output 3"  />
+		<definition item="FL(r) controls output 4"  />
+		<definition item="FL(r) controls output 5"  />
+		<definition item="FL(r) controls output 6"  />
+		<definition item="FL(r) controls output 7"  />
+		<definition item="FL(r) controls output 8"  />
 		<definition item="FL(r) controls output 9" />
 		<definition item="FL(r) controls output 10" />
 		<definition item="FL(r) controls output 11" />
@@ -590,14 +620,14 @@
 		<definition item="FL(r) controls output 13" />
 		<definition item="FL(r) controls output 14" />
 
-		<definition item="F1 controls output 1" CV="35" mask="XXXXXXXV" />
-		<definition item="F1 controls output 2" CV="35" mask="XXXXXXVX" />
-		<definition item="F1 controls output 3" CV="35" mask="XXXXXVXX" />
-		<definition item="F1 controls output 4" CV="35" mask="XXXXVXXX" />
-		<definition item="F1 controls output 5" CV="35" mask="XXXVXXXX" />
-		<definition item="F1 controls output 6" CV="35" mask="XXVXXXXX" />
-		<definition item="F1 controls output 7" CV="35" mask="XVXXXXXX" />
-		<definition item="F1 controls output 8" CV="35" mask="VXXXXXXX" />
+		<definition item="F1 controls output 1"  />
+		<definition item="F1 controls output 2"  />
+		<definition item="F1 controls output 3"  />
+		<definition item="F1 controls output 4"  />
+		<definition item="F1 controls output 5"  />
+		<definition item="F1 controls output 6"  />
+		<definition item="F1 controls output 7"  />
+		<definition item="F1 controls output 8"  />
 		<definition item="F1 controls output 9" />
 		<definition item="F1 controls output 10" />
 		<definition item="F1 controls output 11" />
@@ -605,14 +635,14 @@
 		<definition item="F1 controls output 13" />
 		<definition item="F1 controls output 14" />
 
-		<definition item="F2 controls output 1" CV="36" mask="XXXXXXXV" />
-		<definition item="F2 controls output 2" CV="36" mask="XXXXXXVX" />
-		<definition item="F2 controls output 3" CV="36" mask="XXXXXVXX" />
-		<definition item="F2 controls output 4" CV="36" mask="XXXXVXXX" />
-		<definition item="F2 controls output 5" CV="36" mask="XXXVXXXX" />
-		<definition item="F2 controls output 6" CV="36" mask="XXVXXXXX" />
-		<definition item="F2 controls output 7" CV="36" mask="XVXXXXXX" />
-		<definition item="F2 controls output 8" CV="36" mask="VXXXXXXX" />
+		<definition item="F2 controls output 1"  />
+		<definition item="F2 controls output 2"  />
+		<definition item="F2 controls output 3"  />
+		<definition item="F2 controls output 4"  />
+		<definition item="F2 controls output 5"  />
+		<definition item="F2 controls output 6"  />
+		<definition item="F2 controls output 7"  />
+		<definition item="F2 controls output 8"  />
 		<definition item="F2 controls output 9" />
 		<definition item="F2 controls output 10" />
 		<definition item="F2 controls output 11" />
@@ -620,14 +650,14 @@
 		<definition item="F2 controls output 13" />
 		<definition item="F2 controls output 14" />
 
-		<definition item="F3 controls output 1" CV="37" mask="XXXXXXXV" />
-		<definition item="F3 controls output 2" CV="37" mask="XXXXXXVX" />
-		<definition item="F3 controls output 3" CV="37" mask="XXXXXVXX" />
-		<definition item="F3 controls output 4" CV="37" mask="XXXXVXXX" />
-		<definition item="F3 controls output 5" CV="37" mask="XXXVXXXX" />
-		<definition item="F3 controls output 6" CV="37" mask="XXVXXXXX" />
-		<definition item="F3 controls output 7" CV="37" mask="XVXXXXXX" />
-		<definition item="F3 controls output 8" CV="37" mask="VXXXXXXX" />
+		<definition item="F3 controls output 1" />
+		<definition item="F3 controls output 2" />
+		<definition item="F3 controls output 3" />
+		<definition item="F3 controls output 4" />
+		<definition item="F3 controls output 5" />
+		<definition item="F3 controls output 6" />
+		<definition item="F3 controls output 7" />
+		<definition item="F3 controls output 8" />
 		<definition item="F3 controls output 9" />
 		<definition item="F3 controls output 10" />
 		<definition item="F3 controls output 11" />
@@ -638,14 +668,14 @@
 		<definition item="F4 controls output 1" />
 		<definition item="F4 controls output 2" />
 		<definition item="F4 controls output 3" />
-		<definition item="F4 controls output 4" CV="38" mask="XXXXXXXV" />
-		<definition item="F4 controls output 5" CV="38" mask="XXXXXXVX" />
-		<definition item="F4 controls output 6" CV="38" mask="XXXXXVXX" />
-		<definition item="F4 controls output 7" CV="38" mask="XXXXVXXX" />
-		<definition item="F4 controls output 8" CV="38" mask="XXXVXXXX" />
-		<definition item="F4 controls output 9" CV="38" mask="XXVXXXXX" />
-		<definition item="F4 controls output 10" CV="38" mask="XVXXXXXX" />
-		<definition item="F4 controls output 11" CV="38" mask="VXXXXXXX" />
+		<definition item="F4 controls output 4" />
+		<definition item="F4 controls output 5" />
+		<definition item="F4 controls output 6" />
+		<definition item="F4 controls output 7" />
+		<definition item="F4 controls output 8" />
+		<definition item="F4 controls output 9" />
+		<definition item="F4 controls output 10" />
+		<definition item="F4 controls output 11" />
 		<definition item="F4 controls output 12" />
 		<definition item="F4 controls output 13" />
 		<definition item="F4 controls output 14" />
@@ -653,14 +683,14 @@
 		<definition item="F5 controls output 1" />
 		<definition item="F5 controls output 2" />
 		<definition item="F5 controls output 3" />
-		<definition item="F5 controls output 4" CV="39" mask="XXXXXXXV" />
-		<definition item="F5 controls output 5" CV="39" mask="XXXXXXVX" />
-		<definition item="F5 controls output 6" CV="39" mask="XXXXXVXX" />
-		<definition item="F5 controls output 7" CV="39" mask="XXXXVXXX" />
-		<definition item="F5 controls output 8" CV="39" mask="XXXVXXXX" />
-		<definition item="F5 controls output 9" CV="39" mask="XXVXXXXX" />
-		<definition item="F5 controls output 10" CV="39" mask="XVXXXXXX" />
-		<definition item="F5 controls output 11" CV="39" mask="VXXXXXXX" />
+		<definition item="F5 controls output 4"  />
+		<definition item="F5 controls output 5"  />
+		<definition item="F5 controls output 6"  />
+		<definition item="F5 controls output 7"  />
+		<definition item="F5 controls output 8"  />
+		<definition item="F5 controls output 9"  />
+		<definition item="F5 controls output 10"  />
+		<definition item="F5 controls output 11"  />
 		<definition item="F5 controls output 12" />
 		<definition item="F5 controls output 13" />
 		<definition item="F5 controls output 14" />
@@ -668,14 +698,14 @@
 		<definition item="F6 controls output 1" />
 		<definition item="F6 controls output 2" />
 		<definition item="F6 controls output 3" />
-		<definition item="F6 controls output 4" CV="40" mask="XXXXXXXV" />
-		<definition item="F6 controls output 5" CV="40" mask="XXXXXXVX" />
-		<definition item="F6 controls output 6" CV="40" mask="XXXXXVXX" />
-		<definition item="F6 controls output 7" CV="40" mask="XXXXVXXX" />
-		<definition item="F6 controls output 8" CV="40" mask="XXXVXXXX" />
-		<definition item="F6 controls output 9" CV="40" mask="XXVXXXXX" />
-		<definition item="F6 controls output 10" CV="40" mask="XVXXXXXX" />
-		<definition item="F6 controls output 11" CV="40" mask="VXXXXXXX" />
+		<definition item="F6 controls output 4"  />
+		<definition item="F6 controls output 5"  />
+		<definition item="F6 controls output 6"  />
+		<definition item="F6 controls output 7"  />
+		<definition item="F6 controls output 8"  />
+		<definition item="F6 controls output 9"  />
+		<definition item="F6 controls output 10"  />
+		<definition item="F6 controls output 11"  />
 		<definition item="F6 controls output 12" />
 		<definition item="F6 controls output 13" />
 		<definition item="F6 controls output 14" />
@@ -683,14 +713,14 @@
 		<definition item="F7 controls output 1" />
 		<definition item="F7 controls output 2" />
 		<definition item="F7 controls output 3" />
-		<definition item="F7 controls output 4" CV="41" mask="XXXXXXXV" />
-		<definition item="F7 controls output 5" CV="41" mask="XXXXXXVX" />
-		<definition item="F7 controls output 6" CV="41" mask="XXXXXVXX" />
-		<definition item="F7 controls output 7" CV="41" mask="XXXXVXXX" />
-		<definition item="F7 controls output 8" CV="41" mask="XXXVXXXX" />
-		<definition item="F7 controls output 9" CV="41" mask="XXVXXXXX" />
-		<definition item="F7 controls output 10" CV="41" mask="XVXXXXXX" />
-		<definition item="F7 controls output 11" CV="41" mask="VXXXXXXX" />
+		<definition item="F7 controls output 4"  />
+		<definition item="F7 controls output 5"  />
+		<definition item="F7 controls output 6"  />
+		<definition item="F7 controls output 7"  />
+		<definition item="F7 controls output 8"  />
+		<definition item="F7 controls output 9"  />
+		<definition item="F7 controls output 10"  />
+		<definition item="F7 controls output 11"  />
 		<definition item="F7 controls output 12" />
 		<definition item="F7 controls output 13" />
 		<definition item="F7 controls output 14" />
@@ -698,14 +728,14 @@
 		<definition item="F8 controls output 1" />
 		<definition item="F8 controls output 2" />
 		<definition item="F8 controls output 3" />
-		<definition item="F8 controls output 4" CV="42" mask="XXXXXXXV" />
-		<definition item="F8 controls output 5" CV="42" mask="XXXXXXVX" />
-		<definition item="F8 controls output 6" CV="42" mask="XXXXXVXX" />
-		<definition item="F8 controls output 7" CV="42" mask="XXXXVXXX" />
-		<definition item="F8 controls output 8" CV="42" mask="XXXVXXXX" />
-		<definition item="F8 controls output 9" CV="42" mask="XXVXXXXX" />
-		<definition item="F8 controls output 10" CV="42" mask="XVXXXXXX" />
-		<definition item="F8 controls output 11" CV="42" mask="VXXXXXXX" />
+		<definition item="F8 controls output 4"  />
+		<definition item="F8 controls output 5"  />
+		<definition item="F8 controls output 6"  />
+		<definition item="F8 controls output 7"  />
+		<definition item="F8 controls output 8"  />
+		<definition item="F8 controls output 9"  />
+		<definition item="F8 controls output 10"  />
+		<definition item="F8 controls output 11"  />
 		<definition item="F8 controls output 12" />
 		<definition item="F8 controls output 13" />
 		<definition item="F8 controls output 14" />
@@ -716,14 +746,14 @@
 		<definition item="F9 controls output 4" />
 		<definition item="F9 controls output 5" />
 		<definition item="F9 controls output 6" />
-		<definition item="F9 controls output 7" CV="43" mask="XXXXXXXV" />
-		<definition item="F9 controls output 8" CV="43" mask="XXXXXXVX" />
-		<definition item="F9 controls output 9" CV="43" mask="XXXXXVXX" />
-		<definition item="F9 controls output 10" CV="43" mask="XXXXVXXX" />
-		<definition item="F9 controls output 11" CV="43" mask="XXXVXXXX" />
-		<definition item="F9 controls output 12" CV="43" mask="XXVXXXXX" />
-		<definition item="F9 controls output 13" CV="43" mask="XVXXXXXX" />
-		<definition item="F9 controls output 14" CV="43" mask="VXXXXXXX" />
+		<definition item="F9 controls output 7"  />
+		<definition item="F9 controls output 8"  />
+		<definition item="F9 controls output 9"  />
+		<definition item="F9 controls output 10"  />
+		<definition item="F9 controls output 11"  />
+		<definition item="F9 controls output 12"  />
+		<definition item="F9 controls output 13"  />
+		<definition item="F9 controls output 14"  />
 
 		<definition item="F10 controls output 1" />
 		<definition item="F10 controls output 2" />
@@ -731,14 +761,14 @@
 		<definition item="F10 controls output 4" />
 		<definition item="F10 controls output 5" />
 		<definition item="F10 controls output 6" />
-		<definition item="F10 controls output 7" CV="44" mask="XXXXXXXV" />
-		<definition item="F10 controls output 8" CV="44" mask="XXXXXXVX" />
-		<definition item="F10 controls output 9" CV="44" mask="XXXXXVXX" />
-		<definition item="F10 controls output 10" CV="44" mask="XXXXVXXX" />
-		<definition item="F10 controls output 11" CV="44" mask="XXXVXXXX" />
-		<definition item="F10 controls output 12" CV="44" mask="XXVXXXXX" />
-		<definition item="F10 controls output 13" CV="44" mask="XVXXXXXX" />
-		<definition item="F10 controls output 14" CV="44" mask="VXXXXXXX" />
+		<definition item="F10 controls output 7"  />
+		<definition item="F10 controls output 8"  />
+		<definition item="F10 controls output 9"  />
+		<definition item="F10 controls output 10"  />
+		<definition item="F10 controls output 11"  />
+		<definition item="F10 controls output 12"  />
+		<definition item="F10 controls output 13"  />
+		<definition item="F10 controls output 14"  />
 
 		<definition item="F11 controls output 1" />
 		<definition item="F11 controls output 2" />
@@ -746,14 +776,14 @@
 		<definition item="F11 controls output 4" />
 		<definition item="F11 controls output 5" />
 		<definition item="F11 controls output 6" />
-		<definition item="F11 controls output 7" CV="45" mask="XXXXXXXV" />
-		<definition item="F11 controls output 8" CV="45" mask="XXXXXXVX" />
-		<definition item="F11 controls output 9" CV="45" mask="XXXXXVXX" />
-		<definition item="F11 controls output 10" CV="45" mask="XXXXVXXX" />
-		<definition item="F11 controls output 11" CV="45" mask="XXXVXXXX" />
-		<definition item="F11 controls output 12" CV="45" mask="XXVXXXXX" />
-		<definition item="F11 controls output 13" CV="45" mask="XVXXXXXX" />
-		<definition item="F11 controls output 14" CV="45" mask="VXXXXXXX" />
+		<definition item="F11 controls output 7"  />
+		<definition item="F11 controls output 8"  />
+		<definition item="F11 controls output 9"  />
+		<definition item="F11 controls output 10"  />
+		<definition item="F11 controls output 11"  />
+		<definition item="F11 controls output 12"  />
+		<definition item="F11 controls output 13"  />
+		<definition item="F11 controls output 14"  />
 
 		<definition item="F12 controls output 1" />
 		<definition item="F12 controls output 2" />
@@ -761,14 +791,14 @@
 		<definition item="F12 controls output 4" />
 		<definition item="F12 controls output 5" />
 		<definition item="F12 controls output 6" />
-		<definition item="F12 controls output 7" CV="46" mask="XXXXXXXV" />
-		<definition item="F12 controls output 8" CV="46" mask="XXXXXXVX" />
-		<definition item="F12 controls output 9" CV="46" mask="XXXXXVXX" />
-		<definition item="F12 controls output 10" CV="46" mask="XXXXVXXX" />
-		<definition item="F12 controls output 11" CV="46" mask="XXXVXXXX" />
-		<definition item="F12 controls output 12" CV="46" mask="XXVXXXXX" />
-		<definition item="F12 controls output 13" CV="46" mask="XVXXXXXX" />
-		<definition item="F12 controls output 14" CV="46" mask="VXXXXXXX" />
+		<definition item="F12 controls output 7"  />
+		<definition item="F12 controls output 8"  />
+		<definition item="F12 controls output 9"  />
+		<definition item="F12 controls output 10"  />
+		<definition item="F12 controls output 11"  />
+		<definition item="F12 controls output 12"  />
+		<definition item="F12 controls output 13"  />
+		<definition item="F12 controls output 14"  />
 
 		<definition item="Function Map Option 1" />
 		<definition item="Function Map Option 2" />
@@ -1008,5 +1038,3 @@
 	</definitiongroup>
 
 </names-config>
-
-

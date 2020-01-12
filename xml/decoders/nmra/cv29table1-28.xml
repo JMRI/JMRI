@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010 All rights reserved    -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -59,7 +58,7 @@
 				<choice xml:lang="fr">Utiliser V démarrage (Vstart-Vmax)</choice>
 				<choice xml:lang="de">Anfahrspannung (Vstart-Vmax) nutzen</choice>
 				<choice xml:lang="cs">Nepoužít rychlostní tabulku, použít rozjezdové napětí (Vstart a Vmax)</choice>
-				<choice xml:lang="nl">Gebruik geen snelheids tabel, gebruik start voltage (Vstart en Vmax)</choice>
+				<choice xml:lang="nl">Gebruik geen snelheidsgrafiek, gebruik start voltage (Vstart en Vmax)</choice>
 			</enumChoice>
 			<enumChoice choice="Use Speed Table">
 				<choice>Use Speed Table</choice>
@@ -67,7 +66,7 @@
 				<choice xml:lang="fr">Utiliser tableau de vitesse</choice>
 				<choice xml:lang="de">Geschw.-kennlinie nutzen</choice>
 				<choice xml:lang="cs">Použít rychlostní tabulku</choice>
-				<choice xml:lang="nl">Gebruik de snelheids tabel</choice>
+				<choice xml:lang="nl">Gebruik de snelheidsgrafiek</choice>
 			</enumChoice>
 		</enumVal>
 		<label>Use Speed Table</label>
@@ -75,6 +74,6 @@
 		<label xml:lang="de">Geschwindigkeitskennlinie nutzen</label>
 		<label xml:lang="it">Uso Tabella Velocità</label>
 		<label xml:lang="cs">Použití rychlostní tabulky</label>
-		<label xml:lang="nl">Gebruik de snelheids tabel</label>
+		<label xml:lang="nl">Gebruik de snelheidsgrafiek</label>
   </variable>
 </variables>

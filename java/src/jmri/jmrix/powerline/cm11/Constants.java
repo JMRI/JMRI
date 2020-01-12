@@ -1,10 +1,10 @@
 package jmri.jmrix.powerline.cm11;
 
 /**
- * Constants and functions specific to the CM11 interface
+ * Constants and functions specific to the CM11 interface.
  *
  * @author Bob Jacobsen Copyright (C) 2008
-  */
+ */
 public class Constants {
 
     public static final int POLL_REQ = 0x5A;
@@ -21,7 +21,8 @@ public class Constants {
     public static final int TIMER_DOWNLOAD = 0x9B;
 
     /**
-     * Pretty-print a header code
+     * Pretty-print a header code.
+     *
      * @param b header byte
      * @return  formated as text of header byte
      */
@@ -32,6 +33,3 @@ public class Constants {
     }
 
 }
-
-
-

@@ -1,6 +1,7 @@
 package jmri.jmrit.vsdecoder;
 
 import java.awt.GraphicsEnvironment;
+import jmri.*;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -10,7 +11,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class VSDecoderPaneTest extends jmri.util.swing.JmriPanelTest {
 
@@ -20,7 +21,7 @@ public class VSDecoderPaneTest extends jmri.util.swing.JmriPanelTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         VSDecoderFrame vf = new VSDecoderFrame();
         VSDecoderPane t = new VSDecoderPane(vf);
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(vf);
     }
 
@@ -30,7 +31,7 @@ public class VSDecoderPaneTest extends jmri.util.swing.JmriPanelTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         VSDecoderFrame vf = new VSDecoderFrame();
         VSDecoderPane t = new VSDecoderPane(vf);
-        Assert.assertEquals("help target","package.jmri.jmrit.vsdecoder.VSDecoderPane",t.getHelpTarget());
+        Assert.assertEquals("help target", "package.jmri.jmrit.vsdecoder.VSDecoderPane", t.getHelpTarget());
         JUnitUtil.dispose(vf);
     }
 
@@ -40,8 +41,11 @@ public class VSDecoderPaneTest extends jmri.util.swing.JmriPanelTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         VSDecoderFrame vf = new VSDecoderFrame();
         VSDecoderPane t = new VSDecoderPane(vf);
-        Assert.assertEquals("title",Bundle.getMessage("WindowTitle"),t.getTitle());
+        Assert.assertEquals("title", Bundle.getMessage("WindowTitle"), t.getTitle());
         JUnitUtil.dispose(vf);
+
+        // this created an audio manager, clean that up
+        InstanceManager.getDefault(jmri.AudioManager.class).cleanup();
     }
 
     @Test
@@ -60,6 +64,8 @@ public class VSDecoderPaneTest extends jmri.util.swing.JmriPanelTest {
     @Override
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
     }
 
     @After
@@ -69,5 +75,4 @@ public class VSDecoderPaneTest extends jmri.util.swing.JmriPanelTest {
     }
 
     // private final static Logger log = LoggerFactory.getLogger(VSDecoderPaneTest.class);
-
 }

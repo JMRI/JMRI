@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * JOAL implementation of the Audio Buffer sub-class.
- * <P>
+ * <p>
  * For now, no system-specific implementations are forseen - this will remain
  * internal-only
  * <br><br><hr><br><b>
@@ -56,15 +56,14 @@ import org.slf4j.LoggerFactory;
  * <br><br><br></i>
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
  *
  * @author Matthew Harris copyright (c) 2009, 2011
  */
@@ -89,9 +88,7 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
      */
     public JoalAudioBuffer(String systemName) {
         super(systemName);
-        if (log.isDebugEnabled()) {
-            log.debug("New JoalAudioBuffer: " + systemName);
-        }
+        log.debug("New JoalAudioBuffer: {}", systemName);
         initialised = init();
     }
 
@@ -103,9 +100,7 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
      */
     public JoalAudioBuffer(String systemName, String userName) {
         super(systemName, userName);
-        if (log.isDebugEnabled()) {
-            log.debug("New JoalAudioBuffer: " + userName + " (" + systemName + ")");
-        }
+        log.debug("New JoalAudioBuffer: {} ({})", userName, systemName);
         initialised = init();
     }
 
@@ -115,16 +110,21 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
      * @return true, if initialisation successful
      */
     private boolean init() {
+        // Check that the JoalAudioFactory exists
+        if (al == null) {
+            log.warn("Al Factory not yet initialised");
+            return false;
+        }
+
         // Try to create an empty buffer that will hold the actual sound data
         al.alGenBuffers(1, dataStorageBuffer, 0);
         if (JoalAudioFactory.checkALError()) {
-            log.warn("Error creating JoalAudioBuffer (" + this.getSystemName() + ")");
+            log.warn("Error creating JoalAudioBuffer ({})", this.getSystemName());
             return false;
         }
 
         this.setState(STATE_EMPTY);
         return true;
-
     }
 
     /**
@@ -290,7 +290,7 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
     protected boolean generateStreamingBuffers() {
         // TODO: Actually write this bit
         if (log.isDebugEnabled()) {
-            log.debug("Method generateStreamingBuffers() called for JoalAudioBuffer " + this.getSystemName());
+            log.debug("Method generateStreamingBuffers() called for JoalAudioBuffer {}", this.getSystemName());
         }
         return true;
     }
@@ -299,22 +299,24 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
     protected void removeStreamingBuffers() {
         // TODO: Actually write this bit
         if (log.isDebugEnabled()) {
-            log.debug("Method removeStreamingBuffers() called for JoalAudioBuffer " + this.getSystemName());
+            log.debug("Method removeStreamingBuffers() called for JoalAudioBuffer {}", this.getSystemName());
         }
     }
 
     @Override
+//    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "CF_USELESS_CONTROL_FLOW",
+//            justification = "TODO fill out the actions in these clauses")
     protected void generateLoopBuffers(int which) {
-        if ((which == LOOP_POINT_START) || (which == LOOP_POINT_BOTH)) {
-            // Create start loop buffer
-            // TODO: Actually write this bit
-        }
-        if ((which == LOOP_POINT_END) || (which == LOOP_POINT_BOTH)) {
-            // Create end loop buffer
-            // TODO: Actually write this bit
-        }
+//        if ((which == LOOP_POINT_START) || (which == LOOP_POINT_BOTH)) {
+//            // Create start loop buffer
+//            // TODO: Actually write this bit
+//        }
+//        if ((which == LOOP_POINT_END) || (which == LOOP_POINT_BOTH)) {
+//            // Create end loop buffer
+//            // TODO: Actually write this bit
+//        }
         if (log.isDebugEnabled()) {
-            log.debug("Method generateLoopBuffers() called for JoalAudioBuffer " + this.getSystemName());
+            log.debug("Method generateLoopBuffers() called for JoalAudioBuffer {}", this.getSystemName());
         }
     }
 
@@ -382,7 +384,7 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
             al.alDeleteBuffers(1, dataStorageBuffer, 0);
         }
         if (log.isDebugEnabled()) {
-            log.debug("Cleanup JoalAudioBuffer (" + this.getSystemName() + ")");
+            log.debug("Cleanup JoalAudioBuffer ({})", this.getSystemName());
         }
         this.dispose();
     }

@@ -22,7 +22,7 @@
   <!-- V 1.1 updated file - Mark Waters - 28 Dec 2015 - superceeded by Zimo_Unified_software_MX633v31 file, Hidden in decoder tree  -->
   <decoder>
     <family name="Zimo Unified software (version 32+)" mfg="Zimo">
-      <model show="no" model="MX633 version 32+" replacementModel="MX633 version 25+" replacementFamily="Zimo Unified software (version 25+)" lowVersionID="32" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="10" numFns="14" productID="237">
+      <model show="no" model="MX633 version 32+" replacementModel="MX633 version 25+" replacementFamily="Zimo Unified software (version 25+)" lowVersionID="32" highVersionID="32" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="10" numFns="14" productID="237">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -35,7 +35,7 @@
         <output name="10" label="FO 8"/>
         <size length="22" width="15" height="3.5" units="mm"/>
       </model>
-      <model show="no" model="MX633R version 32+" replacementModel="MX633R version 25+" replacementFamily="Zimo Unified software (version 25+)" lowVersionID="32" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="1.2A" formFactor="HO" connector="NMRAmedium" numOuts="10" numFns="14" productID="237">
+      <model show="no" model="MX633R version 32+" replacementModel="MX633R version 25+" replacementFamily="Zimo Unified software (version 25+)" lowVersionID="32" highVersionID="32" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="1.2A" formFactor="HO" connector="NMRAmedium" numOuts="10" numFns="14" productID="237">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -48,7 +48,7 @@
         <output name="10" label="FO 8"/>
         <size length="22" width="15" height="3.5" units="mm"/>
       </model>
-      <model show="no" model="MX633P22 version 32+" replacementModel="MX633P22 version 25+" replacementFamily="Zimo Unified software (version 25+)" lowVersionID="32" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="1.2A" formFactor="HO" connector="PluX22" numOuts="10" numFns="14" productID="237">
+      <model show="no" model="MX633P22 version 32+" replacementModel="MX633P22 version 25+" replacementFamily="Zimo Unified software (version 25+)" lowVersionID="32" highVersionID="32" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="1.2A" formFactor="HO" connector="PluX22" numOuts="10" numFns="14" productID="237">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>

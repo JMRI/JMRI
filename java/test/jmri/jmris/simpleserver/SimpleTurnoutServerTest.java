@@ -1,4 +1,3 @@
-//SimpleTurnoutServerTest.java
 package jmri.jmris.simpleserver;
 
 import jmri.util.JUnitUtil;

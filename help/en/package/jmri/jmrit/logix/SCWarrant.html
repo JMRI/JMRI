@@ -1,0 +1,169 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+  <meta name="generator" content=
+          "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Warrants Help</title>
+  <meta name="author" content="Karl Johan Lisby">
+  <meta name="keywords" content="JMRI Fast Reacting Warrant Help">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+          "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+        media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+        media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+      <h1>Fast Reacting Warrants</h1>
+      <p>This type of Warrant does not follow
+      the <a href="Warrant.shtml">standard Prototypical Warrant</a>
+      rules, but instead reacts to signals with an immediate
+      speed change upon entering their approach block.<br>
+      The throttle settings are a fixed proportion of the
+      Aspect Speed Names in Warrant Preferences. It is specially
+      adapted for small layouts with short blocks.<br>
+      Apart from standard and Fast Reacting Warrants, a
+      third type is eNtry-eXit or
+      <a href="NXWarrant.shtml">NX Warrants</a></p>
+
+      <p>A number of nice features in standard Warrants have been
+      sacrificed in Fast Reacting Warrants for the sake of
+      speedy and reliable control of small layouts. This includes
+      disabling of speed ramping and the ability to control bells,
+      whistles and light when the train enters a block.</p>
+
+      <p>Likewise a few features available in Fast Reacting Warrants
+      that are not present in standard Warrants.</p>
+
+      <p>First and foremost Fast Reacting Warrants are
+      controlled by signals (hence their technical name Signal
+      Controlled (SC) Warrants). This obviously requires that you have
+      defined signals - at least virtual signals - on your layout
+      and that you have added those signals to your OPortals. If
+      you have done that, the Fast Reacting Warrant will
+      constantly "look" at the next signal along its route and
+      adapt the speed of the train to the Aspect shown by that
+      signal. This speed adaptation happens promptly and no matter
+      how often the Aspect changes. Thereby the train will stop
+      even within short blocks.</p>
+
+      <p>Note: If you have slow moving turnouts on your layout,
+      you have to protect each turnout with a signal. Otherwise
+      a train might run through the turnout while it moves.</p>
+
+      <p>An additional feature of Fast Reacting Warrants is
+      that it is possible to define a number of milliseconds that
+      the train shall continue with low speed after it has entered
+      the destination block. This is in part a substitute for the
+      very flexible way standard Warrants are able to execute
+      throttle commands. But it is also a quite reliable way to
+      make the train stop at the same location every time.</p>
+
+      <p>One more requirement to your layout: Fast Reacting
+      Warrants do not handle "dark" Blocks. I.e. all those Blocks
+      you use in the route for a Fast Reacting Warrant must be
+      equipped with an occupancy sensor. I.e. the Warrant must
+      at all times have at least one sensor active (and thereby
+      an OBlock occupied) while the Fast Reacting Warrant is
+      running a train.</p>
+
+      <h2>Comparison between Warrant types</h2>
+
+      <table style="width:100%">
+        <tr>
+          <td><b>Feature</b></td>
+
+          <td><b>Standard</b></td>
+
+          <td><b>Fast Reacting (SC)</b></td>
+
+          <td><b>Entry Exit (NX)</b></td>
+        </tr>
+
+        <tr>
+          <td>Ramps speed up and down</td>
+
+          <td>yes</td>
+
+          <td>no</td>
+
+          <td>yes</td>
+        </tr>
+
+        <tr>
+          <td>Executes throttle commands as recorded</td>
+
+          <td>yes</td>
+
+          <td>no</td>
+
+          <td>no</td>
+        </tr>
+
+        <tr>
+          <td>Can be stored / is permanent</td>
+
+          <td>yes</td>
+
+          <td>yes</td>
+
+          <td>no</td>
+        </tr>
+
+        <tr>
+          <td>Can be converted to another type</td>
+
+          <td>to SC</td>
+
+          <td>to standard</td>
+
+          <td>to standard or SC</td>
+        </tr>
+
+        <tr>
+          <td>Recording of throttle commands</td>
+
+          <td>yes</td>
+
+          <td>no</td>
+
+          <td>no</td>
+        </tr>
+
+        <tr>
+          <td>Calculation of throttle commands</td>
+
+          <td>no</td>
+
+          <td>yes - while running</td>
+
+          <td>yes - during creation</td>
+        </tr>
+      </table>
+
+      <h2>Creating and running a Fast Reacting Warrant</h2>
+      <p>A Fast Reacting Warrant is created and used in the
+      same way as standard Prototypical Warrants. You may even
+      switch back and forth between a Fast Reacting Warrant
+      and a standard Warrant.</p>
+
+      <p>Simply change the Warrant type in the
+      <a href="CreateEditWarrant.shtml">Warrant Editor</a>.</p>
+
+      <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+</div><!-- closes #mBody-->
+</body>
+</html>

@@ -1,6 +1,5 @@
 package jmri.jmrix.acela;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.DataInputStream;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
@@ -37,7 +36,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
     public AcelaTrafficController() {
         super();
 
-        // entirely poll driven, so reduce interval
+        // entirely poll driven, so reduce Polling interval
         mWaitBeforePoll = 25;  // default = 25
         setAllowUnexpectedReply(true);
 
@@ -402,29 +401,6 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
     @Override
     public void sendAcelaMessage(AcelaMessage m, AcelaListener reply) {
         sendMessage(m, reply);
-    }
-
-    /**
-     * Static function returning the AcelaTrafficController instance to use.
-     *
-     * @return The registered AcelaTrafficController instance for general use,
-     *         if need be creating one.
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public AcelaTrafficController instance() {
-        log.error("Deprecated method instance called");
-        return null;
-    }
-
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "temporary until mult-system; only set at startup")
-    @Override
-    @Deprecated
-    protected void setInstance() {
-        // this is called from AbstractMRTrafficController, so suppress this
-        // error.
-        //log.error("Deprecated method setInstance called");
     }
 
     @Override

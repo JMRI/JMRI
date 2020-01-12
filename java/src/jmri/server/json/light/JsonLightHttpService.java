@@ -5,51 +5,51 @@ import static jmri.server.json.JSON.INCONSISTENT;
 import static jmri.server.json.JSON.OFF;
 import static jmri.server.json.JSON.ON;
 import static jmri.server.json.JSON.STATE;
-import static jmri.server.json.JSON.TYPE;
 import static jmri.server.json.JSON.UNKNOWN;
 import static jmri.server.json.light.JsonLight.LIGHT;
 import static jmri.server.json.light.JsonLight.LIGHTS;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
+
+import jmri.DigitalIO;
 import jmri.InstanceManager;
 import jmri.Light;
+import jmri.LightManager;
+import jmri.NamedBean;
+import jmri.ProvidingManager;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonNamedBeanHttpService;
+import jmri.server.json.JsonRequest;
 
 /**
  *
  * @author Randall Wood
  */
-public class JsonLightHttpService extends JsonNamedBeanHttpService {
+public class JsonLightHttpService extends JsonNamedBeanHttpService<Light> {
 
     public JsonLightHttpService(ObjectMapper mapper) {
         super(mapper);
     }
 
     @Override
-    public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
-        ObjectNode root = mapper.createObjectNode();
-        root.put(TYPE, LIGHT);
-        Light light = InstanceManager.lightManagerInstance().getLight(name);
-        ObjectNode data = this.getNamedBean(light, name, type, locale);
-        root.set(DATA, data);
+    public ObjectNode doGet(Light light, String name, String type, JsonRequest request) throws JsonException {
+        ObjectNode root = this.getNamedBean(light, name, type, request);
+        ObjectNode data = root.with(DATA);
         if (light != null) {
             switch (light.getState()) {
-                case Light.ON:
+                case DigitalIO.ON:
                     data.put(STATE, ON);
                     break;
-                case Light.OFF:
+                case DigitalIO.OFF:
                     data.put(STATE, OFF);
                     break;
-                case Light.INCONSISTENT:
+                case NamedBean.INCONSISTENT:
                     data.put(STATE, INCONSISTENT);
                     break;
-                case Light.UNKNOWN:
+                case NamedBean.UNKNOWN:
                 default:
                     data.put(STATE, UNKNOWN);
                     break;
@@ -59,60 +59,46 @@ public class JsonLightHttpService extends JsonNamedBeanHttpService {
     }
 
     @Override
-    public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {
-        Light light = InstanceManager.lightManagerInstance().getLight(name);
-        if (light == null) {
-            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", LIGHT, name));
-        }
-        this.postNamedBean(light, data, name, type, locale);
+    public ObjectNode doPost(Light light, String name, String type, JsonNode data, JsonRequest request) throws JsonException {
         int state = data.path(STATE).asInt(UNKNOWN);
         switch (state) {
             case ON:
-                light.setState(Light.ON);
+                light.setState(DigitalIO.ON);
                 break;
             case OFF:
-                light.setState(Light.OFF);
+                light.setState(DigitalIO.OFF);
                 break;
             case UNKNOWN:
                 // leave state alone in this case
                 break;
             default:
-                throw new JsonException(400, Bundle.getMessage(locale, "ErrorUnknownState", LIGHT, state));
+                throw new JsonException(400, Bundle.getMessage(request.locale, "ErrorUnknownState", LIGHT, state), request.id);
         }
-        return this.doGet(type, name, locale);
+        return this.doGet(light, name, type, request);
     }
 
     @Override
-    public JsonNode doPut(String type, String name, JsonNode data, Locale locale) throws JsonException {
-        try {
-            InstanceManager.lightManagerInstance().provideLight(name);
-        } catch (Exception ex) {
-            throw new JsonException(500, Bundle.getMessage(locale, "ErrorCreatingObject", LIGHT, name));
-        }
-        return this.doPost(type, name, data, locale);
-    }
-
-    @Override
-    public ArrayNode doGetList(String type, Locale locale) throws JsonException {
-        ArrayNode root = this.mapper.createArrayNode();
-        for (String name : InstanceManager.lightManagerInstance().getSystemNameList()) {
-            root.add(this.doGet(LIGHT, name, locale));
-        }
-        return root;
-
-    }
-
-    @Override
-    public JsonNode doSchema(String type, boolean server, Locale locale) throws JsonException {
+    public JsonNode doSchema(String type, boolean server, JsonRequest request) throws JsonException {
         switch (type) {
             case LIGHT:
             case LIGHTS:
                 return doSchema(type,
                         server,
                         "jmri/server/json/light/light-server.json",
-                        "jmri/server/json/light/light-client.json");
+                        "jmri/server/json/light/light-client.json",
+                        request.id);
             default:
-                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(request.locale, JsonException.ERROR_UNKNOWN_TYPE, type), request.id);
         }
+    }
+
+    @Override
+    protected String getType() {
+        return LIGHT;
+    }
+
+    @Override
+    protected ProvidingManager<Light> getManager() {
+        return InstanceManager.getDefault(LightManager.class);
     }
 }

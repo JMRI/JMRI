@@ -24,14 +24,14 @@ import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Simple GUI for controlling the PRICOM Pocket Tester.
- * <P>
+ * <p>
  * When opened, the user must first select a serial port and click "Start". The
  * rest of the GUI then appears.
- * <P>
+ * <p>
  * For more info on the product, see http://www.pricom.com
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
-  */
+ */
 public class DataSource extends jmri.util.JmriJFrame {
 
     static DataSource existingInstance;
@@ -58,8 +58,6 @@ public class DataSource extends jmri.util.JmriJFrame {
 
     Vector<String> portNameVector = null;
     SerialPort activeSerialPort = null;
-    static java.util.ResourceBundle rb
-            = java.util.ResourceBundle.getBundle("jmri.jmrix.pricom.pockettester.TesterBundle");
 
     JLabel version = new JLabel("");  // hold version label when returned
 
@@ -70,23 +68,23 @@ public class DataSource extends jmri.util.JmriJFrame {
      */
     @Override
     public void initComponents() {
-        setTitle(rb.getString("TitleSource"));
+        setTitle(Bundle.getMessage("TitleSource"));
 
         // set layout manager
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         // load the port selection part
-        portBox.setToolTipText(rb.getString("TooltipSelectPort"));
+        portBox.setToolTipText(Bundle.getMessage("TooltipSelectPort"));
         portBox.setAlignmentX(JLabel.LEFT_ALIGNMENT);
         Vector<String> v = getPortNames();
         for (int i = 0; i < v.size(); i++) {
             portBox.addItem(v.elementAt(i));
         }
-        speedBox.setToolTipText(rb.getString("TooltipSelectBaud"));
+        speedBox.setToolTipText(Bundle.getMessage("TooltipSelectBaud"));
         speedBox.setAlignmentX(JLabel.LEFT_ALIGNMENT);
         speedBox.setSelectedItem("115200");
-        openPortButton.setText(rb.getString("ButtonOpen"));
-        openPortButton.setToolTipText(rb.getString("TooltipOpen"));
+        openPortButton.setText(Bundle.getMessage("ButtonOpen"));
+        openPortButton.setToolTipText(Bundle.getMessage("TooltipOpen"));
         openPortButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -102,9 +100,9 @@ public class DataSource extends jmri.util.JmriJFrame {
         getContentPane().add(new JSeparator());
         JPanel p1 = new JPanel();
         p1.setLayout(new FlowLayout());
-        p1.add(new JLabel(rb.getString("LabelSerialPort")));
+        p1.add(new JLabel(Bundle.getMessage("LabelSerialPort")));
         p1.add(portBox);
-        p1.add(new JLabel(rb.getString("LabelSpeed")));
+        p1.add(new JLabel(Bundle.getMessage("LabelSpeed")));
         p1.add(speedBox);
         p1.add(openPortButton);
         getContentPane().add(p1);
@@ -133,7 +131,7 @@ public class DataSource extends jmri.util.JmriJFrame {
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
             ButtonGroup g = new ButtonGroup();
             JRadioButton b;
-            b = new JRadioButton(rb.getString("ButtonShowAll"));
+            b = new JRadioButton(Bundle.getMessage("ButtonShowAll"));
             g.add(b);
             p.add(b);
             b.setSelected(true);
@@ -143,7 +141,7 @@ public class DataSource extends jmri.util.JmriJFrame {
                     sendBytes(new byte[]{(byte) 'F'});
                 }
             });
-            b = new JRadioButton(rb.getString("ButtonShowAcc"));
+            b = new JRadioButton(Bundle.getMessage("ButtonShowAcc"));
             g.add(b);
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
@@ -153,7 +151,7 @@ public class DataSource extends jmri.util.JmriJFrame {
                 }
             });
             p2.add(p);
-            b = new JRadioButton(rb.getString("ButtonShowMobile"));
+            b = new JRadioButton(Bundle.getMessage("ButtonShowMobile"));
             g.add(b);
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
@@ -166,11 +164,11 @@ public class DataSource extends jmri.util.JmriJFrame {
         }  // end group controlling filtering
 
         {
-            JButton b = new JButton(rb.getString("ButtonGetVersion"));
+            JButton b = new JButton(Bundle.getMessage("ButtonGetVersion"));
             b.addActionListener(new java.awt.event.ActionListener() {
                 @Override
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    version.setText(rb.getString("LabelWaitVersion"));
+                    version.setText(Bundle.getMessage("LabelWaitVersion"));
                     sendBytes(new byte[]{(byte) 'V'});
                 }
             });
@@ -180,7 +178,7 @@ public class DataSource extends jmri.util.JmriJFrame {
         getContentPane().add(p2);
 
         // space for version string
-        version = new JLabel(rb.getString("LabelNoVersion"));  // hold version label when returned
+        version = new JLabel(Bundle.getMessage("LabelNoVersion", Bundle.getMessage("ButtonGetVersion"))); // hold version label when returned
         JPanel p3 = new JPanel();
         p3.add(version);
         getContentPane().add(p3);
@@ -189,7 +187,7 @@ public class DataSource extends jmri.util.JmriJFrame {
 
         JPanel p4 = new JPanel();
         p4.setLayout(new BoxLayout(p4, BoxLayout.X_AXIS));
-        p4.add(new JLabel(rb.getString("LabelToOpen")));
+        p4.add(new JLabel(Bundle.getMessage("LabelToOpen")));
 
         {
             MonitorAction a = new MonitorAction() {
@@ -234,7 +232,7 @@ public class DataSource extends jmri.util.JmriJFrame {
         pack();
     }
 
-    JButton checkButton = new JButton(rb.getString("ButtonInit"));
+    JButton checkButton = new JButton(Bundle.getMessage("ButtonInit"));
 
     /**
      * Send output bytes, e.g. characters controlling operation, to the tester
@@ -303,7 +301,6 @@ public class DataSource extends jmri.util.JmriJFrame {
         super.dispose();
     }
 
-    @SuppressWarnings("unchecked")
     public Vector<String> getPortNames() {
         // first, check that the comm package can be opened and ports seen
         portNameVector = new Vector<String>();
@@ -453,7 +450,7 @@ public class DataSource extends jmri.util.JmriJFrame {
                     break;
                 }
                 // Strip off the CR and LF
-                if (char1 != 10 && char1 != 13) {
+                if (char1 != 13) {
                     msg.append(char1);
                 }
             }
@@ -496,11 +493,11 @@ public class DataSource extends jmri.util.JmriJFrame {
 
     /**
      * Handle a new line from the device.
-     * <UL>
-     * <LI>Check for version number and display
-     * <LI>Trigger the notification of all listeners.
-     * </UL>
-     * <P>
+     * <ul>
+     * <li>Check for version number and display
+     * <li>Trigger the notification of all listeners.
+     * </ul>
+     * <p>
      * This needs to execute on the Swing GUI thread.
      *
      * @param s The new message to distribute

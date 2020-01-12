@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Turnout implementation for XBee systems.
- * <p>
+ *
  * @author Paul Bender Copyright (C) 2014
  */
 public class XBeeTurnout extends AbstractTurnout {
@@ -88,9 +88,9 @@ public class XBeeTurnout extends AbstractTurnout {
                             }
                         }
                     }
-                    pin = Integer.valueOf(systemName.substring(seperator + 1, seperator2 > 0 ? seperator2 : systemName.length())).intValue();
+                    pin = Integer.parseInt(systemName.substring(seperator + 1, seperator2 > 0 ? seperator2 : systemName.length()));
                     if (seperator2 > 0) {
-                        pin2 = Integer.valueOf(systemName.substring(seperator2 + 1)).intValue();
+                        pin2 = Integer.parseInt(systemName.substring(seperator2 + 1));
                     }
                 } catch (NumberFormatException ex) {
                     log.debug("Unable to convert " + systemName + " into the cab and input format of nn:xx");

@@ -34,15 +34,13 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.TrainManager;
-import jmri.jmrit.operations.trains.timetable.TrainSchedule;
-import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
 import jmri.util.davidflanagan.HardcopyWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Action to print a summary of the Location Roster contents
- * <P>
+ * <p>
  * This uses the older style printing, for compatibility with Java 1.1.8 in
  * Macintosh MRJ
  *
@@ -366,31 +364,22 @@ public class PrintLocationsAction extends AbstractAction {
                         si.getDestinationTrackName() +
                         NEW_LINE;
                 writer.write(s);
-                TrainSchedule sch = InstanceManager.getDefault(TrainScheduleManager.class)
-                        .getScheduleById(si.getSetoutTrainScheduleId());
-                String setoutDay = "";
-                if (sch != null) {
-                    setoutDay = sch.getName();
-                }
-                sch = InstanceManager.getDefault(TrainScheduleManager.class)
-                        .getScheduleById(si.getPickupTrainScheduleId());
-                String pickupDay = "";
-                if (sch != null) {
-                    pickupDay = sch.getName();
-                }
 
                 s = padOutString("", cts.getMaxNameLength() + 1) +
                         padOutString(Bundle.getMessage("Random"), Bundle.getMessage("Random").length() + 1) +
                         padOutString(Bundle.getMessage("Delivery"), Bundle.getMessage("Delivery").length() + 1) +
                         padOutString(Bundle.getMessage("Road"), crs.getMaxNameLength() + 1) +
-                        Bundle.getMessage("Pickup") +
+                        padOutString(Bundle.getMessage("Pickup"), Bundle.getMessage("Delivery").length() + 1) +
+                        Bundle.getMessage("Wait") +
                         NEW_LINE;
                 writer.write(s);
+                
                 s = padOutString("", cts.getMaxNameLength() + 1) +
                         padOutString(si.getRandom(), Bundle.getMessage("Random").length() + 1) +
-                        padOutString(setoutDay, Bundle.getMessage("Delivery").length() + 1) +
+                        padOutString(si.getSetoutTrainScheduleName(), Bundle.getMessage("Delivery").length() + 1) +
                         padOutString(si.getRoadName(), crs.getMaxNameLength() + 1) +
-                        pickupDay +
+                        padOutString(si.getPickupTrainScheduleName(), Bundle.getMessage("Delivery").length() + 1) +
+                        si.getWait() +
                         NEW_LINE;
                 writer.write(s);
             }
@@ -843,7 +832,7 @@ public class PrintLocationsAction extends AbstractAction {
 
     private String getTrackShipLoads(Track track) {
         // only staging has the ship load control
-        if (!track.getTrackType().equals(Track.STAGING)) {
+        if (!track.isStaging()) {
             return "";
         }
         if (track.getShipLoadOption().equals(Track.ALL_LOADS)) {
@@ -874,8 +863,8 @@ public class PrintLocationsAction extends AbstractAction {
 
     private String getCarOrder(Track track) {
         // only yards and interchanges have the car order option
-        if (track.getTrackType().equals(Track.SPUR) ||
-                track.getTrackType().equals(Track.STAGING) ||
+        if (track.isSpur() ||
+                track.isStaging() ||
                 track.getServiceOrder().equals(Track.NORMAL)) {
             return "";
         }
@@ -1046,7 +1035,7 @@ public class PrintLocationsAction extends AbstractAction {
 
     private String getSchedule(Track track) {
         // only spurs have schedules
-        if (!track.getTrackType().equals(Track.SPUR) || track.getSchedule() == null) {
+        if (!track.isSpur() || track.getSchedule() == null) {
             return "";
         }
         StringBuffer buf = new StringBuffer(TAB +
@@ -1072,8 +1061,7 @@ public class PrintLocationsAction extends AbstractAction {
     }
     
     private String getStagingInfo(Track track) {
-        // only spurs have schedules
-        if (!track.getTrackType().equals(Track.STAGING)) {
+        if (!track.isStaging()) {
             return "";
         }
 
@@ -1155,11 +1143,10 @@ public class PrintLocationsAction extends AbstractAction {
     JCheckBox printAnalysis = new JCheckBox(Bundle.getMessage("PrintAnalysis"));
     JCheckBox printErrorAnalysis = new JCheckBox(Bundle.getMessage("PrintErrorAnalysis"));
 
-    JButton okayButton = new JButton(Bundle.getMessage("ButtonOK"));
-
     public class LocationPrintOptionFrame extends OperationsFrame {
 
         PrintLocationsAction pla;
+        JButton okayButton = new JButton(Bundle.getMessage("ButtonOK"));
 
         public LocationPrintOptionFrame(PrintLocationsAction pla) {
             super();

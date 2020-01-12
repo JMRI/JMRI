@@ -1,200 +1,214 @@
 package jmri.jmrix.nce;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import jmri.util.JUnitUtil;
 
 /**
  * JUnit tests for the NceReplyclass
  *
  * @author	Bob Jacobsen
-  */
-public class NceReplyTest extends TestCase {
+ */
+public class NceReplyTest extends jmri.jmrix.AbstractMessageTestBase {
+        
+    private NceTrafficController tc = null;
+    private NceReply msg = null;
 
+    @Test
     public void testCreate() {
-        NceTrafficController tc = new NceTrafficController();
-        NceReply m = new NceReply(tc);
-        m.setElement(0, 'A');
-        Assert.assertEquals("expected length ", 1, m.getNumDataElements());
-        m.setElement(1, 'B');
-        m.setElement(2, 'C');
-        Assert.assertEquals("expected length ", 3, m.getNumDataElements());
-        m.setElement(0, '1');
-        Assert.assertEquals("expected length ", 3, m.getNumDataElements());
-        m.setElement(3, 'D');
-        Assert.assertEquals("expected length ", 4, m.getNumDataElements());
-        m.setElement(5, 'A');
-        Assert.assertEquals("expected length ", 6, m.getNumDataElements());
+        msg.setElement(0, 'A');
+        Assert.assertEquals("expected length ", 1, msg.getNumDataElements());
+        msg.setElement(1, 'B');
+        msg.setElement(2, 'C');
+        Assert.assertEquals("expected length ", 3, msg.getNumDataElements());
+        msg.setElement(0, '1');
+        Assert.assertEquals("expected length ", 3, msg.getNumDataElements());
+        msg.setElement(3, 'D');
+        Assert.assertEquals("expected length ", 4, msg.getNumDataElements());
+        msg.setElement(5, 'A');
+        Assert.assertEquals("expected length ", 6, msg.getNumDataElements());
 
     }
 
+    @Test
     public void testBinaryToString() {
-        NceTrafficController tc = new NceTrafficController();
-        NceReply m = new NceReply(tc);
-        m.setBinary(true);
-        m.setOpCode(0x81);
-        m.setElement(1, 0x02);
-        m.setElement(2, 0xA2);
-        m.setElement(3, 0x00);
-        Assert.assertEquals("string compare ", "81 02 A2 00", m.toString());
+        msg.setBinary(true);
+        msg.setOpCode(0x81);
+        msg.setElement(1, 0x02);
+        msg.setElement(2, 0xA2);
+        msg.setElement(3, 0x00);
+        Assert.assertEquals("string compare ", "81 02 A2 00", msg.toString());
     }
 
+    @Test
     public void testAsciiToString() {
-        NceTrafficController tc = new NceTrafficController();
-        NceReply m = new NceReply(tc);
-        m.setBinary(false);
-        m.setOpCode('C');
-        m.setElement(1, 'o');
-        m.setElement(2, 'm');
-        m.setElement(3, ':');
-        Assert.assertEquals("string compare ", "Com:", m.toString());
+        msg.setBinary(false);
+        msg.setOpCode('C');
+        msg.setElement(1, 'o');
+        msg.setElement(2, 'm');
+        msg.setElement(3, ':');
+        Assert.assertEquals("string compare ", "Com:", msg.toString());
     }
 
+    @Test
     public void testSkipWhiteSpace() {
-        NceTrafficController tc = new NceTrafficController();
-        NceReply m = new NceReply(tc);
-        m.setBinary(false);
-        m.setElement(0, '0');
-        m.setElement(1, ' ');
-        m.setElement(2, ' ');
-        m.setElement(3, 'A');
-        m.setElement(4, 0x0A);
-        m.setElement(5, 'A');
-        Assert.assertEquals(" skip two blanks", 3, m.skipWhiteSpace(1));
-        Assert.assertEquals(" skip no blanks", 3, m.skipWhiteSpace(3));
-        Assert.assertEquals(" handle start", 0, m.skipWhiteSpace(0));
-        Assert.assertEquals(" skip LF", 5, m.skipWhiteSpace(4));
+        msg.setBinary(false);
+        msg.setElement(0, '0');
+        msg.setElement(1, ' ');
+        msg.setElement(2, ' ');
+        msg.setElement(3, 'A');
+        msg.setElement(4, 0x0A);
+        msg.setElement(5, 'A');
+        Assert.assertEquals(" skip two blanks", 3, msg.skipWhiteSpace(1));
+        Assert.assertEquals(" skip no blanks", 3, msg.skipWhiteSpace(3));
+        Assert.assertEquals(" handle start", 0, msg.skipWhiteSpace(0));
+        Assert.assertEquals(" skip LF", 5, msg.skipWhiteSpace(4));
     }
 
+    @Test
     public void testSkipCOMMAND() {
-        NceTrafficController tc = new NceTrafficController();
-        NceReply m = new NceReply(tc);
-        m.setBinary(false);
-        m.setElement(0, ' ');
-        m.setElement(1, ' ');
-        m.setElement(2, 'A');
-        m.setElement(3, ' ');
-        m.setElement(4, 'C');
-        m.setElement(5, 'O');
-        m.setElement(6, 'M');
-        m.setElement(7, 'M');
-        m.setElement(8, 'A');
-        m.setElement(9, 'N');
-        m.setElement(10, 'D');
-        m.setElement(11, ':');
-        m.setElement(12, ' ');
-        m.setElement(13, 'X');
-        Assert.assertEquals(" too short", 13, m.skipPrefix(13));
-        Assert.assertEquals(" not found", 5, m.skipPrefix(5));
-        Assert.assertEquals(" too short", 6, m.skipPrefix(6));
-        Assert.assertEquals(" too short", 7, m.skipPrefix(7));
-        Assert.assertEquals(" find & skip", 13, m.skipPrefix(4));
-        Assert.assertEquals(" not found", 0, m.skipPrefix(0));
-        m = new NceReply(tc);
-        m.setBinary(false);
-        m.setElement(0, 'C');
-        m.setElement(1, 'O');
-        m.setElement(2, 'M');
-        m.setElement(3, 'M');
-        m.setElement(4, 'A');
-        m.setElement(5, 'N');
-        m.setElement(6, 'D');
-        m.setElement(7, ':');
-        m.setElement(8, ' ');
-        m.setElement(9, '0');
-        m.setElement(10, '2');
-        m.setElement(11, '7');
-        Assert.assertEquals(" start of reply ", 9, m.skipPrefix(0));
+        msg.setBinary(false);
+        msg.setElement(0, ' ');
+        msg.setElement(1, ' ');
+        msg.setElement(2, 'A');
+        msg.setElement(3, ' ');
+        msg.setElement(4, 'C');
+        msg.setElement(5, 'O');
+        msg.setElement(6, 'M');
+        msg.setElement(7, 'M');
+        msg.setElement(8, 'A');
+        msg.setElement(9, 'N');
+        msg.setElement(10, 'D');
+        msg.setElement(11, ':');
+        msg.setElement(12, ' ');
+        msg.setElement(13, 'X');
+        Assert.assertEquals(" too short", 13, msg.skipPrefix(13));
+        Assert.assertEquals(" not found", 5, msg.skipPrefix(5));
+        Assert.assertEquals(" too short", 6, msg.skipPrefix(6));
+        Assert.assertEquals(" too short", 7, msg.skipPrefix(7));
+        Assert.assertEquals(" find & skip", 13, msg.skipPrefix(4));
+        Assert.assertEquals(" not found", 0, msg.skipPrefix(0));
+        msg = new NceReply(tc);
+        msg.setBinary(false);
+        msg.setElement(0, 'C');
+        msg.setElement(1, 'O');
+        msg.setElement(2, 'M');
+        msg.setElement(3, 'M');
+        msg.setElement(4, 'A');
+        msg.setElement(5, 'N');
+        msg.setElement(6, 'D');
+        msg.setElement(7, ':');
+        msg.setElement(8, ' ');
+        msg.setElement(9, '0');
+        msg.setElement(10, '2');
+        msg.setElement(11, '7');
+        Assert.assertEquals(" start of reply ", 9, msg.skipPrefix(0));
     }
 
+    @Test
     public void testPollValue1() {
-        NceTrafficController tc = new NceTrafficController();
-        NceReply m = new NceReply(tc);
-        m.setBinary(true);
-        m.setElement(0, 0x02);
-        m.setElement(1, 0x00);
-        m.setElement(2, 0x01);
-        m.setElement(3, 0x02);
-        Assert.assertEquals("value ", 0x0200, m.pollValue());
+        msg.setBinary(true);
+        msg.setElement(0, 0x02);
+        msg.setElement(1, 0x00);
+        msg.setElement(2, 0x01);
+        msg.setElement(3, 0x02);
+        Assert.assertEquals("value ", 0x0200, msg.pollValue());
     }
 
+    @Test
     public void testPollValue2() {
-        NceTrafficController tc = new NceTrafficController();
-        NceReply m = new NceReply(tc);
-        m.setBinary(true);
-        m.setElement(0, 0x00);
-        m.setElement(1, 0x04);
-        m.setElement(2, 0x01);
-        m.setElement(3, 0x02);
-        Assert.assertEquals("value ", 0x4, m.pollValue());
+        msg.setBinary(true);
+        msg.setElement(0, 0x00);
+        msg.setElement(1, 0x04);
+        msg.setElement(2, 0x01);
+        msg.setElement(3, 0x02);
+        Assert.assertEquals("value ", 0x4, msg.pollValue());
     }
 
+    @Test
     public void testPollValue3() {
-        NceTrafficController tc = new NceTrafficController();
-        NceReply m = new NceReply(tc);
-        m.setBinary(true);
-        m.setElement(0, 0x12);
-        m.setElement(1, 0x34);
-        m.setElement(2, 0x01);
-        m.setElement(3, 0x02);
-        Assert.assertEquals("value ", 0x1234, m.pollValue());
+        msg.setBinary(true);
+        msg.setElement(0, 0x12);
+        msg.setElement(1, 0x34);
+        msg.setElement(2, 0x01);
+        msg.setElement(3, 0x02);
+        Assert.assertEquals("value ", 0x1234, msg.pollValue());
     }
 
+    @Test
+    public void testPollToString() {
+        msg.setBinary(true);
+        msg.setElement(0, 0x12);
+        msg.setElement(1, 0x34);
+        msg.setElement(2, 0x01);
+        msg.setElement(3, 0x02);
+        Assert.assertEquals("string value","12 34 01 02", msg.toString());
+    }
+
+    @Test
+    public void testPollToMonitorString() {
+        msg.setBinary(true);
+        msg.setElement(0, 0x12);
+        msg.setElement(1, 0x34);
+        msg.setElement(2, 0x01);
+        msg.setElement(3, 0x02);
+        Assert.assertEquals("monitor string value","Reply: 12 34 01 02", msg.toMonitorString());
+    }
+
+    @Test
     public void testValue1() {
-        NceTrafficController tc = new NceTrafficController();
         // value when just the string comes back
-        NceReply m = new NceReply(tc);
-        m.setBinary(false);
-        m.setElement(0, '0');
-        m.setElement(1, '2');
-        m.setElement(2, '7');
-        m.setElement(3, ' ');
-        Assert.assertEquals("value ", 27, m.value());
+        msg.setBinary(false);
+        msg.setElement(0, '0');
+        msg.setElement(1, '2');
+        msg.setElement(2, '7');
+        msg.setElement(3, ' ');
+        Assert.assertEquals("value ", 27, msg.value());
     }
 
+    @Test
     public void testValue2() {
-        NceTrafficController tc = new NceTrafficController();
         // value with a "Command:" prefix
-        NceReply m = new NceReply(tc);
-        m.setBinary(false);
-        m.setElement(0, 'C');
-        m.setElement(1, 'O');
-        m.setElement(2, 'M');
-        m.setElement(3, 'M');
-        m.setElement(4, 'A');
-        m.setElement(5, 'N');
-        m.setElement(6, 'D');
-        m.setElement(7, ':');
-        m.setElement(8, ' ');
-        m.setElement(9, '0');
-        m.setElement(10, '2');
-        m.setElement(11, '7');
-        Assert.assertEquals("value ", 27, m.value());
+        msg.setBinary(false);
+        msg.setElement(0, 'C');
+        msg.setElement(1, 'O');
+        msg.setElement(2, 'M');
+        msg.setElement(3, 'M');
+        msg.setElement(4, 'A');
+        msg.setElement(5, 'N');
+        msg.setElement(6, 'D');
+        msg.setElement(7, ':');
+        msg.setElement(8, ' ');
+        msg.setElement(9, '0');
+        msg.setElement(10, '2');
+        msg.setElement(11, '7');
+        Assert.assertEquals("value ", 27, msg.value());
     }
 
+    @Test
     public void testMatch() {
-        NceTrafficController tc = new NceTrafficController();
-        NceReply m = new NceReply(tc, "**** PROGRAMMING MODE - MAIN TRACK NOW DISCONNECTED ****");
-        Assert.assertEquals("find ", 5, m.match("PROGRAMMING"));
-        Assert.assertEquals("not find ", -1, m.match("foo"));
+        msg = new NceReply(tc, "**** PROGRAMMING MODE - MAIN TRACK NOW DISCONNECTED ****");
+        Assert.assertEquals("find ", 5, msg.match("PROGRAMMING"));
+        Assert.assertEquals("not find ", -1, msg.match("foo"));
     }
 
-    // from here down is testing infrastructure
-    public NceReplyTest(String s) {
-        super(s);
+    @Override
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
+        tc = new NceTrafficController();
+        m = msg = new NceReply(tc);
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {NceReplyTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(NceReplyTest.class);
-        return suite;
+    @After
+    public void tearDown() {
+	    m = msg = null;
+	    tc = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.tearDown();
     }
 
 }

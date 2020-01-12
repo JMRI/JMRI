@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implementation of a serial node for IEEE 802.15.4 networks.
+ * Implementation of a Serial Node for IEEE 802.15.4 networks.
  * <p>
  * Integrated with {@link SerialTrafficController}.
  * <p>

@@ -93,6 +93,17 @@ class OpSessionLog {
         }
     }
 
+    static synchronized public void flush() {
+        if (_outBuff==null) {
+            return;
+        }
+        try {
+            _outBuff.flush();
+        } catch (IOException ioe) {
+            log.error("Op session log error " + ioe.getMessage());
+        }
+    }
+
     static synchronized public void close() {
         if (_outBuff==null) {
             return;

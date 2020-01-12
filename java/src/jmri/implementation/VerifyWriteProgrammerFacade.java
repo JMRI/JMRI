@@ -74,7 +74,7 @@ public class VerifyWriteProgrammerFacade extends AbstractProgrammerFacade implem
     }
 
     /**
-     * This facade ensures that {@link Programmer.WriteConfirmMode#ReadAfterWrite}
+     * This facade ensures that {@link jmri.Programmer.WriteConfirmMode#ReadAfterWrite}
      * is done, so long as it has permission to read the CV after writing.
      */
     @Override

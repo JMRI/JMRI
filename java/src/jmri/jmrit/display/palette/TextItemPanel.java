@@ -14,6 +14,7 @@ import java.awt.dnd.DragSourceEvent;
 import java.awt.dnd.DragSourceListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -52,10 +53,6 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
     @Override
     public void init() {
         if (!_initialized) {
-            if (!jmri.util.ThreadingUtil.isGUIThread()) {
-                log.error("Not on GUI thread", new Exception("traceback"));
-            }
-            Thread.yield();
             JPanel blurb = new JPanel();
             blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
             blurb.add(new JLabel(Bundle.getMessage("addTextAndAttrs")));
@@ -68,8 +65,10 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
             _decorator = new DecoratorPanel(_editor, _paletteFrame);
             _decorator.initDecoratorPanel(sample);
             add(_decorator);
-            initLinkPanel();
             _paletteFrame.pack();
+            if (log.isDebugEnabled()) {
+                log.debug("end init: TextItemPanel size {}", getPreferredSize());
+            }
             super.init();
         }
         if (_decorator != null) {
@@ -80,6 +79,24 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
     public void init(ActionListener doneAction, Positionable pos) {
         _decorator = new DecoratorPanel(_editor, _paletteFrame);
         _decorator.initDecoratorPanel(pos);
+    }
+
+    @Override
+    public void init(ActionListener doneAction) {
+    }
+
+    @Override
+    protected void updateBackground0(BufferedImage im) {
+        if (_decorator != null) {
+            _decorator._bgColorBox.setSelectedIndex(_paletteFrame.getPreviewBg());
+        }
+    }
+
+    @Override
+    protected void setPreviewBg(int index) {
+        if (_decorator != null) {
+            _decorator._bgColorBox.setSelectedIndex(_paletteFrame.getPreviewBg());
+        }
     }
 
     protected JPanel makeDoneButtonPanel(ActionListener doneAction) {
@@ -119,6 +136,14 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
         if (util.hasBackground()) { // unrotated
             l.setOpaque(true);
         }
+    }
+
+    @Override
+    public void closeDialogs() {
+        if (_decorator != null) {
+            _decorator.setSuppressRecentColor(false);
+        }
+        super.closeDialogs();
     }
 
     /**

@@ -1,5 +1,3 @@
-// SerialFilterAction.java
-
 package jmri.jmrix.cmri.serial.serialmon;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
@@ -26,6 +24,7 @@ public class SerialFilterAction extends AbstractAction {
 //        this("CMRInet Message Filter");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
 		// create a SerialMonFrame
 		SerialFilterFrame f = new SerialFilterFrame(_memo);
@@ -41,6 +40,3 @@ public class SerialFilterAction extends AbstractAction {
 	private final static Logger log = LoggerFactory.getLogger(SerialFilterAction.class);
 
 }
-
-
-/* @(#)SerialFilterAction.java */

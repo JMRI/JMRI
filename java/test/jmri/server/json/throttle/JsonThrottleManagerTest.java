@@ -1,24 +1,38 @@
 package jmri.server.json.throttle;
 
+import java.io.DataOutputStream;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
+
+import jmri.DccLocoAddress;
+import jmri.server.json.JsonMockConnection;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
+ * @author Randall Wood Copyright (C) 2019
  */
 public class JsonThrottleManagerTest {
 
+    /**
+     * Testing
+     * {@link jmri.server.json.throttle.JsonThrottleManager#put(JsonThrottle, JsonThrottleSocketService)}
+     * because testing via JsonThrottleSocketService does not trigger the
+     * complete method.
+     */
     @Test
-    public void testCTor() {
-        JsonThrottleManager t = new JsonThrottleManager();
-        Assert.assertNotNull("exists",t);
+    public void testPutThrottleService() {
+        JsonThrottleManager manager = new JsonThrottleManager();
+        JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
+        JsonThrottleSocketService service = new JsonThrottleSocketService(connection);
+        JsonThrottle throttle = new JsonThrottle(new DccLocoAddress(3, true), service);
+        manager.put(throttle, service);
+        Assert.assertEquals(service, manager.getServers(throttle).get(0));
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();

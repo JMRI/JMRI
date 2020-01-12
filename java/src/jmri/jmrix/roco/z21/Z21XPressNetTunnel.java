@@ -33,6 +33,7 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
     /**
      * Build a new XpressNet tunnel.
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SC_START_IN_CTOR", justification="done at end, waits for data")
     public Z21XPressNetTunnel(Z21SystemConnectionMemo memo) {
         // save the SystemConnectionMemo.
         _memo = memo;
@@ -54,6 +55,7 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
         // start a thread to read from the input pipe.
         sourceThread = new Thread(this);
         sourceThread.setName("z21.Z21XpressNetTunnel sourceThread");
+        sourceThread.setDaemon(true);
         sourceThread.start();
 
         // Then use those pipes as the input and output pipes for
@@ -74,7 +76,7 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
         // of the command station simulation.
         log.debug("Simulator Thread Started");
         for (;;) {
-            XNetMessage m = readMessage();
+            Z21XNetMessage m = readMessage();
             if(m != null) {
                // don't forward a null message.
                message(m);
@@ -86,8 +88,8 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
      * Read one incoming message from the buffer and set
      * outputBufferEmpty to true.
      */
-    private XNetMessage readMessage() {
-        XNetMessage msg = null;
+    private Z21XNetMessage readMessage() {
+        Z21XNetMessage msg = null;
         try {
             msg = loadChars();
         } catch (java.io.IOException e) {
@@ -107,7 +109,7 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
      * @return filled message
      * @throws IOException when presented by the input source.
      */
-    private XNetMessage loadChars() throws java.io.IOException {
+    private Z21XNetMessage loadChars() throws java.io.IOException {
         int i;
         byte char1;
         char1 = readByteProtected(inpipe);
@@ -119,7 +121,7 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
         {
            len=4;
         }
-        XNetMessage msg = new XNetMessage(len);
+        Z21XNetMessage msg = new Z21XNetMessage(len);
         msg.setElement(0, char1 & 0xFF);
         for (i = 1; i < len; i++) {
             char1 = readByteProtected(inpipe);
@@ -130,7 +132,7 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
 
     /**
      * Read a single byte, protecting against various timeouts, etc.
-     * <P>
+     * <p>
      * When a port is set to have a receive timeout (via the
      * enableReceiveTimeout() method), some will return zero bytes or an
      * EOFException at the end of the timeout. In that case, the read should be
@@ -162,7 +164,7 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
         // tunneled in a z21 message and forwards it to the XpressNet
         // implementation's input stream.
         if (msg.isXPressNetTunnelMessage()) {
-            XNetReply reply = msg.getXNetReply();
+            Z21XNetReply reply = msg.getXNetReply();
             log.debug("Z21 Reply {} forwarded to XpressNet implementation as {}",
                     msg, reply);
             for (int i = 0; i < reply.getNumDataElements(); i++) {
@@ -253,6 +255,7 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
         //jmri.InstanceManager.getDefault(jmri.jmrix.ConnectionConfigManager.class).add(new Z21XNetConnectionConfig(xsc));
     }
 
+    @SuppressWarnings("deprecation") // Thread.stop not likely to be removed
     public void dispose(){
        if(xsc != null){
           xsc.dispose();

@@ -27,3 +27,5 @@
 <!ATTLIST throttlesPreferences isHidingUndefinedFunctionButtons CDATA #REQUIRED>
 <!ATTLIST throttlesPreferences isIgnoringThrottlePosition CDATA #REQUIRED>
 <!ATTLIST throttlesPreferences isCleaningOnClose CDATA #REQUIRED>
+<!ATTLIST throttlesPreferences isSilentSteal CDATA #REQUIRED>
+<!ATTLIST throttlesPreferences isSilentShare CDATA #REQUIRED>

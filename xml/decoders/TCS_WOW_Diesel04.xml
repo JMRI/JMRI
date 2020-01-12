@@ -20,6 +20,10 @@
 	<!-- add funtion output 7 and 8 and update sound none number -->
 	<version author="Michael Mosher" version="4" lastUpdated="20180124"/>
 	<!-- update bell to same sound option as steam so it shows up on sound pane-->
+	<version author="Michael Mosher" version="5" lastUpdated="20180727"/>
+	<!-- add read me pane -->
+	<version author="Michael Mosher" version="6" lastUpdated="20180813"/>
+	<!-- add Play xxx Quill checkboxes -->
 	<decoder>
 		<family name="WOW Diesel Sound Set 4" mfg="Train Control Systems" >
 			<model model="WOW Diesel 101 SS4" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" connector="9pin"
@@ -1570,47 +1574,64 @@
 				<label>Windshield Wiper</label>
 			</variable>
 			<!-- sound CVs -->
-      <variable item="First" CV="222" default="0" infoOnly="yes" mask="XXXXXXXV">
-        <enumVal>
-            <enumChoice choice="Fairbanks Morse"/>
-        </enumVal>
-        <label>For diesel sound set 4, the first horn is named</label>
-      </variable>
-			<variable item="Sound Option 1" CV="T2CV.4.8" default="0" tooltip="Rotate horn function will change this setting">
-				<enumVal>
-          <enumChoice choice="Fairbanks Morse"/>
-          <enumChoice choice="GE 45 tonner"/>
-          <enumChoice choice="GE 80 tonner"/>
-          <enumChoice choice="GE U-Boat"/>
-          <enumChoice choice="Hancock Air Whistle"/>
-          <enumChoice choice="Leslie 125"/>
-          <enumChoice choice="Leslie 200"/>
-          <enumChoice choice="Leslie 3 Chime"/>
-          <enumChoice choice="Leslie RS3"/>
-          <enumChoice choice="Leslie RS3L"/>
-          <enumChoice choice="Leslie RS5T"/>
-          <enumChoice choice="Nathan K3"/>
-          <enumChoice choice="Nathan K3H #1"/>
-          <enumChoice choice="Nathan K3H #2"/>
-          <enumChoice choice="Nathan K3LA"/>
-          <enumChoice choice="Nathan K3LL"/>
-          <enumChoice choice="Nathan K5H"/>
-          <enumChoice choice="Nathan K5HL"/>
-          <enumChoice choice="Nathan K5LA"/>
-          <enumChoice choice="Strasburg #8618 SW8 Nathan K5LA"/>
-          <enumChoice choice="Nathan K5LLA"/>
-          <enumChoice choice="Nathan M3 #1"/>
-          <enumChoice choice="Nathan M3 #2"/>
-          <enumChoice choice="Nathan M3 #3"/>
-          <enumChoice choice="Nathan M3 Tilt"/>
-          <enumChoice choice="Nathan M5"/>
-          <enumChoice choice="Nathan P3"/>
-          <enumChoice choice="Nathan P5 Chime (Australia)"/>
-          <enumChoice choice="Nathan P5A"/>
-          <enumChoice choice="Quincy RR SW8 #1100"/>
-          <enumChoice choice="RSD12 #2958"/>
-          <enumChoice choice="Galloping Goose #3"/>
-          <enumChoice choice="Wabco E2 3 Chime"/>
+			<variable item="Sound Group 6 Checkbox 5" CV="T2CV.4.1" default="1" mask="XXXXXXXXXXXXXXXV">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+				<label>Play Short Quill</label>
+			</variable>
+			<variable item="Sound Group 6 Checkbox 6" CV="T2CV.4.1" default="1" mask="XXXXXXXXXXXXXXVX">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+				<label>Play Medium Quill</label>
+			</variable>
+			<variable item="Sound Group 6 Checkbox 7" CV="T2CV.4.1" default="1" mask="XXXXXXXXXXXXXVXX">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+				<label>Play Long Quill</label>
+			</variable>
+			<variable item="Sound Group 6 Checkbox 8" CV="T2CV.4.1" default="0" mask="XXXXXXXXVXXXXXXX">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+				<label>Play Quills in Random Order</label>
+				<tooltip>If checked, each secessive press of quill button with play random quill sound, unchecked will play in order</tooltip>
+			</variable>
+		  <variable item="First" CV="222" default="0" infoOnly="yes" mask="XXXXXXXV">
+			<enumVal>
+				<enumChoice choice="Fairbanks Morse"/>
+			</enumVal>
+			<label>For diesel sound set 4, the first horn is named</label>
+		  </variable>
+				<variable item="Sound Option 1" CV="T2CV.4.8" default="0" tooltip="Rotate horn function will change this setting">
+					<enumVal>
+								<enumChoice choice="Fairbanks Morse"/>
+								<enumChoice choice="GE 45 tonner"/>
+								<enumChoice choice="GE 80 tonner"/>
+								<enumChoice choice="GE U-Boat"/>
+								<enumChoice choice="Hancock Air Whistle"/>
+								<enumChoice choice="Leslie 125"/>
+								<enumChoice choice="Leslie 200"/>
+								<enumChoice choice="Leslie 3 Chime"/>
+								<enumChoice choice="Leslie RS3"/>
+								<enumChoice choice="Leslie RS3L"/>
+								<enumChoice choice="Leslie RS5T"/>
+								<enumChoice choice="Nathan K3"/>
+								<enumChoice choice="Nathan K3H #1"/>
+								<enumChoice choice="Nathan K3H #2"/>
+								<enumChoice choice="Nathan K3LA"/>
+								<enumChoice choice="Nathan K3LL"/>
+								<enumChoice choice="Nathan K5H"/>
+								<enumChoice choice="Nathan K5HL"/>
+								<enumChoice choice="Nathan K5LA"/>
+								<enumChoice choice="Strasburg #8618 SW8 Nathan K5LA"/>
+								<enumChoice choice="Nathan K5LLA"/>
+								<enumChoice choice="Nathan M3 #1"/>
+								<enumChoice choice="Nathan M3 #2"/>
+								<enumChoice choice="Nathan M3 #3"/>
+								<enumChoice choice="Nathan M3 Tilt"/>
+								<enumChoice choice="Nathan M5"/>
+								<enumChoice choice="Nathan P3"/>
+								<enumChoice choice="Nathan P5 Chime (Australia)"/>
+								<enumChoice choice="Nathan P5A"/>
+								<enumChoice choice="Quincy RR SW8 #1100"/>
+								<enumChoice choice="RSD12 #2958"/>
+								<enumChoice choice="Galloping Goose #3"/>
+						<enumChoice choice="Wabco E2 3 Chime"/>
 				</enumVal>
 				<label>Default Horn Set</label>
 			</variable>
@@ -1632,20 +1653,20 @@
 				</enumVal>
 				<label>Primemover type</label>
 			</variable>
-      <variable item="Sound Option 9" CV="T2CV.4.19" default="0" mask="XXXXVXXXXXXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/tcs/enum-primemover.xml"/>
-        <label>Switching Mode Primemover</label>
-      </variable>
-      <variable item="Sound Option 10" CV="T2CV.4.19" default="1" mask="XXXVXXXXXXXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/tcs/enum-primemover.xml"/>
-        <label>Mainline Mode Primemover</label>
-      </variable>
-      <variable item="First Bell" CV="222" default="0" infoOnly="yes" mask="XXXXXXVX">
-        <enumVal>
-           <enumChoice choice="Electric E-Bell"/>
-        </enumVal>
-        <label>For diesel sound set 4, the first bell is named</label>
-      </variable>
+			<variable item="Sound Option 9" CV="T2CV.4.19" default="0" mask="XXXXVXXXXXXXXXXX">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enum-primemover.xml"/>
+				<label>Switching Mode Primemover</label>
+			</variable>
+			<variable item="Sound Option 10" CV="T2CV.4.19" default="1" mask="XXXVXXXXXXXXXXXX">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enum-primemover.xml"/>
+				<label>Mainline Mode Primemover</label>
+			</variable>
+			<variable item="First Bell" CV="222" default="0" infoOnly="yes" mask="XXXXXXVX">
+				<enumVal>
+					<enumChoice choice="Electric E-Bell"/>
+				</enumVal>
+				<label>For diesel sound set 4, the first bell is named</label>
+			</variable>
 			<variable item="Sound Option 6" CV="T2CV.4.23" default="0" tooltip="Rotate bell function will change this setting">
 				<enumVal>
 					<enumChoice choice="Electric E-Bell"/>
@@ -1730,6 +1751,7 @@
 			<factReset label="Quick Lighting Preset: Modified Trilley" CV="8" default="12"/>
 		</resets>
 	</decoder>
+    <xi:include href="http://jmri.org/xml/programmers/parts/BasicSpeedControlTrimPane.xml"/>
 	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_Momentum.xml"/>
 	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_Brake.xml"/>
 	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_TCS.xml"/>
@@ -1740,4 +1762,5 @@
 	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_wow_vol4.xml"/>
 	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_wow_vol5.xml"/>
 	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_wow_4cv.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/tcs/paneWowReadMe.xml"/>
 </decoder-config>

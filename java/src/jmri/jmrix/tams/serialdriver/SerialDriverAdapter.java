@@ -18,15 +18,14 @@ import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Implements SerialPortAdapter for the TAMS system.
- * <P>
+ * <p>
  * This connects an TAMS command station via a serial com port.
- * <P>
- *
+ * <p>
  * Based on work by Bob Jacobsen
  *
  * @author	Kevin Dickerson Copyright (C) 2012
  */
-public class SerialDriverAdapter extends TamsPortController implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends TamsPortController {
 
     SerialPort activeSerialPort = null;
 
@@ -50,15 +49,10 @@ public class SerialDriverAdapter extends TamsPortController implements jmri.jmri
             // try to set it for communication via SerialDriver
             try {
                 // find the baud rate value, configure comm options
-                int baud = validSpeedValues[0];  // default, but also defaulted in the initial value of selectedSpeed
-                for (int i = 0; i < validSpeeds.length; i++) {
-                    if (validSpeeds[i].equals(mBaudRate)) {
-                        baud = validSpeedValues[i];
-                    }
-                }
+                int baud = currentBaudNumber(mBaudRate);
                 activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
             } catch (UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
+                log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
 
@@ -71,10 +65,10 @@ public class SerialDriverAdapter extends TamsPortController implements jmri.jmri
             // set timeout
             try {
                 activeSerialPort.enableReceiveTimeout(50);  // Set to 50 was 10 mSec timeout before sending chars
-                log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
-                        + " " + activeSerialPort.isReceiveTimeoutEnabled());
+                log.debug("Serial timeout was observed as: {} {}", activeSerialPort.getReceiveTimeout(),
+                        activeSerialPort.isReceiveTimeoutEnabled());
             } catch (Exception et) {
-                log.info("failed to set serial timeout: " + et);
+                log.info("failed to set serial timeout: ", et);
             }
             // get and save stream
             serialStream = activeSerialPort.getInputStream();
@@ -95,8 +89,8 @@ public class SerialDriverAdapter extends TamsPortController implements jmri.jmri
 
             // report status
             if (log.isInfoEnabled()) {
-                log.info("TAMS " + portName + " port opened at "
-                        + activeSerialPort.getBaudRate() + " baud");
+                log.info("TAMS {} port opened at {} baud", portName,
+                        activeSerialPort.getBaudRate());
             }
             opened = true;
 
@@ -108,7 +102,6 @@ public class SerialDriverAdapter extends TamsPortController implements jmri.jmri
         }
 
         return null; // indicates OK return
-
     }
 
     /**
@@ -144,7 +137,7 @@ public class SerialDriverAdapter extends TamsPortController implements jmri.jmri
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
         } catch (java.io.IOException e) {
-            log.error("getOutputStream exception: " + e);
+            log.error("getOutputStream exception: ", e);
         }
         return null;
     }
@@ -154,13 +147,31 @@ public class SerialDriverAdapter extends TamsPortController implements jmri.jmri
         return opened;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] validBaudRates() {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
-    private final String[] validSpeeds = new String[]{"57,600 baud", "2,400 baud", "9,600 baud", "19,200 baud"};
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
+    }
+
+    private final String[] validSpeeds = new String[]{Bundle.getMessage("Baud57600"),
+            Bundle.getMessage("Baud2400"), Bundle.getMessage("Baud9600"),
+            Bundle.getMessage("Baud19200")};
     private final int[] validSpeedValues = new int[]{57600, 2400, 9600, 19200};
+
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
+    }
 
     // private control members
     private boolean opened = false;

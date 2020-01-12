@@ -1,85 +1,73 @@
 package jmri.jmrix.grapevine;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 
 /**
- * JUnit tests for the SerialMessage class.
+ * JUnit tests for the SerialReply class.
  *
  * @author	Bob Jacobsen Copyright 2003, 2008
-  */
-public class SerialReplyTest extends TestCase {
+ */
+public class SerialReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
-    public void testCreate() {
-        SerialMessage m = new SerialMessage();
-        Assert.assertNotNull("exists", m);
-    }
+    private SerialReply msg = null;
 
     public void testBytesToString() {
-        SerialReply m = new SerialReply();
-        m.setOpCode(0x81);
-        m.setElement(1, (byte) 0x02);
-        m.setElement(2, (byte) 0xA2);
-        m.setElement(3, (byte) 0x00);
-        Assert.assertEquals("string compare ", "81 02 A2 00", m.toString());
+        msg.setOpCode(0x81);
+        msg.setElement(1, (byte) 0x02);
+        msg.setElement(2, (byte) 0xA2);
+        msg.setElement(3, (byte) 0x00);
+        Assert.assertEquals("string compare ", "81 02 A2 00", msg.toString());
     }
 
     public void testFormat1() {
-        SerialReply m = new SerialReply();
-        m.setElement(0, (byte) 0x00);
-        m.setElement(1, (byte) 0x62);
-        m.setElement(2, (byte) 0x00);
-        m.setElement(3, (byte) 0x10);
-        Assert.assertEquals("string compare ", "Error report from node 98: Parity Error", m.format());
+        msg.setElement(0, (byte) 0x00);
+        msg.setElement(1, (byte) 0x62);
+        msg.setElement(2, (byte) 0x00);
+        msg.setElement(3, (byte) 0x10);
+        Assert.assertEquals("string compare ", "Error report from node 98: Parity Error", msg.format());
     }
 
     public void testFormat2() {
-        SerialReply m = new SerialReply();
-        m.setElement(0, (byte) 0xE2);
-        m.setElement(1, (byte) 0x06);
-        m.setNumDataElements(2);
-        Assert.assertEquals("string compare ", "Node 98 reports software version 6", m.format());
+        msg.setElement(0, (byte) 0xE2);
+        msg.setElement(1, (byte) 0x06);
+        msg.setNumDataElements(2);
+        Assert.assertEquals("string compare ", "Node 98 reports software version 6", msg.format());
     }
 
     public void testParallel() {
-        SerialReply m = new SerialReply();
-        m.setElement(0, 128 + 98);
-        m.setElement(1, 0x0E);
-        m.setElement(2, 128 + 98);
-        m.setElement(3, 0x56);
-        Assert.assertEquals("parallel ", true, m.isFromParallelSensor());
-        Assert.assertEquals("old serial ", false, m.isFromOldSerialSensor());
-        Assert.assertEquals("new serial ", false, m.isFromNewSerialSensor());
+        msg.setElement(0, 128 + 98);
+        msg.setElement(1, 0x0E);
+        msg.setElement(2, 128 + 98);
+        msg.setElement(3, 0x56);
+        Assert.assertEquals("parallel ", true, msg.isFromParallelSensor());
+        Assert.assertEquals("old serial ", false, msg.isFromOldSerialSensor());
+        Assert.assertEquals("new serial ", false, msg.isFromNewSerialSensor());
     }
 
     public void testOldSerial() {
-        SerialReply m = new SerialReply();
-        m.setElement(0, 0x81); // sensor 1-4 (from 0) inactive
-        m.setElement(1, 0x6F);
-        m.setElement(2, 0x81);
-        m.setElement(3, 0x50);
-        Assert.assertEquals("parallel ", false, m.isFromParallelSensor());
-        Assert.assertEquals("old serial ", true, m.isFromOldSerialSensor());
-        Assert.assertEquals("new serial ", false, m.isFromNewSerialSensor());
+        msg.setElement(0, 0x81); // sensor 1-4 (from 0) inactive
+        msg.setElement(1, 0x6F);
+        msg.setElement(2, 0x81);
+        msg.setElement(3, 0x50);
+        Assert.assertEquals("parallel ", false, msg.isFromParallelSensor());
+        Assert.assertEquals("old serial ", true, msg.isFromOldSerialSensor());
+        Assert.assertEquals("new serial ", false, msg.isFromNewSerialSensor());
     }
 
-    // from here down is testing infrastructure
-    public SerialReplyTest(String s) {
-        super(s);
+    @Override
+    @Before
+    public void setUp(){
+       JUnitUtil.setUp();
+       m = msg = new SerialReply();
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {SerialReplyTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SerialReplyTest.class);
-        return suite;
+    @After
+    public void tearDown(){
+       m = msg = null;
+       JUnitUtil.tearDown();
     }
 
 }

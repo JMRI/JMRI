@@ -3,25 +3,22 @@ package jmri.jmrix.dccpp.dccppovertcp;
 import jmri.jmrix.dccpp.DCCppCommandStation;
 import jmri.jmrix.dccpp.DCCppInitializationManager;
 import jmri.jmrix.dccpp.DCCppNetworkPortController;
-import jmri.jmrix.dccpp.DCCppPortController;
 import jmri.jmrix.dccpp.DCCppSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implements SerialPortAdapter for the DCCppOverTcp system network
+ * Implements DCCppPortController for the DCCppOverTcp system network
  * connection.
- * <P>
+ * <p>
  * This connects a DCC++ via a telnet connection. Normally controlled by the
- * DCCppTcpDriverFrame class.
+ * DCCppTcpDriverFrame class. Based on LnTcpDriverAdapter.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003
  * @author Alex Shepherd Copyright (C) 2003, 2006
  * @author Mark Underwood Copyright (C) 2015
- *
- * Based on LnTcpDriverAdapter
  */
-public class DCCppTcpDriverAdapter extends DCCppNetworkPortController implements DCCppPortController {
+public class DCCppTcpDriverAdapter extends DCCppNetworkPortController {
     
     public DCCppTcpDriverAdapter() {
         super(new DCCppSystemConnectionMemo());
@@ -33,7 +30,7 @@ public class DCCppTcpDriverAdapter extends DCCppNetworkPortController implements
     }
     
     /**
-     * set up all of the other objects to operate with a DCC++ connected via
+     * Set up all of the other objects to operate with a DCC++ connected via
      * this class.
      */
     @Override
@@ -45,7 +42,7 @@ public class DCCppTcpDriverAdapter extends DCCppNetworkPortController implements
         DCCppOverTcpPacketizer packets = new DCCppOverTcpPacketizer(new DCCppCommandStation());
         packets.connectPort(this);
         
-        // create memo
+        // set the traffic controller
         this.getSystemConnectionMemo().setDCCppTrafficController(packets);
         // do the common manager config
         
@@ -66,7 +63,7 @@ public class DCCppTcpDriverAdapter extends DCCppNetworkPortController implements
     @Override
     public void configureOption1(String value) {
         super.configureOption1(value);
-        log.debug("configureOption1: " + value);
+        log.debug("configureOption1: {}", value);
         setCommandStationType(value);
     }
     

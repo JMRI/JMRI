@@ -26,7 +26,8 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     }
 
     /**
-     * Create a connection configuration without a preexisting adapter.
+     * Ctor for a connection configuration with no preexisting adapter.
+     * {@link #setInstance()} will fill the adapter member.
      */
     public ConnectionConfig() {
         super();
@@ -34,6 +35,9 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
 
     JButton b = new JButton(Bundle.getMessage("ConfigNodesTitle"));
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void loadDetails(JPanel details) {
         // have to embed the usual one in a new JPanel
@@ -49,9 +53,12 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
 
     @Override
     public String name() {
-        return "Acela";
+        return "Acela"; // NOI18N
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setInstance() {
         if (adapter == null) {

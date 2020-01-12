@@ -175,11 +175,11 @@ public class JmriSRCPTimeServer extends AbstractTimeServer {
                     }
                 }
             };
-            if (listen == true) {
-                timebase.addMinuteChangeListener(timeListener);
-            } else {
-                timebase.removeMinuteChangeListener(timeListener);
-            }
+        }
+        if (listen == true) {
+            timebase.addMinuteChangeListener(timeListener);
+        } else {
+            timebase.removeMinuteChangeListener(timeListener);
         }
     }
 

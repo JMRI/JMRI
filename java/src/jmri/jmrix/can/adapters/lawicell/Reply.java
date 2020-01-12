@@ -7,11 +7,11 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Class for replies in a LAWICELL message/reply protocol.
- * <P>
+ * <p>
  *
  * @author Andrew Crosland Copyright (C) 2008
  * @author Bob Jacobsen Copyright (C) 2008
-  */
+ */
 public class Reply extends AbstractMRReply {
 
     // Creates a new instance of ConnectReply
@@ -108,7 +108,7 @@ public class Reply extends AbstractMRReply {
 
     /**
      * Get a hex data byte from the message
-     * <P>
+     * <p>
      * Data bytes are encoded as two ASCII hex digits. The starting position is
      * byte 10 or byte 5, depending on whether this is an extended or standard
      * message

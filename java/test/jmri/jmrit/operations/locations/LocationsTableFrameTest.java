@@ -1,13 +1,12 @@
 package jmri.jmrit.operations.locations;
 
 import java.awt.GraphicsEnvironment;
-import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.OperationsTestCase;
+import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
 import org.junit.Test;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
@@ -16,7 +15,7 @@ import org.netbeans.jemmy.operators.JFrameOperator;
  *
  * @author Dan Boudreau Copyright (C) 2009
  */
-public class LocationsTableFrameTest extends OperationsSwingTestCase {
+public class LocationsTableFrameTest extends OperationsTestCase {
 
     final static int ALL = Track.EAST + Track.WEST + Track.NORTH + Track.SOUTH;
 
@@ -34,6 +33,7 @@ public class LocationsTableFrameTest extends OperationsSwingTestCase {
     public void testTableCreationFrame() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
+        JUnitOperationsUtil.loadFiveLocations();
         LocationsTableFrame f = new LocationsTableFrame();
 
         // should be 5 rows
@@ -61,6 +61,7 @@ public class LocationsTableFrameTest extends OperationsSwingTestCase {
     public void testLocationsEditFrame() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
+        JUnitOperationsUtil.loadFiveLocations();
         LocationsTableFrame f = new LocationsTableFrame();
 
         // create edit location frame
@@ -95,7 +96,7 @@ public class LocationsTableFrameTest extends OperationsSwingTestCase {
         // create add location frame by clicking add button
         f.addButton.doClick();
         // the following fails on 13" laptops
-        //enterClickAndLeave(f.addButton);
+        //JemmyUtil.enterClickAndLeave(f.addButton);
 
         // confirm location add frame creation
         JUnitUtil.waitFor(() -> {
@@ -111,20 +112,5 @@ public class LocationsTableFrameTest extends OperationsSwingTestCase {
         jfof.close();
 
         Assert.assertNull(JmriJFrame.getFrame(Bundle.getMessage("AddLocation")));
-    }
-
-    // Ensure minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() throws Exception {
-        super.setUp();
-
-        loadLocations();
-    }
-
-    @Override
-    @After
-    public void tearDown() throws Exception {
-        super.tearDown();
     }
 }

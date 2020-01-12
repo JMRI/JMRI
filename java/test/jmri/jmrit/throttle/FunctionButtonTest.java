@@ -1,48 +1,59 @@
 package jmri.jmrit.throttle;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import org.junit.Assert;
+import org.junit.*;
 
 /**
  * Test simple functioning of FunctionButton
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class FunctionButtonTest extends TestCase {
+public class FunctionButtonTest {
 
+    @Test
     public void testCtor() {
         FunctionButton panel = new FunctionButton();
         Assert.assertNotNull("exists", panel );
     }
 
-    // from here down is testing infrastructure
-    public FunctionButtonTest(String s) {
-        super(s);
+    @Test
+    public void testIsOn() {
+        FunctionButton panel = new FunctionButton();
+        Assert.assertFalse("function not on", panel.getState() );
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", FunctionButtonTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
+    @Test
+    public void testGetIconPath() {
+        FunctionButton panel = new FunctionButton();
+        Assert.assertEquals("no Icon", "", panel.getIconPath() );
     }
 
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(FunctionButtonTest.class);
-        return suite;
+    @Test
+    public void testIsImageOK() {
+        FunctionButton panel = new FunctionButton();
+        Assert.assertFalse("no image", panel.isImageOK() );
     }
 
-    @Override
-    public void setUp() throws Exception {
-        super.setUp();
-        apps.tests.Log4JFixture.setUp();
+    @Test
+    public void testGetSelectedIconPath() {
+        FunctionButton panel = new FunctionButton();
+        Assert.assertEquals("no Icon", "", panel.getSelectedIconPath() );
+    }
+  
+    @Test
+    public void testIsSelectedImageOK() {
+        FunctionButton panel = new FunctionButton();
+        Assert.assertFalse("no image", panel.isSelectedImageOK() );
+    }
+
+    @Before
+    public void setUp(){
+        jmri.util.JUnitUtil.setUp();
+
     }
     
-    @Override
-    public void tearDown() throws Exception {
-        super.tearDown();
-        apps.tests.Log4JFixture.tearDown();
+    @After
+    public void tearDown(){
+        jmri.util.JUnitUtil.tearDown();
+
     }
 }

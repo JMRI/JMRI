@@ -5,6 +5,7 @@ import jmri.Consist;
 import jmri.ConsistManager;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
+import jmri.jmrit.roster.Roster;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -12,7 +13,6 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-
 
 /**
  * Test simple functioning of ConsistFile
@@ -28,6 +28,22 @@ public class ConsistFileTest {
     public void testCtor() {
         ConsistFile file = new ConsistFile();
         Assert.assertNotNull("exists", file);
+    }
+
+    @Test
+    public void testDefaultFileLocation(){
+            String fileName = Roster.getDefault().getRosterLocation() +
+		"roster" + File.separator + 
+		"consist" + File.separator;
+        Assert.assertEquals("Consist File Location",fileName,
+			ConsistFile.getFileLocation());
+    }
+
+    @Test
+    public void testReadFile() throws java.io.IOException, org.jdom2.JDOMException {
+        ConsistFile file = new ConsistFile();
+        InstanceManager.getDefault(ConsistManager.class);
+        file.readFile("java/test/jmri/jmrit/consisttool/consist.xml");
     }
 
     @Test
@@ -59,8 +75,12 @@ public class ConsistFileTest {
     @Before
     public void setUp() throws java.io.IOException {
         JUnitUtil.setUp();
+        jmri.profile.Profile profile = new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE));
+        JUnitUtil.resetProfileManager(profile );
+        JUnitUtil.initRosterConfigManager();
+        Roster.getDefault().setRosterLocation("");
+        InstanceManager.setDefault(ConsistPreferencesManager.class,new ConsistPreferencesManager());
         InstanceManager.setDefault(ConsistManager.class, new TestConsistManager());
-        JUnitUtil.resetProfileManager( new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
     }
 
     @After

@@ -22,7 +22,8 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     }
 
     /**
-     * Ctor for a functional Swing object with no preexisting adapter.
+     * Ctor for a connection configuration with no preexisting adapter.
+     * {@link #setInstance()} will fill the adapter member.
      */
     public ConnectionConfig() {
         super();
@@ -30,6 +31,9 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
 
     JButton b = new JButton(Bundle.getMessage("WindowTitle"));
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void loadDetails(JPanel details) {
         setInstance();
@@ -47,6 +51,9 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         return Bundle.getMessage("TypeSerial");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setInstance() {
         if (adapter == null) {

@@ -1,12 +1,15 @@
 package jmri.jmrix.anyma;
 
+import java.util.Comparator;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.Light;
 import jmri.LightManager;
+import jmri.NamedBean;
 import jmri.Manager.NameValidity;
 import jmri.jmrix.SystemConnectionMemo;
+import jmri.util.NamedBeanComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -112,7 +115,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
                 if (k > offset) {    // k = position of "L" char in name
                     try {
                         result = Integer.parseInt(systemName.substring(k));
-                    } catch (Exception e) {
+                    } catch (NumberFormatException e) {
                         log.warn("invalid character in channel number field of anyma dmx system name: {}", systemName);
                     }
                 }
@@ -137,36 +140,6 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
         int result = -1;
         if (systemName.startsWith(getSystemPrefix())) {
             result = getSystemPrefix().length();
-        }
-        return result;
-    }
-
-    /**
-     * Public static method to normalize a anyma dmx system name.
-     * <P>
-     * This routine is used to ensure that each system name is uniquely linked
-     * to one anyma dmx channel, by removing any extra zeros inserted by the
-     * user.
-     *
-     * @return "" (empty string) if the supplied system name does not have a
-     *         valid format. Otherwise a normalized name is returned in the same
-     *         format as the input name.
-     */
-    public String normalizeSystemName(String systemName) {
-        String result = "";
-
-        log.debug("* normalizeSystemName('{}')", systemName);
-
-        int offset = checkSystemPrefix(systemName);
-        if (offset > 0) {
-            if (validSystemNameFormat(systemName, systemName.charAt(offset)) == NameValidity.VALID) {
-                int channelNum = Integer.parseInt(systemName.substring(offset + 1));
-                result = systemName.substring(0, offset + 1) + Integer.toString(channelNum);
-            } else {
-                // No point in normalizing if a valid system name format is not present
-            }
-        } else {
-            log.error("invalid system prefix in anyma dmx system name in normalizeSystemName: '{}'", systemName); // fix test first
         }
         return result;
     }
@@ -203,7 +176,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
      *
      * @return enum indicating current validity, which might be just as a prefix
      */
-    public NameValidity validSystemNameFormat(String systemName, char type) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName, char type) {
         log.debug("* validSystemNameFormat('{}', '{}')", systemName, type);
         NameValidity result = NameValidity.INVALID; // assume failure (pessimist!)
 
@@ -219,9 +192,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
                     } else {
                         log.debug("number field out of range in anyma dmx system name: {}", systemName);
                     }
-                } catch (RuntimeException e) {
-                    throw e;
-                } catch (Exception e) {
+                } catch (NumberFormatException e) {
                     log.debug("invalid character in number field of anyma dmx system name: {}", systemName);
                 }
             } else {
@@ -231,38 +202,6 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
             log.error("invalid system prefix in anyma dmx system name in validSystemNameFormat: {}", systemName);
         }
         return result;
-    }
-
-    /**
-     * Public static method to construct a anyma dmx system name from type
-     * character, node address, and channel number.
-     * <p>
-     * If the supplied character is not valid, or the node address is out of the
-     * 0 - 127 range, or the channel number is out of the 1 - 512 range, an
-     * error message is logged and the null string "" is returned.
-     *
-     * @return a system name in the DaLnnnxxx format
-     */
-    public String makeSystemName(String type, int nAddress, int channelNum) {
-        log.debug("* makeSystemName('{}', {}, {})", type, nAddress, channelNum);
-        String nName = "";
-        if (type.equals("L")) {
-            if ((nAddress >= 0) && (nAddress < 1000)) {
-                if ((channelNum >= 1) && (channelNum <= 512)) {
-                    nName = getSystemPrefix() + nAddress + type + Integer.toString(channelNum);
-                } else {
-                    log.warn("invalid channel number proposed for system name");
-                    return nName;
-                }
-            } else {
-                log.warn("invalid node address proposed for system name");
-                return nName;
-            }
-        } else {
-            log.error("invalid type character proposed for system name");
-            return nName;
-        }
-        return nName;
     }
 
     /**
@@ -321,6 +260,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
     /**
      * {@inheritDoc}
      */
+    @Override
     public boolean provides(Class<?> c) {
         return (get(c) != null);
     }
@@ -361,9 +301,9 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
     private UsbLightManager lightManager;
 
     /**
-     * get the light manager
+     * get the LightManager
      *
-     * @return the light manager
+     * @return the LightManager
      */
     public UsbLightManager getLightManager() {
         log.debug("* getLightManager()");
@@ -385,9 +325,14 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
         log.debug("* getActionModelResourceBundle()");
-        return null; //ResourceBundle.getBundle("jmri.jmrix.anyma.AnymaDMX_Bundle");
+        return null;
     }
 
+    @Override
+    public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
+        return new NamedBeanComparator<>();
+    }
+    
     /**
      * dispose
      */

@@ -162,7 +162,9 @@ SimpleNode command():{}
      // This is a simple list of the possible commands.
      // They are broken down further below.
      ( powercmd() | turnoutcmd() |reportercmd() | lightcmd() |sensorcmd() | operationscmd()) <EOL>
-  } catch(ParseException e){
+  } catch(TokenMgrError tme){
+     error_skipto(EOL);
+  } catch(ParseException pe){
      error_skipto(EOL);
   }
      {

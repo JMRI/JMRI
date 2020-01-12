@@ -1,31 +1,57 @@
 package jmri.jmrit.beantable;
 
+import com.alexandriasoftware.swing.Validation;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import jmri.Manager;
+import jmri.swing.ManagerComboBox;
+import jmri.swing.SystemNameValidator;
 
 /**
- * JPanel to create a new JMRI devices HiJacked to serve other beantable tables.
+ * JPanel to create a new hardware-backed NamedBean.
  *
  * @author Bob Jacobsen Copyright (C) 2009
  * @author Pete Cressman Copyright (C) 2010
  */
 public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
 
-    public AddNewHardwareDevicePanel(JTextField sysAddress, JTextField userName, JComboBox<String> prefixBox, JSpinner endRange, JCheckBox addRange,
-            JButton addButton, ActionListener cancelListener, ActionListener rangeListener, JLabel statusBar) {
+    /**
+     * Create the panel.
+     *
+     * @param sysAddress text field for the system name or address
+     * @param sysAddressValidator validation control for sysAddress
+     * @param userName text field for the optional user name
+     * @param prefixBox selector for the connection for the NamedBean
+     * @param endRange selector for range to create multiple NamedBeans
+     * @param addRange check box to allow creation of multiple NamedBeans
+     * @param addButton button to trigger creation of NamedBean
+     * @param cancelListener listener to attach to the cancel button
+     * @param rangeListener listener that controls if addRange is enabled
+     * @param statusBar area where status messages can be presented
+     */
+    public AddNewHardwareDevicePanel(@Nonnull JTextField sysAddress,
+            @Nonnull SystemNameValidator sysAddressValidator,
+            @Nonnull JTextField userName,
+            @Nonnull ManagerComboBox<?> prefixBox,
+            JSpinner endRange,
+            JCheckBox addRange,
+            @Nonnull JButton addButton,
+            @Nonnull ActionListener cancelListener,
+            @Nonnull ActionListener rangeListener,
+            @Nonnull JLabel statusBar) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        if (statusBar == null) statusBar = new JLabel("");
+        this.statusBar = statusBar;
         _endRange = endRange;
         _range = addRange;
         // directly using the addButton from the table action allows to disable it from there
@@ -44,13 +70,14 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
         c.gridx = 0;
         c.gridy = 1;
         p.add(sysAddressLabel, c);
+        sysAddressLabel.setLabelFor(sysAddress);
         c.gridy = 2;
         p.add(userNameLabel, c);
         c.gridx = 2;
         c.gridy = 1;
         c.anchor = java.awt.GridBagConstraints.WEST;
         c.weightx = 1.0;
-        c.fill = java.awt.GridBagConstraints.HORIZONTAL;  // text field will expand
+        c.fill = java.awt.GridBagConstraints.HORIZONTAL; // text field will expand
         c.gridy = 0;
         p.add(prefixBox, c);
         c.gridx = 3;
@@ -91,24 +118,29 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
 
         add(panelBottom);
 
-        addRange.addItemListener(
-                new ItemListener() {
-                    @Override
-                    public void itemStateChanged(ItemEvent e) {
-                        rangeState();
-                    }
-                });
+        addRange.addItemListener((ItemEvent e) -> {
+            rangeState();
+        });
         prefixBox.addActionListener(rangeListener);
-
-        /* System.out.println(jmri.InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class));
-         java.util.List<jmri.jmrix.SystemConnectionMemo> list 
-         = jmri.InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class);
-         if (list != null) {
-         for (jmri.jmrix.SystemConnectionMemo memo : list) {
-         System.out.println(memo.getUserName());
-         //if (menu != null) m.add(menu);
-         }
-         }*/
+        sysAddress.setInputVerifier(sysAddressValidator);
+        if (prefixBox.getSelectedItem() == null) {
+            prefixBox.setSelectedIndex(0);
+        }
+        prefixBox.addActionListener((evt) -> {
+            Manager<?> manager = prefixBox.getSelectedItem();
+            if (manager != null) {
+                sysAddress.setText("");     // Reset saved text before switching managers
+                sysAddressValidator.setManager(manager);
+            }
+        });
+        sysAddressValidator.addPropertyChangeListener("validation", (evt) -> { // NOI18N
+            Validation validation = sysAddressValidator.getValidation();
+            Validation.Type type = validation.getType();
+            addButton.setEnabled(type != Validation.Type.WARNING && type != Validation.Type.DANGER);
+            setStatusBarText(validation.getMessage());
+        });
+        sysAddressValidator.setManager(prefixBox.getSelectedItem());
+        sysAddressValidator.verify(sysAddress);
     }
 
     public void addLabels(String labelSystemName, String labelUserName) {
@@ -123,6 +155,27 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
         } else {
             finishLabel.setEnabled(false);
             _endRange.setEnabled(false);
+        }
+    }
+
+    /**
+     * Set the status bar text; if the input is multi-line HTML, get just the
+     * first line, assuming lines are separated with {@code <br>}.
+     *
+     * @param message the message to set
+     */
+    public void setStatusBarText(@CheckForNull String message) {
+        if (message == null) {
+            statusBar.setText("");
+        } else {
+            message = message.trim();
+            if (message.startsWith("<html>") && message.contains("<br>")) {
+                message = message.substring(0, message.indexOf("<br>"));
+                if (!message.endsWith("</html>")) {
+                    message = message + "</html>";
+                }
+            }
+            statusBar.setText(message);
         }
     }
 

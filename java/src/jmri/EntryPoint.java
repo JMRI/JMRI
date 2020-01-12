@@ -6,14 +6,14 @@ import org.slf4j.LoggerFactory;
 /**
  * Represent an EntryPoint to a Section of track. Specifies a Block within the
  * Section, and a Path of that Block.
- * <P>
+ * <p>
  * An EntryPoint can be "forward" or "reverse" type, depending on if a train
  * entering the Section at this entry point will be travelling in the forward
  * direction or the reverse direction.
- * <P>
+ * <p>
  * An EntryPoint is referenced via lists in its parent Section, and is stored on
  * disk when its parent section is stored.
- * <P>
+ * <p>
  * This module delays initialization of Blocks until first reference after an
  * Entry Point is loaded from a configuration file.
  *

@@ -54,7 +54,8 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
      * @param number car number
      * @return new car or existing Car
      */
-    public Car newCar(String road, String number) {
+    @Override
+    public Car newRS(String road, String number) {
         Car car = getByRoadAndNumber(road, number);
         if (car == null) {
             car = new Car(road, number);
@@ -107,10 +108,10 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
         Kernel kernel = getKernelByName(name);
         if (kernel == null && !name.equals(NONE)) {
             kernel = new Kernel(name);
-            Integer oldSize = Integer.valueOf(_kernelHashTable.size());
+            int oldSize = _kernelHashTable.size();
             _kernelHashTable.put(name, kernel);
-            setDirtyAndFirePropertyChange(KERNEL_LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_kernelHashTable
-                    .size()));
+            setDirtyAndFirePropertyChange(KERNEL_LISTLENGTH_CHANGED_PROPERTY, oldSize, _kernelHashTable
+                    .size());
         }
         return kernel;
     }
@@ -415,7 +416,7 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
         int lastCarsIndex = 0; // incremented each time a car is added to the end of the list
         for (Car rs : byDestination) {
             Car car = rs;
-            if (car.getKernel() != null && !car.getKernel().isLead(car)) {
+            if (car.getKernel() != null && !car.isLead()) {
                 continue; // not the lead car, skip for now.
             }
             if (!car.isCaboose() && !car.hasFred() && !car.isPassenger()) {
@@ -464,7 +465,7 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
                 lastCarsIndex++;
             }
             // group the cars in the kernel together
-            if (car.getKernel() != null && car.getKernel().isLead(car)) {
+            if (car.isLead()) {
                 int index = out.indexOf(car);
                 int numberOfCars = 1; // already added the lead car to the list
                 for (Car kcar : car.getKernel().getCars()) {
@@ -568,7 +569,6 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
     public void load(Element root) {
         // new format using elements starting version 3.3.1
         if (root.getChild(Xml.NEW_KERNELS) != null) {
-            @SuppressWarnings("unchecked")
             List<Element> eKernels = root.getChild(Xml.NEW_KERNELS).getChildren(Xml.KERNEL);
             log.debug("Car manager sees {} kernels", eKernels.size());
             Attribute a;
@@ -590,7 +590,6 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
         }
 
         if (root.getChild(Xml.CARS) != null) {
-            @SuppressWarnings("unchecked")
             List<Element> eCars = root.getChild(Xml.CARS).getChildren(Xml.CAR);
             log.debug("readFile sees {} cars", eCars.size());
             for (Element eCar : eCars) {

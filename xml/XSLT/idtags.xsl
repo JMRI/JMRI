@@ -7,7 +7,7 @@
 <!-- This is just a basic implementation for debugging purposes, without    -->
 <!-- any real attempt at formatting                                         -->
 
-<!-- This file is part of JMRI.  Copyright 2011.                            -->
+<!-- This file is part of JMRI.  Copyright 2011-2018.                       -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -20,7 +20,12 @@
 <!-- for more details.                                                      -->
  
 <xsl:stylesheet	version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-      <xsl:param name="JmriCopyrightYear"/>
+
+<!-- Define the copyright year for the output page
+     In batch work via running Ant, this is defined
+     via the build.xml file
+-->
+<xsl:param name="JmriCopyrightYear" select="1997-2020" />
 
 <!-- Need to instruct the XSLT processor to use HTML output rules.
      See http://www.w3.org/TR/xslt#output for more details
@@ -46,12 +51,12 @@
 <xsl:apply-templates/>
 <hr/>
 This page was produced by <a href="http://jmri.org">JMRI</a>.
-<P/>Copyright &#169; <xsl:value-of select="$JmriCopyrightYear" /> JMRI Community. 
+<p/>Copyright &#169; <xsl:value-of select="$JmriCopyrightYear" /> JMRI Community.
 <p/>JMRI, DecoderPro, PanelPro, DispatcherPro and associated logos are our trademarks.
 <p/><a href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
 <p/>Site hosted by: <br/>
-    <a href="http://sourceforge.net/projects/jmri">
-    <img src="https://sourceforge.net/sflogo.php?type=13&amp;group_id=26788" border="0" alt="JMRI Model Railroad Interface at SourceForge.net"/></a>
+    <a href="http://www.tagadab.com/">
+    <img src="https://www.tagadab.com/sites/default/files/logo-tagadab-nostrap.png" height="28" width="103" border="0" alt="Tagadab logo"/></a>
 </body>
 </html>
 </xsl:template>

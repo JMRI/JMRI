@@ -7,9 +7,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * JMRIClient implementation of the Light interface.
- * <P>
- *
- * Description: extend jmri.AbstractLight for JMRIClient layouts
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008
  * @author Paul Bender Copyright (C) 2010
@@ -40,7 +37,8 @@ public class JMRIClientLight extends AbstractLight implements JMRIClientListener
     }
 
     //request a status update from the layout
-    protected void requestUpdateFromLayout() {
+    @Override
+    public void requestUpdateFromLayout() {
         // create the message
         String text = "LIGHT " + transmitName + "\n";
         // create and send the message

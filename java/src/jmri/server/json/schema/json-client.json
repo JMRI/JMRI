@@ -14,12 +14,16 @@
         },
         "method": {
             "type": "string",
-            "enum": ["get", "put", "post", "delete"],
-            "description": "HTTP Method equivalent to be performed on data; defaults to \"post\" if \"data\" is present, otherwise it defaults to \"get\""
+            "enum": ["get", "put", "post", "delete", "list"],
+            "description": "HTTP Method equivalent to be performed on data; defaults to \"get\" if not specified"
         },
         "list": {
             "type": "string",
             "description": "Request for a list of the given type; only valid with \"type\" value of \"list\""
+        },
+        "id": {
+            "type": "integer",
+            "description": "A message id assigned by the client that will be attached to any messsages sent in direct response to this message; ignored if not a positive integer"
         }
     },
     "oneOf": [

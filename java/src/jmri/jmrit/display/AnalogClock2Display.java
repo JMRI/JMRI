@@ -28,9 +28,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * An Analog Clock for displaying in a panel
+ * An Analog Clock for displaying in a panel.
  * <p>
- * Time code copied in part from code for the Nixie clock by Bob Jacobsen </p>
+ * Time code copied in part from code for the Nixie clock by Bob Jacobsen
  *
  * @author Howard G. Penny - Copyright (C) 2005
  */

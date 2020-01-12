@@ -23,9 +23,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Roster Speed Profiling</h1>
 
       <p>The Speed Profiling tool is designed to create a profile
@@ -87,7 +87,7 @@
       timed run will be taken over, then press [Start].</p>
 
       <img src="images/SpeedProfilingTerms.png" width="377"
-      height="89" alt="Speed Profiling Set-up">
+      height="89" alt="Speed Profiling Setup">
 
       <p>What happens is that the tool will set the loco off
       running in the forward direction at speed step 1, when it
@@ -134,7 +134,7 @@
       where you will more likely experience an over run.</p>
 
       <img src="images/SpeedProfileTable.png" width="619"
-           height="445" align="right" alt="Speed Profiling Set-up">
+           height="445" align="right" alt="Speed Profiling Setup">
       <h3>Viewing</h3>
       <p>Click one of the buttons in the View area to open a table
       showing the profile values for either the New Profiling results,

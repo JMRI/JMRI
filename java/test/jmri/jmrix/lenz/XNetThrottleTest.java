@@ -1,6 +1,7 @@
 package jmri.jmrix.lenz;
 
 import jmri.util.JUnitUtil;
+import jmri.SpeedStepMode;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -86,18 +87,20 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
         // now we're going to wait and verify the throttle eventually has
         // its status set to idle.
-        jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+
         jmri.util.JUnitUtil.releaseThread(this);  // give the messages
         // some time to process;
+
+        jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
 
         Assert.assertEquals("Throttle in THROTTLEIDLE state", XNetThrottle.THROTTLEIDLE, t.requestState);
 
         // and verify all the data was set correctly.
 
         // getSpeedStepMode returns the right mode and
-        Assert.assertEquals("SpeedStepMode",jmri.DccThrottle.SpeedStepMode128,t.getSpeedStepMode());
+        Assert.assertEquals("SpeedStepMode",jmri.SpeedStepMode.NMRA_DCC_128,t.getSpeedStepMode());
         // get speedIncrement reports the correct value.
-        Assert.assertEquals("SpeedStep Increment",jmri.jmrix.AbstractThrottle.SPEED_STEP_128_INCREMENT,t.getSpeedIncrement(),0.0); // the speed increments are constants, so if there is deviation, that is an error.
+        Assert.assertEquals("SpeedStep Increment",(1.0f/126.0f),t.getSpeedIncrement(),0.0); // the speed increments are constants, so if there is deviation, that is an error.
 
         // test that the speed value is the expected value
         Assert.assertEquals("Speed 0.0",0.0,t.getSpeedSetting(),0.0);
@@ -189,8 +192,8 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
         // and finaly, verify that getSpeedStepMode returns the right mode and
         // get speedIncrement reports the correct value.
-        Assert.assertEquals("SpeedStepMode",jmri.DccThrottle.SpeedStepMode14,t.getSpeedStepMode());
-        Assert.assertEquals("SpeedStep Increment",jmri.jmrix.AbstractThrottle.SPEED_STEP_14_INCREMENT,t.getSpeedIncrement(),0.0); // the speed increments are constants, so if there is deviation, that is an error.
+        Assert.assertEquals("SpeedStepMode",jmri.SpeedStepMode.NMRA_DCC_14,t.getSpeedStepMode());
+        Assert.assertEquals("SpeedStep Increment",(1.0f/14.0f),t.getSpeedIncrement(),0.0); // the speed increments are constants, so if there is deviation, that is an error.
 
         // test that the speed value is the expected value
         Assert.assertEquals("Speed 0.0",0.0,t.getSpeedSetting(),0.0);
@@ -279,8 +282,8 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
         // and finaly, verify that getSpeedStepMode returns the right mode and
         // get speedIncrement reports the correct value.
-        Assert.assertEquals("SpeedStepMode",jmri.DccThrottle.SpeedStepMode28,t.getSpeedStepMode());
-        Assert.assertEquals("SpeedStep Increment",jmri.jmrix.AbstractThrottle.SPEED_STEP_28_INCREMENT,t.getSpeedIncrement(),0.0); // the speed increments are constants, so if there is deviation, that is an error.
+        Assert.assertEquals("SpeedStepMode",jmri.SpeedStepMode.NMRA_DCC_28,t.getSpeedStepMode());
+        Assert.assertEquals("SpeedStep Increment",(1.0f/28.0f),t.getSpeedIncrement(),0.0); // the speed increments are constants, so if there is deviation, that is an error.
 
         // test that the speed value is the expected value
         Assert.assertEquals("Speed 0.0",0.0,t.getSpeedSetting(),0.0);
@@ -358,8 +361,8 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
         // and finaly, verify that getSpeedStepMode returns the right mode and
         // get speedIncrement reports the correct value.
-        Assert.assertEquals("SpeedStepMode",jmri.DccThrottle.SpeedStepMode128,t.getSpeedStepMode());
-        Assert.assertEquals("SpeedStep Increment",jmri.jmrix.AbstractThrottle.SPEED_STEP_128_INCREMENT,t.getSpeedIncrement(),0.0); // the speed increments are constants, so if there is deviation, that is an error.
+        Assert.assertEquals("SpeedStepMode",jmri.SpeedStepMode.NMRA_DCC_128,t.getSpeedStepMode());
+        Assert.assertEquals("SpeedStep Increment",(1.0f/126.0f),t.getSpeedIncrement(),0.0); // the speed increments are constants, so if there is deviation, that is an error.
 
         // test that the speed value is the expected value
         Assert.assertEquals("Speed 0.0",0.0,t.getSpeedSetting(),0.0);
@@ -452,8 +455,8 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
         // and finaly, verify that getSpeedStepMode returns the right mode and
         // get speedIncrement reports the correct value.
-        Assert.assertEquals("SpeedStepMode",jmri.DccThrottle.SpeedStepMode27,t.getSpeedStepMode());
-        Assert.assertEquals("SpeedStep Increment",jmri.jmrix.AbstractThrottle.SPEED_STEP_27_INCREMENT,t.getSpeedIncrement(),0.0); // the speed increments are constants, so if there is deviation, that is an error.
+        Assert.assertEquals("SpeedStepMode",jmri.SpeedStepMode.NMRA_DCC_27,t.getSpeedStepMode());
+        Assert.assertEquals("SpeedStep Increment",(1.0f/27.0f),t.getSpeedIncrement(),0.0); // the speed increments are constants, so if there is deviation, that is an error.
 
         // test that the speed value is the expected value
         Assert.assertEquals("Speed 0.0",0.0,t.getSpeedSetting(),0.0);
@@ -1084,7 +1087,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
         // in this case, we are sending a request to change the speed step mode.
 
-        t.setSpeedStepMode(jmri.DccThrottle.SpeedStepMode128);
+        t.setSpeedStepMode(jmri.SpeedStepMode.NMRA_DCC_128);
 
         while (n == tc.outbound.size()) {
         } // busy loop.  Wait for
@@ -1105,8 +1108,8 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
         // and finaly, verify that getSpeedStepMode returns the right mode and
         // get speedIncrement reports the correct value.
-        Assert.assertEquals("SpeedStepMode",jmri.DccThrottle.SpeedStepMode128,t.getSpeedStepMode());
-        Assert.assertEquals("SpeedStep Increment",jmri.jmrix.AbstractThrottle.SPEED_STEP_128_INCREMENT,t.getSpeedIncrement(),0.0); // the speed increments are constants, so if there is deviation, that is an error.
+        Assert.assertEquals("SpeedStepMode",jmri.SpeedStepMode.NMRA_DCC_128,t.getSpeedStepMode());
+        Assert.assertEquals("SpeedStep Increment",(1.0f/126.0f),t.getSpeedIncrement(),0.0); // the speed increments are constants, so if there is deviation, that is an error.
         t.throttleDispose();
     }
 
@@ -1119,7 +1122,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
         // in this case, we are sending a request to change the speed step mode.
 
-        t.setSpeedStepMode(jmri.DccThrottle.SpeedStepMode28);
+        t.setSpeedStepMode(jmri.SpeedStepMode.NMRA_DCC_28);
 
         while (n == tc.outbound.size()) {
         } // busy loop.  Wait for
@@ -1140,8 +1143,8 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
         // and finaly, verify that getSpeedStepMode returns the right mode and
         // get speedIncrement reports the correct value.
-        Assert.assertEquals("SpeedStepMode",jmri.DccThrottle.SpeedStepMode28,t.getSpeedStepMode());
-        Assert.assertEquals("SpeedStep Increment",jmri.jmrix.AbstractThrottle.SPEED_STEP_28_INCREMENT,t.getSpeedIncrement(),0.0); // the speed increments are constants, so if there is deviation, that is an error.
+        Assert.assertEquals("SpeedStepMode",jmri.SpeedStepMode.NMRA_DCC_28,t.getSpeedStepMode());
+        Assert.assertEquals("SpeedStep Increment",(1.0f/28.0f),t.getSpeedIncrement(),0.0); // the speed increments are constants, so if there is deviation, that is an error.
         t.throttleDispose();
     }
 
@@ -1154,7 +1157,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
         // in this case, we are sending a request to change the speed step mode.
 
-        t.setSpeedStepMode(jmri.DccThrottle.SpeedStepMode27);
+        t.setSpeedStepMode(jmri.SpeedStepMode.NMRA_DCC_27);
 
         while (n == tc.outbound.size()) {
         } // busy loop.  Wait for
@@ -1175,8 +1178,8 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
         // and finaly, verify that getSpeedStepMode returns the right mode and
         // get speedIncrement reports the correct value.
-        Assert.assertEquals("SpeedStepMode",jmri.DccThrottle.SpeedStepMode27,t.getSpeedStepMode());
-        Assert.assertEquals("SpeedStep Increment",jmri.jmrix.AbstractThrottle.SPEED_STEP_27_INCREMENT,t.getSpeedIncrement(),0.0); // the speed increments are constants, so if there is deviation, that is an error.
+        Assert.assertEquals("SpeedStepMode",jmri.SpeedStepMode.NMRA_DCC_27,t.getSpeedStepMode());
+        Assert.assertEquals("SpeedStep Increment",(1.0f/27.0f),t.getSpeedIncrement(),0.0); // the speed increments are constants, so if there is deviation, that is an error.
         t.throttleDispose();
     }
 
@@ -1189,7 +1192,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
         // in this case, we are sending a request to change the speed step mode.
 
-        t.setSpeedStepMode(jmri.DccThrottle.SpeedStepMode14);
+        t.setSpeedStepMode(jmri.SpeedStepMode.NMRA_DCC_14);
 
         while (n == tc.outbound.size()) {
         } // busy loop.  Wait for
@@ -1210,8 +1213,8 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
         // and finaly, verify that getSpeedStepMode returns the right mode and
         // get speedIncrement reports the correct value.
-        Assert.assertEquals("SpeedStepMode",jmri.DccThrottle.SpeedStepMode14,t.getSpeedStepMode());
-        Assert.assertEquals("SpeedStep Increment",jmri.jmrix.AbstractThrottle.SPEED_STEP_14_INCREMENT,t.getSpeedIncrement(),0.0); // the speed increments are constants, so if there is deviation, that is an error.
+        Assert.assertEquals("SpeedStepMode",jmri.SpeedStepMode.NMRA_DCC_14,t.getSpeedStepMode());
+        Assert.assertEquals("SpeedStep Increment",(1.0f/14.0f),t.getSpeedIncrement(),0.0); // the speed increments are constants, so if there is deviation, that is an error.
         t.throttleDispose();
     }
 
@@ -1221,8 +1224,8 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testGetSpeedStepMode() {
-        int expResult = 1;
-        int result = instance.getSpeedStepMode();
+        SpeedStepMode expResult = SpeedStepMode.NMRA_DCC_128;
+        SpeedStepMode result = instance.getSpeedStepMode();
         Assert.assertEquals(expResult, result);
     }
 
@@ -1643,6 +1646,8 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Override
     public void setUp() throws Exception {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
+
         // infrastructure objects
         tc = new XNetInterfaceScaffold(new LenzCommandStation());
         memo = new XNetSystemConnectionMemo(tc);
@@ -1655,8 +1660,10 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     @After
+    @Override
     public void tearDown() throws Exception {
         ((XNetThrottle)instance).throttleDispose();
+	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

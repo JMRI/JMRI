@@ -106,6 +106,8 @@ public class RpsTrackingPanelTest {
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
+
         memo = new RpsSystemConnectionMemo();
         InstanceManager.setDefault(RosterConfigManager.class, new RosterConfigManager());
     }

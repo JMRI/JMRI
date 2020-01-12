@@ -7,25 +7,25 @@ import org.slf4j.LoggerFactory;
 /**
  * A LayoutConnectivity object represents a junction between two LayoutBlocks on
  * a LayoutEditor panel.
- * <P>
+ * <p>
  * LayoutConnectivity objects do not persist (are not saved when panels are
  * saved). Instead they are initialized when a panel is loaded and changed
  * dynamically as a panel is edited.
- * <P>
+ * <p>
  * The direction stored here is the direction for proceeding across the block
  * boundary from block1 to block2. The directions represent directions on the
  * LayoutEditor panel. Allowed values (using Path object definitions) are:
  * Path.NORTH (up on panel) Path.SOUTH (down on panel) Path.EAST (right on
  * panel) Path.WEST (left on panel) and points in between: Path.NORTH +
  * Path.EAST Path.NORTH_WEST, Path.SOUTH_EAST Path.SOUTH + Path.WEST
- * <P>
+ * <p>
  * The connected object in the first block is usually a track segment. This
  * track segment is connected to an object in the second block. The connection
  * point in the second block can be either one end of a track segment, or one of
  * the connection points on a turnout, or one of the connection points on a
  * level crossing. The allowed values for the connection points at the second
  * block are defined in LayoutEditor.
- * <P>
+ * <p>
  * The exception to the above is when a crossover turnout has multiple blocks.
  * If so, at least one block boundary is internal to the crossover turnout. Such
  * cases are handled differently, as "crossover block boundary types", see
@@ -34,12 +34,12 @@ import org.slf4j.LoggerFactory;
  * second block. All four block boundaries are possible for the double
  * crossover. One of the crossed over boundaries is not possible with each
  * single crossover.
- * <P>
+ * <p>
  * Note that each LayoutEditor panel has its own list of LayoutConnectivity
  * objects, nominally called its "block connectivity". In contrast, there is
  * only one set of LayoutBlocks, Blocks, and Paths, which are used by all
  * LayoutEditor panels.
- * <P>
+ *
  * @author Dave Duchamp Copyright (c) 2007-2008
  * @author George Warner Copyright (c) 2017-2018
  */

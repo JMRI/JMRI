@@ -1,17 +1,16 @@
-//OperationsRoutesGuiTest.java
 package jmri.jmrit.operations.routes;
 
 import java.awt.GraphicsEnvironment;
 import java.util.List;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.LocationManager;
+import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
-import org.junit.After;
+import jmri.util.swing.JemmyUtil;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -19,12 +18,12 @@ import org.junit.Test;
  *
  * @author	Dan Boudreau Copyright (C) 2009
  */
-public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
+public class OperationsRoutesGuiTest extends OperationsTestCase {
 
     @Test
     public void testRoutesTableFrame() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        loadRoutes();
+        JUnitOperationsUtil.loadFiveRoutes();
 
         RoutesTableFrame f = new RoutesTableFrame();
 
@@ -40,7 +39,7 @@ public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
         // create add route frame
         f.addButton.doClick();
         // the following fails on a 13" laptop
-        //enterClickAndLeave(f.addButton);
+        //JemmyUtil.enterClickAndLeave(f.addButton);
         // confirm panel creation
         JmriJFrame ref = JmriJFrame.getFrame(Bundle.getMessage("TitleRouteAdd"));
         Assert.assertNotNull("route edit frame", ref);
@@ -61,9 +60,9 @@ public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
 
         f.routeNameTextField.setText("New Test Route");
         f.commentTextField.setText("New Text Route Comment");
-        enterClickAndLeave(f.addRouteButton);
+        JemmyUtil.enterClickAndLeave(f.addRouteButton);
 
-        loadRoutes();
+        JUnitOperationsUtil.loadFiveRoutes();
 
         RouteManager rManager = InstanceManager.getDefault(RouteManager.class);
         Assert.assertEquals("should be 6 routes", 6, rManager.getRoutesByNameList().size());
@@ -72,27 +71,27 @@ public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
         Assert.assertEquals("route comment", "New Text Route Comment", newRoute.getComment());
 
         // Add some locations to the route
-        loadLocations();
+        JUnitOperationsUtil.loadFiveLocations();
         LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
         f.locationBox.setSelectedItem(lManager.getLocationByName("Test Loc B"));
         //f.addLocationButton.doClick();
-        enterClickAndLeave(f.addLocationButton);
+        JemmyUtil.enterClickAndLeave(f.addLocationButton);
         f.locationBox.setSelectedItem(lManager.getLocationByName("Test Loc D"));
         //f.addLocationButton.doClick();
-        enterClickAndLeave(f.addLocationButton);
+        JemmyUtil.enterClickAndLeave(f.addLocationButton);
         f.locationBox.setSelectedItem(lManager.getLocationByName("Test Loc A"));
         //f.addLocationButton.doClick();
-        enterClickAndLeave(f.addLocationButton);
+        JemmyUtil.enterClickAndLeave(f.addLocationButton);
 
         // put the next two locations at the start of the route
         //f.addLocAtTop.doClick();
-        enterClickAndLeave(f.addLocAtTop);
+        JemmyUtil.enterClickAndLeave(f.addLocAtTop);
         f.locationBox.setSelectedItem(lManager.getLocationByName("Test Loc C"));
         //f.addLocationButton.doClick();
-        enterClickAndLeave(f.addLocationButton);
+        JemmyUtil.enterClickAndLeave(f.addLocationButton);
         f.locationBox.setSelectedItem(lManager.getLocationByName("Test Loc E"));
         //f.addLocationButton.doClick();
-        enterClickAndLeave(f.addLocationButton);
+        JemmyUtil.enterClickAndLeave(f.addLocationButton);
 
         // confirm that the route sequence is correct
         List<RouteLocation> routeLocations = newRoute.getLocationsBySequenceList();
@@ -104,15 +103,15 @@ public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
 
         f.routeNameTextField.setText("Newer Test Route");
         //f.saveRouteButton.doClick();
-        enterClickAndLeave(f.saveRouteButton);
+        JemmyUtil.enterClickAndLeave(f.saveRouteButton);
 
         Assert.assertEquals("changed route name", "Newer Test Route", newRoute.getName());
 
         // test delete button
         //f.deleteRouteButton.doClick();
-        enterClickAndLeave(f.deleteRouteButton);
+        JemmyUtil.enterClickAndLeave(f.deleteRouteButton);
         // click "Yes" in the confirm popup
-        pressDialogButton(f, Bundle.getMessage("DeleteRoute?"), Bundle.getMessage("ButtonYes"));
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("DeleteRoute?"), Bundle.getMessage("ButtonYes"));
 
         Assert.assertEquals("should be 5 routes", 5, rManager.getRoutesByNameList().size());
 
@@ -122,7 +121,7 @@ public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
     @Test
     public void testRouteEditFrameRead() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        loadRoutes();
+        JUnitOperationsUtil.loadFiveRoutes();
         RouteManager lManager = InstanceManager.getDefault(RouteManager.class);
         Route l2 = lManager.getRouteByName("Test Route C");
 
@@ -134,31 +133,5 @@ public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
         Assert.assertEquals("route comment", "Comment test route C", f.commentTextField.getText());
 
         JUnitUtil.dispose(f);
-    }
-
-    private void loadRoutes() {
-        RouteManager rManager = InstanceManager.getDefault(RouteManager.class);
-        Route r1 = rManager.newRoute("Test Route E");
-        r1.setComment("Comment test route E");
-        Route r2 = rManager.newRoute("Test Route D");
-        r2.setComment("Comment test route D");
-        Route r3 = rManager.newRoute("Test Route C");
-        r3.setComment("Comment test route C");
-        Route r4 = rManager.newRoute("Test Route B");
-        r4.setComment("Comment test route B");
-        Route r5 = rManager.newRoute("Test Route A");
-        r5.setComment("Comment test route A");
-    }
-
-    @Override
-    @Before
-    public void setUp() throws Exception {
-        super.setUp();
-    }
-
-    @Override
-    @After
-    public void tearDown() throws Exception {
-        super.tearDown();
     }
 }

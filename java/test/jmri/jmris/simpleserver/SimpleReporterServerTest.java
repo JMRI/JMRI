@@ -1,4 +1,3 @@
-//SimpleReporterServerTest.java
 package jmri.jmris.simpleserver;
 
 import jmri.util.JUnitUtil;
@@ -153,6 +152,28 @@ public class SimpleReporterServerTest {
         try {
             a.initReporter("IR1");
             a.sendReport("IR1","Hello World");
+            Assert.assertEquals("sendErrorStatus check","REPORTER IR1 Hello World\n",sb.toString());
+        } catch(java.io.IOException ioe){
+            Assert.fail("Exception sending Error Status");
+        }
+    }
+
+    @Test
+    // test sending an ID tag as a Report message.
+    public void testSendIdTagReport() {
+        StringBuilder sb = new StringBuilder();
+        java.io.DataOutputStream output = new java.io.DataOutputStream(
+                new java.io.OutputStream() {
+                    @Override
+                    public void write(int b) throws java.io.IOException {
+                        sb.append((char)b);
+                    }
+                });
+        java.io.DataInputStream input = new java.io.DataInputStream(System.in);
+        SimpleReporterServer a = new SimpleReporterServer(input, output);
+        try {
+            a.initReporter("IR1");
+            a.sendReport("IR1",new jmri.implementation.DefaultIdTag("ID1234","Hello World"));
             Assert.assertEquals("sendErrorStatus check","REPORTER IR1 Hello World\n",sb.toString());
         } catch(java.io.IOException ioe){
             Assert.fail("Exception sending Error Status");

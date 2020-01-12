@@ -5,7 +5,6 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.MessageFormat;
-import java.util.ResourceBundle;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JMenu;
@@ -15,6 +14,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SortOrder;
 import javax.swing.table.TableRowSorter;
+import jmri.NamedBean;
 import jmri.swing.RowSorterUtil;
 import jmri.util.AlphanumComparator;
 import org.slf4j.Logger;
@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provide a JFrame to display a table of NamedBeans.
- * <P>
+ * <p>
  * This frame includes the table itself at the top, plus a "bottom area" for
  * things like an Add... button and checkboxes that control display options.
  * <p>
@@ -34,16 +34,14 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2003
  */
-public class BeanTableFrame extends jmri.util.JmriJFrame {
+public class BeanTableFrame<E extends NamedBean> extends jmri.util.JmriJFrame {
 
-    BeanTableDataModel<?> dataModel;
+    BeanTableDataModel<E> dataModel;
     JTable dataTable;
     JScrollPane dataScroll;
     Box bottomBox;  // panel at bottom for extra buttons etc
     int bottomBoxIndex; // index to insert extra stuff
     static final int bottomStrutWidth = 20;
-
-    ResourceBundle rbapps = ResourceBundle.getBundle("apps.AppsBundle");
 
     public BeanTableFrame() {
         super();
@@ -53,7 +51,7 @@ public class BeanTableFrame extends jmri.util.JmriJFrame {
         super(s);
     }
 
-    public BeanTableFrame(BeanTableDataModel<?> model, String helpTarget, JTable dataTab) {
+    public BeanTableFrame(BeanTableDataModel<E> model, String helpTarget, JTable dataTab) {
 
         super();
         dataModel = model;
@@ -84,7 +82,7 @@ public class BeanTableFrame extends jmri.util.JmriJFrame {
         menuBar.add(fileMenu);
         fileMenu.add(new jmri.configurexml.SaveMenu());
 
-        JMenuItem printItem = new JMenuItem(rbapps.getString("PrintTable"));
+        JMenuItem printItem = new JMenuItem(Bundle.getMessage("PrintTable"));
         fileMenu.add(printItem);
         printItem.addActionListener(new ActionListener() {
             @Override

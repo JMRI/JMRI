@@ -5,12 +5,10 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
-import javax.swing.JOptionPane;
 import jmri.jmrix.oaktree.SerialMessage;
 import jmri.jmrix.oaktree.SerialPortController; // no special xSimulatorController
 import jmri.jmrix.oaktree.SerialReply;
 import jmri.jmrix.oaktree.OakTreeSystemConnectionMemo;
-import jmri.jmrix.oaktree.SerialTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,7 +30,7 @@ import org.slf4j.LoggerFactory;
  * @author Mark Underwood, Copyright (C) 2015
  * @author Egbert Broerse, Copyright (C) 2018
  */
-public class SimulatorAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter, Runnable {
+public class SimulatorAdapter extends SerialPortController implements Runnable {
 
     // private control members
     private boolean opened = false;
@@ -163,18 +161,31 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
     }
 
     /**
-     * Get an array of valid baud rates.
+     * {@inheritDoc}
      *
      * @return null
      */
     @Override
     public String[] validBaudRates() {
         log.debug("validBaudRates should not have been invoked");
-        return null;
+        return new String[]{};
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return new int[]{};
     }
 
     @Override
     public String getCurrentBaudRate() {
+        return "";
+    }
+
+    @Override
+    public String getCurrentPortName(){
         return "";
     }
 
@@ -252,7 +263,6 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
      * @return a single AokTree message to confirm the requested operation, or a series
      * of messages for each (fictitious) node/pin/state. To ignore certain commands, return null.
      */
-    @SuppressWarnings("fallthrough")
     private SerialReply generateReply(SerialMessage msg) {
         int nodeaddr = msg.getAddr();
         log.debug("Generate Reply to message for node {} (string = {})", nodeaddr, msg.toString());

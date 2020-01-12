@@ -22,11 +22,36 @@ public class LnNamedPaneAction extends JmriNamedPaneAction implements SystemConn
 
     /**
      * Enhanced constructor for placing the pane in various GUIs.
+     *
+     * @param s         Human-readable panel name for display by the action
+     * @param wi        Window into which to install the new panel. If you want it to be put into a existing
+     *                  one, provide a reference. To create a new window
+     *                  containing just this pane, use "new jmri.util.swing.sdi.JmriJFrameInterface()"
+     * @param paneClass Name of the panel's class, which must be a subclass of JmriPanel. That's not
+     *                  checked at compile time or when the constructor runs, but must be true
+     *                  for the action to be invoked successfully.
+     * @param memo      {@link jmri.jmrix.loconet.LocoNetSystemConnectionMemo} to be used by this object
      */
     public LnNamedPaneAction(String s, WindowInterface wi, String paneClass, LocoNetSystemConnectionMemo memo) {
         super(s, wi, paneClass);
         this.memo = memo;
     }
+
+
+    /**
+     * Enhanced constructor for placing the pane in various GUIs.
+     *
+     * @param s         Human-readable panel name for display by the action
+     * @param i         Icon for display by the action
+     * @param wi        Window into which to install the new panel. If you want it to be put into a existing
+     *                  one, provide a reference. To create a new window
+     *                  containing just this pane, use "new jmri.util.swing.sdi.JmriJFrameInterface()"
+     * @param paneClass Name of the panel's class, which must be a subclass of JmriPanel. That's not
+     *                  checked at compile time or when the constructor runs, but must be true
+     *                  for the action to be invoked successfully.
+     * @param memo      {@link jmri.jmrix.loconet.LocoNetSystemConnectionMemo} to be used by this object
+     */
+
 
     public LnNamedPaneAction(String s, Icon i, WindowInterface wi, String paneClass, LocoNetSystemConnectionMemo memo) {
         super(s, i, wi, paneClass);

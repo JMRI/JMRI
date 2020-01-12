@@ -23,8 +23,6 @@ public class SerialTrafficControllerTest extends jmri.jmrix.ieee802154.IEEE80215
         Assert.assertNotNull("IEEE802154Message", ((SerialTrafficController)tc).getIEEE802154Message(5));
     }
 
-
-
     @Test
     public void testCreateNode() {
         // test the code to get a new IEEE802154 node
@@ -156,14 +154,16 @@ public class SerialTrafficControllerTest extends jmri.jmrix.ieee802154.IEEE80215
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         tc = new SerialTrafficController();
     }
 
     @Override
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
 }

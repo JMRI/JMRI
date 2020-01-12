@@ -24,24 +24,22 @@ import jmri.util.swing.JmriPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/*
+/**
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under
  * the terms of version 2 of the GNU General Public License as published
  * by the Free Software Foundation. See the "COPYING" file for a copy
  * of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
- * <P>
  *
- * @author   Mark Underwood Copyright (C) 2011
+ * @author Mark Underwood Copyright (C) 2011
  */
-@SuppressWarnings("deprecation")
 public class VSDConfigPanel extends JmriPanel {
 
     // Local References
@@ -103,7 +101,6 @@ public class VSDConfigPanel extends JmriPanel {
     //
     // Read the addressTextBox and broadcast the new address to
     // any listeners.
-    @SuppressWarnings("cast")
     protected void updateAddress() {
         // Simulates the clicking of the address Set button
         VSDecoder dec = main_pane.getDecoder();
@@ -349,17 +346,15 @@ public class VSDConfigPanel extends JmriPanel {
         if ((vsd_path != null) && (vsd_profile != null)) {
             // Load the indicated VSDecoder Profile and update the Profile combo box
             dec = VSDecoderManager.instance().getVSDecoder(vsd_profile, vsd_path);
-            if (dec != null) {
-                log.debug("VSDecoder loaded from file: " + dec.getProfileName());
-                dec.setAddress(rosterEntry.getDccLocoAddress());
-                dec.enable();
-                main_pane.setDecoder(dec);
-                ArrayList<String> sl = VSDecoderManager.instance().getVSDProfileNames();
-                updateProfileList(sl);
-                profileComboBox.setSelectedItem(dec.getProfileName());
-                profileComboBox.setEnabled(true);
-                profile_selected = true;
-            }
+            log.debug("VSDecoder loaded from file: " + dec.getProfileName());
+            dec.setAddress(rosterEntry.getDccLocoAddress());
+            dec.enable();
+            main_pane.setDecoder(dec);
+            ArrayList<String> sl = VSDecoderManager.instance().getVSDProfileNames();
+            updateProfileList(sl);
+            profileComboBox.setSelectedItem(dec.getProfileName());
+            profileComboBox.setEnabled(true);
+            profile_selected = true;
         }
 
         // Set the Address box from the Roster entry
@@ -391,24 +386,17 @@ public class VSDConfigPanel extends JmriPanel {
         log.debug("rosterSaveButton pressed");
         if (rosterSelector.getSelectedRosterEntries().length != 0) {
             RosterEntry r = rosterSelector.getSelectedRosterEntries()[0];
-            String path = main_pane.getDecoder().getVSDFilePath();
-            String profile = profileComboBox.getSelectedItem().toString();
-            if ((path == null) || (profile == null)) {
-                log.debug("Path and/or Profile not selected.  Ignore Save button press.");
-                return;
-            } else {
-                r.setOpen(true);
-                r.putAttribute("VSDecoder_Path", main_pane.getDecoder().getVSDFilePath());
-                r.putAttribute("VSDecoder_Profile", profileComboBox.getSelectedItem().toString());
-                int value = JOptionPane.showConfirmDialog(null,
-                        MessageFormat.format(Bundle.getMessage("UpdateRoster"),
-                                new Object[]{r.titleString()}),
-                        Bundle.getMessage("SaveRoster?"), JOptionPane.YES_NO_OPTION);
-                if (value == JOptionPane.YES_OPTION) {
-                    storeFile(r);
-                }
-                r.setOpen(false);
+            r.setOpen(true);
+            r.putAttribute("VSDecoder_Path", main_pane.getDecoder().getVSDFilePath());
+            r.putAttribute("VSDecoder_Profile", profileComboBox.getSelectedItem().toString());
+            int value = JOptionPane.showConfirmDialog(null,
+                    MessageFormat.format(Bundle.getMessage("UpdateRoster"),
+                            new Object[]{r.titleString()}),
+                    Bundle.getMessage("SaveRoster?"), JOptionPane.YES_NO_OPTION);
+            if (value == JOptionPane.YES_OPTION) {
+                storeFile(r);
             }
+            r.setOpen(false);
 
             // Need to write RosterEntry to file.
         }

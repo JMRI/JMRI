@@ -7,7 +7,6 @@ import java.util.Set;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 import jmri.InstanceInitializer;
-import jmri.InstanceManager;
 import jmri.beans.Bean;
 import jmri.implementation.AbstractInstanceInitializer;
 import jmri.jmrit.XmlFile;
@@ -39,17 +38,6 @@ public class JsonServerPreferences extends Bean {
     private int asLoadedHeartbeatInterval = 15000;
     private int asLoadedPort = DEFAULT_PORT;
     private final static Logger log = LoggerFactory.getLogger(JsonServerPreferences.class);
-
-    /**
-     *
-     * @return the default instance of this class
-     * @deprecated since 4.9.4; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static JsonServerPreferences getDefault() {
-        return InstanceManager.getDefault(JsonServerPreferences.class);
-    }
 
     public JsonServerPreferences(String fileName) {
         boolean migrate = false;

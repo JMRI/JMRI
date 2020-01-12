@@ -2,20 +2,26 @@ package jmri.jmrit.operations.routes;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.text.MessageFormat;
 import java.util.List;
+
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Table Model for edit of routes used by operations
@@ -194,6 +200,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
     }
 
     RouteEditFrame ref = null;
+    protected static final String NEW_LINE = "\n"; // NOI18N
 
     private void editRoute(int row) {
         log.debug("Edit route");
@@ -202,19 +209,22 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
         }
         Route route = sysList.get(row);
         if (route != null && route.getStatus().equals(Route.TRAIN_BUILT)) {
-            // warn user
-            log.debug("Can not edit a route that has a built train");
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("DoNotModifyRoute"), Bundle.getMessage("TrainBuilt"),
+            // list the built trains for this route
+            StringBuffer buf = new StringBuffer(Bundle.getMessage("DoNotModifyRoute"));
+            for (Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByIdList()) {
+                if (train.getRoute() == route && train.isBuilt()) {
+                    buf.append(NEW_LINE +
+                            MessageFormat.format(Bundle.getMessage("TrainIsBuilt"),
+                                    new Object[]{train.getName(), route.getName()}));
+                }
+            }
+            JOptionPane.showMessageDialog(null, buf.toString(), Bundle.getMessage("TrainBuilt"),
                     JOptionPane.WARNING_MESSAGE);
         }
         // use invokeLater so new window appears on top
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
+        SwingUtilities.invokeLater(() -> {
                 ref = new RouteEditFrame();
-                Route route = sysList.get(row);
-                ref.initComponents(route);
-            }
+                ref.initComponents(sysList.get(row));
         });
     }
 

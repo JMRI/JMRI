@@ -1,7 +1,6 @@
 package jmri.server.json.throttle;
 
-import static jmri.server.json.JSON.DATA;
-import static jmri.server.json.JSON.TYPE;
+import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.throttle.JsonThrottle.THROTTLE;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -9,11 +8,11 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
 import jmri.JmriException;
 import jmri.server.json.JsonConnection;
 import jmri.server.json.JsonException;
+import jmri.server.json.JsonRequest;
 import jmri.server.json.JsonSocketService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,57 +25,59 @@ public class JsonThrottleSocketService extends JsonSocketService<JsonThrottleHtt
 
     private final HashMap<String, JsonThrottle> throttles = new HashMap<>();
     private final HashMap<JsonThrottle, String> throttleIds = new HashMap<>();
-    private final static Logger log = LoggerFactory.getLogger(JsonThrottleSocketService.class);
+    private static final Logger log = LoggerFactory.getLogger(JsonThrottleSocketService.class);
 
     public JsonThrottleSocketService(JsonConnection connection) {
         super(connection, new JsonThrottleHttpService(connection.getObjectMapper()));
     }
 
     @Override
-    public void onMessage(String type, JsonNode data, String method, Locale locale) throws IOException, JmriException, JsonException {
+    public void onMessage(String type, JsonNode data, String method, JsonRequest request) throws IOException, JmriException, JsonException {
         log.debug("Processing {}", data);
-        String id = data.path(THROTTLE).asText();
-        if (id.isEmpty()) {
-            throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "ErrorThrottleId")); // NOI18N
+        String name = data.path(NAME).asText();
+        if (name.isEmpty()) {
+            name = data.path(THROTTLE).asText();
+            log.warn("JSON throttle \"{}\" requested using \"throttle\" instead of \"name\"", name);
         }
-        JsonThrottle throttle = this.throttles.get(id);
-        if (!this.throttles.containsKey(id)) {
-            throttle = JsonThrottle.getThrottle(id, data, this);
-            this.throttles.put(id, throttle);
-            this.throttleIds.put(throttle, id);
+        if (name.isEmpty()) {
+            throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(request.locale, "ErrorThrottleId"), request.id); // NOI18N
+        }
+        JsonThrottle throttle = throttles.get(name);
+        if (!throttles.containsKey(name)) {
+            throttle = JsonThrottle.getThrottle(name, data, this, request.id);
+            throttles.put(name, throttle);
+            throttleIds.put(throttle, name);
             throttle.sendStatus(this);
         }
-        throttle.onMessage(locale, data, this);
+        throttle.onMessage(request.locale, data, this);
     }
 
     @Override
-    public void onList(String type, JsonNode data, Locale locale) throws JsonException {
-        throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "UnlistableService", type));
+    public void onList(String type, JsonNode data, JsonRequest request) throws JsonException {
+        throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(request.locale, "UnlistableService", type), request.id);
     }
 
     @Override
     public void onClose() {
-        new HashSet<>(this.throttles.keySet()).stream().forEach((throttleId) -> {
-            this.throttles.get(throttleId).close(this, false);
-            this.throttles.remove(throttleId);
+        new HashSet<>(throttles.keySet()).stream().forEach(throttleId -> {
+            throttles.get(throttleId).close(this, false);
+            throttles.remove(throttleId);
         });
-        this.throttleIds.clear();
+        throttleIds.clear();
     }
 
     void release(JsonThrottle throttle) {
         throttle.release(this, true);
-        this.throttles.remove(this.throttleIds.get(throttle));
-        this.throttleIds.remove(throttle);
+        throttles.remove(throttleIds.get(throttle));
+        throttleIds.remove(throttle);
     }
 
     public void sendMessage(JsonThrottle throttle, ObjectNode data) throws IOException {
-        String id = this.throttleIds.get(throttle);
+        String id = throttleIds.get(throttle);
         if (id != null) {
-            ObjectNode root = this.connection.getObjectMapper().createObjectNode();
-            root.put(TYPE, THROTTLE);
+            data.put(NAME, id);
             data.put(THROTTLE, id);
-            root.set(DATA, data);
-            this.connection.sendMessage(root);
+            connection.sendMessage(service.message(THROTTLE, data, 0), 0);
         }
     }
 

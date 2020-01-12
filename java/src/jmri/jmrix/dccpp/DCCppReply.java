@@ -8,13 +8,12 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Represents a single response from the DCC++ system.
- * <P>
  *
  * @author Paul Bender Copyright (C) 2004
  * @author Mark Underwood Copyright (C) 2015
-  *
- * Based on XNetReply
+ * @author Harald Barth Copyright (C) 2019
  *
+ * Based on XNetReply
  */
 
 /*
@@ -39,7 +38,6 @@ import org.slf4j.LoggerFactory;
  * message format.  For example, there is no need for the listener code to know
  * that the speed is the second number after the "T" in the reply (nor that a
  * Throttle reply starts with a "T").
- *
  */
 
 public class DCCppReply extends jmri.jmrix.AbstractMRReply {
@@ -83,6 +81,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     *
     * @return representation of the DCCppReply as a string.
     */
+    @Override
    public String toMonitorString(){
         // Beautify and display
         String text;
@@ -95,9 +94,25 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 text += "\tDirection: " + getDirectionString();
                 break;
             case DCCppConstants.TURNOUT_REPLY:
-                text = "Turnout Reply: \n";
-                text += "\tT/O Number: " + getTOIDString() + "\n";
-                text += "\tDirection: " + getTOStateString();
+                if (isTurnoutDefReply()) {
+                    text = "Turnout Reply: \n";
+                    text += "\tT/O Number: " + getTOIDString() + "\n";
+                    text += "\tT/O Address: " + getTOAddressString() + "\n";
+                    text += "\tT/O Index: " + getTOAddressIndexString() + "\n";
+                    // if we are able to parse the address and index we can convert it
+                    // to a standard DCC address for display.
+                    if (getTOAddressInt() != -1 && getTOAddressIndexInt() != -1) {
+                        int boardAddr = getTOAddressInt();
+                        int boardIndex = getTOAddressIndexInt();
+                        int dccAddress = (((boardAddr - 1) * 4) + boardIndex) + 1;
+                        text += "\tT/O DCC Address: " + Integer.toString(dccAddress) + "\n";
+                    }
+                    text += "\tDirection: " + getTOStateString();
+                } else {
+                    text = "Turnout Reply: \n";
+                    text += "\tT/O Number: " + getTOIDString() + "\n";
+                    text += "\tDirection: " + getTOStateString();
+                }
                 break;
             case DCCppConstants.SENSOR_REPLY_H:
                 text = "Sensor Reply (Inactive): \n";
@@ -125,9 +140,9 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 } else if (isOutputListReply()) {
                     text = "Output Command Reply: \n";
                     text += "\tOutput Number: " + getOutputNumString() + "\n";
-                    text += "\tOutputState: " + getOutputListPinString() + "\n";
-                    text += "\tOutputState: " + getOutputListIFlagString() + "\n";
-                    text += "\tOutputState: " + getOutputListStateString();
+                    text += "\tOutput Pin: " + getOutputListPinString() + "\n";
+                    text += "\tOutput Flags: " + getOutputListIFlagString() + "\n";
+                    text += "\tOutput State: " + getOutputListStateString();
                 } else {
                     text = "Invalid Output Reply Format: \n";
                     text += "\t" + toString();
@@ -247,10 +262,13 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 }
                 return(r);
             case DCCppConstants.TURNOUT_REPLY:
-                if (s.matches(DCCppConstants.TURNOUT_REPLY_REGEX)) {
-                    r.myRegex = DCCppConstants.TURNOUT_REPLY_REGEX;
-                } else if (s.matches(DCCppConstants.TURNOUT_DEF_REPLY_REGEX)) {
+                // the order of checking the reply here is critical as both the TURNOUT_DEF_REPLY
+                // and TURNOUT_REPLY regex strings start with the same strings but have different
+                // meanings.
+                if (s.matches(DCCppConstants.TURNOUT_DEF_REPLY_REGEX)) {
                     r.myRegex = DCCppConstants.TURNOUT_DEF_REPLY_REGEX;
+                } else if (s.matches(DCCppConstants.TURNOUT_REPLY_REGEX)) {
+                    r.myRegex = DCCppConstants.TURNOUT_REPLY_REGEX;
                 } else if (s.matches(DCCppConstants.MADC_FAIL_REPLY_REGEX)) {
                     r.myRegex = DCCppConstants.MADC_FAIL_REPLY_REGEX;
                 }
@@ -287,6 +305,11 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                     r.myRegex = DCCppConstants.CURRENT_REPLY_REGEX;
                 } else if (s.matches(DCCppConstants.CURRENT_REPLY_NAMED_REGEX)) {
                     r.myRegex = DCCppConstants.CURRENT_REPLY_NAMED_REGEX;
+                }
+                return(r);
+            case DCCppConstants.MAXNUMSLOTS_REPLY:
+                if (s.matches(DCCppConstants.MAXNUMSLOTS_REPLY_REGEX)) {
+                    r.myRegex = DCCppConstants.MAXNUMSLOTS_REPLY_REGEX;
                 }
                 return(r);
             case DCCppConstants.WRITE_EEPROM_REPLY:
@@ -457,9 +480,9 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
      * c : <a CURRENT>
      * s : Series of status messages...
      *     <p[0,1]>  Power state
-     *     <T ...>Throttle responses from all 12 registers
+     *     <T ...>Throttle responses from all registers
      *     <iDCC++ ... > Base station version and build date
-     *     <H ...> All turnout states.
+     *     <H ID ADDR INDEX THROW> All turnout states.
      *
      * Unsolicited Replies
      *   | <Q snum [0,1]> Sensor reply.
@@ -489,13 +512,13 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
             return(m);
 
         } catch (PatternSyntaxException e) {
-            log.error("Malformed DCC++ reply syntax! s = ", pat);
+            log.error("Malformed DCC++ reply syntax! s = {}", pat);
             return(null);
         } catch (IllegalStateException e) {
-            log.error("Group called before match operation executed string= " + s);
+            log.error("Group called before match operation executed string = {}", s);
             return(null);
         } catch (IndexOutOfBoundsException e) {
-            log.error("Index out of bounds string= " + s);
+            log.error("Index out of bounds string = {}", s);
             return(null);
         }
     }
@@ -606,6 +629,38 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         }
     }
 
+    public String getTOAddressString() {
+        if (this.isTurnoutDefReply()) {
+            return(this.getValueString(2));
+        } else {
+            return("-1");
+        }
+    }
+
+    public int getTOAddressInt() {
+        if (this.isTurnoutDefReply()) {
+            return(this.getValueInt(2));
+        } else {
+            return(-1);
+        }
+    }
+
+    public String getTOAddressIndexString() {
+        if (this.isTurnoutDefReply()) {
+            return(this.getValueString(3));
+        } else {
+            return("-1");
+        }
+    }
+
+    public int getTOAddressIndexInt() {
+        if (this.isTurnoutDefReply()) {
+            return(this.getValueInt(3));
+        } else {
+            return(-1);
+        }
+    }
+
     public String getTOStateString() {
         // Will return human readable state. To get string value for command, use
         // getTOStateInt().toString()
@@ -619,7 +674,9 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 
     public int getTOStateInt() {
         // Will return 1 (true - thrown) or 0 (false - closed)
-        if (this.isTurnoutReply()) {
+        if (this.isTurnoutDefReply()) { // turnout list response
+            return(this.getValueInt(4));
+        } else if (this.isTurnoutReply()) { // single turnout response
             return(this.getValueInt(2));
         } else {
             log.error("TurnoutReply Parser called on non-TurnoutReply message type {}", this.getOpCodeChar());
@@ -640,7 +697,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     // Helper methods for Program Replies
 
     public String getCallbackNumString() {
-        if (this.isProgramReply()) {
+        if (this.isProgramReply() || isProgramBitReply() ) {
             return(this.getValueString(1));
         } else {
             log.error("ProgramReply Parser called on non-ProgramReply message type {}", this.getOpCodeChar());
@@ -649,7 +706,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     public int getCallbackNumInt() {
-        if (this.isProgramReply()) {
+        if (this.isProgramReply() || isProgramBitReply() ) {
             return(this.getValueInt(1));
         } else {
             log.error("ProgramReply Parser called on non-ProgramReply message type {}", this.getOpCodeChar());
@@ -658,7 +715,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     public String getCallbackSubString() {
-        if (this.isProgramReply()) {
+        if (this.isProgramReply() || isProgramBitReply() ) {
             return(this.getValueString(2));
         } else {
             log.error("ProgramReply Parser called on non-ProgramReply message type {}", this.getOpCodeChar());
@@ -667,7 +724,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     public int getCallbackSubInt() {
-        if (this.isProgramReply()) {
+        if (this.isProgramReply() || isProgramBitReply() ) {
             return(this.getValueInt(2));
         } else {
             log.error("ProgramReply Parser called on non-ProgramReply message type {}", this.getOpCodeChar());
@@ -676,7 +733,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     public String getCVString() {
-        if (this.isProgramReply()) {
+        if (this.isProgramReply() || isProgramBitReply() ) {
             return(this.getValueString(3));
         } else {
             log.error("ProgramReply Parser called on non-ProgramReply message type {}", this.getOpCodeChar());
@@ -685,7 +742,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     public int getCVInt() {
-        if (this.isProgramReply()) {
+        if (this.isProgramReply() || isProgramBitReply() ) {
             return(this.getValueInt(3));
         } else {
             log.error("ProgramReply Parser called on non-ProgramReply message type {}", this.getOpCodeChar());
@@ -712,7 +769,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     public String getReadValueString() {
-        if (this.isProgramReply()) {
+        if (this.isProgramReply() || isProgramBitReply() ) {
             if (this.matches(DCCppConstants.PROGRAM_BIT_REPLY_REGEX)) {
                 return(this.getValueString(5));
             } else {
@@ -1077,85 +1134,6 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
             return(true);
         } else {
             return(false);
-        }
-    }
-
-    // decode messages of a particular form
-    /*
-     * The next group of routines are used by Feedback and/or turnout
-     * control code.  These are used in multiple places within the code,
-     * so they appear here.
-     */
-
-    // NOTE: Methods below here are holdovers from XpressNet implementation
-    // They should be removed when/if possible.
-
-
-    /**
-     * Is this a feedback response message?
-     * @return true for feedback response
-     */
-    public boolean isFeedbackMessage() {
-        //return (this.getOpCodeChar() == XNetConstants.ACC_INFO_RESPONSE);
-        return false;
-    }
-
-    /**
-     * Is this a feedback broadcast message?
-     * @return true for feedback broadcast
-     */
-    public boolean isFeedbackBroadcastMessage() {
-        return(this.isTurnoutReply());
-    }
-
-    /**
-     * <p>
-     * Extract the feedback message type from a feedback message this is the
-     * middle two bits of the upper byte of the second data byte.
-     * </p>
-     *
-     * @return message type, values are:
-     * <ul>
-     * <li>0 for a turnout with no feedback</li>
-     * <li>1 for a turnout with feedback</li>
-     * <li>2 for a feedback encoder</li>
-     * <li>3 is reserved by Lenz for future use.</li>
-     * </ul>
-     */
-    public int getFeedbackMessageType() {
-        if (this.isFeedbackMessage()) {
-            int a2 = this.getElement(2);
-            return ((a2 & 0x60) / 32);
-        } else {
-            return -1;
-        }
-    }
-
-    /**
-     * <p>
-     * Extract the feedback message type from the data byte of associated with
-     * the specified address byte specified by startByte.
-     * </p>
-     * <p>
-     * The return value is the middle two bits of the upper byte of the data
-     * byte of an address byte/data byte pair.
-     * </p>
-     *
-     * @param startByte The address byte for this address byte data byte pair.
-     * @return message type, values are:
-     * <ul>
-     * <li>0 for a turnout with no feedback</li>
-     * <li>1 for a turnout with feedback</li>
-     * <li>2 for a feedback encoder</li>
-     * <li>3 is reserved by Lenz for future use.</li>
-     * </ul>
-     */
-    public int getFeedbackMessageType(int startByte) {
-        if (this.isFeedbackBroadcastMessage()) {
-            int a2 = this.getElement(startByte + 1);
-            return ((a2 & 0x60) / 32);
-        } else {
-            return -1;
         }
     }
 

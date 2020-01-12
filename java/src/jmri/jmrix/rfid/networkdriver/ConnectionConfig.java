@@ -25,12 +25,15 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
     }
 
     /**
-     * Ctor for a functional Swing object with no existing adapter
+     * Ctor for a functional Swing object with no existing adapter.
      */
     public ConnectionConfig() {
         super();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @SuppressWarnings("unchecked")
     @Override
     public void loadDetails(JPanel details) {
@@ -56,8 +59,8 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         options.get(adapter.getOption2Name()).getLabel().setEnabled(enable);
         options.get(adapter.getOption2Name()).getComponent().setEnabled(enable);
         options.get(adapter.getOption2Name()).getComponent().setToolTipText(enable
-                ? "Choose RFID concentrator range setting" // NOI18N
-                : "Range setting not applicable for selected RFID reader type"); // NOI18N
+                ? Bundle.getMessage("RfidPrefsOption2ToolTipA")
+                : Bundle.getMessage("RfidPrefsOption2ToolTipB"));
     }
 
     @SuppressWarnings("unchecked")
@@ -67,8 +70,8 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         options.get(adapter.getOption3Name()).getComponent().setEnabled(enable);
         options.get(adapter.getOption3Name()).getComponent().setEnabled(enable);
         options.get(adapter.getOption3Name()).getComponent().setToolTipText(enable
-                ? "Choose RFID protocol" // NOI18N
-                : "Protocol setting not applicable for selected RFID reader type"); // NOI18N
+                ? Bundle.getMessage("RfidPrefsOption3ToolTipA")
+                : Bundle.getMessage("RfidPrefsOption3ToolTipB"));
         if (!enable) {
             ((JComboBox<Option>) options.get(adapter.getOption3Name()).getComponent()).setSelectedIndex(0);
         }
@@ -76,13 +79,13 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
 
     @SuppressWarnings("unchecked")
     private void enableOpt4(Object o) {
-        boolean enable = o.equals("Olimex");
+        boolean enable = o.equals("Olimex"); // NOI18N
         options.get(adapter.getOption4Name()).getLabel().setEnabled(enable);
         options.get(adapter.getOption4Name()).getComponent().setEnabled(enable);
         options.get(adapter.getOption4Name()).getComponent().setEnabled(enable);
         options.get(adapter.getOption4Name()).getComponent().setToolTipText(enable
-                ? "Choose RFID Reader model"
-                : "RFID Reader Model setting not applicable for selected RFID reader protocol");
+                ? Bundle.getMessage("RfidPrefsOption4ToolTipA")
+                : Bundle.getMessage("RfidPrefsOption4ToolTipB"));
         if (!enable) {
             ((JComboBox<Option>) options.get(adapter.getOption4Name()).getComponent()).setSelectedIndex(0);
         }
@@ -93,10 +96,14 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         return NAME;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new NetworkDriverAdapter();
         }
     }
+
 }

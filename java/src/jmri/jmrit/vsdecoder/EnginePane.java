@@ -7,29 +7,28 @@ import javax.swing.JPanel;
 /**
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under 
  * the terms of version 2 of the GNU General Public License as published 
  * by the Free Software Foundation. See the "COPYING" file for a copy
  * of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT 
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
  * for more details.
- * <P>
+ * <p>
  *
  * @author Mark Underwood Copyright (C) 2011
  * @author Klaus Killinger Copyright (C) 2018
  */
-@SuppressWarnings("serial")
 public class EnginePane extends JPanel {
     // Superclass for Diesel, Steam, Electric panes.
     // Doesn't really do anything.
 
     String name;
-
     EngineSoundEvent engine;
+    private boolean force_stop_at_zero;
 
     public EnginePane(String n, EngineSoundEvent e) {
         super();
@@ -78,6 +77,14 @@ public class EnginePane extends JPanel {
     }
 
     public void setSpeed(float s) {
+    }
+
+    void setStopOption(boolean m) {
+        force_stop_at_zero = m;
+    }
+
+    public boolean getStopOption() {
+        return force_stop_at_zero;
     }
 
     public void startButtonClick() {

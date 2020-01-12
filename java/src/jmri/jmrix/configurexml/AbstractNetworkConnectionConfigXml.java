@@ -81,7 +81,7 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
     }
 
     /**
-     * Customizable method if you need to add anything more
+     * Customizable method if you need to add anything more.
      *
      * @param e Element being created, update as needed
      */
@@ -146,7 +146,7 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
                 int port = shared.getAttribute("port").getIntValue();
                 adapter.setPort(port);
             } catch (org.jdom2.DataConversionException ex) {
-                log.warn("Could not parse port attribute");
+                log.warn("Could not parse port attribute: {}", shared.getAttribute("port"));
             } catch (NullPointerException ex) {  // considered normal if the attributes are not present
             }
         }
@@ -176,7 +176,7 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
     }
 
     /**
-     * Update static data from XML file
+     * Update static data from XML file.
      *
      * @param element Top level Element to unpack.
      */

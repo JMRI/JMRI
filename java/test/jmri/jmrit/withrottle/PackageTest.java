@@ -28,6 +28,7 @@ import org.junit.runners.Suite;
         ControllerFilterFrameTest.class,
         UserInterfaceTest.class,
         WiThrottleCreationActionTest.class,
+        MultiThrottleStealTest.class,
 })
 
 /**

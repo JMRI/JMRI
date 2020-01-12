@@ -1,0 +1,58 @@
+@startuml
+
+actor "User\n(actions on Swing thread)" as user #white
+participant TabbedPreferencesAction #white
+
+control "Apps\n(start up on main thread)" as apps #white
+participant InstanceManager #white
+participant TabbedPreferencesFrame #white
+participant TabbedPreferences #white
+control SwingAWTThread #white
+control loadingThread #white
+
+activate apps  #BBFFBB
+apps -> InstanceManager : getDefault(TabbedPreferencesFrame)
+    activate InstanceManager #BBFFBB
+    InstanceManager -> TabbedPreferencesFrame : (auto create)
+        activate TabbedPreferencesFrame #BBFFBB
+        TabbedPreferencesFrame -> TabbedPreferences : ctor
+            activate TabbedPreferences #BBFFBB
+                TabbedPreferences -> loadingThread
+                    activate loadingThread #FFBBBB
+                TabbedPreferencesFrame <-- TabbedPreferences
+                deactivate TabbedPreferences
+        TabbedPreferencesFrame -> TabbedPreferencesFrame : add TP to Frame
+        InstanceManager <-- TabbedPreferencesFrame
+        deactivate TabbedPreferencesFrame
+    apps <-- InstanceManager
+    deactivate InstanceManager
+    note over InstanceManager : At this point, TabbedPreferencesFrame exists\nand holds a TabbedPreferences\ninstance. That TabbedPreferences is\nstill being filled.
+
+
+loadingThread -> loadingThread : create something
+loadingThread -> SwingAWTThread
+    activate SwingAWTThread #BBBBFF
+    SwingAWTThread -> TabbedPreferences : add(item) while on Swing thread
+    activate TabbedPreferences  #BBBBFF
+    SwingAWTThread <-- TabbedPreferences
+    deactivate TabbedPreferences
+    loadingThread <-- SwingAWTThread
+    deactivate SwingAWTThread
+
+destroy apps
+    
+user -> TabbedPreferencesAction: actionPerformed(..)
+activate TabbedPreferencesAction  #BBBBFF
+TabbedPreferencesAction -> InstanceManager : getDefault(TabbedPreferencesFrame)
+    activate InstanceManager  #BBBBFF
+    TabbedPreferencesAction <-- InstanceManager
+    deactivate InstanceManager
+TabbedPreferencesAction -> TabbedPreferencesFrame : setVisible
+    activate TabbedPreferencesFrame  #BBBBFF
+    TabbedPreferencesAction <-- TabbedPreferencesFrame
+    deactivate TabbedPreferencesFrame
+user <-- TabbedPreferencesAction
+deactivate TabbedPreferencesFrame
+
+@enduml
+

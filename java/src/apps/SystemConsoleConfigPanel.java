@@ -220,7 +220,7 @@ public class SystemConsoleConfigPanel extends JPanel implements PreferencesPanel
     public boolean isDirty() {
         // console preferences take effect immediately, but are not saved
         // immediately, so we can't tell without rereading the preferences.xml,
-        // but it's to expensive to read that file to determine if it matches
+        // but it's too expensive to read that file to determine if it matches
         // the in memory preferences for this console, so simply return false
         return false;
     }

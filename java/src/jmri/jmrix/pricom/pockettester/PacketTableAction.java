@@ -16,9 +16,7 @@ public abstract class PacketTableAction extends AbstractAction {
 
     public PacketTableAction() {
         super();
-        java.util.ResourceBundle rb
-                = java.util.ResourceBundle.getBundle("jmri.jmrix.pricom.pockettester.TesterBundle");
-        putValue(javax.swing.Action.NAME, rb.getString("ActionPacketTable"));
+        putValue(javax.swing.Action.NAME, Bundle.getMessage("ActionPacketTable"));
     }
 
     @Override

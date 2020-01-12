@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -24,6 +23,12 @@
                 <surname>Heap</surname>
             </personname>
         </author>
+        <author>
+            <personname>
+                <firstname>Ronald</firstname>
+                <surname>Kuhn</surname>
+            </personname>
+        </author>
     </authorgroup>
     <revhistory xmlns="http://docbook.org/ns/docbook">
         <revision>
@@ -31,6 +36,18 @@
             <date>2016-12-05</date>
             <authorinitials>DGH</authorinitials>
             <revremark>Created along with the Facade/capability support for programming</revremark>
+        </revision>
+        <revision>
+            <revnumber>2</revnumber>
+            <date>2019-05-19</date>
+            <authorinitials>RK</authorinitials>
+            <revremark>added german translation</revremark>
+        </revision>
+        <revision>
+            <revnumber>1</revnumber>
+            <date>2019-12-04</date>
+            <authorinitials>DGH</authorinitials>
+            <revremark>Added Bounce Effects and Secondary Address Warning</revremark>
         </revision>
     </revhistory>
     <decoder>
@@ -130,6 +147,9 @@
             <variable CV="1" mask="XXVVVVVV" item="Short Address" default="01">
                 <splitVal highCV="9" upperMask="XXXXXVVV" min="1" max="511"/>
                 <label>Primary Decoder Address</label>
+                <label xml:lang="de">Primäre Decoderadresse</label>
+                <tooltip>Sets base address for primary</tooltip>
+                <tooltip xml:lang="de">Einstellen der primären Decoderadresse</tooltip>
             </variable>
             <!-- Secondary Address. Definition order is important for correct loading of defaults. -->
             <variables exclude="SwitchPilot Servo,SwitchPilot Servo (MA)">
@@ -150,10 +170,14 @@
                 <variable CV="36" mask="XXXXVXXX" item="Second Address Enable" default="1">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
                     <label>Enable Secondary Address</label>
+                    <label xml:lang="de">Aktiviere zweite Adresse</label>
+                    <comment>This variable interacts badly with the Second Address Variables, also using CV 36 but different bitmasks.</comment>
+                    <comment>There is a warning on the Basic pane and a JMRI issue will be raised.</comment>
                 </variable>
                 <variable CV="35" mask="XXVVVVVV" item="Second Address" default="2">
                     <splitVal highCV="36" upperMask="XXXXXVVV" min="1" max="511"/>
                     <label>Secondary Decoder Address</label>
+                    <label xml:lang="de">Zweite Decoderadresse</label>
                 </variable>
             </variables>
             <variable CV="29" mask="VXXXXXXX" item="Is Accessory Decoder" default="1">
@@ -161,68 +185,83 @@
             </variable>
             <variable CV="29" mask="XXXXVXXX" item="RailCom Option 1" default="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-                <label>RailCom Enable</label>
+                <label>RailCom® Enable</label>
+                <label xml:lang="de">RailCom® aktiv</label>
             </variable>
             <variable CV="28" mask="VXXXXXXX" include="SwitchPilot Servo (2013)" item="RailCom Option 2" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-                <label>RailCom Plus Automatic Announcement</label>
+                <label>RailCom® Plus Automatic Announcement</label>
+                <label xml:lang="de">RailCom® Plus automatische Anmeldung aktiv</label>
             </variable>
             <variable CV="28" mask="XXXXXXVX" item="RailCom Option 3" default="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-                <label>RailCom Channel 2 Data Transmission</label>
+                <label>RailCom® Channel 2 Data Transmission</label>
+                <label xml:lang="de">RailCom® Kanal 2 (Daten)</label>
             </variable>
             <variable CV="28" mask="XXXXXVXX" include="SwitchPilot,SwitchPilot Servo,SwitchPilot Servo (MA)" item="RailCom Option 4" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-                <label>RailCom Channel 1 Command Confirmation</label>
+                <label>RailCom® Channel 1 Command Confirmation</label>
+                <label xml:lang="de">RailCom® Kanal 1 (Broadcast)</label>
             </variable>
             <variables include="SwitchPilot,SwitchPilot V2.0">
                 <variable CV="34" mask="XXXXXXXV" item="Zoom Output 1" default="0">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                     <label>Enable Zoom Function on Output 1</label>
+                    <label xml:lang="de">Zoom Funktion an Ausgang 1</label>
                 </variable>
                 <variable CV="34" mask="XXXXXXVX" item="Zoom Output 2" default="0">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                     <label>Enable Zoom Function on Output 2</label>
+                    <label xml:lang="de">Zoom Funktion an Ausgang 2</label>
                 </variable>
                 <variable CV="34" mask="XXXXXVXX" item="Zoom Output 3" default="0">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                     <label>Enable Zoom Function on Output 3</label>
+                    <label xml:lang="de">Zoom Funktion an Ausgang 3</label>
                 </variable>
                 <variable CV="34" mask="XXXXVXXX" item="Zoom Output 4" default="0">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                     <label>Enable Zoom Function on Output 4</label>
+                    <label xml:lang="de">Zoom Funktion an Ausgang 4</label>
                 </variable>
             </variables>
             <variable CV="49" mask="XXXXXXXV" item="Relay 1 Delay" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label>Enable Relay 1 Delay</label>
+                <label xml:lang="de">Relais 1 verzögert</label>
             </variable>
             <variable CV="49" mask="XXXXXXVX" item="Relay 2 Delay" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label>Enable Relay 2 Delay</label>
+                <label xml:lang="de">Relais 2 verzögert</label>
             </variable>
             <variables exclude="SwitchPilot V2.0">
                 <variable CV="49" mask="XXXXXVXX" item="Relay 3 Delay" default="0">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                     <label>Enable Relay 3 Delay</label>
+                    <label xml:lang="de">Relais 3 verzögert</label>
                 </variable>
                 <variable CV="49" mask="XXXXVXXX" item="Relay 4 Delay" default="0">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                     <label>Enable Relay 4 Delay</label>
+                    <label xml:lang="de">Relais 4 verzögert</label>
                 </variable>
             </variables>
             <variables exclude="SwitchPilot,SwitchPilot Servo">
                 <variable CV="50" mask="XXXXXXXV" item="Servo Control 1" default="0">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                     <label>Initial impulse only after command received</label>
+                    <label xml:lang="de">Servoimpuls nach empfangenem Kommando einschalten</label>
                 </variable>
                 <variable CV="50" mask="XXXXXXVX" item="Servo Control 2" default="0">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                     <label>Timeout impulse after position reached</label>
+                    <label xml:lang="de">Servo nach Erreichen der Endstellung abschalten</label>
                 </variable>
                 <variable CV="50" mask="XXXXXVXX" item="Servo Control 3" default="0" exclude="SwitchPilot Servo (MA)">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                     <label>Power on servo only while moving</label>
+                    <label xml:lang="de">Stromversorgung nur bei Bewegung anschalten</label>
                 </variable>
             </variables>
             <variables exclude="SwitchPilot,SwitchPilot Servo,SwitchPilot V2.0">
@@ -291,125 +330,180 @@
         <name xml:lang="cs">Základní</name>
         <column>
             <row>
-                <group include="SwitchPilot,SwitchPilot V2.0">
-                    <column>
-                        <label>
-                            <text> </text>
-                        </label>
-                        <display item="Short Address" tooltip="Sets base address for primary"/>
-                        <label>
-                            <text> </text>
-                        </label>
-                        <display item="Primary_Address_1">
-                            <label>Output 1 Address</label>
-                        </display>
-                        <display item="Primary_Address_2">
-                            <label>Output 2 Address</label>
-                        </display>
-                        <display item="Primary_Address_3">
-                            <label>Output 3 Address</label>
-                        </display>
-                        <display item="Primary_Address_4">
-                            <label>Output 4 Address</label>
-                        </display>
-                    </column>
-                </group>
-                <group exclude="SwitchPilot,SwitchPilot V2.0">
-                    <column>
-                        <label>
-                            <text> </text>
-                        </label>
-                        <display item="Short Address" tooltip="Sets base address for primary"/>
-                        <label>
-                            <text> </text>
-                        </label>
-                        <display item="Primary_Address_1">
-                            <label>Servo 1 Address</label>
-                        </display>
-                        <display item="Primary_Address_2">
-                            <label>Servo 2 Address</label>
-                        </display>
-                        <display item="Primary_Address_3">
-                            <label>Servo 3 Address</label>
-                        </display>
-                        <display item="Primary_Address_4">
-                            <label>Servo 4 Address</label>
-                        </display>
-                    </column>
-                </group>
+                <column>
+                    <row>
+                        <group include="SwitchPilot,SwitchPilot V2.0">
+                            <column>
+                                <label>
+                                    <text> </text>
+                                </label>
+                                <display item="Short Address" tooltip="Sets base address for primary"/>
+                                <label>
+                                    <text> </text>
+                                </label>
+                                <display item="Primary_Address_1">
+                                    <label>Output 1 Address</label>
+                                    <label xml:lang="de">Ausgang 1 Adresse</label>
+                                </display>
+                                <display item="Primary_Address_2">
+                                    <label>Output 2 Address</label>
+                                    <label xml:lang="de">Ausgang 2 Adresse</label>
+                                </display>
+                                <display item="Primary_Address_3">
+                                    <label>Output 3 Address</label>
+                                    <label xml:lang="de">Ausgang 3 Adresse</label>
+                                </display>
+                                <display item="Primary_Address_4">
+                                    <label>Output 4 Address</label>
+                                    <label xml:lang="de">Ausgang 4 Adresse</label>
+                                </display>
+                            </column>
+                        </group>
+                        <group exclude="SwitchPilot,SwitchPilot V2.0">
+                            <column>
+                                <label>
+                                    <text> </text>
+                                </label>
+                                <display item="Short Address" tooltip="Sets base address for primary"/>
+                                <label>
+                                    <text> </text>
+                                </label>
+                                <display item="Primary_Address_1">
+                                    <label>Servo 1 Address</label>
+                                    <label xml:lang="de">Servo 1 Adresse</label>
+                                </display>
+                                <display item="Primary_Address_2">
+                                    <label>Servo 2 Address</label>
+                                    <label xml:lang="de">Servo 2 Adresse</label>
+                                </display>
+                                <display item="Primary_Address_3">
+                                    <label>Servo 3 Address</label>
+                                    <label xml:lang="de">Servo 3 Adresse</label>
+                                </display>
+                                <display item="Primary_Address_4">
+                                    <label>Servo 4 Address</label>
+                                    <label xml:lang="de">Servo 4 Adresse</label>
+                                </display>
+                            </column>
+                        </group>
+                        <column>
+                            <label>
+                                <text>     </text>
+                            </label>
+                        </column>
+                        <group include="SwitchPilot,SwitchPilot V2.0">
+                            <column>
+                                <display item="Second Address Enable" format="checkbox"/>
+                                <display item="Second Address" tooltip="Sets base address for Secondary"/>
+                                <label>
+                                    <text> </text>
+                                </label>
+                                <display item="Secondary_Address_1">
+                                    <label>Servo 1 Address</label>
+                                    <label xml:lang="de">Servo 1 Adresse</label>
+                                </display>
+                                <display item="Secondary_Address_2">
+                                    <label>Servo 2 Address</label>
+                                    <label xml:lang="de">Servo 2 Adresse</label>
+                                </display>
+                                <display item="Secondary_Address_3">
+                                    <label>Servo 3 Address</label>
+                                    <label xml:lang="de">Servo 3 Adresse</label>
+                                </display>
+                                <display item="Secondary_Address_4">
+                                    <label>Servo 4 Address</label>
+                                    <label xml:lang="de">Servo 4 Adresse</label>
+                                </display>
+                            </column>
+                        </group>
+                        <group exclude="SwitchPilot,SwitchPilot V2.0">
+                            <column>
+                                <display item="Second Address Enable" format="checkbox"/>
+                                <display item="Second Address" tooltip="Sets base address for Secondary"/>
+                                <label>
+                                    <text> </text>
+                                </label>
+                                <display item="Secondary_Address_1">
+                                    <label>Servo 1 Address for position C and D</label>
+                                    <label xml:lang="de">Servo 1 Adresse für Position C und D</label>
+                                </display>
+                                <display item="Secondary_Address_2">
+                                    <label>Servo 2 Address for position C and D</label>
+                                    <label xml:lang="de">Servo 2 Adresse für Position C und D</label>
+                                </display>
+                                <display item="Secondary_Address_3">
+                                    <label>Servo 3 Address for position C and D</label>
+                                    <label xml:lang="de">Servo 3 Adresse für Position C und D</label>
+                                </display>
+                                <display item="Secondary_Address_4">
+                                    <label>Servo 4 Address for position C and D</label>
+                                    <label xml:lang="de">Servo 4 Adresse für Position C und D</label>
+                                </display>
+                            </column>
+                        </group>
+                    </row>
+                </column>
                 <column>
                     <label>
                         <text>     </text>
                     </label>
                 </column>
-                <group include="SwitchPilot,SwitchPilot V2.0">
-                    <column>
-                        <display item="Second Address Enable" format="checkbox"/>
-                        <display item="Second Address" tooltip="Sets base address for Secondary"/>
-                        <label>
-                            <text> </text>
-                        </label>
-                        <display item="Secondary_Address_1">
-                            <label>Servo 1 Address</label>
-                        </display>
-                        <display item="Secondary_Address_2">
-                            <label>Servo 2 Address</label>
-                        </display>
-                        <display item="Secondary_Address_3">
-                            <label>Servo 3 Address</label>
-                        </display>
-                        <display item="Secondary_Address_4">
-                            <label>Servo 4 Address</label>
-                        </display>
-                    </column>
-                </group>
-                <group exclude="SwitchPilot,SwitchPilot V2.0">
-                    <column>
-                        <display item="Second Address Enable" format="checkbox"/>
-                        <display item="Second Address" tooltip="Sets base address for Secondary"/>
-                        <label>
-                            <text> </text>
-                        </label>
-                        <display item="Secondary_Address_1">
-                            <label>Servo 1 Address for position C and D</label>
-                        </display>
-                        <display item="Secondary_Address_2">
-                            <label>Servo 2 Address for position C and D</label>
-                        </display>
-                        <display item="Secondary_Address_3">
-                            <label>Servo 3 Address for position C and D</label>
-                        </display>
-                        <display item="Secondary_Address_4">
-                            <label>Servo 4 Address for position C and D</label>
-                        </display>
-                    </column>
-                </group>
+                <column>
+                    <display item="Manufacturer" tooltip="The manufacturer's ID number (read only)">
+                        <tooltip xml:lang="it">ID Costruttore (sola lettura)</tooltip>
+                        <tooltip xml:lang="ca">Número de fabricant (noméss lectura)</tooltip>
+                        <tooltip xml:lang="de">Hersteller ID (nur lesen)</tooltip>
+                        <tooltip xml:lang="cs">ID číslo výrobce (pouze pro čtení)</tooltip>
+                    </display>
+                    <display item="Decoder Version" tooltip="The decoder version number (read only)">
+                        <tooltip xml:lang="it">Numero versione del Decoder (sola lettura)</tooltip>
+                        <tooltip xml:lang="ca">Número de versió del descodificador (noméss lectura)</tooltip>
+                        <tooltip xml:lang="de">Dekoder Version (nur lesen)</tooltip>
+                        <tooltip xml:lang="cs">Číslo verze dekodéru (pouze pro čtení)</tooltip>
+                    </display>
+                    <display item="Product Number" tooltip="The decoder product number (if used) (read only)">
+                        <tooltip xml:lang="it">Codice di prodotto del Decoder (se usato) (sola lettura)</tooltip>
+                        <tooltip xml:lang="ca">La referència del descodificador (només si es fa servir) (només lectura)</tooltip>
+                        <tooltip xml:lang="de">Softwareversion des Dekoders (nur lesen)</tooltip>
+                        <tooltip xml:lang="cs">Číslo výrobku dekodéru (pokud je použito) (pouze pro čtení)</tooltip>
+                    </display>
+                </column>
             </row>
-        </column>
-        <column>
-            <label>
-                <text>     </text>
-            </label>
-        </column>
-        <column>
-            <display item="Manufacturer" tooltip="The manufacturer's ID number (read only)">
-                <tooltip xml:lang="it">ID Costruttore (sola lettura)</tooltip>
-                <tooltip xml:lang="ca">Número de fabricant (noméss lectura)</tooltip>
-                <tooltip xml:lang="de">Hersteller ID (nur lesen)</tooltip>
-                <tooltip xml:lang="cs">ID číslo výrobce (pouze pro čtení)</tooltip>
-            </display>
-            <display item="Decoder Version" tooltip="The decoder version number (read only)">
-                <tooltip xml:lang="it">Numero versione del Decoder (sola lettura)</tooltip>
-                <tooltip xml:lang="ca">Número de versió del descodificador (noméss lectura)</tooltip>
-                <tooltip xml:lang="de">Dekoder Version (nur lesen)</tooltip>
-                <tooltip xml:lang="cs">Číslo verze dekodéru (pouze pro čtení)</tooltip>
-            </display>
-            <display item="Product Number" tooltip="The decoder product number (if used) (read only)">
-                <tooltip xml:lang="it">Codice di prodotto del Decoder (se usato) (sola lettura)</tooltip>
-                <tooltip xml:lang="ca">La referència del descodificador (només si es fa servir) (només lectura)</tooltip>
-                <tooltip xml:lang="de">Softwareversion des Dekoders (nur lesen)</tooltip>
-                <tooltip xml:lang="cs">Číslo výrobku dekodéru (pokud je použito) (pouze pro čtení)</tooltip>
-            </display>
+            <column>
+                <group>
+                    <qualifier>
+                        <variableref>Second Address</variableref>
+                        <relation>exists</relation>
+                        <value>1</value>
+                    </qualifier>
+                    <separator/>
+                    <label>
+                        <text>&lt;html&gt;&lt;h2&gt;Warning: Issue with "Read Sheet(s)"&lt;/h2&gt;&lt;/html&gt;</text>
+                    </label>
+                    <label>
+                        <text> </text>
+                    </label>
+                    <label>
+                        <text>&lt;html&gt;&lt;em&gt;Due to an unresolved JMRI issue, use of "Read Sheet(s)" will show incorrect values for the majority of settings on multiple panes.&lt;/em&gt;&lt;/html&gt;</text>
+                    </label>
+                    <label>
+                        <text> </text>
+                    </label>
+                    <label>
+                        <text>&lt;html&gt;&lt;strong&gt;Workaround: Switch to "CVs" pane and "Read Full Sheet".&lt;/strong&gt;&lt;/html&gt;</text>
+                    </label>
+                    <label>
+                        <text> </text>
+                    </label>
+                    <label>
+                        <text>&lt;html&gt;The correct from-decoder values will then be shown in all panes and can be changed/written.&lt;/html&gt;</text>
+                    </label>
+                    <label>
+                        <text> </text>
+                    </label>
+                    <separator/>
+                </group>
+            </column>
         </column>
     </pane>
     <pane>
@@ -421,8 +515,9 @@
         <name xml:lang="cs">Pokročilý</name>
         <column>
             <label>
-                <text>RailCom Settings</text>
-                <text xml:lang="it">RailCom</text>
+                <text>RailCom® Settings</text>
+                <text xml:lang="it">RailCom®</text>
+                <text xml:lang="de">RailCom® Einstellungen</text>
             </label>
             <label>
                 <text> </text>
@@ -441,6 +536,7 @@
                 <column>
                     <label>
                         <text>Send following information to the command station:</text>
+                        <text xml:lang="de">Folgende Informationen an die Zentrale senden:</text>
                     </label>
                     <label>
                         <text> </text>
@@ -454,12 +550,14 @@
     <xi:include href="http://jmri.org/xml/decoders/esu/switchPilotFnOutPane.xml"/>
     <pane>
         <name>Function Settings</name>
+        <name xml:lang="de">Funktionseinstellungen</name>
         <column>
             <group include="SwitchPilot,SwitchPilot V2.0">
                 <column>
                     <separator/>
                     <label>
                         <text>"Zoom" Configuration</text>
+                        <text xml:lang="de">"Zoom" Konfiguration</text>
                     </label>
                     <label>
                         <text> </text>
@@ -478,6 +576,7 @@
                     <separator/>
                     <label>
                         <text>Relay Control Settings (SwitchPilot Extension)</text>
+                        <text xml:lang="de">Relais Einstellungen (SwitchPilot Extension)</text>
                     </label>
                     <label>
                         <text> </text>
@@ -496,6 +595,7 @@
                     <separator/>
                     <label>
                         <text>Servo Control</text>
+                        <text xml:lang="de">Servo Einstellungen</text>
                     </label>
                     <label>
                         <text> </text>

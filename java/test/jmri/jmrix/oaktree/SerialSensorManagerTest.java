@@ -62,7 +62,6 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
         memo = new OakTreeSystemConnectionMemo("O", "Oak Tree");
         SerialTrafficController t = new SerialTrafficController(memo) {
             SerialTrafficController test() {
-                setInstance();
                 return this;
             }
         }.test();
@@ -80,7 +79,9 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
     @After
     public void tearDown() {
         l.dispose();
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
 }

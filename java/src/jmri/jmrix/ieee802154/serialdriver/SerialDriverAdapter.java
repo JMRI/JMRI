@@ -16,8 +16,8 @@ import purejavacomm.SerialPort;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Provide access to IEEE802.15.4 devices via a serial comm port. Derived from
- * the oaktree code.
+ * Provide access to IEEE802.15.4 devices via a serial com port.
+ * Derived from the Oaktree code.
  *
  * @author Bob Jacobsen Copyright (C) 2006, 2007, 2008
  * @author Ken Cameron, (C) 2009, sensors from poll replies Converted to
@@ -25,7 +25,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * @author kcameron Copyright (C) 2011
  * @author Paul Bender Copyright (C) 2013
  */
-public class SerialDriverAdapter extends IEEE802154PortController implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends IEEE802154PortController {
 
     protected SerialPort activeSerialPort = null;
 
@@ -52,7 +52,7 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
             try {
                 setSerialPort();
             } catch (UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
+                log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
 
@@ -76,8 +76,8 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
             }
             if (log.isDebugEnabled()) {
                 // report additional status
-                log.debug(" port flow control shows " // NOI18N
-                        + (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control")); // NOI18N
+                log.debug(" port flow control shows {}", // NOI18N
+                        (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control")); // NOI18N
 
                 // log events
                 setPortEventLogging(activeSerialPort);
@@ -88,7 +88,7 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
         } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
         } catch (IOException ex) {
-            log.error("Unexpected exception while opening port {}", portName, ex);
+            log.error("Unexpected exception while opening port {} ", portName, ex);
             return "Unexpected error while opening port " + portName + ": " + ex;
         }
 
@@ -104,7 +104,7 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
     }
 
     /**
-     * set up all of the other objects to operate connected to this port
+     * Set up all of the other objects to operate connected to this port.
      */
     @Override
     public void configure() {
@@ -138,7 +138,7 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
         } catch (IOException e) {
-            log.error("getOutputStream exception: " + e.getMessage());
+            log.error("getOutputStream exception: {}", e.getMessage());
         }
         return null;
     }
@@ -149,12 +149,13 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
     }
 
     /**
-     * Local method to do specific port configuration
+     * Local method to do specific port configuration.
+     *
      * @throws UnsupportedCommOperationException if options not supported by port
      */
     protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
-        int baud = 9600;  // default, but also defaulted in the initial value of selectedSpeed
+        int baud = currentBaudNumber(mBaudRate);
 
         activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
                 SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
@@ -164,44 +165,49 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
         configureLeadsAndFlowControl(activeSerialPort, flow);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] validBaudRates() {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
     /**
-     * Set the baud rate.
+     * {@inheritDoc}
      */
     @Override
-    public void configureBaudRate(String rate) {
-        log.debug("configureBaudRate: " + rate);
-        selectedSpeed = rate;
-        super.configureBaudRate(rate);
+    public int[] validBaudNumbers() {
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 
-    String[] stdOption1Values = new String[]{"CM11", "CP290", "Insteon 2412S"};
+    String[] stdOption1Values = new String[]{"CM11", "CP290", "Insteon 2412S"}; // NOI18N
 
     public String[] validOption1() {
         return Arrays.copyOf(stdOption1Values, stdOption1Values.length);
     }
 
     /**
-     * Option 1 not used, so return a null string.
+     * Get a String that says what Option 1 represents.
+     *
      * @return fixed string 'Adapter'
      */
     public String option1Name() {
-        return "Adapter";
+        return "Adapter"; // NOI18N
     }
 
-    private String[] validSpeeds = new String[]{"(automatic)"};
-    @SuppressWarnings("unused")
+    private String[] validSpeeds = new String[]{Bundle.getMessage("BaudAutomatic")};
     private int[] validSpeedValues = new int[]{9600};
-    @SuppressWarnings("unused")
-    private String selectedSpeed = validSpeeds[0];
+
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
+    }
 
     /**
      * Get an array of valid values for "option 2"; used to display valid
-     * options. May not be null, but may have zero entries
+     * options. May not be null, but may have zero entries.
+     *
      * @return empty string array
      */
     public String[] validOption2() {
@@ -209,8 +215,9 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
     }
 
     /**
-     * Get a String that says what Option 2 represents May be an empty string,
-     * but will not be null
+     * Get a String that says what Option 2 represents. May be an empty string,
+     * but will not be null.
+     *
      * @return empty string
      */
     public String option2Name() {

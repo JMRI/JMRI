@@ -1,5 +1,7 @@
 package jmri.jmrix.acela;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import javax.annotation.Nonnull;
 import jmri.Manager.NameValidity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * One address format is supported: Atxxxx where: t is the type code, 'T' for
  * turnouts, 'S' for sensors, and 'L' for lights xxxx is a bit number of the
- * input or output bit (0-1023) examples: AT2 (bit 2), AS1003 (bit 1003), AL134
+ * input or output bit (0-16383) examples: AT2 (bit 2), AS1003 (bit 1003), AL134
  * (bit134).<p>
  * Note: Not fully supporting long system connection prefix yet
  *
@@ -23,16 +25,14 @@ public class AcelaAddress {
     }
     
     static final int MINSENSORADDRESS = 0;
-    static final int MAXSENSORADDRESS = 1023;   //  Artifical limit but OK until someone has
-    //  more than 64 sensor modules (at 16 sensors each).
+    static final int MAXSENSORADDRESS = AcelaNode.MAXSENSORBITS * AcelaNode.MAXNODE -1;
     static final int MINOUTPUTADDRESS = 0;
-    static final int MAXOUTPUTADDRESS = 1023;   //  Artifical limit but OK until someone has
-    //  more than 64 output modules (at 16 outputs each).
+    static final int MAXOUTPUTADDRESS = AcelaNode.MAXOUTPUTBITS * AcelaNode.MAXNODE -1;
 
     /**
      * Public static method to parse an Acela system name and return the Acela
      * Node Address Note: Returns '-1' if illegal systemName format or if the
-     * node is not found. Nodes are numbered from 0 - 127.
+     * node is not found. Nodes are numbered from 0 - {@value AcelaNode#MAXNODE}.
      */
     public static int getNodeAddressFromSystemName(String systemName, AcelaSystemConnectionMemo memo) {
         // validate the system Name leader characters
@@ -97,7 +97,7 @@ public class AcelaAddress {
         // try to parse remaining system name part
         int num = -1;
         try {
-            num = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue(); // multi char prefix
+            num = Integer.parseInt(systemName.substring(prefix.length() + 1)); // multi char prefix
         } catch (NumberFormatException e) {
             log.warn("invalid character in number field of system name: {}", systemName);
             return (-1);
@@ -115,7 +115,7 @@ public class AcelaAddress {
      *
      * @return 'true' if system name has a valid format, else return 'false'
      */
-    public static NameValidity validSystemNameFormat(String systemName, char type, String prefix) {
+    public static NameValidity validSystemNameFormat(@Nonnull String systemName, char type, String prefix) {
         // validate the system Name leader characters
         if (!systemName.startsWith(prefix + type )) {
             // here if an illegal format 
@@ -124,13 +124,13 @@ public class AcelaAddress {
         }
         int num;
         try {
-            num = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue();
+            num = Integer.parseInt(systemName.substring(prefix.length() + 1));
         } catch (NumberFormatException e) {
             log.debug("invalid character in number field of system name: {}", systemName);
             return NameValidity.INVALID;
         }
         if (num >= 0) {
-            // This is a ALnnxxx address
+            // This is an ALnnxxx address
             return NameValidity.VALID;
         } else {
             log.debug("invalid Acela system name: {}", systemName);
@@ -144,6 +144,7 @@ public class AcelaAddress {
      * @return 'true' if system name has a valid meaning in current
      * configuration, else return 'false'
      */
+    @SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES", justification="additional check for valid bit value")
     public static boolean validSystemNameConfig(String systemName, char type, AcelaSystemConnectionMemo memo) {
         if (validSystemNameFormat(systemName, type, memo.getSystemPrefix()) != NameValidity.VALID) {
             // No point in trying if a valid system name format is not present

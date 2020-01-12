@@ -1,22 +1,17 @@
 package jmri.jmrit.roster;
 
-import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
+import com.fasterxml.jackson.databind.util.StdDateFormat;
 import java.awt.HeadlessException;
 import java.awt.Image;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Writer;
-import java.lang.Math;
-import java.text.DateFormat;
-import java.text.ParseException;
+import java.text.*;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.*;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.StringTokenizer;
-import java.util.TreeMap;
-import java.util.Vector;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.ImageIcon;
@@ -46,7 +41,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * The RosterEntry is the central place to find information about a locomotive's
  * configuration, including CV and "programming variable" information.
- * RosterEntry handles persistency through the LocoFile class. Creating a
+ * RosterEntry handles persistence through the LocoFile class. Creating a
  * RosterEntry does not necessarily read the corresponding file (which might not
  * even exist), please see readFile(), writeFile() member functions.
  * <p>
@@ -66,6 +61,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2004, 2005, 2009
  * @author Dennis Miller Copyright 2004
  * @author Egbert Broerse Copyright (C) 2018
+ * @author Dave Heap Copyright (C) 2019
  * @see jmri.jmrit.roster.LocoFile
  */
 public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRosterEntry {
@@ -119,43 +115,37 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     protected int _maxSpeedPCT = 100;
 
     /**
-     * @return the default owner
-     * @deprecated since 4.1.4 use
-     * {@link jmri.jmrit.roster.RosterConfigManager#getDefaultOwner()} instead
+     * Deprecated, use {@link #getMAXFNNUM} directly.
+     *
+     * @deprecated 4.17.1 to be removed in ??
      */
     @Deprecated
-    public static String getDefaultOwner() {
-        return InstanceManager.getDefault(RosterConfigManager.class).getDefaultOwner();
-    }
+    public static final int MAXFNNUM = 28;
 
     /**
-     * @param n the default owner
-     * @deprecated since 4.1.4 use
-     * {@link jmri.jmrit.roster.RosterConfigManager#setDefaultOwner(java.lang.String)}
-     * instead
+     * Get the highest valid Fn key number for this roster entry.
+     * <dl>
+     * <dt>The default value (28) will eventually be able to be overridden in a
+     * decoder definition file:</dt>
+     * <dd><ul>
+     * <li>A European standard (RCN-212) extends NMRA S9.2.1 up to F68.</li>
+     * <li>ESU LokSound 5 already uses up to F31.</li>
+     * </ul></dd>
+     * </dl>
+     *
+     * @return the highest function number (Fn) supported by this roster entry.
+     *
+     * @see "http://normen.railcommunity.de/RCN-212.pdf"
      */
-    @Deprecated
-    public static void setDefaultOwner(String n) {
-        InstanceManager.getDefault(RosterConfigManager.class).setDefaultOwner(n);
-    }
-
-    public final static int MAXFNNUM = 28;
-
     public int getMAXFNNUM() {
         return MAXFNNUM;
     }
 
-    public final static int MAXSOUNDNUM = 32;
-
-    public int getMAXSOUNDNUM() {
-        return MAXSOUNDNUM;
-    }
-
-    protected String[] functionLabels;
-    protected String[] soundLabels;
-    protected String[] functionSelectedImages;
-    protected String[] functionImages;
-    protected boolean[] functionLockables;
+    protected Map<Integer, String> functionLabels;
+    protected Map<Integer, String> soundLabels;
+    protected Map<Integer, String> functionSelectedImages;
+    protected Map<Integer, String> functionImages;
+    protected Map<Integer, Boolean> functionLockables;
     protected String _isShuntingOn = "";
 
     protected final TreeMap<String, String> attributePairs = new TreeMap<>();
@@ -170,6 +160,11 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * Construct a blank object.
      */
     public RosterEntry() {
+        functionLabels = Collections.synchronizedMap(new HashMap<>());
+        soundLabels = Collections.synchronizedMap(new HashMap<>());
+        functionSelectedImages = Collections.synchronizedMap(new HashMap<>());
+        functionImages = Collections.synchronizedMap(new HashMap<>());
+        functionLockables = Collections.synchronizedMap(new HashMap<>());
     }
 
     /**
@@ -186,7 +181,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * Constructor based on a given RosterEntry object and name/ID.
      *
      * @param pEntry RosterEntry object
-     * @param pID unique name/ID for the roster entry
+     * @param pID    unique name/ID for the roster entry
      */
     public RosterEntry(RosterEntry pEntry, String pID) {
         this();
@@ -214,31 +209,40 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         _maxSpeedPCT = pEntry._maxSpeedPCT;
         _isShuntingOn = pEntry._isShuntingOn;
 
-        functionLabels = new String[MAXFNNUM + 1];
-        soundLabels = new String[MAXSOUNDNUM + 1];
-        functionSelectedImages = new String[MAXFNNUM + 1];
-        functionImages = new String[MAXFNNUM + 1];
-        functionLockables = new boolean[MAXFNNUM + 1];
-
-        for (int i = 0; i < MAXFNNUM; i++) {
-            if ((pEntry.functionLabels != null) && (pEntry.functionLabels[i] != null)) {
-                functionLabels[i] = pEntry.functionLabels[i];
-            }
-            if ((pEntry.functionSelectedImages != null) && (pEntry.functionSelectedImages[i] != null)) {
-                functionSelectedImages[i] = pEntry.functionSelectedImages[i];
-            }
-            if ((pEntry.functionImages != null) && (pEntry.functionImages[i] != null)) {
-                functionImages[i] = pEntry.functionImages[i];
-            }
-            if (pEntry.functionLockables != null) {
-                functionLockables[i] = pEntry.functionLockables[i];
-            }
+        if (pEntry.functionLabels != null) {
+            pEntry.functionLabels.forEach((key, value) -> {
+                if (value != null) {
+                    functionLabels.put(key, value);
+                }
+            });
         }
-
-        for (int i = 0; i < MAXSOUNDNUM; i++) {
-            if ((pEntry.soundLabels != null) && (pEntry.soundLabels[i] != null)) {
-                soundLabels[i] = pEntry.soundLabels[i];
-            }
+        if (pEntry.soundLabels != null) {
+            pEntry.soundLabels.forEach((key, value) -> {
+                if (value != null) {
+                    soundLabels.put(key, value);
+                }
+            });
+        }
+        if (pEntry.functionSelectedImages != null) {
+            pEntry.functionSelectedImages.forEach((key, value) -> {
+                if (value != null) {
+                    functionSelectedImages.put(key, value);
+                }
+            });
+        }
+        if (pEntry.functionImages != null) {
+            pEntry.functionImages.forEach((key, value) -> {
+                if (value != null) {
+                    functionImages.put(key, value);
+                }
+            });
+        }
+        if (pEntry.functionLockables != null) {
+            pEntry.functionLockables.forEach((key, value) -> {
+                if (value != null) {
+                    functionLockables.put(key, value);
+                }
+            });
         }
     }
 
@@ -276,18 +280,17 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     }
 
     public String getPathName() {
-        return LocoFile.getFileLocation() + "/" + _fileName;
+        return Roster.getDefault().getRosterFilesLocation() + _fileName;
     }
 
     /**
      * Ensure the entry has a valid filename.
      * <p>
-     * If none exists, create one based on the ID string.
-     * Does _not_ enforce any particular naming; you have to
-     * check separately for {@literal "<none>"} or whatever your convention is
-     * for indicating an invalid name. Does replace the space, period, colon,
-     * slash and backslash characters so that the filename will be generally
-     * usable.
+     * If none exists, create one based on the ID string. Does _not_ enforce any
+     * particular naming; you have to check separately for {@literal "<none>"}
+     * or whatever your convention is for indicating an invalid name. Does
+     * replace the space, period, colon, slash and backslash characters so that
+     * the filename will be generally usable.
      */
     public void ensureFilenameExists() {
         // if there isn't a filename, store using the id
@@ -297,7 +300,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
             // we don't want to overwrite a file that exists, whether or not
             // it's in the roster
-            File testFile = new File(LocoFile.getFileLocation() + newFilename);
+            File testFile = new File(Roster.getDefault().getRosterFilesLocation() + newFilename);
             int count = 0;
             String oldFilename = newFilename;
             while (testFile.exists()) {
@@ -305,7 +308,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                 newFilename = oldFilename.substring(0, oldFilename.length() - 4) + count + ".xml";
                 count++;
                 log.debug("try to use " + newFilename + " as filename instead of " + oldFilename);
-                testFile = new File(LocoFile.getFileLocation() + newFilename);
+                testFile = new File(Roster.getDefault().getRosterFilesLocation() + newFilename);
             }
             setFileName(newFilename);
             log.debug("new filename: " + getFileName());
@@ -471,7 +474,11 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         try {
             n = Integer.parseInt(getDccAddress());
         } catch (NumberFormatException e) {
-            log.error("Illegal format for DCC address roster entry: \"" + getId() + "\" value: \"" + getDccAddress() + "\"");
+            log.error("Illegal format for DCC address roster entry: \""
+                    + getId()
+                    + "\" value: \""
+                    + getDccAddress()
+                    + "\"");
             n = 0;
         }
         return new DccLocoAddress(n, _protocol);
@@ -527,7 +534,8 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     /**
      * Set the date modified given a string representing a date.
      * <p>
-     * Tries ISO 8601 and the current Java defaults as formats for parsing a date.
+     * Tries ISO 8601 and the current Java defaults as formats for parsing a
+     * date.
      *
      * @param date the string to parse into a date
      * @throws ParseException if the date cannot be parsed
@@ -535,15 +543,28 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     public void setDateModified(@Nonnull String date) throws ParseException {
         try {
             // parse using ISO 8601 date format(s)
-            this.setDateModified(new ISO8601DateFormat().parse(date));
+            setDateModified(new StdDateFormat().parse(date));
         } catch (ParseException ex) {
-            log.debug("ParseException in setDateModified");
-            // parse using defaults since thats how it was saved if saved
+            log.debug("ParseException in setDateModified ISO attempt: \"{}\"", date);
+            // next, try parse using defaults since thats how it was saved if saved
             // by earlier versions of JMRI
-            this.setDateModified(DateFormat.getDateTimeInstance().parse(date));
+            try {
+                setDateModified(DateFormat.getDateTimeInstance().parse(date));
+            } catch (ParseException ex2) {
+                // then try with a specific format to handle e.g. "Apr 1, 2016 9:13:36 AM"
+                DateFormat customFmt = new SimpleDateFormat("MMM dd, yyyy hh:mm:ss a");
+                try {
+                    setDateModified(customFmt.parse(date));
+                } catch (ParseException ex3) {
+                    // then try with a specific format to handle e.g. "01-Oct-2016 9:13:36"
+                    customFmt = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss");
+                    setDateModified(customFmt.parse(date));
+                }
+            }
         } catch (IllegalArgumentException ex2) {
             // warn that there's perhaps something wrong with the classpath
-            log.error("IllegalArgumentException in RosterEntry.setDateModified - this may indicate a problem with the classpath, specifically multiple copies of the 'jackson` library. See release notes" );
+            log.error(
+                    "IllegalArgumentException in RosterEntry.setDateModified - this may indicate a problem with the classpath, specifically multiple copies of the 'jackson` library. See release notes");
             // parse using defaults since thats how it was saved if saved
             // by earlier versions of JMRI
             this.setDateModified(DateFormat.getDateTimeInstance().parse(date));
@@ -559,10 +580,8 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * Set the date last updated.
      *
      * @param s the string to parse into a date
-     * @deprecated since 4.7.1; not for removal, but to make access protected
      */
-    @Deprecated
-    public void setDateUpdated(String s) {
+    protected void setDateUpdated(String s) {
         String old = _dateUpdated;
         _dateUpdated = s;
         try {
@@ -589,7 +608,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         if (date == null) {
             return _dateUpdated;
         } else {
-            return new ISO8601DateFormat().format(date);
+            return new StdDateFormat().format(date);
         }
     }
 
@@ -616,12 +635,17 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     /**
      * Construct this Entry from XML.
      * <p>
-     * This member has to remain synchronized
-     * with the detailed DTD in roster-config.xml
+     * This member has to remain synchronized with the detailed schema in
+     * xml/schema/locomotive-config.xsd.
      *
      * @param e Locomotive XML element
      */
     public RosterEntry(Element e) {
+        functionLabels = Collections.synchronizedMap(new HashMap<>());
+        soundLabels = Collections.synchronizedMap(new HashMap<>());
+        functionSelectedImages = Collections.synchronizedMap(new HashMap<>());
+        functionImages = Collections.synchronizedMap(new HashMap<>());
+        functionLockables = Collections.synchronizedMap(new HashMap<>());
         if (log.isDebugEnabled()) {
             log.debug("ctor from element " + e);
         }
@@ -717,7 +741,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                 address = Integer.parseInt(_dccAddress);
             } catch (NumberFormatException e2) {
                 address = 3;
-            }  // ignore, accepting the default value
+            } // ignore, accepting the default value
             if (tf != null && tf.canBeLongAddress(address) && !tf.canBeShortAddress(address)) {
                 // if it has to be long, handle that
                 _protocol = LocoAddress.Protocol.DCC_LONG;
@@ -781,9 +805,12 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      *               source is the roster entry itself
      */
     public void loadFunctions(Element e3, String source) {
-        /*Load flag once, means that when the roster entry is edited only the first set of function labels are displayed 
-         ie those saved in the roster file, rather than those being left blank
-         rather than being over-written by the defaults linked to the decoder def*/
+        /*
+         * Load flag once, means that when the roster entry is edited only the
+         * first set of function labels are displayed ie those saved in the
+         * roster file, rather than those being left blank rather than being
+         * over-written by the defaults linked to the decoder def
+         */
         if (loadedOnce) {
             return;
         }
@@ -793,8 +820,8 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             for (Element fn : l) {
                 int num = Integer.parseInt(fn.getAttribute("num").getValue());
                 String lock = fn.getAttribute("lockable").getValue();
-                String val = LocaleSelector.getAttribute(fn,"text");
-                if (val == null){
+                String val = LocaleSelector.getAttribute(fn, "text");
+                if (val == null) {
                     val = fn.getText();
                 }
                 if ((this.getFunctionLabel(num) == null) || (source.equalsIgnoreCase("model"))) {
@@ -850,9 +877,12 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      *               source is the roster entry itself
      */
     public void loadSounds(Element e3, String source) {
-        /*Load flag once, means that when the roster entry is edited only the first set of sound labels are displayed 
-         ie those saved in the roster file, rather than those being left blank
-         rather than being over-written by the defaults linked to the decoder def*/
+        /*
+         * Load flag once, means that when the roster entry is edited only the
+         * first set of sound labels are displayed ie those saved in the roster
+         * file, rather than those being left blank rather than being
+         * over-written by the defaults linked to the decoder def
+         */
         if (soundLoadedOnce) {
             return;
         }
@@ -861,8 +891,8 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             List<Element> l = e3.getChildren(RosterEntry.SOUND_LABEL);
             for (Element fn : l) {
                 int num = Integer.parseInt(fn.getAttribute("num").getValue());
-                String val = LocaleSelector.getAttribute(fn,"text");
-                if (val == null){
+                String val = LocaleSelector.getAttribute(fn, "text");
+                if (val == null) {
                     val = fn.getText();
                 }
                 if ((this.getSoundLabel(num) == null) || (source.equalsIgnoreCase("model"))) {
@@ -892,16 +922,17 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     }
 
     /**
-     * Define label for a specific function
+     * Set the label for a specific function
      *
-     * @param fn function number, starting with 0
+     * @param fn    function number, starting with 0
+     * @param label the label to use
      */
     public void setFunctionLabel(int fn, String label) {
         if (functionLabels == null) {
-            functionLabels = new String[MAXFNNUM + 1]; // counts zero
+            functionLabels = Collections.synchronizedMap(new HashMap<>());
         }
-        String old = functionLabels[fn];
-        functionLabels[fn] = label;
+        String old = functionLabels.get(fn);
+        functionLabels.put(fn, label);
         this.firePropertyChange(RosterEntry.FUNCTION_LABEL + fn, old, label);
     }
 
@@ -916,10 +947,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         if (functionLabels == null) {
             return null;
         }
-        if (fn < 0 || fn > MAXFNNUM) {
-            throw new IllegalArgumentException("number out of range: " + fn);
-        }
-        return functionLabels[fn];
+        return functionLabels.get(fn);
     }
 
     /**
@@ -930,11 +958,11 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      */
     public void setSoundLabel(int fn, String label) {
         if (soundLabels == null) {
-            soundLabels = new String[MAXSOUNDNUM + 1]; // counts zero
+            soundLabels = Collections.synchronizedMap(new HashMap<>());
         }
-        String old = this.soundLabels[fn];
-        soundLabels[fn] = label;
-        this.firePropertyChange(RosterEntry.SOUND_LABEL + fn, old, this.soundLabels[fn]);
+        String old = soundLabels.get(fn);
+        soundLabels.put(fn, label);
+        this.firePropertyChange(RosterEntry.SOUND_LABEL + fn, old, label);
     }
 
     /**
@@ -948,42 +976,39 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         if (soundLabels == null) {
             return null;
         }
-        if (fn < 0 || fn > MAXSOUNDNUM) {
-            throw new IllegalArgumentException("number out of range: " + fn);
-        }
-        return soundLabels[fn];
+        return soundLabels.get(fn);
     }
 
     public void setFunctionImage(int fn, String s) {
         if (functionImages == null) {
-            functionImages = new String[MAXFNNUM + 1]; // counts zero
+            functionImages = Collections.synchronizedMap(new HashMap<>());
         }
-        String old = functionImages[fn];
-        functionImages[fn] = s;
+        String old = functionImages.get(fn);
+        functionImages.put(fn, s);
         firePropertyChange(RosterEntry.FUNCTION_IMAGE + fn, old, s);
     }
 
     public String getFunctionImage(int fn) {
-        if ((functionImages != null) && (functionImages[fn] != null)) {
-            return functionImages[fn];
+        if (functionImages == null) {
+            return null;
         }
-        return null;
+        return functionImages.get(fn);
     }
 
     public void setFunctionSelectedImage(int fn, String s) {
         if (functionSelectedImages == null) {
-            functionSelectedImages = new String[MAXFNNUM + 1]; // counts zero
+            functionSelectedImages = Collections.synchronizedMap(new HashMap<>());
         }
-        String old = functionSelectedImages[fn];
-        functionSelectedImages[fn] = s;
+        String old = functionSelectedImages.get(fn);
+        functionSelectedImages.put(fn, s);
         firePropertyChange(RosterEntry.FUNCTION_SELECTED_IMAGE + fn, old, s);
     }
 
     public String getFunctionSelectedImage(int fn) {
-        if ((functionSelectedImages != null) && (functionSelectedImages[fn] != null)) {
-            return functionSelectedImages[fn];
+        if (functionSelectedImages == null) {
+            return null;
         }
-        return null;
+        return functionSelectedImages.get(fn);
     }
 
     /**
@@ -994,13 +1019,11 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      */
     public void setFunctionLockable(int fn, boolean lockable) {
         if (functionLockables == null) {
-            functionLockables = new boolean[MAXFNNUM + 1]; // counts zero
-            for (int i = 0; i < functionLockables.length; i++) {
-                functionLockables[i] = true;
-            }
+            functionLockables = Collections.synchronizedMap(new HashMap<>());
+            functionLockables.put(fn, true);
         }
-        boolean old = this.functionLockables[fn];
-        functionLockables[fn] = lockable;
+        boolean old = ((functionLockables.get(fn) != null) ? functionLockables.get(fn) : true);
+        functionLockables.put(fn, lockable);
         this.firePropertyChange(RosterEntry.FUNCTION_LOCKABLE + fn, old, lockable);
     }
 
@@ -1014,10 +1037,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         if (functionLockables == null) {
             return true;
         }
-        if (fn < 0 || fn > MAXFNNUM) {
-            throw new IllegalArgumentException("number out of range: " + fn);
-        }
-        return functionLockables[fn];
+        return ((functionLockables.get(fn) != null) ? functionLockables.get(fn) : true);
     }
 
     @Override
@@ -1043,8 +1063,8 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     /**
      * Provide access to the set of attributes.
      * <p>
-     * This is directly backed access, so e.g. removing an item from this
-     * Set removes it from the RosterEntry too.
+     * This is directly backed access, so e.g. removing an item from this Set
+     * removes it from the RosterEntry too.
      *
      * @return a set of attribute keys
      */
@@ -1116,8 +1136,8 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     /**
      * Create an XML element to represent this Entry.
      * <p>
-     * This member has to remain
-     * synchronized with the detailed DTD in roster-config.xml.
+     * This member has to remain synchronized with the detailed schema in
+     * xml/schema/locomotive-config.xsd.
      *
      * @return Contents in a JDOM Element
      */
@@ -1136,8 +1156,10 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         e.setAttribute("comment", getComment());
         e.setAttribute(RosterEntry.MAX_SPEED, (Integer.toString(getMaxSpeedPCT())));
         // file path are saved without default xml config path
-        e.setAttribute("imageFilePath", (this.getImagePath() != null) ? FileUtil.getPortableFilename(this.getImagePath()) : "");
-        e.setAttribute("iconFilePath", (this.getIconPath() != null) ? FileUtil.getPortableFilename(this.getIconPath()) : "");
+        e.setAttribute("imageFilePath",
+                (this.getImagePath() != null) ? FileUtil.getPortableFilename(this.getImagePath()) : "");
+        e.setAttribute("iconFilePath",
+                (this.getIconPath() != null) ? FileUtil.getPortableFilename(this.getIconPath()) : "");
         e.setAttribute("URL", getURL());
         e.setAttribute(RosterEntry.SHUNTING_FUNCTION, getShuntingFunction());
         if (_dateUpdated.isEmpty()) {
@@ -1152,50 +1174,45 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
         e.addContent(d);
         if (_dccAddress.isEmpty()) {
-            e.addContent((new jmri.configurexml.LocoAddressXml()).store(null));  // store a null address
+            e.addContent((new jmri.configurexml.LocoAddressXml()).store(null)); // store a null address
         } else {
-            e.addContent((new jmri.configurexml.LocoAddressXml()).store(new DccLocoAddress(Integer.parseInt(_dccAddress), _protocol)));
+            e.addContent((new jmri.configurexml.LocoAddressXml())
+                    .store(new DccLocoAddress(Integer.parseInt(_dccAddress), _protocol)));
         }
 
         if (functionLabels != null) {
-            d = new Element("functionlabels");
+            Element s = new Element("functionlabels");
 
             // loop to copy non-null elements
-            for (int i = 0; i <= MAXFNNUM; i++) {
-                if (functionLabels[i] != null && !functionLabels[i].isEmpty()) {
+            functionLabels.forEach((key, value) -> {
+                if (value != null && !value.isEmpty()) {
                     Element fne = new Element(RosterEntry.FUNCTION_LABEL);
-                    fne.setAttribute("num", "" + i);
-                    boolean lockable = false;
-                    if (functionLockables != null) {
-                        lockable = functionLockables[i];
-                    }
-                    fne.setAttribute("lockable", lockable ? "true" : "false");
-                    if ((functionImages != null)) {
-                        fne.setAttribute("functionImage", (functionImages[i] != null) ? FileUtil.getPortableFilename(functionImages[i]) : "");
-                    }
-                    if ((functionSelectedImages != null)) {
-                        fne.setAttribute("functionImageSelected", (functionSelectedImages[i] != null) ? FileUtil.getPortableFilename(functionSelectedImages[i]) : "");
-                    }
-                    fne.addContent(functionLabels[i]);
-                    d.addContent(fne);
+                    fne.setAttribute("num", "" + key);
+                    fne.setAttribute("lockable", getFunctionLockable(key) ? "true" : "false");
+                    fne.setAttribute("functionImage",
+                            (getFunctionImage(key) != null) ? FileUtil.getPortableFilename(getFunctionImage(key)) : "");
+                    fne.setAttribute("functionImageSelected", (getFunctionSelectedImage(key) != null)
+                            ? FileUtil.getPortableFilename(getFunctionSelectedImage(key)) : "");
+                    fne.addContent(value);
+                    s.addContent(fne);
                 }
-            }
-            e.addContent(d);
+            });
+            e.addContent(s);
         }
 
         if (soundLabels != null) {
-            d = new Element("soundlabels");
+            Element s = new Element("soundlabels");
 
             // loop to copy non-null elements
-            for (int i = 0; i < MAXSOUNDNUM; i++) {
-                if (soundLabels[i] != null && !soundLabels[i].isEmpty()) {
+            soundLabels.forEach((key, value) -> {
+                if (value != null && !value.isEmpty()) {
                     Element fne = new Element(RosterEntry.SOUND_LABEL);
-                    fne.setAttribute("num", "" + i);
-                    fne.addContent(soundLabels[i]);
-                    d.addContent(fne);
+                    fne.setAttribute("num", "" + key);
+                    fne.addContent(value);
+                    s.addContent(fne);
                 }
-            }
-            e.addContent(d);
+            });
+            e.addContent(s);
         }
 
         if (!getAttributes().isEmpty()) {
@@ -1203,12 +1220,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             for (String key : getAttributes()) {
                 d.addContent(new Element("keyvaluepair")
                         .addContent(new Element("key")
-                                .addContent(key)
-                        )
+                                .addContent(key))
                         .addContent(new Element("value")
-                                .addContent(getAttribute(key))
-                        )
-                );
+                                .addContent(getAttribute(key))));
             }
             e.addContent(d);
         }
@@ -1225,18 +1239,30 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
     @Override
     public String toString() {
-        String out = "[RosterEntry: " + _id + " "
+        String out = "[RosterEntry: "
+                + _id
+                + " "
                 + (_fileName != null ? _fileName : "<null>")
-                + " " + _roadName
-                + " " + _roadNumber
-                + " " + _mfg
-                + " " + _owner
-                + " " + _model
-                + " " + _dccAddress
-                + " " + _comment
-                + " " + _decoderModel
-                + " " + _decoderFamily
-                + " " + _decoderComment
+                + " "
+                + _roadName
+                + " "
+                + _roadNumber
+                + " "
+                + _mfg
+                + " "
+                + _owner
+                + " "
+                + _model
+                + " "
+                + _dccAddress
+                + " "
+                + _comment
+                + " "
+                + _decoderModel
+                + " "
+                + _decoderFamily
+                + " "
+                + _decoderComment
                 + "]";
         return out;
     }
@@ -1251,19 +1277,20 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     public void updateFile() {
         LocoFile df = new LocoFile();
 
-        String fullFilename = LocoFile.getFileLocation() + getFileName();
+        String fullFilename = Roster.getDefault().getRosterFilesLocation() + getFileName();
 
         // read in the content
         try {
             mRootElement = df.rootFromName(fullFilename);
-        } catch (JDOMException | IOException e) {
+        } catch (JDOMException
+                | IOException e) {
             log.error("Exception while loading loco XML file: " + getFileName() + " exception: " + e);
         }
 
         try {
             File f = new File(fullFilename);
             // do backup
-            df.makeBackupFile(LocoFile.getFileLocation() + getFileName());
+            df.makeBackupFile(Roster.getDefault().getRosterFilesLocation() + getFileName());
 
             // and finally write the file
             df.writeFile(f, mRootElement, this.store());
@@ -1272,7 +1299,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             log.error("error during locomotive file output", e);
             try {
                 JOptionPane.showMessageDialog(null,
-                        ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("ErrorSavingText") + "\n" + e.getMessage(),
+                        ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("ErrorSavingText")
+                        + "\n"
+                        + e.getMessage(),
                         ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("ErrorSavingTitle"),
                         JOptionPane.ERROR_MESSAGE);
             } catch (HeadlessException he) {
@@ -1285,8 +1314,8 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     /**
      * Write the contents of this RosterEntry to a file.
      * <p>
-     * Information on the contents is passed through the parameters,
-     * as the actual XML creation is done in the LocoFile class.
+     * Information on the contents is passed through the parameters, as the
+     * actual XML creation is done in the LocoFile class.
      *
      * @param cvModel       CV contents to include in file
      * @param variableModel Variable contents to include in file
@@ -1296,15 +1325,15 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         LocoFile df = new LocoFile();
 
         // do I/O
-        FileUtil.createDirectory(LocoFile.getFileLocation());
+        FileUtil.createDirectory(Roster.getDefault().getRosterFilesLocation());
 
         try {
-            String fullFilename = LocoFile.getFileLocation() + getFileName();
+            String fullFilename = Roster.getDefault().getRosterFilesLocation() + getFileName();
             File f = new File(fullFilename);
             // do backup
-            df.makeBackupFile(LocoFile.getFileLocation() + getFileName());
+            df.makeBackupFile(Roster.getDefault().getRosterFilesLocation() + getFileName());
 
-            // changed 
+            // changed
             changeDateUpdated();
 
             // and finally write the file
@@ -1314,7 +1343,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             log.error("error during locomotive file output", e);
             try {
                 JOptionPane.showMessageDialog(null,
-                        ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("ErrorSavingText") + "\n" + e.getMessage(),
+                        ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("ErrorSavingText")
+                        + "\n"
+                        + e.getMessage(),
                         ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("ErrorSavingTitle"),
                         JOptionPane.ERROR_MESSAGE);
             } catch (HeadlessException he) {
@@ -1329,8 +1360,6 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      */
     public void changeDateUpdated() {
         // used to create formatted string of now using defaults
-        // java.text.DateFormat df = java.text.DateFormat.getDateTimeInstance();
-        // setDateUpdated(df.format(new java.util.Date()));
         this.setDateModified(new Date());
     }
 
@@ -1375,11 +1404,12 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     }
 
     /**
-     * Ultra compact list view of roster entries.
-     * Shows text from fields as initially visible in the Roster frame table.
-     *
-     * Header is created in {@link PrintListAction#actionPerformed(ActionEvent)}
-     * so keep column widths identical with values of colWidth below.
+     * Ultra compact list view of roster entries. Shows text from fields as
+     * initially visible in the Roster frame table.
+     * <p>
+     * Header is created in
+     * {@link PrintListAction#actionPerformed(java.awt.event.ActionEvent)} so
+     * keep column widths identical with values of colWidth below.
      *
      * @param w writer providing output
      */
@@ -1390,60 +1420,52 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         try {
             //int textSpace = w.getCharactersPerLine() - 1; // could be used to truncate line.
             // for now, text just flows to next line
-            String thisText ="";
+            String thisText = "";
             String thisLine = "";
 
             // start each entry on a new line
             w.write(newLine, 0, 1);
 
             int colWidth = 15;
-            int startNext = colWidth;
             // roster entry ID (not the filname)
             if (_id != null) {
                 thisText = String.format("%-" + colWidth + "s", _id.substring(0, Math.min(_id.length(), colWidth))); // %- = left align
-                log.debug("thisText = |{}|, length = {}, startNext = {}", thisText, thisText.length(), startNext);
+                log.debug("thisText = |{}|, length = {}", thisText, thisText.length());
             } else {
                 thisText = String.format("%-" + colWidth + "s", "<null>");
             }
             thisLine += thisText;
             colWidth = 6;
-            startNext += colWidth;
             // _dccAddress
             thisLine += StringUtil.padString(_dccAddress, colWidth);
             colWidth = 6;
-            startNext += colWidth;
             // _roadName
             thisLine += StringUtil.padString(_roadName, colWidth);
             colWidth = 6;
-            startNext += colWidth;
             // _roadNumber
             thisLine += StringUtil.padString(_roadNumber, colWidth);
             colWidth = 6;
-            startNext += colWidth;
             // _mfg
             thisLine += StringUtil.padString(_mfg, colWidth);
             colWidth = 10;
-            startNext += colWidth;
             // _model
             thisLine += StringUtil.padString(_model, colWidth);
             colWidth = 10;
-            startNext += colWidth;
             // _decoderModel
             thisLine += StringUtil.padString(_decoderModel, colWidth);
             colWidth = 12;
-            startNext += colWidth;
             // _protocol (type)
             thisLine += StringUtil.padString(_protocol.toString(), colWidth);
             colWidth = 6;
-            startNext += colWidth;
             // _owner
             thisLine += StringUtil.padString(_owner, colWidth);
             colWidth = 10;
-            startNext += colWidth;
+
             // dateModified (type)
             if (dateModified != null) {
                 DateFormat.getDateTimeInstance().format(dateModified);
-                thisText = String.format("%-" + colWidth + "s", dateModified.toString().substring(0, Math.min(dateModified.toString().length(), colWidth)));
+                thisText = String.format("%-" + colWidth + "s",
+                        dateModified.toString().substring(0, Math.min(dateModified.toString().length(), colWidth)));
                 thisLine += thisText;
             }
             // don't include comment and decoder family
@@ -1479,7 +1501,8 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             // We might need to pad some areas of the roster out, so that things
             // look correct and text doesn't overflow into the image.
             blanks = (newImg.getHeight(null) - w.getLineAscent()) / w.getLineHeight();
-            textSpaceWithIcon = w.getCharactersPerLine() - ((newImg.getWidth(null) / w.getCharWidth())) - indentWidth - 1;
+            textSpaceWithIcon
+                    = w.getCharactersPerLine() - ((newImg.getWidth(null) / w.getCharWidth())) - indentWidth - 1;
 
         }
         printEntryDetails(w);
@@ -1495,8 +1518,8 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * Print the roster information.
      * <p>
      * Updated to allow for multiline comment and decoder comment fields.
-     * Separate write statements for text and line feeds to work around
-     * the HardcopyWriter bug that misplaces borders.
+     * Separate write statements for text and line feeds to work around the
+     * HardcopyWriter bug that misplaces borders.
      *
      * @param w the writer used to print
      */
@@ -1518,13 +1541,16 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             title = String.format("%-" + labelColumn + "s",
                     (Bundle.getMessage("MakeLabel", Bundle.getMessage("FieldFilename")))); // I18N Filename:
             if ((textSpaceWithIcon != 0) && (linesadded < blanks)) {
-                linesadded = writeWrappedComment(w, _fileName != null ? _fileName : "<null>", leftMargin + title, textSpaceWithIcon) + linesadded;
+                linesadded = writeWrappedComment(w, _fileName != null ? _fileName : "<null>", leftMargin + title,
+                        textSpaceWithIcon) + linesadded;
             } else {
-                linesadded = writeWrappedComment(w, _fileName != null ? _fileName : "<null>", leftMargin + title, textSpace) + linesadded;
+                linesadded = writeWrappedComment(w, _fileName != null ? _fileName : "<null>", leftMargin + title,
+                        textSpace) + linesadded;
             }
 
             if (!(_roadName.isEmpty())) {
-                title = String.format("%-" + labelColumn + "s", (Bundle.getMessage("MakeLabel", Bundle.getMessage("FieldRoadName")))); // I18N Road name:
+                title = String.format("%-" + labelColumn + "s",
+                        (Bundle.getMessage("MakeLabel", Bundle.getMessage("FieldRoadName")))); // I18N Road name:
                 if ((textSpaceWithIcon != 0) && (linesadded < blanks)) {
                     linesadded = writeWrappedComment(w, _roadName, leftMargin + title, textSpaceWithIcon) + linesadded;
                 } else {
@@ -1536,7 +1562,8 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                         (Bundle.getMessage("MakeLabel", Bundle.getMessage("FieldRoadNumber")))); // I18N Road number:
 
                 if ((textSpaceWithIcon != 0) && (linesadded < blanks)) {
-                    linesadded = writeWrappedComment(w, _roadNumber, leftMargin + title, textSpaceWithIcon) + linesadded;
+                    linesadded
+                            = writeWrappedComment(w, _roadNumber, leftMargin + title, textSpaceWithIcon) + linesadded;
                 } else {
                     linesadded = writeWrappedComment(w, _roadNumber, leftMargin + title, textSpace) + linesadded;
                 }
@@ -1601,7 +1628,8 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                 title = String.format("%-" + labelColumn + "s",
                         (Bundle.getMessage("MakeLabel", Bundle.getMessage("FieldDecoderModel")))); // I18N Decoder Model:
                 if ((textSpaceWithIcon != 0) && (linesadded < blanks)) {
-                    linesadded = writeWrappedComment(w, _decoderModel, leftMargin + title, textSpaceWithIcon) + linesadded;
+                    linesadded
+                            = writeWrappedComment(w, _decoderModel, leftMargin + title, textSpaceWithIcon) + linesadded;
                 } else {
                     linesadded = writeWrappedComment(w, _decoderModel, leftMargin + title, textSpace) + linesadded;
                 }
@@ -1610,7 +1638,8 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                 title = String.format("%-" + labelColumn + "s",
                         (Bundle.getMessage("MakeLabel", Bundle.getMessage("FieldDecoderFamily")))); // I18N Decoder Family:
                 if ((textSpaceWithIcon != 0) && (linesadded < blanks)) {
-                    linesadded = writeWrappedComment(w, _decoderFamily, leftMargin + title, textSpaceWithIcon) + linesadded;
+                    linesadded
+                            = writeWrappedComment(w, _decoderFamily, leftMargin + title, textSpaceWithIcon) + linesadded;
                 } else {
                     linesadded = writeWrappedComment(w, _decoderFamily, leftMargin + title, textSpace) + linesadded;
                 }
@@ -1672,10 +1701,10 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     }
 
     /**
-     * Take a String comment field and perform line wrapping on it. String must
-     * be non-null and may or may not have \n characters embedded. textSpace is
-     * the width of the space to print for wrapping purposes. The comment is
-     * wrapped on a word wrap basis
+     * Line wrap a comment.
+     *
+     * @param comment   the comment to wrap at word boundaries
+     * @param textSpace the width of the space to print
      *
      * @return comment wrapped to fit given width
      */
@@ -1744,17 +1773,22 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      */
     public void readFile() {
         if (getFileName() == null) {
-            log.debug("readFiler file invoked with null filename");
+            log.warn("readFile invoked with null filename");
             return;
-        } else if (log.isDebugEnabled()) {
-            log.debug("readFile invoked with filename " + getFileName());
+        } else {
+            log.debug("readFile invoked with filename {}", getFileName());
         }
 
-        LocoFile lf = new LocoFile();  // used as a temporary
+        LocoFile lf = new LocoFile(); // used as a temporary
+        String file = Roster.getDefault().getRosterFilesLocation() + getFileName();
+        if (!(new File(file).exists())) {
+            // try without prefix
+            file = getFileName();
+        }
         try {
-            mRootElement = lf.rootFromName(LocoFile.getFileLocation() + getFileName());
+            mRootElement = lf.rootFromName(file);
         } catch (JDOMException | IOException e) {
-            log.error("Exception while loading loco XML file: " + getFileName() + " exception: " + e);
+            log.error("Exception while loading loco XML file: {} from {}", getFileName(), file, e);
         }
     }
 
@@ -1764,12 +1798,12 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * @param file The file containing the RosterEntry
      * @return a new RosterEntry
      * @throws JDOMException if unable to parse file
-     * @throws IOException if unable to read file
+     * @throws IOException   if unable to read file
      */
     public static RosterEntry fromFile(@Nonnull File file) throws JDOMException, IOException {
         Element loco = (new LocoFile()).rootFromFile(file).getChild("locomotive");
         if (loco == null) {
-          throw new JDOMException("missing expected element");   
+            throw new JDOMException("missing expected element");
         }
         RosterEntry re = new RosterEntry(loco);
         re.setFileName(file.getName());
@@ -1779,7 +1813,8 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     @Override
     public String getDisplayName() {
         if (this.getRoadName() != null && !this.getRoadName().isEmpty()) { // NOI18N
-            return Bundle.getMessage("RosterEntryDisplayName", this.getDccAddress(), this.getRoadName(), this.getRoadNumber()); // NOI18N
+            return Bundle.getMessage("RosterEntryDisplayName", this.getDccAddress(), this.getRoadName(),
+                    this.getRoadNumber()); // NOI18N
         } else {
             return Bundle.getMessage("RosterEntryDisplayName", this.getDccAddress(), this.getId(), ""); // NOI18N
         }

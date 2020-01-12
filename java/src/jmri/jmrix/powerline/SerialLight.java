@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of the Light Object for Powerline devices.
- * <P>
+ * <p>
  * For X10 devices, uses dimming commands to set intensity unless the value is
  * 0.0 or 1.0, in which case it uses on/off commands only.
  * <p>
@@ -31,7 +31,7 @@ abstract public class SerialLight extends AbstractVariableLight {
 
     /**
      * Create a Light object, with only system name.
-     * <P>
+     * <p>
      * 'systemName' was previously validated in SerialLightManager
      * @param systemName system name for light
      * @param tc traffic controller
@@ -45,7 +45,7 @@ abstract public class SerialLight extends AbstractVariableLight {
 
     /**
      * Create a Light object, with both system and user names.
-     * <P>
+     * <p>
      * 'systemName' was previously validated in SerialLightManager
      * @param systemName system name for light
      * @param tc traffic controller

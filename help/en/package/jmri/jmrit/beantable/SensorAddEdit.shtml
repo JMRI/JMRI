@@ -16,11 +16,21 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Adding/Editing Sensors</h1>
 
+      <div class="toc">
+        <ul>
+          <li><a href="#addsensor">Add a Sensor</a></li>
+          <li><a href="#editsensor">Edit a Sensor</a></li>
+          <li><a href="#hardwaresensor">Hardware specific Sensor</a> properties</li>
+        </ul>
+      </div>
+
+      <a name="addsensor" id="addsensor"></a>
+      <h2>Add a new Sensor</h2>
       <p>When adding a Sensor, from the "System connection:" drop down
       list select the hardware connection this Sensor is
       attached to.</p><img src="images/AddSensor.png" alt="Add Sensor">
@@ -31,7 +41,7 @@
       wish to describe the Sensor.<br>
       Finish by clicking the "OK" button.</p>
 
-      <h2>Creating A Number of Sensors</h2>
+      <h3>Creating A Number of Sensors</h3>
 
       <p>It is also possible to create a number of Sensors in one
       go.<br>
@@ -43,10 +53,60 @@
       up or down to set the number of Sensors you wish to add.
       Clicking "OK" will then create that
       number of sequential Sensors in the table.<br>
-      If a User Name has been
-      entered, a number will be added to the end of the name to
-        keep each Sensor User Name unique.</p>
+      If a User Name has been entered, a number will be added to
+      the end of the name to keep each Sensor User Name unique.</p>
 
+      <a name="editsensor" id="editsensor"></a>
+      <h2>Edit a Sensor</h2>
+
+      <p>Clicking on [Edit] in any line of the Sensor Table opens the
+      Edit Sensor pane to edit the following:</p>
+
+      <div class="toc">
+        <ul>
+          <li><a href="#basic">Basic</a></li>
+          <li><a href="#debounce">Debounce Delays</a></li>
+          <li><a href="#pullup">Pull-Up/Down</a></li>
+          <li><a href="#usage">Usage</a></li>
+          <li><a href="#properties">Properties</a></li>
+        </ul>
+      </div>
+
+      <a name="basic" id="basic"></a>
+      <h3>Basic</h3>
+      <p>This tab lets you see and change basic information about the Sensor
+      as entered on its creation:</p>
+      <ul>
+        <li>User Name</li>
+        <li>a Comment on the sensor (free text to keep a note)</li>
+        <li>a checkbox to use this Sensor as Inverted (Inactive will be
+        interpreted as Active and vice versa)</li>
+      </ul>
+
+      <a href="images/SensorEditDelaysTab.png"><img
+              src="images/SensorEditDelaysTab.png" height="248" width="515"
+              align="right" alt="Sensor Edit Debounce Delays pane"></a>
+
+      <a name="debounce" id="debounce"></a>
+      <h3>Debounce Delays</h3>
+      <p>This tab lets you see and change Sensor specific values for
+      the <a href="SensorTable.shtml#Debounce">Sensor Debounce Delay</a>.</p>
+
+      <a name="pullup" id="pullup"></a>
+      <h3>Pull-Up/-Down</h3>
+      <p>This tab lets you set whether your hardware has a puul-up or
+      pull-down resistor installed over the Sensor input.</p>
+
+      <a name="usage" id="usage"></a>
+      <h3>Usage</h3>
+      <p>This is an information field, showing where you have the
+      Sensor displayed on a Panel.</p>
+
+      <a name="properties" id="properties"></a>
+      <h3>Properties</h3>
+      <p>Custom properties, only advised for advanced users.</p>
+
+      <a name="hardwaresensor" id="hardwaresensor"></a>
       <h2>Hardware Specific Information</h2>
 
       <p>Please refer to our
@@ -88,11 +148,14 @@
           <p>Sensor ID = 785</p>
         </dd>
       </dl>
+      <p><a href="../../../../html/hardware/nce/NCE.shtml#names">More
+      on NCE sensor naming</a>.</p>
 
       <h3>LocoNet Sensor to JMRI Sensor Mapping</h3>
 
-      <p>LocoNet Sensor addresses are made up from two different
-      parts: the Board number and Channel number.<br>
+      <p>LocoNet Sensor addresses are either simply entered as an ordinal
+      number or made up from two different parts: the Board number and
+      the Channel number.<br>
       Sensors can also be configured from the Turnout addresses for
       the Aux &amp; Switch input.</p>
 
@@ -101,22 +164,27 @@
 
       <dl>
         <dd>
-          Enter the board number, followed by the channel number
+          <p>If you know the Sensor number, enter it in the Hardware
+          Address field.</p>
+        </dd>
+        <dd>
+          <p>Enter the board number, followed by the channel number
           separated by a ":"<br>
           So for a Sensor on board 11, channel 1 you would enter
           into the Hardware Address field:<br>
-          11:1
+          11:1</p>
 
           <p>For Sensors attached to Turnouts, you enter into the
           hardware address field "T:" followed by the Turnout
           number. This will add the Aux input associated with the
           Turnout. To add both the Aux and the Switch input, check
-          "Add a range" and set the number to add to 2.<br>
+          "Add a sequential range" and set the number to add to 2.<br>
           So for a Sensor attached to Turnout 81 you would enter
           the following:<br>
           T:81</p>
-
-          <p>The Other method is to calculate the address of the
+        </dd>
+        <dd>
+          <p>The third method is to calculate the address of the
           Sensor and add it manually into the hardware address
           field using the following method:</p>
 
@@ -137,8 +205,7 @@
           has number:<br>
           number = 2 * (81 - 1) + 1 = 161</p>
 
-          <p>If it's the switch input, you add one more to
-          that:<br>
+          <p>If it's the switch input, you add one more to that:<br>
           number = 2 * (turnout number - 1) + 2</p>
 
           <p>For example, the switch input associated with Turnout
@@ -146,6 +213,8 @@
           number = 2 * ( 12 - 1 ) + 2 = 24</p>
         </dd>
       </dl>
+      <p><a href="../../../../html/hardware/loconet/Addressing.shtml">More
+      on LocoNet sensor naming</a>.</p>
 
       <h3>Lenz XpressNet Sensor to JMRI Sensor Mapping</h3>
 
@@ -173,13 +242,15 @@
           The feedback address you will use is 787.</p>
         </dd>
       </dl>
-      
-      <h3>MERGCBUS to JMRI Sensor Mapping</h3>
-      <p>Short event 18 on and off : "18".</p>
+      <p><a href="../../../../html/hardware/XPressNet/XNetAddressing.shtml">More
+      on XPressNet sensor naming</a>.</p>
+
+      <h3>MERG CBUS to JMRI Sensor Mapping</h3>
+      <p>Short event 18 on and off : "+18".</p>
       <p>Short event 18 on, short event 21 off : "+18;-21".</p> 
-      <p>Long event Node 2 Event 18 on and off : "+N2E18;-N2E18".</p>
+      <p>Long event Node 2 Event 18 on and off : "+N2E18".</p>
       <p>CAN frame hex string : "X9000020012;X91FFFFFFFE".</p>
-      <p><a href="../../../../html/hardware/can/cbus/Names.shtml">Full details for MERGCBUS sensor naming</a>.</p>
+      <p><a href="../../../../html/hardware/can/cbus/Names.shtml">Full details for MERG CBUS sensor naming</a>.</p>
 
       <h3>Maple and C/MRI Sensor to JMRI Sensor Mapping</h3>
 
@@ -207,9 +278,13 @@
           refer to your C/MRI hardware connection guide.</p>
         </dd>
       </dl>
+      <p>More on
+      <a href="../../../../html/hardware/maple/index.shtml#naming">Maple</a>
+      and
+      <a href="../../../../html/hardware/cmri/CMRI.shtml#L001">C/MRI sensor naming</a>.</p>
 
-      <h3>Grapevine Sensor to JMRI Sensor Mapping</h3>There are
-      three separate types of Grapevine Sensors:
+      <h3>Grapevine Sensor to JMRI Sensor Mapping</h3>
+      <p>There are three separate types of Grapevine Sensors:</p>
 
       <dl>
         <dt>Advanced Serial Detectors</dt>
@@ -268,9 +343,12 @@
         the optional second bank of serial sensors are present,
         they appear as sensors 109 to 116 on the node.</dd>
       </dl>
+      <p><a href="../../../../html/hardware/grapevine/Names.shtml">More
+        on Grapevine sensor naming</a>.</p>
 
       <p>Back to the <a href="SensorTable.shtml">Sensor Table help
       page</a>.</p>
+
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

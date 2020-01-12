@@ -80,7 +80,6 @@ public class XpaTrafficController implements XpaInterface, Runnable {
      * @param m     the message to forward
      * @param notMe registered listener not to forward the message to
      */
-    @SuppressWarnings("unchecked")
     protected void notifyMessage(XpaMessage m, XpaListener notMe) {
         // make a copy of the listener vector to synchronized not needed for transmit
         ArrayList<XpaListener> v;
@@ -104,7 +103,6 @@ public class XpaTrafficController implements XpaInterface, Runnable {
 
     XpaListener lastSender = null;
 
-    @SuppressWarnings("unchecked")
     protected void notifyReply(XpaMessage r) {
         // make a copy of the listener vector to synchronized (not needed for transmit?)
         ArrayList<XpaListener> v;
@@ -205,19 +203,6 @@ public class XpaTrafficController implements XpaInterface, Runnable {
             log.warn("disconnectPort: disconnect called from non-connected XpaPortController");
         }
         controller = null;
-    }
-
-    /**
-     * Static function returning the XpaTrafficController instance to use.
-     *
-     * @return The registered XpaTrafficController instance for general use, if
-     *         need be creating one.
-     * @deprecated since 4.3.6
-     */
-    @Deprecated
-    static public XpaTrafficController instance() {
-        log.error("Deprecated instance method called");
-        return null;
     }
 
     // data members to hold the streams

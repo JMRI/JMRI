@@ -20,7 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * An icon that displays the position of a loco on a panel.<P>
+ * An icon that displays the position of a loco on a panel.<p>
  * The icon can always be repositioned and its popup menu is always active.
  *
  * @author Bob Jacobsen Copyright (c) 2002
@@ -316,9 +316,6 @@ public class LocoIcon extends PositionableLabel {
     @Override
     public void doMouseReleased(MouseEvent event) {
         List<Positionable> selections = _editor.getSelectedItems(event);
-        if (selections == null) {
-            return;
-        }
         for (int i = 0; i < selections.size(); i++) {
             if (selections.get(i) instanceof IndicatorTrack) {
                 IndicatorTrack t = (IndicatorTrack) selections.get(i);
@@ -332,9 +329,8 @@ public class LocoIcon extends PositionableLabel {
                     if (name == null || name.length() == 0) {
                         name = getUnRotatedText();
                     }
-                    if (InstanceManager.getDefault(TrackerTableAction.class).markNewTracker(block, name) != null) {
-                        dock();
-                    }
+                    InstanceManager.getDefault(TrackerTableAction.class).markNewTracker(block, name, this);
+                    dock();
                 }
                 break;
             }

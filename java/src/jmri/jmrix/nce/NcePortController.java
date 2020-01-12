@@ -1,7 +1,8 @@
 package jmri.jmrix.nce;
 
 /*
- * Identifying class representing a NCE communications port
+ * Identifying class representing a NCE communications port.
+ *
  * @author   Bob Jacobsen    Copyright (C) 2001
  */
 public abstract class NcePortController extends jmri.jmrix.AbstractSerialPortController {
@@ -16,4 +17,5 @@ public abstract class NcePortController extends jmri.jmrix.AbstractSerialPortCon
     public NceSystemConnectionMemo getSystemConnectionMemo() {
         return (NceSystemConnectionMemo) super.getSystemConnectionMemo();
     }
+
 }

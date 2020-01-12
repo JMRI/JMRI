@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-
 <html lang="en">
 <head>
   <meta name="generator" content=
@@ -22,25 +21,27 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
-</head><!--#include virtual="/Header.shtml" -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
+</head>
 
 <body>
-  <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+  <!--#include virtual="Sidebar.shtml" -->
+  <div id="mainContent">
 
-    <div id="mainContent">
-      <h1>JMRI: Technology Road Map</h1>
+    <h1>JMRI: Technology Road Map</h1>
       This page is the road map
       for JMRI's future develpoment, including changes to our use
       of Java technologies. It is maintained and updated through
       continuing discussion on the <a href=
-      "http://sourceforge.net/mailarchive/forum.php?forum_name=jmri-developers">
+      "https://jmri-developers.groups.io/g/jmri/topics">
       jmri-developers mailing list</a>.
 
       <p>There's also a <a href="TechRoadMapOlder.shtml">page
       containing the history</a>, particularly the saga of how we
-      moved forward to Java 1.6 and Java 1.8 across a series of
+      moved forward to Java 1.6 and Java 8 across a series of
       platform-related changes.</p>
 
       <h2>JMRI Releases</h2>This section describes the (notional)
@@ -68,7 +69,7 @@
 
           <td>1.6</td>
 
-          <td>1.8</td>
+          <td>8</td>
         </tr>
 
         <tr>
@@ -78,9 +79,9 @@
 
           <td>July 2015 <b>(done)</b></td>
 
-          <td>1.8</td>
+          <td>8</td>
 
-          <td>1.8</td>
+          <td>8</td>
         </tr>
 
         <tr>
@@ -90,9 +91,9 @@
 
           <td></td>
 
-          <td>1.8</td>
+          <td>8</td>
 
-          <td>1.8</td>
+          <td>8</td>
         </tr>
 
         <tr>
@@ -102,9 +103,9 @@
 
           <td>December 2015 <b>(done)</b></td>
 
-          <td>1.8</td>
+          <td>8</td>
 
-          <td>1.8</td>
+          <td>8</td>
         </tr>
 
         <tr>
@@ -114,9 +115,9 @@
 
           <td></td>
 
-          <td>1.8</td>
+          <td>8</td>
 
-          <td>1.8</td>
+          <td>8</td>
         </tr>
 
         <tr>
@@ -126,9 +127,9 @@
 
           <td>Early Summer 2016</td>
 
-          <td>1.8</td>
+          <td>8</td>
 
-          <td>1.8</td>
+          <td>8</td>
         </tr>
 
         <tr>
@@ -138,9 +139,9 @@
 
           <td></td>
 
-          <td>1.8</td>
+          <td>8</td>
 
-          <td>1.8</td>
+          <td>8</td>
         </tr>
 
         <tr>
@@ -150,9 +151,9 @@
 
           <td>Late Fall 2016</td>
 
-          <td>1.8</td>
+          <td>8</td>
 
-          <td>1.8</td>
+          <td>8</td>
         </tr>
 
         <tr>
@@ -162,9 +163,9 @@
 
           <td></td>
 
-          <td>1.8</td>
+          <td>8</td>
 
-          <td>1.8</td>
+          <td>8</td>
         </tr>
 
         <tr>
@@ -174,9 +175,9 @@
 
           <td>Early Summer 2017</td>
 
-          <td>1.8</td>
+          <td>8</td>
 
-          <td>1.8</td>
+          <td>8</td>
         </tr>
 
         <tr>
@@ -186,9 +187,9 @@
 
           <td></td>
 
-          <td>1.8</td>
+          <td>8</td>
 
-          <td>1.8</td>
+          <td>8</td>
         </tr>
 
         <tr>
@@ -198,9 +199,9 @@
 
           <td>December 2017</td>
 
-          <td>1.8</td>
+          <td>8</td>
 
-          <td>1.8</td>
+          <td>8</td>
         </tr>
 
         <tr>
@@ -210,9 +211,9 @@
 
           <td>July 2018</td>
 
-          <td>1.8</td>
+          <td>8</td>
 
-          <td>1.8</td>
+          <td>8</td>
         </tr>
 
         <tr>
@@ -222,9 +223,9 @@
 
           <td>December 2018</td>
 
-          <td>1.8</td>
+          <td>8</td>
 
-          <td>1.8</td>
+          <td>8</td>
         </tr>
 
         <tr>
@@ -234,17 +235,29 @@
 
           <td>July 2019</td>
 
-          <td>1.8</td>
+          <td>8</td>
 
-          <td>1.8</td>
+          <td>8</td>
+        </tr>
+
+        <tr>
+          <td>4.18</td>
+
+          <td>Production version, culmination of Fall 2019 series</td>
+
+          <td>December 2019</td>
+
+          <td>8</td>
+
+          <td>8</td>
         </tr>
 
         <tr>
           <td>??</td>
 
-          <td>Production version, culmination of Fall 2019 series</td>
+          <td>Production version, culmination of Spring 2020 series</td>
 
-          <td>December 2019</td>
+          <td>July 2020</td>
 
           <td>??</td>
 
@@ -255,37 +268,64 @@
 
       <h4>JMRI in the Near Future</h4>The 4.1.* series of test
       releases in Fall 2015 started the requirement for Java 8,
-      also known as Java 1.8.
+      also known as Java 8.
       This has continued through the following release series.
-      The June 2018 release, notionally JMRI 4.12 will
-      remain with Java 8, but may involve other updates.
+      The December 2018 release, notionally JMRI 4.14 will
+      remain with Java 8, but may involve other library updates.
+      This includes doing development, test and production release
+      builds using Java 1.8.0_181. (We also 
+      <a href="http://builds.jmri.org/jenkins/job/Development/job/VersionChecks/job/JRE%208u151/">test on Jenkins with Java 1.8_0_151</a>
+      to ensure Windows XP compatibility)
       
-      <p>The next long-term-support Java release will be
-      Java 11 in Fall of 2018.  Oracle intendes to 
-      <a href="https://blogs.oracle.com/java-platform-group/a-quick-summary-on-the-new-java-se-subscription">align their Java and the OpenJDK at that point</a>.
+      <p>The current long-term-support Java release is
+      Java 11 from Fall of 2018.  
+      Oracle has
+      <a href="https://blogs.oracle.com/java-platform-group/a-quick-summary-on-the-new-java-se-subscription">aligned their Java and the OpenJDK from that point</a>.
       Because some people will
       need to have that on their computers for other purposes, 
-      we intend to support JMRI running on Oracle Java 8 through 11
+      we ensure JMRI can build and run on Oracle Java 8 through 11
       and OpenJDK version 11
-      by JMRI 4.14 in December 2018.
+      by using 
+      <a href="http://jmri.tagadab.com/jenkins/job/Development/job/VersionChecks/">Jenkins</a>
+      to 
+      <ul>
+      <li>Build and run AllTest on each of the JDKs for Java 9, 10, 11; and
+      <li>Run allTest from each of those JDK 9, 10 and 11 builds on a Java 8u181 JRE; and
+      <li>Run AllTest from our JDK 8 builds on each of the Java 9, 10 and 11 JREs.
+      </ul>
+      You can follow the current status of these on the
+      <a href="CI-status.shtml">CI Status page</a>.
       
       <p>
       At some point, the Java version required by JMRI has to move forward.
-      We don't know what that point is, but the earliest it will be is Fall 2019.
+      For example, Oracle 
+      <a href="http://www.oracle.com/technetwork/java/javase/javaclientroadmapupdate2018mar-4414431.pdf">has announced</a> that they'll stop providing standalone JRE installers 
+      by the end of 2020, by which time JMRI distributions will have to contain
+      the Java runtime components or it won't be possible to run JMRI on newly-bought PCs. 
+      That in turn might require tools like
+      jlink from Java 9 or later.
+
+      <p>
+      While we don't know yet when JMRI will have to move past Java 8, 
+      we do know that the earliest Java 9 or later will be required for users is Fall 2020.
       Allowing for migration and
-      development time, and depending on development plans, JMRI's December 2019 release
+      development time, and depending on development plans, JMRI's December 2020 release
       might require Java 11 (in which case it would be called JMRI 5.1)
-      or stay with requiring Java 8 or later (in which case it would be called JMRI 4.18).
-      Releases before Fall 2019 are intended to stay fully compatible Java 8.
+      or stay with requiring Java 8 or later (in which case it would be called JMRI 4.20).
+      Releases before Fall 202 are intended to stay fully compatible Java 8.
       
       <p>
       It's possible that, as an intermediate step,
-      JMRI development will move to a later Java version
-      without requiring that JMRI users move to a later version.  
-      For example, it's remotely possible that JMRI will require Java 11
+      JMRI development will move to a later Java SDK version
+      without requiring that JMRI users move to a later Java JRE version.  
+      For example, it's remotely possible that JMRI will require a Java 11 SDK
       to compile and build distributions, which would still be able to
       work on Java 8.  We prefer to do that to keep older hardware working,
-      but we can't always possible.
+      but it's not always possible. 
+      (Note:  Here, we're talking about using the Java 11 SDK, not about
+      using Java 11 language features. Java 9 through 11 SDKs 
+      require setting their source version and runtime version to the same
+      value;  you can't compile i.e. Java 11 source code for a Java 8 runtime)
 
       <p>
       There are also smaller migration issues. These don't directly
@@ -305,7 +345,7 @@
         for generating multiple documentation forms is also being
         considered.</li>
 
-        <li>Our use of JUnit has been migrated to the 
+        <li>Our use of JUnit has been partially migrated to the 
         <a href="http://junit.org">JUnit 4 release</a>, 
         currently 4.12.
         Among other improvements, this can allow use of the Java
@@ -348,25 +388,6 @@
       section on
       <a href="JUnit.shtml#junit4">our JUnit page</a>.
 
-      <a id="jdom2" name="jdom2"></a><h3>From JDOM 1 to JDOM 2</h3>JMRI
-      3.11 moved from JDOM version 1 to JDOM version 2. This
-      involved a new jdom-2.0.5.jar file (in place of the earlier
-      jdom.jar), changes to startup and build control files, and
-      some required code changes:
-
-      <ul>
-        <li>JDOM 2 classes are in the org.jdom2 package instead of
-        org.jdom. This required some changes to import statements
-        and class-references in the source code.</li>
-
-        <li>The default output formatting is different, requiring
-        minor changes in e.g. the XmlFile class output
-        routines.</li>
-      </ul>
-      <p>In addition, JDOM 2 uses generics in its input
-      parameters and return values. This means you can remove (now
-      redundant) casts in many places. Jenkins will warn about
-      those.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

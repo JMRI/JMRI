@@ -1,13 +1,16 @@
 package jmri.jmrit.blockboss;
 
+import java.util.ArrayList;
+import java.util.Enumeration;
+
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
+
 import org.junit.Assert;
 import org.junit.After;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,29 +20,11 @@ import org.junit.Test;
  * @author	Bob Jacobsen
  */
 public class BlockBossLogicTest {
-
-    protected void startLogic(BlockBossLogic b) {
-        p.start();
-    }
-
-    protected void stopLogic() {
-        if (p!=null) {
-            p.stop();
-            p=null;
-        }
-    }
-
-    BlockBossLogic p;
-    void setupSimpleBlock() {
-        p = new BlockBossLogic("IH1");
-        p.setMode(BlockBossLogic.SINGLEBLOCK);
-        p.setWatchedSignal1("IH2", false);
-    }
     
     // test creation
     @Test
     public void testCreate() {
-        BlockBossLogic p = new BlockBossLogic("IH2");
+        p = new BlockBossLogic("IH2");
         Assert.assertEquals("driven signal name", "IH2", p.getDrivenSignal());
     }
 
@@ -47,7 +32,7 @@ public class BlockBossLogicTest {
     @Test
     public void testSimpleBlock() {
         setupSimpleBlock();
-        startLogic(p);
+        startLogic();
         Assert.assertEquals("driven signal name", "IH1", p.getDrivenSignal());
         
         JUnitUtil.setBeanStateAndWait(h2, SignalHead.YELLOW);
@@ -63,7 +48,7 @@ public class BlockBossLogicTest {
     // test that initial conditions are set right
     public void testSimpleBlockInitial() {
         setupSimpleBlock();
-        startLogic(p);
+        startLogic();
 
         JUnitUtil.waitFor(()->{return SignalHead.YELLOW == h1.getAppearance();}, "initial red sets yellow");  // wait and test
     }
@@ -73,7 +58,7 @@ public class BlockBossLogicTest {
     public void testSimpleBlockOccupancy() throws jmri.JmriException {
         setupSimpleBlock();
         p.setSensor1("IS1");
-        startLogic(p);
+        startLogic();
         JUnitUtil.setBeanState(s1, Sensor.INACTIVE);
         
         JUnitUtil.setBeanStateAndWait(h2, SignalHead.YELLOW);
@@ -91,7 +76,7 @@ public class BlockBossLogicTest {
     public void testSimpleBlockDistant() {
         setupSimpleBlock();
         p.setDistantSignal(true);
-        startLogic(p);
+        startLogic();
 
         Assert.assertEquals("driven signal name", "IH1", p.getDrivenSignal());
 
@@ -111,7 +96,7 @@ public class BlockBossLogicTest {
     public void testSimpleBlockLimited() {
         setupSimpleBlock();
         p.setLimitSpeed1(true);
-        startLogic(p);
+        startLogic();
 
         JUnitUtil.setBeanStateAndWait(h2, SignalHead.RED);
         JUnitUtil.waitFor(()->{return SignalHead.YELLOW == h1.getAppearance();}, "red sets yellow");  // wait and test
@@ -129,7 +114,7 @@ public class BlockBossLogicTest {
         setupSimpleBlock();
         p.setDistantSignal(true);
         p.setLimitSpeed1(true);
-        startLogic(p);
+        startLogic();
 
         JUnitUtil.setBeanStateAndWait(h2, SignalHead.YELLOW);
         JUnitUtil.waitFor(()->{return SignalHead.YELLOW == h1.getAppearance();}, "yellow sets yellow");  // wait and test
@@ -149,7 +134,7 @@ public class BlockBossLogicTest {
         setupSimpleBlock();
         p.setSensor1("IS1");
         p.setRestrictingSpeed1(true);
-        startLogic(p);
+        startLogic();
         
         JUnitUtil.setBeanStateAndWait(h2, SignalHead.YELLOW);
         JUnitUtil.waitFor(()->{return SignalHead.FLASHRED == h1.getAppearance();}, "yellow sets flashing red");  // wait and test
@@ -170,7 +155,7 @@ public class BlockBossLogicTest {
         p = new BlockBossLogic("IH1");
         p.setSensor1("1");
         p.setMode(BlockBossLogic.SINGLEBLOCK);
-        startLogic(p);
+        startLogic();
 
         JUnitUtil.waitFor(()->{return SignalHead.GREEN == h1.getAppearance();}, "missing signal is green");  // wait and test
     }
@@ -185,7 +170,7 @@ public class BlockBossLogicTest {
         p.setSensor1("1");
         p.setLimitSpeed1(true);
 
-        startLogic(p);
+        startLogic();
 
         JUnitUtil.waitFor(()->{return SignalHead.YELLOW == h1.getAppearance();}, "missing signal is green, show yellow");  // wait and test
     }
@@ -193,17 +178,23 @@ public class BlockBossLogicTest {
     // check for basic not-fail if no signal name was set
     @Test
     public void testSimpleBlockNoSignal() throws jmri.JmriException {
-
         try { 
             new BlockBossLogic(null);
+        } catch (java.lang.NullPointerException e) {
+            // this is expected
+        }
+    }
+
+    // check for basic not-fail if empty signal name was set
+    @Test
+    public void testSimpleBlockEmptyName() throws jmri.JmriException {
+        try {
+            new BlockBossLogic("");
         } catch (java.lang.IllegalArgumentException e) {
             // this is expected
         }
-        jmri.util.JUnitAppender.assertWarnMessage("Signal Head \"null\" was not found");
+        jmri.util.JUnitAppender.assertWarnMessage("Signal Head \"\" was not found");
     }
-
-    Thread testThread = null;
-    boolean forceInterrupt = false;
 
     // test interruption
     @Test
@@ -212,6 +203,7 @@ public class BlockBossLogicTest {
         
         forceInterrupt = false;
         p = new BlockBossLogic("IH1") {
+            @Override
             public void setOutput() {
                 testThread = this.thread;
                 if (forceInterrupt) {
@@ -224,7 +216,7 @@ public class BlockBossLogicTest {
         p.setSensor1("1");
         p.setLimitSpeed1(true);
 
-        startLogic(p);
+        startLogic();
 
         JUnitUtil.waitFor(()->{return p.isRunning();}, "is running");
                 
@@ -329,11 +321,31 @@ public class BlockBossLogicTest {
 
     }
 
-    // from here down is testing infrastructure
-    // Ensure minimal setup for log4J
     Turnout t1, t2, t3;
     Sensor s1, s2, s3, s4, s5, s6, s7, s8, s9, s10;
     SignalHead h1, h2, h3, h4;
+    BlockBossLogic p;
+
+    Thread testThread = null;
+    boolean forceInterrupt = false;
+
+    protected void startLogic() {
+        if (p != null) {
+            p.start();
+        }
+    }
+
+    protected void stopLogic() {
+        if (p != null) {
+            p.stop();
+        }
+    }
+
+    void setupSimpleBlock() {
+        p = new BlockBossLogic("IH1");
+        p.setMode(BlockBossLogic.SINGLEBLOCK);
+        p.setWatchedSignal1("IH2", false);
+    }
 
     /**
      * Test-by test initialization. Does log4j for standalone use, and then
@@ -349,6 +361,16 @@ public class BlockBossLogicTest {
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalSignalHeadManager();
 
+        // clear the BlockBossLogic static list
+        Enumeration<BlockBossLogic> en = BlockBossLogic.entries();
+        ArrayList<SignalHead> heads = new ArrayList<>();
+        while (en.hasMoreElements()) {
+            heads.add(en.nextElement().getDrivenSignalNamedBean().getBean());
+        }
+        for (SignalHead head : heads) {  // avoids ConcurrentModificationException
+            BlockBossLogic.getStoppedObject(head);
+        }
+        
         t1 = InstanceManager.turnoutManagerInstance().newTurnout("IT1", "1");
         t2 = InstanceManager.turnoutManagerInstance().newTurnout("IT2", "2");
         t3 = InstanceManager.turnoutManagerInstance().newTurnout("IT3", "3");
@@ -383,6 +405,10 @@ public class BlockBossLogicTest {
 
     @After
     public void tearDown() {
+        t1=t2=t3=null;
+        s1=s2=s3=s4=s5=s6=s7=s8=s9=s10=null;
+        h1=h2=h3=h4=null;
+        testThread = null;
         stopLogic();
         // reset InstanceManager
         JUnitUtil.tearDown();

@@ -27,6 +27,8 @@
 from java.awt import Color
 import jmri
 import java
+import java.awt
+import java.beans
 
 debug = False
 
@@ -45,7 +47,7 @@ class ManageBlocks(java.beans.PropertyChangeListener):
 
         if debug: print "init script, attach listener"        
         # Retrieve rAction memory variable
-        rAction = memories.getMemory('rAction')
+        rAction = memories.provideMemory('rAction')
         if rAction == "None" :
             print "Memory variable rAction not found!"
             return
@@ -85,7 +87,7 @@ class ManageBlocks(java.beans.PropertyChangeListener):
         # Process the rAction command                
         if rAction == 'releaseAll':
             # Init access to layout editor panels
-            PanelMenu = jmri.jmrit.display.PanelMenu.instance()
+            PanelMenu = jmri.InstanceManager.getDefault(jmri.jmrit.display.PanelMenu)
             layouts = PanelMenu.getLayoutEditorPanelList()
             
             cnt = 0
@@ -137,7 +139,7 @@ class ManageBlocks(java.beans.PropertyChangeListener):
                         memories.getMemory("rColor").setValue('')
 
                         # Refresh panel to display new color
-                        PanelMenu = jmri.jmrit.display.PanelMenu.instance()
+                        PanelMenu = jmri.InstanceManager.getDefault(jmri.jmrit.display.PanelMenu)
                         layouts = PanelMenu.getLayoutEditorPanelList()
                         layouts[rIndex].redrawPanel()
 
@@ -151,7 +153,7 @@ class ManageBlocks(java.beans.PropertyChangeListener):
                         memories.getMemory("rColor").setValue('')
 
                         # Refresh panel to display new color
-                        PanelMenu = jmri.jmrit.display.PanelMenu.instance()
+                        PanelMenu = jmri.InstanceManager.getDefault(jmri.jmrit.display.PanelMenu)
                         layouts = PanelMenu.getLayoutEditorPanelList()
                         layouts[rIndex].redrawPanel()
 

@@ -24,6 +24,9 @@ public class EcosLocoAddressManagerXmlTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
+        JUnitUtil.initDefaultUserMessagePreferences();
     }
 
     @After

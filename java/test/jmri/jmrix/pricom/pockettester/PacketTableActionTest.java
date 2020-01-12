@@ -15,6 +15,7 @@ public class PacketTableActionTest {
     @Test
     public void testCTor() {
         PacketTableAction t = new PacketTableAction(){
+            @Override
             void connect(DataListener l){
             }
         };

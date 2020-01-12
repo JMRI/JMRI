@@ -17,10 +17,9 @@ import org.slf4j.LoggerFactory;
 /**
  * A UI subclass that will open external links (website or mail links) in an
  * external browser
- * <P>
+ * <p>
  * To use:
  * SwingHelpUtilities.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");
- * <P>
  *
  * @since JMRI 2.5.3 (or perhaps later, please check CVS)
  */

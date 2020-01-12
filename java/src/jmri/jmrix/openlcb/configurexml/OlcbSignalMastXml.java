@@ -2,6 +2,7 @@ package jmri.jmrix.openlcb.configurexml;
 
 import java.util.List;
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.SignalAppearanceMap;
 import jmri.jmrix.openlcb.OlcbSignalMast;
 import org.jdom2.Element;
@@ -76,7 +77,13 @@ public class OlcbSignalMastXml
     public boolean load(Element shared, Element perNode) {
         OlcbSignalMast m;
         String sys = getSystemName(shared);
-        m = new OlcbSignalMast(sys);
+        try {
+            m = (OlcbSignalMast) InstanceManager.getDefault(jmri.SignalMastManager.class)
+                    .provideCustomSignalMast(sys, OlcbSignalMast.class);
+        } catch (JmriException e) {
+            log.error("Failed to load OlcbSignalMast {}: {}", sys, e);
+            return false;
+        }
 
         if (getUserName(shared) != null) {
             m.setUserName(getUserName(shared));
@@ -115,9 +122,6 @@ public class OlcbSignalMastXml
             }
         }
 
-        System.out.println("register "+m);
-        InstanceManager.getDefault(jmri.SignalMastManager.class)
-                .register(m);
         return true;
 
     }

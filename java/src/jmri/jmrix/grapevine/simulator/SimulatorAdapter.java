@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
  * @author Mark Underwood, Copyright (C) 2015
  * @author Egbert Broerse, Copyright (C) 2018
  */
-public class SimulatorAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter, Runnable {
+public class SimulatorAdapter extends SerialPortController implements Runnable {
 
     // private control members
     private boolean opened = false;
@@ -184,18 +184,31 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
     }
 
     /**
-     * Get an array of valid baud rates.
+     * {@inheritDoc}
      *
      * @return null
      */
     @Override
     public String[] validBaudRates() {
         log.debug("validBaudRates should not have been invoked");
-        return null;
+        return new String[]{};
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return new int[]{};
     }
 
     @Override
     public String getCurrentBaudRate() {
+        return "";
+    }
+
+    @Override
+    public String getCurrentPortName(){
         return "";
     }
 
@@ -266,14 +279,13 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
     /**
      * This is the heart of the simulation. It translates an
      * incoming SerialMessage into an outgoing SerialReply.
-     * See {@link jmri.jmrix.grapevine.SerialMessage#generateReply(SerialMessage)} and
+     * See {@link jmri.jmrix.grapevine.SerialMessage}#generateReply(SerialMessage) and
      * the Grapevine <a href="../package-summary.html">Binary Message Format Summary</a>.
      *
      * @param msg the message received in the simulated node
      * @return a single Grapevine message to confirm the requested operation, or a series
      * of messages for each (fictitious) node/pin/state. To ignore certain commands, return null.
      */
-    @SuppressWarnings("fallthrough")
     private SerialReply generateReply(SerialMessage msg) {
         log.debug("Generate Reply to message from node {} (string = {})", msg.getAddr(), msg.toString());
 
@@ -306,9 +318,9 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
                 // init reply as set in prefs autoInit
                 if (autoInit > 0) { // not disabled
                     log.debug("start init 1 of node {}", nodeaddr);
-                    NodeResponse(nodeaddr, 1, 1, autoInit); // banks 1-4
+                    nodeResponse(nodeaddr, 1, 1, autoInit); // banks 1-4
                 }
-                // all replies are generated and sent by NodeResponse()
+                // all replies are generated and sent by nodeResponse()
                 reply = null;
                 break;
 
@@ -317,9 +329,9 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
                 // init reply as set in prefs autoInit
                 if (autoInit > 0) { // not disabled
                     log.debug("start init 2 of node {}", nodeaddr);
-                    NodeResponse(nodeaddr, 5, 5, autoInit); // bank 5 = parallel
+                    nodeResponse(nodeaddr, 5, 5, autoInit); // bank 5 = parallel
                 }
-                // all replies are generated and sent by NodeResponse()
+                // all replies are generated and sent by nodeResponse()
                 reply = null;
                 break;
 
@@ -414,28 +426,28 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
         return r;
     }
 
-    int SignalBankSize = 16; // theoretically: 16
-    int SensorBankSize = 64; // theoretically: 0x3F
+    int signalBankSize = 16; // theoretically: 16
+    int sensorBankSize = 64; // theoretically: 0x3F
     javax.swing.Timer timer;
 
     /**
      * Pretend a node init reply for a range of banks and bits. Is this a proper simulation of hardware?
      * <p>
-     * Based on information in {@link jmri.jmrix.grapevine.SerialMessage#staticFormat(int, int, int, int)}.
+     * Based on information in jmri.jmrix.grapevine.SerialMessage#staticFormat(int, int, int, int).
      *
      * @param node      the node address
      * @param startBank first bank id to report
      * @param endBank   last bank id to report
      * @param initBits  number of inputs/output bits to report
      */
-    private void NodeResponse(int node, int startBank, int endBank, int initBits) {
+    private void nodeResponse(int node, int startBank, int endBank, int initBits) {
         if (node < 1 || node > 127) { // node address invalid
             log.warn("Invalid Node Address; no response generated");
             return;
         }
         if (initBits > 1) { // leave at max when 1
-            SignalBankSize = 4; // only first 4 signal bits reporting
-            SensorBankSize = 4; // only first 4 sensor bits reporting
+            signalBankSize = 4; // only first 4 signal bits reporting
+            sensorBankSize = 4; // only first 4 sensor bits reporting
         }
         int b1 = -1;
         int b2 = -1;
@@ -451,7 +463,7 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
                 nReply.setElement(3, (k << 4)); // bank (bit 1234): 1-3 = signals
                 log.debug("element 3 set to 0x{} - {}", (k << 4) & 0x70, Integer.toBinaryString((k << 4) & 0x70));
 
-                for (int j = 1; j < SignalBankSize; j++) { // bits, send state of each signal bit (banks 1, 2, 3)
+                for (int j = 1; j < signalBankSize; j++) { // bits, send state of each signal bit (banks 1, 2, 3)
                     log.debug("Sending signal state of node {}, bank {}, bit {}", node, k, j);
                     nReply.setElement(1, ((j << 3) | 0x6) & 0x7F); // bit id (bits 2345) + state (bits 678): set to Red
 
@@ -475,7 +487,7 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
                 nReply.setElement(3, (k << 4)); // bank (bit 1234): 4-5 = sensors
                 log.debug("element 3 set to 0x{} - {}", (k << 4) & 0x70, Integer.toBinaryString((k << 4) & 0x70));
 
-                for (int j = 1; j < SensorBankSize; j++) { // bits, send state of each sensor bit (banks 4, 5)
+                for (int j = 1; j < sensorBankSize; j++) { // bits, send state of each sensor bit (banks 4, 5)
                     log.debug("Sending sensor state of node {}, bank {}, bit {}", node, k, j);
                     nReply.setElement(1, ((j << 1) | 0x1) & 0x7F); // bit id (bits 234567) + state (bit 8): inactive
 

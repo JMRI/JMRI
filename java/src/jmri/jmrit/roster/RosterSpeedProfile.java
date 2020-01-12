@@ -215,6 +215,11 @@ public class RosterSpeedProfile {
         }
     }
 
+    public SpeedStep getSpeedStep(float speed) {
+        int iSpeedStep = Math.round(speed * 1000);
+        return speeds.get(iSpeedStep);
+    }
+
     public void setForwardSpeed(float speedStep, float forward) {
         if (forward > 0.0f) {
             _hasForwardSpeeds = true;
@@ -432,7 +437,7 @@ public class RosterSpeedProfile {
 
     javax.swing.Timer stopTimer = null;
 
-    long lastTimeTimerStarted = 0l;
+    long lastTimeTimerStarted = 0L;
 
     /**
      * reset everything back to default once the change has finished.
@@ -491,6 +496,8 @@ public class RosterSpeedProfile {
      * @param speed the speed to set
      * @param usePercentage the percentage of the block to be used for stopping
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", 
+        justification = "OK to compare floats, as even tiny differences should trigger update")
     public void changeLocoSpeed(DccThrottle t, Block blk, float speed, float usePercentage) {
         if (blk == referenced && speed == desiredSpeedStep) {
             //if(log.isDebugEnabled()) log.debug("Already setting to desired speed step for this block");
@@ -837,7 +844,6 @@ public class RosterSpeedProfile {
         e.addContent(d);
     }
 
-    @SuppressWarnings({"unchecked"})
     public void load(Element e) {
         try {
             setOverRunTimeForward(Float.parseFloat(e.getChild("overRunTimeForward").getText()));
@@ -999,8 +1005,8 @@ public class RosterSpeedProfile {
     /**
      * Get track speed in millimeters per second from throttle setting
      *
-     * @param speedStep - throttle setting
-     * @param isForward - direction
+     * @param speedStep  throttle setting
+     * @param isForward  direction
      * @return track speed
      */
     public float getSpeed(float speedStep, boolean isForward) {

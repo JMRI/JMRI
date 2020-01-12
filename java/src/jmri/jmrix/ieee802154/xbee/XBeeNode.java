@@ -18,7 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implementation of a node for XBee networks.
+ * Implementation of a Node for XBee networks.
  * <p>
  * Integrated with {@link XBeeTrafficController}.
  * <p>
@@ -327,6 +327,7 @@ public class XBeeNode extends IEEE802154Node {
     public XBeeIOStream getIOStream() {
         if (mStream == null) {
             mStream = new XBeeIOStream(this, tc);
+	        mStream.configure(); // start the threads for the stream.
         }
         return mStream;
     }
@@ -334,27 +335,24 @@ public class XBeeNode extends IEEE802154Node {
     private XBeeIOStream mStream = null;
 
     /**
-     * Connect a StreamPortController object to the XBeeIOStream
+     * Connect and configure a StreamPortController object to the XBeeIOStream
      * associated with this node.
      *
      * @param cont AbstractSTreamPortController object to connect
      */
     public void connectPortController(jmri.jmrix.AbstractStreamPortController cont) {
         connectedController = cont;
+        connectedController.configure();
     }
 
     /**
-     * Create a new object derived from AbstractStreamPortController and
-     * connect it to the IOStream associated with this object.
+     * Connect a StreamPortController object to the XBeeIOStream
+     * associated with this node.
+     *
+     * @param cont AbstractSTreamPortController object to connect
      */
-    public void connectPortController(Class<jmri.jmrix.AbstractStreamPortController> T) {
-        try {
-            java.lang.reflect.Constructor<?> ctor = T.getConstructor(java.io.DataInputStream.class, java.io.DataOutputStream.class, String.class);
-            connectedController = (jmri.jmrix.AbstractStreamPortController) ctor.newInstance(getIOStream().getInputStream(), getIOStream().getOutputStream(), "XBee Node " + getPreferedName());
-            connectedController.configure();
-        } catch (java.lang.InstantiationException | java.lang.NoSuchMethodException | java.lang.IllegalAccessException | java.lang.reflect.InvocationTargetException ex) {
-            log.error("Unable to construct Stream Port Controller for node.", ex);
-        }
+    public void setPortController(jmri.jmrix.AbstractStreamPortController cont) {
+        connectedController = cont;
     }
 
     /**
@@ -368,6 +366,44 @@ public class XBeeNode extends IEEE802154Node {
     }
 
     private jmri.jmrix.AbstractStreamPortController connectedController = null;
+
+    /**
+     * Connect and configure a StreamConnectionConfig object to the XBeeIOStream
+     * associated with this node.
+     *
+     * @param cfg AbstractStreamConnectionConfig object to connect
+     */
+    public void connectPortController(jmri.jmrix.AbstractStreamConnectionConfig cfg) {
+        connectedConfig = cfg;
+        connectPortController(cfg.getAdapter());
+    }
+
+    /**
+     * Connect a StreamConnectionConfig object to the XBeeIOStream
+     * associated with this node.
+     *
+     * @param cfg AbstractStreamConnectionConfig object to connect
+     */
+    public void setPortController(jmri.jmrix.AbstractStreamConnectionConfig cfg) {
+        connectedConfig = cfg;
+        setPortController(cfg.getAdapter());
+    }
+
+    /**
+     * Get the StreamConnectionConfig ojbect associated with the XBeeIOStream
+     * associated with this node.
+     *
+     * @return connected {@link jmri.jmrix.AbstractStreamConnectionConfig}
+     */
+    public jmri.jmrix.AbstractStreamConnectionConfig getConnectionConfig() {
+        return connectedConfig;
+    }
+
+    private jmri.jmrix.AbstractStreamConnectionConfig connectedConfig = null;
+
+    /**
+     * Provide a string representation of this XBee Node.
+     */
 
     /**
      * Provide a string representation of this XBee Node.

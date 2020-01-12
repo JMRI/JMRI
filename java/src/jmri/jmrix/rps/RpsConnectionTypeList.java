@@ -4,11 +4,10 @@ import jmri.jmrix.ConnectionTypeList;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
- * Returns a list of valid lenz XpressNet Connection Types
- * <P>
+ * Get a list of valid RPS Connection Types.
+ *
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
-  *
  */
 @ServiceProvider(service = ConnectionTypeList.class)
 public class RpsConnectionTypeList implements jmri.jmrix.ConnectionTypeList {

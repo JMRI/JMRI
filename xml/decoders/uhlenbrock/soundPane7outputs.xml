@@ -1,0 +1,664 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <copyright xmlns="http://docbook.org/ns/docbook">
+        <year>2018</year>
+        <holder>JMRI</holder>
+    </copyright>
+    <authorgroup xmlns="http://docbook.org/ns/docbook">
+        <author>
+            <personname>
+                <firstname>Egbert</firstname>
+                <surname>Broerse</surname>
+            </personname>
+        </author>
+    </authorgroup>
+    <revhistory xmlns="http://docbook.org/ns/docbook">
+        <revision>
+            <revnumber>1</revnumber>
+            <date>2018-10-18</date>
+            <authorinitials>EB</authorinitials>
+            <revremark>Initial version as separate file, taken from Uhlenbrock_32300.xml by ALM</revremark>
+        </revision>
+        <!-- Valid only for certain Uhlenbrock decoders with IntelliSound3/4 Module,
+             such as 32300, 36320, 36360 (IS3), 32500, 32504, 36520, 36560 (IS4) (non exhaustive list) -->
+    </revhistory>
+
+    <name>IntelliSound</name>
+    <column>
+        <row>
+            <column>
+                <display item="SUSI-range"/>
+                <label><text> </text></label>
+            </column>
+            <label><text>                    </text></label>
+            <group>
+                <qualifier>
+                    <variableref>SUSI-range</variableref>
+                    <relation>eq</relation>
+                    <value>1</value>
+                </qualifier>
+                <column>
+                    <display item="Range I Manufacturer ID"/>
+                    <display item="Range I Software version"/>
+                    <label><text> </text></label>
+                </column>
+                <column><label><text>      </text></label></column>
+                <column>
+                    <display item="Range I Hardware Version"/>
+                    <display item="Range I Additional version info"/>
+                    <label><text> </text></label>
+                </column>
+            </group>
+            <group>
+                <qualifier>
+                    <variableref>SUSI-range</variableref>
+                    <relation>eq</relation>
+                    <value>2</value>
+                </qualifier>
+                <column>
+                    <display item="Range II Manufacturer ID"/>
+                    <display item="Range II Software version"/>
+                    <label><text> </text></label>
+                </column>
+                <column><label><text>      </text></label></column>
+                <column>
+                    <display item="Range II Hardware Version"/>
+                    <display item="Range II Additional version info"/>
+                    <label><text> </text></label>
+                </column>
+            </group>
+            <group>
+                <qualifier>
+                    <variableref>SUSI-range</variableref>
+                    <relation>eq</relation>
+                    <value>3</value>
+                </qualifier>
+                <column>
+                    <display item="Range III Manufacturer ID"/>
+                    <display item="Range III Software version"/>
+                    <label><text> </text></label>
+                </column>
+                <column><label><text>      </text></label></column>
+                <column>
+                    <display item="Range III Hardware Version"/>
+                    <display item="Range III Additional version info"/>
+                    <label><text> </text></label>
+                </column>
+            </group>
+        </row>
+        <separator/>
+        <group>
+            <qualifier>
+                <variableref>SUSI-range</variableref>
+                <relation>eq</relation>
+                <value>1</value>
+            </qualifier>
+            <column>
+                <display item="Range I Bank switch"/>
+            </column>
+            <column><label><text>      </text></label></column>
+            <column>
+                <label>
+                    <text>CVs for SUSI range I :</text>
+                    <text xml:lang="de">CVs für SUSI Adressbereich I :</text>
+                    <text xml:lang="nl">CV's voor SUSI-adresbereik I :</text>
+                </label>
+            </column>
+        </group>
+        <group>
+            <qualifier>
+                <variableref>SUSI-range</variableref>
+                <relation>eq</relation>
+                <value>2</value>
+            </qualifier>
+            <column>
+                <display item="Range II Bank switch"/>
+            </column>
+            <column><label><text>      </text></label></column>
+            <column>
+                <label>
+                    <text>CVs for SUSI range II :</text>
+                    <text xml:lang="de">CVs für SUSI Adressbereich II :</text>
+                    <text xml:lang="nl">CV's voor SUSI-adresbereik II :</text>
+                </label>
+            </column>
+        </group>
+        <group>
+            <qualifier>
+                <variableref>SUSI-range</variableref>
+                <relation>eq</relation>
+                <value>3</value>
+            </qualifier>
+            <column>
+                <display item="Range III Bank switch"/>
+            </column>
+            <column><label><text>      </text></label></column>
+            <column>
+                <label>
+                    <text>CVs for SUSI range III :</text>
+                    <text xml:lang="de">CVs für SUSI Adressbereich III :</text>
+                    <text xml:lang="nl">CV's voor SUSI-adresbereik III :</text>
+                </label>
+            </column>
+        </group>
+        <separator/>
+        <row>
+            <group>
+                <qualifier>
+                    <variableref>SUSI-range</variableref>
+                    <relation>eq</relation>
+                    <value>1</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>Range I Bank switch</variableref>
+                    <relation>eq</relation>
+                    <value>1</value>
+                </qualifier>
+                <column>
+                    <label><text> </text></label>
+                    <display item="Range I Sound Volume"/>
+                    <label><text> </text></label>
+                    <display item="Range I Volume Custom 1"/>
+                    <display item="Range I Volume Custom 2"/>
+                    <display item="Range I Volume Custom 3"/>
+                    <display item="Range I Volume Custom 4"/>
+                    <label><text> </text></label>
+                </column>
+                <column><label><text>      </text></label></column>
+                <column><label><text>      </text></label></column>
+                <column>
+                    <label><text> </text></label>
+                    <display item="Range I Chuff Control"/>
+                    <display item="Range I Firebox"/>
+                    <display item="Range I End step"/>
+                    <display item="Range I Whistle Repeat Pause" format="checkbox"/>
+                    <display item="Range I Chuffs halved" format="checkbox"/>
+                    <display item="Range I Fader time" format="checkbox"/>
+                </column>
+            </group>
+            <group>
+                <qualifier>
+                    <variableref>SUSI-range</variableref>
+                    <relation>eq</relation>
+                    <value>1</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>Range I Bank switch</variableref>
+                    <relation>eq</relation>
+                    <value>2</value>
+                </qualifier>
+                <column>
+                    <label><text> </text></label>
+                    <display item="Bank B Range I Volume for chuffs"/>
+                    <display item="Bank B Range I Alternative Volume"/>
+                    <label><text> </text></label>
+                    <display item="Bank B Range I Volume of curve squealing"/>
+                    <display item="Bank B Range I Volume for switching"/>
+                    <display item="Bank B Range I Volume for brake squealing"/>
+                    <display item="Bank B Range I Volume for direction change"/>
+                </column>
+                <column><label><text>      </text></label></column>
+                <column>
+                    <display item="Bank B Range I Volume sound number 1"/>
+                    <display item="Bank B Range I Volume sound number 2"/>
+                    <display item="Bank B Range I Volume sound number 3"/>
+                    <display item="Bank B Range I Volume sound number 4"/>
+                    <display item="Bank B Range I Volume sound number 5"/>
+                    <display item="Bank B Range I Volume sound number 6"/>
+                    <display item="Bank B Range I Volume sound number 7"/>
+                    <!-- no sound #8 -->
+                    <label><text> </text></label>
+                    <display item="Bank B Range I Volume sound number 9"/>
+                    <display item="Bank B Range I Volume sound number 10"/>
+                    <!-- no sound #11 -->
+                    <label><text> </text></label>
+                    <display item="Bank B Range I Volume sound number 12"/>
+                    <display item="Bank B Range I Volume sound number 13"/>
+                </column>
+                <column>
+                    <display item="Bank B Range I Volume sound number 14"/>
+                    <display item="Bank B Range I Volume sound number 15"/>
+                    <display item="Bank B Range I Volume sound number 16"/>
+                    <display item="Bank B Range I Volume sound number 17"/>
+                    <display item="Bank B Range I Volume sound number 18"/>
+                    <display item="Bank B Range I Volume sound number 19"/>
+                    <display item="Bank B Range I Volume sound number 20"/>
+                    <display item="Bank B Range I Volume sound number 21"/>
+                    <display item="Bank B Range I Volume sound number 22"/>
+                    <display item="Bank B Range I Volume sound number 23"/>
+                    <display item="Bank B Range I Volume sound number 24"/>
+                    <display item="Bank B Range I Volume sound number 25"/>
+                </column>
+            </group>
+            <group>
+                <qualifier>
+                    <variableref>SUSI-range</variableref>
+                    <relation>eq</relation>
+                    <value>1</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>Range I Bank switch</variableref>
+                    <relation>eq</relation>
+                    <value>3</value>
+                </qualifier>
+                <column>
+                    <label><text> </text></label>
+                    <display item="Bank C Range I Diesel notch after idle"/>
+                    <label><text> </text></label>
+                    <!-- Bank C Range I Speed step next gear 1 - 13 -->
+                    <display item="Bank C Range I Speed step next gear 1"/>
+                    <display item="Bank C Range I Speed step next gear 2"/>
+                    <display item="Bank C Range I Speed step next gear 3"/>
+                    <display item="Bank C Range I Speed step next gear 4"/>
+                    <display item="Bank C Range I Speed step next gear 5"/>
+                    <display item="Bank C Range I Speed step next gear 6"/>
+                    <display item="Bank C Range I Speed step next gear 7"/>
+                    <display item="Bank C Range I Speed step next gear 8"/>
+                    <display item="Bank C Range I Speed step next gear 9"/>
+                    <display item="Bank C Range I Speed step next gear 10"/>
+                    <display item="Bank C Range I Speed step next gear 11"/>
+                    <display item="Bank C Range I Speed step next gear 12"/>
+                    <display item="Bank C Range I Speed step next gear 13"/>
+                </column>
+            </group>
+            <group>
+                <qualifier>
+                    <variableref>SUSI-range</variableref>
+                    <relation>eq</relation>
+                    <value>2</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>Range II Bank switch</variableref>
+                    <relation>eq</relation>
+                    <value>1</value>
+                </qualifier>
+                <column>
+                    <label><text> </text></label>
+                    <display item="Range II Sound Volume"/>
+                    <label><text> </text></label>
+                    <display item="Range II Volume Custom 1"/>
+                    <display item="Range II Volume Custom 2"/>
+                    <display item="Range II Volume Custom 3"/>
+                    <display item="Range II Volume Custom 4"/>
+                    <label><text> </text></label>
+                </column>
+                <column><label><text>      </text></label></column>
+                <column><label><text>      </text></label></column>
+                <column>
+                    <label><text> </text></label>
+                    <display item="Range II Chuff Control"/>
+                    <display item="Range II Firebox"/>
+                    <display item="Range II End step"/>
+                    <display item="Range II Whistle Repeat Pause" format="checkbox"/>
+                    <display item="Range II Chuffs halved" format="checkbox"/>
+                    <display item="Range II Fader time" format="checkbox"/>
+                </column>
+            </group>
+            <group>
+                <qualifier>
+                    <variableref>SUSI-range</variableref>
+                    <relation>eq</relation>
+                    <value>2</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>Range II Bank switch</variableref>
+                    <relation>eq</relation>
+                    <value>2</value>
+                </qualifier>
+                <column>
+                    <label><text> </text></label>
+                    <display item="Bank B Range II Volume for chuffs"/>
+                    <display item="Bank B Range II Alternative Volume"/>
+                    <label><text> </text></label>
+                    <display item="Bank B Range II Volume of curve squealing"/>
+                    <display item="Bank B Range II Volume for switching"/>
+                    <display item="Bank B Range II Volume for brake squealing"/>
+                    <display item="Bank B Range II Volume for direction change"/>
+                </column>
+                <column><label><text>      </text></label></column>
+                <column>
+                    <display item="Bank B Range II Volume sound number 1"/>
+                    <display item="Bank B Range II Volume sound number 2"/>
+                    <display item="Bank B Range II Volume sound number 3"/>
+                    <display item="Bank B Range II Volume sound number 4"/>
+                    <display item="Bank B Range II Volume sound number 5"/>
+                    <display item="Bank B Range II Volume sound number 6"/>
+                    <display item="Bank B Range II Volume sound number 7"/>
+                    <!-- no sound #8 -->
+                    <label><text> </text></label>
+                    <display item="Bank B Range II Volume sound number 9"/>
+                    <display item="Bank B Range II Volume sound number 10"/>
+                    <!-- no sound #11 -->
+                    <label><text> </text></label>
+                    <display item="Bank B Range II Volume sound number 12"/>
+                    <display item="Bank B Range II Volume sound number 13"/>
+                </column>
+                <column>
+                    <display item="Bank B Range II Volume sound number 14"/>
+                    <display item="Bank B Range II Volume sound number 15"/>
+                    <display item="Bank B Range II Volume sound number 16"/>
+                    <display item="Bank B Range II Volume sound number 17"/>
+                    <display item="Bank B Range II Volume sound number 18"/>
+                    <display item="Bank B Range II Volume sound number 19"/>
+                    <display item="Bank B Range II Volume sound number 20"/>
+                    <display item="Bank B Range II Volume sound number 21"/>
+                    <display item="Bank B Range II Volume sound number 22"/>
+                    <display item="Bank B Range II Volume sound number 23"/>
+                    <display item="Bank B Range II Volume sound number 24"/>
+                    <display item="Bank B Range II Volume sound number 25"/>
+                </column>
+            </group>
+            <group>
+                <qualifier>
+                    <variableref>SUSI-range</variableref>
+                    <relation>eq</relation>
+                    <value>2</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>Range II Bank switch</variableref>
+                    <relation>eq</relation>
+                    <value>3</value>
+                </qualifier>
+                <column>
+                    <label><text> </text></label>
+                    <display item="Bank C Range II Diesel notch after idle"/>
+                    <label><text> </text></label>
+                    <!-- Bank C Range II Speed step next gear 1 - 13 -->
+                    <display item="Bank C Range II Speed step next gear 1"/>
+                    <display item="Bank C Range II Speed step next gear 2"/>
+                    <display item="Bank C Range II Speed step next gear 3"/>
+                    <display item="Bank C Range II Speed step next gear 4"/>
+                    <display item="Bank C Range II Speed step next gear 5"/>
+                    <display item="Bank C Range II Speed step next gear 6"/>
+                    <display item="Bank C Range II Speed step next gear 7"/>
+                    <display item="Bank C Range II Speed step next gear 8"/>
+                    <display item="Bank C Range II Speed step next gear 9"/>
+                    <display item="Bank C Range II Speed step next gear 10"/>
+                    <display item="Bank C Range II Speed step next gear 11"/>
+                    <display item="Bank C Range II Speed step next gear 12"/>
+                    <display item="Bank C Range II Speed step next gear 13"/>
+                </column>
+            </group>
+            <group>
+                <qualifier>
+                    <variableref>SUSI-range</variableref>
+                    <relation>eq</relation>
+                    <value>3</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>Range III Bank switch</variableref>
+                    <relation>eq</relation>
+                    <value>1</value>
+                </qualifier>
+                <column>
+                    <label><text> </text></label>
+                    <display item="Range III Sound Volume"/>
+                    <label><text> </text></label>
+                    <display item="Range III Volume Custom 1"/>
+                    <display item="Range III Volume Custom 2"/>
+                    <display item="Range III Volume Custom 3"/>
+                    <display item="Range III Volume Custom 4"/>
+                     <label><text> </text></label>
+                </column>
+                <column><label><text>      </text></label></column>
+                <column><label><text>      </text></label></column>
+                <column>
+                    <label><text> </text></label>
+                    <display item="Range III Chuff Control"/>
+                    <display item="Range III Firebox"/>
+                    <display item="Range III End step"/>
+                    <display item="Range III Whistle Repeat Pause" format="checkbox"/>
+                    <display item="Range III Chuffs halved" format="checkbox"/>
+                    <display item="Range III Fader time" format="checkbox"/>
+                </column>
+            </group>
+            <group>
+                <qualifier>
+                    <variableref>SUSI-range</variableref>
+                    <relation>eq</relation>
+                    <value>3</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>Range III Bank switch</variableref>
+                    <relation>eq</relation>
+                    <value>2</value>
+                </qualifier>
+                <column>
+                    <label><text> </text></label>
+                    <display item="Bank B Range III Volume for chuffs"/>
+                    <display item="Bank B Range III Alternative Volume"/>
+                    <display item="Bank B Range III Volume of curve squealing"/>
+                    <display item="Bank B Range III Volume for switching"/>
+                    <display item="Bank B Range III Volume for brake squealing"/>
+                    <display item="Bank B Range III Volume for direction change"/>
+                    <label><text> </text></label>
+                    <display item="Bank B Range III Volume sound number 1"/>
+                    <display item="Bank B Range III Volume sound number 2"/>
+                    <display item="Bank B Range III Volume sound number 3"/>
+                    <display item="Bank B Range III Volume sound number 4"/>
+                    <display item="Bank B Range III Volume sound number 5"/>
+                    <display item="Bank B Range III Volume sound number 6"/>
+                    <display item="Bank B Range III Volume sound number 7"/>
+                    <!-- no sound #8 -->
+                    <label><text> </text></label>
+                    <display item="Bank B Range III Volume sound number 9"/>
+                    <display item="Bank B Range III Volume sound number 10"/>
+                    <!-- no sound #11 -->
+                    <label><text> </text></label>
+                    <display item="Bank B Range III Volume sound number 12"/>
+                    <display item="Bank B Range III Volume sound number 13"/>
+                </column>
+                <column>
+                    <display item="Bank B Range III Volume sound number 14"/>
+                    <display item="Bank B Range III Volume sound number 15"/>
+                    <display item="Bank B Range III Volume sound number 16"/>
+                    <display item="Bank B Range III Volume sound number 17"/>
+                    <display item="Bank B Range III Volume sound number 18"/>
+                    <display item="Bank B Range III Volume sound number 19"/>
+                    <display item="Bank B Range III Volume sound number 20"/>
+                    <display item="Bank B Range III Volume sound number 21"/>
+                    <display item="Bank B Range III Volume sound number 22"/>
+                    <display item="Bank B Range III Volume sound number 23"/>
+                    <display item="Bank B Range III Volume sound number 24"/>
+                    <display item="Bank B Range III Volume sound number 25"/>
+                </column>
+            </group>
+            <group>
+                <qualifier>
+                    <variableref>SUSI-range</variableref>
+                    <relation>eq</relation>
+                    <value>3</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>Range III Bank switch</variableref>
+                    <relation>eq</relation>
+                    <value>3</value>
+                </qualifier>
+                <column>
+                    <label><text> </text></label>
+                    <display item="Bank C Range III Diesel notch after idle"/>
+                    <label><text> </text></label>
+                    <!-- Bank C Range III Speed step next gear 1 - 13 -->
+                    <display item="Bank C Range III Speed step next gear 1"/>
+                    <display item="Bank C Range III Speed step next gear 2"/>
+                    <display item="Bank C Range III Speed step next gear 3"/>
+                    <display item="Bank C Range III Speed step next gear 4"/>
+                    <display item="Bank C Range III Speed step next gear 5"/>
+                    <display item="Bank C Range III Speed step next gear 6"/>
+                    <display item="Bank C Range III Speed step next gear 7"/>
+                    <display item="Bank C Range III Speed step next gear 8"/>
+                    <display item="Bank C Range III Speed step next gear 9"/>
+                    <display item="Bank C Range III Speed step next gear 10"/>
+                    <display item="Bank C Range III Speed step next gear 11"/>
+                    <display item="Bank C Range III Speed step next gear 12"/>
+                    <display item="Bank C Range III Speed step next gear 13"/>
+                </column>
+            </group>
+        </row>
+        <row>
+            <label><text>      </text></label>
+            <group>
+                <qualifier>
+                    <variableref>SUSI-range</variableref>
+                    <relation>eq</relation>
+                    <value>1</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>Range I Bank switch</variableref>
+                    <relation>eq</relation>
+                    <value>1</value>
+                </qualifier>
+                <column>
+                    <display item="Range I Sound switch off time"/> <!-- IntelliSound 4 only -->
+                    <display item="Range I Threshold for cooling fan in E-lok"/>
+                    <display item="Range I Threshold for brake screeching"/>
+                    <label><text> </text></label>
+                    <display item="Range I Idle Time"/>
+                    <label><text> </text></label>
+                    <display item="Range I Time between two chuffs at max speed"/>
+                    <display item="Range I Time between two chuffs at min speed"/>
+                    <label><text> </text></label>
+                    <display item="Range I Squeal Start Function"/> <!-- IntelliSound 4 only -->
+                    <display item="Range I Squeal Stop Function"/> <!-- IntelliSound 4 only -->
+                </column>
+                <column><label><text>      </text></label></column>
+                <column>
+                    <display item="Range I Start-up delay"/>
+                    <display item="Range I Steam load time acceleration"/>
+                    <display item="Range I Steam load time load increase"/>
+                    <display item="Range I Steam output Stop"/>
+                    <display item="Range I Steam output running"/>
+                    <display item="Range I Steam output idle"/>
+                    <display item="Range I Steam output start-up"/>
+                    <label><text> </text></label>
+                    <display item="Range I Screeching off Function"/>
+                    <display item="Range I Alternative Volume"/> <!-- IntelliSound 4 only -->
+                </column>
+                <column><label><text>      </text></label></column>
+                <column>
+                    <display item="Range I Timeout Short whistle"/>
+                    <display item="Range I Hold time hissing"/>
+                    <label><text> </text></label>
+                    <display item="Range I Detection faster"/>
+                    <display item="Range I Detection slower"/>
+                    <display item="Range I Sensitivity to load change"/>
+                    <display item="Range I Threshold with load increase"/>
+                    <display item="Range I Threshold with load decrease"/>
+                    <label><text> </text></label>
+                    <display item="Range I Idle 0" format="checkbox"/> <!-- IntelliSound 4 only -->
+                    <display item="Range I Idle 1" format="checkbox"/> <!-- IntelliSound 4 only -->
+                    <display item="Range I Idle 2" format="checkbox"/> <!-- IntelliSound 4 only -->
+                    <display item="Range I Idle 5" format="checkbox"/> <!-- IntelliSound 4 only -->
+                </column>
+            </group>
+            <group>
+                <qualifier>
+                    <variableref>SUSI-range</variableref>
+                    <relation>eq</relation>
+                    <value>2</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>Range II Bank switch</variableref>
+                    <relation>eq</relation>
+                    <value>1</value>
+                </qualifier>
+                <column>
+                    <display item="Range II Sound switch off time"/> <!-- IntelliSound 4 only -->
+                    <display item="Range II Threshold for cooling fan in E-lok"/>
+                    <display item="Range II Threshold for brake screeching"/>
+                    <label><text> </text></label>
+                    <display item="Range II Idle Time"/>
+                    <label><text> </text></label>
+                    <display item="Range II Time between two chuffs at max speed"/>
+                    <display item="Range II Time between two chuffs at min speed"/>
+                    <label><text> </text></label>
+                    <display item="Range II Squeal Start Function"/> <!-- IntelliSound 4 only -->
+                    <display item="Range II Squeal Stop Function"/> <!-- IntelliSound 4 only -->
+                </column>
+                <column><label><text>      </text></label></column>
+                <column>
+                    <display item="Range II Start-up delay"/>
+                    <display item="Range II Steam load time acceleration"/>
+                    <display item="Range II Steam load time load increase"/>
+                    <display item="Range II Steam output Stop"/>
+                    <display item="Range II Steam output running"/>
+                    <display item="Range II Steam output idle"/>
+                    <display item="Range II Steam output start-up"/>
+                    <label><text> </text></label>
+                    <display item="Range II Screeching off Function"/>
+                    <display item="Range II Alternative Volume"/> <!-- IntelliSound 4 only -->
+                </column>
+                <column><label><text>      </text></label></column>
+                <column>
+                    <display item="Range II Timeout Short whistle"/>
+                    <display item="Range II Hold time hissing"/>
+                    <label><text> </text></label>
+                    <display item="Range II Detection faster"/>
+                    <display item="Range II Detection slower"/>
+                    <display item="Range II Sensitivity to load change"/>
+                    <display item="Range II Threshold with load increase"/>
+                    <display item="Range II Threshold with load decrease"/>
+                    <label><text> </text></label>
+                    <display item="Range II Idle 0" format="checkbox"/> <!-- IntelliSound 4 only -->
+                    <display item="Range II Idle 1" format="checkbox"/> <!-- IntelliSound 4 only -->
+                    <display item="Range II Idle 2" format="checkbox"/> <!-- IntelliSound 4 only -->
+                    <display item="Range II Idle 5" format="checkbox"/> <!-- IntelliSound 4 only -->
+                </column>
+            </group>
+            <group>
+                <qualifier>
+                    <variableref>SUSI-range</variableref>
+                    <relation>eq</relation>
+                    <value>3</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>Range III Bank switch</variableref>
+                    <relation>eq</relation>
+                    <value>1</value>
+                </qualifier>
+                <column>
+                    <display item="Range III Sound switch off time"/> <!-- IntelliSound 4 only -->
+                    <display item="Range III Threshold for cooling fan in E-lok"/>
+                    <display item="Range III Threshold for brake screeching"/>
+                    <label><text> </text></label>
+                    <display item="Range III Idle Time"/>
+                    <label><text> </text></label>
+                    <display item="Range III Time between two chuffs at max speed"/>
+                    <display item="Range III Time between two chuffs at min speed"/>
+                    <label><text> </text></label>
+                    <display item="Range III Squeal Start Function"/> <!-- IntelliSound 4 only -->
+                    <display item="Range III Squeal Stop Function"/> <!-- IntelliSound 4 only -->
+                </column>
+                <column><label><text>      </text></label></column>
+                <column>
+                    <display item="Range III Start-up delay"/>
+                    <display item="Range III Steam load time acceleration"/>
+                    <display item="Range III Steam load time load increase"/>
+                    <display item="Range III Steam output Stop"/>
+                    <display item="Range III Steam output running"/>
+                    <display item="Range III Steam output idle"/>
+                    <display item="Range III Steam output start-up"/>
+                    <label><text> </text></label>
+                    <display item="Range III Screeching off Function"/>
+                    <display item="Range III Alternative Volume"/> <!-- IntelliSound 4 only -->
+                </column>
+                <column><label><text>      </text></label></column>
+                <column>
+                    <display item="Range III Timeout Short whistle"/>
+                    <display item="Range III Hold time hissing"/>
+                    <label><text> </text></label>
+                    <display item="Range III Detection faster"/>
+                    <display item="Range III Detection slower"/>
+                    <display item="Range III Sensitivity to load change"/>
+                    <display item="Range III Threshold with load increase"/>
+                    <display item="Range III Threshold with load decrease"/>
+                    <label><text> </text></label>
+                    <display item="Range III Idle 0" format="checkbox"/> <!-- IntelliSound 4 only -->
+                    <display item="Range III Idle 1" format="checkbox"/> <!-- IntelliSound 4 only -->
+                    <display item="Range III Idle 2" format="checkbox"/> <!-- IntelliSound 4 only -->
+                    <display item="Range III Idle 5" format="checkbox"/> <!-- IntelliSound 4 only -->
+                </column>
+            </group>
+        </row>
+    </column>
+</pane>

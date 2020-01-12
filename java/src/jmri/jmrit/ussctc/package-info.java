@@ -14,32 +14,32 @@
  * <a href="doc-files/TurnoutChangeIndication.png"><img src="doc-files/TurnoutChangeIndication.png" style="text-align: right;" alt="Indication" height="25%" width="25%"></a>
  * <HR>
  *     There are a number of older tools remaining in this package:
- * <UL>
- *     <LI>Follower - connects a Turnout to the state of a Sensor. Useful for 
+ * <ul>
+ *     <li>Follower - connects a Turnout to the state of a Sensor. Useful for
  *         e.g. driving a turnout from a switch on the fascia, or to 
  *         drive an indicator light on a physical panel from a senor. 
  *         A veto sensor is optionally available, e.g. to prevent a turnout from
  *         being changed under a train.
- *     <LI>OS Indicator - drives the lamp on the panel for a particular OS.
+ *     <li>OS Indicator - drives the lamp on the panel for a particular OS.
  *         Honors a separate lock/unlocked indication by showing occupied if the
  *         associated turnout has been unlocked.
- * </UL>
+ * </ul>
  * 
- * <P>
+ * <p>
  *     Each tool is made of three parts:
- * <OL>
- *     <LI>A class that handles creation and editing of the underlying objects
+ * <ol>
+ *     <li>A class that handles creation and editing of the underlying objects
  *         that implement the tool.  For example, the
  *         OsIndicator
  *         class provides objects that can create the Routes and Logix needed
  *         to implement an OS Indicator.
- *     <LI>A class to provide a JPanel for creating and editing the objects.
+ *     <li>A class to provide a JPanel for creating and editing the objects.
  *         For example, the OsIndicatorPanel class does this for OsIndicators.
- *     <LI>A class to provide a default frame for embedding the panel. In
+ *     <li>A class to provide a default frame for embedding the panel. In
  *         the case of Os Indicators, this is OsIndicatorFrame. These are children of 
  *         JmriJFrames so they can inherit the features expected ot a JMRI tool frame.
- *     <LI>A class to provide an Action that will open the frame, e.g. for use in menus.
- * </OL>
+ *     <li>A class to provide an Action that will open the frame, e.g. for use in menus.
+ * </ol>
  * 
  * <p>
  *     The underlying implementations for these are based on

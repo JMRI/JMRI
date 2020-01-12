@@ -48,11 +48,6 @@ public class MDITest {
                 JUnitUtil.initMemoryManager();
                 JUnitUtil.initDebugThrottleManager();
             }
-
-            @Override
-            protected void installShutDownManager() {
-                JUnitUtil.initShutDownManager();
-            }
         };
         Assert.assertNotNull(a);
         // shutdown the application
@@ -62,13 +57,17 @@ public class MDITest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
+        JUnitUtil.setUp();
         JUnitUtil.resetApplication();
+        JUnitUtil.resetProfileManager();
     }
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager();  // eventually want to test ShutDownTasks?
         JUnitUtil.resetApplication();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.resetWindows(false,false);
+        JUnitUtil.tearDown();
     }
 
 }

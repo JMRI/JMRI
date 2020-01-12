@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -19,9 +18,10 @@ public class JsonTestHttpService extends JsonHttpService {
     }
 
     @Override
-    public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
+    public JsonNode doGet(String type, String name, JsonNode parameters, JsonRequest request) throws JsonException {
         if (name.equals("JsonException")) {
-            throw new JsonException(499, "Thrown for test"); // not a standard code
+            // not a standard code
+            throw new JsonException(499, "Thrown for test", request.id);
         }
         ObjectNode root = mapper.createObjectNode();
         root.put(JSON.TYPE, type);
@@ -31,29 +31,27 @@ public class JsonTestHttpService extends JsonHttpService {
     }
 
     @Override
-    public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {
-        ObjectNode root = mapper.createObjectNode();
-        root.put(JSON.TYPE, type);
-        root.set(JSON.DATA, data);
-        return root;
+    public JsonNode doPost(String type, String name, JsonNode data, JsonRequest request) throws JsonException {
+        return message(type, data, request.id);
     }
 
     @Override
-    public ArrayNode doGetList(String type, Locale locale) throws JsonException {
+    public ArrayNode doGetList(String type, JsonNode data, JsonRequest request) throws JsonException {
         ArrayNode array = mapper.createArrayNode();
-        array.add(mapper.createObjectNode().put(JSON.TYPE, type).set(JSON.DATA, mapper.createObjectNode()));
-        array.add(mapper.createObjectNode().put(JSON.TYPE, type).set(JSON.DATA, mapper.createObjectNode()));
+        array.add(message(type, mapper.createObjectNode(), request.id));
+        array.add(message(type, mapper.createObjectNode(), request.id));
         return array;
     }
 
     @Override
-    public JsonNode doSchema(String type, boolean server, Locale locale) throws JsonException {
+    public JsonNode doSchema(String type, boolean server, JsonRequest request) throws JsonException {
         switch (type) {
             case JsonTestServiceFactory.TEST:
                 // return an empty schema, which is valid, but accepts anything
                 return mapper.createObjectNode();
             default:
-                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+                        Bundle.getMessage(request.locale, "ErrorUnknownType", type), request.id);
         }
     }
 

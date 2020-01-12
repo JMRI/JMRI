@@ -11,12 +11,13 @@ import org.junit.runners.Suite;
         SerialDriverAdapterTest.class,
         ConnectionConfigTest.class,
         jmri.jmrix.ieee802154.serialdriver.configurexml.PackageTest.class,
+        BundleTest.class,
 })
 
 /**
- * Tests for the jmri.jmrix.ieee802154.serialdriver package
+ * Tests for the jmri.jmrix.ieee802154.serialdriver package.
  *
  * @author	Paul Bender
-  */
+ */
 public class PackageTest  {
 }

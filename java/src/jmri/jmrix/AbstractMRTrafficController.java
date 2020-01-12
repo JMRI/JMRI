@@ -4,13 +4,12 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.LinkedList;
-import java.util.Vector;
+import java.util.*;
 import javax.swing.SwingUtilities;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import jmri.InstanceManager;
+import jmri.ShutDownManager;
+import jmri.ShutDownTask;
 
 /**
  * Abstract base for TrafficControllers in a Message/Reply protocol.
@@ -19,8 +18,8 @@ import org.slf4j.LoggerFactory;
  * handles pushing characters to the port, and also changing the mode. The
  * "Receive" thread converts characters from the input stream into replies.
  * <p>
- * A third thread is registered by the constructor as a shutdown hook. It
- * triggers the necessary cleanup code
+ * The constructor registers a shutdown task to
+ * trigger the necessary cleanup code
  * <p>
  * The internal state machine handles changes of mode, automatic retry of 
  * certain messages, time outs, and sending poll messages when otherwise idle.
@@ -31,9 +30,9 @@ import org.slf4j.LoggerFactory;
  *
  * <img src="doc-files/AbstractMRTrafficController-StateDiagram.png" alt="UML State diagram">
  * 
- * <P>
+ * <p>
  * The key methods for the basic operation are:
- * <UL>
+ * <ul>
  * <li>If needed for formatting outbound messages, {@link #addHeaderToOutput(byte[], AbstractMRMessage)} and {@link #addTrailerToOutput(byte[], int, AbstractMRMessage)}
  * <li> {@link #newReply()} creates an empty reply message (of the proper concrete type) to fill with incoming data
  * <li>The {@link #endOfMessage(AbstractMRReply) } method is used to parse incoming messages. If it needs
@@ -92,11 +91,9 @@ Note left of OKSENDMSGSTATE : Transient internal state\nwill transition when goi
 @enduml
  */
 
-
 abstract public class AbstractMRTrafficController {
 
-    private Thread shutdownHook = null; // retain shutdown hook for 
-                                        // possible removal.
+    private ShutDownTask shutDownTask = null; // retain for possible removal.
 
     /**
      * Create a new unnamed MRTrafficController.
@@ -106,16 +103,15 @@ abstract public class AbstractMRTrafficController {
         mCurrentMode = NORMALMODE;
         mCurrentState = IDLESTATE;
         allowUnexpectedReply = false;
-        setInstance();
 
-        // We use a shutdown hook here to make sure the connection is left
+
+        // We use a shutdown task here to make sure the connection is left
         // in a clean state prior to exiting.  This is required on systems
         // which have a service mode to ensure we don't leave the system 
-        // in an unusable state (This code predates the ShutdownTask 
-        // mechanisim).  Once the shutdown hook executes, the connection
-        // must be considered closed.
-        shutdownHook = new Thread(new CleanupHook(this));
-        Runtime.getRuntime().addShutdownHook(shutdownHook);
+        // in an unusable state. Once the shutdown task executes, the connection
+        // must be considered permanently closed.
+        
+        InstanceManager.getDefault(ShutDownManager.class).register(shutDownTask = new CleanupTask(this));
     }
 
     private boolean synchronizeRx = true;
@@ -123,18 +119,14 @@ abstract public class AbstractMRTrafficController {
     protected void setSynchronizeRx(boolean val) {
         synchronizeRx = val;
     }
+
     protected boolean getSynchronizeRx() {
         return synchronizeRx;
     }
 
-    /**
-     * Set the instance variable.
-     */
-    abstract protected void setInstance();
-
     // The methods to implement the abstract Interface
 
-    protected Vector<AbstractMRListener> cmdListeners = new Vector<AbstractMRListener>();
+    protected final Vector<AbstractMRListener> cmdListeners = new Vector<AbstractMRListener>();
 
     protected synchronized void addListener(AbstractMRListener l) {
         // add only if not already registered
@@ -164,6 +156,7 @@ abstract public class AbstractMRTrafficController {
         // make a copy of the listener vector to synchronized not needed for transmit
         Vector<AbstractMRListener> v;
         synchronized (this) {
+            // FIXME: unnecessary synchronized; the Vector IS already thread-safe.
             v = (Vector<AbstractMRListener>) cmdListeners.clone();
         }
         // forward to all listeners
@@ -277,6 +270,7 @@ abstract public class AbstractMRTrafficController {
         // make a copy of the listener vector to synchronized (not needed for transmit?)
         Vector<AbstractMRListener> v;
         synchronized (this) {
+            // FIXME: unnecessary synchronized; the Vector IS already thread-safe.
             v = (Vector<AbstractMRListener>) cmdListeners.clone();
         }
         // forward to all listeners
@@ -336,7 +330,7 @@ abstract public class AbstractMRTrafficController {
      * Permanent loop for the transmit thread.
      */
     protected void transmitLoop() {
-        log.debug("transmitLoop starts");
+        log.debug("transmitLoop starts in {}", this);
 
         // loop forever
         while (!connectionError && !threadStopRequest) {
@@ -545,6 +539,7 @@ abstract public class AbstractMRTrafficController {
                 }
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt(); // retain if needed later
+                if (threadStopRequest) return; // don't log an error if closing.
                 String[] packages = this.getClass().getName().split("\\.");
                 String name = (packages.length>=2 ? packages[packages.length-2]+"." :"")
                         +(packages.length>=1 ? packages[packages.length-1] :"");
@@ -702,7 +697,7 @@ abstract public class AbstractMRTrafficController {
                             }
                         } catch (InterruptedException e) {
                             Thread.currentThread().interrupt(); // retain if needed later
-                            log.error("retry wait interupted");
+                            log.error("retry wait interrupted");
                         }
                     } else {
                         log.warn("sendMessage: port not ready for data sending: {}", Arrays.toString(msg));
@@ -866,7 +861,7 @@ abstract public class AbstractMRTrafficController {
      * Each turn of the loop is the receipt of a single message.
      */
     public void receiveLoop() {
-        log.debug("receiveLoop starts");
+        log.debug("receiveLoop starts in {}", this);
         int errorCount = 0;
         while (errorCount < maxRcvExceptionCount && !threadStopRequest) { // stream close will exit via exception
             try {
@@ -889,7 +884,7 @@ abstract public class AbstractMRTrafficController {
             }
         }
         if (!threadStopRequest) { // if e.g. unexpected end
-            ConnectionStatus.instance().setConnectionState(controller.getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
+            ConnectionStatus.instance().setConnectionState(controller.getUserName(), controller.getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
             log.error("Exit from rcv loop in {}", this.getClass().toString());
             recovery(); // see if you can restart
         }
@@ -911,7 +906,7 @@ abstract public class AbstractMRTrafficController {
      */
     protected void reportReceiveLoopException(Exception e) {
         log.error("run: Exception: {} in {}", e.toString(), this.getClass().toString(), e);
-        jmri.jmrix.ConnectionStatus.instance().setConnectionState(controller.getCurrentPortName(), jmri.jmrix.ConnectionStatus.CONNECTION_DOWN);
+        jmri.jmrix.ConnectionStatus.instance().setConnectionState(controller.getUserName(), controller.getCurrentPortName(), jmri.jmrix.ConnectionStatus.CONNECTION_DOWN);
         if (controller instanceof AbstractNetworkPortController) {
             portWarnTCP(e);
         }
@@ -925,7 +920,6 @@ abstract public class AbstractMRTrafficController {
      * Dummy routine, to be filled by protocols that have to skip some
      * start-of-message characters.
      */
-    @SuppressWarnings("unused")
     protected void waitForStartOfReply(DataInputStream istream) throws IOException {
     }
 
@@ -942,6 +936,9 @@ abstract public class AbstractMRTrafficController {
      * @throws java.io.IOException if unable to read
      */
     protected byte readByteProtected(DataInputStream istream) throws IOException {
+	if(istream == null) {
+                throw new IOException("Input Stream NULL when reading");
+	}
         while (true) { // loop will repeat until character found
             int nchars;
             nchars = istream.read(rcvBuffer, 0, 1);
@@ -1176,6 +1173,7 @@ abstract public class AbstractMRTrafficController {
     // to request termination, which might have happened
     // before in any case
     @Override
+    @SuppressWarnings("deprecation") // finalize deprecated in Java 9, but not yet removed
     protected final void finalize() throws Throwable {
         terminate();
         super.finalize();
@@ -1285,8 +1283,8 @@ abstract public class AbstractMRTrafficController {
             }
         }    
 
-        // we also need to remove the shutdown hook. 
-        Runtime.getRuntime().removeShutdownHook(shutdownHook);
+        // we also need to remove the shutdown task. 
+        InstanceManager.getDefault(ShutDownManager.class).deregister(shutDownTask);
     }
     
     /**
@@ -1299,20 +1297,38 @@ abstract public class AbstractMRTrafficController {
      * this thread is to make sure the DCC system has exited service mode when
      * the program exits.
      */
-    static class CleanupHook implements Runnable {
+    static class CleanupTask implements jmri.ShutDownTask {
 
         AbstractMRTrafficController mTc;
 
-        CleanupHook(AbstractMRTrafficController pTc) {
+        CleanupTask(AbstractMRTrafficController pTc) {
             mTc = pTc;
         }
 
+        /** {@inheritDoc} */
         @Override
-        public void run() {
+        public boolean isShutdownAllowed() {return true;}
+
+        /** {@inheritDoc} */
+        @Override
+        public boolean execute() {
             mTc.terminate();
+            return true;
         }
+
+        /** {@inheritDoc} */
+        @Override
+        public String getName() {return "ShutDownTask for "+mTc.getClass().getName();}
+
+        /** {@inheritDoc} */
+        @Override
+        public boolean isParallel() {return false;}
+
+        /** {@inheritDoc} */
+        @Override
+        public boolean isComplete() {return !this.isParallel();}
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractMRTrafficController.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractMRTrafficController.class);
 
 }

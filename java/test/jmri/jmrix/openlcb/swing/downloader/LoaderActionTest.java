@@ -27,6 +27,7 @@ public class LoaderActionTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.initConfigureManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         tcs = new TrafficControllerScaffold();
@@ -36,7 +37,9 @@ public class LoaderActionTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(LoaderActionTest.class);

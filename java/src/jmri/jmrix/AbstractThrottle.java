@@ -1,6 +1,6 @@
 package jmri.jmrix;
 
-import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
+import com.fasterxml.jackson.databind.util.StdDateFormat;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Date;
@@ -8,13 +8,12 @@ import java.util.Vector;
 import jmri.BasicRosterEntry;
 import jmri.CommandStation;
 import jmri.LocoAddress;
+import jmri.SpeedStepMode;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.Throttle;
 import jmri.ThrottleListener;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * An abstract implementation of DccThrottle. Based on Glen Oberhauser's
@@ -27,18 +26,11 @@ import org.slf4j.LoggerFactory;
  */
 abstract public class AbstractThrottle implements DccThrottle {
 
-    public final static float SPEED_STEP_14_INCREMENT = 1.0f / 14.0f;
-    public final static float SPEED_STEP_27_INCREMENT = 1.0f / 27.0f;
-    public final static float SPEED_STEP_28_INCREMENT = 1.0f / 28.0f;
-    public final static float SPEED_STEP_128_INCREMENT = 1.0f / 126.0f; // remember there are only 126 
-                                                                        // non-stop values in 128 speed 
-
     protected float speedSetting;
-    protected float speedIncrement;
     /**
      * Question: should we set a default speed step mode so it's never zero?
      */
-    protected int speedStepMode;
+    protected SpeedStepMode speedStepMode = SpeedStepMode.UNKNOWN;
     protected boolean isForward;
     protected boolean f0, f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12;
     protected boolean f13, f14, f15, f16, f17, f18, f19, f20, f21, f22, f23,
@@ -60,6 +52,35 @@ abstract public class AbstractThrottle implements DccThrottle {
     public AbstractThrottle(SystemConnectionMemo memo) {
         active = true;
         adapterMemo = memo;
+        // set defaults for Momentary status.
+        f0Momentary = false;
+        f1Momentary = false;
+        f2Momentary = false;
+        f3Momentary = false;
+        f4Momentary = false;
+        f5Momentary = false;
+        f6Momentary = false;
+        f7Momentary = false;
+        f9Momentary = false;
+        f10Momentary = false;
+        f11Momentary = false;
+        f12Momentary = false;
+        f13Momentary = false;
+        f14Momentary = false;
+        f15Momentary = false;
+        f16Momentary = false;
+        f17Momentary = false;
+        f18Momentary = false;
+        f19Momentary = false;
+        f20Momentary = false;
+        f21Momentary = false;
+        f22Momentary = false;
+        f23Momentary = false;
+        f24Momentary = false;
+        f25Momentary = false;
+        f26Momentary = false;
+        f27Momentary = false;
+        f28Momentary = false;
     }
 
     protected SystemConnectionMemo adapterMemo;
@@ -92,14 +113,14 @@ abstract public class AbstractThrottle implements DccThrottle {
      * to the system state (eg. the speed is the same, or effectivly the same, as the existing speed).
      * Then, the boolean options can affect this behaviour.
      *
-     * @param speed - the new speed
-     * @param allowDuplicates - don't suppress messages
-     * @param allowDuplicatesOnStop - don't suppress messages if the new speed is 'stop'
+     * @param speed  the new speed
+     * @param allowDuplicates  don't suppress messages
+     * @param allowDuplicatesOnStop  don't suppress messages if the new speed is 'stop'
      */
     @Override
     public void setSpeedSetting(float speed, boolean allowDuplicates, boolean allowDuplicatesOnStop) {
         if (Math.abs(this.speedSetting - speed) > 0.0001) {
-            notifyPropertyChangeListener("SpeedSetting", this.speedSetting, this.speedSetting = speed);
+            notifyPropertyChangeListener(SPEEDSETTING, this.speedSetting, this.speedSetting = speed);
         }
         record(speed);
     }
@@ -107,7 +128,7 @@ abstract public class AbstractThrottle implements DccThrottle {
     /**
      * setSpeedSettingAgain - set the speed and don't ever supress the sending of messages to the system
      *
-     * @param speed - the new speed
+     * @param speed  the new speed
      */
     @Override
     public void setSpeedSettingAgain(float speed) {
@@ -133,315 +154,559 @@ abstract public class AbstractThrottle implements DccThrottle {
     @Override
     public void setIsForward(boolean forward) {
         if (forward != this.isForward) {
-            notifyPropertyChangeListener("IsForward", this.isForward, this.isForward = forward);
+            notifyPropertyChangeListener(ISFORWARD, this.isForward, this.isForward = forward);
         }
     }
 
-    // functions - note that we use the naming for DCC, though that's not the implication;
-    // see also DccThrottle interface
+    /**
+     * functions - note that we use the naming for DCC, though that's not the implication;
+     * see also DccThrottle interface
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF0() {
         return f0;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF1() {
         return f1;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF2() {
         return f2;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF3() {
         return f3;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF4() {
         return f4;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF5() {
         return f5;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF6() {
         return f6;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF7() {
         return f7;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF8() {
         return f8;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF9() {
         return f9;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF10() {
         return f10;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF11() {
         return f11;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF12() {
         return f12;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF13() {
         return f13;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF14() {
         return f14;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF15() {
         return f15;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF16() {
         return f16;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF17() {
         return f17;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF18() {
         return f18;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF19() {
         return f19;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF20() {
         return f20;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF21() {
         return f21;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF22() {
         return f22;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF23() {
         return f23;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF24() {
         return f24;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF25() {
         return f25;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF26() {
         return f26;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF27() {
         return f27;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF28() {
         return f28;
     }
 
-    // function momentary status  - note that we use the naming for DCC, 
-    // though that's not the implication;
-    // see also DccThrottle interface
+    /**
+     * function momentary status  - note that we use the naming for DCC, 
+     * though that's not the implication;
+     * see also DccThrottle interface
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF0Momentary() {
         return f0Momentary;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF1Momentary() {
         return f1Momentary;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF2Momentary() {
         return f2Momentary;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF3Momentary() {
         return f3Momentary;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF4Momentary() {
         return f4Momentary;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF5Momentary() {
         return f5Momentary;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF6Momentary() {
         return f6Momentary;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF7Momentary() {
         return f7Momentary;
     }
-
+    
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF8Momentary() {
         return f8Momentary;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF9Momentary() {
         return f9Momentary;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF10Momentary() {
         return f10Momentary;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF11Momentary() {
         return f11Momentary;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF12Momentary() {
         return f12Momentary;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF13Momentary() {
         return f13Momentary;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF14Momentary() {
         return f14Momentary;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF15Momentary() {
         return f15Momentary;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF16Momentary() {
         return f16Momentary;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF17Momentary() {
         return f17Momentary;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF18Momentary() {
         return f18Momentary;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF19Momentary() {
         return f19Momentary;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF20Momentary() {
         return f20Momentary;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF21Momentary() {
         return f21Momentary;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF22Momentary() {
         return f22Momentary;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF23Momentary() {
         return f23Momentary;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF24Momentary() {
         return f24Momentary;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF25Momentary() {
         return f25Momentary;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF26Momentary() {
         return f26Momentary;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF27Momentary() {
         return f27Momentary;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getF28Momentary() {
         return f28Momentary;
     }
+    
+    /**
+     * Notify listeners that a Throttle has disconnected
+     * and is no longer available for use.
+     * <p>
+     * For when throttles have been stolen or encounter hardware 
+     * error, and a normal release / dispose is not possible.
+     *
+     */
+    protected void notifyThrottleDisconnect() {
+        notifyPropertyChangeListener("ThrottleConnected", true, false ); // NOI18N
+    }
+    
+    // set initial values purely for changelistener following
+    // the 1st true or false will always get sent
+    private Boolean _dispatchEnabled = null; 
+    private Boolean _releaseEnabled = null;
+    
+    
+    /**
+     * Notify listeners that a Throttle has Dispatch enabled or disabled.
+     * <p>
+     * For systems where dispatch availability is variable.
+     * <p>
+     * Does not notify if existing value is unchanged.
+     *
+     * @param newVal true if Dispatch enabled, else false
+     *
+     */
+    @Override
+    public void notifyThrottleDispatchEnabled( boolean newVal ) {
+        if (_dispatchEnabled == null){
+            _dispatchEnabled = !newVal; // make sure the 1st time is always sent
+        }
+        if ( newVal == _dispatchEnabled ) {
+            return;
+        }
+        else {
+            notifyPropertyChangeListener("DispatchEnabled", _dispatchEnabled, newVal ); // NOI18N
+            _dispatchEnabled = newVal;
+        }
+    }
+    
+    /**
+     * Notify listeners that a Throttle has Release enabled or disabled.
+     * <p>
+     * For systems where release availability is variable.
+     * <p>
+     * Does not notify if existing value is unchanged.
+     *
+     * @param newVal true if Release enabled, else false
+     *
+     */
+    @Override
+    public void notifyThrottleReleaseEnabled( boolean newVal ) {
+        if (_releaseEnabled == null){
+            _releaseEnabled = !newVal; // make sure the 1st time is always sent
+        }
+        if ( newVal == _releaseEnabled ) {
+            return;
+        }
+        else {
+            notifyPropertyChangeListener("ReleaseEnabled", _releaseEnabled, newVal ); // NOI18N
+            _releaseEnabled = newVal;
+        }
+    }
 
-    // register for notification if any of the properties change
+    /**
+     * Remove notification listener
+     * {@inheritDoc}
+     *
+     */
     @Override
     public void removePropertyChangeListener(PropertyChangeListener l) {
-        log.debug("Removing property change " + l);
+        log.debug("Removing property change {}", l);
         if (listeners.contains(l)) {
             listeners.removeElement(l);
         }
-        log.debug("remove listeners size is " + listeners.size());
+        log.debug("remove listeners size is {}", listeners.size());
         if ((listeners.isEmpty())) {
-            log.debug("No listeners so will call the dispose in the InstanceManger with an empty throttleListenr null value");
+            log.debug("No listeners so will call the dispose in the InstanceManger with an empty throttleListener null value");
             InstanceManager.throttleManagerInstance().disposeThrottle(this, new ThrottleListener() {
                 @Override
                 public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
@@ -450,29 +715,40 @@ abstract public class AbstractThrottle implements DccThrottle {
                 @Override
                 public void notifyThrottleFound(DccThrottle t) {
                 }
+                
+                /**
+                 * {@inheritDoc}
+                 * @deprecated since 4.15.7; use #notifyDecisionRequired
+                 */
+                @Override
+                @Deprecated
+                public void notifyStealThrottleRequired(jmri.LocoAddress address) {
+                }
     
                 @Override
-                public void notifyStealThrottleRequired(LocoAddress address){
-                    // this is an automatically stealing impelementation.
-                    InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
+                public void notifyDecisionRequired(LocoAddress address, DecisionType question){
                 }
             });
         }
     }
 
+    /**
+     * Register for notification if any of the properties change
+     * {@inheritDoc}
+     *
+     */
     @Override
     public void addPropertyChangeListener(PropertyChangeListener l) {
-        log.debug("listeners added " + l);
+        log.debug("listeners added {}", l);
         // add only if not already registered
         if (!listeners.contains(l)) {
             listeners.addElement(l);
         }
-        log.debug("listeners size is " + listeners.size());
+        log.debug("listeners size is {}", listeners.size());
     }
 
     /**
      * Trigger the notification of all PropertyChangeListeners
-     *
      */
     @SuppressWarnings("unchecked")
     protected void notifyPropertyChangeListener(String property, Object oldValue, Object newValue) {
@@ -484,11 +760,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         synchronized (this) {
             v = (Vector<PropertyChangeListener>) listeners.clone();
         }
-        if (log.isDebugEnabled()) {
-            log.debug("notify " + v.size()
-                    + " listeners about property "
-                    + property);
-        }
+        log.debug("notify {} listeners about property {}",v.size(),property);
         // forward to all listeners
         int cnt = v.size();
         for (int i = 0; i < cnt; i++) {
@@ -497,6 +769,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Vector<PropertyChangeListener> getListeners() {
         return listeners;
@@ -506,19 +781,11 @@ abstract public class AbstractThrottle implements DccThrottle {
     final private Vector<PropertyChangeListener> listeners = new Vector<>();
 
     /**
-     * Dispose when finished with this object. After this, further usage of this
-     * Throttle object will result in a JmriException.
+     * Call from a ThrottleListener to dispose of the throttle instance
+     * 
+     * @param l the propertychangelistener instance
+     *
      */
-    @Deprecated
-    @Override
-    public void dispose() {
-        if (!active) {
-            log.error("Dispose called when not active");
-        }
-        log.warn("Dispose called without knowing the original throttle listener");
-        InstanceManager.throttleManagerInstance().disposeThrottle(this, null);
-    }
-
     @Override
     public void dispose(ThrottleListener l) {
         if (!active) {
@@ -527,16 +794,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         InstanceManager.throttleManagerInstance().disposeThrottle(this, l);
     }
 
-    @Deprecated
-    @Override
-    public void dispatch() {
-        if (!active) {
-            log.warn("dispatch called when not active");
-        }
-        log.warn("dispatch called without knowing the original throttle listener");
-        InstanceManager.throttleManagerInstance().dispatchThrottle(this, null);
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void dispatch(ThrottleListener l) {
         if (!active) {
@@ -545,16 +805,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         InstanceManager.throttleManagerInstance().dispatchThrottle(this, l);
     }
 
-    @Deprecated
-    @Override
-    public void release() {
-        if (!active) {
-            log.warn("release called when not active");
-        }
-        log.warn("Release called without knowing the original throttle listener");
-        InstanceManager.throttleManagerInstance().releaseThrottle(this, null);
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void release(ThrottleListener l) {
         if (!active) {
@@ -573,11 +826,14 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public float getSpeedIncrement() {
-        return speedIncrement;
+        return speedStepMode.increment;
     }
 
-    // functions - note that we use the naming for DCC, though that's not the implication;
-    // see also DccThrottle interface
+    /**
+     * functions - note that we use the naming for DCC, though that's not the implication;
+     * see also DccThrottle interface
+     * {@inheritDoc}
+     */
     @Override
     public void setF0(boolean f0) {
         boolean old = this.f0;
@@ -588,6 +844,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF1(boolean f1) {
         boolean old = this.f1;
@@ -598,6 +857,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF2(boolean f2) {
         boolean old = this.f2;
@@ -608,6 +870,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF3(boolean f3) {
         boolean old = this.f3;
@@ -618,6 +883,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF4(boolean f4) {
         boolean old = this.f4;
@@ -628,6 +896,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF5(boolean f5) {
         boolean old = this.f5;
@@ -638,6 +909,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF6(boolean f6) {
         boolean old = this.f6;
@@ -648,6 +922,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF7(boolean f7) {
         boolean old = this.f7;
@@ -658,6 +935,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF8(boolean f8) {
         boolean old = this.f8;
@@ -668,6 +948,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF9(boolean f9) {
         boolean old = this.f9;
@@ -678,6 +961,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF10(boolean f10) {
         boolean old = this.f10;
@@ -688,6 +974,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF11(boolean f11) {
         boolean old = this.f11;
@@ -698,6 +987,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF12(boolean f12) {
         boolean old = this.f12;
@@ -708,6 +1000,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF13(boolean f13) {
         boolean old = this.f13;
@@ -718,6 +1013,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF14(boolean f14) {
         boolean old = this.f14;
@@ -728,6 +1026,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF15(boolean f15) {
         boolean old = this.f15;
@@ -738,6 +1039,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF16(boolean f16) {
         boolean old = this.f16;
@@ -748,6 +1052,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF17(boolean f17) {
         boolean old = this.f17;
@@ -758,6 +1065,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF18(boolean f18) {
         boolean old = this.f18;
@@ -768,6 +1078,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF19(boolean f19) {
         boolean old = this.f19;
@@ -778,6 +1091,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF20(boolean f20) {
         boolean old = this.f20;
@@ -788,6 +1104,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF21(boolean f21) {
         boolean old = this.f21;
@@ -798,6 +1117,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF22(boolean f22) {
         boolean old = this.f22;
@@ -808,6 +1130,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF23(boolean f23) {
         boolean old = this.f23;
@@ -818,6 +1143,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF24(boolean f24) {
         boolean old = this.f24;
@@ -828,6 +1156,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF25(boolean f25) {
         boolean old = this.f25;
@@ -838,6 +1169,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF26(boolean f26) {
         boolean old = this.f26;
@@ -848,6 +1182,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF27(boolean f27) {
         boolean old = this.f27;
@@ -858,6 +1195,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF28(boolean f28) {
         boolean old = this.f28;
@@ -870,7 +1210,7 @@ abstract public class AbstractThrottle implements DccThrottle {
 
     /**
      * Send the message to set the state of functions F0, F1, F2, F3, F4.
-     * <P>
+     * <p>
      * This is used in the setFn implementations provided in this class, but a
      * real implementation needs to be provided.
      */
@@ -880,7 +1220,7 @@ abstract public class AbstractThrottle implements DccThrottle {
 
     /**
      * Send the message to set the state of functions F5, F6, F7, F8.
-     * <P>
+     * <p>
      * This is used in the setFn implementations provided in this class, but a
      * real implementation needs to be provided.
      */
@@ -890,7 +1230,7 @@ abstract public class AbstractThrottle implements DccThrottle {
 
     /**
      * Send the message to set the state of functions F9, F10, F11, F12
-     * <P>
+     * <p>
      * This is used in the setFn implementations provided in this class, but a
      * real implementation needs to be provided.
      */
@@ -901,7 +1241,7 @@ abstract public class AbstractThrottle implements DccThrottle {
     /**
      * Send the message to set the state of functions F13, F14, F15, F16, F17,
      * F18, F19, F20
-     * <P>
+     * <p>
      * This is used in the setFn implementations provided in this class, but a
      * real implementation needs to be provided.
      */
@@ -934,7 +1274,7 @@ abstract public class AbstractThrottle implements DccThrottle {
     /**
      * Send the message to set the state of functions F21, F22, F23, F24, F25,
      * F26, F27, F28
-     * <P>
+     * <p>
      * This is used in the setFn implementations provided in this class, but a
      * real implementation needs to be provided.
      */
@@ -963,9 +1303,12 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
-    // function momentary status  - note that we use the naming for DCC, 
-    // though that's not the implication;
-    // see also DccThrottle interface
+    /**
+     * function momentary status  - note that we use the naming for DCC, 
+     * though that's not the implication;
+     * see also DccThrottle interface
+     * {@inheritDoc}
+     */
     @Override
     public void setF0Momentary(boolean f0Momentary) {
         boolean old = this.f0Momentary;
@@ -976,6 +1319,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF1Momentary(boolean f1Momentary) {
         boolean old = this.f1Momentary;
@@ -986,6 +1332,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF2Momentary(boolean f2Momentary) {
         boolean old = this.f2Momentary;
@@ -996,6 +1345,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF3Momentary(boolean f3Momentary) {
         boolean old = this.f3Momentary;
@@ -1006,6 +1358,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF4Momentary(boolean f4Momentary) {
         boolean old = this.f4Momentary;
@@ -1016,6 +1371,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF5Momentary(boolean f5Momentary) {
         boolean old = this.f5Momentary;
@@ -1026,6 +1384,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF6Momentary(boolean f6Momentary) {
         boolean old = this.f6Momentary;
@@ -1036,6 +1397,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF7Momentary(boolean f7Momentary) {
         boolean old = this.f7Momentary;
@@ -1046,6 +1410,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF8Momentary(boolean f8Momentary) {
         boolean old = this.f8Momentary;
@@ -1056,6 +1423,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF9Momentary(boolean f9Momentary) {
         boolean old = this.f9Momentary;
@@ -1066,6 +1436,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF10Momentary(boolean f10Momentary) {
         boolean old = this.f10Momentary;
@@ -1076,6 +1449,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF11Momentary(boolean f11Momentary) {
         boolean old = this.f11Momentary;
@@ -1086,6 +1462,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF12Momentary(boolean f12Momentary) {
         boolean old = this.f12Momentary;
@@ -1096,6 +1475,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF13Momentary(boolean f13Momentary) {
         boolean old = this.f13Momentary;
@@ -1106,6 +1488,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF14Momentary(boolean f14Momentary) {
         boolean old = this.f14Momentary;
@@ -1116,6 +1501,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF15Momentary(boolean f15Momentary) {
         boolean old = this.f15Momentary;
@@ -1125,7 +1513,10 @@ abstract public class AbstractThrottle implements DccThrottle {
             notifyPropertyChangeListener(Throttle.F15Momentary, old, this.f15Momentary);
         }
     }
-
+    
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF16Momentary(boolean f16Momentary) {
         boolean old = this.f16Momentary;
@@ -1136,6 +1527,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF17Momentary(boolean f17Momentary) {
         boolean old = this.f17Momentary;
@@ -1146,6 +1540,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF18Momentary(boolean f18Momentary) {
         boolean old = this.f18Momentary;
@@ -1156,6 +1553,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF19Momentary(boolean f19Momentary) {
         boolean old = this.f19Momentary;
@@ -1166,6 +1566,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF20Momentary(boolean f20Momentary) {
         boolean old = this.f20Momentary;
@@ -1176,6 +1579,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF21Momentary(boolean f21Momentary) {
         boolean old = this.f21Momentary;
@@ -1186,6 +1592,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF22Momentary(boolean f22Momentary) {
         boolean old = this.f22Momentary;
@@ -1196,6 +1605,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF23Momentary(boolean f23Momentary) {
         boolean old = this.f23Momentary;
@@ -1206,6 +1618,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF24Momentary(boolean f24Momentary) {
         boolean old = this.f24Momentary;
@@ -1216,6 +1631,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF25Momentary(boolean f25Momentary) {
         boolean old = this.f25Momentary;
@@ -1226,6 +1644,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF26Momentary(boolean f26Momentary) {
         boolean old = this.f26Momentary;
@@ -1236,6 +1657,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF27Momentary(boolean f27Momentary) {
         boolean old = this.f27Momentary;
@@ -1246,6 +1670,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setF28Momentary(boolean f28Momentary) {
         boolean old = this.f28Momentary;
@@ -1259,7 +1686,7 @@ abstract public class AbstractThrottle implements DccThrottle {
     /**
      * Send the message to set the momentary state of functions F0, F1, F2, F3,
      * F4.
-     * <P>
+     * <p>
      * This is used in the setFnMomentary implementations provided in this
      * class, a real implementation needs to be provided if the hardware
      * supports setting functions momentary.
@@ -1269,7 +1696,7 @@ abstract public class AbstractThrottle implements DccThrottle {
 
     /**
      * Send the message to set the momentary state of functions F5, F6, F7, F8.
-     * <P>
+     * <p>
      * This is used in the setFnMomentary implementations provided in this
      * class, but a real implementation needs to be provided if the hardware
      * supports setting functions momentary.
@@ -1280,7 +1707,7 @@ abstract public class AbstractThrottle implements DccThrottle {
     /**
      * Send the message to set the Momentary state of functions F9, F10, F11,
      * F12
-     * <P>
+     * <p>
      * This is used in the setFnMomentary implementations provided in this
      * class, but a real implementation needs to be provided if the hardware
      * supports setting functions momentary.
@@ -1291,7 +1718,7 @@ abstract public class AbstractThrottle implements DccThrottle {
     /**
      * Send the message to set the Momentary state of functions F13, F14, F15,
      * F16, F17, F18, F19, F20
-     * <P>
+     * <p>
      * This is used in the setFnMomentary implementations provided in this
      * class, but a real implementation needs to be provided if the hardware
      * supports setting functions momentary.
@@ -1302,7 +1729,7 @@ abstract public class AbstractThrottle implements DccThrottle {
     /**
      * Send the message to set the Momentary state of functions F21, F22, F23,
      * F24, F25, F26, F27, F28
-     * <P>
+     * <p>
      * This is used in the setFnMomentary implementations provided in this
      * class, but a real implementation needs to be provided if the hardware
      * supports setting functions momentary.
@@ -1311,37 +1738,23 @@ abstract public class AbstractThrottle implements DccThrottle {
     }
 
     /**
-     * Set the speed step value and the related speedIncrement value. Default
-     * should be 128 speed step mode in most cases
+     * Set the speed step value. Default should be 128 speed step mode in most cases.
      *
-     * specific implementations should override this function
+     * Specific implementations should override this function.
      *
      * @param Mode the current speed step mode
      */
     @Override
-    public void setSpeedStepMode(int Mode) {
-        if (log.isDebugEnabled()) {
-            log.debug("Speed Step Mode Change to Mode: " + Mode
-                    + " Current mode is: " + this.speedStepMode);
-        }
+    public void setSpeedStepMode(SpeedStepMode Mode) {
+        log.debug("Speed Step Mode Change from:{} to Mode:{}",this.speedStepMode,Mode);
         if (speedStepMode != Mode) {
-            notifyPropertyChangeListener("SpeedSteps", this.speedStepMode,
+            notifyPropertyChangeListener(SPEEDSTEPS, this.speedStepMode,
                     this.speedStepMode = Mode);
-        }
-        if (Mode == DccThrottle.SpeedStepMode14) {
-            speedIncrement = SPEED_STEP_14_INCREMENT;
-        } else if (Mode == DccThrottle.SpeedStepMode27) {
-            speedIncrement = SPEED_STEP_27_INCREMENT;
-        } else if (Mode == DccThrottle.SpeedStepMode28) {
-            speedIncrement = SPEED_STEP_28_INCREMENT;
-        } else // default to 128 speed step mode
-        {
-            speedIncrement = SPEED_STEP_128_INCREMENT;
         }
     }
 
     @Override
-    public int getSpeedStepMode() {
+    public SpeedStepMode getSpeedStepMode() {
         return speedStepMode;
     }
 
@@ -1386,19 +1799,23 @@ abstract public class AbstractThrottle implements DccThrottle {
         stopClock();
         String currentDurationString = re.getAttribute("OperatingDuration");
         long currentDuration = 0;
+        if (currentDurationString == null) {
+            currentDurationString = "0";
+            log.info("operating duration for {} starts as zero", getLocoAddress());
+        }
         try {
-            currentDuration = Long.valueOf(currentDurationString);
+            currentDuration = Long.parseLong(currentDurationString);
         } catch (NumberFormatException e) {
             log.warn("current stored duration is not a valid number \"" + currentDurationString + " \"");
         }
         currentDuration = currentDuration + durationRunning;
         re.putAttribute("OperatingDuration", "" + currentDuration);
-        re.putAttribute("LastOperated", new ISO8601DateFormat().format(new Date()));
+        re.putAttribute("LastOperated", new StdDateFormat().format(new Date()));
         //Only store if the roster entry isn't open.
         if (!re.isOpen()) {
             re.store();
         } else {
-            log.warn("Roster Entry " + re.getId() + " running time not saved as entry is already open for editing");
+            log.warn("Roster Entry {} running time not saved as entry is already open for editing",re.getId());
         }
         re = null;
     }
@@ -1459,6 +1876,6 @@ abstract public class AbstractThrottle implements DccThrottle {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(AbstractThrottle.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractThrottle.class);
 
 }

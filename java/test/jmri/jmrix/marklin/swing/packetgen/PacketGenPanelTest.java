@@ -13,6 +13,7 @@ public class PacketGenPanelTest extends jmri.util.swing.JmriPanelTest {
 
 
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         panel = new PacketGenPanel();
@@ -21,5 +22,6 @@ public class PacketGenPanelTest extends jmri.util.swing.JmriPanelTest {
     }
 
     @After
+    @Override
     public void tearDown() {        JUnitUtil.tearDown();    }
 }

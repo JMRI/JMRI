@@ -5,9 +5,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * New MRC Xml Turnout Manager From Xpa Provides load and store functionality
- * for configuring MrcTurnoutManagers.
- * <P>
+ * New MRC Xml TurnoutManager from Xpa.
+ * <p>
+ * Provides load and store functionality for configuring MrcTurnoutManagers.
+ * <p>
  * Uses the store method from the abstract base class, but provides a load
  * method here.
  *

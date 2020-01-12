@@ -68,8 +68,9 @@ public class FunctionLabelPaneTest {
 
     @Before
     public void setUp() {
-        // log4J
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
 
         // create Element
         eOld = new org.jdom2.Element("locomotive")

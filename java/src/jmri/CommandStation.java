@@ -33,6 +33,7 @@ public interface CommandStation {
 
     public String getUserName();
 
+    @Nonnull
     public String getSystemPrefix();
 
 }

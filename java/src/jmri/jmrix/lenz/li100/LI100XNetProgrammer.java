@@ -2,32 +2,29 @@ package jmri.jmrix.lenz.li100;
 
 import jmri.ProgrammingMode;
 import jmri.jmrix.lenz.XNetConstants;
-import jmri.jmrix.lenz.XNetListener;
 import jmri.jmrix.lenz.XNetMessage;
 import jmri.jmrix.lenz.XNetProgrammer;
 import jmri.jmrix.lenz.XNetReply;
 import jmri.jmrix.lenz.XNetTrafficController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Programmer support for Lenz XpressNet.
- * <P>
+ * <p>
  * The read operation state sequence is:
- * <UL>
- * <LI>Send Register Mode / Paged mode /Direct Mode read request
- * <LI>Wait for Broadcast Service Mode Entry message
- * <LI>Send Request for Service Mode Results request
- * <LI>Wait for results reply, interpret
- * <LI>Send Resume Operations request
- * <LI>Wait for Normal Operations Resumed broadcast
- * </UL>
+ * <ul>
+ * <li>Send Register Mode / Paged mode /Direct Mode read request
+ * <li>Wait for Broadcast Service Mode Entry message
+ * <li>Send Request for Service Mode Results request
+ * <li>Wait for results reply, interpret
+ * <li>Send Resume Operations request
+ * <li>Wait for Normal Operations Resumed broadcast
+ * </ul>
  *
  * @author Bob Jacobsen Copyright (c) 2002, 2007
  * @author Paul Bender Copyright (c) 2003, 2004, 2005, 2009
  * @author Giorgio Terdina Copyright (c) 2007
  */
-public class LI100XNetProgrammer extends XNetProgrammer implements XNetListener {
+public class LI100XNetProgrammer extends XNetProgrammer {
 
     static private final int RETURNSENT = 3;
 
@@ -41,9 +38,12 @@ public class LI100XNetProgrammer extends XNetProgrammer implements XNetListener 
         super(tc);
     }
 
-    // programming interface
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    synchronized public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+    synchronized public void writeCV(String CVname, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+        final int CV = Integer.parseInt(CVname);
         log.debug("writeCV {} listens {}", CV, p);
         useProgrammer(p);
         _progRead = false;
@@ -79,18 +79,25 @@ public class LI100XNetProgrammer extends XNetProgrammer implements XNetListener 
         }
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     synchronized public void confirmCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         readCV(CV, p);
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    synchronized public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
+    synchronized public void readCV(String CVname, jmri.ProgListener p) throws jmri.ProgrammerException {
+        final int CV = Integer.parseInt(CVname);
         log.debug("readCV {} listens {}", CV, p);
 
         if (!getCanRead()) {
             // should not invoke this if cant read, but if done anyway set NotImplemented error
-            p.programmingOpReply(CV, jmri.ProgListener.NotImplemented);
+            notifyProgListenerEnd(p,CV,jmri.ProgListener.NotImplemented);
             return;
         }
 
@@ -126,6 +133,9 @@ public class LI100XNetProgrammer extends XNetProgrammer implements XNetListener 
         }
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     synchronized public void message(XNetReply m) {
         if (m.getElement(0) == XNetConstants.CS_INFO
@@ -363,13 +373,17 @@ public class LI100XNetProgrammer extends XNetProgrammer implements XNetListener 
         }
     }
 
-    // listen for the messages to the LI100/LI101
-    @Override
+    /** 
+     * {@inheritDoc}
+     *
+     * listen for the messages to the LI100/LI101
+     */
+     @Override
     synchronized public void message(XNetMessage l) {
     }
 
-    /**
-     * Internal routine to handle a timeout
+    /** 
+     * {@inheritDoc}
      */
     @Override
     synchronized protected void timeout() {
@@ -393,6 +407,6 @@ public class LI100XNetProgrammer extends XNetProgrammer implements XNetListener 
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LI100XNetProgrammer.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LI100XNetProgrammer.class);
 
 }

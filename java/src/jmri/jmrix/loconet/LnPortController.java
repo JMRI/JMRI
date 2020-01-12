@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Base for classes representing a LocoNet communications port
+ * Base for classes representing a LocoNet communications port.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  */
@@ -39,6 +39,7 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
      * intervals, but it might also stick off if something goes wrong.
      * <p>
      * Provide a default implementation for the MS100, etc.
+     *
      * @return _always_ true, as we rely on the queueing in the port itself
      */
     public boolean okToSend() {
@@ -59,6 +60,7 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
         LnCommandStationType.COMMAND_STATION_DCS200,
         LnCommandStationType.COMMAND_STATION_DCS050,
         LnCommandStationType.COMMAND_STATION_DCS051,
+        LnCommandStationType.COMMAND_STATION_DCS052,
         LnCommandStationType.COMMAND_STATION_DB150,
         LnCommandStationType.COMMAND_STATION_IBX_TYPE_1,
         LnCommandStationType.COMMAND_STATION_IBX_TYPE_2,
@@ -79,6 +81,7 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
     // and "PR2 standalone programmer" in pr2/Pr2Adaper
     /**
      * Set config info from a name, which needs to be one of the valid ones.
+     * @param name the name of the command station type
      */
     public void setCommandStationType(String name) {
         setCommandStationType(LnCommandStationType.getByName(name));
@@ -86,6 +89,7 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
 
     /**
      * Set config info from the command station type enum.
+     * @param value the LnCommandStationType
      */
     public void setCommandStationType(LnCommandStationType value) {
         if (value == null) {

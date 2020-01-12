@@ -94,7 +94,7 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
     }
 
     public void pollButtonActionPerformed(java.awt.event.ActionEvent e) {
-        SerialMessage msg = SerialMessage.getPoll(Integer.valueOf(uaAddrField.getText()).intValue());
+        SerialMessage msg = SerialMessage.getPoll(Integer.parseInt(uaAddrField.getText()));
         memo.getTrafficController().sendSerialMessage(msg, this);
     }
 

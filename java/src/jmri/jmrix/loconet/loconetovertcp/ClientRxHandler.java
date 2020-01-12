@@ -41,7 +41,6 @@ public final class ClientRxHandler extends Thread implements LocoNetListener {
         start();
     }
 
-    @SuppressWarnings("null")
     @Override
     public void run() {
 

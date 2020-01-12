@@ -2,8 +2,8 @@ package jmri.jmrix.dccpp;
 
 import java.util.concurrent.LinkedBlockingQueue;
 import jmri.DccLocoAddress;
-import jmri.DccThrottle;
 import jmri.LocoAddress;
+import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,18 +49,16 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
     public DCCppThrottle(DCCppSystemConnectionMemo memo, LocoAddress address, DCCppTrafficController controller) {
         super(memo);
         this.tc = controller;
-        this.setDccAddress(((DccLocoAddress) address).getNumber());
-        this.speedIncrement = SPEED_STEP_128_INCREMENT;
-        this.speedStepMode = DccThrottle.SpeedStepMode128;
-
-        f0Momentary = f1Momentary = f2Momentary = f3Momentary = f4Momentary
-                = f5Momentary = f6Momentary = f7Momentary = f8Momentary = f9Momentary
-                = f10Momentary = f11Momentary = f12Momentary = false;
+        if (address instanceof DccLocoAddress) {
+            this.setDccAddress(((DccLocoAddress) address).getNumber());
+        }
+        else {
+            log.error("LocoAddress {} is not a DccLocoAddress",address);
+        }
+        this.speedStepMode = SpeedStepMode.NMRA_DCC_128;
 
         requestList = new LinkedBlockingQueue<RequestMessage>();
-        if (log.isDebugEnabled()) {
-            log.debug("DCCppThrottle constructor called for address " + address);
-        }
+        log.debug("DCCppThrottle constructor called for address {}", address);
     }
 
     /*
@@ -147,73 +145,6 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
         queueMessage(msg, THROTTLEIDLE);
     }
 
-    /**
-     * Send the DCC++ message to set the Momentary state of locomotive
-     * functions F0, F1, F2, F3, F4
-     */
-    @Override
-    protected void sendMomentaryFunctionGroup1() {
-        DCCppMessage msg = DCCppMessage.makeFunctionGroup1SetMomMsg(this.getDccAddress(),
-                f0Momentary, f1Momentary, f2Momentary, f3Momentary, f4Momentary);
-        // now, queue the message for sending to the command station
-        //queueMessage(msg, THROTTLEFUNCSENT);
-        queueMessage(msg, THROTTLEIDLE);
-    }
-
-    /**
-     * Send the DCC++ message to set the momentary state of functions F5,
-     * F6, F7, F8
-     */
-    @Override
-    protected void sendMomentaryFunctionGroup2() {
-        DCCppMessage msg = DCCppMessage.makeFunctionGroup2SetMomMsg(this.getDccAddress(),
-                f5Momentary, f6Momentary, f7Momentary, f8Momentary);
-        // now, queue the message for sending to the command station
-        //queueMessage(msg, THROTTLEFUNCSENT);
-        queueMessage(msg, THROTTLEIDLE);
-    }
-
-    /**
-     * Send the DCC++ message to set the momentary state of functions F9,
-     * F10, F11, F12
-     */
-    @Override
-    protected void sendMomentaryFunctionGroup3() {
-        DCCppMessage msg = DCCppMessage.makeFunctionGroup2SetMomMsg(this.getDccAddress(),
-                f9Momentary, f10Momentary, f11Momentary, f12Momentary);
-        // now, queue the message for sending to the command station
-        //queueMessage(msg, THROTTLEFUNCSENT);
-        queueMessage(msg, THROTTLEIDLE);
-    }
-
-    /**
-     * Send the DCC++ message to set the momentary state of functions F13,
-     * F14, F15, F16 F17 F18 F19 F20
-     */
-    @Override
-    protected void sendMomentaryFunctionGroup4() {
-        DCCppMessage msg = DCCppMessage.makeFunctionGroup4SetMomMsg(this.getDccAddress(),
-                f13Momentary, f14Momentary, f15Momentary, f16Momentary,
-                f17Momentary, f18Momentary, f19Momentary, f20Momentary);
-        // now, queue the message for sending to the command station
-        //queueMessage(msg, THROTTLEFUNCSENT);
-        queueMessage(msg, THROTTLEIDLE);
-    }
-
-    /**
-     * Send the DCC++ message to set the momentary state of functions F21,
-     * F22, F23, F24 F25 F26 F27 F28
-     */
-    @Override
-    protected void sendMomentaryFunctionGroup5() {
-        DCCppMessage msg = DCCppMessage.makeFunctionGroup5SetMomMsg(this.getDccAddress(),
-                f21Momentary, f22Momentary, f23Momentary, f24Momentary,
-                f25Momentary, f26Momentary, f27Momentary, f28Momentary);
-        // now, queue the message for sending to the command station
-        //queueMessage(msg, THROTTLEFUNCSENT);
-        queueMessage(msg, THROTTLEIDLE);
-    }
-
     /* 
      * setSpeedSetting - notify listeners and send the new speed to the
      * command station.
@@ -244,7 +175,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
         }
     }
 
-    /* Since xpressnet has a seperate Opcode for emergency stop,
+    /* Since DCC++ has a seperate Opcode for emergency stop,
      * We're setting this up as a seperate protected function
      */
     protected void sendEmergencyStop() {
@@ -267,15 +198,15 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
     /*
      * setSpeedStepMode - set the speed step value and the related
      *                    speedIncrement value.
-     * <P>
-     * @param Mode - the current speed step mode - default should be 128
+     *
+     * @param Mode  the current speed step mode - default should be 128
      *              speed step mode in most cases
      *
      * NOTE: DCC++ only supports 128-step mode.  So we ignore the speed
      * setting, even though we store it.
      */
     @Override
-    public void setSpeedStepMode(int Mode) {
+    public void setSpeedStepMode(SpeedStepMode Mode) {
         super.setSpeedStepMode(Mode);
     }
 
@@ -308,14 +239,6 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
 
     protected int getDccAddressLow() {
         return DCCppCommandStation.getDCCAddressLow(this.address);
-    }
-
-
-    // to handle quantized speed. Note this can change! Valued returned is
-    // always positive.
-    @Override
-    public float getSpeedIncrement() {
-        return speedIncrement;
     }
 
     // Handle incoming messages for This throttle.

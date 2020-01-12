@@ -1,6 +1,5 @@
 package jmri.jmrix.pi.configurexml;
 
-import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrix.configurexml.AbstractConnectionConfigXml;
 import jmri.jmrix.pi.RaspberryPiAdapter;
 import jmri.jmrix.pi.RaspberryPiConnectionConfig;
@@ -13,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * RaspberryPiAdapter. Note this is named as the XML version of a
  * RaspberryPiConnectionConfig object, but it's actually persisting the
  * RaspberryPiAdapter.
- * <P>
+ * <p>
  * This class is invoked from jmrix.JmrixConfigPaneXml on write, as that class
  * is the one actually registered. Reads are brought here directly via the class
  * attribute in the XML.
@@ -34,11 +33,7 @@ public class RaspberryPiConnectionConfigXml extends AbstractConnectionConfigXml 
         if (adapter == null) {
             adapter = new RaspberryPiAdapter();
             if (adapter.getGPIOController() == null) {
-                try {
-                    this.creationErrorEncountered("Not running on Raspberry PI.", adapter.getSystemPrefix(), adapter.getUserName(), null);
-                } catch (JmriConfigureXmlException ex) {
-                    log.error("Not running on Raspberry PI.", ex);
-                }
+                handleException("Not running on Raspberry PI.", null, adapter.getSystemPrefix(), adapter.getUserName(), null);
             }
         }
     }

@@ -11,7 +11,7 @@ import org.junit.Before;
  * card.
  *
  * @author	Bob Jacobsen
-  */
+ */
 public class SerialTurnoutTest2 extends AbstractTurnoutTestBase {
 
     private GrapevineSystemConnectionMemo memo = null; 
@@ -20,6 +20,9 @@ public class SerialTurnoutTest2 extends AbstractTurnoutTestBase {
     @Before
     @Override
     public void setUp() {
+        jmri.util.JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+
         // prepare an interface
         memo = new GrapevineSystemConnectionMemo();
         tcis = new SerialTrafficControlScaffold(memo);

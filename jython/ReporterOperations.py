@@ -14,6 +14,7 @@
 
 import jmri
 import java
+import java.beans
 
 # First, define the listener class.  This gets messages
 # from the reporter, uses the reports to look up equipment
@@ -32,7 +33,7 @@ class ReporterOperations(java.beans.PropertyChangeListener):
 
   def start(self, reporterName ) :
     # connect the object to the reporter, and start to work
-    jmri.InstanceManager.reporterManagerInstance().provideReporter(reporterName).addPropertyChangeListener(self)
+    jmri.InstanceManager.getDefault(jmri.ReporterManager).provideReporter(reporterName).addPropertyChangeListener(self)
     self.cm = jmri.jmrit.operations.rollingstock.cars.CarManager.instance()
     self.em = jmri.jmrit.operations.rollingstock.engines.EngineManager.instance()
     return
@@ -40,7 +41,7 @@ class ReporterOperations(java.beans.PropertyChangeListener):
   def stop(self) :
     # Cease operation.  
     # You can call start() again if desired.
-    jmri.InstanceManager.reporterManagerInstance().getReporter(reporterName).removePropertyChangeListener(self)
+    jmri.InstanceManager.getDefault(jmri.ReporterManager).getReporter(reporterName).removePropertyChangeListener(self)
     return
     
   def format(self, inputString) :

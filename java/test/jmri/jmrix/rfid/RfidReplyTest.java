@@ -2,9 +2,7 @@ package jmri.jmrix.rfid;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * RfidReplyTest.java
@@ -13,23 +11,13 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2012,2016
  */
-public class RfidReplyTest {
+public class RfidReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
     RfidTrafficController tc = null;
 
-    @Test
-    public void testCtor() {
-        RfidReply c = new RfidReply(tc){
-            @Override
-            public String toMonitorString(){
-               return "";
-            }
-        };
-        Assert.assertNotNull(c);
-    }
-
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         tc = new RfidTrafficController(){
@@ -37,12 +25,21 @@ public class RfidReplyTest {
            public void sendInitString(){
            }
         };
+        m = new RfidReply(tc){
+            @Override
+            public String toMonitorString(){
+               return "";
+            }
+        };
     }
 
     @After
     public void tearDown() {
         tc = null;
+	m = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
 }

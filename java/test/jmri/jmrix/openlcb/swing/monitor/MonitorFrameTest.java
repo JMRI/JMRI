@@ -79,6 +79,7 @@ public class MonitorFrameTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.initConfigureManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         tcs = new TrafficControllerScaffold();
@@ -90,6 +91,8 @@ public class MonitorFrameTest {
     @After
     public void tearDown() {
         jmri.util.JUnitUtil.resetWindows(false, false);
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 }

@@ -1,24 +1,28 @@
-/**
- * PacketGenFrameTest.java
- *
- * Description:	tests for the jmri.jmrix.qsi.packetgen.PacketGenFrame class
- *
- * @author	Bob Jacobsen
- */
 package jmri.jmrix.qsi.packetgen;
 
 import java.awt.GraphicsEnvironment;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
+import org.junit.*;
 
-public class PacketGenFrameTest {
+/**
+ * Tests for the jmri.jmrix.qsi.packetgen.PacketGenFrame class
+ *
+ * @author	Bob Jacobsen
+ */
+public class PacketGenFrameTest extends jmri.util.JmriJFrameTestBase {
 
-    @Test
-    public void testFrameCreate() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        PacketGenFrame packetGenFrame = new PacketGenFrame(new jmri.jmrix.qsi.QsiSystemConnectionMemo());
-        Assert.assertNotNull(packetGenFrame);
+    @Before
+    @Override
+    public void setUp() {
+        jmri.util.JUnitUtil.setUp();
+        if(!GraphicsEnvironment.isHeadless()){
+           frame = new PacketGenFrame(new jmri.jmrix.qsi.QsiSystemConnectionMemo());
+    	}
     }
 
+    @After
+    @Override
+    public void tearDown() {
+        jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+	    super.tearDown();
+    }
 }

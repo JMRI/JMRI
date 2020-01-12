@@ -259,7 +259,7 @@ public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.Pr
      * <ol>
      * <li>Write 1 to CV16, which will write both decoders
      * <li>Write 7 to CV15, which will turn off Digitrax
-     * <LI>Write 7 to CV16, which will be stored in the legacy decoder only
+     * <li>Write 7 to CV16, which will be stored in the legacy decoder only
      * </ol>
      */
     void doInit() {
@@ -273,13 +273,13 @@ public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.Pr
             case IDLE:
             default:
                 // shouldn't happen, reset and ignore
-                log.warn("Unexpected init programming reply: {0} {1}", value, retcode);
+                log.warn("Unexpected init programming reply: {} {}", value, retcode);
                 state = IDLE;
                 break;
             case FIRSTCV16:
                 state = FIRSTCV15;
                 if (retcode != ProgListener.OK) {
-                    log.debug("Readback error: {0} {1}", retcode, value);
+                    log.debug("Readback error: {} {}", retcode, value);
                     status.setText(Bundle.getMessage("WriteCVFailed", 15, 7));
                     state = IDLE;
                 } else { // is OK
@@ -289,7 +289,7 @@ public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.Pr
             case FIRSTCV15:
                 state = SECONDCV16;
                 if (retcode != ProgListener.OK) {
-                    log.debug("Readback error: {0} {1}", retcode, value);
+                    log.debug("Readback error: {} {}", retcode, value);
                     status.setText(Bundle.getMessage("WriteCVFailed", 16, 7));
                     state = IDLE;
                 } else { // is OK
@@ -298,7 +298,7 @@ public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.Pr
                 break;
             case SECONDCV16:
                 if (retcode != ProgListener.OK) {
-                    log.debug("Readback error: {0} {1}", retcode, value);
+                    log.debug("Readback error: {} {}", retcode, value);
                     status.setText(Bundle.getMessage("WriteCVFailed", 16, 1));
                     state = IDLE;
                 } else { // is OK

@@ -12,15 +12,17 @@ import javax.swing.event.ChangeListener;
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.NamedBeanHandle;
+import jmri.NamedBean.DisplayOptions;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * An icon to display a status of a Memory in a JSpinner.
- * <P>
+ * <p>
  * Handles the case of either a String or an Integer in the Memory, preserving
  * what it finds.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (c) 2009
  * @since 2.7.2
  */
@@ -142,10 +144,8 @@ public class MemorySpinnerIcon extends PositionableJPanel implements ChangeListe
         String name;
         if (namedMemory == null) {
             name = Bundle.getMessage("NotConnected");
-        } else if (getMemory().getUserName() != null) {
-            name = getMemory().getUserName() + " (" + getMemory().getSystemName() + ")";
         } else {
-            name = getMemory().getSystemName();
+            name = getMemory().getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
         }
         return name;
     }

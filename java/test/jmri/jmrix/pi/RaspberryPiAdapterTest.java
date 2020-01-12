@@ -9,9 +9,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * <P>
  * Tests for RaspberryPiAdapter
- * </P>
+ *
  * @author Paul Bender Copyright (C) 2016
  */
 public class RaspberryPiAdapterTest {
@@ -25,7 +24,7 @@ public class RaspberryPiAdapterTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-       apps.tests.Log4JFixture.setUp();
+       JUnitUtil.setUp();
        GpioProvider myprovider = new PiGpioProviderScaffold();
        GpioFactory.setDefaultProvider(myprovider);
        jmri.util.JUnitUtil.resetInstanceManager();
@@ -35,6 +34,5 @@ public class RaspberryPiAdapterTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-
 
 }

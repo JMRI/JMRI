@@ -1,4 +1,3 @@
-//OperationsSetupTest.java
 package jmri.jmrit.operations.setup;
 
 import java.io.File;
@@ -9,9 +8,8 @@ import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.trains.TrainManagerXml;
-import junit.framework.Test;
-import junit.framework.TestSuite;
 import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * Tests for the Operations Setup class Last manually cross-checked on 20090131
@@ -23,6 +21,7 @@ import org.junit.Assert;
 public class OperationsSetupTest extends OperationsTestCase {
 
     // test creation
+    @Test
     @SuppressWarnings("static-access")
     public void testCreate() {
         Setup s = new Setup();
@@ -34,6 +33,7 @@ public class OperationsSetupTest extends OperationsTestCase {
 
     // test public constants
     @SuppressWarnings("static-access")
+    @Test
     public void testConstants() {
         Setup s = new Setup();
 
@@ -77,6 +77,7 @@ public class OperationsSetupTest extends OperationsTestCase {
 
     // test menu attributes
     @SuppressWarnings("static-access")
+    @Test
     public void testMenuAttributes() {
         Setup s = new Setup();
         s.setMainMenuEnabled(true);
@@ -88,6 +89,7 @@ public class OperationsSetupTest extends OperationsTestCase {
 
     // test scale attributes
     @SuppressWarnings("static-access")
+    @Test
     public void testScaleAttributes() {
         Setup s = new Setup();
         // Not really necessary
@@ -176,6 +178,7 @@ public class OperationsSetupTest extends OperationsTestCase {
 
     // test train attributes
     @SuppressWarnings("static-access")
+    @Test
     public void testTrainAttributes() {
         Setup s = new Setup();
         // Not really necessary
@@ -245,6 +248,7 @@ public class OperationsSetupTest extends OperationsTestCase {
 
     // test panel attributes
     @SuppressWarnings("static-access")
+    @Test
     public void testPanelAttributes() {
         Setup s = new Setup();
         // Not really necessary
@@ -291,6 +295,7 @@ public class OperationsSetupTest extends OperationsTestCase {
     }
 
     // confirm that all operation file names have been modified
+    @Test
     public void testXMLFileTestFileName() {
         Assert.assertEquals("Test setup file name", "OperationsJUnitTest.xml", InstanceManager.getDefault(OperationsSetupXml.class).getOperationsFileName());
         Assert.assertEquals("Test location file name", "OperationsJUnitTestLocationRoster.xml", InstanceManager.getDefault(LocationManagerXml.class).getOperationsFileName());
@@ -304,6 +309,7 @@ public class OperationsSetupTest extends OperationsTestCase {
 
     // test xml file creation and read
     @SuppressWarnings("static-access")
+    @Test
     public void testXMLFileCreate() throws Exception {
         Setup s;
         s = createTestSetup();
@@ -414,7 +420,7 @@ public class OperationsSetupTest extends OperationsTestCase {
     // TODO: Add test to create xml file
     // TODO: Add test to read xml file
     @SuppressWarnings("static-access")
-    public static Setup createTestSetup() throws java.io.IOException, java.io.FileNotFoundException {
+    private Setup createTestSetup() throws java.io.IOException, java.io.FileNotFoundException {
         // this uses explicit filenames intentionally, to ensure that
         // the resulting files go into the test tree area.
 
@@ -459,6 +465,7 @@ public class OperationsSetupTest extends OperationsTestCase {
         return s;
     }
 
+    @Test
     public void readTestSetup() throws org.jdom2.JDOMException, java.io.IOException, java.io.FileNotFoundException {
         // this uses explicit filenames intentionally, to ensure that
         // the resulting files go into the test tree area.
@@ -474,38 +481,5 @@ public class OperationsSetupTest extends OperationsTestCase {
 
         // read it
         ox.readFile(OperationsSetupXml.getFileLocation() + OperationsSetupXml.getOperationsDirectoryName() + File.separator + InstanceManager.getDefault(OperationsSetupXml.class).getOperationsFileName());
-    }
-
-    // from here down is testing infrastructure
-    // Ensure minimal setup for log4J
-    /**
-     * Test-by test initialization.
-     *
-     * @throws Exception exception
-     */
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
-
-    public OperationsSetupTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", OperationsSetupTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(OperationsSetupTest.class);
-        return suite;
-    }
-
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
     }
 }

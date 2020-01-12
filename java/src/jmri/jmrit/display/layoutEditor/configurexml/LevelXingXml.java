@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * LayoutEditor.
  *
  * @author David Duchamp Copyright (c) 2007
- * @author George Warner Copyright (c) 2017-2018
+ * @author George Warner Copyright (c) 2017-2019
  */
 public class LevelXingXml extends AbstractXmlAdapter {
 
@@ -147,11 +147,11 @@ public class LevelXingXml extends AbstractXmlAdapter {
         // get remaining attributes
         Attribute a = element.getAttribute("blocknameac");
         if (a != null) {
-            l.tBlockNameAC = a.getValue();
+            l.tLayoutBlockNameAC = a.getValue();
         }
         a = element.getAttribute("blocknamebd");
         if (a != null) {
-            l.tBlockNameBD = a.getValue();
+            l.tLayoutBlockNameBD = a.getValue();
         }
         a = element.getAttribute("connectaname");
         if (a != null) {

@@ -19,7 +19,7 @@
       <revnumber>1</revnumber>
       <date>2017-11-09</date>
       <authorinitials>MM</authorinitials>
-      <revremark>New file for defualt value 128, made from standard version</revremark>
+      <revremark>New file for default value 128, made from standard version</revremark>
     </revision>
   </revhistory>
   <variable item="Forward Trim" CV="66" default="128" comment="Range 0-255">

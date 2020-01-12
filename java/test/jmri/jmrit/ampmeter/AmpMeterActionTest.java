@@ -16,6 +16,9 @@ public class AmpMeterActionTest {
     public void testCTor() {
         AmpMeterAction t = new AmpMeterAction();
         Assert.assertNotNull("exists",t);
+        // there is no Meter registered, make sure the action is
+	// disabled.
+	Assert.assertFalse(t.isEnabled());
     }
 
     // The minimal setup for log4J

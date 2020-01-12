@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.Timer;
 import java.util.TimerTask;
 import javax.annotation.Nonnull;
 import javax.swing.JTable;
@@ -256,18 +255,6 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
      */
     protected boolean isDirty() {
         return this.dirty;
-    }
-
-    /**
-     * Get dirty (needs to be saved) state. Protected so that subclasses can
-     * manipulate this state.
-     *
-     * @return true if needs to be saved
-     * @deprecated since 4.9.7; use {@link #isDirty()} instead
-     */
-    @Deprecated
-    protected boolean getDirty() {
-        return this.isDirty();
     }
 
     @Override
@@ -564,9 +551,8 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
 
     protected final static class JTableListener implements PropertyChangeListener, RowSorterListener, TableColumnModelListener {
 
-        protected final JTable table;
-        protected final JmriJTablePersistenceManager manager;
-        private Timer delay = null;
+        private final JTable table;
+        private final JmriJTablePersistenceManager manager;
 
         public JTableListener(JTable table, JmriJTablePersistenceManager manager) {
             this.table = table;
@@ -656,6 +642,8 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
             log.trace("Got columnSelectionChanged for {} ({} -> {})", this.table.getName(), e.getFirstIndex(), e.getLastIndex());
         }
 
+        TimerTask delay;
+        
         protected void cancelDelay() {
             if (this.delay != null) {
                 this.delay.cancel(); // cancel complete before dropping reference
@@ -673,8 +661,7 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
          */
         private void saveState() {
             cancelDelay();
-            delay = new Timer("JmriJTablePersistenceManager save delay");
-            delay.schedule(new TimerTask() {
+            jmri.util.TimerUtil.schedule(delay = new TimerTask() {
                 @Override
                 public void run() {
                     JTableListener.this.manager.cacheState(JTableListener.this.table);

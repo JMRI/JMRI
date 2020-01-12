@@ -1,8 +1,6 @@
 package jmri.jmrix.sprog.pi.pisprogonecs;
 
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implements SerialPortAdapter for the Sprog system.
@@ -27,7 +25,8 @@ public class PiSprogOneCSSerialDriverAdapter
     }
 
     /**
-     * Get an array of valid baud rates. This is currently only 115,200 bps
+     * {@inheritDoc}
+     * Currently only 115,200 bps
      */
     @Override
     public String[] validBaudRates() {
@@ -35,9 +34,17 @@ public class PiSprogOneCSSerialDriverAdapter
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return new int[]{115200};
+    }
+
+    /**
      * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
-    @Deprecated
+    @Deprecated  // will be removed when class converted to multi-system
     static public PiSprogOneCSSerialDriverAdapter instance() {
         return null;
     }

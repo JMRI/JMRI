@@ -1,6 +1,5 @@
 package apps.startup;
 
-import apps.tests.Log4JFixture;
 import javax.swing.Action;
 import jmri.JmriException;
 import org.junit.After;
@@ -29,12 +28,12 @@ public class AbstractActionModelTest {
     
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
     }
     
     @After
     public void tearDown() {
-        Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
     }
 
     /**

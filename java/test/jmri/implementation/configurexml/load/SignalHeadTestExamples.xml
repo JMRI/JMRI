@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+  <jmriversion>
+    <major>4</major>
+    <minor>15</minor>
+    <test>7</test>
+    <modifier>ish</modifier>
+  </jmriversion>
+  <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
+    <defaultInitialState>unknown</defaultInitialState>
+    <sensor inverted="false">
+      <systemName>ISCLOCKRUNNING</systemName>
+    </sensor>
+  </sensors>
+  <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">
+    <operations automate="false">
+      <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+      <operation name="Raw" class="jmri.configurexml.turnoutoperations.RawTurnoutOperationXml" interval="300" maxtries="1" />
+      <operation name="Sensor" class="jmri.configurexml.turnoutoperations.SensorTurnoutOperationXml" interval="300" maxtries="3" />
+    </operations>
+    <defaultclosedspeed>Normal</defaultclosedspeed>
+    <defaultthrownspeed>Restricted</defaultthrownspeed>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT1</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT2</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT3</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT4</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT5</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT6</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT7</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT8</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT9</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT10</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT11</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT12</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT13</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT14</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT15</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT16</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT17</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT18</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT19</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT20</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT21</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT22</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT23</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT24</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT25</systemName>
+    </turnout>
+  </turnouts>
+  <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
+    <memory value="8:18 AM">
+      <systemName>IMCURRENTTIME</systemName>
+    </memory>
+    <memory value="1.0">
+      <systemName>IMRATEFACTOR</systemName>
+    </memory>
+  </memories>
+  <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml">
+    <turnoutsignalmast class="jmri.implementation.configurexml.TurnoutSignalMastXml">
+      <systemName>IF$tsm:AAR-1946:PL-2-high($0001)</systemName>
+      <userName>Turrnout1</userName>
+      <unlit allowed="no" />
+      <aspect defines="Clear">
+        <turnout>IT1</turnout>
+        <turnoutstate>closed</turnoutstate>
+      </aspect>
+      <aspect defines="Approach Medium">
+        <turnout>IT2</turnout>
+        <turnoutstate>closed</turnoutstate>
+      </aspect>
+      <aspect defines="Advance Approach">
+        <turnout>IT3</turnout>
+        <turnoutstate>closed</turnoutstate>
+      </aspect>
+      <aspect defines="Medium Clear">
+        <turnout>IT4</turnout>
+        <turnoutstate>closed</turnoutstate>
+      </aspect>
+      <aspect defines="Approach">
+        <turnout>IT5</turnout>
+        <turnoutstate>closed</turnoutstate>
+      </aspect>
+      <aspect defines="Slow Approach">
+        <turnout>IT6</turnout>
+        <turnoutstate>closed</turnoutstate>
+      </aspect>
+      <aspect defines="Permissive">
+        <turnout>IT7</turnout>
+        <turnoutstate>closed</turnoutstate>
+      </aspect>
+      <aspect defines="Restricting">
+        <turnout>IT8</turnout>
+        <turnoutstate>closed</turnoutstate>
+      </aspect>
+      <aspect defines="Stop and Proceed">
+        <turnout />
+        <turnoutstate>thrown</turnoutstate>
+      </aspect>
+      <aspect defines="Stop">
+        <turnout>IT10</turnout>
+        <turnoutstate>closed</turnoutstate>
+      </aspect>
+      <disabledAspects>
+        <disabledAspect>Stop and Proceed</disabledAspect>
+      </disabledAspects>
+      <resetPreviousStates>yes</resetPreviousStates>
+    </turnoutsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:AAR-1946:PL-2-high($0001)</systemName>
+      <userName>Virtual to follow Turnout1</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <matrixsignalmast class="jmri.implementation.configurexml.MatrixSignalMastXml">
+      <systemName>IF$xsm:AAR-1946:PL-2-high($0001)-3t</systemName>
+      <userName>Matrix1</userName>
+      <unlit allowed="no" />
+      <delay duration="0" />
+      <outputs>
+        <output matrixCol="output1">IT11</output>
+        <output matrixCol="output2">IT12</output>
+        <output matrixCol="output3">IT13</output>
+      </outputs>
+      <bitStrings>
+        <bitString aspect="Clear">001</bitString>
+        <bitString aspect="Approach Medium">010</bitString>
+        <bitString aspect="Advance Approach" />
+        <bitString aspect="Medium Clear">011</bitString>
+        <bitString aspect="Approach">100</bitString>
+        <bitString aspect="Slow Approach">101</bitString>
+        <bitString aspect="Permissive">110</bitString>
+        <bitString aspect="Restricting">111</bitString>
+        <bitString aspect="Stop and Proceed" />
+        <bitString aspect="Stop">000</bitString>
+      </bitStrings>
+      <disabledAspects>
+        <disabledAspect>Advance Approach</disabledAspect>
+        <disabledAspect>Stop and Proceed</disabledAspect>
+      </disabledAspects>
+    </matrixsignalmast>
+    <dccsignalmast class="jmri.implementation.configurexml.DccSignalMastXml">
+      <systemName>NF$dsm:AAR-1946:PL-2-high(12)</systemName>
+      <userName>DCC1</userName>
+      <unlit allowed="no" />
+      <packetsendcount>3</packetsendcount>
+      <aspect defines="Clear">
+        <number>1</number>
+      </aspect>
+      <aspect defines="Approach Medium">
+        <number>2</number>
+      </aspect>
+      <aspect defines="Advance Approach">
+        <number>3</number>
+      </aspect>
+      <aspect defines="Medium Clear">
+        <number>4</number>
+      </aspect>
+      <aspect defines="Approach">
+        <number>5</number>
+      </aspect>
+      <aspect defines="Slow Approach">
+        <number>6</number>
+      </aspect>
+      <aspect defines="Permissive">
+        <number>7</number>
+      </aspect>
+      <aspect defines="Restricting">
+        <number>8</number>
+      </aspect>
+      <aspect defines="Stop and Proceed">
+        <number>9</number>
+      </aspect>
+      <aspect defines="Stop">
+        <number>10</number>
+      </aspect>
+      <disabledAspects>
+        <disabledAspect>Advance Approach</disabledAspect>
+      </disabledAspects>
+    </dccsignalmast>
+    <signalmastrepeater>
+      <masterMast>Turrnout1</masterMast>
+      <slaveMast>DCC1</slaveMast>
+      <enabled>true</enabled>
+      <update>BothWay</update>
+    </signalmastrepeater>
+  </signalmasts>
+  <signalgroups class="jmri.managers.configurexml.DefaultSignalGroupManagerXml" />
+  <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml" />
+  <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml" />
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+  </signalmastlogics>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Tue Nov 13 08:09:35 PST 2018" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" showbutton="no" />
+  <filehistory>
+    <operation>
+      <type>app</type>
+      <date>Tue Nov 13 08:09:35 PST 2018</date>
+      <filename>JMRI program</filename>
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Tue Nov 13 08:18:36 PST 2018</date>
+      <filename />
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 4.13.5ish+jake+20181113T1609Z+Re7a9e1ae07 on Tue Nov 13 08:18:36 PST 2018-->
+</layout-config>

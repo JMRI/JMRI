@@ -3,9 +3,7 @@ package jmri.jmrix.can.cbus.swing.configtool;
 import java.awt.GraphicsEnvironment;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Tests for the jmri.jmrix.can.cbus.swing.configtool package.
@@ -26,4 +24,15 @@ public class ConfigToolActionTest {
         Assert.assertNotNull("exists", pane);
     }
 
+    @Before
+    public void setUp() {
+        jmri.util.JUnitUtil.setUp();
+    }
+
+    @After
+    public void tearDown() {
+        jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        jmri.util.JUnitUtil.tearDown();
+
+    }
 }

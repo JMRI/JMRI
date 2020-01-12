@@ -1,7 +1,11 @@
 package jmri.jmrit.logix;
 
 import jmri.InstanceManager;
+import jmri.SignalHead;
 import jmri.Turnout;
+import jmri.implementation.VirtualSignalHead;
+import jmri.implementation.VirtualSignalMast;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -9,19 +13,26 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- *
+ * Tests for the Portal class.
  */
 public class PortalTest {
 
-    OBlockManager _blkMgr;
-    PortalManager _portalMgr;
-    jmri.TurnoutManager _turnoutMgr;
+    private OBlockManager _blkMgr;
+    private PortalManager _portalMgr;
+    private jmri.TurnoutManager _turnoutMgr;
 
     @Test
     public void testCtor() {
-        Portal p = _portalMgr.createNewPortal("IP1", null);
-        Assert.assertNull("No User Name", p);       // Portals must have a user name
-        p = _portalMgr.createNewPortal(null, "portal_1");
+        Portal p = null;
+        try {
+            p = _portalMgr.createNewPortal(null);
+        } catch (NullPointerException ex) {
+            // expected
+        }
+        Assert.assertNull("Null User Name", p); // Portals must have a user name
+        p = _portalMgr.createNewPortal("");
+        Assert.assertNull("Empty User Name", p);
+        p = _portalMgr.createNewPortal("portal_1");
         Assert.assertNotNull("Has User Name", p);
     }
     
@@ -75,13 +86,87 @@ public class PortalTest {
         Assert.assertEquals("Number of toPaths", 2, p.getToPaths().size());
         Assert.assertEquals("Number of fromPaths", 1, p.getFromPaths().size());
         
-        jmri.util.JUnitAppender.assertWarnMessage("Path \"path_1\" already in block OB2, cannot be added to block OB1");
-        jmri.util.JUnitAppender.assertWarnMessage("Path \"path_3\" is duplicate of path \"path_2\" in Portal \"portal_3\" from block OB1.");
-        jmri.util.JUnitAppender.assertWarnMessage("Path \"path_2\" is duplicate name for another path in Portal \"portal_3\" from block OB1.");
+        JUnitAppender.assertWarnMessage("Path \"path_1\" already in block OB2, cannot be added to block OB1");
+        JUnitAppender.assertWarnMessage("Path \"path_3\" is duplicate of path \"path_2\" in Portal \"portal_3\" from block OB1.");
+        JUnitAppender.assertWarnMessage("Path \"path_2\" is duplicate name for another path in Portal \"portal_3\" from block OB1.");
+
+        // now that we have at least one path set up, test method on those paths
+        Assert.assertEquals("toBlk path list size", 2, p.getPathsWithinBlock(toBlk).size());
+    }
+
+    @Test
+    public void testSetProtectSignal() {
+        Portal p = _portalMgr.providePortal("portal_3");
+        OBlock toBlk = _blkMgr.provideOBlock("OB1");
+        OBlock fromBlk = _blkMgr.provideOBlock("OB2");
+        p.setToBlock(toBlk, false);
+        p.setFromBlock(fromBlk, true);
+        VirtualSignalHead sh1 = new VirtualSignalHead("IH1");
+        Assert.assertFalse("null protectedBlock", p.setProtectSignal(sh1, 200, null));
+        p.setProtectSignal(sh1,200, toBlk);
+        Assert.assertNotNull("portal has signal", p.getSignalProtectingBlock(toBlk));
+        VirtualSignalHead sh2 = new VirtualSignalHead("IH2");
+        p.setProtectSignal(sh2,200, fromBlk);
+        Assert.assertNotNull("portal has signal", p.getSignalProtectingBlock(fromBlk));
+        Assert.assertFalse("set signal with wrong block",
+                p.setProtectSignal(sh2, 100, _blkMgr.provideOBlock("OB3")));
+
+        // a (static) method in Portal acting on signals
+        Assert.assertNull("get signal head", Portal.getSignal("IH1")); // would not expect null
+        Assert.assertEquals("block protected by IH1", "OB1", p.getProtectedBlock(sh1).getDisplayName());
+        p.deleteSignal(sh1);
+        Assert.assertNull("ToSignal deleted from portal", p.getFromSignal());
+    }
+
+    @Test
+    public void testSetName() {
+        Portal p = _portalMgr.providePortal("portal_1");
+        Portal p3 = _portalMgr.providePortal("portal_3");
+        OBlock toBlk = _blkMgr.provideOBlock("OB1");
+        p.setFromBlock(toBlk, false);
+        p3.setToBlock(toBlk, false);
+        Assert.assertNull("portal set empty", p.setName(null));
+        Assert.assertNull("portal set new name", p.setName("portal_1")); // set old name
+        Assert.assertNull("portal set new name", p.setName("portal_2"));
+        Assert.assertEquals("portal get new name", "portal_2", p.getName());
+        Assert.assertNotNull("portal setName returned Error message", p.setName("portal_3"));
+    }
+
+    @Test
+    public void testGetPermissibleSpeed() {
+        Portal p = _portalMgr.providePortal("portal_1");
+        OBlock toBlk = _blkMgr.provideOBlock("OB1");
+        OBlock fromBlk = _blkMgr.provideOBlock("OB2");
+        p.setToBlock(toBlk, false);
+        p.setFromBlock(fromBlk, true);
+        Assert.assertNull("block exitSpeed not set", p.getPermissibleSpeed(toBlk, false));
+        // signal head
+        SignalHead sh1 = new VirtualSignalHead("IH1");
+        p.setProtectSignal(sh1, 200, fromBlk);
+        p.getPermissibleSpeed(fromBlk, false);
+        JUnitAppender.assertErrorMessageStartsWith("SignalHead \"IH1\" has no exit speed specified for appearance \"Dark\"!");
+        sh1.setAppearance(SignalHead.RED);
+        Assert.assertEquals("get protecting signal speed", "Stop", p.getPermissibleSpeed(fromBlk, true));
+        // signal mast
+        VirtualSignalMast sm1 = new VirtualSignalMast("IF$vsm:basic:one-searchlight($1)", "mast 1");
+        p.setProtectSignal(sm1, 90, toBlk);
+        p.getPermissibleSpeed(toBlk, true);
+        JUnitAppender.assertErrorMessageStartsWith("SignalMast \"mast 1\" has no entrance speed specified for aspect \"null\"!");
+    }
+
+    @Test
+    public void testDisposePortal() {
+        Portal p = _portalMgr.providePortal("portal p");
+        p.setToBlock(_blkMgr.provideOBlock("OB1"), false);
+        p.setFromBlock(_blkMgr.provideOBlock("OB2"), true);
+        Assert.assertEquals("portal description",
+                "Portal \"portal p\" between OBlocks \"OB2\" and \"OB1\"", p.getDescription());
+        p.dispose();
+        Assert.assertNull("portal p disposed", _portalMgr.getPortal("portal_1"));
     }
 
     // from here down is testing infrastructure
-    // The minimal setup for log4J
+    // setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();        

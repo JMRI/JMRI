@@ -22,7 +22,7 @@
   Provides build services for JMRI web pages
   </description>
 
-  <property name="jmri.copyright.year" value="1997-2018"/>
+  <property name="jmri.copyright.year" value="1997-2020"/>
 
   <!-- set global properties for this build -->
   <property name="xml" value=".."/>
@@ -32,11 +32,11 @@
   <property name="target" value="pages/"/>
   <property name="propertiesdir" value="properties/"/>
 
-    <!-- ../../local.properties file      (not an error if doesn't exist)                -->
+    <!-- ../../local.properties file      (not an error if it doesn't exist)             -->
     <!--                                                                                 -->
     <!-- Things you might want to set:                                                   -->
-    <!--    # Your SourceForge ID (used for upload) if different                         -->
-    <!--    sourceforge.userid=me                                                        -->               
+    <!--    # Your GitHub ID (used for upload) if different                              -->
+    <!--    github.userid=me                                                             -->
     <!--                                                                                 -->
     <!-- This file should NEVER be checked-in to Git, it is in the .gitignore file       -->
     <!--                                                                                 -->

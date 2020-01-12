@@ -371,7 +371,7 @@
       <enumChoice choice="F4">
         <choice>F4</choice>
       </enumChoice>
-      <enumChoice choice="F3">
+      <enumChoice choice="F3" value="16">
         <choice>F3</choice>
       </enumChoice>
     </enumVal>
@@ -763,7 +763,7 @@
     <label xml:lang="it">Valore differenziale</label>
     <label xml:lang="cs">Diferenciální složka</label>
   </variable>
-  <variable CV="149" mask="VVVVVVVX" default="0" item="EMF Enable">
+  <variable CV="149" mask="XXXXXXXV" default="0" item="EMF Enable">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
     <label>Adaptive proportional value</label>
     <label xml:lang="it">Valore proprzionale adattabile</label>

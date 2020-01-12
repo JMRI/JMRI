@@ -1,4 +1,3 @@
-//RestoreFilesAction.java
 package jmri.jmrit.operations.setup;
 
 import apps.Apps;

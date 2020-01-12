@@ -1,9 +1,8 @@
 package jmri.jmrix.pricom.pockettester;
 
 import java.awt.GraphicsEnvironment;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
+import jmri.util.JUnitUtil;
+import org.junit.*;
 
 /**
  * JUnit tests for the MonitorFrame class
@@ -33,5 +32,16 @@ public class PacketTableFrameTest {
 
         // close frame
         f.dispose();
+    }
+
+    @Before
+    public void setUp() throws Exception {
+        JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        JUnitUtil.tearDown();
     }
 }

@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
+import javax.annotation.Nonnull;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -86,8 +87,6 @@ public abstract class ItemPanel extends JPanel {
      */
     public void init() {
         if (!_initialized) {
-            if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
-            Thread.yield();
             add(Box.createVerticalGlue());
             _initialized = true;
         }
@@ -95,9 +94,9 @@ public abstract class ItemPanel extends JPanel {
 
     /**
      * Initialization for conversion of plain track to indicator track by CircuitBuilder.
+     * @param doneAction Callback action for Done button
      */
-    public void init(ActionListener doneAction) {
-    }
+    abstract public void init(ActionListener doneAction);
 
 
     protected void setEditor(Editor ed) {
@@ -110,8 +109,9 @@ public abstract class ItemPanel extends JPanel {
     /*
      * Notification to itemPanel to update child dialogs, if any
      */
-    protected void setPreviewBg(int index) {
-    }
+    abstract protected void setPreviewBg(int index);
+    
+    abstract protected void updateBackground0(BufferedImage im);
 
     public boolean oktoUpdate() {
         return true;
@@ -198,6 +198,7 @@ public abstract class ItemPanel extends JPanel {
         }
         // always update background from Panel Editor
         backgrounds[0] = DrawSquares.getImage(500, 400, 10, panelBackground, panelBackground);
+        log.debug("makeBackgrounds backgrounds[0] = {}", backgrounds[0]);
         return backgrounds;
     }
 
@@ -262,6 +263,7 @@ public abstract class ItemPanel extends JPanel {
     static final String[] PORTAL = {PortalIcon.HIDDEN, PortalIcon.VISIBLE, PortalIcon.PATH,
             PortalIcon.TO_ARROW, PortalIcon.FROM_ARROW};
 
+    @Nonnull
     static private String[] getNames(String type) {
         if (type.equals("Turnout")) {
             return TURNOUT;
@@ -287,12 +289,13 @@ public abstract class ItemPanel extends JPanel {
             return PORTAL;
         } else {
             log.error("Item type \"{}\" cannot create icon sets!", type);
-            return null;
+            return new String[]{};
         }
     }
 
     static String redX = "resources/icons/misc/X-red.gif";
 
+    @Nonnull
     static protected HashMap<String, NamedIcon> makeNewIconMap(String type) {
         HashMap<String, NamedIcon> newMap = new HashMap<>();
         String[] names = getNames(type);
@@ -325,10 +328,11 @@ public abstract class ItemPanel extends JPanel {
             log.debug("resize by {} Dim= ({}, {}) \"{}\" OldDim= ({}, {}) NewDim= ({}, {})",
                     (isPalette?"TabPane":"JFrame"), totalDim.width, totalDim.height,
                     this._itemType, oldDim.width, oldDim.height, newDim.width, newDim.height);
-        if (_update) {
-            _paletteFrame.reSize(_paletteFrame, deltaDim, newDim);                            
-        } else if (isPalette && _initialized) {
-            _paletteFrame.reSize(ItemPalette._tabPane, deltaDim, newDim);            
+
+        if (isPalette && _initialized) {
+            _paletteFrame.reSize(ItemPalette._tabPane, deltaDim, newDim, _editor);            
+        } else if (_update || _initialized) {
+            _paletteFrame.reSize(_paletteFrame, deltaDim, newDim, _editor);                            
         }
     }
 

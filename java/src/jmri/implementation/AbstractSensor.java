@@ -7,9 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Abstract class providing the basic logic of the Sensor interface
- * <p>
- * Sensor system names are always upper case.
+ * Abstract class providing the basic logic of the Sensor interface.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2009
  */
@@ -19,11 +17,11 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
 
     // ctor takes a system-name string for initialization
     public AbstractSensor(String systemName) {
-        super(systemName.toUpperCase());
+        super(systemName);
     }
 
     public AbstractSensor(String systemName, String userName) {
-        super(systemName.toUpperCase(), userName);
+        super(systemName, userName);
     }
 
     @Override
@@ -94,28 +92,14 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
     public boolean getUseDefaultTimerSettings() {
         return useDefaultTimerSettings;
     }
-    
-    @Override
-    @Deprecated
-    public void useDefaultTimerSettings(boolean boo) {
-        setUseDefaultTimerSettings(boo);
-    }
-    
-    @Override
-    @Deprecated
-    public boolean useDefaultTimerSettings() {
-        return getUseDefaultTimerSettings();
-    }
-    
 
     protected Thread thr;
     protected Runnable r;
 
-    /* 
-     * Before going active or inactive or checking that we can go active, we will wait 500ms
-     * for things to settle down to help prevent a race condition
+    /**
+     * Before going active or inactive or checking that we can go active, we will wait for
+     * sensorDebounceGoing(In)Active for things to settle down to help prevent a race condition.
      */
-
     protected void sensorDebounce() {
         final int lastKnownState = _knownState;
         r = new Runnable() {
@@ -162,9 +146,10 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
         }
     }
 
-    // setKnownState() for implementations that can't
-    // actually do it on the layout. Not intended for use by implementations
-    // that can
+    /**
+     * Perform setKnownState(int) for implementations that can't actually
+     * do it on the layout. Not intended for use by implementations that can.
+     */
     @Override
     public void setKnownState(int s) throws jmri.JmriException {
         setOwnState(s);
@@ -193,8 +178,8 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
                 sensorDebounce();
                 return;
             } else {
-                //we shall try to stop the thread as one of the state changes 
-                //might start the thread, while the other may not.
+                // we shall try to stop the thread as one of the state changes
+                // might start the thread, while the other may not.
                 if (thr != null) {
                     thr.interrupt();
                 }
@@ -320,6 +305,5 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
     public PullResistance getPullResistance(){
        return PullResistance.PULL_OFF;
     }
-
 
 }

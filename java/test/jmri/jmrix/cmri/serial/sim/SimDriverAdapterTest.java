@@ -16,7 +16,7 @@ public class SimDriverAdapterTest {
 
    @Test
    public void ConstructorTest(){
-      Assert.assertNotNull("SimDriverAdapter constructor",new SimDriverAdapter());
+      Assert.assertNotNull("SimDriverAdapter constructor", new SimDriverAdapter());
    }
 
    @Before

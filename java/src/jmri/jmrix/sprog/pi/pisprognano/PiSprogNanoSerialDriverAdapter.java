@@ -2,6 +2,7 @@ package jmri.jmrix.sprog.pi.pisprognano;
 
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
 
+
 /**
  * Implements SerialPortAdapter for the Sprog system.
  * <p>
@@ -26,7 +27,8 @@ public class PiSprogNanoSerialDriverAdapter
     }
 
     /**
-     * Get an array of valid baud rates. This is currently only 115,200 bps
+     * {@inheritDoc}
+     * Currently only 115,200 bps
      */
     @Override
     public String[] validBaudRates() {
@@ -34,9 +36,17 @@ public class PiSprogNanoSerialDriverAdapter
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return new int[]{115200};
+    }
+
+    /**
      * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
-    @Deprecated
+    @Deprecated  // will be removed when class converted to multi-system
     static public PiSprogNanoSerialDriverAdapter instance() {
         return null;
     }

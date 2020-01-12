@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<group xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <column>      
+        <label>
+            <text>  </text>
+        </label>
+        <display item="ProId"/>
+        <display item="ProId 2"/>
+        <label>
+            <text>  </text>
+        </label>
+        <display item="SerNo"/>
+        <label>
+            <text>  </text>
+        </label>
+        <display item="PDate"/>
+        <display item="PInfo"/>
+        <label>
+            <text>  </text>
+        </label>
+        <row>
+            <display item="BCode Major Version" label="Bootcode Version"/>
+            <display item="BCode Minor Version" label="."/>
+            <display item="BCode Build Number" label="."/>
+        </row>
+        <display item="BDate"/>
+        <label>
+            <text>  </text>
+        </label>
+        <row>
+            <display item="ACode Major Version" label="Firmware Version"/>
+            <display item="ACode Minor Version" label="."/>
+            <display item="ACode Build Number" label="."/>
+        </row>
+        <display item="ADate"/>
+        <display item="AType"/>
+    </column>
+</group>

@@ -39,6 +39,7 @@ public class CbusConsolePaneTest extends jmri.util.swing.JmriPanelTest {
 
 
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         memo = new jmri.jmrix.can.CanSystemConnectionMemo();
@@ -50,7 +51,10 @@ public class CbusConsolePaneTest extends jmri.util.swing.JmriPanelTest {
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    @Override
+    public void tearDown() {        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.tearDown();
+    }
 
 
 }

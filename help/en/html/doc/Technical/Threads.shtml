@@ -22,14 +22,16 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
-</head><!--#include virtual="/Header.shtml" -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
+</head>
 
 <body>
-  <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
+
       <h1>JMRI Code: Threading</h1>
       
       <p>The vast majority of JMRI code (and
@@ -79,7 +81,8 @@
       file, spend some time munging it, and then create a window to
       present it all, you might want to do all that work on a
       separate thread. At the end, when it's time to set your new
-      frame visible, you have to to that on the Swing (GUI) thread.
+      frame visible, 
+      <a href="http://web.archive.org/web/20090526170426/http://java.sun.com/developer/JDCTechTips/2003/tt1208.html">you have to to that on the Swing (GUI) thread</a>.
       Here's the code to do that:</p>
 <pre style="font-family: monospace;">
     frame = new JmriJFrame();  // frame declared as instance variable<br>
@@ -99,7 +102,43 @@
       migrated to the newer JMRI-specific methods as time is
       available to keep our code just a tiny bit cleaner and more
       flexible.) 
-  
+      
+      <p>
+      If you do write a method that has to be called on a particular
+      thread, please annotate it with a 
+      <a href="http://jmri.org/JavaDoc/doc/jmri/InvokeOnGuiThread.html">@InvokeOnGuiThread</a>
+      or
+      <a href="http://jmri.org/JavaDoc/doc/jmri/InvokeOnLayoutThread.html">@InvokeOnLayoutThread</a>
+      to ease later static checking.
+
+      <p>
+      If you have ensured that a method is thread safe and may be run on any thread, please mark it with
+      <a href="http://jmri.org/JavaDoc/doc/jmri/InvokeOnAnyThread.html">@InvokeOnAnyThread</a>
+      
+      <p>
+      If you want to check at runtime that something is running on the intended thread:
+<pre style="font-family: monospace;">
+    ThreadingUtil.requireGuiThread(log);
+</pre>
+    or
+<pre style="font-family: monospace;">
+    ThreadingUtil.requireLayoutThread(log);
+</pre>
+        That check does take a bit of time, so it should probably only be 
+        done on entry to a large chunk of code, or perhaps be protected 
+        by a check of <code>log.isDebugEnabled()</code>. If 
+        the call occurs on the wrong thread, a <code>Log4JUtil.warnOnce</code>
+        logs the first occurance with traceback info.
+      
+    In addition to the <code>@InvokeOnGuiThread</code>, <code>@InvokeOnLayoutThread</code>
+    and <code>@InvokeOnAnyThread</code> annotations mentioned here, there are
+    <code>@ThreadSafe</code>, <code>@NotThreadSafe</code>, 
+    <code>@Immutable</code>, and 
+    <code>@GuardedBy</code> annotations that are useful.
+    See the discussion on the 
+    <a href="SpotBugs.shtml#annotations">JMRI SpotBugs page</a>.
+
+<a id="ending" name="ending"></a>
 <h3>Ending Threads</h3>
 
     This is really about interrupt() and our use of it.
@@ -113,7 +152,7 @@
         This is not an error, and shouldn't be treated as one.  If you can, 
         terminate what the code is doing and return to normal operation.
     <li>If you can't reliably terminate whatever is being done, perhaps because you're 
-        code is a low-level part, Just pass the InterruptedException up:  
+        code is a low-level part, just pass the InterruptedException up:  
         Don't <code>catch</code> it, just have your method says that it
         <code>throws InterruptedException</code>.
     <li>Sometimes you can't change the signature of your method: Perhaps it's overriding a
@@ -134,6 +173,27 @@
     For more background, please read 
     <a href="https://www.ibm.com/developerworks/library/j-jtp05236/index.html">this article</a>.
 
+<a id="timer" name="timer"></a>
+<h3>Timed Events</h3> 
+    The <a href="http://jmri.org/JavaDoc/doc/jmri/util/ThreadingUtil.html">jmri.util.ThreadingUtil</a>
+    class provides the
+    <a href="http://jmri.org/JavaDoc/doc/jmri/util/ThreadingUtil.html#runOnGUIDelayed-jmri.util.ThreadingUtil.ThreadAction-int-">runOnGUIDelayed</a>
+    and
+    <a href="http://jmri.org/JavaDoc/doc/jmri/util/ThreadingUtil.html#runOnLayoutDelayed-jmri.util.ThreadingUtil.ThreadAction-int-">runOnLayoutDelayed</a>
+    methods to make it easy to run some code after a delay.
+    In general, you should use these whenever possible instead of explicit 
+    javax.swing.Timer or java.util.Timer objects.
+    <p>
+    We recommend you not use the java.util.Timer class directly because of significant issues:
+    <ul>
+        <li>Each Timer object creates and keeps its own thread, which is very hard to end.
+            This can cause significant memory use if not handled carefully.
+        <li>The requested operation is run on the Timer's own thread, which isn't the layout or GUI thread.
+    </ul>
+    
+   The <a href="http://jmri.org/JavaDoc/doc/jmri/util/TimerUtil.html">jmri.util.TimerUtil</a>
+   can help with these issues.
+    
 <h3>Other Items of Interest</h3>    
 
     <p>

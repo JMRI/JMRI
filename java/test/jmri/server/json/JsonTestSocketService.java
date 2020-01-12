@@ -4,7 +4,6 @@ import static jmri.server.json.JsonTestServiceFactory.TEST;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import java.io.IOException;
-import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
 import jmri.JmriException;
 
@@ -20,19 +19,19 @@ public class JsonTestSocketService extends JsonSocketService<JsonTestHttpService
     }
 
     @Override
-    public void onMessage(String type, JsonNode data, String method, Locale locale) throws IOException, JmriException, JsonException {
+    public void onMessage(String type, JsonNode data, String method, JsonRequest request) throws IOException, JmriException, JsonException {
         if (data.path("throws").asText("").equals("JmriException")) {
             throw new JmriException(); // thrown for testing purposes
         }
         switch (method) {
             case JSON.GET:
-                connection.sendMessage(service.doGet(type, data.path(JSON.NAME).asText(), locale));
+                connection.sendMessage(service.doGet(type, data.path(JSON.NAME).asText(), data, request), request.id);
                 break;
             case JSON.POST:
-                connection.sendMessage(service.doPost(type, data.path(JSON.NAME).asText(), data, locale));
+                connection.sendMessage(service.doPost(type, data.path(JSON.NAME).asText(), data, request), request.id);
                 break;
             default:
-                throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, Bundle.getMessage(locale, "ErrorObject", TEST, data.path(JSON.NAME).asText()));
+                throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, Bundle.getMessage(request.locale, "ErrorObject", TEST, data.path(JSON.NAME).asText()), request.id);
         }
     }
 
@@ -42,8 +41,8 @@ public class JsonTestSocketService extends JsonSocketService<JsonTestHttpService
      * {@inheritDoc}
      */
     @Override
-    public void onList(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
-        connection.sendMessage(service.doGetList(type, locale));
+    public void onList(String type, JsonNode data, JsonRequest request) throws IOException, JmriException, JsonException {
+        connection.sendMessage(service.doGetList(type, data, request), request.id);
     }
 
     @Override

@@ -1,14 +1,15 @@
-//InterchangeEditFrameTest.java
 package jmri.jmrit.operations.locations;
 
 import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+import jmri.util.swing.JemmyUtil;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,7 +18,7 @@ import org.junit.Test;
  *
  * @author	Dan Boudreau Copyright (C) 2009
  */
-public class InterchangeEditFrameTest extends OperationsSwingTestCase {
+public class InterchangeEditFrameTest extends OperationsTestCase {
 
     final static int ALL = Track.EAST + Track.WEST + Track.NORTH + Track.SOUTH;
     private LocationManager lManager = null;
@@ -25,9 +26,7 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
 
     @Test
     public void testAddInterchange() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't use Assume in TestCase subclasses
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         InterchangeEditFrame f = new InterchangeEditFrame();
         f.setTitle("Test Interchange Add Frame");
         f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
@@ -36,7 +35,7 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
         // create one interchange track
         f.trackNameTextField.setText("new interchange track");
         f.trackLengthTextField.setText("321");
-        enterClickAndLeave(f.addTrackButton);
+        JemmyUtil.enterClickAndLeave(f.addTrackButton);
 
         Track t = l.getTrackByName("new interchange track", Track.INTERCHANGE);
         Assert.assertNotNull("new interchange track", t);
@@ -50,9 +49,7 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
 
     @Test
     public void testSetDirectionUsingCheckbox() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't use Assume in TestCase subclasses
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         InterchangeEditFrame f = new InterchangeEditFrame();
         f.setTitle("Test Interchange Add Frame");
         f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
@@ -61,17 +58,17 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
         // create one interchange tracks
         f.trackNameTextField.setText("2nd interchange track");
         f.trackLengthTextField.setText("4331");
-        enterClickAndLeave(f.addTrackButton);
+        JemmyUtil.enterClickAndLeave(f.addTrackButton);
         Track t = l.getTrackByName("2nd interchange track", Track.INTERCHANGE);
         Assert.assertNotNull("2nd interchange track", t);
         Assert.assertEquals("2nd interchange track length", 4331, t.getLength());
         Assert.assertEquals("Direction All before change", ALL, t.getTrainDirections());
 
         // deselect east and south check boxes
-        enterClickAndLeave(f.eastCheckBox);
-        enterClickAndLeave(f.southCheckBox);
+        JemmyUtil.enterClickAndLeave(f.eastCheckBox);
+        JemmyUtil.enterClickAndLeave(f.southCheckBox);
 
-        enterClickAndLeave(f.saveTrackButton);
+        JemmyUtil.enterClickAndLeave(f.saveTrackButton);
 
         Assert.assertEquals("west and north", Track.NORTH + Track.WEST, t.getTrainDirections());
 
@@ -80,9 +77,7 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
 
     @Test
     public void testSetAcceptedCarTypes() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't use Assume in TestCase subclasses
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         InterchangeEditFrame f = new InterchangeEditFrame();
         f.setTitle("Test Interchange Add Frame");
         f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
@@ -91,19 +86,19 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
         // create one interchange tracks
         f.trackNameTextField.setText("2nd interchange track");
         f.trackLengthTextField.setText("4331");
-        enterClickAndLeave(f.addTrackButton);
+        JemmyUtil.enterClickAndLeave(f.addTrackButton);
 
         Track t = l.getTrackByName("2nd interchange track", Track.INTERCHANGE);
 
         // check track accepts Boxcars
         Assert.assertTrue("2nd interchange track accepts Boxcars", t.acceptsTypeName("Boxcar"));
         // test clear car types button
-        enterClickAndLeave(f.clearButton);
-        enterClickAndLeave(f.saveTrackButton);
+        JemmyUtil.enterClickAndLeave(f.clearButton);
+        JemmyUtil.enterClickAndLeave(f.saveTrackButton);
         Assert.assertFalse("2nd interchange track doesn't accept Boxcars", t.acceptsTypeName("Boxcar"));
 
-        enterClickAndLeave(f.setButton);
-        enterClickAndLeave(f.saveTrackButton);
+        JemmyUtil.enterClickAndLeave(f.setButton);
+        JemmyUtil.enterClickAndLeave(f.saveTrackButton);
         Assert.assertTrue("2nd interchange track accepts Boxcars again", t.acceptsTypeName("Boxcar"));
 
         JUnitUtil.dispose(f);
@@ -111,9 +106,7 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
 
     @Test
     public void testAddCloseAndRestore() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't use Assume in TestCase subclasses
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         InterchangeEditFrame f = new InterchangeEditFrame();
         f.setTitle("Test Interchange Add Frame");
         f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
@@ -122,17 +115,17 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
         // create two interchange tracks
         f.trackNameTextField.setText("new interchange track");
         f.trackLengthTextField.setText("321");
-        enterClickAndLeave(f.addTrackButton);
+        JemmyUtil.enterClickAndLeave(f.addTrackButton);
 
         f.trackNameTextField.setText("2nd interchange track");
         f.trackLengthTextField.setText("4331");
-        enterClickAndLeave(f.addTrackButton);
+        JemmyUtil.enterClickAndLeave(f.addTrackButton);
 
         // deselect east and south check boxes
-        enterClickAndLeave(f.eastCheckBox);
-        enterClickAndLeave(f.southCheckBox);
+        JemmyUtil.enterClickAndLeave(f.eastCheckBox);
+        JemmyUtil.enterClickAndLeave(f.southCheckBox);
 
-        enterClickAndLeave(f.saveTrackButton);
+        JemmyUtil.enterClickAndLeave(f.saveTrackButton);
 
         JUnitUtil.dispose(f);
 
@@ -155,12 +148,12 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
     // Ensure minimal setup for log4J
     @Override
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         super.setUp();
         CarTypes ct = InstanceManager.getDefault(CarTypes.class);
         ct.addName("Boxcar");
 
-        loadLocations();
+        JUnitOperationsUtil.loadFiveLocations();
 
         // add UP road name
         CarRoads cr = InstanceManager.getDefault(CarRoads.class);
@@ -169,14 +162,7 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
         lManager = InstanceManager.getDefault(LocationManager.class);
         l = lManager.getLocationByName("Test Loc C");
         
-        loadTrain(l);
+        JUnitOperationsUtil.loadTrain(l);
        
-    }
-
-    // The minimal setup for log4J
-    @Override
-    @After
-    public void tearDown() throws Exception {
-        super.tearDown();
     }
 }

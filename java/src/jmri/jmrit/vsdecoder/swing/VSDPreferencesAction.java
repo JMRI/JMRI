@@ -3,20 +3,18 @@ package jmri.jmrit.vsdecoder.swing;
 /*
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under 
  * the terms of version 2 of the GNU General Public License as published 
  * by the Free Software Foundation. See the "COPYING" file for a copy
  * of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT 
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
  * for more details.
- * <P>
  *
  * @author   Mark Underwood Copyright (C) 2011
- * 
  */
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
@@ -24,7 +22,6 @@ import javax.swing.JFrame;
 import jmri.jmrit.vsdecoder.VSDecoderManager;
 import jmri.util.JmriJFrame;
 
-@SuppressWarnings("serial")
 public class VSDPreferencesAction extends AbstractAction {
 
     /**

@@ -55,7 +55,6 @@ public class JythonWindow extends AbstractAction {
     /**
      * Invoking this action via an event triggers display of a file dialog. If a
      * file is selected, it's then invoked as a script.
-     *
      */
     @Override
     public void actionPerformed(ActionEvent e) {

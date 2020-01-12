@@ -5,11 +5,11 @@ import javax.vecmath.Vector3d;
 
 /**
  * Encodes a single measurement point for RPS
- * <P>
+ * <p>
  * Immutable
  *
  * @author	Bob Jacobsen Copyright (C) 2006
-  */
+ */
 public class Measurement {
 
     public Measurement(Reading r) {
@@ -28,7 +28,7 @@ public class Measurement {
 
     /**
      * Return the Reading this measurement made from.
-     * <P>
+     * <p>
      * By definition, Reading objects are immutable
      *
      */
@@ -134,6 +134,5 @@ public class Measurement {
     double truncate(double x) {
         return (int) Math.round(x * 10) / 10.;
     }
+
 }
-
-

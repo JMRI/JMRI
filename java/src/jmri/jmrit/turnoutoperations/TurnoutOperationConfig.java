@@ -8,9 +8,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * configuration panel for TurnoutOperation class Must be overridden to define
- * specific panel details for class Must have exactly one constructor like the
- * one shown below
+ * Configuration panel for TurnoutOperation class. Must be overridden to define
+ * specific panel details for class. Must have exactly one constructor like the
+ * one shown below.
  *
  * @author John Harper Copyright 2005
  */
@@ -38,7 +38,7 @@ public class TurnoutOperationConfig extends JPanel {
      * error, ....) just return null
      *
      * @param op operation for which configurator is required
-     * @return the configurator
+     * @return the configurator or null in case of an error
      */
     static public TurnoutOperationConfig getConfigPanel(TurnoutOperation op) {
         TurnoutOperationConfig config = null;
@@ -58,9 +58,11 @@ public class TurnoutOperationConfig extends JPanel {
         }
         if (config == null) {
             //config = null;
-            log.debug("could not create configurator for " + op.getClass().getName() + " \"" + op.getName() + "\"");
+            log.debug("could not create configurator for {} \"{}\"", op.getClass().getName(), op.getName());
         }
         return config;
     }
+
     private final static Logger log = LoggerFactory.getLogger(TurnoutOperationConfig.class);
+
 }

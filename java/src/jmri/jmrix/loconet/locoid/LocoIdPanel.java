@@ -1,6 +1,5 @@
 package jmri.jmrix.loconet.locoid;
 
-import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -119,7 +118,7 @@ public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel implements
      */
     public void readButtonActionPerformed() {
         // We set the display to "-" until the callback gets the value from the
-        // Loconet
+        // LocoNet
         idBox.setSelectedIndex(0);
         memo.getLnTrafficController().sendLocoNetMessage(createReadPacket());
     }
@@ -140,9 +139,9 @@ public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel implements
             return;
         }
 
-        int b1 = m.getElement(0) & 0xFF;
-        int b2 = m.getElement(1) & 0xFF;
-        int b3 = m.getElement(2) & 0xFF;
+        int b1 = m.getOpCode();
+        int b2 = m.getElement(1);
+        int b3 = m.getElement(2);
         int b4 = m.getElement(3) & 0x07; // UR-92's set bit 4 for duplex
 
         // Response code is D7 {12, 17, 1F} 00 <value>

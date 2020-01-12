@@ -16,20 +16,19 @@ import org.slf4j.LoggerFactory;
 /**
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under 
  * the terms of version 2 of the GNU General Public License as published 
  * by the Free Software Foundation. See the "COPYING" file for a copy
  * of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT 
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
  * for more details.
- * <P>
  *
  * @author Mark Underwood Copyright (C) 2011
- * @author Klaus Killinger Copyright (C) 2018
+ * @author Klaus Killinger Copyright (C) 2018, 2019
  */
 // Usage:
 // EngineSound() : constructor
@@ -47,15 +46,13 @@ class Diesel3Sound extends EngineSound {
     AudioBuffer start_buffer;
     AudioBuffer stop_buffer;
     AudioBuffer transition_buf;
+    Integer idle_notch;
+    int top_speed;
     float engine_rd;
     float engine_gain;
 
     // Common variables
-    Float throttle_setting; // used for handling speed changes
-
     int current_notch = 1;
-    boolean changing_speed = false;
-    boolean is_looping = false;
     D3LoopThread _loopThread = null;
 
     public Diesel3Sound(String name) {
@@ -70,21 +67,21 @@ class Diesel3Sound extends EngineSound {
         log.debug("Loop Thread Started.  Sound name: {}", _soundName);
     }
 
-    @Override
-    public void stop() {
-        // Stop the loop thread, in case it's running
-        if (_loopThread != null) {
-            _loopThread.setRunning(false);
-        }
-        is_looping = false;
-    }
-
     // Responds to "CHANGE" trigger
     @Override
     public void changeThrottle(float s) {
         // This is all we have to do.  The loop thread will handle everything else.
         if (_loopThread != null) {
             _loopThread.setThrottle(s);
+        }
+    }
+
+    // Responds to throttle loco direction key (see EngineSound.java and EngineSoundEvent.java)
+    @Override
+    public void changeLocoDirection(int dirfn) {
+        log.debug("loco IsForward is {}", dirfn);
+        if (_loopThread != null) {
+            _loopThread.getLocoDirection(dirfn);
         }
     }
 
@@ -95,7 +92,9 @@ class Diesel3Sound extends EngineSound {
     @Override
     public void startEngine() {
         log.debug("startEngine.  ID: {}", this.getName());
-        _loopThread.startEngine(start_buffer);
+        if (_loopThread != null) {
+            _loopThread.startEngine(start_buffer);
+        }
     }
 
     @Override
@@ -108,7 +107,10 @@ class Diesel3Sound extends EngineSound {
 
     @Override
     public void shutdown() {
-        this.stop();
+        // Stop the loop thread, in case it's running
+        if (_loopThread != null) {
+            _loopThread.setRunning(false);
+        }
     }
 
     @Override
@@ -138,7 +140,7 @@ class Diesel3Sound extends EngineSound {
         me.setAttribute("name", this.getName());
         me.setAttribute("type", "engine");
         // Do something, eventually...
-        return (me);
+        return me;
     }
 
     @Override
@@ -153,9 +155,19 @@ class Diesel3Sound extends EngineSound {
         //log.debug("Diesel EngineSound: {}", e.getAttribute("name").getValue());
         _soundName = this.getName() + ":LoopSound";
         log.debug("get name: {}, soundName: {}, name: {}", this.getName(), _soundName, name);
-        notch_sounds = new HashMap<Integer, D3Notch>();
+
+        // Optional value
+        in = e.getChildText("top-speed");
+        if (in != null) {
+            top_speed = Integer.parseInt(in);
+        } else {
+            top_speed = 0; // default
+        }
+        log.debug("top speed forward: {} MPH", top_speed);
+
+        notch_sounds = new HashMap<>();
         in = e.getChildText("idle-notch");
-        Integer idle_notch = null;
+        idle_notch = null;
         if (in != null) {
             idle_notch = Integer.parseInt(in);
         } else {
@@ -204,7 +216,7 @@ class Diesel3Sound extends EngineSound {
                 List<AudioBuffer> l = D3Notch.getBufferList(vf, fn, "n" + i + "_" + j, i + "_" + j);
                 log.debug("Buffers Created: ");
                 for (AudioBuffer b : l) {
-                    log.debug("\tSubBuffer: {}", b.getSystemName());
+                    log.debug("\tSubBuffer: {}, length: {}", b.getSystemName(), SoundBite.calcLength(b));
                 }
                 sb.addLoopBuffers(l);
                 j++;
@@ -263,6 +275,7 @@ class Diesel3Sound extends EngineSound {
             log.info("No Idle Notch Specified.  Choosing Notch {} to be the Idle Notch.", (min_notch != null ? min_notch.getNotch() : "min_notch not set"));
             if (min_notch != null) {
                 min_notch.setIdleNotch(true);
+                idle_notch = min_notch.getNotch();
             } else {
                 log.warn("Could not set idle notch because min_notch was still null");
             }
@@ -506,10 +519,12 @@ class Diesel3Sound extends EngineSound {
         private boolean is_running = false;
         private boolean is_looping = false;
         private boolean is_dying = false;
+        private boolean is_in_rampup_mode;
         Diesel3Sound _parent;
         D3Notch _notch;
         SoundBite _sound;
         float _throttle;
+        private float rpm_dirfn;
 
         public static final int SLEEP_INTERVAL = 50;
 
@@ -529,11 +544,13 @@ class Diesel3Sound extends EngineSound {
             is_running = r;
             is_looping = false;
             is_dying = false;
+            is_in_rampup_mode = false;
             _parent = d;
             _notch = n;
             _sound = new SoundBite(s);
             _sound.setGain(_parent.engine_gain);
             _throttle = 0.0f;
+            rpm_dirfn = 0.0f;
             if (r) {
                 this.start();
             }
@@ -561,9 +578,26 @@ class Diesel3Sound extends EngineSound {
 
         public void setThrottle(float t) {
             if (_parent.engine_started) {
+                if (t < 0.0f) {
+                    t = 0.0f;
+                }
                 _throttle = t;
             }
             log.debug("Throttle set: {}", _throttle);
+        }
+
+        private void getLocoDirection(int d) {
+            log.debug("loco direction: {}", d);
+
+            // React to a change in direction to slow down,
+            // then change direction, then ramp-up to the old speed
+            if (_throttle > 0.0f && _parent.engine_started && !is_in_rampup_mode) {
+                rpm_dirfn = _throttle; // save rpm for ramp-up
+                log.debug("speed {} saved", rpm_dirfn);
+                is_in_rampup_mode = true; // set a flag for the ramp-up
+                _throttle = 0.0f;
+                changeNotch(); // will slow down to 0
+            }
         }
 
         public void startEngine(AudioBuffer start_buf) {
@@ -654,6 +688,7 @@ class Diesel3Sound extends EngineSound {
                         }
                     }
                     sleep(SLEEP_INTERVAL);
+                    checkState();
                 }
                 // Note: if (is_running == false) we'll exit the endless while and the Thread will die.
                 return;
@@ -670,12 +705,6 @@ class Diesel3Sound extends EngineSound {
             int new_notch = _notch.getNotch();
 
             log.debug("D3Thread Change Throttle: {}, Accel Limit: {}, Decel Limit: {}", _throttle, _notch.getAccelLimit(), _notch.getDecelLimit());
-            if (_throttle < 0) {
-                // DO something to shut down
-                _sound.stop();
-                is_running = false;
-                return;
-            }
             if (_throttle > _notch.getAccelLimit()) {
                 // Too fast. Need to go to next notch up.
                 transition_buf = _notch.getAccelBuffer();
@@ -708,6 +737,15 @@ class Diesel3Sound extends EngineSound {
                 }
             }
             return;
+        }
+
+        private void checkState() {
+            // Handle a throttle forward or reverse change
+            if (is_in_rampup_mode && _throttle == 0.0f && _notch.getNotch() == _parent.idle_notch) {
+                log.debug("now ramp-up to speed {}", rpm_dirfn);
+                is_in_rampup_mode = false;
+                _throttle = rpm_dirfn;
+            }
         }
 
         public void mute(boolean m) {

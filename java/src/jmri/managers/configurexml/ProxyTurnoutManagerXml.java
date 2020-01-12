@@ -5,7 +5,7 @@ import org.jdom2.Element;
 
 /**
  * Handle XML persistance of ProxyTurnoutManager
- * <P>
+ * <p>
  * This class is named as being the persistant form of the ProxyTurnoutManager
  * class, but there's no object of that form created or used.
  *

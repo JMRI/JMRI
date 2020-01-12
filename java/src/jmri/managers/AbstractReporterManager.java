@@ -1,10 +1,12 @@
 package jmri.managers;
 
 import java.util.Objects;
-
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import jmri.Manager;
 import jmri.Reporter;
 import jmri.ReporterManager;
+import jmri.jmrix.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +17,15 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AbstractReporterManager extends AbstractManager<Reporter>
         implements ReporterManager {
+
+    /**
+     * Create a new ReporterManager instance.
+     * 
+     * @param memo the system connection
+     */
+    public AbstractReporterManager(SystemConnectionMemo memo) {
+        super(memo);
+    }
 
     /** {@inheritDoc} */
     @Override
@@ -30,10 +41,11 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
 
     /** {@inheritDoc} */
     @Override
-    public Reporter provideReporter(String sName) {
-        Reporter t = getReporter(sName);
-        if (t != null) {
-            return t;
+    @Nonnull
+    public Reporter provideReporter(@Nonnull String sName) {
+        Reporter r = getReporter(sName);
+        if (r != null) {
+            return r;
         }
         if (sName.startsWith(getSystemPrefix() + typeLetter())) {
             return newReporter(sName, null);
@@ -44,36 +56,32 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
 
     /** {@inheritDoc} */
     @Override
-    public Reporter getReporter(String name) {
-        Reporter t = getByUserName(name);
-        if (t != null) {
-            return t;
+    public Reporter getReporter(@Nonnull String name) {
+        Reporter r = getByUserName(name);
+        if (r != null) {
+            return r;
         }
-
         return getBySystemName(name);
     }
 
     /** {@inheritDoc} */
     @Override
-    public Reporter getBySystemName(String name) {
-        return _tsys.get(name);
+    @Nonnull
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameReporters" : "BeanNameReporter");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<Reporter> getNamedBeanClass() {
+        return Reporter.class;
     }
 
     /** {@inheritDoc} */
     @Override
-    public Reporter getByUserName(String key) {
-        return _tuser.get(key);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameReporter");
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public Reporter getByDisplayName(String key) {
+    public Reporter getByDisplayName(@Nonnull String key) {
         // First try to find it in the user list.
         // If that fails, look it up in the system list
         Reporter retv = this.getByUserName(key);
@@ -86,9 +94,10 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
 
     /** {@inheritDoc} */
     @Override
-    public Reporter newReporter(String systemName, String userName) {
-        Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was "+ ((userName == null) ? "null" : userName));  // NOI18N
-
+    @Nonnull
+    public Reporter newReporter(@Nonnull String systemName, @CheckForNull String userName) {
+        Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was "
+               + ((userName == null) ? "null" : userName));  // NOI18N
         log.debug("new Reporter: {} {}", systemName, userName);
 
        // is system name in correct format?
@@ -104,7 +113,8 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
         Reporter r;
         if ((userName != null) && ((r = getByUserName(userName)) != null)) {
             if (getBySystemName(systemName) != r) {
-                log.error("inconsistent user (" + userName + ") and system name (" + systemName + ") results; userName related to (" + r.getSystemName() + ")");
+                log.error("inconsistent user ({}) and system name ({}) results; userName related to ({})",
+                        userName, systemName, r.getSystemName());
             }
             return r;
         }
@@ -112,8 +122,7 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
             if ((r.getUserName() == null) && (userName != null)) {
                 r.setUserName(userName);
             } else if (userName != null) {
-                log.warn("Found reporter via system name (" + systemName
-                        + ") with non-null user name (" + userName + ")");
+                log.warn("Found reporter via system name ({}}) with non-null user name ({}})", systemName, userName);
             }
             return r;
         }
@@ -121,9 +130,13 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
         // doesn't exist, make a new one
         r = createNewReporter(systemName, userName);
 
-        // save in the maps
-        register(r);
-
+        // Some implementations of createNewReporter() registers the bean, some
+        // don't. Check if the bean is registered and register it if it isn't
+        // registered.
+        if (getBySystemName(systemName) == null) {
+            // save in the maps
+            register(r);
+        }
         return r;
     }
 
@@ -131,21 +144,21 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
      * Internal method to invoke the factory, after all the logic for returning
      * an existing method has been invoked.
      *
-     * @return Never null
+     * @return never null
      */
-    abstract protected Reporter createNewReporter(String systemName, String userName);
+    abstract protected Reporter createNewReporter(@Nonnull String systemName, String userName);
 
     /** {@inheritDoc} */
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return false;
     }
 
     /** {@inheritDoc} */
     @Override
-    public String getNextValidAddress(String curAddress, String prefix) {
-        //If the hardware address passed does not already exist then this can
-        //be considered the next valid address.
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) {
+        // If the hardware address passed does not already exist then this can
+        // be considered the next valid address.
         Reporter r = getBySystemName(prefix + typeLetter() + curAddress);
         if (r == null) {
             return curAddress;
@@ -156,14 +169,14 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
         try {
             iName = Integer.parseInt(curAddress);
         } catch (NumberFormatException ex) {
-            log.error("Unable to convert " + curAddress + " Hardware Address to a number");
+            log.error("Unable to convert {} Hardware Address to a number", curAddress);
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showErrorMessage(Bundle.getMessage("WarningTitle"), "Unable to convert " + curAddress + " to a valid Hardware Address", "" + ex, "", true, false);
+                    showErrorMessage(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ErrorConvertNumberX", curAddress), "" + ex, "", true, false);
             return null;
         }
 
-        //Check to determine if the systemName is in use, return null if it is,
-        //otherwise return the next valid address.
+        // Check to determine if the systemName is in use, return null if it is,
+        // otherwise return the next valid address.
         r = getBySystemName(prefix + typeLetter() + iName);
         if (r != null) {
             for (int x = 1; x < 10; x++) {
@@ -173,6 +186,8 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
                     return Integer.toString(iName);
                 }
             }
+            // feedback when next address is also in use
+            log.warn("10 hardware addresses starting at {} already in use. No new Reporters added", curAddress);
             return null;
         } else {
             return Integer.toString(iName);

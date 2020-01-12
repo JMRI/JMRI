@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -173,7 +172,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
      */
     @Override
     public String getHelpTarget() {
-        return "package.jmri.jmrix.loconet.DuplexGroupSetup.DuplexGroupScanPanel"; // NOI18N
+        return "package.jmri.jmrix.loconet.duplexgroup.DuplexGroupTabbedPanel"; // NOI18N replacement UR92
     } // NOI18N
 
     /**
@@ -238,11 +237,11 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
      * Examines incoming LocoNet messages to see if the message is a Duplex
      * Group Channel Report. If so, captures the group number.
      *
-     * @param m - incoming LocoNetMessage
+     * @param m  incoming LocoNetMessage
      * @return true if message m is a Duplex Group Channel Report
      */
     private boolean handleMessageDuplexChannelReport(LocoNetMessage m) {
-        if ((m.getElement(0) != LnConstants.OPC_PEER_XFER)
+        if ((m.getOpCode() != LnConstants.OPC_PEER_XFER)
                 || (m.getElement(1) != LnConstants.RE_DPLX_OP_LEN)
                 || (m.getElement(2) != LnConstants.RE_DPLX_GP_CHAN_TYPE)
                 || (m.getElement(3) != LnConstants.RE_DPLX_SCAN_REPORT_B3)) {
@@ -264,7 +263,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
      *         present, else return false.
      */
     private boolean handleMessageDuplexScanReport(LocoNetMessage m) {
-        if ((m.getElement(0) != LnConstants.OPC_PEER_XFER)
+        if ((m.getOpCode() != LnConstants.OPC_PEER_XFER)
                 || (m.getElement(1) != LnConstants.RE_DPLX_SCAN_OP_LEN)
                 || (m.getElement(2) != LnConstants.RE_DPLX_SCAN_REPORT_B2)
                 || (m.getElement(3) != LnConstants.RE_DPLX_SCAN_REPORT_B3)) {
@@ -310,7 +309,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
      * Creates a LocoNet message containing a channel-specific query for signal
      * information from UR92 device(s).
      *
-     * @param channelNum - integer between 11 and 26, inclusive
+     * @param channelNum  integer between 11 and 26, inclusive
      * @return LocoNetMessage - query for Dulpex Channel Scan information
      */
     private LocoNetMessage createDuplexScanQueryPacket(int channelNum) {
@@ -578,8 +577,8 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
          * GUI. An invalid channel number may be used to cause the class to
          * clear the channel highlight. After invoking this method, a call to
          * this class' repaint() method is required to cause the GUI update.
-         * <p>
-         * @param channelNum - integer representing a Duplex Group channel
+         *
+     * @param channelNum  integer representing a Duplex Group channel
          *                   number.
          */
         public void setChannelBeingScanned(int channelNum) {

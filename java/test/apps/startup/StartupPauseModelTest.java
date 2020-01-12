@@ -1,6 +1,5 @@
 package apps.startup;
 
-import apps.tests.Log4JFixture;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -27,12 +26,12 @@ public class StartupPauseModelTest {
     
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
     }
     
     @After
     public void tearDown() {
-        Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
     }
 
     /**

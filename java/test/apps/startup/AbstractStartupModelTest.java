@@ -1,6 +1,5 @@
 package apps.startup;
 
-import apps.tests.Log4JFixture;
 import jmri.JmriException;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -28,12 +27,12 @@ public class AbstractStartupModelTest {
 
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
-        Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
     }
 
     /**

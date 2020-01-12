@@ -1,13 +1,12 @@
 package jmri.jmrit.operations.trains;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
+import java.io.*;
 import java.text.MessageFormat;
 import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.rollingstock.cars.Car;
@@ -15,10 +14,8 @@ import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.timetable.TrainSchedule;
-import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.jmrit.operations.trains.schedules.TrainSchedule;
+import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 
 /**
  * Builds a train's manifest. User has the ability to modify the text of the
@@ -62,9 +59,8 @@ public class TrainManifest extends TrainCommon {
             String valid = MessageFormat.format(messageFormatText = TrainManifestText.getStringValid(),
                     new Object[]{getDate(true)});
 
-            if (Setup.isPrintTimetableNameEnabled()) {
-                TrainSchedule sch = InstanceManager.getDefault(TrainScheduleManager.class).getScheduleById(
-                        InstanceManager.getDefault(TrainManager.class).getTrainScheduleActiveId());
+            if (Setup.isPrintTrainScheduleNameEnabled()) {
+                TrainSchedule sch = InstanceManager.getDefault(TrainScheduleManager.class).getActiveSchedule();
                 if (sch != null) {
                     valid = valid + " (" + sch.getName() + ")";
                 }
@@ -86,7 +82,6 @@ public class TrainManifest extends TrainCommon {
             List<Car> carList = carManager.getByTrainDestinationList(train);
             log.debug("Train has {} cars assigned to it", carList.size());
 
-            boolean hasWork = false;
             boolean hadWork = false;
             boolean noWork = false;
             String previousRouteLocationName = null;
@@ -99,7 +94,7 @@ public class TrainManifest extends TrainCommon {
              */
             for (RouteLocation rl : routeList) {
                 boolean printHeader = false;
-                hasWork = isThereWorkAtLocation(carList, engineList, rl);
+                boolean hasWork = isThereWorkAtLocation(carList, engineList, rl);
                 // print info only if new location
                 String routeLocationName = splitString(rl.getName());
                 if (!routeLocationName.equals(previousRouteLocationName) || (hasWork && !hadWork)) {
@@ -138,7 +133,7 @@ public class TrainManifest extends TrainCommon {
                         }
                         // add route location comment
                         if (!rl.getComment().trim().equals(RouteLocation.NONE)) {
-                            newLine(fileOut, rl.getComment());
+                            newLine(fileOut, rl.getFormatedColorComment());
                         }
 
                         // add location comment
@@ -188,10 +183,10 @@ public class TrainManifest extends TrainCommon {
                     }
                 } else if (Setup.getManifestFormat().equals(Setup.TWO_COLUMN_FORMAT)) {
                     blockLocosTwoColumn(fileOut, engineList, rl, IS_MANIFEST);
-                    blockCarsByTrackTwoColumn(fileOut, train, carList, routeList, rl, printHeader, IS_MANIFEST);
+                    blockCarsTwoColumn(fileOut, carList, routeList, rl, printHeader, IS_MANIFEST);
                 } else {
                     blockLocosTwoColumn(fileOut, engineList, rl, IS_MANIFEST);
-                    blockCarsByTrackNameTwoColumn(fileOut, train, carList, routeList, rl, printHeader, IS_MANIFEST);
+                    blockCarsByTrackNameTwoColumn(fileOut, carList, routeList, rl, printHeader, IS_MANIFEST);
                 }
 
                 if (rl != train.getRoute().getTerminatesRouteLocation()) {
@@ -224,8 +219,9 @@ public class TrainManifest extends TrainCommon {
                         newLine(fileOut, trainDeparts);
                     } else {
                         // no work at this location
-                        if (!noWork)
+                        if (!noWork) {
                             newLine(fileOut);
+                        }
                         noWork = true;
                         String s = MessageFormat.format(messageFormatText = TrainManifestText
                                 .getStringNoScheduledWork(), new Object[]{routeLocationName, train.getName(),
@@ -237,7 +233,7 @@ public class TrainManifest extends TrainCommon {
                             if (rl.getComment().trim().length() > 0) {
                                 s = MessageFormat.format(messageFormatText = TrainManifestText
                                         .getStringNoScheduledWorkWithRouteComment(),
-                                        new Object[]{routeLocationName, rl.getComment(), train.getName(),
+                                        new Object[]{routeLocationName, rl.getFormatedColorComment(), train.getName(),
                                                 train.getDescription()});
                             }
                         }
@@ -265,13 +261,15 @@ public class TrainManifest extends TrainCommon {
                     }
                 } else {
                     // last location in the train's route, print train terminates message
-                    if (Setup.isPrintHeadersEnabled() || !Setup.getManifestFormat().equals(Setup.STANDARD_FORMAT)) {
-                        printHorizontalLine(fileOut, IS_MANIFEST);
-                    } else if (!noWork) {
+                    if (!hadWork) {
                         newLine(fileOut);
+                    } else if (Setup.isPrintHeadersEnabled() ||
+                            !Setup.getManifestFormat().equals(Setup.STANDARD_FORMAT)) {
+                        printHorizontalLine(fileOut, IS_MANIFEST);
                     }
                     newLine(fileOut, MessageFormat.format(messageFormatText = TrainManifestText
-                            .getStringTrainTerminates(), new Object[]{routeLocationName, train.getName(),
+                            .getStringTrainTerminates(),
+                            new Object[]{routeLocationName, train.getName(),
                                     train.getDescription()}));
                 }
             }

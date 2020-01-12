@@ -130,7 +130,7 @@ public class MarklinTurnout extends AbstractTurnout
         MarklinMessage m = MarklinMessage.getSetTurnout(getCANAddress(), (newstate ? 1 : 0), 0x01);
         tc.sendMarklinMessage(m, this);
 
-        meterTimer.schedule(new java.util.TimerTask() {
+        jmri.util.TimerUtil.schedule(new java.util.TimerTask() {
             boolean state = newstate;
 
             @Override
@@ -193,7 +193,6 @@ public class MarklinTurnout extends AbstractTurnout
     }
 
     static final int METERINTERVAL = 100;  // msec wait before closed
-    static java.util.Timer meterTimer = new java.util.Timer("Marklin Turnout Meter Timer",true);
 
     private final static Logger log = LoggerFactory.getLogger(MarklinTurnout.class);
 }

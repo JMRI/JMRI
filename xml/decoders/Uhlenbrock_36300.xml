@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2014 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <version author="Egbert Broerse" version="1" lastUpdated="20181017"/>
+    <!-- Version 1 - Created from Uhlenbrock_76560.xml v1 (Alain Le Marchand), added Uhlenbrock 363x decoder models, Dutch translation -->
+    <!-- WARNING: output names fully linked to function mapping include file - do not change independently -->
+<decoder>
+    <family name="Multi-Protocol IntelliSound3 Decoder" mfg="Uhlenbrock Elektronik"><!-- version was checked by hardware owner Frits -->
+      <model model="36320" lowVersionID="11" highVersionID="11" numOuts="9" numFns="14" maxMotorCurrent="1.2A" formFactor="HO" connector="NMRAmedium" productID="36320" comment="IntelliSound 3 with PluX22 plug and RailCom(R)">
+        <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
+        <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
+        <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
+        <output name="4" label=". A2 ." connection="solder" maxcurrent="400 mA"/>
+        <output name="5" label=". A3 ." connection="solder" maxcurrent="400 mA"/>
+        <output name="6" label=". A4 ." connection="solder" maxcurrent="400 mA"/>
+        <output name="7" label=". A5 ." connection="solder" maxcurrent="400 mA"/>
+        <output name="8" label=". A6 ." connection="solder" maxcurrent="400 mA"/>
+        <output name="9" label=". A7 ." connection="solder" maxcurrent="400 mA"/>
+        <output name="Shunting" label="mode"/>
+        <output name="Start/brake" label="inertia"/>
+        <size length="30" width="15" height="4.8" units="mm"/>
+      </model>
+      <model model="36360" lowVersionID="5" highVersionID="5" numOuts="9" numFns="14" maxMotorCurrent="1.2A" formFactor="HO" connector="PluX22" productID="36360" comment="IntelliSound 3 with PluX22 plug and RailCom(R)">
+        <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
+        <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
+        <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
+        <output name="4" label=". A2 ." connection="plug" maxcurrent="400 mA"/>
+        <output name="5" label=". A3 ." connection="plug" maxcurrent="400 mA"/>
+        <output name="6" label=". A4 ." connection="plug" maxcurrent="400 mA"/>
+        <output name="7" label=". A5 ." connection="plug" maxcurrent="400 mA"/>
+        <output name="8" label=". A6 ." connection="plug" maxcurrent="400 mA"/>
+        <output name="9" label=". A7 ." connection="plug" maxcurrent="400 mA"/>
+        <output name="Shunting" label="mode"/>
+        <output name="Start/brake" label="inertia"/>
+        <size length="30" width="15" height="4.8" units="mm"/>
+      </model>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes">
+      <capability>
+        <name>Indexed CV access</name>
+        <parameter name="PI">1021</parameter>
+        <parameter name="SI">0</parameter> <!-- Not used, but need to be declared for cvFirst to be read -->
+        <parameter name="cvFirst">true</parameter>
+      </capability>
+    </programming>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/vStartHighMid-accelDecel.xml"/>
+      <variable item="Decoder Version" CV="7" readOnly="yes" default="5">
+        <decVal/>
+        <label>Manufacturer Version No: </label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
+        <label xml:lang="nl">Versie van decoder: </label>
+      </variable>
+      <variable item="Manufacturer" CV="8" readOnly="yes" default="85">
+        <decVal/>
+        <label>Manufacturer ID: </label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
+        <label xml:lang="nl">Fabrikant-ID: </label>
+      </variable>
+      <!-- CV12 - see below with CV49 -->
+      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv13analogfunction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29RailCom.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
+      <!-- Include function mapping -->
+      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/functionmap7outputs.xml"/>
+      <!-- End function mapping -->
+      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv47.48trim.xml"/>
+      <!-- CV49 Uhlenbrock decoder configuration - common bits -->
+      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv49common.xml"/>
+      <!-- CV49 bits 3-4 moved to CV12 in this decoder 			-->
+      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv12dataformat.xml"/>
+      <!-- CV49 specific bits for this decoder-->
+      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv49braking.xml"/>
+      <!-- added for 363xx/365xx CV50 -->
+      <variable item="Motorola address 2" CV="50" default="0">
+        <decVal max="255"/>
+        <label>Motorola loco address 2</label>
+        <label xml:lang="de">Motorola Lokadresse 2</label>
+        <label xml:lang="nl">Motorola Loc-adres 2</label>
+        <tooltip>for F5 to F8 (Value 1-255)</tooltip>
+        <tooltip xml:lang="de">für F5 bis F8 (Wert 1-255)</tooltip>
+        <tooltip xml:lang="nl">voor F5 t/m F8 (waarde 1-255)</tooltip>
+      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv51analog.xml"/>
+      <variable item="EMF Option 1" CV="53" default="35">
+        <decVal max="63"/>
+        <label>Repetition rate</label>
+        <label xml:lang="de">Wiederholrate der Motorregelung</label>
+        <label xml:lang="nl">Herhaling Motorregeling</label>
+        <tooltip>Lower if the locomotive does not run smoothly - Value * 53 micro.s</tooltip>
+        <tooltip xml:lang="de">verkleinern, wenn Lok ungleichmäßig läuft - Wert * 53 micro.S</tooltip>
+        <tooltip xml:lang="nl">verlaag als Loc ongelijkmatig rijdt - Waarde * 53 ms</tooltip>
+      </variable>	  
+      <variable item="EMF Static Config" CV="54" default="20">
+        <decVal max="63"/>
+        <label>Motor regulation P Constant</label>
+        <label xml:lang="de">Motorregelung P-Konstante</label>
+        <label xml:lang="nl">Motorregeling P-constante</label>
+      </variable>	  
+      <variable item="EMF Dynamic Config" CV="55" default="10">
+        <decVal max="63"/>
+        <label>Motor regulation I Constant</label>
+        <label xml:lang="de">Motorregelung I-Konstante</label>
+        <label xml:lang="nl">Motorregeling I-constante</label>
+      </variable>  
+      <variable item="EMF Control Reference" CV="56" default="32">
+        <decVal max="63"/>
+        <label>Control Reference</label>
+        <label xml:lang="de">Regelreferenz</label>
+        <label xml:lang="nl">Regelreferentie</label>
+        <tooltip>Lower Value if top speed to low, Raise Value if Speed at Step 1 too fast"</tooltip>
+        <tooltip xml:lang="de">verkleinern, wenn Höchstgeschwindigkeit zu geringer - vergrößern, wenn geschwindigkeit Schritt 1 zu schnell"</tooltip>
+        <tooltip xml:lang="nl">verlagen als max.snelheid te laag is - verhogen als snelheid in Stap 1 te hoog is"</tooltip>
+      </variable>
+      <variable item="EMF Droop Config" CV="57" default="2">
+        <decVal max="63"/>
+        <label>Motor regulation D Constant</label>
+        <label xml:lang="de">Motorregelung D-Konstante</label>
+        <label xml:lang="nl">Motorregeling D-constante</label>
+      </variable>	  
+      <variable item="EMF Option 2" CV="58" default="12">
+        <decVal max="63"/>
+        <label>Time slot for AD measurement</label>
+        <label xml:lang="de">Zeitschlitz für AD Wandlermessung</label>
+        <label xml:lang="nl">Duur van AD-meting</label>
+        <tooltip>Increase if loc does not run smoothly at low speeds - Decrease if the top speed is too low after CV53 has been lowered</tooltip>
+        <tooltip xml:lang="de">vergrößern, wenn Lok bei geringer Geschwindigkeit ungleichmäßig läuft; verkleinern, wenn bei heruntergesetztem CV 53 Höchstgeschwindigkeit der Lok zu gering ist</tooltip>
+      </variable>	  
+      <variable item="Short circuit supervision" CV="60" default="137" readOnly="yes">
+        <decVal max="9"/>
+        <label>Motor and Function Output Short circuit supervision</label>
+        <label xml:lang="de">Kurzschlussüberwachung Motor- und Funktionsausgänge</label>
+        <label xml:lang="nl">Kortsluitbeveiliging Motor- und Functie-uitgangen</label>
+        <tooltip>Do not change! 0=deactivated - 137=activated</tooltip>
+      </variable>
+      <variable item="Shutdown Temperature" CV="61" default="32" readOnly="yes">
+        <decVal/>
+        <label>Shutdown Temperature</label>
+        <label xml:lang="de">Abschalttemperatur</label>
+        <label xml:lang="nl">Uitschakeltemperatuur</label>
+        <tooltip>in °C, different with each decoder</tooltip>
+      </variable>
+      <!-- added for 363xx/265xx -->
+      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv62error.xml"/>
+      <variable item="End braking speed" CV="64" default="30">
+        <decVal/>
+        <label>End braking speed</label>
+        <label xml:lang="de">Geschw. am Ende Bremsstrecke</label>
+        <label xml:lang="nl">Snelheid aan einde Remsectie</label>
+        <tooltip>Valid when CV49 Bit 2=1 (Braking end) and Bit 7=1 (Braking analog)</tooltip>
+      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv65.66registers.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv107.108indepOutputs.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv115lissy.xml"/>
+      <!-- CVs 109 - 111, 116 - 123 -->
+      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/optionVars7outputs.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv124.129coupling.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv130.134smoke.xml"/>
+      <!-- integrate IntelliSound3 variables in decoder -->
+      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/soundVars7outputs.xml"/>
+    </variables>
+    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/factReset.xml"/>
+  </decoder>
+  <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/PaneUhlenbrock.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/soundPane7outputs.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/fmapPane7outputs.xml"/>
+</decoder-config>

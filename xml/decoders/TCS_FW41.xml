@@ -550,6 +550,7 @@
       </factReset>
     </resets>
   </decoder>
+  <xi:include href="http://jmri.org/xml/programmers/parts/BasicSpeedControlTrimPane.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/tcs/Pane_Momentum.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/tcs/Pane_TCS.xml"/>
 </decoder-config>

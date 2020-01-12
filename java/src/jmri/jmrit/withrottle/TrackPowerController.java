@@ -34,7 +34,7 @@ public class TrackPowerController extends AbstractController implements Property
     }
 
     @Override
-    public void handleMessage(String message) {
+    public void handleMessage(String message, DeviceServer deviceServer) {
         if (message.charAt(0) == 'A') {
             if (message.charAt(1) == '1') {
                 setTrackPowerOn();

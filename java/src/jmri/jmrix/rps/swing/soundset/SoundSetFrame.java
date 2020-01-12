@@ -48,4 +48,5 @@ public class SoundSetFrame extends jmri.util.JmriJFrame {
         // prepare for display
         pack();
     }
+
 }

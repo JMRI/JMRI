@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Base class for Actions to copy, export and import RosterEntrys.
- * <P>
+ * <p>
  * Note that {@link DeleteRosterItemAction} is sufficiently different that it
  * doesn't use this base class.
  *
@@ -119,7 +119,7 @@ abstract public class AbstractRosterItemAction extends jmri.util.swing.JmriAbstr
     public void setExistingEntry(RosterEntry mFromEntry) {
         this.mFromEntry = mFromEntry;
         mFromFilename = mFromEntry.getFileName();
-        mFullFromFilename = LocoFile.getFileLocation() + mFromFilename;
+        mFullFromFilename = Roster.getDefault().getRosterFilesLocation() + mFromFilename;
         log.debug(" from resolves to \"" + mFromFilename + "\", \"" + mFullFromFilename + "\"");
     }
 

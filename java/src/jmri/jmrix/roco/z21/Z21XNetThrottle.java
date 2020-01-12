@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender (C) 2015
  */
-public class Z21XNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
+public class Z21XNetThrottle extends jmri.jmrix.roco.RocoXNetThrottle {
 
     /**
      * Constructor
@@ -28,6 +28,40 @@ public class Z21XNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
      */
     public Z21XNetThrottle(XNetSystemConnectionMemo memo, LocoAddress address, XNetTrafficController controller) {
         super(memo,address,controller);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    synchronized public void setSpeedSetting(float speed) {
+        log.debug("set Speed to: {} Current step mode is: {}",speed,this.speedStepMode);
+        this.speedSetting = speed;
+        record(speed);
+        if (speed < 0) {
+            /* we're sending an emergency stop to this locomotive only */
+            sendEmergencyStop();
+        } else {
+            if (speed > 1) {
+                speed = (float) 1.0;
+            }
+            /* we're sending a speed to the locomotive */
+            XNetMessage msg = Z21XNetMessage.getZ21LanXSetLocoDriveMsg(getDccAddress(),
+                    this.speedStepMode,
+                    speed,
+                    this.isForward);
+            // now, queue the message for sending to the command station
+            queueMessage(msg, THROTTLEIDLE);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setSpeedSetting(float speed, boolean allowDuplicates, boolean allowDuplicatesOnStop) {
+        this.speedSetting = speed;
+        record(speed);
     }
 
     /**
@@ -55,19 +89,19 @@ public class Z21XNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
         // send all the functions when there is a change in the group.
         XNetMessage msg = Z21XNetMessage.getZ21LocomotiveFunctionOperationMsg(this.getDccAddress(),0,f0);
         // now, queue the message for sending to the command station
-        queueMessage(msg, THROTTLEFUNCSENT);
+        queueMessage(msg, THROTTLEIDLE);
         XNetMessage msg1 = Z21XNetMessage.getZ21LocomotiveFunctionOperationMsg(this.getDccAddress(),1,f1);
         // now, queue the message for sending to the command station
-        queueMessage(msg1, THROTTLEFUNCSENT);
+        queueMessage(msg1, THROTTLEIDLE);
         XNetMessage msg2 = Z21XNetMessage.getZ21LocomotiveFunctionOperationMsg(this.getDccAddress(),2,f2);
         // now, queue the message for sending to the command station
-        queueMessage(msg2, THROTTLEFUNCSENT);
+        queueMessage(msg2, THROTTLEIDLE);
         XNetMessage msg3 = Z21XNetMessage.getZ21LocomotiveFunctionOperationMsg(this.getDccAddress(),3,f3);
         // now, queue the message for sending to the command station
-        queueMessage(msg3, THROTTLEFUNCSENT);
+        queueMessage(msg3, THROTTLEIDLE);
         XNetMessage msg4 = Z21XNetMessage.getZ21LocomotiveFunctionOperationMsg(this.getDccAddress(),4,f4);
         // now, queue the message for sending to the command station
-        queueMessage(msg4, THROTTLEFUNCSENT);
+        queueMessage(msg4, THROTTLEIDLE);
     }
 
     /**
@@ -79,16 +113,16 @@ public class Z21XNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
         // send all the functions when there is a change in the group.
         XNetMessage msg = Z21XNetMessage.getZ21LocomotiveFunctionOperationMsg(this.getDccAddress(),5,f5);
         // now, queue the message for sending to the command station
-        queueMessage(msg, THROTTLEFUNCSENT);
+        queueMessage(msg, THROTTLEIDLE);
         XNetMessage msg1 = Z21XNetMessage.getZ21LocomotiveFunctionOperationMsg(this.getDccAddress(),6,f6);
         // now, queue the message for sending to the command station
-        queueMessage(msg1, THROTTLEFUNCSENT);
+        queueMessage(msg1, THROTTLEIDLE);
         XNetMessage msg2 = Z21XNetMessage.getZ21LocomotiveFunctionOperationMsg(this.getDccAddress(),7,f7);
         // now, queue the message for sending to the command station
-        queueMessage(msg2, THROTTLEFUNCSENT);
+        queueMessage(msg2, THROTTLEIDLE);
         XNetMessage msg3 = Z21XNetMessage.getZ21LocomotiveFunctionOperationMsg(this.getDccAddress(),8,f8);
         // now, queue the message for sending to the command station
-        queueMessage(msg3, THROTTLEFUNCSENT);
+        queueMessage(msg3, THROTTLEIDLE);
     }
 
     /**
@@ -101,16 +135,16 @@ public class Z21XNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
         // send all the functions when there is a change in the group.
         XNetMessage msg = Z21XNetMessage.getZ21LocomotiveFunctionOperationMsg(this.getDccAddress(),9,f9);
         // now, queue the message for sending to the command station
-        queueMessage(msg, THROTTLEFUNCSENT);
+        queueMessage(msg, THROTTLEIDLE);
         XNetMessage msg1 = Z21XNetMessage.getZ21LocomotiveFunctionOperationMsg(this.getDccAddress(),10,f10);
         // now, queue the message for sending to the command station
-        queueMessage(msg1, THROTTLEFUNCSENT);
+        queueMessage(msg1, THROTTLEIDLE);
         XNetMessage msg2 = Z21XNetMessage.getZ21LocomotiveFunctionOperationMsg(this.getDccAddress(),11,f11);
         // now, queue the message for sending to the command station
-        queueMessage(msg2, THROTTLEFUNCSENT);
+        queueMessage(msg2, THROTTLEIDLE);
         XNetMessage msg3 = Z21XNetMessage.getZ21LocomotiveFunctionOperationMsg(this.getDccAddress(),12,f12);
         // now, queue the message for sending to the command station
-        queueMessage(msg3, THROTTLEFUNCSENT);
+        queueMessage(msg3, THROTTLEIDLE);
     }
 
     /**
@@ -123,28 +157,28 @@ public class Z21XNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
         // send all the functions when there is a change in the group.
         XNetMessage msg = Z21XNetMessage.getZ21LocomotiveFunctionOperationMsg(this.getDccAddress(),13,f13);
         // now, queue the message for sending to the command station
-        queueMessage(msg, THROTTLEFUNCSENT);
+        queueMessage(msg, THROTTLEIDLE);
         XNetMessage msg1 = Z21XNetMessage.getZ21LocomotiveFunctionOperationMsg(this.getDccAddress(),14,f14);
         // now, queue the message for sending to the command station
-        queueMessage(msg1, THROTTLEFUNCSENT);
+        queueMessage(msg1, THROTTLEIDLE);
         XNetMessage msg2 = Z21XNetMessage.getZ21LocomotiveFunctionOperationMsg(this.getDccAddress(),15,f15);
         // now, queue the message for sending to the command station
-        queueMessage(msg2, THROTTLEFUNCSENT);
+        queueMessage(msg2, THROTTLEIDLE);
         XNetMessage msg3 = Z21XNetMessage.getZ21LocomotiveFunctionOperationMsg(this.getDccAddress(),16,f16);
         // now, queue the message for sending to the command station
-        queueMessage(msg3, THROTTLEFUNCSENT);
+        queueMessage(msg3, THROTTLEIDLE);
         XNetMessage msg4 = Z21XNetMessage.getZ21LocomotiveFunctionOperationMsg(this.getDccAddress(),17,f17);
         // now, queue the message for sending to the command station
-        queueMessage(msg4, THROTTLEFUNCSENT);
+        queueMessage(msg4, THROTTLEIDLE);
         XNetMessage msg5 = Z21XNetMessage.getZ21LocomotiveFunctionOperationMsg(this.getDccAddress(),18,f18);
         // now, queue the message for sending to the command station
-        queueMessage(msg5, THROTTLEFUNCSENT);
+        queueMessage(msg5, THROTTLEIDLE);
         XNetMessage msg6 = Z21XNetMessage.getZ21LocomotiveFunctionOperationMsg(this.getDccAddress(),19,f19);
         // now, queue the message for sending to the command station
-        queueMessage(msg6, THROTTLEFUNCSENT);
+        queueMessage(msg6, THROTTLEIDLE);
         XNetMessage msg7 = Z21XNetMessage.getZ21LocomotiveFunctionOperationMsg(this.getDccAddress(),20,f20);
         // now, queue the message for sending to the command station
-        queueMessage(msg7, THROTTLEFUNCSENT);
+        queueMessage(msg7, THROTTLEIDLE);
     }
     /**
      * Send the XpressNet message to set the state of functions F21, F22, F23,
@@ -156,59 +190,31 @@ public class Z21XNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
         // send all the functions when there is a change in the group.
         XNetMessage msg = Z21XNetMessage.getZ21LocomotiveFunctionOperationMsg(this.getDccAddress(),21,f21);
         // now, queue the message for sending to the command station
-        queueMessage(msg, THROTTLEFUNCSENT);
+        queueMessage(msg, THROTTLEIDLE);
         XNetMessage msg1 = Z21XNetMessage.getZ21LocomotiveFunctionOperationMsg(this.getDccAddress(),22,f22);
         // now, queue the message for sending to the command station
-        queueMessage(msg1, THROTTLEFUNCSENT);
+        queueMessage(msg1, THROTTLEIDLE);
         XNetMessage msg2 = Z21XNetMessage.getZ21LocomotiveFunctionOperationMsg(this.getDccAddress(),23,f23);
         // now, queue the message for sending to the command station
-        queueMessage(msg2, THROTTLEFUNCSENT);
+        queueMessage(msg2, THROTTLEIDLE);
         XNetMessage msg3 = Z21XNetMessage.getZ21LocomotiveFunctionOperationMsg(this.getDccAddress(),24,f24);
         // now, queue the message for sending to the command station
-        queueMessage(msg3, THROTTLEFUNCSENT);
+        queueMessage(msg3, THROTTLEIDLE);
         XNetMessage msg4 = Z21XNetMessage.getZ21LocomotiveFunctionOperationMsg(this.getDccAddress(),25,f25);
         // now, queue the message for sending to the command station
-        queueMessage(msg4, THROTTLEFUNCSENT);
+        queueMessage(msg4, THROTTLEIDLE);
         XNetMessage msg5 = Z21XNetMessage.getZ21LocomotiveFunctionOperationMsg(this.getDccAddress(),26,f26);
         // now, queue the message for sending to the command station
-        queueMessage(msg5, THROTTLEFUNCSENT);
+        queueMessage(msg5, THROTTLEIDLE);
         XNetMessage msg6 = Z21XNetMessage.getZ21LocomotiveFunctionOperationMsg(this.getDccAddress(),27,f27);
         // now, queue the message for sending to the command station
-        queueMessage(msg6, THROTTLEFUNCSENT);
+        queueMessage(msg6, THROTTLEIDLE);
         XNetMessage msg7 = Z21XNetMessage.getZ21LocomotiveFunctionOperationMsg(this.getDccAddress(),28,f28);
         // now, queue the message for sending to the command station
-        queueMessage(msg7, THROTTLEFUNCSENT);
+        queueMessage(msg7, THROTTLEIDLE);
     }
 
-    // The Z21 doesn't support setting the momentary/continuous status of
-    // functions, so override the sending of all momentary/continuous 
-    // from the parent class.
-    @Override
-    protected void sendMomentaryFunctionGroup1() {
-    }
-    @Override
-    protected void sendMomentaryFunctionGroup2() {
-    }
-    @Override
-    protected void sendMomentaryFunctionGroup3() {
-    }
-    @Override
-    protected void sendMomentaryFunctionGroup4() {
-    }
-    @Override
-    protected void sendMomentaryFunctionGroup5() {
-    }
-
-    // also prevent requesting the momentary status information
-    @Override
-    synchronized protected void sendFunctionStatusInformationRequest() {
-    }
-    @Override
-    synchronized protected void sendFunctionHighMomentaryStatusRequest() {
-    }
-
-
-    // The Z21 Doesn't support the XpressNet directed emergency stop
+    // The Roco Doesn't support the XpressNet directed emergency stop
     // instruction, so override sendEmergencyStop in the parent, and
     // just send speed step 0.
     @Override
@@ -219,8 +225,7 @@ public class Z21XNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
     // Handle incoming messages for this throttle.
     @Override
     public void message(XNetReply l) {
-        if (log.isDebugEnabled()) 
-            log.debug("Throttle " + getDccAddress() + " - received message " + l.toString());
+        log.debug("Throttle {} - received message {}",getDccAddress(),l.toString());
         if((l.getElement(0)&0xE0)==0xE0 && ((l.getElement(0)&0x0f) >= 7 && (l.getElement(0)&0x0f) <=15 )){
             //This is a Roco specific throttle information message.
             //Data Byte 0 and 1 contain the locomotive address
@@ -246,13 +251,11 @@ public class Z21XNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
                parseFunctionInformation(b4,b5);
                // byte 6 and 7 contain function information for F13-F28
                parseFunctionHighInformation(b6,b7);
-               
-                // Always end by setting the state to idle
-                // (z21 always responds with the same messge, regardless of
-                // request).
-                requestState = THROTTLEIDLE;
-                // and send any queued messages.
-                sendQueuedMessage();
+              
+               // set the request state to idle
+               requestState = THROTTLEIDLE;
+               // and send any queued messages.
+               sendQueuedMessage();
            } 
         } else {
             // let the standard XpressNet Throttle have a chance to look

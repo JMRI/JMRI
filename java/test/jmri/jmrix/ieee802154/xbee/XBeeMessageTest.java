@@ -13,22 +13,25 @@ import org.junit.Test;
  *
  * @author	Paul Bender
  */
-public class XBeeMessageTest {
+public class XBeeMessageTest extends jmri.jmrix.AbstractMessageTestBase {
 
+    @Override
     @Test
     public void testCtor() {
-        XBeeMessage m = new XBeeMessage(3);
         Assert.assertEquals("length", 3, m.getNumDataElements());
     }
 
     // The minimal setup for log4J
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        m = new XBeeMessage(3);
     }
 
     @After
     public void tearDown() {
+	m = null;
         JUnitUtil.tearDown();
     }
 

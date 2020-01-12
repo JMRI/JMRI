@@ -1,27 +1,13 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
-    "title": "jmri-json-reporter-client-message",
+    "title": "jmri-json-client-client-message",
     "type": "object",
-    "description": "Schema data object in message from client to JMRI for type \"reporter\"",
+    "description": "Schema data object in message from client to JMRI for type \"client\"",
     "properties": {
-        "name": {
+        "client": {
             "type": "string",
-            "description": "System name of the reporter"
-        },
-        "userName": {
-            "type": "string",
-            "description": "If present, set the user name of the reporter"
-        },
-        "comment": {
-            "type": "string",
-            "description": "If present, set the comment for the reporter"
-        },
-        "state": {
-            "type": "integer",
-            "description": "If present, sets the state of the reporter",
-            "enum": [0, 2, 4]
+            "description": "A token the client can use to subscribe to a message stream"
         }
     },
-    "additionalProperties": false,
-    "required": ["name"]
+    "additionalProperties": false
 }

@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -382,7 +382,7 @@ public class LayoutEditorChecks {
     //
     private void doCheckNonContiguousBlocksMenuItem(
             @Nonnull String blockName,
-            @Nullable Set<String> trackNameSet) {
+            @CheckForNull Set<String> trackNameSet) {
         log.debug("doCheckNonContiguousBlocksMenuItem({})", blockName);
 
         if (trackNameSet != null) {

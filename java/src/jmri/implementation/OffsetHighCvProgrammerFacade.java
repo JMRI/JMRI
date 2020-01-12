@@ -78,7 +78,7 @@ public class OffsetHighCvProgrammerFacade extends AbstractProgrammerFacade imple
         useProgrammer(p);
         if (prog.getCanRead(CV) || _cv <= top) {
             state = ProgState.PROGRAMMING;
-            prog.readCV(_cv, this);
+            prog.readCV(CV, this);
         } else {
             // write index first
             state = ProgState.FINISHREAD;
@@ -143,7 +143,7 @@ public class OffsetHighCvProgrammerFacade extends AbstractProgrammerFacade imple
             case FINISHREAD:
                 try {
                     state = ProgState.PROGRAMMING;
-                    prog.readCV(_cv % modulo, this);
+                    prog.readCV(String.valueOf(_cv % modulo), this);
                 } catch (jmri.ProgrammerException e) {
                     log.error("Exception doing final read", e);
                 }

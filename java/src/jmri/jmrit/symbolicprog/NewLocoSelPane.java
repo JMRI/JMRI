@@ -24,9 +24,9 @@ import org.slf4j.LoggerFactory;
 /**
  * Provide GUI controls to select a decoder for a new loco and/or copy an
  * existing config.
- * <P>
+ * <p>
  * The user can select either a loco to copy, or a new decoder type or both.
- * <P>
+ * <p>
  * When the "open programmer" button is pushed, i.e. the user is ready to
  * continue, the startProgrammer method is invoked. This should be overridden
  * (e.g. in a local anonymous class) to create the programmer frame you're

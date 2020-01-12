@@ -107,7 +107,7 @@
     <label xml:lang="cs">Zpoždění vypnutí</label>
     <label xml:lang="de">&lt;html&gt;DAMPF: Anfahrt verzögern, bis&lt;br&gt;„Anfahrpfiff“ vollständig abgespielt.&lt;/html&gt;</label>
   </variable>
-  <variable CV="155" item="Half Speed Key Extension" default="0">
+  <variable CV="155" mask="XXXVVVVV" item="Half Speed Key Extension" default="0">
     <enumVal>
       <enumChoice choice="Use Setting in CV124 above">
         <choice>Setting in CV124</choice>
@@ -176,7 +176,7 @@
     <label>Half Speed Key Extension</label>
     <label xml:lang="it">Estensione tasto funzione Mezza velocità</label>
     <label xml:lang="cs">Rozšíření funkční klávesy poloviční rychlost</label>
-    <label xml:lang="de">Halbgeschwindigkeit</label>
+    <label xml:lang="de">Halbgeschwindigkeit mit Taste</label>
   </variable>
   <variable CV="156" item="Shunt Function Key Extension" default="0">
     <enumVal>

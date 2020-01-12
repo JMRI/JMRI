@@ -34,16 +34,15 @@ public class UnzipFileClass {
 	 */
 	public static void unzipFunction(File directory, InputStream input) {	        
 		// if the output directory doesn't exist, create it
-		if(!directory.exists()) 
-			directory.mkdirs();
-
+		if(!directory.exists()) {
+			if ( !directory.mkdirs() ) log.error("Unable to create output directory {}", directory);
+        }
         String destinationFolder = directory.getPath();
         
 		// buffer for read and write data to file
 		byte[] buffer = new byte[2048];
         
-		try {
-			ZipInputStream zipInput = new ZipInputStream(input);
+		try (ZipInputStream zipInput = new ZipInputStream(input)) {
             
 			ZipEntry entry = zipInput.getNextEntry();
             
@@ -59,18 +58,21 @@ public class UnzipFileClass {
 					if(!newDir.exists()) {
 						boolean success = newDir.mkdirs();
 						if(success == false) {
-							log.error("Problem creating Folder");
+							log.error("Problem creating Folder {}", newDir);
 						}
 					}
                 }
 				else {
-					FileOutputStream fOutput = new FileOutputStream(file);
-					int count = 0;
-					while ((count = zipInput.read(buffer)) > 0) {
-						// write 'count' bytes to the file output stream
-						fOutput.write(buffer, 0, count);
-					}
-					fOutput.close();
+					try  (FileOutputStream fOutput = new FileOutputStream(file)) {
+                        int count = 0;
+                        while ((count = zipInput.read(buffer)) > 0) {
+                            // write 'count' bytes to the file output stream
+                            fOutput.write(buffer, 0, count);
+                        }
+                    } catch (IOException e) {
+                        log.error("Error writing unpacked zip file contents", e);
+                        return;
+                    }
 				}
 				// close ZipEntry and take the next one
 				zipInput.closeEntry();

@@ -57,7 +57,7 @@ public class QualifierCombinerTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
 
         p = new ProgDebugger();
         cvtable = new CvTableModel(new JLabel(""), p);

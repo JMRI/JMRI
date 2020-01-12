@@ -5,11 +5,8 @@ import java.awt.Component;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import jmri.InstanceManager;
-import jmri.Route;
 import jmri.RouteManager;
 import org.openide.util.lookup.ServiceProvider;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Factory to create {@link apps.startup.TriggerRouteModel} objects.
@@ -18,8 +15,6 @@ import org.slf4j.LoggerFactory;
  */
 @ServiceProvider(service = StartupModelFactory.class)
 public class TriggerRouteModelFactory implements StartupModelFactory {
-
-    private final static Logger log = LoggerFactory.getLogger(TriggerRouteModelFactory.class);
 
     @Override
     public Class<? extends StartupModel> getModelClass() {
@@ -45,15 +40,10 @@ public class TriggerRouteModelFactory implements StartupModelFactory {
     public void editModel(StartupModel model, Component parent) {
         if (this.getModelClass().isInstance(model)) {
             ArrayList<String> userNames = new ArrayList<>();
-            InstanceManager.getDefault(RouteManager.class).getSystemNameList().stream().forEach((systemName) -> {
-                Route r = InstanceManager.getDefault(RouteManager.class).getBySystemName(systemName);
-                if (r != null) {
-                    String userName = r.getUserName();
-                    if (userName != null && !userName.isEmpty()) {
-                        userNames.add(userName);
-                    }
-                } else {
-                    log.error("Failed to get route {}", systemName);
+            InstanceManager.getDefault(RouteManager.class).getNamedBeanSet().stream().forEach((r) -> {
+                String userName = r.getUserName();
+                if (userName != null && !userName.isEmpty()) {
+                    userNames.add(userName);
                 }
             });
             userNames.sort(null);
@@ -75,4 +65,7 @@ public class TriggerRouteModelFactory implements StartupModelFactory {
     public void initialize() {
         // nothing to do
     }
+
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TriggerRouteModelFactory.class);
+
 }

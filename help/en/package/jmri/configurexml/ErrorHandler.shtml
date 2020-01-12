@@ -29,9 +29,9 @@
 
     <body>
         <!--#include virtual="/Header" -->
-
         <div class="nomenu" id="mBody">
             <div id="mainContent">
+
                 <h1>XML Error Handling</h1>
                 <p>JMRI will sometimes encounter errors loading XML files including layout
                     and control panels. Some of these errors occur when loading a file
@@ -91,6 +91,14 @@
                             </li>
                         </ol>
                     </dd>
+                    <dt>jmri.NamedBean$BadSystemNameException</dt>
+                    <dd>A NamedBean (i.e. Turnout, Sensor, Logix, Conditional, etc) has an invalid 
+                        system name.  You can often figure out which one it was from the traceback
+                        just below the message, which will show the type of "manager" that failed,
+                        i.e. a reference to jmri.managers.DefaultSensorManager means that problem
+                        was while loading a Sensor.  (Problems with Conditionals are often blamed on
+                        DefaultLogixManager).  Messages right after the traceback will also sometimes
+                        show the problematic name.
                     <dt>Parse error</dt>
                     <dd>The XML file is not readable for some reason. This can be for one
                         of two reasons:

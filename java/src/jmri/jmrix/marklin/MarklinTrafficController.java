@@ -1,6 +1,5 @@
 package jmri.jmrix.marklin;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import jmri.CommandStation;
 import jmri.jmrix.AbstractMRListener;
@@ -110,36 +109,6 @@ public class MarklinTrafficController extends AbstractMRTrafficController implem
         return MarklinMessage.getExitProgMode();
     }
 
-    /**
-     * static function returning the MarklinTrafficController instance to use.
-     *
-     * @return The registered MarklinTrafficController instance for general use,
-     *         if need be creating one.
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public MarklinTrafficController instance() {
-        return self;
-    }
-
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Override
-    @Deprecated
-    //This can be removed once multi-connection is complete
-    public void setInstance() {
-    }
-
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    @SuppressFBWarnings(value = "MS_PKGPROTECT")
-    // SpotBugs wants this package protected, but we're removing it when multi-connection
-    // migration is complete
-    final static protected MarklinTrafficController self = null;
-
     @Override
     protected AbstractMRReply newReply() {
         MarklinReply reply = new MarklinReply();
@@ -191,7 +160,7 @@ public class MarklinTrafficController extends AbstractMRTrafficController implem
 
     /**
      * As we have to poll the tams system to get updates we put request into a
-     * queue and allow the the abstrct traffic controller to handle them when it
+     * queue and allow the abstrct traffic controller to handle them when it
      * is free.
      */
     public void addPollMessage(MarklinMessage mm, MarklinListener ml) {

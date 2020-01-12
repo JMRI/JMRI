@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2002, 2004 All rights reserved -->
-<!-- $Id$ -->
 <!--      V6 includes Analog function mapping   -->
 <!--      Consist Management , sound panel      -->
 <!--      and default functions label                       -->
@@ -689,10 +688,7 @@
       </variable>
       <!-- Documented CV-->
       <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <variable item="CV67(Range 0 - 255)" CV="67" default="9">
         <decVal max="255"/>
         <label>CV67(Range 0 - 255)</label>

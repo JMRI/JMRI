@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2014 All rights reserved                            -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2014</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Alain</firstname>
+        <surname>Le Marchand</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2014-05-10</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>Initial version as separate file from cv65.66registers.xml</revremark>
+    </revision>
+  </revhistory>
+  <variable label="Page Register" CV="64" default="0" readOnly="yes">
+    <decVal/>
+    <label>Page Register</label>
+    <label xml:lang="it">Registro Pagine</label>
+    <tooltip>For CV programming with a Motorola digital controller, used in DCC page mode</tooltip>
+    <tooltip xml:lang="de">für die CV Progr. mit einer Motorolazentrale (DCC page mode)</tooltip>
+    <tooltip xml:lang="it">Per programmare le CV con una centrale Motorola in modalità DCC a Pagina</tooltip>
+  </variable>
+  <variable label="Offset Register" CV="65" default="0" readOnly="yes">
+    <decVal/>
+    <label>Offset Register</label>
+    <label xml:lang="it">Registro Indice</label>
+    <tooltip>For CV programming with a Motorola digital controller</tooltip>	
+    <tooltip xml:lang="de">für die CV Progr. mit einer Motorolazentrale</tooltip>
+    <tooltip xml:lang="it">Per programmare le CV con una centrale Motorola</tooltip>
+  </variable>
+</variables>

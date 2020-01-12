@@ -2,7 +2,7 @@ package jmri.util;
 
 /**
  * File filter to suppress zip file archives.
- * <P>
+ * <p>
  * Java 1.6's FileChooser gets slow when it encounters large zip files. This
  * filter skips them, while still allowing you to specify others, etc.
  *

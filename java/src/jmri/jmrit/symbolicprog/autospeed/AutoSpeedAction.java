@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Action to start the an "Auto Speed Configurer" by creating a frame to select
  * loco, etc.
- * <P>
+ * <p>
  * The resulting JFrame is constructed on the fly here, and has no specific
  * type.
  *

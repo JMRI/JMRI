@@ -22,116 +22,114 @@ public abstract class AbstractProgrammerFacade implements Programmer {
         this.prog = prog;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String decodeErrorCode(int code) {
         return prog.decodeErrorCode(code);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public synchronized void addPropertyChangeListener(PropertyChangeListener l) {
         prog.addPropertyChangeListener(l);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public synchronized void removePropertyChangeListener(PropertyChangeListener l) {
         prog.removePropertyChangeListener(l);
     }
 
     /**
-     * @param CV  the CV to write
-     * @param val the value to write
-     * @param p   the listener that will be notified of the write
-     * @throws jmri.ProgrammerException if unable to communicate
-     * @deprecated As of 4.1.1, use #writeCV(java.lang.String, int,
-     * jmri.ProgListener)
-     * @see jmri.Programmer#writeCV(int, int, jmri.ProgListener) 
+     * {@inheritDoc}
      */
-    @Deprecated
-    @Override
-    public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
-        prog.writeCV(CV, val, p);
-    }
-
     @Override
     public void writeCV(String CV, int val, ProgListener p) throws ProgrammerException {
         prog.writeCV(CV, val, p);
     }
 
     /**
-     * @param CV the CV to read
-     * @param p  the listener that will be notified of the read
-     * @throws jmri.ProgrammerException if unable to communicate
-     * @deprecated As of 4.1.1, use #readCV(java.lang.String, int,
-     * jmri.ProgListener)
-     * @see jmri.Programmer#readCV(int, jmri.ProgListener)
+     * {@inheritDoc}
      */
-    @Deprecated
-    @Override
-    public void readCV(int CV, ProgListener p) throws ProgrammerException {
-        prog.readCV(CV, p);
-    }
-
     @Override
     public void readCV(String CV, ProgListener p) throws ProgrammerException {
         prog.readCV(CV, p);
     }
 
     /**
-     *
-     * @param CV  the CV to confirm
-     * @param val the value to confirm
-     * @param p   the listener that will be notified of the confirmation
-     * @throws jmri.ProgrammerException if unable to communicate
-     * @see jmri.Programmer#confirmCV(int, int, jmri.ProgListener)
-     * @deprecated since 4.1.1; use #confirmCV(java.lang.String, int,
-     * jmri.ProgListener) instead.
+     * {@inheritDoc}
      */
-    @Override
-    @Deprecated
-    public final void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException {
-        prog.confirmCV(CV, val, p);
-    }
-
     @Override
     public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
         prog.confirmCV(CV, val, p);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ProgrammingMode getMode() {
         return prog.getMode();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
+    @Nonnull
     public List<ProgrammingMode> getSupportedModes() {
         return prog.getSupportedModes();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setMode(ProgrammingMode p) {
         prog.setMode(p);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getCanRead() {
         return prog.getCanRead();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getCanRead(String addr) {
         return prog.getCanRead(addr);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getCanWrite() {
         return prog.getCanWrite();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getCanWrite(String addr) {
         return prog.getCanWrite(addr);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @Nonnull
     public WriteConfirmMode getWriteConfirmMode(String addr) { return prog.getWriteConfirmMode(addr); }

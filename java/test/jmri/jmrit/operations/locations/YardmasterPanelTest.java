@@ -13,7 +13,8 @@ public class YardmasterPanelTest extends jmri.jmrit.operations.CommonConductorYa
     @Before
     @Override
     public void setUp() {
-        JUnitUtil.setUp();        p = new YardmasterPanel();
+        JUnitUtil.setUp();
+        p = new YardmasterPanel();
     }
 
 }

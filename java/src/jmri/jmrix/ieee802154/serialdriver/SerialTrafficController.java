@@ -1,4 +1,3 @@
-// SerialTrafficController
 package jmri.jmrix.ieee802154.serialdriver;
 
 import jmri.jmrix.AbstractMRReply;

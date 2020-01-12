@@ -1,6 +1,3 @@
-/**
- *
- */
 package jmri.configurexml.turnoutoperations;
 
 import java.lang.reflect.Constructor;
@@ -16,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * XML.
  *
  * @author John Harper Copyright 2005
- *
  */
 public abstract class CommonTurnoutOperationXml extends TurnoutOperationXml {
 
@@ -74,4 +70,5 @@ public abstract class CommonTurnoutOperationXml extends TurnoutOperationXml {
     }
 
     private final static Logger log = LoggerFactory.getLogger(CommonTurnoutOperationXml.class);
+
 }

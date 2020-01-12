@@ -4,11 +4,10 @@ import jmri.jmrix.ConnectionTypeList;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
- * Returns a list of valid lenz Virtual Connection Types
- * <P>
+ * Get a list of valid Virtual (Internal) Connection Types
+ *
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
- *
  */
 @ServiceProvider(service = ConnectionTypeList.class)
 public class InternalConnectionTypeList implements jmri.jmrix.ConnectionTypeList {

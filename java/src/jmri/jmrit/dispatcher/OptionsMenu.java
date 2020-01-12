@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -22,6 +23,8 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import jmri.InstanceManager;
 import jmri.Scale;
+import jmri.ScaleManager;
+import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.JmriJFrame;
@@ -99,8 +102,8 @@ public class OptionsMenu extends JMenu {
     JmriJFrame optionsFrame = null;
     Container optionsPane = null;
     JCheckBox useConnectivityCheckBox = new JCheckBox(Bundle.getMessage("UseConnectivity"));
-    JComboBox<String> layoutEditorBox = new JComboBox<String>();
-    ArrayList<LayoutEditor> layoutEditorList = new ArrayList<LayoutEditor>();
+    JComboBox<String> layoutEditorBox = new JComboBox<>();
+    ArrayList<LayoutEditor> layoutEditorList = new ArrayList<>();
     JCheckBox autoAllocateCheckBox = new JCheckBox(Bundle.getMessage("AutoAllocateBox"));
     JCheckBox autoTurnoutsCheckBox = new JCheckBox(Bundle.getMessage("AutoTurnoutsBox"));
     JRadioButton trainsFromRoster = new JRadioButton(Bundle.getMessage("TrainsFromRoster"));
@@ -114,13 +117,14 @@ public class OptionsMenu extends JMenu {
     JCheckBox extraColorForAllocatedCheckBox = new JCheckBox(Bundle.getMessage("ExtraColorForAllocatedBox"));
     JCheckBox nameInAllocatedBlockCheckBox = new JCheckBox(Bundle.getMessage("NameInAllocatedBlockBox"));
     JCheckBox supportVSDecoderCheckBox = new JCheckBox(Bundle.getMessage("SupportVSDecoder"));
-    JComboBox<String> layoutScaleBox = new JComboBox<String>();
+    JComboBox<Scale> layoutScaleBox = new JComboBox<>();
     JRadioButton scaleFeet = new JRadioButton(Bundle.getMessage("ScaleFeet"));
     JRadioButton scaleMeters = new JRadioButton(Bundle.getMessage("ScaleMeters"));
     JCheckBox openDispatcherWithPanel = new JCheckBox(Bundle.getMessage("OpenDispatcherWithPanelBox"));
     JSpinner minThrottleIntervalSpinner = new JSpinner(new SpinnerNumberModel(100, 20, 1000, 1));
     JSpinner fullRampTimeSpinner = new JSpinner(new SpinnerNumberModel(5000, 1000, 20000, 1));
     JCheckBox trustKnownTurnoutsCheckBox = new JCheckBox(Bundle.getMessage("trustKnownTurnouts"));
+    JComboBox<String> stoppingSpeedBox = new JComboBox<>();
 
     String[] signalTypes = {Bundle.getMessage("SignalType1"), Bundle.getMessage("SignalType2")};
 
@@ -136,7 +140,7 @@ public class OptionsMenu extends JMenu {
             useConnectivityCheckBox.setToolTipText(Bundle.getMessage("UseConnectivityHint"));
             p1.add(layoutEditorBox);
             layoutEditorBox.setToolTipText(Bundle.getMessage("LayoutEditorHint"));
-            signalTypeBox = new JComboBox<String>(signalTypes);
+            signalTypeBox = new JComboBox<>(signalTypes);
             p1.add(signalTypeBox);
             signalTypeBox.setToolTipText(Bundle.getMessage("SignalTypeHint"));
             optionsPane.add(p1);
@@ -246,12 +250,19 @@ public class OptionsMenu extends JMenu {
             scaleGroup.add(scaleMeters);
             optionsPane.add(p12);
 
+            JPanel p14 = new JPanel();
+            initializeStoppingSpeedCombo();
+            p14.add(new JLabel(Bundle.getMessage("LabelStoppingSpeed")));
+            p14.add(stoppingSpeedBox);
+            stoppingSpeedBox.setToolTipText(Bundle.getMessage("StoppingSpeedHint"));
+            optionsPane.add(p14);
+
             JPanel p15 = new JPanel();
             p15.setLayout(new FlowLayout());
             p15.add(new JLabel(Bundle.getMessage("minThrottleInterval") + ":"));
             minThrottleIntervalSpinner.setToolTipText(Bundle.getMessage("minThrottleIntervalHint"));
             p15.add(minThrottleIntervalSpinner);
-            p15.add(new JLabel(Bundle.getMessage("ms")));
+            p15.add(new JLabel(Bundle.getMessage("LabelMilliseconds")));
             optionsPane.add(p15);
 
             JPanel p17 = new JPanel();
@@ -259,14 +270,14 @@ public class OptionsMenu extends JMenu {
             p17.add(new JLabel(Bundle.getMessage("fullRampTime") + " :"));
             fullRampTimeSpinner.setToolTipText(Bundle.getMessage("fullRampTimeHint", Bundle.getMessage("RAMP_FAST")));
             p17.add(fullRampTimeSpinner);
-            p17.add(new JLabel(Bundle.getMessage("ms")));
+            p17.add(new JLabel(Bundle.getMessage("LabelMilliseconds")));
             optionsPane.add(p17);
 
-            JPanel p14 = new JPanel();
-            p14.setLayout(new FlowLayout());
-            p14.add(openDispatcherWithPanel);
+            JPanel p18 = new JPanel();
+            p18.setLayout(new FlowLayout());
+            p18.add(openDispatcherWithPanel);
             openDispatcherWithPanel.setToolTipText(Bundle.getMessage("OpenDispatcherWithPanelBoxHint"));
-            optionsPane.add(p14);
+            optionsPane.add(p18);
 
             optionsPane.add(new JSeparator());
             JPanel p9 = new JPanel();
@@ -353,11 +364,12 @@ public class OptionsMenu extends JMenu {
         dispatcher.setNameInAllocatedBlock(nameInAllocatedBlockCheckBox.isSelected());
         dispatcher.setRosterEntryInBlock(rosterInBlockCheckBox.isSelected());
         dispatcher.setSupportVSDecoder(supportVSDecoderCheckBox.isSelected());
-        dispatcher.setScale(layoutScaleBox.getSelectedIndex() + 1);
+        dispatcher.setScale((Scale) layoutScaleBox.getSelectedItem());
         dispatcher.setUseScaleMeters(scaleMeters.isSelected());
         dispatcher.setMinThrottleInterval((int) minThrottleIntervalSpinner.getValue());
         dispatcher.setFullRampTime((int) fullRampTimeSpinner.getValue());
         dispatcher.getLayoutEditor().setOpenDispatcherOnLoad(openDispatcherWithPanel.isSelected());
+        dispatcher.setStoppingSpeedName( (String) stoppingSpeedBox.getSelectedItem());
         optionsFrame.setVisible(false);
         optionsFrame.dispose(); // prevent this window from being listed in the Window menu.
         optionsFrame = null;
@@ -413,11 +425,25 @@ public class OptionsMenu extends JMenu {
 
     private void initializeScaleCombo() {
         layoutScaleBox.removeAllItems();
-        for (int i = 0; i < Scale.NUM_SCALES; i++) {
-            layoutScaleBox.addItem(Scale.getScaleID(i + 1));
+        for (Scale scale : ScaleManager.getScales()) {
+            if (scale.getScaleName().equals("CUSTOM")) {  // No custom support yet, don't show.
+                continue;
+            }
+            layoutScaleBox.addItem(scale);
         }
-        layoutScaleBox.setSelectedIndex(dispatcher.getScale() - 1);
+        jmri.util.swing.JComboBoxUtil.setupComboBoxMaxRows(layoutScaleBox);
+        layoutScaleBox.setSelectedItem(dispatcher.getScale());
+    }
+
+    private void initializeStoppingSpeedCombo() {
+        stoppingSpeedBox.removeAllItems();
+        Enumeration<String> speedNamesList = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeedIterator();
+        while (speedNamesList.hasMoreElements()) {
+            stoppingSpeedBox.addItem(speedNamesList.nextElement());
+        }
+        stoppingSpeedBox.setSelectedItem(dispatcher.getStoppingSpeedName());
     }
 
     private final static Logger log = LoggerFactory.getLogger(OptionsMenu.class);
+
 }

@@ -1,9 +1,9 @@
 package jmri.jmrit.operations.locations.tools;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
@@ -12,6 +12,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.Location;
@@ -22,8 +27,6 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame to show which trains can service this location
@@ -234,7 +237,9 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
 
     @Override
     public void dispose() {
-        _location.removePropertyChangeListener(this);
+        if (_location != null) {
+            _location.removePropertyChangeListener(this);
+        }
         if (_track != null) {
             _track.removePropertyChangeListener(this);
         }

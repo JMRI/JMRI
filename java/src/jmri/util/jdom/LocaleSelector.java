@@ -33,12 +33,11 @@ public class LocaleSelector {
      * {@code <foo temp="a">}
      * {@code <temp xml:lang="hh">b</temp>}
      * {@code </foo>}
-     * </p>
      * <p>
      * Say it's looking for the attribute ATT. For each possible suffix, it
      * first looks for a contained element named ATT with an XML 'lang'
      * attribute for the suffix. If so, it takes that value. If none are found,
-     * the attribute value is taken from the original element</p>
+     * the attribute value is taken from the original element.
      *
      * @param el   the element with the attribute or child element
      * @param name the name of the attribute or child element

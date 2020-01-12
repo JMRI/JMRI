@@ -253,8 +253,8 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
 
         TurnoutManager mgr = InstanceManager.turnoutManagerInstance();
 
+        @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
         TurnoutFilterModel() {
-
             sysNameList = mgr.getSystemNameList();
             mgr.addPropertyChangeListener(this);
         }
@@ -337,8 +337,8 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
 
         RouteManager mgr = InstanceManager.getDefault(jmri.RouteManager.class);
 
+        @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
         RouteFilterModel() {
-
             sysNameList = mgr.getSystemNameList();
             mgr.addPropertyChangeListener(this);
         }

@@ -3,16 +3,12 @@ package jmri.jmrit.operations.locations.schedules;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
+
+import javax.swing.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.Location;
@@ -21,11 +17,8 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.locations.tools.LocationsByCarTypeFrame;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
-import jmri.jmrit.operations.rollingstock.cars.PrintCarLoadsAction;
+import jmri.jmrit.operations.rollingstock.cars.tools.PrintCarLoadsAction;
 import jmri.jmrit.operations.setup.Control;
-import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame to display spurs with schedules and their loads
@@ -97,8 +90,8 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
         // build menu
         JMenuBar menuBar = new JMenuBar();
         JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
-        toolMenu.add(new PrintCarLoadsAction(Bundle.getMessage("MenuItemCarLoadsPreview"), true, this));
-        toolMenu.add(new PrintCarLoadsAction(Bundle.getMessage("MenuItemCarLoadsPrint"), false, this));
+        toolMenu.add(new PrintCarLoadsAction(true, this));
+        toolMenu.add(new PrintCarLoadsAction(false, this));
         menuBar.add(toolMenu);
         setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.operations.Operations_ShowSchedulesByCarTypeAndLoad", true); // NOI18N
@@ -180,37 +173,20 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
                         addItemLeft(locationsPanel,
                                 new JLabel(spur.getName() + " (" + spur.getScheduleName() + ")"), 1, x);
                         // create string Receive(type, delivery, road, load)
-                        String s = si.getTypeName();
-                        if (!si.getSetoutTrainScheduleId().equals(ScheduleItem.NONE) &&
-                                InstanceManager.getDefault(TrainScheduleManager.class)
-                                        .getScheduleById(si.getSetoutTrainScheduleId()) != null) {
-                            s = s +
-                                    ", " +
-                                    InstanceManager.getDefault(TrainScheduleManager.class).getScheduleById(si.getSetoutTrainScheduleId())
-                                            .getName();
-                        } else {
-                            s = s + ",";
-                        }
-                        if (!si.getRoadName().equals(ScheduleItem.NONE)) {
-                            s = s + ", " + si.getRoadName();
-                        } else {
-                            s = s + ",";
-                        }
-                        s = s + ", " + si.getReceiveLoadName();
+                        String s = si.getTypeName() +
+                                ", " +
+                                si.getSetoutTrainScheduleName() +
+                                ", " +
+                                si.getRoadName() +
+                                ", " +
+                                si.getReceiveLoadName();
                         addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Receive") + " (" + s + ")"), 2, x);
                         // create string Ship(load, pickup)
-                        s = "";
-                        if (!si.getPickupTrainScheduleId().equals(ScheduleItem.NONE) &&
-                                InstanceManager.getDefault(TrainScheduleManager.class)
-                                        .getScheduleById(si.getPickupTrainScheduleId()) != null) {
-                            s = ", " +
-                                    InstanceManager.getDefault(TrainScheduleManager.class).getScheduleById(si.getPickupTrainScheduleId())
-                                            .getName();
-                        }
                         addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Ship") +
                                 " (" +
                                 si.getShipLoadName() +
-                                s +
+                                ", " +
+                                si.getPickupTrainScheduleName() +
                                 ")"), 3, x++);
                         // now the destination and track
                         if (si.getDestination() != null) {
@@ -260,7 +236,8 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
             InstanceManager.getDefault(CarTypes.class).updateComboBox(typesComboBox);
         }
         if (e.getSource().getClass().equals(CarLoads.class)) {
-            InstanceManager.getDefault(CarLoads.class).updateComboBox((String) typesComboBox.getSelectedItem(), loadsComboBox);
+            InstanceManager.getDefault(CarLoads.class).updateComboBox((String) typesComboBox.getSelectedItem(),
+                    loadsComboBox);
         }
         if (e.getSource().getClass().equals(Schedule.class) ||
                 e.getSource().getClass().equals(LocationManager.class) ||

@@ -110,25 +110,25 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
                 // if it terminates at this location
                 if (stops == 1) {
                     // newLine(fileOut);
-                    addLine(fileOut, TN + train.getName());
-                    addLine(fileOut, TM + train.getDescription());
+                    addLine(fileOut, TN + ESC + train.getName() + ESC);
+                    addLine(fileOut, TM + ESC + train.getDescription() + ESC);
 
                     if (train.isTrainEnRoute()) {
                         addLine(fileOut, TIR);
                         addLine(fileOut, ETE + expectedArrivalTime);
                     } else {
-                        addLine(fileOut, DL + splitString(splitString(train.getTrainDepartsName())));
+                        addLine(fileOut, DL + ESC + splitString(splitString(train.getTrainDepartsName())) + ESC);
                         addLine(fileOut, DT + train.getFormatedDepartureTime());
                         if (rl == train.getRoute().getDepartsRouteLocation() && routeList.size() > 1) {
-                            addLine(fileOut, TD + splitString(rl.getName()) + DEL + rl.getTrainDirectionString());
+                            addLine(fileOut, TD + ESC + splitString(rl.getName()) + ESC + DEL + rl.getTrainDirectionString());
                         }
                         if (rl != train.getRoute().getDepartsRouteLocation()) {
                             addLine(fileOut, ETA + expectedArrivalTime);
-                            addLine(fileOut, TA + splitString(rl.getName()) + DEL + rl.getTrainDirectionString());
+                            addLine(fileOut, TA + ESC + splitString(rl.getName()) + ESC + DEL + rl.getTrainDirectionString());
                         }
                     }
                     if (rl == train.getRoute().getTerminatesRouteLocation()) {
-                        addLine(fileOut, TT + splitString(rl.getName()));
+                        addLine(fileOut, TT + ESC + splitString(rl.getName()) + ESC);
                     }
                 }
                 if (stops > 1) {
@@ -148,7 +148,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
                         }
                         addLine(fileOut, TA + splitString(rl.getName()) + DEL + rl.getTrainDirectionString());
                         if (rl == train.getRoute().getTerminatesRouteLocation()) {
-                            addLine(fileOut, TT + splitString(rl.getName()));
+                            addLine(fileOut, TT + ESC + splitString(rl.getName()) + ESC);
                         }
                     } else {
                         stops--; // don't bump stop count, same location
@@ -233,7 +233,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
                 if (dropCars == 0) {
                     addLine(fileOut, NCSO);
                 }
-                addLine(fileOut, TEND + train.getName()); // done with this train
+                addLine(fileOut, TEND + ESC + train.getName() + ESC); // done with this train
             }
         }
         addLine(fileOut, END); // done with switch list

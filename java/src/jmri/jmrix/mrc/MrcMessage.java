@@ -11,17 +11,17 @@ import org.slf4j.LoggerFactory;
  * extend to uses in other software products. If you wish to use this code,
  * algorithm or these message formats outside of JMRI, please contact MRC Inc
  * for separate permission.
- * <p>
+ *
  * @author Bob Jacobsen Copyright (C) 2001, 2004
  * @author Kevin Dickerson Copyright (C) 2014
  * @author kcameron Copyright (C) 2014
-  */
+ */
 public class MrcMessage {
 
     // create a new one
     public MrcMessage(int len) {
         if (len < 1) {
-            log.error("invalid length in call to ctor: {0}", len);  //IN18N
+            log.error("invalid length in call to ctor: {}", len);  //IN18N
         }
         _nDataChars = len;
         _dataChars = new int[len];
@@ -190,7 +190,7 @@ public class MrcMessage {
                 i = m.putHeader(MrcPackets.FUNCTIONGROUP6PACKETHEADER);
                 break;
             default:
-                log.error("Invalid function group: {0}", group);  //IN18N
+                log.error("Invalid function group: {}", group);  //IN18N
                 return null;
         }
 
@@ -345,7 +345,7 @@ public class MrcMessage {
      */
     static public MrcMessage setClockRatio(int ratio) {
         if (ratio < 0 || ratio > 60) {
-            log.error("ratio number too large: {0}", ratio); //IN18N
+            log.error("ratio number too large: {}", ratio); //IN18N
         }
         MrcMessage m = new MrcMessage(MrcPackets.getSetClockRatioPacketLength());
         m.setMessageClass(MrcInterface.CLOCK);
@@ -367,10 +367,10 @@ public class MrcMessage {
      */
     static public MrcMessage setClockTime(int hour, int minute) {
         if (hour < 0 || hour > 23) {
-            log.error("hour number out of range : {0}", hour); //IN18N
+            log.error("hour number out of range : {}", hour); //IN18N
         }
         if (minute < 0 || minute > 59) {
-            log.error("minute number out of range : {0}", minute); //IN18N
+            log.error("minute number out of range : {}", minute); //IN18N
         }
         MrcMessage m = new MrcMessage(MrcPackets.getSetClockTimePacketLength());
         m.setMessageClass(MrcInterface.CLOCK);

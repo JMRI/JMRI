@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -15,6 +16,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.CommonConductorYardmasterPanel;
 import jmri.jmrit.operations.rollingstock.RollingStock;
@@ -30,8 +35,6 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.TrainSwitchListText;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Yardmaster frame by track. Shows work at one location listed by track.
@@ -172,11 +175,8 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
     @Override
     protected void update() {
         // use invokeLater to prevent deadlock
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                runUpdate();
-            }
+        SwingUtilities.invokeLater(() -> {
+            runUpdate();
         });
     }
 

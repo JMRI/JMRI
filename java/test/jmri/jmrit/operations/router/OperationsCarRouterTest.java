@@ -24,6 +24,7 @@ import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.JUnitOperationsUtil;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -201,7 +202,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         c3.setFinalDestination(acton);
         Assert.assertFalse("Try routing final destination equal to current", router.setDestination(c3, null, null));
         Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
-        Assert.assertEquals("Router status", Router.STATUS_CAR_AT_DESINATION, router.getStatus());
+        Assert.assertEquals("Router status", Router.STATUS_NOT_ABLE, router.getStatus());
 
         // now try with next track not equal to current
         c3.setFinalDestination(acton);
@@ -215,7 +216,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         c3.setFinalDestinationTrack(actonSpur1);
         Assert.assertFalse("Try routing final track equal to current", router.setDestination(c3, null, null));
         Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
-        Assert.assertEquals("Router status", Router.STATUS_CAR_AT_DESINATION, router.getStatus());
+        Assert.assertEquals("Router status", Router.STATUS_NOT_ABLE, router.getStatus());
 
         // create a local train servicing Acton
         Train actonTrain = tmanager.newTrain("Acton Local");
@@ -1063,6 +1064,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
      * Test routing using one train and the train is a local. a local services
      * only one location
      */
+    @Test
     public void testCarRoutingOneLocalTrain() {
         // load up the managers
         TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
@@ -1112,11 +1114,11 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         Assert.assertEquals("Router status", Router.STATUS_ROUTER_DISABLED, router.getStatus());
         Setup.setCarRoutingEnabled(true);
 
-        // first try car routing with just one location
+        // first try car routing with only destination, no track
         c3.setFinalDestination(acton);
         Assert.assertFalse("Try routing final destination equal to current", router.setDestination(c3, null, null));
         Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
-        Assert.assertEquals("Router status", Router.STATUS_CAR_AT_DESINATION, router.getStatus());
+        Assert.assertEquals("Router status", Router.STATUS_NOT_ABLE, router.getStatus());
 
         // now try with next track not equal to current
         c3.setFinalDestination(acton);
@@ -1130,7 +1132,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         c3.setFinalDestinationTrack(actonSpur1);
         Assert.assertFalse("Try routing final track equal to current", router.setDestination(c3, null, null));
         Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
-        Assert.assertEquals("Router status", Router.STATUS_CAR_AT_DESINATION, router.getStatus());
+        Assert.assertEquals("Router status", Router.STATUS_NOT_ABLE, router.getStatus());
 
         // create a local train servicing Acton
         Train actonTrain = tmanager.newTrain("Acton Local");
@@ -1420,6 +1422,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
     /**
      * Tests routing using one train and two locations.
      */
+    @Test
     public void testCarRoutingOneTrain() {
         // now load up the managers
         TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
@@ -1756,6 +1759,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
     /**
      * Two trains and two locations testing. A local performs the first move.
      */
+    @Test
     public void testCarRoutingTwoTrains() {
         // now load up the managers
         TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
@@ -1915,6 +1919,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
     /**
      * Five train routing test
      */
+    @Test
     public void testCarRoutingFiveTrainsA() {
 
         // only use interchange tracks for this test
@@ -2045,6 +2050,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
     /**
      * Five train routing test
      */
+    @Test
     public void testCarRoutingFiveTrainsB() {
 
         // now load up the managers
@@ -2302,6 +2308,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
     /**
      * Test routing through staging
      */
+    @Test
     public void testCarRoutingThroughStaging() {
         // now load up the managers
         TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
@@ -2512,6 +2519,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
     }
 
     // Use trains to move cars
+    @Test
     public void testRoutingWithTrains() {
         TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
         CarManager cmanager = InstanceManager.getDefault(CarManager.class);
@@ -2721,6 +2729,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
     /**
      * Test alternate track when routing with trains
      */
+    @Test
     public void testRoutingWithTrainsAlternateTrack() {
         TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
         CarManager cmanager = InstanceManager.getDefault(CarManager.class);
@@ -2947,6 +2956,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
      * "Food". They should be routed to the correct schedule that is demanding
      * the car type and load.
      */
+    @Test
     public void testRoutingWithSimpleSchedules() {
         TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
         CarManager cmanager = InstanceManager.getDefault(CarManager.class);
@@ -3300,6 +3310,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
      * used, three boxcars and a flat. They should be routed to the correct
      * schedule that is demanding the car type and load.
      */
+    @Test
     public void testRoutingWithSchedules() {
         TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
         CarManager cmanager = InstanceManager.getDefault(CarManager.class);
@@ -3503,6 +3514,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
      * cars. This test creates 1 schedule in match mode with multiple items.
      * Test uses car loads to activate schedule.
      */
+    @Test
     public void testRoutingWithSchedulesMatchMode() {
         TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
         CarManager cmanager = InstanceManager.getDefault(CarManager.class);
@@ -3635,6 +3647,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
      * cars. This test creates 1 schedule in match mode with multiple items.
      * Cars use final destination to activate schedule
      */
+    @Test
     public void testRoutingWithSchedulesMatchMode2() {
         TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
         CarManager cmanager = InstanceManager.getDefault(CarManager.class);
@@ -3926,6 +3939,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
      * has 5 tracks, 3 spurs, yard, and an interchange track.
      *
      */
+    @Test
     public void testRoutingWithSchedulesLocal() {
         TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
         CarManager cmanager = InstanceManager.getDefault(CarManager.class);
@@ -4369,8 +4383,9 @@ public class OperationsCarRouterTest extends OperationsTestCase {
     }
 
     // Ensure minimal setup for log4J
+    @Before
     @Override
-    protected void setUp() throws Exception {
+    public void setUp() {
         super.setUp();
         
         // change report level to increase test coverage
@@ -4387,18 +4402,13 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         // register the car and engine types used
         ct.addName("Boxcar");
         ct.addName(Bundle.getMessage("Caboose"));
-        ct.addName("Flat");
-        
-    }
-
-    public OperationsCarRouterTest(String s) {
-        super(s);
+        ct.addName("Flat");   
     }
 
     // The minimal setup for log4J
     @Override
     @After
-    protected void tearDown() throws Exception {
+    public void tearDown() {
         super.tearDown();
     }
 }

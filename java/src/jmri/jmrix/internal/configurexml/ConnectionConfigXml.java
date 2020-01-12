@@ -8,7 +8,7 @@ import org.jdom2.Element;
 
 /**
  * Handle XML persistance of virtual layout connections
- * <P>
+ * <p>
  * This class is invoked from jmrix.JmrixConfigPaneXml on write, as that class
  * is the one actually registered. Reads are brought here directly via the class
  * attribute in the XML.

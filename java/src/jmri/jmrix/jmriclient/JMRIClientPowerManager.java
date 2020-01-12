@@ -1,5 +1,7 @@
 package jmri.jmrix.jmriclient;
 
+import java.beans.PropertyChangeListener;
+
 import jmri.JmriException;
 import jmri.PowerManager;
 
@@ -8,7 +10,7 @@ import jmri.PowerManager;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008
  * @author Paul Bender Copyright (C) 2010
-  */
+ */
 public class JMRIClientPowerManager implements PowerManager, JMRIClientListener {
 
     private JMRIClientSystemConnectionMemo memo = null;
@@ -78,6 +80,30 @@ public class JMRIClientPowerManager implements PowerManager, JMRIClientListener 
         pcs.removePropertyChangeListener(l);
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(propertyName, listener);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public PropertyChangeListener[] getPropertyChangeListeners() {
+        return pcs.getPropertyChangeListeners();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
+        return pcs.getPropertyChangeListeners(propertyName);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        pcs.removePropertyChangeListener(propertyName, listener);
+    }
+
     JMRIClientTrafficController tc = null;
 
     // to listen for status changes from JMRIClient system
@@ -96,6 +122,3 @@ public class JMRIClientPowerManager implements PowerManager, JMRIClientListener 
     }
 
 }
-
-
-

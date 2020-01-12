@@ -22,6 +22,8 @@ import org.openlcb.can.GridConnect;
  */
 
 public class OlcbTestInterface {
+
+
     /**
      * Creates a lightweight test setup.
      */
@@ -32,7 +34,14 @@ public class OlcbTestInterface {
         iface = canInterface.getInterface();
     }
 
-    public static class CreateConfigurationManager {}
+    public static class CreateConfigurationManager {
+        /**
+         * Override this function in the creation class in order to set protocol options on
+         * creating the interface. This function gets invoked before the .configureManagers() call.
+         * @param memo SystemConnectionMemo to set the protocol options on.
+         */
+        void setOptions(CanSystemConnectionMemo memo) {}
+    }
 
     /**
      * Creates a more heavyweight test setup, using the standard ConfigurationManager class.
@@ -41,10 +50,11 @@ public class OlcbTestInterface {
     public OlcbTestInterface(CreateConfigurationManager hh) {
         tc = new TestTrafficController();
         InstanceManager.store(new NodeID("02.01.0D.00.00.01"), NodeID.class);
-        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
-        memo.setTrafficController(tc);
-        memo.setProtocol(ConfigurationManager.OPENLCB);
-        memo.configureManagers();
+        systemConnectionMemo = new CanSystemConnectionMemo();
+        hh.setOptions(systemConnectionMemo);
+        systemConnectionMemo.setTrafficController(tc);
+        systemConnectionMemo.setProtocol(ConfigurationManager.OPENLCB);
+        systemConnectionMemo.configureManagers();
         configurationManager = InstanceManager.getDefault(OlcbConfigurationManager.class);
         canInterface = configurationManager.olcbCanInterface;
         iface = canInterface.getInterface();
@@ -87,6 +97,7 @@ public class OlcbTestInterface {
     public void assertSentMessage(String gridconnectMessage) {
         List<CanFrame> l = GridConnect.parse(gridconnectMessage);
         Assert.assertEquals(1, l.size());
+        iface.flushSendQueue();
         Assert.assertEquals(OlcbConfigurationManager.convertToCan(l.get(0)), tc.rcvMessage);
         tc.rcvMessage = null;
     }
@@ -95,7 +106,16 @@ public class OlcbTestInterface {
      * Asserts that no message was sent to the bus.
      */
     public void assertNoSentMessages() {
+        flush();
         Assert.assertNull(tc.rcvMessage);
+    }
+
+    /**
+     * Resets the traffic controller to forget about sent messages.
+     */
+    public void clearSentMessages() {
+        flush();
+        tc.rcvMessage = null;
     }
 
     /**
@@ -149,6 +169,8 @@ public class OlcbTestInterface {
     public CanInterface canInterface;
     public OlcbInterface iface;
     public OlcbConfigurationManager configurationManager;
+    // Filled in only if called constructor with the argument to create the system connection memo.
+    public CanSystemConnectionMemo systemConnectionMemo;
 
     public void dispose(){
       // terminate the OlcbInterface (and terminate thread)

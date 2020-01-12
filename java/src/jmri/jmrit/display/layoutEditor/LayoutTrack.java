@@ -3,19 +3,12 @@ package jmri.jmrit.display.layoutEditor;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import java.awt.geom.*;
+import java.util.*;
+import javax.annotation.*;
 import javax.swing.JPopupMenu;
-import jmri.JmriException;
-import jmri.Turnout;
-import jmri.util.ColorUtil;
-import jmri.util.MathUtil;
+import jmri.*;
+import jmri.util.*;
 
 /**
  * Abstract base class for all layout track objects (PositionablePoint,
@@ -55,6 +48,9 @@ public abstract class LayoutTrack {
     public static final int SLIP_RIGHT = 26;
     public static final int BEZIER_CONTROL_POINT_OFFSET_MIN = 30; // offset for TrackSegment Bezier control points (minimum)
     public static final int BEZIER_CONTROL_POINT_OFFSET_MAX = 38; // offset for TrackSegment Bezier control points (maximum)
+    public static final int SHAPE_CENTER = 39;
+    public static final int SHAPE_POINT_OFFSET_MIN = 40; // offset for Shape points (minimum)
+    public static final int SHAPE_POINT_OFFSET_MAX = 49; // offset for Shape points (maximum)
     public static final int TURNTABLE_RAY_OFFSET = 50; // offset for turntable connection points
 
     // operational instance variables (not saved between sessions)
@@ -67,13 +63,6 @@ public abstract class LayoutTrack {
     //protected static double maxDashLength = 10;
     protected boolean hidden = false;
 
-    // package-private
-    static Color defaultTrackColor = Color.black;
-    //TODO: Add accessor methods
-    //TODO: Should these be 1)Global, 2)Per-layout, 3)Per-Block or 4)Per-Track?
-    static Color defaultBallastColor = Color.gray;
-    static Color defaultTieColor = new Color(122, 74, 50);
-
     /**
      * constructor method
      */
@@ -81,7 +70,6 @@ public abstract class LayoutTrack {
         this.ident = ident;
         this.center = c;
         this.layoutEditor = layoutEditor;
-        defaultTrackColor = ColorUtil.stringToColor(layoutEditor.getDefaultTrackColor());
     }
 
     /**
@@ -139,12 +127,38 @@ public abstract class LayoutTrack {
     }
     protected Map<String, String> decorations = null;
 
-    public static void setDefaultTrackColor(@Nullable Color color) {
-        defaultTrackColor = color;
+    /**
+     * convenience method for accessing...
+     * @return the layout editor's toolbar panel
+     */
+    @Nonnull
+    public LayoutEditorToolBarPanel getLayoutEditorToolBarPanel() {
+        return layoutEditor.getLayoutEditorToolBarPanel();
+    }
+
+    //these are convenience methods to return circles & rectangle used to draw onscreen
+    //
+    //compute the control point rect at inPoint; use the turnout circle size
+    public Ellipse2D trackEditControlCircleAt(@Nonnull Point2D inPoint) {
+        return trackControlCircleAt(inPoint);
+    }
+
+    //compute the turnout circle at inPoint (used for drawing)
+    public Ellipse2D trackControlCircleAt(@Nonnull Point2D inPoint) {
+        return new Ellipse2D.Double(inPoint.getX() - layoutEditor.circleRadius,
+                inPoint.getY() - layoutEditor.circleRadius, 
+                layoutEditor.circleDiameter, layoutEditor.circleDiameter);
+    }
+
+    //compute the turnout circle control rect at inPoint
+    public Rectangle2D trackControlCircleRectAt(@Nonnull Point2D inPoint) {
+        return new Rectangle2D.Double(inPoint.getX() - layoutEditor.circleRadius,
+                inPoint.getY() - layoutEditor.circleRadius, 
+                layoutEditor.circleDiameter, layoutEditor.circleDiameter);
     }
 
     protected Color getColorForTrackBlock(
-            @Nullable LayoutBlock layoutBlock, boolean forceBlockTrackColor) {
+            @CheckForNull LayoutBlock layoutBlock, boolean forceBlockTrackColor) {
         Color result = ColorUtil.CLEAR;  // transparent
         if (layoutBlock != null) {
             if (forceBlockTrackColor) {
@@ -157,19 +171,19 @@ public abstract class LayoutTrack {
     }
 
     // optional parameter forceTrack = false
-    protected Color getColorForTrackBlock(@Nullable LayoutBlock lb) {
+    protected Color getColorForTrackBlock(@CheckForNull LayoutBlock lb) {
         return getColorForTrackBlock(lb, false);
     }
 
     protected Color setColorForTrackBlock(Graphics2D g2,
-            @Nullable LayoutBlock layoutBlock, boolean forceBlockTrackColor) {
+            @CheckForNull LayoutBlock layoutBlock, boolean forceBlockTrackColor) {
         Color result = getColorForTrackBlock(layoutBlock, forceBlockTrackColor);
         g2.setColor(result);
         return result;
     }
 
     // optional parameter forceTrack = false
-    protected Color setColorForTrackBlock(Graphics2D g2, @Nullable LayoutBlock lb) {
+    protected Color setColorForTrackBlock(Graphics2D g2, @CheckForNull LayoutBlock lb) {
         return setColorForTrackBlock(g2, lb, false);
     }
 
@@ -253,17 +267,6 @@ public abstract class LayoutTrack {
         return hidden;
     }
 
-    /**
-     * Get the hidden state of the track element.
-     *
-     * @return true if hidden; false otherwise
-     * @deprecated since 4.7.2; use {@link #isHidden()} instead
-     */
-    @Deprecated // Java standard pattern for boolean getters is "isHidden()"
-    public boolean getHidden() {
-        return hidden;
-    }
-
     public void setHidden(boolean hide) {
         if (hidden != hide) {
             hidden = hide;
@@ -295,6 +298,33 @@ public abstract class LayoutTrack {
     }
 
     /**
+     * Check for active block boundaries.
+     * <p>
+     * If any connection point of a layout track object has attached objects, such as
+     * signal masts, signal heads or NX sensors, the layout track object cannot be deleted.
+     * @return true if the layout track object can be deleted.
+     */
+    public abstract boolean canRemove();
+
+    /**
+     * Display the attached items that prevent removing the layout track item.
+     * @param itemList A list of the attached heads, masts and/or sensors.
+     * @param typeKey The object type such as Turnout, Level Crossing, etc.
+     */
+    public void displayRemoveWarningDialog(List<String> itemList, String typeKey) {
+        itemList.sort(null);
+        StringBuilder msg = new StringBuilder(Bundle.getMessage("MakeLabel",  // NOI18N
+                Bundle.getMessage("DeleteTrackItem", Bundle.getMessage(typeKey))));  // NOI18N
+        for (String item : itemList) {
+            msg.append("\n    " + item);  // NOI18N
+        }
+        javax.swing.JOptionPane.showMessageDialog(layoutEditor,
+                msg.toString(),
+                Bundle.getMessage("WarningTitle"),  // NOI18N
+                javax.swing.JOptionPane.WARNING_MESSAGE);
+    }
+
+    /**
      * Initialization method for LayoutTrack sub-classes. The following method
      * is called for each instance after the entire LayoutEditor is loaded to
      * set the specific objects for that instance
@@ -309,7 +339,7 @@ public abstract class LayoutTrack {
      * @param xFactor the amount to scale X coordinates
      * @param yFactor the amount to scale Y coordinates
      */
-    public abstract void scaleCoords(float xFactor, float yFactor);
+    public abstract void scaleCoords(double xFactor, double yFactor);
 
     /**
      * translate this LayoutTrack's coordinates by the x and y factors
@@ -317,7 +347,14 @@ public abstract class LayoutTrack {
      * @param xFactor the amount to translate X coordinates
      * @param yFactor the amount to translate Y coordinates
      */
-    public abstract void translateCoords(float xFactor, float yFactor);
+    public abstract void translateCoords(double xFactor, double yFactor);
+
+    /**
+     * rotate this LayoutTrack's coordinates by angleDEG's
+     *
+     * @param angleDEG the amount to rotate in degrees
+     */
+    public abstract void rotateCoords(double angleDEG);
 
     protected Point2D rotatePoint(@Nonnull Point2D p, double sineRot, double cosineRot) {
         double cX = center.getX();
@@ -332,10 +369,10 @@ public abstract class LayoutTrack {
     /**
      * find the hit (location) type for a point
      *
-     * @param hitPoint           - the point
-     * @param useRectangles      - whether to use (larger) rectangles or
+     * @param hitPoint            the point
+     * @param useRectangles       whether to use (larger) rectangles or
      *                           (smaller) circles for hit testing
-     * @param requireUnconnected - whether to only return hit types for free
+     * @param requireUnconnected  whether to only return hit types for free
      *                           connections
      * @return the location type for the point (or NONE)
      * @since 7.4.3
@@ -391,7 +428,7 @@ public abstract class LayoutTrack {
                 result = false; // these are not
                 break;
         }
-        if ((hitType >= BEZIER_CONTROL_POINT_OFFSET_MIN) && (hitType <= BEZIER_CONTROL_POINT_OFFSET_MAX)) {
+        if (isBezierHitType(hitType)) {
             result = false; // these are not
         } else if (hitType >= TURNTABLE_RAY_OFFSET) {
             result = true;  // these are all connection types
@@ -401,7 +438,7 @@ public abstract class LayoutTrack {
 
     /**
      * @param hitType the hit point type
-     * @return true if this int is for a layout control
+     * @return true if this hit type is for a layout control
      */
     protected static boolean isControlHitType(int hitType) {
         boolean result = false; // assume failure (pessimist!)
@@ -438,13 +475,18 @@ public abstract class LayoutTrack {
                 result = false; // these are not
                 break;
         }
-        if ((hitType >= BEZIER_CONTROL_POINT_OFFSET_MIN) && (hitType <= BEZIER_CONTROL_POINT_OFFSET_MAX)) {
+        if (isBezierHitType(hitType)) {
             result = false; // these are not control types
         } else if (hitType >= TURNTABLE_RAY_OFFSET) {
             result = true;  // these are all control types
         }
         return result;
     }   // isControlHitType
+
+    protected static boolean isBezierHitType(int hitType) {
+        return (hitType >= BEZIER_CONTROL_POINT_OFFSET_MIN)
+                && (hitType <= BEZIER_CONTROL_POINT_OFFSET_MAX);
+    }
 
     /**
      * @param hitType the hit point type
@@ -485,7 +527,7 @@ public abstract class LayoutTrack {
                 result = false; // these are not
                 break;
         }
-        if ((hitType >= BEZIER_CONTROL_POINT_OFFSET_MIN) && (hitType <= BEZIER_CONTROL_POINT_OFFSET_MAX)) {
+        if (isBezierHitType(hitType)) {
             result = true; // these are all popup hit types
         } else if (hitType >= TURNTABLE_RAY_OFFSET) {
             result = true;  // these are all popup hit types
@@ -514,7 +556,7 @@ public abstract class LayoutTrack {
      * @return the popup menu for this layout track
      */
     @Nonnull
-    protected abstract JPopupMenu showPopup(@Nullable MouseEvent mouseEvent);
+    protected abstract JPopupMenu showPopup(@Nonnull MouseEvent mouseEvent);
 
     /**
      * show the popup menu for this layout track
@@ -582,7 +624,7 @@ public abstract class LayoutTrack {
     /**
      * return true if this connection type is disconnected
      *
-     * @param connectionType - the connection type to test
+     * @param connectionType  the connection type to test
      * @return true if the connection for this connection type is free
      */
     public boolean isDisconnected(int connectionType) {

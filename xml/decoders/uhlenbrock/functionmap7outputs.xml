@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2014 All rights reserved -->
-<!-- $Id$ -->
+<!-- Copyright (C) JMRI 2014-2019 All rights reserved 						-->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -32,8 +31,9 @@
       <authorinitials>ALM</authorinitials>
       <revremark>Initial version as separate file</revremark>
     </revision>
-    <!-- Valid only for certain Uhlenbrock decoders with 7 additional outputs A1 to A7,
-	     such as 76560 (non exhaustive list) -->
+    <!-- Valid only for certain Uhlenbrock decoders with up to 7 additional outputs A1 to A7,
+	     such as 76560 (non exhaustive list),
+	     also for 74120 etc with only A1 A2, as minOut will hide A3 and up -->
   </revhistory>
   <!-- no need to translate the following, as it generally only appears -->
   <!-- in the function map selection pane -->

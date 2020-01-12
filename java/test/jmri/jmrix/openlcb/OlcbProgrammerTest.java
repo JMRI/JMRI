@@ -1,10 +1,8 @@
 package jmri.jmrix.openlcb;
 
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import org.junit.Assert;
+import jmri.ProgrammingMode;
+import org.junit.*;
 
 /**
  * OlcbProgrammerTest.java
@@ -13,39 +11,45 @@ import org.junit.Assert;
  *
  * @author	Bob Jacobsen
  */
-public class OlcbProgrammerTest extends TestCase {
+public class OlcbProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
 
-    public void testCtor() {
-        new OlcbSystemConnectionMemo();
-        OlcbProgrammer s = new OlcbProgrammer();
-        Assert.assertNotNull(s);
+    @Test
+    @Override
+    public void testDefault() {
+        Assert.assertEquals("Check Default", OlcbProgrammerManager.OPENLCBMODE,
+                programmer.getMode());        
+    }
+    
+    @Override
+    @Test
+    public void testDefaultViaBestMode() {
+        Assert.assertEquals("Check Default", OlcbProgrammerManager.OPENLCBMODE,
+                ((OlcbProgrammer)programmer).getBestMode());        
     }
 
-    // from here down is testing infrastructure
-    public OlcbProgrammerTest(String s) {
-        super(s);
+    @Test(expected=java.lang.IllegalArgumentException.class)
+    @Override
+    public void testSetGetMode() {
+        programmer.setMode(ProgrammingMode.REGISTERMODE);
+        Assert.assertEquals("Check mode matches set", ProgrammingMode.REGISTERMODE,
+                programmer.getMode());        
     }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", OlcbProgrammerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(OlcbProgrammerTest.class);
-        return suite;
-    }
+    
+    @Test
 
     // The minimal setup for log4J
     @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
+        //new OlcbSystemConnectionMemo();
+        programmer = new OlcbProgrammer();
     }
 
     @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
+        programmer = null;
         JUnitUtil.tearDown();
     }
 }

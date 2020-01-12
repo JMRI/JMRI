@@ -16,6 +16,12 @@ public class JsonConsist {
      */
     public static final String CONSISTS = "consists"; // NOI18N
     /**
+     * {@value #ERROR_NO_CONSIST_MANAGER}, a key for localized error messages
+     * indicating that no consist manager is available.
+     */
+    public static final String ERROR_NO_CONSIST_MANAGER = "ErrorNoConsistManager"; // NOI18N
+
+    /**
      * Prevent instantiation, since this class only contains static values
      */
     private JsonConsist() {

@@ -1,5 +1,6 @@
 package jmri.jmrit.logix;
 
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -18,9 +19,11 @@ public class EngineerTest {
         jmri.DccLocoAddress addr = new jmri.DccLocoAddress(5,false);
         jmri.jmrix.SystemConnectionMemo memo = new jmri.jmrix.internal.InternalSystemConnectionMemo();
         jmri.DccThrottle throttle = new jmri.jmrix.debugthrottle.DebugThrottle(addr,memo);
-        Engineer t = new Engineer(warrant,throttle);
+        Engineer t = new Engineer(warrant, throttle);
         Assert.assertNotNull("exists",t);
-        t.dispose();
+        t.stopRun(true, true);
+        JUnitAppender.assertErrorMessageStartsWith("Throttle Manager unavailable or cannot provide throttle. 5(S)");
+        warrant.stopWarrant(true);
     }
 
     // The minimal setup for log4J
@@ -31,6 +34,7 @@ public class EngineerTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
         JUnitUtil.tearDown();
     }
 

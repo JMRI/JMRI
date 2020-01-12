@@ -1,6 +1,5 @@
 package jmri.jmrix.cmri.serial.cmrinetmetrics;
 
-import apps.tests.Log4JFixture;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -32,13 +31,12 @@ public class CMRInetMetricsCollectorTest {
 
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
+        JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
     }
 
     @After
     public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

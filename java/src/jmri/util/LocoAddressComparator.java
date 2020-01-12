@@ -5,7 +5,7 @@ import jmri.LocoAddress;
 
 /**
  * Comparator for LocoAddress objects.
- * <P>
+ * <p>
  * Compares objects based on protocol and then address.
  *
  * @author	Paul Bender Copyright (C) 2015

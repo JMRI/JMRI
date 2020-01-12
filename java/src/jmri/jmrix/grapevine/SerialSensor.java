@@ -1,8 +1,6 @@
 package jmri.jmrix.grapevine;
 
 import jmri.implementation.AbstractSensor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implement Sensor for Grapevine.
@@ -14,8 +12,6 @@ import org.slf4j.LoggerFactory;
  */
 public class SerialSensor extends AbstractSensor {
 
-    GrapevineSystemConnectionMemo memo = null;
-
     /**
      * Create a Sensor object, with both system and user names.
      *
@@ -24,7 +20,6 @@ public class SerialSensor extends AbstractSensor {
      */
     public SerialSensor(String systemName, GrapevineSystemConnectionMemo _memo) {
         super(systemName);
-        memo = _memo;
         _knownState = UNKNOWN;
     }
 
@@ -37,7 +32,6 @@ public class SerialSensor extends AbstractSensor {
      */
     public SerialSensor(String systemName, String userName, GrapevineSystemConnectionMemo _memo) {
         super(systemName, userName);
-        memo = _memo;
         _knownState = UNKNOWN;
     }
 

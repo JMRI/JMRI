@@ -10,14 +10,13 @@ import jmri.implementation.DefaultRoute;
 /**
  * Provide bean-like access to the collection of Logix, Routes, Memories, etc
  * that make up a Follower.
- * <P>
- *
  *
  * @author Bob Jacobsen Copyright (C) 2007
  */
 public class Follower implements Constants {
 
-    final static String namePrefix = commonNamePrefix + "FOLLOWER" + commonNameSuffix;
+    static String routePrefix = InstanceManager.getDefault(jmri.RouteManager.class).getSystemNamePrefix();
+    final static String namePrefix = routePrefix + ":" + commonNamePrefix + "FOLLOWER" + commonNameSuffix; // NOI18N
 
     /**
      * Nobody can build anonymous object
@@ -68,7 +67,7 @@ public class Follower implements Constants {
         rc.addSensorToRoute(sensor, !invert ? Route.ONINACTIVE : Route.ONACTIVE);
 
         // optionally, add veto
-        if (!veto.equals("")) {
+        if (!veto.isEmpty()) {
             rt.addSensorToRoute(veto, Route.VETOACTIVE);
             rc.addSensorToRoute(veto, Route.VETOACTIVE);
         }
@@ -95,12 +94,12 @@ public class Follower implements Constants {
         this.output = outputName;
 
         // find existing thrown route to get info
-        String nameT = namePrefix + "T" + nameDivider + output;        
+        String nameT = namePrefix + "T" + nameDivider + output;
 
         RouteManager rm = InstanceManager.getDefault(jmri.RouteManager.class);
         Route r = rm.getBySystemName(nameT);
         if (r == null) {
-            throw new jmri.JmriException("Route does not exist");
+            throw new jmri.JmriException("Route does not exist");   // NOI18N
         }
 
         // and load internals from the route

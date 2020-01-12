@@ -6,60 +6,105 @@ import jmri.jmrix.loconet.LnSensorManager;
 import jmri.jmrix.loconet.LnTurnout;
 import jmri.jmrix.loconet.LnTurnoutManager;
 import jmri.jmrix.loconet.LocoNetMessage;
-import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
+import jmri.util.*;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
+import org.junit.After;
+import org.junit.Before;
 
 /**
  * Tests for the jmri.jmrix.loconet.locomon.Llnmon class.
  *
  * @author	Bob Jacobsen Copyright (C) 2002, 2007
- * @author      B. Milhaupt  Copyright (C) 2015, 2018
+ * @author  B. Milhaupt  Copyright (C) 2015, 2018
  */
-public class LlnmonTest extends TestCase {
+public class LlnmonTest {
 
     Llnmon f;
     LnTurnoutManager lntm;
     LnSensorManager lnsm;
     LnReporterManager lnrm;
 
+    @Test
     public void testTransponding() {
         LocoNetMessage l;
 
         l = new LocoNetMessage(new int[] {0xD0, 0x01, 0x20, 0x08, 0x20, 0x26});
-        assertEquals("out A", "Transponder address 1056 absent at LR161 () (BDL16x Board ID 11 RX4 zone A).\n", f.displayMessage(l));
+        assertEquals("out A", 
+                "Transponder address 1056 absent at LR161 () "+
+                        "(BDL16x Board ID 11 RX4 zone A or "+
+                        "BXP88 Board ID 21 section 1 or "+
+                        "the BXPA1 Board ID 161 section).\n", 
+                f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xD0, 0x21, 0x20, 0x08, 0x20, 0x04});
-        assertEquals(" in A", "Transponder address 1056 present at LR161 () (BDL16x Board ID 11 RX4 zone A).\n", f.displayMessage(l));
+        assertEquals(" in A", 
+                "Transponder address 1056 present at LR161 () "+
+                        "(BDL16x Board ID 11 RX4 zone A or "+
+                        "BXP88 Board ID 21 section 1 or "+
+                        "the BXPA1 Board ID 161 section).\n", 
+                f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xD0, 0x21, 0x22, 0x08, 0x20, 0x24});
-        assertEquals(" in B", "Transponder address 1056 present at LR163 () (BDL16x Board ID 11 RX4 zone B).\n", f.displayMessage(l));
+        assertEquals(" in B", 
+                "Transponder address 1056 present at LR163 () "+
+                        "(BDL16x Board ID 11 RX4 zone B or "+
+                        "BXP88 Board ID 21 section 3 or "+
+                        "the BXPA1 Board ID 163 section).\n", 
+                f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xD0, 0x21, 0x24, 0x7d, 0x70, 0x04});
-        assertEquals(" in C", "Transponder address 112 (short, or \"B2\") (or long address 16112) present at LR165 () (BDL16x Board ID 11 RX4 zone C).\n", f.displayMessage(l));
+        assertEquals(" in C", 
+                "Transponder address 112 (short, or \"B2\") "+
+                        "(or long address 16112) present at LR165 () "+
+                        "(BDL16x Board ID 11 RX4 zone C or "+
+                        "BXP88 Board ID 21 section 5 or "+
+                        "the BXPA1 Board ID 165 section).\n", 
+                        f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xD0, 0x21, 0x26, 0x08, 0x20, 0x04});
-        assertEquals(" in D", "Transponder address 1056 present at LR167 () (BDL16x Board ID 11 RX4 zone D).\n", f.displayMessage(l));
+        assertEquals(" in D", "Transponder address 1056 present at LR167 () "+
+                        "(BDL16x Board ID 11 RX4 zone D or "+
+                        "BXP88 Board ID 21 section 7 or "+
+                        "the BXPA1 Board ID 167 section).\n", f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xD0, 0x21, 0x28, 0x08, 0x20, 0x04});
-        assertEquals(" in E", "Transponder address 1056 present at LR169 () (BDL16x Board ID 11 RX4 zone E).\n", f.displayMessage(l));
+        assertEquals(" in E", "Transponder address 1056 present at LR169 () "+
+                "(BDL16x Board ID 11 RX4 zone E or "+
+                        "BXP88 Board ID 22 section 1 or "+
+                        "the BXPA1 Board ID 169 section).\n", f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xD0, 0x21, 0x2A, 0x08, 0x20, 0x04});
-        assertEquals(" in F", "Transponder address 1056 present at LR171 () (BDL16x Board ID 11 RX4 zone F).\n", f.displayMessage(l));
+        assertEquals(" in F", "Transponder address 1056 present at LR171 () "+
+                "(BDL16x Board ID 11 RX4 zone F or "+
+                        "BXP88 Board ID 22 section 3 or "+
+                        "the BXPA1 Board ID 171 section).\n", f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xD0, 0x21, 0x2C, 0x08, 0x20, 0x04});
-        assertEquals(" in G", "Transponder address 1056 present at LR173 () (BDL16x Board ID 11 RX4 zone G).\n", f.displayMessage(l));
+        assertEquals(" in G", "Transponder address 1056 present at LR173 () "+
+                "(BDL16x Board ID 11 RX4 zone G or "+
+                        "BXP88 Board ID 22 section 5 or "+
+                        "the BXPA1 Board ID 173 section).\n", f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xD0, 0x20, 0x2E, 0x08, 0x20, 0x04});
         assertEquals(" in H",
-                "Transponder address 1056 present at LR47 () (BDL16x Board ID 3 RX4 zone H).\n",
+                "Transponder address 1056 present at LR47 () "+
+                "(BDL16x Board ID 3 RX4 zone H or "+
+                        "BXP88 Board ID 6 section 7 or "+
+                        "the BXPA1 Board ID 47 section).\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xD0, 0x20, 0x2E, 0x7d, 0x01, 0x04});
         assertEquals("another in H",
-                "Transponder address 1 (short) (or long address 16001) present at LR47 () (BDL16x Board ID 3 RX4 zone H).\n",
-                f.displayMessage(l));
+                "Transponder address 1 (short) (or long address 16001) present at LR47 () "+
+                "(BDL16x Board ID 3 RX4 zone H or "+
+                        "BXP88 Board ID 6 section 7 or "+
+                        "the BXPA1 Board ID 47 section).\n", f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x40, 0x7D, 0x03, 0x00, 0x00, 0x00, 0x2D});
         assertEquals("find loco 3 (short)",
@@ -68,21 +113,24 @@ public class LlnmonTest extends TestCase {
 
         l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x00, 0x7D, 0x03, 0x00, 0x12, 0x00, 0x7F});
         assertEquals(" in H",
-                "Transponder Find report: address 3 (short) (or long address 16003) present at LR19 (BDL16x Board 2 RX4 zone B).\n",
+                "Transponder Find report: address 3 (short) (or long address 16003) present at LR19 "+
+                "(BDL16x Board 2 RX4 zone B).\n",
                 f.displayMessage(l));
 
         LnReporter r = (LnReporter) lnrm.provideReporter("LR19");
 
         l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x00, 0x7D, 0x03, 0x00, 0x14, 0x00, 0x7F});
         assertEquals("Transponding no reporter user name",
-                "Transponder Find report: address 3 (short) (or long address 16003) present at LR21 (BDL16x Board 2 RX4 zone C).\n",
+                "Transponder Find report: address 3 (short) (or long address 16003) present at LR21 "+
+                "(BDL16x Board 2 RX4 zone C).\n",
                 f.displayMessage(l));
 
         r.setUserName("AUserName");
 
         l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x00, 0x7D, 0x03, 0x00, 0x12, 0x00, 0x7F});
         assertEquals("Transponding in B, with reporter user name",
-                "Transponder Find report: address 3 (short) (or long address 16003) present at LR19 (AUserName) (BDL16x Board 2 RX4 zone B).\n",
+                "Transponder Find report: address 3 (short) (or long address 16003) present at LR19 (AUserName) "+
+                "(BDL16x Board 2 RX4 zone B).\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x01, 0x7D, 0x03, 0x00, 0x12, 0x00, 0x7F});
@@ -97,7 +145,8 @@ public class LlnmonTest extends TestCase {
 
         l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x00, 0x00, 0x04, 0x00, 0x16, 0x00, 0x7F});
         assertEquals(" in D",
-                "Transponder Find report: address 4 (short) present at LR23 (BDL16x Board 2 RX4 zone D).\n",
+                "Transponder Find report: address 4 (short) present at LR23 "+
+                "(BDL16x Board 2 RX4 zone D).\n",
                 f.displayMessage(l));
 
         assertNotNull("reporter Got Created", lnrm.getBySystemName("LR23"));
@@ -105,7 +154,8 @@ public class LlnmonTest extends TestCase {
         assertNull("reporter is Not Yet Created", lnrm.getBySystemName("LR25"));
         l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x00, 0x00, 0x04, 0x00, 0x18, 0x00, 0x7F});
         assertEquals(" in D",
-                "Transponder Find report: address 4 (short) present at LR25 (BDL16x Board 2 RX4 zone E).\n",
+                "Transponder Find report: address 4 (short) present at LR25 "+
+                "(BDL16x Board 2 RX4 zone E).\n",
                 f.displayMessage(l));
         assertNotNull("reporter Created", lnrm.getBySystemName("LR25"));
         ((LnReporter) lnrm.getBySystemName("LR25")).setUserName("Friendly name E");
@@ -121,41 +171,232 @@ public class LlnmonTest extends TestCase {
 
         l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x00, 0x00, 0x04, 0x00, 0x18, 0x00, 0x7F});
         assertEquals(" in D",
-                "Transponder Find report: address 4 (short) present at LR25 (Friendly name E) (BDL16x Board 2 RX4 zone E).\n",
+                "Transponder Find report: address 4 (short) present at LR25 (Friendly name E) "+
+                "(BDL16x Board 2 RX4 zone E).\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x00, 0x00, 0x04, 0x00, 0x14, 0x00, 0x7F});
         assertEquals(" in D",
-                "Transponder Find report: address 4 (short) present at LR21 (Friendly Name C) (BDL16x Board 2 RX4 zone C).\n",
+                "Transponder Find report: address 4 (short) present at LR21 (Friendly Name C) "+
+                "(BDL16x Board 2 RX4 zone C).\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x00, 0x00, 0x04, 0x00, 0x12, 0x00, 0x7F});
         assertEquals(" in D",
-                "Transponder Find report: address 4 (short) present at LR19 (Friendly Name B) (BDL16x Board 2 RX4 zone B).\n",
+                "Transponder Find report: address 4 (short) present at LR19 (Friendly Name B) "+
+                "(BDL16x Board 2 RX4 zone B).\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x00, 0x00, 0x04, 0x00, 0x10, 0x00, 0x7F});
         assertEquals(" in D",
-                "Transponder Find report: address 4 (short) present at LR17 (Friendly Name A) (BDL16x Board 2 RX4 zone A).\n",
+                "Transponder Find report: address 4 (short) present at LR17 (Friendly Name A) "+
+                "(BDL16x Board 2 RX4 zone A).\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x00, 0x00, 0x04, 0x00, 0x1A, 0x00, 0x7F});
         assertEquals(" in D",
-                "Transponder Find report: address 4 (short) present at LR27 (Friendly Name F) (BDL16x Board 2 RX4 zone F).\n",
+                "Transponder Find report: address 4 (short) present at LR27 (Friendly Name F) "+
+                "(BDL16x Board 2 RX4 zone F).\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x00, 0x00, 0x04, 0x00, 0x1C, 0x00, 0x7F});
         assertEquals(" in D",
-                "Transponder Find report: address 4 (short) present at LR29 (Friendly Name G) (BDL16x Board 2 RX4 zone G).\n",
+                "Transponder Find report: address 4 (short) present at LR29 (Friendly Name G) "+
+                "(BDL16x Board 2 RX4 zone G).\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x00, 0x00, 0x04, 0x00, 0x1E, 0x00, 0x7F});
         assertEquals(" in D",
-                "Transponder Find report: address 4 (short) present at LR31 (Friendly Name H) (BDL16x Board 2 RX4 zone H).\n",
+                "Transponder Find report: address 4 (short) present at LR31 (Friendly Name H) "+
+                "(BDL16x Board 2 RX4 zone H).\n",
                 f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xD0, 0x20, 0x00, 0x00, 0x01, 0x04});
+        assertEquals("one in A/1",
+                "Transponder address 1 (short) present at LR1 () "+
+                "(BDL16x Board ID 1 RX4 zone A or "+
+                        "BXP88 Board ID 1 section 1 or "+
+                        "the BXPA1 Board ID 1 section).\n", f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xD0, 0x20, 0x01, 0x00, 0x01, 0x04});
+        assertEquals("one in section 2",
+                "Transponder address 1 (short) present at LR2 () "+
+                        "(BXP88 Board ID 1 section 2 or "+
+                        "the BXPA1 Board ID 2 section).\n", f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xD0, 0x20, 0x02, 0x00, 0x01, 0x04});
+        assertEquals("one in B/3",
+                "Transponder address 1 (short) present at LR3 () "+
+                "(BDL16x Board ID 1 RX4 zone B or "+
+                        "BXP88 Board ID 1 section 3 or "+
+                        "the BXPA1 Board ID 3 section).\n", f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xD0, 0x20, 0x03, 0x00, 0x01, 0x04});
+        assertEquals("one in section 4",
+                "Transponder address 1 (short) present at LR4 () "+
+                        "(BXP88 Board ID 1 section 4 or "+
+                        "the BXPA1 Board ID 4 section).\n", f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xD0, 0x20, 0x04, 0x00, 0x01, 0x04});
+        assertEquals("one in C/5",
+                "Transponder address 1 (short) present at LR5 () "+
+                "(BDL16x Board ID 1 RX4 zone C or "+
+                        "BXP88 Board ID 1 section 5 or "+
+                        "the BXPA1 Board ID 5 section).\n", f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xD0, 0x20, 0x05, 0x00, 0x01, 0x04});
+        assertEquals("one in section 6",
+                "Transponder address 1 (short) present at LR6 () "+
+                        "(BXP88 Board ID 1 section 6 or "+
+                        "the BXPA1 Board ID 6 section).\n", f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xD0, 0x20, 0x06, 0x00, 0x01, 0x04});
+        assertEquals("one in D/7",
+                "Transponder address 1 (short) present at LR7 () "+
+                "(BDL16x Board ID 1 RX4 zone D or "+
+                        "BXP88 Board ID 1 section 7 or "+
+                        "the BXPA1 Board ID 7 section).\n", f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xD0, 0x20, 0x07, 0x00, 0x01, 0x04});
+        assertEquals("one in section 8",
+                "Transponder address 1 (short) present at LR8 () "+
+                        "(BXP88 Board ID 1 section 8 or "+
+                        "the BXPA1 Board ID 8 section).\n", f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xD0, 0x20, 0x08, 0x00, 0x01, 0x04});
+        assertEquals("one in E/9",
+                "Transponder address 1 (short) present at LR9 () "+
+                "(BDL16x Board ID 1 RX4 zone E or "+
+                        "BXP88 Board ID 2 section 1 or "+
+                        "the BXPA1 Board ID 9 section).\n", f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xD0, 0x20, 0x09, 0x00, 0x01, 0x04});
+        assertEquals("one in section 10",
+                "Transponder address 1 (short) present at LR10 () "+
+                        "(BXP88 Board ID 2 section 2 or "+
+                        "the BXPA1 Board ID 10 section).\n", f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xD0, 0x20, 0x0A, 0x00, 0x01, 0x04});
+        assertEquals("one in 11",
+                "Transponder address 1 (short) present at LR11 () "+
+                "(BDL16x Board ID 1 RX4 zone F or "+
+                        "BXP88 Board ID 2 section 3 or "+
+                        "the BXPA1 Board ID 11 section).\n", f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xD0, 0x20, 0x0B, 0x00, 0x01, 0x04});
+        assertEquals("one in section 12",
+                "Transponder address 1 (short) present at LR12 () "+
+                        "(BXP88 Board ID 2 section 4 or "+
+                        "the BXPA1 Board ID 12 section).\n", f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xD0, 0x20, 0x0C, 0x00, 0x01, 0x04});
+        assertEquals("one in G/13",
+                "Transponder address 1 (short) present at LR13 () "+
+                "(BDL16x Board ID 1 RX4 zone G or "+
+                        "BXP88 Board ID 2 section 5 or "+
+                        "the BXPA1 Board ID 13 section).\n", f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xD0, 0x20, 0x0D, 0x00, 0x01, 0x04});
+        assertEquals("one in section 14",
+                "Transponder address 1 (short) present at LR14 () "+
+                        "(BXP88 Board ID 2 section 6 or "+
+                        "the BXPA1 Board ID 14 section).\n", f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xD0, 0x20, 0x0E, 0x00, 0x01, 0x04});
+        assertEquals("one in H/15",
+                "Transponder address 1 (short) present at LR15 () "+
+                "(BDL16x Board ID 1 RX4 zone H or "+
+                        "BXP88 Board ID 2 section 7 or "+
+                        "the BXPA1 Board ID 15 section).\n", f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xD0, 0x20, 0x0F, 0x00, 0x01, 0x04});
+        assertEquals("one in section 16",
+                "Transponder address 1 (short) present at LR16 () "+
+                        "(BXP88 Board ID 2 section 8 or "+
+                        "the BXPA1 Board ID 16 section).\n", f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xD0, 0x20, 0x10, 0x00, 0x01, 0x04});
+        assertEquals("one in A/1",
+                "Transponder address 1 (short) present at LR17 (Friendly Name A) "+
+                "(BDL16x Board ID 2 RX4 zone A or "+
+                        "BXP88 Board ID 3 section 1 or "+
+                        "the BXPA1 Board ID 17 section).\n", f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xD0, 0x20, 0x11, 0x00, 0x01, 0x04});
+        assertEquals("one in section 2",
+                "Transponder address 1 (short) present at LR18 () "+
+                        "(BXP88 Board ID 3 section 2 or "+
+                        "the BXPA1 Board ID 18 section).\n", f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xD0, 0x20, 0x17, 0x00, 0x01, 0x04});
+        assertEquals("one in section 8",
+                "Transponder address 1 (short) present at LR24 () "+
+                        "(BXP88 Board ID 3 section 8 or "+
+                        "the BXPA1 Board ID 24 section).\n", f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xD0, 0x20, 0x18, 0x00, 0x01, 0x04});
+        assertEquals("one in A/1",
+                "Transponder address 1 (short) present at LR25 (Friendly name E) "+
+                "(BDL16x Board ID 2 RX4 zone E or "+
+                        "BXP88 Board ID 4 section 1 or "+
+                        "the BXPA1 Board ID 25 section).\n", f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xD0, 0x20, 0x1F, 0x00, 0x01, 0x04});
+        assertEquals("one in section 8",
+                "Transponder address 1 (short) present at LR32 () "+
+                        "(BXP88 Board ID 4 section 8 or "+
+                        "the BXPA1 Board ID 32 section).\n", f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xD0, 0x20, 0x20, 0x00, 0x01, 0x04});
+        assertEquals("one in A/1",
+                "Transponder address 1 (short) present at LR33 () "+
+                "(BDL16x Board ID 3 RX4 zone A or "+
+                        "BXP88 Board ID 5 section 1 or "+
+                        "the BXPA1 Board ID 33 section).\n", f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xD0, 0x20, 0x28, 0x00, 0x01, 0x04});
+        assertEquals("one in E/1",
+                "Transponder address 1 (short) present at LR41 () "+
+                "(BDL16x Board ID 3 RX4 zone E or "+
+                        "BXP88 Board ID 6 section 1 or "+
+                        "the BXPA1 Board ID 41 section).\n", f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xD0, 0x20, 0x29, 0x00, 0x01, 0x04});
+        assertEquals("one in 2",
+                "Transponder address 1 (short) present at LR42 () "+
+                        "(BXP88 Board ID 6 section 2 or "+
+                        "the BXPA1 Board ID 42 section).\n", f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xD0, 0x20, 0x3F, 0x00, 0x01, 0x04});
+        assertEquals("one in section 8",
+                "Transponder address 1 (short) present at LR64 () "+
+                        "(BXP88 Board ID 8 section 8 or "+
+                        "the BXPA1 Board ID 64 section).\n", f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xD0, 0x20, 0x40, 0x00, 0x01, 0x04});
+        assertEquals("one in A/1",
+                "Transponder address 1 (short) present at LR65 () "+
+                "(BDL16x Board ID 5 RX4 zone A or "+
+                        "BXP88 Board ID 9 section 1 or "+
+                        "the BXPA1 Board ID 65 section).\n", f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xD0, 0x20, 0x7F, 0x00, 0x01, 0x04});
+        assertEquals("one in section 8",
+                "Transponder address 1 (short) present at LR128 () "+
+                        "(BXP88 Board ID 16 section 8 or "+
+                        "the BXPA1 Board ID 128 section).\n", f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xD0, 0x21, 0x00, 0x00, 0x01, 0x04});
+        assertEquals("one in A/1",
+                "Transponder address 1 (short) present at LR129 () "+
+                "(BDL16x Board ID 9 RX4 zone A or "+
+                        "BXP88 Board ID 17 section 1 or "+
+                        "the BXPA1 Board ID 129 section).\n", f.displayMessage(l));
+
 
     }
 
+    @Test
     public void testOpcPeerXfer7Byte() {
         LocoNetMessage l;
 
@@ -194,8 +435,8 @@ public class LlnmonTest extends TestCase {
                 f.displayMessage(l));
     }
 
+    @Test
     public void testALM() {
-
         LocoNetMessage l;
 
         l = new LocoNetMessage(new int[] {0xEE, 0x10, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00});
@@ -210,6 +451,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testSVProgrammingProtocolV1() {
         LocoNetMessage l;
 
@@ -283,6 +525,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testSVProgrammingProtocolV2() {
         LocoNetMessage l;
 
@@ -532,6 +775,7 @@ public class LlnmonTest extends TestCase {
                 , f.displayMessage(l));
     }
 
+    @Test
     public void testLissy() {
         LocoNetMessage l = new LocoNetMessage(new int[] {0xE4, 0x08, 0x00, 0x60, 0x01, 0x42, 0x35, 0x05});
         assertEquals("Lissy message test 1", "Lissy 1 IR Report: Loco 8501 moving south\n",
@@ -585,6 +829,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testOpcAnalogIO() {
         LocoNetMessage l = new LocoNetMessage(new int[] {0xE4, 0x08, 0x01, 0x01, 0x03, 0x32, 0x11, 0x35});
         assertEquals("OpcAnalogIO message test 1", "Lissy 3 Wheel Report: 6417 wheels moving north\n", f.displayMessage(l));
@@ -597,6 +842,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testLACK() {
         LocoNetMessage l;
 
@@ -661,6 +907,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testIPL() {
         LocoNetMessage l;
 
@@ -1175,6 +1422,7 @@ public class LlnmonTest extends TestCase {
                 f.displayMessage(l));
     }
 
+    @Test
     public void testIplHostNumbers() {
         LocoNetMessage l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x16, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77});
         String s;
@@ -1242,6 +1490,7 @@ public class LlnmonTest extends TestCase {
          }
     }
 
+    @Test
     public void testIplPingMessages() {
         LocoNetMessage l;
 
@@ -1507,6 +1756,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testSv1Messages() {
         LocoNetMessage l;
 
@@ -1527,6 +1777,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testProgrammingMessages() {
         LocoNetMessage l;
 
@@ -2151,6 +2402,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testTranspondingMessages() {
         LocoNetMessage l;
         l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x40, 0x7D, 0x03, 0x00, 0x00, 0x00, 0x2D});
@@ -2160,7 +2412,10 @@ public class LlnmonTest extends TestCase {
 
         l = new LocoNetMessage(new int[] {0xD0, 0x20, 0x12, 0x7D, 0x03, 0x63});
         assertEquals(" basic Transponding Test 02",
-                "Transponder address 3 (short) (or long address 16003) present at LR19 () (BDL16x Board ID 2 RX4 zone B).\n",
+                "Transponder address 3 (short) (or long address 16003) present at LR19 () "+
+                        "(BDL16x Board ID 2 RX4 zone B or "+
+                        "BXP88 Board ID 3 section 3 or "+
+                        "the BXPA1 Board ID 19 section).\n", 
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xB2, 0x0B, 0x70, 0x36});
@@ -2180,7 +2435,9 @@ public class LlnmonTest extends TestCase {
 
         l = new LocoNetMessage(new int[] {0xD0, 0x00, 0x12, 0x7D, 0x03, 0x43});
         assertEquals(" basic Transponding Test 06",
-                "Transponder address 3 (short) (or long address 16003) absent at LR19 () (BDL16x Board ID 2 RX4 zone B).\n",
+                "Transponder address 3 (short) (or long address 16003) absent at LR19 () "+
+                        "(BDL16x Board ID 2 RX4 zone B or "+
+                        "BXP88 Board ID 3 section 3 or the BXPA1 Board ID 19 section).\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xB2, 0x0B, 0x60, 0x26});
@@ -2205,21 +2462,29 @@ public class LlnmonTest extends TestCase {
 
         l = new LocoNetMessage(new int[] {0xD0, 0x20, 0x12, 0x00, 0x03, 0x63});
         assertEquals(" basic Transponding Test 11",
-                "Transponder address 3 (short) present at LR19 () (BDL16x Board ID 2 RX4 zone B).\n",
+                "Transponder address 3 (short) present at LR19 () "+
+                        "(BDL16x Board ID 2 RX4 zone B or "+
+                        "BXP88 Board ID 3 section 3 or "+
+                        "the BXPA1 Board ID 19 section).\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xD0, 0x20, 0x15, 0x00, 0x03, 0x63});
         assertEquals(" basic Transponding Test 12",
-                "Transponder address 3 (short) present at LR22 () (BDL16x Board ID 2 RX4 zone C).\n",
+                "Transponder address 3 (short) present at LR22 () "+
+                        "(BXP88 Board ID 3 section 6 or "+
+                        "the BXPA1 Board ID 22 section).\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xD0, 0x00, 0x15, 0x00, 0x03, 0x63});
         assertEquals(" basic Transponding Test 12",
-                "Transponder address 3 (short) absent at LR22 () (BDL16x Board ID 2 RX4 zone C).\n",
+                "Transponder address 3 (short) absent at LR22 () "+
+                        "(BXP88 Board ID 3 section 6 or "+
+                        "the BXPA1 Board ID 22 section).\n",
                 f.displayMessage(l));
 
     }
 
+    @Test
     public void testBasicConsistingMessages() {
         LocoNetMessage l;
         l = new LocoNetMessage(new int[] {0xB9, 0x0B, 0x05, 0x48});
@@ -2236,6 +2501,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testBasicSensorReportMessages() {
         LocoNetMessage l;
 
@@ -2279,6 +2545,7 @@ public class LlnmonTest extends TestCase {
                 f.displayMessage(l));
     }
 
+    @Test
     public void testTurnoutSensorStateMessages() {
         LocoNetMessage l;
 
@@ -2364,6 +2631,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testBasicImmediatePacketMessages() {
         LocoNetMessage l;
 
@@ -2975,9 +3243,11 @@ public class LlnmonTest extends TestCase {
 */
     }
 
+    @Test
     public void testPlayableWhistleMessages() {
     }
 
+    @Test
     public void testBasicTurnoutControlMessages() {
         LocoNetMessage l;
 
@@ -3131,6 +3401,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testTetherlessQueryAndReplies() {
         LocoNetMessage l;
 
@@ -3265,6 +3536,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testBasicPM42Events() {
         LocoNetMessage l;
 
@@ -3346,6 +3618,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testPR3ModeMessages() {
         LocoNetMessage l;
 
@@ -3391,6 +3664,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testTrackPowerMessages() {
         LocoNetMessage l;
 
@@ -3416,6 +3690,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testPM42OpSwMessages() {
         LocoNetMessage l;
 
@@ -3501,6 +3776,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testDS64OpSwMessages() {
         LocoNetMessage l;
 
@@ -3561,6 +3837,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testCmdStationCfgSlot() {
         LocoNetMessage l;
 
@@ -4344,6 +4621,7 @@ public class LlnmonTest extends TestCase {
                 f.displayMessage(l));
     }
 
+    @Test
     public void testDuplexRadioScan() {
         LocoNetMessage l;
 
@@ -4432,6 +4710,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void textOpcPeerXfer() {
         LocoNetMessage l;
 
@@ -4442,6 +4721,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testThrottleMessages() {
         LocoNetMessage l;
 
@@ -4538,6 +4818,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testOpcPeerXfer10() {
         LocoNetMessage l;
         l = new LocoNetMessage(new int[] {0xe5, 0x0a, 0x73, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7f}  );
@@ -4582,6 +4863,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testBasicSlotAccessMessages() {
         LocoNetMessage l;
 
@@ -5192,6 +5474,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testAliasing() {
         LocoNetMessage l;
         l = new LocoNetMessage(new int[] {0xEE, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00} );
@@ -5284,6 +5567,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testConvertToMixed() {
         LocoNetMessage l;
 
@@ -5357,6 +5641,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testSwichMessages() {
         LocoNetMessage l;
 
@@ -5544,6 +5829,7 @@ public class LlnmonTest extends TestCase {
                 f.displayMessage(l));
 }
 
+    @Test
     public void testDirf() {
         LocoNetMessage l;
 
@@ -5554,6 +5840,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testPeerXfer20DuplexQuery() {
         LocoNetMessage l;
         l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x01, 0x08, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0x7f});
@@ -5956,6 +6243,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testDownloadFirmware() {
         LocoNetMessage l;
 
@@ -6246,6 +6534,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testExtendedCsOpSws() {
         LocoNetMessage l;
 
@@ -6261,43 +6550,28 @@ public class LlnmonTest extends TestCase {
 "	OpSw121=Thrown, OpSw122=Thrown, OpSw123=Thrown, OpSw124=Thrown, OpSw125=Thrown, OpSw126=Thrown, OpSw127=Thrown, OpSw128=Thrown.\n", f.displayMessage(l));
     }
 
-    // from here down is testing infrastructure
-    public LlnmonTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {LlnmonTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(LlnmonTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.initReporterManager();
+        JUnitUtil.initReporterManager();
+        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo("L", "LocoNet");
+        jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold(memo);
+        lntm = new LnTurnoutManager(memo, lnis, false);
+        lnsm = new LnSensorManager(memo);
+        lnrm = new LnReporterManager(memo);
 
-        jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold();
-        lntm = new LnTurnoutManager(lnis, lnis, "L", false);
-        lnsm = new LnSensorManager(lnis, "L");
-        lnrm = new LnReporterManager(lnis, "L");
+        Log4JUtil.setDeprecatedLogging(false); // testing deprecated method
         f = new Llnmon(lntm, lnsm, lnrm);
+
         jmri.InstanceManager.setTurnoutManager(lntm);
         jmri.InstanceManager.setSensorManager(lnsm);
         jmri.InstanceManager.setReporterManager(lnrm);
-
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         lnsm.dispose();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

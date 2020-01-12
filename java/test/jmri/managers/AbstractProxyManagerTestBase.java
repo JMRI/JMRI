@@ -1,9 +1,7 @@
 package jmri.managers;
 
-import java.beans.PropertyChangeListener;
 import jmri.*;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**

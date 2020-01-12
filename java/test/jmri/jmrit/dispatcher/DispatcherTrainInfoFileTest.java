@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Swing jfcUnit tests for dispatcher train info
+ * Swing tests for dispatcher train info.
  *
  * @author Dave Duchamp
  */
@@ -17,7 +17,7 @@ public class DispatcherTrainInfoFileTest {
     public void testFileRead() throws Exception {
 
         TrainInfoFile tif = new TrainInfoFile();
-        tif.setFileLocation("java/test/jmri/jmrit/dispatcher/");
+        tif.setFileLocation("java/test/jmri/jmrit/dispatcher/traininfo/");
         TrainInfo ti = tif.readTrainInfo("TestTrain.xml");
         // test input information
         Assert.assertEquals("Transit Name", "IZ5( Red Main Loop CW )", ti.getTransitName());
@@ -36,7 +36,7 @@ public class DispatcherTrainInfoFileTest {
         Assert.assertFalse("Train From Trains", ti.getTrainFromTrains());
         Assert.assertFalse("Train From User", ti.getTrainFromUser());
         Assert.assertEquals("Priority", 7, ti.getPriority());
-        Assert.assertTrue("Run Auto", ti.getAutoRun());
+        Assert.assertFalse("Run Auto", ti.getAutoRun());
         Assert.assertFalse("Reset When Done", ti.getResetWhenDone());
         Assert.assertEquals("Delayed Start", 1, ti.getDelayedStart());
         Assert.assertEquals("Departure Time Hours", 8, ti.getDepartureTimeHr());
@@ -58,38 +58,38 @@ public class DispatcherTrainInfoFileTest {
     public void testFileRead_V2() throws Exception {
 
         TrainInfoFile tif = new TrainInfoFile();
-        tif.setFileLocation("java/test/jmri/jmrit/dispatcher/");
-        TrainInfo ti = tif.readTrainInfo("TestTrain2.xml");
+        tif.setFileLocation("java/test/jmri/jmrit/dispatcher/traininfo/");
+        TrainInfo ti = tif.readTrainInfo("TestTrainCW.xml");
         // test input information
-        Assert.assertEquals("Transit Name", "IZ42(11WEST-2122)", ti.getTransitName());
-        Assert.assertEquals("transitid", "IZ42", ti.getTransitId());
-        Assert.assertEquals("Train Name", "CN-RDC-250", ti.getTrainName());
-        Assert.assertEquals("DCC Address", " ", ti.getDccAddress());
+        Assert.assertEquals("Transit Name", "IZ1(SouthPlatform CW)", ti.getTransitName());
+        Assert.assertEquals("transitid", "IZ1", ti.getTransitId());
+        Assert.assertEquals("Train Name", "1000", ti.getTrainName());
+        Assert.assertEquals("DCC Address", "1000", ti.getDccAddress());
         Assert.assertTrue("Train In Transit", ti.getTrainInTransit());
-        Assert.assertEquals("Start Block Name", "IB20(B-11-WEST)-1", ti.getStartBlockName());
-        Assert.assertEquals("Start Block Id", "IB20", ti.getStartBlockId());
+        Assert.assertEquals("Start Block Name", "IB:AUTO:0003(South Platform)-1", ti.getStartBlockName());
+        Assert.assertEquals("Start Block Id", "IB:AUTO:0003", ti.getStartBlockId());
         Assert.assertEquals("Start Block Sequ", 1, ti.getStartBlockSeq());
-        Assert.assertEquals("Destination Block Name", "IB:AUTO:0002(B-21-22)", ti.getDestinationBlockName());
-        Assert.assertEquals("Destination Block Id", "IB:AUTO:0002", ti.getDestinationBlockId());
-        Assert.assertEquals("Destination Block Sequ", 10, ti.getDestinationBlockSeq());
-        Assert.assertTrue("Train From Roster", ti.getTrainFromRoster());
+        Assert.assertEquals("Destination Block Name", "IB:AUTO:0003(South Platform)-5", ti.getDestinationBlockName());
+        Assert.assertEquals("Destination Block Id", "IB:AUTO:0003", ti.getDestinationBlockId());
+        Assert.assertEquals("Destination Block Sequ", 5, ti.getDestinationBlockSeq());
+        Assert.assertFalse("Train From Roster", ti.getTrainFromRoster());
         Assert.assertFalse("Train From Trains", ti.getTrainFromTrains());
-        Assert.assertFalse("Train From User", ti.getTrainFromUser());
+        Assert.assertTrue("Train From User", ti.getTrainFromUser());
         Assert.assertEquals("Priority", 5, ti.getPriority());
         Assert.assertTrue("Run Auto", ti.getAutoRun());
-        Assert.assertTrue("Reset When Done", ti.getResetWhenDone());
-        Assert.assertEquals("Delayed Start", 2, ti.getDelayedStart());
-        Assert.assertEquals("Start Sensor", "1-StartTrain1", ti.getDelaySensorName());
+        Assert.assertFalse("Reset When Done", ti.getResetWhenDone());
+        Assert.assertEquals("Delayed Start", 0, ti.getDelayedStart());
+        Assert.assertEquals("Start Sensor", null, ti.getDelaySensorName());
         Assert.assertEquals("Departure Time Hours", 8, ti.getDepartureTimeHr());
         Assert.assertEquals("Departure Time Minutes", 0, ti.getDepartureTimeMin());
-        Assert.assertEquals("Train Type", "EXPRESS_PASSENGER", ti.getTrainType());
+        Assert.assertEquals("Train Type", "LOCAL_PASSENGER", ti.getTrainType());
         Assert.assertEquals("Speed Factor", ti.getSpeedFactor(), 1.0f, 0.0);
-        Assert.assertEquals("Maximum Speed", ti.getMaxSpeed(), 1.0f, 0.0);
-        Assert.assertEquals("Ramp Rate", "RAMP_NONE", ti.getRampRate());
+        Assert.assertEquals("Maximum Speed", ti.getMaxSpeed(), 0.6f, 0.0);
+        Assert.assertEquals("Ramp Rate", "None", ti.getRampRate());
         Assert.assertTrue("Resistance Wheels", ti.getResistanceWheels());
         Assert.assertFalse("Run In Reverse", ti.getRunInReverse());
         Assert.assertTrue("Sound Decoder", ti.getSoundDecoder());
-        Assert.assertEquals("Maximum Train Length", ti.getMaxTrainLength(), 120.0f, 0.0);
+        Assert.assertEquals("Maximum Train Length", ti.getMaxTrainLength(), 200.0f, 0.0);
         Assert.assertEquals("Allocation Method", ti.getAllocationMethod(),3,0);
         Assert.assertFalse("Use Speed Profile", ti.getUseSpeedProfile());
         Assert.assertEquals("Use Speed Profile Adjust block length", ti.getStopBySpeedProfileAdjust(),1.0f,0.0f);

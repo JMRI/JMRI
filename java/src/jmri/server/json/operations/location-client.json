@@ -1,14 +1,40 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
-    "title": "jmri-json-engine-client-message",
+    "title": "jmri-json-location-client-message",
     "type": "object",
-    "description": "Schema data object in message from client to JMRI for type \"engine\"",
+    "description": "Schema data object in message from client to JMRI for type \"location\"",
     "properties": {
         "name": {
             "type": "string",
-            "description": "Id of the engine being requested"
+            "description": "Operations id of the location being requested; required except when PUTing a location"
+        },
+        "userName": {
+            "type": "string",
+            "description": "Operations name of the location being requested; required if PUTing a location"
+        },
+        "comment": {
+            "type": "string",
+            "description": "Freeform comment concerning location"
+        },
+        "reporter": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "The system name of the reporter for this location"
         }
     },
     "additionalProperties": false,
-    "required": ["name"]
+    "anyOf": [
+        {
+            "required": [
+                "name"
+            ]
+        },
+        {
+            "required": [
+                "userName"
+            ]
+        }
+    ]
 }

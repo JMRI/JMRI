@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+  <name>Basic Speed Control</name>
+  <name xml:lang="ca">Control bàsic de velocitat</name>
+  <name xml:lang="cs">Základní řízení rychlosti</name>
+  <name xml:lang="da">Grundlæggende Speed Kontrol</name>
+  <name xml:lang="de">Geschwindigkeit</name>
+  <name xml:lang="fr">Contrôle basique de vitesse</name>
+  <name xml:lang="it">Controllo Semplificato Velocità </name>
+  <name xml:lang="nl">Snelheid</name>
+  <column>
+    <row>
+      <column>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Speed Table Definition" format="offradiobutton" layout="above" label="Select this button to use settings shown below">
+          <label xml:lang="ca">Selecciona aquest botó per usar les característiques següents</label>
+          <label xml:lang="cs">Pro použití nastavení níže zvolte toto tlačítko</label>
+          <label xml:lang="da">Vælg denne knap for at bruge indstillingerne vist herunder</label>
+          <label xml:lang="de">Um diese einfache Einstellungen zu benutzen, diesen Button markieren</label>
+          <label xml:lang="fr">Sélectionner ce bouton pour utiliser les options suivantes</label>
+          <label xml:lang="it">Seleziona questo pulsante per usare le impostazioni visualizzate sotto</label>
+          <label xml:lang="nl">Selecteer om onderstaande basisinstellingen toe te passen</label>
+        </display>
+        <label>
+          <text>           To turn off, use Speed Table pane</text>
+          <text xml:lang="ca">           Per deshabilitar usa la Taula de velocitats</text>
+          <text xml:lang="cs">           pro vypnutí použijte Rychlostní tabulku</text>
+          <text xml:lang="da">           For at deaktivere, brug hastigheds tabel fanen</text>
+          <text xml:lang="de">           Zum Deselektieren, die Lasche Geschwindigkeitskennlinie aktivieren</text>
+          <text xml:lang="fr">         Pour désactiver, utiliser le Tableau de vitesse</text>
+          <text xml:lang="it">           Per disabilitare usa la Tabella velocità</text>
+          <text xml:lang="nl">           Om deze tab uit te schakelen, de tab Snelheidsgrafiek activeren</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+    </row>
+    <row>
+      <label>
+        <text> </text>
+      </label>
+    </row>
+    <row>
+      <label>
+        <text> </text>
+      </label>
+    </row>
+    <row>
+      <column>
+        <grid ipadx="10" ipady="2">
+          <!-- default padding for all grid items -->
+          <griditem gridx="0" gridy="0" weightx="1" anchor="LINE_END">
+            <display item="Vstart" tooltip="Sets the starting voltage at throttle speed step 1">
+              <tooltip xml:lang="ca">Estableix el voltatge inicial al pas 1</tooltip>
+              <tooltip xml:lang="cs">Nastavení rozjezdového napětí pro 1. rychlostní krok ovladače</tooltip>
+              <tooltip xml:lang="da">Indstiller start volt ved hastighedstrin 1</tooltip>
+              <tooltip xml:lang="de">Geschwindigkeit bei niedrigster Fahrstufe einstellen</tooltip>
+              <tooltip xml:lang="fr">Régle la tension de démarrage au cran 1</tooltip>
+              <tooltip xml:lang="it">Imposta Tensione Motore iniziale a Velocità 1</tooltip>
+              <tooltip xml:lang="nl">Snelheid voor laagste rijstand instellen</tooltip>
+            </display>
+          </griditem>
+          <griditem gridx="1" gridy="0" weightx="1" anchor="LINE_END">
+            <display item="Vstart" format="hslider" label="" tooltip="Sets the starting voltage at throttle speed step 1">
+              <tooltip xml:lang="ca">Estableix el voltatge inicial al pas 1</tooltip>
+              <tooltip xml:lang="cs">Nastavení rozjezdového napětí pro 1. rychlostní krok ovladače</tooltip>
+              <tooltip xml:lang="da">Indstiller start volt ved hastighedstrin 1</tooltip>
+              <tooltip xml:lang="de">Geschwindigkeit bei niedrigster Fahrstufe einstellen</tooltip>
+              <tooltip xml:lang="fr">Régle la tension de démarrage au cran 1</tooltip>
+              <tooltip xml:lang="it">Imposta Tensione Motore iniziale a Velocità 1</tooltip>
+              <tooltip xml:lang="nl">Snelheid voor laagste rijstand instellen</tooltip>
+            </display>
+          </griditem>
+          <griditem gridx="0" gridy="1" weightx="1" anchor="LINE_END">
+            <display item="Vmid" tooltip="Sets the voltage at mid throttle">
+              <tooltip xml:lang="ca">Estableix el voltatge a mig regulador</tooltip>
+              <tooltip xml:lang="cs">Nastavení napětí pro střední rychlostní krok ovladače</tooltip>
+              <tooltip xml:lang="da">Indstiller midt volt hastighedstrin</tooltip>
+              <tooltip xml:lang="de">Geschwindigkeit bei mittlerer Fahrstufe einstellen</tooltip>
+              <tooltip xml:lang="fr">Régle la tension au cran de vitesse intermédiaire</tooltip>
+              <tooltip xml:lang="it">Imposta Tensione Motore a Velocità Intermedia</tooltip>
+              <tooltip xml:lang="nl">Snelheid voor middelste rijstand instellen</tooltip>
+            </display>
+          </griditem>
+          <griditem gridx="1" gridy="1" weightx="1" anchor="LINE_END">
+            <display item="Vmid" format="hslider" label="" tooltip="Sets the voltage at mid throttle">
+              <tooltip xml:lang="ca">Estableix el voltatge a mig regulador</tooltip>
+              <tooltip xml:lang="cs">Nastavení napětí pro střední rychlostní krok ovladače</tooltip>
+              <tooltip xml:lang="da">Indstiller midt volt hastighedstrin</tooltip>
+              <tooltip xml:lang="de">Geschwindigkeit bei mittlerer Fahrstufe einstellen</tooltip>
+              <tooltip xml:lang="fr">Régle la tension au cran de vitesse intermédiaire</tooltip>
+              <tooltip xml:lang="it">Imposta Tensione Motore a Velocità Intermedia</tooltip>
+              <tooltip xml:lang="nl">Snelheid voor middelste rijstand instellen</tooltip>
+            </display>
+          </griditem>
+          <griditem gridx="0" gridy="2" weightx="1" anchor="LINE_END">
+            <display item="Vhigh" tooltip="Sets the maximum voltage at full throttle">
+              <tooltip xml:lang="ca">Estableix el voltatge amb el regulador al màxim</tooltip>
+              <tooltip xml:lang="cs">Nastavení napětí pro poslední rychlostní krok ovladače</tooltip>
+              <tooltip xml:lang="da">Indstiller maks volt hastighedstrin</tooltip>
+              <tooltip xml:lang="de">Geschwindigkeit bei höchster Fahrstufe einstellen</tooltip>
+              <tooltip xml:lang="fr">Régle la tension à la vitesse maximale</tooltip>
+              <tooltip xml:lang="it">Imposta Tensione Motore a Velocità Massima</tooltip>
+              <tooltip xml:lang="nl">Snelheid voor hoogste rijstand instellen</tooltip>
+            </display>
+          </griditem>
+          <griditem gridx="1" gridy="2" weightx="1" anchor="LINE_END">
+            <display item="Vhigh" format="hslider" label="" tooltip="Sets the maximum voltage at full throttle">
+              <tooltip xml:lang="ca">Estableix el voltatge amb el regulador al màxim</tooltip>
+              <tooltip xml:lang="cs">Nastavení napětí pro poslední rychlostní krok ovladače</tooltip>
+              <tooltip xml:lang="de">Geschwindigkeit bei höchster Fahrstufe einstellen</tooltip>
+              <tooltip xml:lang="da">Indstiller maks volt hastighedstrin</tooltip>
+              <tooltip xml:lang="fr">Régle la tension à la vitesse maximale</tooltip>
+              <tooltip xml:lang="it">Imposta Tensione Motore a Velocità Massima</tooltip>
+              <tooltip xml:lang="nl">Snelheid voor hoogste rijstand instellen</tooltip>
+            </display>
+          </griditem>
+        </grid>
+      </column>
+    </row>
+    <row>
+      <column>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Speed Table/Mid Range Cab Speed Step" tooltip="Sets voltage curve for mid throttle, set Vstart and Vhigh first">
+          <tooltip xml:lang="ca">Estableix corba de voltatge per punt mig del regulador. Cal establir primer Vinici i VAlt</tooltip>
+          <tooltip xml:lang="cs">Nastavení křivky napětí pro střední rychlostní korky ovladače, nejprve nastavte 1. a poslední rychlostní krok</tooltip>
+          <tooltip xml:lang="da">Indstiller midt volt kurve hastighedstrin, indstil først Vstart og Vhigh</tooltip>
+          <tooltip xml:lang="de">Geschwindigkeitkurve bei mittlerer Fahrstufe einstellen, erst Vmin und Vmax einstellen</tooltip>
+          <tooltip xml:lang="fr">Régle la vitesse en utilisant les vitesses basse, moyenne et haute</tooltip>
+          <tooltip xml:lang="it">Imposta Curva Tensione Motore a Velocità Media. Imposta prima Vstart e Vhigh</tooltip>
+          <tooltip xml:lang="nl">Snelheidsgrafiek instellen voor middenstand Rijregelaar; vooraf Vmin en Vmax instellen</tooltip>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+    </row>
+    <row>
+      <column>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Forward Trim" tooltip="Fine tune the forward voltage levels">
+          <tooltip xml:lang="ca">Ajustament fi de voltatge marxa enrere</tooltip>
+          <tooltip xml:lang="cs">Jemné nastavení napětí pro směr vpřed</tooltip>
+          <tooltip xml:lang="de">Feineinstellung der Geschwindikeitskennlinie "Vorwärts"</tooltip>
+          <tooltip xml:lang="fr">Réglage fin du niveau de tension de la vitesse avant</tooltip>
+          <tooltip xml:lang="it">Impostazione Fine della tensione motore in Avanti</tooltip>
+          <tooltip xml:lang="nl">Details voor de snelheidsgrafiek "Vooruit"</tooltip>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+      <column>
+        <label>
+          <text>     </text>
+        </label>
+      </column>
+      <column>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Reverse Trim" tooltip="Fine tune the reverse voltage levels">
+          <tooltip xml:lang="ca">Ajustament fi de voltatge marxa enrere</tooltip>
+          <tooltip xml:lang="cs">Jemné nastavení napětí pro směr vzad</tooltip>
+          <tooltip xml:lang="de">Feineinstellung der Geschwindikeitskennlinie "Rückwärts"</tooltip>
+          <tooltip xml:lang="fr">Réglage fin du niveau de tension de la vitesse arrière</tooltip>
+          <tooltip xml:lang="it">Impostazione Fine della tensione motore in Indietro</tooltip>
+          <tooltip xml:lang="nl">Details voor de snelheidsgrafiek "Achteruit"</tooltip>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+    </row>
+    <row>
+      <label>
+        <text>     </text>
+      </label>
+      <label>
+        <text>This decoder supports Trim with Basic Speed Control</text>
+      </label>
+      <label>
+        <text>     </text>
+      </label>
+    </row>
+  </column>
+</pane>

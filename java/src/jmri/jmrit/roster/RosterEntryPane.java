@@ -414,7 +414,6 @@ public class RosterEntryPane extends javax.swing.JPanel {
      *
      * @param r the roster entry to display
      */
-    @SuppressWarnings("deprecation") // r.getDateUpdated()
     public void updateGUI(RosterEntry r) {
         roadName.setText(r.getRoadName());
         roadNumber.setText(r.getRoadNumber());

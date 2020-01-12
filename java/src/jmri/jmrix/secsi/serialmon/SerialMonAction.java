@@ -10,7 +10,7 @@ import jmri.jmrix.secsi.SecsiSystemConnectionMemo;
  * Swing action to create and register a SerialMonFrame object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2006, 2007, 2008
-  */
+ */
 public class SerialMonAction extends AbstractAction {
 
     private SecsiSystemConnectionMemo _memo = null;

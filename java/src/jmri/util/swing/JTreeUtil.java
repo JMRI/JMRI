@@ -5,7 +5,7 @@ import org.jdom2.Element;
 
 /**
  * Common utility methods for working with JTrees.
- * <P>
+ * <p>
  * Chief among these is the loadTree method, for creating a tree from an XML
  * definition
  *

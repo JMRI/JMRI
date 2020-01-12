@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * method here.
  *
  * @author Dave Duchamp Copyright (c) 2006
- * @author Bob Coleman, Copyright (c) 2007, 2008 Based on Loconet example,
+ * @author Bob Coleman, Copyright (c) 2007, 2008 Based on LocoNet example,
  * modified to establish Acela support.
  */
 public class AcelaLightManagerXml extends jmri.managers.configurexml.AbstractLightManagerConfigXML {

@@ -6,6 +6,7 @@ import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import jmri.InstanceManager;
 import jmri.util.FileUtil;
 import jmri.util.davidflanagan.HardcopyWriter;
 import org.slf4j.Logger;
@@ -13,7 +14,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Action to print a summary of the Roster contents
- * <P>
+ * <p>
  * This uses the older style printing, for compatibility with Java 1.1.8 in
  * Macintosh MRJ
  *
@@ -44,7 +45,7 @@ public class PrintNceConsistRosterAction extends AbstractAction {
         // obtain a HardcopyWriter to do this
         HardcopyWriter writer = null;
         try {
-            writer = new HardcopyWriter(mFrame, "DecoderPro Consist Roster", 10, .5, .5, .5, .5, isPreview);
+            writer = new HardcopyWriter(mFrame, Bundle.getMessage("NcePrintRosterTitle"), 10, .5, .5, .5, .5, isPreview);
         } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print cancelled");
             return;
@@ -56,12 +57,12 @@ public class PrintNceConsistRosterAction extends AbstractAction {
         writer.write(icon.getImage(), new JLabel(icon));
 
         // Loop through the Roster, printing as needed
-        NceConsistRoster r = NceConsistRoster.instance();
-        List<NceConsistRosterEntry> l = r.matchingList(null, null, null, null, null, null, null, null, null, null); // take all
-        int i = -1;
-        log.debug("Roster list size: " + l.size());
-        for (i = 0; i < l.size(); i++) {
-            l.get(i).printEntry(writer);
+        NceConsistRoster r = InstanceManager.getDefault(NceConsistRoster.class);
+        List<NceConsistRosterEntry> list = r.matchingList(null, null, null, null, null, null, null, null, null, null); // take all
+
+        log.debug("Roster list size: " + list.size());
+        for (NceConsistRosterEntry entry : list) {
+            entry.printEntry(writer);
         }
 
         // and force completion of the printing

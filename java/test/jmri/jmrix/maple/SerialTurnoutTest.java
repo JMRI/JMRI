@@ -7,10 +7,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * JUnit tests for the jmri.jmrix.maple.SerialTurnout class
+ * JUnit tests for the jmri.jmrix.maple.SerialTurnout class.
  *
  * @author	Bob Jacobsen
-  */
+ */
 public class SerialTurnoutTest extends AbstractTurnoutTestBase {
 
     private SerialTrafficControlScaffold tcis = null;
@@ -52,6 +52,7 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
     @Override
     @Before
     public void setUp() {
+        jmri.util.JUnitUtil.setUp();
         // prepare an interface
         tcis = new SerialTrafficControlScaffold();
         _memo = new MapleSystemConnectionMemo("K", "Maple");
@@ -67,7 +68,10 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
         _memo.dispose();
         n = null;
         t = null;
-        // JUnitUtil.tearDown() clean up is done through the AbstractTurnoutTestBase
+        // Some clean up is done through the AbstractTurnoutTestBase
+        jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        jmri.util.JUnitUtil.tearDown();
+
     }
 
 }

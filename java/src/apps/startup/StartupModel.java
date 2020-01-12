@@ -1,9 +1,8 @@
 package apps.startup;
 
 import java.util.List;
-import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import jmri.JmriException;
 
 /**
@@ -28,7 +27,7 @@ public interface StartupModel {
      *
      * @param name the name, an empty string, or null
      */
-    public void setName(@Nullable String name);
+    public void setName(@CheckForNull String name);
 
     /**
      * Test is model is a valid model. Invalid models will not be shown or saved

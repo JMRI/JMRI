@@ -5,13 +5,13 @@ import javax.annotation.Nonnull;
 
 /**
  * Denote a single programming mode.
- * <P>
+ * <p>
  * User code gets a list of available modes from the {@link Programmer} or
  * {@link AddressedProgrammer} in use. It then selects a mode to use and
  * indicates it via a setMode() call.
  * <p>
  * A ProgrammingMode has a user-readable name to help humans select it.
- * <P>
+ * <p>
  * We define a number of modes as constants because they are common across so
  * many DCC-specific implementations, they've become defacto standards.
  * <p>

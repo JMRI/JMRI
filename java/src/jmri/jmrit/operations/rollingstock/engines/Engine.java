@@ -1,14 +1,19 @@
 package jmri.jmrit.operations.rollingstock.engines;
 
 import java.beans.PropertyChangeEvent;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.trains.Train;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.jmrit.roster.Roster;
+import jmri.jmrit.roster.RosterEntry;
 
 /**
  * Represents a locomotive on the layout
@@ -19,6 +24,7 @@ public class Engine extends RollingStock {
 
     public static final int NCE_REAR_BLOCK_NUMBER = 8;
     public static final int B_UNIT_BLOCKING = 10; // block B Units after NCE Consists
+    public static final String HP_CHANGED_PROPERTY = "hp"; // NOI18N
 
     private Consist _consist = null;
     private String _model = NONE;
@@ -34,6 +40,7 @@ public class Engine extends RollingStock {
     /**
      * Set the locomotive's model. Note a model has only one length, type, and
      * horsepower rating.
+     * 
      * @param model The string model name.
      *
      */
@@ -87,7 +94,7 @@ public class Engine extends RollingStock {
         String old = getHp();
         engineModels.setModelHorsepower(getModel(), hp);
         if (!old.equals(hp)) {
-            setDirtyAndFirePropertyChange("hp", old, hp); // NOI18N
+            setDirtyAndFirePropertyChange(HP_CHANGED_PROPERTY, old, hp); // NOI18N
         }
     }
 
@@ -103,7 +110,7 @@ public class Engine extends RollingStock {
         try {
             return Integer.parseInt(getHp());
         } catch (NumberFormatException e) {
-            log.warn("Locomotive ({}) horsepower ({}) isn't a number", toString(), getHp());
+            log.debug("Locomotive ({}) horsepower ({}) isn't a number", toString(), getHp());
             return 0;
         }
     }
@@ -139,8 +146,8 @@ public class Engine extends RollingStock {
                 length = NONE;
             }
             if (!length.equals(_length)) {
-                if (_lengthChange) // return "old" length, used for track reserve changes
-                {
+                // return "old" length, used for track reserve changes
+                if (_lengthChange) {
                     return _length;
                 }
                 log.debug("Loco ({}) length ({}) has been modified from ({})", toString(), length, _length);
@@ -213,6 +220,7 @@ public class Engine extends RollingStock {
 
     /**
      * Place locomotive in a consist
+     * 
      * @param consist The Consist to use.
      *
      */
@@ -254,6 +262,75 @@ public class Engine extends RollingStock {
     }
 
     /**
+     * Used to determine if engine is lead engine in a consist
+     * 
+     * @return true if lead engine in a consist
+     */
+    public boolean isLead() {
+        if (getConsist() != null) {
+            return getConsist().isLead(this);
+        }
+        return false;
+    }
+
+    /**
+     * Get the DCC address for this engine from the JMRI roster. Does 4
+     * attempts, 1st by road and number, 2nd by number, 3rd by dccAddress using
+     * the engine's road number, 4th by id.
+     * 
+     * @return dccAddress
+     */
+    public String getDccAddress() {
+        RosterEntry re = getRosterEntry();
+        if (re != null) {
+            return re.getDccAddress();
+        }
+        return NONE;
+    }
+    
+    /**
+     * Get the RosterEntry for this engine from the JMRI roster. Does 4
+     * attempts, 1st by road and number, 2nd by number, 3rd by dccAddress using
+     * the engine's road number, 4th by id.
+     * 
+     * @return RosterEntry, can be null
+     */
+    public RosterEntry getRosterEntry() {
+        RosterEntry rosterEntry = null;
+        // 1st by road name and number
+        List<RosterEntry> list =
+                Roster.getDefault().matchingList(getRoadName(), getNumber(), null, null, null, null, null);
+        if (list.size() > 0) {
+            rosterEntry = list.get(0);
+            log.debug("Roster Loco found by road and number: {}", rosterEntry.getDccAddress());
+            // 2nd by road number
+        } else if (!getNumber().equals(NONE)) {
+            list = Roster.getDefault().matchingList(null, getNumber(), null, null, null, null, null);
+            if (list.size() > 0) {
+                rosterEntry = list.get(0);
+                log.debug("Roster Loco found by number: {}", rosterEntry.getDccAddress());
+            }
+        }
+        // 3rd by dcc address
+        if (rosterEntry == null) {
+            list = Roster.getDefault().matchingList(null, null, getNumber(), null, null, null, null);
+            if (list.size() > 0) {
+                rosterEntry = list.get(0);
+                log.debug("Roster Loco found by dccAddress: {}", rosterEntry.getDccAddress());
+            }
+        }
+        // 4th by id
+        if (rosterEntry == null) {
+            list = Roster.getDefault().matchingList(null, null, null, null, null, null, getNumber());
+            if (list.size() > 0) {
+                rosterEntry = list.get(0);
+                log.debug("Roster Loco found by roster id: {}", rosterEntry.getDccAddress());
+            }
+        }
+        return rosterEntry;
+    }
+
+    /**
      * Used to check destination track to see if it will accept locomotive
      *
      * @return status, see RollingStock.java
@@ -272,7 +349,7 @@ public class Engine extends RollingStock {
     @Override
     protected void moveRollingStock(RouteLocation current, RouteLocation next) {
         if (current == getRouteLocation()) {
-            if (getConsist() == null || getConsist().isLead(this)) {
+            if (getConsist() == null || isLead()) {
                 if (getRouteLocation() != getRouteDestination() &&
                         getTrain() != null &&
                         !isBunit() &&
@@ -361,7 +438,7 @@ public class Engine extends RollingStock {
         e.setAttribute(Xml.B_UNIT, (isBunit() ? Xml.TRUE : Xml.FALSE));
         if (getConsist() != null) {
             e.setAttribute(Xml.CONSIST, getConsistName());
-            if (getConsist().isLead(this)) {
+            if (isLead()) {
                 e.setAttribute(Xml.LEAD_CONSIST, Xml.TRUE);
                 if (getConsist().getConsistNumber() > 0) {
                     e.setAttribute(Xml.CONSIST_NUM,

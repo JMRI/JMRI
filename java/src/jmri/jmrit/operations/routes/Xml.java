@@ -9,6 +9,10 @@ package jmri.jmrit.operations.routes;
  */
 public class Xml {
 
+    private Xml(){
+        // class of constants
+    }
+
     // Common to operation xml files
     static final String ID = "id"; // NOI18N
     static final String NAME = "name"; // NOI18N
@@ -39,6 +43,7 @@ public class Xml {
     static final String TRAIN_ICON_RANGE_X = "trainIconRangeX"; // NOI18N
     static final String TRAIN_ICON_RANGE_Y = "trainIconRangeY"; // NOI18N
     static final String SEQUENCE_ID = "sequenceId"; // NOI18N
+    static final String COMMENT_COLOR = "commentColor";
 
     // RouteManagerXml.java
     static final String ROUTES = "routes"; // NOI18N

@@ -15,7 +15,7 @@ import javax.swing.SwingUtilities;
  * sent to the listener object; this means that the getOldValue() in the change event is not
  * guaranteed to be the last call's getNewValue(). Listeners that depend on exact sequencing of
  * oldValue and newValue objects should probably not be wrapped in this class.
- * <p>
+ *
  * @author Balazs Racz Copyright (C) 2017
  */
 

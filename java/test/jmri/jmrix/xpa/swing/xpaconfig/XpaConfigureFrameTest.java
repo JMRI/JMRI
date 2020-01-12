@@ -2,37 +2,33 @@ package jmri.jmrix.xpa.swing.xpaconfig;
 
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * @author Paul Bender Copyright(C) 2016
  */
-public class XpaConfigureFrameTest {
+public class XpaConfigureFrameTest extends jmri.util.JmriJFrameTestBase {
 
     private jmri.jmrix.xpa.XpaSystemConnectionMemo memo = null;
 
-    @Test
-    public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertNotNull("XpaConfigureFrame exists",new XpaConfigureFrame(memo) );
-    }
-
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
 
         memo = new jmri.jmrix.xpa.XpaSystemConnectionMemo();
         jmri.InstanceManager.setDefault(jmri.jmrix.xpa.XpaSystemConnectionMemo.class,memo);
-
+        if(!GraphicsEnvironment.isHeadless()){
+           frame = new XpaConfigureFrame(memo);
+	}
     }
 
     @After
+    @Override
     public void tearDown() {
-        JUnitUtil.tearDown();
+	    memo = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        super.tearDown();
     }
 }

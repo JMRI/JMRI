@@ -26,6 +26,8 @@
 	<!-- Fix defualt values CV4.9 & 4.21                                 -->
 	<version author="Michael Mosher" version="8" lastUpdated="20170317"/>
 	<!-- update factory resets -->
+	<version author="Michael Mosher" version="9" lastUpdated="20180727"/>
+	<!-- add read me pane -->
 	<decoder>
 		<family name="WOW Sound Set 3" mfg="Train Control Systems" comment="TCS FW Starting Jan 2012">
 			<model model="WOW Sound 101" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="9pin"
@@ -1888,6 +1890,7 @@
 			<factReset label="Quick Lighting Preset: Modified Trilley" CV="8" default="12"/>
 		</resets>
 	</decoder>
+    <xi:include href="http://jmri.org/xml/programmers/parts/BasicSpeedControlTrimPane.xml"/>
 	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_Momentum.xml"/>
 	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_Brake.xml"/>
 	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_TCS.xml"/>
@@ -1898,4 +1901,5 @@
 	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_wow_vol1.xml"/>
 	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_wow_vol2.xml"/>
 	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_wow_4cv.xml"/>
+   <xi:include href="http://jmri.org/xml/decoders/tcs/paneWowReadMe.xml"/>
 </decoder-config>

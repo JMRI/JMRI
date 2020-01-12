@@ -1,16 +1,14 @@
 package jmri.jmrix.lenz.liusbserver;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 /**
  * Handle configuring an XpressNet layout connection via a LIUSB Server.
- * <P>
+ * <p>
  * This uses the {@link LIUSBServerAdapter} class to do the actual connection.
  *
  * @author Paul Bender Copyright (C) 2009
-  *
+ *
  * @see LIUSBServerAdapter
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig {
@@ -21,11 +19,11 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
      */
     public ConnectionConfig(jmri.jmrix.NetworkPortAdapter p) {
         super(p);
-
     }
 
     /**
-     * Ctor for a functional Swing object with no prexisting adapter.
+     * Ctor for a connection configuration with no preexisting adapter.
+     * {@link #setInstance()} will fill the adapter member.
      */
     public ConnectionConfig() {
         super();
@@ -37,8 +35,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
     }
 
     /**
-     * Load the adapter with an appropriate object
-     * <i>unless</i> it has already been set.
+     * {@inheritDoc}
      */
     @Override
     protected void setInstance() {
@@ -47,6 +44,9 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void loadDetails(JPanel details) {
         super.loadDetails(details);
@@ -57,8 +57,5 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         portField.setEnabled(false); // we can't change this now.
         options.get(adapter.getOption1Name()).getComponent().setEnabled(false); // we can't change this now.
     }
-
-    @SuppressFBWarnings(value = "URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD", justification = "the server uses a fixed port, but we want users to see what it is")
-    protected JTextField bcastPortField = new JTextField(String.valueOf(LIUSBServerAdapter.BROADCAST_TCP_PORT));
 
 }

@@ -2,12 +2,15 @@ package jmri.jmrit.operations.rollingstock;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.JComboBox;
-import jmri.jmrit.operations.setup.Control;
+
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.jmrit.operations.setup.Control;
 
 /**
  * Represents an attribute a rolling stock can have. Some attributes are length,
@@ -16,9 +19,9 @@ import org.slf4j.LoggerFactory;
  * @author Daniel Boudreau Copyright (C) 2014
  *
  */
-public class RollingStockAttribute {
+public abstract class RollingStockAttribute {
 
-    protected static final int MIN_NAME_LENGTH = 4;
+    protected static final int MIN_NAME_LENGTH = 1;
 
     public RollingStockAttribute() {
     }
@@ -97,17 +100,19 @@ public class RollingStockAttribute {
         if (name == null) {
             return;
         }
-        // insert at start of list, sort later
         if (list.contains(name)) {
             return;
         }
+        // insert at start of list, sort on restart
         list.add(0, name);
         maxNameLength = 0; // reset maximum name length
+        maxNameSubStringLength = 0;
     }
 
     public void deleteName(String name) {
         list.remove(name);
         maxNameLength = 0; // reset maximum name length
+        maxNameSubStringLength = 0;
     }
 
     public boolean containsName(String name) {
@@ -127,18 +132,42 @@ public class RollingStockAttribute {
         }
     }
 
+    protected String maxName = "";
     protected int maxNameLength = 0;
-
+    
     public int getMaxNameLength() {
         if (maxNameLength == 0) {
-            maxNameLength = MIN_NAME_LENGTH;
+            maxName = "";
+            maxNameLength = getMinNameLength();
             for (String name : getNames()) {
                 if (name.length() > maxNameLength) {
+                    maxName = name;
                     maxNameLength = name.length();
                 }
             }
         }
         return maxNameLength;
+    }
+    
+    protected int maxNameSubStringLength = 0;
+    
+    public int getMaxNameSubStringLength() {
+        if (maxNameSubStringLength == 0) {
+            maxName = "";
+            maxNameSubStringLength = getMinNameLength();
+            for (String name : getNames()) {
+                String[] subString = name.split("-");
+                if (subString[0].length() > maxNameSubStringLength) {
+                    maxName = name;
+                    maxNameSubStringLength = subString[0].length();
+                }
+            }
+        }
+        return maxNameSubStringLength;
+    }
+    
+    protected int getMinNameLength() {
+        return MIN_NAME_LENGTH;
     }
 
     /**
@@ -175,7 +204,6 @@ public class RollingStockAttribute {
     public void load(Element root, String eNames, String eName, String oldName) {
         // new format using elements starting version 3.3.1
         if (root.getChild(eNames) != null) {
-            @SuppressWarnings("unchecked")
             List<Element> l = root.getChild(eNames).getChildren(eName);
             Attribute a;
             String[] names = new String[l.size()];

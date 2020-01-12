@@ -3,7 +3,7 @@ package jmri.jmrix.zimo;
 /**
  * Mx1Listener provides the call-back interface for notification when a new MX-1
  * message arrives from the layout.
- * <P>
+ * <p>
  * Note that the Mx1Listener implementation cannot assume that messages will be
  * returned in any particular thread. We may eventually revisit this, as
  * returning messages in the Swing GUI thread would result in some

@@ -107,15 +107,13 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
                     }
                     int nxType = p.getEntryExitType(key, panel, keyDest);
                     switch (nxType) {
-                        case 0x00:
-                            dest.setAttribute("nxType", "turnoutsetting");  // NOI18N
-                            break;
                         case 0x01:
                             dest.setAttribute("nxType", "signalmastlogic");  // NOI18N
                             break;
                         case 0x02:
                             dest.setAttribute("nxType", "fullinterlocking");  // NOI18N
                             break;
+                        case 0x00:
                         default:
                             dest.setAttribute("nxType", "turnoutsetting");  // NOI18N
                             break;
@@ -178,7 +176,12 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
             eep.setDispatcherIntegration(true);
         }
         if (shared.getChild("colourwhilesetting") != null) {
-            eep.setSettingRouteColor(ColorUtil.stringToColor(shared.getChild("colourwhilesetting").getText()));  // NOI18N
+            try {
+                eep.setSettingRouteColor(ColorUtil.stringToColor(shared.getChild("colourwhilesetting").getText()));  // NOI18N
+            } catch (IllegalArgumentException e) {
+                eep.setSettingRouteColor(Color.BLACK);
+                log.error("Invalid color {}; using black", shared.getChild("colourwhilesetting").getText());
+            }
             int settingTimer = 2000;
             try {
                 settingTimer = Integer.parseInt(shared.getChild("settingTimer").getText());  // NOI18N
@@ -282,31 +285,6 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
             }
         }
         return true;
-    }
-
-    /**
-     * Get a descriptive name for a given color value.
-     *
-     * @param color Integer value of a color to display on screen
-     * @return lower case color name in English; None if color entered is null
-     * @deprecated since 4.9.4; use {@link jmri.util.ColorUtil#colorToColorName(Color)} instead
-     */
-    @Deprecated
-    public static String colorToString(Color color) {
-        return ColorUtil.colorToColorName(color);
-    }
-
-    /**
-     * Get a color value for a color name.
-     *
-     * @param string String describing a color
-     * @return integer representing a screen color
-     * @deprecated since 4.9.4; use {@link jmri.util.ColorUtil#stringToColor(String)} instead
-     *
-     */
-    @Deprecated
-    public static Color stringToColor(String string) {
-        return ColorUtil.stringToColor(string);
     }
 
     @Override

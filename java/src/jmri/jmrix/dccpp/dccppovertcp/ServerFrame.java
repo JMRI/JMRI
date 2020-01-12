@@ -17,8 +17,8 @@ import jmri.implementation.AbstractInstanceInitializer;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
- * Frame displaying and programming a DCCpp clock monitor.
- * <P>
+ * Frame displaying and programming a DCCppovertcp server.
+ * <p>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
  * not extend to uses in other software products. If you wish to use this code,
@@ -59,8 +59,7 @@ public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner, 
 
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-        panel.add(serverStatus);
-        panel.add(clientStatus);
+        panel.add(statusLabel);
         super.getContentPane().add(panel);
 
         startButton.addActionListener((ActionEvent a) -> {
@@ -99,22 +98,6 @@ public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner, 
         super.windowClosing(e);
     }
 
-    @Override
-    public void dispose() {
-        super.dispose();
-    }
-
-    /**
-     *
-     * @return the managed instance
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    static public synchronized ServerFrame getInstance() {
-        return InstanceManager.getDefault(ServerFrame.class);
-    }
-
     private void updateServerStatus() {
         Server server = InstanceManager.getDefault(Server.class);
         autoStartCheckBox.setSelected(server.getAutoStart());
@@ -127,11 +110,12 @@ public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner, 
         startButton.setEnabled(!server.isEnabled());
         stopButton.setEnabled(server.isEnabled());
         saveButton.setEnabled(server.isSettingChanged());
-        serverStatus.setText("Server Status: " + (server.isEnabled() ? "Enabled" : "Disabled")); // TODO I18N, also below
+        updateClientStatus(server);
     }
 
-    private void updateClientStatus() {
-        clientStatus.setText("   Client Count: " + Integer.toString(InstanceManager.getDefault(Server.class).getClientCount()));
+    private void updateClientStatus(Server s) {
+        statusLabel.setText(Bundle.getMessage("StatusLabel", (s.isEnabled() ? Bundle.getMessage("Running") : Bundle.getMessage("Stopped")), s.getClientCount()));
+        // combined status and count in 1 field, like LnTcpServer
     }
 
     @Override
@@ -144,21 +128,18 @@ public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner, 
     @Override
     public void notifyClientStateChanged(Server s) {
         javax.swing.SwingUtilities.invokeLater(() -> {
-            updateClientStatus();
+            updateClientStatus(s);
         });
     }
 
     JSpinner portNumber;
     SpinnerNumberModel portNumberModel;
-    JLabel portNumberLabel = new JLabel("  Port Number: ");
-    JLabel serverStatus = new JLabel("Server Status:         ");
-    JLabel clientStatus = new JLabel("   Client Count:  ");
-
-    JCheckBox autoStartCheckBox = new JCheckBox(
-            "Start Server at Application Startup");
-    JButton startButton = new JButton("Start Server");
-    JButton stopButton = new JButton("Stop Server");
-    JButton saveButton = new JButton("Save Settings");
+    JLabel portNumberLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("LabelPort")));
+    private final JLabel statusLabel = new JLabel(Bundle.getMessage("StatusLabel", Bundle.getMessage("Stopped"), 0));
+    JCheckBox autoStartCheckBox = new JCheckBox(Bundle.getMessage("LabelStartup"));
+    JButton startButton = new JButton(Bundle.getMessage("StartServer"));
+    JButton stopButton = new JButton(Bundle.getMessage("StopServer"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     @Override
     public void initialize() {
@@ -172,7 +153,7 @@ public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner, 
     public static class Initializer extends AbstractInstanceInitializer {
 
         @Override
-        public <T> Object getDefault(Class<T> type) throws IllegalArgumentException {
+        public <T> Object getDefault(Class<T> type) {
             if (type.equals(ServerFrame.class)) {
                 return new ServerFrame();
             }
@@ -186,4 +167,5 @@ public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner, 
             return set;
         }
     }
+
 }

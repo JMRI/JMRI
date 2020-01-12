@@ -249,7 +249,7 @@ public class XTableColumnModel extends DefaultTableColumnModel {
 
     /**
      * Returns the position of the first column whose identifier equals
-     * {@code identifier}. Position is the the index in all visible columns if
+     * {@code identifier}. Position is the index in all visible columns if
      * {@code onlyVisible} is true or else the index in all columns.
      *
      * @param identifier  the identifier object to search for

@@ -30,7 +30,7 @@ import jmri.jmrit.display.layoutEditor.LayoutTurnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class DestinationPoints extends jmri.implementation.AbstractNamedBean implements NamedBean {
+public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
 
     @Override
     public String getBeanType() {
@@ -97,21 +97,20 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
         };
     }
 
-    @Override
-    public String getDisplayName() {
-        String uName = getUserName();
-        if (uName != null) {
-            return uName;
-        }
-        return getSystemName();
-    }
-
     String getUniqueId() {
         return getSystemName();
     }
 
     public PointDetails getDestPoint() {
         return point;
+    }
+
+    /**
+     * @since 4.17.4
+     * Making the source object available for scripting in Jython.
+     */
+    public Source getSource() {
+        return src ;
     }
 
     boolean getUniDirection() {
@@ -317,7 +316,13 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
         final List<Color> realColorXtra = new ArrayList<Color>();
         final List<LayoutBlock> routeBlocks = new ArrayList<>();
         if (manager.useDifferentColorWhenSetting()) {
+            boolean first = true;
             for (LayoutBlock lbk : routeDetails) {
+                if (first) {
+                    // Don't change the color for the facing block
+                    first = false;
+                    continue;
+                }
                 routeBlocks.add(lbk);
                 realColorXtra.add(lbk.getBlockExtraColor());
                 realColorStd.add(lbk.getBlockTrackColor());
@@ -639,7 +644,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
     void cancelClearOptionBox() {
         if (cancelClearFrame == null) {
             JButton jButton_Clear = new JButton(Bundle.getMessage("ClearDown"));  // NOI18N
-            JButton jButton_Cancel = new JButton("Cancel");  // NOI18N
+            JButton jButton_Cancel = new JButton(Bundle.getMessage("ButtonCancel"));  // NOI18N
 
             JButton jButton_Exit = new JButton(Bundle.getMessage("Exit"));  // NOI18N
             JLabel jLabel = new JLabel(Bundle.getMessage("InterlockPrompt"));  // NOI18N

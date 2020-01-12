@@ -1,4 +1,7 @@
 import java
+import java.awt
+import java.awt.event
+import java.beans
 import jmri
 import jmri.jmrit.jython.Jynstrument as Jynstrument
 import java.awt.CardLayout as CardLayout

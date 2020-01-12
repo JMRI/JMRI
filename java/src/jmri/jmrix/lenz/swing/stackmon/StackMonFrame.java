@@ -214,8 +214,8 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
     /**
      * Request the status of the current address.
      */
-    @SuppressWarnings("unused")
-@SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification = "This is part of work in progress code to allow display of all information about the locomotives in the stack.")
+    @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", 
+        justification = "This is part of work in progress code to allow display of all information about the locomotives in the stack.")
     private void requestStatus() {
         int address = 0;
         if (!adrTextField.getText().equals("")) {
@@ -229,8 +229,8 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
      * Request the momentary/continuous status of functions for the 
      * current address.
      */
-    @SuppressWarnings("unused")
-@SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification = "This is part of work in progress code to allow display of all information about the locomotives in the stack.")
+    @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", 
+            justification = "This is part of work in progress code to allow display of all information about the locomotives in the stack.")
     private void requestFunctionStatus() {
         int address = 0;
         if (!adrTextField.getText().equals("")) {

@@ -25,6 +25,7 @@ import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.PowerManager;
+import jmri.SpeedStepMode;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.powerpanel.PowerPane;
 import jmri.jmrit.throttle.FunctionButton;
@@ -65,7 +66,6 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
     private ButtonFrame _buttonPanel;
     private WarrantFrame _warrantFrame;
     private float _currentSpeed;
-    private boolean _isForward;
 
     private DccThrottle _throttle;
 
@@ -269,13 +269,13 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
     /* Record throttle commands that have been sent to the throttle from ControlPanel */
 
     protected void setSpeedSetting(float speed) {
-        _warrantFrame.setSpeedCommand(speed, _isForward );
+        _warrantFrame.setSpeedCommand(speed);
         _currentSpeed = speed;
     }
     /* from ControlPanel */
 
-    protected void setSpeedStepMode(int speedStep) {
-        _warrantFrame.setThrottleCommand("SpeedStep", Integer.toString(speedStep));
+    protected void setSpeedStepMode(SpeedStepMode speedStep) {
+        _warrantFrame.setThrottleCommand("SpeedStep", speedStep.name);
     }
     /* from FunctionPanel */
 
@@ -302,7 +302,6 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
     protected void setButtonForward(boolean isForward) {
         _buttonPanel.setForwardDirection(isForward);
         _warrantFrame.setThrottleCommand("Forward", Boolean.toString(isForward));
-        _isForward = isForward;
     }
     /* from ButtonPanel */
 

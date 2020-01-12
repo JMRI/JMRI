@@ -23,6 +23,7 @@
     </label>
     <display item="Half Speed Key" tooltip="+ 4"/>
     <display item="Half Speed Key Extension"/>
+    <display item="Half Speed"/>
     <label>
       <text> </text>
     </label>

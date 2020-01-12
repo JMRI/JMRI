@@ -8,6 +8,7 @@ import jmri.jmrit.catalog.NamedIcon;
 /**
  * Gather common methods for Turnouts, Semsors, SignalHeads, Masts, etc.
  *
+ * <a href="doc-files/Heirarchy.png"><img src="doc-files/Heirarchy.png" alt="UML class diagram for package" height="33%" width="33%"></a>
  * @author PeteCressman Copyright (C) 2011
  */
 public class PositionableIcon extends PositionableLabel {

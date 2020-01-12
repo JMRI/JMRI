@@ -1,6 +1,5 @@
 package jmri.jmrix.tmcc;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.DataInputStream;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
@@ -99,19 +98,6 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
     static public SerialTrafficController instance() {
         log.warn("deprecated instance() call for TMCCTrafficController");
         return null;
-    }
-
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used
-     */
-    @Deprecated
-    static volatile protected SerialTrafficController self = null;
-
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "temporary until mult-system; only set at startup")
-    @Override
-    protected void setInstance() {
-        self = this;
     }
 
     /**
@@ -268,7 +254,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
                                 }
                             } catch (InterruptedException e) {
                                 Thread.currentThread().interrupt(); // retain if needed later
-                                log.error("char send wait interupted");
+                                log.error("char send wait interrupted");
                             }
                         }
                         break;
@@ -280,7 +266,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
                                 xmtRunnable.wait(m.getTimeout());
                             }
                         } catch (InterruptedException e) {
-                            log.error("retry wait interupted");
+                            log.error("retry wait interrupted");
                         }
                     } else {
                         log.warn("sendMessage: port not ready for data sending: {}", java.util.Arrays.toString(msg));

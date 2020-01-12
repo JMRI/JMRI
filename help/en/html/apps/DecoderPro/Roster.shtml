@@ -7,7 +7,8 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
 
-  <title>JMRI: DecoderPro - Rosters</title><!-- Style -->
+  <title>JMRI: DecoderPro - Rosters</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -15,15 +16,14 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
       <!-- Page Body -->
 
@@ -41,9 +41,10 @@
       number of individual locomotives.</p>
 
       <p>Each Roster entry has an "identifier" (Roster ID) by which
-      it's known. When the program wants you to select a Roster
-      entry, it will show a selection box or menu containing all of
-      the Roster entry IDs. You can use anything you want for this:
+      it's known. This is your name it.
+      When the program wants you to select a Roster
+      entry, it will ask you to pick from a selection box or menu containing 
+      Roster entry IDs. You can use anything you want for this:
       Road number, type, even "That crummy old model I need to
       repaint" or "My beautiful Shay".</p>
 
@@ -59,8 +60,9 @@
       <dl>
         <dt>Roster ID</dt>
 
-        <dd>The ID for this entry. You can change it if you want,
-        in which case it will appear in selection boxes, etc, with
+        <dd>Your name for the new locomotive, see above.
+        You can change an entry's ID later,
+        in which case it will appear in new selection boxes, etc, with
         the new ID name.</dd>
 
         <dt>DCC Address</dt>

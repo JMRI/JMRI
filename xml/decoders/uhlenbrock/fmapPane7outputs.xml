@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+	<copyright xmlns="http://docbook.org/ns/docbook">
+		<year>2018</year>
+		<holder>JMRI</holder>
+	</copyright>
+	<authorgroup xmlns="http://docbook.org/ns/docbook">
+		<author>
+			<personname>
+				<firstname>Egbert</firstname>
+				<surname>Broerse</surname>
+			</personname>
+		</author>
+	</authorgroup>
+	<revhistory xmlns="http://docbook.org/ns/docbook">
+		<revision>
+			<revnumber>1</revnumber>
+			<date>2018-09-29</date>
+			<authorinitials>EB</authorinitials>
+			<revremark>Initial version as separate file</revremark>
+		</revision>
+		<!-- Valid only for certain Uhlenbrock decoders with 7 additional outputs A1 to A7,
+             such as 76560, 36320, 36360 (non exhaustive list) -->
+	</revhistory>
+
+	<name>Sound Fn Map</name>
+	<name xml:lang="de">Funktionszuord. Sound</name>
+	<name xml:lang="nl">Functietoew. Geluid</name>
+	<column>
+		<row>
+			<column>
+				<display item="SUSI-range"/>
+				<label><text> </text></label>
+			</column>
+		</row>
+		<separator/>
+		<group>
+			<qualifier>
+				<variableref>SUSI-range</variableref>
+				<relation>eq</relation>
+				<value>1</value>
+			</qualifier>
+			<column>
+				<label>
+					<text>CVs for SUSI range I :</text>
+					<text xml:lang="de">CVs für SUSI Adressbereich I :</text>
+				</label>
+			</column>
+		</group>
+		<group>
+			<qualifier>
+				<variableref>SUSI-range</variableref>
+				<relation>eq</relation>
+				<value>2</value>
+			</qualifier>
+			<column>
+				<label>
+					<text>CVs for SUSI range II :</text>
+					<text xml:lang="de">CVs für SUSI Adressbereich II :</text>
+				</label>
+			</column>
+		</group>
+		<group>
+			<qualifier>
+				<variableref>SUSI-range</variableref>
+				<relation>eq</relation>
+				<value>3</value>
+			</qualifier>
+			<column>
+				<label>
+					<text>CVs for SUSI range III :</text>
+					<text xml:lang="de">CVs für SUSI Adressbereich III :</text>
+				</label>
+			</column>
+		</group>
+		<separator/>
+		<group>
+			<qualifier>
+				<variableref>SUSI-range</variableref>
+				<relation>eq</relation>
+				<value>1</value>
+			</qualifier>
+			<column>
+				<label><text> </text></label>
+				<display item="Range I F0 activated sound"/>
+				<label><text> </text></label>
+			</column>
+		</group>
+		<group>
+			<qualifier>
+				<variableref>SUSI-range</variableref>
+				<relation>eq</relation>
+				<value>2</value>
+			</qualifier>
+			<column>
+				<label><text> </text></label>
+				<display item="Range II F0 activated sound"/>
+				<label><text> </text></label>
+			</column>
+		</group>
+		<group>
+			<qualifier>
+				<variableref>SUSI-range</variableref>
+				<relation>eq</relation>
+				<value>3</value>
+			</qualifier>
+			<column>
+				<label><text> </text></label>
+				<display item="Range III F0 activated sound"/>
+				<label><text> </text></label>
+			</column>
+		</group>
+		<row>
+			<group>
+				<qualifier>
+					<variableref>SUSI-range</variableref>
+					<relation>eq</relation>
+					<value>1</value>
+				</qualifier>
+				<row>
+					<column>
+						<display item="Range I F1 activated sound"/>
+						<display item="Range I F2 activated sound"/>
+						<display item="Range I F3 activated sound"/>
+						<display item="Range I F4 activated sound"/>
+						<display item="Range I F5 activated sound"/>
+						<display item="Range I F6 activated sound"/>
+						<display item="Range I F7 activated sound"/>
+						<display item="Range I F8 activated sound"/>
+						<display item="Range I F9 activated sound"/>
+						<display item="Range I F10 activated sound"/>
+						<display item="Range I F11 activated sound"/>
+						<display item="Range I F12 activated sound"/>
+						<display item="Range I F13 activated sound"/>
+						<display item="Range I F14 activated sound"/>
+					</column>
+					<column><label><text>      </text></label></column>
+					<column>
+						<display item="Range I F15 activated sound"/>
+						<display item="Range I F16 activated sound"/>
+						<display item="Range I F17 activated sound"/>
+						<display item="Range I F18 activated sound"/>
+						<display item="Range I F19 activated sound"/>
+						<display item="Range I F20 activated sound"/>
+						<display item="Range I F21 activated sound"/>
+						<display item="Range I F22 activated sound"/>
+						<display item="Range I F23 activated sound"/>
+						<display item="Range I F24 activated sound"/>
+						<display item="Range I F25 activated sound"/>
+						<display item="Range I F26 activated sound"/>
+						<display item="Range I F27 activated sound"/>
+						<display item="Range I F28 activated sound"/>
+					</column>
+				</row>
+				<label><text> </text></label>
+				<row>
+					<display item="Range I Screeching off Function"/>
+					<column><label><text>       </text></label></column>
+					<display item="Range I Start-up delay off Function"/>
+				</row>
+				<label><text> </text></label>
+			</group>
+			<group>
+				<qualifier>
+					<variableref>SUSI-range</variableref>
+					<relation>eq</relation>
+					<value>2</value>
+				</qualifier>
+				<row>
+					<column>
+						<display item="Range II F1 activated sound"/>
+						<display item="Range II F2 activated sound"/>
+						<display item="Range II F3 activated sound"/>
+						<display item="Range II F4 activated sound"/>
+						<display item="Range II F5 activated sound"/>
+						<display item="Range II F6 activated sound"/>
+						<display item="Range II F7 activated sound"/>
+						<display item="Range II F8 activated sound"/>
+						<display item="Range II F9 activated sound"/>
+						<display item="Range II F10 activated sound"/>
+						<display item="Range II F11 activated sound"/>
+						<display item="Range II F12 activated sound"/>
+						<display item="Range II F13 activated sound"/>
+						<display item="Range II F14 activated sound"/>
+					</column>
+					<column><label><text>      </text></label></column>
+					<column>
+						<display item="Range II F15 activated sound"/>
+						<display item="Range II F16 activated sound"/>
+						<display item="Range II F17 activated sound"/>
+						<display item="Range II F18 activated sound"/>
+						<display item="Range II F19 activated sound"/>
+						<display item="Range II F20 activated sound"/>
+						<display item="Range II F21 activated sound"/>
+						<display item="Range II F22 activated sound"/>
+						<display item="Range II F23 activated sound"/>
+						<display item="Range II F24 activated sound"/>
+						<display item="Range II F25 activated sound"/>
+						<display item="Range II F26 activated sound"/>
+						<display item="Range II F27 activated sound"/>
+						<display item="Range II F28 activated sound"/>
+					</column>
+				</row>
+				<label><text> </text></label>
+				<row>
+					<display item="Range II Screeching off Function"/>
+					<column><label><text>       </text></label></column>
+					<display item="Range II Start-up delay off Function"/>
+				</row>
+				<label><text> </text></label>
+			</group>
+			<group>
+				<qualifier>
+					<variableref>SUSI-range</variableref>
+					<relation>eq</relation>
+					<value>3</value>
+				</qualifier>
+				<row>
+					<column>
+						<display item="Range III F1 activated sound"/>
+						<display item="Range III F2 activated sound"/>
+						<display item="Range III F3 activated sound"/>
+						<display item="Range III F4 activated sound"/>
+						<display item="Range III F5 activated sound"/>
+						<display item="Range III F6 activated sound"/>
+						<display item="Range III F7 activated sound"/>
+						<display item="Range III F8 activated sound"/>
+						<display item="Range III F9 activated sound"/>
+						<display item="Range III F10 activated sound"/>
+						<display item="Range III F11 activated sound"/>
+						<display item="Range III F12 activated sound"/>
+						<display item="Range III F13 activated sound"/>
+						<display item="Range III F14 activated sound"/>
+					</column>
+					<column><label><text>      </text></label></column>
+					<column>
+						<display item="Range III F15 activated sound"/>
+						<display item="Range III F16 activated sound"/>
+						<display item="Range III F17 activated sound"/>
+						<display item="Range III F18 activated sound"/>
+						<display item="Range III F19 activated sound"/>
+						<display item="Range III F20 activated sound"/>
+						<display item="Range III F21 activated sound"/>
+						<display item="Range III F22 activated sound"/>
+						<display item="Range III F23 activated sound"/>
+						<display item="Range III F24 activated sound"/>
+						<display item="Range III F25 activated sound"/>
+						<display item="Range III F26 activated sound"/>
+						<display item="Range III F27 activated sound"/>
+						<display item="Range III F28 activated sound"/>
+					</column>
+				</row>
+				<label><text> </text></label>
+				<row>
+					<display item="Range III Screeching off Function"/>
+					<column><label><text>       </text></label></column>
+					<display item="Range III Start-up delay off Function"/>
+				</row>
+				<label><text> </text></label>
+			</group>
+		</row>
+	</column>
+</pane>

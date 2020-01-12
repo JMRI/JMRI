@@ -24,21 +24,7 @@ import org.slf4j.LoggerFactory;
  */
 public class JmriSRCPServer extends JmriServer {
 
-    private static JmriServer _instance = null;
-
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmris.srcp.JmriSRCPServerBundle");
-
-    /*
-     * @deprecated since 4.7.1 use @link{jmri.InstanceManager.getDefault()} instead.
-     */
-    @Deprecated
-    synchronized public static JmriServer instance() {
-        if (_instance == null) {
-            int port = java.lang.Integer.parseInt(rb.getString("JMRISRCPServerPort"));
-            _instance = new JmriSRCPServer(port);
-        }
-        return _instance;
-    }
 
     // Create a new server using the default port
     public JmriSRCPServer() {
@@ -57,7 +43,6 @@ public class JmriSRCPServer extends JmriServer {
     }
 
     // Handle communication to a client through inStream and outStream
-    @SuppressWarnings("deprecation")
     @Override
     public void handleClient(DataInputStream inStream, DataOutputStream outStream) throws IOException {
         // Listen for commands from the client until the connection closes

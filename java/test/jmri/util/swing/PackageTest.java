@@ -21,6 +21,7 @@ import org.junit.runners.Suite;
         JTreeUtilTest.class,
         JmriPanelTest.class,
         ResizableImagePanelTest.class,
+        ScrollablePanelTest.class,
         SliderSnapTest.class,
         StatusBarTest.class,
         SwingSettingsTest.class,
@@ -44,6 +45,9 @@ import org.junit.runners.Suite;
         SplitButtonColorChooserPanelTest.class,
         JmriColorChooserPanelTest.class,
         JmriColorChooserTest.class,
+        TextAreaFIFOTest.class,
+        ComboBoxToolTipRendererTest.class,
+        StayOpenCheckBoxItemTest.class
 })
 
 /**

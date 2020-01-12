@@ -22,6 +22,7 @@ public class LoadXmlConfigActionTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
     @After

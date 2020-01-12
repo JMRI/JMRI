@@ -39,7 +39,7 @@ export default moment.defineLocale('be', {
     weekdays : {
         format: 'нядзелю_панядзелак_аўторак_сераду_чацвер_пятніцу_суботу'.split('_'),
         standalone: 'нядзеля_панядзелак_аўторак_серада_чацвер_пятніца_субота'.split('_'),
-        isFormat: /\[ ?[Вв] ?(?:мінулую|наступную)? ?\] ?dddd/
+        isFormat: /\[ ?[Ууў] ?(?:мінулую|наступную)? ?\] ?dddd/
     },
     weekdaysShort : 'нд_пн_ат_ср_чц_пт_сб'.split('_'),
     weekdaysMin : 'нд_пн_ат_ср_чц_пт_сб'.split('_'),
@@ -120,7 +120,7 @@ export default moment.defineLocale('be', {
     },
     week : {
         dow : 1, // Monday is the first day of the week.
-        doy : 7  // The week that contains Jan 1st is the first week of the year.
+        doy : 7  // The week that contains Jan 7th is the first week of the year.
     }
 });
 

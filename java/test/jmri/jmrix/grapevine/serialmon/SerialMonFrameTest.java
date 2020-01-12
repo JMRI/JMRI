@@ -4,11 +4,7 @@ import java.awt.GraphicsEnvironment;
 import jmri.jmrix.grapevine.SerialMessage;
 import jmri.jmrix.grapevine.SerialReply;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
 import jmri.jmrix.grapevine.SerialTrafficController;
 import jmri.jmrix.grapevine.SerialTrafficControlScaffold;
@@ -66,6 +62,7 @@ public class SerialMonFrameTest {
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
 
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         memo = new GrapevineSystemConnectionMemo();
@@ -75,7 +72,9 @@ public class SerialMonFrameTest {
 
     @After
     public void tearDown() throws Exception {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
 }

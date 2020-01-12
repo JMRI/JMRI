@@ -1,5 +1,6 @@
 package jmri.jmrix.internal;
 
+import jmri.InstanceManager;
 import jmri.Light;
 import jmri.LightManager;
 import jmri.util.JUnitUtil;
@@ -26,7 +27,7 @@ public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTest
     @Test
     public void testAsAbstractFactory() {
         // create and register the manager object
-        InternalLightManager alm = new InternalLightManager();
+        InternalLightManager alm = new InternalLightManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
         jmri.InstanceManager.setLightManager(alm);
 
         // ask for a Light, and check type
@@ -54,24 +55,19 @@ public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTest
 
     @Test
     public void testIsVariableLight() {
-        // create and register the manager object
-        InternalLightManager alm = new InternalLightManager();
-        jmri.InstanceManager.setLightManager(alm);
-
         // ask for a Light, and check type
         LightManager lm = jmri.InstanceManager.lightManagerInstance();
 
         Assert.assertTrue(lm.newLight("IL21", "my name").isIntensityVariable());
-
     }
 
     // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         // create and register the manager object
-        l = new InternalLightManager();
+        l = new InternalLightManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
         jmri.InstanceManager.setLightManager(l);
     }
 
@@ -81,5 +77,4 @@ public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTest
     }
 
     private final static Logger log = LoggerFactory.getLogger(InternalLightManagerTest.class);
-
 }

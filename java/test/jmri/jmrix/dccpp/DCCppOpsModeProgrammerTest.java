@@ -1,10 +1,7 @@
 package jmri.jmrix.dccpp;
 
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import org.junit.Assert;
+import org.junit.*;
 
 /**
  * DCCppOpsModeProgrammerTest.java
@@ -14,42 +11,35 @@ import org.junit.Assert;
  * @author	Paul Bender
  * @author	Mark Underwood (C) 2015
  */
-public class DCCppOpsModeProgrammerTest extends TestCase {
+public class DCCppOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgrammerTestBase {
 
-    public void testCtor() {
-        // infrastructure objects
-        DCCppInterfaceScaffold tc = new DCCppInterfaceScaffold(new DCCppCommandStation());
-
-        DCCppOpsModeProgrammer t = new DCCppOpsModeProgrammer(5, tc);
-        Assert.assertNotNull(t);
-    }
-
-    // from here down is testing infrastructure
-    public DCCppOpsModeProgrammerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", DCCppOpsModeProgrammerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(DCCppOpsModeProgrammerTest.class);
-        return suite;
+    @Override
+    @Test
+    public void testGetCanRead() {
+        // DccPP supports railcom?
+        Assert.assertTrue("can read", programmer.getCanRead());
     }
 
     // The minimal setup for log4J
     @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
+        // infrastructure objects
+        DCCppInterfaceScaffold tc = new DCCppInterfaceScaffold(new DCCppCommandStation());
+
+        DCCppOpsModeProgrammer t = new DCCppOpsModeProgrammer(5, tc);
+	    programmer = t;
     }
 
     @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
+	    programmer = null;
+        JUnitUtil.resetWindows(false,false);
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
 }

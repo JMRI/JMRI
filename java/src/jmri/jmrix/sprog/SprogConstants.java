@@ -66,7 +66,7 @@ public final class SprogConstants {
      */
     public static int TC_PROG_REPLY_TIMEOUT = 70*1000;
     public static int TC_OPS_REPLY_TIMEOUT = 200;
-
+    public static int TC_BOOT_REPLY_TIMEOUT = 200;
     
     /* The following should be altered only if you know what you are doing */
     /* How many times to repeat an accessory or function packet in the S queue */

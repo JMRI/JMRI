@@ -1,6 +1,5 @@
 package jmri.jmrit.decoderdefn;
 
-import apps.tests.Log4JFixture;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -34,7 +33,7 @@ public class DuplicateTest {
                 failed = check(file) || failed;
             }
         }
-        System.out.println("checked total of " + models.size());
+        log.debug("checked total of{}", models.size());
         if (failed) {
             Assert.fail("test failed, see System.err");
         }
@@ -42,7 +41,6 @@ public class DuplicateTest {
 
     ArrayList<String> models = new ArrayList<>();
 
-    @SuppressWarnings("unchecked")
     boolean check(File file) throws JDOMException, IOException {
         Element root = readFile(file);
 
@@ -78,12 +76,14 @@ public class DuplicateTest {
 
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
+
     }
 
     @After
     public void tearDown() {
-        Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
+
     }
 
     private final static Logger log = LoggerFactory.getLogger(DuplicateTest.class);

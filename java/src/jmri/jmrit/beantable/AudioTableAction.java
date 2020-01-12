@@ -2,8 +2,6 @@ package jmri.jmrit.beantable;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
-import java.beans.PropertyChangeListener;
-import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -27,15 +25,15 @@ import org.slf4j.LoggerFactory;
  *
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ * <p>
  *
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Matthew Harris copyright (c) 2009
@@ -55,7 +53,7 @@ public class AudioTableAction extends AbstractTableAction<Audio> {
 
     /**
      * Create an action with a specific title.
-     * <P>
+     * <p>
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
@@ -175,7 +173,6 @@ public class AudioTableAction extends AbstractTableAction<Audio> {
     @Override
     public void setMenuBar(BeanTableFrame f) {
         JMenuBar menuBar = f.getJMenuBar();
-        ResourceBundle rbapps = ResourceBundle.getBundle("apps.AppsBundle");
         MenuElement[] subElements;
         JMenu fileMenu = null;
         for (int i = 0; i < menuBar.getMenuCount(); i++) {
@@ -193,7 +190,7 @@ public class AudioTableAction extends AbstractTableAction<Audio> {
             MenuElement[] popsubElements = subElement.getSubElements();
             for (MenuElement popsubElement : popsubElements) {
                 if (popsubElement instanceof JMenuItem) {
-                    if (((JMenuItem) popsubElement).getText().equals(rbapps.getString("PrintTable"))) {
+                    if (((JMenuItem) popsubElement).getText().equals(Bundle.getMessage("PrintTable"))) {
                         JMenuItem printMenu = (JMenuItem) popsubElement;
                         fileMenu.remove(printMenu);
                         break;
@@ -260,7 +257,7 @@ public class AudioTableAction extends AbstractTableAction<Audio> {
     /**
      * Define abstract AudioTableDataModel
      */
-    abstract public class AudioTableDataModel extends BeanTableDataModel<Audio> implements PropertyChangeListener {
+    abstract public class AudioTableDataModel extends BeanTableDataModel<Audio> {
 
         char subType;
 
@@ -299,6 +296,7 @@ public class AudioTableAction extends AbstractTableAction<Audio> {
          *
          * @param subType Audio sub-type to update
          */
+        @SuppressWarnings("deprecation") // needs careful unwinding for Set operations & generics
         protected synchronized void updateSpecificNameList(char subType) {
             // first, remove listeners from the individual objects
             if (sysNameList != null) {
@@ -493,7 +491,7 @@ public class AudioTableAction extends AbstractTableAction<Audio> {
 
     @Override
     public void setMessagePreferencesDetails(){
-        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).preferenceItemDetails(getClassName(), "nullAudio", Bundle.getMessage("HideNullAudioWarningMessage"));
+        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).setPreferenceItemDetails(getClassName(), "nullAudio", Bundle.getMessage("HideNullAudioWarningMessage"));
         super.setMessagePreferencesDetails();
     }
 

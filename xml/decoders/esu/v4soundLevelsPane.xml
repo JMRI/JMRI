@@ -1,23 +1,899 @@
 <?xml version="1.0" encoding="utf-8"?>
-<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <name>Sound Levels</name>
-  <column>
-    <label>
-      <text>&lt;html&gt;
-        &lt;strong&gt;This tab is empty because Sound Levels are found on the Sound tab.&lt;/strong&gt;
-        &lt;br&gt;&lt;br&gt;&lt;br&gt;
-        &lt;strong&gt;To hide empty tabs, uncheck Preferences -> Roster -> Programmer -> Show empty tabs.&lt;/strong&gt;
-      &lt;/html&gt;</text>
-      <text xml:lang="de">&lt;html&gt;
-        &lt;strong&gt;Dieser Reiter ist leer weil Lautstärke auf dem Sound Reiter konfiguriert wird.&lt;/strong&gt;
-        &lt;br&gt;&lt;br&gt;&lt;br&gt;
-        &lt;strong&gt;Um leere Reiter zu verbergen, deselektiere Voreinstellungen -> Lokpark -> Programmierer -> Zeige leere Reiter.&lt;/strong&gt;
-        &lt;/html&gt;</text>
-        <text xml:lang="ca">&lt;html&gt;
-        &lt;strong&gt;Aquesta pestanya és buida perquè els volums del so estan a la pestanya de sons.&lt;/strong&gt;
-        &lt;br&gt;&lt;br&gt;&lt;br&gt;
-        &lt;strong&gt;Per amagar aquesta pestanya, desactiva Preferències -> Flota -> Programador -> Mostra pestanyes buides.&lt;/strong&gt;
-      &lt;/html&gt;</text>
-    </label>
-  </column>
+<!-- Copyright (C) JMRI 2019 All rights reserved -->
+
+<pane xmlns:xi="http://www.w3.org/2001/XInclude"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+    <name>Sound Levels</name>
+    <name xml:lang="ca">Volum de so</name>
+    <name xml:lang="cs">Hladiny zvuku</name>
+    <name xml:lang="da">Lydstyrker</name>
+    <name xml:lang="de">Sound Lautstärke</name>
+    <name xml:lang="fr">Volume des Sons</name>
+    <name xml:lang="it">Livelli dei Suoni</name>
+    <name xml:lang="nl">Geluidvolume</name>
+    <column>
+        <grid ipadx="10" ipady="10">
+            <!-- default padding for all grid items -->
+            <griditem gridx="0" gridy="0" weightx="1" gridheight="REMAINDER" anchor="LINE_START">
+                <!-- gridheight for full-depth row heading, weightx for right-justified row -->
+                <label>
+                    <text>Master Controls</text>
+                    <text xml:lang="it">Controlli principali</text>
+                    <text xml:lang="de">Globale Einstellungen</text>
+                    <text xml:lang="ca">Control Master</text>
+                </label>
+            </griditem>
+            <griditem gridx="1" gridy="2">
+                <display item="Sound Volume Master" layout="above" label=""/>
+                <display item="Sound Volume Master" format="hslider" layout="above"/>
+            </griditem>
+            <griditem gridx="RELATIVE" gridy="2">
+                <display item="Sound Volume Faded" layout="above" label=""/>
+                <display item="Sound Volume Faded" format="hslider" layout="above"/>
+            </griditem>
+            <griditem gridx="RELATIVE" gridy="2">
+                <display item="Sound Min Speed Master" layout="above" label=""/>
+                <display item="Sound Min Speed Master" format="hslider" layout="above"/>
+            </griditem>
+            <griditem gridx="RELATIVE" gridy="2">
+                <display item="Sound Max Speed Master" layout="above" label=""/>
+                <display item="Sound Max Speed Master" format="hslider" layout="above"/>
+            </griditem>
+        </grid>
+        <separator/>
+        <grid ipadx="10" ipady="10">
+            <!-- default padding for all grid items -->
+            <griditem gridx="0" gridy="0" gridwidth="REMAINDER" anchor="LINE_START">
+                <!-- gridwidth for full-width heading -->
+                <label>
+                    <text>Sound Slots</text>
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="1">
+                <column>
+                    <!-- character-based indent via empty column -->
+                    <label>
+                        <text>    </text>
+                    </label>
+                </column>
+                <column>
+                    <label>
+                        <text>Due to the flexible and free-form design of LokSound Decoders, it is possible</text>
+                        <text xml:lang="it">Grazie al progetto flessibile dei decoders LokSound è possibile</text>
+                        <text xml:lang="de">Durch die flexible und freie Gestaltung von LokSound Decodern ist es</text>
+                        <text xml:lang="ca">Pel disseny del LokSound és possible</text>
+                    </label>
+                    <label>
+                        <text>for project designers to assign sounds to arbitrary sound slots.</text>
+                        <text xml:lang="it">assegnare suoni arbitrari ai singoli Slots</text>
+                        <text xml:lang="de">Projekt-Designern möglich Sounds beliebigen Sound-Slots zuzuordnen.</text>
+                        <text xml:lang="ca">Per assignar sons a sa</text>
+                    </label>
+                </column>
+                <column>
+                    <!-- character-based indent via empty column -->
+                    <label>
+                        <text>        </text>
+                    </label>
+                </column>
+                <column>
+                    <label>
+                        <text>Any sound slot labels shown below are only a guide from ESU documentation and</text>
+                        <text xml:lang="it">Tutte le etichette degli sloto visualizzati sono solo esempi presi dalla documentazione ESU</text>
+                        <text xml:lang="de">Alle unten aufgeführten Sound-Slots sind aus der Anleitung der ESU-Dokumentation und passen</text>
+                        <text xml:lang="ca">Els slots inferiors són una guia ESU</text>
+                    </label>
+                    <label>
+                        <text>may not be correct for the particular sound project loaded into your loco decoder.</text>
+                        <text xml:lang="it">e potrebbero anche non corrispondere al particolare progetto caricato nel vostro decoder</text>
+                        <text xml:lang="de">möglicherweise nicht korrekt für das jeweilige Soundprojekt, das in Ihren Lokdecoder geladen wurde.</text>
+                        <text xml:lang="ca">i potser no són correctes pel projecte de so en particular</text>
+                    </label>
+                </column>
+            </griditem>
+            <griditem gridx="1" gridy="1" ipadx="0" weightx="1">
+                <!-- weightx expands column to left-justify row -->
+                <label>
+                    <text/>
+                </label>
+            </griditem>
+        </grid>
+        <grid gridx="NEXT" gridy="CURRENT" ipadx="10" ipady="10">
+            <!-- default settings for all grid items -->
+            <griditem gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+                <!-- weightx expands column to right-justify row -->
+                <soundlabel num="1"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Volume 1" layout="above" label=""/>
+                <display item="Sound Volume 1" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Drive 1" format="checkbox" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Min Speed 1" layout="above" label=""/>
+                <display item="Sound Min Speed 1" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Max Speed 1" layout="above" label=""/>
+                <display item="Sound Max Speed 1" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Config 1" layout="above"/>
+            </griditem>
+            <griditem gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+                <!-- weightx expands column to right-justify row -->
+                <soundlabel num="2"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Volume 2" layout="above" label=""/>
+                <display item="Sound Volume 2" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Drive 2" format="checkbox" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Min Speed 2" layout="above" label=""/>
+                <display item="Sound Min Speed 2" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Max Speed 2" layout="above" label=""/>
+                <display item="Sound Max Speed 2" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Config 2" layout="above"/>
+            </griditem>
+            <griditem gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+                <!-- weightx expands column to right-justify row -->
+                <soundlabel num="3"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Volume 3" layout="above" label=""/>
+                <display item="Sound Volume 3" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Drive 3" format="checkbox" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Min Speed 3" layout="above" label=""/>
+                <display item="Sound Min Speed 3" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Max Speed 3" layout="above" label=""/>
+                <display item="Sound Max Speed 3" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Config 3" layout="above"/>
+            </griditem>
+            <griditem gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+                <!-- weightx expands column to right-justify row -->
+                <soundlabel num="4"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Volume 4" layout="above" label=""/>
+                <display item="Sound Volume 4" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Drive 4" format="checkbox" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Min Speed 4" layout="above" label=""/>
+                <display item="Sound Min Speed 4" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Max Speed 4" layout="above" label=""/>
+                <display item="Sound Max Speed 4" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Config 4" layout="above"/>
+            </griditem>
+            <griditem gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+                <!-- weightx expands column to right-justify row -->
+                <soundlabel num="5"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Volume 5" layout="above" label=""/>
+                <display item="Sound Volume 5" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Drive 5" format="checkbox" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Min Speed 5" layout="above" label=""/>
+                <display item="Sound Min Speed 5" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Max Speed 5" layout="above" label=""/>
+                <display item="Sound Max Speed 5" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Config 5" layout="above"/>
+            </griditem>
+            <griditem gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+                <!-- weightx expands column to right-justify row -->
+                <soundlabel num="6"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Volume 6" layout="above" label=""/>
+                <display item="Sound Volume 6" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Drive 6" format="checkbox" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Min Speed 6" layout="above" label=""/>
+                <display item="Sound Min Speed 6" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Max Speed 6" layout="above" label=""/>
+                <display item="Sound Max Speed 6" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Config 6" layout="above"/>
+            </griditem>
+            <griditem gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+                <!-- weightx expands column to right-justify row -->
+                <soundlabel num="7"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Volume 7" layout="above" label=""/>
+                <display item="Sound Volume 7" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Drive 7" format="checkbox" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Min Speed 7" layout="above" label=""/>
+                <display item="Sound Min Speed 7" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Max Speed 7" layout="above" label=""/>
+                <display item="Sound Max Speed 7" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Config 7" layout="above"/>
+            </griditem>
+            <griditem gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+                <!-- weightx expands column to right-justify row -->
+                <soundlabel num="8"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Volume 8" layout="above" label=""/>
+                <display item="Sound Volume 8" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Drive 8" format="checkbox" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Min Speed 8" layout="above" label=""/>
+                <display item="Sound Min Speed 8" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Max Speed 8" layout="above" label=""/>
+                <display item="Sound Max Speed 8" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Config 8" layout="above"/>
+            </griditem>
+            <griditem gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+                <!-- weightx expands column to right-justify row -->
+                <soundlabel num="9"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Volume 9" layout="above" label=""/>
+                <display item="Sound Volume 9" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Drive 9" format="checkbox" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Min Speed 9" layout="above" label=""/>
+                <display item="Sound Min Speed 9" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Max Speed 9" layout="above" label=""/>
+                <display item="Sound Max Speed 9" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Config 9" layout="above"/>
+            </griditem>
+            <griditem gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+                <!-- weightx expands column to right-justify row -->
+                <soundlabel num="10"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Volume 10" layout="above" label=""/>
+                <display item="Sound Volume 10" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Drive 10" format="checkbox" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Min Speed 10" layout="above" label=""/>
+                <display item="Sound Min Speed 10" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Max Speed 10" layout="above" label=""/>
+                <display item="Sound Max Speed 10" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Config 10" layout="above"/>
+            </griditem>
+            <griditem gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+                <!-- weightx expands column to right-justify row -->
+                <soundlabel num="11"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Volume 11" layout="above" label=""/>
+                <display item="Sound Volume 11" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Drive 11" format="checkbox" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Min Speed 11" layout="above" label=""/>
+                <display item="Sound Min Speed 11" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Max Speed 11" layout="above" label=""/>
+                <display item="Sound Max Speed 11" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Config 11" layout="above"/>
+            </griditem>
+            <griditem gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+                <!-- weightx expands column to right-justify row -->
+                <soundlabel num="12"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Volume 12" layout="above" label=""/>
+                <display item="Sound Volume 12" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Drive 12" format="checkbox" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Min Speed 12" layout="above" label=""/>
+                <display item="Sound Min Speed 12" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Max Speed 12" layout="above" label=""/>
+                <display item="Sound Max Speed 12" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Config 12" layout="above"/>
+            </griditem>
+            <griditem gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+                <!-- weightx expands column to right-justify row -->
+                <soundlabel num="13"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Volume 13" layout="above" label=""/>
+                <display item="Sound Volume 13" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Drive 13" format="checkbox" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Min Speed 13" layout="above" label=""/>
+                <display item="Sound Min Speed 13" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Max Speed 13" layout="above" label=""/>
+                <display item="Sound Max Speed 13" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Config 13" layout="above"/>
+            </griditem>
+            <griditem gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+                <!-- weightx expands column to right-justify row -->
+                <soundlabel num="14"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Volume 14" layout="above" label=""/>
+                <display item="Sound Volume 14" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Drive 14" format="checkbox" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Min Speed 14" layout="above" label=""/>
+                <display item="Sound Min Speed 14" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Max Speed 14" layout="above" label=""/>
+                <display item="Sound Max Speed 14" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Config 14" layout="above"/>
+            </griditem>
+            <griditem gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+                <!-- weightx expands column to right-justify row -->
+                <soundlabel num="15"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Volume 15" layout="above" label=""/>
+                <display item="Sound Volume 15" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Drive 15" format="checkbox" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Min Speed 15" layout="above" label=""/>
+                <display item="Sound Min Speed 15" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Max Speed 15" layout="above" label=""/>
+                <display item="Sound Max Speed 15" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Config 15" layout="above"/>
+            </griditem>
+            <griditem gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+                <!-- weightx expands column to right-justify row -->
+                <soundlabel num="16"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Volume 16" layout="above" label=""/>
+                <display item="Sound Volume 16" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Drive 16" format="checkbox" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Min Speed 16" layout="above" label=""/>
+                <display item="Sound Min Speed 16" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Max Speed 16" layout="above" label=""/>
+                <display item="Sound Max Speed 16" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Config 16" layout="above"/>
+            </griditem>
+            <griditem gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+                <!-- weightx expands column to right-justify row -->
+                <soundlabel num="17"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Volume 17" layout="above" label=""/>
+                <display item="Sound Volume 17" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Drive 17" format="checkbox" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Min Speed 17" layout="above" label=""/>
+                <display item="Sound Min Speed 17" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Max Speed 17" layout="above" label=""/>
+                <display item="Sound Max Speed 17" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Config 17" layout="above"/>
+            </griditem>
+            <griditem gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+                <!-- weightx expands column to right-justify row -->
+                <soundlabel num="18"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Volume 18" layout="above" label=""/>
+                <display item="Sound Volume 18" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Drive 18" format="checkbox" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Min Speed 18" layout="above" label=""/>
+                <display item="Sound Min Speed 18" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Max Speed 18" layout="above" label=""/>
+                <display item="Sound Max Speed 18" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Config 18" layout="above"/>
+            </griditem>
+            <griditem gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+                <!-- weightx expands column to right-justify row -->
+                <soundlabel num="19"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Volume 19" layout="above" label=""/>
+                <display item="Sound Volume 19" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Drive 19" format="checkbox" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Min Speed 19" layout="above" label=""/>
+                <display item="Sound Min Speed 19" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Max Speed 19" layout="above" label=""/>
+                <display item="Sound Max Speed 19" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Config 19" layout="above"/>
+            </griditem>
+            <griditem gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+                <!-- weightx expands column to right-justify row -->
+                <soundlabel num="20"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Volume 20" layout="above" label=""/>
+                <display item="Sound Volume 20" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Drive 20" format="checkbox" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Min Speed 20" layout="above" label=""/>
+                <display item="Sound Min Speed 20" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Max Speed 20" layout="above" label=""/>
+                <display item="Sound Max Speed 20" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Config 20" layout="above"/>
+            </griditem>
+            <griditem gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+                <!-- weightx expands column to right-justify row -->
+                <soundlabel num="21"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Volume 21" layout="above" label=""/>
+                <display item="Sound Volume 21" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Drive 21" format="checkbox" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Min Speed 21" layout="above" label=""/>
+                <display item="Sound Min Speed 21" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Max Speed 21" layout="above" label=""/>
+                <display item="Sound Max Speed 21" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Config 21" layout="above"/>
+            </griditem>
+            <griditem gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+                <!-- weightx expands column to right-justify row -->
+                <soundlabel num="22"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Volume 22" layout="above" label=""/>
+                <display item="Sound Volume 22" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Drive 22" format="checkbox" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Min Speed 22" layout="above" label=""/>
+                <display item="Sound Min Speed 22" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Max Speed 22" layout="above" label=""/>
+                <display item="Sound Max Speed 22" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Config 22" layout="above"/>
+            </griditem>
+            <griditem gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+                <!-- weightx expands column to right-justify row -->
+                <soundlabel num="23"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Volume 23" layout="above" label=""/>
+                <display item="Sound Volume 23" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Drive 23" format="checkbox" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Min Speed 23" layout="above" label=""/>
+                <display item="Sound Min Speed 23" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Max Speed 23" layout="above" label=""/>
+                <display item="Sound Max Speed 23" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Config 23" layout="above"/>
+            </griditem>
+            <griditem gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+                <!-- weightx expands column to right-justify row -->
+                <soundlabel num="24"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Volume 24" layout="above" label=""/>
+                <display item="Sound Volume 24" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Drive 24" format="checkbox" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Min Speed 24" layout="above" label=""/>
+                <display item="Sound Min Speed 24" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Max Speed 24" layout="above" label=""/>
+                <display item="Sound Max Speed 24" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Config 24" layout="above"/>
+            </griditem>
+            <griditem gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+                <!-- weightx expands column to right-justify row -->
+                <soundlabel num="25"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Volume 25" layout="above" label=""/>
+                <display item="Sound Volume 25" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Drive 25" format="checkbox" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Min Speed 25" layout="above" label=""/>
+                <display item="Sound Min Speed 25" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Max Speed 25" layout="above" label=""/>
+                <display item="Sound Max Speed 25" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Config 25" layout="above"/>
+            </griditem>
+            <griditem gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+                <!-- weightx expands column to right-justify row -->
+                <soundlabel num="26"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Volume 26" layout="above" label=""/>
+                <display item="Sound Volume 26" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Drive 26" format="checkbox" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Min Speed 26" layout="above" label=""/>
+                <display item="Sound Min Speed 26" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Max Speed 26" layout="above" label=""/>
+                <display item="Sound Max Speed 26" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Config 26" layout="above"/>
+            </griditem>
+            <griditem gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+                <!-- weightx expands column to right-justify row -->
+                <soundlabel num="27"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Volume 27" layout="above" label=""/>
+                <display item="Sound Volume 27" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Drive 27" format="checkbox" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Min Speed 27" layout="above" label=""/>
+                <display item="Sound Min Speed 27" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Max Speed 27" layout="above" label=""/>
+                <display item="Sound Max Speed 27" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Config 27" layout="above"/>
+            </griditem>
+            <griditem gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+                <!-- weightx expands column to right-justify row -->
+                <soundlabel num="28"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Volume 28" layout="above" label=""/>
+                <display item="Sound Volume 28" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Drive 28" format="checkbox" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Min Speed 28" layout="above" label=""/>
+                <display item="Sound Min Speed 28" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Max Speed 28" layout="above" label=""/>
+                <display item="Sound Max Speed 28" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Config 28" layout="above"/>
+            </griditem>
+            <griditem gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+                <!-- weightx expands column to right-justify row -->
+                <soundlabel num="29"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Volume 29" layout="above" label=""/>
+                <display item="Sound Volume 29" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Drive 29" format="checkbox" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Min Speed 29" layout="above" label=""/>
+                <display item="Sound Min Speed 29" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Max Speed 29" layout="above" label=""/>
+                <display item="Sound Max Speed 29" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Config 29" layout="above"/>
+            </griditem>
+            <griditem gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+                <!-- weightx expands column to right-justify row -->
+                <soundlabel num="30"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Volume 30" layout="above" label=""/>
+                <display item="Sound Volume 30" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Drive 30" format="checkbox" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Min Speed 30" layout="above" label=""/>
+                <display item="Sound Min Speed 30" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Max Speed 30" layout="above" label=""/>
+                <display item="Sound Max Speed 30" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Config 30" layout="above"/>
+            </griditem>
+            <griditem gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+                <!-- weightx expands column to right-justify row -->
+                <soundlabel num="31"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Volume 31" layout="above" label=""/>
+                <display item="Sound Volume 31" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Drive 31" format="checkbox" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Min Speed 31" layout="above" label=""/>
+                <display item="Sound Min Speed 31" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Max Speed 31" layout="above" label=""/>
+                <display item="Sound Max Speed 31" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Config 31" layout="above"/>
+            </griditem>
+            <griditem gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+                <!-- weightx expands column to right-justify row -->
+                <soundlabel num="32"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Volume 32" layout="above" label=""/>
+                <display item="Sound Volume 32" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Drive 32" format="checkbox" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Min Speed 32" layout="above" label=""/>
+                <display item="Sound Min Speed 32" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Max Speed 32" layout="above" label=""/>
+                <display item="Sound Max Speed 32" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Config 32" layout="above"/>
+            </griditem>
+            <griditem gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+                <!-- weightx expands column to right-justify row -->
+                <soundlabel num="33"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Volume 33" layout="above" label=""/>
+                <display item="Sound Volume 33" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Drive 33" format="checkbox" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Min Speed 33" layout="above" label=""/>
+                <display item="Sound Min Speed 33" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Max Speed 33" layout="above" label=""/>
+                <display item="Sound Max Speed 33" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Config 33" layout="above"/>
+            </griditem>
+            <griditem gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+                <!-- weightx expands column to right-justify row -->
+                <soundlabel num="34"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Volume 34" layout="above" label=""/>
+                <display item="Sound Volume 34" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Drive 34" format="checkbox" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Min Speed 34" layout="above" label=""/>
+                <display item="Sound Min Speed 34" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Max Speed 34" layout="above" label=""/>
+                <display item="Sound Max Speed 34" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Config 34" layout="above"/>
+            </griditem>
+            <griditem gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+                <!-- weightx expands column to right-justify row -->
+                <soundlabel num="35"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Volume 35" layout="above" label=""/>
+                <display item="Sound Volume 35" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Drive 35" format="checkbox" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Min Speed 35" layout="above" label=""/>
+                <display item="Sound Min Speed 35" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Max Speed 35" layout="above" label=""/>
+                <display item="Sound Max Speed 35" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Config 35" layout="above"/>
+            </griditem>
+            <griditem gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+                <!-- weightx expands column to right-justify row -->
+                <soundlabel num="36"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Volume 36" layout="above" label=""/>
+                <display item="Sound Volume 36" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Drive 36" format="checkbox" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Min Speed 36" layout="above" label=""/>
+                <display item="Sound Min Speed 36" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Max Speed 36" layout="above" label=""/>
+                <display item="Sound Max Speed 36" format="hslider" layout="above"/>
+            </griditem>
+            <griditem>
+                <display item="Sound Config 36" layout="above"/>
+            </griditem>
+        </grid>
+        <separator/>
+    </column>
 </pane>

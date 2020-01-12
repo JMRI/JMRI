@@ -8,7 +8,11 @@ import com.digi.xbee.api.io.IOLine;
 import com.digi.xbee.api.io.IOMode;
 import com.digi.xbee.api.io.IOSample;
 import com.digi.xbee.api.listeners.IIOSampleReceiveListener;
+
+import java.util.Locale;
+import javax.annotation.Nonnull;
 import jmri.JmriException;
+import jmri.NamedBean;
 import jmri.Sensor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,34 +20,34 @@ import org.slf4j.LoggerFactory;
 /**
  * Manage the XBee specific Sensor implementation.
  *
- * System names are "ZSnnn", where nnn is the sensor number without padding.
- * Or "ZSstring:pin", where string is a node address and pin is the io pin used.
+ * System names are formatted as one of:
+ * <ul>
+ *   <li>"ZSnnn", where nnn is the sensor number without padding</li>
+ *   <li>"ZSstring:pin", where string is a node address and pin is the io pin used.</li>
+ * </ul>
+ * Z is the user-configurable system prefix.
  *
  * @author Paul Bender Copyright (C) 2003-2016
  */
 public class XBeeSensorManager extends jmri.managers.AbstractSensorManager implements IIOSampleReceiveListener{
 
     // ctor has to register for XBee events
-    public XBeeSensorManager(XBeeTrafficController controller, String prefix) {
-        tc = controller;
-        this.prefix = prefix;
+    public XBeeSensorManager(XBeeConnectionMemo memo) {
+        super(memo);
+        tc = (XBeeTrafficController) memo.getTrafficController();
         tc.getXBee().addIOSampleListener(this);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    @Nonnull
+    public XBeeConnectionMemo getMemo() {
+        return (XBeeConnectionMemo) memo;
     }
-    protected String prefix = null;
 
     protected XBeeTrafficController tc = null;
-
-    @Deprecated
-    static public XBeeSensorManager instance() {
-        return mInstance;
-    }
-    @Deprecated
-    static private XBeeSensorManager mInstance = null;
 
     // to free resources when no longer used
     @Override
@@ -54,8 +58,15 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
 
     // XBee specific methods
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * System name is normalized to ensure uniqueness.
+     * @throws IllegalArgumentException when SystemName can't be converted
+     */
     @Override
-    public Sensor createNewSensor(String systemName, String userName) {
+    @Nonnull
+    public Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         XBeeNode curNode = null;
         String name = addressFromSystemName(systemName);
         if ((curNode = (XBeeNode) tc.getNodeFromName(name)) == null) {
@@ -63,31 +74,46 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
                 try {
                     curNode = (XBeeNode) tc.getNodeFromAddress(Integer.parseInt(name));
                 } catch (java.lang.NumberFormatException nfe) {
-                    // if there was a number format exception, we couldn't
-                    // find the node.
-                    curNode = null;
+                    // we couldn't find the node
+                    throw new IllegalArgumentException("Unable to convert " +  // NOI18N
+                            systemName + " to XBee sensor address"); // NOI18N
                 }
             }
         }
         int pin = pinFromSystemName(systemName);
         if (curNode != null && !curNode.getPinAssigned(pin)) {
-            log.debug("Adding sensor to pin " + pin);
+            log.debug("Adding sensor to pin {}", pin);
             curNode.setPinBean(pin, new XBeeSensor(systemName, userName, tc));
             return (XBeeSensor) curNode.getPinBean(pin);
         } else {
-            log.debug("Failed to create sensor " + systemName);
-            return null;
+            log.debug("Failed to create sensor {}", systemName);
+            throw new IllegalArgumentException("Can't assign pin for " +  // NOI18N
+                    systemName +
+                    " XBee sensor"); // NOI18N
         }
     }
 
     /**
-     * Public method to validate system name format.
-     *
-     * @param systemName Xbee id format with pins to be checked
-     * @return 'true' if system name has a valid format, else returns 'false'
+     * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
+        super.validateSystemNameFormat(name, locale);
+        int pin = pinFromSystemName(name);
+        if (pin < 0 || pin > 7) {
+            throw new NamedBean.BadSystemNameException(
+                    Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidPin", name),
+                    Bundle.getMessage(locale, "SystemNameInvalidPin", name));
+        }
+        return name;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         if (tc.getNodeFromName(addressFromSystemName(systemName)) == null
                 && tc.getNodeFromAddress(addressFromSystemName(systemName)) == null) {
             try {
@@ -144,7 +170,7 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
 
                         // Sensor name is prefix followed by NI/address
                         // followed by the bit number.
-                        String sName = prefix + typeLetter()
+                        String sName = getSystemNamePrefix()
                                 + node.getPreferedName() + ":" + i;
                         XBeeSensor s = (XBeeSensor) getSensor(sName);
                         if (s == null) {
@@ -170,12 +196,13 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
     // for now, set this to false. multiple additions currently works
     // partially, but not for all possible cases.
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return false;
     }
 
     @Override
-    public String createSystemName(String curAddress, String prefix) throws JmriException {
+    @Nonnull
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         String encoderAddress = addressFromSystemName(prefix + typeLetter() + curAddress);
         int input = pinFromSystemName(prefix + typeLetter() + curAddress);
 
@@ -209,7 +236,7 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
             //Address format passed is in the form of encoderAddress:input or L:light address
             int seperator = systemName.indexOf(":");
             try {
-                input = Integer.valueOf(systemName.substring(seperator + 1)).intValue();
+                input = Integer.parseInt(systemName.substring(seperator + 1));
             } catch (NumberFormatException ex) {
                 log.debug("Unable to convert " + systemName + " into the cab and input format of nn:xx");
                 return -1;
@@ -230,7 +257,7 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
     }
 
     @Override
-    public void deregister(jmri.Sensor s) {
+    public void deregister(@Nonnull jmri.Sensor s) {
         super.deregister(s);
         // remove the specified sensor from the associated XBee pin.
         String systemName = s.getSystemName();
@@ -250,9 +277,9 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
         }
         if (curNode != null) {
             if (curNode.removePinBean(pin, s)) {
-                log.debug("Removing sensor from pin " + pin);
+                log.debug("Removing sensor from pin {}", pin);
             } else {
-                log.debug("Failed to removing sensor from pin " + pin);
+                log.debug("Failed to removing sensor from pin {}", pin);
             }
         }
     }
@@ -272,12 +299,11 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
     }
 
     /**
-     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddInputEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddEntryToolTip");
     }
 
     private final static Logger log = LoggerFactory.getLogger(XBeeSensorManager.class);

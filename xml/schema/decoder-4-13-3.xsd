@@ -1,0 +1,1019 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="schema2xhtml.xsl" type="text/xsl"?>
+
+<!-- Schema for JMRI decoder definitions       -->
+
+<!-- This schema is part of JMRI. Copyright 2009, 2010, 2015                -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+
+    <!-- not yet in proper Venetian blind form -->
+    <!-- needs to share the pane type with programmer definition -->
+
+    <!-- needs more attribute restrictions -->
+    <!-- needs attribute defaults -->
+
+<xs:schema xmlns:xi="http://www.w3.org/2001/XInclude"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsi ="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:docbook="http://docbook.org/ns/docbook"
+           xmlns:jmri="http://jmri.org/xml/schema/JMRIschema"
+           xsi:schemaLocation="
+                http://jmri.org/xml/schema/JMRIschema http://jmri.org/xml/schema/JMRIschema.xsd
+                http://docbook.org/ns/docbook http://jmri.org/xml/schema/docbook/docbook.xsd
+            "
+        >
+
+    <xs:include schemaLocation="http://jmri.org/xml/schema/types/general.xsd"/>
+    <xs:include schemaLocation="http://jmri.org/xml/schema/types/panetype.xsd"/>
+    <xs:import namespace='http://docbook.org/ns/docbook' schemaLocation='http://jmri.org/xml/schema/docbook/docbook.xsd'/>
+    <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2001/03/xml.xsd" />
+    <xs:import namespace="http://www.w3.org/2001/XInclude" schemaLocation="http://www.w3.org/2001/XInclude.xsd"/>
+
+    <xs:annotation>
+      <xs:documentation>
+      Defines the JMRI decoder definition files.
+
+      This version is for use with JMRI 4.1.1 and later, in which
+      support for the "ivariable" element and contained elements
+      have been deprecated.  Those will not validate with this
+      schema.
+
+      </xs:documentation>
+      <xs:appinfo>
+        <jmri:usingclass configurexml="false">jmri.jmrit.decoderdefn.DecoderFile</jmri:usingclass>
+        <jmri:usingclass configurexml="false">jmri.jmrit.symbolicprog.VariableTableModel</jmri:usingclass>
+      </xs:appinfo>
+    </xs:annotation>
+
+  <xs:complexType name="VersionType">
+      <xs:attribute name="author" type="xs:string" />
+      <xs:attribute name="version" type="xs:string" />
+      <xs:attribute name="lastUpdated" type="xs:string" />
+  </xs:complexType>
+
+  <xs:complexType name="DecoderType">
+    <xs:sequence>
+
+      <xs:element name="family" type="FamilyType" minOccurs="1" maxOccurs="1" />
+
+      <xs:element name="programming" minOccurs="1" maxOccurs="1" >
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="capability" minOccurs="0" maxOccurs="unbounded">
+              <xs:annotation><xs:documentation>
+              Indicate programmer facades to be added.
+              Later ones work through earlier ones.
+              </xs:documentation></xs:annotation>
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="name" minOccurs="1" maxOccurs="1">
+                    <xs:annotation><xs:documentation>
+                    Required name of the particular facade to instantiate
+                    </xs:documentation></xs:annotation>
+                  </xs:element>
+                  <xs:sequence>
+                    <xs:element name="parameter" minOccurs="0" maxOccurs="unbounded">
+                      <xs:annotation><xs:documentation>
+                      Parameter values for a specific facade.
+                      </xs:documentation></xs:annotation>
+                      <xs:complexType>
+                      <xs:simpleContent>
+                        <xs:extension base="xs:string">
+                          <xs:attribute name="name" type="xs:string" >
+                            <xs:annotation><xs:documentation>
+                            Name of the particular attribute being set.
+                            Whether this is required is defined by a
+                            particular facade; facades may take their
+                            parameters in a specified order instead of using names.
+                            </xs:documentation></xs:annotation>
+                          </xs:attribute>
+                        </xs:extension>
+                      </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="mode" type="modeType" minOccurs="0" maxOccurs="unbounded">
+              <xs:annotation><xs:documentation>
+              Content is the internal name of a supported programmer mode.
+              Having at least one of these (or the
+              historical direct, paged, et al attributes)
+              is required or programming is not possible.
+              </xs:documentation></xs:annotation>
+            </xs:element>
+          </xs:sequence>
+          <xs:attribute name="direct" default="yes" >
+            <xs:annotation><xs:documentation>
+            Yes indicates programmer supports one of the direct
+            programming modes,
+            specifically the DIRECTMODE, none, DIRECTBITMODE or DIRECTBYTEMODE
+            respectively.
+            </xs:documentation></xs:annotation>
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="yes"/>
+                <xs:enumeration value="no"/>
+                <xs:enumeration value="bitOnly"/>
+                <xs:enumeration value="byteOnly"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="paged" type="yesNoType" default="yes">
+            <xs:annotation><xs:documentation>
+            Yes indicates programmer supports Paged mode,
+            specifically the PAGEMODE type.
+            </xs:documentation></xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="register" type="yesNoType" default="yes">
+            <xs:annotation><xs:documentation>
+            Yes indicates programmer supports Register mode,
+            specifically the REGISTERMODE type.
+            </xs:documentation></xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="ops" type="yesNoType" default="yes">
+            <xs:annotation><xs:documentation>
+            Yes indicates programmer supports Ops mode for locomotive decoders,
+            specifically the OPSBITMODE type.
+            </xs:documentation></xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="transpRead" type="yesNoType" default="no">
+            <xs:annotation><xs:documentation>
+            Not a programming mode per say, this indicates that the
+            decoder is capable of replying to CV reads via Digitrax Transponding.
+            </xs:documentation></xs:annotation>
+          </xs:attribute>
+        </xs:complexType>
+      </xs:element>
+
+      <xs:element name="variables" type="VariablesType" minOccurs="1" maxOccurs="1">
+        <xs:unique name="UniqueVariableItemAttribute2">
+          <xs:annotation><xs:documentation>Insist that the variable item attribute is unique</xs:documentation></xs:annotation>
+          <xs:selector xpath=".//variable"/>
+          <xs:field xpath="@item"/>
+          <xs:field xpath="@include"/>
+          <xs:field xpath="@exclude"/>
+        </xs:unique>
+      </xs:element>
+
+      <xs:element name="resets" type="ResetsType" minOccurs="0" maxOccurs="1"/>
+
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:element name="decoder-config">
+    <xs:complexType>
+      <xs:sequence>
+          <xs:element ref="docbook:copyright" minOccurs="0" maxOccurs="1" >
+              <xs:annotation><xs:documentation>
+              DocBook element(s) providing copyright information in standard form.
+              </xs:documentation></xs:annotation>
+          </xs:element>
+          <xs:element ref="docbook:authorgroup" minOccurs="0" maxOccurs="unbounded" >
+              <xs:annotation><xs:documentation>
+              DocBook element(s) describing the authors in standard form.
+              </xs:documentation></xs:annotation>
+          </xs:element>
+          <xs:element ref="docbook:revhistory" minOccurs="0" maxOccurs="unbounded" >
+              <xs:annotation><xs:documentation>
+              DocBook element(s) describing the revision history in standard form.
+              </xs:documentation></xs:annotation>
+          </xs:element>
+        <xs:element name="version" type="VersionType" minOccurs="0" maxOccurs="unbounded">
+              <xs:annotation><xs:documentation>
+              Older form of version information. Not deprecated as such, but prefer
+              the authorgroup/revhistory style to enable future automated processing.
+              </xs:documentation></xs:annotation>
+        </xs:element>
+        <xs:element name="decoder" type="DecoderType" minOccurs="1" maxOccurs="1"/>
+        <xs:element name="pane"    type="PaneType" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+      <xs:attribute name="showEmptyPanes" type="yesNoType"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="decoderIndex-config">
+    <xs:annotation><xs:documentation>
+        Defines the content of the JMRI decoderIndex.xml file.
+    </xs:documentation></xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="decoderIndex" minOccurs="1" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="mfgList" minOccurs="1" maxOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="manufacturer" minOccurs="1" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:attribute name="mfg" type="xs:string"/>
+                        <xs:attribute name="mfgID" type="xs:int"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="nmraListDate" type="xs:string"/>
+                  <xs:attribute name="updated" type="xs:string"/>
+                  <xs:attribute name="lastadd" type="xs:string">
+                    <xs:annotation><xs:documentation>
+                        Comma-separated list of numbers recently added; next time
+                        you update, check to see if these entries have had
+                        names changed to correct NMRA transcription errors. Also can be
+                        useful to look near these values for new additions to the
+                        NMRA list.
+                    </xs:documentation></xs:annotation>
+                  </xs:attribute>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="familyList" minOccurs="1" maxOccurs="1" >
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="family" minOccurs="1" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:complexContent>
+                          <xs:extension base="FamilyType">
+                            <xs:annotation><xs:documentation>
+                                This element is the same as in the decoder definition itself,
+                                with the addition of a file name attribute.
+                            </xs:documentation></xs:annotation>
+                            <xs:attribute name="file" type="xs:string" />
+                          </xs:extension>
+                        </xs:complexContent>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="version" type="xs:int"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="variables" type="VariablesType">
+    <xs:annotation>
+      <xs:documentation>
+      Provides a base element that can be used in "variables" fragment files, those
+      little files that are XIncluded into primary decoder files.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:unique name="UniqueVariableItemAttribute3">
+      <xs:annotation><xs:documentation>Insist that the variable item attribute is unique</xs:documentation></xs:annotation>
+      <xs:selector xpath=".//variable"/>
+      <xs:field xpath="@item"/>
+      <xs:field xpath="@include"/> <!-- Duplicates are OK so long as include, exclude only get one. -->
+      <xs:field xpath="@exclude"/> <!-- This isn't quite right, but it's a start -->
+    </xs:unique>
+  </xs:element>
+
+  <xs:element name="group" type="PaneGenericGroupType">
+    <xs:annotation>
+      <xs:documentation>
+      Provides a base element that can be used in "group" fragment files, those
+      little files that are XIncluded into primary decoder files.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
+  <xs:element name="enumVal" type="EnumValType">
+    <xs:annotation>
+      <xs:documentation>
+      Provides a base element that can be used in "enumVal" fragment files, those
+      little files that are XIncluded into primary decoder files.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
+  <xs:element name="enumChoiceGroup" type="EnumChoiceGroupType">
+    <xs:annotation>
+      <xs:documentation>
+      Provides a base element that can be used in "enumChoiceGroup" fragment files, those
+      little files that are XIncluded into primary decoder files.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
+  <xs:element name="resets" type="ResetsType" >
+    <xs:annotation>
+      <xs:documentation>
+      Provides a base element that can be used in "resets" fragment files, those
+      little files that are XIncluded into primary decoder files.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
+  <xs:complexType name="FamilyType">
+    <xs:sequence>
+
+      <xs:element name="model" minOccurs="0" maxOccurs="unbounded" >
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="versionCV" minOccurs="0" maxOccurs="unbounded" >
+              <xs:complexType>
+                <xs:attribute name="lowVersionID" type="xs:int" />
+                <xs:attribute name="highVersionID" type="xs:int" />
+                <xs:attribute name="comment" type="xs:string" />
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="output" minOccurs="0" maxOccurs="unbounded" >
+              <xs:annotation><xs:documentation>
+                Can represent either an electrical output, i.e. a wire to a light,
+                or some other kind of output, i.e. a sound,
+                or even internal state operations, e.g. "Switch to alternating lights".
+              </xs:documentation></xs:annotation>
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="label" minOccurs="0" maxOccurs="unbounded">
+                    <xs:annotation><xs:documentation>Multiple elements provide internationalized label text</xs:documentation></xs:annotation>
+                    <xs:complexType mixed="true">
+                        <xs:attribute ref="xml:lang" default=""/>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:sequence>
+                <xs:attribute name="name" type="xs:string" use="required"/>
+                <xs:attribute name="label" type="xs:string" />
+                <xs:attribute name="comment" type="xs:string" />
+                <xs:attribute name="maxcurrent" type="xs:string" />
+                <xs:attribute name="connection" default="unspecified" >
+                  <xs:simpleType>
+                    <xs:restriction base="xs:token" >
+                      <xs:enumeration value="unspecified"/>
+                      <xs:enumeration value="plug"/>
+                      <xs:enumeration value="wire"/>
+                      <xs:enumeration value="solder"/>
+                      <xs:enumeration value="LED"/>
+                      <xs:enumeration value="bulb"/>
+                      <xs:enumeration value="other"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+              <xs:unique name="UniqueOutputLabel1">
+                <xs:annotation><xs:documentation>Insist that there's only one label per language</xs:documentation></xs:annotation>
+                <xs:selector xpath="label"/>
+                <xs:field xpath="@xml:lang"/>
+              </xs:unique>
+            </xs:element>
+            <xs:element name="size" minOccurs="0" maxOccurs="1" >
+              <xs:annotation><xs:documentation>
+                Describes the physical size of the package, for reference.
+              </xs:documentation></xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="length" type="xs:string" />
+                <xs:attribute name="width" type="xs:string" />
+                <xs:attribute name="height" type="xs:string" />
+                <xs:attribute name="units" use="required" >
+                  <xs:simpleType>
+                    <xs:restriction base="xs:token" >
+                      <xs:enumeration value="inches"/>
+                      <xs:enumeration value="mm"/>
+                      <xs:enumeration value="cm"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+                <xs:attribute name="comment" type="xs:string" />
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="protocols" minOccurs="0" maxOccurs="1" >
+              <xs:annotation><xs:documentation>
+                Lists communication protocols this decoder will respond to.
+              </xs:documentation></xs:annotation>
+              <xs:complexType>
+              <xs:sequence>
+                <xs:element name="protocol" minOccurs="1" maxOccurs="unbounded">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:token" >
+                      <xs:enumeration value="dcc"/>
+                      <xs:enumeration value="selectrix"/>
+                      <xs:enumeration value="motorola"/>
+                      <xs:enumeration value="mfx"/>
+                      <xs:enumeration value="m4"/>
+                      <xs:enumeration value="openlcb"/>
+                      <xs:enumeration value="other">
+                        <xs:annotation><xs:documentation>Intended only as a temporary for new protocols until schema can be updated.</xs:documentation></xs:annotation>
+                      </xs:enumeration>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="functionlabels" type="functionlabelsType" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="soundlabels" type="soundlabelsType" minOccurs="0" maxOccurs="1"/>
+          </xs:sequence>
+          <xs:attribute name="model" type="familyModelNameType" use="required" />
+          <xs:attribute name="show" type="yesNoMaybeType" default="yes" >
+            <xs:annotation><xs:documentation>&quot;yes&quot; always shows in the full decoder model list; &quot;no&quot; never shows in the full decoder model list; &quot;maybe&quot; shows when this model has been detected</xs:documentation></xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="options" type="xs:string" />
+          <xs:attribute name="comment" type="xs:string" />
+          <xs:attribute name="numFns" type="xs:int">
+              <xs:annotation><xs:documentation>
+              This is a legacy attribute that limits the total number of function mapping lines displayed. 
+              It is no longer required as there are many optional variations as well as
+              the original F0F, F0R &amp; F1-F28.
+              Hence the JMRI code now automatically suppresses unused lines.
+              </xs:documentation></xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="numOuts" type="xs:int" >
+              <xs:annotation><xs:documentation>
+              Number of physical outputs (wires) on the decoder.
+              For example, a decoder with three wires and two sounds would have this as 3.
+              It does not affect the number of columns displayed,
+              the JMRI code shows all used columns.
+              </xs:documentation></xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="lowVersionID" type="xs:int" />
+          <xs:attribute name="highVersionID" type="xs:int" />
+          <xs:attribute name="productID" type="xs:string" >
+            <xs:annotation><xs:documentation>
+                For a decoder definition which
+                describes a device implementing the LocoNet SV2 messaging protocol,
+                this value is used to match a "discovered" device
+                to an appropriate decoder definition
+            </xs:documentation></xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="developerID" type="xs:int" default="-1" >
+            <xs:annotation><xs:documentation>
+                For a decoder definition which
+                describes a device implementing the LocoNet SV2 messaging protocol,
+                this value is used to match a "discovered" device
+                to an appropriate decoder definition
+            </xs:documentation></xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="maxInputVolts" type="xs:string" />
+          <xs:attribute name="maxMotorCurrent" type="xs:string" />
+          <xs:attribute name="maxTotalCurrent" type="xs:string" />
+          <xs:attribute name="formFactor" type="xs:string" />
+          <xs:attribute name="nmraWarrant" type="yesNoType" default="no" />
+          <xs:attribute name="nmraWarrantStart" type="xs:string" />
+          <xs:attribute name="nmraWarrantEnd" type="xs:string" />
+          <xs:attribute name="connector" default="unspecified" >
+            <xs:simpleType>
+              <xs:restriction base="xs:token"  >
+                <xs:enumeration value="unspecified"/>
+                <xs:enumeration value="NMRAsmall"/>
+                <xs:enumeration value="NMRAmedium"/>
+                <xs:enumeration value="NMRAlarge"/>
+                <xs:enumeration value="9pin"/>
+                <xs:enumeration value="Wires"/>
+                <xs:enumeration value="21MTC"/>
+                <xs:enumeration value="Next18"/>
+                <xs:enumeration value="PluX8"/>
+                <xs:enumeration value="PluX12"/>
+                <xs:enumeration value="PluX16"/>
+                <xs:enumeration value="PluX22"/>
+                <xs:enumeration value="NEM651"/>
+                <xs:enumeration value="NEM652"/>
+                <xs:enumeration value="Wires/NEM651"/>
+                <xs:enumeration value="Wires/NEM652"/>
+                <xs:enumeration value="Wires/NEM651/NEM652"/>
+                <xs:enumeration value="16pin"/>
+                <xs:enumeration value="21pin"/>
+                <xs:enumeration value="DropIn"/>
+                <xs:enumeration value="SUSI"/>
+                <xs:enumeration value="other"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="extFnsNmraF13" type="yesNoType" >
+            <xs:annotation><xs:documentation>
+                Functions 13 and up are implemented via NMRA-standard function DCC packets
+            </xs:documentation></xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="extFnsMRC" type="yesNoType" >
+            <xs:annotation><xs:documentation>
+                Functions 13 and up are implemented via MRC's non-standard use of DCC packets
+            </xs:documentation></xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="extFnsESU" type="yesNoType" >
+            <xs:annotation><xs:documentation>
+                The decoder implement's ESU's function mapping instead of the NMRA's.
+            </xs:documentation></xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="extFnsNmraBSC" type="yesNoType" >
+            <xs:annotation><xs:documentation>
+                The decoder will respond to Binary State Control DCC packets. This is uncommon.
+            </xs:documentation></xs:annotation>
+          </xs:attribute>
+
+          <xs:attribute name="replacementModel" type="xs:string" default="">
+            <xs:annotation><xs:documentation>Update Decoders will replace the current model with the one in this attribute if non-blank</xs:documentation></xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="replacementFamily" type="xs:string" default="">
+            <xs:annotation><xs:documentation>Update Decoders will replace the current family with the one in this attribute if non-blank</xs:documentation></xs:annotation>
+          </xs:attribute>
+        </xs:complexType>
+      </xs:element>
+
+      <xs:element name="functionlabels" type="functionlabelsType" minOccurs="0" maxOccurs="1"/>
+
+      <xs:element name="soundlabels" type="soundlabelsType" minOccurs="0" maxOccurs="1"/>
+
+      <xs:element name="comment" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation>Multiple elements provide internationalized comment text</xs:documentation></xs:annotation>
+      </xs:element>
+
+    </xs:sequence>
+    <xs:attribute name="name" type="familyModelNameType" />
+    <xs:attribute name="mfg" type="xs:string" />
+    <xs:attribute name="lowVersionID" type="xs:int" />
+    <xs:attribute name="highVersionID" type="xs:int" />
+    <xs:attribute name="type" type="xs:string" />
+    <xs:attribute name="comment" type="xs:string" />
+  </xs:complexType>
+
+  <xs:complexType name="functionlabelsType">
+    <xs:sequence>
+      <xs:element name="functionlabel" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType mixed="true">
+          <xs:sequence>
+            <xs:element name="text" minOccurs="0" maxOccurs="unbounded" >
+              <xs:unique name="UniqueFunctionText1">
+                <xs:annotation><xs:documentation>Insist that there's only one text per language</xs:documentation></xs:annotation>
+                <xs:selector xpath="text"/>
+                <xs:field xpath="@xml:lang"/>
+              </xs:unique>
+            </xs:element>
+          </xs:sequence>
+          <xs:attribute name="num" type="xs:string"/>
+          <xs:attribute name="lockable" type="xs:string"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="soundlabelsType">
+    <xs:sequence>
+      <xs:element name="soundlabel" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType mixed="true">
+          <xs:sequence>
+            <xs:element name="text" minOccurs="0" maxOccurs="unbounded" >
+              <xs:unique name="UniqueSoundText1">
+                <xs:annotation><xs:documentation>Insist that there's only one text per language</xs:documentation></xs:annotation>
+                <xs:selector xpath="text"/>
+                <xs:field xpath="@xml:lang"/>
+              </xs:unique>
+            </xs:element>
+          </xs:sequence>
+          <xs:attribute name="num" type="xs:string"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="VariablesType">
+    <xs:sequence minOccurs="0" maxOccurs="1">
+        <xs:element name="qualifier" type="QualifierType" minOccurs="0" maxOccurs="unbounded" >
+          <xs:annotation><xs:documentation>
+          Qualifies whether the variables within this variables element will appear in the interface, depending
+          on the value in other pre-defined variables.
+          </xs:documentation></xs:annotation>
+        </xs:element>
+
+        <xs:sequence minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="variables" type="VariablesType" minOccurs="0" maxOccurs="unbounded" >
+            <xs:annotation><xs:documentation>Can be nested to make it possible to include groups</xs:documentation></xs:annotation>
+            <xs:unique name="UniqueVariableItemAttribute1">
+              <xs:annotation><xs:documentation>Insist that the variable item attribute is unique</xs:documentation></xs:annotation>
+              <xs:selector xpath=".//variable"/>
+              <xs:field xpath="@item"/>
+              <xs:field xpath="@include"/>
+              <xs:field xpath="@exclude"/>
+            </xs:unique>
+          </xs:element>
+
+          <xs:element ref="docbook:copyright" minOccurs="0" maxOccurs="1" >
+              <xs:annotation><xs:documentation>
+              DocBook element(s) providing copyright information in standard form.
+              For use in subfiles.
+              </xs:documentation></xs:annotation>
+          </xs:element>
+
+          <xs:element ref="docbook:authorgroup" minOccurs="0" maxOccurs="unbounded" >
+              <xs:annotation><xs:documentation>
+              DocBook element(s) describing the authors in standard form.
+              For use in subfiles.
+              </xs:documentation></xs:annotation>
+          </xs:element>
+
+          <xs:element ref="docbook:revhistory" minOccurs="0" maxOccurs="unbounded" >
+              <xs:annotation><xs:documentation>
+              DocBook element(s) describing the revision history in standard form.
+              For use in subfiles.
+              </xs:documentation></xs:annotation>
+          </xs:element>
+
+          <xs:element name="constant" minOccurs="0" maxOccurs="unbounded" >
+            <xs:complexType>
+              <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                  <xs:element name="label" minOccurs="0" maxOccurs="unbounded">
+                    <xs:annotation><xs:documentation>Multiple elements provide internationalized label text</xs:documentation></xs:annotation>
+                    <xs:complexType mixed="true">
+                        <xs:attribute ref="xml:lang" default=""/>
+                    </xs:complexType>
+                  </xs:element>
+              </xs:sequence>
+              <xs:attribute name="label" type="xs:string"/>
+              <xs:attribute name="default" type="xs:int"/>
+              <xs:attribute name="comment" type="xs:string"/>
+              <xs:attribute name="item" type="xs:string" use="required"/>
+              <xs:attribute name="minFn" type="xs:int"/>
+              <xs:attribute name="minOut" type="xs:int"/>
+              <xs:attribute name="inOptions" type="xs:string"/>
+              <xs:attribute name="include" type="xs:string" default=""/>
+              <xs:attribute name="exclude" type="xs:string" default=""/>
+            </xs:complexType>
+            <xs:unique name="UniqueConstantLabel1">
+              <xs:annotation><xs:documentation>Insist that there's only one label per language</xs:documentation></xs:annotation>
+              <xs:selector xpath="label"/>
+              <xs:field xpath="@xml:lang"/>
+            </xs:unique>
+          </xs:element>
+
+          <xs:element name="variable" minOccurs="0" maxOccurs="unbounded" >
+            <xs:complexType>
+              <xs:sequence minOccurs="1" maxOccurs="1">
+                  <xs:element name="defaultItem" minOccurs="0" maxOccurs="unbounded" >
+                    <xs:annotation><xs:documentation>
+                    Specifies the default value to use when the decoder family/model/productID has a specific value.
+                    Either or both of "include" and "exclude" can be specified.
+                    </xs:documentation></xs:annotation>
+                    <xs:complexType>
+                      <xs:attribute name="default" type="xs:int" use="required"/>
+                      <xs:attribute name="include" type="xs:string" default=""/>
+                      <xs:attribute name="exclude" type="xs:string" default=""/>
+                    </xs:complexType>
+                  </xs:element>
+                  <xs:element name="qualifier" type="QualifierType" minOccurs="0" maxOccurs="unbounded" >
+                    <xs:annotation><xs:documentation>
+                    Qualifies whether this variable will appear in the interface, depending
+                    on the value in other variables.
+                    </xs:documentation></xs:annotation>
+                  </xs:element>
+                <xs:choice minOccurs="1" maxOccurs="1">
+                  <xs:element name="enumVal" type="EnumValType">
+                    <xs:annotation><xs:documentation>
+                    A fixed set of choices is defined, each corresponding to a specific value
+                    </xs:documentation></xs:annotation>
+                  </xs:element>
+                  <xs:element name="decVal" >
+                    <xs:annotation><xs:documentation>
+                    A decimal value is used, subject to mask and limit requirements
+                    </xs:documentation></xs:annotation>
+                    <xs:complexType>
+                      <xs:attribute name="min" type="xs:int" default="0"/>
+                      <xs:attribute name="max" type="xs:int" default="255"/>
+                      <xs:attribute name="comment" type="xs:string"/>
+                    </xs:complexType>
+                  </xs:element>
+                  <xs:element name="hexVal" >
+                    <xs:annotation><xs:documentation>
+                    A hexadecimal value is used, subject to mask and limit requirements
+                    </xs:documentation></xs:annotation>
+                    <xs:complexType>
+                      <xs:attribute name="min" type="xs:string" default="0"/>
+                      <xs:attribute name="max" type="xs:string" default="ff"/>
+                      <xs:attribute name="comment" type="xs:string"/>
+                    </xs:complexType>
+                  </xs:element>
+                  <xs:element name="speedTableVal" >
+                    <xs:annotation><xs:documentation>
+                    NMRA speed table
+                    </xs:documentation></xs:annotation>
+                    <xs:complexType>
+                      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                        <xs:element name="speedTableEntry" >
+                          <xs:complexType>
+                            <xs:attribute name="step" type="xs:int" use="required" />
+                            <xs:attribute name="value" type="xs:int" use="required"  />
+                            <xs:attribute name="comment" type="xs:string"/>
+                          </xs:complexType>
+                        </xs:element>
+                      </xs:sequence>
+                      <xs:attribute name="entries" type="xs:int" default="28" />
+                      <xs:attribute name="min" type="xs:int" default="0">
+                        <xs:annotation><xs:documentation>
+                        Smallest allowable value for the CVs in the table
+                        </xs:documentation></xs:annotation>
+                      </xs:attribute>
+                      <xs:attribute name="max" type="xs:int" default="255">
+                        <xs:annotation><xs:documentation>
+                        Largest allowable value for the CVs in the table
+                        </xs:documentation></xs:annotation>
+                      </xs:attribute>
+                      <xs:attribute name="mfx" type="trueFalseType" default="false">
+                        <xs:annotation><xs:documentation>
+                        False, the default, is a NMRA speed table; true is a MFX speed table ala Markin, with fixed end points.
+                        </xs:documentation></xs:annotation>
+                      </xs:attribute>
+                      <xs:attribute name="comment" type="xs:string"/>
+                    </xs:complexType>
+                  </xs:element>
+                  <xs:element name="longAddressVal" >
+                    <xs:annotation><xs:documentation>
+                    NMRA long address, including its unique behaviors
+                    </xs:documentation></xs:annotation>
+                    <xs:complexType>
+                      <xs:attribute name="comment" type="xs:string"/>
+                    </xs:complexType>
+                  </xs:element>
+                  <xs:element name="shortAddressVal" >
+                    <xs:annotation><xs:documentation>
+                    NMRA short address, including its unique behaviors
+                    </xs:documentation></xs:annotation>
+                    <xs:complexType>
+                      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                        <xs:element name="shortAddressChanges" >
+                          <xs:complexType>
+                            <xs:attribute name="cv" type="cvNameType" use="required" />
+                          </xs:complexType>
+                        </xs:element>
+                      </xs:sequence>
+                      <xs:attribute name="comment" type="xs:string"/>
+                    </xs:complexType>
+                  </xs:element>
+                  <xs:element name="splitVal" >
+                    <xs:annotation><xs:documentation>
+                    A decimal value, but stored across two CVs using some simple calculations
+                    </xs:documentation></xs:annotation>
+                    <xs:complexType>
+                      <xs:attribute name="highCV" type="cvNameType" use="required" />
+                      <xs:attribute name="min" type="xs:int" default="0"/>
+                      <xs:attribute name="max" type="xs:int" default="255"/>
+                      <xs:attribute name="default" type="xs:int"/>
+                      <xs:attribute name="factor" type="xs:int" default="1"/>
+                      <xs:attribute name="offset" type="xs:int" default="0"/>
+                      <xs:attribute name="comment" type="xs:string"/>
+                      <xs:attribute name="upperMask" type="maskType" default="VVVVVVVV" />
+                    </xs:complexType>
+                  </xs:element>
+                  <xs:element name="compositeVal" >
+                    <xs:annotation><xs:documentation>
+                    A value made up of references to others
+                    </xs:documentation></xs:annotation>
+                    <xs:complexType>
+                      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                        <xs:element name="compositeChoice" >
+                          <xs:complexType>
+                            <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                              <xs:element name="compositeSetting" >
+                                <xs:complexType>
+                                  <xs:attribute name="label" type="xs:string" use="required"/>
+                                  <xs:attribute name="value" type="xs:int" use="required" />
+                                </xs:complexType>
+                              </xs:element>
+                            </xs:sequence>
+                            <xs:attribute name="choice" type="xs:string" use="required"/>
+                            <xs:attribute name="comment" type="xs:string"/>
+                          </xs:complexType>
+                        </xs:element>
+                      </xs:sequence>
+                      <xs:attribute name="comment" type="xs:string"/>
+                    </xs:complexType>
+                  </xs:element>
+                  <xs:element ref="xi:include" minOccurs="0" maxOccurs="1" />
+                </xs:choice>
+                <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                  <xs:element name="label" minOccurs="0" maxOccurs="unbounded">
+                    <xs:annotation><xs:documentation>Multiple elements provide internationalized label text</xs:documentation></xs:annotation>
+                    <xs:complexType mixed="true">
+                        <xs:attribute ref="xml:lang" default=""/>
+                    </xs:complexType>
+                  </xs:element>
+                  <xs:element name="comment" minOccurs="0" maxOccurs="unbounded">
+                    <xs:annotation><xs:documentation>Multiple elements provide internationalized comment text</xs:documentation></xs:annotation>
+                  </xs:element>
+                  <xs:element name="tooltip" minOccurs="0" maxOccurs="unbounded">
+                    <xs:annotation><xs:documentation>Multiple elements provide internationalized tooltip text</xs:documentation></xs:annotation>
+                  </xs:element>
+                </xs:sequence>
+              </xs:sequence>
+              <xs:attribute name="label" type="xs:string">
+                <xs:annotation><xs:documentation>Deprecated, use the label element instead.</xs:documentation></xs:annotation>
+              </xs:attribute>
+              <xs:attribute name="CV" type="cvNameType"/>
+              <xs:attribute name="mask" type="maskType" default="VVVVVVVV" />
+              <xs:attribute name="readOnly" type="yesNoType" default="no" />
+              <xs:attribute name="infoOnly" type="yesNoType" default="no" />
+              <xs:attribute name="opsOnly" type="yesNoType" default="no" />
+              <xs:attribute name="writeOnly" type="yesNoType" default="no" />
+              <xs:attribute name="default" type="xs:string"/>
+              <xs:attribute name="comment" type="xs:string"/>
+              <xs:attribute name="item" type="xs:string"/><!-- should be use="required" !!! -->
+              <xs:attribute name="minFn" type="xs:int">
+                  <xs:annotation><xs:documentation>Only present if the decoder has at least minFn functions defined in numFn</xs:documentation></xs:annotation>
+              </xs:attribute>
+              <xs:attribute name="minOut" type="xs:int">
+                  <xs:annotation><xs:documentation>Only present if the decoder has at least minOut functions defined in numOut</xs:documentation></xs:annotation>
+              </xs:attribute>
+              <xs:attribute name="inOptions" type="xs:string"/>
+              <xs:attribute name="tooltip" type="xs:string">
+                <xs:annotation><xs:documentation>Deprecated, use the tooltip element instead.</xs:documentation></xs:annotation>
+              </xs:attribute>
+              <xs:attribute name="include" type="xs:string" default=""/>
+              <xs:attribute name="exclude" type="xs:string" default=""/>
+            </xs:complexType>
+            <xs:unique name="UniqueVariableLabel1">
+              <xs:annotation><xs:documentation>Insist that there's only one label per language</xs:documentation></xs:annotation>
+              <xs:selector xpath="label"/>
+              <xs:field xpath="@xml:lang"/>
+            </xs:unique>
+          </xs:element>
+
+          <xs:element ref="xi:include" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:sequence>
+    <xs:attribute ref="xml:base" />
+    <xs:attribute name="include" type="xs:string"/>
+    <xs:attribute name="exclude" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="ResetsType">
+    <xs:sequence>
+      <xs:element name="mode" type="modeType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation>
+          Specifies programmer mode(s) for use during reset
+        </xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="factReset" minOccurs="0" maxOccurs="unbounded" >
+        <xs:complexType>
+          <xs:sequence minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="mode" type="modeType" minOccurs="0" maxOccurs="unbounded">
+              <xs:annotation><xs:documentation>
+                Specifies programmer mode(s) for use during reset
+              </xs:documentation></xs:annotation>
+            </xs:element>
+            <xs:element name="label" minOccurs="0" maxOccurs="unbounded">
+              <xs:annotation><xs:documentation>Multiple elements provide internationalized label text</xs:documentation></xs:annotation>
+              <xs:complexType mixed="true">
+                <xs:attribute ref="xml:lang" default=""/>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+          <xs:attribute name="label" type="xs:string">
+              <xs:annotation><xs:documentation>Deprecated, use the label element instead.</xs:documentation></xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="CV" type="cvNameType"/>
+          <xs:attribute name="default" type="xs:string">
+              <xs:annotation><xs:documentation>Value to be written to CV to perform this reset.</xs:documentation></xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="comment" type="xs:string"/>
+          <xs:attribute name="item" type="xs:string"/>
+          <xs:attribute ref="xml:base" />
+        </xs:complexType>
+        <xs:unique name="UniqueResetLabel1">
+          <xs:annotation><xs:documentation>Insist that there's only one label per language</xs:documentation></xs:annotation>
+          <xs:selector xpath="label"/>
+          <xs:field xpath="@xml:lang"/>
+        </xs:unique>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="mode" type="modeType"/>
+    <xs:attribute ref="xml:base" />
+  </xs:complexType>
+
+  <xs:complexType name="EnumValType">
+    <xs:annotation><xs:documentation>
+    A variable containing a fixed set of choices is defined, each choice corresponding to a specific value
+    </xs:documentation></xs:annotation>
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element ref="docbook:copyright" minOccurs="0" maxOccurs="1">
+              <xs:annotation><xs:documentation>
+              DocBook element(s) providing copyright information in standard form.
+              For use in subfiles.
+              </xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element ref="docbook:authorgroup" minOccurs="0" maxOccurs="unbounded" >
+          <xs:annotation><xs:documentation>
+          DocBook element(s) describing the authors in standard form.
+          For use in subfiles.
+          </xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element ref="docbook:revhistory" minOccurs="0" maxOccurs="unbounded" >
+        <xs:annotation><xs:documentation>
+        DocBook element(s) describing the revision history in standard form.
+        For use in subfiles.
+        </xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element type="EnumChoiceType" name="enumChoice" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element type="EnumChoiceGroupType" name="enumChoiceGroup" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element ref="xi:include" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute ref="xml:base" />
+    <xs:attribute name="comment" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="EnumChoiceType">
+    <xs:annotation><xs:documentation>
+    Defines one choice within an enumVal element (though may be grouped in one or more
+    intermediate enumChoiceGroup elements)
+    </xs:documentation></xs:annotation>
+          <xs:sequence minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation><xs:documentation>Multiple elements provide internationalized choice text</xs:documentation></xs:annotation>
+            <xs:element name="choice" minOccurs="1" maxOccurs="unbounded" />
+            <xs:element name="comment" minOccurs="0" maxOccurs="unbounded" />
+          </xs:sequence>
+          <xs:attribute name="choice" type="xs:string">
+            <xs:annotation><xs:documentation>Deprecated in favor of the choice sub-element</xs:documentation></xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="value" type="xs:int" />
+          <xs:attribute name="include" type="xs:string"/>
+          <xs:attribute name="exclude" type="xs:string"/>
+          <xs:attribute name="comment" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="EnumChoiceGroupType">
+    <xs:annotation><xs:documentation>
+    Allows grouping of enumChoice elements within an enumVal element.
+    This can be used for e.g. defining individual XML documents to be included.
+    The optional name element(s), if and only if present, is used in a tree display to
+    indicate the presence of intermediate tree nodes.
+    </xs:documentation></xs:annotation>
+      <xs:sequence minOccurs="1" maxOccurs="1">
+        <xs:element ref="docbook:copyright" minOccurs="0" maxOccurs="1">
+              <xs:annotation><xs:documentation>
+              DocBook element(s) providing copyright information in standard form.
+              For use in subfiles.
+              </xs:documentation></xs:annotation>
+        </xs:element>
+        <xs:element ref="docbook:authorgroup" minOccurs="0" maxOccurs="unbounded" >
+          <xs:annotation><xs:documentation>
+          DocBook element(s) describing the authors in standard form.
+          For use in subfiles.
+          </xs:documentation></xs:annotation>
+        </xs:element>
+        <xs:element ref="docbook:revhistory" minOccurs="0" maxOccurs="unbounded" >
+          <xs:annotation><xs:documentation>
+          DocBook element(s) describing the revision history in standard form.
+          For use in subfiles.
+          </xs:documentation></xs:annotation>
+        </xs:element>
+        <xs:element name="name" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation><xs:documentation>User-visible name for this group, can be repeated for I18N</xs:documentation></xs:annotation>
+        </xs:element>
+        <xs:sequence minOccurs="0" maxOccurs="unbounded">
+          <xs:element type="EnumChoiceType" name="enumChoice" minOccurs="0" maxOccurs="unbounded"/>
+          <xs:element type="EnumChoiceGroupType" name="enumChoiceGroup" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:sequence>
+    <xs:attribute ref="xml:base" />
+    <xs:attribute name="include" type="xs:string"/>
+    <xs:attribute name="exclude" type="xs:string"/>
+    <xs:attribute name="comment" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:simpleType name="maskType">
+    <xs:annotation>
+        <xs:documentation>
+          Type for CV mask values: 8 or 16 characters of either V (valid bit) or X (ignore bit) with the V's consecutive.
+        </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:normalizedString">
+      <xs:pattern value="(V|X)*"/>
+      <xs:minLength value="8"/>
+      <xs:maxLength value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="modeType">
+    <xs:annotation>
+      <xs:documentation>
+        Content limited to the the internal name of a supported programmer mode.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="PAGEMODE"/>
+      <xs:enumeration value="OPSBITMODE"/>
+      <xs:enumeration value="OPSACCEXTBYTEMODE"/>
+      <xs:enumeration value="OPSACCBITMODE"/>
+      <xs:enumeration value="OPSACCEXTBITMODE"/>
+      <xs:enumeration value="OPSACCBYTEMODE"/>
+      <xs:enumeration value="NONE"/>
+      <xs:enumeration value="ADDRESSMODE"/>
+      <xs:enumeration value="OPSBYTEMODE"/>
+      <xs:enumeration value="DIRECTBYTEMODE"/>
+      <xs:enumeration value="REGISTERMODE"/>
+      <xs:enumeration value="DIRECTBITMODE"/>
+      <xs:enumeration value="DIRECTMODE"/>
+      <xs:enumeration value="LOCONETOPSBOARD"/>
+      <xs:enumeration value="LOCONETSV1MODE"/>
+      <xs:enumeration value="LOCONETSV2MODE"/>
+      <xs:enumeration value="LOCONETBDOPSWMODE"/>
+      <xs:enumeration value="LOCONETCSOPSWMODE"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+</xs:schema>

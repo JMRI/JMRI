@@ -1,14 +1,24 @@
+# select image with Java 1.8 221
+image: Visual Studio 2019
+
 version: '{build}'
 clone_depth: 50
+skip_commits:
+# don't spend time building merge-PR-on-GitHub commits
+# quotes needed in the following because of the pound sign
+  message: "/Merge pull request #[1-9][0-9]* from /"
+  
 install:
+# Available choices on https://www.appveyor.com/docs/windows-images-software/#java
   - SET JAVA_HOME=C:\Program Files\Java\jdk1.8.0
+#  - echo JAVA_HOME %JAVA_HOME%
   - SET GECKODRIVER=C:\Tools\WebDriver
   - SET CHROMEDRIVER=C:\Tools\WebDriver\chromedriver.exe
   - SET PATH=%JAVA_HOME%\bin;%GECKODRIVER%;%CHROMEDRIVER%;%PATH%
 #  - echo PATH %PATH%
-#  - echo JAVA_HOME %JAVA_HOME%
+# following need to be done after PATH is set
   - java -version
-#  - javac -version
+  - javac -version
   - mvn -version
 build: off
 
@@ -22,12 +32,31 @@ before_test:
 
 test_script:
 - ps: |
-    mvn test -P appveyor --batch-mode
+    mvn --quiet test -P appveyor --batch-mode
+
+after_test:
+# upload results to Appveyor
+# This works, but the Appveyor display is unreliable.
+#- ps: |
+#    $wc = New-Object 'System.Net.WebClient'
+#    $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\junit-results.xml))
 
 deploy: off
 
 artifacts:
   - path: instanceManagerSequence.txt
+  - path: tests.log
+  - path: target\testreport\junit-results.xml
+
+on_failure:
+- appveyor PushArtifact tests.log
+- appveyor PushArtifact target\testreport\junit-results.xml
+- ps: echo "Failing Tests"
+# modified from an example found at https://www.codeproject.com/Articles/61900/PowerShell-and-XML
+- ps: |
+    $xml = [xml](get-content .\target\testreport\junit-results.xml)
+    $xml.SelectNodes("//testcase") | where { $_.failure } | format-table classname,name,InnerXml
+    $xml.SelectNodes("//testcase") | where { $_.error } | format-table classname,name,InnerXml
 
 cache:
   - C:\Users\appveyor\.m2 -> pom.xml

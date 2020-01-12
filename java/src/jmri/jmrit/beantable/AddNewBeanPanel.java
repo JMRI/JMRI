@@ -16,7 +16,7 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 
 /**
- * JPanel to create a new JMRI devices HiJacked to serve other beantable tables.
+ * JPanel to create a new JMRI device (used to add Memory, Block).
  *
  * @author Bob Jacobsen Copyright (C) 2009
  * @author Pete Cressman Copyright (C) 2010
@@ -44,8 +44,10 @@ public class AddNewBeanPanel extends jmri.util.swing.JmriPanel {
         c.gridx = 0;
         c.gridy = 1;
         p.add(sysNameLabel, c);
+        sysNameLabel.setLabelFor(sys);
         c.gridy = 2;
         p.add(userNameLabel, c);
+        userNameLabel.setLabelFor(userName);
         c.gridx = 2;
         c.gridy = 1;
         c.anchor = java.awt.GridBagConstraints.WEST;
@@ -157,4 +159,5 @@ public class AddNewBeanPanel extends jmri.util.swing.JmriPanel {
     JCheckBox _range;
     JCheckBox _autoSys;
     JLabel finishLabel = new JLabel(Bundle.getMessage("LabelNumberToAdd"));
+
 }

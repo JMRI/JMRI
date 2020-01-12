@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Provide access to LocoNet via a LocoNet Bluetooth adapter.
  */
-public class LocoNetBluetoothAdapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
+public class LocoNetBluetoothAdapter extends LnPortController {
 
     public LocoNetBluetoothAdapter() {
         this(new LocoNetSystemConnectionMemo());
@@ -46,7 +46,7 @@ public class LocoNetBluetoothAdapter extends LnPortController implements jmri.jm
 
     @Override
     public Vector<String> getPortNames() {
-        portNameVector = new Vector<String>();
+        portNameVector = new Vector<>();
         try {
             RemoteDevice[] devices = LocalDevice.getLocalDevice().getDiscoveryAgent().retrieveDevices(DiscoveryAgent.PREKNOWN);
             if (devices != null) {
@@ -147,7 +147,7 @@ public class LocoNetBluetoothAdapter extends LnPortController implements jmri.jm
         }
 
         if (!opened) {
-            ConnectionStatus.instance().setConnectionState(portName, ConnectionStatus.CONNECTION_DOWN);
+            ConnectionStatus.instance().setConnectionState(null, portName, ConnectionStatus.CONNECTION_DOWN);
             if (exception[0] != null) {
                 log.error("Exception when connecting to " + portName);
                 return exception[0].getLocalizedMessage();
@@ -230,11 +230,22 @@ public class LocoNetBluetoothAdapter extends LnPortController implements jmri.jm
     private InputStream in = null;
     private OutputStream out = null;
 
-    private final static Logger log = LoggerFactory.getLogger(LocoNetBluetoothAdapter.class);
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] validBaudRates() {
-        return new String[]{""};
+        return new String[]{};
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return new int[]{};
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(LocoNetBluetoothAdapter.class);
 
 }

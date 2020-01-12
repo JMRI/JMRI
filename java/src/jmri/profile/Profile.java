@@ -11,7 +11,21 @@ import javax.annotation.Nonnull;
  * completely separate set of preferences at each launch without relying on host
  * OS-specific tricks to ensure this happens.
  *
- * @author Randall Wood Copyright (C) 2013, 2014, 2015
+ * It is recommended that profile directory names end in {@value #EXTENSION} so
+ * that supporting iOS and macOS applications could potentially treat a JMRI
+ * profile as a single file, instead of as a directory structure. This would
+ * allow an application subject to mandatory security controls in iOS, and an
+ * application sandbox on macOS to request permission from the user to access
+ * the entire profile once, instead of needing to request permission to access
+ * each file individually. This would also allow a profile to be opened by
+ * double clicking on it, and to have a unique icon within the iOS Files app and
+ * macOS Finder.
+ * 
+ * Note that JMRI itself is not currently capable of supporting opening a
+ * profile by double clicking on it, even if other applications on the same
+ * computer can.
+ * 
+ * @author Randall Wood Copyright (C) 2013, 2014, 2015, 2018
  */
 public class Profile implements Comparable<Profile> {
 
@@ -26,10 +40,22 @@ public class Profile implements Comparable<Profile> {
     public static final String CONFIG = "profile.xml"; // NOI18N
     public static final String SHARED_PROPERTIES = PROFILE + "/" + PROPERTIES; // NOI18N
     public static final String SHARED_CONFIG = PROFILE + "/" + CONFIG; // NOI18N
+    /**
+     * {@value #CONFIG_FILENAME} may be present in older profiles
+     */
     public static final String CONFIG_FILENAME = "ProfileConfig.xml"; // NOI18N
     public static final String UI_CONFIG = "user-interface.xml"; // NOI18N
     public static final String SHARED_UI_CONFIG = PROFILE + "/" + UI_CONFIG; // NOI18N
+    /**
+     * {@value #UI_CONFIG_FILENAME} may be present in older profiles
+     */
     public static final String UI_CONFIG_FILENAME = "UserPrefsProfileConfig.xml"; // NOI18N
+    /**
+     * The filename extension for JMRI profile directories. This is needed for
+     * external applications on some operating systems to recognize JMRI
+     * profiles.
+     */
+    public static final String EXTENSION = ".jmri"; // NOI18N
 
     /**
      * Create a Profile object given just a path to it. The Profile must exist
@@ -55,33 +81,44 @@ public class Profile implements Comparable<Profile> {
      *             constraints.
      * @param id   Id of the profile. Will be prepended to a random String to
      *             enforce uniqueness constraints.
-     * @param path Location to store the profile
+     * @param path Location to store the profile; {@value #EXTENSION} will be
+     *             appended to this path if needed.
      * @throws java.io.IOException If unable to create the profile at path
+     * @throws IllegalArgumentException If a profile already exists at or within path
      */
     public Profile(@Nonnull String name, @Nonnull String id, @Nonnull File path) throws IOException, IllegalArgumentException {
-        if (!path.getName().equals(id)) {
+        File pathWithExt; // path with extension
+        if (path.getName().endsWith(EXTENSION)) {
+            pathWithExt = path;
+        } else {
+            pathWithExt = new File(path.getParentFile(), path.getName() + EXTENSION);
+        }
+        if (!pathWithExt.getName().equals(id + EXTENSION)) {
             throw new IllegalArgumentException(id + " " + path.getName() + " do not match"); // NOI18N
         }
-        if (Profile.isProfile(path)) {
+        if (Profile.isProfile(path) || Profile.isProfile(pathWithExt)) {
             throw new IllegalArgumentException("A profile already exists at " + path); // NOI18N
         }
-        if (Profile.containsProfile(path)) {
+        if (Profile.containsProfile(path) || Profile.containsProfile(pathWithExt)) {
             throw new IllegalArgumentException(path + " contains a profile in a subdirectory."); // NOI18N
         }
-        if (Profile.inProfile(path)) {
+        if (Profile.inProfile(path) || Profile.inProfile(pathWithExt)) {
+            if (Profile.inProfile(path)) log.warn("Exception: Path {} is within an existing profile.", path, new Exception("traceback")); // NOI18N
+            if (Profile.inProfile(pathWithExt)) log.warn("Exception: pathWithExt {} is within an existing profile.", pathWithExt, new Exception("traceback")); // NOI18N
             throw new IllegalArgumentException(path + " is within an existing profile."); // NOI18N
         }
         this.name = name;
         this.id = id + "." + ProfileManager.createUniqueId();
-        this.path = path;
-        if (!path.exists() && !path.mkdirs()) {
-            throw new IOException("Unable to create directory " + path); // NOI18N
+        this.path = pathWithExt;
+        // use field, not local variables (path or pathWithExt) for paths below
+        if (!this.path.exists() && !this.path.mkdirs()) {
+            throw new IOException("Unable to create directory " + this.path); // NOI18N
         }
-        if (!path.isDirectory()) {
+        if (!this.path.isDirectory()) {
             throw new IllegalArgumentException(path + " is not a directory"); // NOI18N
         }
         this.save();
-        if (!Profile.isProfile(path)) {
+        if (!Profile.isProfile(this.path)) {
             throw new IllegalArgumentException(path + " does not contain a profile.properties file"); // NOI18N
         }
     }
@@ -117,7 +154,20 @@ public class Profile implements Comparable<Profile> {
      * @throws java.io.IOException If the profile's preferences cannot be read.
      */
     protected Profile(@Nonnull File path, @Nonnull String id, boolean isReadable) throws IOException {
-        this.path = path;
+        File pathWithExt; // path with extension
+        if (path.getName().endsWith(EXTENSION)) {
+            pathWithExt = path;
+        } else {
+            pathWithExt = new File(path.getParentFile(), path.getName() + EXTENSION);
+        }
+        // if path does not exist, but pathWithExt exists, use pathWithExt
+        // to support a scenario where user adds .jmri extension to profile
+        // directory outside of JMRI application
+        if ((!path.exists() && pathWithExt.exists())) {
+            this.path = pathWithExt;
+        } else {
+            this.path = path;
+        }
         this.id = id;
         if (isReadable) {
             this.readProfile();
@@ -226,6 +276,10 @@ public class Profile implements Comparable<Profile> {
         return hash;
     }
 
+    /**
+     * {@inheritDoc}
+     * This tests for equal ID values
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -311,7 +365,7 @@ public class Profile implements Comparable<Profile> {
      * @since 3.9.4
      */
     public static boolean isProfile(File path) {
-        if (path.isDirectory()) {
+        if (path.exists() && path.isDirectory()) {
             // version 2
             if ((new File(path, SHARED_PROPERTIES)).canRead()) {
                 return true;
@@ -333,4 +387,6 @@ public class Profile implements Comparable<Profile> {
         String thatString = "" + o.getName() + o.getPath();
         return thisString.compareTo(thatString);
     }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Profile.class);
 }

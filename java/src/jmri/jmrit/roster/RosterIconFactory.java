@@ -2,7 +2,6 @@ package jmri.jmrit.roster;
 
 import java.util.HashMap;
 import javax.swing.ImageIcon;
-import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 
 /**
@@ -11,15 +10,15 @@ import jmri.InstanceManagerAutoDefault;
  * generate icons at different heights.
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ *
  * @author Lionel Jeanson Copyright (C) 2009
  */
 public class RosterIconFactory implements InstanceManagerAutoDefault {
@@ -62,16 +61,5 @@ public class RosterIconFactory implements InstanceManagerAutoDefault {
             icons.put(re.getIconPath(), icon);
         }
         return icon;
-    }
-
-    /**
-     *
-     * @return the default RosterIconFactory instance
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static RosterIconFactory instance() {
-        return InstanceManager.getDefault(RosterIconFactory.class);
     }
 }

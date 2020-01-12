@@ -10,7 +10,6 @@ import java.awt.geom.AffineTransform;
 import javax.swing.Icon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicLabelUI;
 
 /**
@@ -22,15 +21,14 @@ import javax.swing.plaf.basic.BasicLabelUI;
  * </code>
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
  *
  * @author Matthew Harris copyright (c) 2010
  */
@@ -48,11 +46,6 @@ public class VerticalLabelUI extends BasicLabelUI {
      * Define Anti-Clockwise rotation (-90 degrees from horizontal)
      */
     public static final int ANTICLOCKWISE = 2;
-
-    /**
-     * Static variable to define default instance
-     */
-    private static ComponentUI verticalLabelUI = new VerticalLabelUI();
 
     /**
      * Variable to determine rotation direction
@@ -171,18 +164,6 @@ public class VerticalLabelUI extends BasicLabelUI {
                 ((Graphics2D) graphics).setTransform(transform);
             }
         }
-    }
-
-    /**
-     * Return default VerticalLabelUI instance
-     *
-     * @param component ignored
-     * @return default VerticalLabelUI instance
-     * @deprecated since 4.9.5; construct a new VerticalLabelUI object instead
-     */
-    @Deprecated
-    public static ComponentUI createUI(JComponent component) {
-        return verticalLabelUI;
     }
 
     //private static final Logger log = LoggerFactory.getLogger(VerticalLabelUI.class);

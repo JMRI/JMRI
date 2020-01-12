@@ -9,7 +9,8 @@
   <title>JMRI: Patterns and Structure</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
-  "JMRI technical code patterns structure"><!-- Style -->
+  "JMRI technical code patterns structure">
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -17,16 +18,16 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-
-  <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+<div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
+
       <h1>JMRI Code: Patterns and Organization</h1>
 
       <p>JMRI has grown and evolved with time, and you can't always
@@ -61,6 +62,7 @@
       "http://jmri.org/JavaDoc/doc/jmri/NamedBean.html">NamedBean</a>
       class.
 
+      <a id="handles" name="handles"></a>
       <h3>Naming and Handles</h3>
       
       <p>To get access to a specific object (a NamedBean of a
@@ -213,6 +215,8 @@
       <dt><a href="http://jmri.org/JavaDoc/doc/jmri/spi/JsonServiceFactory.html">JsonServiceFactory</a></dt>
       <dt><a href="http://jmri.org/JavaDoc/doc/jmri/spi/PreferencesManager.html">PreferencesManager</a></dt>
       <dt><a href="http://jmri.org/JavaDoc/doc/jmri/swing/PreferencesPanel.html">PreferencesPanel</a></dt>
+      <dt><a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/beantable/signalmast/SignalMastAddPane.html">SignalMastAddPane</a></dt>
+        <dd>Provide a type-specific pane used to add/edit the information in a SignalMast concrete object</dd>
       <dt><a href="http://jmri.org/JavaDoc/doc/apps/startup/StartupActionFactory.html">StartupActionFactory</a></dt>
       <dt><a href="http://jmri.org/JavaDoc/doc/apps/startup/StartupModelFactory.html">StartupModelFactory</a></dt>
       <dt><a href="http://jmri.org/JavaDoc/doc/jmri/server/web/spi/WebManifest.html">WebManifest</a></dt>
@@ -228,6 +232,14 @@
       JMRI then packages those into the appropriate level of <code>jmri.jar</code> file, 
       where they will eventually be found and acted on.</p>
       
+      <p>
+      To access them:
+<pre style="font-family: monospace;">
+            java.util.ServiceLoader.load(OurServiceClass.class).forEach((ourServiceObject) -> {
+                 // access the service object via ourServiceObject
+            });
+</pre>
+
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

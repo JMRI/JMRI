@@ -18,15 +18,15 @@ import org.slf4j.LoggerFactory;
  *
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ *
  * @author Kevin Dickerson Copyright (C) 2009
  */
 public class CreateRosterGroupAction extends JmriAbstractAction {
@@ -71,7 +71,7 @@ public class CreateRosterGroupAction extends JmriAbstractAction {
         if (rosterEntries != null) {
             for (RosterEntry re : rosterEntries) {
                 log.debug("Adding RosterEntry " + re.getId() + " to new group " + entry);
-                re.putAttribute(Roster.getDefault().getRosterGroupPrefix() + entry, "yes");
+                re.putAttribute(Roster.ROSTER_GROUP_PREFIX + entry, "yes");
                 re.updateFile();
             }
         }

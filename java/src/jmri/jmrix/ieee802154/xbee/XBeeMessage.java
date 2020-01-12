@@ -10,7 +10,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * This is a wrapper class for a Digi XBeeAPIPacket.
- * <P>
  *
  * @author Paul Bender Copyright (C) 2013
  */
@@ -76,7 +75,7 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
     @Override
     public String toMonitorString() {
         if (xbm != null) {
-            return xbm.toString();
+            return xbm.toPrettyString();
         } else {
             return toString();
         }
@@ -85,10 +84,12 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
     @Override
     public String toString() {
         String s = "";
-        byte packet[] = xbm.getPacketData();
-        for (int i = 0; i < packet.length; i++) {
-            s=jmri.util.StringUtil.appendTwoHexFromInt(packet[i],s);
-        }
+	if(xbm != null) {
+           byte packet[] = xbm.getPacketData();
+           for (int i = 0; i < packet.length; i++) {
+               s=jmri.util.StringUtil.appendTwoHexFromInt(packet[i],s);
+           }
+	}
         return s;
     }
 

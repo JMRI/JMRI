@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * A PerformFileModel object loads an xml file when the program is started.
- * <P>
+ *
  * @author Bob Jacobsen Copyright 2003
  * @author Randall Wood (c) 2016
  * @see apps.startup.PerformFileModelFactory

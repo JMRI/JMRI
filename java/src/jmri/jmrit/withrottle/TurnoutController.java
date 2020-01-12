@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import jmri.InstanceManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,41 +54,61 @@ public class TurnoutController extends AbstractController implements PropertyCha
         sysNameList = tempList;
     }
 
+    /**
+     * parse and process a turnout command message
+     * <p>
+     * Format: PTA[command][turnoutname]
+     *   where command is 'C'losed, 'T'hrown, '2'oggle and
+     *   turnoutname is a complete system name or a turnout number only
+     *     if number only, system prefix and letter will be added
+     * Checks for existing turnout and verifies it is allowed, or  
+     *   if Create Turnout preference enabled, will attempt to create turnout
+     * Then sends command to alter state of turnout
+     * Can return HM error messages to client
+     * @param message Command string to be parsed
+     * @param deviceServer client to send responses (error messages) back to
+     */
     @Override
-    void handleMessage(String message) {
+    void handleMessage(String message, DeviceServer deviceServer) {
         if (message.charAt(0) == 'A') {
-            //first look for existing turnout
-            Turnout t = manager.getBySystemName(message.substring(2));
+            String tName = message.substring(2);
+            //first look for existing turnout with name passed in
+            Turnout t = manager.getTurnout(tName);
+            //if not found that way AND input is all numeric, prepend system prefix + type and try again
+            if (t == null && NumberUtils.isDigits(tName)) { 
+                tName = manager.getSystemPrefix() + manager.typeLetter() + tName;
+                t = manager.getTurnout(tName);
+            }
             //this turnout IS known to JMRI
             if (t != null) {                
                 //send error if this turnout is not allowed
                 Object o = t.getProperty("WifiControllable");
                 if (o != null && Boolean.valueOf(o.toString())==false) {
-                    String msg = "Turnout '" + message.substring(2) + "' not allowed in JMRI Filter Controls.";
+                    String msg = Bundle.getMessage("ErrorTurnoutNotAllowed", t.getSystemName());
                     log.warn(msg);
-                    thislistener.sendAlertMessage(msg);
+                    deviceServer.sendAlertMessage(msg);
                     return;
                 }            
-            //turnout is NOT known to JMRI, attempt to create it
+            //turnout is NOT known to JMRI, attempt to create it (if allowed)
             } else {
                 //check if turnout creation is allowed
                 if (!isTurnoutCreationAllowed) {
-                    String msg = "Turnout '" + message.substring(2) + "' not defined in JMRI, create not allowed.";
+                    String msg = Bundle.getMessage("ErrorTurnoutNotDefined", message.substring(2));
                     log.warn(msg);
-                    thislistener.sendAlertMessage(msg);                    
+                    deviceServer.sendAlertMessage(msg);                    
                     return;
                 } else {
                     try {
                         t = manager.provideTurnout(message.substring(2));
                     } catch (IllegalArgumentException e) {
-                        String msg = "JMRI error creating Turnout: " + e.getLocalizedMessage();
+                        String msg = Bundle.getMessage("ErrorCreatingTurnout", e.getLocalizedMessage());
                         log.warn(msg);
-                        thislistener.sendAlertMessage(msg);
+                        deviceServer.sendAlertMessage(msg);
                         return;
                     }
-                    String msg = "JMRI created Turnout '" + message.substring(2) + "'";
+                    String msg = Bundle.getMessage("InfoCreatedTurnout", t.getSystemName());
                     log.debug(msg);
-                    thislistener.sendInfoMessage(msg);                    
+                    deviceServer.sendInfoMessage(msg);                    
                 }
             }
             

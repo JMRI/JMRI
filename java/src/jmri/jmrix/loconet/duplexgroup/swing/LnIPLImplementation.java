@@ -10,7 +10,7 @@ import jmri.jmrix.loconet.duplexgroup.LnDplxGrpInfoImplConstants;
  * LocoNet messages associated with IPL. IPL is a mechanism which allows
  * identification and firmware programming of some types of Digitrax hardware.
  *
- * @author B. Milhaupt Copyright 2010, 2011
+ * @author B. Milhaupt Copyright 2010, 2011, 2018
  */
 public class LnIPLImplementation extends javax.swing.JComponent implements jmri.jmrix.loconet.LocoNetListener {
 
@@ -31,6 +31,7 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
     }
 
     private void moreInit() {
+        waitingForIplReply = false;
         // connect to the LnTrafficController
         connect(memo.getLnTrafficController());
 
@@ -79,6 +80,12 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
         return m;
     }
 
+    public void sendIplQueryAllDevices() {
+        jmri.jmrix.loconet.LnTrafficController tc = memo.getLnTrafficController();
+        tc.sendLocoNetMessage(createQueryAllIplDevicesPacket());
+        waitingForIplReply = true;
+    }
+
     /**
      * Create a LocoNet packet which queries IPL devices by specific host
      * manufacturer and specific host device type. The invoking method is
@@ -98,8 +105,8 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
             Integer hostMfr,
             Integer hostDevice) {
         LocoNetMessage m = createQueryAllIplDevicesPacket();
-        m.setElement(4, hostMfr);
-        m.setElement(5, hostDevice);
+        m.setElement(4, hostMfr & 0x7F);
+        m.setElement(5, hostDevice & 0x7F);
         return m;
     }
 
@@ -122,8 +129,8 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
             Integer slaveMfr,
             Integer slaveDevice) {
         LocoNetMessage m = createQueryAllIplDevicesPacket();
-        m.setElement(7, slaveMfr);
-        m.setElement(6, slaveDevice);
+        m.setElement(7, slaveMfr & 0x7F);
+        m.setElement(6, slaveDevice & 0x7F);
         return m;
     }
 
@@ -150,10 +157,10 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
             Integer slaveMfr,
             Integer slaveDevice) {
         LocoNetMessage m = createQueryAllIplDevicesPacket();
-        m.setElement(4, hostMfr);
-        m.setElement(5, hostDevice);
-        m.setElement(7, slaveMfr);
-        m.setElement(6, slaveDevice);
+        m.setElement(4, hostMfr & 0x7F);
+        m.setElement(5, hostDevice & 0x7F);
+        m.setElement(7, slaveMfr & 0x7F);
+        m.setElement(6, slaveDevice & 0x7F);
         return m;
     }
 
@@ -217,6 +224,20 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
     }
 
     /**
+     * Create a LocoNet packet which queries DCS52 devices for IPL
+     * identification information. The invoking method is responsible for
+     * sending the message to LocoNet.
+     *
+     * @return a LocoNetMessage containing the packet required to query DCS52
+     *         devices for IPL identification information
+     */
+    public static final LocoNetMessage createIplDcs52QueryPacket() {
+        return createIplSpecificHostQueryPacket(
+                LnConstants.RE_IPL_MFR_DIGITRAX,
+                LnConstants.RE_IPL_DIGITRAX_HOST_DCS52);
+    }
+
+    /**
      * Create a LocoNet packet which queries PR3 devices for IPL identification
      * information. The invoking method is responsible for sending the message
      * to LocoNet.
@@ -234,10 +255,11 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * Checks message m to determine if it contains a IPL Identity Report
      * message.
      *
+     * @param m  LocoNetMessage to be checked for an IPL Identity Query message
      * @return true if message is report of IPL Identity
      */
     public static final boolean isIplIdentityQueryMessage(LocoNetMessage m) {
-        if ((m.getElement(0) == LnConstants.OPC_PEER_XFER)
+        if ((m.getOpCode() == LnConstants.OPC_PEER_XFER)
                 && (m.getElement(1) == LnConstants.RE_IPL_OP_LEN)) {
             // Message is a peer-to-peer message of appropriate length for
             // IPL Report message.  Check the individual message type
@@ -256,10 +278,11 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * Checks message m to determine if it contains a IPL Identity Report
      * message.
      *
+     * @param m  LocoNet message to check for an IPL Identity Report
      * @return true if message is report of IPL Identity
      */
     public static final boolean isIplIdentityReportMessage(LocoNetMessage m) {
-        if ((m.getElement(0) == LnConstants.OPC_PEER_XFER)
+        if ((m.getOpCode() == LnConstants.OPC_PEER_XFER)
                 && (m.getElement(1) == LnConstants.RE_IPL_OP_LEN)) {
             // Message is a peer-to-peer message of appropriate length for
             // IPL Report message.  Check the individual message type
@@ -288,8 +311,8 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
         if (!isIplIdentityReportMessage(m)) {
             return false;
         }
-        if ((m.getElement(4) == hostMfr)
-                && (m.getElement(5) == hostDevice)) {
+        if ((m.getElement(4) == (hostMfr & 0x7F))
+                && (m.getElement(5) == (hostDevice & 0x7F))) {
             return true;
         }
         return false;
@@ -345,6 +368,19 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
         return isIplSpecificIdentityReportMessage(m,
                 LnConstants.RE_IPL_MFR_DIGITRAX,
                 LnConstants.RE_IPL_DIGITRAX_HOST_DCS51);
+    }
+
+    /**
+     * Check message m to determine if it contains a DSC52 IPL Identity Report
+     * message.
+     *
+     * @param m message to analyse
+     * @return true if message is report of DCS52 IPL Identity
+     */
+    public static final boolean isIplDcs52IdentityReportMessage(LocoNetMessage m) {
+        return isIplSpecificIdentityReportMessage(m,
+                LnConstants.RE_IPL_MFR_DIGITRAX,
+                LnConstants.RE_IPL_DIGITRAX_HOST_DCS52);
     }
 
     /**
@@ -412,6 +448,30 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
                 LnConstants.RE_IPL_DIGITRAX_HOST_DCS210);
     }
 
+    public static final boolean isIplDt500DIdentityReportMessage(LocoNetMessage m) {
+        if (!isIplDt500IdentityReportMessage(m)) {
+            return false;
+        }
+        if (!isIplRf24SlaveIdentityReportMessage(m)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * Check message m to determine if it contains a DT500 IPL Identity Report
+     * message.
+     *
+     * @param m message to analyse
+     * @return true if message is report of DT500 IPL Identity
+     */
+    public static final boolean isIplDt500IdentityReportMessage(LocoNetMessage m) {
+        return isIplSpecificIdentityReportMessage(m,
+                LnConstants.RE_IPL_MFR_DIGITRAX,
+                LnConstants.RE_IPL_DIGITRAX_HOST_DT500);
+    }
+
     /**
      * Determine if message is IPL Identity Report with RF24 as slave device.
      *
@@ -441,93 +501,28 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
             return null;
         }
         if (isIplDt402DIdentityReportMessage(m)) {
-            return forcedDt402DManufacturerDevice();
+            return interpretHostManufacturerDevice(
+                    LnConstants.RE_IPL_MFR_DIGITRAX,
+                    LnConstants.RE_IPL_DIGITRAX_HOST_DT402,
+                    LnConstants.RE_IPL_MFR_DIGITRAX,
+                    LnConstants.RE_IPL_DIGITRAX_SLAVE_RF24);
         }
         if (isIplUt4DIdentityReportMessage(m)) {
-            return forcedUt4DManufacturerDevice();
+            return interpretHostManufacturerDevice(
+                    LnConstants.RE_IPL_MFR_DIGITRAX,
+                    LnConstants.RE_IPL_DIGITRAX_HOST_UT4,
+                    LnConstants.RE_IPL_MFR_DIGITRAX,
+                    LnConstants.RE_IPL_DIGITRAX_SLAVE_RF24);
         }
-        if (isIplPr4IdentityReportMessage(m)) {
-            return forcedPr4ManufacturerDevice();
-        }
-        if (isIplBxp88IdentityReportMessage(m)) {
-            return forcedBxp88ManufacturerDevice();
-        }
-        if (isIplDcs240IdentityReportMessage(m)) {
-            return forcedDcs240ManufacturerDevice();
-        }
-        if (isIplDcs210IdentityReportMessage(m)) {
-            return forcedDcs210ManufacturerDevice();
-        }
-        if (isIplLnwiIdentityReportMessage(m)) {
-            return forcedLnwiManufacturerDevice();
+        if (isIplDt500DIdentityReportMessage(m)) {
+            return interpretHostManufacturerDevice(
+                    LnConstants.RE_IPL_MFR_DIGITRAX,
+                    LnConstants.RE_IPL_DIGITRAX_HOST_DT500,
+                    LnConstants.RE_IPL_MFR_DIGITRAX,
+                    LnConstants.RE_IPL_DIGITRAX_SLAVE_RF24);
         }
 
         return interpretHostManufacturerDevice(extractIplIdentityHostManufacturer(m), extractIplIdentityHostDevice(m));
-    }
-
-    private static final String forcedDt402DManufacturerDevice() {
-        return interpretHostManufacturerDevice(
-                LnConstants.RE_IPL_MFR_DIGITRAX,
-                LnConstants.RE_IPL_DIGITRAX_HOST_DT402,
-                LnConstants.RE_IPL_MFR_DIGITRAX,
-                LnConstants.RE_IPL_DIGITRAX_SLAVE_RF24);
-    }
-
-    private static final String forcedUt4DManufacturerDevice() {
-        return interpretHostManufacturerDevice(
-                LnConstants.RE_IPL_MFR_DIGITRAX,
-                LnConstants.RE_IPL_DIGITRAX_HOST_UT4,
-                LnConstants.RE_IPL_MFR_DIGITRAX,
-                LnConstants.RE_IPL_DIGITRAX_SLAVE_RF24);
-    }
-
-    private static final String forcedPr4DManufacturerDevice() {
-        return interpretHostManufacturerDevice(
-                LnConstants.RE_IPL_MFR_DIGITRAX,
-                LnConstants.RE_IPL_DIGITRAX_HOST_PR4,
-                LnConstants.RE_IPL_MFR_DIGITRAX, 0);
-    }
-
-    private static final String forcedBxp88DManufacturerDevice() {
-        return interpretHostManufacturerDevice(
-                LnConstants.RE_IPL_MFR_DIGITRAX,
-                LnConstants.RE_IPL_DIGITRAX_HOST_BXP88,
-                LnConstants.RE_IPL_MFR_DIGITRAX, 0);
-    }
-
-    private static final String forcedLnwiManufacturerDevice() {
-        return interpretHostManufacturerDevice(
-                LnConstants.RE_IPL_MFR_DIGITRAX,
-                LnConstants.RE_IPL_DIGITRAX_HOST_LNWI,
-                LnConstants.RE_IPL_MFR_DIGITRAX, 0);
-    }
-
-    private static final String forcedBxp88ManufacturerDevice() {
-        return interpretHostManufacturerDevice(
-                LnConstants.RE_IPL_MFR_DIGITRAX,
-                LnConstants.RE_IPL_DIGITRAX_HOST_BXP88,
-                LnConstants.RE_IPL_MFR_DIGITRAX, 0);
-    }
-
-    private static final String forcedPr4ManufacturerDevice() {
-        return interpretHostManufacturerDevice(
-                LnConstants.RE_IPL_MFR_DIGITRAX,
-                LnConstants.RE_IPL_DIGITRAX_HOST_PR4,
-                LnConstants.RE_IPL_MFR_DIGITRAX, 0);
-    }
-
-    private static final String forcedDcs240ManufacturerDevice() {
-        return interpretHostManufacturerDevice(
-                LnConstants.RE_IPL_MFR_DIGITRAX,
-                LnConstants.RE_IPL_DIGITRAX_HOST_DCS240,
-                LnConstants.RE_IPL_MFR_DIGITRAX, 0);
-    }
-
-    private static final String forcedDcs210ManufacturerDevice() {
-        return interpretHostManufacturerDevice(
-                LnConstants.RE_IPL_MFR_DIGITRAX,
-                LnConstants.RE_IPL_DIGITRAX_HOST_DCS210,
-                LnConstants.RE_IPL_MFR_DIGITRAX, 0);
     }
 
     /**
@@ -656,7 +651,7 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * @return Integer containing the IPL Slave firmware revision
      */
     public static final Integer extractIplIdentitySlaveFrimwareRevNum(LocoNetMessage m) {
-        return ((m.getElement(10) & 0x78) + ((m.getElement(9) & 0x1) << 7));
+        return ((m.getElement(10) & 0x7F) + ((m.getElement(9) & 0x1) << 7));
     }
 
     /**
@@ -675,7 +670,7 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      */
     public static final String extractIplIdentitySlaveFrimwareRev(LocoNetMessage m) {
         StringBuilder s = new StringBuilder();
-        s.append(Integer.toString((m.getElement(10) & 0x78) >> 3) + ((m.getElement(9) & 0x1) << 5));
+        s.append(Integer.toString(((m.getElement(10) & 0x78) >> 3) + ((m.getElement(9) & 0x1) << 4)));
         s.append(".");
         s.append(Integer.toString((m.getElement(10) & 0x07)));
         return s.toString();
@@ -738,21 +733,32 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * return "Digitrax UT4(x)" in response to appropriate Host Manufacturer
      * number and appropriate Host Device number.
      *
+     * @param hostMfr  host manufacturer number
+     * @param hostDevice  host device number
+     * @param slaveMfr  slave manufacturer number
+     * @param slaveDevice  slave device number
      * @return String containing Manufacturer name and Device model.
      */
     public static final String interpretHostManufacturerDevice(Integer hostMfr, Integer hostDevice,
             Integer slaveMfr, Integer slaveDevice) {
         String s;
         s = "Unknown Host Manufacturer/Device";
-        switch (hostMfr) {
+        int manuf = hostMfr & 0x7f;
+        int device = hostDevice & 0x7f;
+        int slave = slaveDevice & 0x7f;
+        int smanuf = slaveMfr & 0x7f;
+        switch (manuf) {
             case LnConstants.RE_IPL_MFR_DIGITRAX: {
-                switch (hostDevice) {
+                switch (device) {
                     case LnConstants.RE_IPL_DIGITRAX_HOST_DCS51:
                         s = "Digitrax DCS51"; // NOI18N
                         break;
+                    case LnConstants.RE_IPL_DIGITRAX_HOST_DCS52:
+                        s = "Digitrax DCS52"; // NOI18N
+                        break;
                     case LnConstants.RE_IPL_DIGITRAX_HOST_DT402:
-                        if ((slaveMfr == LnConstants.RE_IPL_MFR_DIGITRAX)
-                                && (slaveDevice == LnConstants.RE_IPL_DIGITRAX_SLAVE_RF24)) {
+                        if ((smanuf == LnConstants.RE_IPL_MFR_DIGITRAX)
+                                && (slave == LnConstants.RE_IPL_DIGITRAX_SLAVE_RF24)) {
                             s = "Digitrax DT402D"; // NOI18N
                         } else {
                             s = "Digitrax DT402(x)"; // NOI18N
@@ -765,8 +771,8 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
                         s = "Digitrax UR92"; // NOI18N
                         break;
                     case LnConstants.RE_IPL_DIGITRAX_HOST_UT4:
-                        if ((slaveMfr == LnConstants.RE_IPL_MFR_DIGITRAX)
-                                && (slaveDevice == LnConstants.RE_IPL_DIGITRAX_SLAVE_RF24)) {
+                        if ((smanuf == LnConstants.RE_IPL_MFR_DIGITRAX)
+                                && (slave == LnConstants.RE_IPL_DIGITRAX_SLAVE_RF24)) {
                             s = "Digitrax UT4D"; // NOI18N
                         } else {
                             s = "Digitrax UT4(x)"; // NOI18N
@@ -796,22 +802,59 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
                     case LnConstants.RE_IPL_DIGITRAX_HOST_DCS240:
                         s = "Digitrax DCS240";
                         break;
+                    case LnConstants.RE_IPL_DIGITRAX_HOST_DT500:
+                        if ((smanuf == LnConstants.RE_IPL_MFR_DIGITRAX)
+                                && (slave == LnConstants.RE_IPL_DIGITRAX_SLAVE_RF24)) {
+                            s = "Digitrax DT500D"; // NOI18N
+                        } else {
+                            s = "Digitrax DT500(x)"; // NOI18N
+                        }
+                            break;
+                    case LnConstants.RE_IPL_DIGITRAX_HOST_BXPA1:
+                        s = "Digitrax BXPA1";
+                        break;
                     default:
                         break;
                 }
                 break;
             }
             case LnConstants.RE_IPL_MFR_RR_CIRKITS:
-                s = interpretHostManufacturerDevice(hostMfr, hostDevice)
-                        + " "
-                        + interpretSlaveManufacturerDevice(slaveMfr, slaveDevice);
+
+                switch (device) {
+                    case LnConstants.RE_IPL_RRCIRKITS_HOST_TC64:
+                        s = "RR-CirKits TC-64"; // NOI18N
+                        break;
+                    case LnConstants.RE_IPL_RRCIRKITS_HOST_TC64_MKII:
+                        s = "RR-CirKits TC-64 Mk-II"; // NOI18N
+                        break;
+                    case LnConstants.RE_IPL_RRCIRKITS_HOST_LNCP:
+                        s = "RR-CirKits LNCP"; // NOI18N
+                        break;
+                    case LnConstants.RE_IPL_RRCIRKITS_HOST_MOTORMAN:
+                        s = "RR-CirKits MotorMan"; // NOI18N
+                        break;
+                    case LnConstants.RE_IPL_RRCIRKITS_HOST_MOTORMAN_II:
+                        s = "RR-CirKits MotorMan-II"; // NOI18N
+                        break;
+                    case LnConstants.RE_IPL_RRCIRKITS_HOST_SIGNALMAN:
+                        s = "RR-CirKits SignalMan"; // NOI18N
+                        break;
+                    case LnConstants.RE_IPL_RRCIRKITS_HOST_TOWERMAN:
+                        s = "RR-CirKits TowerMan"; // NOI18N
+                        break;
+                    case LnConstants.RE_IPL_RRCIRKITS_HOST_WATCHMAN:
+                        s = "RR-CirKits WatchMan"; // NOI18N
+                        break;
+                    default:
+                        s = "RR-CirKits (unknown device)";
+                        break;
+                }
                 break;
             default:
                 break;
         }
         return s;
     }
-
     /**
      * Interpret IPL Identity Host Manufacturer and Host Device number as a
      * string.
@@ -826,50 +869,12 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * return "Digitrax UT4(x)" in response to appropriate Host Manufacturer
      * number and appropriate Host Device number.
      *
+     * @param hostMfr  host manufacturer number
+     * @param hostDevice  host device number
      * @return String containing Manufacturer name and Device model.
      */
     public static final String interpretHostManufacturerDevice(Integer hostMfr, Integer hostDevice) {
-        String s;
-        s = "Unknown Host Manufacturer/Device";
-        switch (hostMfr) {
-            case LnConstants.RE_IPL_MFR_DIGITRAX: {
-                switch (hostDevice) {
-                    case LnConstants.RE_IPL_DIGITRAX_HOST_DCS51:
-                        s = "Digitrax DCS51"; // NOI18N
-                        break;
-                    case LnConstants.RE_IPL_DIGITRAX_HOST_DT402:
-                        s = "Digitrax DT402(x)"; // NOI18N
-                        break;
-                    case LnConstants.RE_IPL_DIGITRAX_HOST_PR3:
-                        s = "Digitrax PR3"; // NOI18N
-                        break;
-                    case LnConstants.RE_IPL_DIGITRAX_HOST_UR92:
-                        s = "Digitrax UR92"; // NOI18N
-                        break;
-                    case LnConstants.RE_IPL_DIGITRAX_HOST_UT4:
-                        s = "Digitrax UT4(x)"; // NOI18N
-                        break;
-                    default:
-                        s = "Digitrax (unknown device)";
-                        break;
-                }
-                break;
-            }
-            case LnConstants.RE_IPL_MFR_RR_CIRKITS: {
-                switch (hostDevice) {
-                    case LnConstants.RE_IPL_RRCIRKITS_HOST_TC64:
-                        s = "RR-Cirkits TC-64"; // NOI18N
-                        break;
-                    default:
-                        s = "RR-Cirkits (unknown device)";
-                        break;
-                }
-                break;
-            }
-            default:
-                break;
-        }
-        return s;
+        return interpretHostManufacturerDevice(hostMfr, hostDevice, 0, 0);
     }
 
     /**
@@ -879,25 +884,29 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * NOTE: Some IPL-capable devices may not be completely determined based
      * solely on Slave Manufacturer number and Slave Device number.
      *
+     * @param slaveMfr  slave manufacturer number
+     * @param slaveDevice  slave device number
      * @return String containing Slave Manufacturer name and Device model.
      */
     public static final String interpretSlaveManufacturerDevice(Integer slaveMfr, Integer slaveDevice) {
         String s;
         s = "Unknown Slave Manufacturer/Device";
-        switch (slaveMfr) {
+        int sMfr = slaveMfr & 0x7f;
+        int sDevice = slaveDevice & 0x7F;
+        switch (sMfr) {
             case LnConstants.RE_IPL_MFR_DIGITRAX: {
-                switch (slaveDevice) {
+                switch (sDevice) {
                     case LnConstants.RE_IPL_DIGITRAX_SLAVE_RF24:
                         s = "Digitrax RF24"; // NOI18N
                         break;
                     default:
-                        s = "Digitrax (Unknown device)";
+                        s = "Digitrax (unknown Slave Device)";
                         break;
                 }
                 break;
             }
             case LnConstants.RE_IPL_MFR_RR_CIRKITS: {
-                s = "RR-Cirkits (unknown device)";
+                s = "RR-CirKits (unknown Slave Device)";
                 break;
             }
             default:
@@ -910,6 +919,8 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
 
     /**
      * Connect this instance's LocoNetListener to the LocoNet Traffic Controller.
+     *
+     * @param t  a LocoNet Traffic Controller
      */
     public void connect(jmri.jmrix.loconet.LnTrafficController t) {
         if (t != null) {
@@ -935,7 +946,7 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * Process all incoming LocoNet messages to look for IPL operations. Ignores
      * all other LocoNet messages.
      *
-     * @param m - incoming LocoNet message to be examined
+     * @param m  incoming LocoNet message to be examined
      */
     @Override
     public void message(LocoNetMessage m) {
@@ -943,20 +954,6 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
         if (handleMessageIplDeviceQuery(m)) {
             return;
         } else if (handleMessageIplDeviceReport(m)) {
-            return;
-        } else if (handleMessageIplProgramInitiate(m)) {
-            return;
-        } else if (handleMessageIplProgramAddress(m)) {
-            return;
-        } else if (handleMessageIplProgramWriteData(m)) {
-            return;
-        } else if (handleMessageIplProgramVerifyData(m)) {
-            return;
-        } else if (handleMessageIplProgramTerminate(m)) {
-            return;
-        } else if (handleMessageIplDevicePing(m)) {
-            return;
-        } else if (handleMessageIplDeviceIdentify(m)) {
             return;
         }
 
@@ -993,35 +990,9 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
         }
         return false;
     }
-
-    private boolean handleMessageIplProgramInitiate(LocoNetMessage m) {
-        return false;
-    }
-
-    private boolean handleMessageIplProgramAddress(LocoNetMessage m) {
-        return false;
-    }
-
-    private boolean handleMessageIplProgramWriteData(LocoNetMessage m) {
-        return false;
-    }
-
-    private boolean handleMessageIplProgramVerifyData(LocoNetMessage m) {
-        return false;
-    }
-
-    private boolean handleMessageIplProgramTerminate(LocoNetMessage m) {
-        return false;
-    }
-
-    private boolean handleMessageIplDevicePing(LocoNetMessage m) {
-        return false;
-    }
-
-    private boolean handleMessageIplDeviceIdentify(LocoNetMessage m) {
-        return false;
+    public boolean isIplQueryTimerRunning() {
+        return swingTmrIplQuery.isRunning();
     }
 
     private boolean waitingForIplReply;
-
 }

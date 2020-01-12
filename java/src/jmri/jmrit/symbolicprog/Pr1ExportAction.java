@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Action to export the CV values to a PR1DOS data file.
- * <P>
+ * <p>
  * Note that this format is somewhat different from the PR1WIN format, and it's
  * not clear they will interoperate.
  *

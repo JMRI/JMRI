@@ -29,7 +29,7 @@ public class MemoryTableAction extends AbstractTableAction<Memory> {
 
     /**
      * Create an action with a specific title.
-     * <P>
+     * <p>
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
@@ -160,15 +160,15 @@ public class MemoryTableAction extends AbstractTableAction<Memory> {
     }
 
     JmriJFrame addFrame = null;
-    JTextField sysName = new JTextField(20);
-    JTextField userName = new JTextField(20);
+    JTextField sysNameField = new JTextField(20);
+    JTextField userNameField = new JTextField(20);
     JLabel sysNameLabel = new JLabel(Bundle.getMessage("LabelSystemName"));
     JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
     SpinnerNumberModel rangeSpinner = new SpinnerNumberModel(1, 1, 100, 1); // maximum 100 items
-    JSpinner numberToAdd = new JSpinner(rangeSpinner);
-    JCheckBox range = new JCheckBox(Bundle.getMessage("AddRangeBox"));
-    JCheckBox autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));
-    JLabel statusBar = new JLabel(Bundle.getMessage("AddBeanStatusEnter"), JLabel.LEADING);
+    JSpinner numberToAddSpinner = new JSpinner(rangeSpinner);
+    JCheckBox rangeBox = new JCheckBox(Bundle.getMessage("AddRangeBox"));
+    JCheckBox autoSystemNameBox = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));
+    JLabel statusBarLabel = new JLabel(Bundle.getMessage("AddBeanStatusEnter"), JLabel.LEADING);
     jmri.UserPreferencesManager p;
 
     @Override
@@ -185,15 +185,15 @@ public class MemoryTableAction extends AbstractTableAction<Memory> {
             ActionListener cancelListener = (ActionEvent e1) -> {
                 cancelPressed(e1);
             };
-            addFrame.add(new AddNewBeanPanel(sysName, userName, numberToAdd, range, autoSystemName, "ButtonCreate", okListener, cancelListener, statusBar));
-            sysName.setToolTipText(Bundle.getMessage("SysNameToolTip", "M")); // override tooltip with bean specific letter
+            addFrame.add(new AddNewBeanPanel(sysNameField, userNameField, numberToAddSpinner, rangeBox, autoSystemNameBox, "ButtonCreate", okListener, cancelListener, statusBarLabel));
+            sysNameField.setToolTipText(Bundle.getMessage("SysNameToolTip", "M")); // override tooltip with bean specific letter
         }
-        sysName.setBackground(Color.white);
-        // reset statusBar text
-        statusBar.setText(Bundle.getMessage("AddBeanStatusEnter"));
-        statusBar.setForeground(Color.gray);
+        sysNameField.setBackground(Color.white);
+        // reset status bar text
+        statusBarLabel.setText(Bundle.getMessage("AddBeanStatusEnter"));
+        statusBarLabel.setForeground(Color.gray);
         if (p.getSimplePreferenceState(systemNameAuto)) {
-            autoSystemName.setSelected(true);
+            autoSystemNameBox.setSelected(true);
         }
         addFrame.pack();
         addFrame.setVisible(true);
@@ -211,8 +211,8 @@ public class MemoryTableAction extends AbstractTableAction<Memory> {
 
         int numberOfMemory = 1;
 
-        if (range.isSelected()) {
-            numberOfMemory = (Integer) numberToAdd.getValue();
+        if (rangeBox.isSelected()) {
+            numberOfMemory = (Integer) numberToAddSpinner.getValue();
         }
 
         if (numberOfMemory >= 65) { // limited by JSpinnerModel to 100
@@ -224,90 +224,86 @@ public class MemoryTableAction extends AbstractTableAction<Memory> {
             }
         }
 
-        String user = NamedBean.normalizeUserName(userName.getText());
-        if (user.equals("")) {
-            user = null;
+        String uName = NamedBean.normalizeUserName(userNameField.getText());
+        if (uName == null || uName.isEmpty()) {
+            uName = null;
         }
-        String sName = jmri.InstanceManager.memoryManagerInstance().normalizeSystemName(sysName.getText());
+        String sName = sysNameField.getText();
         // initial check for empty entry
-        if (sName.length() < 1 && !autoSystemName.isSelected()) {
-            statusBar.setText(Bundle.getMessage("WarningSysNameEmpty"));
-            statusBar.setForeground(Color.red);
-            sysName.setBackground(Color.red);
+        if (sName.isEmpty() && !autoSystemNameBox.isSelected()) {
+            statusBarLabel.setText(Bundle.getMessage("WarningSysNameEmpty"));
+            statusBarLabel.setForeground(Color.red);
+            sysNameField.setBackground(Color.red);
             return;
         } else {
-            sysName.setBackground(Color.white);
+            sysNameField.setBackground(Color.white);
         }
 
         // Add some entry pattern checking, before assembling sName and handing it to the memoryManager
         String statusMessage = Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameMemory"));
         String errorMessage = null;
-        StringBuilder b;
         for (int x = 0; x < numberOfMemory; x++) {
-
-            if (x != 0) {
-                if (user != null) {
-                    b = new StringBuilder(NamedBean.normalizeUserName(userName.getText())); // N11N
-                    b.append(":");
-                    b.append(Integer.toString(x));
-                    user = b.toString(); // add :x to user name starting with 2nd item
-                }
-                if (!autoSystemName.isSelected()) {
-                    b = new StringBuilder(jmri.InstanceManager.memoryManagerInstance().normalizeSystemName(sysName.getText()));
-                    b.append(":");
-                    b.append(Integer.toString(x));
-                    sName = b.toString();
-                }
-            }
-
-            if (user != null && !user.equals("") && jmri.InstanceManager.memoryManagerInstance().getByUserName(user) != null && !p.getPreferenceState(getClassName(), "duplicateUserName")) {
+            if (uName != null && !uName.isEmpty() && jmri.InstanceManager.memoryManagerInstance().getByUserName(uName) != null && !p.getPreferenceState(getClassName(), "duplicateUserName")) {
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                        showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorDuplicateUserName", user), getClassName(), "duplicateUserName", false, true);
-                user = null; // new Memory objects always receive a valid system name using the next free index, but user names must not be in use so use none in that case
+                        showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorDuplicateUserName", uName), getClassName(), "duplicateUserName", false, true);
                 // show in status bar
-                errorMessage = Bundle.getMessage("ErrorDuplicateUserName", user);
-                statusBar.setText(errorMessage);
-                statusBar.setForeground(Color.red);
+                errorMessage = Bundle.getMessage("ErrorDuplicateUserName", uName);
+                statusBarLabel.setText(errorMessage);
+                statusBarLabel.setForeground(Color.red);
+                uName = null; // new Memory objects always receive a valid system name using the next free index, but uName names must not be in use so use none in that case
             }
-            if (sName != null && !sName.equals("") && jmri.InstanceManager.memoryManagerInstance().getBySystemName(sName) != null && !p.getPreferenceState(getClassName(), "duplicateSystemName")) {
+            if (!sName.isEmpty() && jmri.InstanceManager.memoryManagerInstance().getBySystemName(sName) != null && !p.getPreferenceState(getClassName(), "duplicateSystemName")) {
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                         showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorDuplicateSystemName", sName), getClassName(), "duplicateSystemName", false, true);
                 // show in status bar
                 errorMessage = Bundle.getMessage("ErrorDuplicateSystemName", sName);
-                statusBar.setText(errorMessage);
-                statusBar.setForeground(Color.red);
+                statusBarLabel.setText(errorMessage);
+                statusBarLabel.setForeground(Color.red);
                 return; // new Memory objects are always valid, but system names must not be in use so skip in that case
             }
             try {
-                if (autoSystemName.isSelected()) {
-                    InstanceManager.memoryManagerInstance().newMemory(user);
+                if (autoSystemNameBox.isSelected()) {
+                    InstanceManager.memoryManagerInstance().newMemory(uName);
                 } else {
-                    InstanceManager.memoryManagerInstance().newMemory(sName, user);
+                    InstanceManager.memoryManagerInstance().newMemory(sName, uName);
                 }
             } catch (IllegalArgumentException ex) {
-                // user input no good
+                // uName input no good
                 handleCreateException(sName);
                 errorMessage = "An error has occurred";
-                statusBar.setText(errorMessage);
-                statusBar.setForeground(Color.red);
+                statusBarLabel.setText(errorMessage);
+                statusBarLabel.setForeground(Color.red);
                 return; // without creating
             }
-            // add first and last names to statusMessage user feedback string
-            if (x == 0 || x == numberOfMemory - 1) statusMessage = statusMessage + " " + sName + " (" + user + ")";
-            if (x == numberOfMemory - 2) statusMessage = statusMessage + " " + Bundle.getMessage("ItemCreateUpTo") + " ";
-            // only mention first and last of range added
-        } // end of for loop creating range of Memories
 
-        // provide feedback to user
+            // add first and last names to statusMessage uName feedback string
+            // only mention first and last of rangeBox added
+            if (x == 0 || x == numberOfMemory - 1) {
+                statusMessage = statusMessage + " " + sName + " (" + uName + ")";
+            }
+            if (x == numberOfMemory - 2) {
+                statusMessage = statusMessage + " " + Bundle.getMessage("ItemCreateUpTo") + " ";
+            }
+
+            // bump system & uName names
+            if (!autoSystemNameBox.isSelected()) {
+                sName = nextName(sName);
+            }
+            if (uName != null) {
+                uName = nextName(uName);
+            }
+        } // end of for loop creating rangeBox of Memories
+
+        // provide feedback to uName
         if (errorMessage == null) {
-            statusBar.setText(statusMessage);
-            statusBar.setForeground(Color.gray);
+            statusBarLabel.setText(statusMessage);
+            statusBarLabel.setForeground(Color.gray);
         } else {
-            statusBar.setText(errorMessage);
-            // statusBar.setForeground(Color.red); // handled when errorMassage is set to differentiate urgency
+            statusBarLabel.setText(errorMessage);
+            // statusBarLabel.setForeground(Color.red); // handled when errorMassage is set to differentiate urgency
         }
 
-        p.setSimplePreferenceState(systemNameAuto, autoSystemName.isSelected());
+        p.setSimplePreferenceState(systemNameAuto, autoSystemNameBox.isSelected());
     }
 
     void handleCreateException(String sysName) {

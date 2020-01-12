@@ -46,9 +46,9 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
     JTextField mPacketField[] = new JTextField[MAXSEQUENCE];
     JCheckBox mUseField[] = new JCheckBox[MAXSEQUENCE];
     JTextField mDelayField[] = new JTextField[MAXSEQUENCE];
-    JToggleButton mRunButton = new JToggleButton(Bundle.getMessage("ButtonGo"));
+    JToggleButton mRunButton = new JToggleButton(Bundle.getMessage("ButtonRun"));
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -56,7 +56,7 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
         return "package.jmri.jmrix.loconet.locogen.LocoGenFrame"; // NOI18N
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -64,7 +64,7 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
         return getTitle(Bundle.getMessage("MenuItemSendPacket"));
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -132,7 +132,7 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
         });
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -153,6 +153,8 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
 
     /**
      * Internal routine to handle timer starts {@literal &} restarts
+     *
+     * @param delay in mSec
      */
     protected void restartTimer(int delay) {
         if (timer == null) {
@@ -170,8 +172,9 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
     }
 
     /**
-     * Run button pressed down, start the sequence operation
+     * Run button pressed down, start the sequence operation.
      *
+     * @param e  a {@link java.awt.event.ActionEvent} to be triggered
      */
     public void runButtonActionPerformed(java.awt.event.ActionEvent e) {
         if (!mRunButton.isSelected()) {
@@ -193,7 +196,7 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
         sendNextItem();
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -256,7 +259,12 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
 
     /**
      * Create a well-formed LocoNet packet from a String
+     * <p>
+     * Well-formed generally means a space-separated string of hex values of
+     * two characters each, as defined in
+     * {@link jmri.util.StringUtil#bytesFromHexString(String s)} .
      *
+     * @param s  a string containing raw hex data of good form
      * @return The packet, with contents filled-in
      */
     LocoNetMessage createPacket(String s) {

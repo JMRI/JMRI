@@ -3,19 +3,19 @@ package jmri;
 /**
  * This class holds information and options for a Action to be applied when an
  * automated train enters, exits, or is inside of a Section in a Transit.
- * <P>
+ * <p>
  * A TransitSection holds specified TrainsitSectionActions. A TransitSection may
  * have as many TransitSectionActions as appropriate. Each TransitSectionAction
  * belongs to one and only one TransitSection.
- * <P>
+ * <p>
  * TransitSectionActions are specified in two parts: 1. The "When" part
  * specifies when after the automated train enters the Section the action is to
  * be initiated. Optionally, each "when" may be delayed by a specified time (in
  * milliseconds). 2. The "What" part specified what action is to occur.
- * <P>
+ * <p>
  * TransitSectionActions are created and edited in the Transit Table, when
  * Transits are defined.
- * <P>
+ * <p>
  * This class provides support for SENSORACTIVE and SENSORINACTIVE "when"'s.
  *
  * @author Dave Duchamp Copyright (C) 2009, 2010

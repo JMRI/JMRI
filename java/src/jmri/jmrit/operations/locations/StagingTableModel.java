@@ -1,11 +1,14 @@
 package jmri.jmrit.operations.locations;
 
 import java.beans.PropertyChangeEvent;
+
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
-import jmri.jmrit.operations.setup.Control;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.jmrit.operations.setup.Control;
 
 /**
  * Table Model for edit of staging tracks used by operations
@@ -41,14 +44,11 @@ public class StagingTableModel extends TrackTableModel {
             tef.dispose();
         }
         // use invokeLater so new window appears on top
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                tef = new StagingEditFrame();
-                Track staging = tracksList.get(row);
-                tef.initComponents(_location, staging);
-                tef.setTitle(Bundle.getMessage("EditStaging"));
-            }
+        SwingUtilities.invokeLater(() -> {
+            tef = new StagingEditFrame();
+            Track staging = tracksList.get(row);
+            tef.initComponents(_location, staging);
+            tef.setTitle(Bundle.getMessage("EditStaging"));
         });
     }
 
@@ -62,7 +62,7 @@ public class StagingTableModel extends TrackTableModel {
         super.propertyChange(e);
         if (e.getSource().getClass().equals(Track.class)) {
             Track track = ((Track) e.getSource());
-            if (track.getTrackType().equals(Track.STAGING)) {
+            if (track.isStaging()) {
                 int row = tracksList.indexOf(track);
                 if (Control.SHOW_PROPERTY) {
                     log.debug("Update staging table row: {} track: {}", row, track.getName());

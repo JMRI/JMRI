@@ -3,10 +3,8 @@ package jmri.jmrix.easydcc;
 import jmri.JmriException;
 import jmri.jmrix.AbstractPowerManagerTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import jmri.util.junit.annotations.NotApplicable;
+import org.junit.*;
 
 /**
  * JUnit tests for the EasyDccPowerManager class
@@ -37,6 +35,16 @@ public class EasyDccPowerManagerTest extends AbstractPowerManagerTestBase {
     protected void hearOff() {
         // this does nothing, as there is no unsolicited on
     }
+    
+    @Override
+    protected void sendIdleReply() {
+        // this does nothign as there is no IDLE support
+    }
+
+    @Override
+    protected void hearIdle() {
+        // this does nothign as there is no IDLE support
+    }
 
     @Override
     protected int numListeners() {
@@ -58,11 +66,16 @@ public class EasyDccPowerManagerTest extends AbstractPowerManagerTestBase {
         return 'K' == ((controller.outbound.elementAt(index))).getOpCode();
     }
 
+    @Override
+    protected boolean outboundIdleOK(int index) {
+        return false;
+    }
+
     // setup a default EasyDccTrafficController interface
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         EasyDccSystemConnectionMemo memo = new EasyDccSystemConnectionMemo("E", "EasyDCC via Serial");
         controller = new EasyDccTrafficControlScaffold(memo);
         memo.setEasyDccTrafficController(controller); // important for successful getTrafficController()
@@ -76,13 +89,13 @@ public class EasyDccPowerManagerTest extends AbstractPowerManagerTestBase {
     // state readback by sending messages & getting a reply
     @Override
     @Test
-    @Ignore("no unsolicited messages, so skip test")
+    @NotApplicable("no unsolicited messages, so skip test")
     public void testStateOn() throws JmriException {
     }
 
     @Override
     @Test
-    @Ignore("no unsolicited messages, so skip test")
+    @NotApplicable("no unsolicited messages, so skip test")
     public void testStateOff() throws JmriException {
     }
 

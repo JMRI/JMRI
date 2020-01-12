@@ -1,9 +1,5 @@
 package jmri.jmrix.direct.simulator;
 
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import jmri.jmrix.direct.DirectSystemConnectionMemo;
-
 /**
  * Handle configuring an Direct layout connection via a Simulator
  * adapter.
@@ -13,7 +9,7 @@ import jmri.jmrix.direct.DirectSystemConnectionMemo;
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  * @author Paul Bender Copyright (C) 2009
  * @author Mark Underwood Copyright (C) 2015
-  *
+ *
  * @see SimulatorAdapter
  *
  * Based on jmri.jmrix.lenz.xnetsimulator.ConnectionConfig, copied from EasyDCC
@@ -29,7 +25,8 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
     }
 
     /**
-     * Ctor for a functional Swing object with no prexisting adapter
+     * Ctor for a connection configuration with no preexisting adapter.
+     * {@link #setInstance()} will fill the adapter member.
      */
     public ConnectionConfig() {
         super();
@@ -52,6 +49,9 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
         manufacturerName = manu;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setInstance() {
         if (adapter == null) {

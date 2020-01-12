@@ -1,50 +1,45 @@
 package jmri.jmrit.logix;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.annotation.Nonnull;
+import javax.swing.JOptionPane;
+
 import jmri.InstanceManager;
+import jmri.NamedBean;
 import jmri.ShutDownTask;
 import jmri.jmrit.roster.RosterSpeedProfile;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractManager;
+import jmri.util.ThreadingUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Basic Implementation of a WarrantManager.
- * <P>
+ * <p>
  * Note this is a concrete class.
- *
- * <hr>
- * This file is part of JMRI.
- * <P>
- * JMRI is free software; you can redistribute it and/or modify it under the
- * terms of version 2 of the GNU General Public License as published by the Free
- * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
  *
  * @author Pete Cressman Copyright (C) 2009
  */
 public class WarrantManager extends AbstractManager<Warrant>
-        implements java.beans.PropertyChangeListener, jmri.InstanceManagerAutoDefault {
+        implements jmri.InstanceManagerAutoDefault {
     
     private HashMap<String, RosterSpeedProfile> _mergeProfiles;
     private HashMap<String, RosterSpeedProfile> _sessionProfiles;
+    private boolean _suppressWarnings = false;
 
     public WarrantManager() {
-        super();
+        super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
     }
 
     @Override
     public int getXMLOrder() {
         return jmri.Manager.WARRANTS;
-    }
-
-    @Override
-    public String getSystemPrefix() {
-        return "I";
     }
 
     @Override
@@ -62,7 +57,7 @@ public class WarrantManager extends AbstractManager<Warrant>
      * @return an existing warrant if found or a new warrant
      */
     public Warrant createNewWarrant(String systemName, String userName, boolean SCWa, long TTP) {
-        log.debug("createNewWarrant " + systemName + " SCWa="+SCWa);
+        log.debug("createNewWarrant {} SCWa= {}",systemName,SCWa);
         // Check that Warrant does not already exist
         Warrant r;
         if (userName != null && userName.trim().length() > 0) {
@@ -71,20 +66,20 @@ public class WarrantManager extends AbstractManager<Warrant>
                 r = getBySystemName(systemName);
             }
             if (r != null) {
-                log.warn("Warrant " + r.getDisplayName() + "  exits.");
+                log.warn("Warrant {}  exits.",r.getDisplayName());
                 return null;
             }
         }
-        String sName = systemName.trim().toUpperCase();
-        if ((sName.compareTo(systemName) != 0) || !sName.startsWith("IW") || sName.length() < 3) {
-            log.error("Warrant system name \"" + systemName + "\" must be upper case  begining with \"IW\".");
+        if (!systemName.startsWith(getSystemNamePrefix()) || systemName.length() < getSystemNamePrefix().length()+1) {
+            log.error("Warrant system name \"{}\" must begin with \"{}\".",
+                    systemName, getSystemNamePrefix());
             return null;
         }
         // Warrant does not exist, create a new Warrant
         if (SCWa) {
-            r = new SCWarrant(sName, userName, TTP);
+            r = new SCWarrant(systemName, userName, TTP);
         } else {
-            r = new Warrant(sName, userName);
+            r = new Warrant(systemName, userName);
         }
         // save in the maps
         register(r);
@@ -107,21 +102,6 @@ public class WarrantManager extends AbstractManager<Warrant>
         return getBySystemName(name);
     }
 
-    public Warrant getBySystemName(String name) {
-        if (name == null || name.trim().length() == 0) {
-            return null;
-        }
-        String key = name.toUpperCase();
-        return _tsys.get(key);
-    }
-
-    public Warrant getByUserName(String key) {
-        if (key == null || key.trim().length() == 0) {
-            return null;
-        }
-        return _tuser.get(key);
-    }
-
     public Warrant provideWarrant(String name) {
         if (name == null || name.trim().length() == 0) {
             return null;
@@ -136,6 +116,208 @@ public class WarrantManager extends AbstractManager<Warrant>
         return w;
     }
 
+    protected boolean okToRemoveBlock(OBlock block) {
+        String name = block.getDisplayName();
+        List<Warrant> list = warrantsUsing(block);
+        boolean ok = true;
+        if (!list.isEmpty()) {
+//            ok = false;   Last setting was OK = true when _suppressWarnings was set to true
+            if (!_suppressWarnings) {
+                StringBuilder sb = new StringBuilder();
+                for (Warrant w : list) {
+                    sb.append(Bundle.getMessage("DeleteWarrantBlock", name, w.getDisplayName()));
+                }
+                sb.append(Bundle.getMessage("DeleteConfirm", name));
+                ok = okToRemove(name, sb.toString());
+            }
+        }
+        if (ok) {
+            removeWarrants(list);
+        }
+        return ok;
+    }
+    
+    protected boolean okToRemovePortal(Portal portal) {
+        String name = portal.getName();
+        boolean ok = true;
+        List<Warrant> wList = warrantsUsing(portal);
+        if (!wList.isEmpty()) {
+//          ok = false;   Last setting was OK = true when _suppressWarnings was set to true
+            if (!_suppressWarnings) {
+                StringBuilder sb = new StringBuilder();
+                for (Warrant w : wList) {
+                    sb.append(Bundle.getMessage("DeleteWarrantPortal", name, w.getDisplayName()));
+                 }
+                sb.append(Bundle.getMessage("DeleteConfirm", name));
+                ok = okToRemove(name, sb.toString());
+            }
+        }
+        List<NamedBean> sList = signalsUsing(portal);
+        if (!sList.isEmpty()) {
+//          ok = false;   Last setting was OK = true when _suppressWarnings was set to true
+            if (!_suppressWarnings) {
+                StringBuilder sb = new StringBuilder();
+                for (NamedBean s : sList) {
+                    sb.append(Bundle.getMessage("DeletePortalSignal", 
+                            name, s.getDisplayName(), portal.getProtectedBlock(s)));
+                 }
+                sb.append(Bundle.getMessage("DeleteConfirmSignal", name));
+                ok = okToRemove(name, sb.toString());
+            }
+        }
+        
+        if (ok) {
+            removeWarrants(wList);
+            for (NamedBean s : sList) {
+                portal.deleteSignal(s);
+            }
+        }
+        return ok;
+    }
+
+    protected boolean okToRemoveBlockPath(OBlock block, OPath path) {
+        String pathName = path.getName();
+        String blockName = block.getDisplayName();
+        boolean ok = true;
+        List<Warrant> list = warrantsUsing(block, path);
+        if (!list.isEmpty()) {
+//          ok = false;   Last setting was OK = true when _suppressWarnings was set to true
+            if (!_suppressWarnings) {
+                StringBuilder sb = new StringBuilder();
+                for (Warrant w : list) {
+                    sb.append(Bundle.getMessage("DeleteWarrantPath", 
+                            pathName, blockName, w.getDisplayName()));
+                 }
+                sb.append(Bundle.getMessage("DeleteConfirm", pathName));
+                ok = okToRemove(pathName, sb.toString());
+            }
+        }
+        if (ok) {
+            removeWarrants(list);
+        }
+        return ok;
+    }
+
+    private void removeWarrants(List<Warrant> list) {
+        for (Warrant w : list) {
+            if (w.getRunMode() != Warrant.MODE_NONE) {
+                w.controlRunTrain(Warrant.ABORT);
+            }
+            deregister(w);
+            w.dispose();
+        }
+    }
+
+    private boolean okToRemove(String name, String message) {
+        if (!ThreadingUtil.isLayoutThread()) {  //need GUI
+            log.warn("Cannot delete portal \"{}\" from this thread", name);
+            return false;
+        }
+        int val = JOptionPane.showOptionDialog(null, message,
+                Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE, null,
+                new Object[]{Bundle.getMessage("ButtonYes"),
+                        Bundle.getMessage("ButtonYesPlus"),
+                        Bundle.getMessage("ButtonNo"),},
+                Bundle.getMessage("ButtonNo")); // default NO
+        if (val == 2) {
+            return false;
+        }
+        if (val == 1) { // suppress future warnings
+            _suppressWarnings = true;
+        }
+        return true;
+    }
+
+    synchronized protected void portalNameChange(String oldName, String newName) {
+        for (Warrant w : getNamedBeanSet()) {
+            List<BlockOrder> orders = w.getBlockOrders();
+            Iterator<BlockOrder> it = orders.iterator();
+            while (it.hasNext()) {
+                BlockOrder bo = it.next();
+                if (oldName.equals(bo.getEntryName())) {
+                    bo.setEntryName(newName);
+                }
+                if (oldName.equals(bo.getExitName())) {
+                    bo.setExitName(newName);
+                }
+            }
+        }
+    }
+
+    protected List<Warrant> warrantsUsing(OBlock block) {
+        ArrayList<Warrant> list = new ArrayList<>();
+        for (Warrant w : getNamedBeanSet()) {
+            List<BlockOrder> orders = w.getBlockOrders();
+            Iterator<BlockOrder> it = orders.iterator();
+            while (it.hasNext()) {
+                if (block.equals(it.next().getBlock()))
+                    list.add(w);
+            }
+        }
+        return list;
+    }
+
+    protected List<Warrant> warrantsUsing(Portal portal) {
+        ArrayList<Warrant> list = new ArrayList<>();
+        String name = portal.getName();
+        for (Warrant w : getNamedBeanSet()) {
+            List<BlockOrder> orders = w.getBlockOrders();
+            Iterator<BlockOrder> it = orders.iterator();
+            while (it.hasNext()) {
+                BlockOrder bo = it.next();
+                if (name.equals(bo.getEntryName()) && !list.contains(w)) {
+                    list.add(w);
+                } else if (name.equals(bo.getExitName()) && !list.contains(w)) {
+                    list.add(w);
+                }
+            }
+        }
+        return list;
+    }
+
+    protected List<NamedBean> signalsUsing(Portal portal) {
+        ArrayList<NamedBean> list = new ArrayList<>();
+        NamedBean signal = portal.getToSignal();
+        if (signal != null) {
+            list.add(signal);
+        }
+        signal = portal.getFromSignal();
+        if (signal != null) {
+            list.add(signal);
+        }
+        return list;
+    }
+
+    protected List<Warrant> warrantsUsing(OBlock block, OPath path) {
+        ArrayList<Warrant> list = new ArrayList<>();
+        String name = path.getName();
+        for (Warrant w : getNamedBeanSet()) {
+            List<BlockOrder> orders = w.getBlockOrders();
+            Iterator<BlockOrder> it = orders.iterator();
+            while (it.hasNext()) {
+                BlockOrder bo = it.next();
+                if (block.equals(bo.getBlock()) && name.equals(bo.getPathName())) {
+                    list.add(w);
+                }
+            }
+        }
+        return list;
+    }
+
+    synchronized protected void pathNameChange(OBlock block, String oldName, String newName) {
+        for (Warrant w : getNamedBeanSet()) {
+            List<BlockOrder> orders = w.getBlockOrders();
+            Iterator<BlockOrder> it = orders.iterator();
+            while (it.hasNext()) {
+                BlockOrder bo = it.next();
+                if (bo.getBlock().equals(block) && bo.getPathName().equals(oldName)) {
+                    bo.setPathName(newName);
+                }
+            }
+        }
+    }
+
     /**
      * Get the default WarrantManager.
      *
@@ -147,46 +329,30 @@ public class WarrantManager extends AbstractManager<Warrant>
         });
     }
 
-    /**
-     * Get the default WarrantManager.
-     *
-     * @return the default WarrantManager, creating it if necessary
-     * @deprecated since 4.7.1; use {@link #getDefault()} instead
-     */
-    @Deprecated
-    static public WarrantManager instance() {
-        return getDefault();
-    }
-
-    /**
-     * Get the default warrant preferences.
-     *
-     * @return the default preferences, created if necessary
-     * @deprecated since 4.7.1; use
-     * {@link jmri.jmrit.logix.WarrantPreferences#getDefault()} instead
-     */
-    @Deprecated
-    static public WarrantPreferences warrantPreferencesInstance() {
-        return WarrantPreferences.getDefault();
-    }
-
     @Override
-    public String getBeanTypeHandled() {
-        return jmri.jmrit.logix.Bundle.getMessage("BeanNameWarrant");
+    @Nonnull
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameWarrants" : "BeanNameWarrant");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<Warrant> getNamedBeanClass() {
+        return Warrant.class;
     }
     
     protected void setSpeedProfiles(String id, RosterSpeedProfile merge, RosterSpeedProfile session) {
         if (_mergeProfiles == null) {
-            _mergeProfiles = new HashMap<String, RosterSpeedProfile>();
-            _sessionProfiles = new HashMap<String, RosterSpeedProfile>();
-            if (jmri.InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
+            _mergeProfiles = new HashMap<>();
+            _sessionProfiles = new HashMap<>();
+            if (!WarrantPreferences.getDefault().getShutdown().equals((WarrantPreferences.Shutdown.NO_MERGE))) {
                 ShutDownTask shutDownTask = new WarrantShutdownTask("WarrantRosterSpeedProfileCheck");
-                        jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(shutDownTask);
-            } else {
-                log.error("No ShutDownManager for WarrantRosterSpeedProfileCheck");
+                jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(shutDownTask);
             }
         }
-        if (id != null && merge != null) {
+        if (id != null) {
             _mergeProfiles.put(id, merge);
             _sessionProfiles.put(id, session);
         }
@@ -212,5 +378,13 @@ public class WarrantManager extends AbstractManager<Warrant>
         return _sessionProfiles;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(WarrantManager.class);
+    @Override
+    public void dispose(){
+        for(Warrant w:_beans){
+            w.stopWarrant(true);
+        }
+        super.dispose();
+    }
+
+    private static final Logger log = LoggerFactory.getLogger(WarrantManager.class);
 }

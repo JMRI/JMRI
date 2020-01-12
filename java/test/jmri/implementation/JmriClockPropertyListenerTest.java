@@ -1,5 +1,6 @@
 package jmri.implementation;
 
+import jmri.Conditional;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -14,7 +15,9 @@ public class JmriClockPropertyListenerTest {
 
     @Test
     public void testCTor() {
-        JmriClockPropertyListener t = new JmriClockPropertyListener("foo",0,"bar",1,new DefaultConditional("foo"),0,0);
+        JmriClockPropertyListener t =
+                new JmriClockPropertyListener("foo",0,"bar",
+                        Conditional.Type.SENSOR_ACTIVE,new DefaultConditional("foo"),0,0);
         Assert.assertNotNull("exists",t);
     }
 

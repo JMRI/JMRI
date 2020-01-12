@@ -1,35 +1,59 @@
 package jmri.jmrix.mrc;
 
+import jmri.ProgrammingMode;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class MrcProgrammerTest {
+public class MrcProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
 
     @Test
-    public void testCTor() {
+    @Override
+    public void testDefault() {
+        Assert.assertEquals("Check Default", MrcProgrammer.AUTOMATICMODE,
+                programmer.getMode());        
+    }
+    
+    @Override
+    @Test
+    public void testDefaultViaBestMode() {
+        Assert.assertEquals("Check Default", MrcProgrammer.AUTOMATICMODE,
+                ((MrcProgrammer)programmer).getBestMode());        
+    }
+
+    @Override
+    @Test(expected=java.lang.IllegalArgumentException.class)
+    public void testSetGetMode() {
+        programmer.setMode(ProgrammingMode.REGISTERMODE);
+        Assert.assertEquals("Check mode matches set", ProgrammingMode.REGISTERMODE,
+                programmer.getMode());        
+    }
+
+    @Override
+    @Test
+    public void testGetCanWriteAddress() {
+        Assert.assertFalse("can write address", programmer.getCanWrite("1234"));
+    }    
+
+    // The minimal setup for log4J
+    @Override
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
         MrcSystemConnectionMemo memo = new MrcSystemConnectionMemo();
         MrcInterfaceScaffold tc = new MrcInterfaceScaffold();
         memo.setMrcTrafficController(tc);
         jmri.InstanceManager.store(memo, MrcSystemConnectionMemo.class);
-        MrcProgrammer t = new MrcProgrammer(tc);
-        Assert.assertNotNull("exists",t);
+        programmer = new MrcProgrammer(memo);
     }
 
-    // The minimal setup for log4J
-    @Before
-    public void setUp() {
-        JUnitUtil.setUp();
-    }
-
+    @Override
     @After
     public void tearDown() {
+        programmer = null;
         JUnitUtil.tearDown();
     }
 

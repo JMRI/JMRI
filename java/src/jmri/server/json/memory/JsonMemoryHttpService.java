@@ -1,56 +1,68 @@
 package jmri.server.json.memory;
 
 import static jmri.server.json.JSON.DATA;
-import static jmri.server.json.JSON.TYPE;
 import static jmri.server.json.JSON.VALUE;
 import static jmri.server.json.memory.JsonMemory.MEMORIES;
 import static jmri.server.json.memory.JsonMemory.MEMORY;
+import static jmri.server.json.idtag.JsonIdTag.IDTAG;
+import static jmri.server.json.reporter.JsonReporter.REPORTER;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
+
 import jmri.InstanceManager;
 import jmri.Memory;
+import jmri.MemoryManager;
+import jmri.ProvidingManager;
+import jmri.Reportable;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonNamedBeanHttpService;
+import jmri.server.json.JsonRequest;
+import jmri.server.json.idtag.JsonIdTagHttpService;
+import jmri.server.json.reporter.JsonReporterHttpService;
 
 /**
- *
  * @author Randall Wood
  */
-public class JsonMemoryHttpService extends JsonNamedBeanHttpService {
+public class JsonMemoryHttpService extends JsonNamedBeanHttpService<Memory> {
+
+    private JsonIdTagHttpService idTagService = new JsonIdTagHttpService(mapper);
+    private JsonReporterHttpService reporterService = new JsonReporterHttpService(mapper);
 
     public JsonMemoryHttpService(ObjectMapper mapper) {
         super(mapper);
     }
 
     @Override
-    public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
-        Memory memory = InstanceManager.memoryManagerInstance().getMemory(name);
-        ObjectNode data = this.getNamedBean(memory, name, type, locale);
-        ObjectNode root = mapper.createObjectNode();
-        root.put(TYPE, MEMORY);
-        root.set(DATA, data);
+    public ObjectNode doGet(Memory memory, String name, String type, JsonRequest request) throws JsonException {
+        ObjectNode root = this.getNamedBean(memory, name, type, request);
+        ObjectNode data = root.with(DATA);
         if (memory != null) {
-            if (memory.getValue() == null) {
+            Object val = memory.getValue();
+            if (val == null) {
                 data.putNull(VALUE);
             } else {
-                data.put(VALUE, memory.getValue().toString());
+                // set memory value based on type
+                if (val instanceof jmri.IdTag) {
+                    ObjectNode idTagValue = idTagService.doGet((jmri.IdTag) val, name, IDTAG, request);
+                    data.set(VALUE, idTagValue);
+                } else if (val instanceof Reportable) {
+                    ObjectNode reporterValue = reporterService.doGet((jmri.Reporter) val, name, REPORTER, request);
+                    data.set(VALUE, reporterValue);
+                } else {
+                    // send string for types not explicitly handled
+                    data.put(VALUE, val.toString());
+                }
             }
         }
         return root;
     }
 
     @Override
-    public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {
-        Memory memory = InstanceManager.memoryManagerInstance().getMemory(name);
-        if (memory == null) {
-            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", MEMORY, name));
-        }
-        this.postNamedBean(memory, data, name, type, locale);
+    public ObjectNode doPost(Memory memory, String name, String type, JsonNode data, JsonRequest request)
+            throws JsonException {
         if (!data.path(VALUE).isMissingNode()) {
             if (data.path(VALUE).isNull()) {
                 memory.setValue(null);
@@ -58,40 +70,32 @@ public class JsonMemoryHttpService extends JsonNamedBeanHttpService {
                 memory.setValue(data.path(VALUE).asText());
             }
         }
-        return this.doGet(type, name, locale);
+        return this.doGet(memory, name, type, request);
     }
 
     @Override
-    public JsonNode doPut(String type, String name, JsonNode data, Locale locale) throws JsonException {
-        try {
-            InstanceManager.memoryManagerInstance().provideMemory(name);
-        } catch (Exception ex) {
-            throw new JsonException(500, Bundle.getMessage(locale, "ErrorCreatingObject", MEMORY, name));
-        }
-        return this.doPost(type, name, data, locale);
-    }
-
-    @Override
-    public ArrayNode doGetList(String type, Locale locale) throws JsonException {
-        ArrayNode root = this.mapper.createArrayNode();
-        for (String name : InstanceManager.memoryManagerInstance().getSystemNameList()) {
-            root.add(this.doGet(MEMORY, name, locale));
-        }
-        return root;
-
-    }
-
-    @Override
-    public JsonNode doSchema(String type, boolean server, Locale locale) throws JsonException {
+    public JsonNode doSchema(String type, boolean server, JsonRequest request) throws JsonException {
         switch (type) {
             case MEMORY:
             case MEMORIES:
                 return doSchema(type,
                         server,
                         "jmri/server/json/memory/memory-server.json",
-                        "jmri/server/json/memory/memory-client.json");
+                        "jmri/server/json/memory/memory-client.json",
+                        request.id);
             default:
-                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+                        Bundle.getMessage(request.locale, JsonException.ERROR_UNKNOWN_TYPE, type), request.id);
         }
+    }
+
+    @Override
+    protected String getType() {
+        return MEMORY;
+    }
+
+    @Override
+    protected ProvidingManager<Memory> getManager() {
+        return InstanceManager.getDefault(MemoryManager.class);
     }
 }

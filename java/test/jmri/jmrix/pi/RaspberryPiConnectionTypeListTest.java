@@ -15,7 +15,7 @@ public class RaspberryPiConnectionTypeListTest {
     @Test
     public void testCTor() {
         RaspberryPiConnectionTypeList t = new RaspberryPiConnectionTypeList();
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists", t);
     }
 
     // The minimal setup for log4J

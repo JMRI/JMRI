@@ -16,9 +16,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Edit Block Window</h1>
 
       <p>The Edit Block pane allows you to edit the following
@@ -66,8 +66,9 @@
           that will help you distinguish this Block from other
           Blocks, or provide useful notes about its use.</p>
         </li>
-      </ul><a name="sensor" id="sensor"></a>
+      </ul>
 
+      <a name="sensor" id="sensor"></a>
       <h2>Sensor</h2>
 
       <p>This tab allows you to assign a Sensor to the Block to
@@ -250,9 +251,9 @@
 
       <p>This is an information field, showing where you have the
       Block displayed on a Panel:</p><img src=
-      "images/BlocksEditUsageTab.png" width="460" height="120"> <a name=
-      "properties" id="properties"></a>
+      "images/BlocksEditUsageTab.png" width="460" height="120">
 
+      <a name="properties" id="properties"></a>
       <h2>Properties</h2>
       <img src="images/BlocksEditPropsTab.png" width="392" height="89">
 

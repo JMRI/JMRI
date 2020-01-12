@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Store the entire JMRI status in an XML file.
- * <P>
+ * <p>
  * See {@link jmri.ConfigureManager} for information on the various types of
  * information stored in configuration files.
  *

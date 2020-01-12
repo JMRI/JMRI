@@ -17,13 +17,14 @@ public class SRCPTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContr
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         tc = new SRCPTrafficController();
     }
 
     @Override
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 }

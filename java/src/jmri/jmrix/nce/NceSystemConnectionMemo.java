@@ -1,8 +1,11 @@
 package jmri.jmrix.nce;
 
+import java.util.Comparator;
 import java.util.ResourceBundle;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
+import jmri.NamedBean;
+import jmri.util.NamedBeanComparator;
 
 /**
  * Lightweight class to denote that a system is active, and provide general
@@ -63,7 +66,7 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     public void setNceTrafficController(NceTrafficController tc) {
         nceTrafficController = tc;
         if (tc != null) {
-            tc.setSystemConnectionMemo(this);
+            tc.setAdapterMemo(this);
         }
     }
 
@@ -95,9 +98,8 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     /**
-     * Tells which managers this class provides.
+     * {@inheritDoc}
      */
-    @SuppressWarnings("deprecation")
     @Override
     public boolean provides(Class<?> type) {
         if (getDisabled()) {
@@ -138,9 +140,9 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     /**
-     * Provide manager by class
+     * {@inheritDoc}
      */
-    @SuppressWarnings({"unchecked", "deprecation"})
+    @SuppressWarnings({"unchecked"})
     @Override
     public <T> T get(Class<?> T) {
         if (getDisabled()) {
@@ -191,34 +193,31 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      * Configure the common managers for NCE connections. This puts the common
      * manager config in one place.
      */
-    @SuppressWarnings("deprecation")
     public void configureManagers() {
+        log.trace("configureManagers() with: {} ", getNceUsbSystem());
         powerManager = new jmri.jmrix.nce.NcePowerManager(this);
         InstanceManager.store(powerManager, jmri.PowerManager.class);
 
-        turnoutManager = new jmri.jmrix.nce.NceTurnoutManager(getNceTrafficController(), getSystemPrefix());
+        turnoutManager = new jmri.jmrix.nce.NceTurnoutManager(this);
         InstanceManager.setTurnoutManager(turnoutManager);
 
-        lightManager = new jmri.jmrix.nce.NceLightManager(getNceTrafficController(), getSystemPrefix());
+        lightManager = new jmri.jmrix.nce.NceLightManager(this);
         InstanceManager.setLightManager(lightManager);
 
-        sensorManager = new jmri.jmrix.nce.NceSensorManager(getNceTrafficController(), getSystemPrefix());
+        sensorManager = new jmri.jmrix.nce.NceSensorManager(this);
         InstanceManager.setSensorManager(sensorManager);
 
         throttleManager = new jmri.jmrix.nce.NceThrottleManager(this);
         InstanceManager.setThrottleManager(throttleManager);
 
-        if (getNceUsbSystem() != NceTrafficController.USB_SYSTEM_NONE) {
-            if (getNceUsbSystem() != NceTrafficController.USB_SYSTEM_POWERHOUSE) {
-                // don't set a service mode programmer
-            }
-        } else {
-            if (getProgrammerManager().isAddressedModePossible()) {
-                InstanceManager.store(getProgrammerManager(), jmri.AddressedProgrammerManager.class);
-            }
-            if (getProgrammerManager().isGlobalProgrammerAvailable()) {
-                InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
-            }
+        // non-USB case
+        if (getProgrammerManager().isAddressedModePossible()) {
+            log.trace("store AddressedProgrammerManager");
+            InstanceManager.store(getProgrammerManager(), jmri.AddressedProgrammerManager.class);
+        }
+        if (getProgrammerManager().isGlobalProgrammerAvailable()) {
+            log.trace("store GlobalProgrammerManager");
+            InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
         }
 
         clockManager = new jmri.jmrix.nce.NceClockControl(getNceTrafficController(), getSystemPrefix());
@@ -228,6 +227,7 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
         setConsistManager(new jmri.jmrix.nce.NceConsistManager(this));
 
+        log.trace("configureManagers() end");
     }
 
     public NcePowerManager getPowerManager() {
@@ -254,11 +254,22 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         return clockManager;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.nce.NceActionListBundle");
     }
 
+    @Override
+    public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
+        return new NamedBeanComparator<>();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void dispose() {
         nceTrafficController = null;
@@ -288,4 +299,5 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         super.dispose();
     }
 
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NceSystemConnectionMemo.class);
 }

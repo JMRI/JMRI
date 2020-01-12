@@ -1,0 +1,650 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+  <name>Sound</name>
+  <name xml:lang="ca">So</name>
+  <name xml:lang="cs">Zvuk</name>
+  <name xml:lang="da">Lyd</name>
+  <name xml:lang="de">Sound</name>
+  <name xml:lang="fr">Sons</name>
+  <name xml:lang="it">Suoni</name>
+  <name xml:lang="nl">Geluid</name>
+
+  <group include="PIKO56400,PIKO56401">
+    <label>
+      <text>Sound not available in this Piko SmartDecoder 4.1</text>
+    </label>
+  </group>
+
+  <group exclude="PIKO56400,PIKO56401">
+  <column>
+    <row>
+      <display item="Bank_Switch"/>
+    </row>
+  </column>
+
+    <group>
+      <qualifier>
+        <variableref>Bank_Switch</variableref>
+        <relation>eq</relation>
+        <value>0</value>
+      </qualifier>
+      <column>
+        <!--Bank 0-->
+        <display item="Bank A Manufacturer ID"/>
+        <display item="Bank A Software version"/>
+        <display item="Bank A Reset"/>
+      </column>
+    </group>
+
+    <group>
+      <qualifier>
+        <variableref>Bank_Switch</variableref>
+        <relation>eq</relation>
+        <value>1</value>
+      </qualifier>
+      <column>
+        <!--Bank 1-->
+        <display item="Bank B Hardware ID"/>
+        <display item="Bank B Subversion ID"/>
+      </column>
+    </group>
+
+    <group>
+      <qualifier>
+        <variableref>Bank_Switch</variableref>
+        <relation>eq</relation>
+        <value>2</value>
+      </qualifier>
+      <column>
+        <!--Bank 2-->
+        <row>
+          <display item="Bank C Sound Setting 1" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank C Sound Setting 1" layout="above" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank C Sound Setting 2" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank C Sound Setting 2" layout="above" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank C Sound Setting 3" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank C Sound Setting 3" layout="above" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank C Sound Setting 4" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank C Sound Setting 4" layout="above" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank C Sound Setting 5" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank C Sound Setting 5" layout="above" format="hslider"/>
+        </row>
+        <display item="Bank C Sound Setting 6"/>
+        <display item="Bank C Sound Setting 7"/>
+      </column>
+    </group>
+
+    <!--TODO complete Banks 3 and 4-->
+    <group>
+      <qualifier>
+        <variableref>Bank_Switch</variableref>
+        <relation>eq</relation>
+        <value>3</value>
+      </qualifier>
+      <column>
+        <!--Bank 3-->
+        <label>
+          <text>Speed Step activating Switching Sound</text>
+          <text xml:lang="de">Fahrstufe für Schaltgerausch</text>
+          <text xml:lang="nl">Snelheidsstap bij Schakelgeluid</text>
+        </label>
+        <row>
+          <display item="Bank D Sound Setting 1" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank D Sound Setting 1" layout="above" label="#1" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank D Sound Setting 2" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank D Sound Setting 2" layout="above" label="#2" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank D Sound Setting 3" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank D Sound Setting 3" layout="above" label="#3" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank D Sound Setting 4" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank D Sound Setting 4" layout="above" label="#4" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank D Sound Setting 5" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank D Sound Setting 5" layout="above" label="#5" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank D Sound Setting 6" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank D Sound Setting 6" layout="above" label="#6" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank D Sound Setting 7" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank D Sound Setting 7" layout="above" label="#7" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank D Sound Setting 8" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank D Sound Setting 8" layout="above" label="#8" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank D Sound Setting 9" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank D Sound Setting 9" layout="above" label="#9" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank D Sound Setting 10" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank D Sound Setting 10" layout="above" label="#10" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank D Sound Setting 11" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank D Sound Setting 11" layout="above" label="#11" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank D Sound Setting 12" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank D Sound Setting 12" layout="above" label="#12" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank D Sound Setting 13" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank D Sound Setting 13" layout="above" label="#13" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank D Sound Setting 14" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank D Sound Setting 14" layout="above" label="#14" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank D Sound Setting 15" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank D Sound Setting 15" layout="above" label="#15" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank D Sound Setting 16" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank D Sound Setting 16" layout="above" label="#16" format="hslider"/>
+        </row>
+      </column>
+
+      <column>
+        <label>
+          <text>     </text>
+        </label>
+      </column>
+
+      <column>
+        <label>
+          <text>     </text>
+        </label>
+        <row>
+          <display item="Bank D Sound Setting 17" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank D Sound Setting 17" layout="above" label="#17" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank D Sound Setting 18" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank D Sound Setting 18" layout="above" label="#18" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank D Sound Setting 19" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank D Sound Setting 19" layout="above" label="#19" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank D Sound Setting 20" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank D Sound Setting 20" layout="above" label="#20" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank D Sound Setting 21" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank D Sound Setting 21" layout="above" label="#21" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank D Sound Setting 22" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank D Sound Setting 22" layout="above" label="#22" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank D Sound Setting 23" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank D Sound Setting 23" layout="above" label="#23" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank D Sound Setting 24" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank D Sound Setting 24" layout="above" label="#24" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank D Sound Setting 25" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank D Sound Setting 25" layout="above" label="#25" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank D Sound Setting 26" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank D Sound Setting 26" layout="above" label="#26" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank D Sound Setting 27" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank D Sound Setting 27" layout="above" label="#27" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank D Sound Setting 28" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank D Sound Setting 28" layout="above" label="#28" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank D Sound Setting 29" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank D Sound Setting 29" layout="above" label="#29" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank D Sound Setting 30" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank D Sound Setting 30" layout="above" label="#30" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank D Sound Setting 31" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank D Sound Setting 31" layout="above" label="#31" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank D Sound Setting 32" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank D Sound Setting 32" layout="above" label="#32" format="hslider"/>
+        </row>
+      </column>
+    </group>
+
+    <group>
+      <qualifier>
+        <variableref>Bank_Switch</variableref>
+        <relation>eq</relation>
+        <value>4</value>
+      </qualifier>
+      <column>
+        <!--Bank 4-->
+        <label>
+          <text>Volume for each Sound Slot</text>
+          <text xml:lang="de">Lautstärke für jedes Soundslot</text>
+          <text xml:lang="nl">Volume per Soundslot</text>
+        </label>
+        <row>
+          <display item="Bank E Sound Setting 1" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank E Sound Setting 1" layout="above" label="#1" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank E Sound Setting 2" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank E Sound Setting 2" layout="above" label="#2" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank E Sound Setting 3" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank E Sound Setting 3" layout="above" label="#3" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank E Sound Setting 4" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank E Sound Setting 4" layout="above" label="#4" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank E Sound Setting 5" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank E Sound Setting 5" layout="above" label="#5" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank E Sound Setting 6" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank E Sound Setting 6" layout="above" label="#6" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank E Sound Setting 7" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank E Sound Setting 7" layout="above" label="#7" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank E Sound Setting 8" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank E Sound Setting 8" layout="above" label="#8" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank E Sound Setting 9" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank E Sound Setting 9" layout="above" label="#9" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank E Sound Setting 10" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank E Sound Setting 10" layout="above" label="#10" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank E Sound Setting 11" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank E Sound Setting 11" layout="above" label="#11" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank E Sound Setting 12" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank E Sound Setting 12" layout="above" label="#12" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank E Sound Setting 13" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank E Sound Setting 13" layout="above" label="#13" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank E Sound Setting 14" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank E Sound Setting 14" layout="above" label="#14" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank E Sound Setting 15" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank E Sound Setting 15" layout="above" label="#15" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank E Sound Setting 16" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank E Sound Setting 16" layout="above" label="#16" format="hslider"/>
+        </row>
+      </column>
+
+      <column>
+        <label>
+          <text>     </text>
+        </label>
+      </column>
+
+      <column>
+        <label>
+          <text>     </text>
+        </label>
+        <row>
+          <display item="Bank E Sound Setting 17" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank E Sound Setting 17" layout="above" label="#17" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank E Sound Setting 18" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank E Sound Setting 18" layout="above" label="#18" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank E Sound Setting 19" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank E Sound Setting 19" layout="above" label="#19" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank E Sound Setting 20" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank E Sound Setting 20" layout="above" label="#20" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank E Sound Setting 21" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank E Sound Setting 21" layout="above" label="#21" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank E Sound Setting 22" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank E Sound Setting 22" layout="above" label="#22" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank E Sound Setting 23" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank E Sound Setting 23" layout="above" label="#23" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank E Sound Setting 24" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank E Sound Setting 24" layout="above" label="#24" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank E Sound Setting 25" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank E Sound Setting 25" layout="above" label="#25" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank E Sound Setting 26" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank E Sound Setting 26" layout="above" label="#26" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank E Sound Setting 27" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank E Sound Setting 27" layout="above" label="#27" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank E Sound Setting 28" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank E Sound Setting 28" layout="above" label="#28" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank E Sound Setting 29" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank E Sound Setting 29" layout="above" label="#29" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank E Sound Setting 30" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank E Sound Setting 30" layout="above" label="#30" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank E Sound Setting 31" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank E Sound Setting 31" layout="above" label="#31" format="hslider"/>
+        </row>
+        <row>
+          <display item="Bank E Sound Setting 32" layout="above" label=""/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bank E Sound Setting 32" layout="above" label="#32" format="hslider"/>
+        </row>
+      </column>
+    </group>
+
+    <group>
+      <qualifier>
+        <variableref>Bank_Switch</variableref>
+        <relation>eq</relation>
+        <value>8</value>
+      </qualifier>
+  <!--Function Mapping for Sound Slots-->
+      <column>
+        <display item="Bank F F0 activated sound"/>
+        <display item="Bank F F1 activated sound"/>
+        <display item="Bank F F2 activated sound"/>
+        <display item="Bank F F3 activated sound"/>
+        <display item="Bank F F4 activated sound"/>
+        <display item="Bank F F5 activated sound"/>
+        <display item="Bank F F6 activated sound"/>
+        <display item="Bank F F7 activated sound"/>
+        <display item="Bank F F8 activated sound"/>
+        <display item="Bank F F9 activated sound"/>
+        <display item="Bank F F10 activated sound"/>
+        <display item="Bank F F11 activated sound"/>
+        <display item="Bank F F12 activated sound"/>
+        <display item="Bank F F13 activated sound"/>
+        <display item="Bank F F14 activated sound"/>
+      </column>
+      <column>
+        <display item="Bank F F15 activated sound"/>
+        <display item="Bank F F16 activated sound"/>
+        <display item="Bank F F17 activated sound"/>
+        <display item="Bank F F18 activated sound"/>
+        <display item="Bank F F19 activated sound"/>
+        <display item="Bank F F20 activated sound"/>
+        <display item="Bank F F21 activated sound"/>
+        <display item="Bank F F22 activated sound"/>
+        <display item="Bank F F23 activated sound"/>
+        <display item="Bank F F24 activated sound"/>
+        <display item="Bank F F25 activated sound"/>
+        <display item="Bank F F26 activated sound"/>
+        <display item="Bank F F27 activated sound"/>
+        <display item="Bank F F28 activated sound"/>
+      </column>
+    </group>
+
+  <!--    end of SmartDecoder Sound vars group-->
+  </group>
+
+</pane>

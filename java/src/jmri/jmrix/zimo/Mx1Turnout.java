@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * New Zimo Binary implementation of the Turnout interface
- * <P>
  *
  * @author	Kevin Dickerson Copyright (C) 2014
  */

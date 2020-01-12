@@ -1,0 +1,55 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "jmri-json-track-server-message",
+    "type": "object",
+    "description": "Data portion of message from JMRI to client for type \"track\"",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "Operations id for track"
+        },
+        "userName": {
+            "type": "string",
+            "description": "Operations name for track"
+        },
+        "carType": {
+            "type": "array",
+            "description": "The types of rolling stock accepted at track",
+            "items": {
+                "type": "string"
+            }
+        },
+        "comment": {
+            "type": "string",
+            "description": "Freeform comment concerning track"
+        },
+        "length": {
+            "type": "integer",
+            "description": "Current track length for available siding calculations"
+        },
+        "location": {
+            "type": "string",
+            "description": "Operations Id of parent location"
+        },
+        "reporter": {
+            "type": ["string", "null"],
+            "description": "The system name of the reporter for this track"
+        },
+        "type": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "The type of track",
+            "enum": [
+                "Interchange",
+                "Siding",
+                "Staging",
+                "Yard",
+                ""
+            ]
+        }
+    },
+    "additionalProperties": false,
+    "required": ["name", "userName", "carType", "comment", "length", "location", "reporter", "type"]
+}

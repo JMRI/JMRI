@@ -1,12 +1,16 @@
 package jmri.jmrix.loconet;
 
+import java.util.Locale;
+import javax.annotation.Nonnull;
 import jmri.Reporter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Manage the LocoNet-specific Reporter implementation. System names are
- * "LRnnn", where nnn is the Reporter number without padding.
+ * Manage the LocoNet-specific Reporter implementation.
+ * <p>
+ * System names are "LRnnn", where L is the user configurable system prefix,
+ * nnn is the Reporter number without padding.
  * <p>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
@@ -18,10 +22,12 @@ import org.slf4j.LoggerFactory;
  */
 public class LnReporterManager extends jmri.managers.AbstractReporterManager implements LocoNetListener {
 
+    protected final LnTrafficController tc;
+    
     // ctor has to register for LocoNet events
-    public LnReporterManager(LnTrafficController tc, String prefix) {
-        this.prefix = prefix;
-        this.tc = tc;
+    public LnReporterManager(LocoNetSystemConnectionMemo memo) {
+        super(memo);
+        tc = memo.getLnTrafficController();
         if (tc != null) {
             tc.addLocoNetListener(~0, this);
         } else {
@@ -29,12 +35,13 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
         }
     }
 
-    LnTrafficController tc;
-    String prefix;
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    @Nonnull
+    public LocoNetSystemConnectionMemo getMemo() {
+        return (LocoNetSystemConnectionMemo) memo;
     }
 
     @Override
@@ -46,10 +53,10 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
     }
 
     @Override
-    public Reporter createNewReporter(String systemName, String userName) {
+    public Reporter createNewReporter(@Nonnull String systemName, String userName) {
         Reporter t;
-        int addr = Integer.parseInt(systemName.substring(prefix.length() + 1));
-        t = new LnReporter(addr, tc, prefix);
+        int addr = Integer.parseInt(systemName.substring(getSystemNamePrefix().length()));
+        t = new LnReporter(addr, tc, getSystemPrefix());
         t.setUserName(userName);
         t.addPropertyChangeListener(this);
 
@@ -57,48 +64,39 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
     }
 
     /**
-     * Get the bit address from the system name.
-     *
-     * @param systemName the system name
-     * @return the bit address
-     */
-    public int getBitFromSystemName(String systemName) {
-        // validate the system Name leader characters
-        if ((!systemName.startsWith(getSystemPrefix())) || (!systemName.startsWith(getSystemPrefix() + "R"))) {
-            // here if an illegal LocoNet Reporter system name
-            log.error("invalid character in header field of loconet reporter system name: {}", systemName);
-            return (0);
-        }
-        // name must be in the LRnnnnn format (L is user configurable)
-        int num;
-        try {
-            num = Integer.parseInt(systemName.substring(
-                    getSystemPrefix().length() + 1, systemName.length()));
-        } catch (NumberFormatException e) {
-            log.warn("invalid character in number field of system name: {}", systemName);
-            return (0);
-        }
-        if (num <= 0) {
-            log.warn("invalid loconet reporter system name: {}", systemName);
-            return (0);
-        } else if (num > 4096) {
-            log.warn("bit number out of range in loconet reporter system name: {}", systemName);
-            return (0);
-        }
-        return (num);
-    }
-
-    /**
-     * Validate system name format.
-     *
-     * @param systemName the name to validate
-     * @return VALID if system name has a valid format; otherwise return INVALID
+     * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String systemName, @Nonnull Locale locale) {
+        return validateIntegerSystemNameFormat(systemName, 1, 4096, locale);
+    }
+
+    /**
+     * Get the bit address from the system name.
+     * @param systemName a valid LocoNet-based Reporter System Name
+     * @return the turnout number extracted from the system name
+     */
+    public int getBitFromSystemName(String systemName) {
+        try {
+            validateSystemNameFormat(systemName, Locale.getDefault());
+        } catch (IllegalArgumentException ex) {
+            return 0;
+        }
+        return Integer.parseInt(systemName.substring(getSystemNamePrefix().length()));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getEntryToolTip() {
         return Bundle.getMessage("AddInputEntryToolTip");
@@ -108,18 +106,32 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
     @Override
     public void message(LocoNetMessage l) {
         // check message type
-        if (l.getOpCode() != 0xD0) {
-            return;
+        int addr;
+        switch (l.getOpCode()) {
+            case LnConstants.OPC_MULTI_SENSE:
+                if ((l.getElement(1) & 0xC0) == 0) {
+                    addr = (l.getElement(1) & 0x1F) * 128 + l.getElement(2) + 1;
+                    break;
+                }
+                return;
+            case LnConstants.OPC_PEER_XFER:
+                if (l.getElement(1) == 0x09 && l.getElement(2) == 0x00) {
+                    addr = (l.getElement(5) & 0x1F) * 128 + l.getElement(6) + 1;
+                    break;
+                }
+                return;
+            case LnConstants.OPC_LISSY_UPDATE:
+                if (l.getElement(1) == 0x08) {
+                    addr =  (l.getElement(4) & 0x7F);
+                    break;
+                }
+                return;
+            default:
+                return;
         }
-        if ((l.getElement(1) & 0xC0) != 0) {
-            return;
-        }
-
-        // message type OK, check address
-        int addr = (l.getElement(1) & 0x1F) * 128 + l.getElement(2) + 1;
-
-        LnReporter r = (LnReporter) provideReporter("LR" + addr); // NOI18N
-        r.message(l); // make sure it got the message
+        log.debug("Reporter[{}]", addr);
+        LnReporter r = (LnReporter) provideReporter(getSystemNamePrefix() + addr); // NOI18N
+        r.messageFromManager(l); // make sure it got the message
     }
 
     private final static Logger log = LoggerFactory.getLogger(LnReporterManager.class);

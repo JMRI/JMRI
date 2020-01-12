@@ -1,6 +1,8 @@
 package jmri;
 
 import javax.annotation.CheckForNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * General input device representation. Often subclassed for specific types of
@@ -8,34 +10,50 @@ import javax.annotation.CheckForNull;
  *
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
-public interface Sensor extends NamedBean {
+public interface Sensor extends DigitalIO {
 
     // states are parameters; both closed and thrown is possible!
-    public static final int ACTIVE = 0x02;
-    public static final int INACTIVE = 0x04;
+    public static final int ACTIVE = DigitalIO.ON;
+    public static final int INACTIVE = DigitalIO.OFF;
 
     // MAx value for Debounce Parameter
     public static final Long MAX_DEBOUNCE = 9999999L;
 
-    /**
-     * Known state on layout is a bound parameter
-     *
-     * @return known state value
-     */
-    public int getKnownState();
 
+    /** {@inheritDoc} */
+    @Override
+    default public boolean isConsistentState() {
+        return true;
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    @InvokeOnLayoutThread
+    default public void setCommandedState(int s) {
+        try {
+            setState(s);
+        } catch (JmriException ex) {
+            log.error("setCommandedState", ex);
+        }
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    default public int getCommandedState() {
+        return getState();
+    }
+    
     /**
      * Set the known state on the layout. This might not always be available, or
      * effective, depending on the limits of the underlying system and
@@ -44,13 +62,8 @@ public interface Sensor extends NamedBean {
      * @param newState the state to set
      * @throws jmri.JmriException if unable to set the state
      */
+    @InvokeOnLayoutThread
     public void setKnownState(int newState) throws jmri.JmriException;
-
-    /**
-     * Request an update from the layout soft/hardware. May not even happen, and
-     * if it does it will happen later; listen for the result.
-     */
-    public void requestUpdateFromLayout();
 
     /**
      * Control whether the actual sensor input is considered to be inverted,
@@ -62,6 +75,7 @@ public interface Sensor extends NamedBean {
      *
      * @param inverted true if the sensor should be inverted; false otherwise
      */
+    @InvokeOnLayoutThread
     public void setInverted(boolean inverted);
 
     /**
@@ -127,7 +141,7 @@ public interface Sensor extends NamedBean {
     /**
      * Use the timers specified in the {@link jmri.SensorManager} for the
      * debounce delay.
-     * @since 4.9.2 (replaces {@link #useDefaultTimerSettings(boolean)})
+     * @since 4.9.2
      *
      * @param flag true to set to current defaults if not previously true
      */
@@ -136,27 +150,13 @@ public interface Sensor extends NamedBean {
     /**
      * Does this sensor use the default timers values? (A remarkably unfortunate
      * name given the one above)
-     * @since 4.9.2 (replaces {@link #useDefaultTimerSettings()})
+     * @since 4.9.2
      *
      * @return true if using default debounce values from the
      *         {@link jmri.SensorManager}
      */
     public boolean getUseDefaultTimerSettings();
 
-    /**
-     * @deprecated Since JMRI 4.9.2, use {@link #setUseDefaultTimerSettings(boolean)}
-     * @param flag true to set to current defaults if not previously true
-     */
-    @Deprecated
-    public void useDefaultTimerSettings(boolean flag);
-    
-    /**
-     * @deprecated Since JMRI 4.9.2, use {@link #setUseDefaultTimerSettings(boolean)}
-     * @return true if using default debounce values from the
-     *         {@link jmri.SensorManager}
-     */
-    @Deprecated
-    public boolean useDefaultTimerSettings();
     /**
      * Some sensor boards also serve the function of being able to report back
      * train identities via such methods as RailCom. The setting and creation of
@@ -231,6 +231,7 @@ public interface Sensor extends NamedBean {
      *
      * @param r PullResistance value to use.
      */
+    @InvokeOnLayoutThread
     public void setPullResistance(PullResistance r);
 
     /**
@@ -240,4 +241,7 @@ public interface Sensor extends NamedBean {
      */
     public PullResistance getPullResistance();
 
+
+    final static Logger log = LoggerFactory.getLogger(Sensor.class);
+    
 }

@@ -1,0 +1,26 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "jmri-json-idTag-client-message",
+    "type": "object",
+    "description": "Schema data object in message from client to JMRI for type \"idTag\"",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "System name of the idTag"
+        },
+        "userName": {
+            "type": "string",
+            "description": "If present, set the user name of the idTag"
+        },
+        "comment": {
+            "type": "string",
+            "description": "If present, set the comment for the idTag"
+        },
+        "reporter": {
+            "type": ["string", "null"],
+            "description": "If present, sets the reporter to have last seen the idTag"
+        }
+    },
+    "additionalProperties": false,
+    "required": ["name"]
+}

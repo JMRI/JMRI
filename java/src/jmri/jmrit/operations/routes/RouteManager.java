@@ -241,7 +241,8 @@ public class RouteManager implements InstanceManagerAutoDefault, InstanceManager
         rlNew.setRandomControl(rl.getRandomControl());
         rlNew.setWait(rl.getWait());
         rlNew.setDepartureTime(rl.getDepartureTime());
-        rlNew.setComment(rl.getComment());     
+        rlNew.setComment(rl.getComment());
+        rlNew.setCommentColor(rl.getCommentColor());
         if (!invert) {
             rlNew.setDropAllowed(rl.isDropAllowed());
             rlNew.setPickUpAllowed(rl.isPickUpAllowed());
@@ -284,7 +285,6 @@ public class RouteManager implements InstanceManagerAutoDefault, InstanceManager
     public void load(Element root) {
         // decode type, invoke proper processing routine if a decoder file
         if (root.getChild(Xml.ROUTES) != null) {
-            @SuppressWarnings("unchecked")
             List<Element> eRoutes = root.getChild(Xml.ROUTES).getChildren(Xml.ROUTE);
             log.debug("readFile sees {} routes", eRoutes.size());
             for (Element eRoute : eRoutes) {

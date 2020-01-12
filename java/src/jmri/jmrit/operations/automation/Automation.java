@@ -538,7 +538,6 @@ public class Automation implements java.beans.PropertyChangeListener {
             _comment = a.getValue();
         }
         if (e.getChildren(Xml.ITEM) != null) {
-            @SuppressWarnings("unchecked")
             List<Element> eAutomationItems = e.getChildren(Xml.ITEM);
             log.debug("automation: {} has {} items", getName(), eAutomationItems.size());
             for (Element eAutomationItem : eAutomationItems) {

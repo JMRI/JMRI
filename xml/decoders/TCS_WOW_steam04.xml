@@ -25,6 +25,12 @@
 	<!-- update names of CV 4.30,31,33,34 -->
 	<version author="Michael Mosher" version="7" lastUpdated="20170808"/>
 	<!-- update volume groups -->
+	<version author="Michael Mosher" version="8" lastUpdated="20180727"/>
+	<!-- add read me pane -->
+	<version author="Michael Mosher" version="9" lastUpdated="20180917"/>
+	<!-- change default values for sound functions with no sound mapped to 65535 -->
+	<version author="Michael Mosher" version="10" lastUpdated="20191111"/>
+	<!-- Add CV 177-181 & new bit in CV182 -->
    <decoder>
       <family name="WOW Steam Sound Set 4" mfg="Train Control Systems">
          <model model="WOW Steam 101 SS4" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="9pin" lowVersionID="4" highVersionID="4" productID="130">
@@ -100,6 +106,7 @@
       <variables>
          <xi:include href="http://jmri.org/xml/decoders/tcs/CV1_CV99_wow.xml"/>
          <xi:include href="http://jmri.org/xml/decoders/tcs/CV100_CV187_wow.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/CV177_CV182_wow.xml"/>
          <variable item="Sound Option 4" CV="248" default="4" readOnly="yes">
             <decVal/>
             <label>Sound Set</label>
@@ -169,28 +176,28 @@
          <variable item="Function 20 Sound" CV="T2CV.1.20" default="1660" mask="VVVVVVVVVVVVVVVV">
             <xi:include href="http://jmri.org/xml/decoders/tcs/enumSteamV4.xml"/>
          </variable>
-         <variable item="Function 21 Sound" CV="T2CV.1.21" default="2140" mask="VVVVVVVVVVVVVVVV">
+         <variable item="Function 21 Sound" CV="T2CV.1.21" default="65535" mask="VVVVVVVVVVVVVVVV">
             <xi:include href="http://jmri.org/xml/decoders/tcs/enumSteamV4.xml"/>
          </variable>
-         <variable item="Function 22 Sound" CV="T2CV.1.22" default="2140" mask="VVVVVVVVVVVVVVVV">
+         <variable item="Function 22 Sound" CV="T2CV.1.22" default="65535" mask="VVVVVVVVVVVVVVVV">
             <xi:include href="http://jmri.org/xml/decoders/tcs/enumSteamV4.xml"/>
          </variable>
-         <variable item="Function 23 Sound" CV="T2CV.1.23" default="2140" mask="VVVVVVVVVVVVVVVV">
+         <variable item="Function 23 Sound" CV="T2CV.1.23" default="65535" mask="VVVVVVVVVVVVVVVV">
             <xi:include href="http://jmri.org/xml/decoders/tcs/enumSteamV4.xml"/>
          </variable>
-         <variable item="Function 24 Sound" CV="T2CV.1.24" default="2140" mask="VVVVVVVVVVVVVVVV">
+         <variable item="Function 24 Sound" CV="T2CV.1.24" default="65535" mask="VVVVVVVVVVVVVVVV">
             <xi:include href="http://jmri.org/xml/decoders/tcs/enumSteamV4.xml"/>
          </variable>
-         <variable item="Function 25 Sound" CV="T2CV.1.25" default="2140" mask="VVVVVVVVVVVVVVVV">
+         <variable item="Function 25 Sound" CV="T2CV.1.25" default="65535" mask="VVVVVVVVVVVVVVVV">
             <xi:include href="http://jmri.org/xml/decoders/tcs/enumSteamV4.xml"/>
          </variable>
-         <variable item="Function 26 Sound" CV="T2CV.1.26" default="2140" mask="VVVVVVVVVVVVVVVV">
+         <variable item="Function 26 Sound" CV="T2CV.1.26" default="65535" mask="VVVVVVVVVVVVVVVV">
             <xi:include href="http://jmri.org/xml/decoders/tcs/enumSteamV4.xml"/>
          </variable>
-         <variable item="Function 27 Sound" CV="T2CV.1.27" default="2140" mask="VVVVVVVVVVVVVVVV">
+         <variable item="Function 27 Sound" CV="T2CV.1.27" default="65535" mask="VVVVVVVVVVVVVVVV">
             <xi:include href="http://jmri.org/xml/decoders/tcs/enumSteamV4.xml"/>
          </variable>
-         <variable item="Function 28 Sound" CV="T2CV.1.28" default="2140" mask="VVVVVVVVVVVVVVVV">
+         <variable item="Function 28 Sound" CV="T2CV.1.28" default="65535" mask="VVVVVVVVVVVVVVVV">
             <xi:include href="http://jmri.org/xml/decoders/tcs/enumSteamV4.xml"/>
          </variable>
          <variable item="Random 1 Sound" CV="T2CV.1.29" default="0" mask="VVVVVVVVVVVVVVVV">
@@ -202,7 +209,7 @@
          <variable item="Random 3 Sound" CV="T2CV.1.31" default="1345" mask="VVVVVVVVVVVVVVVV">
             <xi:include href="http://jmri.org/xml/decoders/tcs/enumSteamV4.xml"/>
          </variable>
-         <variable item="Random 4 Sound" CV="T2CV.1.32" default="2140" mask="VVVVVVVVVVVVVVVV">
+         <variable item="Random 4 Sound" CV="T2CV.1.32" default="65535" mask="VVVVVVVVVVVVVVVV">
             <xi:include href="http://jmri.org/xml/decoders/tcs/enumSteamV4.xml"/>
          </variable>
          <variable item="Aux Input Sound" CV="T2CV.1.34" default="1723" mask="VVVVVVVVVVVVVVVV" include="132">
@@ -2998,6 +3005,7 @@
 			<factReset label="Quick Lighting Preset: Modified Trolley" CV="8" default="12"/>
       </resets>
    </decoder>
+   <xi:include href="http://jmri.org/xml/programmers/parts/BasicSpeedControlTrimPane.xml"/>
    <xi:include href="http://jmri.org/xml/decoders/tcs/Pane_Momentum.xml"/>
    <xi:include href="http://jmri.org/xml/decoders/tcs/Pane_Brake.xml"/>
    <xi:include href="http://jmri.org/xml/decoders/tcs/Pane_TCS.xml"/>
@@ -3010,4 +3018,5 @@
    <xi:include href="http://jmri.org/xml/decoders/tcs/Pane_wow_vol6.xml"/>
    <xi:include href="http://jmri.org/xml/decoders/tcs/Pane_wow_vol7.xml"/>
    <xi:include href="http://jmri.org/xml/decoders/tcs/Pane_wow_4cv.xml"/>
+   <xi:include href="http://jmri.org/xml/decoders/tcs/paneWowReadMe.xml"/>
 </decoder-config>

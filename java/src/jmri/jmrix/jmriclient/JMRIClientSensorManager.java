@@ -1,35 +1,49 @@
 package jmri.jmrix.jmriclient;
 
+import javax.annotation.Nonnull;
 import jmri.Sensor;
 
 /**
- * Implement sensor manager for JMRIClient systems
- * <P>
+ * Implement sensor manager for JMRIClient systems.
+ * <p>
  * System names are "prefixnnn", where prefix is the system prefix and nnn is
  * the sensor number without padding.
  *
  * @author Paul Bender Copyright (C) 2010
-  */
+ */
 public class JMRIClientSensorManager extends jmri.managers.AbstractSensorManager {
 
-    private JMRIClientSystemConnectionMemo memo = null;
-    private String prefix = null;
-
     public JMRIClientSensorManager(JMRIClientSystemConnectionMemo memo) {
-        this.memo = memo;
-        this.prefix = memo.getSystemPrefix();
+        super(memo);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    @Nonnull
+    public JMRIClientSystemConnectionMemo getMemo() {
+        return (JMRIClientSystemConnectionMemo) memo;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @throws IllegalArgumentException when SystemName can't be converted
+     */
     @Override
-    public Sensor createNewSensor(String systemName, String userName) {
+    @Nonnull
+    public Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         Sensor t;
-        int addr = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue();
-        t = new JMRIClientSensor(addr, memo);
+        int addr;
+        try {
+            addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1)); // .length() only? TODO
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Can't convert " +  // NOI18N
+                    systemName.substring(getSystemPrefix().length() + 1) +
+                    " to JMRIClient sensor address"); // NOI18N
+        }
+        t = new JMRIClientSensor(addr, getMemo());
         t.setUserName(userName);
         return t;
     }
@@ -39,10 +53,9 @@ public class JMRIClientSensorManager extends jmri.managers.AbstractSensorManager
      * on the server.
      */
     @Override
-    public String createSystemName(String curAddress, String prefix) throws jmri.JmriException {
+    @Nonnull
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws jmri.JmriException {
         return prefix + typeLetter() + curAddress;
     }
 
 }
-
-

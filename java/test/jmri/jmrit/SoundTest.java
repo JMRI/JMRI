@@ -1,6 +1,5 @@
 package jmri.jmrit;
 
-import apps.tests.Log4JFixture;
 import java.awt.GraphicsEnvironment;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.LineUnavailableException;
@@ -21,12 +20,14 @@ public class SoundTest {
 
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
+
     }
 
     @After
     public void tearDown() {
-        Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
+
     }
     
     /**

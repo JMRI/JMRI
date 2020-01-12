@@ -7,9 +7,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * <P>
- * Tests for SprogCSSerialDriverAdapter
- * </P>
+ * Tests for SprogCSSerialDriverAdapter.
+ *
  * @author Paul Bender Copyright (C) 2016
  */
 public class SprogCSSerialDriverAdapterTest {
@@ -18,6 +17,9 @@ public class SprogCSSerialDriverAdapterTest {
    public void ConstructorTest(){
        SprogCSSerialDriverAdapter a = new SprogCSSerialDriverAdapter();
        Assert.assertNotNull(a);
+
+       // clean up
+       a.getSystemConnectionMemo().getSprogTrafficController().dispose();
    }
 
     // The minimal setup for log4J
@@ -30,6 +32,5 @@ public class SprogCSSerialDriverAdapterTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-
 
 }

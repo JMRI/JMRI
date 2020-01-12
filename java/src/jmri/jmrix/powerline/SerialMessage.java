@@ -2,7 +2,7 @@ package jmri.jmrix.powerline;
 
 /**
  * Contains the data payload of a serial packet.
- * <P>
+ * <p>
  * The transmission protocol can come in one of several forms:
  * <ul>
  * <li>If the interlocked parameter is false (default), the packet is just sent.
@@ -78,8 +78,6 @@ abstract public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     public int getResponseLength() {
         return responseLength;
     }
-
-    abstract public String toMonitorString();
 
     // static methods to recognize a message
     public boolean isPoll() {

@@ -3,7 +3,7 @@ package jmri.jmrix.lenz;
 /**
  * XNetListener provides the call-back interface for notification when a new
  * XNet message arrives from the layout.
- * <P>
+ * <p>
  * Note that the XNetListener implementation cannot assume that messages will be
  * returned in any particular thread. We may eventually revisit this, as
  * returning messages in the Swing GUI thread would result in some
@@ -12,7 +12,7 @@ package jmri.jmrix.lenz;
  *
  * @author Bob Jacobsen Copyright (C) 2002
  * @author Bob Jacobsen Copyright (C) 2010
-  */
+ */
 public interface XNetListener extends jmri.jmrix.AbstractMRListener {
 
     /**

@@ -1,6 +1,5 @@
 package jmri.jmrix.roco.z21;
 
-import apps.tests.Log4JFixture;
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetListenerScaffold;
@@ -53,7 +52,8 @@ public class Z21XNetInitializationManagerTest {
 
     @After
     public void tearDown() throws Exception {
-        Log4JFixture.tearDown();
+        JUnitUtil.clearShutDownManager(); // drop ShutDownTask for jmri.jmrix.lenz.XNetInterfaceScaffold
+        JUnitUtil.tearDown();
     }
 
 }

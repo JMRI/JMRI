@@ -3,18 +3,19 @@ package jmri.jmrit.display;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import javax.annotation.Nonnull;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import jmri.util.JmriJFrame;
 
 /**
- * Displays and allows user to modify the text display used in a sensor
- *
+ * Displays and allows user to modify the text display used in a sensor.
+ * <p>
  * This is a modification of CoordinateEdit.java by Dan Boudreau for use with
- * LayoutEditor
+ * LayoutEditor.
  *
  * @author Dan Boudreau Copyright (C) 2007
- * @author Kevin Dickerson (SensorTextEditor version);
+ * @author Kevin Dickerson (SensorTextEdit version);
  */
 public class SensorTextEdit extends JmriJFrame {
 
@@ -56,7 +57,7 @@ public class SensorTextEdit extends JmriJFrame {
         super.windowClosed(e);
     }
 
-    public void initComponents(SensorIcon l, String name) {
+    public void initComponents(@Nonnull SensorIcon l, String name) {
         pl = l;
 
         // the following code sets the frame's initial state
@@ -158,7 +159,7 @@ public class SensorTextEdit extends JmriJFrame {
 
         if (ae.getSource() == okButton) {
             // save current values in case user cancels
-            if (oldActive == INIT) {
+            if (oldActive == null) {
                 oldActive = pl.getActiveText();
                 oldInactive = pl.getInactiveText();
                 oldIncon = pl.getInconsistentText();
@@ -174,7 +175,7 @@ public class SensorTextEdit extends JmriJFrame {
             textUnknown.setText(Bundle.getMessage("BeanStateUnknown") + " = " + pl.getUnknownText());
         }
         if (ae.getSource() == cancelButton) {
-            if (oldActive != INIT) {
+            if (oldActive != null) {
                 pl.setInactiveText(oldInactive);
                 pl.setActiveText(oldActive);
                 pl.setInconsistentText(oldIncon);
@@ -183,4 +184,5 @@ public class SensorTextEdit extends JmriJFrame {
             dispose();
         }
     }
+
 }

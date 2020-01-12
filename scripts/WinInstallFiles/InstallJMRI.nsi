@@ -50,6 +50,20 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.26.0
+; - Remove JMRIDemo link
+; - Rename Tools and Demos Folder to Tools
+; - use https link for Java download and JMRI Website
+; -------------------------------------------------------------------------
+; - Version 0.1.25.0
+; - Backup and remove lib folder
+; -------------------------------------------------------------------------
+; - Version 0.1.24.1
+; - Correct the support for Java 11 Registry Keys
+; -------------------------------------------------------------------------
+; - Version 0.1.24.0
+; - Add support for Java 11 Registry Keys
+; -------------------------------------------------------------------------
 ; - Version 0.1.22.15
 ; - Backup and remove classes folder
 ; -------------------------------------------------------------------------
@@ -298,7 +312,7 @@
   ; -- usually, this will be determined by the build.xml ant script
   !define JRE_VER   "1.8"                       ; Required JRE version
 !endif
-!define INST_VER  "0.1.22.15"                   ; Installer version
+!define INST_VER  "0.1.26.0"                    ; Installer version
 !define PNAME     "${APP}.${JMRI_VER}"          ; Name of installer.exe
 !define SRCDIR    "."                           ; Path to head of sources
 InstallDir        "$PROGRAMFILES\JMRI"          ; Default install directory
@@ -332,7 +346,7 @@ SetCompressor /SOLID /FINAL lzma
 ; -------------------------------------------------------------------------
 ; - Defines for downloading
 ; -------------------------------------------------------------------------
-!define JRE_URL     "http://java.com/winoffline_installer/"
+!define JRE_URL     "https://java.com/winoffline_installer/"
 !define INTERNET_CONNECTION_CONFIGURED 64  ; 0x40
 !define INTERNET_CONNECTION_LAN 2          ; 0x02
 !define INTERNET_CONNECTION_MODEM 1        ; 0x01
@@ -477,99 +491,19 @@ SectionGroup "JMRI Core Files" SEC_CORE
     ; -- that might not be consistent with this new version
     RMDir /R "$OUTDIR\classes"
 
-    ; -- Delete insecure jackson jar files as of JMRI 4.11.3
-    Delete "$OUTDIR\lib\jackson-annotations-2.8.5.jar"
-    Delete "$OUTDIR\lib\jackson-core-2.8.5.jar"
-    Delete "$OUTDIR\lib\jackson-databind-2.8.5.jar"
-
-    ; -- Delete old PJC file for JMRI 4.7.5
-    Delete "$OUTDIR\lib\jna-4.2.2.jar"
-
-    ; -- Delete old jackson jar files as of JMRI 4.7.1
-    Delete "$OUTDIR\lib\jackson-annotations-2.0.6.jar"
-    Delete "$OUTDIR\lib\jackson-core-2.0.6.jar"
-    Delete "$OUTDIR\lib\jackson-databind-2.0.6.jar"
-
-    ; -- Delete old vecmath.jar files as of JMRI 4.5.1
-    Delete "$OUTDIR\lib\vecmath.jar"
+    ; -- Recursively delete lib folder, which historically contained
+    ; -- individually added JAR files, but which we have been encouraging
+    ; -- users not to modify
+    RMDir /R "$OUTDIR\lib"
 
     ; -- Delete old USB library files
     Delete "$OUTDIR\ch.ntb.usb.jar"
-    Delete "$OUTDIR\lib\ch.ntb.usb.jar"
 
     ; -- Delete old .jar & support files in destination directory
     Delete "$OUTDIR\jh.1.1.2.jar"
     Delete "$OUTDIR\jh.jar"
     Delete "$OUTDIR\jdom-jdk11.jar"
-
-    ; -- Delete old logging libraries
-    Delete "$OUTDIR\lib\slf4j-api-1.7.13.jar"
-    Delete "$OUTDIR\lib\slf4j-log4j12-1.7.13.jar"
-    Delete "$OUTDIR\lib\jul-to-slf4j-1.7.13.jar"
-
-    ; -- Delete jetty and websocket libraries irrespective of version
-    Delete "$OUTDIR\lib\jetty-http-9.3.9.v20160517.jar"
-    Delete "$OUTDIR\lib\jetty-io-9.3.9.v20160517.jar"
-    Delete "$OUTDIR\lib\jetty-security-9.3.9.v20160517.jar"
-    Delete "$OUTDIR\lib\jetty-server-9.3.9.v20160517.jar"
-    Delete "$OUTDIR\lib\jetty-servlet-9.3.9.v20160517.jar"
-    Delete "$OUTDIR\lib\jetty-util-9.3.9.v20160517.jar"
-    Delete "$OUTDIR\lib\websocket-api-9.3.9.v20160517.jar"
-    Delete "$OUTDIR\lib\websocket-client-9.3.9.v20160517.jar"
-    Delete "$OUTDIR\lib\websocket-common-9.3.9.v20160517.jar"
-    Delete "$OUTDIR\lib\websocket-server-9.3.9.v20160517.jar"
-    Delete "$OUTDIR\lib\websocket-servlet-9.3.9.v20160517.jar"
-
-    ; -- Delete outmoded jetty .jar and outmoded servlet files, as of JMRI 4.3.7
-    Delete "$OUTDIR\lib\jetty-http-9.3.6.v20151106.jar"
-    Delete "$OUTDIR\lib\jetty-io-9.3.6.v20151106.jar"
-    Delete "$OUTDIR\lib\jetty-security-9.3.6.v20151106.jar"
-    Delete "$OUTDIR\lib\jetty-server-9.3.6.v20151106.jar"
-    Delete "$OUTDIR\lib\jetty-servlet-9.3.6.v20151106.jar"
-    Delete "$OUTDIR\lib\jetty-util-9.3.6.v20151106.jar"
-    Delete "$OUTDIR\lib\websocket-api-9.3.6.v20151106.jar"
-    Delete "$OUTDIR\lib\websocket-client-9.3.6.v20151106.jar"
-    Delete "$OUTDIR\lib\websocket-common-9.3.6.v20151106.jar"
-    Delete "$OUTDIR\lib\websocket-server-9.3.6.v20151106.jar"
-    Delete "$OUTDIR\lib\websocket-servlet-9.3.6.v20151106.jar"
-
-    ; -- Delete outmoded jetty .jar and outmoded servlet files, as of JMRI 4.3.1
-    Delete "$OUTDIR\lib\jetty-http-9.2.7.v20150116.jar"
-    Delete "$OUTDIR\lib\jetty-io-9.2.7.v20150116.jar"
-    Delete "$OUTDIR\lib\jetty-security-9.2.7.v20150116.jar"
-    Delete "$OUTDIR\lib\jetty-server-9.2.7.v20150116.jar"
-    Delete "$OUTDIR\lib\jetty-servlet-9.2.7.v20150116.jar"
-    Delete "$OUTDIR\lib\jetty-util-9.2.7.v20150116.jar"
-    Delete "$OUTDIR\lib\websocket-api-9.2.7.v20150116.jar"
-    Delete "$OUTDIR\lib\websocket-client-9.2.7.v20150116.jar"
-    Delete "$OUTDIR\lib\websocket-common-9.2.7.v20150116.jar"
-    Delete "$OUTDIR\lib\websocket-server-9.2.7.v20150116.jar"
-    Delete "$OUTDIR\lib\websocket-servlet-9.2.7.v20150116.jar"
-
-    ; -- Delete older outmoded jetty .jar and outmoded servlet files, as of
-    ;    JMRI 3.11.3 (added for version 0.1.21.5 of Windows installer)
-    Delete "$OUTDIR\lib\jetty-continuation-8.1.0.v20120127.jar"
-    Delete "$OUTDIR\lib\jetty-http-8.1.0.v20120127.jar"
-    Delete "$OUTDIR\lib\jetty-io-8.1.0.v20120127.jar"
-    Delete "$OUTDIR\lib\jetty-security-8.1.0.v20120127.jar"
-    Delete "$OUTDIR\lib\jetty-server-8.1.0.v20120127.jar"
-    Delete "$OUTDIR\lib\jetty-servlet-8.1.0.v20120127.jar"
-    Delete "$OUTDIR\lib\jetty-util-8.1.0.v20120127.jar"
-    Delete "$OUTDIR\lib\jetty-websocket-8.1.0.v20120127.jar"
-    Delete "$OUTDIR\lib\log4j.jar"
-    Delete "$OUTDIR\lib\jspWin.dll"
-
-    ; -- Delete outmoded jetty .jar and outmoded servlet files, as of JMRI 3.11.3
-    Delete "$OUTDIR\lib\jetty-continuation-8.1.11.v20130520.jar"
-    Delete "$OUTDIR\lib\jetty-http-8.1.11.v20130520.jar"
-    Delete "$OUTDIR\lib\jetty-io-8.1.11.v20130520.jar"
-    Delete "$OUTDIR\lib\jetty-security-8.1.11.v20130520.jar"
-    Delete "$OUTDIR\lib\jetty-server-8.1.11.v20130520.jar"
-    Delete "$OUTDIR\lib\jetty-servlet-8.1.11.v20130520.jar"
-    Delete "$OUTDIR\lib\jetty-util-8.1.11.v20130520.jar"
-    Delete "$OUTDIR\lib\jetty-websocket-8.1.11.v20130520.jar"
-    Delete "$OUTDIR\lib\servlet-api-3.0.jar"
-
+ 
     ; -- Delete XmlIO-related files, as of JMRI 3.11.3
     Delete "$OUTDIR\help\en\package\jmri\jmrit\inControl\images\2Throttles.png"
     Delete "$OUTDIR\help\en\package\jmri\jmrit\inControl\images\AnalogClock.png"
@@ -618,19 +552,6 @@ SectionGroup "JMRI Core Files" SEC_CORE
     Delete "$OUTDIR\xml\decoders\zimo\CV739-CV744twoSwitchIP.xml"
     Delete "$OUTDIR\xml\decoders\zimo\CV739-CV768.xml"
 
-    ; -- Delete old .jar & support files in lib\ directory
-    Delete "$OUTDIR\lib\activation.jar"
-    Delete "$OUTDIR\lib\crimson.jar"
-    Delete "$OUTDIR\lib\comm.jar"
-    Delete "$OUTDIR\lib\servlet.jar"
-    Delete "$OUTDIR\lib\slf4j-api-1.6.4.jar"
-    Delete "$OUTDIR\lib\slf4j-log4j12-1.6.4.jar"
-    Delete "$OUTDIR\lib\slf4j-api-1.7.2.jar"
-    Delete "$OUTDIR\lib\slf4j-log4j12-1.7.2.jar"
-    Delete "$OUTDIR\lib\slf4j-api-1.7.5.jar"
-    Delete "$OUTDIR\lib\slf4j-log4j12-1.7.5.jar"
-    Delete "$OUTDIR\lib\jython.jar"
-
     ; -- Delete .jar & support files installed using previous layout
     Delete "$OUTDIR\activation.jar"
     Delete "$OUTDIR\ch.ntb.usb.jar"
@@ -666,26 +587,6 @@ SectionGroup "JMRI Core Files" SEC_CORE
 
     ; -- Delete old plug-ins from program folder
     Delete "$OUTDIR\WiThrottle.jar"
-
-    ; -- Delete .dll files from previous x64/x86 layout
-    Delete "$OUTDIR\lib\jinput-raw_64.dll"
-    Delete "$OUTDIR\lib\jinput-dx8_64.dll"
-    Delete "$OUTDIR\lib\rxtxSerial.dll"
-    Delete "$OUTDIR\lib\LibusbJava.dll"
-    Delete "$OUTDIR\lib\gluegen-rt.dll"
-    Delete "$OUTDIR\lib\jinput-dx8.dll"
-    Delete "$OUTDIR\lib\jinput-raw.dll"
-    Delete "$OUTDIR\lib\jinput-wintab.dll"
-    Delete "$OUTDIR\lib\joal_native.dll"
-
-    ; -- Delete old JOAL .dll files
-    Delete "$OUTDIR\lib\x86\joal_native.dll"
-
-    ; -- Delete RXTX/SerialIO files
-    Delete "$OUTDIR\lib\Serialio.jar"
-    Delete "$OUTDIR\lib\RXTXcomm.jar"
-    Delete "$OUTDIR\lib\x86\rxtxSerial.dll"
-    Delete "$OUTDIR\lib\x64\rxtxSerial.dll"
 
     ; -- Delete old log files from program folder
     Delete "$OUTDIR\messages.log"
@@ -725,8 +626,11 @@ SectionGroup "JMRI Core Files" SEC_CORE
     Delete "$SMPROGRAMS\$0\Tools and Demos\InstallTest.pif" ; -- for Win98
     Delete "$SMPROGRAMS\$0\Tools and Demos\DecoderPro3.lnk"
     Delete "$SMPROGRAMS\$0\Tools and Demos\Preferences.lnk"
+    Delete "$SMPROGRAMS\$0\Tools\InstallTest.lnk"
+    Delete "$SMPROGRAMS\$0\Tools\Preferences.lnk"
     Delete "$SMPROGRAMS\$0\Uninstall.lnk"
     RMDir "$SMPROGRAMS\$0\Tools and Demos\"
+    RMDir "$SMPROGRAMS\$0\Tools\"
     RMDir "$SMPROGRAMS\$0\"
 
     ; -- Remove any predictably-named JMRI shortcuts from the Desktop
@@ -878,8 +782,8 @@ SectionGroup "Start menu shortcuts" SEC_SMSC
                    "apps.SoundPro.SoundPro" \
                    "$INSTDIR\SoundPro80x80.ico" 0 "" "" \
                    "Start SoundPro"
-    CreateDirectory "$SMPROGRAMS\$SMFOLDER\Tools and Demos"
-    CreateShortcut "$SMPROGRAMS\$SMFOLDER\Tools and Demos\InstallTest.lnk" \
+    CreateDirectory "$SMPROGRAMS\$SMFOLDER\Tools"
+    CreateShortcut "$SMPROGRAMS\$SMFOLDER\Tools\InstallTest.lnk" \
                    "$INSTDIR\InstallTest.bat" \
                    "" \
                    "$INSTDIR\InstallTest80x80.ico" 0 "" "" \
@@ -888,28 +792,18 @@ SectionGroup "Start menu shortcuts" SEC_SMSC
     IfFileExists "$PROFILE\JMRI\*.*" +2
       CreateDirectory "$PROFILE\JMRI"
       ; -- Now create a shortcut to it
-      CreateShortcut "$SMPROGRAMS\$SMFOLDER\Tools and Demos\Preferences.lnk" \
+      CreateShortcut "$SMPROGRAMS\$SMFOLDER\Tools\Preferences.lnk" \
                    "%HOMEDRIVE%%HOMEPATH%\JMRI" \
                    "" \
                    "" "" "" "" \
                    "Open JMRI Preferences Folder"
-    SetFileAttributes "$SMPROGRAMS\$SMFOLDER\Tools and Demos\Preferences.lnk" READONLY
+    SetFileAttributes "$SMPROGRAMS\$SMFOLDER\Tools\Preferences.lnk" READONLY
     CreateShortcut "$SMPROGRAMS\$SMFOLDER\Uninstall.lnk" \
                    "$INSTDIR\Uninstall.exe" \
                    "/$MultiUser.InstallMode"
     !insertmacro MUI_STARTMENU_WRITE_END
   SectionEnd ; SEC_SCSMSC
 
-  Section /o "Additional Tools and Demos" SEC_OCSMSC
-    SectionIn 2
-    !insertmacro MUI_STARTMENU_WRITE_BEGIN JMRIStartMenu
-    CreateShortcut "$SMPROGRAMS\$SMFOLDER\Tools and Demos\JmriDemo.lnk" \
-                   "$INSTDIR\LaunchJMRI.exe" \
-                   "apps.JmriDemo.JMRIdemo" \
-                   "$INSTDIR\decpro5.ico" 0 "" "" \
-                   "Start JMRI Demo"
-    !insertmacro MUI_STARTMENU_WRITE_END
-  SectionEnd ; SEC_OCSMSC
 SectionGroupEnd ; SEC_SMSC
 
 SectionGroup "Desktop Shortcuts" SEC_DTSC
@@ -963,7 +857,7 @@ Section "-PostProcessing" SEC_POST
   WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\JMRI" \
                  "Publisher" "JMRI Community"
   WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\JMRI" \
-                 "URLInfoAbout" "http://jmri.org/"
+                 "URLInfoAbout" "https://jmri.org/"
   WriteRegDWORD SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\JMRI" \
                  "NoModify" 1
   WriteRegDWORD SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\JMRI" \
@@ -1062,7 +956,6 @@ LangString DESC_SEC_XML ${LANG_ENGLISH} "XML files (Decoder definitions, etc.)"
 LangString DESC_SEC_WEB ${LANG_ENGLISH} "Web files"
 LangString DESC_SEC_SMSC ${LANG_ENGLISH} "Select Start Menu Shortcuts to create"
 LangString DESC_SEC_SCSMSC ${LANG_ENGLISH} "Creates Start menu shortcuts for DecoderPro, PanelPro and InstallTest"
-LangString DESC_SEC_OCSMSC ${LANG_ENGLISH} "Creates Start menu shortcut for JMRI Demo"
 LangString DESC_SEC_DTSC ${LANG_ENGLISH} "Select Desktop Shortcuts to create."
 LangString DESC_SEC_DPDTSC ${LANG_ENGLISH} "Creates a Desktop shortcut for DecoderPro"
 LangString DESC_SEC_PPDTSC ${LANG_ENGLISH} "Creates a Desktop shortcut for PanelPro"
@@ -1083,7 +976,6 @@ LangString MESSAGE_WIN2K_OR_LATER ${LANG_ENGLISH} "${APP} version ${JMRI_VER} is
   !insertmacro MUI_DESCRIPTION_TEXT ${SEC_WEB} $(DESC_SEC_WEB)
   !insertmacro MUI_DESCRIPTION_TEXT ${SEC_SMSC} $(DESC_SEC_SMSC)
   !insertmacro MUI_DESCRIPTION_TEXT ${SEC_SCSMSC} $(DESC_SEC_SCSMSC)
-  !insertmacro MUI_DESCRIPTION_TEXT ${SEC_OCSMSC} $(DESC_SEC_OCSMSC)
   !insertmacro MUI_DESCRIPTION_TEXT ${SEC_DTSC} $(DESC_SEC_DTSC)
   !insertmacro MUI_DESCRIPTION_TEXT ${SEC_DPDTSC} $(DESC_SEC_DPDTSC)
   !insertmacro MUI_DESCRIPTION_TEXT ${SEC_PPDTSC} $(DESC_SEC_PPDTSC)
@@ -1194,9 +1086,12 @@ Function CheckJRE
     ClearErrors
     ReadRegStr $1 HKLM "SOFTWARE\JavaSoft\JRE" "CurrentVersion"
     ReadRegStr $0 HKLM "SOFTWARE\JavaSoft\JRE\$1" "JavaHome"
-    IfErrors 0 +3
+    IfErrors 0 JRECheck
     ReadRegStr $1 HKLM "SOFTWARE\JavaSoft\Java Runtime Environment" "CurrentVersion"
     ReadRegStr $0 HKLM "SOFTWARE\JavaSoft\Java Runtime Environment\$1" "JavaHome"
+    IfErrors 0 JRECheck
+    ReadRegStr $1 HKLM "SOFTWARE\JavaSoft\JDK" "CurrentVersion"
+    ReadRegStr $0 HKLM "SOFTWARE\JavaSoft\JDK\$1" "JavaHome"
 
     ; -- Not found
     IfErrors 0 JRECheck
@@ -1508,6 +1403,7 @@ Function RemoveOldJMRI
   CreateDirectory "$PROFILE\JMRI_backup"
   CopyFiles "$PROFILE\JMRI\*.*" "$PROFILE\JMRI_backup"
   CopyFiles "$INSTDIR\classes" "$PROFILE\JMRI_backup"
+  CopyFiles "$INSTDIR\lib" "$PROFILE\JMRI_backup"
 
   ; -- Check if uninstall required
   StrCmp $REMOVEOLDJMRI.BACKUPONLY "1" Done

@@ -1,15 +1,18 @@
 package jmri.jmrix.xpa;
 
+import java.util.Comparator;
 import java.util.ResourceBundle;
 import jmri.InstanceManager;
+import jmri.NamedBean;
 import jmri.PowerManager;
 import jmri.ThrottleManager;
 import jmri.TurnoutManager;
 import jmri.jmrix.SystemConnectionMemo;
+import jmri.util.NamedBeanComparator;
 
 /**
  * Provide the required SystemConnectionMemo for the XPA+Modem adapters.
- * <p>
+ *
  * @author Randall Wood randall.h.wood@alexandriasoftware.com
  * @author Paul Bender Copyright (C) 2016
  */
@@ -35,6 +38,11 @@ public class XpaSystemConnectionMemo extends SystemConnectionMemo {
         return null;
     }
 
+    @Override
+    public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
+        return new NamedBeanComparator<>();
+    }
+
     jmri.jmrix.swing.ComponentFactory cf = null;
 
 
@@ -42,8 +50,8 @@ public class XpaSystemConnectionMemo extends SystemConnectionMemo {
     private XpaTrafficController tc = null;
     
     /**
-     * Set the XpaTrafficController associated with this memo
-     * <P>
+     * Set the XpaTrafficController associated with this memo.
+     *
      * @param t is the XpaTrafficController memo to set
      */
     public void setXpaTrafficController(XpaTrafficController t){
@@ -52,16 +60,16 @@ public class XpaSystemConnectionMemo extends SystemConnectionMemo {
     }
 
     /**
-     * Get the XpaTrafficController associated with this memo
-     * <p>
-     * @return XpaTrafficController assocated with this memo.
+     * Get the XpaTrafficController associated with this memo.
+     *
+     * @return XpaTrafficController assocated with this memo
      */
     public XpaTrafficController getXpaTrafficController(){
        return tc;
     }
 
     /*
-     * Provides access to the Throttle Manager for this particular connection.
+     * Provide access to the Throttle Manager for this particular connection.
      */
     public ThrottleManager getThrottleManager() {
         if (throttleManager == null) {
@@ -78,7 +86,7 @@ public class XpaSystemConnectionMemo extends SystemConnectionMemo {
     private ThrottleManager throttleManager;
 
     /*
-     * Provides access to the Power Manager for this particular connection.
+     * Provide access to the PowerManager for this particular connection.
      */
     public PowerManager getPowerManager() {
         if (powerManager == null) {
@@ -95,7 +103,7 @@ public class XpaSystemConnectionMemo extends SystemConnectionMemo {
     private PowerManager powerManager;
 
     /*
-     * Provides access to the Turnout Manager for this particular connection.
+     * Provide access to the TurnoutManager for this particular connection.
      */
     public TurnoutManager getTurnoutManager() {
         if (turnoutManager == null) {

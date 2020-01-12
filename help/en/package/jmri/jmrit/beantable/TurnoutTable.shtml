@@ -16,9 +16,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>The Turnout Table</h1>
 
       <p>This table contains a list of all Turnouts that exist for
@@ -211,9 +211,9 @@
         </dd>
       </dl><a name="controls" id="controls"></a>
 
-      <h2>Turnout Table Controls</h2>There are some buttons and
-      checkboxes along the bottom of the Turnout Table pane that
-      control its operation.
+      <h2>Turnout Table Controls</h2>
+      <p>Along the bottom of the Turnout Table pane are buttons and
+      checkboxes that control its operation.</p>
 
       <dl>
         <dt>Add...</dt>
@@ -247,6 +247,11 @@
         for each Turnout. Choose either Use Block Speed or one of
         the speed values from the list.</dd>
 
+        <dt>Show State Query actions</dt>
+
+        <dd>When checked, the optional Sensor State Query and State Forget
+          columns are shown.</dd>
+
         <dt>Automation menu</dt>
 
         <dd>To read or set global (system wide) turnout retry
@@ -260,7 +265,8 @@
         menu.</dd>
       </dl>
 
-      <h2><a name="Turnout_Feedback"></a>Turnout Feedback</h2>
+      <a name="Turnout_Feedback" id="Turnout_Feedback"></a>
+      <h2>Turnout Feedback</h2>
 
       <p>Model railroaders want different things when it comes to
       knowing the status of the turnouts on their layout. Some are
@@ -391,7 +397,7 @@
         examples page on the JMRI website.</dd>
       </dl>
 
-      <h2><a name="automation" id="automation"></a>Turnout
+      <a name="automation" id="automation"></a><h2>Turnout
       Automation</h2>
 
       <p>JMRI can watch a Turnout and automate certain operations

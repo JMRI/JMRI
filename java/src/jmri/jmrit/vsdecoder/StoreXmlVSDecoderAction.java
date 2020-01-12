@@ -23,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * @author Mark Underwood Copyright (C) 2011
  * @author Daniel Boudreau (C) Copyright 2008
  */
-@SuppressWarnings("serial")
 public class StoreXmlVSDecoderAction extends AbstractAction {
 
     /**

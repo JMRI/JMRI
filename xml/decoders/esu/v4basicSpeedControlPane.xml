@@ -128,6 +128,11 @@
                    &lt;br/&gt;
                    &lt;strong&gt;Vstart &amp; Vhigh are settable on Speed Table Pane.&lt;/strong&gt;
                 &lt;/html&gt;</text>
+                <text xml:lang="de">&lt;html&gt;
+                   &lt;h2&gt;&lt;strong&gt;Die einfache Geschwindigkeitskurve kann bei diesem Decoder &lt;em&gt;nicht&lt;/em&gt; verwendet werden.&lt;/strong&gt;&lt;/h2&gt;
+                   &lt;br/&gt;
+                   &lt;strong&gt;Vstart &amp; Vhigh sind auf dem Reiter Geschwindigkeitskennlinie einstellbar.&lt;/strong&gt;
+                &lt;/html&gt;</text>
                 </label>
             </column>
         </row>

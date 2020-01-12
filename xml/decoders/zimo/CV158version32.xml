@@ -3,7 +3,7 @@
 <!-- version 1.1 Corrected labeling errors for CV158 RailCom speed reporting method, Mark Waters, 17 jan 2015 --> 
 <!-- version 1.2, Ronald Kuhn - add german translation  -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <variable CV="158" item="RailCom speed reporting method" mask="XXXXXVXX" default="1">
+  <variable CV="158" item="RailCom speed reporting method" mask="XXXXXVXX" default="0">
     <enumVal>
       <enumChoice choice="Zimo for MX31ZL" value="0">
       <choice>Zimo for MX31ZL</choice>
@@ -19,27 +19,27 @@
     <label>RailCom speed reporting method</label>
     <label xml:lang="de">RailCom Geschwindigkeits-Rückmeldung</label>
   </variable>
-  <variable CV="158" item="Standing Sound on premature shutdown" mask="XXXXVXXX" default="0">
+  <variable CV="158" item="Standing Sound on premature shutdown" mask="XXXXVXXX" default="0" exclude="130,195,197,199,211,218,240">
     <enumVal>
       <enumChoice choice="Present" value="0">
         <choice>Present</choice>
         <choice xml:lang="it">Presente</choice>
         <choice xml:lang="cs">Přítomný</choice>
-        <choice xml:lang="de">kein Abbruch</choice>
+        <choice xml:lang="de">Nein</choice>
       </enumChoice>
       <enumChoice choice="Disappear" value="1">
         <choice>Disappear</choice>
         <choice xml:lang="it">Sparisce</choice>
         <choice xml:lang="cs">Zmizí</choice>
-        <choice xml:lang="de">Abbruch</choice>
+        <choice xml:lang="de">Ja</choice>
       </enumChoice>
     </enumVal>
     <label>Standing Sound on premature shutdown</label>
     <label xml:lang="it">Suono distinto per arresto prematuro</label>
     <label xml:lang="cs">Zvuk stání při předčasném vypnutí</label>
-    <label xml:lang="de">Standgeräusch wird vorzeitig abgebrochen</label>
+    <label xml:lang="de">Standgeräusch vorzeitig abbrechen</label>
   </variable>
-  <variable CV="158" item="Chuff rate at higher speed steps" mask="XXXVXXXX" default="0">
+  <variable CV="158" item="Chuff rate at higher speed steps" mask="XXXVXXXX" default="0" exclude="130,195,197,199,211,218,240">
     <enumVal>
       <enumChoice choice="Normal" value="0">
         <choice>Normal</choice>
@@ -59,7 +59,7 @@
     <label xml:lang="cs">Frekvence výfuků páry při vyšších rychlostech</label>
     <label xml:lang="de">&lt;html&gt;DAMPFschlag Häufigkeit steigt&lt;br&gt;beim Schnellfahren unterproportional&lt;/html&gt;</label>
   </variable>
-  <variable CV="158" item="Drop one speed step to lower turbocharger" mask="XXVXXXXX" default="0">
+  <variable CV="158" item="Drop one speed step to lower turbocharger" mask="XXVXXXXX" default="0" exclude="130,195,197,199,211,218,240">
     <enumVal>
       <enumChoice choice="Off (default)" value="0">
         <choice>Normal</choice>

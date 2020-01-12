@@ -1,12 +1,13 @@
 package jmri.jmrit.operations.trains.configurexml;
 
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.configurexml.LocoIconXml;
 import jmri.jmrit.operations.trains.TrainIcon;
 import jmri.jmrit.roster.RosterEntry;
-import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle configuration for display.TrainIcon objects.
@@ -24,7 +25,9 @@ public class TrainIconXml extends LocoIconXml {
      *
      * @param o Object to store, of type TrainIcon
      * @return Element containing the complete info
+     * @deprecated Never ever used in operations or anywhere else, since 4.15.7
      */
+    @Deprecated
     @Override
     public Element store(Object o) {
 
@@ -62,8 +65,10 @@ public class TrainIconXml extends LocoIconXml {
      *
      * @param element Top level Element to unpack.
      * @param o       an Editor as an Object
+     * @deprecated Never ever used in operations or anywhere else, since 4.15.7
      */
     @Override
+    @Deprecated
     public void load(Element element, Object o) {
         //NOTE: this method should not be populated.  
         //  The operations program restores the Icons when the Trains window is opened.   

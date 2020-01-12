@@ -1,0 +1,789 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+  <jmriversion>
+    <major>4</major>
+    <minor>17</minor>
+    <test>4</test>
+    <modifier>ish</modifier>
+  </jmriversion>
+  <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
+    <defaultInitialState>unknown</defaultInitialState>
+    <sensor inverted="false">
+      <systemName>ISBO1</systemName>
+      <userName>blocknorthwestoccupied</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISBO2</systemName>
+      <userName>blocknorthoccupied</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISBO3</systemName>
+      <userName>blocknorthsidingoccupied</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISBO4</systemName>
+      <userName>blocknortheastoccupied</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISBO5</systemName>
+      <userName>blockeastoccupied</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISBO6</systemName>
+      <userName>blockeastsidingoccupied</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISBO7</systemName>
+      <userName>blocksoutheastoccupied</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISBO8</systemName>
+      <userName>blocksouthoccupied</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISBO9</systemName>
+      <userName>blocksouthsidingoccupied</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISBO10</systemName>
+      <userName>blocksouthwestoccupied</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISBO11</systemName>
+      <userName>blockwestoccupied</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISBO12</systemName>
+      <userName>blockwestsidingoccupied</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISCLOCKRUNNING</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSDIRF1</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSDIRF2</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSDIRF3</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSDIRF4</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSDIRF5</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSDIRF6</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSDIRF7</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSDIRF8</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSDIRF9</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSDIRF10</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSDIRF11</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSDIRF12</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSDIRR1</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSDIRR2</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSDIRR3</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSDIRR4</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSDIRR5</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSDIRR6</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSDIRR7</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSDIRR8</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSDIRR9</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSDIRR10</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSDIRR11</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSDIRR12</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSSTOPF1</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSSTOPF2</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSSTOPF3</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSSTOPF4</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSSTOPF5</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSSTOPF6</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSSTOPF7</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSSTOPF8</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSSTOPF9</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSSTOPF10</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSSTOPF11</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSSTOPF12</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSSTOPR1</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSSTOPR2</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSSTOPR3</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSSTOPR4</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSSTOPR5</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSSTOPR6</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSSTOPR7</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSSTOPR8</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSSTOPR9</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSSTOPR10</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSSTOPR11</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISSSTOPR12</systemName>
+    </sensor>
+  </sensors>
+  <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">
+    <operations automate="false">
+      <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+      <operation name="Raw" class="jmri.configurexml.turnoutoperations.RawTurnoutOperationXml" interval="300" maxtries="1" />
+      <operation name="Sensor" class="jmri.configurexml.turnoutoperations.SensorTurnoutOperationXml" interval="300" maxtries="3" />
+    </operations>
+    <defaultclosedspeed>Normal</defaultclosedspeed>
+    <defaultthrownspeed>Restricted</defaultthrownspeed>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT1</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT2</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT3</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT4</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT5</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT6</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT7</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT8</systemName>
+    </turnout>
+  </turnouts>
+  <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
+    <memory>
+      <systemName>IM:AUTO:0001</systemName>
+      <userName>blocknorthwestmemory</userName>
+    </memory>
+    <memory>
+      <systemName>IM:AUTO:0002</systemName>
+      <userName>blocknorthmemory</userName>
+    </memory>
+    <memory>
+      <systemName>IM:AUTO:0003</systemName>
+      <userName>blocknorthsidingmemory</userName>
+    </memory>
+    <memory>
+      <systemName>IM:AUTO:0004</systemName>
+      <userName>blocknortheastmemory</userName>
+    </memory>
+    <memory>
+      <systemName>IM:AUTO:0005</systemName>
+      <userName>blockeastmemory</userName>
+    </memory>
+    <memory>
+      <systemName>IM:AUTO:0006</systemName>
+      <userName>blockeastsidingmemory</userName>
+    </memory>
+    <memory>
+      <systemName>IM:AUTO:0007</systemName>
+      <userName>blocksoutheastmemory</userName>
+    </memory>
+    <memory>
+      <systemName>IM:AUTO:0008</systemName>
+      <userName>blocksouthmemory</userName>
+    </memory>
+    <memory>
+      <systemName>IM:AUTO:0009</systemName>
+      <userName>blocksouthsidingmemory</userName>
+    </memory>
+    <memory>
+      <systemName>IM:AUTO:0010</systemName>
+      <userName>blocksouthwestmemory</userName>
+    </memory>
+    <memory>
+      <systemName>IM:AUTO:0011</systemName>
+      <userName>blockwestmemory</userName>
+    </memory>
+    <memory>
+      <systemName>IM:AUTO:0012</systemName>
+      <userName>blockwestsidingmemory</userName>
+    </memory>
+    <memory value="10:25 PM">
+      <systemName>IMCURRENTTIME</systemName>
+    </memory>
+    <memory value="1.0">
+      <systemName>IMRATEFACTOR</systemName>
+    </memory>
+  </memories>
+  <blocks class="jmri.configurexml.BlockManagerXml">
+    <defaultspeed>Normal</defaultspeed>
+    <block systemName="IB1">
+      <systemName>IB1</systemName>
+      <userName>blocknorthwest</userName>
+    </block>
+    <block systemName="IB2">
+      <systemName>IB2</systemName>
+      <userName>blocknorth</userName>
+    </block>
+    <block systemName="IB3">
+      <systemName>IB3</systemName>
+      <userName>blocknorthsiding</userName>
+    </block>
+    <block systemName="IB4">
+      <systemName>IB4</systemName>
+      <userName>blocknortheast</userName>
+    </block>
+    <block systemName="IB5">
+      <systemName>IB5</systemName>
+      <userName>blockeast</userName>
+    </block>
+    <block systemName="IB6">
+      <systemName>IB6</systemName>
+      <userName>blockeastsiding</userName>
+    </block>
+    <block systemName="IB7">
+      <systemName>IB7</systemName>
+      <userName>blocksoutheast</userName>
+    </block>
+    <block systemName="IB8">
+      <systemName>IB8</systemName>
+      <userName>blocksouth</userName>
+    </block>
+    <block systemName="IB9">
+      <systemName>IB9</systemName>
+      <userName>blocksouthsiding</userName>
+    </block>
+    <block systemName="IB10">
+      <systemName>IB10</systemName>
+      <userName>blocksouthwest</userName>
+    </block>
+    <block systemName="IB11">
+      <systemName>IB11</systemName>
+      <userName>blockwest</userName>
+    </block>
+    <block systemName="IB12">
+      <systemName>IB12</systemName>
+      <userName>blockwestsiding</userName>
+    </block>
+    <block systemName="IB1" length="0.0" curve="0">
+      <systemName>IB1</systemName>
+      <userName>blocknorthwest</userName>
+      <permissive>no</permissive>
+      <occupancysensor>blocknorthwestoccupied</occupancysensor>
+      <path todir="64" fromdir="128" block="IB2">
+        <beansetting setting="2">
+          <turnout systemName="IT1" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB3">
+        <beansetting setting="4">
+          <turnout systemName="IT1" />
+        </beansetting>
+      </path>
+      <path todir="32" fromdir="16" block="IB11">
+        <beansetting setting="2">
+          <turnout systemName="IT8" />
+        </beansetting>
+      </path>
+      <path todir="32" fromdir="16" block="IB12">
+        <beansetting setting="4">
+          <turnout systemName="IT8" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB2" length="0.0" curve="0">
+      <systemName>IB2</systemName>
+      <userName>blocknorth</userName>
+      <permissive>no</permissive>
+      <occupancysensor>blocknorthoccupied</occupancysensor>
+      <path todir="128" fromdir="64" block="IB1">
+        <beansetting setting="2">
+          <turnout systemName="IT1" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB4">
+        <beansetting setting="2">
+          <turnout systemName="IT2" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB3" length="0.0" curve="0">
+      <systemName>IB3</systemName>
+      <userName>blocknorthsiding</userName>
+      <permissive>no</permissive>
+      <occupancysensor>blocknorthsidingoccupied</occupancysensor>
+      <path todir="128" fromdir="64" block="IB1">
+        <beansetting setting="4">
+          <turnout systemName="IT1" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB4">
+        <beansetting setting="4">
+          <turnout systemName="IT2" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB4" length="0.0" curve="0">
+      <systemName>IB4</systemName>
+      <userName>blocknortheast</userName>
+      <permissive>no</permissive>
+      <occupancysensor>blocknortheastoccupied</occupancysensor>
+      <path todir="128" fromdir="64" block="IB2">
+        <beansetting setting="2">
+          <turnout systemName="IT2" />
+        </beansetting>
+      </path>
+      <path todir="128" fromdir="64" block="IB3">
+        <beansetting setting="4">
+          <turnout systemName="IT2" />
+        </beansetting>
+      </path>
+      <path todir="32" fromdir="16" block="IB5">
+        <beansetting setting="2">
+          <turnout systemName="IT3" />
+        </beansetting>
+      </path>
+      <path todir="32" fromdir="16" block="IB6">
+        <beansetting setting="4">
+          <turnout systemName="IT3" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB5" length="0.0" curve="0">
+      <systemName>IB5</systemName>
+      <userName>blockeast</userName>
+      <permissive>no</permissive>
+      <occupancysensor>blockeastoccupied</occupancysensor>
+      <path todir="16" fromdir="32" block="IB4">
+        <beansetting setting="2">
+          <turnout systemName="IT3" />
+        </beansetting>
+      </path>
+      <path todir="32" fromdir="16" block="IB7">
+        <beansetting setting="2">
+          <turnout systemName="IT4" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB6" length="0.0" curve="0">
+      <systemName>IB6</systemName>
+      <userName>blockeastsiding</userName>
+      <permissive>no</permissive>
+      <occupancysensor>blockeastsidingoccupied</occupancysensor>
+      <path todir="16" fromdir="32" block="IB4">
+        <beansetting setting="4">
+          <turnout systemName="IT3" />
+        </beansetting>
+      </path>
+      <path todir="32" fromdir="16" block="IB7">
+        <beansetting setting="4">
+          <turnout systemName="IT4" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB7" length="0.0" curve="0">
+      <systemName>IB7</systemName>
+      <userName>blocksoutheast</userName>
+      <permissive>no</permissive>
+      <occupancysensor>blocksoutheastoccupied</occupancysensor>
+      <path todir="16" fromdir="32" block="IB5">
+        <beansetting setting="2">
+          <turnout systemName="IT4" />
+        </beansetting>
+      </path>
+      <path todir="16" fromdir="32" block="IB6">
+        <beansetting setting="4">
+          <turnout systemName="IT4" />
+        </beansetting>
+      </path>
+      <path todir="128" fromdir="64" block="IB8">
+        <beansetting setting="2">
+          <turnout systemName="IT5" />
+        </beansetting>
+      </path>
+      <path todir="128" fromdir="64" block="IB9">
+        <beansetting setting="4">
+          <turnout systemName="IT5" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB8" length="0.0" curve="0">
+      <systemName>IB8</systemName>
+      <userName>blocksouth</userName>
+      <permissive>no</permissive>
+      <occupancysensor>blocksouthoccupied</occupancysensor>
+      <path todir="64" fromdir="128" block="IB7">
+        <beansetting setting="2">
+          <turnout systemName="IT5" />
+        </beansetting>
+      </path>
+      <path todir="128" fromdir="64" block="IB10">
+        <beansetting setting="2">
+          <turnout systemName="IT6" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB9" length="0.0" curve="0">
+      <systemName>IB9</systemName>
+      <userName>blocksouthsiding</userName>
+      <permissive>no</permissive>
+      <occupancysensor>blocksouthsidingoccupied</occupancysensor>
+      <path todir="64" fromdir="128" block="IB7">
+        <beansetting setting="4">
+          <turnout systemName="IT5" />
+        </beansetting>
+      </path>
+      <path todir="128" fromdir="64" block="IB10">
+        <beansetting setting="4">
+          <turnout systemName="IT6" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB10" length="0.0" curve="0">
+      <systemName>IB10</systemName>
+      <userName>blocksouthwest</userName>
+      <permissive>no</permissive>
+      <occupancysensor>blocksouthwestoccupied</occupancysensor>
+      <path todir="64" fromdir="128" block="IB8">
+        <beansetting setting="2">
+          <turnout systemName="IT6" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB9">
+        <beansetting setting="4">
+          <turnout systemName="IT6" />
+        </beansetting>
+      </path>
+      <path todir="16" fromdir="32" block="IB11">
+        <beansetting setting="2">
+          <turnout systemName="IT7" />
+        </beansetting>
+      </path>
+      <path todir="16" fromdir="32" block="IB12">
+        <beansetting setting="4">
+          <turnout systemName="IT7" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB11" length="0.0" curve="0">
+      <systemName>IB11</systemName>
+      <userName>blockwest</userName>
+      <permissive>no</permissive>
+      <occupancysensor>blockwestoccupied</occupancysensor>
+      <path todir="32" fromdir="16" block="IB10">
+        <beansetting setting="2">
+          <turnout systemName="IT7" />
+        </beansetting>
+      </path>
+      <path todir="16" fromdir="32" block="IB1">
+        <beansetting setting="2">
+          <turnout systemName="IT8" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB12" length="0.0" curve="0">
+      <systemName>IB12</systemName>
+      <userName>blockwestsiding</userName>
+      <permissive>no</permissive>
+      <occupancysensor>blockwestsidingoccupied</occupancysensor>
+      <path todir="32" fromdir="16" block="IB10">
+        <beansetting setting="4">
+          <turnout systemName="IT7" />
+        </beansetting>
+      </path>
+      <path todir="16" fromdir="32" block="IB1">
+        <beansetting setting="4">
+          <turnout systemName="IT8" />
+        </beansetting>
+      </path>
+    </block>
+  </blocks>
+  <sections class="jmri.configurexml.SectionManagerXml">
+    <section systemName="IY:AUTO:0001" userName="NorthWest" creationtype="userdefined" fstopsensorname="ISSSTOPF1" rstopsensorname="ISSSTOPR1" fsensorname="ISSDIRF1" rsensorname="ISSDIRR1">
+      <systemName>IY:AUTO:0001</systemName>
+      <userName>NorthWest</userName>
+      <blockentry sName="IB1" order="0" />
+      <entrypoint fromblock="IB11" toblock="IB1" direction="4" fixed="no" fromblockdirection="North" />
+      <entrypoint fromblock="IB12" toblock="IB1" direction="4" fixed="no" fromblockdirection="North" />
+      <entrypoint fromblock="IB2" toblock="IB1" direction="8" fixed="no" fromblockdirection="West" />
+      <entrypoint fromblock="IB3" toblock="IB1" direction="8" fixed="no" fromblockdirection="West" />
+    </section>
+    <section systemName="IY:AUTO:0002" userName="North" creationtype="userdefined" fstopsensorname="ISSSTOPF2" rstopsensorname="ISSSTOPR2" fsensorname="ISSDIRF2" rsensorname="ISSDIRR2">
+      <systemName>IY:AUTO:0002</systemName>
+      <userName>North</userName>
+      <blockentry sName="IB2" order="0" />
+      <entrypoint fromblock="IB1" toblock="IB2" direction="4" fixed="no" fromblockdirection="East" />
+      <entrypoint fromblock="IB4" toblock="IB2" direction="8" fixed="no" fromblockdirection="West" />
+    </section>
+    <section systemName="IY:AUTO:0003" userName="NorthSiding" creationtype="userdefined" fstopsensorname="ISSSTOPF3" rstopsensorname="ISSSTOPR3" fsensorname="ISSDIRF3" rsensorname="ISSDIRR3">
+      <systemName>IY:AUTO:0003</systemName>
+      <userName>NorthSiding</userName>
+      <blockentry sName="IB3" order="0" />
+      <entrypoint fromblock="IB1" toblock="IB3" direction="4" fixed="no" fromblockdirection="East" />
+      <entrypoint fromblock="IB4" toblock="IB3" direction="8" fixed="no" fromblockdirection="West" />
+    </section>
+    <section systemName="IY:AUTO:0004" userName="NorthEast" creationtype="userdefined" fstopsensorname="ISSSTOPF4" rstopsensorname="ISSSTOPR4" fsensorname="ISSDIRF4" rsensorname="ISSDIRR4">
+      <systemName>IY:AUTO:0004</systemName>
+      <userName>NorthEast</userName>
+      <blockentry sName="IB4" order="0" />
+      <entrypoint fromblock="IB2" toblock="IB4" direction="4" fixed="no" fromblockdirection="East" />
+      <entrypoint fromblock="IB3" toblock="IB4" direction="4" fixed="no" fromblockdirection="East" />
+      <entrypoint fromblock="IB5" toblock="IB4" direction="8" fixed="no" fromblockdirection="North" />
+      <entrypoint fromblock="IB6" toblock="IB4" direction="8" fixed="no" fromblockdirection="North" />
+    </section>
+    <section systemName="IY:AUTO:0005" userName="East" creationtype="userdefined" fstopsensorname="ISSSTOPF5" rstopsensorname="ISSSTOPR5" fsensorname="ISSDIRF5" rsensorname="ISSDIRR5">
+      <systemName>IY:AUTO:0005</systemName>
+      <userName>East</userName>
+      <blockentry sName="IB5" order="0" />
+      <entrypoint fromblock="IB4" toblock="IB5" direction="4" fixed="no" fromblockdirection="South" />
+      <entrypoint fromblock="IB7" toblock="IB5" direction="8" fixed="no" fromblockdirection="North" />
+    </section>
+    <section systemName="IY:AUTO:0006" userName="EastSiding" creationtype="userdefined" fstopsensorname="ISSSTOPF6" rstopsensorname="ISSSTOPR6" fsensorname="ISSDIRF6" rsensorname="ISSDIRR6">
+      <systemName>IY:AUTO:0006</systemName>
+      <userName>EastSiding</userName>
+      <blockentry sName="IB6" order="0" />
+      <entrypoint fromblock="IB4" toblock="IB6" direction="4" fixed="no" fromblockdirection="South" />
+      <entrypoint fromblock="IB7" toblock="IB6" direction="8" fixed="no" fromblockdirection="North" />
+    </section>
+    <section systemName="IY:AUTO:0007" userName="SouthEast" creationtype="userdefined" fstopsensorname="ISSSTOPF7" rstopsensorname="ISSSTOPR7" fsensorname="ISSDIRF7" rsensorname="ISSDIRR7">
+      <systemName>IY:AUTO:0007</systemName>
+      <userName>SouthEast</userName>
+      <blockentry sName="IB7" order="0" />
+      <entrypoint fromblock="IB5" toblock="IB7" direction="4" fixed="no" fromblockdirection="South" />
+      <entrypoint fromblock="IB6" toblock="IB7" direction="4" fixed="no" fromblockdirection="South" />
+      <entrypoint fromblock="IB8" toblock="IB7" direction="8" fixed="no" fromblockdirection="East" />
+      <entrypoint fromblock="IB9" toblock="IB7" direction="8" fixed="no" fromblockdirection="East" />
+    </section>
+    <section systemName="IY:AUTO:0008" userName="South" creationtype="userdefined" fstopsensorname="ISSSTOPF8" rstopsensorname="ISSSTOPR8" fsensorname="ISSDIRF8" rsensorname="ISSDIRR8">
+      <systemName>IY:AUTO:0008</systemName>
+      <userName>South</userName>
+      <blockentry sName="IB8" order="0" />
+      <entrypoint fromblock="IB7" toblock="IB8" direction="4" fixed="no" fromblockdirection="West" />
+      <entrypoint fromblock="IB10" toblock="IB8" direction="8" fixed="no" fromblockdirection="East" />
+    </section>
+    <section systemName="IY:AUTO:0009" userName="SouthSiding" creationtype="userdefined" fstopsensorname="ISSSTOPF9" rstopsensorname="ISSSTOPR9" fsensorname="ISSDIRF9" rsensorname="ISSDIRR9">
+      <systemName>IY:AUTO:0009</systemName>
+      <userName>SouthSiding</userName>
+      <blockentry sName="IB9" order="0" />
+      <entrypoint fromblock="IB7" toblock="IB9" direction="4" fixed="no" fromblockdirection="West" />
+      <entrypoint fromblock="IB10" toblock="IB9" direction="8" fixed="no" fromblockdirection="East" />
+    </section>
+    <section systemName="IY:AUTO:0010" userName="SouthWest" creationtype="userdefined" fstopsensorname="ISSSTOPF10" rstopsensorname="ISSSTOPR10" fsensorname="ISSDIRF10" rsensorname="ISSDIRR10">
+      <systemName>IY:AUTO:0010</systemName>
+      <userName>SouthWest</userName>
+      <blockentry sName="IB10" order="0" />
+      <entrypoint fromblock="IB8" toblock="IB10" direction="4" fixed="no" fromblockdirection="West" />
+      <entrypoint fromblock="IB9" toblock="IB10" direction="4" fixed="no" fromblockdirection="West" />
+      <entrypoint fromblock="IB11" toblock="IB10" direction="8" fixed="no" fromblockdirection="South" />
+      <entrypoint fromblock="IB12" toblock="IB10" direction="8" fixed="no" fromblockdirection="South" />
+    </section>
+    <section systemName="IY:AUTO:0011" userName="West" creationtype="userdefined" fstopsensorname="ISSSTOPF11" rstopsensorname="ISSSTOPR11" fsensorname="ISSDIRF11" rsensorname="ISSDIRR11">
+      <systemName>IY:AUTO:0011</systemName>
+      <userName>West</userName>
+      <blockentry sName="IB11" order="0" />
+      <entrypoint fromblock="IB10" toblock="IB11" direction="4" fixed="no" fromblockdirection="North" />
+      <entrypoint fromblock="IB1" toblock="IB11" direction="8" fixed="no" fromblockdirection="South" />
+    </section>
+    <section systemName="IY:AUTO:0012" userName="WestSiding" creationtype="userdefined" fstopsensorname="ISSSTOPF12" rstopsensorname="ISSSTOPR12" fsensorname="ISSDIRF12" rsensorname="ISSDIRR12">
+      <systemName>IY:AUTO:0012</systemName>
+      <userName>WestSiding</userName>
+      <blockentry sName="IB12" order="0" />
+      <entrypoint fromblock="IB10" toblock="IB12" direction="4" fixed="no" fromblockdirection="North" />
+      <entrypoint fromblock="IB1" toblock="IB12" direction="8" fixed="no" fromblockdirection="South" />
+    </section>
+  </sections>
+  <transits class="jmri.configurexml.TransitManagerXml">
+    <transit systemName="IZ:AUTO:0001" userName="gocw1">
+      <systemName>IZ:AUTO:0001</systemName>
+      <userName>gocw1</userName>
+      <transitsection sectionname="IY:AUTO:0003" sequence="1" direction="4" alternate="no" safe="no" stopallocatingsensor="" />
+      <transitsection sectionname="IY:AUTO:0004" sequence="2" direction="4" alternate="no" safe="no" stopallocatingsensor="" />
+      <transitsection sectionname="IY:AUTO:0005" sequence="3" direction="4" alternate="no" safe="no" stopallocatingsensor="" />
+      <transitsection sectionname="IY:AUTO:0006" sequence="3" direction="4" alternate="yes" safe="no" stopallocatingsensor="" />
+      <transitsection sectionname="IY:AUTO:0007" sequence="4" direction="4" alternate="no" safe="no" stopallocatingsensor="" />
+      <transitsection sectionname="IY:AUTO:0008" sequence="5" direction="4" alternate="no" safe="no" stopallocatingsensor="" />
+      <transitsection sectionname="IY:AUTO:0009" sequence="5" direction="4" alternate="yes" safe="no" stopallocatingsensor="" />
+      <transitsection sectionname="IY:AUTO:0010" sequence="6" direction="4" alternate="no" safe="no" stopallocatingsensor="" />
+      <transitsection sectionname="IY:AUTO:0012" sequence="7" direction="4" alternate="no" safe="no" stopallocatingsensor="" />
+    </transit>
+    <transit systemName="IZ:AUTO:0002" userName="gocw2">
+      <systemName>IZ:AUTO:0002</systemName>
+      <userName>gocw2</userName>
+      <transitsection sectionname="IY:AUTO:0012" sequence="1" direction="4" alternate="no" safe="no" stopallocatingsensor="" />
+      <transitsection sectionname="IY:AUTO:0001" sequence="2" direction="4" alternate="no" safe="no" stopallocatingsensor="" />
+      <transitsection sectionname="IY:AUTO:0003" sequence="3" direction="4" alternate="no" safe="no" stopallocatingsensor="" />
+    </transit>
+    <transit systemName="IZ:AUTO:0003" userName="goccw1">
+      <systemName>IZ:AUTO:0003</systemName>
+      <userName>goccw1</userName>
+      <transitsection sectionname="IY:AUTO:0009" sequence="1" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
+      <transitsection sectionname="IY:AUTO:0007" sequence="2" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
+      <transitsection sectionname="IY:AUTO:0005" sequence="3" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
+      <transitsection sectionname="IY:AUTO:0006" sequence="3" direction="8" alternate="yes" safe="no" stopallocatingsensor="" />
+      <transitsection sectionname="IY:AUTO:0004" sequence="4" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
+      <transitsection sectionname="IY:AUTO:0002" sequence="5" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
+      <transitsection sectionname="IY:AUTO:0003" sequence="5" direction="8" alternate="yes" safe="no" stopallocatingsensor="" />
+      <transitsection sectionname="IY:AUTO:0001" sequence="6" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
+      <transitsection sectionname="IY:AUTO:0011" sequence="7" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
+    </transit>
+    <transit systemName="IZ:AUTO:0004" userName="goccw2">
+      <systemName>IZ:AUTO:0004</systemName>
+      <userName>goccw2</userName>
+      <transitsection sectionname="IY:AUTO:0011" sequence="1" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
+      <transitsection sectionname="IY:AUTO:0010" sequence="2" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
+      <transitsection sectionname="IY:AUTO:0009" sequence="3" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
+    </transit>
+  </transits>
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+  </signalmastlogics>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Sat Jun 18 07:25:15 CEST 2016" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <filehistory>
+    <operation>
+      <type>app</type>
+      <date>Sun Sep 08 21:01:39 CEST 2019</date>
+      <filename>JMRI program</filename>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Sun Sep 08 21:03:18 CEST 2019</date>
+      <filename>/Users/egbertbroerse/Documents/Egbert/Computers/IntelliJ%20local/JMRI/java/test/jmri/configurexml/load/SectionManagerXmlTest-4.7.4.xml</filename>
+      <filehistory>
+        <operation>
+          <type>Load OK</type>
+          <date>Thu Aug 10 17:52:13 PDT 2017</date>
+          <filename>/Applications/JMRI/Sources/geowar1/java/test/jmri/configurexml/load/SectionManagerXmlTest-4.7.4.xml</filename>
+          <filehistory>
+            <operation>
+              <type>Load OK</type>
+              <date>Thu Aug 10 16:36:14 PDT 2017</date>
+              <filename>/Applications/JMRI/Sources/geowar1/java/test/jmri/configurexml/load/SectionManagerXmlTest-4.7.4.xml</filename>
+            </operation>
+            <operation>
+              <type>Load OK</type>
+              <date>Thu Aug 10 16:36:14 PDT 2017</date>
+              <filename>/Applications/JMRI/Sources/geowar1/java/test/jmri/configurexml/load/SectionManagerXmlTest-4.7.4.xml</filename>
+            </operation>
+            <operation>
+              <type>Store</type>
+              <date>Thu Aug 10 16:36:14 PDT 2017</date>
+              <filename />
+            </operation>
+          </filehistory>
+        </operation>
+        <operation>
+          <type>Load OK</type>
+          <date>Thu Aug 10 17:52:13 PDT 2017</date>
+          <filename>/Applications/JMRI/Sources/geowar1/java/test/jmri/configurexml/load/SectionManagerXmlTest-4.7.4.xml</filename>
+          <filehistory>
+            <operation>
+              <type>Load OK</type>
+              <date>Thu Aug 10 16:36:14 PDT 2017</date>
+              <filename>/Applications/JMRI/Sources/geowar1/java/test/jmri/configurexml/load/SectionManagerXmlTest-4.7.4.xml</filename>
+            </operation>
+            <operation>
+              <type>Load OK</type>
+              <date>Thu Aug 10 16:36:14 PDT 2017</date>
+              <filename>/Applications/JMRI/Sources/geowar1/java/test/jmri/configurexml/load/SectionManagerXmlTest-4.7.4.xml</filename>
+            </operation>
+            <operation>
+              <type>Store</type>
+              <date>Thu Aug 10 16:36:14 PDT 2017</date>
+              <filename />
+            </operation>
+          </filehistory>
+        </operation>
+        <operation>
+          <type>Store</type>
+          <date>Thu Aug 10 17:52:13 PDT 2017</date>
+          <filename />
+        </operation>
+      </filehistory>
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Sun Sep 08 21:03:30 CEST 2019</date>
+      <filename />
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 4.17.4ish+egbertbroerse+20190908T1901Z+R59b5cbdf37 on Sun Sep 08 21:03:30 CEST 2019-->
+</layout-config>

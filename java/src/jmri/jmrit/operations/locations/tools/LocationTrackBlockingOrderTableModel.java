@@ -207,7 +207,7 @@ public class LocationTrackBlockingOrderTableModel extends AbstractTableModel imp
         }
     }
 
-    // this table listens for changes to a location and it's tracks
+    // this table listens for changes to a location and its tracks
     @Override
     public void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY)

@@ -50,7 +50,9 @@ public final class CbusConstants {
 
     // Opcodes with 2 data
     public static final int CBUS_RLOC = 0x40;
+    public static final int CBUS_QCON = 0x41;
     public static final int CBUS_SNN = 0x42;
+    public static final int CBUS_ALOC = 0x43;
     public static final int CBUS_STMOD = 0x44;
     public static final int CBUS_PCON = 0x45;
     public static final int CBUS_KCON = 0x46;
@@ -137,7 +139,7 @@ public final class CbusConstants {
     // Opcodes with 6 data
     public static final int CBUS_RDCC5 = 0xC0;
     public static final int CBUS_WCVOA = 0xC1;
-
+    public static final int CBUS_CABDAT = 0xC2;
     public static final int CBUS_FCLK = 0xCF;
 
     public static final int CBUS_ACON2 = 0xD0;
@@ -174,6 +176,7 @@ public final class CbusConstants {
     public static final int CBUS_ASOF3 = 0xF9;
     public static final int CBUS_DDES = 0xFA;
     public static final int CBUS_DDRS = 0xFB;
+    public static final int CBUS_DDWS = 0xFC;
 
     public static final int CBUS_ARSON3 = 0xFD;
     public static final int CBUS_ARSOF3 = 0xFE;
@@ -216,17 +219,21 @@ public final class CbusConstants {
     public static final int EVENT_ON = 0;
     public static final int EVENT_OFF = 1;
     public static final int EVENT_EITHER = 2;
+    public static final int EVENT_NEITHER = 3;
+    
+    /**
+     * Event directions
+     */
+    public static final int EVENT_DIR_UNSET = 0;
+    public static final int EVENT_DIR_IN = 1;
+    public static final int EVENT_DIR_OUT = 2;
+    public static final int EVENT_DIR_EITHER = 3;
 
     /**
      * CBUS Priorities
      */
     public static final int DEFAULT_DYNAMIC_PRIORITY = 2;
     public static final int DEFAULT_MINOR_PRIORITY = 3;
-
-    /**
-     * Event Table
-     */
-    public static final int MAX_TABLE_EVENTS = 5000;
 
     /**
      * Function bits for group1

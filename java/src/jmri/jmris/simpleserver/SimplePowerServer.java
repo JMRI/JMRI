@@ -1,4 +1,3 @@
-//SimplePowerServer.java
 package jmri.jmris.simpleserver;
 
 import java.io.DataInputStream;
@@ -11,6 +10,7 @@ import jmri.jmris.simpleserver.parser.JmriServerParser;
 import jmri.jmris.simpleserver.parser.ParseException;
 import jmri.jmris.simpleserver.parser.SimpleNode;
 import jmri.jmris.simpleserver.parser.SimpleVisitor;
+import jmri.jmris.simpleserver.parser.TokenMgrError;
 
 /**
  * Simple Server interface between the JMRI power manager and a network
@@ -63,6 +63,8 @@ public class SimplePowerServer extends AbstractPowerServer {
                  sendStatus(v.getOutputString());
               } 
            } catch(ParseException pe){
+              sendErrorStatus();
+           } catch(TokenMgrError pe){
               sendErrorStatus();
            }
         } catch(IOException ioe) {

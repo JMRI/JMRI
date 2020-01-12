@@ -367,10 +367,10 @@ public class JmriJTablePersistenceManagerTest {
         String name1 = "Test1";
         String name2 = "Test2";
         Profile profile = ProfileManager.getDefault().getActiveProfile();
-        Assume.assumeNotNull(profile);
+        Assert.assertNotNull(profile); // test requires non-null profile
         // copy preferences into profile
         File source = new File(ClassLoader.getSystemResource("jmri/swing/JmriJTablePersistenceManagerTest-user-interface.xml").toURI());
-        File target = new File(new File(new File(profile.getPath(), Profile.PROFILE), NodeIdentity.identity()), Profile.UI_CONFIG);
+        File target = new File(new File(new File(profile.getPath(), Profile.PROFILE), NodeIdentity.storageIdentity()), Profile.UI_CONFIG);
         FileUtil.createDirectory(target.getParentFile());
         FileUtil.copy(source, target);
         JmriJTablePersistenceManagerSpy instance = new JmriJTablePersistenceManagerSpy();
@@ -413,7 +413,7 @@ public class JmriJTablePersistenceManagerTest {
      * Test of savePreferences method, of class JmriJTablePersistenceManager.
      */
     @Test
-    @Ignore
+    @Ignore("test code is incomplete prototype")
     public void testSavePreferences() {
         System.out.println("savePreferences");
         Profile profile = null;
@@ -524,28 +524,10 @@ public class JmriJTablePersistenceManagerTest {
     }
 
     /**
-     * Test of getDirty method, of class JmriJTablePersistenceManager.
-     */
-    @Test
-    @SuppressWarnings("deprecation")
-    public void testGetDirty() {
-        JmriJTablePersistenceManagerSpy instance = new JmriJTablePersistenceManagerSpy();
-        JTable test = testTable("test");
-        Assert.assertFalse("new manager w/o tables is clean", instance.getDirty());
-        instance.persist(test);
-        Assert.assertTrue("table added, not saved", instance.getDirty());
-        instance.setDirty(false);
-        Assert.assertFalse("set to clean for test", instance.getDirty());
-        instance.setPersistedState(test.getName(), "c1", 0, 0, SortOrder.ASCENDING, false);
-        Assert.assertTrue("column changed", instance.getDirty());
-    }
-
-    /**
      * Test of setTableColumnPreferences method, of class
      * JmriJTablePersistenceManager.
      */
     @Test
-    @SuppressWarnings("deprecation")
     public void testSetTableColumnPreferences() {
         JTable table = testTable("test");
         JmriJTablePersistenceManagerSpy instance = new JmriJTablePersistenceManagerSpy();

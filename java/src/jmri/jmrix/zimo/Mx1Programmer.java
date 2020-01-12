@@ -2,22 +2,25 @@ package jmri.jmrix.zimo;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
+
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Programmer support for Zimo Mx-1. Currently paged mode is implemented.
- * <P>
+ * <p>
  * The read operation state sequence is:
- * <UL>
- * <LI>Reset Mx-1
- * <LI>Send paged mode read/write request
- * <LI>Wait for results reply, interpret
- * <LI>Send Resume Operations request
- * <LI>Wait for Normal Operations Resumed broadcast
- * </UL>
+ * <ul>
+ * <li>Reset Mx-1
+ * <li>Send paged mode read/write request
+ * <li>Wait for results reply, interpret
+ * <li>Send Resume Operations request
+ * <li>Wait for Normal Operations Resumed broadcast
+ * </ul>
  *
  * @author Bob Jacobsen Copyright (c) 2002
  *
@@ -37,10 +40,13 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
             this.tc.addMx1Listener(~0, this);
     }
 
-    /**
+    /** 
+     * {@inheritDoc}
+     *
      * Types implemented here.
      */
     @Override
+    @Nonnull
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
         ret.add(ProgrammingMode.PAGEMODE);
@@ -56,9 +62,12 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
     int _val;	// remember the value being read/written for confirmative reply
     int _cv;	// remember the cv being read/written
 
-    // programming interface
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    synchronized public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+    synchronized public void writeCV(String CVname, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+        final int CV = Integer.parseInt(CVname);
         if (log.isDebugEnabled()) {
             log.debug("writeCV " + CV + " listens " + p);
         }
@@ -84,13 +93,20 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
         }
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public void confirmCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         readCV(CV, p);
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    synchronized public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
+    synchronized public void readCV(String CVname, jmri.ProgListener p) throws jmri.ProgrammerException {
+        final int CV = Integer.parseInt(CVname);
         if (log.isDebugEnabled()) {
             log.debug("readCV " + CV + " listens " + p);
         }
@@ -131,6 +147,9 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
         }
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     synchronized public void message(Mx1Message m) {
         if (progState == NOTPROGRAMMING) {
@@ -187,7 +206,9 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
         }
     }
 
-    /**
+    /** 
+     * {@inheritDoc}
+     *
      * Internal routine to handle a timeout
      */
     @Override
@@ -216,7 +237,7 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
         // clear the current listener _first_
         jmri.ProgListener temp = _usingProgrammer;
         _usingProgrammer = null;
-        temp.programmingOpReply(value, status);
+        notifyProgListenerEnd(temp, value, status);
     }
 
     public int ascToBcd(int hex) {

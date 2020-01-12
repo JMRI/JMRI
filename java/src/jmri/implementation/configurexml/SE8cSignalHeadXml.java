@@ -21,7 +21,7 @@ public class SE8cSignalHeadXml extends jmri.managers.configurexml.AbstractNamedB
     }
 
     /**
-     * Default implementation for storing the contents of a SE8cSignalHead
+     * Default implementation for storing the contents of a SE8cSignalHead.
      *
      * @param o Object to store, of type TripleTurnoutSignalHead
      * @return Element containing the complete info
@@ -82,7 +82,15 @@ public class SE8cSignalHeadXml extends jmri.managers.configurexml.AbstractNamedB
 
         loadCommon(h, shared);
 
-        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
+        SignalHead existingBean = InstanceManager.getDefault(jmri.SignalHeadManager.class)
+                        .getBySystemName(sys);
+
+        if ((existingBean != null) && (existingBean != h)) {
+            log.error("systemName is already registered: {}", sys);
+        } else {
+            InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
+        }
+
         return true;
     }
 
@@ -108,7 +116,12 @@ public class SE8cSignalHeadXml extends jmri.managers.configurexml.AbstractNamedB
             } else {
                 t = InstanceManager.turnoutManagerInstance().getBySystemName(name);
             }
-            return jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, t);
+            if (t != null) {
+                return jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, t);
+            } else {
+                log.warn("Failed to find turnout {}. Check connection and configuration", name);
+                return null;
+            }
         } else {
             String name = e.getText();
             try {
@@ -127,4 +140,5 @@ public class SE8cSignalHeadXml extends jmri.managers.configurexml.AbstractNamedB
     }
 
     private final static Logger log = LoggerFactory.getLogger(SE8cSignalHeadXml.class);
+
 }

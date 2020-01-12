@@ -1,23 +1,25 @@
 package jmri.jmrit.operations.trains;
 
 import java.awt.GraphicsEnvironment;
+
+import org.junit.*;
+
+
 import jmri.InstanceManager;
-import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteManager;
+import jmri.jmrit.operations.setup.Setup;
+import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import jmri.util.swing.JemmyUtil;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class TrainEditBuildOptionsFrameTest extends OperationsSwingTestCase{
+public class TrainEditBuildOptionsFrameTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
@@ -44,6 +46,9 @@ public class TrainEditBuildOptionsFrameTest extends OperationsSwingTestCase{
         TrainEditFrame trainEditFrame = new TrainEditFrame(t);
         trainEditFrame.setLocation(0, 0); // entire panel must be visible for tests to work properly
         trainEditFrame.setTitle("Test Build Options Train Frame");
+        
+        // Normal build option is only enabled when building aggressive
+        Setup.setBuildAggressive(true);
 
         TrainEditBuildOptionsFrame f = new TrainEditBuildOptionsFrame();
         f.setLocation(0, 0); // entire panel must be visible for tests to work properly
@@ -58,8 +63,8 @@ public class TrainEditBuildOptionsFrameTest extends OperationsSwingTestCase{
         Assert.assertEquals("allow through cars", true, t.isAllowThroughCarsEnabled());
 
         // test options
-        enterClickAndLeave(f.buildNormalCheckBox);
-        enterClickAndLeave(f.saveTrainButton);
+        JemmyUtil.enterClickAndLeave(f.buildNormalCheckBox);
+        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
 
         Assert.assertEquals("Build normal", true, t.isBuildTrainNormalEnabled());
         Assert.assertEquals("send to terminal", false, t.isSendCarsToTerminalEnabled());
@@ -67,8 +72,8 @@ public class TrainEditBuildOptionsFrameTest extends OperationsSwingTestCase{
         Assert.assertEquals("allow local moves", true, t.isAllowLocalMovesEnabled());
         Assert.assertEquals("allow through cars", true, t.isAllowThroughCarsEnabled());
 
-        enterClickAndLeave(f.sendToTerminalCheckBox);
-        enterClickAndLeave(f.saveTrainButton);
+        JemmyUtil.enterClickAndLeave(f.sendToTerminalCheckBox);
+        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
 
         Assert.assertEquals("Build normal", true, t.isBuildTrainNormalEnabled());
         Assert.assertEquals("send to terminal", true, t.isSendCarsToTerminalEnabled());
@@ -76,8 +81,8 @@ public class TrainEditBuildOptionsFrameTest extends OperationsSwingTestCase{
         Assert.assertEquals("allow local moves", true, t.isAllowLocalMovesEnabled());
         Assert.assertEquals("allow through cars", true, t.isAllowThroughCarsEnabled());
 
-        enterClickAndLeave(f.returnStagingCheckBox);
-        enterClickAndLeave(f.saveTrainButton);
+        JemmyUtil.enterClickAndLeave(f.returnStagingCheckBox);
+        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
 
         Assert.assertEquals("Build normal", true, t.isBuildTrainNormalEnabled());
         Assert.assertEquals("send to terminal", true, t.isSendCarsToTerminalEnabled());
@@ -86,8 +91,8 @@ public class TrainEditBuildOptionsFrameTest extends OperationsSwingTestCase{
         Assert.assertEquals("allow local moves", true, t.isAllowLocalMovesEnabled());
         Assert.assertEquals("allow through cars", true, t.isAllowThroughCarsEnabled());
 
-        enterClickAndLeave(f.allowLocalMovesCheckBox);
-        enterClickAndLeave(f.saveTrainButton);
+        JemmyUtil.enterClickAndLeave(f.allowLocalMovesCheckBox);
+        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
 
         Assert.assertEquals("Build normal", true, t.isBuildTrainNormalEnabled());
         Assert.assertEquals("send to terminal", true, t.isSendCarsToTerminalEnabled());
@@ -95,8 +100,8 @@ public class TrainEditBuildOptionsFrameTest extends OperationsSwingTestCase{
         Assert.assertEquals("allow local moves", false, t.isAllowLocalMovesEnabled());
         Assert.assertEquals("allow through cars", true, t.isAllowThroughCarsEnabled());
 
-        enterClickAndLeave(f.allowThroughCarsCheckBox);
-        enterClickAndLeave(f.saveTrainButton);
+        JemmyUtil.enterClickAndLeave(f.allowThroughCarsCheckBox);
+        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
 
         Assert.assertEquals("Build normal", true, t.isBuildTrainNormalEnabled());
         Assert.assertEquals("send to terminal", true, t.isSendCarsToTerminalEnabled());
@@ -105,52 +110,52 @@ public class TrainEditBuildOptionsFrameTest extends OperationsSwingTestCase{
         Assert.assertEquals("allow through cars", false, t.isAllowThroughCarsEnabled());
 
         // test car owner options
-        enterClickAndLeave(f.ownerNameExclude);
+        JemmyUtil.enterClickAndLeave(f.ownerNameExclude);
 
         Assert.assertEquals("train car owner exclude", Train.EXCLUDE_OWNERS, t.getOwnerOption());
-        enterClickAndLeave(f.ownerNameInclude);
+        JemmyUtil.enterClickAndLeave(f.ownerNameInclude);
 
         Assert.assertEquals("train car owner include", Train.INCLUDE_OWNERS, t.getOwnerOption());
-        enterClickAndLeave(f.ownerNameAll);
+        JemmyUtil.enterClickAndLeave(f.ownerNameAll);
 
         Assert.assertEquals("train car owner all", Train.ALL_OWNERS, t.getOwnerOption());
 
         // test car date options
-        enterClickAndLeave(f.builtDateAfter);
+        JemmyUtil.enterClickAndLeave(f.builtDateAfter);
 
         f.builtAfterTextField.setText("1956");
-        enterClickAndLeave(f.saveTrainButton);
+        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
 
         Assert.assertEquals("train car built after", "1956", t.getBuiltStartYear());
 
-        enterClickAndLeave(f.builtDateBefore);
+        JemmyUtil.enterClickAndLeave(f.builtDateBefore);
 
         f.builtBeforeTextField.setText("2010");
-        enterClickAndLeave(f.saveTrainButton);
+        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
 
         Assert.assertEquals("train car built before", "2010", t.getBuiltEndYear());
 
-        enterClickAndLeave(f.builtDateRange);
+        JemmyUtil.enterClickAndLeave(f.builtDateRange);
 
         f.builtAfterTextField.setText("1888");
         f.builtBeforeTextField.setText("2000");
-        enterClickAndLeave(f.saveTrainButton);
+        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
 
         Assert.assertEquals("train car built after range", "1888", t.getBuiltStartYear());
         Assert.assertEquals("train car built before range", "2000", t.getBuiltEndYear());
 
-        enterClickAndLeave(f.builtDateAll);
-        enterClickAndLeave(f.saveTrainButton);
+        JemmyUtil.enterClickAndLeave(f.builtDateAll);
+        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
 
         Assert.assertEquals("train car built after all", "", t.getBuiltStartYear());
         Assert.assertEquals("train car built before all", "", t.getBuiltEndYear());
 
         // test optional loco and caboose changes
-        enterClickAndLeave(f.change1Engine);
-        enterClickAndLeave(f.saveTrainButton);
+        JemmyUtil.enterClickAndLeave(f.change1Engine);
+        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
 
         // clear dialogue box
-        pressDialogButton(f, Bundle.getMessage("CanNotSave"), "OK");
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotSave"), Bundle.getMessage("ButtonOK"));
 
         Assert.assertEquals("loco 1 change", Train.CHANGE_ENGINES, t.getSecondLegOptions());
         Assert.assertEquals("loco 1 departure name", "", t.getSecondLegStartLocationName());
@@ -160,7 +165,7 @@ public class TrainEditBuildOptionsFrameTest extends OperationsSwingTestCase{
         f.modelEngine1Box.setSelectedItem("FT");
         f.roadEngine1Box.setSelectedItem("UP");
 
-        enterClickAndLeave(f.saveTrainButton);
+        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
 
         Assert.assertEquals("loco 1 change", Train.CHANGE_ENGINES, t.getSecondLegOptions());
         Assert.assertEquals("loco 1 departure name", "Test Train Location A", t
@@ -169,53 +174,53 @@ public class TrainEditBuildOptionsFrameTest extends OperationsSwingTestCase{
         Assert.assertEquals("loco 1 model", "FT", t.getSecondLegEngineModel());
         Assert.assertEquals("loco 1 road", "UP", t.getSecondLegEngineRoad());
 
-        enterClickAndLeave(f.modify1Caboose);
+        JemmyUtil.enterClickAndLeave(f.modify1Caboose);
 
         f.routePickup1Box.setSelectedIndex(0);
         String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
         f.roadCaboose1Box.setSelectedItem(roadNames[2]);
-        enterClickAndLeave(f.saveTrainButton);
+        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
 
         // clear dialogue box
-        pressDialogButton(f, Bundle.getMessage("CanNotSave"), "OK");
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotSave"), Bundle.getMessage("ButtonOK"));
 
         Assert.assertEquals("caboose 1 change", Train.ADD_CABOOSE, t.getSecondLegOptions());
 
         f.routePickup1Box.setSelectedIndex(2);
-        enterClickAndLeave(f.saveTrainButton);
+        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
 
         Assert.assertEquals("caboose 1 road", roadNames[2], t.getSecondLegCabooseRoad());
 
-        enterClickAndLeave(f.helper1Service);
+        JemmyUtil.enterClickAndLeave(f.helper1Service);
 
         f.routePickup1Box.setSelectedIndex(0);
-        enterClickAndLeave(f.saveTrainButton);
+        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
 
         // clear dialogue box
-        pressDialogButton(f, Bundle.getMessage("CanNotSave"), "OK");
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotSave"), Bundle.getMessage("ButtonOK"));
 
         Assert.assertEquals("helper 1 change", Train.HELPER_ENGINES, t.getSecondLegOptions());
 
         f.routePickup1Box.setSelectedIndex(2); // Should be "Test Train Location B"
         f.routeDrop1Box.setSelectedIndex(3); // Should be "Test Train Location C"
-        enterClickAndLeave(f.saveTrainButton);
+        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
 
         Assert.assertEquals("Helper 1 start location name", "Test Train Location B", t
                 .getSecondLegStartLocationName());
         Assert.assertEquals("Helper 1 end location name", "Test Train Location C", t
                 .getSecondLegEndLocationName());
 
-        enterClickAndLeave(f.none1);
-        enterClickAndLeave(f.saveTrainButton);
+        JemmyUtil.enterClickAndLeave(f.none1);
+        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
 
         Assert.assertEquals("none 1", 0, t.getSecondLegOptions());
 
         // now do the second set of locos and cabooses
-        enterClickAndLeave(f.change2Engine);
-        enterClickAndLeave(f.saveTrainButton);
+        JemmyUtil.enterClickAndLeave(f.change2Engine);
+        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
 
         // clear dialogue box
-        pressDialogButton(f, Bundle.getMessage("CanNotSave"), "OK");
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotSave"), Bundle.getMessage("ButtonOK"));
 
         Assert.assertEquals("loco 2 change", Train.CHANGE_ENGINES, t.getThirdLegOptions());
         Assert.assertEquals("loco 2 departure name", "", t.getThirdLegStartLocationName());
@@ -225,7 +230,7 @@ public class TrainEditBuildOptionsFrameTest extends OperationsSwingTestCase{
         f.modelEngine2Box.setSelectedItem("FT");
         f.roadEngine2Box.setSelectedItem("UP");
 
-        enterClickAndLeave(f.saveTrainButton);
+        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
 
         Assert.assertEquals("loco 2 change", Train.CHANGE_ENGINES, t.getThirdLegOptions());
         Assert.assertEquals("loco 2 departure name", "Test Train Location A", t
@@ -234,43 +239,43 @@ public class TrainEditBuildOptionsFrameTest extends OperationsSwingTestCase{
         Assert.assertEquals("loco 2 model", "FT", t.getThirdLegEngineModel());
         Assert.assertEquals("loco 2 road", "UP", t.getThirdLegEngineRoad());
 
-        enterClickAndLeave(f.modify2Caboose);
+        JemmyUtil.enterClickAndLeave(f.modify2Caboose);
 
         f.routePickup2Box.setSelectedIndex(0);
         f.roadCaboose2Box.setSelectedItem(roadNames[2]);
-        enterClickAndLeave(f.saveTrainButton);
+        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
 
         // clear dialogue box
-        pressDialogButton(f, Bundle.getMessage("CanNotSave"), Bundle.getMessage("OK"));
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotSave"), Bundle.getMessage("ButtonOK"));
 
         Assert.assertEquals("caboose 2 change", Train.ADD_CABOOSE, t.getThirdLegOptions());
 
         f.routePickup2Box.setSelectedIndex(2);
-        enterClickAndLeave(f.saveTrainButton);
+        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
 
         Assert.assertEquals("caboose 2 road", roadNames[2], t.getThirdLegCabooseRoad());
 
-        enterClickAndLeave(f.helper2Service);
+        JemmyUtil.enterClickAndLeave(f.helper2Service);
 
         f.routePickup2Box.setSelectedIndex(0);
-        enterClickAndLeave(f.saveTrainButton);
+        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
 
         // clear dialogue box
-        pressDialogButton(f, Bundle.getMessage("CanNotSave"), "OK");
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotSave"), Bundle.getMessage("ButtonOK"));
 
         Assert.assertEquals("helper 2 change", Train.HELPER_ENGINES, t.getThirdLegOptions());
 
         f.routePickup2Box.setSelectedIndex(2); // Should be "Test Train Location B"
         f.routeDrop2Box.setSelectedIndex(3); // Should be "Test Train Location C"
-        enterClickAndLeave(f.saveTrainButton);
+        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
 
         Assert.assertEquals("Helper 2 start location name", "Test Train Location B", t
                 .getThirdLegStartLocationName());
         Assert.assertEquals("Helper 2 end location name", "Test Train Location C", t
                 .getThirdLegEndLocationName());
 
-        enterClickAndLeave(f.none2);
-        enterClickAndLeave(f.saveTrainButton);
+        JemmyUtil.enterClickAndLeave(f.none2);
+        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
 
         Assert.assertEquals("none 2", 0, t.getThirdLegOptions());
 
@@ -281,14 +286,14 @@ public class TrainEditBuildOptionsFrameTest extends OperationsSwingTestCase{
     // The minimal setup for log4J
     @Override
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         super.setUp();
-        loadTrains();
+        JUnitOperationsUtil.loadTrains();
      }
 
     @Override
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         super.tearDown();
     }
 

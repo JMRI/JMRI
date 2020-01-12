@@ -2,10 +2,10 @@ package jmri.jmrix.easydcc;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
+
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implements the jmri.Programmer interface via commands for the EasyDCC
@@ -21,12 +21,13 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
         LONG_TIMEOUT = 180000;
     }
 
-    private EasyDccTrafficController tc = null;
+    protected EasyDccTrafficController tc = null;
 
-    /**
-     * Types implemented here.
+    /** 
+     * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
         ret.add(ProgrammingMode.PAGEMODE);
@@ -42,9 +43,12 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
     int _val; // remember the value being read/written for confirmative reply
     int _cv; // remember the cv being read/written
 
-    // programming interface
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    public synchronized void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+    public synchronized void writeCV(String CVname, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+        final int CV = Integer.parseInt(CVname);
         if (log.isDebugEnabled()) {
             log.debug("writeCV " + CV + " listens " + p);
         }
@@ -67,13 +71,20 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
         }
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public synchronized void confirmCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         readCV(CV, p);
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    public synchronized void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
+    public synchronized void readCV(String CVname, jmri.ProgListener p) throws jmri.ProgrammerException {
+        final int CV = Integer.parseInt(CVname);
         if (log.isDebugEnabled()) {
             log.debug("readCV " + CV + " listens " + p);
         }
@@ -134,11 +145,17 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
         }
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public void message(EasyDccMessage m) {
         log.error("message received unexpectedly: {}", m.toString());
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     synchronized public void reply(EasyDccReply m) {
         if (progState == NOTPROGRAMMING) {
@@ -173,8 +190,8 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
         }
     }
 
-    /**
-     * Internal routine to handle a timeout.
+    /** 
+     * {@inheritDoc}
      */
     @Override
     synchronized protected void timeout() {
@@ -209,17 +226,9 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
         // clear the current listener _first_
         jmri.ProgListener temp = _usingProgrammer;
         _usingProgrammer = null;
-        temp.programmingOpReply(value, status);
+        notifyProgListenerEnd(temp,value,status);
     }
 
-    /**
-     * @deprecated since 4.9.5
-     */
-    @Deprecated
-    protected EasyDccTrafficController controller() {
-        return tc;
-    }
-
-    private final static Logger log = LoggerFactory.getLogger(EasyDccProgrammer.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EasyDccProgrammer.class);
 
 }

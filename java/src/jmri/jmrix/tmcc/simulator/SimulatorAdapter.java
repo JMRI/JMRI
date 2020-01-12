@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+
 import jmri.jmrix.tmcc.SerialMessage;
 import jmri.jmrix.tmcc.SerialPortController; // no special xSimulatorController
 import jmri.jmrix.tmcc.SerialReply;
@@ -27,7 +28,7 @@ import org.slf4j.LoggerFactory;
  * @author Mark Underwood, Copyright (C) 2015
  * @author Egbert Broerse, Copyright (C) 2017
  */
-public class SimulatorAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter, Runnable {
+public class SimulatorAdapter extends SerialPortController implements Runnable {
 
     // private control members
     private boolean opened = false;
@@ -162,19 +163,31 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
     }
 
     /**
-     * Get an array of valid baud rates. This is currently just a message saying
-     * its fixed.
+     * {@inheritDoc}
      *
      * @return null
      */
     @Override
     public String[] validBaudRates() {
         log.debug("validBaudRates should not have been invoked");
-        return null;
+        return new String[]{};
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return new int[]{};
     }
 
     @Override
     public String getCurrentBaudRate() {
+        return "";
+    }
+
+    @Override
+    public String getCurrentPortName(){
         return "";
     }
 
@@ -246,7 +259,6 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
      *
      * As yet, no a meaningful reply. TODO: Throttle
      */
-    @SuppressWarnings("fallthrough")
     private SerialReply generateReply(SerialMessage msg) {
         log.debug("Generate Reply to message type {} (string = {})", msg.toString().charAt(0), msg.toString());
 

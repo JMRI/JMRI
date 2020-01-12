@@ -9,6 +9,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth3.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth4.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth8.xml"/>
     </enumVal>
     <label>Function output 7 effect generated</label>
     <label xml:lang="it">Effetti uscita Funzione 7</label>
@@ -28,6 +29,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth3.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth4.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth8.xml"/>
     </enumVal>
     <label>Function output 8 effect generated</label>
     <label xml:lang="it">Effetti uscita Funzione 8</label>

@@ -40,7 +40,7 @@ log4j.appender.A1.target=System.err
 # while still causing the debug code to run (isDebugEnabled will 
 # be true if log4j.rootCategory is set to DEBUG)
 # Note: comment on this line if you want DEBUG output from specific categories below
-log4j.appender.A1.Threshold=WARN
+log4j.appender.A1.Threshold=INFO
 
 # A1 uses PatternLayout to control the format of the log messages.
 log4j.appender.A1.layout=org.apache.log4j.PatternLayout

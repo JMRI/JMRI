@@ -32,4 +32,10 @@ public class TestBean1 {
         TestBean1 o2 = (TestBean1) o1;
         return a.equals(o2.a) && (b == o2.b);
     }
+    
+    @Override
+    public int hashCode() {
+        if (a == null) return 0;
+        return a.hashCode();
+    }
 }

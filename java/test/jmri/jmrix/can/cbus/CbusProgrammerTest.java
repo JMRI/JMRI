@@ -1,69 +1,49 @@
 package jmri.jmrix.can.cbus;
 
-import jmri.ProgListener;
+import jmri.ProgListenerScaffold;
 import jmri.ProgrammingMode;
 import jmri.jmrix.can.CanReply;
-import jmri.jmrix.can.TestTrafficController;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import org.junit.Assert;
+import org.junit.*;
 
 /**
  * Tests for the jmri.jmrix.can.cbus.CbusProgrammer class.
  *
  * @author	Bob Jacobsen Copyright 2008
  */
-public class CbusProgrammerTest extends TestCase {
+public class CbusProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
+        
+    private TrafficControllerScaffold tc = null;
+    private CbusProgrammer p = null; 
+    private ProgListenerScaffold testListener;
 
-    public void testGetMode() {
-        CbusProgrammer p = new CbusProgrammer(10, new TestTrafficController());
-
-        Assert.assertEquals("CBUSNODEVARMODE", CbusProgrammer.CBUSNODEVARMODE,
-                p.getMode());
+    @Test
+    @Override
+    public void testDefault() {
+        Assert.assertEquals("Check Default", CbusProgrammer.CBUSNODEVARMODE,
+                programmer.getMode());        
     }
 
-    public void testSetMode() {
-        CbusProgrammer p = new CbusProgrammer(10, new TestTrafficController());
-
-        try {
-            p.setMode(ProgrammingMode.PAGEMODE);
-        } catch (IllegalArgumentException e) {
-            return;
-        }
-        Assert.fail("No IllegalArgumentException thrown");
+    @Override
+    @Test
+    public void testDefaultViaBestMode() {
+        Assert.assertEquals("Check Default", CbusProgrammer.CBUSNODEVARMODE,
+                ((CbusProgrammer)programmer).getBestMode());        
     }
 
-    public void testGetCanRead() {
-        CbusProgrammer p = new CbusProgrammer(10, new TestTrafficController());
 
-        Assert.assertTrue("can read", p.getCanRead());
+    @Test(expected=java.lang.IllegalArgumentException.class)
+    @Override
+    public void testSetGetMode() {
+        programmer.setMode(ProgrammingMode.REGISTERMODE);
+        Assert.assertEquals("Check mode matches set", ProgrammingMode.REGISTERMODE,
+                programmer.getMode());        
     }
 
-    boolean reply;
-    int rcvdValue;
-    int rcvdStatus;
-
-    ProgListener testListener = new ProgListener() {
-        @Override
-        public void programmingOpReply(int value, int status) {
-            reply = true;
-            rcvdValue = value;
-            rcvdStatus = status;
-        }
-    };
-
+    @Test
     public void testWriteSequence() throws jmri.ProgrammerException {
-        TrafficControllerScaffold tc = new TrafficControllerScaffold();
-        CbusProgrammer p = new CbusProgrammer(3, tc);
-
-        reply = false;
-        rcvdValue = -2;
-        rcvdStatus = -2;
-
-        p.writeCV(4, 5, testListener);
+        p.writeCV("4", 5, testListener);
 
         Assert.assertEquals("listeners", 0, tc.numListeners());
         Assert.assertEquals("sent count", 1, tc.outbound.size());
@@ -72,62 +52,49 @@ public class CbusProgrammerTest extends TestCase {
 
         // no reply from CAN and listener replies immediately,
         // contrast read test below
-        Assert.assertTrue("listener invoked", reply);
-        Assert.assertEquals("status", 0, rcvdStatus);
+        Assert.assertTrue("listener invoked", testListener.getRcvdInvoked()>0);
+        Assert.assertEquals("status", 0, testListener.getRcvdStatus());
     }
 
+    @Test
     public void testReadSequence() throws jmri.ProgrammerException {
-        TrafficControllerScaffold tc = new TrafficControllerScaffold();
-        CbusProgrammer p = new CbusProgrammer(3, tc);
-
-        reply = false;
-        rcvdValue = -2;
-        rcvdStatus = -2;
-
-        p.readCV(4, testListener);
+        p.readCV("4", testListener);
 
         Assert.assertEquals("listeners", 0, tc.numListeners());
         Assert.assertEquals("sent count", 1, tc.outbound.size());
         Assert.assertEquals("content 1", "[78] 71 00 03 04",
                 tc.outbound.get(0).toString());
-        Assert.assertTrue("listener not invoked", !reply);
+        Assert.assertTrue("listener not invoked", testListener.getRcvdInvoked()==0);
 
         // pretend reply from CAN
         int[] frame = new int[]{0x97, 0, 3, 5};
         CanReply f = new CanReply(frame);
         p.reply(f);
 
-        Assert.assertTrue("listener invoked", reply);
-        Assert.assertEquals("status", 0, rcvdStatus);
-        Assert.assertEquals("value", 5, rcvdValue);
-    }
-
-    // from here down is testing infrastructure
-    public CbusProgrammerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {CbusProgrammerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(CbusProgrammerTest.class);
-        return suite;
+        Assert.assertTrue("listener invoked", testListener.getRcvdInvoked()>0);
+        Assert.assertEquals("status", 0, testListener.getRcvdStatus());
+        Assert.assertEquals("value", 5, testListener.getRcvdValue());
     }
 
     // The minimal setup for log4J
     @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
+        tc = new TrafficControllerScaffold();
+        p = new CbusProgrammer(3, tc);
+        programmer = p;
+        testListener = new ProgListenerScaffold();
     }
 
     @Override
-    protected void tearDown() {
-        JUnitUtil.tearDown();
+    @After
+    public void tearDown() {
+        programmer = p = null;
+        tc = null;
+	    testListener = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+    	JUnitUtil.tearDown();
     }
 
 }

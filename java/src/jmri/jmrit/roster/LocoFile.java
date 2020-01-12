@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Represents and manipulates a locomotive definition, both as a file and in
  * memory. The interal storage is a JDOM tree. See locomotive-config.xsd
- * <P>
+ * <p>
  * This class is intended for use by RosterEntry only; you should not use it
  * directly. That's why this is not a public class.
  *
@@ -93,7 +93,7 @@ public class LocoFile extends XmlFile {
                     cvModel.addCV(name, false, false, false);
                     cvObject = cvModel.allCvMap().get(name);
                 }
-                cvObject.setValue(Integer.valueOf(value).intValue());
+                cvObject.setValue(Integer.parseInt(value));
                 cvObject.setState(CvValue.FROMFILE);
             }
         } else {
@@ -348,7 +348,7 @@ public class LocoFile extends XmlFile {
     }
 
     static public String getFileLocation() {
-        return Roster.getDefault().getRosterLocation() + "roster" + File.separator;
+        return Roster.getDefault().getRosterFilesLocation();
     }
 
     // initialize logging

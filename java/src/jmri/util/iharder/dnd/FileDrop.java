@@ -423,10 +423,10 @@ public class FileDrop {
             // Get the container
             Container cont = (Container) c;
 
-            // Get it's components
+            // Get its components
             Component[] comps = cont.getComponents();
 
-            // Set it's components as listeners also
+            // Set its components as listeners also
             for (Component comp : comps) {
                 makeDropTarget(comp, recursive);
             }

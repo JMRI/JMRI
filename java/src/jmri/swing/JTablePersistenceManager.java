@@ -7,7 +7,7 @@ import javax.swing.JTable;
  * Manager for ensuring that {@link javax.swing.JTable} user interface state is
  * persisted.
  * <p>
- * JTable user interface state that can be persisted includes:</p>
+ * JTable user interface state that can be persisted includes:
  * <ul>
  * <li>row sort order (if the table has a non-null
  * {@link javax.swing.RowSorter})</li>
@@ -18,7 +18,7 @@ import javax.swing.JTable;
  * <p>
  * Row sort order is only persisted for JTables that implement the
  * {@link javax.swing.RowSorter} for sorting. If the RowSorter is null, the row
- * sorting will not be persisted.</p>
+ * sorting will not be persisted.
  * <p>
  * Column attributes (order, visibility, and width) are persisted by listening
  * to changes in the {@link javax.swing.table.TableColumnModel} of the table.

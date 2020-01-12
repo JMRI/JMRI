@@ -11,33 +11,32 @@ import static jmri.server.json.turnout.JsonTurnoutServiceFactory.TURNOUTS;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
+import jmri.NamedBean;
+import jmri.ProvidingManager;
 import jmri.Turnout;
+import jmri.TurnoutManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonNamedBeanHttpService;
+import jmri.server.json.JsonRequest;
 
 /**
  *
  * @author Randall Wood
  */
-public class JsonTurnoutHttpService extends JsonNamedBeanHttpService {
+public class JsonTurnoutHttpService extends JsonNamedBeanHttpService<Turnout> {
 
     public JsonTurnoutHttpService(ObjectMapper mapper) {
         super(mapper);
     }
 
     @Override
-    public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
-        ObjectNode root = mapper.createObjectNode();
-        root.put(JSON.TYPE, TURNOUT);
-        Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(name);
-        ObjectNode data = this.getNamedBean(turnout, name, type, locale); // throws JsonException if turnout == null
-        root.set(JSON.DATA, data);
+    public ObjectNode doGet(Turnout turnout, String name, String type, JsonRequest request) throws JsonException {
+        ObjectNode root = this.getNamedBean(turnout, name, type, request); // throws JsonException if turnout == null
+        ObjectNode data = root.with(JSON.DATA);
         if (turnout != null) {
             data.put(INVERTED, turnout.getInverted());
             switch (turnout.getKnownState()) {
@@ -47,10 +46,10 @@ public class JsonTurnoutHttpService extends JsonNamedBeanHttpService {
                 case Turnout.CLOSED:
                     data.put(STATE, CLOSED);
                     break;
-                case Turnout.INCONSISTENT:
+                case NamedBean.INCONSISTENT:
                     data.put(STATE, INCONSISTENT);
                     break;
-                case Turnout.UNKNOWN:
+                case NamedBean.UNKNOWN:
                 default:
                     data.put(STATE, UNKNOWN);
                     break;
@@ -60,12 +59,7 @@ public class JsonTurnoutHttpService extends JsonNamedBeanHttpService {
     }
 
     @Override
-    public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {
-        Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(name);
-        if (turnout == null) {
-            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", TURNOUT, name));
-        }
-        this.postNamedBean(turnout, data, name, type, locale);
+    public ObjectNode doPost(Turnout turnout, String name, String type, JsonNode data, JsonRequest request) throws JsonException {
         if (data.path(INVERTED).isBoolean()) {
             turnout.setInverted(data.path(INVERTED).asBoolean());
         }
@@ -81,42 +75,33 @@ public class JsonTurnoutHttpService extends JsonNamedBeanHttpService {
                 // leave state alone in this case
                 break;
             default:
-                throw new JsonException(400, Bundle.getMessage(locale, "ErrorUnknownState", TURNOUT, state));
+                throw new JsonException(400, Bundle.getMessage(request.locale, "ErrorUnknownState", TURNOUT, state), request.id);
         }
-        return this.doGet(type, name, locale);
+        return this.doGet(turnout, name, type, request);
     }
 
     @Override
-    public JsonNode doPut(String type, String name, JsonNode data, Locale locale) throws JsonException {
-        try {
-            InstanceManager.turnoutManagerInstance().provideTurnout(name);
-        } catch (IllegalArgumentException ex) {
-            throw new JsonException(500, Bundle.getMessage(locale, "ErrorCreatingObject", TURNOUT, name));
-        }
-        return this.doPost(type, name, data, locale);
-    }
-
-    @Override
-    public ArrayNode doGetList(String type, Locale locale) throws JsonException {
-        ArrayNode root = this.mapper.createArrayNode();
-        for (String name : InstanceManager.turnoutManagerInstance().getSystemNameList()) {
-            root.add(this.doGet(TURNOUT, name, locale));
-        }
-        return root;
-
-    }
-
-    @Override
-    public JsonNode doSchema(String type, boolean server, Locale locale) throws JsonException {
+    public JsonNode doSchema(String type, boolean server, JsonRequest request) throws JsonException {
         switch (type) {
             case TURNOUT:
             case TURNOUTS:
                 return doSchema(type,
                         server,
                         "jmri/server/json/turnout/turnout-server.json",
-                        "jmri/server/json/turnout/turnout-client.json");
+                        "jmri/server/json/turnout/turnout-client.json",
+                        request.id);
             default:
-                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(request.locale, JsonException.ERROR_UNKNOWN_TYPE, type), request.id);
         }
+    }
+
+    @Override
+    protected String getType() {
+        return TURNOUT;
+    }
+
+    @Override
+    protected ProvidingManager<Turnout> getManager() {
+        return InstanceManager.getDefault(TurnoutManager.class);
     }
 }

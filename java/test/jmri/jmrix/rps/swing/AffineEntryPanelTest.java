@@ -3,10 +3,9 @@ package jmri.jmrix.rps.swing;
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.AffineTransform;
 import javax.swing.JFrame;
+import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Tests for the jmri.jmrix.rps.swing.AffineEntryPanel class
@@ -53,4 +52,14 @@ public class AffineEntryPanelTest {
         Assert.assertTrue(p.getTransform().equals(t));
     }
 
+    // The minimal setup for log4J
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @After
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
 }

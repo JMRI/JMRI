@@ -22,14 +22,16 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
-</head><!--#include virtual="/Header.shtml" -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
+</head>
 
 <body>
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
+
       <h1>JMRI Code: Introduction to JMRI Library Structure</h1>
       
       <p>This page is the top-level introduction to how the
@@ -176,8 +178,19 @@
       long run it makes it much harder for JMRI to be maintained and 
       improved by a large group of people.  We just can't allow lots of 
       tiny little special cases to make the code impossible to understand.
-      The <code>scripts/checkdepends.csh</code> script can do a 
-      quick check of this, although it's far from perfect.
+      We're developing
+      <a href="https://www.archunit.org">ArchUnit</a>
+      tests for this which can be
+      run via <code>./runtest.csh jmri.ArchitectureCheck</code>
+      as part of
+      <a href="JUnit.shtml">developer unit testing</a>.
+      This will highlight many existing structure violations
+      in addition to new ones
+      because we haven't yet cleaned up some historical issues.
+      There's also <code>jmri.ArchitectureTest</code>
+      which is run as part of our
+      <a href="ContinuousIntegration.shtml">CI tests</a>,
+      and catches new violations of a subset of the constraints.
       
       <p>
       Similarly, we have conventions for where to locate
@@ -221,20 +234,20 @@
             <li>It automatically handles creation of many parts of JMRI via
                 several mechanisms:
                 <ul>
-                <li><a href="http://jmri.org/JavaDoc/doc/jmri/InstanceManagerAutoDefault.html">InstanceManagerAutoDefault</a>
-                <li><a href="http://jmri.org/JavaDoc/doc/jmri/InstanceInitializer.html">InstanceInitializer</a>
+                  <li><a href="http://jmri.org/JavaDoc/doc/jmri/InstanceManagerAutoDefault.html">InstanceManagerAutoDefault</a></li>
+                  <li><a href="http://jmri.org/JavaDoc/doc/jmri/InstanceInitializer.html">InstanceInitializer</a></li>
                 </ul>
-                <p>and, when needed, provides for their 
+                and, when needed, provides for their
                     <a href="http://jmri.org/JavaDoc/doc/jmri/InstanceManagerAutoInitialize.html">post-creation initialization</a>.
+            </li>
             <li>It 
                 <a href="http://jmri.org/JavaDoc/doc/jmri/InstanceManager.html#dispose-jmri.Disposable-">disposes</a> 
                 of 
                 <a href="http://jmri.org/JavaDoc/doc/jmri/Disposable.html">suitable objects</a>
                 at the end of their lifespan when the InstanceManager (or a particular collection in it)
-                is cleared.
+                is cleared.</li>
         </ul>
-        
-    
+
       <p>Extensive use of Factory pattern via objects we call
       "Manager" objects.</p>
 
@@ -249,8 +262,8 @@
       <p>The role of the generic Manager&lt;T&gt; class
       
       <p>NamedBean and addressing as part of the Manager's role.
-      <p>The role of NamedBeanHandle and the NamedBeanHandleManager.
-      </p>
+      <p>The role of NamedBeanHandle and the NamedBeanHandleManager.</p>
+
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

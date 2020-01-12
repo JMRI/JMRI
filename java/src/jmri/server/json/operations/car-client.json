@@ -6,9 +6,141 @@
     "properties": {
         "name": {
             "type": "string",
-            "description": "Id of the car being requested"
+            "description": "Operations id of the car being requested"
+        },
+        "road": {
+            "type": "string",
+            "description": "The car owning railroad"
+        },
+        "number": {
+            "type": "string",
+            "description": "The car number"
+        },
+        "built": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "Month and year car was built in MM-YY, MM-YYYY, or YYYY format"
+        },
+        "carType": {
+            "type": "string",
+            "description": "The car type"
+        },
+        "addComment": {
+            "type": "string",
+            "description": "Additional pickup instructions or an empty string if none"
+        },
+        "removeComment": {
+            "type": "string",
+            "description": "Additional drop instructions or an empty string if none"
+        },
+        "caboose": {
+            "type": "boolean",
+            "description": "True if the car is to be treated as a caboose; false otherwise"
+        },
+        "color": {
+            "type": "string",
+            "description": "The color of the car"
+        },
+        "comment": {
+            "type": "string",
+            "description": "Freeform comment concerning car"
+        },
+        "fred": {
+            "type": "boolean",
+            "description": "True if the car contains a FRED; false otherwise"
+        },
+        "hazardous": {
+            "type": "boolean",
+            "description": "True if the load is considered hazardous; false otherwise"
+        },
+        "kernel": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "The name of the kernel this car is associated with"
+        },
+        "length": {
+            "type": "integer",
+            "description": "Current car length for available siding calculations"
+        },
+        "load": {
+            "type": "string",
+            "description": "The load in the car (may also be the localized E (Empty) or L (Load)"
+        },
+        "outOfService": {
+            "type": "boolean",
+            "description": "True if out of service; false otherwise"
+        },
+        "owner": {
+            "type": "string",
+            "description": "The car owner"
+        },
+        "passenger": {
+            "type": "boolean",
+            "description": "True if the car is a passenger vehicle; false otherwise"
+        },
+        "rfid": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "RFID tag attached to car; null if none"
+        },
+        "location": {
+            "type": [
+                "object",
+                "null"
+            ],
+            "description": "The current location of the car"
+        },
+        "utility": {
+            "type": "boolean",
+            "description": "True if the car is shown as a utility car on manifests; false otherwise"
+        },
+        "destination": {
+            "type": [
+                "object",
+                "null"
+            ],
+            "description": "the current destination of the car"
+        },
+        "finalDestination": {
+            "type": [
+                "object",
+                "null"
+            ],
+            "description": "the final destination of the car"
+        },
+        "returnWhenEmpty": {
+            "type": [
+                "object",
+                "null"
+            ],
+            "description": "The location to return the car to when empty or null"
+        },
+        "status": {
+            "type": "string",
+            "description": "The status symbol of the car"
+        },
+        "weight": {
+            "type": "number",
+            "description": "Weight of car in onces"
+        },
+        "weightTons": {
+            "type": "number",
+            "description": "Weight of car in tons"
         }
     },
     "additionalProperties": false,
-    "required": ["name"]
+    "anyOf":[
+        {
+            "required": ["name"]
+        },
+        {
+            "required": ["road", "number"]
+        }
+    ]
 }

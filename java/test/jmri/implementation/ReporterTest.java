@@ -1,32 +1,30 @@
 package jmri.implementation;
 
 import jmri.Reporter;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import org.junit.Assert;
+import org.junit.*;
 
 /**
  * Tests for the Reporter class
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ * <p>
  *
  * @author Matthew Harris Copyright (C) 2011
  */
-public class ReporterTest extends TestCase {
+public class ReporterTest {
+        
+    private Reporter r = null; 
 
+    @Test
     public void testReporterCreation() {
-        // Create a new reporter
-        Reporter r = createNewReporter("SYS", "usr");
         // Check that it is not a null object
         Assert.assertNotNull("Created Reporter not null", r);
         // Check that the SystemName and UserName is as specified
@@ -37,10 +35,8 @@ public class ReporterTest extends TestCase {
         Assert.assertNull("LastReport at initialisation is 'null'", r.getLastReport());
     }
 
+    @Test
     public void testReportStringObject() {
-        // Create a new reporter
-        Reporter r = createNewReporter("SYS", "usr");
-
         // Report a String
         r.setReport("Something To Report");
         // Check that both CurrentReport and LastReport are String objects
@@ -57,10 +53,8 @@ public class ReporterTest extends TestCase {
         Assert.assertEquals("After null report, LastReport String is 'Something To Report'", "Something To Report", r.getLastReport());
     }
 
+    @Test
     public void testReportOtherObject() {
-        // Create a new reporter
-        Reporter r = createNewReporter("SYS", "usr");
-
         // Create an ObjectToReport object to report
         ObjectToReport otr = new ObjectToReport(42);
         // and report it.
@@ -90,9 +84,10 @@ public class ReporterTest extends TestCase {
         Assert.assertSame("After null report, LastReport Object is identical to otr", otr, r.getLastReport());
     }
 
-    // Utility method to create a concrete AbstractReporter
-    private Reporter createNewReporter(String systemName, String userName) {
-        return new AbstractReporter(systemName, userName) {
+    @Before
+    public void setUp(){
+       jmri.util.JUnitUtil.setUp();
+       r = new AbstractReporter("SYS", "usr") {
             @Override
             public int getState() {
                 return state;
@@ -104,6 +99,12 @@ public class ReporterTest extends TestCase {
             }
             int state = 0;
         };
+    }
+
+    @After
+    public void tearDown(){
+       r = null;
+       jmri.util.JUnitUtil.tearDown();
     }
 
     // Utility class for testing reporter
@@ -119,24 +120,6 @@ public class ReporterTest extends TestCase {
             return this.value;
         }
     }
-
-    // from here down is testing infrastructure
-    public ReporterTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {ReporterTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(ReporterTest.class);
-        return suite;
-    }
-
 }
 
 

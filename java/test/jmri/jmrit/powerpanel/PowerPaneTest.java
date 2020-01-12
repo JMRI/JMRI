@@ -1,9 +1,7 @@
 package jmri.jmrit.powerpanel;
 
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Tests for the Jmrit PowerPanel
@@ -16,10 +14,16 @@ public class PowerPaneTest extends jmri.util.swing.JmriPanelTest {
     @Before
     @Override
     public void setUp() {
+        JUnitUtil.setUp();
         JUnitUtil.initDebugPowerManager();
         panel = new PowerPane();
         helpTarget="package.jmri.jmrit.powerpanel.PowerPanelFrame";
         title=Bundle.getMessage("TitlePowerPanel");
+    }
+    @After
+    @Override
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
     // test on button routine

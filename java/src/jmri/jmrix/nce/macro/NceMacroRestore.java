@@ -3,7 +3,6 @@ package jmri.jmrix.nce.macro;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import javax.swing.JFileChooser;
@@ -90,129 +89,127 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
             return; // Canceled
         }
         File f = fc.getSelectedFile();
-        BufferedReader in;
-        try {
-            in = new BufferedReader(new FileReader(f));
-        } catch (FileNotFoundException e) {
-            return;
-        }
+        
+        try (BufferedReader in = new BufferedReader(new FileReader(f))) {
 
-        // create a status frame
-        JPanel ps = new JPanel();
-        jmri.util.JmriJFrame fstatus = new jmri.util.JmriJFrame("Macro Restore");
-        fstatus.setLocationRelativeTo(null);
-        fstatus.setSize(200, 100);
-        fstatus.getContentPane().add(ps);
+            // create a status frame
+            JPanel ps = new JPanel();
+            jmri.util.JmriJFrame fstatus = new jmri.util.JmriJFrame("Macro Restore");
+            fstatus.setLocationRelativeTo(null);
+            fstatus.setSize(200, 100);
+            fstatus.getContentPane().add(ps);
 
-        ps.add(textMacro);
-        ps.add(macroNumber);
+            ps.add(textMacro);
+            ps.add(macroNumber);
 
-        textMacro.setText("Macro number:");
-        textMacro.setVisible(true);
-        macroNumber.setVisible(true);
+            textMacro.setText("Macro number:");
+            textMacro.setVisible(true);
+            macroNumber.setVisible(true);
 
-        // Now read the file and check the macro address
-        waiting = 0;
-        fileValid = false;     // in case we break out early
-        int macroNum = 0;     // for user status messages
-        int curMacro = CS_MACRO_MEM;  // load the start address of the NCE macro memory
-        byte[] macroAccy = new byte[20];  // NCE Macro data
-        String line;
+            // Now read the file and check the macro address
+            waiting = 0;
+            fileValid = false;     // in case we break out early
+            int macroNum = 0;     // for user status messages
+            int curMacro = CS_MACRO_MEM;  // load the start address of the NCE macro memory
+            byte[] macroAccy = new byte[20];  // NCE Macro data
+            String line;
 
-        while (true) {
-            try {
-                line = in.readLine();
-            } catch (IOException e) {
-                break;
-            }
+            while (true) {
+                try {
+                    line = in.readLine();
+                } catch (IOException e) {
+                    break;
+                }
 
-            macroNumber.setText(Integer.toString(macroNum++));
+                macroNumber.setText(Integer.toString(macroNum++));
 
-            if (line == null) {    // while loop does not break out quick enough
-                log.error("NCE macro file terminator :0000 not found");
-                break;
-            }
-            if (log.isDebugEnabled()) {
-                log.debug("macro " + line);
-            }
-            // check that each line contains the NCE memory address of the macro
-            String macroAddr = ":" + Integer.toHexString(curMacro);
-            String[] macroLine = line.split(" ");
+                if (line == null) {    // while loop does not break out quick enough
+                    log.error("NCE macro file terminator :0000 not found");
+                    break;
+                }
+                if (log.isDebugEnabled()) {
+                    log.debug("macro " + line);
+                }
+                // check that each line contains the NCE memory address of the macro
+                String macroAddr = ":" + Integer.toHexString(curMacro);
+                String[] macroLine = line.split(" ");
 
-            // check for end of macro terminator
-            if (macroLine[0].equalsIgnoreCase(":0000")) {
-                fileValid = true; // success!
-                break;
-            }
+                // check for end of macro terminator
+                if (macroLine[0].equalsIgnoreCase(":0000")) {
+                    fileValid = true; // success!
+                    break;
+                }
 
-            if (!macroAddr.equalsIgnoreCase(macroLine[0])) {
-                log.error("Restore file selected is not a vaild backup file");
-                log.error("Macro addr in restore file should be {} Macro addr read {}", macroAddr, macroLine[0]);
-                break;
-            }
+                if (!macroAddr.equalsIgnoreCase(macroLine[0])) {
+                    log.error("Restore file selected is not a vaild backup file");
+                    log.error("Macro addr in restore file should be {} Macro addr read {}", macroAddr, macroLine[0]);
+                    break;
+                }
 
-            // macro file found, give the user the choice to continue
-            if (curMacro == CS_MACRO_MEM) {
-                if (JOptionPane
-                        .showConfirmDialog(
-                                null,
-                                "Restore file found!  Restore can take over a minute, continue?",
-                                "NCE Macro Restore", JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+                // macro file found, give the user the choice to continue
+                if (curMacro == CS_MACRO_MEM) {
+                    if (JOptionPane
+                            .showConfirmDialog(
+                                    null,
+                                    "Restore file found!  Restore can take over a minute, continue?",
+                                    "NCE Macro Restore", JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+                        break;
+                    }
+                }
+
+                fstatus.setVisible(true);
+
+                // now read the entire line from the file and create NCE messages
+                for (int i = 0; i < 10; i++) {
+                    int j = i << 1;    // i = word index, j = byte index
+
+                    byte b[] = StringUtil.bytesFromHexString(macroLine[i + 1]);
+
+                    macroAccy[j] = b[0];
+                    macroAccy[j + 1] = b[1];
+                }
+
+                NceMessage m = writeNceMacroMemory(curMacro, macroAccy, false);
+                tc.sendNceMessage(m, this);
+                m = writeNceMacroMemory(curMacro, macroAccy, true);
+                tc.sendNceMessage(m, this);
+
+                curMacro += MACRO_LNTH;
+
+                // wait for writes to NCE CS to complete
+                if (waiting > 0) {
+                    synchronized (this) {
+                        try {
+                            wait(20000);
+                        } catch (InterruptedException e) {
+                            Thread.currentThread().interrupt(); // retain if needed later
+                        }
+                    }
+                }
+                // failed
+                if (waiting > 0) {
+                    log.error("timeout waiting for reply");
                     break;
                 }
             }
 
-            fstatus.setVisible(true);
-
-            // now read the entire line from the file and create NCE messages
-            for (int i = 0; i < 10; i++) {
-                int j = i << 1;    // i = word index, j = byte index
-
-                byte b[] = StringUtil.bytesFromHexString(macroLine[i + 1]);
-
-                macroAccy[j] = b[0];
-                macroAccy[j + 1] = b[1];
-            }
-
-            NceMessage m = writeNceMacroMemory(curMacro, macroAccy, false);
-            tc.sendNceMessage(m, this);
-            m = writeNceMacroMemory(curMacro, macroAccy, true);
-            tc.sendNceMessage(m, this);
-
-            curMacro += MACRO_LNTH;
-
-            // wait for writes to NCE CS to complete
-            if (waiting > 0) {
-                synchronized (this) {
-                    try {
-                        wait(20000);
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt(); // retain if needed later
-                    }
-                }
-            }
-            // failed
-            if (waiting > 0) {
-                log.error("timeout waiting for reply");
-                break;
-            }
-        }
-        try {
             in.close();
+            
+            // kill status panel
+            fstatus.dispose();
+
+            if (fileValid) {
+                JOptionPane.showMessageDialog(null, "Successful Restore!",
+                        "NCE Macro", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null,
+                        "Restore failed. Check console for error messages. \r\n"
+                        + "If operating at 19,200 baud, try 9600 baud.",
+                        "NCE Macro", JOptionPane.ERROR_MESSAGE);
+            }
+
         } catch (IOException e) {
-        }
-
-        // kill status panel
-        fstatus.dispose();
-
-        if (fileValid) {
-            JOptionPane.showMessageDialog(null, "Successful Restore!",
-                    "NCE Macro", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(null,
-                    "Restore failed. Check console for error messages. \r\n"
-                    + "If operating at 19,200 baud, try 9600 baud.",
-                    "NCE Macro", JOptionPane.ERROR_MESSAGE);
+            return;
         }
     }
 
@@ -281,4 +278,5 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
     }
 
     private final static Logger log = LoggerFactory.getLogger(NceMacroRestore.class);
+
 }

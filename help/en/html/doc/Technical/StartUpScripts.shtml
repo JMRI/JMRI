@@ -7,7 +7,8 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
 
-  <title>JMRI: Startup Scripts</title><!-- Style -->
+  <title>JMRI: Startup Scripts</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -15,16 +16,16 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
+
       <h1>JMRI: Startup Scripts</h1>
 
       <p>Although JMRI itself is constructed to "run anywhere",
@@ -53,17 +54,94 @@
       sources:</p>
 
       <ul>
-        <li>The active <a href="../../profiles.shtml">configuration
-        profiles</a></li>
+        <li>If you're building and running the program locally, the <em>release.properties</em>
+        and <em>local.properties</em> files set the context.
+        
+        <li>The file <em>jmri.conf</em> in the system-specific settings
+        directory is used by the startup scripts to set values.</li>
 
-        <li>The file <em>jmri.conf</em> in the settings
-        directory</li>
+        <li>JMRI code reads <a href="#prop">system properties</a> that were set before JMRI started.</li>
 
-        <li>The file <em>python.properties</em> to configure the
-        Jython interpreter</li>
-      </ul><a name="linux" id="linux"></a>
+        <li>The active <a href="../../setup/profiles.shtml">configuration
+        profiles</a> are read and processed.</li>
 
-      <h2>Linux</h2>
+        <li>The file <em>python.properties</em> is used to configure the
+        Jython interpreter when it's launched.</li>
+
+      </ul>
+
+      <h3 id="env">Environment variables</h3>
+      Since JMRI version 2.11.4, it
+      is possible to influence the settings used to launch JMRI via
+      the use of environment variables which are interpreted by 
+      the startup scripts. 
+      These are:
+
+      <dl>
+        <dt>JMRI_HOME</dt>
+
+        <dd>This determines the program location</dd>
+
+        <dt>JMRI_OPTIONS</dt>
+
+        <dd>This specifies additional JVM options</dd>
+
+        <dt>JMRI_PREFSDIR</dt>
+
+        <dd>This specifies the location of an alternative
+        preferences directory</dd>
+
+        <dt>JMRI_USERHOME</dt>
+
+        <dd>This specifies the location of an alternative user home
+        directory</dd>
+      </dl>If both JMRI_PREFSDIR and JMRI_USERHOME are defined, the
+      location defined by JMRI_PREFSDIR will take precedence over
+      the location defined by JMRI_USERHOME for determining the
+      location of the preferences file.
+
+
+      <h3 id="prop">JMRI properties</h3>
+      In this section, we briefly describe
+      some JMRI-specific Java system properties that are interpreted by 
+      the JMRI library itself. 
+      Consult the Java documentation for Java properties that
+      JMRI will use, including os.name, user.home, etc.
+      Note that many naming conventions have been used, but the
+      "org.jmri...." form is now preferred.
+      <p>
+      In general, to set one of these, use the form:
+      <pre>
+      -Dorg.jmri.python.preload=true
+      </pre>
+      in the JMRI_OPTIONS environment variable.
+      
+      <dl>
+        <dt>org.jmri.apps.Apps.configFilename</dt>
+            <dd>Usually set by the startup scripts</dd>
+        <dt>jmri.path.program</dt>
+            <dd>Current working directory by default, but can be overridden if set before startup.</dd>
+        <dt>jmri.prefsdir</dt>
+            <dd>A system-specific directory by default, but can be overridden if set before startup.</dd>
+        <dt>jmri_default_cachedir</dt>
+            <dd>A system-specific directory by default, but can be overridden if set before startup.</dd>
+        <dt>jmri.log</dt>
+            <dd>Full or partial pathname of the logging control file, by default "default.lcf"</dd>
+        <dt>jmri.log.path</dt>
+            <dd>The directory for storing logs. If not specified, logs are stored in the JMRI preferences directory.</dd>
+        <dt>jmri.inset.width, jmri.inset.height</dt>
+            <dd>Overrides the space automatically reserved for screen insets in jmri.util.JFrame</dd>
+        <dt>org.jmri.python.preload</dt>
+            <dd>If true, JMRI will start the Python script engine during startup.
+                If false or unspecified, the engine will be started when the 
+                first script is launched.</dd>
+      </dl>
+        <a id="testingvars" name="testingvars"></a>
+        There are also a few that are only used during testing, i.e. in the JUnit CI 
+        tests. They're documented on the 
+        <a href="JUnit.shtml#testingvars">JMRI JUnit page</a>.
+
+      <h2 id="Linux">Linux</h2>
 
       <p>JMRI distributions for Linux contain bash shell scripts
       for each of the main applications: DecoderPro, PanelPro, etc.
@@ -155,7 +233,7 @@
 
         <dt><code>--help</code></dt>
 
-        <dd>Print a consise list of all options the launcher
+        <dd>Print a concise list of all options the launcher
         handles.</dd>
       </dl>
 
@@ -167,25 +245,101 @@
 
       <p><code>default_options="-J-Xmx2048m"</code></p>
 
-      <a name="macosx" id="macosx"></a>
-
-      <h2>macOS</h2>
+      <h2 id="macosx">macOS</h2>
 
       JMRI distributions for macOS contain application bundles for each of the
-      main applications: DecoderPro, PanelPro, etc. These provide familiar
+      main applications: DecoderPro, PanelPro, and SoundPro. These provide familiar
       application icons for the user.
 
-      <p>To register the bundles with macOS, they need to be
-      copied from the distributed disk image onto the user's disk
-      drive.</p>
+      <p>The applications are registered with macOS when copied from the
+          distributed disk image onto the user's disk drive, however, no mechanism
+          within the JMRI applications takes advantage of this registration.</p>
 
-      <h3>Script Details</h3>Each bundle has a startup bash shell
-      script in the Contents/MacOSX directory what does the actual
-      startup. This is the same script as used for Linux, see
-      please see <a href="#linux">that section</a> for details.
-      <a name="windows" id="windows"></a>
+      <h3>Script Details</h3>
+      
+      <p>Each bundle has a startup bash shell script in the Contents/MacOSX
+          directory that performs the actual startup. This is the same script as
+          used for Linux, see <a href="#linux">that section</a> for details.</p>
+      
+      <h3>Uniform Type Identifiers</h3>
+      
+      <p><a href="https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/understanding_utis/understand_utis_intro/understand_utis_intro.html#//apple_ref/doc/uid/TP40001319">Uniform Type Identifiers</a>
+          (UTIs) are a mechanism that iOS, macOS, and tvOS use to identify file
+          and URL types to ensure that the correct application is used to open a
+          file or handle a URL. UTIs allow these operating systems to support
+          Packages, or directories that are represented to a user as a single file,
+          and Bundles, which are Packages with executable content.</p>
+      
+      <p><a href="https://developer.apple.com/library/archive/documentation/Security/Conceptual/AppSandboxDesignGuide/AppSandboxInDepth/AppSandboxInDepth.html#//apple_ref/doc/uid/TP40011183-CH3-SW16">Application Sandboxes</a>
+          are a security and privacy control in iOS and macOS that limit
+          applications to accessing data the user has explictly granted the application
+          access to, or is contained within the sandbox. In iOS, users can only
+          grant access to files, while in macOS, users can grant access to files
+          and directories. When requesting access, applications request the operating
+          system prompt the user to grant access to file types identified by UTI.</p>
 
-      <h2>Windows</h2>Upto and including JMRI version 2.3.2, the
+      <p>Since the JMRI applications are not subject to application sandboxes,
+          JMRI applications do not export any UTIs that would allow other applications
+          subject to sandboxes to request permission from the user to view or edit
+          JMRI Configuration Profiles.</p>
+      
+      <p>To allow other macOS applications or any iOS app to request permission
+          from a user to view or edit a JMRI Configuration Profile if the Profile
+          is in a directory with the <code>.jmri</code> extension, add the following
+          UTI and document type to that application's Info.plist file:</p>
+      
+      <pre>
+        &lt;key&gt;UTImportedTypeDeclarations&lt;/key&gt;
+        &lt;array&gt;
+            &lt;dict&gt;
+                &lt;key&gt;UTTypeConformsTo&lt;/key&gt;
+                &lt;array&gt;
+                    &lt;string&gt;com.apple.package&lt;/string&gt;
+                &lt;/array&gt;
+                &lt;key&gt;UTTypeIconFiles&lt;/key&gt;
+                &lt;array/&gt;
+                &lt;key&gt;UTTypeIdentifier&lt;/key&gt;
+                &lt;string&gt;org.jmri.profile&lt;/string&gt;
+                &lt;key&gt;UTTypeDescription&lt;/key&gt;
+                &lt;string&gt;JMRI Configuration Profile&lt;/string&gt;
+                &lt;key&gt;UTTypeTagSpecification&lt;/key&gt;
+                &lt;dict&gt;
+                    &lt;key&gt;public.filename-extension&lt;/key&gt;
+                    &lt;string&gt;jmri&lt;/string&gt;
+                &lt;/dict&gt;
+            &lt;/dict&gt;
+        &lt;/array&gt;
+        &lt;key&gt;CFBundleDocumentTypes&lt;/key&gt;
+        &lt;array&gt;
+            &lt;dict&gt;
+                &lt;key&gt;CFBundleTypeName&lt;/key&gt;
+                &lt;string&gt;JMRI Configuration Profile&lt;/string&gt;
+                &lt;key&gt;CFBundleTypeIconFiles&lt;/key&gt;
+                &lt;array/&gt;
+                &lt;key&gt;LSItemContentTypes&lt;/key&gt;
+                &lt;array&gt;
+                    &lt;string&gt;org.jmri.profile&lt;/string&gt;
+                &lt;/array&gt;
+            &lt;/dict&gt;
+        &lt;/array&gt;
+      </pre>
+      
+      <p>Note that you will want to provide icons for these documents; the example
+          does not. Note also that if, and when, the JMRI applications include the
+          UTIs, they need to <em>export</em> the UTIs instead of <em>importing</em>
+          the UTIs, as other non-JMRI applications should.</p>
+      
+      <p>Note that a UTI is only present for Configuration Profiles, not for Rosters
+          or User Files, since most users store those within a Configuration Profile.
+          Rosters also have a structure that is not conducive to defining a UTI for it
+          (the roster index (<code>roster.xml</code>) is stored adjacent to the
+          <code>roster</code> directory that contains the individual roster entries,
+          images, and icons. User files are, if not contained within a Configuration
+          Profile, in an arbitrary directory, and likely would need individual
+          access from different applications for editing outside of JMRI.</p>
+
+      <h2 id="windows">Windows</h2>
+      Upto and including JMRI version 2.3.2, the
       Windows .bat files just create a fixed java command and
       executed it.
 
@@ -221,7 +375,7 @@
 
         <dd>If this option is set on the command line, the launcher
             will use profile <em>PROFILEID</em> as the <a href=
-        "/help/en/html/profiles.shtml">JMRI configuration
+        "../../setup/profiles.shtml">JMRI configuration
         profile</a> to use instead of the default one. (since JMRI 3.7.1)</dd>
 
         <dt><code>--cp:a=<em>CLASSPATH</em></code></dt>
@@ -237,6 +391,15 @@
         to the beginning of the standard JMRI classpath. This is
         the recommended way to override existing Java classes in
         JMRI. (since JMRI 4.5.7)</dd>
+
+        <dt><code>/noalt</code></dt>
+
+        <dd>If this option is set on the command line, the launcher
+        will no longer use the alternate launching behavior of using
+        a renamed java.exe from a temporary location and revert to the
+        standard java.exe. This means that the launched JMRI application
+        is no longer explicitly mentioned in Windows Task Manager. This
+        option is the default behavior with JDK 11. (since JMRI 4.15.3)</dd>
 
         <dt>Class Parameter (Required)</dt>
 
@@ -266,37 +429,9 @@
         the preferences file as a parameter.</dd>
       </dl>
 
-      <h3>Environment variables</h3>As from JMRI version 2.11.4, it
-      is possible to influence the settings used to launch JMRI via
-      the use of Environment Variables. The Environment Variables
-      used are:
-
-      <dl>
-        <dt>JMRI_HOME</dt>
-
-        <dd>This determines the program location</dd>
-
-        <dt>JMRI_OPTIONS</dt>
-
-        <dd>This specifies additional JVM options</dd>
-
-        <dt>JMRI_PREFSDIR</dt>
-
-        <dd>This specifies the location of an alternative
-        preferences directory</dd>
-
-        <dt>JMRI_USERHOME</dt>
-
-        <dd>This specifies the location of an alternative user home
-        directory</dd>
-      </dl>If both JMRI_PREFSDIR and JMRI_USERHOME are defined, the
-      location defined by JMRI_PREFSDIR will take precedence over
-      the location defined by JMRI_USERHOME for determining the
-      location of the preferences file.
-
+      
       <h3>Launcher details</h3>In this section, we briefly describe
-      what the launcher application does.
-
+      what the Windows launcher application does.
       <dl>
         <dt>Directory</dt>
 
@@ -340,7 +475,7 @@
         java command, which it executes.</dd>
       </dl>
 
-      <h3>Start Menu shortcuts and Desktop icons</h3>In a default
+      <h3 id="startm">Start Menu shortcuts and Desktop icons</h3>In a default
       JMRI installation, a number of shortcuts are created in the
       Start Menu, along with Desktop Icons for DecoderPro and
       PanelPro.
@@ -426,14 +561,14 @@
 
         <dt>Comment</dt>
 
-        <dd>Start Decoder Pro</dd>
+        <dd>Start DecoderPro</dd>
 
         <dt>Icon</dt>
 
         <dd>"C:\Program Files\JMRI\decpro5.ico"</dd>
       </dl>
 
-      <h4>Desktop Icons</h4>Desktop Icons for DecoderPro and
+      <h4 id="wicon">Desktop Icons</h4>Desktop Icons for DecoderPro and
       PanelPro are created in the default installation - at
       installation time an optional desktop icon can also be
       created for the SoundPro application.
@@ -481,15 +616,15 @@
 
         <dt>Comment</dt>
 
-        <dd>Start Decoder Pro</dd>
+        <dd>Start DecoderPro</dd>
 
         <dt>Icon</dt>
 
         <dd>"C:\Program Files\JMRI\decpro5.ico"</dd>
       </dl><a name="old_DecoderPro" id="old_DecoderPro"></a>
 
-      <h4>Retrieving "legacy" DecoderPro from versions prior to
-      4.0.x</h4>
+      <h2 id="dp-forever">Retrieving "legacy" DecoderPro from versions prior to
+      4.0.x</h2>
 
       <p>The "legacy" DecoderPro that was existing prior to version
       4.0.x has been removed from the distribution package and the

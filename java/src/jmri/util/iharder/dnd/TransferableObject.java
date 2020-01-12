@@ -30,17 +30,16 @@ import java.awt.datatransfer.DataFlavor;
  *
  * The {@link java.awt.datatransfer.DataFlavor} associated with
  * {@link TransferableObject} has the representation class
- * <tt>net.iharder.dnd.TransferableObject.class</tt> and MIME type
- * <tt>application/x-net.iharder.dnd.TransferableObject</tt>. This data flavor
+ * {@code net.iharder.dnd.TransferableObject.class} and MIME type
+ * {@code application/x-net.iharder.dnd.TransferableObject}. This data flavor
  * is accessible via the static {@link #DATA_FLAVOR} property.
- *
  *
  * <p>
  * <em>This code is licensed for public use under the Common Public License
  * version 0.5.</em><br>
  * The Common Public License, developed by IBM and modeled after their
  * industry-friendly IBM Public License, differs from other common open source
- * licenses in several important ways:</p>
+ * licenses in several important ways:
  * <ul>
  * <li>You may include this software with other software that uses a different
  * (even non-open source) license.</li>
@@ -48,7 +47,7 @@ import java.awt.datatransfer.DataFlavor;
  * <li>Your patent rights, should you generate patents, are protected.</li>
  * </ul>
  * <p>
- * <em>Copyright 2001 Robert Harder</em></p>
+ * <em>Copyright 2001 Robert Harder</em>
  *
  * @author Robert.Harder copyright 2001
  * @version 1.1
@@ -57,7 +56,7 @@ public class TransferableObject implements java.awt.datatransfer.Transferable {
 
     /**
      * The MIME type for {@link #DATA_FLAVOR} is
-     * <tt>application/x-net.iharder.dnd.TransferableObject</tt>.
+     * {@code application/x-net.iharder.dnd.TransferableObject}.
      *
      * @since 1.1
      */
@@ -66,9 +65,9 @@ public class TransferableObject implements java.awt.datatransfer.Transferable {
     /**
      * The default {@link java.awt.datatransfer.DataFlavor} for
      * {@link TransferableObject} has the representation class
-     * <tt>net.iharder.dnd.TransferableObject.class</tt>
+     * {@code net.iharder.dnd.TransferableObject.class}
      * and the MIME type
-     * <tt>application/x-net.iharder.dnd.TransferableObject</tt>.
+     * {@code application/x-net.iharder.dnd.TransferableObject}.
      *
      * @since 1.1
      */
@@ -85,7 +84,7 @@ public class TransferableObject implements java.awt.datatransfer.Transferable {
      * Along with the {@link #DATA_FLAVOR} associated with this class, this
      * creates a custom data flavor with a representation class determined from
      * <code>data.getClass()</code> and the MIME type
-     * <tt>application/x-net.iharder.dnd.TransferableObject</tt>.
+     * {@code application/x-net.iharder.dnd.TransferableObject}.
      *
      * @param data The data to transfer
      * @since 1.1
@@ -114,7 +113,7 @@ public class TransferableObject implements java.awt.datatransfer.Transferable {
      * associated with this class, this creates a custom data flavor with a
      * representation class <var>dataClass</var>
      * and the MIME type
-     * <tt>application/x-net.iharder.dnd.TransferableObject</tt>.
+     * {@code application/x-net.iharder.dnd.TransferableObject}.
      *
      * @see Fetcher
      * @param dataClass The {@link java.lang.Class} to use in the custom data
@@ -129,7 +128,7 @@ public class TransferableObject implements java.awt.datatransfer.Transferable {
 
     /**
      * Returns the custom {@link java.awt.datatransfer.DataFlavor} associated
-     * with the encapsulated object or <tt>null</tt> if the {@link Fetcher}
+     * with the encapsulated object or {@code null} if the {@link Fetcher}
      * constructor was used without passing a {@link java.lang.Class}.
      *
      * @return The custom data flavor for the encapsulated object
@@ -192,7 +191,7 @@ public class TransferableObject implements java.awt.datatransfer.Transferable {
     }   // end getTransferData
 
     /**
-     * Returns <tt>true</tt> if <var>flavor</var> is one of the supported
+     * Returns {@code true} if <var>flavor</var> is one of the supported
      * flavors. Flavors are supported using the <code>equals(...)</code> method.
      *
      * @param flavor The data flavor to check

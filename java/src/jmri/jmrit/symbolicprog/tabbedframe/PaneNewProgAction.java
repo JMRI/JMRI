@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a frame for selecting the information
  * needed to open a PaneProgFrame for creating a new Roster entry.
- * <P>
+ * <p>
  * The resulting JFrame is constructed on the fly here, and has no specific
  * type.
  * <p>

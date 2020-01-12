@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+
+<outputs xmlns:xi="http://www.w3.org/2001/XInclude" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xmlns:docbook="http://docbook.org/ns/docbook"
+         xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+                 
+    <output name="1" label="White" connection="plug"/>
+    <output name="2" label="Yellow" connection="plug"/>
+    <output name="3" label="Green" connection="wire"/>
+    <output name="4" label="Violet" connection="wire"/>
+
+</outputs>

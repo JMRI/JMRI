@@ -5,10 +5,10 @@ import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Common utility methods for working with Serial Ports.
- * <P>
+ * <p>
  * This is a libary of functions for handling specific operations related to
  * serial ports.
- * <P>
+ * <p>
  * In some cases, these routines use may use a JavaComm 3 or later method,
  * falling back to JavaComm 2 if necessary.
  *

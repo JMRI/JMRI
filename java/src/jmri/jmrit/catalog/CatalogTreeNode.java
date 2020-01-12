@@ -3,8 +3,7 @@ package jmri.jmrit.catalog;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import javax.swing.tree.DefaultMutableTreeNode;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import javax.swing.tree.TreeNode;
 
 /**
  * Node of a CatalogTree.
@@ -32,27 +31,31 @@ public class CatalogTreeNode extends DefaultMutableTreeNode {
     }
 
     /**
-     * Insert leaf according to height.
+     * Insert leaf according to height. Dan Boudreau 10/15/2018 eliminated the
+     * check for valid icon and the sorting of the icons by height. Improves
+     * load time at initialization by an order of magnitude.
      *
      * @param name name of the new leaf
      * @param path path to the new leaf
      */
     public void addLeaf(String name, String path) {
         // check path
-        NamedIcon icon = NamedIcon.getIconByName(path);
-        if (icon == null) {
-            log.warn("path \"" + path + "\" is not a NamedIcon.");
-            return;
-        }
-        int h = icon.getIconHeight();
-        for (int i = 0; i < _leafs.size(); i++) {
-            CatalogTreeLeaf leaf = _leafs.get(i);
-            if (h < leaf.getSize()) {
-                _leafs.add(i + 1, new CatalogTreeLeaf(name, path, h));
-                return;
-            }
-        }
-        _leafs.add(new CatalogTreeLeaf(name, path, h));
+        //        NamedIcon icon = NamedIcon.getIconByName(path);
+        //        if (icon == null) {
+        //            log.warn("path \" {} \" is not a NamedIcon.", path);
+        //            return;
+        //        }
+        //        int h = icon.getIconHeight();
+        //        log.debug("_leafs size {}", _leafs.size());
+        //        for (int i = 0; i < _leafs.size(); i++) {
+        //            CatalogTreeLeaf leaf = _leafs.get(i);
+        //            if (h < leaf.getSize()) {
+        //                _leafs.add(i + 1, new CatalogTreeLeaf(name, path, h));
+        //                return;
+        //            }
+        //        }
+        int h = 0;
+        _leafs.add(new CatalogTreeLeaf(name, path, h)); //  name is non-localized
     }
 
     /**
@@ -80,8 +83,7 @@ public class CatalogTreeNode extends DefaultMutableTreeNode {
     }
 
     public CatalogTreeLeaf getLeaf(String name, String path) {
-        for (int i = 0; i < _leafs.size(); i++) {
-            CatalogTreeLeaf leaf = _leafs.get(i);
+        for (CatalogTreeLeaf leaf : _leafs) {
             if (name.equals(leaf.getName()) && path.equals(leaf.getPath())) {
                 return leaf;
             }
@@ -98,8 +100,7 @@ public class CatalogTreeNode extends DefaultMutableTreeNode {
      */
     public ArrayList<CatalogTreeLeaf> getLeaves(String name) {
         ArrayList<CatalogTreeLeaf> leafs = new ArrayList<>();
-        for (int i = 0; i < _leafs.size(); i++) {
-            CatalogTreeLeaf leaf = _leafs.get(i);
+        for (CatalogTreeLeaf leaf : _leafs) {
             if (name.equals(leaf.getName())) {
                 leafs.add(leaf);
             }
@@ -109,7 +110,7 @@ public class CatalogTreeNode extends DefaultMutableTreeNode {
 
     @Override
     @SuppressWarnings("unchecked")
-    public Enumeration<CatalogTreeNode> children() {
+    public Enumeration<TreeNode> children() { // for JDK 9 typing
         return super.children();
     }
 
@@ -125,5 +126,5 @@ public class CatalogTreeNode extends DefaultMutableTreeNode {
         _leafs = leafs;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CatalogTreeNode.class);
+    //    private final static Logger log = LoggerFactory.getLogger(CatalogTreeNode.class);
 }

@@ -1,4 +1,3 @@
-//SimpleSignalHeadServerTest.java
 package jmri.jmris.simpleserver;
 
 import jmri.util.JUnitUtil;
@@ -306,11 +305,11 @@ public class SimpleSignalHeadServerTest {
     @Before public void setUp() throws Exception {
         JUnitUtil.setUp();
 
-        jmri.util.JUnitUtil.initInternalTurnoutManager();
-        jmri.util.JUnitUtil.initInternalLightManager();
-        jmri.util.JUnitUtil.initInternalSensorManager();
-        jmri.util.JUnitUtil.initInternalSignalHeadManager();
-        jmri.util.JUnitUtil.initDebugThrottleManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalLightManager();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initInternalSignalHeadManager();
+        JUnitUtil.initDebugThrottleManager();
         jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).register(new jmri.implementation.VirtualSignalHead("IH1","Head 1"));
     }
 

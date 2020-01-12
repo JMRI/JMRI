@@ -1,11 +1,14 @@
 package jmri.jmrix.cmri;
 
+import java.util.Comparator;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.CheckReturnValue;
 import jmri.InstanceManager;
 import jmri.Light;
 import jmri.Manager.NameValidity;
+import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.Turnout;
 import jmri.jmrix.AbstractNode;
@@ -17,6 +20,7 @@ import jmri.jmrix.cmri.serial.SerialTrafficController;
 import jmri.jmrix.cmri.serial.SerialTurnoutManager;
 import jmri.jmrix.cmri.swing.CMRIComponentFactory;
 import jmri.jmrix.swing.ComponentFactory;
+import jmri.util.NamedBeanComparator;
 
 /**
  * Minimal SystemConnectionMemo for C/MRI systems.
@@ -239,7 +243,7 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
 
     /**
      * Normalize a C/MRI system name.
-     * <P>
+     * <p>
      * This routine is used to ensure that each system name is uniquely linked
      * to one C/MRI bit, by removing extra zeros inserted by the user.
      *
@@ -336,14 +340,14 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
      * @param type       the device type
      * @return enum indicating current validity, which might be just as a prefix
      */
-    public NameValidity validSystemNameFormat(String systemName, char type) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName, char type) {
         int offset = checkSystemPrefix(systemName);
         if (offset < 1) {
-            log.error("invalid system prefix in CMRI system name: {}", systemName);
+            log.debug("invalid system prefix in CMRI system name: {}", systemName);
             return NameValidity.INVALID;
         }
         if (systemName.charAt(offset) != type) {
-            log.error("invalid type character in CMRI system name: {}", systemName);
+            log.debug("invalid type character in CMRI system name: {}", systemName);
             return NameValidity.INVALID;
         }
         String s = "";
@@ -411,6 +415,85 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
             }
         } // TODO add format check for CLnn:xxx format
         return NameValidity.VALID;
+    }
+
+    /**
+     * Validate system name format. Does not check whether that node is defined
+     * on current system.
+     *
+     * @param systemName the system name
+     * @param type       the device type
+     * @param locale     the Locale for user messages
+     * @return systemName unmodified
+     * @throws IllegalArgumentException if unable to validate systemName
+     */
+    public String validateSystemNameFormat(String systemName, char type, Locale locale) throws IllegalArgumentException {
+        String prefix = getSystemPrefix() + type;
+        if (!systemName.startsWith(prefix)) {
+            throw new NamedBean.BadSystemNameException(
+                    Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameInvalidPrefix", systemName),
+                    Bundle.getMessage(locale, "InvalidSystemNameInvalidPrefix", systemName));
+        }
+        String address = systemName.substring(prefix.length());
+        int node = 0;
+        int bit = 0;
+        if (!address.contains("B") && !address.contains(":")) {
+            // This is a CLnnnxxx pattern address
+            int num;
+            try {
+                num = Integer.parseInt(address);
+                node = num / 1000;
+                bit = num - ((num / 1000) * 1000);
+            } catch (NumberFormatException ex) {
+                throw new NamedBean.BadSystemNameException(
+                        Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameNotInteger", systemName, prefix),
+                        Bundle.getMessage(locale, "InvalidSystemNameNotInteger", systemName, prefix));
+            }
+        } else {
+            // This is a CLnBxxx or CLn:xxx pattern address
+            String[] parts = address.split("B");
+            if (parts.length != 2) {
+                parts = address.split(":");
+                if (parts.length != 2) {
+                    if (address.indexOf(":") == 0 && address.indexOf("B") == 0) {
+                        // no node
+                        throw new NamedBean.BadSystemNameException(
+                                Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameNodeInvalid", systemName, ""),
+                                Bundle.getMessage(locale, "InvalidSystemNameNodeInvalid", systemName, ""));
+                    } else {
+                        // no bit
+                        throw new NamedBean.BadSystemNameException(
+                                Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameBitInvalid", systemName, ""),
+                                Bundle.getMessage(locale, "InvalidSystemNameBitInvalid", systemName, ""));
+                    }
+                }
+            }
+            try {
+                node = Integer.parseInt(parts[0]);
+            } catch (NumberFormatException ex) {
+                throw new NamedBean.BadSystemNameException(
+                        Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameNodeInvalid", systemName, parts[0]),
+                        Bundle.getMessage(locale, "InvalidSystemNameNodeInvalid", systemName, parts[0]));
+            }
+            try {
+                bit = Integer.parseInt(parts[1]);
+            } catch (NumberFormatException ex) {
+                throw new NamedBean.BadSystemNameException(
+                        Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameBitInvalid", systemName, parts[1]),
+                        Bundle.getMessage(locale, "InvalidSystemNameBitInvalid", systemName, parts[1]));
+            }
+        }
+        if (node < 0 || node >= 128) {
+            throw new NamedBean.BadSystemNameException(
+                    Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameNodeInvalid", systemName, node),
+                    Bundle.getMessage(locale, "InvalidSystemNameNodeInvalid", systemName, node));
+        }
+        if (bit < 1 || bit > 2048) {
+            throw new NamedBean.BadSystemNameException(
+                    Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameBitInvalid", systemName, bit),
+                    Bundle.getMessage(locale, "InvalidSystemNameBitInvalid", systemName, bit));
+        }
+        return systemName;
     }
 
     /**
@@ -719,6 +802,11 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.cmri.CmriActionListBundle");
+    }
+
+    @Override
+    public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
+        return new NamedBeanComparator<>();
     }
 
     @Override

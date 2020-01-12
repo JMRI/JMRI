@@ -1,6 +1,5 @@
 package jmri.jmrix.oaktree;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.DataInputStream;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
@@ -185,26 +184,6 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     @Override
     public void sendSerialMessage(SerialMessage m, SerialListener reply) {
         sendMessage(m, reply);
-    }
-
-    /**
-     * Return the SerialTrafficController instance to use.
-     *
-     * @return The registered SerialTrafficController instance for general use,
-     *         if need be creating one.
-     * @deprecated since 4.9.7
-     */
-    @Deprecated
-    static public SerialTrafficController instance() {
-        log.warn("deprecated instance() call for OakTree SerialTrafficController");
-        return null;
-    }
-
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "temporary until multi-system; only set at startup")
-    @Override
-    @Deprecated
-    protected void setInstance() {
     }
 
     /**

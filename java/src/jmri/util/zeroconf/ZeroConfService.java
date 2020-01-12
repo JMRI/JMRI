@@ -1,37 +1,17 @@
 package jmri.util.zeroconf;
 
-import java.io.IOException;
-import java.net.Inet4Address;
-import java.net.Inet6Address;
 import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
-import java.util.prefs.Preferences;
 import javax.jmdns.JmDNS;
-import javax.jmdns.JmmDNS;
-import javax.jmdns.NetworkTopologyEvent;
-import javax.jmdns.NetworkTopologyListener;
 import javax.jmdns.ServiceInfo;
 import jmri.InstanceManager;
-import jmri.ShutDownManager;
-import jmri.implementation.QuietShutDownTask;
-import jmri.profile.ProfileManager;
-import jmri.profile.ProfileUtils;
-import jmri.util.node.NodeIdentity;
-import jmri.web.server.WebServerPreferences;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * ZeroConfService objects manage a zeroConf network service advertisement.
- * <P>
+ * <p>
  * ZeroConfService objects encapsulate zeroConf network services created using
  * JmDNS, providing methods to start and stop service advertisements and to
  * query service state. Typical usage would be:
@@ -44,11 +24,11 @@ import org.slf4j.LoggerFactory;
  * </pre> ZeroConfService objects can also be created with a HashMap of
  * properties that are included in the TXT record for the service advertisement.
  * This HashMap should remain small, but it could include information such as
- * the XMLIO path (for a web server), the default path (also for a web server),
- * a specific protocol version, or other information. Note that all service
- * advertisements include the JMRI version, using the key "version", and the
- * JMRI version numbers in a string "major.minor.test" with the key "jmri"
- * <P>
+ * the default path (for a web server), a specific protocol version, or other
+ * information. Note that all service advertisements include the JMRI version,
+ * using the key "version", and the JMRI version numbers in a string
+ * "major.minor.test" with the key "jmri"
+ * <p>
  * All ZeroConfServices are published with the computer's hostname as the mDNS
  * hostname (unless it cannot be determined by JMRI), as well as the JMRI node
  * name in the TXT record with the key "node".
@@ -58,17 +38,16 @@ import org.slf4j.LoggerFactory;
  * ZeroConfService objects.
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
  *
- * @author Randall Wood Copyright (C) 2011, 2013
+ * @author Randall Wood Copyright (C) 2011, 2013, 2018
  * @see javax.jmdns.JmDNS
  * @see javax.jmdns.ServiceInfo
  */
@@ -78,19 +57,12 @@ public class ZeroConfService {
     private final HashMap<InetAddress, ServiceInfo> serviceInfos = new HashMap<>();
     private ServiceInfo serviceInfo = null;
     // static data objects
-    private static final HashMap<String, ZeroConfService> services = new HashMap<>();
-    private static final HashMap<InetAddress, JmDNS> netServices = new HashMap<>();
     private final List<ZeroConfServiceListener> listeners = new ArrayList<>();
-    private static final Logger log = LoggerFactory.getLogger(ZeroConfService.class);
-    private static final NetworkListener networkListener = new NetworkListener();
-    private static final ShutDownTask shutDownTask = new ShutDownTask("Stop ZeroConfServices");
-
+    // API constants
     public static final String IPv4 = "IPv4";
     public static final String IPv6 = "IPv6";
-
-    private static final Preferences zeroConfPrefs = ProfileUtils.getPreferences(ProfileManager.getDefault().getActiveProfile(),
-            ZeroConfService.class,
-            false);
+    public static final String LOOPBACK = "loopback";
+    public static final String LINKLOCAL = "linklocal";
 
     /**
      * Create a ZeroConfService with the minimal required settings. This method
@@ -99,12 +71,12 @@ public class ZeroConfService {
      *
      * @param type The service protocol
      * @param port The port the service runs over
-     * @return An unpublished ZeroConfService
+     * @return A new unpublished ZeroConfService, or an existing service
      * @see #create(java.lang.String, java.lang.String, int, int, int,
      * java.util.HashMap)
      */
     public static ZeroConfService create(String type, int port) {
-        return create(type, port, new HashMap<>());
+        return InstanceManager.getDefault(ZeroConfServiceManager.class).create(type, port);
     }
 
     /**
@@ -119,10 +91,10 @@ public class ZeroConfService {
      * @param port       The port the service runs over
      * @param properties Additional information to be listed in service
      *                   advertisement
-     * @return An unpublished ZeroConfService
+     * @return A new unpublished ZeroConfService, or an existing service
      */
     public static ZeroConfService create(String type, int port, HashMap<String, String> properties) {
-        return create(type, InstanceManager.getDefault(WebServerPreferences.class).getRailroadName(), port, 0, 0, properties);
+        return InstanceManager.getDefault(ZeroConfServiceManager.class).create(type, port, properties);
     }
 
     /**
@@ -141,24 +113,10 @@ public class ZeroConfService {
      * @param priority   Default value is 0
      * @param properties Additional information to be listed in service
      *                   advertisement
-     * @return An unpublished ZeroConfService
+     * @return A new unpublished ZeroConfService, or an existing service
      */
     public static ZeroConfService create(String type, String name, int port, int weight, int priority, HashMap<String, String> properties) {
-        ZeroConfService s;
-        if (ZeroConfService.services().containsKey(ZeroConfService.key(type, name))) {
-            s = ZeroConfService.services().get(ZeroConfService.key(type, name));
-            log.debug("Using existing ZeroConfService {}", s.key());
-        } else {
-            properties.put("version", jmri.Version.name());
-            // use the major.minor.test version string for jmri since we have potentially
-            // tight space constraints in terms of the number of bytes that properties
-            // can use, and there are some unconstrained properties that we would like to use.
-            properties.put("jmri", jmri.Version.getCanonicalVersion());
-            properties.put("node", NodeIdentity.identity());
-            s = new ZeroConfService(ServiceInfo.create(type, name, port, weight, priority, properties));
-            log.debug("Creating new ZeroConfService {} with properties {}", s.key(), properties);
-        }
-        return s;
+        return InstanceManager.getDefault(ZeroConfServiceManager.class).create(type, name, port, weight, priority, properties);
     }
 
     /**
@@ -172,25 +130,26 @@ public class ZeroConfService {
 
     /**
      * Get the key of the ZeroConfService object. The key is fully qualified
-     * name of the service in all lowercase, jmri._http.local.
+     * name of the service in all lowercase, for example
+     * {@code jmri._http.local }.
      *
-     * @return The fully qualified name of the service.
+     * @return The fully qualified name of the service
      */
-    public String key() {
-        return this.serviceInfo().getKey();
+    public String getKey() {
+        return this.getServiceInfo().getKey();
     }
 
     /**
-     * Generate a ZeroConfService key for searching in the HashMap of running
-     * services.
+     * Get the key of the ZeroConfService object. The key is fully qualified
+     * name of the service in all lowercase, for example
+     * {@code jmri._http.local }.
      *
-     * @param type the service type (usually a protocol name or mapping)
-     * @param name the service name (usually the JMRI railroad name or system
-     *             host name)
-     * @return The combination of the name and type of the service.
+     * @return The fully qualified name of the service
+     * @deprecated since 4.15.1; use {@link #getKey() } instead
      */
-    protected static String key(String type, String name) {
-        return (name + "." + type).toLowerCase();
+    @Deprecated
+    public String key() {
+        return getKey();
     }
 
     /**
@@ -198,10 +157,23 @@ public class ZeroConfService {
      * creating the object.
      *
      * @return The service name as reported by the
-     *         {@link javax.jmdns.ServiceInfo} object.
+     *         {@link javax.jmdns.ServiceInfo} object
      */
+    public String getName() {
+        return this.getServiceInfo().getName();
+    }
+
+    /**
+     * Get the name of the ZeroConfService object. The name can only be set when
+     * creating the object.
+     *
+     * @return The service name as reported by the
+     *         {@link javax.jmdns.ServiceInfo} object
+     * @deprecated since 4.15.1; use {@link #getName() } instead
+     */
+    @Deprecated
     public String name() {
-        return this.serviceInfo().getName();
+        return getName();
     }
 
     /**
@@ -209,28 +181,99 @@ public class ZeroConfService {
      * creating the object.
      *
      * @return The service type as reported by the
-     *         {@link javax.jmdns.ServiceInfo} object.
+     *         {@link javax.jmdns.ServiceInfo} object
      */
-    public String type() {
-        return this.serviceInfo().getType();
+    public String getType() {
+        return this.getServiceInfo().getType();
     }
 
-    private ServiceInfo addServiceInfo(JmDNS DNS) throws IOException {
-        if (!this.serviceInfos.containsKey(DNS.getInetAddress())) {
-            this.serviceInfos.put(DNS.getInetAddress(), this.serviceInfo().clone());
+    /**
+     * Get the type of the ZeroConfService object. The type can only be set when
+     * creating the object.
+     *
+     * @return The service type as reported by the
+     *         {@link javax.jmdns.ServiceInfo} object
+     * @deprecated since 4.15.1; use {@link #getType() } instead
+     */
+    @Deprecated
+    public String type() {
+        return getType();
+    }
+
+    /**
+     * Get the ServiceInfo for the given address. Package private so can be
+     * managed by {@link jmri.util.zeroconf.ZeroConfServiceManager}, but not in
+     * public API.
+     *
+     * @param address the address associated with the ServiceInfo to get
+     * @return the ServiceInfo for the address or null if none exists
+     */
+    ServiceInfo getServiceInfo(InetAddress address) {
+        return serviceInfos.get(address);
+    }
+
+    /**
+     * Add the ServiceInfo for the given address. Package private so can be
+     * managed by {@link jmri.util.zeroconf.ZeroConfServiceManager}, but not in
+     * public API.
+     *
+     * @param address the address associated with the ServiceInfo to add
+     * @return the added ServiceInfo for the address
+     */
+    ServiceInfo addServiceInfo(InetAddress address) {
+        if (!this.serviceInfos.containsKey(address)) {
+            this.serviceInfos.put(address, this.getServiceInfo().clone());
         }
-        return this.serviceInfos.get(DNS.getInetAddress());
+        return this.serviceInfos.get(address);
+    }
+
+    /**
+     * Remove the ServiceInfo for the given address. Package private so can be
+     * managed by {@link jmri.util.zeroconf.ZeroConfServiceManager}, but not in
+     * public API.
+     *
+     * @param address the address associated with the ServiceInfo to remove
+     */
+    void removeServiceInfo(InetAddress address) {
+        serviceInfos.remove(address);
+    }
+
+    /**
+     * Check if a ServiceInfo exists for the given address. Package private so
+     * can be managed by {@link jmri.util.zeroconf.ZeroConfServiceManager}, but
+     * not in public API.
+     *
+     * @param key the address associated with the ServiceInfo to check for
+     * @return true if the ServiceInfo exists; false otherwise
+     */
+    boolean containsServiceInfo(InetAddress key) {
+        return serviceInfos.containsKey(key);
     }
 
     /**
      * Get the reference ServiceInfo for the object. This is the JmDNS
      * implementation of a zeroConf service. The reference ServiceInfo is never
-     * actually registered with a JmDNS service.
+     * actually registered with a JmDNS service, since registrations with a
+     * JmDNS service are unique per InetAddress.
      *
-     * @return The serviceInfo object.
+     * @return The getServiceInfo object.
      */
-    public ServiceInfo serviceInfo() {
+    public ServiceInfo getServiceInfo() {
         return this.serviceInfo;
+    }
+
+    /**
+     * Get the reference ServiceInfo for the object. This is the JmDNS
+     * implementation of a zeroConf service. The reference ServiceInfo is never
+     * actually registered with a JmDNS service, since registrations with a
+     * JmDNS service are unique per InetAddress.
+     *
+     * @return The getServiceInfo object.
+     * @deprecated since 4.15.1; use {@link #getServiceInfo() } instead
+     */
+    @Deprecated
+    public ServiceInfo serviceInfo() {
+        return getServiceInfo();
     }
 
     /**
@@ -238,157 +281,45 @@ public class ZeroConfService {
      *
      * @return True if the service is being advertised, and false otherwise.
      */
-    public Boolean isPublished() {
-        return ZeroConfService.services().containsKey(key());
+    public boolean isPublished() {
+        return InstanceManager.getDefault(ZeroConfServiceManager.class).isPublished(this);
     }
 
     /**
      * Start advertising the service.
      */
     public void publish() {
-        if (!isPublished()) {
-            //get current preference values
-            boolean useIPv4 = zeroConfPrefs.getBoolean(IPv4, true);
-            boolean useIPv6 = zeroConfPrefs.getBoolean(IPv6, true);
-            ZeroConfService.services.put(this.key(), this);
-            this.listeners.stream().forEach((listener) -> {
-                listener.serviceQueued(new ZeroConfServiceEvent(this, null));
-            });
-            for (JmDNS netService : ZeroConfService.netServices().values()) {
-                ZeroConfServiceEvent event;
-                ServiceInfo info;
-                try {
-                    if (netService.getInetAddress() instanceof Inet6Address && !useIPv6) {
-                        // Skip if address is IPv6 and should not be advertised on
-                        log.debug("Ignoring IPv6 address {}", netService.getInetAddress().getHostAddress());
-                        continue;
-                    }
-                    if (netService.getInetAddress() instanceof Inet4Address && !useIPv4) {
-                        // Skip if address is IPv4 and should not be advertised on
-                        log.debug("Ignoring IPv4 address {}", netService.getInetAddress().getHostAddress());
-                        continue;
-                    }
-                    try {
-                        log.debug("Publishing ZeroConfService for '{}' on {}", key(), netService.getInetAddress().getHostAddress());
-                    } catch (IOException ex) {
-                        log.debug("Publishing ZeroConfService for '{}' with IOException {}", key(), ex.getLocalizedMessage(), ex);
-                    }
-                    // JmDNS requires a 1-to-1 mapping of serviceInfo to InetAddress
-                    if (!this.serviceInfos.containsKey(netService.getInetAddress())) {
-                        try {
-                            info = this.serviceInfo();
-                            netService.registerService(info);
-                            log.debug("Register service '{}' on {} successful.", this.key(), netService.getInetAddress().getHostAddress());
-                        } catch (IllegalStateException ex) {
-                            // thrown if the reference serviceInfo object is in use
-                            try {
-                                log.debug("Initial attempt to register '{}' on {} failed.", this.key(), netService.getInetAddress().getHostAddress());
-                                info = this.addServiceInfo(netService);
-                                log.debug("Retrying register '{}' on {}.", this.key(), netService.getInetAddress().getHostAddress());
-                                netService.registerService(info);
-                            } catch (IllegalStateException ex1) {
-                                // thrown if service gets registered on interface by
-                                // the networkListener before this loop on interfaces
-                                // completes, so we only ensure a later notification
-                                // is not posted continuing to next interface in list
-                                log.debug("'{}' is already registered on {}.", this.key(), netService.getInetAddress().getHostAddress());
-                                continue;
-                            }
-                        }
-                    } else {
-                        log.debug("skipping '{}' on {}, already in serviceInfos.", this.key(), netService.getInetAddress().getHostAddress());
-                    }
-                    event = new ZeroConfServiceEvent(this, netService);
-                } catch (IOException ex) {
-                    log.error("Unable to publish service for '{}': {}", key(), ex.getMessage());
-                    continue;
-                }
-                this.listeners.stream().forEach((listener) -> {
-                    listener.servicePublished(event);
-                });
-            }
-        }
+        InstanceManager.getDefault(ZeroConfServiceManager.class).publish(this);
     }
 
     /**
      * Stop advertising the service.
      */
     public void stop() {
-        log.debug("Stopping ZeroConfService {}", this.key());
-        if (ZeroConfService.services().containsKey(this.key())) {
-            ZeroConfService.netServices().values().stream().forEach((netService) -> {
-                try {
-                    try {
-                        log.debug("Unregistering {} from {}", this.key(), netService.getInetAddress());
-                        netService.unregisterService(this.serviceInfos.get(netService.getInetAddress()));
-                        this.serviceInfos.remove(netService.getInetAddress());
-                        this.listeners.stream().forEach((listener) -> {
-                            listener.serviceUnpublished(new ZeroConfServiceEvent(this, netService));
-                        });
-                    } catch (NullPointerException ex) {
-                        log.debug("{} already unregistered from {}", this.key(), netService.getInetAddress());
-                    }
-                } catch (IOException ex) {
-                    log.error("Unable to stop ZeroConfService {}. {}", this.key(), ex.getLocalizedMessage());
-                }
-            });
-            ZeroConfService.services().remove(key());
-        }
+        InstanceManager.getDefault(ZeroConfServiceManager.class).stop(this);
     }
 
     /**
      * Stop advertising all services.
+     *
+     * @deprecated since 4.15.1; use
+     * {@link jmri.util.zeroconf.ZeroConfServiceManager#stopAll() } instead
      */
+    @Deprecated
     public static void stopAll() {
-        ZeroConfService.stopAll(false);
-    }
-
-    private static void stopAll(final boolean close) {
-        log.debug("Stopping all ZeroConfServices");
-        CountDownLatch zcLatch = new CountDownLatch(ZeroConfService.services().size());
-        new HashMap<>(ZeroConfService.services()).values().parallelStream().forEach(service -> {
-            service.stop();
-            zcLatch.countDown();
-        });
-        try {
-            zcLatch.await();
-        } catch (InterruptedException ex) {
-            log.warn("ZeroConfService stop threads interrupted.", ex);
-        }
-        CountDownLatch nsLatch = new CountDownLatch(ZeroConfService.netServices().size());
-        new HashMap<>(ZeroConfService.netServices()).values().parallelStream().forEach((netService) -> {
-            new Thread(() -> {
-                netService.unregisterAllServices();
-                if (close) {
-                    try {
-                        netService.close();
-                    } catch (IOException ex) {
-                        log.debug("jmdns.close() returned IOException: {}", ex.getMessage());
-                    }
-                }
-                nsLatch.countDown();
-            }).start();
-        });
-        try {
-            zcLatch.await();
-        } catch (InterruptedException ex) {
-            log.warn("JmDNS unregister threads interrupted.", ex);
-        }
-        ZeroConfService.services().clear();
+        InstanceManager.getDefault(ZeroConfServiceManager.class).stopAll();
     }
 
     /**
      * A list of published ZeroConfServices
      *
      * @return Collection of ZeroConfServices
+     * @deprecated since 4.15.1; use
+     * {@link jmri.util.zeroconf.ZeroConfServiceManager#allServices() } instead
      */
+    @Deprecated
     public static Collection<ZeroConfService> allServices() {
-        return ZeroConfService.services().values();
-    }
-
-    /* return a list of published services */
-    private static HashMap<String, ZeroConfService> services() {
-        return ZeroConfService.services;
+        return InstanceManager.getDefault(ZeroConfServiceManager.class).allServices();
     }
 
     /**
@@ -396,24 +327,11 @@ public class ZeroConfService {
      *
      * @return a {@link java.util.HashMap} of {@link javax.jmdns.JmDNS} objects,
      *         accessible by {@link java.net.InetAddress} keys.
+     * @deprecated since 4.15.1 without public replacement
      */
+    @Deprecated
     synchronized public static HashMap<InetAddress, JmDNS> netServices() {
-        if (ZeroConfService.netServices.isEmpty()) {
-            log.debug("JmDNS version: {}", JmDNS.VERSION);
-            try {
-                for (InetAddress address : hostAddresses()) {
-                    // explicitly pass a valid host name, since null causes a very long lookup on some networks
-                    log.debug("Calling JmDNS.create({}, '{}')", address.getHostAddress(), address.getHostAddress());
-                    ZeroConfService.netServices.put(address, JmDNS.create(address, address.getHostAddress()));
-                }
-            } catch (IOException ex) {
-                log.warn("Unable to create JmDNS with error: {}", ex.getMessage(), ex);
-            }
-            InstanceManager.getOptionalDefault(ShutDownManager.class).ifPresent(manager -> {
-                manager.register(ZeroConfService.shutDownTask);
-            });
-        }
-        return new HashMap<>(ZeroConfService.netServices);
+        return InstanceManager.getDefault(ZeroConfServiceManager.class).getDNSes();
     }
 
     /**
@@ -421,14 +339,15 @@ public class ZeroConfService {
      * determined. This method returns the first part of the fully qualified
      * domain name from {@link #FQDN}.
      *
-     * @param address The {@link java.net.InetAddress} for the host name.
-     * @return The hostName associated with the first interface encountered.
+     * @param address The {@link java.net.InetAddress} for the host name
+     * @return The hostName associated with the first interface encountered
+     * @deprecated since 4.15.1; use
+     * {@link jmri.util.zeroconf.ZeroConfServiceManager#hostName(java.net.InetAddress) }
+     * instead
      */
+    @Deprecated
     public static String hostName(InetAddress address) {
-        String hostName = ZeroConfService.FQDN(address) + ".";
-        // we would have to check for the existance of . if we did not add .
-        // to the string above.
-        return hostName.substring(0, hostName.indexOf('.'));
+        return InstanceManager.getDefault(ZeroConfServiceManager.class).hostName(address);
     }
 
     /**
@@ -436,53 +355,15 @@ public class ZeroConfService {
      * cannot be determined. This method uses the
      * {@link javax.jmdns.JmDNS#getHostName()} method to get the name.
      *
-     * @param address The {@link java.net.InetAddress} for the FQDN.
-     * @return The fully qualified domain name.
+     * @param address The {@link java.net.InetAddress} for the FQDN
+     * @return The fully qualified domain name
+     * @deprecated since 4.15.1; use
+     * {@link jmri.util.zeroconf.ZeroConfServiceManager#FQDN(java.net.InetAddress) }
+     * instead
      */
+    @Deprecated
     public static String FQDN(InetAddress address) {
-        return ZeroConfService.netServices().get(address).getHostName();
-    }
-
-    /**
-     * A list of the non-loopback, non-link-local IP addresses of the host, or
-     * null if none found. The UseIPv4 and UseIPv6 preferences are also applied.
-     *
-     * @return The non-loopback, non-link-local IP addresses on the host, of the allowed type(s).
-     */
-    public static List<InetAddress> hostAddresses() {
-        List<InetAddress> addrList = new ArrayList<>();
-        Enumeration<NetworkInterface> IFCs = null;
-        //get current preference values
-        boolean useIPv4 = zeroConfPrefs.getBoolean(IPv4, true);
-        boolean useIPv6 = zeroConfPrefs.getBoolean(IPv6, true);
-        
-        try {
-            IFCs = NetworkInterface.getNetworkInterfaces();
-        } catch (SocketException ex) {
-            log.error("Unable to get network interfaces.", ex);
-        }
-        if (IFCs != null) {
-            while (IFCs.hasMoreElements()) {
-                NetworkInterface IFC = IFCs.nextElement();
-                try {
-                    if (IFC.isUp()) {
-                        Enumeration<InetAddress> addresses = IFC.getInetAddresses();
-                        while (addresses.hasMoreElements()) {
-                            InetAddress address = addresses.nextElement();
-                            //add only if a valid address type
-                            if (!address.isLoopbackAddress() && !address.isLinkLocalAddress() &&
-                                    ((address instanceof Inet4Address && useIPv4) ||
-                                            (address instanceof Inet6Address && useIPv6))) {
-                                addrList.add(address);
-                            }
-                        }
-                    }
-                } catch (SocketException ex) {
-                    log.error("Unable to read network interface {}.", IFC, ex);
-                }
-            }
-        }
-        return addrList;
+        return InstanceManager.getDefault(ZeroConfServiceManager.class).FQDN(address);
     }
 
     public void addEventListener(ZeroConfServiceListener l) {
@@ -492,93 +373,12 @@ public class ZeroConfService {
     public void removeEventListener(ZeroConfServiceListener l) {
         this.listeners.remove(l);
     }
-
-    private static class NetworkListener implements NetworkTopologyListener {
-
-        @Override
-        public void inetAddressAdded(NetworkTopologyEvent nte) {
-            //get current preference values
-            boolean useIPv4 = zeroConfPrefs.getBoolean(IPv4, true);
-            boolean useIPv6 = zeroConfPrefs.getBoolean(IPv6, true);
-            if (nte.getInetAddress() instanceof Inet6Address
-                    && !useIPv6 ) {
-                log.debug("Ignoring IPv6 address {}", nte.getInetAddress().getHostAddress());
-                return;
-            }
-            if (nte.getInetAddress() instanceof Inet4Address
-                    && !useIPv4) {
-                log.debug("Ignoring IPv4 address {}", nte.getInetAddress().getHostAddress());
-                return;
-            }
-            if (!ZeroConfService.netServices.containsKey(nte.getInetAddress())) {
-                log.debug("Adding address {}", nte.getInetAddress().getHostAddress());
-                ZeroConfService.netServices.put(nte.getInetAddress(), nte.getDNS());
-                ZeroConfService.allServices().stream().forEach((service) -> {
-                    try {
-                        if (!service.serviceInfos.containsKey(nte.getDNS().getInetAddress())) {
-                            log.debug("Publishing zeroConf service for '{}' on {}", service.key(), nte.getInetAddress().getHostAddress());
-                            nte.getDNS().registerService(service.addServiceInfo(nte.getDNS()));
-                            service.listeners.stream().forEach((listener) -> {
-                                listener.servicePublished(new ZeroConfServiceEvent(service, nte.getDNS()));
-                            });
-                        }
-                    } catch (IOException ex) {
-                        log.error(ex.getLocalizedMessage(), ex);
-                    }
-                });
-            } else {
-                log.debug("Address {} already known.", nte.getInetAddress().getHostAddress());
-            }
-        }
-
-        @Override
-        public void inetAddressRemoved(NetworkTopologyEvent nte) {
-            log.debug("Removing address {}", nte.getInetAddress());
-            ZeroConfService.netServices.remove(nte.getInetAddress());
-            nte.getDNS().unregisterAllServices();
-            ZeroConfService.allServices().stream().map((service) -> {
-                service.serviceInfos.remove(nte.getInetAddress());
-                return service;
-            }).forEach((service) -> {
-                service.listeners.stream().forEach((listener) -> {
-                    listener.servicePublished(new ZeroConfServiceEvent(service, nte.getDNS()));
-                });
-            });
-        }
-
-    }
-
-    private static class ShutDownTask extends QuietShutDownTask {
-
-        private boolean isComplete = false;
-
-        public ShutDownTask(String name) {
-            super(name);
-        }
-
-        @Override
-        public boolean execute() {
-            new Thread(() -> {
-                Date start = new Date();
-                log.debug("Starting to stop services...");
-                ZeroConfService.stopAll(true);
-                log.debug("Stopped all services in {} milliseconds", new Date().getTime() - start.getTime());
-                start = new Date();
-                JmmDNS.Factory.getInstance().removeNetworkTopologyListener(ZeroConfService.networkListener);
-                log.debug("Removed network topology listener in {} milliseconds", new Date().getTime() - start.getTime());
-                this.isComplete = true;
-            }).start();
-            return true;
-        }
-
-        @Override
-        public boolean isParallel() {
-            return true;
-        }
-
-        @Override
-        public boolean isComplete() {
-            return this.isComplete;
-        }
+    
+    /**
+     * Get a list of the listeners for this service.
+     * @return the listeners or an empty list if none
+     */
+    public List<ZeroConfServiceListener> getListeners() {
+        return new ArrayList<>(listeners);
     }
 }

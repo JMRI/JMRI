@@ -22,8 +22,6 @@ public class NceMonPanel extends jmri.jmrix.AbstractMonPane implements NceListen
         super();
     }
 
-    NceMonBinary nceMon = new NceMonBinary();
-
     @Override
     public String getHelpTarget() {
         return null;
@@ -82,26 +80,18 @@ public class NceMonPanel extends jmri.jmrix.AbstractMonPane implements NceListen
     @Override
     public synchronized void message(NceMessage m) {  // receive a message and log it
         if (m.isBinary()) {
-            nextLine(nceMon.displayMessage(m), m.toString());
+            logMessage(m);
         } else {
-            nextLine("cmd: \"" + m.toString() + "\"\n", null);
+            logMessage("cmd: ",m);
         }
     }
 
     @Override
     public synchronized void reply(NceReply r) {  // receive a reply message and log it
-        String raw = "";
-        for (int i = 0; i < r.getNumDataElements(); i++) {
-            if (i > 0) {
-                raw += " ";
-            }
-            raw = jmri.util.StringUtil.appendTwoHexFromInt(r.getElement(i) & 0xFF, raw);
-        }
-
         if (r.isUnsolicited()) {
-            nextLine("msg: \"" + r.toString() + "\"\n", raw);
+            logMessage("msg: ",r);
         } else {
-            nextLine(nceMon.displayReply(r), raw);
+            logMessage(r);
         }
     }
 

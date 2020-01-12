@@ -33,6 +33,7 @@ import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.security.CodeSource;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -42,9 +43,13 @@ import java.util.stream.Collectors;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
+
 import jmri.Version;
 import jmri.beans.Bean;
+import jmri.profile.Profile;
+import jmri.profile.ProfileManager;
 import jmri.util.FileUtil.Location;
+import jmri.util.FileUtil.Property;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,7 +60,7 @@ import org.slf4j.LoggerFactory;
  * they can be exposed to scripts as an object methods instead of as static
  * methods of a class.
  *
- * @author Randall Wood (C) 2015, 2016
+ * @author Randall Wood (C) 2015, 2016, 2019
  */
 public class FileUtilSupport extends Bean {
 
@@ -69,11 +74,11 @@ public class FileUtilSupport extends Bean {
     /* path to jmri.jar */
     private String jarPath = null;
     /* path to the jython scripts directory */
-    private String scriptsPath = null;
+    private final HashMap<Profile, String> scriptsPaths = new HashMap<>();
     /* path to the user's files directory */
-    private String userFilesPath = null;
-    /* path to the current profile */
-    private String profilePath = null;
+    private final HashMap<Profile, String> userFilesPaths = new HashMap<>();
+    /* path to profiles in use */
+    private final HashMap<Profile, String> profilePaths = new HashMap<>();
 
     // initialize logging
     private static final Logger log = LoggerFactory.getLogger(FileUtilSupport.class);
@@ -95,8 +100,27 @@ public class FileUtilSupport extends Bean {
     @Nonnull
     @CheckReturnValue
     public File getFile(@Nonnull String path) throws FileNotFoundException {
+        return getFile(ProfileManager.getDefault().getActiveProfile(), path);
+    }
+
+    /**
+     * Get the {@link java.io.File} that path refers to. Throws a
+     * {@link java.io.FileNotFoundException} if the file cannot be found instead
+     * of returning null (as File would). Use {@link #getURI(java.lang.String) }
+     * or {@link #getURL(java.lang.String) } instead of this method if possible.
+     *
+     * @param profile the profile to use as a base
+     * @param path    the path to find
+     * @return {@link java.io.File} at path
+     * @throws java.io.FileNotFoundException if path cannot be found
+     * @see #getURI(java.lang.String)
+     * @see #getURL(java.lang.String)
+     */
+    @Nonnull
+    @CheckReturnValue
+    public File getFile(@CheckForNull Profile profile, @Nonnull String path) throws FileNotFoundException {
         try {
-            return new File(this.pathFromPortablePath(path));
+            return new File(this.pathFromPortablePath(profile, path));
         } catch (NullPointerException ex) {
             throw new FileNotFoundException("Cannot find file at " + path);
         }
@@ -305,24 +329,64 @@ public class FileUtilSupport extends Bean {
      * <li>Otherwise, treat the name as a relative path below the program
      * directory</li>
      * </ul>
-     * In any case, absolute pathnames will work.
+     * In any case, absolute pathnames will work. Uses the Profile returned by
+     * {@link ProfileManager#getActiveProfile()} as the base.
      *
-     * @param pName The name string, possibly starting with file:, home:,
-     *              profile:, program:, preference:, scripts:, settings, or
-     *              resource:
-     * @return Absolute file name to use. This will include
-     *         system-specific file separators.
+     * @param pName the name, possibly starting with file:, home:, profile:,
+     *              program:, preference:, scripts:, settings, or resource:
+     * @return Absolute file name to use. This will include system-specific file
+     *         separators.
      * @since 2.7.2
      */
     @Nonnull
     @CheckReturnValue
     public String getExternalFilename(@Nonnull String pName) {
-        String filename = this.pathFromPortablePath(pName);
+        return getExternalFilename(ProfileManager.getDefault().getActiveProfile(), pName);
+    }
+
+    /**
+     * Get the resource file corresponding to a name. There are five cases:
+     * <ul>
+     * <li>Starts with "resource:", treat the rest as a pathname relative to the
+     * program directory (deprecated; see "program:" below)</li>
+     * <li>Starts with "program:", treat the rest as a relative pathname below
+     * the program directory</li>
+     * <li>Starts with "preference:", treat the rest as a relative path below
+     * the user's files directory</li>
+     * <li>Starts with "settings:", treat the rest as a relative path below the
+     * JMRI system preferences directory</li>
+     * <li>Starts with "home:", treat the rest as a relative path below the
+     * user.home directory</li>
+     * <li>Starts with "file:", treat the rest as a relative path below the
+     * resource directory in the preferences directory (deprecated; see
+     * "preference:" above)</li>
+     * <li>Starts with "profile:", treat the rest as a relative path below the
+     * profile directory as specified in the
+     * active{@link jmri.profile.Profile}</li>
+     * <li>Starts with "scripts:", treat the rest as a relative path below the
+     * scripts directory</li>
+     * <li>Otherwise, treat the name as a relative path below the program
+     * directory</li>
+     * </ul>
+     * In any case, absolute pathnames will work.
+     *
+     * @param profile the Profile to use as a base
+     * @param pName   the name, possibly starting with file:, home:, profile:,
+     *                program:, preference:, scripts:, settings, or resource:
+     * @return Absolute file name to use. This will include system-specific file
+     *         separators.
+     * @since 4.17.3
+     */
+    @Nonnull
+    @CheckReturnValue
+    public String getExternalFilename(@CheckForNull Profile profile, @Nonnull String pName) {
+        String filename = this.pathFromPortablePath(profile, pName);
         return (filename != null) ? filename : pName.replace(SEPARATOR, File.separatorChar);
     }
 
     /**
-     * Convert a portable filename into an absolute filename.
+     * Convert a portable filename into an absolute filename, using
+     * {@link jmri.profile.ProfileManager#getActiveProfile()} as the base.
      *
      * @param path the portable filename
      * @return An absolute filename
@@ -330,7 +394,20 @@ public class FileUtilSupport extends Bean {
     @Nonnull
     @CheckReturnValue
     public String getAbsoluteFilename(@Nonnull String path) {
-        return this.pathFromPortablePath(path);
+        return this.getAbsoluteFilename(ProfileManager.getDefault().getActiveProfile(), path);
+    }
+
+    /**
+     * Convert a portable filename into an absolute filename.
+     *
+     * @param profile the profile to use as the base
+     * @param path    the portable filename
+     * @return An absolute filename
+     */
+    @Nonnull
+    @CheckReturnValue
+    public String getAbsoluteFilename(@CheckForNull Profile profile, @Nonnull String path) {
+        return this.pathFromPortablePath(profile, path);
     }
 
     /**
@@ -347,7 +424,7 @@ public class FileUtilSupport extends Bean {
     @Nonnull
     @CheckReturnValue
     public String getPortableFilename(@Nonnull File file) {
-        return this.getPortableFilename(file, false, false);
+        return this.getPortableFilename(ProfileManager.getDefault().getActiveProfile(), file, false, false);
     }
 
     /**
@@ -377,65 +454,7 @@ public class FileUtilSupport extends Bean {
     @Nonnull
     @CheckReturnValue
     public String getPortableFilename(@Nonnull File file, boolean ignoreUserFilesPath, boolean ignoreProfilePath) {
-        // compare full path name to see if same as preferences
-        String filename = file.getAbsolutePath();
-
-        // append separator if file is a directory
-        if (file.isDirectory()) {
-            filename = filename + File.separator;
-        }
-
-        if (filename == null ) {
-            throw new IllegalArgumentException("File \""+file+"\" has a null absolute path which is not allowed");
-        }
-        
-        // compare full path name to see if same as preferences
-        if (!ignoreUserFilesPath) {
-            if (filename.startsWith(getUserFilesPath())) {
-                return PREFERENCES + filename.substring(getUserFilesPath().length(), filename.length()).replace(File.separatorChar, SEPARATOR);
-            }
-        }
-
-        if (!ignoreProfilePath) {
-            // compare full path name to see if same as profile
-            if (filename.startsWith(getProfilePath())) {
-                return PROFILE + filename.substring(getProfilePath().length(), filename.length()).replace(File.separatorChar, SEPARATOR);
-            }
-        }
-
-        // compare full path name to see if same as settings
-        if (filename.startsWith(getPreferencesPath())) {
-            return SETTINGS + filename.substring(getPreferencesPath().length(), filename.length()).replace(File.separatorChar, SEPARATOR);
-        }
-
-        if (!ignoreUserFilesPath) {
-            /*
-             * The tests for any portatable path that could be within the
-             * UserFiles locations needs to be within this block. This prevents
-             * the UserFiles or Profile path from being set to another portable
-             * path that is user settable.
-             *
-             * Note that this test should be after the UserFiles, Profile, and
-             * Preferences tests.
-             */
-            // check for relative to scripts dir
-            if (filename.startsWith(getScriptsPath()) && !filename.equals(getScriptsPath())) {
-                return SCRIPTS + filename.substring(getScriptsPath().length(), filename.length()).replace(File.separatorChar, SEPARATOR);
-            }
-        }
-
-        // now check for relative to program dir
-        if (filename.startsWith(getProgramPath())) {
-            return PROGRAM + filename.substring(getProgramPath().length(), filename.length()).replace(File.separatorChar, SEPARATOR);
-        }
-
-        // compare full path name to see if same as home directory
-        // do this last, in case preferences or program dir are in home directory
-        if (filename.startsWith(getHomePath())) {
-            return HOME + filename.substring(getHomePath().length(), filename.length()).replace(File.separatorChar, SEPARATOR);
-        }
-
-        return filename.replace(File.separatorChar, SEPARATOR);   // absolute, and doesn't match; not really portable...
+        return getPortableFilename(ProfileManager.getDefault().getActiveProfile(), file, ignoreUserFilesPath, ignoreProfilePath);
     }
 
     /**
@@ -451,7 +470,7 @@ public class FileUtilSupport extends Bean {
     @Nonnull
     @CheckReturnValue
     public String getPortableFilename(@Nonnull String filename) {
-        return this.getPortableFilename(filename, false, false);
+        return getPortableFilename(ProfileManager.getDefault().getActiveProfile(), filename, false, false);
     }
 
     /**
@@ -491,6 +510,180 @@ public class FileUtilSupport extends Bean {
     }
 
     /**
+     * Convert a File object's path to our preferred storage form.
+     * <p>
+     * This is the inverse of {@link #getFile(String pName)}. Deprecated forms
+     * are not created.
+     *
+     * @param profile Profile to use as base
+     * @param file    File at path to be represented
+     * @return Filename for storage in a portable manner. This will include
+     *         portable, not system-specific, file separators.
+     * @since 4.17.3
+     */
+    @Nonnull
+    @CheckReturnValue
+    public String getPortableFilename(@CheckForNull Profile profile, @Nonnull File file) {
+        return this.getPortableFilename(profile, file, false, false);
+    }
+
+    /**
+     * Convert a File object's path to our preferred storage form.
+     * <p>
+     * This is the inverse of {@link #getFile(String pName)}. Deprecated forms
+     * are not created.
+     * <p>
+     * This method supports a specific use case concerning profiles and other
+     * portable paths that are stored within the User files directory, which
+     * will cause the {@link jmri.profile.ProfileManager} to write an incorrect
+     * path for the current profile or
+     * {@link apps.configurexml.FileLocationPaneXml} to write an incorrect path
+     * for the Users file directory. In most cases, the use of
+     * {@link #getPortableFilename(java.io.File)} is preferable.
+     *
+     * @param profile             Profile to use as base
+     * @param file                File at path to be represented
+     * @param ignoreUserFilesPath true if paths in the User files path should be
+     *                            stored as absolute paths, which is often not
+     *                            desirable.
+     * @param ignoreProfilePath   true if paths in the profile should be stored
+     *                            as absolute paths, which is often not
+     *                            desirable.
+     * @return Storage format representation
+     * @since 3.5.5
+     */
+    @Nonnull
+    @CheckReturnValue
+    public String getPortableFilename(@CheckForNull Profile profile, @Nonnull File file, boolean ignoreUserFilesPath, boolean ignoreProfilePath) {
+        // compare full path name to see if same as preferences
+        String filename = file.getAbsolutePath();
+
+        // append separator if file is a directory
+        if (file.isDirectory()) {
+            filename = filename + File.separator;
+        }
+
+        if (filename == null) {
+            throw new IllegalArgumentException("File \"" + file + "\" has a null absolute path which is not allowed");
+        }
+
+        // compare full path name to see if same as preferences
+        if (!ignoreUserFilesPath) {
+            if (filename.startsWith(getUserFilesPath(profile))) {
+                return PREFERENCES
+                        + filename.substring(getUserFilesPath(profile).length(), filename.length()).replace(File.separatorChar,
+                                SEPARATOR);
+            }
+        }
+
+        if (!ignoreProfilePath) {
+            // compare full path name to see if same as profile
+            if (filename.startsWith(getProfilePath(profile))) {
+                return PROFILE
+                        + filename.substring(getProfilePath(profile).length(), filename.length()).replace(File.separatorChar,
+                                SEPARATOR);
+            }
+        }
+
+        // compare full path name to see if same as settings
+        if (filename.startsWith(getPreferencesPath())) {
+            return SETTINGS
+                    + filename.substring(getPreferencesPath().length(), filename.length()).replace(File.separatorChar,
+                            SEPARATOR);
+        }
+
+        if (!ignoreUserFilesPath) {
+            /*
+             * The tests for any portatable path that could be within the
+             * UserFiles locations needs to be within this block. This prevents
+             * the UserFiles or Profile path from being set to another portable
+             * path that is user settable.
+             *
+             * Note that this test should be after the UserFiles, Profile, and
+             * Preferences tests.
+             */
+            // check for relative to scripts dir
+            if (filename.startsWith(getScriptsPath(profile)) && !filename.equals(getScriptsPath(profile))) {
+                return SCRIPTS
+                        + filename.substring(getScriptsPath(profile).length(), filename.length()).replace(File.separatorChar,
+                                SEPARATOR);
+            }
+        }
+
+        // now check for relative to program dir
+        if (filename.startsWith(getProgramPath())) {
+            return PROGRAM
+                    + filename.substring(getProgramPath().length(), filename.length()).replace(File.separatorChar,
+                            SEPARATOR);
+        }
+
+        // compare full path name to see if same as home directory
+        // do this last, in case preferences or program dir are in home directory
+        if (filename.startsWith(getHomePath())) {
+            return HOME
+                    + filename.substring(getHomePath().length(), filename.length()).replace(File.separatorChar,
+                            SEPARATOR);
+        }
+
+        return filename.replace(File.separatorChar, SEPARATOR); // absolute, and doesn't match; not really portable...
+    }
+
+    /**
+     * Convert a filename string to our preferred storage form.
+     * <p>
+     * This is the inverse of {@link #getExternalFilename(String pName)}.
+     * Deprecated forms are not created.
+     *
+     * @param profile  Profile to use as base
+     * @param filename Filename to be represented
+     * @return Filename for storage in a portable manner
+     * @since 4.17.3
+     */
+    @Nonnull
+    @CheckReturnValue
+    public String getPortableFilename(@CheckForNull Profile profile, @Nonnull String filename) {
+        return getPortableFilename(profile, filename, false, false);
+    }
+
+    /**
+     * Convert a filename string to our preferred storage form.
+     * <p>
+     * This is the inverse of {@link #getExternalFilename(String pName)}.
+     * Deprecated forms are not created.
+     * <p>
+     * This method supports a specific use case concerning profiles and other
+     * portable paths that are stored within the User files directory, which
+     * will cause the {@link jmri.profile.ProfileManager} to write an incorrect
+     * path for the current profile or
+     * {@link apps.configurexml.FileLocationPaneXml} to write an incorrect path
+     * for the Users file directory. In most cases, the use of
+     * {@link #getPortableFilename(java.io.File)} is preferable.
+     *
+     * @param profile             Profile to use as base
+     * @param filename            Filename to be represented
+     * @param ignoreUserFilesPath true if paths in the User files path should be
+     *                            stored as absolute paths, which is often not
+     *                            desirable.
+     * @param ignoreProfilePath   true if paths in the profile path should be
+     *                            stored as absolute paths, which is often not
+     *                            desirable.
+     * @return Storage format representation
+     * @since 4.17.3
+     */
+    @Nonnull
+    @CheckReturnValue
+    public String getPortableFilename(@CheckForNull Profile profile, @Nonnull String filename, boolean ignoreUserFilesPath,
+            boolean ignoreProfilePath) {
+        if (isPortableFilename(filename)) {
+            // if this already contains prefix, run through conversion to normalize
+            return getPortableFilename(profile, getExternalFilename(filename), ignoreUserFilesPath, ignoreProfilePath);
+        } else {
+            // treat as pure filename
+            return getPortableFilename(profile, new File(filename), ignoreUserFilesPath, ignoreProfilePath);
+        }
+    }
+
+    /**
      * Test if the given filename is a portable filename.
      * <p>
      * Note that this method may return a false positive if the filename is a
@@ -521,78 +714,122 @@ public class FileUtilSupport extends Bean {
 
     /**
      * Get the user's files directory. If not set by the user, this is the same
-     * as the profile path. Note that if the profile path has been set to null,
-     * that returns the preferences directory, see {@link #getProfilePath()}.
+     * as the profile path returned by
+     * {@link ProfileManager#getActiveProfile()}. Note that if the profile path
+     * has been set to null, that returns the preferences directory, see
+     * {@link #getProfilePath()}.
      *
      * @see #getProfilePath()
-     * @return User's files directory as a String - never null
+     * @return User's files directory
      */
     @Nonnull
     @CheckReturnValue
     public String getUserFilesPath() {
-        if (userFilesPath != null) return userFilesPath;
-        return getProfilePath();
+        return getUserFilesPath(ProfileManager.getDefault().getActiveProfile());
+    }
+
+    /**
+     * Get the user's files directory. If not set by the user, this is the same
+     * as the profile path. Note that if the profile path has been set to null,
+     * that returns the preferences directory, see {@link #getProfilePath()}.
+     *
+     * @param profile the profile to use
+     * @see #getProfilePath()
+     * @return User's files directory
+     */
+    @Nonnull
+    @CheckReturnValue
+    public String getUserFilesPath(@CheckForNull Profile profile) {
+        String path = userFilesPaths.get(profile);
+        return path != null ? path : getProfilePath(profile);
     }
 
     /**
      * Set the user's files directory.
      *
      * @see #getUserFilesPath()
-     * @param path The path to the user's files directory using system-specific
-     *             separators
+     * @param profile the profile to set the user's files directory for
+     * @param path    The path to the user's files directory using
+     *                system-specific separators
      */
-    public void setUserFilesPath(@Nonnull String path) {
-        String old = this.userFilesPath;
+    public void setUserFilesPath(@CheckForNull Profile profile, @Nonnull String path) {
+        String old = userFilesPaths.get(profile);
         if (!path.endsWith(File.separator)) {
             path = path + File.separator;
         }
-        this.userFilesPath = path;
+        userFilesPaths.put(profile, path);
         if ((old != null && !old.equals(path)) || (!path.equals(old))) {
-            this.firePropertyChange(FileUtil.PREFERENCES, old, path);
+            this.firePropertyChange(FileUtil.PREFERENCES, new Property(profile, old), new Property(profile, path));
         }
     }
 
     /**
-     * Get the profile directory. If not set, provide the
-     * preferences path.
+     * Get the profile directory. If not set, provide the preferences path.
+     *
+     * @param profile the Profile to use as a base
+     * @see #getPreferencesPath()
+     * @return Profile directory using system-specific separators
+     */
+    @Nonnull
+    @CheckReturnValue
+    public String getProfilePath(@CheckForNull Profile profile) {
+        String path = profilePaths.get(profile);
+        if (path == null) {
+            File f = profile != null ? profile.getPath() : null;
+            if (f != null) {
+                path = f.getAbsolutePath();
+                if (!path.endsWith(File.separator)) {
+                    path = path + File.separator;
+                }
+                profilePaths.put(profile, path);
+            }
+        }
+        return (path != null) ? path : this.getPreferencesPath();
+    }
+
+    /**
+     * Get the profile directory. If not set, provide the preferences path. Uses
+     * the Profile returned by {@link ProfileManager#getActiveProfile()} as a
+     * base.
      *
      * @see #getPreferencesPath()
-     * @return Profile directory as a String using system-specific separators
+     * @return Profile directory using system-specific separators
      */
     @Nonnull
     @CheckReturnValue
     public String getProfilePath() {
-        return (this.profilePath != null) ? this.profilePath : this.getPreferencesPath();
+        return getProfilePath(ProfileManager.getDefault().getActiveProfile());
     }
 
     /**
-     * Set the profile directory.
+     * Used to set the profile path, but now does nothing.
      *
      * @see #getProfilePath()
      * @param path The path to the profile directory using system-specific
-     *             separators. If null, this will cause  {@link #getProfilePath()} to 
-     *             provide the preferences directory via {@link #getPreferencesPath()}.
+     *             separators. If null, this will cause
+     *             {@link #getProfilePath()} to provide the preferences
+     *             directory via {@link #getPreferencesPath()}.
+     * @deprecated since 4.17.3 without replacement
      */
+    @Deprecated
     public void setProfilePath(@CheckForNull String path) {
-        String old = this.profilePath;
-        if (path != null && !path.endsWith(File.separator)) {
-            path = path + File.separator;
-        }
-        this.profilePath = path;
-        if ((old != null && !old.equals(path)) || (path != null && !path.equals(old))) {
-            this.firePropertyChange(FileUtil.PROFILE, old, path);
-        }
+        // does nothing
     }
 
     /**
      * Get the preferences directory. This directory is set based on the OS and
-     * is not normally settable by the user. <ul><li>On Microsoft Windows
-     * systems, this is JMRI in the User's home directory.</li> <li>On OS X
-     * systems, this is Library/Preferences/JMRI in the User's home
-     * directory.</li> <li>On Linux, Solaris, and othe UNIXes, this is .jmri in
-     * the User's home directory.</li> <li>This can be overridden with by
-     * setting the jmri.prefsdir Java property when starting JMRI.</li></ul> Use
-     * {@link #getHomePath()} to get the User's home directory.
+     * is not normally settable by the user.
+     * <ul>
+     * <li>On Microsoft Windows systems, this is {@code JMRI} in the User's home
+     * directory.</li>
+     * <li>On OS X systems, this is {@code Library/Preferences/JMRI} in the
+     * User's home directory.</li>
+     * <li>On Linux, Solaris, and other UNIXes, this is {@code .jmri} in the
+     * User's home directory.</li>
+     * <li>This can be overridden with by setting the {@code jmri.prefsdir} Java
+     * property when starting JMRI.</li>
+     * </ul>
+     * Use {@link #getHomePath()} to get the User's home directory.
      *
      * @see #getHomePath()
      * @return Path to the preferences directory using system-specific
@@ -632,7 +869,7 @@ public class FileUtilSupport extends Bean {
                 result = this.getHomePath() + "JMRI" + File.separator; // NOI18N
                 break;
         }
-        // logging here merely throws warnings since we call this method to setup logging
+        // logging here merely throws warnings since we call this method to set up logging
         // uncomment below to print OS default to console
         // System.out.println("preferencesPath defined as \"" + result + "\" based on os.name=\"" + SystemType.getOSName() + "\"");
         return result;
@@ -775,17 +1012,34 @@ public class FileUtilSupport extends Bean {
 
     /**
      * Get the path to the scripts directory. If not set previously with
-     * {@link #setScriptsPath}, this is the "jython" subdirectory in the program directory.
+     * {@link #setScriptsPath}, this is the "jython" subdirectory in the program
+     * directory. Uses the Profile returned by
+     * {@link ProfileManager#getActiveProfile()} as the base.
      *
-     * @return the scriptsPath using system-specific separators
+     * @return the scripts directory using system-specific separators
      */
     @Nonnull
     @CheckReturnValue
     public String getScriptsPath() {
-        if (scriptsPath != null) {
-            return scriptsPath;
+        return getScriptsPath(ProfileManager.getDefault().getActiveProfile());
+    }
+
+    /**
+     * Get the path to the scripts directory. If not set previously with
+     * {@link #setScriptsPath}, this is the "jython" subdirectory in the program
+     * directory.
+     *
+     * @param profile the Profile to use as the base
+     * @return the path to scripts directory using system-specific separators
+     */
+    @Nonnull
+    @CheckReturnValue
+    public String getScriptsPath(@CheckForNull Profile profile) {
+        String path = scriptsPaths.get(profile);
+        if (path != null) {
+            return path;
         }
-        // scriptsPath not set by user, return default if it exists
+        // scripts directory not set by user, return default if it exists
         File file = new File(this.getProgramPath() + File.separator + "jython" + File.separator); // NOI18N
         if (file.exists() && file.isDirectory()) {
             return file.getPath() + File.separator;
@@ -795,18 +1049,20 @@ public class FileUtilSupport extends Bean {
     }
 
     /**
-     * Set the path to python scripts. 
+     * Set the path to python scripts.
      *
-     * @param path the scriptsPath to set. Null resets to the default, defined in {@link #getScriptsPath()}
+     * @param profile the profile to use as a base
+     * @param path    the scriptsPaths to set; null resets to the default,
+     *                defined in {@link #getScriptsPath()}
      */
-    public void setScriptsPath(@CheckForNull String path) {
-        String old = this.scriptsPath;
+    public void setScriptsPath(@CheckForNull Profile profile, @CheckForNull String path) {
+        String old = scriptsPaths.get(profile);
         if (path != null && !path.endsWith(File.separator)) {
             path = path + File.separator;
         }
-        this.scriptsPath = path;
+        scriptsPaths.put(profile, path);
         if ((old != null && !old.equals(path)) || (path != null && !path.equals(old))) {
-            this.firePropertyChange(FileUtil.SCRIPTS, old, path);
+            this.firePropertyChange(FileUtil.SCRIPTS, new Property(profile, old), new Property(profile, path));
         }
     }
 
@@ -1520,7 +1776,7 @@ public class FileUtilSupport extends Bean {
      * @return Canonical path to use, or null if one cannot be found.
      * @since 2.7.2
      */
-    private String pathFromPortablePath(@Nonnull String path) {
+    private String pathFromPortablePath(@CheckForNull Profile profile, @Nonnull String path) {
         if (path.startsWith(PROGRAM)) {
             if (new File(path.substring(PROGRAM.length())).isAbsolute()) {
                 path = path.substring(PROGRAM.length());
@@ -1531,19 +1787,19 @@ public class FileUtilSupport extends Bean {
             if (new File(path.substring(PREFERENCES.length())).isAbsolute()) {
                 path = path.substring(PREFERENCES.length());
             } else {
-                path = path.replaceFirst(PREFERENCES, Matcher.quoteReplacement(this.getUserFilesPath()));
+                path = path.replaceFirst(PREFERENCES, Matcher.quoteReplacement(this.getUserFilesPath(profile)));
             }
         } else if (path.startsWith(PROFILE)) {
             if (new File(path.substring(PROFILE.length())).isAbsolute()) {
                 path = path.substring(PROFILE.length());
             } else {
-                path = path.replaceFirst(PROFILE, Matcher.quoteReplacement(this.getProfilePath()));
+                path = path.replaceFirst(PROFILE, Matcher.quoteReplacement(this.getProfilePath(profile)));
             }
         } else if (path.startsWith(SCRIPTS)) {
             if (new File(path.substring(SCRIPTS.length())).isAbsolute()) {
                 path = path.substring(SCRIPTS.length());
             } else {
-                path = path.replaceFirst(SCRIPTS, Matcher.quoteReplacement(this.getScriptsPath()));
+                path = path.replaceFirst(SCRIPTS, Matcher.quoteReplacement(this.getScriptsPath(profile)));
             }
         } else if (path.startsWith(SETTINGS)) {
             if (new File(path.substring(SETTINGS.length())).isAbsolute()) {

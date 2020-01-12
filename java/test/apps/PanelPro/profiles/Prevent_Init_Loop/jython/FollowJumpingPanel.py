@@ -1,4 +1,4 @@
-# FollowJumpingPanel is a diagnostic tool that can provide panel location meterics
+# FollowJumpingPanel is a diagnostic tool that can provide panel location metrics
 # to indicate an inconsistent and even intermittent symptom, but not yet (as of this date) 
 # provide a fix for a problem that has shown up in 4.9.1
 #
@@ -76,7 +76,7 @@ class FollowJumpingPanel(jmri.jmrit.automat.AbstractAutomaton):
     # As each panel appears, the x and y locations of the upper left corner are discovered and reported.
     #
     # Executing this script will provide "before" and "after" values on the JMRI
-    # System console and in your "session.log" file.  
+    # System Console and in your "session.log" file.
 
 
 

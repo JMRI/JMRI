@@ -8,20 +8,20 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Encodes a message to an NCE command station.
- * <P>
+ * <p>
  * The {@link NceReply} class handles the response from the command station.
- * <P>
+ * <p>
  * The NCE protocol has "binary" and "ASCII" command sets. Depending on the
  * version of the EPROM it contains, NCE command stations have different support
  * for command sets:
- * <UL>
- * <LI>1999 - All ASCII works. Binary works except for programming.
- * <LI>2004 - ASCII needed for programming, binary for everything else.
- * <LI>2006 - binary needed for everything
- * </UL>
+ * <ul>
+ * <li>1999 - All ASCII works. Binary works except for programming.
+ * <li>2004 - ASCII needed for programming, binary for everything else.
+ * <li>2006 - binary needed for everything
+ * </ul>
  * See the {@link NceTrafficController#setCommandOptions(int)} method for more
  * information.
- * <P>
+ * <p>
  * Apparently the binary "exitProgrammingMode" command can crash the command
  * station if the EPROM was built before 2006. This method uses a state flag
  * ({@link NceTrafficController#getNceProgMode}) to detect whether a command to
@@ -33,6 +33,8 @@ import org.slf4j.LoggerFactory;
  * @author kcameron Copyright (C) 2014
  */
 public class NceMessage extends jmri.jmrix.AbstractMRMessage {
+ 
+    protected static final jmri.jmrix.nce.ncemon.NceMonBinary nceMon = new jmri.jmrix.nce.ncemon.NceMonBinary();
 
     public static final int NOP_CMD = 0x80; //NCE NOP command
     public static final int ASSIGN_CAB_CMD = 0x81; // NCE Assign loco to cab command, NCE-USB no
@@ -247,8 +249,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
             // not supported by USB connected to SB3 or PH
             if (tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB3 ||
                     tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB5 ||
-                    tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_TWIN ||
-                    tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_POWERHOUSE) {
+                    tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_POWERPRO) {
                 log.error("attempt to send unsupported binary command EXIT_PROG_CMD to NCE USB");
                 //       return null;
             }
@@ -346,8 +347,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
         // not supported by USB connected to SB3 or PH
         if (tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB3 ||
                 tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB5 ||
-                tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_TWIN ||
-                tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_POWERHOUSE) {
+                tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_POWERPRO) {
             log.error("attempt to send unsupported binary command READ_REG_CMD to NCE USB");
             return null;
         }
@@ -379,8 +379,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
         // not supported by USB connected to SB3 or PH
         if (tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB3 ||
                 tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB5 ||
-                tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_TWIN ||
-                tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_POWERHOUSE) {
+                tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_POWERPRO) {
             log.error("attempt to send unsupported binary command WRITE_REG_CMD to NCE USB");
             return null;
         }
@@ -415,8 +414,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
         // not supported by USB connected to SB3 or PH
         if (tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB3 ||
                 tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB5 ||
-                tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_TWIN ||
-                tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_POWERHOUSE) {
+                tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_POWERPRO) {
             log.error("attempt to send unsupported binary command READ_DIR_CV_CMD to NCE USB");
             return null;
         }
@@ -439,8 +437,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
         // not supported by USB connected to SB3 or PH
         if (tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB3 ||
                 tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB5 ||
-                tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_TWIN ||
-                tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_POWERHOUSE) {
+                tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_POWERPRO) {
             log.error("attempt to send unsupported binary command WRITE_DIR_CV_CMD to NCE USB");
             return null;
         }
@@ -615,6 +612,14 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
         m.setElement(4, mess[4]);
         m.setElement(5, mess[5]);
         return m;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toMonitorString(){
+	    return nceMon.displayMessage(this);
     }
 
     private final static Logger log = LoggerFactory.getLogger(NceMessage.class);

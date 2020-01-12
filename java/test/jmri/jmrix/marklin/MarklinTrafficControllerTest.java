@@ -17,14 +17,16 @@ public class MarklinTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCo
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         tc = new MarklinTrafficController();
     }
     
     @Override
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
 }

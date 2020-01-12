@@ -7,11 +7,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SortOrder;
 import javax.swing.table.TableRowSorter;
+import jmri.NamedBean;
 import jmri.swing.RowSorterUtil;
 
 /**
  * Provide a JPanel to display a table of NamedBeans.
- * <P>
+ * <p>
  * This frame includes the table itself at the top, plus a "bottom area" for
  * things like an Add... button and checkboxes that control display options.
  * <p>
@@ -23,16 +24,16 @@ import jmri.swing.RowSorterUtil;
  *
  * @author Bob Jacobsen Copyright (C) 2003
  */
-public class BeanTablePane extends jmri.util.swing.JmriPanel {
+public class BeanTablePane<E extends NamedBean> extends jmri.util.swing.JmriPanel {
 
-    BeanTableDataModel dataModel;
+    BeanTableDataModel<E> dataModel;
     JTable dataTable;
     JScrollPane dataScroll;
     Box bottomBox;  // panel at bottom for extra buttons etc
     int bottomBoxIndex; // index to insert extra stuff
     static final int bottomStrutWidth = 20;
 
-    public void init(BeanTableDataModel model) {
+    public void init(BeanTableDataModel<E> model) {
 
         dataModel = model;
 

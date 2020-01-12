@@ -53,20 +53,20 @@ if (not javax.swing.SwingUtilities.isEventDispatchThread()) :
     print "ERROR: NOT RUNNING ON SWING THREAD!!"
     
 checkForEntries("Tsunami Bachmann OEM",["HO 2-6-6-2",
-										"HO 2-8-0",
-										"HO 2-10-0 Russian Decapod",
-										"HO 2-10-2 USRA Light",
-										"HO 4-4-0 Low Boiler",
-										"HO 4-4-0 High Boiler",
-										"HO 4-6-0",
-										"HO 4-6-2 K4",
-										"HO 4-8-2 USRA Heavy",
-										"HO 4-8-4 J Class",
-										"HO 3 Truck Shay",
-										"On30 2-4-4 Forney",
-										"On30 2-6-6-2",
-										"On30 4-6-0",
-										"On30 2 Truck T Boiler Shay",
-										"On30 Climax"])
+                                        "HO 2-8-0",
+                                        "HO 2-10-0 Russian Decapod",
+                                        "HO 2-10-2 USRA Light",
+                                        "HO 4-4-0 Low Boiler",
+                                        "HO 4-4-0 High Boiler",
+                                        "HO 4-6-0",
+                                        "HO 4-6-2 K4",
+                                        "HO 4-8-2 USRA Heavy",
+                                        "HO 4-8-4 J Class",
+                                        "HO 3 Truck Shay",
+                                        "On30 2-4-4 Forney",
+                                        "On30 2-6-6-2",
+                                        "On30 4-6-0",
+                                        "On30 2 Truck T Boiler Shay",
+                                        "On30 Climax"])
  
 

@@ -1,42 +1,44 @@
 package jmri.managers;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.Frame;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Objects;
+import java.util.*;
+
 import jmri.ShutDownManager;
 import jmri.ShutDownTask;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Manage tasks to be completed when the program shuts down normally.
- * Specifically, allows other object to register and deregister
- * {@link ShutDownTask} objects, which are invoked in an orderly way when the
- * program is is commanded to terminate.
+ * The default implementation of {@link ShutDownManager}. This implementation
+ * makes the following assumptions:
+ * <ul>
+ * <li>The {@link #shutdown()} and {@link #restart()} methods are called on the
+ * application's main thread.</li>
+ * <li>If the application has a graphical user interface, the application's main
+ * thread is the event dispatching thread.</li>
+ * <li>Application windows may contain code that <em>should</em> be run within a
+ * registered {@link ShutDownTask#execute()} method, but are not. A side effect
+ * of this assumption is that <em>all</em> displayable application windows are
+ * closed by this implementation when shutdown() or restart() is called and a
+ * ShutDownTask has not aborted the shutdown or restart.</li>
+ * <li>It is expected that SIGINT and SIGTERM should trigger a clean application
+ * exit.</li>
+ * </ul>
  * <p>
- * Operations:
- * <ol>
- * <li>Asks each {@link ShutDownTask} by calling isShutdownAllowed(), allowing
- * it to abort the shutdown if needed, without getting JMRI in an inconsistent
- * state.
- * <li>Execute each {@link ShutDownTask} in order, allowing it to abort the
- * shutdown if needed.
- * <li>If not aborted, terminate the program.
- * </ol>
+ * If another implementation of ShutDownManager has not been registered with the
+ * {@link jmri.InstanceManager}, an instance of this implementation will be
+ * automatically registered as the ShutDownManager.
  * <p>
- * There can only be one instance of this operating, and it is generally
- * obtained via the instance manager.
- * <p>
- * To avoid being unable to quit the program, which annoys people, an exception
- * in a ShutDownTask is treated as permission to continue after logging.
- * <p>
- * A non-Exception Throwable during shutdown will lead to an immediate
- * application halt.
+ * Developers other applications that cannot accept the above assumptions are
+ * recommended to create their own implementations of ShutDownManager that
+ * integrates with their application's lifecycle and register that
+ * implementation with the InstanceManager as soon as possible in their
+ * application.
  *
  * @author Bob Jacobsen Copyright (C) 2008
  */
@@ -64,11 +66,13 @@ public class DefaultShutDownManager implements ShutDownManager {
         try {
             Runtime.getRuntime().addShutdownHook(this.shutdownHook);
         } catch (IllegalStateException ex) {
-            // this is thrown only if System.exit() has already been called,
-            // so ignore
+            // thrown only if System.exit() has been called, so ignore
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     synchronized public void register(ShutDownTask s) {
         Objects.requireNonNull(s, "Shutdown task cannot be null.");
@@ -79,6 +83,9 @@ public class DefaultShutDownManager implements ShutDownManager {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     synchronized public void deregister(ShutDownTask s) {
         if (s == null) {
@@ -91,10 +98,15 @@ public class DefaultShutDownManager implements ShutDownManager {
     }
 
     /**
-     * Run the shutdown tasks, and then terminate the program with status 0 if
-     * not aborted. Does not return under normal circumstances. Does return if
-     * the shutdown was aborted by the user, in which case the program should
-     * continue to operate.
+     * {@inheritDoc}
+     */
+    @Override
+    public List<ShutDownTask> tasks() {
+        return Collections.unmodifiableList(tasks);
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @SuppressFBWarnings(value = "DM_EXIT", justification = "OK to directly exit standalone main")
     @Override
@@ -103,14 +115,7 @@ public class DefaultShutDownManager implements ShutDownManager {
     }
 
     /**
-     * Run the shutdown tasks, and then terminate the program with status 100 if
-     * not aborted. Does not return under normal circumstances. Does return if
-     * the shutdown was aborted by the user, in which case the program should
-     * continue to operate.
-     *
-     * By exiting the program with status 100, the batch file (MS Windows) or
-     * shell script (Linux/Mac OS X/UNIX) can catch the exit status and restart
-     * the java program.
+     * {@inheritDoc}
      */
     @SuppressFBWarnings(value = "DM_EXIT", justification = "OK to directly exit standalone main")
     @Override
@@ -119,7 +124,8 @@ public class DefaultShutDownManager implements ShutDownManager {
     }
 
     /**
-     * First asks the shutdown tasks if shutdown is allowed. If not return false.
+     * First asks the shutdown tasks if shutdown is allowed. If not return
+     * false.
      * <p>
      * Then run the shutdown tasks, and then terminate the program with status 0
      * if not aborted. Does not return under normal circumstances. Does return
@@ -135,29 +141,30 @@ public class DefaultShutDownManager implements ShutDownManager {
      * @return false if shutdown or restart failed
      */
     @SuppressFBWarnings(value = "DM_EXIT", justification = "OK to directly exit standalone main")
-    public boolean shutdown(int status, boolean exit) {
+    protected boolean shutdown(int status, boolean exit) {
         if (!shuttingDown) {
             Date start = new Date();
             log.debug("Shutting down with {} tasks", this.tasks.size());
             setShuttingDown(true);
             // First check if shut down is allowed
             for (ShutDownTask task : tasks) {
-                if (! task.isShutdownAllowed()) {
+                if (!task.isShutdownAllowed()) {
                     setShuttingDown(false);
                     return false;
                 }
             }
-            long timeout = 30; // all shut down tasks must complete within n seconds
+            // all shut down tasks must complete within _timeout_ seconds
+            long timeout = 30;
             // trigger parallel tasks (see jmri.ShutDownTask#isParallel())
             if (!this.runShutDownTasks(true)) {
                 return false;
             }
-            log.debug("parallel tasks completed executing {} milliseconds after starting shutdown", new Date().getTime() - start.getTime());
+            log.debug("parallel tasks executed {} milliseconds after starting shutdown", new Date().getTime() - start.getTime());
             // trigger non-parallel tasks
             if (!this.runShutDownTasks(false)) {
                 return false;
             }
-            log.debug("sequential tasks completed executing {} milliseconds after starting shutdown", new Date().getTime() - start.getTime());
+            log.debug("sequential tasks executed {} milliseconds after starting shutdown", new Date().getTime() - start.getTime());
             // close any open windows by triggering a closing event
             // this gives open windows a final chance to perform any cleanup
             if (!GraphicsEnvironment.isHeadless()) {
@@ -182,7 +189,12 @@ public class DefaultShutDownManager implements ShutDownManager {
                         // do nothing
                     }
                     if ((new Date().getTime() - start.getTime()) > (timeout * 1000)) { // milliseconds
-                        log.warn("Terminating without waiting for all tasks to complete");
+                        log.warn("Terminating without waiting for the following tasks to complete");
+                        this.tasks.forEach((task) -> {
+                            if (!task.isComplete()) {
+                                log.warn("\t{}", task.getName());
+                            }
+                        });
                         break;
                     }
                 }
@@ -240,9 +252,7 @@ public class DefaultShutDownManager implements ShutDownManager {
     }
 
     /**
-     * Check if application is shutting down.
-     *
-     * @return true if shutting down; false otherwise
+     * {@inheritDoc}
      */
     @Override
     public boolean isShuttingDown() {
@@ -255,7 +265,7 @@ public class DefaultShutDownManager implements ShutDownManager {
      *
      * @param state true if shutting down; false otherwise
      */
-    private static void setShuttingDown(boolean state) {
+    protected static void setShuttingDown(boolean state) {
         shuttingDown = state;
         log.debug("Setting shuttingDown to {}", state);
     }

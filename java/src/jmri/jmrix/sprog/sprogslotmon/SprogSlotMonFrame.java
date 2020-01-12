@@ -14,7 +14,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.table.TableRowSorter;
-import jmri.jmrix.sprog.sprogslotmon.SprogSlotMonDataModel;
 import jmri.jmrix.sprog.SprogListener;
 import jmri.jmrix.sprog.SprogMessage;
 import jmri.jmrix.sprog.SprogReply;
@@ -228,11 +227,15 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame implements SprogList
     public void dispose() {
         // deregister with the command station.
         stopTimer();
-        slotModel.dispose();
+	if(slotModel!=null) {
+           slotModel.dispose();
+	}
         slotModel = null;
         slotTable = null;
         slotScroll = null;
-        tc.removeSprogListener(this);
+	if(tc!=null) {
+           tc.removeSprogListener(this);
+	}
         super.dispose();
     }
 

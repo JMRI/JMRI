@@ -6,7 +6,8 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>DecoderPro&reg; Main Window</title><!-- Style -->
+  <title>DecoderPro&reg; Main Window</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -14,16 +15,16 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
+
       <h1>DecoderPro&reg; Debug Menu</h1>
 
       <h2>VSDecoder Manager</h2>
@@ -46,8 +47,7 @@
       simple window will appear, with a blank panel, a volume/mute
       control, and an "Add Decoder" button.</p>
 
-      <p><img src="images/VSD_Manager01.png" width="423" height=
-      "147"></p>
+      <p><img src="images/VSD_Manager01.png" alt="blank VSDManager window" width="423" height="147"></p>
 
       <p>To create a new VSDecoder, click "Add Decoder". This will
       open a Configuration Dialog ("Config Dialog") where you can
@@ -59,17 +59,16 @@
       added to the main window. You can remove Control Panels by
       clicking the "Delete" button.</p>
 
-      <p><img src="images/VSD_Manager04.png" alt=
-      "VSDecoder Manager" width="442" height="157"></p>
+      <p><img src="images/VSD_Manager04.png" alt="VSDecoder Manager with one loco" width="442" height="157"></p>
 
       <p>Once you have added a Control Panel, the VSDecoder will
       respond to throttle and function button presses from a
       throttle assigned to the locomotive's address, or to button
       presses on the Control Panel.</p>
 
-      <h4>Configuration Dialog</h4><img src=
-      "images/VSD_Manager02.png" alt="Config Dialog" width="430"
-      height="256" border="4">
+      <h4>Configuration Dialog</h4>
+
+      <p><img src="images/VSD_Manager02.png" alt="Config Dialog" width="430" height="256" border="4"></p>
 
       <p>The Configuration Dialog allows you to create a new
       VSDecoder. Choose a locomotive from the Roster or set an
@@ -103,8 +102,9 @@
         <li>Enter an address and choose a protocol</li>
 
         <li>Click the "Set" button</li>
-      </ol><img src="images/VSD_Manager03.png" alt="Config Dialog"
-      width="430" height="256" border="4">
+      </ol>
+
+      <p><img src="images/VSD_Manager03.png" alt="Config Dialog" width="430" height="256" border="4"></p>
 
       <h4>Control Panel</h4>
 
@@ -118,8 +118,9 @@
         <li>Sound activation buttons</li>
 
         <li>Options and Delete buttons</li>
-      </ul><img src="images/VSD_Manager05.png" alt=
-      "Two Control Panels" width="631" height="231">
+      </ul>
+
+      <p><img src="images/VSD_Manager05.png" alt="Two Control Panels" width="631" height="231"></p>
 
       <p>The left section shows the assigned Loco Address and
       Profile Name. The center section provides buttons for
@@ -128,7 +129,7 @@
 
       <p>Sounds can also be activated by a throttle assigned to the
       same address as the VSDecoder.</p>
-	  <p>And similar the "Engine Start" button 
+      <p>And similar the "Engine Start" button 
       <a href="VSD_File_and_Config.shtml#engine-startstop">can be
       activated</a> by a throttle key, if desired.</p>
       <p><em>Note 1:</em> To start the Engine the throttle speed must be 0.<br>

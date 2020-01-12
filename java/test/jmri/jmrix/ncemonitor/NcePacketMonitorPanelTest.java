@@ -42,8 +42,11 @@ public class NcePacketMonitorPanelTest extends jmri.util.swing.JmriPanelTest {
     }
 
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
+
         memo = new NceSystemConnectionMemo();
         memo.setNceTrafficController(new NceTrafficController());
         panel = new NcePacketMonitorPanel();
@@ -52,5 +55,8 @@ public class NcePacketMonitorPanelTest extends jmri.util.swing.JmriPanelTest {
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    @Override
+    public void tearDown() {        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.tearDown();
+    }
 }

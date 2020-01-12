@@ -35,10 +35,13 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-import jmri.LocoAddress;
+import java.util.LinkedList;
+import java.util.Queue;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
+import jmri.LocoAddress;
+import jmri.SpeedStepMode;
 import jmri.ThrottleListener;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
@@ -53,6 +56,8 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
     DccLocoAddress leadAddress;
     char whichThrottle;
     float speedMultiplier;
+    protected Queue<Float> lastSentSpeed;
+    protected float newSpeed;
     boolean isAddressSet;
     protected ArrayList<ThrottleControllerListener> listeners;
     protected ArrayList<ControllerInterface> controllerListeners;
@@ -64,6 +69,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
 
     public ThrottleController() {
         speedMultiplier = 1.0f / 126.0f;
+        lastSentSpeed = new LinkedList<Float>();
     }
 
     public ThrottleController(char whichThrottleChar, ThrottleControllerListener tcl, ControllerInterface cl) {
@@ -203,17 +209,29 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
     public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
         log.warn("Throttle request failed for {} because {}.", address, reason);
         for (ThrottleControllerListener l : listeners) {
-            l.notifyControllerAddressDeclined(this, (DccLocoAddress) address);
+            l.notifyControllerAddressDeclined(this, (DccLocoAddress) address, reason);
             log.debug("Notify TCListener address declined in-use: {}", l.getClass());
         }
     }
-
+    
+    /**
+     * {@inheritDoc}
+     * @deprecated since 4.15.7; use #notifyDecisionRequired
+     */
     @Override
-    public void notifyStealThrottleRequired(LocoAddress address) {
-        notifyFailedThrottleRequest(address, "Steal Required");
+    @Deprecated
+    public void notifyStealThrottleRequired(jmri.LocoAddress address) {
+        notifyDecisionRequired(address, DecisionType.STEAL);
+    }
 
-        // this is an automatically stealing impelementation.
-//        InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
+    /**
+     * calls notifyFailedThrottleRequest, Steal Required
+     * <p>
+     * {@inheritDoc}
+     */
+    @Override
+    public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
+        notifyFailedThrottleRequest(address, "Steal Required");
     }
 
 
@@ -341,7 +359,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
         return ("RPF}|{" + whichThrottle);
     }
 
-    protected void sendCurrentSpeed(DccThrottle t) {
+    synchronized protected void sendCurrentSpeed(DccThrottle t) {
     }
 
     protected void sendCurrentDirection(DccThrottle t) {
@@ -361,6 +379,10 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
      * @return true to keep reading in run loop.
      */
     public boolean sort(String inPackage) {
+        if (inPackage.charAt(0) == 'Q') {// If device has Quit.
+            shutdownThrottle();
+            return false;
+        }
         if (isAddressSet) {
 
             try {
@@ -430,7 +452,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
                         break;
 
                     case 's':       //v>=2.0
-                        handleSpeedStepMode(Integer.parseInt(inPackage.substring(1)));
+                        handleSpeedStepMode(decodeSpeedStepMode(inPackage.substring(1)));
                         break;
 
                     case 'm':       //v>=2.0
@@ -481,10 +503,6 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
                     break;
             }
         }
-        if (inPackage.charAt(0) == 'Q') {// If device has Quit.
-            shutdownThrottle();
-            return false;
-        }
         return true;
 
     }
@@ -509,7 +527,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
 
     public void setLocoForConsistFunctions(String inPackage) {
         /*
-         *      This is used to control speed an direction on the
+         *      This is used to control speed and direction on the
          *      consist address, but have functions mapped to lead.
          *      Consist address must be set first!
          */
@@ -565,11 +583,14 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
      *
      * @param rawSpeed Value sent from mobile device, range 0 - 126
      */
-    protected void setSpeed(int rawSpeed) {
+    synchronized protected void setSpeed(int rawSpeed) {
 
         float newSpeed = (rawSpeed * speedMultiplier);
 
         log.debug("raw: {}, NewSpd: {}", rawSpeed, newSpeed);
+        while(lastSentSpeed.offer(Float.valueOf(newSpeed))==false){
+              log.debug("failed attempting to add speed to queue");
+        }
         throttle.setSpeedSetting(newSpeed);
     }
 
@@ -589,9 +610,10 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
     protected void setAddress(int number, boolean isLong) {
         log.debug("setAddress: {}, isLong: {}", number, isLong);
         if (rosterLoco != null) {
-            jmri.InstanceManager.throttleManagerInstance().requestThrottle(rosterLoco, this);
+            jmri.InstanceManager.throttleManagerInstance().requestThrottle(rosterLoco, this, true);
         } else {
-            jmri.InstanceManager.throttleManagerInstance().requestThrottle(number, isLong, this);
+            jmri.InstanceManager.throttleManagerInstance().requestThrottle(new DccLocoAddress(number, isLong), this, true);
+            
         }
     }
 
@@ -631,6 +653,21 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
             return ((DccLocoAddress) throttle.getLocoAddress()).toString();
         } else {
             return "Not Set";
+        }
+    }
+
+    /**
+     * Get the string representation of this Roster ID. Returns empty string 
+     * if no address in use.
+     * since 4.15.4
+     *
+     * @return string value of throttle Roster ID
+     */
+    public String getCurrentRosterIdString() {
+        if (rosterLoco != null) {
+            return rosterLoco.getId() ;
+        } else {
+            return " ";
         }
     }
 
@@ -719,7 +756,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
 
     }
 
-    protected void handleSpeedStepMode(int newMode) {
+    protected void handleSpeedStepMode(SpeedStepMode newMode) {
         throttle.setSpeedStepMode(newMode);
     }
 
@@ -748,7 +785,12 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
     protected void handleRequest(String inPackage) {
         switch (inPackage.charAt(0)) {
             case 'V': {
-                sendCurrentSpeed(throttle);
+                if(lastSentSpeed.isEmpty()){
+                   // send the current speed only
+                   // if we aren't waiting for the back end
+                   // to update the speed.
+                   sendCurrentSpeed(throttle);
+                }
                 break;
             }
             case 'R': {
@@ -768,6 +810,25 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
                 break;
         }
 
+    }
+
+
+    private static SpeedStepMode decodeSpeedStepMode(String mode) {
+        // NOTE: old speed step modes use the original numeric values
+        // from when speed step modes were in DccThrottle. If the input does not match
+        // any of the old modes, decode based on the new speed step names.
+        if(mode.equals("1"))  {
+            return SpeedStepMode.NMRA_DCC_128;
+        } else if(mode.equals("2")) {
+            return SpeedStepMode.NMRA_DCC_28;
+        } else if(mode.equals("4")) {
+            return SpeedStepMode.NMRA_DCC_27;
+        } else if(mode.equals("8")) {
+            return SpeedStepMode.NMRA_DCC_14;
+        } else if(mode.equals("16")) {
+            return SpeedStepMode.MOTOROLA_28;
+        }
+        return SpeedStepMode.getByName(mode);
     }
 
     private final static Logger log = LoggerFactory.getLogger(ThrottleController.class);

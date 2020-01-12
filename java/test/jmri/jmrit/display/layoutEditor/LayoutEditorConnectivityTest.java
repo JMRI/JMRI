@@ -298,9 +298,9 @@ public class LayoutEditorConnectivityTest {
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalSensorManager();
-        JUnitUtil.initShutDownManager();
     }
 
     @After

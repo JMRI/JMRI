@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 /**
  * User interface frame for creating and editing "OS Indicator" logic on USS CTC
  * machines.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2007
  */
 public class OsIndicatorPanel extends BasePanel {
@@ -34,31 +34,31 @@ public class OsIndicatorPanel extends BasePanel {
         // add output name field
         JPanel p3 = new JPanel();
 
-        label = new JLabel(rb.getString("LabelOutputName"));
-        label.setToolTipText(rb.getString("ToolTipOsIndicatorOutput"));
+        label = new JLabel(Bundle.getMessage("LabelOutputName"));  // NOI18N
+        label.setToolTipText(Bundle.getMessage("ToolTipOsIndicatorOutput"));  // NOI18N
         p3.add(label);
         outputName = new JTextField(12);
-        outputName.setToolTipText(rb.getString("ToolTipOsIndicatorOutput"));
+        outputName.setToolTipText(Bundle.getMessage("ToolTipOsIndicatorOutput"));  // NOI18N
         p3.add(outputName);
         p2xs.add(p3);
 
         // add sensor name field
         p3 = new JPanel();
-        label = new JLabel(rb.getString("LabelSensorName"));
-        label.setToolTipText(rb.getString("ToolTipOsIndicatorSensor"));
+        label = new JLabel(Bundle.getMessage("LabelSensorName"));  // NOI18N
+        label.setToolTipText(Bundle.getMessage("ToolTipOsIndicatorSensor"));  // NOI18N
         p3.add(label);
         sensorName = new JTextField(12);
-        sensorName.setToolTipText(rb.getString("ToolTipOsIndicatorSensor"));
+        sensorName.setToolTipText(Bundle.getMessage("ToolTipOsIndicatorSensor"));  // NOI18N
         p3.add(sensorName);
         p2xs.add(p3);
 
         // add lock name field
         p3 = new JPanel();
-        label = new JLabel(rb.getString("LabelLockName"));
-        label.setToolTipText(rb.getString("ToolTipOsIndicatorLock"));
+        label = new JLabel(Bundle.getMessage("LabelLockName"));
+        label.setToolTipText(Bundle.getMessage("ToolTipOsIndicatorLock"));  // NOI18N
         p3.add(label);
         lockName = new JTextField(12);
-        lockName.setToolTipText(rb.getString("ToolTipOsIndicatorLock"));
+        lockName.setToolTipText(Bundle.getMessage("ToolTipOsIndicatorLock"));  // NOI18N
         p3.add(lockName);
         p2xs.add(p3);
 
@@ -68,7 +68,7 @@ public class OsIndicatorPanel extends BasePanel {
         p2xs = new JPanel();
         p2xs.setLayout(new BoxLayout(p2xs, BoxLayout.Y_AXIS));
 
-        viewButton = new JButton(rb.getString("ButtonView"));
+        viewButton = new JButton(Bundle.getMessage("ButtonView"));  // NOI18N
         viewButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -76,7 +76,7 @@ public class OsIndicatorPanel extends BasePanel {
             }
         });
         p2xs.add(viewButton);
-        addButton = new JButton(rb.getString("ButtonAddUpdate"));
+        addButton = new JButton(Bundle.getMessage("ButtonAddUpdate"));  // NOI18N
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -92,7 +92,7 @@ public class OsIndicatorPanel extends BasePanel {
         // validate
         ok &= validateTurnout(outputName.getText());
         ok &= validateSensor(sensorName.getText());
-        if (!lockName.getText().equals("")) {
+        if (!lockName.getText().isEmpty()) {
             ok &= validateMemory(lockName.getText());
         }
 
@@ -111,7 +111,7 @@ public class OsIndicatorPanel extends BasePanel {
             sensorName.setText(o.getOsSensorName());
             lockName.setText(o.getLockName());
         } catch (jmri.JmriException e) {
-            log.error("Exception trying to find existing OS Indicator: " + e);
+            log.error("Exception trying to find existing OS Indicator: " + e);  // NOI18N
         }
     }
 

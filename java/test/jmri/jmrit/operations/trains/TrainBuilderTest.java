@@ -5,6 +5,7 @@ import java.io.File;
 import java.util.List;
 import java.util.ResourceBundle;
 import jmri.InstanceManager;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
@@ -31,11 +32,9 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.timetable.TrainSchedule;
-import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
+import jmri.jmrit.operations.trains.schedules.TrainSchedule;
+import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import jmri.util.JUnitOperationsUtil;
-import jmri.util.JUnitUtil;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -49,7 +48,7 @@ import org.junit.Test;
  *
  * @author Bob Coleman Copyright (C) 2008, 2009
  */
-public class TrainBuilderTest {
+public class TrainBuilderTest extends OperationsTestCase {
 
     private final int DIRECTION_ALL = Location.EAST + Location.WEST + Location.NORTH + Location.SOUTH;
 
@@ -498,19 +497,19 @@ public class TrainBuilderTest {
         train.setRoute(route);
         train.setNumberEngines("2");
 
-        Engine e1 = emanager.newEngine("E", "1");
+        Engine e1 = emanager.newRS("E", "1");
         e1.setModel("GP40");
         e1.setLocation(depart, departureTrack);
 
-        Engine e2 = emanager.newEngine("E", "2");
+        Engine e2 = emanager.newRS("E", "2");
         e2.setModel("GP40");
         e2.setLocation(depart, departureTrack);
 
-        Engine e3 = emanager.newEngine("E", "3");
+        Engine e3 = emanager.newRS("E", "3");
         e3.setModel("GP40");
         e3.setLocation(depart, departureTrack);
 
-        Engine e4 = emanager.newEngine("E", "4");
+        Engine e4 = emanager.newRS("E", "4");
         e4.setModel("GP40");
         e4.setLocation(depart, departureTrack);
 
@@ -2255,7 +2254,7 @@ public class TrainBuilderTest {
         c7.setPickupScheduleId(schedules.get(1).getId());
         c8.setPickupScheduleId(schedules.get(1).getId());
 
-        Assert.assertEquals("Active schedule", "", tmanager.getTrainScheduleActiveId());
+        Assert.assertEquals("Active schedule", "", trainScheduleManager.getTrainScheduleActiveId());
 
         // define the train
         Train train1 = tmanager.newTrain("TestCarScheduledPickup1");
@@ -2281,8 +2280,8 @@ public class TrainBuilderTest {
 
         // now set the day to Monday
         Assert.assertEquals("Train schedule day", "Monday", schedules.get(1).getName());
-        tmanager.setTrainSecheduleActiveId(schedules.get(1).getId());
-        Assert.assertEquals("Active schedule", "2", tmanager.getTrainScheduleActiveId());
+        trainScheduleManager.setTrainScheduleActiveId(schedules.get(1).getId());
+        Assert.assertEquals("Active schedule", "2", trainScheduleManager.getTrainScheduleActiveId());
 
         train1.reset();
         new TrainBuilder().build(train1);
@@ -2305,7 +2304,7 @@ public class TrainBuilderTest {
         c8.setPickupScheduleId(schedules.get(1).getId());
 
         // change pick up day to any day of the week
-        tmanager.setTrainSecheduleActiveId(TrainSchedule.ANY);
+        trainScheduleManager.setTrainScheduleActiveId(TrainSchedule.ANY);
 
         train1.reset();
         new TrainBuilder().build(train1);
@@ -2826,7 +2825,7 @@ public class TrainBuilderTest {
         Location l3 = lmanager.getLocationById("3"); // staging
         Track l1s1 = l1.getTrackById("1s1");
         Track l1s2 = l1.getTrackById("1s2");
-        Track l2s1 = l2.getTrackById("2s1");
+        Track l2s1 = l2.getTrackById("20s1");
         Track l3s1 = l3.getTrackById("3s1");
         Track l3s2 = l3.getTrackById("3s2");
         Route route1 = rmanager.getRouteById("1");
@@ -3058,7 +3057,7 @@ public class TrainBuilderTest {
 
         // provide a destination for the car with FRED out of staging
         Location locationNI = lmanager.getLocationById("20");
-        Track yardNI = locationNI.getTrackById("2s1");
+        Track yardNI = locationNI.getTrackById("20s1");
 
         // car with FRED and no changes in trains route, has to go terminal
         train1.reset();
@@ -3221,7 +3220,7 @@ public class TrainBuilderTest {
         train1.reset();
         Assert.assertTrue(new TrainBuilder().build(train1));
         Assert.assertEquals("Train status", true, train1.isBuilt());
-        
+
         // track doesn't accept Boxcar, so final destination should be removed
         Assert.assertEquals("car final destination", null, c4.getFinalDestination());
         Assert.assertEquals("car final destination track", null, c4.getFinalDestinationTrack());
@@ -4005,7 +4004,7 @@ public class TrainBuilderTest {
         Location l3 = lmanager.getLocationById("3");
         Track l1s1 = l1.getTrackById("1s1");
         Track l1s2 = l1.getTrackById("1s2");
-        Track l2s1 = l2.getTrackById("2s1");
+        Track l2s1 = l2.getTrackById("20s1");
         Track l3s1 = l3.getTrackById("3s1");
         Track l3s2 = l3.getTrackById("3s2");
         Route route1 = rmanager.getRouteById("1");
@@ -4607,7 +4606,7 @@ public class TrainBuilderTest {
         Location l3 = lmanager.getLocationById("3");
         Track l1s1 = l1.getTrackById("1s1");
 
-        Track l2s1 = l2.getTrackById("2s1");
+        Track l2s1 = l2.getTrackById("20s1");
         Track l3s1 = l3.getTrackById("3s1");
         Track l3s2 = l3.getTrackById("3s2");
 
@@ -4756,7 +4755,7 @@ public class TrainBuilderTest {
         Track northEnd3 = northEndStaging.addTrack("North End 3", Track.STAGING);
         northEnd3.setLength(500);
 
-        Track yard = northIndustries.getTrackById("2s1");
+        Track yard = northIndustries.getTrackById("20s1");
 
         // create a route that returns to staging
         Route route = rmanager.newRoute("NorthEnd-NI-NorthEnd");
@@ -4826,7 +4825,7 @@ public class TrainBuilderTest {
         Track northEndStaging1 = northEndStaging.getTrackByName("North End 1", Track.STAGING);
 
         Location northIndustries = lmanager.getLocationById("20");
-        Track niYard = northIndustries.getTrackById("2s1");
+        Track niYard = northIndustries.getTrackById("20s1");
 
         Location southEndStaging = lmanager.getLocationById("3");
         Track southEndStaging1 = southEndStaging.getTrackByName("South End 1", Track.STAGING);
@@ -4924,7 +4923,7 @@ public class TrainBuilderTest {
         Location northIndustries = lmanager.getLocationById("20");
 
         Track northEndStaging1 = northEndStaging.getTrackById("1s1");
-        Track yardNI = northIndustries.getTrackById("2s1");
+        Track yardNI = northIndustries.getTrackById("20s1");
 
         // create a route that returns to staging
         Route route = rmanager.newRoute("NorthEnd-NI-NorthEnd");
@@ -4977,6 +4976,86 @@ public class TrainBuilderTest {
     }
 
     /**
+     * Test caboose generate custom load returning to same staging track
+     */
+    @Test
+    public void testStagingtoStagingTrainTurnCabooseWithCustomLoad() {
+
+        Setup.setBuildAggressive(true);
+
+        JUnitOperationsUtil.initOperationsData();
+
+        Car c1 = cmanager.getByRoadAndNumber("CP", "C10099");
+        Car c2 = cmanager.getByRoadAndNumber("CP", "C20099");
+        Car c3 = cmanager.getByRoadAndNumber("CP", "X10001");
+        Car c4 = cmanager.getByRoadAndNumber("CP", "X10002");
+
+        Car c7 = cmanager.getByRoadAndNumber("CP", "777");
+        Car c8 = cmanager.getByRoadAndNumber("CP", "888");
+        Car c9 = cmanager.getByRoadAndNumber("CP", "99");
+
+        Location northEndStaging = lmanager.getLocationById("1");
+        Location northIndustries = lmanager.getLocationById("20");
+
+        Track northEndStaging1 = northEndStaging.getTrackById("1s1");
+        // test requires only one staging track
+        northEndStaging.deleteTrack(northEndStaging.getTrackById("1s2"));
+        Assert.assertEquals("confirm only one staging track", 1, northEndStaging.getTrackList().size());
+
+        Track yardNI = northIndustries.getTrackById("20s1");
+
+        // create a route that returns to staging
+        Route route = rmanager.newRoute("NorthEnd-NI-NorthEnd");
+        route.addLocation(northEndStaging);
+        route.addLocation(northIndustries);
+        route.addLocation(northEndStaging);
+
+        Train train1 = tmanager.newTrain("TestStagingtoStagingTrainTurn");
+        train1.setRoute(route);
+
+        // allow train to return to the same track
+        Setup.setStagingTrackImmediatelyAvail(true);
+        // allow staging to generate custom loads for cars
+        northEndStaging1.setAddCustomLoadsEnabled(true);
+
+        Assert.assertTrue(new TrainBuilder().build(train1));
+        Assert.assertTrue("Train 1 status", train1.isBuilt());
+
+        // confirm car destinations
+        Assert.assertEquals("destination track", northEndStaging1, c1.getDestinationTrack());
+        Assert.assertEquals("destination track", northEndStaging1, c2.getDestinationTrack());
+        Assert.assertEquals("destination track", yardNI, c3.getDestinationTrack());
+        Assert.assertEquals("destination track", yardNI, c4.getDestinationTrack());
+        Assert.assertEquals("destination track", northEndStaging1, c7.getDestinationTrack());
+        Assert.assertEquals("destination track", northEndStaging1, c8.getDestinationTrack());
+        Assert.assertEquals("destination track", northEndStaging1, c9.getDestinationTrack());
+
+        // don't allow "E" or "L" loads into staging
+        northEndStaging1.setLoadOption(Track.EXCLUDE_LOADS);
+        northEndStaging1.addLoadName("E");
+        northEndStaging1.addLoadName("L");
+
+        cld.addName("Caboose", "Crew");
+
+        train1.reset();
+        Assert.assertTrue(new TrainBuilder().build(train1));
+        Assert.assertTrue("Train 1 status", train1.isBuilt());
+
+        Assert.assertEquals("Confirm caboose load", "Crew", c1.getLoadName());
+        Assert.assertEquals("Confirm caboose load", "Crew", c2.getLoadName());
+
+        // confirm car destinations
+        Assert.assertEquals("destination track", northEndStaging1, c1.getDestinationTrack());
+        Assert.assertEquals("destination track", northEndStaging1, c2.getDestinationTrack());
+        Assert.assertEquals("destination track", yardNI, c3.getDestinationTrack());
+        Assert.assertEquals("destination track", yardNI, c4.getDestinationTrack());
+        Assert.assertEquals("destination track", null, c7.getDestinationTrack());
+        Assert.assertEquals("destination track", null, c8.getDestinationTrack());
+        Assert.assertEquals("destination track", null, c9.getDestinationTrack());
+
+    }
+
+    /**
      * Test to see if staging track becomes available once train is built in
      * aggressive mode
      */
@@ -5004,7 +5083,7 @@ public class TrainBuilderTest {
         Location northIndustries = lmanager.getLocationById("20");
         Location southEndStaging = lmanager.getLocationById("3");
 
-        Track yardNI = northIndustries.getTrackById("2s1");
+        Track yardNI = northIndustries.getTrackById("20s1");
         Track southEndStaging1 = southEndStaging.getTrackById("3s1");
         Track southEndStaging2 = southEndStaging.getTrackById("3s2");
 
@@ -5199,7 +5278,7 @@ public class TrainBuilderTest {
         BufferedReader in = JUnitOperationsUtil.getBufferedReader(buildReport);
 
         // any changes to the build report could cause this to fail
-        Assert.assertEquals("confirm number of lines in build report", 506, in.lines().count());
+        Assert.assertEquals("confirm number of lines in build report", 459, in.lines().count());
 
         //TODO search and confirm limit message in build report
     }
@@ -5235,7 +5314,7 @@ public class TrainBuilderTest {
         BufferedReader in = JUnitOperationsUtil.getBufferedReader(buildReport);
 
         // any changes to the build report could cause this to fail
-        Assert.assertEquals("confirm number of lines in build report", 251, in.lines().count());
+        Assert.assertEquals("confirm number of lines in build report", 250, in.lines().count());
 
         //TODO search and confirm limit message in build report
     }
@@ -5285,7 +5364,7 @@ public class TrainBuilderTest {
         BufferedReader in = JUnitOperationsUtil.getBufferedReader(buildReport);
 
         // any changes to the build report could cause this to fail
-        Assert.assertEquals("confirm number of lines in build report", 376, in.lines().count());
+        Assert.assertEquals("confirm number of lines in build report", 375, in.lines().count());
 
         //TODO search and confirm limit message in build report
     }
@@ -5466,7 +5545,7 @@ public class TrainBuilderTest {
 
         // Create engines used
         Engine e1;
-        e1 = emanager.newEngine("CP", "5501");
+        e1 = emanager.newRS("CP", "5501");
         e1.setModel("GP30");
         e1.setMoves(5);
         // Test that default engine type is an acceptable type at all locations and tracks
@@ -5480,13 +5559,13 @@ public class TrainBuilderTest {
                 loc2trke1));
 
         Engine e2;
-        e2 = emanager.newEngine("CP", "5888");
+        e2 = emanager.newRS("CP", "5888");
         e2.setModel("GP40");
         Assert.assertEquals("Test Engine CP5888 SetLocation 2s4", "okay", e2.setLocation(loc2, loc2trke2));
 
         // Create cars used
         Car b1;
-        b1 = cmanager.newCar("CP", "81234567");
+        b1 = cmanager.newRS("CP", "81234567");
         b1.setTypeName(carTypes[1]);
         b1.setLength("40");
         b1.setLoadName("L");
@@ -5508,7 +5587,7 @@ public class TrainBuilderTest {
                 loc2, loc2trk4));
 
         Car b2;
-        b2 = cmanager.newCar("CP", "81234568");
+        b2 = cmanager.newRS("CP", "81234568");
         b2.setTypeName(carTypes[1]);
         b2.setLength("40");
         b2.setMoves(5);
@@ -5516,7 +5595,7 @@ public class TrainBuilderTest {
                 loc2trk4));
 
         Car b3;
-        b3 = cmanager.newCar("CP", "81234569");
+        b3 = cmanager.newRS("CP", "81234569");
         b3.setTypeName(carTypes[1]);
         b3.setLength("40");
         b3.setLoadName("Flour");
@@ -5525,7 +5604,7 @@ public class TrainBuilderTest {
                 loc2trk4));
 
         Car b4;
-        b4 = cmanager.newCar("CP", "81234566");
+        b4 = cmanager.newRS("CP", "81234566");
         b4.setTypeName(carTypes[1]);
         b4.setLength("40");
         b4.setLoadName("Bags");
@@ -5534,7 +5613,7 @@ public class TrainBuilderTest {
                 loc2trk4));
 
         Car b5;
-        b5 = cmanager.newCar("CP", "71234567");
+        b5 = cmanager.newRS("CP", "71234567");
         b5.setTypeName(carTypes[1]);
         b5.setLength("40");
         // b5.setLoad("E");
@@ -5542,7 +5621,7 @@ public class TrainBuilderTest {
                 loc2trk3));
 
         Car b6;
-        b6 = cmanager.newCar("CP", "71234568");
+        b6 = cmanager.newRS("CP", "71234568");
         b6.setTypeName(carTypes[1]);
         b6.setLength("40");
         // b6.setLoad("E");
@@ -5550,7 +5629,7 @@ public class TrainBuilderTest {
                 loc2trk3));
 
         Car b7;
-        b7 = cmanager.newCar("CP", "71234569");
+        b7 = cmanager.newRS("CP", "71234569");
         b7.setTypeName(carTypes[1]);
         b7.setLength("40");
         // b7.setLoad("E");
@@ -5558,7 +5637,7 @@ public class TrainBuilderTest {
                 loc2trk3));
 
         Car b8;
-        b8 = cmanager.newCar("CP", "71234566");
+        b8 = cmanager.newRS("CP", "71234566");
         b8.setTypeName(carTypes[1]);
         b8.setLength("40");
         Assert.assertEquals("Bob Test Test Car CP71234566 SetLocation 2s4", "okay", b8.setLocation(loc2,
@@ -5566,7 +5645,7 @@ public class TrainBuilderTest {
 
         // Create cars used
         Car c1;
-        c1 = cmanager.newCar("CP", "12345678");
+        c1 = cmanager.newRS("CP", "12345678");
         c1.setTypeName(Bundle.getMessage("Caboose"));
         c1.setLength("32");
         c1.setCaboose(true);
@@ -5580,7 +5659,7 @@ public class TrainBuilderTest {
                 .setLocation(loc2, loc2trkc1));
 
         Car c2;
-        c2 = cmanager.newCar("CP", "12345679");
+        c2 = cmanager.newRS("CP", "12345679");
         c2.setTypeName(Bundle.getMessage("Caboose"));
         c2.setLength("32");
         c2.setCaboose(true);
@@ -5676,7 +5755,7 @@ public class TrainBuilderTest {
         southEndStaging1.addLoadName("Flour");
 
         Location locationNI = lmanager.getLocationById("20");
-        Track yardNI = locationNI.getTrackById("2s1");
+        Track yardNI = locationNI.getTrackById("20s1");
 
         Car c1 = cmanager.getByRoadAndNumber("CP", "C10099"); // on staging track north end 1
         Car c2 = cmanager.getByRoadAndNumber("CP", "C20099"); // on staging track north end 1
@@ -5771,7 +5850,7 @@ public class TrainBuilderTest {
         Track northEndStaging2 = locationNorthEnd.getTrackById("1s2");
 
         Location locationNI = lmanager.getLocationById("20");
-        Track yardNI = locationNI.getTrackById("2s1");
+        Track yardNI = locationNI.getTrackById("20s1");
 
         Location locationSouthEnd = lmanager.getLocationById("3");
         Track southEndStaging1 = locationSouthEnd.getTrackById("3s1");
@@ -5853,7 +5932,7 @@ public class TrainBuilderTest {
         Track northEndStaging1 = locationNorthEnd.getTrackById("1s1");
 
         Location locationNI = lmanager.getLocationById("20");
-        Track yardNI = locationNI.getTrackById("2s1");
+        Track yardNI = locationNI.getTrackById("20s1");
         // eliminate NI yard as a possible destination
         yardNI.deleteTypeName("Boxcar");
 
@@ -6065,7 +6144,7 @@ public class TrainBuilderTest {
         Track northEndStaging1 = locationNorthEnd.getTrackById("1s1");
 
         Location locationNI = lmanager.getLocationById("20");
-        Track yardNI = locationNI.getTrackById("2s1");
+        Track yardNI = locationNI.getTrackById("20s1");
 
         Location locationSouthEnd = lmanager.getLocationById("3");
         Track southEndStaging1 = locationSouthEnd.getTrackById("3s1");
@@ -6142,7 +6221,7 @@ public class TrainBuilderTest {
         southEndStaging1.addLoadName("Steel");
 
         Location locationNI = lmanager.getLocationById("20");
-        Track yardNI = locationNI.getTrackById("2s1");
+        Track yardNI = locationNI.getTrackById("20s1");
 
         // cars in staging have "E" loads, inclusing caboose
         Car c1 = cmanager.getByRoadAndNumber("CP", "C10099"); // on staging track north end 1
@@ -8113,70 +8192,70 @@ public class TrainBuilderTest {
         // place two engines in a consist
         Consist con1 = emanager.newConsist("C1");
 
-        Engine e1 = emanager.newEngine("UP", "1");
+        Engine e1 = emanager.newRS("UP", "1");
         e1.setModel("GP40");
         e1.setConsist(con1);
-        Engine e2 = emanager.newEngine("SP", "2");
+        Engine e2 = emanager.newRS("SP", "2");
         e2.setModel("GP40");
         e2.setConsist(con1);
 
         // Set up three cabooses and six box cars
-        Car c1 = cmanager.newCar("UP", "1");
+        Car c1 = cmanager.newRS("UP", "1");
         c1.setTypeName(Bundle.getMessage("Caboose"));
         c1.setLength("32");
         c1.setMoves(10);
         c1.setCaboose(true);
 
-        Car c2 = cmanager.newCar("SP", "2");
+        Car c2 = cmanager.newRS("SP", "2");
         c2.setTypeName(Bundle.getMessage("Caboose"));
         c2.setLength("30");
         c2.setMoves(5);
         c2.setCaboose(true);
 
-        Car c3 = cmanager.newCar("NH", "3");
+        Car c3 = cmanager.newRS("NH", "3");
         c3.setTypeName(Bundle.getMessage("Caboose"));
         c3.setLength("33");
         c3.setCaboose(true);
 
-        Car c4 = cmanager.newCar("UP", "4");
+        Car c4 = cmanager.newRS("UP", "4");
         c4.setTypeName(carTypes[1]);
         c4.setLength("40");
         c4.setMoves(16);
         c4.setFred(true);
 
-        Car c5 = cmanager.newCar("SP", "5");
+        Car c5 = cmanager.newRS("SP", "5");
         c5.setTypeName(carTypes[1]);
         c5.setLength("40");
         c5.setMoves(8);
         c5.setFred(true);
 
-        Car c6 = cmanager.newCar("NH", "6");
+        Car c6 = cmanager.newRS("NH", "6");
         c6.setTypeName(carTypes[1]);
         c6.setLength("40");
         c6.setMoves(2);
         c6.setFred(true);
 
-        Car c7 = cmanager.newCar("UP", "7");
+        Car c7 = cmanager.newRS("UP", "7");
         c7.setTypeName(carTypes[5]);
         c7.setLength("40");
         c7.setMoves(5);
 
-        Car c8 = cmanager.newCar("SP", "8");
+        Car c8 = cmanager.newRS("SP", "8");
         c8.setTypeName(carTypes[1]);
         c8.setLength("40");
         c8.setMoves(4);
 
-        Car c9 = cmanager.newCar("NH", "9");
+        Car c9 = cmanager.newRS("NH", "9");
         c9.setTypeName(carTypes[1]);
         c9.setLength("40");
         c9.setMoves(3);
 
-        Car c10 = cmanager.newCar("NH", "10");
+        Car c10 = cmanager.newRS("NH", "10");
         c10.setTypeName(carTypes[1]);
         c10.setLength("40");
         c10.setMoves(10);
 
-        Car c11 = cmanager.newCar("SP", "11");
+        Car c11 = cmanager.newRS("SP", "11");
         c11.setTypeName(carTypes[1]);
         c11.setLength("40");
         c11.setMoves(3);
@@ -8503,70 +8582,70 @@ public class TrainBuilderTest {
         // place two engines in a consist
         Consist con1 = emanager.newConsist("C1");
 
-        Engine e1 = emanager.newEngine("NH", "1");
+        Engine e1 = emanager.newRS("NH", "1");
         e1.setModel("GP40");
         e1.setConsist(con1);
-        Engine e2 = emanager.newEngine("SP", "2");
+        Engine e2 = emanager.newRS("SP", "2");
         e2.setModel("GP40");
         e2.setConsist(con1);
 
         // Set up three cabooses and six box cars
-        Car c1 = cmanager.newCar("UP", "1");
+        Car c1 = cmanager.newRS("UP", "1");
         c1.setTypeName(Bundle.getMessage("Caboose"));
         c1.setLength("32");
         c1.setMoves(10);
         c1.setCaboose(true);
 
-        Car c2 = cmanager.newCar("SP", "2");
+        Car c2 = cmanager.newRS("SP", "2");
         c2.setTypeName(Bundle.getMessage("Caboose"));
         c2.setLength("30");
         c2.setMoves(5);
         c2.setCaboose(true);
 
-        Car c3 = cmanager.newCar("NH", "3");
+        Car c3 = cmanager.newRS("NH", "3");
         c3.setTypeName(Bundle.getMessage("Caboose"));
         c3.setLength("33");
         c3.setCaboose(true);
 
-        Car c4 = cmanager.newCar("UP", "4");
+        Car c4 = cmanager.newRS("UP", "4");
         c4.setTypeName(carTypes[1]);
         c4.setLength("40");
         c4.setMoves(16);
         c4.setFred(true);
 
-        Car c5 = cmanager.newCar("SP", "5");
+        Car c5 = cmanager.newRS("SP", "5");
         c5.setTypeName(carTypes[1]);
         c5.setLength("40");
         c5.setMoves(8);
         c5.setFred(true);
 
-        Car c6 = cmanager.newCar("NH", "6");
+        Car c6 = cmanager.newRS("NH", "6");
         c6.setTypeName(carTypes[1]);
         c6.setLength("40");
         c6.setMoves(2);
         c6.setFred(true);
 
-        Car c7 = cmanager.newCar("UP", "7");
+        Car c7 = cmanager.newRS("UP", "7");
         c7.setTypeName(carTypes[5]);
         c7.setLength("40");
         c7.setMoves(5);
 
-        Car c8 = cmanager.newCar("SP", "8");
+        Car c8 = cmanager.newRS("SP", "8");
         c8.setTypeName(carTypes[1]);
         c8.setLength("40");
         c8.setMoves(4);
 
-        Car c9 = cmanager.newCar("NH", "9");
+        Car c9 = cmanager.newRS("NH", "9");
         c9.setTypeName(carTypes[1]);
         c9.setLength("40");
         c9.setMoves(3);
 
-        Car c10 = cmanager.newCar("NH", "10");
+        Car c10 = cmanager.newRS("NH", "10");
         c10.setTypeName(carTypes[1]);
         c10.setLength("40");
         c10.setMoves(10);
 
-        Car c11 = cmanager.newCar("SP", "11");
+        Car c11 = cmanager.newRS("SP", "11");
         c11.setTypeName(carTypes[1]);
         c11.setLength("40");
         c11.setMoves(3);
@@ -8770,70 +8849,70 @@ public class TrainBuilderTest {
         // place two engines in a consist
         Consist con1 = emanager.newConsist("C1");
 
-        Engine e1 = emanager.newEngine("UP", "1");
+        Engine e1 = emanager.newRS("UP", "1");
         e1.setModel("GP40");
         e1.setConsist(con1);
-        Engine e2 = emanager.newEngine("SP", "2");
+        Engine e2 = emanager.newRS("SP", "2");
         e2.setModel("GP40");
         e2.setConsist(con1);
 
         // Set up three cabooses and six box cars
-        Car c1 = cmanager.newCar("NH", "1");
+        Car c1 = cmanager.newRS("NH", "1");
         c1.setTypeName(Bundle.getMessage("Caboose"));
         c1.setLength("32");
         c1.setMoves(10);
         c1.setCaboose(true);
 
-        Car c2 = cmanager.newCar("SP", "2");
+        Car c2 = cmanager.newRS("SP", "2");
         c2.setTypeName(Bundle.getMessage("Caboose"));
         c2.setLength("30");
         c2.setMoves(5);
         c2.setCaboose(true);
 
-        Car c3 = cmanager.newCar("NH", "3");
+        Car c3 = cmanager.newRS("NH", "3");
         c3.setTypeName(Bundle.getMessage("Caboose"));
         c3.setLength("33");
         c3.setCaboose(true);
 
-        Car c4 = cmanager.newCar("UP", "4");
+        Car c4 = cmanager.newRS("UP", "4");
         c4.setTypeName(carTypes[1]);
         c4.setLength("40");
         c4.setMoves(16);
         c4.setFred(true);
 
-        Car c5 = cmanager.newCar("SP", "5");
+        Car c5 = cmanager.newRS("SP", "5");
         c5.setTypeName(carTypes[1]);
         c5.setLength("40");
         c5.setMoves(8);
         c5.setFred(true);
 
-        Car c6 = cmanager.newCar("NH", "6");
+        Car c6 = cmanager.newRS("NH", "6");
         c6.setTypeName(carTypes[1]);
         c6.setLength("40");
         c6.setMoves(2);
         c6.setFred(true);
 
-        Car c7 = cmanager.newCar("UP", "7");
+        Car c7 = cmanager.newRS("UP", "7");
         c7.setTypeName(carTypes[5]);
         c7.setLength("40");
         c7.setMoves(5);
 
-        Car c8 = cmanager.newCar("SP", "8");
+        Car c8 = cmanager.newRS("SP", "8");
         c8.setTypeName(carTypes[1]);
         c8.setLength("40");
         c8.setMoves(4);
 
-        Car c9 = cmanager.newCar("NH", "9");
+        Car c9 = cmanager.newRS("NH", "9");
         c9.setTypeName(carTypes[1]);
         c9.setLength("40");
         c9.setMoves(3);
 
-        Car c10 = cmanager.newCar("NH", "10");
+        Car c10 = cmanager.newRS("NH", "10");
         c10.setTypeName(carTypes[1]);
         c10.setLength("40");
         c10.setMoves(10);
 
-        Car c11 = cmanager.newCar("SP", "11");
+        Car c11 = cmanager.newRS("SP", "11");
         c11.setTypeName(carTypes[1]);
         c11.setLength("40");
         c11.setMoves(3);
@@ -9045,14 +9124,14 @@ public class TrainBuilderTest {
 
         // Set the track length too short missing one set of couplers
         bostonEngineYard
-                .setLength(Integer.parseInt(e1.getLength()) + Integer.parseInt(e2.getLength()) + Engine.COUPLER);
+                .setLength(Integer.parseInt(e1.getLength()) + Integer.parseInt(e2.getLength()) + Engine.COUPLERS);
         train1.reset();
         Assert.assertFalse(new TrainBuilder().build(train1));
         Assert.assertEquals("Train 1 After Build 20.1", false, train1.isBuilt());
 
         // restore track length
         bostonEngineYard
-                .setLength(Integer.parseInt(e1.getLength()) + Integer.parseInt(e2.getLength()) + 2 * Engine.COUPLER);
+                .setLength(Integer.parseInt(e1.getLength()) + Integer.parseInt(e2.getLength()) + 2 * Engine.COUPLERS);
         train1.reset();
         Assert.assertTrue(new TrainBuilder().build(train1));
         Assert.assertEquals("Train 1 After Build 20.2", true, train1.isBuilt());
@@ -9155,13 +9234,13 @@ public class TrainBuilderTest {
         // create 2 consists and a single engine for testing
         Consist con1 = emanager.newConsist("C1");
 
-        Engine e1 = emanager.newEngine("UP", "1");
+        Engine e1 = emanager.newRS("UP", "1");
         e1.setModel("GP30");
         e1.setOwner("AT");
         e1.setBuilt("1957");
         e1.setConsist(con1);
         e1.setMoves(5);
-        Engine e2 = emanager.newEngine("SP", "2");
+        Engine e2 = emanager.newRS("SP", "2");
         e2.setModel("GP30");
         e2.setOwner("AT");
         e2.setBuilt("1957");
@@ -9169,20 +9248,20 @@ public class TrainBuilderTest {
         e2.setMoves(5);
 
         // one engine
-        Engine e3 = emanager.newEngine("SP", "3");
+        Engine e3 = emanager.newRS("SP", "3");
         e3.setModel("GP40");
         e3.setOwner("DAB");
         e3.setBuilt("1957");
 
         Consist con2 = emanager.newConsist("C2");
 
-        Engine e4 = emanager.newEngine("UP", "10");
+        Engine e4 = emanager.newRS("UP", "10");
         e4.setModel("GP40");
         e4.setOwner("DAB");
         e4.setBuilt("1944");
         e4.setConsist(con2);
         e4.setMoves(20);
-        Engine e5 = emanager.newEngine("SP", "20");
+        Engine e5 = emanager.newRS("SP", "20");
         e5.setModel("GP40");
         e5.setOwner("DAB");
         e5.setBuilt("1944");
@@ -9192,19 +9271,19 @@ public class TrainBuilderTest {
         // 3 engine consist
         Consist con3 = emanager.newConsist("C3");
 
-        Engine e6 = emanager.newEngine("UP", "100");
+        Engine e6 = emanager.newRS("UP", "100");
         e6.setModel("GP40");
         e6.setOwner("DAB");
         e6.setBuilt("1944");
         e6.setConsist(con3);
         e6.setMoves(2);
-        Engine e7 = emanager.newEngine("SP", "200");
+        Engine e7 = emanager.newRS("SP", "200");
         e7.setModel("GP40");
         e7.setOwner("DAB");
         e7.setBuilt("1944");
         e7.setConsist(con3);
         e7.setMoves(2);
-        Engine e8 = emanager.newEngine("SP", "300");
+        Engine e8 = emanager.newRS("SP", "300");
         e8.setModel("GP40");
         e8.setOwner("DAB");
         e8.setBuilt("1944");
@@ -9212,7 +9291,7 @@ public class TrainBuilderTest {
         e8.setMoves(2);
 
         // Set up three cabooses and six box cars
-        Car c1 = cmanager.newCar("PU", "1");
+        Car c1 = cmanager.newRS("PU", "1");
         c1.setTypeName(Bundle.getMessage("Caboose"));
         c1.setLength("32");
         c1.setMoves(10);
@@ -9220,7 +9299,7 @@ public class TrainBuilderTest {
         c1.setBuilt("1943");
         c1.setCaboose(true);
 
-        Car c2 = cmanager.newCar("SP", "2");
+        Car c2 = cmanager.newRS("SP", "2");
         c2.setTypeName(Bundle.getMessage("Caboose"));
         c2.setLength("30");
         c2.setMoves(5);
@@ -9228,7 +9307,7 @@ public class TrainBuilderTest {
         c2.setBuilt("1957");
         c2.setCaboose(true);
 
-        Car c3 = cmanager.newCar("UP", "3");
+        Car c3 = cmanager.newRS("UP", "3");
         c3.setTypeName(Bundle.getMessage("Caboose"));
         c3.setLength("33");
         c3.setMoves(0);
@@ -9236,7 +9315,7 @@ public class TrainBuilderTest {
         c3.setBuilt("1944");
         c3.setCaboose(true);
 
-        Car c4 = cmanager.newCar("UP", "4");
+        Car c4 = cmanager.newRS("UP", "4");
         c4.setTypeName(carTypes[1]);
         c4.setLength("40");
         c4.setMoves(16);
@@ -9244,7 +9323,7 @@ public class TrainBuilderTest {
         c4.setBuilt("1958");
         c4.setFred(true);
 
-        Car c5 = cmanager.newCar("SP", "5");
+        Car c5 = cmanager.newRS("SP", "5");
         c5.setTypeName(carTypes[1]);
         c5.setLength("40");
         c5.setMoves(8);
@@ -9252,7 +9331,7 @@ public class TrainBuilderTest {
         c5.setBuilt("1958");
         c5.setFred(true);
 
-        Car c6 = cmanager.newCar("NH", "6");
+        Car c6 = cmanager.newRS("NH", "6");
         c6.setTypeName(carTypes[1]);
         c6.setLength("40");
         c6.setMoves(2);
@@ -9260,35 +9339,35 @@ public class TrainBuilderTest {
         c6.setBuilt("1958");
         c6.setFred(true);
 
-        Car c7 = cmanager.newCar("UP", "7");
+        Car c7 = cmanager.newRS("UP", "7");
         c7.setTypeName(carTypes[5]);
         c7.setLength("40");
         c7.setMoves(5);
         c7.setOwner("DAB");
         c7.setBuilt("1958");
 
-        Car c8 = cmanager.newCar("SP", "8");
+        Car c8 = cmanager.newRS("SP", "8");
         c8.setTypeName(carTypes[1]);
         c8.setLength("40");
         c8.setMoves(4);
         c8.setOwner("DAB");
         c8.setBuilt("1958");
 
-        Car c9 = cmanager.newCar("NH", "9");
+        Car c9 = cmanager.newRS("NH", "9");
         c9.setTypeName(carTypes[1]);
         c9.setLength("40");
         c9.setMoves(3);
         c9.setOwner("DAB");
         c9.setBuilt("1944");
 
-        Car c10 = cmanager.newCar("NH", "10");
+        Car c10 = cmanager.newRS("NH", "10");
         c10.setTypeName(carTypes[1]);
         c10.setLength("40");
         c10.setMoves(10);
         c10.setOwner("DAB");
         c10.setBuilt("1958");
 
-        Car c11 = cmanager.newCar("SP", "11");
+        Car c11 = cmanager.newRS("SP", "11");
         c11.setTypeName(carTypes[1]);
         c11.setLength("40");
         c11.setMoves(3);
@@ -9933,7 +10012,7 @@ public class TrainBuilderTest {
 
         Location boston = route.getRouteLocationBySequenceNumber(2).getLocation();
         Track bostonSpur1 = boston.getTrackByName("Boston Spur 1", null);
-        
+
         Location chelmsford = route.getTerminatesRouteLocation().getLocation();
         Track chelmsfordSpur1 = chelmsford.getTrackByName("Chelmsford Spur 1", null);
 
@@ -11030,14 +11109,14 @@ public class TrainBuilderTest {
         // create a 2 engine consist for departure
         Consist con1 = emanager.newConsist("C1");
 
-        Engine e1 = emanager.newEngine("UP", "1");
+        Engine e1 = emanager.newRS("UP", "1");
         e1.setModel("GP30");
         e1.setOwner("AT");
         e1.setBuilt("1957");
         e1.setConsist(con1);
         e1.setMoves(5);
 
-        Engine e2 = emanager.newEngine("SP", "2");
+        Engine e2 = emanager.newRS("SP", "2");
         e2.setModel("GP30");
         e2.setOwner("AT");
         e2.setBuilt("1957");
@@ -11045,36 +11124,36 @@ public class TrainBuilderTest {
         e2.setMoves(5);
 
         // one engine
-        Engine e3 = emanager.newEngine("SP", "3");
+        Engine e3 = emanager.newRS("SP", "3");
         e3.setModel("GP40");
         e3.setBuilt("1957");
 
-        Engine e4 = emanager.newEngine("UP", "40");
+        Engine e4 = emanager.newRS("UP", "40");
         e4.setModel("GP40");
         e4.setBuilt("1944");
         e4.setMoves(20);
 
-        Engine e5 = emanager.newEngine("SP", "50");
+        Engine e5 = emanager.newRS("SP", "50");
         e5.setModel("GP40");
         e5.setBuilt("1944");
         e5.setMoves(20);
 
-        Engine e6 = emanager.newEngine("UP", "600");
+        Engine e6 = emanager.newRS("UP", "600");
         e6.setModel("GP40");
         e6.setBuilt("1944");
         e6.setMoves(2);
 
-        Engine e7 = emanager.newEngine("SP", "700");
+        Engine e7 = emanager.newRS("SP", "700");
         e7.setModel("GP40");
         e7.setBuilt("1944");
         e7.setMoves(2);
 
-        Engine e8 = emanager.newEngine("SP", "800");
+        Engine e8 = emanager.newRS("SP", "800");
         e8.setModel("GP40");
         e8.setBuilt("1944");
         e8.setMoves(20);
 
-        Engine e9 = emanager.newEngine("SP", "900");
+        Engine e9 = emanager.newRS("SP", "900");
         e9.setModel("GP30");
         e9.setBuilt("1944");
         e9.setMoves(2);
@@ -11208,39 +11287,39 @@ public class TrainBuilderTest {
         westfordYard.setLength(200);
 
         // create and place cabooses
-        Car c1 = cmanager.newCar("ABC", "1");
+        Car c1 = cmanager.newRS("ABC", "1");
         c1.setTypeName(Bundle.getMessage("Caboose"));
         c1.setLength("32");
         c1.setCaboose(true);
         Assert.assertEquals("Place c1", Track.OKAY, c1.setLocation(acton, actonYard));
 
         // car with FRED at departure
-        Car f1 = cmanager.newCar("CBA", "1");
+        Car f1 = cmanager.newRS("CBA", "1");
         f1.setTypeName(carTypes[1]);
         f1.setLength("32");
         f1.setFred(true);
         Assert.assertEquals("Place f1", Track.OKAY, f1.setLocation(acton, actonYard));
 
-        Car c2 = cmanager.newCar("ABC", "2");
+        Car c2 = cmanager.newRS("ABC", "2");
         c2.setTypeName(Bundle.getMessage("Caboose"));
         c2.setLength("32");
         c2.setCaboose(true);
         Assert.assertEquals("Place c2", Track.OKAY, c2.setLocation(boston, bostonYard));
 
-        Car c3 = cmanager.newCar("XYZ", "3");
+        Car c3 = cmanager.newRS("XYZ", "3");
         c3.setTypeName(Bundle.getMessage("Caboose"));
         c3.setLength("32");
         c3.setCaboose(true);
         c2.setMoves(10);
         Assert.assertEquals("Place c3", Track.OKAY, c3.setLocation(boston, bostonYard));
 
-        Car c4 = cmanager.newCar("ABC", "4");
+        Car c4 = cmanager.newRS("ABC", "4");
         c4.setTypeName(Bundle.getMessage("Caboose"));
         c4.setLength("32");
         c4.setCaboose(true);
         Assert.assertEquals("Place c4", Track.OKAY, c4.setLocation(harvard, harvardYard1));
 
-        Car c5 = cmanager.newCar("STU", "5");
+        Car c5 = cmanager.newRS("STU", "5");
         c5.setTypeName(Bundle.getMessage("Caboose"));
         c5.setLength("32");
         c5.setCaboose(true);
@@ -11396,7 +11475,7 @@ public class TrainBuilderTest {
         Location essex = route.getTerminatesRouteLocation().getLocation();
 
         // create 4 new engine models with different HP ratings
-        Engine e1 = emanager.newEngine("UP", "1");
+        Engine e1 = emanager.newRS("UP", "1");
         e1.setModel("GP30-200");
         e1.setTypeName("Diesel");
         e1.setHp("200");
@@ -11404,7 +11483,7 @@ public class TrainBuilderTest {
         e1.setWeightTons("100");
         e1.setMoves(20);
 
-        Engine e2 = emanager.newEngine("SP", "2");
+        Engine e2 = emanager.newRS("SP", "2");
         e2.setModel("GP30-400");
         e2.setTypeName("Diesel");
         e2.setHp("400");
@@ -11412,7 +11491,7 @@ public class TrainBuilderTest {
         e2.setWeightTons("110");
         e2.setMoves(15);
 
-        Engine e3 = emanager.newEngine("SP", "3");
+        Engine e3 = emanager.newRS("SP", "3");
         e3.setModel("GP40-800");
         e3.setTypeName("Diesel");
         e3.setHp("800");
@@ -11420,7 +11499,7 @@ public class TrainBuilderTest {
         e3.setWeightTons("120");
         e3.setMoves(10);
 
-        Engine e4 = emanager.newEngine("UP", "10");
+        Engine e4 = emanager.newRS("UP", "10");
         e4.setModel("GP40-1600");
         e4.setTypeName("Diesel");
         e4.setHp("1600");
@@ -11429,7 +11508,7 @@ public class TrainBuilderTest {
         e4.setMoves(5);
 
         // place this engine later in the route
-        Engine e5 = emanager.newEngine("SP", "5");
+        Engine e5 = emanager.newRS("SP", "5");
         e5.setModel("GP40-800");
         e5.setTypeName("Diesel");
         e5.setHp("800");
@@ -11496,7 +11575,7 @@ public class TrainBuilderTest {
         Assert.assertEquals("e3 assigned to train", essex, e3.getDestination());
         Assert.assertEquals("e4 assigned to train", essex, e4.getDestination());
     }
-    
+
     /**
      * Test the automatic assignment of engines to a train based on HP
      * requirements. There can be two engine changes in a train's route
@@ -11513,14 +11592,14 @@ public class TrainBuilderTest {
 
         Location boston = lmanager.getLocationByName("Boston");
         Track bostonYard1 = boston.getTrackByName("Boston Yard 1", Track.YARD);
-        
+
         Location danvers = lmanager.getLocationByName("Danvers");
         Track danversYard1 = danvers.getTrackByName("Danvers Yard 1", Track.YARD);
 
         Location essex = route.getTerminatesRouteLocation().getLocation();
 
         // create 4 new engine models with different HP ratings
-        Engine e1 = emanager.newEngine("UP", "1");
+        Engine e1 = emanager.newRS("UP", "1");
         e1.setModel("GP30-200");
         e1.setTypeName("Diesel");
         e1.setHp("200");
@@ -11528,7 +11607,7 @@ public class TrainBuilderTest {
         e1.setWeightTons("100");
         e1.setMoves(6);
 
-        Engine e2 = emanager.newEngine("SP", "2");
+        Engine e2 = emanager.newRS("SP", "2");
         e2.setModel("GP30-400");
         e2.setTypeName("Diesel");
         e2.setHp("400");
@@ -11536,7 +11615,7 @@ public class TrainBuilderTest {
         e2.setWeightTons("110");
         e2.setMoves(5);
 
-        Engine e3 = emanager.newEngine("SP", "3");
+        Engine e3 = emanager.newRS("SP", "3");
         e3.setModel("GP40-800");
         e3.setTypeName("Diesel");
         e3.setHp("800");
@@ -11544,7 +11623,7 @@ public class TrainBuilderTest {
         e3.setWeightTons("120");
         e3.setMoves(10);
 
-        Engine e4 = emanager.newEngine("UP", "4");
+        Engine e4 = emanager.newRS("UP", "4");
         e4.setModel("GP40-1600");
         e4.setTypeName("Diesel");
         e4.setHp("1600");
@@ -11553,36 +11632,36 @@ public class TrainBuilderTest {
         e4.setMoves(15);
 
         // place the next 4 engines later in the route at Boston
-        Engine e5 = emanager.newEngine("SP", "5");
+        Engine e5 = emanager.newRS("SP", "5");
         e5.setModel("GP30-400");
-        e5.setMoves(10);     
-     
-        Engine e6 = emanager.newEngine("UP", "6");
+        e5.setMoves(10);
+
+        Engine e6 = emanager.newRS("UP", "6");
         e6.setModel("GP30-400");
         e6.setMoves(5);
-        
-        Engine e7 = emanager.newEngine("UP", "7");
+
+        Engine e7 = emanager.newRS("UP", "7");
         e7.setModel("GP30-400");
         e7.setMoves(2);
 
-        Engine e8 = emanager.newEngine("SP", "8");
+        Engine e8 = emanager.newRS("SP", "8");
         e8.setModel("GP30-400");
         e8.setMoves(1);
-        
+
         // place the next 4 engines at Danvers
-        Engine e9 = emanager.newEngine("UP", "9");
+        Engine e9 = emanager.newRS("UP", "9");
         e9.setModel("GP30-200");
         e9.setMoves(2);
 
-        Engine e10 = emanager.newEngine("SP", "10");
+        Engine e10 = emanager.newRS("SP", "10");
         e10.setModel("GP30-200");
         e10.setMoves(5);
 
-        Engine e11 = emanager.newEngine("SP", "11");
+        Engine e11 = emanager.newRS("SP", "11");
         e11.setModel("GP30-200");
         e11.setMoves(10);
 
-        Engine e12 = emanager.newEngine("UP", "12");
+        Engine e12 = emanager.newRS("UP", "12");
         e12.setModel("GP30-200");
         e12.setMoves(15);
 
@@ -11596,7 +11675,7 @@ public class TrainBuilderTest {
         Assert.assertEquals("Place e6", Track.OKAY, e6.setLocation(boston, bostonYard1));
         Assert.assertEquals("Place e7", Track.OKAY, e7.setLocation(boston, bostonYard1));
         Assert.assertEquals("Place e8", Track.OKAY, e8.setLocation(boston, bostonYard1));
-        
+
         Assert.assertEquals("Place e9", Track.OKAY, e9.setLocation(danvers, danversYard1));
         Assert.assertEquals("Place e10", Track.OKAY, e10.setLocation(danvers, danversYard1));
         Assert.assertEquals("Place e11", Track.OKAY, e11.setLocation(danvers, danversYard1));
@@ -11613,11 +11692,11 @@ public class TrainBuilderTest {
         // use auto HPT
         train1.setBuildConsistEnabled(true);
         train1.setNumberEngines(Train.AUTO_HPT);
-        
+
         train1.setSecondLegOptions(Train.CHANGE_ENGINES);
         train1.setSecondLegNumberEngines("1");
         train1.setSecondLegStartLocation(rlBoston);
-        
+
         // 3rd engine change at Danvers
         RouteLocation rlDanvers = route.getRouteLocationBySequenceNumber(4);
         train1.setThirdLegOptions(Train.CHANGE_ENGINES);
@@ -11628,7 +11707,7 @@ public class TrainBuilderTest {
         Car c1 = JUnitOperationsUtil.createAndPlaceCar("UP", "1", "Boxcar", "40", actonYard1, 0);
         c1.setWeightTons("200"); // 200 tons loaded
         c1.setLoadName(cld.getDefaultLoadName());
-        
+
         // increase the train's weight departing Boston
         Car c2 = JUnitOperationsUtil.createAndPlaceCar("UP", "2", "Boxcar", "40", bostonYard1, 0);
         c2.setWeightTons("200"); // 200 tons loaded
@@ -11648,14 +11727,13 @@ public class TrainBuilderTest {
         Assert.assertEquals("e6 assigned to train", danvers, e6.getDestination());
         Assert.assertEquals("e7 assigned to train", danvers, e7.getDestination());
         Assert.assertEquals("e8 assigned to train", danvers, e8.getDestination());
-        
+
         // confirm that the specified engines were assigned to the train
         Assert.assertEquals("e9 assigned to train", essex, e9.getDestination());
         Assert.assertEquals("e10 assigned to train", essex, e10.getDestination());
         Assert.assertEquals("e11 not assigned to train", null, e11.getDestination());
         Assert.assertEquals("e12 not assigned to train", null, e12.getDestination());
     }
-
 
     @Test
     public void testAutoHptWithhelpers() {
@@ -11671,7 +11749,7 @@ public class TrainBuilderTest {
         Location essex = route.getTerminatesRouteLocation().getLocation();
 
         // create 4 new engine models with different HP ratings
-        Engine e1 = emanager.newEngine("UP", "1");
+        Engine e1 = emanager.newRS("UP", "1");
         e1.setModel("GP30-200");
         e1.setTypeName("Diesel");
         e1.setHp("200");
@@ -11679,7 +11757,7 @@ public class TrainBuilderTest {
         e1.setWeightTons("100");
         e1.setMoves(20);
 
-        Engine e2 = emanager.newEngine("SP", "2");
+        Engine e2 = emanager.newRS("SP", "2");
         e2.setModel("GP30-400");
         e2.setTypeName("Diesel");
         e2.setHp("400");
@@ -11687,7 +11765,7 @@ public class TrainBuilderTest {
         e2.setWeightTons("110");
         e2.setMoves(15);
 
-        Engine e3 = emanager.newEngine("SP", "3");
+        Engine e3 = emanager.newRS("SP", "3");
         e3.setModel("GP40-800");
         e3.setTypeName("Diesel");
         e3.setHp("800");
@@ -11695,7 +11773,7 @@ public class TrainBuilderTest {
         e3.setWeightTons("120");
         e3.setMoves(10);
 
-        Engine e4 = emanager.newEngine("UP", "10");
+        Engine e4 = emanager.newRS("UP", "10");
         e4.setModel("GP40-1600");
         e4.setTypeName("Diesel");
         e4.setHp("1600");
@@ -11794,13 +11872,13 @@ public class TrainBuilderTest {
         // create 2 consists and a single engine for testing
         Consist con1 = emanager.newConsist("C1");
 
-        Engine e1 = emanager.newEngine("UP", "1");
+        Engine e1 = emanager.newRS("UP", "1");
         e1.setModel("GP30");
         e1.setOwner("AT");
         e1.setBuilt("1957");
         e1.setConsist(con1);
         e1.setMoves(5);
-        Engine e2 = emanager.newEngine("SP", "2");
+        Engine e2 = emanager.newRS("SP", "2");
         e2.setModel("GP30");
         e2.setOwner("AT");
         e2.setBuilt("1957");
@@ -11808,20 +11886,20 @@ public class TrainBuilderTest {
         e2.setMoves(5);
 
         // one engine
-        Engine e3 = emanager.newEngine("SP", "3");
+        Engine e3 = emanager.newRS("SP", "3");
         e3.setModel("GP40");
         e3.setOwner("DAB");
         e3.setBuilt("1957");
 
         Consist con2 = emanager.newConsist("C2");
 
-        Engine e4 = emanager.newEngine("UP", "10");
+        Engine e4 = emanager.newRS("UP", "10");
         e4.setModel("GP40");
         e4.setOwner("DAB");
         e4.setBuilt("1944");
         e4.setConsist(con2);
         e4.setMoves(20);
-        Engine e5 = emanager.newEngine("SP", "20");
+        Engine e5 = emanager.newRS("SP", "20");
         e5.setModel("GP40");
         e5.setOwner("DAB");
         e5.setBuilt("1944");
@@ -11831,19 +11909,19 @@ public class TrainBuilderTest {
         // 3 engine consist
         Consist con3 = emanager.newConsist("C3");
 
-        Engine e6 = emanager.newEngine("UP", "100");
+        Engine e6 = emanager.newRS("UP", "100");
         e6.setModel("GP40");
         e6.setOwner("DAB");
         e6.setBuilt("1944");
         e6.setConsist(con3);
         e6.setMoves(2);
-        Engine e7 = emanager.newEngine("SP", "200");
+        Engine e7 = emanager.newRS("SP", "200");
         e7.setModel("GP40");
         e7.setOwner("DAB");
         e7.setBuilt("1944");
         e7.setConsist(con3);
         e7.setMoves(2);
-        Engine e8 = emanager.newEngine("SP", "300");
+        Engine e8 = emanager.newRS("SP", "300");
         e8.setModel("GP40");
         e8.setOwner("DAB");
         e8.setBuilt("1944");
@@ -11851,7 +11929,7 @@ public class TrainBuilderTest {
         e8.setMoves(2);
 
         // Set up cars
-        Car c1 = cmanager.newCar("PU", "13");
+        Car c1 = cmanager.newRS("PU", "13");
         c1.setTypeName(Bundle.getMessage("Caboose"));
         c1.setLength("32");
         c1.setMoves(10);
@@ -11859,70 +11937,70 @@ public class TrainBuilderTest {
         c1.setBuilt("1943");
         c1.setCaboose(true);
 
-        Car c2 = cmanager.newCar("SP", "23");
+        Car c2 = cmanager.newRS("SP", "23");
         c2.setTypeName(carTypes[1]);
         c2.setLength("30");
         c2.setMoves(5);
         c2.setOwner("DAB");
         c2.setBuilt("1957");
 
-        Car c3 = cmanager.newCar("UP", "33");
+        Car c3 = cmanager.newRS("UP", "33");
         c3.setTypeName(carTypes[1]);
         c3.setLength("33");
         c3.setMoves(0);
         c3.setOwner("DAB");
         c3.setBuilt("1944");
 
-        Car c4 = cmanager.newCar("UP", "43");
+        Car c4 = cmanager.newRS("UP", "43");
         c4.setTypeName(carTypes[1]);
         c4.setLength("40");
         c4.setMoves(16);
         c4.setOwner("DAB");
         c4.setBuilt("1958");
 
-        Car c5 = cmanager.newCar("SP", "53");
+        Car c5 = cmanager.newRS("SP", "53");
         c5.setTypeName(carTypes[1]);
         c5.setLength("40");
         c5.setMoves(8);
         c5.setOwner("DAB");
         c5.setBuilt("1958");
 
-        Car c6 = cmanager.newCar("NH", "63");
+        Car c6 = cmanager.newRS("NH", "63");
         c6.setTypeName(carTypes[1]);
         c6.setLength("40");
         c6.setMoves(2);
         c6.setOwner("DAB");
         c6.setBuilt("1958");
 
-        Car c7 = cmanager.newCar("UP", "73");
+        Car c7 = cmanager.newRS("UP", "73");
         c7.setTypeName(carTypes[5]);
         c7.setLength("40");
         c7.setMoves(5);
         c7.setOwner("DAB");
         c7.setBuilt("1958");
 
-        Car c8 = cmanager.newCar("SP", "83");
+        Car c8 = cmanager.newRS("SP", "83");
         c8.setTypeName(carTypes[1]);
         c8.setLength("40");
         c8.setMoves(4);
         c8.setOwner("DAB");
         c8.setBuilt("1958");
 
-        Car c9 = cmanager.newCar("NH", "93");
+        Car c9 = cmanager.newRS("NH", "93");
         c9.setTypeName(carTypes[1]);
         c9.setLength("40");
         c9.setMoves(3);
         c9.setOwner("DAB");
         c9.setBuilt("1944");
 
-        Car c10 = cmanager.newCar("NH", "103");
+        Car c10 = cmanager.newRS("NH", "103");
         c10.setTypeName(carTypes[1]);
         c10.setLength("40");
         c10.setMoves(10);
         c10.setOwner("DAB");
         c10.setBuilt("1958");
 
-        Car c11 = cmanager.newCar("SP", "113");
+        Car c11 = cmanager.newRS("SP", "113");
         c11.setTypeName(carTypes[1]);
         c11.setLength("40");
         c11.setMoves(3);
@@ -12263,7 +12341,7 @@ public class TrainBuilderTest {
         java.util.Date date = cal.getTime();
 
         // place 3 cars on the track.
-        Car a = cmanager.newCar("ABC", "123");
+        Car a = cmanager.newRS("ABC", "123");
         a.setTypeName(carTypes[1]);
         a.setLength("50");
         a.setLastDate(date);
@@ -12272,7 +12350,7 @@ public class TrainBuilderTest {
         cal.add(java.util.Calendar.MINUTE, 2);
         date = cal.getTime();
 
-        Car b = cmanager.newCar("ABC", "321");
+        Car b = cmanager.newRS("ABC", "321");
         b.setTypeName(carTypes[1]);
         b.setLength("50");
         b.setLastDate(date);
@@ -12281,7 +12359,7 @@ public class TrainBuilderTest {
         cal.add(java.util.Calendar.MINUTE, 2);
         date = cal.getTime();
 
-        Car c = cmanager.newCar("ABC", "111");
+        Car c = cmanager.newRS("ABC", "111");
         c.setTypeName(carTypes[1]);
         c.setLength("50");
         c.setLastDate(date);
@@ -12336,7 +12414,7 @@ public class TrainBuilderTest {
         java.util.Date date = cal.getTime();
 
         // and placing 3 cars on the track.
-        Car a = cmanager.newCar("ABC", "123");
+        Car a = cmanager.newRS("ABC", "123");
         a.setTypeName(carTypes[1]);
         a.setLength("50");
         a.setLastDate(date);
@@ -12345,7 +12423,7 @@ public class TrainBuilderTest {
         cal.add(java.util.Calendar.MINUTE, 2);
         date = cal.getTime();
 
-        Car b = cmanager.newCar("ABC", "321");
+        Car b = cmanager.newRS("ABC", "321");
         b.setTypeName(carTypes[1]);
         b.setLength("50");
         b.setLastDate(date);
@@ -12354,7 +12432,7 @@ public class TrainBuilderTest {
         cal.add(java.util.Calendar.MINUTE, 2);
         date = cal.getTime();
 
-        Car c = cmanager.newCar("ABC", "111");
+        Car c = cmanager.newRS("ABC", "111");
         c.setTypeName(carTypes[1]);
         c.setLength("50");
         c.setLastDate(date);
@@ -12408,7 +12486,7 @@ public class TrainBuilderTest {
         java.util.Date date = cal.getTime();
 
         // and placing 3 cars on the track.
-        Car a = cmanager.newCar("ABC", "123");
+        Car a = cmanager.newRS("ABC", "123");
         a.setTypeName(carTypes[1]);
         a.setLength("50");
         a.setLastDate(date);
@@ -12417,7 +12495,7 @@ public class TrainBuilderTest {
         cal.add(java.util.Calendar.MINUTE, 2);
         date = cal.getTime();
 
-        Car b = cmanager.newCar("ABC", "321");
+        Car b = cmanager.newRS("ABC", "321");
         b.setTypeName(carTypes[1]);
         b.setLength("50");
         b.setLastDate(date);
@@ -12426,7 +12504,7 @@ public class TrainBuilderTest {
         cal.add(java.util.Calendar.MINUTE, 2);
         date = cal.getTime();
 
-        Car c = cmanager.newCar("ABC", "111");
+        Car c = cmanager.newRS("ABC", "111");
         c.setTypeName(carTypes[1]);
         c.setLength("50");
         c.setLastDate(date);
@@ -12627,9 +12705,7 @@ public class TrainBuilderTest {
         Assert.assertTrue(train.isBuilt());
 
         // confirm that car destination is correct
-        Assert.assertEquals("car destination is now the yard", midtownYard, c1.getDestinationTrack());
-        // passenger car is being routed to final destination
-        Assert.assertEquals("car final destination", eastendSpur1, c1.getFinalDestinationTrack());
+        Assert.assertEquals("car destination", eastendSpur1, c1.getDestinationTrack());
 
         // Caboose or car with FRED are exceptions to the through car restriction
         c1.setPassenger(false);
@@ -12710,10 +12786,10 @@ public class TrainBuilderTest {
         Assert.assertEquals("Midtown spur 2", 40, midtownSpur2.getMoves());
         Assert.assertEquals("Eastend spur 1", 60, eastendSpur1.getMoves());
     }
-    
+
     /**
-     * Test that car sent to a spur with a schedule that doesn't match
-     * removes the car's final destination and track.
+     * Test that car sent to a spur with a schedule that doesn't match removes
+     * the car's final destination and track.
      */
     @Test
     public void testFinalDestinationForCarLoadNoMatch() {
@@ -12738,7 +12814,7 @@ public class TrainBuilderTest {
         Assert.assertEquals("car destination", null, c1.getDestinationTrack());
         Assert.assertEquals("car final destination", null, c1.getFinalDestination());
         Assert.assertEquals("car final destination track", null, c1.getFinalDestinationTrack());
-        
+
         // should still have custom load
         Assert.assertEquals("car load name", "BAGS", c1.getLoadName());
     }
@@ -13016,7 +13092,7 @@ public class TrainBuilderTest {
         c2.setFinalDestination(midtown);
         c2.setFinalDestinationTrack(midtownSpur2);
         c2.setLoadName("Nuts");
-        
+
         midtownSpur2.setLength(80); // there's only room for one car
 
         train.reset();
@@ -13476,7 +13552,7 @@ public class TrainBuilderTest {
         sch1Item3.setSetoutTrainScheduleId(schedules.get(5).getId());
         sch1Item3.setPickupTrainScheduleId(schedules.get(6).getId());
 
-        Assert.assertEquals("Active schedule", "", tmanager.getTrainScheduleActiveId());
+        Assert.assertEquals("Active schedule", "", trainScheduleManager.getTrainScheduleActiveId());
 
         // no deliveries allowed
         new TrainBuilder().build(train);
@@ -13491,7 +13567,7 @@ public class TrainBuilderTest {
 
         // now set the day to Sunday
         Assert.assertEquals("Train schedule day", "Sunday", schedules.get(3).getName());
-        tmanager.setTrainSecheduleActiveId(schedules.get(3).getId());
+        trainScheduleManager.setTrainScheduleActiveId(schedules.get(3).getId());
 
         train.reset();
         new TrainBuilder().build(train);
@@ -13691,13 +13767,13 @@ public class TrainBuilderTest {
         rB.setMaxCarMoves(5);
         rC.setMaxCarMoves(5);
 
-        Engine e1 = emanager.newEngine("E", "1");
+        Engine e1 = emanager.newRS("E", "1");
         e1.setModel("GP20");
-        Engine e2 = emanager.newEngine("E", "2");
+        Engine e2 = emanager.newRS("E", "2");
         e2.setModel("GP30");
-        Engine e3 = emanager.newEngine("E", "3");
+        Engine e3 = emanager.newRS("E", "3");
         e3.setModel("GP35");
-        Engine e4 = emanager.newEngine("E", "4");
+        Engine e4 = emanager.newRS("E", "4");
         e4.setModel("GP40");
 
         e1.setLocation(A, tA);
@@ -13707,7 +13783,7 @@ public class TrainBuilderTest {
 
         return route;
     }
-    
+
     private String getTrainStatus(Train train) {
         String[] status = train.getStatus().split(" ");
         return status[0];
@@ -13715,11 +13791,11 @@ public class TrainBuilderTest {
 
     // from here down is testing infrastructure
     // Ensure minimal setup for log4J
+    @Override
     @Before
-    public void setUp() throws Exception {
-        JUnitUtil.setUp();
+    public void setUp() {
+        super.setUp();
 
-        JUnitOperationsUtil.resetOperationsManager();
         // setup new managers
         tmanager = InstanceManager.getDefault(TrainManager.class);
         rmanager = InstanceManager.getDefault(RouteManager.class);
@@ -13762,11 +13838,5 @@ public class TrainBuilderTest {
         Setup.setRouterBuildReportLevel(Setup.BUILD_REPORT_VERY_DETAILED);
         // increase test coverage
         Setup.setGenerateCsvManifestEnabled(true);
-    }
-
-    // The minimal setup for log4J
-    @After
-    public void tearDown() throws Exception {
-        JUnitUtil.tearDown();
     }
 }

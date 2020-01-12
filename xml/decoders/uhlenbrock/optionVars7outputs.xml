@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2014 All rights reserved                            -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2019</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Egbert</firstname>
+        <surname>Broerse</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2018-10-14</date>
+      <authorinitials>EB</authorinitials>
+      <revremark>Initial version as separate file, taken from Uhlenbrock_363xx.xml/365xx.xml</revremark>
+    </revision>
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2019-02-15</date>
+        <authorinitials>EB</authorinitials>
+        <revremark>Additional variables for IntelliDrive2 73xx5</revremark>
+    </revision>
+    <!-- Used in Uhlenbrock advanced decoders,
+           such as 36320, 36360 (IS3), 36520, 36560 (IS4) 73xx5 (ID2) Piko Sound 4.1 (non exhaustive list) -->
+  </revhistory>
+    <!-- CV 109 - 111 -->
+    <variable item="Function F0F check 1" CV="109" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Blink generator - Lights</label>
+        <label xml:lang="de">Blinkgenerator - Licht</label>
+        <label xml:lang="nl">Knippergenerator - Licht</label>
+    </variable>
+    <variable item="Function F0F check 2" CV="110" mask="XXXXXXXV" include="73105,73115,73145,73405,73415,73235,74120,PIKO41RH2400">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Blink generator Phase 2 - Lights</label>
+        <label xml:lang="de">Blinkgenerator Phase 2 - Licht</label>
+        <label xml:lang="nl">Knippergenerator Fase 2 - Licht</label>
+    </variable>
+    <variable item="Function F0F check 3" CV="113" mask="XXXXXXXV" include="73105,73115,73145,73405,73415,73235,74120,PIKO41RH2400">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Function output Forward Off - A0</label>
+        <label xml:lang="de">Funktionsausgang Vorwärts Aus - A0</label>
+        <label xml:lang="nl">Functieuitgang Vooruit Uit - A0</label>
+    </variable>
+    <variable item="Function F0F check 4" CV="114" mask="XXXXXXXV" include="73105,73115,73145,73405,73415,73235,74120,PIKO41RH2400">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Function output Reverse Off - A0</label>
+        <label xml:lang="de">Funktionsausgang Rückwärts Aus - A0</label>
+        <label xml:lang="nl">Functieuitgang Achteruit Uit - A0</label>
+    </variable>
+    <variable item="Function 1 check 1" CV="109" default="0" mask="XXXXXXVX" minOut="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Blink generator - A1</label>
+        <label xml:lang="de">Blinkgenerator - A1</label>
+        <label xml:lang="nl">Knippergenerator - A1</label>
+    </variable>
+    <!-- Blink phase 2 etc checks will show up on Lights pane if name is "Function x check 2" -->
+    <variable item="Function 1 check 2" CV="110" mask="XXXXXXVX" include="73105,73145,73405,73415,73235,74120,PIKO41RH2400">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Blink generator Phase 2 - A1</label>
+        <label xml:lang="de">Blinkgenerator Phase 2 - A1</label>
+        <label xml:lang="nl">Knippergenerator Fase 2 - A1</label>
+    </variable>
+    <variable item="Function 1 check 3" CV="113" mask="XXXXXXVX" include="73105,73145,73405,73415,73235,74120,PIKO41RH2400">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Function output Forward Off - A1</label>
+        <label xml:lang="de">Funktionsausgang Vorwärts Aus - A1</label>
+        <label xml:lang="nl">Functieuitgang Vooruit Uit - A1</label>
+    </variable>
+    <variable item="Function 1 check 4" CV="114" mask="XXXXXXVX" include="73105,73145,73405,73415,73235,74120,PIKO41RH2400">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Function output Reverse Off - A1</label>
+        <label xml:lang="de">Funktionsausgang Rückwärts Aus - A1</label>
+        <label xml:lang="nl">Functieuitgang Achteruit Uit - A1</label>
+    </variable>
+    <variable item="Function 2 check 1" CV="109" default="0" mask="XXXXXVXX" minOut="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Blink generator - A2</label>
+        <label xml:lang="de">Blinkgenerator - A2</label>
+        <label xml:lang="nl">Knippergenerator - A2</label>
+    </variable>
+    <variable item="Function 2 check 2" CV="110" mask="XXXXXVXX" include="73105,73145,73405,73415,73235,74120,PIKO41RH2400">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Blink generator Phase 2 - A2</label>
+        <label xml:lang="de">Blinkgenerator Phase 2 - A2</label>
+        <label xml:lang="nl">Knippergenerator Fase 2 - A2</label>
+    </variable>
+    <variable item="Function 2 check 3" CV="113" mask="XXXXXVXX" include="73105,73145,73405,73415,73235,74120,PIKO41RH2400">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Function output Forward Off - A2</label>
+        <label xml:lang="de">Funktionsausgang Vorwärts Aus - A2</label>
+        <label xml:lang="nl">Functieuitgang Vooruit Uit - A2</label>
+    </variable>
+    <variable item="Function 2 check 4" CV="114" mask="XXXXXVXX" include="73105,73145,73405,73415,73235,74120,PIKO41RH2400">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Function output Reverse Off - A2</label>
+        <label xml:lang="de">Funktionsausgang Rückwärts Aus - A2</label>
+        <label xml:lang="nl">Functieuitgang Achteruit Uit - A2</label>
+    </variable>
+    <variable item="Function 3 check 1" CV="109" default="0" mask="XXXXVXXX" minOut="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Blink generator - A3</label>
+        <label xml:lang="de">Blinkgenerator - A3</label>
+        <label xml:lang="nl">Knippergenerator - A3</label>
+    </variable>
+    <variable item="Function 3 check 2" CV="110" mask="XXXXVXXX" include="73235,PIKO41RH2400">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Blink generator Phase 2 - A3</label>
+        <label xml:lang="de">Blinkgenerator Phase 2 - A3</label>
+        <label xml:lang="nl">Knippergenerator Fase 2 - A3</label>
+    </variable>
+    <variable item="Function 3 check 3" CV="113" mask="XXXXVXXX" include="73235,PIKO41RH2400">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Function output Forward Off - A3</label>
+        <label xml:lang="de">Funktionsausgang Vorwärts Aus - A3</label>
+        <label xml:lang="nl">Functieuitgang Vooruit Uit - A3</label>
+    </variable>
+    <variable item="Function 3 check 4" CV="114" mask="XXXXVXXX" include="73235,PIKO41RH2400">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Function output Reverse Off - A3</label>
+        <label xml:lang="de">Funktionsausgang Rückwärts Aus - A3</label>
+        <label xml:lang="nl">Functieuitgang Achteruit Uit - A3</label>
+    </variable>
+    <variable item="Function 4 check 1" CV="109" default="0" mask="XXXVXXXX" minOut="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Blink generator - A4</label>
+        <label xml:lang="de">Blinkgenerator - A4</label>
+        <label xml:lang="nl">Knippergenerator - A4</label>
+    </variable>
+    <variable item="Function 4 check 2" CV="110" mask="XXXVXXXX" include="73235,PIKO41RH2400">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Blink generator Phase 2 - A4</label>
+        <label xml:lang="de">Blinkgenerator Phase 2 - A4</label>
+        <label xml:lang="nl">Knippergenerator Fase 2 - A4</label>
+    </variable>
+    <variable item="Function 4 check 3" CV="113" mask="XXXVXXXX" include="73235,PIKO41RH2400">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Function output Forward Off - A4</label>
+        <label xml:lang="de">Funktionsausgang Vorwärts Aus - A4</label>
+        <label xml:lang="nl">Functieuitgang Vooruit Uit - A4</label>
+    </variable>
+    <variable item="Function 4 check 4" CV="114" mask="XXXVXXXX" include="73235,PIKO41RH2400">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Function output Reverse Off - A4</label>
+        <label xml:lang="de">Funktionsausgang Rückwärts Aus - A4</label>
+        <label xml:lang="nl">Functieuitgang Achteruit Uit - A4</label>
+    </variable>
+    <variable item="Function 5 check 1" CV="109" default="0" mask="XXVXXXXX" minOut="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Blink generator - A5</label>
+        <label xml:lang="de">Blinkgenerator - A5</label>
+        <label xml:lang="nl">Knippergenerator - A5</label>
+    </variable>
+    <variable item="Function 5 check 2" CV="110" mask="XXVXXXXX" include="73235,PIKO41RH2400">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Blink generator Phase 2 - A5</label>
+        <label xml:lang="de">Blinkgenerator Phase 2 - A5</label>
+        <label xml:lang="nl">Knippergenerator Fase 2 - A5</label>
+    </variable>
+    <variable item="Function 5 check 3" CV="113" mask="XXVXXXXX" include="73235,PIKO41RH2400">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Function output Forward Off - A5</label>
+        <label xml:lang="de">Funktionsausgang Vorwärts Aus - A5</label>
+        <label xml:lang="nl">Functieuitgang Vooruit Uit - A5</label>
+    </variable>
+    <variable item="Function 5 check 4" CV="114" mask="XXVXXXXX" include="73235,PIKO41RH2400">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Function output Reverse Off - A5</label>
+        <label xml:lang="de">Funktionsausgang Rückwärts Aus - A5</label>
+        <label xml:lang="nl">Functieuitgang Achteruit Uit - A5</label>
+    </variable>
+    <variable item="Function 6 check 1" CV="109" default="0" mask="XVXXXXXX" minOut="8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Blink generator - A6</label>
+        <label xml:lang="de">Blinkgenerator - A6</label>
+        <label xml:lang="nl">Knippergenerator - A6</label>
+    </variable>
+    <variable item="Function 6 check 2" CV="110" mask="XVXXXXXX" include="73235,PIKO41RH2400">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Blink generator Phase 2 - A6</label>
+        <label xml:lang="de">Blinkgenerator Phase 2 - A6</label>
+        <label xml:lang="nl">Knippergenerator Fase 2 - A6</label>
+    </variable>
+    <variable item="Function 6 check 3" CV="113" mask="XVXXXXXX" include="73235,PIKO41RH2400">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Function output Forward Off - A6</label>
+        <label xml:lang="de">Funktionsausgang Vorwärts Aus - A6</label>
+        <label xml:lang="nl">Functieuitgang Vooruit Uit - A6</label>
+    </variable>
+    <variable item="Function 6 check 4" CV="114" mask="XVXXXXXX" include="73235,PIKO41RH2400">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Function output Reverse Off - A6</label>
+        <label xml:lang="de">Funktionsausgang Rückwärts Aus - A6</label>
+        <label xml:lang="nl">Functieuitgang Achteruit Uit - A6</label>
+    </variable>
+    <variable item="Function 7 check 1" CV="109" default="0" mask="VXXXXXXX" minOut="9">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Blink generator - A7</label>
+        <label xml:lang="de">Blinkgenerator - A7</label>
+        <label xml:lang="nl">Knippergenerator - A7</label>
+    </variable>
+    <variable item="Function 7 check 2" CV="110" mask="VXXXXXXX" include="73235,PIKO41RH2400">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Blink generator Phase 2 - A7</label>
+        <label xml:lang="de">Blinkgenerator Phase 2 - A7</label>
+        <label xml:lang="nl">Knippergenerator Fase 2 - A7</label>
+    </variable>
+    <variable item="Function 7 check 3" CV="113" mask="VXXXXXXX" include="73235,PIKO41RH2400">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Function output Forward Off - A7</label>
+        <label xml:lang="de">Funktionsausgang Vorwärts Aus - A7</label>
+        <label xml:lang="nl">Functieuitgang Vooruit Uit - A7</label>
+    </variable>
+    <variable item="Function 7 check 4" CV="114" mask="VXXXXXXX" include="73235,PIKO41RH2400">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Function output Reverse Off - A7</label>
+        <label xml:lang="de">Funktionsausgang Rückwärts Aus - A7</label>
+        <label xml:lang="nl">Functieuitgang Achteruit Uit - A7</label>
+    </variable>
+
+    <variable item="Global lighting option 2" CV="110" default="5" exclude="73105,73235,74120,PIKO41RH2400">
+        <decVal/>
+        <label>Blink Generator Off time</label>
+        <label xml:lang="de">Blinkgenerator Ausschaltzeit</label>
+        <label xml:lang="nl">Uitschakeltijd Knippergenerator</label>
+        <tooltip>in 100 ms steps</tooltip>
+        <tooltip xml:lang="de">in 100ms Schritten</tooltip>
+        <tooltip xml:lang="nl">in stappen van 100ms</tooltip>
+    </variable>
+    <variable item="Global lighting option 2" CV="112" default="5" include="73105,73235,74120,PIKO41RH2400">
+        <decVal/>
+        <label>Blink Generator Off time</label>
+        <label xml:lang="de">Blinkgenerator Ausschaltzeit</label>
+        <label xml:lang="nl">Uitschakeltijd Knippergenerator</label>
+        <tooltip>in 100 ms steps</tooltip>
+        <tooltip xml:lang="de">in 100ms Schritten</tooltip>
+        <tooltip xml:lang="nl">in stappen van 100ms</tooltip>
+    </variable>
+
+    <variable item="Global lighting option 3" CV="111" default="5">
+        <decVal/>
+        <label>Blink Generator On time</label>
+        <label xml:lang="de">Blinkgenerator Einschaltzeit</label>
+        <label xml:lang="nl">Inschakeltijd Knippergenerator</label>
+        <tooltip>in 100 ms steps</tooltip>
+        <tooltip xml:lang="de">in 100ms Schritten</tooltip>
+        <tooltip xml:lang="nl">in stappen van 100ms</tooltip>
+    </variable>
+
+    <!-- CV 116 - 123 -->
+    <variable item="Function F0F option 1" CV="116" default="32">
+        <decVal min="0" max="32"/>
+        <label>Dimming - Lights</label>
+        <label xml:lang="de">Dimmung - Licht</label>
+        <label xml:lang="nl">Dimmen - Licht</label>
+        <tooltip>min=0 (off), max=32 (100%)</tooltip>
+    </variable>
+    <variable item="Function 1 option 1" CV="117" default="32" minOut="3">
+        <decVal min="0" max="32"/>
+        <label>Dimming - A1</label>
+        <label xml:lang="de">Dimmung - A1</label>
+        <label xml:lang="nl">Dimmen - A1</label>
+        <tooltip>min=0 (off), max=32 (100%)</tooltip>
+    </variable>
+    <variable item="Function 2 option 1" CV="118" default="32" minOut="4">
+        <decVal min="0" max="32"/>
+        <label>Dimming - A2</label>
+        <label xml:lang="de">Dimmung - A2</label>
+        <label xml:lang="nl">Dimmen - A2</label>
+        <tooltip>min=0 (off), max=32 (100%)</tooltip>
+    </variable>
+    <variable item="Function 3 option 1" CV="119" default="32" minOut="5">
+        <decVal min="0" max="32"/>
+        <label>Dimming - A3</label>
+        <label xml:lang="de">Dimmung - A3</label>
+        <label xml:lang="nl">Dimmen - A3</label>
+        <tooltip>min=0 (off), max=32 (100%)</tooltip>
+    </variable>
+    <variable item="Function 4 option 1" CV="120" default="32" minOut="6">
+        <decVal min="0" max="32"/>
+        <label>Dimming - A4</label>
+        <label xml:lang="de">Dimmung - A4</label>
+        <label xml:lang="nl">Dimmen - A4</label>
+        <tooltip>min=0 (off), max=32 (100%)</tooltip>
+    </variable>
+    <variable item="Function 5 option 1" CV="121" default="32" minOut="7">
+        <decVal min="0" max="32"/>
+        <label>Dimming - A5</label>
+        <label xml:lang="de">Dimmung - A5</label>
+        <label xml:lang="nl">Dimmen - A5</label>
+        <tooltip>min=0 (off), max=32 (100%)</tooltip>
+    </variable>
+    <variable item="Function 6 option 1" CV="122" default="32" minOut="8">
+        <decVal min="0" max="32"/>
+        <label>Dimming - A6</label>
+        <label xml:lang="de">Dimmung - A6</label>
+        <label xml:lang="nl">Dimmen - A6</label>
+        <tooltip>min=0 (off), max=32 (100%)</tooltip>
+    </variable>
+    <variable item="Function 7 option 1" CV="123" default="32" minOut="9">
+        <decVal min="0" max="32"/>
+        <label>Dimming - A7</label>
+        <label xml:lang="de">Dimmung - A7</label>
+        <label xml:lang="nl">Dimmen - A7</label>
+        <tooltip>min=0 (off), max=32 (100%)</tooltip>
+    </variable>
+    <!-- CV 150 - 157 -->
+    <variable item="Function F0F option 2" CV="150" default="10" include="73105,73235,73405,74120,PIKO41RH2400">
+        <decVal min="0" max="32"/>
+        <label>2nd Dimming - Lights</label>
+        <label xml:lang="de">2. Dimmung - Licht</label>
+        <label xml:lang="nl">2e Dimmen - Licht</label>
+        <tooltip>min=0 (off), max=63 (100%)</tooltip>
+    </variable>
+    <variable item="Function 1 option 2" CV="151" default="10" include="73105,73235,73405,74120,PIKO41RH2400">
+        <decVal min="0" max="63"/>
+        <label>2nd Dimming - A1</label>
+        <label xml:lang="de">2. Dimmung - A1</label>
+        <label xml:lang="nl">2e Dimmen - A1</label>
+        <tooltip>min=0 (off), max=63 (100%)</tooltip>
+    </variable>
+    <variable item="Function 2 option 2" CV="152" default="10" include="73105,73235,73405,74120,PIKO41RH2400">
+        <decVal min="0" max="63"/>
+        <label>2nd Dimming - A2</label>
+        <label xml:lang="de">2. Dimmung - A2</label>
+        <label xml:lang="nl">2e Dimmen - A2</label>
+        <tooltip>min=0 (off), max=63 (100%)</tooltip>
+    </variable>
+    <variable item="Function 3 option 2" CV="153" default="10" include="73235,PIKO41RH2400">
+        <decVal min="0" max="63"/>
+        <label>2nd Dimming - A3</label>
+        <label xml:lang="de">2. Dimmung - A3</label>
+        <label xml:lang="nl">2e Dimmen - A3</label>
+        <tooltip>min=0 (off), max=63 (100%)</tooltip>
+    </variable>
+    <variable item="Function 4 option 2" CV="154" default="10" include="73235,PIKO41RH2400">
+        <decVal min="0" max="63"/>
+        <label>2nd Dimming - A4</label>
+        <label xml:lang="de">2. Dimmung - A4</label>
+        <label xml:lang="nl">2e Dimmen - A4</label>
+        <tooltip>min=0 (off), max=63 (100%)</tooltip>
+    </variable>
+    <variable item="Function 5 option 2" CV="155" default="10" include="73235,PIKO41RH2400">
+        <decVal min="0" max="63"/>
+        <label>2nd Dimming - A5</label>
+        <label xml:lang="de">2. Dimmung - A5</label>
+        <label xml:lang="nl">2e Dimmen - A5</label>
+        <tooltip>min=0 (off), max=63 (100%)</tooltip>
+    </variable>
+    <variable item="Function 6 option 2" CV="156" default="10" include="73235,PIKO41RH2400">
+        <decVal min="0" max="63"/>
+        <label>2nd Dimming - A6</label>
+        <label xml:lang="de">2. Dimmung - A6</label>
+        <label xml:lang="nl">2e Dimmen - A6</label>
+        <tooltip>min=0 (off), max=63 (100%)</tooltip>
+    </variable>
+    <variable item="Function 7 option 2" CV="157" default="10" include="73235,PIKO41RH2400">
+        <decVal min="0" max="63"/>
+        <label>2nd Dimming - A7</label>
+        <label xml:lang="de">2. Dimmung - A7</label>
+        <label xml:lang="nl">2e Dimmen - A7</label>
+        <tooltip>min=0 (off), max=63 (100%)</tooltip>
+    </variable>
+</variables>

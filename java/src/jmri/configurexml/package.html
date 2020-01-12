@@ -2,9 +2,7 @@
 <html>
     <head>
         <!--
-        
-          @(#)package.html	1.60 98/01/27
-        
+
           Made with permission from the Sun version at
           http://java.sun.com/j2se/javadoc/writingdoccomments/package-template.html
         
@@ -85,8 +83,8 @@
         </UL>
         
         <P>
-            Additionally, the {@link jmri.manager} class has a 
-            {@link jmri.manager#getXMLOrder} method that 
+            Additionally, the {@link jmri.Manager} class has a 
+            {@link jmri.Manager#getXMLOrder} method that 
             is used to order operations within a level.
 
         <a id="schema"></a>
@@ -101,21 +99,22 @@
         <p>
             A rudimentary version control system is provided by schema file naming, i.e.
         <ul>
-            <li>layout-config.xsd - the original, not to be changed any more.
-            <li>layout-config-2-9-6.xsd - manually created when the first non-backward-compatible XML content 
-                change was made after the release of JMRI 2.9.3, this accumulates changes
+            <li>layout.xsd - the original, not to be changed any more.
+            <li>layout-2-9-6.xsd - manually created when the first non-backward-compatible XML content 
+                change was made after the release of JMRI 2.9.5, this accumulates changes
                 until some later non-backward-compatible change is made.
+            <li>layout-4-19-2.xsd - a significant update in structure and content.
         </ul>
 
         When a non-backward compatible change is made to XML persistance,
         the following steps are needed:
         <ul>
             <li>Copy the existing schema to one with the next version name (e.g.
-                while building the 2.7.4 release, 
-                copy layout-config-2-7-4.xsd to layout-config-2-7-5.xsd)
-                and commit to SVN.
+                while building the 3.1.2 release, 
+                copy layout-2-9-6.xsd to layout-config-3-1-2.xsd)
+                and commit to Git.
             <li>Update the comment on the previous file.
-            <li>Update the references in the 
+            <li>Update the schemaVersion value in the 
                 {@link jmri.configurexml.ConfigXmlManager} code.
         </ul>
         For more information, see the 

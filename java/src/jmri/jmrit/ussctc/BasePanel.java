@@ -5,7 +5,7 @@ import jmri.*;
 
 /**
  * Refactored common routines and data for the GUI panels in this package.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2007
  */
 public class BasePanel extends JPanel implements Constants {
@@ -13,14 +13,12 @@ public class BasePanel extends JPanel implements Constants {
     BasePanel() {
     }
 
-    static java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrit.ussctc.UssCtcBundle");
-
     void complain(String message, String value) {
         javax.swing.JOptionPane.showMessageDialog(this,
                 java.text.MessageFormat.format(
-                        rb.getString(message),
+                        Bundle.getMessage(message),
                         new Object[]{value}),
-                rb.getString("ErrorTitle"),
+                Bundle.getMessage("ErrorTitle"),
                 javax.swing.JOptionPane.ERROR_MESSAGE);
     }
 

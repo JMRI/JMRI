@@ -4,11 +4,12 @@ import javax.annotation.Nonnull;
 
 import jmri.Sensor;
 import jmri.SensorManager;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implementation of a SensorManager that can serves as a proxy for multiple
+ * Implementation of a SensorManager that can serve as a proxy for multiple
  * system-specific implementations.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2010
@@ -31,7 +32,7 @@ public class ProxySensorManager extends AbstractProxyManager<Sensor>
      * @return Null if nothing by that name exists
      */
     @Override
-    public Sensor getSensor(String name) {
+    public Sensor getSensor(@Nonnull String name) {
         return super.getNamedBean(name);
     }
 
@@ -42,56 +43,36 @@ public class ProxySensorManager extends AbstractProxyManager<Sensor>
     }
 
     @Override
-    public Sensor provideSensor(String sName) throws IllegalArgumentException {
+    @Nonnull
+    public Sensor provideSensor(@Nonnull String sName) throws IllegalArgumentException {
         return super.provideNamedBean(sName);
     }
 
-    @Override
     /** {@inheritDoc} */
+    @Override
+    @Nonnull
     public Sensor provide(@Nonnull String name) throws IllegalArgumentException { return provideSensor(name); }
-
-    /**
-     * Locate an instance based on a system name. Returns null if no instance
-     * already exists.
-     *
-     * @return requested Turnout object or null if none exists
-     */
-    @Override
-    public Sensor getBySystemName(String sName) {
-        return super.getBeanBySystemName(sName);
-    }
-
-    /**
-     * Locate an instance based on a user name. Returns null if no instance
-     * already exists.
-     *
-     * @return requested Turnout object or null if none exists
-     */
-    @Override
-    public Sensor getByUserName(String userName) {
-        return super.getBeanByUserName(userName);
-    }
 
     /**
      * Return an instance with the specified system and user names. Note that
      * two calls with the same arguments will get the same instance; there is
      * only one Sensor object representing a given physical turnout and
      * therefore only one with a specific system or user name.
-     * <P>
+     * <p>
      * This will always return a valid object reference for a valid request; a
      * new object will be created if necessary. In that case:
-     * <UL>
-     * <LI>If a null reference is given for user name, no user name will be
+     * <ul>
+     * <li>If a null reference is given for user name, no user name will be
      * associated with the Turnout object created; a valid system name must be
      * provided
-     * <LI>If a null reference is given for the system name, a system name will
+     * <li>If a null reference is given for the system name, a system name will
      * _somehow_ be inferred from the user name. How this is done is system
      * specific. Note: a future extension of this interface will add an
      * exception to signal that this was not possible.
-     * <LI>If both names are provided, the system name defines the hardware
+     * <li>If both names are provided, the system name defines the hardware
      * access of the desired turnout, and the user address is associated with
      * it.
-     * </UL>
+     * </ul>
      * Note that it is possible to make an inconsistent request if both
      * addresses are provided, but the given values are associated with
      * different objects. This is a problem, and we don't have a good solution
@@ -101,7 +82,8 @@ public class ProxySensorManager extends AbstractProxyManager<Sensor>
      * @return requested Sensor object (never null)
      */
     @Override
-    public Sensor newSensor(String systemName, String userName) {
+    @Nonnull
+    public Sensor newSensor(@Nonnull String systemName, String userName) {
         return newNamedBean(systemName, userName);
     }
 
@@ -111,7 +93,7 @@ public class ProxySensorManager extends AbstractProxyManager<Sensor>
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         int i = matchTentative(systemName);
         if (i >= 0) {
             return ((SensorManager) getMgr(i)).allowMultipleAdditions(systemName);
@@ -120,59 +102,22 @@ public class ProxySensorManager extends AbstractProxyManager<Sensor>
     }
 
     @Override
-    public String createSystemName(String curAddress, String prefix) throws jmri.JmriException {
-        for (int i = 0; i < nMgrs(); i++) {
-            if (prefix.equals(
-                    ((SensorManager) getMgr(i)).getSystemPrefix())) {
-                try {
-                    return ((SensorManager) getMgr(i)).createSystemName(curAddress, prefix);
-                } catch (jmri.JmriException ex) {
-                    log.error(ex.toString());
-                    throw ex;
-                }
-            }
-        }
-        throw new jmri.JmriException("Sensor Manager could not be found for System Prefix " + prefix);
+    @Nonnull
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws jmri.JmriException {
+        return createSystemName(curAddress, prefix, SensorManager.class);
     }
 
     @Override
-    public String getNextValidAddress(String curAddress, String prefix) throws jmri.JmriException {
-        for (int i = 0; i < nMgrs(); i++) {
-            if (prefix.equals(
-                    ((SensorManager) getMgr(i)).getSystemPrefix())) {
-                try {
-                    return ((SensorManager) getMgr(i)).getNextValidAddress(curAddress, prefix);
-                } catch (jmri.JmriException ex) {
-                    throw ex;
-                }
-            }
-        }
-        return null;
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws jmri.JmriException {
+        return getNextValidAddress(curAddress, prefix, typeLetter());
     }
 
     /**
-     * Validate system name format. Locate a system specfic SensorManager based on
-     * a system name.
-     *
-     * @return if a manager is found, return its determination of validity of
-     * system name format. Return INVALID if no manager exists.
-     */
-    @Override
-    public NameValidity validSystemNameFormat(String systemName) {
-        int i = matchTentative(systemName);
-        if (i >= 0) {
-            return ((SensorManager) getMgr(i)).validSystemNameFormat(systemName);
-        }
-        return NameValidity.INVALID;
-    }
-
-    /**
-     * Provide a connection system agnostic tooltip for the Add new item beantable pane.
+     * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = "Enter a number from 1 to 9999"; // Basic number format help
-        return entryToolTip;
+        return "Enter a number from 1 to 9999"; // Basic number format help
     }
 
     @Override
@@ -205,17 +150,25 @@ public class ProxySensorManager extends AbstractProxyManager<Sensor>
     }
 
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameSensor");
+    @Nonnull
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameSensors" : "BeanNameSensor");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<Sensor> getNamedBeanClass() {
+        return Sensor.class;
     }
 
     /**
      * Do the sensor objects provided by this manager support configuring
-     * an internal pullup or pull down resistor?
-     * <p>
-     * Return false to satisfy the SensorManager interface.
+     * an internal pull up or pull down resistor?
      *
-     * @return true if pull up/pull down configuration is supported.
+     * @return true if pull up/pull down configuration is supported,
+     * default to false to satisfy the SensorManager interface
      */
     @Override
     public boolean isPullResistanceConfigurable(){

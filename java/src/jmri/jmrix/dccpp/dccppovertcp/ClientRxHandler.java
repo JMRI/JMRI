@@ -11,12 +11,11 @@ import jmri.jmrix.dccpp.DCCppListener;
 import jmri.jmrix.dccpp.DCCppMessage;
 import jmri.jmrix.dccpp.DCCppReply;
 import jmri.jmrix.dccpp.DCCppSystemConnectionMemo;
-import jmri.jmrix.dccpp.DCCppTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implementation of the DCCppOverTcp LbServer Server Protocol
+ * Implementation of the DCCppOverTcp LbServer Server Protocol.
  *
  * @author Alex Shepherd Copyright (C) 2006
  * @author Mark Underwood Copyright (C) 2015
@@ -26,17 +25,17 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
     Socket clientSocket;
     BufferedReader inStream;
     OutputStream outStream;
-    LinkedList<DCCppReply> replyQueue = new LinkedList<DCCppReply>(); // Init before Rx and Tx
+    LinkedList<DCCppReply> replyQueue = new LinkedList<>(); // Init before Rx and Tx
 
     Thread txThread;
     String inString;
     String remoteAddress;
     DCCppMessage lastSentMessage;
-    final String oldSendPrefix = "SEND"; // lack of space is correct for legacy code
-    final String oldReceivePrefix = "RECEIVE "; // presence of space is correct for legacy code
-    final String sendPrefix = "<";
-    final String oldServerVersionString = "VERSION JMRI Server "; // CAREFUL: Changing this could break backward compatibility
-    final String newServerVersionString = "VERSION DCC++ Server ";
+    private static final String oldSendPrefix = "SEND"; // lack of space is correct for legacy code
+    private static final String oldReceivePrefix = "RECEIVE "; // presence of space is correct for legacy code
+    private static final String sendPrefix = "<";
+    private static final String oldServerVersionString = "VERSION JMRI Server "; // CAREFUL: Changing this could break backward compatibility
+    private static final String newServerVersionString = "VERSION DCC++ Server ";
     boolean useOldPrefix = false;
 
     public ClientRxHandler(String newRemoteAddress, Socket newSocket) {
@@ -49,10 +48,11 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
         start();
     }
 
-    @SuppressWarnings("null")
     @Override
     public void run() {
-
+    
+        DCCppSystemConnectionMemo memo = InstanceManager.getDefault(DCCppSystemConnectionMemo.class);
+        
         try {
             txThread = new Thread(new ClientTxHandler(this));
             txThread.setDaemon(true);
@@ -62,9 +62,7 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
             inStream = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             outStream = clientSocket.getOutputStream();
 
-            DCCppSystemConnectionMemo memo = InstanceManager.getDefault(DCCppSystemConnectionMemo.class);
             memo.getDCCppTrafficController().addDCCppListener(~0, this);
-            //DCCppTrafficController.instance().addDCCppListener(~0, this);
 
             txThread.start();
 
@@ -74,7 +72,7 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
                     log.debug("ClientRxHandler: Remote Connection Closed");
                     interrupt();
                 } else {
-                    log.debug("ClientRxHandler: Received: " + inString);
+                    log.debug("ClientRxHandler: Received: {}", inString);
 
                     // Check for the old server version string.  If present,
                     // append the old-style prefixes to transmissions.
@@ -97,25 +95,19 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
                         log.debug("Invalid packet format: {}", inString);
                         continue;
                     }
-                    //final int trim = sendPrefix.length();
-                    //inString = inString.substring(trim);
-                    //  Note: the substring call below also strips off the "< >"
-                    //DCCppMessage msg = DCCppMessage.parseDCCppMessage(inString.substring(inString.indexOf("<")+1,
-                    //         inString.lastIndexOf(">")));
 
                     // BUG FIX: Incoming DCCppOverTCP messages are already formatted for DCC++ and don't
                     // need to be parsed. Indeed, trying to parse them will screw them up.
                     // So instead, we de-@Deprecated the string constructor so that we can
                     // directly create a DCCppMessage from the incoming string without translation/parsing.
-                    DCCppMessage msg = new DCCppMessage(inString.substring(inString.indexOf("<") + 1,
-                            inString.lastIndexOf(">")));
+                    DCCppMessage msg = new DCCppMessage(inString.substring(inString.indexOf('<') + 1,
+                            inString.lastIndexOf('>')));
                     if (!msg.isValidMessageFormat()) {
-                        log.warn("Invalid Message Format {}", msg.toString());
+                        log.warn("Invalid Message Format {}", msg);
                         continue;
                     }
 
-                    // TODO: Bad practice to use instance().
-                    DCCppTrafficController.instance().sendDCCppMessage(msg, null);
+                    memo.getDCCppTrafficController().sendDCCppMessage(msg, null);
                     // Keep the message we just sent so we can ACK it when we hear
                     // the echo from the LocoBuffer
                     lastSentMessage = msg;
@@ -124,8 +116,8 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
         } catch (IOException ex) {
             log.debug("ClientRxHandler: IO Exception: ", ex);
         }
-        // TODO: Bad practice to use instance();
-        DCCppTrafficController.instance().removeDCCppListener(~0, this);
+
+        memo.getDCCppTrafficController().removeDCCppListener(~0, this);
         txThread.interrupt();
 
         txThread = null;
@@ -137,6 +129,7 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
         try {
             clientSocket.close();
         } catch (IOException ex1) {
+            log.trace("Exception while closing client socket",ex1);
         }
 
         InstanceManager.getDefault(Server.class).removeClient(this);
@@ -154,7 +147,7 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
     class ClientTxHandler implements Runnable {
 
         DCCppReply msg;
-        StringBuffer outBuf;
+        StringBuilder outBuf;
         Thread parentThread;
 
         ClientTxHandler(Thread creator) {
@@ -165,7 +158,7 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
         public void run() {
 
             try {
-                outBuf = new StringBuffer(newServerVersionString);
+                outBuf = new StringBuilder(newServerVersionString);
                 outBuf.append(jmri.Version.name()).append("\r\n");
                 outStream.write(outBuf.toString().getBytes());
 
@@ -179,7 +172,7 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
 
                         if (!replyQueue.isEmpty()) {
                             msg = replyQueue.removeFirst();
-                            log.debug("Prepping to send message: {}", msg.toString());
+                            log.debug("Prepping to send message: {}", msg);
                         }
                     }
 
@@ -191,7 +184,7 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
                         outBuf.append("<");
                         outBuf.append(msg.toString());
                         outBuf.append(">");
-                        log.debug("ClientTxHandler: Send: " + outBuf.toString());
+                        log.debug("ClientTxHandler: Send: {}", outBuf);
                         outBuf.append("\r\n");
                         outStream.write(outBuf.toString().getBytes());
                         outStream.flush();
@@ -215,6 +208,7 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
 
     @Override
     public void message(DCCppMessage msg) {
+        // no need to handle outgonig messages
     }
 
     @Override
@@ -222,13 +216,15 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
         synchronized (replyQueue) {
             replyQueue.add(msg);
             replyQueue.notify();
-            log.debug("Message added to queue: {}", msg.toString());
+            log.debug("Message added to queue: {}", msg);
         }
     }
 
     @Override
     public void notifyTimeout(DCCppMessage m) {
+        // ToDo : handle timeouts
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ClientRxHandler.class);
+    private static final Logger log = LoggerFactory.getLogger(ClientRxHandler.class);
+
 }

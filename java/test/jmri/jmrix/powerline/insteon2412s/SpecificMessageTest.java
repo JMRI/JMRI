@@ -1,47 +1,38 @@
 package jmri.jmrix.powerline.insteon2412s;
 
-import jmri.jmrix.powerline.SerialMessage;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
+import org.junit.*;
 
 /**
  * JUnit tests for the cm11.SpecficMessage class.
  *
  * @author	Bob Jacobsen Copyright 2003, 2007, 2008, 2009
-  */
-public class SpecificMessageTest extends TestCase {
+ */
+public class SpecificMessageTest extends jmri.jmrix.AbstractMessageTestBase {
 
-    public void testCreate() {
-        SerialMessage m = new SpecificMessage(4);
-        Assert.assertNotNull("exists", m);
+    private SpecificMessage msg = null;
+
+    @Before
+    @Override
+    public void setUp() {
+	JUnitUtil.setUp();
+        m = msg = new SpecificMessage(4);
     }
 
+    @After
+    public void tearDown(){
+        m = msg = null;
+	JUnitUtil.tearDown();
+    }
+
+    @Test
     public void testBytesToString() {
-        SerialMessage m = new SpecificMessage(4);
-        m.setOpCode(0x81);
-        m.setElement(1, (byte) 0x02);
-        m.setElement(2, (byte) 0xA2);
-        m.setElement(3, (byte) 0x00);
-        Assert.assertEquals("string compare ", "81 02 A2 00", m.toString());
-    }
-
-    // from here down is testing infrastructure
-    public SpecificMessageTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {SpecificMessageTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SpecificMessageTest.class);
-        return suite;
+        msg = new SpecificMessage(4);
+        msg.setOpCode(0x81);
+        msg.setElement(1, (byte) 0x02);
+        msg.setElement(2, (byte) 0xA2);
+        msg.setElement(3, (byte) 0x00);
+        Assert.assertEquals("string compare ", "81 02 A2 00", msg.toString());
     }
 
 }

@@ -4,7 +4,7 @@
 
 <!-- Used by default when the file is displayed in a web browser            -->
 
-<!-- This file is part of JMRI.  Copyright 2009-2011.                       -->
+<!-- This file is part of JMRI.  Copyright 2009-2018.                       -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -20,7 +20,12 @@
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:db="http://docbook.org/ns/docbook"
     >
-      <xsl:param name="JmriCopyrightYear"/>
+<!-- Define the copyright year for the output page
+     In batch work via running Ant, this is defined
+     via the build.xml file. We build it by concatenation
+     because XPath will evaluate '1997 - 2017' to '20'.
+-->
+<xsl:param name="JmriCopyrightYear" select="concat('1997','-','2020')" />
 
 <!-- Need to instruct the XSLT processor to use HTML output rules.
      See http://www.w3.org/TR/xslt#output for more details
@@ -46,28 +51,27 @@
 
 <html>
 	<head>
-		<title>JMRI &quot;<xsl:value-of select="document('http:aspects.xml', .)/aspecttable/name"/>
+		<title>JMRI &quot;<xsl:value-of select="document('aspects.xml', .)/aspecttable/name"/>
 		                  <xsl:text>: </xsl:text>
 		                  <xsl:value-of select="appearancetable/name"/>&quot; Appearance Table</title>
 	</head>
 	
 	<body>
-		<h2>JMRI &quot;<xsl:value-of select="document('http:aspects.xml', .)/aspecttable/name"/> 
+		<h2>JMRI &quot;<xsl:value-of select="document('aspects.xml', .)/aspecttable/name"/> 
 		               <xsl:text>: </xsl:text>
 		               <xsl:value-of select="appearancetable/name"/>&quot; Appearance Table</h2>
 
 
 <xsl:apply-templates/>
 
-<HR/>
+<hr/>
 This page was produced by <a href="http://jmri.org">JMRI</a>.
-<P/>Copyright &#169; <xsl:value-of select="$JmriCopyrightYear" /> JMRI Community. 
-<P/>JMRI, DecoderPro, PanelPro, SoundPro, SignalPro, DispatcherPro and associated logos are our trademarks.
-<P/><A href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</A>
-<P/>Site hosted by: <BR/>
-    <a href="http://sourceforge.net/projects/jmri">
-    <img src="https://sourceforge.net/sflogo.php?type=13&amp;group_id=26788" border="0" alt="JMRI Model Railroad Interface at SourceForge.net"/></a>
-
+<p/>Copyright &#169; <xsl:value-of select="$JmriCopyrightYear" /> JMRI Community.
+<p/>JMRI, DecoderPro, PanelPro, SoundPro, SignalPro, DispatcherPro and associated logos are our trademarks.
+<p/><a href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
+<p/>Site hosted by: <br/>
+        <a href="http://www.tagadab.com/">
+        <img src="https://www.tagadab.com/sites/default/files/logo-tagadab-nostrap.png" height="28" width="103" border="0" alt="Tagadab logo"/></a>
 	</body>
 </html>
 
@@ -79,7 +83,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
     <a href="aspects.xml">
         <!-- The second argument provides the context (parent file) for the document() path; -->
         <!-- without it, the reference is relative to the stylesheet location -->
-        <xsl:value-of select="document('http:aspects.xml', .)/aspecttable/name"/>
+        <xsl:value-of select="document('aspects.xml', .)/aspecttable/name"/>
     </a>
     <p/>
     Name: <xsl:value-of select="name"/><p/>
@@ -112,7 +116,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
     <!-- Compare to each aspect name in aspects.xml for matching rule -->
     <!-- The second argument provides the context (parent file) for the document() path; -->
     <!-- without it, the reference is relative to the stylesheet location -->
-    <xsl:for-each select="document('http:aspects.xml', .)/aspecttable/aspects/aspect[name=$matchaspect]">
+    <xsl:for-each select="document('aspects.xml', .)/aspecttable/aspects/aspect[name=$matchaspect]">
         <!-- looking at all aspects to find the one matching matchaspect -->
             <!-- now current node is match in aspects.xml -->
                         
@@ -135,7 +139,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
     <!-- end heading -->
     
     <!-- error if no match -->
-    <xsl:if test="not(document('http:aspects.xml', .)/aspecttable/aspects/aspect[name=$matchaspect])">
+    <xsl:if test="not(document('aspects.xml', .)/aspecttable/aspects/aspect[name=$matchaspect])">
         <em>Error: This appearance does not appear in the <a href="aspects.xml">aspect table</a>.
         Check spelling and upper/lower case.</em>
     </xsl:if>
@@ -143,7 +147,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
     <!-- then compare to each aspect name in aspects.xml for match -->
     <!-- The second argument provides the context (parent file) for the document() path; -->
     <!-- without it, the reference is relative to the stylesheet location -->
-    <xsl:for-each select="document('http:aspects.xml', .)/aspecttable/aspects/aspect[name=$matchaspect]">
+    <xsl:for-each select="document('aspects.xml', .)/aspecttable/aspects/aspect[name=$matchaspect]">
             <!-- now current node is match in aspects.xml -->
 
             <!-- show title element if it exists -->

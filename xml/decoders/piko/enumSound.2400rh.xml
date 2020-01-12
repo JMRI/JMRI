@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2014 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- 																		-->
+<!-- version 1 - include file for Piko SmartDecoder 4.1 Sound Rh2400        -->
+<!-- 																		-->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <enumChoice choice="None">
+	<choice>Light front on/off</choice>
+	<choice xml:lang="de">Licht vorn ein/aus</choice>
+  </enumChoice>
+  <enumChoice choice="Motor Sound">
+	<choice>Motor Sound</choice>
+	<choice xml:lang="de">Motor Sound</choice>
+  </enumChoice>
+  <enumChoice choice="Horn low">
+	<choice>Horn low</choice>
+	<choice xml:lang="de">Horn tief</choice>
+  </enumChoice>
+  <enumChoice choice="Horn High">
+	<choice>Horn High</choice>
+	<choice xml:lang="de">Horn hoch</choice>
+  </enumChoice>
+  <enumChoice choice="Double horn">
+	<choice>Double horn (hi-lo)</choice>
+	<choice xml:lang="de">Doppelhorn (hoch-tief)</choice>
+  </enumChoice>
+  <enumChoice choice="Conductor whistle">
+	<choice>Conductor whistle</choice>
+	<choice xml:lang="de">Schaffnerpfiff</choice>
+  </enumChoice>
+  <enumChoice choice="Hand pump oil">
+	<choice>Hand pump oil</choice>
+	<choice xml:lang="de">Handpumpe - Öl</choice>
+  </enumChoice>
+  <enumChoice choice="Shunting">
+	<choice>Shunting</choice>
+	<choice xml:lang="de">Rangiergang</choice>
+  </enumChoice>
+  <enumChoice choice="Hand Brake apply/release">
+	<choice>Hand Brake apply/release</choice>
+	<choice xml:lang="de">Handbremse anlegen/lösen</choice>
+  </enumChoice>
+  <enumChoice choice="Compressor">
+	<choice>Compressor</choice>
+	<choice xml:lang="de">Kompressor</choice>
+  </enumChoice>
+  <enumChoice choice="Engineer's door open/close">
+	<choice>Engineer's door open/close</choice>
+	<choice xml:lang="de">Führerstandstüre auf/zu</choice>
+  </enumChoice>
+  <enumChoice choice="Engineer's window open/close">
+	<choice>Engineer's window open/close</choice>
+	<choice xml:lang="de">Führerstandsfenster auf/zu</choice>
+  </enumChoice>
+  <enumChoice choice="Radio #1">
+	<choice>Radio #1</choice>
+	<choice xml:lang="de">Funk #1</choice>
+  </enumChoice>
+  <enumChoice choice="Radio #2" >
+	<choice>Radio #2</choice>
+	<choice xml:lang="de">Funk #2</choice>
+  </enumChoice>
+  <enumChoice choice="Shunting brake">
+	<choice>Shunting brake</choice>
+	<choice xml:lang="de">Rangierbremse</choice>
+  </enumChoice>
+  <enumChoice choice="Coupling/release">
+	<choice>Coupling/release</choice>
+	<choice xml:lang="de">Kuppeln ab-/ankuppeln</choice>
+  </enumChoice>
+  <enumChoice choice="Engine brake apply/release">
+    <choice>Engine brake apply/release</choice>
+    <choice xml:lang="de">Zugbremse anlegen/lösen</choice>
+  </enumChoice>
+  <enumChoice choice="Dead man switch">
+    <choice>Dead man switch</choice>
+    <choice xml:lang="de">Totmannschalter</choice>
+  </enumChoice>
+  <enumChoice choice="Direction change">
+    <choice>Direction change</choice>
+    <choice xml:lang="de">Fahrtrichtungswender</choice>
+  </enumChoice>
+  <enumChoice choice="Sanding">
+    <choice>Sanding</choice>
+    <choice xml:lang="de">Sanden</choice>
+  </enumChoice>
+  <enumChoice choice="Curve screech on/off">
+    <choice>Curve screech on/off</choice>
+    <choice xml:lang="de">Kurvenquietschen ein/aus</choice>
+  </enumChoice>
+  <enumChoice choice="Rail bump on/off">
+    <choice>Rail bump on/off</choice>
+    <choice xml:lang="de">Schienenstösse ein/aus</choice>
+  </enumChoice>
+  <enumChoice choice="Engine lights: switching">
+    <choice>Engine lights: switching</choice>
+    <choice xml:lang="de">Zugbeleuchtung: Lok schiebt</choice>
+  </enumChoice>
+  <enumChoice choice="Engine lights: pulling">
+    <choice>Engine lights: pulling</choice>
+    <choice xml:lang="de">Zugbeleuchtung: Lok zieht</choice>
+  </enumChoice>
+  <enumChoice choice="Volume control">
+    <choice>Volume control</choice>
+    <choice xml:lang="de">Lautstärkeregelung</choice>
+  </enumChoice>
+  <enumChoice choice="Sound fader (Tunnel mode)">
+    <choice>Sound fader (Tunnel mode)</choice>
+    <choice xml:lang="de">Soundfader (Tunnelmodus)</choice>
+  </enumChoice>
+</enumVal>
+
+

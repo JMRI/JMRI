@@ -6,6 +6,7 @@ import javax.swing.JOptionPane;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
 import jmri.Throttle;
+import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +36,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
 
     public EcosDccThrottle(DccLocoAddress address, EcosSystemConnectionMemo memo, boolean control) {
         super(memo);
-        super.speedStepMode = SpeedStepMode128;
+        super.speedStepMode = SpeedStepMode.NMRA_DCC_128;
         p = memo.getPreferenceManager();
         tc = memo.getTrafficController();
         objEcosLocoManager = memo.getLocoAddressManager();
@@ -85,8 +86,15 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
 
         ecosretry = 0;
 
+        log.debug("EcosDccThrottle constructor " + address);
+
         //We go on a hunt to find an object with the dccaddress sent by our controller.
-        objEcosLoco = objEcosLocoManager.provideByDccAddress(address.getNumber());
+        if (address.getNumber() < EcosLocoAddress.MFX_DCCAddressOffset) {
+            objEcosLoco = objEcosLocoManager.provideByDccAddress(address.getNumber());
+        } else {
+            int ecosID = address.getNumber()-EcosLocoAddress.MFX_DCCAddressOffset;
+            objEcosLoco = objEcosLocoManager.provideByEcosObject(String.valueOf(ecosID));
+        }
 
         this.objectNumber = objEcosLoco.getEcosObject();
         if (this.objectNumber == null) {
@@ -132,9 +140,9 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
         if (lSpeed == 0) {
             return 0.0f;
         }
-        if (getSpeedStepMode() == jmri.DccThrottle.SpeedStepMode28) {
+        if (getSpeedStepMode() == SpeedStepMode.NMRA_DCC_28) {
             int step = (int) Math.ceil(lSpeed / 4.65);
-            return step * SPEED_STEP_28_INCREMENT;
+            return step * getSpeedIncrement();
         }
         return ((lSpeed) / 126.f);
     }
@@ -518,7 +526,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
 
     /**
      * Set the speed {@literal &} direction.
-     * <P>
+     * <p>
      * This intentionally skips the emergency stop value of 1.
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop
@@ -559,7 +567,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
         //record(speed);
     }
 
-    long lastSpeedMessageTime = 0l;
+    long lastSpeedMessageTime = 0L;
 
     EcosTrafficController tc;
 
@@ -693,11 +701,11 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
                     } else if (line.contains("protocol")) {
                         String pro = EcosReply.getContentDetails(line, "protocol");
                         if (pro.equals("DCC128")) {
-                            setSpeedStepMode(SpeedStepMode128);
+                            setSpeedStepMode(SpeedStepMode.NMRA_DCC_128);
                         } else if (pro.equals("DCC28")) {
-                            setSpeedStepMode(SpeedStepMode28);
+                            setSpeedStepMode(SpeedStepMode.NMRA_DCC_28);
                         } else if (pro.equals("DCC14")) {
-                            setSpeedStepMode(SpeedStepMode14);
+                            setSpeedStepMode(SpeedStepMode.NMRA_DCC_14);
                         }
                     } else if (line.contains("func[")) {
                         String funcStr = EcosReply.getContentDetails(line, "func");

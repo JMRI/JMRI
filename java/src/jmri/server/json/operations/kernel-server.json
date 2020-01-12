@@ -1,0 +1,37 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "jmri-json-kernel-server-message",
+    "type": "object",
+    "description": "Data portion of message from JMRI to client for operations type \"kernel\"",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "Name of kernel"
+        },
+        "length": {
+            "type": "integer",
+            "description": "Length of all cars in the kernel"
+        },
+        "weight": {
+            "type": "integer",
+            "description": "Weight of all cars in the kernel"
+        },
+        "cars": {
+            "type": "array",
+            "description": "The cars in the kernel",
+            "items": {
+                "type": "object"
+            }
+        },
+        "lead": {
+            "type": ["object", "null"],
+            "description": "The lead car in the kernel"
+        },
+        "rename": {
+            "type": "string",
+            "description": "Old name of kernel if just renamed"
+        }
+    },
+    "additionalProperties": false,
+    "required": ["name", "cars", "lead", "length", "weight"]
+}

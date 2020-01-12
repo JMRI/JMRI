@@ -22,6 +22,16 @@ public class LnStreamPortController extends jmri.jmrix.AbstractStreamPortControl
         setManufacturer(LnConnectionTypeList.DIGITRAX);
     }
 
+    public LnStreamPortController(DataInputStream in, DataOutputStream out, String pname) {
+        super(new LocoNetSystemConnectionMemo(), in, out, pname);
+        setManufacturer(LnConnectionTypeList.DIGITRAX);
+    }
+
+    public LnStreamPortController() {
+        super(new LocoNetSystemConnectionMemo());
+        setManufacturer(LnConnectionTypeList.DIGITRAX);
+    }
+
     /**
      * Check that this object is ready to operate. This is a question of
      * configuration, not transient hardware status.

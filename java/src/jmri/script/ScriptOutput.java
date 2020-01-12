@@ -24,10 +24,11 @@ public class ScriptOutput {
 
     /**
      * Provide access to the JTextArea containing all ScriptEngine output.
-     * <P>
+     * <p>
      * The output JTextArea is not created until this is invoked, so that code
      * that doesn't use this feature can run on GUI-less machines.
-     *
+     * <p>
+     * This creates a "ScriptOutput PipeListener" thread which is not normally terminated.
      * @return component containing script output
      */
     public JTextArea getOutputArea() {
@@ -49,6 +50,8 @@ public class ScriptOutput {
                 // Swing TextArea data model
                 PipedReader pr = new PipedReader(pw);
                 PipeListener pl = new PipeListener(pr, output);
+                pl.setName("ScriptOutput PipeListener");
+                pl.setDaemon(true);
                 pl.start();
             } catch (IOException e) {
                 log.error("Exception creating script output area", e);

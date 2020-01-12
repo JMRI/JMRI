@@ -8,6 +8,7 @@
 
 import jmri
 import java
+import java.beans
 
 # Define a listener which appends a single character (from its
 # local 'digit' variable) to a memory (in its local 'memory' variable)

@@ -3,8 +3,8 @@ package jmri.managers;
 /**
  * Mock Implementation for the User Preferences Manager.
  *
- * @see jmri.UserMessageManager
- * @see jmri.managers.DefaultUserMessagePreferences
+ * @see jmri.UserPreferencesManager
+ * @see jmri.managers.JmriUserPreferencesManager
  *
  * @author Bob Jacobsen Copyright (C) 2015
  */

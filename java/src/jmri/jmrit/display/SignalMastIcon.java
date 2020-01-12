@@ -12,6 +12,7 @@ import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.SignalMast;
 import jmri.Transit;
+import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.palette.SignalMastItemPanel;
 import jmri.jmrit.picker.PickListModel;
@@ -184,10 +185,8 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
         String name;
         if (getSignalMast() == null) {
             name = Bundle.getMessage("NotConnected");
-        } else if (getSignalMast().getUserName() == null) {
-            name = getSignalMast().getSystemName();
         } else {
-            name = getSignalMast().getUserName() + " (" + getSignalMast().getSystemName() + ")";
+            name = getSignalMast().getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
         }
         return name;
     }
@@ -326,7 +325,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
     }
 
     private void addTransitPopup(JPopupMenu popup) {
-        if ((InstanceManager.getDefault(jmri.SectionManager.class).getSystemNameList().size()) > 0
+        if ((InstanceManager.getDefault(jmri.SectionManager.class).getNamedBeanSet().size()) > 0
                 && jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
 
             if (tct == null) {
@@ -620,7 +619,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
 
     /**
      * How to handle lit vs not lit?
-     * <P>
+     * <p>
      * False means ignore (always show R/Y/G/etc appearance on screen); True
      * means show {@link jmri.SignalAppearanceMap#DARK} if lit is set false.
      */

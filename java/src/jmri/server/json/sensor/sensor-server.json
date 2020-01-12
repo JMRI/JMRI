@@ -35,6 +35,10 @@
                 "required": ["name", "value"]
             }
         },
+        "inverted": {
+            "type": "boolean",
+            "description": "true if sensor is inverted; false otherwise"
+        },
         "state": {
             "type": "integer",
             "description": "The state of the sensor",
@@ -42,5 +46,5 @@
         }
     },
     "additionalProperties": false,
-    "required": ["name", "userName", "comment", "state"]
+    "required": ["name", "userName", "comment", "inverted", "state"]
 }

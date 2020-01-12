@@ -4,9 +4,11 @@ import java.awt.Component;
 import java.util.HashMap;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -73,6 +75,7 @@ public class EnumVariableValueTest extends AbstractVariableValueTestBase {
     // This replaces a parent member function (test) that had just
     // too many casts in it to work.
     @Override
+    @Test
     public void testVariableSynch() {
 
         HashMap<String, CvValue> v = createCvMap();
@@ -111,6 +114,7 @@ public class EnumVariableValueTest extends AbstractVariableValueTestBase {
     }
 
     // end of abstract members for common testing - start of custom tests
+    @Test
     public void testSetValue() {
         log.debug("testSetValue");
         EnumVariableValue val = createOutOfSequence();
@@ -120,6 +124,7 @@ public class EnumVariableValueTest extends AbstractVariableValueTestBase {
         }
     }
 
+    @Test
     public void testSetIntValue() {
         EnumVariableValue val = createOutOfSequence();
         for (int i = 0; i < 21; i++) {
@@ -128,6 +133,7 @@ public class EnumVariableValueTest extends AbstractVariableValueTestBase {
         }
     }
 
+    @Test
     public void testGetTextValue() {
         EnumVariableValue val = createOutOfSequence();
         val.setIntValue(0);
@@ -163,21 +169,62 @@ public class EnumVariableValueTest extends AbstractVariableValueTestBase {
         return v1;
     }
 
-    // from here down is testing infrastructure
-    public EnumVariableValueTest(String s) {
-        super(s);
-    }
+    @Test
+    public void testBaseMasks3() {
+        HashMap<String, CvValue> v = createCvMap();
+        CvValue cv = new CvValue("81", p);
+        cv.setValue(0);
+        v.put("81", cv);
+        // create a variable pointed at CV 81, check name
+        EnumVariableValue variable = new EnumVariableValue("label", "comment", "", false, false, false, false, "81", "9", 0, 3, v, null, null);
+        variable.nItems(3);
+        variable.addItem("A");
+        variable.addItem("B");
+        variable.addItem("C");
+        variable.lastItem();
+        
+        checkValue(variable, "value object initially contains ", "A");
+        Assert.assertEquals("cv value", 0*9, cv.getValue());
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", EnumVariableValueTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
+        setValue(variable, "B");
+        checkValue(variable, "value object contains ", "B");
+        Assert.assertEquals("cv value", 1*9, cv.getValue());
 
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(EnumVariableValueTest.class);
-        return suite;
+        setValue(variable, "A");
+        checkValue(variable, "value object contains ", "A");
+        Assert.assertEquals("cv value", 0*9, cv.getValue());
+
+        // pretend you've edited the value & manually notify
+        setValue(variable, "C");   // 3rd choice, value = 2
+        // check variable value
+        checkValue(variable, "value object contains ", "C");
+        // see if the CV was updated
+        Assert.assertEquals("cv value", 18, cv.getValue());
+        
+        // now check that other parts are maintained
+        cv.setValue(3+1*9+81);
+        // check variable value
+        checkValue(variable, "value object contains ", "B");
+        // see if the CV was updated
+        Assert.assertEquals("cv value", 3+1*9+81, cv.getValue());
+
+        // and try setting another value
+        setValue(variable, "B");
+        Assert.assertEquals("cv value", 3+1*9+81, cv.getValue());
+        checkValue(variable, "value object contains ", "B");
+                       
+    }
+    
+    @Before
+    @Override
+    public void setUp() {
+        super.setUp();
+    }
+    
+    @After
+    @Override
+    public void tearDown() {
+        super.tearDown();
     }
 
     private final static Logger log = LoggerFactory.getLogger(EnumVariableValueTest.class);

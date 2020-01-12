@@ -4,10 +4,7 @@ import java.util.List;
 import jmri.ProgListener;
 import jmri.ProgrammingMode;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import org.junit.Assert;
+import org.junit.*;
 
 /**
  * JUnit tests for the AbstractProgrammer class
@@ -16,64 +13,19 @@ import org.junit.Assert;
  *
  * @author Bob Jacobsen
  */
-public class AbstractProgrammerTest extends TestCase {
+public class AbstractProgrammerTest extends jmri.ProgrammerTestBase {
 
-    AbstractProgrammer abstractprogrammer;
-
-    public void testDefault() {
-        Assert.assertEquals("Check Default", ProgrammingMode.DIRECTMODE,
-                abstractprogrammer.getMode());        
-    }
-    
+    @Test
     public void testDefaultViaBestMode() {
-        // Programmer implementation that uses getBestMode for setting default
-        abstractprogrammer = new AbstractProgrammer() {
-
-            @Override
-            public List<ProgrammingMode> getSupportedModes() {
-                java.util.ArrayList<ProgrammingMode> retval = new java.util.ArrayList<ProgrammingMode>();
-                
-                retval.add(ProgrammingMode.DIRECTMODE);
-                retval.add(ProgrammingMode.PAGEMODE);
-                retval.add(ProgrammingMode.REGISTERMODE);
-
-                return retval;
-            }
-
-            @Override
-            public ProgrammingMode getBestMode() { return ProgrammingMode.REGISTERMODE; }
-            
-            @Override
-            public void writeCV(int i, int j, ProgListener l) {}
-            @Override
-            public void confirmCV(String i, int j, ProgListener l) {}
-            @Override
-            public void readCV(int i, ProgListener l) {}
-            @Override
-            public void timeout() {}
-            @Override
-            public boolean getCanRead() { return true;}
-        };
-
-        Assert.assertEquals("Check Default", ProgrammingMode.REGISTERMODE,
-                abstractprogrammer.getMode());        
+        Assume.assumeTrue(programmer instanceof AbstractProgrammer);
+        Assert.assertEquals("Check Default", ProgrammingMode.DIRECTMODE,
+                ((AbstractProgrammer)programmer).getBestMode());        
     }
     
-    public void testSetGetMode() {
-        abstractprogrammer.setMode(ProgrammingMode.REGISTERMODE);
-        Assert.assertEquals("Check mode matches set", ProgrammingMode.REGISTERMODE,
-                abstractprogrammer.getMode());        
-    }
-    
-    public void testSetModeNull() {
-        try {
-            abstractprogrammer.setMode(null);
-        } catch (IllegalArgumentException e) { return;  /* OK */ }
-        
-        Assert.fail("should not have setMode(null)");        
-    }
-    
+    @Test
     public void testRegisterFromCV() {
+        Assume.assumeTrue(programmer instanceof AbstractProgrammer);
+        AbstractProgrammer abstractprogrammer = (AbstractProgrammer) programmer;
         int cv1 = -1;
 
         try {
@@ -109,29 +61,13 @@ public class AbstractProgrammerTest extends TestCase {
         }
     }
 
-    // from here down is testing infrastructure
-    public AbstractProgrammerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {AbstractProgrammerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(AbstractProgrammerTest.class);
-        return suite;
-    }
-
     // The minimal setup for log4J
+    @Before
     @Override
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+    public void setUp() {
+        JUnitUtil.setUp();
 
-        abstractprogrammer = new AbstractProgrammer() {
+        programmer = new AbstractProgrammer() {
 
             @Override
             public List<ProgrammingMode> getSupportedModes() {
@@ -143,13 +79,17 @@ public class AbstractProgrammerTest extends TestCase {
 
                 return retval;
             }
+  
+            // Programmer implementation that uses getBestMode for setting default
+            @Override
+            public ProgrammingMode getBestMode() { return ProgrammingMode.DIRECTMODE; }
 
             @Override
-            public void writeCV(int i, int j, ProgListener l) {}
+            public void writeCV(String i, int j, ProgListener l) {}
             @Override
             public void confirmCV(String i, int j, ProgListener l) {}
             @Override
-            public void readCV(int i, ProgListener l) {}
+            public void readCV(String i, ProgListener l) {}
             @Override
             public void timeout() {}
             @Override
@@ -157,8 +97,10 @@ public class AbstractProgrammerTest extends TestCase {
         };
     }
 
+    @After
     @Override
-    protected void tearDown() {
+    public void tearDown() {
+        programmer = null;
         JUnitUtil.tearDown();
     }
 

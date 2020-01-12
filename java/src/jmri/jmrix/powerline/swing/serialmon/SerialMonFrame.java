@@ -22,11 +22,17 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
 
     SerialTrafficController tc = null;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected String title() {
         return "Powerline Device Command Monitor";
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void init() {
         // connect to TrafficController
@@ -34,24 +40,34 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
     }
 
     /**
-     * Define system-specific help item
+     * {@inheritDoc}
      */
+    @Override
     protected void setHelp() {
         addHelpMenu("package.jmri.jmrix.powerline.serialmon.SerialMonFrame", true);  // NOI18N
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void dispose() {
         tc.removeSerialListener(this);
         super.dispose();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public synchronized void message(SerialMessage l) {  // receive a message and log it
         nextLine(l.toMonitorString(), l.toString());
         return;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public synchronized void reply(SerialReply l) {  // receive a reply message and log it
         nextLine(l.toMonitorString(), l.toString());

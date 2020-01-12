@@ -1,14 +1,13 @@
-//LocationEditFrameTest.java
 package jmri.jmrit.operations.locations;
 
 import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.OperationsTestCase;
+import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+import jmri.util.swing.JemmyUtil;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -16,20 +15,20 @@ import org.junit.Test;
  *
  * @author	Dan Boudreau Copyright (C) 2009
  */
-public class LocationEditFrameTest extends OperationsSwingTestCase {
+public class LocationEditFrameTest extends OperationsTestCase {
 
     final static int ALL = Track.EAST + Track.WEST + Track.NORTH + Track.SOUTH;
 
     @Test
     public void testLocationEditFrame() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        loadLocations();
+        JUnitOperationsUtil.loadFiveLocations();
 
         LocationEditFrame f = new LocationEditFrame(null);
         f.setTitle("Test Add Location Frame");
 
         f.locationNameTextField.setText("New Test Location");
-        enterClickAndLeave(f.addLocationButton);
+        JemmyUtil.enterClickAndLeave(f.addLocationButton);
 
         LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
         Assert.assertEquals("should be 6 locations", 6, lManager.getLocationsByNameList().size());
@@ -38,42 +37,30 @@ public class LocationEditFrameTest extends OperationsSwingTestCase {
         Assert.assertNotNull(newLoc);
 
         // add a yard track
-        enterClickAndLeave(f.addYardButton);
+        JemmyUtil.enterClickAndLeave(f.addYardButton);
 
         // add an interchange track
-        enterClickAndLeave(f.addInterchangeButton);
+        JemmyUtil.enterClickAndLeave(f.addInterchangeButton);
 
         // add a staging track
-        enterClickAndLeave(f.addStagingButton);
+        JemmyUtil.enterClickAndLeave(f.addStagingButton);
 
         // add a yard track
-        enterClickAndLeave(f.addYardButton);
+        JemmyUtil.enterClickAndLeave(f.addYardButton);
 
         f.locationNameTextField.setText("Newer Test Location");
-        enterClickAndLeave(f.saveLocationButton);
+        JemmyUtil.enterClickAndLeave(f.saveLocationButton);
 
         Assert.assertEquals("changed location name", "Newer Test Location", newLoc.getName());
 
         // test delete button
-        enterClickAndLeave(f.deleteLocationButton);
+        JemmyUtil.enterClickAndLeave(f.deleteLocationButton);
         Assert.assertEquals("should be 6 locations", 6, lManager.getLocationsByNameList().size());
         // confirm delete dialog window should appear
-        pressDialogButton(f, Bundle.getMessage("deletelocation?"), Bundle.getMessage("ButtonYes"));
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("deletelocation?"), Bundle.getMessage("ButtonYes"));
         // location now deleted
         Assert.assertEquals("should be 5 locations", 5, lManager.getLocationsByNameList().size());
 
         JUnitUtil.dispose(f);
-    }
-
-    @Override
-    @Before
-    public void setUp() throws Exception {
-        super.setUp();
-    }
-
-    @Override
-    @After
-    public void tearDown() throws Exception {
-        super.tearDown();
     }
 }

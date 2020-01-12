@@ -8,7 +8,6 @@ import java.awt.FlowLayout;
 import java.awt.event.WindowEvent;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import jmri.jmrix.ieee802154.xbee.XBeeNode;
 import jmri.jmrix.ieee802154.xbee.XBeeTrafficController;
@@ -20,7 +19,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2004
  * @author Dave Duchamp Copyright (C) 2004
- * @author Paul Bender Copyright (C) 2013,2016
+ * @author Paul Bender Copyright (C) 2013,2016,2018
  */
 public class XBeeEditNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.EditNodeFrame {
 
@@ -68,6 +67,11 @@ public class XBeeEditNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Ed
         initAddressBoxes();
         contentPane.add(panel);
 
+        StreamConfigPane streamPane = StreamConfigPane.createPanel((XBeeNode)curNode);
+        streamPane.setXBeeNode((XBeeNode)curNode);
+        contentPane.add(streamPane);
+
+
         // Set up buttons
         JPanel panel4 = new JPanel();
         panel4.setLayout(new FlowLayout());
@@ -92,7 +96,7 @@ public class XBeeEditNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Ed
                 cancelButtonActionPerformed();
             }
         });
-        contentPane.add(panel4);
+        contentPane.add(panel4); 
 
         // pack for display
         pack();
@@ -134,12 +138,6 @@ public class XBeeEditNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Ed
         // create the RemoteXBeeDevice for the node.
         RemoteXBeeDevice remoteDevice = new RemoteXBeeDevice(xtc.getXBee(),
               guid,address,Identifier);
-        // get a XBeeNode corresponding to this node address if one exists
-        XBeeNode existingNode = (XBeeNode) xtc.getNodeFromXBeeDevice(remoteDevice);
-        if (existingNode != null) {
-            javax.swing.JOptionPane.showMessageDialog(this,Bundle.getMessage("Error1",remoteDevice),Bundle.getMessage("EditNodeErrorTitle"),JOptionPane.ERROR_MESSAGE);
-            return;
-        }
         // save the old remote device
         RemoteXBeeDevice oldDevice = ((XBeeNode)curNode).getXBee();
         // and then add the new device to the network

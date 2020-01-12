@@ -1,8 +1,12 @@
 package jmri.jmrix.grapevine;
 
+import java.util.Locale;
+import javax.annotation.Nonnull;
 import jmri.Manager.NameValidity;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import jmri.Manager;
+import jmri.NamedBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,26 +15,26 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Multiple address formats are supported:
  * <ul>
- * <li>Gitnnnxxx where: Gi is the (multichar) system connection prefix,
+ * <li>Gtnnnxxx where: G is the (multichar) system connection prefix,
  * t is the type code: 'T' for turnouts, 'S' for sensors, 'H' for signal
  * heads and 'L' for lights;
- * nnn is the node address (0-127); xxx is a bit number of the input or
+ * nnn is the node address (1-127); xxx is a bit number of the input or
  * output bit (001-999)</li>
- * <li>Gitnnnxxx = (node address x 1000) + bit number.<br>
- * Examples: GT2 (node address 0, bit 2), G1S1003 (node address 1, bit 3),
+ * <li>Gtnnnxxx = (node address x 1000) + bit number.<br>
+ * Examples: GT1002 (node address 1, bit 2), G1S1003 (node address 1, bit 3),
  * GL11234 (node address 11, bit234)</li>
- * <li>Gitnnnaxxxx where: t is the type code, 'T' for turnouts, 'S' for
+ * <li>Gtnnnaxxxx where: t is the type code, 'T' for turnouts, 'S' for
  * sensors, 'H' for signal heads and 'L' for lights; nnn is the node address of the
- * input or output bit (0-127); xxxx is a bit number of the input or output bit
+ * input or output bit (1-127); xxxx is a bit number of the input or output bit
  * (1-2048); a is a subtype-specific letter:
  *  <ul>
  *  <li>'B' for a bit number (e.g. GT12B3 is a shorter form of GT12003)
  *  <li>'a' is for advanced serial occupancy sensors (only valid t = S)
  *  <li>'m' is for advanced serial motion sensors (only valid t = S)
- *  <li>'p' is for parallel sensors (only valid t = S)
- *  <li>'s' is for serial occupancy sensors (only valid t = S)
+ *  <li>'pattern' is for parallel sensors (only valid t = S)
+  <li>'s' is for serial occupancy sensors (only valid t = S)
  *  </ul>
- * Examples: GT0B2 (node address 0, bit 2), G1S1B3 (node address 1, bit 3),
+ * Examples: GT1B2 (node address 1, bit 2), G1S1B3 (node address 1, bit 3),
  * G22L11B234 (node address 11, bit 234)
  * </li>
  * </ul>
@@ -48,7 +52,7 @@ public class SerialAddress {
      * <p>
      * Groups:
      * <ul>
-     * <li> - System letter/prefix (excluded in regex since 4.11.3)
+     * <li> - System letter/prefix (not captured in regex)
      * <li>1 - Type letter
      * <li>2 - suffix, if of nnnAnnn form
      * <li>3 - node number in nnnAnnn form
@@ -57,7 +61,7 @@ public class SerialAddress {
      * <li>6 - combined number in nnnnnn form
      * </ul>
      */
-    static final String turnoutRegex = "(T)(?:((\\d++)(B)(\\d++))|(\\d++))$";
+    static final String turnoutRegex = "^\\w\\d*(T)(?:((\\d++)(B)(\\d++))|(\\d++))$";
     static volatile Pattern turnoutPattern = null;
 
     static Pattern getTurnoutPattern() {
@@ -73,7 +77,7 @@ public class SerialAddress {
      * <p>
      * Groups:
      * <ul>
-     * <li> - System letter/prefix (excluded in regex since 4.11.3)
+     * <li> - System letter/prefix (not captured in regex)
      * <li>1 - Type letter
      * <li>2 - suffix, if of nnnAnnn form
      * <li>3 - node number in nnnAnnn form
@@ -82,7 +86,7 @@ public class SerialAddress {
      * <li>6 - combined number in nnnnnn form
      * </ul>
      */
-    static final String lightRegex = "(L)(?:((\\d++)(B)(\\d++))|(\\d++))$";
+    static final String lightRegex = "^\\w\\d*(L)(?:((\\d++)(B)(\\d++))|(\\d++))$";
     static volatile Pattern lightPattern = null;
 
     static Pattern getLightPattern() {
@@ -98,7 +102,7 @@ public class SerialAddress {
      * <p>
      * Groups:
      * <ul>
-     * <li> - System letter/prefix (excluded in regex since 4.11.3)
+     * <li> - System letter/prefix (not captured in regex)
      * <li>1 - Type letter
      * <li>2 - suffix, if of nnnAnnn form
      * <li>3 - node number in nnnAnnn form
@@ -107,7 +111,7 @@ public class SerialAddress {
      * <li>6 - combined number in nnnnnn form
      * </ul>
      */
-    static final String headRegex = "(H)(?:((\\d++)(B)(\\d++))|(\\d++))$";
+    static final String headRegex = "^\\w\\d*(H)(?:((\\d++)(B)(\\d++))|(\\d++))$";
     static volatile Pattern headPattern = null;
 
     static Pattern getHeadPattern() {
@@ -123,7 +127,7 @@ public class SerialAddress {
      * <p>
      * Groups:
      * <ul>
-     * <li> - System letter/prefix (excluded in regex since 4.11.3)
+     * <li> - System letter/prefix (not captured in regex)
      * <li>1 - Type letter
      * <li>2 - suffix, if of nnnAnnn form
      * <li>3 - node number in nnnAnnn form
@@ -132,7 +136,7 @@ public class SerialAddress {
      * <li>6 - combined number in nnnnnn form
      * </ul>
      */
-    static final String sensorRegex = "(S)(?:((\\d++)([BbAaMmPpSs])(\\d++))|(\\d++))$";
+    static final String sensorRegex = "^\\w\\d*(S)(?:((\\d++)([BbAaMmPpSs])(\\d++))|(\\d++))$";
     static volatile Pattern sensorPattern = null;
 
     static Pattern getSensorPattern() {
@@ -148,7 +152,7 @@ public class SerialAddress {
      * <p>
      * Groups:
      * <ul>
-     * <li> - System letter/prefix (excluded in regex since 4.11.3)
+     * <li> - System letter/prefix (not captured in regex)
      * <li>1 - Type letter
      * <li>2 - suffix, if of nnnAnnn form
      * <li>3 - node number in nnnAnnn form
@@ -157,7 +161,7 @@ public class SerialAddress {
      * <li>6 - combined number in nnnnnn form
      * </ul>
      */
-    static final String allRegex = "([SHLT])(?:((\\d++)([BbAaMmPpSs])(\\d++))|(\\d++))$";
+    static final String allRegex = "^\\w\\d*([SHLT])(?:((\\d++)([BbAaMmPpSs])(\\d++))|(\\d++))$";
     static volatile Pattern allPattern = null;
 
     static Pattern getAllPattern() {
@@ -196,12 +200,11 @@ public class SerialAddress {
      * @return 'NULL' if illegal systemName format or if the node is not found
      */
     public static SerialNode getNodeFromSystemName(String systemName, SerialTrafficController tc) {
-        String prefix = tc.getSystemConnectionMemo().getSystemPrefix();
         // validate the System Name leader characters
-        Matcher matcher = getAllPattern().matcher(systemName.substring(prefix.length())); // exclude multichar prefix
+        Matcher matcher = getAllPattern().matcher(systemName);
         if (!matcher.matches()) {
             // here if an illegal format 
-            log.error("illegal system name format: {}", systemName);
+            log.error("illegal system name format in getNodeFromSystemName: {}", systemName);
             return null;
         }
 
@@ -209,7 +212,7 @@ public class SerialAddress {
         int ua;
         if (matcher.group(6) != null) {
             // This is a Gitnnxxx address
-            int num = Integer.valueOf(matcher.group(6)).intValue();
+            int num = Integer.parseInt(matcher.group(6));
             if (num > 0) {
                 ua = num / 1000;
             } else {
@@ -217,7 +220,7 @@ public class SerialAddress {
                 return null;
             }
         } else {
-            ua = Integer.valueOf(matcher.group(3)).intValue();
+            ua = Integer.parseInt(matcher.group(3));
         }
         return (SerialNode) tc.getNodeFromAddress(ua);
     }
@@ -230,29 +233,29 @@ public class SerialAddress {
      */
     public static int getBitFromSystemName(String systemName, String prefix) {
         // validate the System Name leader characters
-        Matcher matcher = getAllPattern().matcher(systemName.substring(prefix.length())); // exclude multichar prefix
+        Matcher matcher = getAllPattern().matcher(systemName);
         if (!matcher.matches()) {
             // here if an illegal format 
-            log.error("illegal system name format: {}", systemName);
+            log.error("illegal system name format in getBitFromSystemName: {} prefix: {}", systemName, prefix, new Exception("traceback"));
             return 0;
         }
 
         // start decode
-        int n = 0;
+        int n;
         if (matcher.group(6) != null) {
             // name in be Gitnnxxx format
-            int num = Integer.valueOf(matcher.group(6)).intValue();
+            int num = Integer.parseInt(matcher.group(6));
             if (num > 0) {
                 n = num % 1000;
             } else {
                 log.error("invalid value in system name: {}", systemName);
-                return (0);
+                return 0;
             }
         } else {
             // This is a Gitnnaxxxx address
-            n = Integer.valueOf(matcher.group(5)).intValue();
+            n = Integer.parseInt(matcher.group(5));
         }
-        return (n);
+        return n;
     }
 
     /**
@@ -264,29 +267,149 @@ public class SerialAddress {
      */
     public static int getNodeAddressFromSystemName(String systemName, String prefix) {
         // validate the System Name leader characters
-        Matcher matcher = getAllPattern().matcher(systemName.substring(prefix.length())); // exclude multichar prefix
+        Matcher matcher = getAllPattern().matcher(systemName);
         if (!matcher.matches()) {
             // here if an illegal format 
-            log.error("illegal system name format: {}", systemName);
-            return (-1);
+            log.error("illegal system name format in getNodeAddressFromSystemName: {}", systemName);
+            return -1;
         }
 
         // start decode
         int ua;
         if (matcher.group(6) != null) {
             // This is a Gitnnxxx address
-            int num = Integer.valueOf(matcher.group(6)).intValue();
+            int num = Integer.parseInt(matcher.group(6));
             if (num > 0) {
                 ua = num / 1000;
             } else {
                 log.error("invalid value in system name: {}", systemName);
-                return (-1);
+                return -1;
             }
         } else {
-            ua = Integer.valueOf(matcher.group(3)).intValue();
+            ua = Integer.parseInt(matcher.group(3));
             log.debug("node ua: {}", ua);
         }
         return ua;
+    }
+
+    /**
+     * Validate a system name.
+     *
+     * @param name    the name to validate
+     * @param manager the manager requesting validation
+     * @param locale  the locale for user messages
+     * @return the name, unchanged
+     * @throws IllegalArgumentException if name is not valid
+     * @see Manager#validateSystemNameFormat(java.lang.String, java.util.Locale)
+     */
+    static String validateSystemNameFormat(String name, Manager manager, Locale locale) {
+        name = manager.validateSystemNamePrefix(name, locale);
+        Pattern pattern;
+        switch (manager.typeLetter()) {
+            case 'L':
+                pattern = getLightPattern();
+                break;
+            case 'T':
+                pattern = getTurnoutPattern();
+                break;
+            case 'H':
+                pattern = getHeadPattern();
+                break;
+            case 'S':
+                pattern = getSensorPattern();
+                break;
+            default:
+                // validateSystemNamePrefix did not validate correctly, so log a stack trace
+                NamedBean.BadSystemNameException ex = new NamedBean.BadSystemNameException(
+                        Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidUnknownType", name),
+                        Bundle.getMessage(locale, "SystemNameInvalidUnknownType", name));
+                log.error(ex.getMessage(), ex); // second parameter logs stack trace
+                throw ex;
+        }
+        Matcher matcher = pattern.matcher(name);
+        if (!matcher.matches()) {
+            throw new NamedBean.BadSystemNameException(
+                    Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidFailedRegex", name, pattern.pattern()),
+                    Bundle.getMessage(locale, "SystemNameInvalidFailedRegex", name, pattern.pattern()));
+        }
+        int node;
+        int bit;
+        if (matcher.group(6) != null) {
+            // Gitnnxxx format
+            int num = Integer.parseInt(matcher.group(6));
+            node = num / 1000;
+            bit = num % 1000;
+        } else {
+            // Gitnnaxxxx address
+            node = Integer.parseInt(matcher.group(3));
+            bit = Integer.parseInt(matcher.group(5));
+        }
+        // check values
+        if ((node < 1) || (node > 127)) {
+            throw new NamedBean.BadSystemNameException(
+                    Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidNode", name, bit, 1, 127),
+                    Bundle.getMessage(locale, "SystemNameInvalidNode", name, bit, 1, 127));
+        }
+
+        // check bit numbers
+        if (manager.typeLetter() != 'S') {
+            if (!((bit >= 101 && bit <= 124)
+                    || (bit >= 201 && bit <= 224)
+                    || (bit >= 301 && bit <= 324)
+                    || (bit >= 401 && bit <= 424))) {
+                throw new NamedBean.BadSystemNameException(
+                        Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidFailedRegex", name, pattern.pattern()),
+                        Bundle.getMessage(locale, "SystemNameInvalidFailedRegex", name, pattern.pattern()));
+            }
+        } else {
+            // sort on subtype
+            String subtype = matcher.group(4);
+            if (null == subtype) { // no subtype, just look at total
+                if ((bit < 1) || (bit > 224)) {
+                    throw new NamedBean.BadSystemNameException(
+                            Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidBit", name, bit, 1, 224),
+                            Bundle.getMessage(locale, "SystemNameInvalidBit", name, bit, 1, 224));
+                }
+            } else {
+                switch (subtype.toUpperCase()) {
+                    case "A":
+                        // advanced serial occ
+                        if ((bit < 1) || (bit > 24)) {
+                            throw new NamedBean.BadSystemNameException(
+                                    Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidBit", name, bit, 1, 24),
+                                    Bundle.getMessage(locale, "SystemNameInvalidBit", name, bit, 1, 24));
+                        }
+                        break;
+                    case "M":
+                        // advanced serial motion
+                        if ((bit < 1) || (bit > 24)) {
+                            throw new NamedBean.BadSystemNameException(
+                                    Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidBit", name, bit, 1, 24),
+                                    Bundle.getMessage(locale, "SystemNameInvalidBit", name, bit, 1, 24));
+                        }
+                        break;
+                    case "S":
+                        // old serial
+                        if ((bit < 1) || (bit > 24)) {
+                            throw new NamedBean.BadSystemNameException(
+                                    Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidBit", name, bit, 1, 24),
+                                    Bundle.getMessage(locale, "SystemNameInvalidBit", name, bit, 1, 24));
+                        }
+                        break;
+                    case "P":
+                        // parallel
+                        if ((bit < 1) || (bit > 96)) {
+                            throw new NamedBean.BadSystemNameException(
+                                    Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidBit", name, bit, 1, 96),
+                                    Bundle.getMessage(locale, "SystemNameInvalidBit", name, bit, 1, 96));
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        return name;
     }
 
     /**
@@ -298,9 +421,9 @@ public class SerialAddress {
      * @param prefix     system connection prefix from memo
      * @return 'true' if system name has a valid format, else returns 'false'
      */
-    public static NameValidity validSystemNameFormat(String systemName, char type, String prefix) {
+    public static NameValidity validSystemNameFormat(@Nonnull String systemName, char type, String prefix) {
         // validate the System Name leader characters
-        Matcher matcher = getAllPattern().matcher(systemName.substring(prefix.length())); // exclude multichar prefix
+        Matcher matcher = getAllPattern().matcher(systemName);
         if (!matcher.matches()) {
             // here if an illegal format, e.g. another system letter
             // which happens all the time due to how proxy managers work
@@ -325,19 +448,19 @@ public class SerialAddress {
         }
 
         // check format
-        Matcher m2 = p.matcher(systemName.substring(prefix.length()));
-        if (!m2.matches()) {
-            // here if cannot parse specifically (only accepts GxTnnn or GxTnnnB
+        matcher = p.matcher(systemName);
+        if (!matcher.matches()) {
+            // here if cannot parse specifically (only accepts GTnnn or GTnnnB
             log.debug("invalid system name format: {} for type {}", systemName, type);
             return NameValidity.INVALID;
         }
 
         // check for the two different formats
-        int node = -1;
-        int bit = -1;
+        int node;
+        int bit;
         if (matcher.group(6) != null) {
             // name in be Gitnnxxx format
-            int num = Integer.valueOf(matcher.group(6)).intValue();
+            int num = Integer.parseInt(matcher.group(6));
             if (num > 0) {
                 node = num / 1000;
                 bit = num % 1000;
@@ -347,8 +470,8 @@ public class SerialAddress {
             }
         } else {
             // This is a Gitnnaxxxx address, get values
-            node = Integer.valueOf(matcher.group(3)).intValue();
-            bit = Integer.valueOf(matcher.group(5)).intValue();
+            node = Integer.parseInt(matcher.group(3));
+            bit = Integer.parseInt(matcher.group(5));
         }
 
         // check values
@@ -461,15 +584,15 @@ public class SerialAddress {
             return "";
         }
 
-        Matcher matcher = getAllPattern().matcher(systemName.substring(prefix.length())); // exclude multichar prefix
+        Matcher matcher = getAllPattern().matcher(systemName);
         matcher.matches(); // known to work, just need values
         // check format
         if (matcher.group(6) != null) {
-            int num = Integer.valueOf(matcher.group(6)).intValue();
+            int num = Integer.parseInt(matcher.group(6));
             return prefix + matcher.group(1) + (num / 1000) + "B" + (num % 1000);
         } else {
-            int node = Integer.valueOf(matcher.group(3)).intValue();
-            int bit = Integer.valueOf(matcher.group(5)).intValue();
+            int node = Integer.parseInt(matcher.group(3));
+            int bit = Integer.parseInt(matcher.group(5));
             return prefix + matcher.group(1) + node + "B" + bit;
         }
     }
@@ -492,18 +615,18 @@ public class SerialAddress {
                return "";
            }
 
-           Matcher matcher = getAllPattern().matcher(systemName.substring(prefix.length())); // exclude multichar prefix
+           Matcher matcher = getAllPattern().matcher(systemName);
            matcher.matches(); // known to work, just need values
 
            // check format
            if (matcher.group(6) != null) {
-              int num = Integer.valueOf(matcher.group(6)).intValue();
+              int num = Integer.parseInt(matcher.group(6));
               return prefix + matcher.group(1) + num;
            } else {
               // there are alternate forms...
               int offset = typeOffset(matcher.group(4));
-              int node = Integer.valueOf(matcher.group(3)).intValue();
-              int bit = Integer.valueOf(matcher.group(5)).intValue();
+              int node = Integer.parseInt(matcher.group(3));
+              int bit = Integer.parseInt(matcher.group(5));
               return prefix + matcher.group(1) + (node * 1000 + bit + offset);
            }
        } catch(java.lang.StringIndexOutOfBoundsException sobe){

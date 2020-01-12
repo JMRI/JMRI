@@ -2,8 +2,6 @@ package jmri.jmrix.can.swing;
 
 import java.awt.GraphicsEnvironment;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.TestTrafficController;
-import jmri.jmrix.can.TrafficController;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -33,14 +31,15 @@ public class CanNamedPaneActionTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        // tc = new TestTrafficController();
+        jmri.util.JUnitUtil.resetProfileManager();
+
         m = new CanSystemConnectionMemo();
         m.setSystemPrefix("ABC");
     }
 
     @After
     public void tearDown() {
-        // tc = null;
+        m = null;
         JUnitUtil.tearDown();
     }
 
