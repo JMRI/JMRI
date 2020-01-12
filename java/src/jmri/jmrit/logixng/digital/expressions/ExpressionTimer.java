@@ -11,18 +11,18 @@ import org.slf4j.LoggerFactory;
 /**
  * This expression is a timer.
  * It can be of these types:
- * * Wait some time and then return 'true' once. Timer is restarted upon reset.
- * * Wait some time and then return 'true' until reset.
- * * Wait some time and then return 'true' once. Once evaluate() is called, the timer is reset and starts again.
- * * Wait some time and then return 'true'. Wait some time and then return 'false'. Once evaluate() is called, the timer is reset and starts again.
- * <P>
+ * Wait some time and then return 'true' once. ExpressionTimer is restarted upon reset.
+ * Wait some time and then return 'true' until reset.
+ * Wait some time and then return 'true' once. Once evaluate() is called, the timer is reset and starts again.
+ * Wait some time and then return 'true'. Wait some time and then return 'false'. Once evaluate() is called, the timer is reset and starts again.
+ <P>
  * The timer is reset when listerners are registered, which will happen when
  * setEnabled(true) is called on the LogixNG, the ConditionalNG or any male
  * socket, if this timer is enabled and all its parents are enabled and if the
  * LogixNG is activated.
  * @author Daniel Bergqvist Copyright 2018
  */
-public class Timer extends AbstractDigitalExpression {
+public class ExpressionTimer extends AbstractDigitalExpression {
 
     private ProtectedTimerTask _timerTask;
     private TimerType _timerType = TimerType.WAIT_ONCE_TRIG_ONCE;
@@ -33,7 +33,7 @@ public class Timer extends AbstractDigitalExpression {
     private long _delayOn = 0;      // Time in milliseconds
     
     
-    public Timer(String sys, String user) {
+    public ExpressionTimer(String sys, String user) {
         super(sys, user);
     }
 
@@ -308,6 +308,6 @@ public class Timer extends AbstractDigitalExpression {
     }
     
     
-    private final static Logger log = LoggerFactory.getLogger(Timer.class);
+    private final static Logger log = LoggerFactory.getLogger(ExpressionTimer.class);
     
 }

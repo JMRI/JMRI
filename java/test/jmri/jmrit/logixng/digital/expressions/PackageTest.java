@@ -22,7 +22,7 @@ import org.junit.runners.Suite;
     HoldTest.class,
     OrTest.class,
     ResetOnTrueTest.class,
-    TimerTest.class,
+    ExpressionTimerTest.class,
     TriggerOnceTest.class,
     TrueTest.class,
 })

@@ -66,7 +66,7 @@ public class DigitalExpressionsTest {
         b.load((Element) null, (Object) null);
         JUnitAppender.assertMessage("Invalid method called");
         
-        b = new TimerXml();
+        b = new ExpressionTimerXml();
         Assert.assertNotNull("exists", b);
         b.load((Element) null, (Object) null);
         JUnitAppender.assertMessage("Invalid method called");

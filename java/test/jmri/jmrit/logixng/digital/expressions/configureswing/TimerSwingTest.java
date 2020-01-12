@@ -3,7 +3,7 @@ package jmri.jmrit.logixng.digital.expressions.configureswing;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JPanel;
 import jmri.util.JUnitUtil;
-import jmri.jmrit.logixng.digital.expressions.Timer;
+import jmri.jmrit.logixng.digital.expressions.ExpressionTimer;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -21,7 +21,7 @@ public class TimerSwingTest {
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
-        TimerSwing t = new TimerSwing();
+        ExpressionTimerSwing t = new ExpressionTimerSwing();
         Assert.assertNotNull("exists",t);
     }
     
@@ -29,7 +29,7 @@ public class TimerSwingTest {
     public void testPanel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
-        TimerSwing t = new TimerSwing();
+        ExpressionTimerSwing t = new ExpressionTimerSwing();
         JPanel panel = t.getConfigPanel(new JPanel());
         Assert.assertNotNull("exists",panel);
     }
@@ -39,9 +39,9 @@ public class TimerSwingTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
         Assert.assertTrue("panel is not null",
-            null != new TimerSwing().getConfigPanel(new JPanel()));
+            null != new ExpressionTimerSwing().getConfigPanel(new JPanel()));
         Assert.assertTrue("panel is not null",
-            null != new TimerSwing().getConfigPanel(new Timer("IQDE1", null), new JPanel()));
+            null != new ExpressionTimerSwing().getConfigPanel(new ExpressionTimer("IQDE1", null), new JPanel()));
     }
     
     // The minimal setup for log4J

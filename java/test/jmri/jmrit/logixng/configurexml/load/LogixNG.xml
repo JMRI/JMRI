@@ -3,8 +3,8 @@
 <layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
   <jmriversion>
     <major>4</major>
-    <minor>17</minor>
-    <test>7</test>
+    <minor>19</minor>
+    <test>2</test>
     <modifier>ish</modifier>
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
@@ -65,7 +65,7 @@
     <memory>
       <systemName>IM4</systemName>
     </memory>
-    <memory value="11:35 em">
+    <memory value="4:48 fm">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -75,7 +75,7 @@
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
   </signalmastlogics>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Sat Oct 19 23:35:39 CEST 2019" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Sun Jan 12 04:48:52 CET 2020" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <logixngs class="jmri.jmrit.logixng.implementation.configurexml.DefaultLogixNGManagerXml">
     <logixng enabled="yes">
       <systemName>IQ:AUTO:0001</systemName>
@@ -108,11 +108,11 @@
         <systemName>IQDA:AUTO:0001</systemName>
       </socket>
     </conditionalng>
-    <conditionalng enabled="no">
+    <conditionalng enabled="yes">
       <systemName>IQC:AUTO:0002</systemName>
       <socket>
         <socketName />
-        <systemName>IQDA:AUTO:0004</systemName>
+        <systemName>IQDA:AUTO:0003</systemName>
       </socket>
     </conditionalng>
     <conditionalng enabled="yes">
@@ -120,7 +120,7 @@
       <userName>Yet another conditionalNG</userName>
       <socket>
         <socketName />
-        <systemName>IQDA:AUTO:0007</systemName>
+        <systemName>IQDA:AUTO:0005</systemName>
       </socket>
     </conditionalng>
   </logixngConditionalNGs>
@@ -383,17 +383,17 @@
         <socketName>E2</socketName>
       </secondarySocket>
     </reset-on-true>
-    <timer class="jmri.jmrit.logixng.digital.expressions.configurexml.TimerXml">
+    <timer class="jmri.jmrit.logixng.digital.expressions.configurexml.ExpressionTimerXml">
       <systemName>IQDE:AUTO:00020</systemName>
     </timer>
-    <timer class="jmri.jmrit.logixng.digital.expressions.configurexml.TimerXml">
+    <timer class="jmri.jmrit.logixng.digital.expressions.configurexml.ExpressionTimerXml">
       <systemName>IQDE:AUTO:00021</systemName>
       <userName>My Timer expression</userName>
     </timer>
     <trigger-once class="jmri.jmrit.logixng.digital.expressions.configurexml.TriggerOnceXml">
       <systemName>IQDE:AUTO:00022</systemName>
       <socket>
-        <socketName>E1</socketName>
+        <socketName>E</socketName>
         <systemName>IQDE:AUTO:00023</systemName>
       </socket>
     </trigger-once>
@@ -401,7 +401,7 @@
       <systemName>IQDE:AUTO:00023</systemName>
       <userName>My TriggerOnce expression</userName>
       <socket>
-        <socketName>E1</socketName>
+        <socketName>E</socketName>
       </socket>
     </trigger-once>
     <true class="jmri.jmrit.logixng.digital.expressions.configurexml.TrueXml">
@@ -463,15 +463,11 @@
         </socket>
         <socket>
           <socketName>A2</socketName>
-          <systemName>IQDA:AUTO:0003</systemName>
-        </socket>
-        <socket>
-          <socketName>A3</socketName>
         </socket>
       </actions>
     </many>
     <if-then-else class="jmri.jmrit.logixng.digital.actions.configurexml.IfThenElseXml" type="TRIGGER_ACTION">
-      <systemName>IQDA:AUTO:0003</systemName>
+      <systemName>IQDA:AUTO:0002</systemName>
       <ifSocket>
         <socketName>E</socketName>
       </ifSocket>
@@ -483,51 +479,43 @@
       </elseSocket>
     </if-then-else>
     <many class="jmri.jmrit.logixng.digital.actions.configurexml.ManyXml">
-      <systemName>IQDA:AUTO:0004</systemName>
+      <systemName>IQDA:AUTO:0003</systemName>
       <actions>
         <socket>
           <socketName>A1</socketName>
-          <systemName>IQDA:AUTO:0005</systemName>
+          <systemName>IQDA:AUTO:0004</systemName>
         </socket>
         <socket>
           <socketName>A2</socketName>
+        </socket>
+      </actions>
+    </many>
+    <if-then-else class="jmri.jmrit.logixng.digital.actions.configurexml.IfThenElseXml" type="TRIGGER_ACTION">
+      <systemName>IQDA:AUTO:0004</systemName>
+      <ifSocket>
+        <socketName>E</socketName>
+      </ifSocket>
+      <thenSocket>
+        <socketName>A1</socketName>
+      </thenSocket>
+      <elseSocket>
+        <socketName>A2</socketName>
+      </elseSocket>
+    </if-then-else>
+    <many class="jmri.jmrit.logixng.digital.actions.configurexml.ManyXml">
+      <systemName>IQDA:AUTO:0005</systemName>
+      <actions>
+        <socket>
+          <socketName>A1</socketName>
           <systemName>IQDA:AUTO:0006</systemName>
         </socket>
         <socket>
-          <socketName>A3</socketName>
+          <socketName>A2</socketName>
         </socket>
       </actions>
     </many>
     <if-then-else class="jmri.jmrit.logixng.digital.actions.configurexml.IfThenElseXml" type="TRIGGER_ACTION">
       <systemName>IQDA:AUTO:0006</systemName>
-      <ifSocket>
-        <socketName>E</socketName>
-      </ifSocket>
-      <thenSocket>
-        <socketName>A1</socketName>
-      </thenSocket>
-      <elseSocket>
-        <socketName>A2</socketName>
-      </elseSocket>
-    </if-then-else>
-    <many class="jmri.jmrit.logixng.digital.actions.configurexml.ManyXml">
-      <systemName>IQDA:AUTO:0007</systemName>
-      <actions>
-        <socket>
-          <socketName>A1</socketName>
-          <systemName>IQDA:AUTO:0008</systemName>
-        </socket>
-        <socket>
-          <socketName>A2</socketName>
-          <systemName>IQDA:AUTO:0009</systemName>
-        </socket>
-        <socket>
-          <socketName>A3</socketName>
-        </socket>
-      </actions>
-    </many>
-    <if-then-else class="jmri.jmrit.logixng.digital.actions.configurexml.IfThenElseXml" type="TRIGGER_ACTION">
-      <systemName>IQDA:AUTO:0009</systemName>
       <ifSocket>
         <socketName>E</socketName>
         <systemName>IQDE:AUTO:00001</systemName>
@@ -546,82 +534,78 @@
       <actions>
         <socket>
           <socketName>A1</socketName>
-          <systemName>IQDA:AUTO:00011</systemName>
-        </socket>
-        <socket>
-          <socketName>A2</socketName>
           <systemName>IQDA:AUTO:00012</systemName>
         </socket>
         <socket>
-          <socketName>A3</socketName>
+          <socketName>A2</socketName>
           <systemName>IQDA:AUTO:00013</systemName>
         </socket>
         <socket>
-          <socketName>A4</socketName>
+          <socketName>A3</socketName>
           <systemName>IQDA:AUTO:00014</systemName>
         </socket>
         <socket>
-          <socketName>A5</socketName>
+          <socketName>A4</socketName>
           <systemName>IQDA:AUTO:00015</systemName>
         </socket>
         <socket>
-          <socketName>A6</socketName>
+          <socketName>A5</socketName>
           <systemName>IQDA:AUTO:00016</systemName>
         </socket>
         <socket>
-          <socketName>A7</socketName>
+          <socketName>A6</socketName>
           <systemName>IQDA:AUTO:00017</systemName>
         </socket>
         <socket>
-          <socketName>A8</socketName>
+          <socketName>A7</socketName>
           <systemName>IQDA:AUTO:00018</systemName>
         </socket>
         <socket>
-          <socketName>A9</socketName>
+          <socketName>A8</socketName>
           <systemName>IQDA:AUTO:10019</systemName>
         </socket>
         <socket>
-          <socketName>A10</socketName>
+          <socketName>A9</socketName>
           <systemName>IQDA:AUTO:00020</systemName>
         </socket>
         <socket>
-          <socketName>A11</socketName>
+          <socketName>A10</socketName>
           <systemName>IQDA:AUTO:00021</systemName>
         </socket>
         <socket>
-          <socketName>A12</socketName>
+          <socketName>A11</socketName>
           <systemName>IQDA:AUTO:00022</systemName>
         </socket>
         <socket>
-          <socketName>A13</socketName>
+          <socketName>A12</socketName>
           <systemName>IQDA:AUTO:00023</systemName>
         </socket>
         <socket>
-          <socketName>A14</socketName>
+          <socketName>A13</socketName>
           <systemName>IQDA:AUTO:10023</systemName>
         </socket>
         <socket>
-          <socketName>A15</socketName>
+          <socketName>A14</socketName>
           <systemName>IQDA:AUTO:10024</systemName>
         </socket>
         <socket>
-          <socketName>A16</socketName>
+          <socketName>A15</socketName>
           <systemName>IQDA:AUTO:00101</systemName>
         </socket>
         <socket>
-          <socketName>A17</socketName>
+          <socketName>A16</socketName>
           <systemName>IQDA:AUTO:00102</systemName>
         </socket>
         <socket>
-          <socketName>A18</socketName>
+          <socketName>A17</socketName>
           <systemName>IQDA:AUTO:00103</systemName>
         </socket>
         <socket>
-          <socketName>A19</socketName>
+          <socketName>A18</socketName>
           <systemName>IQDA:AUTO:00104</systemName>
         </socket>
         <socket>
-          <socketName>A20</socketName>
+          <socketName>A19</socketName>
         </socket>
       </actions>
     </many>
@@ -800,22 +784,10 @@
   </logixngStringActions>
   <filehistory>
     <operation>
-      <type>Load OK</type>
-      <date>Fri Nov 29 21:10:36 CET 2019</date>
-      <filename>/F:/Projekt/Java/GitHub/JMRI/java/test/jmri/jmrit/logixng/configurexml/load/LogixNG.xml</filename>
-      <filehistory>
-        <operation>
-          <type>Store</type>
-          <date>Sat Oct 19 23:35:39 CEST 2019</date>
-          <filename />
-        </operation>
-      </filehistory>
-    </operation>
-    <operation>
       <type>Store</type>
-      <date>Fri Nov 29 21:10:36 CET 2019</date>
+      <date>Sun Jan 12 04:48:53 CET 2020</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.17.7ish+daniel+20191129T2009Z on Fri Nov 29 21:10:36 CET 2019-->
+  <!--Written by JMRI version 4.19.2ish+daniel+20200112T0348Z on Sun Jan 12 04:48:53 CET 2020-->
 </layout-config>

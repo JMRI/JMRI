@@ -27,7 +27,7 @@ public class Factory implements DigitalExpressionFactory {
         expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, Hold.class));
         expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.COMMON, Or.class));
         expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, ResetOnTrue.class));
-        expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.COMMON, Timer.class));
+        expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.COMMON, ExpressionTimer.class));
         expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, TriggerOnce.class));
         expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, True.class));
         return expressionClasses;

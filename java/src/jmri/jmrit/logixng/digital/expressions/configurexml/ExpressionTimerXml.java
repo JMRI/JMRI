@@ -2,7 +2,7 @@ package jmri.jmrit.logixng.digital.expressions.configurexml;
 
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.DigitalExpressionManager;
-import jmri.jmrit.logixng.digital.expressions.Timer;
+import jmri.jmrit.logixng.digital.expressions.ExpressionTimer;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,9 +14,9 @@ import jmri.jmrit.logixng.DigitalExpressionBean;
  * @author Bob Jacobsen Copyright: Copyright (c) 2004, 2008, 2010
  * @author Daniel Bergqvist Copyright (C) 2019
  */
-public class TimerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
+public class ExpressionTimerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
-    public TimerXml() {
+    public ExpressionTimerXml() {
     }
     
     /**
@@ -27,7 +27,7 @@ public class TimerXml extends jmri.managers.configurexml.AbstractNamedBeanManage
      */
     @Override
     public Element store(Object o) {
-        Timer p = (Timer) o;
+        ExpressionTimer p = (ExpressionTimer) o;
 
         Element element = new Element("timer");
         element.setAttribute("class", this.getClass().getName());
@@ -44,9 +44,9 @@ public class TimerXml extends jmri.managers.configurexml.AbstractNamedBeanManage
         String uname = getUserName(shared);
         DigitalExpressionBean h;
         if (uname == null) {
-            h = new Timer(sys, null);
+            h = new ExpressionTimer(sys, null);
         } else {
-            h = new Timer(sys, uname);
+            h = new ExpressionTimer(sys, uname);
         }
 
         loadCommon(h, shared);
@@ -60,5 +60,5 @@ public class TimerXml extends jmri.managers.configurexml.AbstractNamedBeanManage
         log.error("Invalid method called");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TimerXml.class);
+    private final static Logger log = LoggerFactory.getLogger(ExpressionTimerXml.class);
 }

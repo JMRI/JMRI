@@ -8,12 +8,12 @@ import jmri.InstanceManager;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.MaleSocket;
-import jmri.jmrit.logixng.digital.expressions.Timer;
+import jmri.jmrit.logixng.digital.expressions.ExpressionTimer;
 
 /**
  * Configures an ExpressionTurnout object with a Swing JPanel.
  */
-public class TimerSwing extends AbstractExpressionSwing {
+public class ExpressionTimerSwing extends AbstractExpressionSwing {
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
@@ -29,14 +29,14 @@ public class TimerSwing extends AbstractExpressionSwing {
     /** {@inheritDoc} */
     @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
-        Timer expression = new Timer(systemName, userName);
+        ExpressionTimer expression = new ExpressionTimer(systemName, userName);
         return InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expression);
     }
     
     /** {@inheritDoc} */
     @Override
     public void updateObject(@Nonnull Base object) {
-//        Timer expression = (Timer)object;
+//        ExpressionTimer expression = (ExpressionTimer)object;
     }
     
     /** {@inheritDoc} */

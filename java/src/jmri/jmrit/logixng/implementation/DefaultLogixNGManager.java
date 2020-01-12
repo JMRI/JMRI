@@ -59,7 +59,7 @@ import jmri.jmrit.logixng.digital.expressions.False;
 import jmri.jmrit.logixng.digital.expressions.Hold;
 import jmri.jmrit.logixng.digital.expressions.Or;
 import jmri.jmrit.logixng.digital.expressions.ResetOnTrue;
-import jmri.jmrit.logixng.digital.expressions.Timer;
+import jmri.jmrit.logixng.digital.expressions.ExpressionTimer;
 import jmri.jmrit.logixng.digital.expressions.TriggerOnce;
 import jmri.jmrit.logixng.digital.expressions.True;
 import jmri.jmrit.logixng.string.actions.StringActionMemory;
@@ -381,11 +381,11 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
                     MaleSocket socketResetOnTrue3 = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionResetOnTrue3);
                     expressionResetOnTrue.getChild(1).connect(socketResetOnTrue3);
                     
-                    Timer expressionTimer = new Timer(getSystemNamePrefix()+"DE:AUTO:00020", null);
+                    ExpressionTimer expressionTimer = new ExpressionTimer(getSystemNamePrefix()+"DE:AUTO:00020", null);
                     MaleSocket socketTimer = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionTimer);
                     socketOr.getChild(index++).connect(socketTimer);
                     
-                    Timer expressionTimer2 = new Timer(getSystemNamePrefix()+"DE:AUTO:00021", "My Timer expression");
+                    ExpressionTimer expressionTimer2 = new ExpressionTimer(getSystemNamePrefix()+"DE:AUTO:00021", "My Timer expression");
                     MaleSocket socketTimer2 = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionTimer2);
                     socketOr.getChild(index++).connect(socketTimer2);
                     
