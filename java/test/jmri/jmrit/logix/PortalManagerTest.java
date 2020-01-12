@@ -150,6 +150,7 @@ public class PortalManagerTest {
     @After
     public void tearDown() {
         _portalMgr = null;
+        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
         JUnitUtil.tearDown();
     }
 

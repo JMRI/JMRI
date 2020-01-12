@@ -1100,8 +1100,6 @@
 
 <mapID target="html.doc.Technical.JUnit_issues" url="html/doc/Technical/JUnit.shtml#issues"/>
 
-<mapID target="html.hardware.loconet.DigitraxPower.Sidebar" url="html/hardware/loconet/DigitraxPower/Sidebar.shtml"/>
-
 <mapID target="html.hardware.roco.z21.index" url="html/hardware/roco/z21/index.shtml"/>
 
 <mapID target="package.jmri.jmrit.beantable.SensorAddEdit_basic" url="package/jmri/jmrit/beantable/SensorAddEdit.shtml#basic"/>
@@ -1159,8 +1157,6 @@
 <mapID target="manual.DecoderPro3.Comp_PrintData_c" url="manual/DecoderPro3/Comp_PrintData_c.shtml"/>
 
 <mapID target="manual.DecoderPro3.Comp_PrintData_b" url="manual/DecoderPro3/Comp_PrintData_b.shtml"/>
-
-<mapID target="html.hardware.loconet.DigitraxPower.index" url="html/hardware/loconet/DigitraxPower/index.shtml"/>
 
 <mapID target="html.hardware.loconet.LocoNetSim_SeeAlso" url="html/hardware/loconet/LocoNetSim.shtml#SeeAlso"/>
 
@@ -1377,6 +1373,8 @@
 <mapID target="manual.DecoderPro.Main_XpressNet_LV102CM" url="manual/DecoderPro/Main_XpressNet.shtml#LV102CM"/>
 
 <mapID target="package.jmri.jmrit.vsdecoder.swing.ManageLocationsFrame" url="package/jmri/jmrit/vsdecoder/swing/ManageLocationsFrame.shtml"/>
+
+<mapID target="html.doc.Technical.githubdesktopinto" url="html/doc/Technical/githubdesktopinto.shtml"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_Routes" url="manual/JMRI_OPS_UsersGuide/Ops_Routes.shtml"/>
 
@@ -2308,6 +2306,8 @@
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_ImportEngines_FromRoster_Top" url="manual/JMRI_OPS_UsersGuide/Ops_ImportEngines_FromRoster.shtml#Top"/>
 
+<mapID target="parts.SidebarApplications" url="parts/SidebarApplications.shtml"/>
+
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_Locations_setCars_Top" url="manual/JMRI_OPS_UsersGuide/Ops_Locations_setCars.shtml#Top"/>
 
 <mapID target="manual.DecoderPro.Dcode_Format" url="manual/DecoderPro/Dcode_Format.shtml"/>
@@ -2794,6 +2794,8 @@
 
 <mapID target="html.hardware.hardware-template_documentation" url="html/hardware/hardware-template.shtml#documentation"/>
 
+<mapID target="html.hardware.loconet.DigitraxPower" url="html/hardware/loconet/DigitraxPower.shtml"/>
+
 <mapID target="package.jmri.jmrit.operations.Operations_SynchronizeWithNCEConsists" url="package/jmri/jmrit/operations/Operations.shtml#SynchronizeWithNCEConsists"/>
 
 <mapID target="package.jmri.jmrix.loconet.duplexgroup.DuplexGroupTabbedPanel_Fields" url="package/jmri/jmrix/loconet/duplexgroup/DuplexGroupTabbedPanel.shtml#Fields"/>
@@ -3087,6 +3089,8 @@
 <mapID target="html.hardware.loconet.LocoNetTools_tools" url="html/hardware/loconet/LocoNetTools.shtml#tools"/>
 
 <mapID target="manual.DecoderPro3.Main_XpressNet_LI101CU" url="manual/DecoderPro3/Main_XpressNet.shtml#LI101CU"/>
+
+<mapID target="manual.DecoderPro.Main_VSD_throttle-auto-launch" url="manual/DecoderPro/Main_VSD.shtml#throttle-auto-launch"/>
 
 <mapID target="manual.DecoderPro.index_Main" url="manual/DecoderPro/index.shtml#Main"/>
 
@@ -4126,6 +4130,8 @@
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_ImportEngines_FromFiles_Top" url="manual/JMRI_OPS_UsersGuide/Ops_ImportEngines_FromFiles.shtml#Top"/>
 
+<mapID target="html.doc.Technical.SpotBugs_nullable" url="html/doc/Technical/SpotBugs.shtml#nullable"/>
+
 <mapID target="package.jmri.jmrit.operations.Operations_AllowCarsToReturnToStaging" url="package/jmri/jmrit/operations/Operations.shtml#AllowCarsToReturnToStaging"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Start_Preferences_Defaults" url="manual/JMRI_OPS_UsersGuide/Start_Preferences.shtml#Defaults"/>
@@ -4221,6 +4227,8 @@
 <mapID target="package.jmri.jmrix.can.cbus.swing.simulator.SimulatorPane_nodes" url="package/jmri/jmrix/can/cbus/swing/simulator/SimulatorPane.shtml#nodes"/>
 
 <mapID target="package.jmri.jmrit.dispatcher.Dispatcher_intro" url="package/jmri/jmrit/dispatcher/Dispatcher.shtml#intro"/>
+
+<mapID target="html.apps.index_addonApplications" url="html/apps/index.shtml#addonApplications"/>
 
 <mapID target="package.jmri.jmrix.cmri.serial.cmrinetmanager.CMRInetManagerFrame" url="package/jmri/jmrix/cmri/serial/cmrinetmanager/CMRInetManagerFrame.shtml"/>
 

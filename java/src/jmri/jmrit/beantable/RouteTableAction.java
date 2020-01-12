@@ -847,11 +847,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
             public void windowClosing(java.awt.event.WindowEvent e) {
                 // remind to save, if Route was created or edited
                 if (routeDirty) {
-                    InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                            showInfoMessage(Bundle.getMessage("ReminderTitle"),
-                                    Bundle.getMessage("ReminderSaveString", Bundle.getMessage("MenuItemRouteTable")),
-                                    getClassName(),
-                                    "remindSaveRoute"); //NOI18N
+                    showReminderMessage();
                     routeDirty = false;
                 }
                 // hide addFrame
@@ -870,6 +866,14 @@ public class RouteTableAction extends AbstractTableAction<Route> {
         // display the window
         addFrame.setVisible(true);
         autoSystemName();
+    }
+
+    void showReminderMessage() {
+        InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                showInfoMessage(Bundle.getMessage("ReminderTitle"),  // NOI18N
+                        Bundle.getMessage("ReminderSaveString", Bundle.getMessage("MenuItemRouteTable")),  // NOI18N
+                        getClassName(),
+                        "remindSaveRoute"); //NOI18N
     }
 
     void autoSystemName() {
@@ -1844,6 +1848,9 @@ public class RouteTableAction extends AbstractTableAction<Route> {
      * Cancel Add mode.
      */
     void cancelAdd() {
+        if (routeDirty) {
+            showReminderMessage();
+        }
         curRoute = null;
         finishUpdate();
         status1.setText(createInst);
@@ -2071,9 +2078,15 @@ public class RouteTableAction extends AbstractTableAction<Route> {
 
     private boolean showAll = true;   // false indicates show only included Turnouts
 
-    public final static String LOGIX_SYS_NAME = "RTX";
-    public final static String CONDITIONAL_SYS_PREFIX = LOGIX_SYS_NAME + "C";
+    public final static String LOGIX_SYS_NAME;
+    public final static String CONDITIONAL_SYS_PREFIX;
     private static int ROW_HEIGHT;
+
+    static {
+        String logixPrefix = InstanceManager.getDefault(jmri.LogixManager.class).getSystemNamePrefix();
+        LOGIX_SYS_NAME = logixPrefix + ":RTX:";
+        CONDITIONAL_SYS_PREFIX = LOGIX_SYS_NAME + "C";
+    }
 
     private static String[] COLUMN_NAMES = {Bundle.getMessage("ColumnSystemName"),
         Bundle.getMessage("ColumnUserName"),
