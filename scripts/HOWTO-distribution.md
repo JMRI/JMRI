@@ -188,7 +188,8 @@ git push github
 - Create the _next_ release note. Best way to do this is to copy the current release note now, before you prune out all the headers and other info where changes weren't made. (We need to work through automation of version number values below) (If you're creating a production version, its release note is made from a merge of the features of all the test releases; also create the *.*.1 note for the next test release)
 
 ```    
-        cd (local web copy)/releasenotes
+        cd (local web copy)
+        cd releasenotes
         git checkout master
         git pull 
         cp jmri4.19.2.shtml jmri4.19.3.shtml
