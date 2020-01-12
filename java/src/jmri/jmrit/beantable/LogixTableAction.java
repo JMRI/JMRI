@@ -1079,27 +1079,24 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
     }
 
     /**
-     * Check validity of Logix system name.
-     * <p>
-     * Fixes name if it doesn't start with "IX".
-     *
-     * @return false if name has length &lt; 1 after displaying a dialog
+     * Check for a valid Logix system name.
+     * A valid name has a Logix prefix, normally IX, and at least 1 additional character.
+     * The prefix will be added if necessary.
+     * makeSystemName errors are logged to the system console and a dialog is displayed.
+     * @return true if the name is now valid.
      */
     boolean checkLogixSysName() {
         String sName = _systemName.getText();
-        if ((sName.length() < 1)) {
-            // Entered system name is blank or too short
+
+        try {
+            sName = InstanceManager.getDefault(jmri.LogixManager.class).makeSystemName(sName);
+        } catch (jmri.NamedBean.BadSystemNameException ex) {
             JOptionPane.showMessageDialog(addLogixFrame,
                     Bundle.getMessage("LogixError8"), Bundle.getMessage("ErrorTitle"), // NOI18N
                     JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        if ((sName.length() < 2) || (sName.charAt(0) != 'I')
-                || (sName.charAt(1) != 'X')) {
-            // System name does not begin with IX, prefix IX to it
-            String s = sName;
-            sName = "IX" + s;  // NOI18N
-        }
+
         _systemName.setText(sName);
         return true;
     }

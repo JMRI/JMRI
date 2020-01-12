@@ -1,20 +1,16 @@
 package jmri.jmrit.operations.automation;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.automation.actions.ActionCodes;
-import jmri.jmrit.operations.automation.actions.ActivateTrainScheduleAction;
-import jmri.jmrit.operations.automation.actions.BuildTrainAction;
-import jmri.jmrit.operations.automation.actions.GotoAction;
-import jmri.jmrit.operations.automation.actions.RunAutomationAction;
-import jmri.jmrit.operations.automation.actions.WaitTrainAction;
+import jmri.jmrit.operations.automation.actions.*;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
-import org.junit.Assert;
-import org.junit.Test;
 
 public class AutomationItemTest extends OperationsTestCase {
 
@@ -41,8 +37,8 @@ public class AutomationItemTest extends OperationsTestCase {
         
         // static tests
         Assert.assertEquals("Do Nothing", AutomationItem.getActionByCode(0x0000).getName()); // there isn't a code 0x0000 action
-        Assert.assertEquals("Number of actions", 29, AutomationItem.getActionComboBox().getItemCount());
-        Assert.assertEquals("Number of actions", 29, AutomationItem.getActionList().size());
+        Assert.assertEquals("Number of actions", 31, AutomationItem.getActionComboBox().getItemCount());
+        Assert.assertEquals("Number of actions", 31, AutomationItem.getActionList().size());
     }
 
     @Test

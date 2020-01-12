@@ -1,10 +1,8 @@
 
     <!-- contains new warnings for the release under development -->
-
-    <li>The system names for Routes are required to start with "IO" to avoid
-    	ambiguity or confusion with Reporters (the system names of which start
-    	with "IR"). JMRI 4.19.2 or later should automatically rename Routes
-    	correctly, but it is possible that references to those Routes will need
-    	to be updated.
-	  </li>
-    	
+    <li>
+        <code>Manager.getSystemNameArray()</code> has been removed after being 
+        deprecated for two years. Please migrate to using
+        <code>Manager.getNamedBeanSet()</code> instead.  If you really
+        must have an array, use <code>Manager.getNamedBeanSet().toSet()</code>
+    </li>

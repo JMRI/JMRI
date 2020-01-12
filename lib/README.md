@@ -14,7 +14,6 @@ macOS binaries are treated slightly differently, see the README file there.
 
 If you make a change in this directory (add/change/remove a file), please make corresponding changes in the control files that are used for various JMRI development and release operations:
 - build.xml - used by Ant, and in turn by various IDEs. Note that in addition to changing the classpath entry or entries, you should also check to make sure that the three javadoc targets are linking to the proper sources.
-- .classpath - used by Eclipse
 - pom.xml - used by Maven (see notes below)
 - nbproject/ide-file-targets.xml, nbproject/project.xml - used by NetBeans
 
@@ -100,13 +99,8 @@ After that, add and commit the additional files that were created within lib/
 ##### security.policy
 - (JMRI file)
 
-##### jdom.jar
-- (deprecated, we've moved to JDOM2; will be removed from here and control files post JMRI 3.12, but remains for e.g. CATS now)
-- version 1.1
-- from <jdom.org>
-
-##### jdom-2.0.5.jar
-- version 2.0.5
+##### jdom2-2.0.6.jar
+- version 2.0.6
 - from <jdom.org>
 
 ##### jackson-annotations-2.10.0.jar, jackson-core-2.10.0.jar, jackson-databind-2.10.0.jar
