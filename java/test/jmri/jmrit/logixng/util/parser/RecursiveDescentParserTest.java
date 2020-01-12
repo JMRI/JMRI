@@ -11,7 +11,6 @@ import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -79,6 +78,7 @@ public class RecursiveDescentParserTest {
                 + "\n";
 */        
         String myScript = ""
+                + "print \"jmri.jmrit.logixng.util.parser.RecursiveDescentParserTest\"\n"
                 + "print False == 0\n"
                 + "print True == 0\n"
                 + "print False < 0\n"
@@ -142,7 +142,7 @@ public class RecursiveDescentParserTest {
         Assert.assertTrue("expression node is null", null == exprNode);
         exprNode = t.parseExpression("134");
         Assert.assertTrue("expression matches", "IntNumber:134".equals(exprNode.getDefinitionString()));
-        Assert.assertTrue("calculate is correct", ((Long)134l).equals(exprNode.calculate()));
+        Assert.assertTrue("calculate is correct", ((Long)134L).equals(exprNode.calculate()));
         exprNode = t.parseExpression("abc");
         Assert.assertTrue("expression matches", "Identifier:abc".equals(exprNode.getDefinitionString()));
         Assert.assertTrue("calculate is correct", "ABC".equals(exprNode.calculate()));
@@ -153,10 +153,10 @@ public class RecursiveDescentParserTest {
         Assert.assertTrue("calculate is correct", "a little string".equals(exprNode.calculate()));
         exprNode = t.parseExpression("123*1233");
         Assert.assertTrue("expression matches", "(IntNumber:123)*(IntNumber:1233)".equals(exprNode.getDefinitionString()));
-        Assert.assertTrue("calculate is correct", ((Long)151659l).equals(exprNode.calculate()));
+        Assert.assertTrue("calculate is correct", ((Long)151659L).equals(exprNode.calculate()));
         exprNode = t.parseExpression("123+2123");
         Assert.assertTrue("expression matches", "(IntNumber:123)+(IntNumber:2123)".equals(exprNode.getDefinitionString()));
-        Assert.assertTrue("calculate is correct", ((Long)2246l).equals(exprNode.calculate()));
+        Assert.assertTrue("calculate is correct", ((Long)2246L).equals(exprNode.calculate()));
         exprNode = t.parseExpression("123*3.2331");
         Assert.assertTrue("expression matches", "(IntNumber:123)*(FloatNumber:3.2331)".equals(exprNode.getDefinitionString()));
         Assert.assertTrue("calculate is correct", ((Double)397.6713).equals(exprNode.calculate()));
@@ -165,10 +165,10 @@ public class RecursiveDescentParserTest {
         Assert.assertTrue("calculate is correct", ((Double)561.0).equals(exprNode.calculate()));
         exprNode = t.parseExpression("12*45+34");
         Assert.assertTrue("expression matches", "((IntNumber:12)*(IntNumber:45))+(IntNumber:34)".equals(exprNode.getDefinitionString()));
-        Assert.assertTrue("calculate is correct", ((Long)574l).equals(exprNode.calculate()));
+        Assert.assertTrue("calculate is correct", ((Long)574L).equals(exprNode.calculate()));
         exprNode = t.parseExpression("12-57/43");
         Assert.assertTrue("expression matches", "(IntNumber:12)-((IntNumber:57)/(IntNumber:43))".equals(exprNode.getDefinitionString()));
-        Assert.assertTrue("calculate is correct", ((Long)11l).equals(exprNode.calculate()));
+        Assert.assertTrue("calculate is correct", ((Long)11L).equals(exprNode.calculate()));
         exprNode = t.parseExpression("12/23.2-43");
         Assert.assertTrue("expression matches", "((IntNumber:12)/(FloatNumber:23.2))-(IntNumber:43)".equals(exprNode.getDefinitionString()));
         Assert.assertTrue("calculate is correct", ((Double)(-42.482758620689655172413793103448)).equals(exprNode.calculate()));

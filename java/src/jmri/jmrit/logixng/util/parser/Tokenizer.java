@@ -153,7 +153,7 @@ public class Tokenizer {
                     
                 case STRING:
                     if (!currentToken._string.endsWith("\"")) {
-                        System.err.format("String: %s%n", currentToken._string);
+//                        System.err.format("String: %s%n", currentToken._string);
                         throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntaxAtIndex", i));
                     }
                     if ((currentToken._tokenType != TokenType.NONE) && (currentToken._tokenType != TokenType.SPACE)) {

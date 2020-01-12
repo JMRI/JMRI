@@ -3,11 +3,8 @@ package jmri.jmrit.logixng.implementation;
 import java.io.PrintWriter;
 import java.util.Locale;
 import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.FemaleSocket;
-import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.MaleSocket;
-import jmri.jmrit.logixng.implementation.InternalBase;
 
 /**
  * The abstract class that is the base class for all LogixNG classes that
@@ -54,21 +51,6 @@ public abstract class AbstractMaleSocket implements Base, InternalBase {
         }
     }
     
-    /*.* {@inheritDoc} *./
-    @Override
-    public final void registerListeners() {
-//        throw new UnsupportedOperationException("call registerListeners() on LogixNG or ConditionalNG only");
-        if ((this instanceof LogixNG) || (this instanceof ConditionalNG)) {
-            registerListenersInternal();
-        } else {
-            ((InternalBase)getConditionalNG()).registerListenersInternal();
-        }
-//        registerListenersForThisClass();
-//        for (int i=0; i < getChildCount(); i++) {
-//            getChild(i).registerListeners();
-//        }
-    }
-*/    
     /** {@inheritDoc} */
     @Override
     public final void unregisterListeners() {

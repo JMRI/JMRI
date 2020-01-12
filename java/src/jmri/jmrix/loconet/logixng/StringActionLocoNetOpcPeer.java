@@ -231,7 +231,7 @@ public class StringActionLocoNetOpcPeer extends AbstractStringAction
                     lengthByte
             );
             
-            System.out.format("Send LocoNet message: %s%n", l.toString());
+//            System.out.format("Send LocoNet message: %s%n", l.toString());
             
 //            ThreadingUtil.runOnGUIEventually(() -> {
 //                tc.sendLocoNetMessage(l);

@@ -297,7 +297,7 @@ public class Antecedent extends AbstractDigitalExpression implements FemaleSocke
             }
             int index = dp.argsUsed.nextClearBit(0);
             if (index >= 0 && index < expressionEntryList.size()) {
-                System.out.format("Daniel: ant: %s%n", ant);
+//                System.out.format("Daniel: ant: %s%n", ant);
                 return java.text.MessageFormat.format(
                         rbx.getString("ParseError5"),  // NOI18N
                         new Object[]{expressionEntryList.size(), index + 1});

@@ -146,12 +146,6 @@ public class ExpressionTimer extends AbstractDigitalExpression {
     
     /**
      * Get a new timer task.
-     * I had some concurrency errors in about 1 of 20 times of running TimerTest.
-     * The call _timerTask.cancel() return even if the task is still running,
-     * so we are not guaranteed that after the call to _timerTask.cancel(),
-     * the _timerTask is completed.
-     * This code ensures that we don't return from this method until _timerTask
-     * is cancelled and that it's not running any more. / Daniel Bergqvist
      */
     private ProtectedTimerTask getNewTimerTask() {
         final jmri.jmrit.logixng.ConditionalNG c = getConditionalNG();
@@ -167,11 +161,7 @@ public class ExpressionTimer extends AbstractDigitalExpression {
     
     private void scheduleTimer(long delay) {
         synchronized(this) {
-            if (_timerTask != null) {
-                _timerTask.stopTimer();
-                _timerTask = null;
-            }
-            
+            if (_timerTask != null) _timerTask.stopTimer();
             _timerTask = getNewTimerTask();
             jmri.util.TimerUtil.schedule(_timerTask, delay);
         }
@@ -253,9 +243,10 @@ public class ExpressionTimer extends AbstractDigitalExpression {
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
-        // stopTimer() will not return until the timer task is cancelled and stopped.
-        if (_timerTask != null) {
-            _timerTask.stopTimer();
+        synchronized(this) {
+            // stopTimer() will not return until the timer task
+            // is cancelled and stopped.
+            if (_timerTask != null) _timerTask.stopTimer();
             _timerTask = null;
         }
         _listenersAreRegistered = false;

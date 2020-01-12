@@ -630,7 +630,8 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
                     } else {
                         FileUtil.createDirectory(FileUtil.getUserFilesPath() + "temp");
                         File file = new File(FileUtil.getUserFilesPath() + "temp/" + "LogixNG.xml");
-                        System.out.format("Temporary file: %s%n", file.getAbsoluteFile());
+                        log.info("Temporary file: %s%n", file.getAbsoluteFile());
+//                        System.out.format("Temporary file: %s%n", file.getAbsoluteFile());
 
                         final String treeIndent = "   ";
                         StringWriter stringWriter = new StringWriter();

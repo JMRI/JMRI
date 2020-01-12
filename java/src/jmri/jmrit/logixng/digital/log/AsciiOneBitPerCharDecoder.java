@@ -15,6 +15,7 @@ public class AsciiOneBitPerCharDecoder implements LogReaderDecoder {
     private InputStream _input;
     
     /** {@inheritDoc} */
+    @Override
     public void init(Log logixNGLog, InputStream input) {
         _logixNGLog = logixNGLog;
         _input = input;

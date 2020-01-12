@@ -23,7 +23,7 @@ public abstract class ProtectedTimerTask extends TimerTask {
     public abstract void execute();
     
     @Override
-    public void run() {
+    public final void run() {
         synchronized(_lock) {
             if (_stopTimer) return;
             _timerIsRunning = true;

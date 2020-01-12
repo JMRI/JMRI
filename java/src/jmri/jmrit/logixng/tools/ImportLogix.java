@@ -1,6 +1,5 @@
 package jmri.jmrit.logixng.tools;
 
-import java.util.logging.Level;
 import jmri.Conditional;
 import jmri.InstanceManager;
 import jmri.Logix;
@@ -44,7 +43,7 @@ public class ImportLogix {
             try {
                 ic.doImport();
             } catch (SocketAlreadyConnectedException ex) {
-                ex.printStackTrace();
+//                ex.printStackTrace();
                 log.error("Import Conditional {} to ConditionalNG {}", c.getSystemName(), _logixNG.getSystemName(), ex);
             }
         }

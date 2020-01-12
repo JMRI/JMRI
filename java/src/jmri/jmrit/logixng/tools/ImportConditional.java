@@ -1,7 +1,6 @@
 package jmri.jmrit.logixng.tools;
 
 import java.util.List;
-import java.util.logging.Level;
 import jmri.Conditional;
 import jmri.ConditionalAction;
 import jmri.ConditionalVariable;

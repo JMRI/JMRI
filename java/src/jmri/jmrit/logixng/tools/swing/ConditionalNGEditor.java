@@ -402,7 +402,7 @@ public final class ConditionalNGEditor extends JmriJFrame {
            
             SwingConfiguratorInterface swingConfiguratorInterface =
                     _swingConfiguratorComboBox.getItemAt(_swingConfiguratorComboBox.getSelectedIndex());
-            System.err.format("swingConfiguratorInterface: %s%n", swingConfiguratorInterface.getClass().getName());
+//            System.err.format("swingConfiguratorInterface: %s%n", swingConfiguratorInterface.getClass().getName());
             createAddFrame(femaleSocket, path, swingConfiguratorInterface);
         });
         

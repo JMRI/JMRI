@@ -1,8 +1,7 @@
 package jmri.jmrit.logixng.digital.actions;
 
 import java.util.Locale;
-import java.util.Timer;
-import java.util.TimerTask;
+import jmri.util.TimerUtil;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
@@ -12,6 +11,7 @@ import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.FemaleDigitalActionSocket;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
+import jmri.jmrit.logixng.util.ProtectedTimerTask;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,9 +25,9 @@ public class ActionTimer extends AbstractDigitalAction
 
     private String _actionSocketSystemName;
     private final FemaleDigitalActionSocket _actionSocket;
-    private final Timer _timer = new Timer(true);
-    long _delay = 0;
-    boolean _isActive = false;
+    private ProtectedTimerTask _timerTask;
+    private boolean _listenersAreRegistered = false;
+    private long _delay = 0;
     
     public ActionTimer(String sys, String user) {
         super(sys, user);
@@ -47,20 +47,33 @@ public class ActionTimer extends AbstractDigitalAction
         return false;
     }
     
+    /**
+     * Get a new timer task.
+     */
+    private ProtectedTimerTask getNewTimerTask() {
+        final jmri.jmrit.logixng.ConditionalNG c = getConditionalNG();
+        
+        return new ProtectedTimerTask() {
+            @Override
+            public void execute() {
+                try {
+                    _actionSocket.execute();
+                } catch (Exception e) {
+                    log.error("Exception thrown", e);
+                }
+            }
+        };
+    }
+    
     /** {@inheritDoc} */
     @Override
     public void execute() {
         if (_actionSocket.isConnected()) {
-            _timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    try {
-                        _actionSocket.execute();
-                    } catch (Exception e) {
-                        log.error("Exception thrown", e);
-                    }
-                }
-            }, _delay);
+            synchronized(this) {
+                if (_timerTask != null) _timerTask.stopTimer();
+                _timerTask = getNewTimerTask();
+                TimerUtil.schedule(_timerTask, _delay);
+            }
         }
     }
 
@@ -171,17 +184,30 @@ public class ActionTimer extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
+        if (!_listenersAreRegistered) {
+            _listenersAreRegistered = true;
+        }
     }
     
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
+        synchronized(this) {
+            // stopTimer() will not return until the timer task
+            // is cancelled and stopped.
+            if (_timerTask != null) _timerTask.stopTimer();
+            _timerTask = null;
+        }
+        _listenersAreRegistered = false;
     }
     
     /** {@inheritDoc} */
     @Override
     public void disposeMe() {
-        _timer.cancel();
+        synchronized(this) {
+            if (_timerTask != null) _timerTask.stopTimer();
+            _timerTask = null;
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(ActionTimer.class);

@@ -117,18 +117,6 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
     public void testTimer() throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException, JmriException {
         ActionTimer t = new ActionTimer("IQDA1", null);
         Assert.assertNotNull("exists",t);
-        
-        // Set field t._timer to accessible and remove "final" modifier
-        Field timerField = t.getClass().getDeclaredField("_timer");
-        timerField.setAccessible(true);
-        Field modifiersField = Field.class.getDeclaredField("modifiers");
-        modifiersField.setAccessible(true);
-        modifiersField.setInt(timerField, timerField.getModifiers() & ~Modifier.FINAL);
-        
-        MyTimer myTimer = new MyTimer();
-        // Set the field t._timer to the new timer
-        timerField.set(t, myTimer);
-        
         Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT1");
         turnout.setState(Turnout.CLOSED);
         ActionTurnout actionTurnout = new ActionTurnout("IQDA2", null);
@@ -138,10 +126,12 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
                 InstanceManager.getDefault(DigitalActionManager.class)
                         .registerAction(actionTurnout);
         t.getThenActionSocket().connect(actionTurnoutSocket);
+        t.setDelay(100);
         Assert.assertTrue("turnout is closed", Turnout.CLOSED == turnout.getState());
         t.execute();
         Assert.assertTrue("turnout is closed", Turnout.CLOSED == turnout.getState());
-        myTimer.triggerTimer();     // Simulate timer has reached its time
+        // The timer should now trig after 100 milliseconds
+        JUnitUtil.waitFor(()->{return Turnout.THROWN == turnout.getState();}, "timer has not triggered");
         Assert.assertTrue("turnout is thrown", Turnout.THROWN == turnout.getState());
     }
     
@@ -182,7 +172,7 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
     
     
     
-    
+/*    
     public class MyTimer extends Timer {
         
         private TimerTask _task;
@@ -238,5 +228,5 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
         }
         
     }
-    
+*/    
 }

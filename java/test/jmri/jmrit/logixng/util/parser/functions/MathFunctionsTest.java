@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
 import jmri.jmrit.logixng.util.parser.CalculateException;
-import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.jmrit.logixng.util.parser.Token;
 import jmri.jmrit.logixng.util.parser.TokenType;
 import jmri.jmrit.logixng.util.parser.WrongNumberOfParametersException;
@@ -105,7 +104,7 @@ public class MathFunctionsTest {
         Assert.assertTrue("exception is thrown", hasThrown.get());
         
         // The constant is (long) 12, not the number 121
-        Assert.assertEquals("numbers are equal", 12l, longFunction.calculate(getParameterList(expr12_34)));
+        Assert.assertEquals("numbers are equal", 12L, (long)longFunction.calculate(getParameterList(expr12_34)));
         
         // Test unsupported token type
         hasThrown.set(false);

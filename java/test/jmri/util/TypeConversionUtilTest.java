@@ -89,7 +89,7 @@ public class TypeConversionUtilTest {
         Assert.assertTrue("doubles are equal", 0.0 == TypeConversionUtil.convertToDouble("", false));
         JUnitAppender.suppressWarnMessage("the string \"\" cannot be converted to a number");
         Assert.assertTrue("doubles are equal", 123 == TypeConversionUtil.convertToDouble(123, false));         // Integer
-        Assert.assertTrue("doubles are equal", 123 == TypeConversionUtil.convertToDouble(123l, false));        // Long
+        Assert.assertTrue("doubles are equal", 123 == TypeConversionUtil.convertToDouble(123L, false));        // Long
         Assert.assertTrue("doubles are equal", 123.523f == TypeConversionUtil.convertToDouble(123.523f, false));  // Float
         Assert.assertTrue("doubles are equal", 123.523 == TypeConversionUtil.convertToDouble(123.523d, false));  // Double
         Assert.assertTrue("doubles are equal", 12352.3 == TypeConversionUtil.convertToDouble(123.523e2, false));
@@ -131,7 +131,7 @@ public class TypeConversionUtilTest {
         Assert.assertTrue("strings are equal", "".equals(TypeConversionUtil.convertToString(null, false)));
         Assert.assertTrue("strings are equal", "".equals(TypeConversionUtil.convertToString("", false)));
         Assert.assertTrue("strings are equal", "123".equals(TypeConversionUtil.convertToString(123, false)));     // Integer
-        Assert.assertTrue("strings are equal", "123".equals(TypeConversionUtil.convertToString(123l, false)));    // Long
+        Assert.assertTrue("strings are equal", "123".equals(TypeConversionUtil.convertToString(123L, false)));    // Long
         Assert.assertTrue("strings are equal", "123.523".equals(TypeConversionUtil.convertToString(123.523f, false)));    // Float
         Assert.assertTrue("strings are equal", "123.523".equals(TypeConversionUtil.convertToString(123.523d, false)));    // Double
         Assert.assertTrue("strings are equal", "true".equals(TypeConversionUtil.convertToString(true, false)));
