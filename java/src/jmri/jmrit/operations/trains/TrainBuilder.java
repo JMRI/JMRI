@@ -2134,7 +2134,7 @@ public class TrainBuilder extends TrainCommon {
         RouteLocation rl = _train.getTrainDepartsRouteLocation();
         while (true) {
             String blockId = getLargestBlock(); // get the id of the largest block of cars
-            if (blockId.equals("") || _numOfBlocks.get(blockId) == 1) {
+            if (blockId.isEmpty() || _numOfBlocks.get(blockId) == 1) {
                 break; // done
             }
             // get the remaining location with the greatest number of moves

@@ -2,6 +2,10 @@ package jmri.jmrit.operations.rollingstock.cars;
 
 import java.awt.GraphicsEnvironment;
 import java.text.MessageFormat;
+
+import org.junit.*;
+import org.junit.rules.Timeout;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
@@ -12,10 +16,8 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
-import jmri.util.junit.rules.*;
+import jmri.util.junit.rules.RetryRule;
 import jmri.util.swing.JemmyUtil;
-import org.junit.*;
-import org.junit.rules.*;
 
 /**
  * Tests for the Operations Cars GUI class
@@ -236,7 +238,8 @@ public class CarEditFrameTest extends OperationsTestCase {
     }
 
     @Test
-    @Ignore("AppVeyor:giving up after 3 failures. 12/31/2019")
+    //@Ignore("AppVeyor:giving up after 3 failures. 12/31/2019")
+    // please specify where the test is failing 1/12/2020
     public void testLocationComboBox() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -255,7 +258,7 @@ public class CarEditFrameTest extends OperationsTestCase {
 
         CarManager cm = InstanceManager.getDefault(CarManager.class);
         Car car = cm.getByRoadAndNumber("SP", "10345");
-        Assert.assertNull("car exists", car);
+        Assert.assertNull(car);
 
         // this will load the weight fields
         f.lengthComboBox.setSelectedIndex(4); //40 foot car
@@ -263,10 +266,11 @@ public class CarEditFrameTest extends OperationsTestCase {
         // test no track selected error
         f.locationBox.setSelectedIndex(1);
         JemmyUtil.enterClickAndLeave(f.addButton);
+        
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("rsCanNotLoc"), Bundle.getMessage("ButtonOK"));
 
         car = cm.getByRoadAndNumber("SP", "10345");
-        Assert.assertNotNull("car exists", car);
+        Assert.assertNotNull(car);
 
         Assert.assertEquals("car location", null, car.getLocation());
 

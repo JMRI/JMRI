@@ -1127,7 +1127,7 @@ public class Train implements java.beans.PropertyChangeListener {
         }
         java.util.Arrays.sort(roads);
         for (String road : roads) {
-            if (!road.equals("")) {
+            if (!road.isEmpty()) {
                 _roadList.add(road);
             }
         }
@@ -1260,7 +1260,7 @@ public class Train implements java.beans.PropertyChangeListener {
         }
         java.util.Arrays.sort(loads);
         for (String load : loads) {
-            if (!load.equals("")) {
+            if (!load.isEmpty()) {
                 _loadList.add(load);
             }
         }
@@ -1380,7 +1380,7 @@ public class Train implements java.beans.PropertyChangeListener {
         }
         java.util.Arrays.sort(owners);
         for (String owner : owners) {
-            if (!owner.equals("")) {
+            if (!owner.isEmpty()) {
                 _ownerList.add(owner);
             }
         }

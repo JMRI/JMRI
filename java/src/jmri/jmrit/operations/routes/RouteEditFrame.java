@@ -4,20 +4,7 @@ import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.ScrollPaneConstants;
+import javax.swing.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -366,7 +353,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
      * @return true if name is length is okay
      */
     private boolean checkName(String s) {
-        if (routeNameTextField.getText().trim().equals("")) {
+        if (routeNameTextField.getText().trim().isEmpty()) {
             log.debug("Must enter a name for the route");
             JOptionPane.showMessageDialog(this, Bundle.getMessage("MustEnterName"), MessageFormat.format(Bundle
                     .getMessage("CanNotRoute"), new Object[]{s}), JOptionPane.ERROR_MESSAGE);
