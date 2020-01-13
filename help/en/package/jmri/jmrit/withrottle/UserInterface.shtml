@@ -18,6 +18,11 @@
 <!-- /Style -->
 </head>
 
+
+<!-- Page needs to be split into (1) WiFi Throttles page including intro and table and section on remote use (file location in repository TBD), and (2) section on WiThrottle and its UI (the original intent of this page based on the name of the file and where this file resides in the JMRI repository). @jerryg2003 01/12/2020 -->
+
+
+
 <body>
 	<!--#include virtual="/Header" -->
 	<div class="nomenu" id="mBody">
@@ -152,7 +157,9 @@
 				<tr>
 					<td><a target="_blank"
 						href="/help/en/package/jmri/jmrit/webThrottle/webThrottle.shtml">WebThrottle</a></td>
-					<td>Web control for locos, panels, turnouts and routes.
+					<td>
+					NOTE: This WiFI Throttle uses JMRI's Web Server.  YOU MUST START Web Server before using this app.
+					Web control for locos, panels, turnouts and routes.
 						Included in JMRI, nothing to install!</td>
 					<td></td>
 					<td></td>
