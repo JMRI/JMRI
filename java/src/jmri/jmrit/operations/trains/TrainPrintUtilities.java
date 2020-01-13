@@ -71,7 +71,7 @@ public class TrainPrintUtilities {
             return;
         }
         // set font
-        if (!fontName.equals("")) {
+        if (!fontName.isEmpty()) {
             writer.setFontName(fontName);
         }
 
@@ -122,7 +122,7 @@ public class TrainPrintUtilities {
             // check for build report print level
             if (isBuildReport) {
                 line = filterBuildReport(line, false); // no indent
-                if (line.equals("")) {
+                if (line.isEmpty()) {
                     continue;
                 }
                 // printing the train manifest
@@ -279,7 +279,7 @@ public class TrainPrintUtilities {
                     break;
                 }
                 line = filterBuildReport(line, Setup.isBuildReportIndentEnabled());
-                if (line.equals("")) {
+                if (line.isEmpty()) {
                     continue;
                 }
                 out.println(line); // indent lines for each level
