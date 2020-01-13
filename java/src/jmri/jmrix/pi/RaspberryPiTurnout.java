@@ -89,15 +89,15 @@ public class RaspberryPiTurnout extends AbstractTurnout implements java.io.Seria
     * Sets the GPIO pin.
     */
    @Override
-   protected void forwardCommandChangeToLayout(int s){
-      if(s == CLOSED){
+   protected void forwardCommandChangeToLayout(int newState) {
+      if (newState == CLOSED) {
          log.debug("Setting turnout '{}' to CLOSED", getSystemName());
          if (!getInverted()) {
              pin.high();
          } else {
              pin.low();
          }
-      } else if (s == THROWN) {
+      } else if (newState == THROWN) {
          log.debug("Setting turnout '{}' to THROWN", getSystemName());
          if (!getInverted()) {
              pin.low();

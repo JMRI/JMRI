@@ -36,15 +36,14 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
 
     @Override
     public void checkThrownMsgSent() {
-
-//                tcis.sendSerialMessage(tcis.nextWrite(), null); // force outbound message; normally done by poll loop
+//      tcis.sendSerialMessage(tcis.nextWrite(), null); // force outbound message; normally done by poll loop
 //		Assert.assertTrue("message sent", tcis.outbound.size()>0);
 //		Assert.assertEquals("content", "41 54 08", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // THROWN message
     }
 
     @Override
     public void checkClosedMsgSent() {
-//                tcis.sendSerialMessage(tcis.nextWrite(), null); // force outbound message; normally done by poll loop
+//      tcis.sendSerialMessage(tcis.nextWrite(), null); // force outbound message; normally done by poll loop
 //		Assert.assertTrue("message sent", tcis.outbound.size()>0);
 //		Assert.assertEquals("content", "41 54 00", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // CLOSED message
     }
@@ -71,7 +70,6 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
         // Some clean up is done through the AbstractTurnoutTestBase
         jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         jmri.util.JUnitUtil.tearDown();
-
     }
 
 }

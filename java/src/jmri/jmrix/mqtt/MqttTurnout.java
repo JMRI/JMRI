@@ -47,27 +47,19 @@ public class MqttTurnout extends AbstractTurnout implements MqttEventListener {
         }
         
         @Override
-        public @Nonnull String payloadFromBean(@Nonnull Turnout bean, int newState){
-            // sort out states
-            if ((newState & Turnout.CLOSED) != 0 ^ getInverted()) {
-                // first look for the double case, which we can't handle
-                if ((newState & Turnout.THROWN ) != 0 ^ getInverted()) {
-                    // this is the disaster case!
-                    log.error("Cannot command both CLOSED and THROWN: {}", newState);
-                    throw new IllegalArgumentException("Cannot command both CLOSED and THROWN: " + newState);
-                } else {
-                    // send a CLOSED command
-                    return closedText;
-                }
-            } else {
-                // send a THROWN command
-                return thrownText;
+        public @Nonnull String payloadFromBean(@Nonnull Turnout bean, int newState) {
+            // calls jmri.implementation.AbstractTurnout#commandChangeCheck(int)
+            String text = "";
+            try {
+                text = (commandChangeCheck(newState) ? closedText : thrownText);
+            } catch (IllegalArgumentException ex) {
+                log.error("new state invalid, Turnout not set");
             }
+            return text;
         }
     };
-    
 
-    // Turnouts do support inversion
+    // MQTT Turnouts do support inversion
     @Override
     public boolean canInvert() {
         return true;

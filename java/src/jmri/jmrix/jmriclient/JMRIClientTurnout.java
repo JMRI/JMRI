@@ -88,10 +88,10 @@ public class JMRIClientTurnout extends AbstractTurnout implements JMRIClientList
      * {@inheritDoc}
      */
     @Override
-    protected void forwardCommandChangeToLayout(int s) {
+    protected void forwardCommandChangeToLayout(int newState) {
         // sort out states
-        if ((s & Turnout.CLOSED) != 0) {
-            if (noStateConflict(s & Turnout.THROWN)) {
+        if ((newState & Turnout.CLOSED) != 0) {
+            if (!statesConflict(newState)) {
                 // send a CLOSED command
                 sendMessage(true ^ getInverted());
             }

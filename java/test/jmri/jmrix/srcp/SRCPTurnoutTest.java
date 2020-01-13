@@ -8,9 +8,7 @@ import org.junit.Test;
 
 
 /**
- * SRCPTurnoutTest.java
- *
- * Description:	tests for the jmri.jmrix.srcp.SRCPTurnout class
+ * Tests for the jmri.jmrix.srcp.SRCPTurnout class
  *
  * @author	Bob Jacobsen
  * @author  Paul Bender Copyright (C) 2017
@@ -26,19 +24,21 @@ public class SRCPTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
 
     @Override
     public void checkThrownMsgSent() {
-       Assert.assertTrue("message sent", stc.outbound.size()>0);
-       Assert.assertEquals("content", "SET 1 GA 1 0 1 -1\n", stc.outbound.elementAt(stc.outbound.size()-1).toString());  // THROWN message
+       Assert.assertTrue("message sent", stc.outbound.size() > 0);
+       Assert.assertEquals("content",
+               "SET 1 GA 1 0 1 -1\n", stc.outbound.elementAt(stc.outbound.size()-1).toString());  // THROWN message
     }
 
     @Override
     public void checkClosedMsgSent() {
-       Assert.assertTrue("message sent", stc.outbound.size()>0);
-       Assert.assertEquals("content", "SET 1 GA 1 0 0 -1\n", stc.outbound.elementAt(stc.outbound.size()-1).toString());  // THROWN message
+       Assert.assertTrue("message sent", stc.outbound.size() > 0);
+       Assert.assertEquals("content",
+               "SET 1 GA 1 0 0 -1\n", stc.outbound.elementAt(stc.outbound.size()-1).toString());  // THROWN message
     }
 
     @Test
     public void testGetNumber(){
-        Assert.assertEquals("Number",1,((SRCPTurnout) t).getNumber());
+        Assert.assertEquals("Number",1, ((SRCPTurnout) t).getNumber());
     }
 
     @Override

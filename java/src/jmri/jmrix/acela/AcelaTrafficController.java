@@ -40,7 +40,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
         mWaitBeforePoll = 25;  // default = 25
         setAllowUnexpectedReply(true);
 
-        super.init(0, 1024); // 1024 is an artifical limit but economically reasonable maxNode upper limit
+        super.init(0, 1024); // 1024 is an artificial limit but economically reasonable maxNode upper limit
 
         reallyReadyToPoll = false;           // Need to not start polling until we are ready
         needToPollNodes = true;              // Need to poll and create corresponding nodes
@@ -378,7 +378,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
             return m;
         }
 
-        // Trying to serialize Acela initiatization so system is stable
+        // Trying to serialize Acela initialization so system is stable
         // So we will not poll sensors or send om/off commands until we have
         // initialized all of the sensor modules -- this can take several seconds
         // during a cold system startup.

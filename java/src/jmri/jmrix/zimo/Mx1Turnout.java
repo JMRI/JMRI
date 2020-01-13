@@ -41,17 +41,15 @@ public class Mx1Turnout extends AbstractTurnout /*implements Mx1TrafficListener*
      * Sends a formatted DCC packet
      */
     @Override
-    protected void forwardCommandChangeToLayout(int s) {
-        // sort out states
-        if ((s & Turnout.CLOSED) != 0) {
-            if (noStateConflict(s)) {
-                // send a CLOSED command
-                forwardToCommandStation(Turnout.THROWN);
-            }
-        } else {
-            // send a THROWN command
-            forwardToCommandStation(Turnout.CLOSED);
+    protected void forwardCommandChangeToLayout(int newState) {
+        // calls jmri.implementation.AbstractTurnout#commandChangeCheck(int)
+        int command = newState;
+        try {
+            command = (commandChangeCheck(newState) ? Turnout.CLOSED : Turnout.THROWN);
+        } catch (IllegalArgumentException ex) {
+            log.error("new state invalid, Turnout not set");
         }
+        forwardToCommandStation(command);
     }
 
     void forwardToCommandStation(int state) {
@@ -63,6 +61,6 @@ public class Mx1Turnout extends AbstractTurnout /*implements Mx1TrafficListener*
     protected void turnoutPushbuttonLockout(boolean pushButtonLockout) {
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(Mx1Turnout.class);
+    private final static Logger log = LoggerFactory.getLogger(Mx1Turnout.class);
 
 }

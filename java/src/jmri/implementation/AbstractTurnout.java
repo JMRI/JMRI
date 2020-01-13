@@ -72,26 +72,40 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         forwardCommandChangeToLayout(_commandedState);
     }
 
-    protected boolean CommandChangeCheck(int s) {
+    /**
+     * Preprocess a Turnout state change request for {@link #forwardCommandChangeToLayout(int)}
+     *
+     * @param newState the Turnout command value passed
+     * @return true if a Turnout.CLOSED was requested and Turnout is not set to _inverted
+     */
+    protected boolean commandChangeCheck(int newState) throws IllegalArgumentException {
         // sort out states
-        if ((s & Turnout.CLOSED) != 0) {
-            if (noStateConflict(s)) {
-                // send a CLOSED command
-                return (false);
+        if ((newState & Turnout.CLOSED) != 0) {
+            if (!statesConflict(newState)) {
+                // request a CLOSED command (or THROWN if inverted)
+                return (!_inverted);
+            } else {
+                throw new IllegalArgumentException("Can't set state for Turnout " + newState);
             }
         }
-        // send a THROWN command
-        return (true);
+        // request a THROWN command (or CLOSED if inverted)
+        return (_inverted);
     }
 
-    protected boolean noStateConflict(int s) {
-        // look for the double case, which we can't handle
+    /**
+     * Look for the case in which the state is neither Closed nor Thrown, which we can't handle.
+     * Separate method to allow it to be used in XpaTurnout.
+     *
+     * @param s the Turnout command value passed
+     * @return false if s = Turnout.THROWN, which is what we want
+     */
+    protected boolean statesConflict(int s) {
         if ((s & Turnout.THROWN) != 0) {
             // this is the disaster case!
             log.error("Cannot command both CLOSED and THROWN");
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
     /**

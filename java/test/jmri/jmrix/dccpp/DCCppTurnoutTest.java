@@ -8,9 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * DCCppThrottleTest.java
- *
- * Description:	tests for the jmri.jmrix.dccpp.DCCppTurnout class
+ * Tests for the jmri.jmrix.dccpp.DCCppTurnout class
  *
  * @author	Paul Bender
  * @author	Mark Underwood

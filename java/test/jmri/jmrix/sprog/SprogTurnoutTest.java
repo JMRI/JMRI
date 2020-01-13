@@ -22,13 +22,15 @@ public class SprogTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
     @Override
     public void checkThrownMsgSent() {
         Assert.assertTrue("message sent", stcs.outbound.size() > 0);
-        Assert.assertEquals("content", "O 81 FA 7B", stcs.outbound.elementAt(stcs.outbound.size() - 1).toString());  // THROWN message
+        Assert.assertEquals("content",
+                "O 81 FA 7B", stcs.outbound.elementAt(stcs.outbound.size() - 1).toString());  // THROWN message
     }
 
     @Override
     public void checkClosedMsgSent() {
         Assert.assertTrue("message sent", stcs.outbound.size() > 0);
-        Assert.assertEquals("content", "O 81 FB 7A", stcs.outbound.elementAt(stcs.outbound.size() - 1).toString());  // CLOSED message
+        Assert.assertEquals("content",
+                "O 81 FB 7A", stcs.outbound.elementAt(stcs.outbound.size() - 1).toString());  // CLOSED message
     }
 
     // The minimal setup for log4J
@@ -45,7 +47,7 @@ public class SprogTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
         stcs = new SprogTrafficControlScaffold(m);
         m.setSprogTrafficController(stcs);
 
-        t = new SprogTurnout(2,m);
+        t = new SprogTurnout(2, m);
         jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
     }
 

@@ -1,6 +1,5 @@
 package jmri.jmrix.acela;
 
-import jmri.Turnout;
 import jmri.implementation.AbstractTurnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,9 +19,9 @@ public class AcelaTurnout extends AbstractTurnout {
     private AcelaSystemConnectionMemo _memo = null;
 
     /**
-     * Create a Light object, with only system name.
+     * Create a Turnout object, with only system name.
      * <p>
-     * 'SystemName' was previously validated in AcelaLightManager
+     * 'SystemName' was previously validated in AcelaTurnoutManager
      *
      * @param systemName the system name for this Turnout
      * @param memo       the memo for the system connection
@@ -34,9 +33,9 @@ public class AcelaTurnout extends AbstractTurnout {
     }
 
     /**
-     * Create a Light object, with both system and user names.
+     * Create a Turnout object, with both system and user names.
      * <p>
-     * 'systemName' was previously validated in AcelaLightManager
+     * 'systemName' was previously validated in AcelaTurnoutManager
      *
      * @param systemName the system name for this Turnout
      * @param userName   the user name for this Turnout
@@ -72,16 +71,11 @@ public class AcelaTurnout extends AbstractTurnout {
      * {@inheritDoc}
      */
     @Override
-    protected void forwardCommandChangeToLayout(int s) {
-        // sort out states
-        if ((s & Turnout.CLOSED) != 0) {
-            if (noStateConflict(s)) {
-                // send a CLOSED command
-                sendMessage(!getInverted());
-            }
-        } else {
-            // send a THROWN command
-            sendMessage(getInverted());
+    protected void forwardCommandChangeToLayout(int newState) {
+        try {
+            sendMessage(commandChangeCheck(newState));
+        } catch (IllegalArgumentException ex) {
+            log.error("new state invalid, Turnout not set");
         }
     }
 
@@ -108,7 +102,6 @@ public class AcelaTurnout extends AbstractTurnout {
     // method which takes a turnout state as a parameter and adjusts it as necessary
     // to reflect the turnout invert property
     private int adjustStateForInversion(int rawState) {
-
         if (getInverted() && (rawState == CLOSED || rawState == THROWN)) {
             if (rawState == CLOSED) {
                 return THROWN;

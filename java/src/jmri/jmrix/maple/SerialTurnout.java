@@ -94,20 +94,15 @@ public class SerialTurnout extends AbstractTurnout {
      */
     @Override
     protected void forwardCommandChangeToLayout(int newState) {
-        // sort out states
-        if ((newState & Turnout.CLOSED) != 0) {
-            if (noStateConflict(newState & Turnout.THROWN)) {
-                // send a CLOSED command
-                sendMessage(true);
-            }
-        } else {
-            // send a THROWN command
-            sendMessage(false);
+        try {
+            sendMessage(commandChangeCheck(newState));
+        } catch (IllegalArgumentException ex) {
+            log.error("new state invalid, Turnout not set");
         }
     }
 
     /**
-     * Turnouts do support inversion
+     * Turnouts do support inversion.
      */
     @Override
     public boolean canInvert() {

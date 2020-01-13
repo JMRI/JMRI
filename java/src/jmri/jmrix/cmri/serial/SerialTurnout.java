@@ -74,16 +74,11 @@ public class SerialTurnout extends AbstractTurnout {
      */
      @Override
     protected void forwardCommandChangeToLayout(int newState) {
-        // sort out states
-        if ((newState & Turnout.CLOSED) != 0) {
-            if (noStateConflict(newState)) {
-                // send a CLOSED command
-                sendMessage(true);
-            }
-        } else {
-            // send a THROWN command
-            sendMessage(false);
-        }
+         try {
+             sendMessage(commandChangeCheck(newState));
+         } catch (IllegalArgumentException ex) {
+             log.error("new state invalid, Turnout not set");
+         }
     }
 
     /**
@@ -96,9 +91,7 @@ public class SerialTurnout extends AbstractTurnout {
 
      @Override
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
-        if (log.isDebugEnabled()) {
-            log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock") + " Pushbutton ");
-        }
+         log.debug("Send command to {} Pushbutton", (_pushButtonLockout ? "Lock" : "Unlock"));
     }
 
     // data members

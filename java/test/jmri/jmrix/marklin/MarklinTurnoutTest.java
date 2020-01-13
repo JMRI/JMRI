@@ -16,8 +16,8 @@ public class MarklinTurnoutTest {
     public void testCTor() {
         MarklinTrafficController tc = new MarklinTrafficController();
         new MarklinSystemConnectionMemo(tc);
-        MarklinTurnout t = new MarklinTurnout(1,"MC",tc);
-        Assert.assertNotNull("exists",t);
+        MarklinTurnout t = new MarklinTurnout(1,"MC", tc);
+        Assert.assertNotNull("exists", t);
     }
 
     // The minimal setup for log4J

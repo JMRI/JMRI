@@ -44,10 +44,10 @@ public class SprogCSTurnout extends AbstractTurnout {
      * Sends a command via the commandStation.
      */
     @Override
-    protected void forwardCommandChangeToLayout(int s) {
+    protected void forwardCommandChangeToLayout(int newState) {
         // sort out states
-        if ((s & Turnout.CLOSED) != 0) {
-            if (noStateConflict(s & Turnout.THROWN)) {
+        if ((newState & Turnout.CLOSED) != 0) {
+            if (!statesConflict(newState)) {
                 // send a CLOSED command
                 commandStation.forwardCommandChangeToLayout(_number, true ^ getInverted());
             }

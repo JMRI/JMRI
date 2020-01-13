@@ -16,8 +16,8 @@ public class Mx1TurnoutTest {
 
     @Test
     public void testCTor() {
-        Mx1Turnout t = new Mx1Turnout(5,tc,"Z");
-        Assert.assertNotNull("exists",t);
+        Mx1Turnout t = new Mx1Turnout(5, tc, "Z");
+        Assert.assertNotNull("exists", t);
     }
 
     // The minimal setup for log4J

@@ -2,6 +2,7 @@ package jmri.jmrix.oaktree;
 
 import jmri.implementation.AbstractTurnoutTestBase;
 import jmri.util.JUnitUtil;
+import org.junit.Assert;
 import org.junit.After;
 import org.junit.Before;
 
@@ -22,13 +23,13 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
 
     @Override
     public void checkThrownMsgSent() {
-        //    Assert.assertTrue("message sent", tcis.outbound.size()>0);
+        //    Assert.assertTrue("message sent", tcis.outbound.size() > 0);
         //    Assert.assertEquals("content", "41 54 08", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // THROWN message
     }
 
     @Override
     public void checkClosedMsgSent() {
-        //    Assert.assertTrue("message sent", tcis.outbound.size()>0);
+        //    Assert.assertTrue("message sent", tcis.outbound.size() > 0);
         //    Assert.assertEquals("content", "41 54 00", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // CLOSED message
     }
 
@@ -51,7 +52,6 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
         t = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
-
     }
 
 }

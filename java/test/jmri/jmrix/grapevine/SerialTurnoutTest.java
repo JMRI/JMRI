@@ -42,13 +42,15 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
     @Override
     public void checkClosedMsgSent() {
         Assert.assertTrue("message sent", tcis.outbound.size() > 0);
-        Assert.assertEquals("content", "81 18 81 0C", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());  // CLOSED message
+        Assert.assertEquals("content", "81 18 81 0C",
+                tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());  // CLOSED message
     }
 
     @Override
     public void checkThrownMsgSent() {
         Assert.assertTrue("message sent", tcis.outbound.size() > 0);
-        Assert.assertEquals("content", "81 1E 81 00", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());  // THROWN message
+        Assert.assertEquals("content", "81 1E 81 00",
+                tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());  // THROWN message
     }
 
     // reset objects

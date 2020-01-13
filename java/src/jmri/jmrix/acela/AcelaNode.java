@@ -800,7 +800,7 @@ public class AcelaNode extends AbstractNode {
                             // outputLength[c] tells us how long in tenths of
                             // a second to pulse the output.
                             // output will actually return to off state after
-                            // the pulse duratiom -- but we will never know.
+                            // the pulse duration -- but we will never know.
                             // Program will need to fake this out.
                             // command 0x02 is deactivate
                             // command 0x03 is to pulse on

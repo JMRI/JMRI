@@ -66,8 +66,6 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
 
     /**
      * Common initialization for constructor.
-     * <p>
-     *
      */
     private void init(String address) {
         // build local addresses
@@ -84,7 +82,6 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
                 break;
             default:
                 log.error("Can't parse OpenLCB Turnout system name: " + address);
-                return;
         }
     }
 

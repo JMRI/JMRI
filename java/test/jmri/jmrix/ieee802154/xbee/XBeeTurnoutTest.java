@@ -9,9 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * XBeeTurnoutTest.java
- *
- * Description:	tests for the jmri.jmrix.ieee802154.xbee.XBeeTurnout class
+ * Tests for the jmri.jmrix.ieee802154.xbee.XBeeTurnout class
  *
  * @author	Paul Bender
  */

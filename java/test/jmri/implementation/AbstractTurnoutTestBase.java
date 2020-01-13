@@ -115,22 +115,22 @@ public abstract class AbstractTurnoutTestBase {
     }
 
     class TestSensor extends AbstractSensor {
-            public boolean request = false;
+        public boolean request = false;
 
-            public TestSensor(String sysName, String userName){
+        public TestSensor(String sysName, String userName){
                 super(sysName, userName);
             }
 
-            @Override
-            public void requestUpdateFromLayout(){
+        @Override
+        public void requestUpdateFromLayout(){
                 request = true;
             }
 
-            boolean getRequest(){
+        boolean getRequest(){
               return request;
             }
 
-            void resetRequest(){
+        void resetRequest(){
               request=false;
             }
     }
@@ -259,26 +259,26 @@ public abstract class AbstractTurnoutTestBase {
     @Test 
     public void testDirectFeedback() throws Exception {
 
-        // DIRECT mode is implemented in the AbstractTurnout class, so
+    // DIRECT mode is implemented in the AbstractTurnout class, so
 	// it is possible on all systems.
-	if(t.getFeedbackMode() != Turnout.DIRECT){
-		t.setFeedbackMode(Turnout.DIRECT);
-	}
+	    if (t.getFeedbackMode() != Turnout.DIRECT){
+		    t.setFeedbackMode(Turnout.DIRECT);
+	    }
         Assert.assertEquals(Turnout.DIRECT, t.getFeedbackMode());
 
-	listenStatus = Turnout.UNKNOWN;
-	t.addPropertyChangeListener(new Listen());
+	    listenStatus = Turnout.UNKNOWN;
+	    t.addPropertyChangeListener(new Listen());
         
         // Check that state changes appropriately
         t.setCommandedState(Turnout.THROWN);
         checkThrownMsgSent();
         Assert.assertEquals(t.getState(), Turnout.THROWN);
-	Assert.assertEquals("listener notified of change for DIRECT feedback", Turnout.THROWN,listenStatus);
+	    Assert.assertEquals("listener notified of change for DIRECT feedback", Turnout.THROWN,listenStatus);
 
-	t.setCommandedState(Turnout.CLOSED);
+	    t.setCommandedState(Turnout.CLOSED);
         checkClosedMsgSent();
         Assert.assertEquals(t.getState(), Turnout.CLOSED);
-	Assert.assertEquals("listener notified of change for DIRECT feedback", Turnout.CLOSED,listenStatus);
+	    Assert.assertEquals("listener notified of change for DIRECT feedback", Turnout.CLOSED,listenStatus);
     }
 
     @Test

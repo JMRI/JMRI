@@ -51,23 +51,18 @@ public class SRCPTurnout extends AbstractTurnout {
      * {@inheritDoc}
      */
     @Override
-    protected void forwardCommandChangeToLayout(int s) {
-        // sort out states
-        if ((s & Turnout.CLOSED) != 0) {
-            // first look for the double case, which we can't handle
-            if (noStateConflict(s)) {
-                // send a CLOSED command
-                sendMessage(true ^ getInverted());
-            }
-        } else {
-            // send a THROWN command
-            sendMessage(false ^ getInverted());
+    protected void forwardCommandChangeToLayout(int newState) {
+        try {
+            sendMessage(commandChangeCheck(newState));
+        } catch (IllegalArgumentException ex) {
+            log.error("new state invalid, Turnout not set");
         }
     }
 
     @Override
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
-        log.debug("Send command to {} Pushbutton ET{}", (_pushButtonLockout ? "Lock" : "Unlock"), _number);
+        log.debug("Send command to {} Pushbutton {}T{}",
+                (_pushButtonLockout ? "Lock" : "Unlock"), tc.getSystemConnectionMemo().getSystemPrefix(), _number);
     }
 
     // data members

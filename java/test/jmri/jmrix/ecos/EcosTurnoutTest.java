@@ -17,8 +17,8 @@ public class EcosTurnoutTest {
         EcosTrafficController tc = new EcosInterfaceScaffold();
         EcosSystemConnectionMemo memo = new EcosSystemConnectionMemo(tc);
         EcosTurnoutManager l = new EcosTurnoutManager(memo);
-        EcosTurnout t = new EcosTurnout(5,"U",tc,l);
-        Assert.assertNotNull("exists",t);
+        EcosTurnout t = new EcosTurnout(5,"U", tc, l);
+        Assert.assertNotNull("exists", t);
     }
 
     // The minimal setup for log4J

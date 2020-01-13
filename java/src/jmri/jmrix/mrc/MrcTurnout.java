@@ -59,16 +59,11 @@ public class MrcTurnout extends AbstractTurnout implements MrcTrafficListener {
      * {@inheritDoc}
      */
     @Override
-    protected void forwardCommandChangeToLayout(int s) {
-        // sort out states
-        if ((s & Turnout.CLOSED) != 0) {
-            if (noStateConflict(s & Turnout.THROWN)) {
-                // send a CLOSED command
-                forwardToCommandStation(true ^ getInverted());
-            }
-        } else {
-            // send a THROWN command
-            forwardToCommandStation(false ^ getInverted());
+    protected void forwardCommandChangeToLayout(int newState) {
+        try {
+            forwardToCommandStation(commandChangeCheck(newState));
+        } catch (IllegalArgumentException ex) {
+            log.error("new state invalid, Turnout not set");
         }
     }
 
@@ -116,6 +111,6 @@ public class MrcTurnout extends AbstractTurnout implements MrcTrafficListener {
     protected void turnoutPushbuttonLockout(boolean pushButtonLockout) {
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(MrcTurnout.class);
+    private final static Logger log = LoggerFactory.getLogger(MrcTurnout.class);
 
 }

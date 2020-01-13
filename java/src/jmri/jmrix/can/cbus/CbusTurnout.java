@@ -31,8 +31,6 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
 
     /**
      * Common initialization for both constructors.
-     * <p>
-     *
      */
     private void init(String address) {
         // build local addresses
@@ -92,17 +90,17 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
 
     /**
      * {@inheritDoc}
-     * Sends a CBUS event
+     * Sends a CBUS event.
      */
     @Override
-    protected void forwardCommandChangeToLayout(int s) {
+    protected void forwardCommandChangeToLayout(int newState) {
         CanMessage m;
-        if (s == Turnout.THROWN) {
+        if (newState == Turnout.THROWN) {
             m = getAddrThrown();
             CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
             tc.sendCanMessage(m, this);
         } 
-        if (s == Turnout.CLOSED) {
+        if (newState == Turnout.CLOSED) {
             m = getAddrClosed();
             CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
             tc.sendCanMessage(m, this);
@@ -110,7 +108,8 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
     }
     
     /**
-     * Package method returning CanMessage for the Thrown Turnout Address
+     * Package method returning CanMessage for the Thrown Turnout Address.
+     *
      * @return CanMessage with the Thrown Address
      */    
     public CanMessage getAddrThrown(){

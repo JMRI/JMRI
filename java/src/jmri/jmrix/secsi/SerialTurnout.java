@@ -38,16 +38,11 @@ public class SerialTurnout extends AbstractTurnout {
      * Sends a DCC++ command
      */
     @Override
-    protected void forwardCommandChangeToLayout(int s) {
-        // sort out states
-        if ((s & Turnout.CLOSED) != 0) {
-            if (noStateConflict(s & Turnout.THROWN)) {
-                // send a CLOSED command
-                sendMessage(true ^ getInverted());
-            }
-        } else {
-            // send a THROWN command
-            sendMessage(false ^ getInverted());
+    protected void forwardCommandChangeToLayout(int newState) {
+        try {
+            sendMessage(commandChangeCheck(newState));
+        } catch (IllegalArgumentException ex) {
+            log.error("new state invalid, Turnout not set");
         }
     }
 

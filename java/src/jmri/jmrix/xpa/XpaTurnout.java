@@ -42,18 +42,19 @@ public class XpaTurnout extends AbstractTurnout {
      * {@inheritDoc}
      */
     @Override
-    synchronized protected void forwardCommandChangeToLayout(int s) {
+    synchronized protected void forwardCommandChangeToLayout(int newState) {
         XpaMessage m;
         // sort out states
-        if ((s & Turnout.CLOSED) != 0) {
-            if (noStateConflict(s)) {
-                // send a CLOSED command
+        if ((newState & Turnout.CLOSED) != 0) {
+            if (!statesConflict(newState)) {
+                // send a CLOSED command (or THROWN if inverted)
                 m = XpaMessage.getSwitchMsg(_number, getInverted());
             } else {
+                log.error("Cannot command both CLOSED and THROWN {}", newState);
                 return;
             }
         } else {
-            // send a THROWN command
+            // send a THROWN command (or CLOSED if inverted)
             m = XpaMessage.getSwitchMsg(_number, !getInverted());
         }
         tc.sendXpaMessage(m, null);
@@ -69,7 +70,6 @@ public class XpaTurnout extends AbstractTurnout {
     public boolean canInvert() {
         return true;
     }
-
 
     private final static Logger log = LoggerFactory.getLogger(XpaTurnout.class);
 

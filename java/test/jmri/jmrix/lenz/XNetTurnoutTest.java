@@ -187,12 +187,13 @@ public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         listenStatus = Turnout.UNKNOWN;
         t.setCommandedState(Turnout.CLOSED);
         checkClosedMsgSent();
-        ((XNetTurnout)t).message(new XNetReply("01 04 05"));                            ((XNetTurnout)t).message(new XNetReply("01 04 05"));
+        ((XNetTurnout)t).message(new XNetReply("01 04 05"));
+        ((XNetTurnout)t).message(new XNetReply("01 04 05"));
         jmri.util.JUnitUtil.waitFor(() -> {
             return listenStatus != Turnout.UNKNOWN;
         }, "Turnout state changed");
         Assert.assertEquals(t.getState(), Turnout.CLOSED);
-	Assert.assertEquals("listener notified of change for DIRECT feedback",Turnout.CLOSED,listenStatus);
+	    Assert.assertEquals("listener notified of change for DIRECT feedback",Turnout.CLOSED,listenStatus);
     }
 
     @Test
@@ -223,9 +224,8 @@ public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
             return listenStatus != Turnout.UNKNOWN;
         }, "Turnout state changed");
         Assert.assertEquals(t.getState(), Turnout.CLOSED);
-	Assert.assertEquals("listener notified of change for DIRECT feedback",Turnout.CLOSED,listenStatus);
+	    Assert.assertEquals("listener notified of change for DIRECT feedback", Turnout.CLOSED,listenStatus);
     }
-
 
     // The minimal setup for log4J
     @Override
