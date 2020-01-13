@@ -9,7 +9,7 @@ import java.util.List;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.InstanceManager;
-import jmri.jmris.json.JsonServerPreferences;
+import jmri.server.json.JsonServerPreferences;
 import org.eclipse.jetty.websocket.api.Session;
 import org.junit.Assert;
 

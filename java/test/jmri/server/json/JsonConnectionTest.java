@@ -4,7 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import jmri.InstanceManager;
-import jmri.jmris.json.JsonServerPreferences;
+import jmri.server.json.JsonServerPreferences;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.After;

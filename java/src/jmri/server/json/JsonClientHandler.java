@@ -26,7 +26,6 @@ import javax.annotation.Nonnull;
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.JmriException;
-import jmri.jmris.json.JsonServerPreferences;
 import jmri.server.json.schema.JsonSchemaServiceCache;
 import jmri.spi.JsonServiceFactory;
 import org.slf4j.Logger;
