@@ -5,26 +5,21 @@ import java.io.File;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.text.NumberFormat;
+
 import javax.swing.JOptionPane;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.ImportRollingStock;
 import jmri.jmrit.operations.rollingstock.RollingStock;
-import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.rollingstock.cars.CarColors;
-import jmri.jmrit.operations.rollingstock.cars.CarLengths;
-import jmri.jmrit.operations.rollingstock.cars.CarLoads;
-import jmri.jmrit.operations.rollingstock.cars.CarManager;
-import jmri.jmrit.operations.rollingstock.cars.CarOwners;
-import jmri.jmrit.operations.rollingstock.cars.CarRoads;
-import jmri.jmrit.operations.rollingstock.cars.CarTypes;
-import jmri.jmrit.operations.rollingstock.cars.Kernel;
+import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This routine will import cars into the operation database.
@@ -170,12 +165,12 @@ public class ImportCars extends ImportRollingStock {
             } else {
                 inputLine = line.split("\\s+"); // NOI18N
             }
-            if (inputLine.length < 1 || line.equals("")) {
+            if (inputLine.length < 1 || line.isEmpty()) {
                 log.debug("Skipping blank line");
                 continue;
             }
             int base = 1;
-            if (comma || !inputLine[0].equals("")) {
+            if (comma || !inputLine[0].isEmpty()) {
                 base--; // skip over any spaces at start of line
             }
 
@@ -208,19 +203,19 @@ public class ImportCars extends ImportRollingStock {
                 log.debug("Checking car number ({}) road ({}) type ({}) length ({}) weight ({}) color ({})", carNumber,
                         carRoad, carType, carLength, carWeight, carColor); // NOI18N
                 
-                if (carNumber.trim().equals("")) {
+                if (carNumber.trim().isEmpty()) {
                     log.info("Import line {} missing car number", lineNum);
                     break;
                 }
-                if (carRoad.trim().equals("")) {
+                if (carRoad.trim().isEmpty()) {
                     log.info("Import line {} missing car road", lineNum);
                     break;
                 }
-                if (carType.trim().equals("")) {
+                if (carType.trim().isEmpty()) {
                     log.info("Import line {} missing car type", lineNum);
                     break;
                 }
-                if (carLength.trim().equals("")) {
+                if (carLength.trim().isEmpty()) {
                     log.info("Import line {} missing car length", lineNum);
                     break;
                 }
@@ -288,7 +283,7 @@ public class ImportCars extends ImportRollingStock {
                             JOptionPane.ERROR_MESSAGE);
                     break;
                 }
-                if (carLength.equals("")) {
+                if (carLength.isEmpty()) {
                     log.debug("Car ({} {}) length not specified", carRoad, carNumber);
                     JOptionPane.showMessageDialog(null, MessageFormat.format(
                             Bundle.getMessage("CarLengthNotSpecified"), new Object[]{(carRoad + " " + carNumber)}),
@@ -452,7 +447,7 @@ public class ImportCars extends ImportRollingStock {
                     Location location =
                             InstanceManager.getDefault(LocationManager.class).getLocationByName(carLocationName);
                     Track track = null;
-                    if (location == null && !carLocationName.equals("")) {
+                    if (location == null && !carLocationName.isEmpty()) {
                         if (autoCreateLocations) {
                             log.debug("Create location ({})", carLocationName);
                             location = InstanceManager.getDefault(LocationManager.class).newLocation(carLocationName);
@@ -484,7 +479,7 @@ public class ImportCars extends ImportRollingStock {
                             }
                         }
                     }
-                    if (location != null && !carTrackName.equals("")) {
+                    if (location != null && !carTrackName.isEmpty()) {
                         track = location.getTrackByName(carTrackName, null);
                         if (track == null) {
                             if (autoCreateTracks) {
@@ -609,7 +604,7 @@ public class ImportCars extends ImportRollingStock {
                         }
                     }
 
-                    if (car.getWeight().equals("")) {
+                    if (car.getWeight().isEmpty()) {
                         log.debug("Car ({} {}) weight not specified", carRoad, carNumber);
                         if (weightResults != JOptionPane.CANCEL_OPTION) {
                             weightResults = JOptionPane.showOptionDialog(null, MessageFormat.format(Bundle
@@ -778,7 +773,7 @@ public class ImportCars extends ImportRollingStock {
                     log.info("Car number (" + carNumber + ") road (" + carRoad + ") does not exist!"); // NOI18N
                     break;
                 }
-            } else if (!line.equals("")) {
+            } else if (!line.isEmpty()) {
                 log.info("Car import line " + lineNum + " missing attributes: " + line);
                 JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("ImportMissingAttributes"),
                         new Object[]{lineNum}) +
