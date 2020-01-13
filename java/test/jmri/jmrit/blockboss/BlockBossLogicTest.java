@@ -11,7 +11,6 @@ import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.junit.After;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -179,13 +178,22 @@ public class BlockBossLogicTest {
     // check for basic not-fail if no signal name was set
     @Test
     public void testSimpleBlockNoSignal() throws jmri.JmriException {
-
         try { 
             new BlockBossLogic(null);
+        } catch (java.lang.NullPointerException e) {
+            // this is expected
+        }
+    }
+
+    // check for basic not-fail if empty signal name was set
+    @Test
+    public void testSimpleBlockEmptyName() throws jmri.JmriException {
+        try {
+            new BlockBossLogic("");
         } catch (java.lang.IllegalArgumentException e) {
             // this is expected
         }
-        jmri.util.JUnitAppender.assertWarnMessage("Signal Head \"null\" was not found");
+        jmri.util.JUnitAppender.assertWarnMessage("Signal Head \"\" was not found");
     }
 
     // test interruption

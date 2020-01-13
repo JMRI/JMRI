@@ -2,13 +2,8 @@ package jmri.jmrix.can.cbus.swing.simulator;
 
 import javax.swing.BoxLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 import jmri.jmrix.can.cbus.node.CbusNodeConstants;
 import jmri.jmrix.can.cbus.simulator.CbusDummyNode;
 import jmri.util.swing.ComboBoxToolTipRenderer;
@@ -46,7 +41,7 @@ public class NdPane extends JPanel {
 
         _sessionText = new JLabel();
         
-        _selectNd = new JComboBox<String>();
+        _selectNd = new JComboBox<>();
         _selectNd.setEditable(false);
         
         ComboBoxToolTipRenderer renderer = new ComboBoxToolTipRenderer();
@@ -54,7 +49,7 @@ public class NdPane extends JPanel {
         
         _node.setPane(this);
         
-        tooltips = new ArrayList<String>();
+        tooltips = new ArrayList<>();
         String getSelected="";
         
         for (int i = 0; i < CbusDummyNode.ndTypes.size(); i++) {
@@ -68,21 +63,18 @@ public class NdPane extends JPanel {
         }
         
         _selectNd.setSelectedItem(getSelected);
-        _selectNd.addActionListener (new ActionListener () {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String chosen = (String)_selectNd.getSelectedItem();
-                
-                for (int i = 0; i < CbusDummyNode.ndTypes.size(); i++) {
-                    int intoption = CbusDummyNode.ndTypes.get(i);
-                    String option = CbusNodeConstants.getModuleType(165,intoption);
-                    if (option.equals(chosen)) {
-                        log.debug("chosen {} {}",i,chosen);
-                        _node.setDummyType(165,intoption);
-                    }
+        _selectNd.addActionListener ((ActionEvent e) -> {
+            String chosen = (String)_selectNd.getSelectedItem();
+            
+            for (int i = 0; i < CbusDummyNode.ndTypes.size(); i++) {
+                int intoption = CbusDummyNode.ndTypes.get(i);
+                String option = CbusNodeConstants.getModuleType(165,intoption);
+                if (option.equals(chosen)) {
+                    log.debug("chosen {} {}",i,chosen);
+                    _node.setDummyType(165,intoption);
                 }
-                updateNode();
             }
+            updateNode();
         });
 
         renderer.setTooltips(tooltips);
@@ -104,11 +96,8 @@ public class NdPane extends JPanel {
         add(topPane);
         add(dp);
         
-        _resetNd.addActionListener (new ActionListener () {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                _node.flimButton();
-            }
+        _resetNd.addActionListener ((ActionEvent e) -> {
+            _node.flimButton();
         });
         
         updateNode();

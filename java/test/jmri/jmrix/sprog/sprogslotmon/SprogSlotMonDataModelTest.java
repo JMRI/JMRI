@@ -3,7 +3,6 @@ package jmri.jmrix.sprog.sprogslotmon;
 import java.awt.GraphicsEnvironment;
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 import jmri.jmrix.sprog.SprogTrafficControlScaffold;
-import jmri.jmrix.sprog.SprogConstants;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;

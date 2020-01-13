@@ -1,6 +1,5 @@
 package jmri.jmrix.srcp.swing;
 
-import java.util.ResourceBundle;
 import javax.swing.JMenu;
 import jmri.jmrix.srcp.SRCPSystemConnectionMemo;
 import jmri.jmrix.srcp.swing.packetgen.PacketGenAction;

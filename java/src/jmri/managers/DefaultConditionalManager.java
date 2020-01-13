@@ -13,7 +13,6 @@ import jmri.Conditional;
 import jmri.ConditionalManager;
 import jmri.InstanceManager;
 import jmri.Logix;
-import jmri.SignalHead;
 import jmri.implementation.DefaultConditional;
 import jmri.implementation.SensorGroupConditional;
 import jmri.jmrit.sensorgroup.SensorGroupFrame;
@@ -307,6 +306,7 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
      */
     @Deprecated // 4.11.5
     @Override
+    @Nonnull
     public List<String> getSystemNameList() {
         List<String> nameList = new ArrayList<>();
 
@@ -356,6 +356,7 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
     }
 
     @Override
+    @Nonnull
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameConditionals" : "BeanNameConditional");
     }

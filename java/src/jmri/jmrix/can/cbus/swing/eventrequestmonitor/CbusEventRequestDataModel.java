@@ -32,7 +32,7 @@ public class CbusEventRequestDataModel extends javax.swing.table.AbstractTableMo
     private boolean sessionConfirmDeleteRow=true; // display confirm popup
     private final int _defaultFeedback= 1;
     protected int _contype=0; // event table pane console message type
-    protected String _context=null; // event table pane console text
+    protected String _context; // event table pane console text
     private final int _defaultfeedbackdelay = 4000;
     private static final int MAX_LINES = 500; // tablefeedback screen log size
     
@@ -65,7 +65,7 @@ public class CbusEventRequestDataModel extends javax.swing.table.AbstractTableMo
         // _memo = memo;
         tc = memo.getTrafficController();
         addTc(tc);
-        nameService = new CbusNameService();
+        nameService = new CbusNameService(memo);
     }
 
     // order needs to match column list top of dtabledatamodel
@@ -103,6 +103,7 @@ public class CbusEventRequestDataModel extends javax.swing.table.AbstractTableMo
      * <p>
      * This is optional, in that other table formats can use this table model.
      * But we put it here to help keep it consistent.
+     * @param eventTable Table to be configured
      */
     public void configureTable(JTable eventTable) {
         // allow reordering of the columns
@@ -158,9 +159,10 @@ public class CbusEventRequestDataModel extends javax.swing.table.AbstractTableMo
     }
 
     /**
-    * Returns int of startup column widths
-    * @param col int col number
-    */
+     * Returns int of startup column widths
+     * @param col int col number
+     * @return Preferred Initial Width
+     */
     public static int getPreferredWidth(int col) {
         switch (col) {
             case NODE_COLUMN:

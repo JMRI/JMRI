@@ -385,6 +385,7 @@ public class LinkedWarrantTest {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initDebugPowerManager();
         JUnitUtil.initOBlockManager();
+        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
         JUnitUtil.initWarrantManager();
         JUnitUtil.initDebugThrottleManager();
 

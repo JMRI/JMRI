@@ -15,8 +15,8 @@ public class CbusTableEventTest {
 
     @Test
     public void testCTor() {
-        // int,int,EvState,int,String,String,String,int,int,int,int,Date
-        CbusTableEvent t = new CbusTableEvent(0,1,null,0,"","",0,0,0,0,null);
+        // memo,int,int,EvState,int,String,String,String,int,int,int,int,Date
+        CbusTableEvent t = new CbusTableEvent(null,0,1,null,0,"","",0,0,0,0,null);
         Assert.assertNotNull("exists",t);
         t = null;
     }
@@ -24,7 +24,7 @@ public class CbusTableEventTest {
     @Test
     public void testSetGet() {
         
-        CbusTableEvent t = new CbusTableEvent(0,1,null,0,"","",0,0,0,0,null);
+        CbusTableEvent t = new CbusTableEvent(null,0,1,null,0,"","",0,0,0,0,null);
         
         t.setDate(new java.util.Date() );
         Assert.assertNotNull("date",t.getDate());

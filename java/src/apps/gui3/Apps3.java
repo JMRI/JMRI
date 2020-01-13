@@ -17,7 +17,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.EventObject;
-import java.util.ResourceBundle;
 import javax.help.SwingHelpUtilities;
 import javax.swing.JComponent;
 import javax.swing.JLabel;

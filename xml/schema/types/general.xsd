@@ -35,20 +35,28 @@
     </xs:documentation>
   </xs:annotation>
 
+  <xs:attributeGroup name="CommonNamedBeanContentAttributes">
+    <xs:annotation>
+      <xs:documentation>
+        The common attributes of all specialized NamedBean elements.
+        None at present?  (After removal of deprecations)
+      </xs:documentation>
+    </xs:annotation>
+  </xs:attributeGroup>
 
-
-  <xs:complexType name="UnNamedBeanType">
+  <xs:group name="CommonNamedBeanContentElements">
     <xs:annotation><xs:documentation>
-      General NamedBean type _without_ a system name specification.
-      Extend this with a definition of a specific system name type.
+        The common elements of all specialized NamedBean elements.
+        At a minimum, requires a proper systemName element before;
+        any specializations go after.
     </xs:documentation></xs:annotation>
-    <xs:all>
+    <xs:sequence>
       <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
       <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="1" />
       <xs:element name="properties" minOccurs="0" maxOccurs="1">
         <xs:complexType>
           <xs:sequence>
-            <xs:element name="property" minOccurs="1" maxOccurs="unbounded">
+            <xs:element name="property" minOccurs="1"> <!--  maxOccurs="unbounded" -->
               <xs:complexType>
                 <xs:sequence>
                   <xs:element name="key" minOccurs="1" maxOccurs="1">
@@ -75,11 +83,8 @@
           </xs:sequence>
         </xs:complexType>
       </xs:element>
-    </xs:all>
-    <xs:attribute name="userName" type="userNameType">
-        <xs:annotation><xs:documentation>Deprecated 2.9.6 in favor of separate element</xs:documentation></xs:annotation>
-    </xs:attribute>
-  </xs:complexType>
+    </xs:sequence>
+  </xs:group>
 
   <xs:complexType name="NamedBeanType">
     <xs:annotation><xs:documentation>

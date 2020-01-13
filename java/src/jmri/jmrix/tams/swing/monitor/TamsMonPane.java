@@ -1,6 +1,5 @@
 package jmri.jmrix.tams.swing.monitor;
 
-import java.util.ResourceBundle;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import jmri.jmrix.tams.TamsListener;

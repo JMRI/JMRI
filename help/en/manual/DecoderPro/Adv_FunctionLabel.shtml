@@ -22,7 +22,7 @@
 <body>
   <!--#include virtual="/Header" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent"></div><a name="Top" id="Top"></a>
 
     <h1>DecoderPro&reg; Advanced Programmer</h1>

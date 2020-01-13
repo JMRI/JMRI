@@ -45,9 +45,9 @@ public class ProxyTurnoutManagerTest {
         // create
         Turnout t = l.newTurnout(getSystemName(getNumToTest1()), "mine");
         // check
-        Assert.assertTrue("real object returned ", t != null);
-        Assert.assertTrue("user name correct ", t == l.getByUserName("mine"));
-        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+        Assert.assertNotNull("real object returned ", t);
+        Assert.assertSame("user name correct ", t, l.getByUserName("mine"));
+        Assert.assertSame("system name correct ", t, l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
     @Test
@@ -55,8 +55,8 @@ public class ProxyTurnoutManagerTest {
         // create
         Turnout t = l.provideTurnout("" + getNumToTest1());
         // check
-        Assert.assertTrue("real object returned ", t != null);
-        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+        Assert.assertNotNull("real object returned ", t);
+        Assert.assertSame("system name correct ", t, l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
     @Test(expected=IllegalArgumentException.class)
@@ -74,21 +74,21 @@ public class ProxyTurnoutManagerTest {
     public void testSingleObject() {
         // test that you always get the same representation
         Turnout t1 = l.newTurnout(getSystemName(getNumToTest1()), "mine");
-        Assert.assertTrue("t1 real object returned ", t1 != null);
-        Assert.assertTrue("same by user ", t1 == l.getByUserName("mine"));
-        Assert.assertTrue("same by system ", t1 == l.getBySystemName(getSystemName(getNumToTest1())));
+        Assert.assertNotNull("t1 real object returned ", t1);
+        Assert.assertSame("same by user ", t1, l.getByUserName("mine"));
+        Assert.assertSame("same by system ", t1, l.getBySystemName(getSystemName(getNumToTest1())));
 
         Turnout t2 = l.newTurnout(getSystemName(getNumToTest1()), "mine");
-        Assert.assertTrue("t2 real object returned ", t2 != null);
+        Assert.assertNotNull("t2 real object returned ", t2);
         // check
-        Assert.assertTrue("same new ", t1 == t2);
+        Assert.assertSame("same new ", t1, t2);
     }
 
     @Test
     public void testMisses() {
         // try to get nonexistant objects
-        Assert.assertTrue(null == l.getByUserName("foo"));
-        Assert.assertTrue(null == l.getBySystemName("bar"));
+        Assert.assertNull(l.getByUserName("foo"));
+        Assert.assertNull(l.getBySystemName("bar"));
     }
 
     @Test
@@ -106,7 +106,7 @@ public class ProxyTurnoutManagerTest {
         t1.setUserName("after");
         Turnout t2 = l.getByUserName("after");
         Assert.assertEquals("same object", t1, t2);
-        Assert.assertEquals("no old object", null, l.getByUserName("before"));
+        Assert.assertNull("no old object", l.getByUserName("before"));
     }
 
     @Test
@@ -116,7 +116,7 @@ public class ProxyTurnoutManagerTest {
 
         Assert.assertNotNull(jl212);
         Assert.assertNotNull(jl211);
-        Assert.assertTrue(jl212 != jl211);
+        Assert.assertNotSame(jl212, jl211);
     }
 
     @Test

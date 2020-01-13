@@ -2,7 +2,6 @@ package jmri.jmrix.openlcb.configurexml;
 
 import jmri.configurexml.LoadAndStoreTestBase;
 import jmri.jmrix.openlcb.*;
-import jmri.util.*;
 
 import java.io.File;
 import org.junit.*;

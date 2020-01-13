@@ -100,13 +100,6 @@ release. You can adjust that as needed. If you already have a
 release checked out and want to update it to a specific release,
 change the "co" command to "update -d"
 
-      <h3><a name="refid" id="refid">What are those lines like
-      <i>$Revision$</i> and <i>$Id$</i>?</a></h3>Those are
-      automatically updated by CVS every time a new version of the
-      file is checked-in to the repository. Please don't edit
-      them!!! If you contribute your changes to the project, those
-      line have to be intact in the contributed file.
-
       <h3><a name="update1" id="update1">How do I update an existing
       copy of the source to the current version?</a></h3>As the
       common code changes, you might want to update your copy to

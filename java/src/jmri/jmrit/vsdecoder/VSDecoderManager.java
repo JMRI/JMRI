@@ -12,14 +12,12 @@ import java.util.Set;
 import jmri.Block;
 import jmri.IdTag;
 import jmri.LocoAddress;
-import jmri.DccLocoAddress;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.PhysicalLocationReporter;
 import jmri.Reporter;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
-import jmri.jmrit.vsdecoder.VSDConfig;
 import jmri.jmrit.vsdecoder.listener.ListeningSpot;
 import jmri.jmrit.vsdecoder.listener.VSDListener;
 import jmri.jmrit.vsdecoder.swing.VSDManagerFrame;
@@ -522,7 +520,7 @@ public class VSDecoderManager implements PropertyChangeListener {
     }
 
     protected void registerBeanListener(Manager beanManager, String sysName) {
-        NamedBean b = beanManager.getBeanBySystemName(sysName);
+        NamedBean b = beanManager.getBySystemName(sysName);
         if (b == null) {
             log.debug("No bean by name {}", sysName);
             return;

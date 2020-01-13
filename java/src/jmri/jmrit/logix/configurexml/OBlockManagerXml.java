@@ -255,21 +255,17 @@ public class OBlockManagerXml // extends XmlFile
 
     private void loadBlock(Element elem) {
         if (elem.getAttribute("systemName") == null) {
-            log.error("unexpected null for block systemName elem= ", elem);
+            log.error("unexpected null for block systemName elem = {}", elem);
             return;
         }
-        String sysName = elem.getAttribute("systemName").getValue();
+        String systemName = elem.getAttribute("systemName").getValue();
         String userName = null;
         if (elem.getAttribute("userName") != null) {
             userName = elem.getAttribute("userName").getValue();
         }
-        log.debug("Load block sysName= {}, userName= {}", sysName, userName);
+        log.debug("Load block sysName= {}, userName= {}", systemName, userName);
         // Portal may have already created a skeleton of this block
-        OBlock block = getBlock(sysName);
-        if (block == null) {
-            log.error("Null block!? sysName= {}, userName= {}", sysName, userName);
-            return;
-        }
+        OBlock block = getBlock(systemName); // never null (for a valid systemName)
         block.setUserName(userName);
         String c = elem.getChildText("comment");
         if (c != null) {
@@ -344,7 +340,7 @@ public class OBlockManagerXml // extends XmlFile
         for (Element pa : paths) {
             if (!block.addPath(loadPath(pa, block))) {
                 log.error("load: block \"{}\" failed to add path \"{}\" in block \"{}\"",
-                        sysName, pa.getName(), block.getSystemName());
+                        systemName, pa.getName(), block.getSystemName());
             }
         }
     }   // loadBlock

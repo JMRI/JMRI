@@ -8,17 +8,18 @@ import com.fasterxml.jackson.databind.util.StdDateFormat;
 import static jmri.server.json.idtag.JsonIdTag.IDTAG;
 
 import java.util.Date;
-import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
 import jmri.IdTag;
 import jmri.IdTagManager;
 import jmri.InstanceManager;
+import jmri.NamedBean;
 import jmri.ProvidingManager;
 import jmri.Reporter;
 import jmri.ReporterManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonNamedBeanHttpService;
+import jmri.server.json.JsonRequest;
 import jmri.server.json.reporter.JsonReporter;
 
 /**
@@ -32,12 +33,12 @@ public class JsonIdTagHttpService extends JsonNamedBeanHttpService<IdTag> {
     }
 
     @Override
-    public ObjectNode doGet(IdTag idTag, String name, String type, Locale locale, int id) throws JsonException {
-        ObjectNode root = this.getNamedBean(idTag, name, type, locale, id); // throws JsonException if idTag == null
+    public ObjectNode doGet(IdTag idTag, String name, String type, JsonRequest request) throws JsonException {
+        ObjectNode root = this.getNamedBean(idTag, name, type, request); // throws JsonException if idTag == null
         ObjectNode data = root.with(JSON.DATA);
         if (idTag != null) {
             int state = idTag.getState();
-            if (state == IdTag.UNKNOWN) {
+            if (state == NamedBean.UNKNOWN) {
                 data.put(JSON.STATE, JSON.UNKNOWN);
             } else {
                 data.put(JSON.STATE, state);
@@ -51,36 +52,36 @@ public class JsonIdTagHttpService extends JsonNamedBeanHttpService<IdTag> {
     }
 
     @Override
-    public ObjectNode doPost(IdTag idTag, String name, String type, JsonNode data, Locale locale, int id) throws JsonException {
+    public ObjectNode doPost(IdTag idTag, String name, String type, JsonNode data, JsonRequest request) throws JsonException {
         JsonNode node = data.path(JsonReporter.REPORTER);
         if (node.isNull()) {
             idTag.setWhereLastSeen(null);
         } else if (node.isTextual()) {
-            Reporter reporter = InstanceManager.getDefault(ReporterManager.class).getBeanBySystemName(node.asText());
+            Reporter reporter = InstanceManager.getDefault(ReporterManager.class).getBySystemName(node.asText());
             if (reporter != null) {
                 idTag.setWhereLastSeen(reporter);
             } else {
-                throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(locale, JsonException.ERROR_NOT_FOUND, JsonReporter.REPORTER, node.asText()), id);
+                throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(request.locale, JsonException.ERROR_NOT_FOUND, JsonReporter.REPORTER, node.asText()), request.id);
             }
         }
-        return doGet(idTag, name, type, locale, id);
+        return doGet(idTag, name, type, request);
     }
 
     @Override
-    public void doDelete(IdTag bean, String name, String type, JsonNode data, Locale locale, int id) throws JsonException {
-        super.deleteBean(bean, name, type, data, locale, id);
+    public void doDelete(IdTag bean, String name, String type, JsonNode data, JsonRequest request) throws JsonException {
+        super.deleteBean(bean, name, type, data, request);
     }
 
     @Override
-    public JsonNode doSchema(String type, boolean server, Locale locale, int id) throws JsonException {
+    public JsonNode doSchema(String type, boolean server, JsonRequest request) throws JsonException {
         if (IDTAG.equals(type)) {
             return doSchema(type,
                     server,
                     "jmri/server/json/idtag/idTag-server.json",
                     "jmri/server/json/idtag/idTag-client.json",
-                    id);
+                    request.id);
         } else {
-            throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, JsonException.ERROR_UNKNOWN_TYPE, type), id);
+            throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(request.locale, JsonException.ERROR_UNKNOWN_TYPE, type), request.id);
         }
     }
 

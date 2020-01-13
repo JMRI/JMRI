@@ -1,8 +1,5 @@
 package jmri.jmrix.can.cbus.simulator;
 
-import jmri.jmrix.can.cbus.simulator.CbusDummyCS;
-import jmri.jmrix.can.cbus.simulator.CbusDummyNode;
-import jmri.jmrix.can.cbus.simulator.CbusEventResponder;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;

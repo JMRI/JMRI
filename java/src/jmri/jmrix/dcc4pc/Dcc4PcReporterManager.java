@@ -1,5 +1,6 @@
 package jmri.jmrix.dcc4pc;
 
+import javax.annotation.Nonnull;
 import jmri.Reporter;
 
 /**
@@ -18,6 +19,7 @@ public class Dcc4PcReporterManager extends jmri.managers.AbstractReporterManager
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public Dcc4PcSystemConnectionMemo getMemo() {
         return (Dcc4PcSystemConnectionMemo) memo;
     }
@@ -28,9 +30,10 @@ public class Dcc4PcReporterManager extends jmri.managers.AbstractReporterManager
     }
 
     @Override
-    public Reporter createNewReporter(String systemName, String userName) {
+    public Reporter createNewReporter(@Nonnull String systemName, String userName) {
         Reporter r = new Dcc4PcReporter(systemName, userName);
         register(r);
         return r;
     }
+
 }

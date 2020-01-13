@@ -1044,9 +1044,10 @@ public class LayoutTurnoutTest {
         JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
             JUnitUtil.resetProfileManager();
-            jmri.util.JUnitUtil.resetInstanceManager();
-            jmri.util.JUnitUtil.initInternalTurnoutManager();
-            jmri.util.JUnitUtil.initInternalSensorManager();
+            JUnitUtil.resetInstanceManager();
+            JUnitUtil.initInternalTurnoutManager();
+            JUnitUtil.initInternalSensorManager();
+            JUnitUtil.initInternalSignalHeadManager();
             layoutEditor = new LayoutEditor();
         }
     }

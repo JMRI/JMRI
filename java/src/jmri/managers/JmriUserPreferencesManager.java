@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.annotation.CheckForNull;
 import javax.swing.BoxLayout;
@@ -69,34 +68,6 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
     private final static String WINDOWS_NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/window-details-4-3-5.xsd"; // NOI18N
     private final static String WINDOWS_ELEMENT = "windowDetails"; // NOI18N
     private final static Logger log = LoggerFactory.getLogger(JmriUserPreferencesManager.class);
-
-    /**
-     * Get the default UserPreferencesManager or create a new one if none
-     * exists. Load user preferences if needed.
-     *
-     * @return the default UserPreferencesManager
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} with
-     * {@code UserPreferencesManager.class} as the argument instead.
-     */
-    @Deprecated
-    public static UserPreferencesManager getInstance() {
-        return JmriUserPreferencesManager.getDefault();
-    }
-
-    /**
-     * Get the default UserPreferencesManager or create a new one if none
-     * exists. Load user preferences if needed.
-     *
-     * @return the default UserPreferencesManager
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} with
-     * {@code UserPreferencesManager.class} as the argument instead.
-     */
-    @Deprecated
-    public static UserPreferencesManager getDefault() {
-        return InstanceManager.getDefault(UserPreferencesManager.class);
-    }
 
     private boolean dirty = false;
     private boolean loading = false;

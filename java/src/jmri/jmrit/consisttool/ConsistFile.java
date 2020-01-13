@@ -32,9 +32,11 @@ import org.slf4j.LoggerFactory;
  */
 public class ConsistFile extends XmlFile implements PropertyChangeListener {
 
-    private static final String CONSISTNUMBER = "consistNumber"; //NOI18N
-    private static final String LONGADDRESS = "longAddress"; //NOI18N
     private static final String CONSIST = "consist"; //NOI18N
+    private static final String CONSISTID = "id"; //NOI18N
+    private static final String CONSISTNUMBER = "consistNumber"; //NOI18N
+    private static final String DCCLOCOADDRESS = "dccLocoAddress"; //NOI18N
+    private static final String LONGADDRESS = "longAddress"; //NOI18N
     private static final String LOCODIR = "locoDir"; // NOI18N
     private static final String LOCONAME = "locoName"; //NOI18N
     private static final String LOCOROSTERID = "locoRosterId"; // NOI18N
@@ -90,7 +92,7 @@ public class ConsistFile extends XmlFile implements PropertyChangeListener {
 
     }
 
-    public void readConsistLocoList(Element consist,Consist newConsist) {
+    public void readConsistLocoList(Element consist, Consist newConsist) {
         // read each child of locomotive in the consist from the file
         // and restore it's information to memory.
         Iterator<Element> childIterator = consist.getDescendants(new ElementFilter("loco"));
@@ -98,7 +100,7 @@ public class ConsistFile extends XmlFile implements PropertyChangeListener {
             Element e;
             do {
                 e = childIterator.next();
-                Attribute number = e.getAttribute(CONSISTNUMBER);
+                Attribute number = e.getAttribute(DCCLOCOADDRESS);
                 log.debug("adding Loco {}", number);
                 DccLocoAddress address = readLocoAddress(e);
 
@@ -126,7 +128,7 @@ public class ConsistFile extends XmlFile implements PropertyChangeListener {
         }
     }
 
-    private void readConsistType(Element consist,Consist newConsist){
+    private void readConsistType(Element consist, Consist newConsist){
         // read and set the consist type
         Attribute type = consist.getAttribute("type");
         if (type != null) {
@@ -140,7 +142,7 @@ public class ConsistFile extends XmlFile implements PropertyChangeListener {
 
     private void readConsistId(Element consist,Consist newConsist){
         // Read the consist ID from the file
-        Attribute cID = consist.getAttribute("id");
+        Attribute cID = consist.getAttribute(CONSISTID);
         if (cID != null) {
             // use the value read from the file
             newConsist.setConsistID(cID.getValue());
@@ -166,7 +168,7 @@ public class ConsistFile extends XmlFile implements PropertyChangeListener {
 
     private DccLocoAddress readLocoAddress(Element loco){
         DccLocoAddress address;
-        Attribute number = loco.getAttribute(CONSISTNUMBER);
+        Attribute number = loco.getAttribute(DCCLOCOADDRESS);
         Attribute isLong = loco.getAttribute(LONGADDRESS);
         if (isLong != null ) {
             // use the values from the file
@@ -191,7 +193,7 @@ public class ConsistFile extends XmlFile implements PropertyChangeListener {
      */
     private Element consistToXml(Consist consist) {
         Element e = new Element(CONSIST);
-        e.setAttribute("id", consist.getConsistID());
+        e.setAttribute(CONSISTID, consist.getConsistID());
         e.setAttribute(CONSISTNUMBER, "" + consist.getConsistAddress()
                 .getNumber());
         e.setAttribute(LONGADDRESS, consist.getConsistAddress()
@@ -202,7 +204,7 @@ public class ConsistFile extends XmlFile implements PropertyChangeListener {
         for (int i = 0; i < addressList.size(); i++) {
             DccLocoAddress locoaddress = addressList.get(i);
             Element eng = new Element("loco");
-            eng.setAttribute("dccLocoAddress", "" + locoaddress.getNumber());
+            eng.setAttribute(DCCLOCOADDRESS, "" + locoaddress.getNumber());
             eng.setAttribute(LONGADDRESS, locoaddress.isLongAddress() ? "yes" : "no");
             eng.setAttribute(LOCODIR, consist.getLocoDirection(locoaddress) ? NORMAL : REVERSE);
             int position = consist.getPosition(locoaddress);

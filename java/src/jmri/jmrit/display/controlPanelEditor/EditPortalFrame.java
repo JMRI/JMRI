@@ -37,7 +37,6 @@ import jmri.jmrit.logix.PortalManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  *
@@ -229,8 +228,6 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
         }
     }
 
-    @SuppressWarnings("fallthrough")
-    @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
     private void deletePortal() {
         String name = _portalName.getText();
         if (name == null || name.length() == 0) {

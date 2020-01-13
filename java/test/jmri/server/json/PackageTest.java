@@ -48,7 +48,12 @@ import org.junit.runners.Suite.SuiteClasses;
     JsonHttpServiceTest.class,
     JsonNamedBeanHttpServiceTest.class,
     JsonSocketServiceTest.class,
-    JsonWebSocketTest.class
+    JsonWebSocketTest.class,
+    JsonServerActionTest.class,
+    JsonServerPreferencesPanelTest.class,
+    JsonServerPreferencesTest.class,
+    JsonServerTest.class,
+    JsonServerStartupActionFactoryTest.class
 })
 public class PackageTest {
 }

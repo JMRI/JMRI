@@ -3,7 +3,6 @@ package jmri.jmrit.catalog;
 import java.io.File;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.util.FileUtil;
 

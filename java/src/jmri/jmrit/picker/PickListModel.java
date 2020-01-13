@@ -156,14 +156,14 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
     @Override
     @CheckForNull
     public E getBySystemName(@Nonnull String name) {
-        return getManager().getBeanBySystemName(name);
+        return getManager().getBySystemName(name);
     }
 
     /** {@inheritDoc} */
     @Override
     @CheckForNull
     protected E getByUserName(@Nonnull String name) {
-        return getManager().getBeanByUserName(name);
+        return getManager().getByUserName(name);
     }
 
     /** {@inheritDoc} */

@@ -22,7 +22,7 @@
 <body>
   <!--#include virtual="/Header" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
 
       <h1>DecoderPro&reg; Debug Menu</h1>
@@ -102,6 +102,12 @@
           &lt;action>NOTHING&lt;/action&gt;
       &lt;/trigger&gt;
       </pre>
+
+      <p>Action "STOP_AT_ZERO":<br>
+      With the example above you can stop the engine at any speed.
+      Using the action "STOP_AT_ZERO" instead of "NOTHING" prevents
+      the engine from stopping if the speed is not zero.<br>
+      <em>Since JMRI 4.19.2</em></p>
 
       <h5>More throttle key functions: Brake-Key, Half-Speed-Key and Coast-Key</h5>
 

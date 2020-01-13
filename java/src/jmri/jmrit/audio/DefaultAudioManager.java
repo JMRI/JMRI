@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import javax.annotation.Nonnull;
 import jmri.Audio;
 import jmri.AudioException;
 import jmri.InstanceManager;
@@ -70,7 +71,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
     }
 
     @Override
-    protected synchronized Audio createNewAudio(String systemName, String userName) throws AudioException {
+    protected synchronized Audio createNewAudio(@Nonnull String systemName, String userName) throws AudioException {
 
         if (activeAudioFactory == null) {
             log.debug("Initialise in createNewAudio");
@@ -79,7 +80,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
 
         Audio a = null;
 
-        log.debug("sysName: " + systemName + " userName: " + userName);
+        log.debug("sysName: {} userName: {}", systemName, userName);
         if (userName != null && _tuser.containsKey(userName)) {
             throw new AudioException("Duplicate name");
         }
@@ -125,6 +126,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
 
     @Override
     @Deprecated
+    @Nonnull
     public List<String> getSystemNameList(char subType) {
         Set<Audio> tempSet = getNamedBeanSet();
         List<String> out = new ArrayList<>();
@@ -138,6 +140,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
 
     /** {@inheritDoc} */
     @Override
+    @Nonnull
     public SortedSet<Audio> getNamedBeanSet(char subType) {
         switch (subType) {
             case Audio.BUFFER: {
@@ -191,7 +194,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
                 // and proceed to fallback choices
             }
         }
-        
+
 //      // Try to initialise LWJGL
 //      log.debug("Try to initialise LWJGLAudioFactory");
 //      activeAudioFactory = new LWJGLAudioFactory();
@@ -213,19 +216,19 @@ public class DefaultAudioManager extends AbstractAudioManager {
         activeAudioFactory.init();
         // assumed to succeed.
     }
-    
+
     /**
-     * Method used to initialise the manager and make connections
+     * Initialise the manager and make connections.
      */
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
     // OK to write to static variables as we only do so if not initialised
     @Override
     public synchronized void init() {
         if (!initialised) {
-        
+
             // create Factory of appropriate type
             createFactory();
-            
+
             // Create default Listener and save in map
             try {
                 Audio s = createNewAudio("IAL$", "Default Audio Listener");
@@ -255,7 +258,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
     @Override
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "Synchronized method to ensure correct counter manipulation")
-    public synchronized void deregister(Audio s) {
+    public synchronized void deregister(@Nonnull Audio s) {
         // Decrement the relevant Audio object counter
         switch (s.getSubType()) {
             case (Audio.BUFFER): {
@@ -312,7 +315,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
     }
 
     /**
-     * Return the current instance of this object.
+     * Get the current instance of this object.
      * <p>
      * If not existing, create a new instance.
      *

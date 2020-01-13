@@ -11,68 +11,22 @@ import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.geom.Point2D;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import javax.annotation.CheckForNull;
-import javax.annotation.CheckReturnValue;
-import javax.annotation.Nonnull;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JRootPane;
-import javax.swing.JSeparator;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
+import java.util.*;
+import javax.annotation.*;
+import javax.swing.*;
 import javax.swing.border.Border;
-import jmri.Block;
-import jmri.BlockManager;
-import jmri.Conditional;
-import jmri.ConditionalAction;
-import jmri.ConditionalManager;
-import jmri.ConditionalVariable;
-import jmri.InstanceManager;
-import jmri.Logix;
-import jmri.LogixManager;
-import jmri.Manager;
-import jmri.NamedBean;
+import jmri.*;
 import jmri.NamedBean.DisplayOptions;
-import jmri.Path;
-import jmri.Sensor;
-import jmri.SignalHead;
-import jmri.SignalHeadManager;
-import jmri.SignalMast;
-import jmri.SignalMastLogicManager;
-import jmri.SignalMastManager;
-import jmri.Turnout;
 import jmri.implementation.DefaultConditionalAction;
 import jmri.jmrit.blockboss.BlockBossLogic;
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.display.PositionableIcon;
-import jmri.jmrit.display.SensorIcon;
-import jmri.jmrit.display.SignalHeadIcon;
-import jmri.jmrit.display.SignalMastIcon;
+import jmri.jmrit.display.*;
 import jmri.jmrit.signalling.SignallingGuiTools;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.JmriJFrame;
 import jmri.util.MathUtil;
 import jmri.util.swing.JComboBoxUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.slf4j.*;
 
 /**
  * Layout Editor Tools provides tools making use of layout connectivity
@@ -1250,20 +1204,6 @@ public class LayoutEditorTools {
             result = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(str);
         }
         return result;
-    }
-
-    /**
-     * Places a signal head icon on the panel after rotation at the designated
-     * place, with all icons taken care of.
-     *
-     * @deprecated since 4.11.6, use
-     * {@link #setSignalHeadOnPanel(double, String, int, int)} directly.
-     */
-    @Deprecated
-    public void setSignalHeadOnPanel(int rotation,
-            @Nonnull String signalHeadName,
-            int xLoc, int yLoc) {
-        setSignalHeadOnPanel((double) rotation, signalHeadName, xLoc, yLoc);
     }
 
     /**
@@ -13669,7 +13609,8 @@ public class LayoutEditorTools {
         String turnoutName = turn.getDisplayName();
         String farTurnoutName = farTurn.getDisplayName();
 
-        String logixName = "IX_LAYOUTSLIP:" + slip.ident;
+        String logixPrefix = InstanceManager.getDefault(jmri.LogixManager.class).getSystemNamePrefix();
+        String logixName = logixPrefix + ":IX_LAYOUTSLIP:" + slip.ident;
         String sensorName = "IS:" + logixName + "C" + number;
         try {
             InstanceManager.sensorManagerInstance().provideSensor(sensorName);
@@ -13785,7 +13726,7 @@ public class LayoutEditorTools {
     @CheckReturnValue
     public SignalHeadIcon getSignalHeadIcon(@Nonnull String signalName) {
         if (signalIconEditor == null) {
-            signalIconEditor = layoutEditor.signalIconEditor;
+            signalIconEditor = layoutEditor.getLayoutEditorToolBarPanel().signalIconEditor;
         }
         SignalHeadIcon l = new SignalHeadIcon(layoutEditor);
         l.setSignalHead(signalName);

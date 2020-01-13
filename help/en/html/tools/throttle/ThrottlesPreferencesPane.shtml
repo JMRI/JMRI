@@ -28,7 +28,7 @@
 <body>
   <!--#include virtual="/Header" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
 
       <h1>Throttles Preferences</h1><img src=
@@ -117,8 +117,8 @@
       Throttle Windows</a>. 
       
       <h2>Steal / Share Options</h2>
-      <img src="images/throttles-preferences-steal-share-600x395.png" width="600" height="395" 
-        alt= "JMRI Throttle Preferences Silent Steal Share Options" />
+      <img alt= "JMRI Throttle Preferences Silent Steal Share Options"
+           src="images/throttles-preferences-steal-share-600x395.png" width="600" height="395"/>
       
       <p>These are system dependent options, and are not be available for all hardware types.</p>
       
@@ -136,9 +136,7 @@
       
       <p>See individual hardware documentation for more detail on how these options affect
       your system, eg. <a href="../../hardware/can/cbus/index.shtml#dcc">MERG CBUS Throttles</a></p>
-      
-      
-      
+
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

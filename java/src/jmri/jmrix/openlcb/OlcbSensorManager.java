@@ -2,6 +2,7 @@ package jmri.jmrix.openlcb;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
 import jmri.BooleanPropertyDescriptor;
 import jmri.JmriException;
 import jmri.NamedBean;
@@ -34,11 +35,13 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public CanSystemConnectionMemo getMemo() {
         return (CanSystemConnectionMemo) memo;
     }
 
     @Override
+    @Nonnull
     public List<NamedBeanPropertyDescriptor<?>> getKnownBeanProperties() {
         List<NamedBeanPropertyDescriptor<?>> l = new ArrayList<>();
         l.add(new BooleanPropertyDescriptor(OlcbUtils.PROPERTY_IS_AUTHORITATIVE, OlcbTurnout
@@ -81,8 +84,14 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
         memo.getTrafficController().addCanListener(this);
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @throws IllegalArgumentException when SystemName can't be converted
+     */
     @Override
-    public Sensor createNewSensor(String systemName, String userName) {
+    @Nonnull
+    public Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         String addr = systemName.substring(getSystemPrefix().length() + 1);
         // first, check validity
         try {
@@ -91,7 +100,6 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
             log.error(e.toString());
             throw e;
         }
-
         // OK, make
         OlcbSensor s = new OlcbSensor(getSystemPrefix(), addr, memo.get(OlcbInterface.class));
         s.setUserName(userName);
@@ -135,12 +143,13 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return false;
     }
 
     @Override
-    public String createSystemName(String curAddress, String prefix) throws JmriException {
+    @Nonnull
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         try {
             validateAddressFormat(curAddress);
         } catch (IllegalArgumentException e) {
@@ -151,7 +160,7 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
     }
 
     @Override
-    public String getNextValidAddress(String curAddress, String prefix) {
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) {
         // always return this (the current) name without change
         return curAddress;
     }

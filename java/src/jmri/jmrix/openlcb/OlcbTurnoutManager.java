@@ -2,6 +2,7 @@ package jmri.jmrix.openlcb;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
 import jmri.BooleanPropertyDescriptor;
 import jmri.JmriException;
 import jmri.NamedBean;
@@ -34,11 +35,13 @@ public class OlcbTurnoutManager extends AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public CanSystemConnectionMemo getMemo() {
         return (CanSystemConnectionMemo) memo;
     }
 
     @Override
+    @Nonnull
     public List<NamedBeanPropertyDescriptor<?>> getKnownBeanProperties() {
         List<NamedBeanPropertyDescriptor<?>> l = new ArrayList<>();
         l.add(new BooleanPropertyDescriptor(OlcbUtils.PROPERTY_IS_AUTHORITATIVE, OlcbTurnout
@@ -75,7 +78,7 @@ public class OlcbTurnoutManager extends AbstractTurnoutManager {
      * @return never null
      */
     @Override
-    protected Turnout createNewTurnout(String systemName, String userName) {
+    protected Turnout createNewTurnout(@Nonnull String systemName, String userName) {
         String addr = systemName.substring(getSystemPrefix().length() + 1);
         OlcbTurnout t = new OlcbTurnout(getSystemPrefix(), addr, memo.get(OlcbInterface.class));
         t.setUserName(userName);
@@ -116,12 +119,12 @@ public class OlcbTurnoutManager extends AbstractTurnoutManager {
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return false;
     }
 
     @Override
-    public String createSystemName(String curAddress, String prefix) throws JmriException {
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         // don't check for integer; should check for validity here
         try {
             validateAddressFormat(curAddress);
@@ -132,7 +135,7 @@ public class OlcbTurnoutManager extends AbstractTurnoutManager {
     }
 
     @Override
-    public String getNextValidAddress(String curAddress, String prefix) throws JmriException {
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         // always return this (the current) name without change
         try {
             validateAddressFormat(curAddress);

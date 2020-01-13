@@ -2,7 +2,6 @@ package jmri.jmrix.anyma.configurexml;
 
 import jmri.util.JUnitUtil;
 import org.junit.*;
-import jmri.jmrix.anyma.AnymaDMX_ConnectionConfig;
 
 /**
  * AnymaDMX_ConnectionConfigXmlTest.java

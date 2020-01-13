@@ -35,7 +35,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
     /**
      *  Number of columns in logix matrix, default to 6, set in Matrix Mast panel &amp; on loading xml.
      *  Used to set size of char[] bitString.
-     *  Match to MAXMATRIXBITS in {@link jmri.jmrit.beantable.signalmast.AddSignalMastPanel}.
+     *  See MAXMATRIXBITS in {@link jmri.jmrit.beantable.signalmast.MatrixSignalMastAddPane}.
      */
     private int mastBitNum = 6;
     private int mDelay = 0;
@@ -324,29 +324,17 @@ public class MatrixSignalMast extends AbstractSignalMast {
         // to do: use for loop
         ArrayList<String> outputlist = new ArrayList<String>(); // (6) or (mastBitNum) ?
         //list = outputsToBeans.keySet();
-        outputlist.add(outputsToBeans.get("output1").getName()); // convert NBH to name (String)
-        if (outputsToBeans.containsKey("output2")) {
-            // outputsToBeans hashmap
-            outputlist.add(outputsToBeans.get("output2").getName());
+        
+        int index = 1;
+        while (outputsToBeans.containsKey("output"+index)) {
+            outputlist.add(outputsToBeans.get("output"+index).getName());
+            index++;
         }
-        if (outputsToBeans.containsKey("output3")) {
-            outputlist.add(outputsToBeans.get("output3").getName());
-        }
-        if (outputsToBeans.containsKey("output4")) {
-            outputlist.add(outputsToBeans.get("output4").getName());
-        }
-        if (outputsToBeans.containsKey("output5")) {
-            outputlist.add(outputsToBeans.get("output5").getName());
-        }
-        if (outputsToBeans.containsKey("output6")) {
-            outputlist.add(outputsToBeans.get("output6").getName());
-        }
-        // repeat in order to set MAXMATRIXBITS > 6
         return outputlist;
     }
 
-    protected HashMap<String, NamedBeanHandle<Turnout>> outputsToBeans = new HashMap<String, NamedBeanHandle<Turnout>>(6); // output# - bean pairs
-    // adjust Hashmap size in order to set MAXMATRIXBITS > 6
+    protected HashMap<String, NamedBeanHandle<Turnout>> outputsToBeans = new HashMap<String, NamedBeanHandle<Turnout>>(); // output# - bean pairs
+
     /**
      * Receive properties from xml, convert name to NamedBeanHandle, store in hashmap outputsToBeans.
      *

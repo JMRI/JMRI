@@ -2,7 +2,7 @@ package apps.gui;
 
 /**
  * 
- * @author Randall Wood Copyright 2019
+ * @author Randall Wood Copyright 2019, 2020
  * @deprecated since 4.19.2; use {@link jmri.util.gui.GuiLafPreferencesManager} instead
  */
 @Deprecated

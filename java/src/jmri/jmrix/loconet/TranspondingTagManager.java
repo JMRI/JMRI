@@ -32,6 +32,7 @@ public class TranspondingTagManager extends jmri.managers.DefaultIdTagManager {
     }
     
     @Override
+    @Nonnull
     public IdTag newIdTag(@Nonnull String systemName, @CheckForNull String userName) {
         if (log.isDebugEnabled()) {
             log.debug("new IdTag:"

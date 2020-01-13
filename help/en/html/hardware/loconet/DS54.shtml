@@ -24,7 +24,7 @@
 <body>
   <!--#include virtual="/Header" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
 
       <h1>Hardware Support: DS54 Examples</h1>
@@ -197,7 +197,7 @@
       is from an <i>autoreversing</i> power district.</p>
 
       <p>Technical details on this issue can be found in <a href=
-      "DigitraxPower/index.shtml">a discussion of power leads on
+      "DigitraxPower.shtml">a discussion of power leads on
       Digitrax components</a>.</p>
 
       <p>LocoNet&reg; is a registered trademark of <a href=

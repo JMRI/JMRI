@@ -171,7 +171,7 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
         loadCommon(h, shared);
 
         SignalHead existingBean = InstanceManager.getDefault(jmri.SignalHeadManager.class)
-                        .getBeanBySystemName(sys);
+                        .getBySystemName(sys);
 
         if ((existingBean != null) && (existingBean != h)) {
             log.error("systemName is already registered: {}", sys);

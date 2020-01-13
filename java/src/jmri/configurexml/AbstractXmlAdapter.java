@@ -1,11 +1,6 @@
 package jmri.configurexml;
 
-import jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.List;
 
 /**
  * Abstract class to provide basic error handling for XmlAdapter

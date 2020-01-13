@@ -1,8 +1,6 @@
 package jmri.jmrit.cabsignals;
 
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import jmri.Block;
@@ -12,7 +10,6 @@ import jmri.InstanceManager;
 import jmri.LocoAddress;
 import jmri.Path;
 import jmri.SignalMast;
-import jmri.jmrit.roster.RosterEntry;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
