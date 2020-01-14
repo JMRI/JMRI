@@ -12,7 +12,10 @@
 
             <!--#include virtual="/help/en/parts/SidebarLayoutAutomation.shtml" -->
 	    
-	        <!--#include virtual="/help/en/parts/SidebarSupportedHardware.shtml" -->    
+	    <!--#include virtual="/help/en/parts/SidebarSupportedHardware.shtml" -->    
+
+	    <!--#include virtual="/help/en/parts/SidebarSetup.shtml" -->    
+
 
          </dl>
 
