@@ -43,6 +43,7 @@ public class OperationsTestCase {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initIdTagManager();
+        JUnitUtil.clearShutDownManager();
     }
 
     private final boolean waitOnEventQueueNotEmpty = false;
@@ -91,7 +92,6 @@ public class OperationsTestCase {
                 Assert.fail("Shutdown task found: " + task.getName());
             }
         }
-//        JUnitUtil.clearShutDownManager();
 
         JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
