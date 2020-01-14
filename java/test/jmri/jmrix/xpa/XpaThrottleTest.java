@@ -9,7 +9,7 @@ import org.junit.Test;
 
 
 /**
- * Description:	tests for the jmri.jmrix.xpa.XpaThrottle class.
+ * Tests for the jmri.jmrix.xpa.XpaThrottle class.
  *
  * @author	Paul Bender
  */
@@ -214,9 +214,9 @@ public class XpaThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void setUp() {
         JUnitUtil.setUp();
         tc = new XpaTrafficController();
-        instance = new XpaThrottle(new jmri.DccLocoAddress(3, false),tc);
+        instance = new XpaThrottle(new jmri.DccLocoAddress(3, false), tc);
         XpaSystemConnectionMemo memo = new XpaSystemConnectionMemo();
-        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class,new XpaThrottleManager(memo));
+        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class, new XpaThrottleManager(memo));
     }
 
     @Override

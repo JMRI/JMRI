@@ -91,7 +91,7 @@ public class XNetSensorTest extends jmri.implementation.AbstractSensorTestBase {
         t.setState(jmri.Sensor.ACTIVE);  	// in case registration with TrafficController is deferred to after first use
         Assert.assertEquals("controller listeners ", 1, numListeners());
         t.dispose();
-	// XPressNet leaves one listener after the dispose, should it?
+	// XpressNet leaves one listener after the dispose, should it?
         Assert.assertEquals("controller listeners remaining", 1, numListeners());
     }
 

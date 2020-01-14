@@ -36,7 +36,7 @@ public class XNetConsistManagerTest extends jmri.implementation.AbstractConsistM
     @Test
     @Override
     public void testIsCommandStationConsistPossible(){
-       // true for XPressNet
+       // true for XpressNet
        Assert.assertTrue("CS Consist Possible",cm.isCommandStationConsistPossible());
     }
 

@@ -107,19 +107,19 @@ public class XpaMessageTest {
     @Test
     public void testGetIncreaseSpeedMsg() {
         String s = "ATDT#65*33333;"; // expected value.
-        XpaMessage m = XpaMessage.getSpeedChangeMsg(65, true, 5);
+        XpaMessage m = XpaMessage.getSpeedChangeMsg(65, 5);
         Assert.assertNotNull("String Constructor Succeeded", m);
         Assert.assertEquals("length", s.length(), m.getNumDataElements());
-        Assert.assertTrue("content", s.equals(m.toString()));
+        Assert.assertEquals("content", s, m.toString());
     }
 
     @Test
     public void testGetDecreaseSpeedMsg() {
         String s = "ATDT#65*11111;"; // expected value.
-        XpaMessage m = XpaMessage.getSpeedChangeMsg(65, false, 5);
+        XpaMessage m = XpaMessage.getSpeedChangeMsg(65, -5);
         Assert.assertNotNull("String Constructor Succeeded", m);
-        Assert.assertEquals("length", s.length(), m.getNumDataElements());
-        Assert.assertTrue("content", s.equals(m.toString()));
+        //Assert.assertEquals("length", s.length(), m.getNumDataElements());
+        Assert.assertEquals("content", s, m.toString());
     }
 
     @Test
