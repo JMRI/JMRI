@@ -30,7 +30,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author Randall Wood (C) 2015
+ * @author Randall Wood (C) 2015, 2019, 2020
  */
 @ServiceProvider(service = PreferencesManager.class)
 public class GuiLafPreferencesManager extends Bean implements PreferencesManager, InstanceManagerAutoDefault {
@@ -42,12 +42,12 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     public static final String NONSTANDARD_MOUSE_EVENT = "nonstandardMouseEvent";
     public static final String GRAPHIC_TABLE_STATE = "graphicTableState";
     /**
-     * @deprecated since 4.19.2; use {@link #GRAPHIC_TABLE_STATE} instead
+     * @deprecated since 4.19.3; use {@link #GRAPHIC_TABLE_STATE} instead
      */
     @Deprecated
     public static final String GRAPHICTABLESTATE = GRAPHIC_TABLE_STATE;
     /**
-     * @deprecated since 4.19.2 without replacement
+     * @deprecated since 4.19.3 without replacement
      */
     @Deprecated
     public static final String VERTICAL_TOOLBAR = "verticalToolBar";
@@ -97,13 +97,8 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     public void initialize(Profile profile) throws InitializationException {
         if (!initialized) {
             Preferences preferences = JmriPreferencesProvider.getPreferences(profile, getClass(), true);
-            boolean migrate = true;
-            try {
-                migrate = !preferences.nodeExists("");
-            } catch (BackingStoreException e) {
-                // don't migrate if unable to handle preferences
-                migrate = false;
-            }
+            // getting the preference returns null if it had not previously been set
+            boolean migrate = preferences.get(FONT_SIZE, null) == null;
             if (migrate) {
                 // using deprecated, not for removal, call to enable migration
                 // of preferences keys from apps.gui.* to jmri.util.gui.*
@@ -270,7 +265,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
      * Sets a new font by name
      *
      * @param name the name of the new font to set
-     * @deprecated since 4.19.2; use {@link #setFont(String)} instead
+     * @deprecated since 4.19.3; use {@link #setFont(String)} instead
      */
     @Deprecated
     public void setFontByName(@Nonnull String name) {
@@ -299,7 +294,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
      * with a null value.
      * 
      * @see #getDefaultFont()
-     * @deprecated since 4.19.2 without direct replacement
+     * @deprecated since 4.19.3 without direct replacement
      */
     @Deprecated
     public void setDefaultFont() {
@@ -343,7 +338,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
      * default font.
      * 
      * @see #getDefaultFontSize()
-     * @deprecated since 4.19.2 without direct replacement
+     * @deprecated since 4.19.3 without direct replacement
      */
     @Deprecated
     public void setDefaultFontSize() {
