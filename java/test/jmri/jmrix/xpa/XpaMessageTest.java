@@ -7,9 +7,7 @@ import org.junit.Before;
 import org.junit.Assert;
 
 /**
- * XpaMessageTest.java
- *
- * Description: tests for the jmri.jmrix.xpa.XpaMessage class
+ * Tests for the jmri.jmrix.xpa.XpaMessage class
  *
  * @author Paul Bender
  */
@@ -109,7 +107,7 @@ public class XpaMessageTest {
     @Test
     public void testGetIncreaseSpeedMsg() {
         String s = "ATDT#65*33333;"; // expected value.
-        XpaMessage m = XpaMessage.getIncSpeedMsg(65, 5);
+        XpaMessage m = XpaMessage.getSpeedChangeMsg(65, true, 5);
         Assert.assertNotNull("String Constructor Succeeded", m);
         Assert.assertEquals("length", s.length(), m.getNumDataElements());
         Assert.assertTrue("content", s.equals(m.toString()));
@@ -118,7 +116,7 @@ public class XpaMessageTest {
     @Test
     public void testGetDecreaseSpeedMsg() {
         String s = "ATDT#65*11111;"; // expected value.
-        XpaMessage m = XpaMessage.getDecSpeedMsg(65, 5);
+        XpaMessage m = XpaMessage.getSpeedChangeMsg(65, false, 5);
         Assert.assertNotNull("String Constructor Succeeded", m);
         Assert.assertEquals("length", s.length(), m.getNumDataElements());
         Assert.assertTrue("content", s.equals(m.toString()));

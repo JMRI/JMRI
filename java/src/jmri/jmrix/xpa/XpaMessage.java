@@ -120,31 +120,22 @@ public class XpaMessage implements jmri.jmrix.Message {
         return new XpaMessage("ATDT#" + Address + "*5;");
     }
 
-    /*
-     Get a message for an "Increase Speed" command
-     to a specific locomotive on the layout.  To make
-     calculations easy, this uses a single speed step increase
+    /**
+     * Get a message for an "Increase/Decrease Speed" command
+     * to a specific locomotive on the layout.  To make
+     * calculations easy, this uses a single speed step increase.
+     *
+     * @param address throttle locomotive address for message
+     * @param increase true to increase, false to decrease
+     * @param steps amount of speed steps to change
      */
-    static XpaMessage getIncSpeedMsg(int Address, int steps) {
-        StringBuilder buf = new StringBuilder("ATDT#" + Address + "*");
-        String message;
-        for (int i = 0; i < steps; i++) {
-            buf.append("3");
-        }
-        message = buf.toString() + ";";
-        return new XpaMessage(message);
-    }
-
-    /*
-     Get a message for a "Decrease Speed" command
-     to a specific locomotive on the layout. To make
-     calculations easy, this uses a single speed step increase.
-     */
-    static XpaMessage getDecSpeedMsg(int address, int steps) {
+    static XpaMessage getSpeedChangeMsg(int address, boolean increase, int steps) {
         StringBuilder buf = new StringBuilder("ATDT#" + address + "*");
         String message;
+        String digit = "1"; // for decrease speed message
+        if (increase) digit = "3";
         for (int i = 0; i < steps; i++) {
-            buf.append("1");
+            buf.append(digit);
         }
         message = buf.toString() + ";";
         return new XpaMessage(message);
