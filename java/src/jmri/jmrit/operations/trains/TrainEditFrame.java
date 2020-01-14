@@ -540,7 +540,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
      */
     private boolean checkName(String s) {
         String trainName = trainNameTextField.getText().trim();
-        if (trainName.equals("")) {
+        if (trainName.isEmpty()) {
             log.debug("Must enter a train name");
             JOptionPane.showMessageDialog(this, Bundle.getMessage("MustEnterName"), MessageFormat.format(Bundle
                     .getMessage("CanNot"), new Object[]{s}), JOptionPane.ERROR_MESSAGE);

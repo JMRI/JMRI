@@ -78,6 +78,8 @@ public class Xml {
     static final String BOTH = "both"; // NOI18N
     static final String PICKUP = "pickup"; // NOI18N
     static final String SETOUT = "setout"; // NOI18N
+    static final String PRINT_MANIFEST = "printManifest"; // NOI18N
+    static final String PRINT_SWITCH_LISTS = "printSwitchLists"; // NOI18N
     static final String TRACK_DESTINATION_OPTION = "trackDestinationOption"; // NOI18N
     static final String DESTINATIONS = "destinations"; // NOI18N
     static final String DESTINATION = "destination"; // NOI18N

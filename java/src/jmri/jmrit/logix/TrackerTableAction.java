@@ -922,7 +922,7 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
     public static class Initializer extends AbstractInstanceInitializer {
 
         @Override
-        public <T> Object getDefault(Class<T> type) throws IllegalArgumentException {
+        public <T> Object getDefault(Class<T> type) {
             if (type.equals(TrackerTableAction.class)) {
                 return new TrackerTableAction(Bundle.getMessage("MenuTrackers"));
             }

@@ -210,7 +210,7 @@ public class JsonServerPreferences extends Bean {
     public static class Initializer extends AbstractInstanceInitializer {
 
         @Override
-        public <T> Object getDefault(Class<T> type) throws IllegalArgumentException {
+        public <T> Object getDefault(Class<T> type) {
             if (type.equals(JsonServerPreferences.class)) {
                 String fileName = FileUtil.getUserFilesPath() + "networkServices" + File.separator + "JsonServerPreferences.xml"; // NOI18N
                 if ((new File(fileName)).exists()) {

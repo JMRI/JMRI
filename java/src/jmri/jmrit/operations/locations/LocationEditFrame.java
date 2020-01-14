@@ -479,7 +479,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
      * @return true if name OK and is less than the maximum allowed length
      */
     private boolean checkName(String s) {
-        if (locationNameTextField.getText().trim().equals("")) {
+        if (locationNameTextField.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("MustEnterName"), MessageFormat.format(Bundle
                     .getMessage("CanNotLocation"), new Object[]{s}), JOptionPane.ERROR_MESSAGE);
             return false;
