@@ -87,6 +87,7 @@ public class TrackEditCommentsFrameTest extends OperationsTestCase {
         Assert.assertEquals("Test Spot", track.getCommentSetout());
         
         JUnitUtil.dispose(tecf);
+        JUnitOperationsUtil.checkIdTagsShutDownTask();
     }
 
 

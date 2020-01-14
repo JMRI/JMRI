@@ -1,12 +1,15 @@
 package jmri.jmrit.operations.rollingstock.cars.tools;
 
 import java.awt.GraphicsEnvironment;
-import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.rollingstock.cars.CarsTableFrame;
-import jmri.util.JUnitUtil;
+
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Test;
+
+import jmri.jmrit.operations.OperationsTestCase;
+import jmri.jmrit.operations.rollingstock.cars.CarsTableFrame;
+import jmri.util.JUnitOperationsUtil;
+import jmri.util.JUnitUtil;
 
 /**
  *
@@ -21,6 +24,7 @@ public class ExportCarRosterActionTest extends OperationsTestCase {
         ExportCarRosterAction t = new ExportCarRosterAction("Test Action",ctf);
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(ctf);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ExportCarRosterActionTest.class);

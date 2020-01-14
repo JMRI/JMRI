@@ -23,6 +23,8 @@ public class TrainByCarTypeFrameTest extends OperationsTestCase {
         TrainByCarTypeFrame t = new TrainByCarTypeFrame((Train) null);
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(t);
+        
+        JUnitOperationsUtil.checkIdTagsShutDownTask();
     }
 
     @Test
@@ -38,6 +40,7 @@ public class TrainByCarTypeFrameTest extends OperationsTestCase {
         t.carsComboBox.setSelectedIndex(1);
 
         JUnitUtil.dispose(t);
+        JUnitOperationsUtil.checkIdTagsShutDownTask();
     }
 
     // The minimal setup for log4J
