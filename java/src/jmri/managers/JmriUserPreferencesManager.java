@@ -1344,7 +1344,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
     public static class Initializer extends AbstractInstanceInitializer {
 
         @Override
-        public <T> Object getDefault(Class<T> type) throws IllegalArgumentException {
+        public <T> Object getDefault(Class<T> type) {
             if (type.equals(UserPreferencesManager.class)) {
                 return new JmriUserPreferencesManager();
             }

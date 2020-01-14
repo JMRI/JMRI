@@ -197,10 +197,8 @@ public class CatalogPanel extends JPanel {
             jmri.util.ThreadingUtil.runOnGUI(() -> addTree(tree));
         } else {
             final CatalogTree t = manager.newCatalogTree(systemName, userName);
-            jmri.util.ThreadingUtil.runOnGUI(() -> {
-                t.insertNodes(path);
-                addTree(t);
-            });
+            t.insertNodes(path);
+            jmri.util.ThreadingUtil.runOnGUI(() -> addTree(t));
         }
     }
 

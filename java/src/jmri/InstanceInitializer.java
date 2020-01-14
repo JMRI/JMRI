@@ -39,7 +39,7 @@ public interface InstanceInitializer {
      *                                  supported by this InstanceInitalizer
      */
     @Nonnull
-    public <T> Object getDefault(@Nonnull Class<T> type) throws IllegalArgumentException;
+    public <T> Object getDefault(@Nonnull Class<T> type);
 
     /**
      * Get the set of classes for which this InstanceInitializer can provide
