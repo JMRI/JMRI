@@ -1,13 +1,23 @@
 <!-- SidebarApplications.shtml -->
-<!-- This is the common sidebar definition for Tools pages, originally made from help/en/html/apps/Sidebar.shtml -->
-		<dt><h3><a href="/help/en/html/apps/">Applications</a></h3></dt>
-		<dd>
-		  <ul>
-			<li><a href="DecoderPro/index.shtml">DecoderPro&reg;</a></li>
-			<li><a href="PanelPro/index.shtml">PanelPro&trade;</a></li>
-			<li><a href="DispatcherPro/index.shtml">DispatcherPro&trade;</a></li>
-	        <li><a href="../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a></li>
-			<li><a href="SoundPro/SoundPro.shtml">SoundPro&trade;</a></li>
-		  </ul>
+<!-- This is a common sidebar definition for help pages, originally made from help/en/html/apps/Sidebar.shtml -->
+	<dt><h3><a href="/help/en/html/apps/">Applications</a></h3></dt>
+	<dd>
+	   <ul>
+              <li><a href="/help/en/apps/DecoderPro/index.shtml">DecoderPro&reg;</a></li>
+              <li><a href="/help/en/apps/PanelPro/index.shtml">PanelPro&trade;</a></li>
+              <li><a href="/help/en/apps/DispatcherPro/index.shtml">DispatcherPro&trade;</a></li>
+              <li><a href="/help/en/package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a></li>
+              <li><a href="/help/en/apps/SoundPro/SoundPro.shtml">SoundPro&trade;</a></li>
+           </ul>
         </dd>
+	<dt><h3 style="padding-left: 1em;"><a href="/help/en/html/setup">JMRI Setup and Installation</a></h3></dt>
+	<dd> 
+	   <ul>
+            <li><a href="/install/WindowsNew.shtml">Windows</a>
+            <li><a href="/install/MacOSX.shtml">Mac OS X</a>
+            <li><a href="/install/Linux.shtml">Linux (multiple)</a>
+	    <li><a href="/install/Raspbian.shtml">RaspberryPi</a>
+            <li><a href="/install/Debug.shtml">Debugging an installation</a>
+           </ul>
+	 </dd>
 <!-- /SidebarApplications.shtml -->
