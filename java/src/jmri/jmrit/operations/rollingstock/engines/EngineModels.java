@@ -220,7 +220,7 @@ public class EngineModels extends RollingStockAttribute {
     public static class Initializer extends AbstractInstanceInitializer {
 
         @Override
-        public <T> Object getDefault(Class<T> type) throws IllegalArgumentException {
+        public <T> Object getDefault(Class<T> type) {
             if (type.equals(EngineModels.class)) {
                 EngineModels instance = new EngineModels();
                 instance.loadDefaults();
