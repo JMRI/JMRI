@@ -91,11 +91,12 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
     @Override
     public void tearDown() {
         if (e != null) {
-            EditorFrameOperator efo = new EditorFrameOperator(e);
-            efo.closeFrameWithConfirmations();
+             // dispose on Swing thread
+             JUnitUtil.dispose(e.getTargetFrame());
+             JUnitUtil.dispose(e);
             e = null;
         }
         JUnitUtil.tearDown();
-    }
+    }		         
 
 }
