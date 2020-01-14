@@ -2373,7 +2373,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("Car destination", bostonSpur1, c9.getDestinationTrack());
         Assert.assertEquals("Car destination", null, c10.getDestinationTrack()); // limit of 7 pulls out of Acton
         
-        JUnitOperationsUtil.checkOperationsShutDownTask();;
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     /**
