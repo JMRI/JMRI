@@ -68,23 +68,18 @@ public class MqttTurnoutTest extends AbstractTurnoutTestBase {
             }
         
             @Override
-            public @Nonnull String payloadFromBean(@Nonnull Turnout bean, int newState){
-                // sort out states
-                if ((newState & Turnout.CLOSED) != 0) {
-                    // first look for the double case, which we can't handle
-                    if ((newState & Turnout.THROWN ) != 0) {
-                        // this is the disaster case!
-                        throw new IllegalArgumentException("Cannot command both CLOSED and THROWN: "+newState);
-                    } else {
-                        // send a CLOSED command
-                        return closedText;
-                    }
-                } else {
-                    // send a THROWN command
-                    return thrownText;
+            public @Nonnull String payloadFromBean(@Nonnull Turnout bean, int newState) {
+                // calls jmri.implementation.AbstractTurnout#stateChangeCheck(int)
+                String text = "";
+                try {
+                    text = (((MqttTurnout)t).stateChangeCheck(newState) ? closedText : thrownText);
+                } catch (IllegalArgumentException ex) {
+                    //log.error("new state invalid, Turnout not set");
                 }
+                return text;
             }
         };
+
         ((MqttTurnout)t).setParser(parser);
         
         t.setCommandedState(Turnout.THROWN);
@@ -96,10 +91,8 @@ public class MqttTurnoutTest extends AbstractTurnoutTestBase {
         
         Assert.assertEquals("topic", "track/turnout/2", saveTopic);
         Assert.assertEquals("topic", "BAR", new String(savePayload));
-        
     }
-    
-    
+
     @Override
     public void checkThrownMsgSent() {
         Assert.assertEquals("topic", "track/turnout/2", saveTopic);

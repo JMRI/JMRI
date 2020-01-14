@@ -32,7 +32,7 @@ public abstract class SystemConnectionMemo extends Bean {
     public static final String DISABLED = "ConnectionDisabled";
     public static final String USER_NAME = "ConnectionNameChanged";
     public static final String SYSTEM_PREFIX = "ConnectionPrefixChanged";
-    public static final String INTERVAL = "outputInterval";
+    public static final String INTERVAL = "OutputInterval";
     private boolean disabled = false;
     private Boolean disabledAsLoaded = null; // Boolean can be true, false, or null
     private String prefix;

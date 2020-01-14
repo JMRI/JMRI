@@ -74,14 +74,15 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
     /**
      * Preprocess a Turnout state change request for {@link #forwardCommandChangeToLayout(int)}
+     * Public access to allow use in tests.
      *
-     * @param newState the Turnout command value passed
+     * @param newState the Turnout state command value passed
      * @return true if a Turnout.CLOSED was requested and Turnout is not set to _inverted
      */
-    protected boolean commandChangeCheck(int newState) throws IllegalArgumentException {
+    public boolean stateChangeCheck(int newState) throws IllegalArgumentException {
         // sort out states
         if ((newState & Turnout.CLOSED) != 0) {
-            if (!statesConflict(newState)) {
+            if (statesOk(newState)) {
                 // request a CLOSED command (or THROWN if inverted)
                 return (!_inverted);
             } else {
@@ -94,18 +95,18 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
     /**
      * Look for the case in which the state is neither Closed nor Thrown, which we can't handle.
-     * Separate method to allow it to be used in XpaTurnout.
+     * Separate method to allow it to be used in {@link #stateChangeCheck} and Xpa/MqttTurnout.
      *
-     * @param s the Turnout command value passed
+     * @param state the Turnout state passed
      * @return false if s = Turnout.THROWN, which is what we want
      */
-    protected boolean statesConflict(int s) {
-        if ((s & Turnout.THROWN) != 0) {
+    protected boolean statesOk(int state) {
+        if ((state & Turnout.THROWN) != 0) {
             // this is the disaster case!
             log.error("Cannot command both CLOSED and THROWN");
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
     /**

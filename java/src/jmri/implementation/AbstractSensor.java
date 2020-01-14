@@ -1,8 +1,11 @@
 package jmri.implementation;
 
 import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
+
 import jmri.Reporter;
 import jmri.Sensor;
+import jmri.Turnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +28,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
     }
 
     @Override
+    @Nonnull
     public String getBeanType() {
         return Bundle.getMessage("BeanNameSensor");
     }
@@ -52,7 +56,6 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
         long oldValue = sensorDebounceGoingActive;
         sensorDebounceGoingActive = time;
         firePropertyChange("ActiveTimer", oldValue, sensorDebounceGoingActive);
-
     }
 
     @Override
@@ -134,6 +137,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
     int restartcount = 0;
 
     @Override
+    @Nonnull
     @CheckReturnValue
     public String describeState(int state) {
         switch (state) {
@@ -151,8 +155,32 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
      * do it on the layout. Not intended for use by implementations that can.
      */
     @Override
-    public void setKnownState(int s) throws jmri.JmriException {
-        setOwnState(s);
+    public void setKnownState(int newState) throws jmri.JmriException {
+        setOwnState(newState);
+    }
+
+    /**
+     * Preprocess a Sensor state change request for specific implementations
+     * of {@link #setKnownState(int)}
+     *
+     * @param newState the Sensor state command value passed
+     * @return true if a Sensor.ACTIVE was requested and Sensor is not set to _inverted
+     */
+    protected boolean stateChangeCheck(int newState) throws IllegalArgumentException {
+        // sort out states
+        if ((newState & Sensor.ACTIVE) != 0) {
+            // first look for the double case, which we can't handle
+            if ((newState & Sensor.INACTIVE) != 0) {
+                // this is the disaster case!
+                throw new IllegalArgumentException("Can't set state for Sensor " + newState);
+            } else {
+                // send an ACTIVE command (or INACTIVE if inverted)
+                return(!getInverted());
+            }
+        } else {
+            // send a INACTIVE command (or ACTIVE if inverted)
+            return(getInverted());
+        }
     }
 
     /**

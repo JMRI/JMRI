@@ -133,7 +133,7 @@ public class EcosTurnout extends AbstractTurnout
     @Override
     protected void forwardCommandChangeToLayout(int newState) {
         try {
-            sendMessage(commandChangeCheck(newState));
+            sendMessage(stateChangeCheck(newState));
         } catch (IllegalArgumentException ex) {
             log.error("new state invalid, Turnout not set");
         }

@@ -36,29 +36,16 @@ public class JMRIClientSensor extends AbstractSensor implements JMRIClientListen
         return _number;
     }
 
-    // Handle a request to change state by sending a formatted packet
-    // to the server.
+    /** Handle a request to change state by sending a formatted packet
+     * to the server.
+     */
     @Override
-    public void setKnownState(int s) throws jmri.JmriException {
-        // sort out states
-        if ((s & Sensor.ACTIVE) != 0) {
-            // first look for the double case, which we can't handle
-            if ((s & Sensor.INACTIVE) != 0) {
-                // this is the disaster case!
-                log.error("Cannot command both ACTIVE and INACTIVE " + s);
-                return;
-            } else {
-                // send an ACTIVE command
-                sendMessage(true ^ getInverted());
-            }
-        } else {
-            // send a INACTIVE command
-            sendMessage(false ^ getInverted());
-        }
-        if (_knownState != s) {
+    public void setKnownState(int newState) throws jmri.JmriException {
+        sendMessage(stateChangeCheck(newState));
+        if (_knownState != newState) {
             int oldState = _knownState;
-            _knownState = s;
-            firePropertyChange("KnownState", Integer.valueOf(oldState), Integer.valueOf(_knownState));
+            _knownState = newState;
+            firePropertyChange("KnownState", oldState, _knownState);
         }
     }
 
@@ -109,6 +96,3 @@ public class JMRIClientSensor extends AbstractSensor implements JMRIClientListen
     private final static Logger log = LoggerFactory.getLogger(JMRIClientSensor.class);
 
 }
-
-
-

@@ -91,13 +91,13 @@ public class JMRIClientTurnout extends AbstractTurnout implements JMRIClientList
     protected void forwardCommandChangeToLayout(int newState) {
         // sort out states
         if ((newState & Turnout.CLOSED) != 0) {
-            if (!statesConflict(newState)) {
+            if (statesOk(newState)) {
                 // send a CLOSED command
-                sendMessage(true ^ getInverted());
+                sendMessage(!getInverted());
             }
         } else {
             // send a THROWN command
-            sendMessage(false ^ getInverted());
+            sendMessage(getInverted());
         }
     }
 

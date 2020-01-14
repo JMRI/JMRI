@@ -6,9 +6,7 @@ import org.junit.Before;
 
 
 /**
- * SRCPSensorTest.java
- *
- * Description:	tests for the jmri.jmrix.srcp.SRCPSensor class
+ * Tests for the jmri.jmrix.srcp.SRCPSensor class
  *
  * @author	Bob Jacobsen
  * @author      Paul Bender Copyright (C) 2018	
@@ -26,7 +24,6 @@ public class SRCPSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
     @Override
     public void checkStatusRequestMsgSent() {}
-
         
     // The minimal setup for log4J
     @Override

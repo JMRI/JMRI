@@ -4,7 +4,6 @@ import jmri.Turnout;
 import jmri.implementation.AbstractTurnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import javax.annotation.concurrent.GuardedBy;
 
 /**
  * Xpa+Modem implementation of the Turnout interface.
@@ -46,7 +45,7 @@ public class XpaTurnout extends AbstractTurnout {
         XpaMessage m;
         // sort out states
         if ((newState & Turnout.CLOSED) != 0) {
-            if (!statesConflict(newState)) {
+            if (statesOk(newState)) {
                 // send a CLOSED command (or THROWN if inverted)
                 m = XpaMessage.getSwitchMsg(_number, getInverted());
             } else {

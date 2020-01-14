@@ -42,10 +42,10 @@ public class Mx1Turnout extends AbstractTurnout /*implements Mx1TrafficListener*
      */
     @Override
     protected void forwardCommandChangeToLayout(int newState) {
-        // calls jmri.implementation.AbstractTurnout#commandChangeCheck(int)
+        // calls jmri.implementation.AbstractTurnout#stateChangeCheck(int)
         int command = newState;
         try {
-            command = (commandChangeCheck(newState) ? Turnout.CLOSED : Turnout.THROWN);
+            command = (stateChangeCheck(newState) ? Turnout.CLOSED : Turnout.THROWN);
         } catch (IllegalArgumentException ex) {
             log.error("new state invalid, Turnout not set");
         }

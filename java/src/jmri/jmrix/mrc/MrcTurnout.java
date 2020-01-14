@@ -61,7 +61,7 @@ public class MrcTurnout extends AbstractTurnout implements MrcTrafficListener {
     @Override
     protected void forwardCommandChangeToLayout(int newState) {
         try {
-            forwardToCommandStation(commandChangeCheck(newState));
+            forwardToCommandStation(stateChangeCheck(newState));
         } catch (IllegalArgumentException ex) {
             log.error("new state invalid, Turnout not set");
         }

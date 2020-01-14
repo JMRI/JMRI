@@ -48,10 +48,10 @@ public class MqttTurnout extends AbstractTurnout implements MqttEventListener {
         
         @Override
         public @Nonnull String payloadFromBean(@Nonnull Turnout bean, int newState) {
-            // calls jmri.implementation.AbstractTurnout#commandChangeCheck(int)
+            // calls jmri.implementation.AbstractTurnout#stateChangeCheck(int)
             String text = "";
             try {
-                text = (commandChangeCheck(newState) ? closedText : thrownText);
+                text = (stateChangeCheck(newState) ? closedText : thrownText);
             } catch (IllegalArgumentException ex) {
                 log.error("new state invalid, Turnout not set");
             }
