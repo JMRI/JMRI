@@ -990,7 +990,7 @@ public final class MathUtil {
      */
     @CheckReturnValue
     public static Rectangle2D inset(@Nonnull Rectangle2D r, double i) {
-        return new Rectangle2D.Double(r.getX() + i, r.getY() + i, r.getWidth() - (2 * i), r.getHeight() - (2 * i));
+        return inset(r, i, i);
     }
 
     /**
