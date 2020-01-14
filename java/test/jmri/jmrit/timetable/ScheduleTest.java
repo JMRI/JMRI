@@ -1,5 +1,6 @@
 package jmri.jmrit.timetable;
 
+import jmri.InstanceManager;
 import org.junit.*;
 
 /**
@@ -49,6 +50,7 @@ public class ScheduleTest {
     @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
+        InstanceManager.setDefault(TimeTableDataManager.class,new TimeTableDataManager(false));
     }
 
     @After
