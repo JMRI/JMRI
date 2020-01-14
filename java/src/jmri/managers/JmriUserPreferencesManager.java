@@ -57,17 +57,24 @@ import org.slf4j.LoggerFactory;
  */
 public class JmriUserPreferencesManager extends Bean implements UserPreferencesManager, InstanceManagerAutoInitialize {
 
-    public final static String SAVE_ALLOWED = "saveAllowed";
+    public static final String SAVE_ALLOWED = "saveAllowed";
 
-    private final static String CLASSPREFS_NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/class-preferences-4-3-5.xsd"; // NOI18N
-    private final static String CLASSPREFS_ELEMENT = "classPreferences"; // NOI18N
-    private final static String COMBOBOX_NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/combobox-4-3-5.xsd"; // NOI18N
-    private final static String COMBOBOX_ELEMENT = "comboBoxLastValue"; // NOI18N
-    private final static String SETTINGS_NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/settings-4-3-5.xsd"; // NOI18N
-    private final static String SETTINGS_ELEMENT = "settings"; // NOI18N
-    private final static String WINDOWS_NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/window-details-4-3-5.xsd"; // NOI18N
-    private final static String WINDOWS_ELEMENT = "windowDetails"; // NOI18N
-    private final static Logger log = LoggerFactory.getLogger(JmriUserPreferencesManager.class);
+    private static final String CLASSPREFS_NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/class-preferences-4-3-5.xsd"; // NOI18N
+    private static final String CLASSPREFS_ELEMENT = "classPreferences"; // NOI18N
+    private static final String COMBOBOX_NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/combobox-4-3-5.xsd"; // NOI18N
+    private static final String COMBOBOX_ELEMENT = "comboBoxLastValue"; // NOI18N
+    private static final String SETTINGS_NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/settings-4-3-5.xsd"; // NOI18N
+    private static final String SETTINGS_ELEMENT = "settings"; // NOI18N
+    private static final String WINDOWS_NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/window-details-4-3-5.xsd"; // NOI18N
+    private static final String WINDOWS_ELEMENT = "windowDetails"; // NOI18N
+    private static final Logger log = LoggerFactory.getLogger(JmriUserPreferencesManager.class);
+    private static final String REMINDER = "reminder";
+    private static final String JMRI_UTIL_JMRI_JFRAME = "jmri.util.JmriJFrame";
+    private static final String CLASS = "class";
+    private static final String VALUE = "value";
+    private static final String WIDTH = "width";
+    private static final String HEIGHT = "height";
+    private static final String PROPERTIES = "properties";
 
     private boolean dirty = false;
     private boolean loading = false;
@@ -85,7 +92,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         this.allowSave = false;
 
         //I18N in ManagersBundle.properties (this is a checkbox on prefs tab Messages|Misc items)
-        this.setPreferenceItemDetails(getClassName(), "reminder", Bundle.getMessage("HideReminderLocationMessage")); // NOI18N
+        this.setPreferenceItemDetails(getClassName(), REMINDER, Bundle.getMessage("HideReminderLocationMessage")); // NOI18N
         //I18N in ManagersBundle.properties (this is the title of prefs tab Messages|Misc items)
         this.classPreferenceList.get(getClassName()).setDescription(Bundle.getMessage("UserPreferences")); // NOI18N
 
@@ -105,7 +112,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
     }
 
     @Override
-    public boolean isSaveAllowed() {
+    public synchronized boolean isSaveAllowed() {
         return this.allowSave;
     }
 
@@ -437,7 +444,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         if (loading) {
             return;
         }
-        showInfoMessage(Bundle.getMessage("Reminder"), Bundle.getMessage("ReminderLine"), getClassName(), "reminder"); // NOI18N
+        showInfoMessage(Bundle.getMessage("Reminder"), Bundle.getMessage("ReminderLine"), getClassName(), REMINDER); // NOI18N
     }
 
     @Override
@@ -474,7 +481,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
 
     @Override
     public void setSaveWindowSize(String strClass, boolean b) {
-        if ((strClass == null) || (strClass.equals("jmri.util.JmriJFrame"))) {
+        if ((strClass == null) || (strClass.equals(JMRI_UTIL_JMRI_JFRAME))) {
             return;
         }
         if (!windowDetails.containsKey(strClass)) {
@@ -486,7 +493,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
 
     @Override
     public void setSaveWindowLocation(String strClass, boolean b) {
-        if ((strClass == null) || (strClass.equals("jmri.util.JmriJFrame"))) {
+        if ((strClass == null) || (strClass.equals(JMRI_UTIL_JMRI_JFRAME))) {
             return;
         }
         if (!windowDetails.containsKey(strClass)) {
@@ -498,7 +505,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
 
     @Override
     public void setWindowLocation(String strClass, Point location) {
-        if ((strClass == null) || (strClass.equals("jmri.util.JmriJFrame"))) {
+        if ((strClass == null) || (strClass.equals(JMRI_UTIL_JMRI_JFRAME))) {
             return;
         }
         if (!windowDetails.containsKey(strClass)) {
@@ -510,7 +517,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
 
     @Override
     public void setWindowSize(String strClass, Dimension dim) {
-        if ((strClass == null) || (strClass.equals("jmri.util.JmriJFrame"))) {
+        if ((strClass == null) || (strClass.equals(JMRI_UTIL_JMRI_JFRAME))) {
             return;
         }
         if (!windowDetails.containsKey(strClass)) {
@@ -602,7 +609,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                 desc = (String) method.invoke(t);
                 classDesFound = true;
             } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NullPointerException | ExceptionInInitializerError | NoSuchMethodException ex) {
-                log.debug("Unable to call declared method \"getClassDescription\" with exception {}", ex.toString());
+                log.debug("Unable to call declared method \"getClassDescription\" with exception {}", ex);
                 classDesFound = false;
             }
             if (!classDesFound) {
@@ -610,7 +617,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                     method = cl.getMethod("getClassDescription");
                     desc = (String) method.invoke(t);
                 } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NullPointerException | ExceptionInInitializerError | NoSuchMethodException ex) {
-                    log.debug("Unable to call undeclared method \"getClassDescription\" with exception {}", ex.toString());
+                    log.debug("Unable to call undeclared method \"getClassDescription\" with exception {}", ex);
                     classDesFound = false;
                 }
             }
@@ -629,7 +636,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                 classSetFound = true;
             } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NullPointerException | ExceptionInInitializerError | NoSuchMethodException ex) {
                 // TableAction.setMessagePreferencesDetails() method is routinely not present in multiple classes
-                log.debug("Unable to call declared method \"setMessagePreferencesDetails\" with exception {}", ex.toString());
+                log.debug("Unable to call declared method \"setMessagePreferencesDetails\" with exception {}", ex);
                 classSetFound = false;
             }
             if (!classSetFound) {
@@ -637,7 +644,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                     method = cl.getMethod("setMessagePreferencesDetails");
                     method.invoke(t);
                 } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NullPointerException | ExceptionInInitializerError | NoSuchMethodException ex) {
-                    log.debug("Unable to call undeclared method \"setMessagePreferencesDetails\" with exception {}", ex.toString());
+                    log.debug("Unable to call undeclared method \"setMessagePreferencesDetails\" with exception {}", ex);
                 }
             }
 
@@ -765,9 +772,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
             classPreferenceList.put(strClass, new ClassPreferences());
         }
         classPreferenceList.get(strClass).getMultipleChoiceList().stream()
-                .filter((mc) -> (mc.getItem().equals(choice))).forEachOrdered((mc) -> {
-            mc.setValue(value);
-        });
+                .filter(mc -> (mc.getItem().equals(choice))).forEachOrdered(mc -> mc.setValue(value));
         this.savePreferencesState();
     }
 
@@ -864,9 +869,8 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
     private void readComboBoxLastSelections() {
         Element element = this.readElement(COMBOBOX_ELEMENT, COMBOBOX_NAMESPACE);
         if (element != null) {
-            element.getChildren("comboBox").stream().forEach((combo) -> {
-                comboBoxLastSelection.put(combo.getAttributeValue("name"), combo.getAttributeValue("lastSelected"));
-            });
+            element.getChildren("comboBox").stream().forEach(combo ->
+                comboBoxLastSelection.put(combo.getAttributeValue("name"), combo.getAttributeValue("lastSelected")));
         }
     }
 
@@ -876,14 +880,12 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
             Element element = new Element(COMBOBOX_ELEMENT, COMBOBOX_NAMESPACE);
             // Do not store blank last entered/selected values
             comboBoxLastSelection.entrySet().stream().
-                    filter((cbls) -> (cbls.getValue() != null && !cbls.getValue().isEmpty())).map((cbls) -> {
+                    filter(cbls -> (cbls.getValue() != null && !cbls.getValue().isEmpty())).map(cbls -> {
                 Element combo = new Element("comboBox");
                 combo.setAttribute("name", cbls.getKey());
                 combo.setAttribute("lastSelected", cbls.getValue());
                 return combo;
-            }).forEach((combo) -> {
-                element.addContent(combo);
-            });
+            }).forEach(element::addContent);
             this.saveElement(element);
             this.resetChangeMade();
         }
@@ -892,26 +894,24 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
     private void readPreferencesState() {
         Element element = this.readElement(CLASSPREFS_ELEMENT, CLASSPREFS_NAMESPACE);
         if (element != null) {
-            element.getChildren("preferences").stream().forEach((preferences) -> {
-                String clazz = preferences.getAttributeValue("class");
+            element.getChildren("preferences").stream().forEach(preferences -> {
+                String clazz = preferences.getAttributeValue(CLASS);
                 log.debug("Reading class preferences for \"{}\"", clazz);
-                preferences.getChildren("multipleChoice").stream().forEach((mc) -> {
-                    mc.getChildren("option").stream().forEach((option) -> {
+                preferences.getChildren("multipleChoice").stream().forEach(mc ->
+                    mc.getChildren("option").stream().forEach(option -> {
                         int value = 0;
                         try {
-                            option.getAttribute("value").getIntValue();
+                            option.getAttribute(VALUE).getIntValue();
                         } catch (DataConversionException ex) {
                             log.error("failed to convert positional attribute");
                         }
                         this.setMultipleChoiceOption(clazz, option.getAttributeValue("item"), value);
-                    });
-                });
-                preferences.getChildren("reminderPrompts").stream().forEach((rp) -> {
-                    rp.getChildren("reminder").stream().forEach((reminder) -> {
+                    }));
+                preferences.getChildren("reminderPrompts").stream().forEach(rp ->
+                    rp.getChildren(REMINDER).stream().forEach(reminder -> {
                         log.debug("Setting preferences state \"true\" for \"{}\", \"{}\"", clazz, reminder.getText());
                         this.setPreferenceState(clazz, reminder.getText(), true);
-                    });
-                });
+                    }));
             });
         }
     }
@@ -920,28 +920,26 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         this.setChangeMade(true);
         if (this.allowSave) {
             Element element = new Element(CLASSPREFS_ELEMENT, CLASSPREFS_NAMESPACE);
-            this.classPreferenceList.keySet().stream().forEach((name) -> {
+            this.classPreferenceList.keySet().stream().forEach(name -> {
                 ClassPreferences cp = this.classPreferenceList.get(name);
                 if (!cp.multipleChoiceList.isEmpty() || !cp.preferenceList.isEmpty()) {
                     Element clazz = new Element("preferences");
-                    clazz.setAttribute("class", name);
+                    clazz.setAttribute(CLASS, name);
                     if (!cp.multipleChoiceList.isEmpty()) {
                         Element choices = new Element("multipleChoice");
                         // only save non-default values
-                        cp.multipleChoiceList.stream().filter((mc) -> (mc.getDefaultValue() != mc.getValue())).forEach((mc) -> {
+                        cp.multipleChoiceList.stream().filter(mc -> (mc.getDefaultValue() != mc.getValue())).forEach(mc ->
                             choices.addContent(new Element("option")
                                     .setAttribute("item", mc.getItem())
-                                    .setAttribute("value", Integer.toString(mc.getValue())));
-                        });
+                                    .setAttribute(VALUE, Integer.toString(mc.getValue()))));
                         if (!choices.getChildren().isEmpty()) {
                             clazz.addContent(choices);
                         }
                     }
                     if (!cp.preferenceList.isEmpty()) {
                         Element reminders = new Element("reminderPrompts");
-                        cp.preferenceList.stream().filter((pl) -> (pl.getState())).forEach((pl) -> {
-                            reminders.addContent(new Element("reminder").addContent(pl.getItem()));
-                        });
+                        cp.preferenceList.stream().filter(pl -> (pl.getState())).forEach(pl ->
+                            reminders.addContent(new Element(REMINDER).addContent(pl.getItem())));
                         if (!reminders.getChildren().isEmpty()) {
                             clazz.addContent(reminders);
                         }
@@ -958,9 +956,8 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
     private void readSimplePreferenceState() {
         Element element = this.readElement(SETTINGS_ELEMENT, SETTINGS_NAMESPACE);
         if (element != null) {
-            element.getChildren("setting").stream().forEach((setting) -> {
-                this.simplePreferenceList.add(setting.getText());
-            });
+            element.getChildren("setting").stream().forEach(setting ->
+                this.simplePreferenceList.add(setting.getText()));
         }
     }
 
@@ -968,9 +965,8 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         this.setChangeMade(false);
         if (this.allowSave) {
             Element element = new Element(SETTINGS_ELEMENT, SETTINGS_NAMESPACE);
-            getSimplePreferenceStateList().stream().forEach((setting) -> {
-                element.addContent(new Element("setting").addContent(setting));
-            });
+            getSimplePreferenceStateList().stream().forEach(setting ->
+                element.addContent(new Element("setting").addContent(setting)));
             this.saveElement(element);
             this.resetChangeMade();
         }
@@ -980,8 +976,8 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         // TODO: COMPLETE!
         Element element = this.readElement(WINDOWS_ELEMENT, WINDOWS_NAMESPACE);
         if (element != null) {
-            element.getChildren("window").stream().forEach((window) -> {
-                String reference = window.getAttributeValue("class");
+            element.getChildren("window").stream().forEach(window -> {
+                String reference = window.getAttributeValue(CLASS);
                 log.debug("Reading window details for {}", reference);
                 try {
                     if (window.getAttribute("locX") != null && window.getAttribute("locY") != null) {
@@ -989,21 +985,21 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                         double y = window.getAttribute("locY").getDoubleValue();
                         this.setWindowLocation(reference, new java.awt.Point((int) x, (int) y));
                     }
-                    if (window.getAttribute("width") != null && window.getAttribute("height") != null) {
-                        double width = window.getAttribute("width").getDoubleValue();
-                        double height = window.getAttribute("height").getDoubleValue();
+                    if (window.getAttribute(WIDTH) != null && window.getAttribute(HEIGHT) != null) {
+                        double width = window.getAttribute(WIDTH).getDoubleValue();
+                        double height = window.getAttribute(HEIGHT).getDoubleValue();
                         this.setWindowSize(reference, new java.awt.Dimension((int) width, (int) height));
                     }
                 } catch (DataConversionException ex) {
                     log.error("Unable to read dimensions of window \"{}\"", reference);
                 }
-                if (window.getChild("properties") != null) {
-                    window.getChild("properties").getChildren().stream().forEach((property) -> {
+                if (window.getChild(PROPERTIES) != null) {
+                    window.getChild(PROPERTIES).getChildren().stream().forEach(property -> {
                         String key = property.getChild("key").getText();
                         try {
-                            Class<?> cl = Class.forName(property.getChild("value").getAttributeValue("class"));
+                            Class<?> cl = Class.forName(property.getChild(VALUE).getAttributeValue(CLASS));
                             Constructor<?> ctor = cl.getConstructor(new Class<?>[]{String.class});
-                            Object value = ctor.newInstance(new Object[]{property.getChild("value").getText()});
+                            Object value = ctor.newInstance(new Object[]{property.getChild(VALUE).getText()});
                             log.debug("Setting property {} for {} to {}", key, reference, value);
                             this.setProperty(reference, key, value);
                         } catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
@@ -1025,7 +1021,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                 Element element = new Element(WINDOWS_ELEMENT, WINDOWS_NAMESPACE);
                 for (Entry<String, WindowLocations> entry : windowDetails.entrySet()) {
                     Element window = new Element("window");
-                    window.setAttribute("class", entry.getKey());
+                    window.setAttribute(CLASS, entry.getKey());
                     if (entry.getValue().getSaveLocation()) {
                         try {
                             window.setAttribute("locX", Double.toString(entry.getValue().getLocation().getX()));
@@ -1040,28 +1036,26 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                             double width = entry.getValue().getSize().getWidth();
                             // Do not save the width or height if set to zero
                             if (!(height == 0.0 && width == 0.0)) {
-                                window.setAttribute("width", Double.toString(width));
-                                window.setAttribute("height", Double.toString(height));
+                                window.setAttribute(WIDTH, Double.toString(width));
+                                window.setAttribute(HEIGHT, Double.toString(height));
                             }
                         } catch (NullPointerException ex) {
                             // Expected if the size has not been set or the window is open
                         }
                     }
                     if (!entry.getValue().parameters.isEmpty()) {
-                        Element properties = new Element("properties");
-                        entry.getValue().parameters.entrySet().stream().map((property) -> {
+                        Element properties = new Element(PROPERTIES);
+                        entry.getValue().parameters.entrySet().stream().map(property -> {
                             Element propertyElement = new Element("property");
                             propertyElement.addContent(new Element("key").setText(property.getKey()));
                             Object value = property.getValue();
                             if (value != null) {
-                                propertyElement.addContent(new Element("value")
-                                        .setAttribute("class", value.getClass().getName())
+                                propertyElement.addContent(new Element(VALUE)
+                                        .setAttribute(CLASS, value.getClass().getName())
                                         .setText(value.toString()));
                             }
                             return propertyElement;
-                        }).forEach((propertyElement) -> {
-                            properties.addContent(propertyElement);
-                        });
+                        }).forEach(properties::addContent);
                         window.addContent(properties);
                     }
                     element.addContent(window);
@@ -1100,9 +1094,8 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         this.saveSimplePreferenceState();
         this.saveWindowDetails();
         this.resetChangeMade();
-        InstanceManager.getOptionalDefault(JmriJTablePersistenceManager.class).ifPresent((manager) -> {
-            manager.savePreferences(ProfileManager.getDefault().getActiveProfile());
-        });
+        InstanceManager.getOptionalDefault(JmriJTablePersistenceManager.class).ifPresent(manager ->
+            manager.savePreferences(ProfileManager.getDefault().getActiveProfile()));
     }
 
     @Override
@@ -1113,7 +1106,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
     /**
      * Holds details about the specific class.
      */
-    protected final static class ClassPreferences {
+    protected static final class ClassPreferences {
 
         String classDescription;
 
@@ -1172,7 +1165,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         }
     }
 
-    protected final static class MultipleChoice {
+    protected static final class MultipleChoice {
 
         HashMap<Integer, String> options;
         String optionDescription;
@@ -1196,9 +1189,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         }
 
         void setValue(String value) {
-            options.keySet().stream().filter((o) -> (options.get(o).equals(value))).forEachOrdered((o) -> {
-                this.value = o;
-            });
+            options.keySet().stream().filter(o -> (options.get(o).equals(value))).forEachOrdered(o -> this.value = o);
         }
 
         void setMessageItems(String description, HashMap<Integer, String> options, int defaultOption) {
@@ -1232,7 +1223,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
 
     }
 
-    protected final static class PreferenceList {
+    protected static final class PreferenceList {
 
         // need to fill this with bits to get a meaning full description.
         boolean set = false;
@@ -1275,7 +1266,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
 
     }
 
-    protected final static class WindowLocations {
+    protected static final class WindowLocations {
 
         private Point xyLocation = new Point(0, 0);
         private Dimension size = new Dimension(0, 0);
