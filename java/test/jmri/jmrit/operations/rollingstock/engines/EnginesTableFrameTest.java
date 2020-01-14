@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
 import org.junit.Test;
 
 import jmri.InstanceManager;
@@ -31,6 +30,7 @@ public class EnginesTableFrameTest extends OperationsTestCase {
     @Test
     public void testenginesTableFrame() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        loadEngines();
         // enable rfid field
         Setup.setRfidEnabled(true);
 
@@ -166,15 +166,6 @@ public class EnginesTableFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(etf);
         JUnitOperationsUtil.checkOperationsShutDownTask();
         JUnitOperationsUtil.checkIdTagsShutDownTask();
-    }
-
-    // Ensure minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-
-        loadEngines();
     }
 
     private void loadEngines() {

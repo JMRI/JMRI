@@ -47,7 +47,7 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
     public void testStagingPromptFrom() {
 
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-
+        JUnitOperationsUtil.initOperationsData();
         Setup.setPromptFromStagingEnabled(true);
 
         // two sets of cars in staging
@@ -112,7 +112,7 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
     public void testStagingPromptTo() {
 
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-
+        JUnitOperationsUtil.initOperationsData();
         Setup.setPromptToStagingEnabled(true);
         
         Train train2 = tmanager.getTrainById("2");
@@ -171,7 +171,7 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
     public void testBuildFailedMessage() {
 
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+        JUnitOperationsUtil.initOperationsData();
         // enable build failure messages
         tmanager.setBuildMessagesEnabled(true);
         
@@ -212,7 +212,7 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
     public void testBuildFailedMessageStagingA() {
 
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+        JUnitOperationsUtil.initOperationsData();
         tmanager.setBuildMessagesEnabled(true);
         
         Engine e1 = emanager.getByRoadAndNumber("PC", "5016");
@@ -307,7 +307,7 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
     public void testBuildFailedMessageStagingB() {
 
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+        JUnitOperationsUtil.initOperationsData();
         tmanager.setBuildMessagesEnabled(true);
         
         Engine e1 = emanager.getByRoadAndNumber("PC", "5016");
@@ -406,7 +406,7 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
     public void testBuildFailedMessageStagingC() {
 
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+        JUnitOperationsUtil.initOperationsData();
         tmanager.setBuildMessagesEnabled(true);
 
         Location northend = lmanager.getLocationById("1");
@@ -497,7 +497,7 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
     public void testBuildFailedMessageStagingD() {
 
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+        JUnitOperationsUtil.initOperationsData();
         tmanager.setBuildMessagesEnabled(true);
         
         Engine e1 = emanager.getByRoadAndNumber("PC", "5016");
@@ -591,7 +591,7 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
     public void testBuildFailedMessageStagingE() {
 
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+        JUnitOperationsUtil.initOperationsData();
         tmanager.setBuildMessagesEnabled(true);
         
         Engine e1 = emanager.getByRoadAndNumber("PC", "5016");
@@ -692,6 +692,5 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
 
         // disable build messages
         tmanager.setBuildMessagesEnabled(false);
-        JUnitOperationsUtil.initOperationsData();
     }
 }

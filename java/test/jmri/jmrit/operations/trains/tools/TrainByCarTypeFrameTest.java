@@ -2,7 +2,10 @@ package jmri.jmrit.operations.trains.tools;
 
 import java.awt.GraphicsEnvironment;
 
-import org.junit.*;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -23,13 +26,12 @@ public class TrainByCarTypeFrameTest extends OperationsTestCase {
         TrainByCarTypeFrame t = new TrainByCarTypeFrame((Train) null);
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(t);
-        
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
     }
 
     @Test
     public void testSelection() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        JUnitOperationsUtil.initOperationsData();
         Train train = InstanceManager.getDefault(TrainManager.class).getTrainById("1");
         Assert.assertNotNull("exists", train);
 
@@ -41,15 +43,6 @@ public class TrainByCarTypeFrameTest extends OperationsTestCase {
 
         JUnitUtil.dispose(t);
         JUnitOperationsUtil.checkIdTagsShutDownTask();
-    }
-
-    // The minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-
-        JUnitOperationsUtil.initOperationsData();
     }
 
     @Override
