@@ -24,7 +24,6 @@ import jmri.profile.Profile;
 import jmri.spi.PreferencesManager;
 import jmri.util.prefs.InitializationException;
 import jmri.util.prefs.JmriPreferencesProvider;
-import jmri.util.swing.SwingSettings;
 import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -141,7 +140,6 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
 
         applyLookAndFeel();
         applyFontSize();
-        SwingSettings.setNonStandardMouseEvent(isNonStandardMouseEvent());
     }
 
     @Override

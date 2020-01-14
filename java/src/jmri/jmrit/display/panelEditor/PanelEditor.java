@@ -53,6 +53,7 @@ import jmri.jmrit.display.PositionablePopupUtil;
 import jmri.jmrit.display.ToolTip;
 import jmri.util.JmriJFrame;
 import jmri.util.SystemType;
+import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.util.swing.JmriColorChooser;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -843,7 +844,7 @@ public class PanelEditor extends Editor implements ItemListener {
         _selectRect = null;
 
         // if not sending MouseClicked, do it here
-        if (jmri.util.swing.SwingSettings.getNonStandardMouseEvent()) {
+        if (InstanceManager.getDefault(GuiLafPreferencesManager.class).isNonStandardMouseEvent()) {
             mouseClicked(event);
         }
         _targetPanel.repaint(); // needed for ToolTip

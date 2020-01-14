@@ -1,5 +1,8 @@
 package jmri.util.swing;
 
+import jmri.InstanceManager;
+import jmri.util.gui.GuiLafPreferencesManager;
+
 /**
  * Settings for workarounds in Swing API.
  * <p>
@@ -15,17 +18,32 @@ package jmri.util.swing;
  *
  * @author Bob Jacobsen Copyright 2010
  * @since 2.9.4
+ * @deprecated since 4.19.3 without direct replacement
  */
+@Deprecated
 public class SwingSettings {
 
-    static private boolean nonStandardMouseEvent = false;
-
-    static public boolean getNonStandardMouseEvent() {
-        return nonStandardMouseEvent;
+    /**
+     * @return result of
+     *         {@link GuiLafPreferencesManager#isNonStandardMouseEvent()}
+     * @deprecated since 4.19.3; use
+     *             {@link GuiLafPreferencesManager#isNonStandardMouseEvent()}
+     *             instead
+     */
+    @Deprecated
+    public static boolean getNonStandardMouseEvent() {
+        return InstanceManager.getDefault(GuiLafPreferencesManager.class).isNonStandardMouseEvent();
     }
 
-    static public void setNonStandardMouseEvent(boolean v) {
-        nonStandardMouseEvent = v;
+    /**
+     * Does nothing; retained for API compatibility.
+     * 
+     * @param v ignored
+     * @deprecated since 4.19.3 without direct replacement
+     */
+    @Deprecated
+    public static void setNonStandardMouseEvent(boolean v) {
+        // does nothing
     }
 
 }
