@@ -101,8 +101,8 @@ var jmri_logging = false;
 //
 
 // log object properties
-function $logProperties(obj, force = false) {
-	if (jmri_logging || force) {
+function $logProperties(obj) {
+	if (jmri_logging) {
 		var $propList = "";
 		for (var $propName in obj) {
 			if (typeof obj[$propName] !== "undefined") {
@@ -128,7 +128,7 @@ function isDefined(x) {
 class Decoration {
     constructor($widget) {
         //jmri.log("Decoration.constructor(...)");
-        //$logProperties(this.$widget, true);
+        $logProperties(this.$widget);
         this.$widget = $widget;
     }
     getEndPoints() {
@@ -1450,7 +1450,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                             //store these blocks in a persistent var
                             $gBlks[$widget.systemName] = $widget;
                             //jmri.log("layoutblock:");
-                            //$logProperties($widget, true);
+                            $logProperties($widget);
                             //jmri.log("block[" + $widget.systemName + "].blockcolor: '" + $widget.trackcolor + "'.")
                             jmri.getLayoutBlock($widget.systemName);
                             break;
@@ -1755,7 +1755,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                             //loop thru raytracks, calc and store end of ray point for each
                             $widget['raytracks'] = $(this).find('raytrack');
                             $widget.raytracks.each(function(i, item) {
-                                //$logProperties(item, true);
+                                $logProperties(item);
                                 //note:the 50 offset is due to TrackSegment.java TURNTABLE_RAY_OFFSET
                                 var rayID = $widget.ident + "." + (50 + item.attributes.index.value * 1);
                                 var $t = {ident:rayID};
@@ -1935,7 +1935,7 @@ function $handleClick(e) {
         var $turntableID = $rayID.split(".")[0];
         var $widget = $gWidgets[$turntableID];
         $widget.raytracks.each(function(i, item) {
-            //$logProperties(item, true);
+            $logProperties(item);
             //note:offset 50 is due to TrackSegment.java TURNTABLE_RAY_OFFSET
             var rayID = $turntableID + "." + (50 + item.attributes.index.value * 1);
             if (rayID == $rayID) {
@@ -2045,7 +2045,6 @@ function $drawTrackSegment($widget) {
     if ($widget.hidden == "yes") {
         return;
     }
-    //$logProperties($widget, true);  //TODO: remove or comment out for production
 
     // if positional points have not been loaded...
     if (Object.keys($gPts).length == 0) {
@@ -2063,11 +2062,6 @@ function $drawTrackSegment($widget) {
         jmri.log("can't draw tracksegment " + $widget.ident + ": connect2: " + $widget.connect2name + "." + $widget.type2 + " undefined.");
         return;
     }
-
-    // if ($widget.ident == "T5") {
-    //     //jmri.log("$widget.ident:" + $widget.ident);
-    //     $logProperties($widget, true);
-    // }
 
     $gCtx.save();   // save current line width and color
 
@@ -2278,7 +2272,7 @@ function $drawIcon($widget) {
 //draw a turntable (pass in widget)
 //from jmri.jmrit.display.layoutEditor.layoutTurntable
 function $drawTurntable($widget) {
-    //$logProperties($widget, true);
+    $logProperties($widget);
 
     //get the center
     var $txcen = $widget.xcen * 1;
@@ -2294,7 +2288,7 @@ function $drawTurntable($widget) {
 
     //loop thru raytracks drawing each one (and control circles if it has a turnout)
     $widget.raytracks.each(function(i, item) {
-        //$logProperties(item, true);
+        $logProperties(item);
         var rayID = $widget.ident + "." + (50 + item.attributes.index.value * 1);
         var $t = $gPts[rayID];
         //draw the line from ray endpoint to turntable edge
@@ -3142,7 +3136,7 @@ function $drawEllipse(x, y, rw, rh, startAngleRAD, stopAngleRAD)
 //  $drawBezier
 //
 var bezier1st = true;
-function $drawBezier(points, $color, $width, displacement = 0) {
+function $drawBezier(points, $color, $width, displacement) {
     $gCtx.save();   // save current line width and color
 
     // set color and width
@@ -3151,6 +3145,9 @@ function $drawBezier(points, $color, $width, displacement = 0) {
     }
     if (typeof $width !== "undefined") {
         $gCtx.lineWidth = $width;
+    }
+    if (typeof displacement === "undefined") {
+        displacement = 0;
     }
 
     try {
@@ -3176,7 +3173,7 @@ function $drawBezier(points, $color, $width, displacement = 0) {
 //
 //plotBezier - recursive function to draw bezier curve
 //
-function $plotBezier(points, depth = 0, displacement = 0) {
+function $plotBezier(points, depth, displacement) {
     var len = points.length, idx, jdx;
 
     // calculate flatness to determine if we need to recurse...
@@ -3274,7 +3271,7 @@ function $point_midpoint(p1, p2) {
     return [$half(p1[0], p2[0]), $half(p1[1], p2[1])];
 }
 
-function $point_normalizeTo(p, new_length = 1) {
+function $point_normalizeTo(p, new_length) {
     var m = new_length / $point_length(p);
     return [p[0] * m, p[1] * m];
 }
@@ -3568,7 +3565,7 @@ var $setWidgetState = function($id, $newState, data) {
             $id = slipID;
         } else if ($id.startsWith("TUR")) {
             //jmri.log("$setWidgetState(" + $id + ", " + $newState + ", " + data + ")");
-            //$logProperties(data, true);
+            $logProperties(data);
 
             var turntableID = $id.split(".")[0];
             $widget = $gWidgets[turntableID];
@@ -3702,7 +3699,7 @@ jQuery.fn.xmlClean = function() {
 //handle the toggling (or whatever) of the "next" state for the passed-in widget
 var $getNextState = function($widget) {
     var $nextState = undefined;
-    //$logProperties($widget);
+    $logProperties($widget);
     if ($widget.widgetType == 'signalheadicon') { //special case for signalheadicons
         switch ($widget.clickmode * 1) {          //   logic based on SignalHeadIcon.java
             case 0 :
@@ -3878,7 +3875,7 @@ function $redrawBlock(blockName) {
     //loop thru widgets, if block matches, redraw widget by proper method
     jQuery.each($gWidgets, function($id, $widget) {
         ///jmri.log("  $id: " + $id);
-        //$logProperties($widget);
+        $logProperties($widget);
         if (($widget.blockname == blockName)
         || ($widget.blocknameac == blockName)
         || ($widget.blocknamebd == blockName)
@@ -4014,7 +4011,7 @@ function updateBlockSensorState(blockName, sensorName, sensorState) {
 //             jmri.log("blockName: " + blockName
 //                 + ", sensorName: " + sensorName
 //                 + ", sensorState: " + sensorState);
-//             $logProperties($blk, true);
+//             $logProperties($blk);
             if (isDefined($blk.occupancysensor)
                 && ($blk.occupancysensor == sensorName)) {
                 $blk.state = sensorState;
