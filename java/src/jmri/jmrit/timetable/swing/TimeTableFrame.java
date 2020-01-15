@@ -383,24 +383,16 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         });
 
         JMenuItem impsgn = new JMenuItem(Bundle.getMessage("MenuImportSgn"));  // NOI18N
-        impsgn.addActionListener((ActionEvent event) -> {
-            importPressed();
-        });
+        impsgn.addActionListener((ActionEvent event) -> importPressed());
 
         JMenuItem impcsv = new JMenuItem(Bundle.getMessage("MenuImportCsv"));  // NOI18N
-        impcsv.addActionListener((ActionEvent event) -> {
-            importCsvPressed();
-        });
+        impcsv.addActionListener((ActionEvent event) -> importCsvPressed());
         
         JMenuItem impopr = new JMenuItem(Bundle.getMessage("MenuImportOperations"));  // NOI18N
-        impopr.addActionListener((ActionEvent event) -> {
-            importFromOperationsPressed();
-        });
+        impopr.addActionListener((ActionEvent event) -> importFromOperationsPressed());
 
         JMenuItem expcsv = new JMenuItem(Bundle.getMessage("MenuExportCsv"));  // NOI18N
-        expcsv.addActionListener((ActionEvent event) -> {
-            exportCsvPressed();
-        });
+        expcsv.addActionListener((ActionEvent event) -> exportCsvPressed());
 
         JMenu ttMenu = new JMenu(Bundle.getMessage("MenuTimetable"));  // NOI18N
         ttMenu.add(trainTime);
@@ -445,7 +437,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         _editTrainTypeName = new JTextField(20);
         _editTrainTypeColor = new JColorChooser(Color.BLACK);
         _editTrainTypeColor.setPreviewPanel(new JPanel()); // remove the preview panel
-        AbstractColorChooserPanel editTypeColorPanels[] = {new SplitButtonColorChooserPanel()};
+        AbstractColorChooserPanel[] editTypeColorPanels = {new SplitButtonColorChooserPanel()};
         _editTrainTypeColor.setChooserPanels(editTypeColorPanels);
 
         _editTrainTypeName.addFocusListener(detailFocusEvent);
