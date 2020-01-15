@@ -27,26 +27,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
-import javax.swing.AbstractAction;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
-import javax.swing.JTree;
-import javax.swing.TransferHandler;
+import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
-import javax.swing.tree.DefaultTreeCellRenderer;
-import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.DefaultTreeSelectionModel;
-import javax.swing.tree.TreeModel;
-import javax.swing.tree.TreeNode;
-import javax.swing.tree.TreePath;
+import javax.swing.tree.*;
+
 import jmri.CatalogTree;
 import jmri.CatalogTreeManager;
 import jmri.InstanceManager;
@@ -170,11 +154,9 @@ public class CatalogPanel extends JPanel {
         _dTree.setRootVisible(false);
         _dTree.setShowsRootHandles(true);
         _dTree.setScrollsOnExpand(true);
-        _dTree.getSelectionModel().setSelectionMode(DefaultTreeSelectionModel.SINGLE_TREE_SELECTION);
+        _dTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 
-        _dTree.addTreeSelectionListener((TreeSelectionEvent e) -> {
-            updatePanel();
-        });
+        _dTree.addTreeSelectionListener((TreeSelectionEvent e) -> updatePanel());
         _dTree.setExpandsSelectedPaths(true);
         _treePane.setViewportView(_dTree);
     }
@@ -212,15 +194,11 @@ public class CatalogPanel extends JPanel {
         CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
         CatalogTree tree = manager.getBySystemName(systemName);
         if (tree != null) {
-            jmri.util.ThreadingUtil.runOnGUI(() -> {
-                addTree(tree);
-            });
+            jmri.util.ThreadingUtil.runOnGUI(() -> addTree(tree));
         } else {
             final CatalogTree t = manager.newCatalogTree(systemName, userName);
-            jmri.util.ThreadingUtil.runOnGUI(() -> {
-                t.insertNodes(path);
-                addTree(t);
-            });
+            t.insertNodes(path);
+            jmri.util.ThreadingUtil.runOnGUI(() -> addTree(t));
         }
     }
 
@@ -255,7 +233,7 @@ public class CatalogPanel extends JPanel {
     private void addTreeBranch(CatalogTreeNode node) {
         if (log.isDebugEnabled()) {
             log.debug("addTreeBranch called for node= {}, has {} children.",
-                    node.toString(), node.getChildCount());
+                    node, node.getChildCount());
         }
         CatalogTreeNode root = (CatalogTreeNode) _model.getRoot();
         Enumeration<TreeNode> e = node.children();
@@ -359,9 +337,10 @@ public class CatalogPanel extends JPanel {
         CatalogTreeNode cParent = getCorrespondingNode(parent);
         CatalogTreeNode node = new CatalogTreeNode(name);
         AbstractCatalogTree tree = (AbstractCatalogTree) getCorespondingModel(parent);
-
-        tree.insertNodeInto(node, cParent, index);
-        InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
+        if(tree!=null) {
+            tree.insertNodeInto(node, cParent, index);
+            InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
+        }
         return true;
     }
 
@@ -372,9 +351,11 @@ public class CatalogPanel extends JPanel {
      */
     protected void removeNodeFromModel(CatalogTreeNode node) {
         AbstractCatalogTree tree = (AbstractCatalogTree) getCorespondingModel(node);
-        tree.removeNodeFromParent(getCorrespondingNode(node));
-        _model.removeNodeFromParent(node);
-        InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
+        if(tree!=null) {
+            tree.removeNodeFromParent(getCorrespondingNode(node));
+            _model.removeNodeFromParent(node);
+            InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
+        }
     }
 
     /**
@@ -390,32 +371,37 @@ public class CatalogPanel extends JPanel {
             return false;
         }
         CatalogTreeNode cNode = getCorrespondingNode(node);
-        cNode.setLeaves(node.getLeaves());
         AbstractCatalogTree tree = (AbstractCatalogTree) getCorespondingModel(node);
+        if (cNode != null && tree != null) {
+            cNode.setLeaves(node.getLeaves());
 
-        cNode.setUserObject(name);
-        tree.nodeChanged(cNode);
-        node.setUserObject(name);
-        _model.nodeChanged(node);
-        InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
-        updatePanel();
-        return true;
+            cNode.setUserObject(name);
+            tree.nodeChanged(cNode);
+            node.setUserObject(name);
+            _model.nodeChanged(node);
+            InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
+            updatePanel();
+            return true;
+        }
+        return false;
     }
     
     private void addLeaf(CatalogTreeNode node, NamedIcon icon) {
         node.addLeaf(icon.getName(), icon.getURL());
 
         CatalogTreeNode cNode = getCorrespondingNode(node);
-        cNode.setLeaves(node.getLeaves());
         AbstractCatalogTree tree = (AbstractCatalogTree) getCorespondingModel(node);
+        if (cNode != null && tree != null) {
+            cNode.setLeaves(node.getLeaves());
 
-        cNode.setUserObject(node.toString());
-        tree.nodeChanged(cNode);
-        _model.nodeChanged(node);
-        
-        InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
+            cNode.setUserObject(node.toString());
+            tree.nodeChanged(cNode);
+            _model.nodeChanged(node);
+
+            InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
+        }
         if (node.equals(getSelectedNode())) {
-            updatePanel();            
+            updatePanel();
         }
     }
 
@@ -449,7 +435,6 @@ public class CatalogPanel extends JPanel {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         _treePane = new JScrollPane(_dTree);
         panel.add(new JLabel(Bundle.getMessage(label)));
-        // _treePane.setPreferredSize(new Dimension(100, 350));
         _treePane.setMinimumSize(new Dimension(30, 100));
         panel.add(_treePane);
         return panel;
@@ -466,7 +451,6 @@ public class CatalogPanel extends JPanel {
         _preview.setOpaque(false);
         _iconPane =  new JScrollPane(_preview);
         previewPanel.add(_iconPane);
-        // _preview.setMaximumSize(new Dimension(200,200));
         _iconPane.setMinimumSize(new Dimension(30, 100));
         _iconPane.setPreferredSize(new Dimension(2*ICON_WIDTH, 2*ICON_HEIGHT));
         return previewPanel;
@@ -643,7 +627,7 @@ public class CatalogPanel extends JPanel {
             JPanel p = new IconDisplayPanel(leaf.getName(), icon);
             gridbag.setConstraints(p, c);
             _preview.add(p);
-            // log.debug("{} inserted at ({}, {})", leaf.getName(), c.gridx, c.gridy);
+            log.debug("{} inserted at ({}, {})", leaf.getName(), c.gridx, c.gridy);
         }
         _preview.invalidate();
 
@@ -663,6 +647,7 @@ public class CatalogPanel extends JPanel {
         }
         @Override
         public void mousePressed(MouseEvent event) {
+            // no handling provided for mousePressed events
         }
         @Override
         public void mouseReleased(MouseEvent e) {
@@ -687,14 +672,16 @@ public class CatalogPanel extends JPanel {
         }
         @Override
         public void mouseEntered(MouseEvent event) {
+            // no handling provided for mouseEntered events
         }
         @Override
         public void mouseExited(MouseEvent event) {
+            // no handling provided for mouseExited events
         }
     }
 
     public static CatalogPanel makeDefaultCatalog() {
-        // log.debug("CatalogPanel catalog requested");
+        log.debug("CatalogPanel catalog requested");
         return makeDefaultCatalog(true, false, true); // deactivate dragNdrop? (true, true, false)
     }
 
@@ -709,8 +696,8 @@ public class CatalogPanel extends JPanel {
             }
         }
         catalog.createNewBranch("IFJAR", "Program Directory", "resources");
-        FileUtil.createDirectory(FileUtil.getUserFilesPath() + "resources");
-        catalog.createNewBranch("IFPREF", "Preferences Directory", FileUtil.getUserFilesPath() + "resources");
+        FileUtil.createDirectory(FileUtil.getUserResourcePath());
+        catalog.createNewBranch("IFPREF", "Preferences Directory", FileUtil.getUserResourcePath());
         return catalog;
     }
 
@@ -776,7 +763,7 @@ public class CatalogPanel extends JPanel {
     protected void setSelectedNode(CatalogTreeNode node) {
         _dTree.setExpandsSelectedPaths(true);
         if (log.isDebugEnabled()) {
-            log.debug("setSelectedNode node: {}", node.toString());
+            log.debug("setSelectedNode node: {}", node);
         }
         if (node != null) {
             _dTree.setSelectionPath(new TreePath(node.getPath()));            
@@ -804,7 +791,7 @@ public class CatalogPanel extends JPanel {
             // somebody has been selected
             TreePath path = _dTree.getSelectionPath();
             if (log.isDebugEnabled()) {
-                log.debug("getSelectedNode TreePath: {}, lastComponent= {}", path.toString(), path.getLastPathComponent().toString());
+                log.debug("getSelectedNode TreePath: {}, lastComponent= {}", path, path.getLastPathComponent());
             }
             return (CatalogTreeNode) path.getLastPathComponent();
         }
@@ -817,7 +804,7 @@ public class CatalogPanel extends JPanel {
             return;
         }
         if (log.isDebugEnabled()) {
-            log.debug("delete icon {} from node {}", icon.getName(), node.toString());
+            log.debug("delete icon {} from node {}", icon.getName(), node);
         }
         node.deleteLeaf(icon.getName(), icon.getURL());
         _model.nodeChanged(node);
@@ -835,15 +822,12 @@ public class CatalogPanel extends JPanel {
                 JOptionPane.QUESTION_MESSAGE);
         if (name != null && name.length() > 0) {
             if (log.isDebugEnabled()) {
-                log.debug("rename icon {} to {} from node {}", icon.getName(), name, node.toString());
+                log.debug("rename icon {} to {} from node {}", icon.getName(), name, node);
             }
             CatalogTreeLeaf leaf = node.getLeaf(icon.getName(), icon.getURL());
             if (leaf != null) {
                 leaf.setName(name);
             }
-            /* Repaint of panel doesn't happen with these calls 
-            _model.nodeChanged(node);
-            updatePanel();*/
             TreePath path = _dTree.getSelectionPath();
             // deselect to refresh panel
             _dTree.setSelectionPath(null);
@@ -854,7 +838,7 @@ public class CatalogPanel extends JPanel {
 
     private void showPopUp(MouseEvent evt, NamedIcon icon) {
         if (log.isDebugEnabled()) {
-            log.debug("showPopUp {}", icon.toString());
+            log.debug("showPopUp {}", icon);
         }
         JPopupMenu popup = new JPopupMenu();
         popup.add(new JMenuItem(icon.getName()));
@@ -893,9 +877,9 @@ public class CatalogPanel extends JPanel {
     }
 
     class DropOnPanelToNode extends TransferHandler {
-        
+
         DataFlavor dataFlavor;
-        
+
         DropOnPanelToNode() {
             try {
                 dataFlavor = new DataFlavor(ImageIndexEditor.IconDataFlavorMime);
@@ -927,7 +911,7 @@ public class CatalogPanel extends JPanel {
                 NamedIcon icon = (NamedIcon) t.getTransferData(dataFlavor);
                 addLeaf(node, icon);
                 if (log.isDebugEnabled()) {
-                    log.debug("DropOnPanelToNode.drop COMPLETED for {} into {}", icon.getURL(), node.toString());
+                    log.debug("DropOnPanelToNode.drop COMPLETED for {} into {}", icon.getURL(), node);
                 }
                 return true;
             } catch (IOException | UnsupportedFlavorException ex) {
@@ -949,27 +933,27 @@ public class CatalogPanel extends JPanel {
                 log.warn("DropJTree Unable to create data flavor", cnfe);
             }
             new DropTarget(this, DnDConstants.ACTION_COPY_OR_MOVE, this);
-            // log.debug("DropJTree ctor");
+            log.debug("DropJTree ctor");
         }
 
         @Override
         public void dragExit(DropTargetEvent dte) {
-            // log.debug("DropJTree.dragExit");
+            log.debug("DropJTree.dragExit");
         }
 
         @Override
         public void dragEnter(DropTargetDragEvent dtde) {
-            // log.debug("DropJTree.dragEnter");
+            log.debug("DropJTree.dragEnter");
         }
 
         @Override
         public void dragOver(DropTargetDragEvent dtde) {
-            // log.debug("DropJTree.dragOver");
+            log.debug("DropJTree.dragOver");
         }
 
         @Override
         public void dropActionChanged(DropTargetDragEvent dtde) {
-            // log.debug("DropJTree.dropActionChanged");
+            log.debug("DropJTree.dropActionChanged");
         }
 
         @Override
@@ -986,7 +970,7 @@ public class CatalogPanel extends JPanel {
                         addLeaf(node, icon);
                         e.dropComplete(true);
                         if (log.isDebugEnabled()) {
-                            log.debug("DropJTree.drop COMPLETED for {} into {}", icon.getURL(), node.toString());
+                            log.debug("DropJTree.drop COMPLETED for {} into {}", icon.getURL(), node);
                         }
                         return;
                     }
@@ -1007,7 +991,6 @@ public class CatalogPanel extends JPanel {
             super();
             _name = leafName;
             _icon = icon;
-            // setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
             setLayout(new BorderLayout());
             setOpaque(false);
             if (_name != null) {
@@ -1044,19 +1027,18 @@ public class CatalogPanel extends JPanel {
                     scale = icon.reduceTo(ICON_WIDTH, ICON_HEIGHT, ICON_SCALE);
                 }
                 image.setIcon(icon);
-                image.setHorizontalAlignment(JLabel.CENTER);
+                image.setHorizontalAlignment(SwingConstants.CENTER);
                 image.addMouseListener(new IconListener());
                 add(image, BorderLayout.NORTH);
                 
                 String scaleMessage = Bundle.getMessage("scale", CatalogPanel.printDbl(scale, 2));
                 JLabel label = new JLabel(scaleMessage);
                 label.setOpaque(false);
-                label.setHorizontalAlignment(JLabel.CENTER);
+                label.setHorizontalAlignment(SwingConstants.CENTER);
                 add(label, BorderLayout.CENTER);
                 label = new JLabel(_name);
                 label.setOpaque(false);
-                label.setHorizontalAlignment(JLabel.CENTER);
-//                label.addMouseListener(new IconListener());
+                label.setHorizontalAlignment(SwingConstants.CENTER);
                 add(label, BorderLayout.SOUTH);
                 setBorder(BorderFactory.createEmptyBorder(2,2,2,2));
             } catch (java.lang.ClassNotFoundException cnfe) {
@@ -1075,19 +1057,23 @@ public class CatalogPanel extends JPanel {
         }
         @Override
         public void mousePressed(MouseEvent event) {
+            // no handling provided for mousePressed events
         }
         @Override
         public void mouseReleased(MouseEvent event) {
+            // no handling provided for mouseReleased events
         }
         @Override
         public void mouseEntered(MouseEvent event) {
+            // no handling provided for mouseEntered events
         }
         @Override
         public void mouseExited(MouseEvent event) {
+            // no handling provided for mouseExited events
         }
     }
     
 
-    private final static Logger log = LoggerFactory.getLogger(CatalogPanel.class);
+    private static final Logger log = LoggerFactory.getLogger(CatalogPanel.class);
 
 }

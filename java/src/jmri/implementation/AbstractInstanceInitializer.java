@@ -16,7 +16,7 @@ public class AbstractInstanceInitializer implements InstanceInitializer {
      */
     @Override
     @Nonnull
-    public <T> Object getDefault(@Nonnull Class<T> type) throws IllegalArgumentException {
+    public <T> Object getDefault(@Nonnull Class<T> type) {
         throw new IllegalArgumentException();
     }
 

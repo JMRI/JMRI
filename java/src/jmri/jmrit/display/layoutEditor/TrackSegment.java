@@ -626,42 +626,46 @@ public class TrackSegment extends LayoutTrack {
         int result = NONE;  //assume point not on connection
 
         if (!requireUnconnected) {
-            //note: optimization here: instead of creating rectangles for all the
-            //points to check below, we create a rectangle for the test point
-            //and test if the points below are in that rectangle instead.
-            Rectangle2D r = layoutEditor.layoutEditorControlCircleRectAt(hitPoint);
-            Point2D p, minPoint = MathUtil.zeroPoint2D;
+            if (MathUtil.inset(getBounds(), -LayoutEditor.SIZE).contains(hitPoint)) {
+                //note: optimization here: instead of creating rectangles for all the
+                // points to check below, we create a rectangle for the test point
+                // and test if the points below are in that rectangle instead.
+                Rectangle2D r = layoutEditor.layoutEditorControlCircleRectAt(hitPoint);
+                Point2D p, minPoint = MathUtil.zeroPoint2D;
+                double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
+                double distance, minDistance = Float.POSITIVE_INFINITY;
 
-            double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
-            double distance, minDistance = Double.POSITIVE_INFINITY;
-
-            if (isCircle()) {
-                p = getCoordsCenterCircle();
-                distance = MathUtil.distance(p, hitPoint);
-                if (distance < minDistance) {
-                    minDistance = distance;
-                    minPoint = p;
-                    result = TRACK_CIRCLE_CENTRE;
-                }
-            } else if (isBezier()) {
-                //hit testing for the control points
-                for (int index = 0; index < bezierControlPoints.size(); index++) {
-                    p = bezierControlPoints.get(index);
+                if (isCircle()) {
+                    p = getCoordsCenterCircle();
                     distance = MathUtil.distance(p, hitPoint);
                     if (distance < minDistance) {
                         minDistance = distance;
                         minPoint = p;
-                        result = BEZIER_CONTROL_POINT_OFFSET_MIN + index;
+                        result = TRACK_CIRCLE_CENTRE;
+                    }
+                } else if (isBezier()) {
+                    // hit testing for the control points
+                    for (int index = 0; index < bezierControlPoints.size(); index++) {
+                        p = bezierControlPoints.get(index);
+                        distance = MathUtil.distance(p, hitPoint);
+                        if (distance < minDistance) {
+                            minDistance = distance;
+                            minPoint = p;
+                            result = BEZIER_CONTROL_POINT_OFFSET_MIN + index;
+                        }
                     }
                 }
-            }
-            if ((useRectangles && !r.contains(minPoint))
-                    || (!useRectangles && (minDistance > circleRadius))) {
-                result = NONE;
-            }
-            if (result == NONE) {
-                if (r.contains(getCentreSeg())) {
-                    result = LayoutTrack.TRACK;
+                p = getCentreSeg();
+                if (r.contains(p)) {
+                    distance = MathUtil.distance(p, hitPoint);
+                    if (distance <= minDistance) {
+                        minDistance = distance;
+                        minPoint = p;
+                        result = LayoutTrack.TRACK;
+                    }
+                }
+                if ((result != NONE) && (useRectangles ? !r.contains(minPoint) : (minDistance > circleRadius))) {
+                    result = NONE;
                 }
             }
         }

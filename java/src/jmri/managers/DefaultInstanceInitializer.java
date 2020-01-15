@@ -130,9 +130,7 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
 
         if (type == Timebase.class) {
             Timebase timebase = new SimpleTimebase();
-            InstanceManager.getOptionalDefault(ConfigureManager.class).ifPresent((cm) -> {
-                cm.registerConfig(timebase, Manager.TIMEBASE);
-            });
+            InstanceManager.getOptionalDefault(ConfigureManager.class).ifPresent(cm -> cm.registerConfig(timebase, Manager.TIMEBASE));
             return timebase;
         }
 

@@ -590,8 +590,9 @@ public class LevelXing extends LayoutTrack {
     @Override
     public void setConnection(int connectionType, LayoutTrack o, int type) throws jmri.JmriException {
         if ((type != TRACK) && (type != NONE)) {
-            log.error("unexpected type of connection to LevelXing - " + type);
-            throw new jmri.JmriException("unexpected type of connection to LevelXing - " + type);
+            String errString = String.format("unexpected type of connection (%d) to LevelXing %s", connectionType, getName());
+            log.error(errString);
+            throw new jmri.JmriException(errString);
         }
         switch (connectionType) {
             case LEVEL_XING_A:
@@ -607,8 +608,9 @@ public class LevelXing extends LayoutTrack {
                 connectD = o;
                 break;
             default:
-                log.error("Invalid Connection Type " + connectionType); //I18IN
-                throw new jmri.JmriException("Invalid Connection Type " + connectionType);
+                String errString = String.format("Invalid connectionType (%s) to LevelXing %s.", connectionType, getName());
+                log.error(errString);
+                throw new jmri.JmriException(errString);
         }
     }
 
@@ -705,7 +707,7 @@ public class LevelXing extends LayoutTrack {
                 result = getCoordsD();
                 break;
             default:
-                log.error("Invalid connection type " + connectionType); //I18IN
+                log.error("getCoordsForConnectionType(): Invalid connection type " + connectionType); //I18IN
         }
         return result;
     }
