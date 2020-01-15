@@ -1,5 +1,12 @@
 package jmri.jmrit.operations.locations.tools;
 
+import java.awt.GraphicsEnvironment;
+import java.awt.event.ActionEvent;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
@@ -7,13 +14,6 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
-
-import java.awt.GraphicsEnvironment;
-import java.awt.event.ActionEvent;
-
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
 
 /**
  *
@@ -34,6 +34,7 @@ public class LocationTrackBlockingOrderActionTest extends OperationsTestCase {
         JmriJFrame bof = JmriJFrame.getFrame(Bundle.getMessage("TitleTrackBlockingOrder"));
         Assert.assertNotNull("exists", bof);
         JUnitUtil.dispose(bof);
+        JUnitOperationsUtil.checkIdTagsShutDownTask();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(LocationTrackBlockingOrderActionTest.class);

@@ -29,6 +29,7 @@ public class LocationsTableFrameTest extends OperationsTestCase {
         // close windows
         JFrameOperator jfof = new JFrameOperator(f);
         jfof.dispose();
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     @Test
@@ -57,6 +58,7 @@ public class LocationsTableFrameTest extends OperationsTestCase {
         // close windows
         JFrameOperator jfof = new JFrameOperator(f);
         jfof.dispose();
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     @Test
@@ -83,7 +85,7 @@ public class LocationsTableFrameTest extends OperationsTestCase {
         jfof.dispose();
 
         Assert.assertNull(JmriJFrame.getFrame(Bundle.getMessage("TitleLocationEdit")));
-
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     @Test
@@ -114,5 +116,6 @@ public class LocationsTableFrameTest extends OperationsTestCase {
         jfof.dispose();
 
         Assert.assertNull(JmriJFrame.getFrame(Bundle.getMessage("AddLocation")));
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 }

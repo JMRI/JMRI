@@ -4,7 +4,6 @@ import java.awt.GraphicsEnvironment;
 
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
 import org.junit.Test;
 import org.netbeans.jemmy.operators.JSpinnerOperator;
 
@@ -26,24 +25,29 @@ public class SetTrainIconRouteFrameTest extends OperationsTestCase {
     @Test
     public void testCTorNull() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        JUnitOperationsUtil.initOperationsData();
         SetTrainIconRouteFrame t = new SetTrainIconRouteFrame(null);
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(t);
+        JUnitOperationsUtil.checkIdTagsShutDownTask();
     }
 
     @Test
     public void testCTorRoute() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        JUnitOperationsUtil.initOperationsData();
         Route route = InstanceManager.getDefault(RouteManager.class).getRouteByName("Southbound Main Route");
         Assert.assertNotNull(route);
         SetTrainIconRouteFrame t = new SetTrainIconRouteFrame(route);
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(t);
+        JUnitOperationsUtil.checkIdTagsShutDownTask();
     }
     
     @Test
     public void testFrameButtons() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        JUnitOperationsUtil.initOperationsData();
         Route route = InstanceManager.getDefault(RouteManager.class).getRouteByName("Southbound Main Route");
         Assert.assertNotNull(route);
         SetTrainIconRouteFrame t = new SetTrainIconRouteFrame(route);
@@ -82,15 +86,7 @@ public class SetTrainIconRouteFrameTest extends OperationsTestCase {
         Assert.assertEquals("spinner value for ", 345, t.spinTrainIconX.getValue());
         
         JUnitUtil.dispose(t);
-    }
-
-    // The minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
- 
-        JUnitOperationsUtil.initOperationsData();
+        JUnitOperationsUtil.checkIdTagsShutDownTask();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(SetTrainIconRouteFrameTest.class);
