@@ -22,6 +22,20 @@
       <comment>Input for IO1, don't change</comment>
     </sensor>
     <sensor inverted="false">
+      <systemName>IS102</systemName>
+      <comment>With Properties</comment>
+      <properties>
+        <property>
+          <key>ListenStateMessages</key>
+          <value class="java.lang.Boolean">true</value>
+        </property>
+        <property>
+          <key>IsAuthoritative</key>
+          <value class="java.lang.Boolean">true</value>
+        </property>
+      </properties>
+    </sensor>
+    <sensor inverted="false">
       <systemName>ISCLOCKRUNNING</systemName>
     </sensor>
   </sensors>
@@ -70,11 +84,44 @@
     <turnout feedback="DIRECT" inverted="false" automate="Default">
       <systemName>IT4</systemName>
     </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT5</systemName>
+      <userName>User 5</userName>
+      <comment>Comment #5</comment>
+      <properties>
+        <property>
+          <key>Send ON/OFF</key>
+          <value class="java.lang.Boolean">false</value>
+        </property>
+        <property>
+          <key>Bypass Bushby Bit</key>
+          <value class="java.lang.Boolean">true</value>
+        </property>
+        <property>
+          <key>User Added Property</key>
+          <value class="java.lang.String">Data Value</value>
+        </property>
+      </properties>
+    </turnout>
   </turnouts>
   <lights class="jmri.jmrix.internal.configurexml.InternalLightManagerXml">
     <light minIntensity="0.0" maxIntensity="1.0" transitionTime="0.0">
       <systemName>IL1</systemName>
       <userName>User 1</userName>
+    </light>
+    <light minIntensity="0.0" maxIntensity="1.0" transitionTime="0.0">
+      <systemName>IL2</systemName>
+      <userName>User 2</userName>
+      <properties>
+        <property>
+          <key>IsAuthoritative</key>
+          <value class="java.lang.Boolean">true</value>
+        </property>
+        <property>
+          <key>ListenStateMessages</key>
+          <value class="java.lang.Boolean">true</value>
+        </property>
+      </properties>
     </light>
   </lights>
   <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
