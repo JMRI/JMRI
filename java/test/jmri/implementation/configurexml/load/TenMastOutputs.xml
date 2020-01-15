@@ -4,7 +4,7 @@
   <jmriversion>
     <major>4</major>
     <minor>19</minor>
-    <test>2</test>
+    <test>3</test>
     <modifier>ish</modifier>
   </jmriversion>
   <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">
@@ -89,6 +89,7 @@
       <disabledAspects>
         <disabledAspect>Stop and Proceed</disabledAspect>
       </disabledAspects>
+      <resetPreviousStates>yes</resetPreviousStates>
     </matrixsignalmast>
   </signalmasts>
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
