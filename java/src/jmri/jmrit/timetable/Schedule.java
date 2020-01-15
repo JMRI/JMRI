@@ -14,7 +14,7 @@ public class Schedule {
      */
     public Schedule(int layoutId) {
         if (_dm.getLayout(layoutId) == null) {
-            throw new IllegalArgumentException(_dm.SCHEDULE_ADD_FAIL);
+            throw new IllegalArgumentException(TimeTableDataManager.SCHEDULE_ADD_FAIL);
         }
         _scheduleId = _dm.getNextId("Schedule");  // NOI18N
         _layoutId = layoutId;
@@ -74,7 +74,7 @@ public class Schedule {
      */
     public void setStartHour(int newStartHour) {
         if (newStartHour < 0 || newStartHour > 23) {
-            throw new IllegalArgumentException(_dm.START_HOUR_RANGE);
+            throw new IllegalArgumentException(TimeTableDataManager.START_HOUR_RANGE);
         }
         int oldStartHour = _startHour;
         _startHour = newStartHour;
@@ -99,7 +99,7 @@ public class Schedule {
      */
     public void setDuration(int newDuration) {
         if (newDuration < 1 || newDuration > 24) {
-            throw new IllegalArgumentException(_dm.DURATION_RANGE);
+            throw new IllegalArgumentException(TimeTableDataManager.DURATION_RANGE);
         }
         int oldDuration = _duration;
         _duration = newDuration;
