@@ -1,12 +1,15 @@
 package jmri.jmrit.operations.trains.tools;
 
 import java.awt.GraphicsEnvironment;
-import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.trains.TrainsTableFrame;
-import jmri.util.JUnitUtil;
+
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Test;
+
+import jmri.jmrit.operations.OperationsTestCase;
+import jmri.jmrit.operations.trains.TrainsTableFrame;
+import jmri.util.JUnitOperationsUtil;
+import jmri.util.JUnitUtil;
 
 /**
  *
@@ -21,6 +24,7 @@ public class TrainsScriptActionTest extends OperationsTestCase {
         TrainsScriptAction t = new TrainsScriptAction("Test Action",ttf);
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(ttf);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TrainsScriptActionTest.class);

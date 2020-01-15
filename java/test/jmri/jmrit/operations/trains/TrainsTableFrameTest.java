@@ -3,6 +3,11 @@ package jmri.jmrit.operations.trains;
 import java.awt.GraphicsEnvironment;
 import java.text.MessageFormat;
 
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Rule;
+import org.junit.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
@@ -13,8 +18,6 @@ import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JemmyUtil;
-
-import org.junit.*;
 
 /**
  *
@@ -34,6 +37,7 @@ public class TrainsTableFrameTest extends OperationsTestCase {
         TrainsTableFrame t = new TrainsTableFrame();
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(t);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     @Test
@@ -89,6 +93,7 @@ public class TrainsTableFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(tef);
         JUnitUtil.dispose(tsle);
         JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     @Test
@@ -106,6 +111,7 @@ public class TrainsTableFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(f.moveRB);
 
         JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     @Test
@@ -148,6 +154,7 @@ public class TrainsTableFrameTest extends OperationsTestCase {
         }
 
         JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     @Test
@@ -228,6 +235,7 @@ public class TrainsTableFrameTest extends OperationsTestCase {
         }
 
         JUnitUtil.dispose(ttf);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     @Test
@@ -250,6 +258,7 @@ public class TrainsTableFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(f.terminateButton);
 
         JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TrainsTableFrameTest.class);
