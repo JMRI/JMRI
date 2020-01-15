@@ -2122,7 +2122,7 @@ function $drawTrackSegmentBezier($widget) {
 
     //$point_log("points[0]", points[0]);
 
-    $drawBezier(points);
+    $drawBezier(points, $gCtx.strokeStyle, $gCtx.lineWidth, 0);
 }
 
 function $drawTrackSegmentCircle($widget) {
@@ -3139,16 +3139,8 @@ var bezier1st = true;
 function $drawBezier(points, $color, $width, displacement) {
     $gCtx.save();   // save current line width and color
 
-    // set color and width
-    if (typeof $color !== "undefined") {
-        $gCtx.strokeStyle = $color;
-    }
-    if (typeof $width !== "undefined") {
-        $gCtx.lineWidth = $width;
-    }
-    if (typeof displacement === "undefined") {
-        displacement = 0;
-    }
+    $gCtx.strokeStyle = $color;
+    $gCtx.lineWidth = $width;
 
     try {
         bezier1st = true;
