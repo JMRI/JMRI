@@ -19,7 +19,7 @@
         <dt><h3 style="padding-left: 1em;"><a href="/help/en/html/hardware/">Supported Hardware</a></h3></dt>
         <dd>JMRI supports a wide range of DCC systems, command stations and protocols.</dd>
         
-        <dt><h3 style="padding-left: 1em;"><a href="/help/en/html/setup/">JMRI Setup and Installation</a></h3></dt>
+        <dt><h3 style="padding-left: 1em;"><a href="/help/en/html/setup/">Installing JMRI</a></h3></dt>
         <dd>JMRI can be installed on a variety of hardware and operating systems.</dd>
 		
       </dl>
