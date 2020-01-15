@@ -71,7 +71,7 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
             CatalogTree tree = _tsys.get(key);
             if (tree != null) {
                 CatalogTreeNode root = tree.getRoot();
-                log.debug("root= {}, has {} children", root.toString(), root.getChildCount());
+                log.debug("root= {}, has {} children", root,root.getChildCount());
             }
         }
         return _tsys.get(key);
@@ -87,7 +87,7 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
      */
     @Override
     public CatalogTree newCatalogTree(@Nonnull String systemName, String userName) {
-        log.debug("new CatalogTree: systemName= {}, userName= {}", systemName, (userName != null ? userName : "null"));
+        log.debug("new CatalogTree: systemName= {}, userName= {}", systemName, userName);
         if (systemName.length() == 0) {
             log.error("Empty systemName!");
             return null;
@@ -239,14 +239,14 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultCatalogTreeManager.class);
+    private static final Logger log = LoggerFactory.getLogger(DefaultCatalogTreeManager.class);
 
     @ServiceProvider(service = InstanceInitializer.class)
     public static class Initializer extends AbstractInstanceInitializer {
 
         @Override
         @Nonnull
-        public <T> Object getDefault(Class<T> type) throws IllegalArgumentException {
+        public <T> Object getDefault(Class<T> type) {
             if (type.equals(CatalogTreeManager.class)) {
                 return new DefaultCatalogTreeManager();
             }

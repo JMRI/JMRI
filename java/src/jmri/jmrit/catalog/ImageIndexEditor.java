@@ -325,7 +325,7 @@ public final class ImageIndexEditor extends JmriJFrame {
     public static class Initializer extends AbstractInstanceInitializer {
 
         @Override
-        public <T> Object getDefault(Class<T> type) throws IllegalArgumentException {
+        public <T> Object getDefault(Class<T> type) {
             if (type.equals(ImageIndexEditor.class)) {
                 ImageIndexEditor instance = new ImageIndexEditor(Bundle.getMessage("editIndexFrame"));
                 instance.init();
