@@ -1,19 +1,19 @@
 package jmri.jmrit.operations.setup;
 
 import java.awt.GraphicsEnvironment;
+
 import javax.swing.JComboBox;
-import jmri.jmrit.display.LocoIcon;
-import jmri.jmrit.operations.OperationsTestCase;
-import jmri.util.JUnitUtil;
-import jmri.util.swing.JemmyUtil;
+
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Test;
-import org.netbeans.jemmy.operators.JButtonOperator;
-import org.netbeans.jemmy.operators.JCheckBoxOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
-import org.netbeans.jemmy.operators.JLabelOperator;
-import org.netbeans.jemmy.operators.JRadioButtonOperator;
+import org.netbeans.jemmy.operators.*;
+
+import jmri.jmrit.display.LocoIcon;
+import jmri.jmrit.operations.OperationsTestCase;
+import jmri.util.JUnitOperationsUtil;
+import jmri.util.JUnitUtil;
+import jmri.util.swing.JemmyUtil;
 
 /**
  * Tests for OperationsSetupFrame
@@ -28,6 +28,7 @@ public class OperationsSetupFrameTest extends OperationsTestCase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         OperationsSetupFrame t = new OperationsSetupFrame();
         Assert.assertNotNull("exists",t);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     @Test
@@ -66,6 +67,7 @@ public class OperationsSetupFrameTest extends OperationsTestCase {
 
         // done
         JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     @Test
@@ -154,6 +156,8 @@ public class OperationsSetupFrameTest extends OperationsTestCase {
         Assert.assertEquals("local color", LocoIcon.YELLOW, ((JComboBox<?>)(new JLabelOperator(jfo2,Bundle.getMessage("IconLocal")).getLabelFor())).getSelectedItem());
         // done
         JUnitUtil.dispose(frameRead);
+        
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(OperationsSetupFrameTest.class);

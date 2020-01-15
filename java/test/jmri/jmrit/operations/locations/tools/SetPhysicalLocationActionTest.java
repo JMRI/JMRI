@@ -6,8 +6,6 @@ import java.awt.event.ActionEvent;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -44,6 +42,7 @@ public class SetPhysicalLocationActionTest extends OperationsTestCase {
         JmriJFrame plf = JmriJFrame.getFrame(Bundle.getMessage("MenuSetPhysicalLocation"));
         Assert.assertNotNull("exists", plf);
         JUnitUtil.dispose(plf);
+        JUnitOperationsUtil.checkIdTagsShutDownTask();
     }
     
     @Test
@@ -71,10 +70,10 @@ public class SetPhysicalLocationActionTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(splf.closeButton);
         
         JUnitUtil.dispose(plf);
-        
-        log.debug("test done");
+        JUnitOperationsUtil.checkIdTagsShutDownTask();
+        //log.debug("test done");
     }
 
-     private final static Logger log = LoggerFactory.getLogger(SetPhysicalLocationActionTest.class);
+     //private final static Logger log = LoggerFactory.getLogger(SetPhysicalLocationActionTest.class);
 
 }
