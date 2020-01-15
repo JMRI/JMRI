@@ -547,7 +547,7 @@ git push github
     
 Test version 4.19.2 of JMRI/DecoderPro is available for download.
 
-This is the next in a series of test releases that will culminate in a production release, hopefully in early December 2019.
+This is the next in a series of test releases that will culminate in a production release, hopefully in early summer 2020.
 
 - Alt: There have been a lot of updates in this version, so it should be considered experimental.
 - Alt: We're getting close to the end of the development series, so we'd appreciate feedback on whether or not this release works for your layout.
