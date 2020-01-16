@@ -109,7 +109,11 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     public final static int AUTOCANCEL = 0x02;
     public final static int AUTOSTACK = 0x03;
 
+    public final static int OVERLAP_CANCEL = 0x01;
+    public final static int OVERLAP_STACK = 0x02;
+
     int routeClearOption = PROMPTUSER;
+    int routeOverlapOption = PROMPTUSER;
 
     static JPanel glassPane = new JPanel();
 
@@ -275,7 +279,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     /** {@inheritDoc} */
     @Override
     @CheckReturnValue
-    public int getObjectCount() { 
+    public int getObjectCount() {
         return getNamedBeanList().size(); // not efficient
     }
 
@@ -342,6 +346,14 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
 
     public int getClearDownOption() {
         return routeClearOption;
+    }
+
+    public void setOverlapOption(int i) {
+        routeOverlapOption = i;
+    }
+
+    public int getOverlapOption() {
+        return routeOverlapOption;
     }
 
     /** {@inheritDoc} */
@@ -1436,7 +1448,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     }
 
     final List<ManagerDataListener<DestinationPoints>> listeners = new ArrayList<>();
-    
+
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(EntryExitPairs.class);
 
