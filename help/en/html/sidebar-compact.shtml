@@ -24,9 +24,10 @@
 		
       </dl>
       
-      </div> <!-- closes #side -->
 
-    <!--#include virtual="/help/en/parts/SidebarTail.shtml" -->    
+    <!--#include virtual="/help/en/parts/SidebarTail.shtml" -->   
+    
+    </div> <!-- closes #side -->  
 
 
 <!-- /Sidebar-compact.shtml -->
