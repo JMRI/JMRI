@@ -50,6 +50,12 @@ import org.slf4j.LoggerFactory;
  */
 public class DecoderIndexFile extends XmlFile {
 
+    public static final String MANUFACTURER = "manufacturer";
+    public static final String MFG_ID = "mfgID";
+    public static final String DECODER_INDEX = "decoderIndex";
+    public static final String VERSION = "version";
+    public static final String LOW_VERSION_ID = "lowVersionID";
+    public static final String HIGH_VERSION_ID = "highVersionID";
     // fill in abstract members
     protected List<DecoderFile> decoderList = new ArrayList<>();
 
@@ -142,7 +148,7 @@ public class DecoderIndexFile extends XmlFile {
      * @param l list of decoders
      * @return a combo box populated with the list
      */
-    static public JComboBox<String> jComboBoxFromList(List<DecoderFile> l) {
+    public static JComboBox<String> jComboBoxFromList(List<DecoderFile> l) {
         return new JComboBox<>(jComboBoxModelFromList(l));
     }
 
@@ -153,7 +159,7 @@ public class DecoderIndexFile extends XmlFile {
      * @param l list of decoders
      * @return a combo box model populated with the list
      */
-    static public javax.swing.ComboBoxModel<String> jComboBoxModelFromList(List<DecoderFile> l) {
+    public static javax.swing.ComboBoxModel<String> jComboBoxModelFromList(List<DecoderFile> l) {
         javax.swing.DefaultComboBoxModel<String> b = new javax.swing.DefaultComboBoxModel<>();
         for (int i = 0; i < l.size(); i++) {
             DecoderFile r = l.get(i);
@@ -231,7 +237,7 @@ public class DecoderIndexFile extends XmlFile {
     /**
      * Replace the managed instance with a new instance.
      */
-    public synchronized static void resetInstance() {
+    public static synchronized void resetInstance() {
         InstanceManager.getDefault().clear(DecoderIndexFile.class);
     }
 
@@ -265,9 +271,9 @@ public class DecoderIndexFile extends XmlFile {
         }
         log.debug("checking for master file at {}", masterFile);
         Element masterRoot = masterXmlFile.rootFromURL(masterFile);
-        if (masterRoot.getChild("decoderIndex") != null) {
-            if (masterRoot.getChild("decoderIndex").getAttribute("version") != null) {
-                masterVersion = masterRoot.getChild("decoderIndex").getAttribute("version").getValue();
+        if (masterRoot.getChild(DECODER_INDEX) != null) {
+            if (masterRoot.getChild(DECODER_INDEX).getAttribute(VERSION) != null) {
+                masterVersion = masterRoot.getChild(DECODER_INDEX).getAttribute(VERSION).getValue();
             }
             log.debug("master version found, is {}", masterVersion);
         } else {
@@ -281,9 +287,9 @@ public class DecoderIndexFile extends XmlFile {
         DecoderIndexFile userXmlFile = new DecoderIndexFile();
         log.debug("checking for user file at {}", defaultDecoderIndexFilename());
         Element userRoot = userXmlFile.rootFromName(defaultDecoderIndexFilename());
-        if (userRoot.getChild("decoderIndex") != null) {
-            if (userRoot.getChild("decoderIndex").getAttribute("version") != null) {
-                userVersion = userRoot.getChild("decoderIndex").getAttribute("version").getValue();
+        if (userRoot.getChild(DECODER_INDEX) != null) {
+            if (userRoot.getChild(DECODER_INDEX).getAttribute(VERSION) != null) {
+                userVersion = userRoot.getChild(DECODER_INDEX).getAttribute(VERSION).getValue();
             }
             log.debug("user version found, is {}", userVersion);
         }
@@ -302,7 +308,7 @@ public class DecoderIndexFile extends XmlFile {
     /**
      * Force creation of a new user index without incrementing version
      */
-    static public void forceCreationOfNewIndex() {
+    public static void forceCreationOfNewIndex() {
         forceCreationOfNewIndex(false);
     }
 
@@ -311,11 +317,11 @@ public class DecoderIndexFile extends XmlFile {
      *
      * @param increment true to increment the version of the decoder index
      */
-    static public void forceCreationOfNewIndex(boolean increment) {
+    public static void forceCreationOfNewIndex(boolean increment) {
         log.info("update decoder index");
         // make sure we're using only the default manufacturer info
         // to keep from propagating wrong, old stuff
-        File oldfile = new File(FileUtil.getUserFilesPath() + "decoderIndex.xml");
+        File oldfile = new File(FileUtil.getUserFilesPath() + DECODER_INDEX_FILE_NAME);
         if (oldfile.exists()) {
             log.debug("remove existing user decoderIndex.xml file");
             if (!oldfile.delete()) // delete file, check for success
@@ -356,10 +362,10 @@ public class DecoderIndexFile extends XmlFile {
                 }
             }
         } else {
-            log.error("Could not access decoder definition directory {}", XmlFile.xmlDir() + DecoderFile.fileLocation);
+            log.error("Could not access decoder definition directory {}{}", XmlFile.xmlDir(),DecoderFile.fileLocation);
         }
         // copy the decoder entries to the final array
-        String sbox[] = al.toArray(new String[al.size()]);
+        String[] sbox = al.toArray(new String[al.size()]);
 
         //the resulting array is now sorted on file-name to make it easier
         // for humans to read
@@ -378,7 +384,7 @@ public class DecoderIndexFile extends XmlFile {
 
         // write it out
         try {
-            index.writeFile("decoderIndex.xml", InstanceManager.getDefault(DecoderIndexFile.class), sbox);
+            index.writeFile(DECODER_INDEX_FILE_NAME, InstanceManager.getDefault(DecoderIndexFile.class), sbox);
         } catch (java.io.IOException ex) {
             log.error("Error writing new decoder index file: {}", ex.getMessage());
         }
@@ -394,23 +400,23 @@ public class DecoderIndexFile extends XmlFile {
      */
     void readFile(String name) throws org.jdom2.JDOMException, java.io.IOException {
         if (log.isDebugEnabled()) {
-            log.debug("readFile " + name);
+            log.debug("readFile {}",name);
         }
         
         // read file, find root
         Element root = rootFromName(name);
 
         // decode type, invoke proper processing routine if a decoder file
-        if (root.getChild("decoderIndex") != null) {
-            if (root.getChild("decoderIndex").getAttribute("version") != null) {
-                fileVersion = Integer.parseInt(root.getChild("decoderIndex")
-                        .getAttribute("version")
+        if (root.getChild(DECODER_INDEX) != null) {
+            if (root.getChild(DECODER_INDEX).getAttribute(VERSION) != null) {
+                fileVersion = Integer.parseInt(root.getChild(DECODER_INDEX)
+                        .getAttribute(VERSION)
                         .getValue()
                 );
             }
             log.debug("found fileVersion of {}", fileVersion);
             readMfgSection();
-            readFamilySection(root.getChild("decoderIndex"));
+            readFamilySection(root.getChild(DECODER_INDEX));
         } else {
             log.error("Unrecognized decoderIndex file contents in file: {}", name);
         }
@@ -436,16 +442,16 @@ public class DecoderIndexFile extends XmlFile {
                 lastAdd = a.getValue();
             }
 
-            List<Element> l = mfgList.getChildren("manufacturer");
+            List<Element> l = mfgList.getChildren(MANUFACTURER);
             if (log.isDebugEnabled()) {
-                log.debug("readMfgSection sees " + l.size() + " children");
+                log.debug("readMfgSection sees {} children",l.size());
             }
             for (int i = 0; i < l.size(); i++) {
                 // handle each entry
                 Element el = l.get(i);
                 String mfg = el.getAttribute("mfg").getValue();
                 mMfgNameList.add(mfg);
-                Attribute attr = el.getAttribute("mfgID");
+                Attribute attr = el.getAttribute(MFG_ID);
                 if (attr != null) {
                     _mfgIdFromNameHash.put(mfg, attr.getValue());
                     _mfgNameFromIdHash.put(attr.getValue(), mfg);
@@ -475,8 +481,8 @@ public class DecoderIndexFile extends XmlFile {
     void readFamily(Element family) {
         Attribute attr;
         String filename = family.getAttribute("file").getValue();
-        String parentLowVersID = ((attr = family.getAttribute("lowVersionID")) != null ? attr.getValue() : null);
-        String parentHighVersID = ((attr = family.getAttribute("highVersionID")) != null ? attr.getValue() : null);
+        String parentLowVersID = ((attr = family.getAttribute(LOW_VERSION_ID)) != null ? attr.getValue() : null);
+        String parentHighVersID = ((attr = family.getAttribute(HIGH_VERSION_ID)) != null ? attr.getValue() : null);
         String ParentReplacementFamilyName = ((attr = family.getAttribute("replacementFamily")) != null ? attr.getValue() : null);
         String familyName = ((attr = family.getAttribute("name")) != null ? attr.getValue() : null);
         String mfg = ((attr = family.getAttribute("mfg")) != null ? attr.getValue() : null);
@@ -491,7 +497,7 @@ public class DecoderIndexFile extends XmlFile {
         List<Element> l = family.getChildren("model");
         log.trace("readFamily sees {} children", l.size());
         Element modelElement;
-        if (l.size() <= 0) {
+        if (l.isEmpty()) {
             log.error("Did not find at least one model in the {} family", familyName);
             modelElement = null;
         } else {
@@ -515,8 +521,8 @@ public class DecoderIndexFile extends XmlFile {
         for (int i = 0; i < l.size(); i++) {
             // handle each entry by creating a DecoderFile object containing all it knows
             Element decoder = l.get(i);
-            String loVersID = ((attr = decoder.getAttribute("lowVersionID")) != null ? attr.getValue() : parentLowVersID);
-            String hiVersID = ((attr = decoder.getAttribute("highVersionID")) != null ? attr.getValue() : parentHighVersID);
+            String loVersID = ((attr = decoder.getAttribute(LOW_VERSION_ID)) != null ? attr.getValue() : parentLowVersID);
+            String hiVersID = ((attr = decoder.getAttribute(HIGH_VERSION_ID)) != null ? attr.getValue() : parentHighVersID);
             String replacementModelName = ((attr = decoder.getAttribute("replacementModel")) != null ? attr.getValue() : null);
             String replacementFamilyName = ((attr = decoder.getAttribute("replacementFamily")) != null ? attr.getValue() : ParentReplacementFamilyName);
             int numFns = ((attr = decoder.getAttribute("numFns")) != null ? Integer.parseInt(attr.getValue()) : -1);
@@ -533,16 +539,16 @@ public class DecoderIndexFile extends XmlFile {
             for (int j = 0; j < vcodes.size(); j++) {
                 // for each versionCV element
                 Element vcv = vcodes.get(j);
-                String vLoVersID = ((attr = vcv.getAttribute("lowVersionID")) != null ? attr.getValue() : loVersID);
-                String vHiVersID = ((attr = vcv.getAttribute("highVersionID")) != null ? attr.getValue() : hiVersID);
+                String vLoVersID = ((attr = vcv.getAttribute(LOW_VERSION_ID)) != null ? attr.getValue() : loVersID);
+                String vHiVersID = ((attr = vcv.getAttribute(HIGH_VERSION_ID)) != null ? attr.getValue() : hiVersID);
                 df.setVersionRange(vLoVersID, vHiVersID);
             }
         }
     }
 
-    public void writeFile(String name, DecoderIndexFile oldIndex, String files[]) throws java.io.IOException {
+    public void writeFile(String name, DecoderIndexFile oldIndex, String[] files) throws java.io.IOException {
         if (log.isDebugEnabled()) {
-            log.debug("writeFile " + name);
+            log.debug("writeFile {}",name);
         }
         // This is taken in large part from "Java and XML" page 368
         File file = new File(FileUtil.getUserFilesPath() + name);
@@ -566,8 +572,8 @@ public class DecoderIndexFile extends XmlFile {
 
         // add top-level elements
         Element index;
-        root.addContent(index = new Element("decoderIndex"));
-        index.setAttribute("version", Integer.toString(fileVersion));
+        root.addContent(index = new Element(DECODER_INDEX));
+        index.setAttribute(VERSION, Integer.toString(fileVersion));
         log.debug("version written to file as {}", fileVersion);
 
         // add mfg list from existing DecoderIndexFile item
@@ -584,9 +590,9 @@ public class DecoderIndexFile extends XmlFile {
         }
 
         // We treat "NMRA" special...
-        Element mfg = new Element("manufacturer");
+        Element mfg = new Element(MANUFACTURER);
         mfg.setAttribute("mfg", "NMRA");
-        mfg.setAttribute("mfgID", "999");
+        mfg.setAttribute(MFG_ID, "999");
         mfgList.addContent(mfg);
         // start working on the rest of the entries
         List<String> keys = new ArrayList<>(oldIndex._mfgIdFromNameHash.keySet());
@@ -594,9 +600,9 @@ public class DecoderIndexFile extends XmlFile {
         for (Object item : keys) {
             String mfgName = (String) item;
             if (!mfgName.equals("NMRA")) {
-                mfg = new Element("manufacturer");
+                mfg = new Element(MANUFACTURER);
                 mfg.setAttribute("mfg", mfgName);
-                mfg.setAttribute("mfgID", oldIndex._mfgIdFromNameHash.get(mfgName));
+                mfg.setAttribute(MFG_ID, oldIndex._mfgIdFromNameHash.get(mfgName));
                 mfgList.addContent(mfg);
             }
         }
@@ -645,14 +651,14 @@ public class DecoderIndexFile extends XmlFile {
         return DECODER_INDEX_FILE_NAME;
     }
 
-    static final protected String DECODER_INDEX_FILE_NAME = "decoderIndex.xml";
-    private final static Logger log = LoggerFactory.getLogger(DecoderIndexFile.class);
+    protected static final String DECODER_INDEX_FILE_NAME = "decoderIndex.xml";
+    private static final Logger log = LoggerFactory.getLogger(DecoderIndexFile.class);
 
     @ServiceProvider(service = InstanceInitializer.class)
     public static class Initializer extends AbstractInstanceInitializer {
 
         @Override
-        public <T> Object getDefault(Class<T> type) throws IllegalArgumentException {
+        public <T> Object getDefault(Class<T> type) {
             if (type.equals(DecoderIndexFile.class)) {
                 // create and load
                 DecoderIndexFile instance = new DecoderIndexFile();

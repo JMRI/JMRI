@@ -1,14 +1,17 @@
 package jmri.jmrit.operations.trains.excel;
 
 import java.awt.GraphicsEnvironment;
-import jmri.InstanceManager;
-import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.setup.Setup;
-import jmri.util.JUnitUtil;
-import jmri.util.swing.JemmyUtil;
+
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Test;
+
+import jmri.InstanceManager;
+import jmri.jmrit.operations.OperationsTestCase;
+import jmri.jmrit.operations.setup.Setup;
+import jmri.util.JUnitOperationsUtil;
+import jmri.util.JUnitUtil;
+import jmri.util.swing.JemmyUtil;
 
 /**
  *
@@ -39,6 +42,8 @@ public class SetupExcelProgramManifestFrameTest extends OperationsTestCase {
         JemmyUtil.pressDialogButton(Bundle.getMessage("FindDesiredExcelFile"), "Cancel");
 
         JUnitUtil.dispose(f);
+        
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     @Test
@@ -56,6 +61,7 @@ public class SetupExcelProgramManifestFrameTest extends OperationsTestCase {
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("ManifestCreatorNotFound"), Bundle.getMessage("ButtonOK"));
 
         JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     @Test
@@ -77,6 +83,7 @@ public class SetupExcelProgramManifestFrameTest extends OperationsTestCase {
         Assert.assertEquals("", "Test File Name", InstanceManager.getDefault(TrainCustomManifest.class).getFileName());
 
         JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(SetupExcelProgramManifestFrameTest.class);

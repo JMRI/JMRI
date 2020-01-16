@@ -149,6 +149,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
                     }
                 }
             }
+            // add a timer here to wait a while before setting new aspect?
             if (aspectToOutput.containsKey(aspect) && aspectToOutput.get(aspect) != errorBits) {
                 // ToDo: pick up drop down choice for either DCC direct packets or Turnouts as outputs
                 // c.sendPacket(NmraPacket.altAccSignalDecoderPkt(dccSignalDecoderAddress, aspectToOutput.get(aspect)), packetRepeatCount);
