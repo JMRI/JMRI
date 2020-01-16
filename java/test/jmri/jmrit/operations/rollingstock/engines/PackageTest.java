@@ -15,6 +15,7 @@ import org.junit.runners.Suite;
         EngineEditFrameTest.class,
         EngineSetFrameTest.class,
         EngineManagerXmlTest.class,
+        EngineRosterMenuTest.class,
         EnginesTableActionTest.class,
         EnginesTableModelTest.class,
         ConsistTest.class,

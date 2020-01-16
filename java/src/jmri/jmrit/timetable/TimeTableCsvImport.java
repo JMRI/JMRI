@@ -455,7 +455,7 @@ public class TimeTableCsvImport {
         int stopStationIndex = convertToInteger(stopStationString);
         stopStationIndex -= 1;       // stations list is 0 to n-1
         if (stopStationIndex >= 0 && stopStationIndex < stations.size()) {
-            ArrayList<Stop> stops = tdm.getStops(trainId, 0, false);
+            List<Stop> stops = tdm.getStops(trainId, 0, false);
             Stop newStop = new Stop(trainId, stops.size() + 1);
             newStop.setStationId(stations.get(stopStationIndex));
 

@@ -103,6 +103,9 @@ public class MatrixSignalMastXml
                 e.addContent(el);
             }
         }
+        if (p.resetPreviousStates()) {
+            e.addContent(new Element("resetPreviousStates").addContent("yes"));
+        }
         return e;
     }
 
@@ -170,6 +173,12 @@ public class MatrixSignalMastXml
                 m.setAspectDisabled(asp.getText());
             }
         }
+
+        if ((shared.getChild("resetPreviousStates") != null) // load mast-specific delay, since 4.19.4
+                && shared.getChild("resetPreviousStates").getText().equals("yes")) {
+            m.resetPreviousStates(true);
+        }
+
         return true;
     }
 
