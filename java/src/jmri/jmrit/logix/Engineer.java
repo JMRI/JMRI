@@ -51,7 +51,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
     private Sensor _waitSensor;
     private int _sensorWaitState;
     final ReentrantLock _lock = new ReentrantLock(true);    // Ramp needs to block script speeds
-    private Object _lockObject; // used for synchronizing threads for _ramp
+    private static Object _lockObject = new Object(); // used for synchronizing threads for _ramp
     private ThrottleRamp _ramp;
     private boolean _atHalt = false;
     private boolean _atClear = false;
@@ -1159,7 +1159,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                                 // Note: command indexes biased from 0 to 1 to match Warrant display of commands.
 
                         ListIterator<Float> iter = _rampData.speedIterator(true);
-                        if (iter.hddasNext()) {
+                        if (iter.hasNext()) {
                             log.trace("starting ramp at speed {}", iter.next());
                         }
                         while (iter.hasNext()) { // do ramp up
