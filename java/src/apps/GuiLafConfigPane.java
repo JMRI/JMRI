@@ -32,8 +32,7 @@ import org.openide.util.lookup.ServiceProvider;
  * Provide GUI to configure Swing GUI LAF defaults
  * <p>
  * Provides GUI configuration for SWING LAF by displaying radio buttons for each
- * LAF implementation available. This information is then persisted separately
- * by {@link apps.configurexml.GuiLafConfigPaneXml}
+ * LAF implementation available.
  * <p>
  * Locale default language and country is also considered a GUI (and perhaps
  * LAF) configuration item.

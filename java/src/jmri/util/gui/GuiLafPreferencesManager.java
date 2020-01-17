@@ -569,7 +569,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     /**
      * Set dirty state.
      *
-     * @param dirty true if preferences need to be saved
+     * @param flag true if preferences need to be saved
      */
     private void setDirty(boolean flag) {
         boolean old = dirty;
