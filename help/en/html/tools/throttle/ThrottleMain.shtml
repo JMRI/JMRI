@@ -78,6 +78,14 @@
         <li><a href="HowToJMRIOrientedThrottle.shtml">How to build
         a Throttle oriented JMRI</a></li>
       </ul>
+      
+      <p>And for a related topic:</p>
+
+      <ul>
+        <li>Using <a href="/help/en/package/jmri/jmrit/withrottle/UserInterface.shtml">WiFi Throttles with JMRI</a></li>
+        <!-- Prior href will need to be changted when referenced page is reorganized @jerryg2003 01-14-2020 -->
+      </ul>
+
       <hr>
 
       <p><a href="ThrottleChapter1.shtml">Throttles Help for JMRI v
