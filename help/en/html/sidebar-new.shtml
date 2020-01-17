@@ -14,17 +14,18 @@
 	    
 	    <!--#include virtual="/help/en/parts/SidebarSupportedHardware.shtml" -->    
 
-	    <!--#include virtual="/help/en/parts/SidebarSetup.shtml" -->    
+	    <!--#include virtual="/help/en/parts/SidebarInstall.shtml" -->    
 
 
          </dl>
 
     <!--#include virtual="/help/en/parts/SidebarTail.shtml" -->    
 
+    </div>  <!-- ends side -->
 
 <!-- /Sidebar.shtml -->
 
 <!-- ============================================================================ -->
 
 <!-- Help pages should use Sidebar in help/en/html unless something unique to add -->
-<!-- [replace with pound sign]include virtual="/help/en/Sidebar.shtml" -->   
+<!-- [pound sign]include virtual="/help/en/html/Sidebar.shtml" -->   
