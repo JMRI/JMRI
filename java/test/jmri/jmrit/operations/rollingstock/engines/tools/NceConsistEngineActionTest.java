@@ -1,12 +1,15 @@
 package jmri.jmrit.operations.rollingstock.engines.tools;
 
 import java.awt.GraphicsEnvironment;
-import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.rollingstock.engines.EnginesTableFrame;
-import jmri.util.JUnitUtil;
+
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Test;
+
+import jmri.jmrit.operations.OperationsTestCase;
+import jmri.jmrit.operations.rollingstock.engines.EnginesTableFrame;
+import jmri.util.JUnitOperationsUtil;
+import jmri.util.JUnitUtil;
 
 /**
  *
@@ -21,6 +24,8 @@ public class NceConsistEngineActionTest extends OperationsTestCase {
         NceConsistEngineAction t = new NceConsistEngineAction("Test Action",etf);
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(etf);
+        
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(NceConsistEngineActionTest.class);

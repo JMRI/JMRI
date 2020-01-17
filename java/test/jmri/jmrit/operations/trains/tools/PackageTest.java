@@ -16,6 +16,7 @@ import org.junit.runners.Suite;
         TrainManifestOptionFrameTest.class,
         TrainScriptFrameTest.class,
         TrainsScriptFrameTest.class,
+        TrainsScriptActionTest.class,
         TrainsByCarTypeActionTest.class,
         TrainsByCarTypeFrameTest.class,
         TrainsScriptFrameTest.class,

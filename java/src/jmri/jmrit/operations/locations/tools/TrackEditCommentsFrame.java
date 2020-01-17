@@ -2,20 +2,18 @@ package jmri.jmrit.operations.locations.tools;
 
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
+
+import javax.swing.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainSwitchListEditFrame;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class TrackEditCommentsFrame extends OperationsFrame {
 
@@ -35,6 +33,9 @@ public class TrackEditCommentsFrame extends OperationsFrame {
     Dimension minScrollerDim = new Dimension(1200, 300);
 
     JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
+    
+    JCheckBox printManifest = new JCheckBox(Bundle.getMessage("PrintManifest"));
+    JCheckBox printSwitchList = new JCheckBox(Bundle.getMessage("PrintSwitchList"));
 
     Track _track;
 
@@ -76,7 +77,12 @@ public class TrackEditCommentsFrame extends OperationsFrame {
 
         JPanel pB = new JPanel();
         pB.setLayout(new GridBagLayout());
-        addItem(pB, saveButton, 0, 0);
+        addItem(pB, printManifest, 0, 0);
+        addItem(pB, printSwitchList, 1, 0);
+        addItem(pB, saveButton, 2, 0);
+        
+        printManifest.setSelected(track.isPrintManifestCommentEnabled());
+        printSwitchList.setSelected(track.isPrintSwitchListCommentEnabled());
 
         getContentPane().add(pCb);
         getContentPane().add(pCp);
@@ -96,6 +102,8 @@ public class TrackEditCommentsFrame extends OperationsFrame {
             _track.setCommentBoth(commentBothTextArea.getText());
             _track.setCommentPickup(commentPickupTextArea.getText());
             _track.setCommentSetout(commentSetoutTextArea.getText());
+            _track.setPrintManifestCommentEnabled(printManifest.isSelected());
+            _track.setPrintSwitchListCommentEnabled(printSwitchList.isSelected());
             // save location file
             OperationsXml.save();
             if (Setup.isCloseWindowOnSaveEnabled()) {

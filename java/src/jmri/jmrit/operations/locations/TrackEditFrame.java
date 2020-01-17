@@ -8,37 +8,18 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
+import javax.swing.*;
 
-import jmri.ReporterManager;
-import jmri.swing.NamedBeanComboBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.Reporter;
+import jmri.ReporterManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.schedules.ScheduleManager;
-import jmri.jmrit.operations.locations.tools.PoolTrackAction;
-import jmri.jmrit.operations.locations.tools.TrackDestinationEditAction;
-import jmri.jmrit.operations.locations.tools.TrackEditCommentsAction;
-import jmri.jmrit.operations.locations.tools.TrackLoadEditAction;
-import jmri.jmrit.operations.locations.tools.TrackRoadEditAction;
+import jmri.jmrit.operations.locations.tools.*;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
@@ -51,6 +32,7 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.TrainManager;
+import jmri.swing.NamedBeanComboBox;
 
 /**
  * Frame for user edit of tracks
@@ -657,7 +639,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
      * @return true if name is less than 26 characters
      */
     private boolean checkName(String s) {
-        if (trackNameTextField.getText().trim().equals("")) {
+        if (trackNameTextField.getText().trim().isEmpty()) {
             log.debug("Must enter a track name");
             JOptionPane.showMessageDialog(this, Bundle.getMessage("MustEnterName"), MessageFormat.format(Bundle
                     .getMessage("CanNotTrack"), new Object[]{s}), JOptionPane.ERROR_MESSAGE);

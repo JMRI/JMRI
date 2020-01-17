@@ -16,6 +16,7 @@ If you make a change in this directory (add/change/remove a file), please make c
 - build.xml - used by Ant, and in turn by various IDEs. Note that in addition to changing the classpath entry or entries, you should also check to make sure that the three javadoc targets are linking to the proper sources.
 - pom.xml - used by Maven (see notes below)
 - nbproject/ide-file-targets.xml, nbproject/project.xml - used by NetBeans
+- .factorypath - used by Visual Studio Code
 
 On macOS, most of these changes can be affected with:
 ```
@@ -27,8 +28,6 @@ On Linux, these same changes can be affected with:
 ```
 find . -type f -not -path './.git/*' -exec sed -i 's/OLD_JAR_NAME/NEW_JAR_NAME/g' {} \;
 ```
-
-Note that Windows installers don't necessarily remove existing library versions. (See [JMRI Issue #359](https://github.com/JMRI/JMRI/issues/359) for discussion on this)  Until that's changed, if you remove a library from here that really needs to _not_ be in user installs, you need to add an explicit delete to the scripts/WinInstallFiles/InstallJMRI.nsi file, in addition to modifying those above.
 
 If the specific library being added or updated is not published to [Maven Central](http://maven.org) by the upstream provider, run the following command after updating the pom.xml file, replacing the tokens in ALL CAPS with the correct values for that library:
 ```
@@ -246,8 +245,11 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 - version Xerces-J 2.11.0
 - from http://www.apache.org/dist/xerces/j/
 
-
-
+##### usb-api-1.0.2.jar, usb4java-*.jar, libusb4java-*.jar
+- usb4java version 1.3.0
+- support for direct USB device usage
+- from https://github.com/usb4java/usb4java/releases/tag/usb4java-1.3.0
+  and https://github.com/usb4java/usb4java-javax/releases/tag/usb4java-javax-1.3.0
 
 
 ## For unit tests & development work only:

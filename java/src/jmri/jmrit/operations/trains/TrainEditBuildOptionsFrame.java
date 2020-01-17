@@ -809,10 +809,10 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
             return false;
         }
         try {
-            if (!builtAfterTextField.getText().trim().equals("")) {
+            if (!builtAfterTextField.getText().trim().isEmpty()) {
                 Integer.parseInt(builtAfterTextField.getText().trim());
             }
-            if (!builtBeforeTextField.getText().trim().equals("")) {
+            if (!builtBeforeTextField.getText().trim().isEmpty()) {
                 Integer.parseInt(builtBeforeTextField.getText().trim());
             }
         } catch (NumberFormatException e) {

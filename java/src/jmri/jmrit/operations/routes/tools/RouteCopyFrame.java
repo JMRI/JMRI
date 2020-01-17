@@ -131,7 +131,7 @@ public class RouteCopyFrame extends OperationsFrame {
      * @return true if name length is okay
      */
     private boolean checkName() {
-        if (routeNameTextField.getText().trim().equals("")) {
+        if (routeNameTextField.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("EnterRouteName"),
                     Bundle.getMessage("EnterRouteName"), JOptionPane.ERROR_MESSAGE);
             return false;

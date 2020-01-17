@@ -1,0 +1,30 @@
+<!-- Sidebar.shtml -->
+<!-- This is the common sidebar definition for Help system pages -->
+	<hr class="hide">
+	
+    <div id="side"> <!-- Block of text on left side of page -->
+        <div style="text-align: center">JMRI&reg; is...</div>
+        <dl>
+
+            <!--#include virtual="/help/en/parts/SidebarApplications.shtml" -->
+
+            <!--#include virtual="/help/en/parts/SidebarTools.shtml" -->
+
+            <!--#include virtual="/help/en/parts/SidebarLayoutAutomation.shtml" -->
+	    
+	    <!--#include virtual="/help/en/parts/SidebarSupportedHardware.shtml" -->    
+
+	    <!--#include virtual="/help/en/parts/SidebarSetup.shtml" -->    
+
+
+         </dl>
+
+    <!--#include virtual="/help/en/parts/SidebarTail.shtml" -->    
+
+
+<!-- /Sidebar.shtml -->
+
+<!-- ============================================================================ -->
+
+<!-- Help pages should use Sidebar in help/en/html unless something unique to add -->
+<!-- [replace with pound sign]include virtual="/help/en/Sidebar.shtml" -->   

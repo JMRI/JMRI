@@ -602,9 +602,20 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
     // Variables for the Options menu item
     JmriJFrame optionsFrame = null;
     Container optionsPane = null;
-    String[] clearOptions = {Bundle.getMessage("PromptUser"), Bundle.getMessage("ClearRoute"),  // NOI18N
-             Bundle.getMessage("CancelRoute"), Bundle.getMessage("StackRoute")};  // NOI18N
+
+    String[] clearOptions = {
+            Bundle.getMessage("PromptUser"),   // NOI18N
+            Bundle.getMessage("ClearRoute"),   // NOI18N
+            Bundle.getMessage("CancelRoute"),  // NOI18N
+            Bundle.getMessage("StackRoute")};  // NOI18N
     JComboBox<String> clearEntry = new JComboBox<>(clearOptions);
+
+    String[] overlapOptions = {
+            Bundle.getMessage("PromptUser"),   // NOI18N
+            Bundle.getMessage("CancelRoute"),  // NOI18N
+            Bundle.getMessage("StackRoute")};  // NOI18N
+    JComboBox<String> overlapEntry = new JComboBox<>(overlapOptions);
+
     JTextField durationSetting = new JTextField(10);
     String[] colorText = {"ColorClear", "Black", "DarkGray", "Gray",  // NOI18N
         "LightGray", "White", "Red", "Pink", "Orange",  // NOI18N
@@ -647,6 +658,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
             //optionsFrame.addHelpMenu("package.jmri.jmrit.dispatcher.Options", true);
             optionsPane = optionsFrame.getContentPane();
             optionsPane.setLayout(new BoxLayout(optionsFrame.getContentPane(), BoxLayout.Y_AXIS));
+
             clearEntry.setSelectedIndex(nxPairs.getClearDownOption());
             JPanel p1 = new JPanel();
             //clearEntry.addActionListener(clearEntryListener);
@@ -654,6 +666,14 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
             p1.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("Reselection"))));  // NOI18N
             p1.add(clearEntry);
             optionsPane.add(p1);
+
+            overlapEntry.setSelectedIndex(nxPairs.getOverlapOption());
+            JPanel p1a = new JPanel();
+            overlapEntry.setToolTipText(Bundle.getMessage("OverlapSelectedTip"));  // NOI18N
+            p1a.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("OverlapSelected"))));  // NOI18N
+            p1a.add(overlapEntry);
+            optionsPane.add(p1a);
+
             JPanel p2 = new JPanel();
             initializeColorCombo(settingTrackColorBox);
             setColorCombo(settingTrackColorBox, nxPairs.getSettingRouteColor());
@@ -709,6 +729,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
         nxPairs.setSettingTimer(settingTimer);
         nxPairs.setSettingRouteColor(getSelectedColor(settingTrackColorBox));
         nxPairs.setClearDownOption(clearEntry.getSelectedIndex());
+        nxPairs.setOverlapOption(overlapEntry.getSelectedIndex());
         nxPairs.setDispatcherIntegration(dispatcherUse.isSelected());
         optionsFrame.setVisible(false);
 
