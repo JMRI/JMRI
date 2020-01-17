@@ -2,7 +2,6 @@ package jmri.util.gui;
 
 import jmri.spi.PreferencesManager;
 import jmri.util.JUnitUtil;
-import jmri.util.gui.GuiLafPreferencesManager;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
