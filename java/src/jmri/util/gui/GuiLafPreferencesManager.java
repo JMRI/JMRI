@@ -97,12 +97,12 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
         if (!initialized) {
             Preferences preferences = JmriPreferencesProvider.getPreferences(profile, getClass(), true);
             // getting the preference returns null if it had not previously been set
-            boolean migrate = preferences.get(FONT_SIZE, null) == null;
+            boolean migrate = preferences.get(LOOK_AND_FEEL, null) == null;
             if (migrate) {
                 // using deprecated, not for removal, call to enable migration
-                // of preferences keys from apps.gui.* to jmri.util.gui.*
+                // of preferences keys from "apps-gui" to "jmri-util-gui"
+                // JMRI <= 4.19.2 uses "apps-gui", JMRI >= 4.19.3 usses "jmri-util-gui"
                 getPreferences(JmriPreferencesProvider.getPreferences(profile, "apps-gui", true));
-                setDirty(false);
             }
             getPreferences(preferences);
             setDirty(false);
@@ -185,9 +185,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
         if (temp == getDefaultFontSize()) {
             temp = 0;
         }
-        if (temp != preferences.getInt(FONT_SIZE, -1)) {
-            preferences.putInt(FONT_SIZE, temp);
-        }
+        preferences.putInt(FONT_SIZE, temp);
         preferences.putBoolean(NONSTANDARD_MOUSE_EVENT, isNonStandardMouseEvent());
         preferences.putBoolean(GRAPHIC_TABLE_STATE, isGraphicTableState());
         preferences.putBoolean(EDITOR_USE_OLD_LOC_SIZE, isEditorUseOldLocSize());
