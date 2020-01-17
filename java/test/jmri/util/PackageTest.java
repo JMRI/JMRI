@@ -21,8 +21,7 @@ import org.junit.runners.Suite;
         ColorUtilTest.class,
         MathUtilTest.class,
         JUnitSwingUtilTest.class,
-        SwingTestCaseTest.class,
-        
+
         jmri.util.docbook.PackageTest.class,
         jmri.util.exceptionhandler.PackageTest.class,
         jmri.util.jdom.PackageTest.class,

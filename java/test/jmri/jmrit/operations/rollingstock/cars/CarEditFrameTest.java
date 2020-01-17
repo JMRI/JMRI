@@ -3,7 +3,10 @@ package jmri.jmrit.operations.rollingstock.cars;
 import java.awt.GraphicsEnvironment;
 import java.text.MessageFormat;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Rule;
+import org.junit.Test;
 import org.junit.rules.Timeout;
 
 import jmri.InstanceManager;
@@ -91,7 +94,8 @@ public class CarEditFrameTest extends OperationsTestCase {
     }
 
     @Test
-    @Ignore("AppVeyor:giving up after 3 failures. 12/31/2019")
+    //@Ignore("AppVeyor:giving up after 3 failures. 12/31/2019")
+ // please detail failure so test can be fixed
     public void testWeightErrorConditions() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -496,7 +500,8 @@ public class CarEditFrameTest extends OperationsTestCase {
     }
     
     @Test
-    @Ignore("AppVeyor:giving up after 3 failures. 12/31/2019")
+    //@Ignore("AppVeyor:giving up after 3 failures. 12/31/2019")
+ // please detail failure so test can be fixed
     public void testSaveExistingCar() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -518,10 +523,12 @@ public class CarEditFrameTest extends OperationsTestCase {
                 new Object[]{car.getTypeName()}), Bundle.getMessage("ButtonOK"));
  
         JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkIdTagsShutDownTask();
     }
 
     @Test
-    @Ignore("AppVeyor:giving up after 3 failures. 12/31/2019")
+    //@Ignore("AppVeyor:giving up after 3 failures. 12/31/2019")
+ // please detail failure so test can be fixed
     public void testSaveCarPassenger() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -592,10 +599,12 @@ public class CarEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("blocking order", 99, car2.getBlocking());
 
         JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkIdTagsShutDownTask();
     }
 
     @Test
-    @Ignore("AppVeyor:giving up after 3 failures. 12/31/2019")
+    //@Ignore("AppVeyor:giving up after 3 failures. 12/31/2019")
+ // please detail failure so test can be fixed
     public void testSaveCarCaboose() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -641,6 +650,7 @@ public class CarEditFrameTest extends OperationsTestCase {
         Assert.assertTrue(car2.isCaboose());
 
         JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkIdTagsShutDownTask();
     }
 
     @Test
@@ -671,7 +681,8 @@ public class CarEditFrameTest extends OperationsTestCase {
     }
 
     @Test
-    @Ignore("AppVeyor:giving up after 3 failures. 12/31/2019")
+    //@Ignore("AppVeyor:giving up after 3 failures. 12/31/2019")
+ // please detail failure so test can be fixed
     public void testSaveCarUtility() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -717,10 +728,12 @@ public class CarEditFrameTest extends OperationsTestCase {
         Assert.assertTrue(car2.isUtility());
 
         JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkIdTagsShutDownTask();
     }
 
     @Test
-    @Ignore("AppVeyor:giving up after 3 failures. 12/31/2019")
+    //@Ignore("AppVeyor:giving up after 3 failures. 12/31/2019")
+    // please detail failure so test can be fixed
     public void testSaveCarHazardous() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -766,6 +779,7 @@ public class CarEditFrameTest extends OperationsTestCase {
         Assert.assertTrue(car2.isHazardous());
 
         JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkIdTagsShutDownTask();
     }
 
     @Test

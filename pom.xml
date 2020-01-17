@@ -416,8 +416,11 @@
                         <exclude>**.PackageTest</exclude>
                         <!-- ignore since the test is not intended to be normally used -->
                         <exclude>jmri.util.FailTest</exclude>
+			<!-- exclude the archunit tests from automatic execution -->
+                        <exclude>jmri.ArchitectureTest</exclude>
+			<!-- exclude the line endings tests from automatic execution -->
+                        <exclude>jmri.util.FileLineEndings</exclude>
                         <!-- ignore since base classes for other tests -->
-                        <exclude>jmri.util.SwingTestCase</exclude>
                         <exclude>jmri.jmrit.operations.OperationsTestCase</exclude>
                         <exclude>jmri.jmrit.operations.OperationsSwingTestCase</exclude>
                         <!-- exclude since intentionally waits forever -->
@@ -700,6 +703,8 @@
                                 <File>jmri/jmris/srcp/parser/SRCPParserTreeConstants.class</File>
                                 <File>jmri/jmrit/audio/AudioSource.class</File>
                                 <File>jmri/jmrix/srcp/parser/SRCPClientParserTreeConstants.class</File>
+                                <!-- exclude the archunit check -->
+				<File>jmri.ArchitectureCheck.class</File>
                                 <!-- deprecated classes -->
                                 <File>jmri/jmrix/loconet/AbstractAlmImplementation.class</File>
                                 <!-- Exclude files meant to check SpotBugs. -->
