@@ -8,7 +8,7 @@
 
             <!--#include virtual="/help/en/parts/SidebarApplications.shtml" -->
 
-            <!--#include virtual="/help/en/parts/SidebarTools.shtml" -->
+            <!--#include virtual="/help/en/parts/SidebarTools-new.shtml" -->
 
             <!--#include virtual="/help/en/parts/SidebarLayoutAutomation.shtml" -->
 	    
