@@ -25,7 +25,7 @@
 <body>
   <!--#include virtual="/Header" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar.shtml" -->
+    <!--#include virtual="../Sidebar.shtml" -->
     <div id="mainContent">
 
       <h2>JMRI: Block Tracking</h2>
@@ -91,7 +91,7 @@
       with time.</p>
 
       <h3>Block Table</h3>The <a href=
-      "../../../package/jmri/jmrit/beantable/BlockTable.shtml">Block
+      "help/en/package/jmri/jmrit/beantable/BlockTable.shtml">Block
       Table</a> lets you see the status of your Blocks.
 
       <h3>Issues</h3>There is no functional requirement for a type
