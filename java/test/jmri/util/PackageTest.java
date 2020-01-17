@@ -24,7 +24,7 @@ import org.junit.runners.Suite;
         JUnitSwingUtilTest.class,
         SwingTestCaseTest.class,
         ReflectionUtilScaffoldTest.class,
-        
+
         jmri.util.docbook.PackageTest.class,
         jmri.util.exceptionhandler.PackageTest.class,
         jmri.util.jdom.PackageTest.class,

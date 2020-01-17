@@ -666,10 +666,10 @@ public abstract class AbstractManager<E extends NamedBean> implements Manager<E>
         /* The following keeps track of the last created auto system name.
          currently we do not reuse numbers, although there is nothing to stop the
          user from manually recreating them */
-        String prefix = getSubSystemNamePrefix() + ":AUTO:";
-        if (systemName.startsWith(prefix)) {
+        String autoPrefix = getSystemNamePrefix() + ":AUTO:";
+        if (systemName.startsWith(autoPrefix)) {
             try {
-                int autoNumber = Integer.parseInt(systemName.substring(prefix.length()));
+                int autoNumber = Integer.parseInt(systemName.substring(autoPrefix.length()));
                 lastAutoNamedBeanRef.accumulateAndGet(autoNumber, Math::max);
             } catch (NumberFormatException e) {
                 log.warn("Auto generated SystemName {} is not in the correct format", systemName);

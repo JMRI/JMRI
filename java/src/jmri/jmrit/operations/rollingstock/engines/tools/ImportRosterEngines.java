@@ -2,16 +2,19 @@ package jmri.jmrit.operations.rollingstock.engines.tools;
 
 import java.text.MessageFormat;
 import java.util.List;
+
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Import engines from the jmri Roster
@@ -54,7 +57,7 @@ public class ImportRosterEngines extends Thread {
 
         for (RosterEntry re : engines) {
             // add engines that have a road name and number
-            if (!re.getRoadName().equals("") && !re.getRoadNumber().equals("")) {
+            if (!re.getRoadName().isEmpty() && !re.getRoadNumber().isEmpty()) {
                 String road = re.getRoadName();
                 if (road.length() > Control.max_len_string_attibute) {
                     road = road.substring(0, Control.max_len_string_attibute);

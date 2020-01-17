@@ -235,7 +235,7 @@ public class PanelMenu extends JMenu {
 
         @Override
         @Nonnull
-        public <T> Object getDefault(Class<T> type) throws IllegalArgumentException {
+        public <T> Object getDefault(Class<T> type) {
             if (type.equals(PanelMenu.class)) {
                 return new PanelMenu();
             }

@@ -470,7 +470,7 @@
    <h3>Web Access</h3>
         <a id="WA" name="WA"></a>
         <ul>
-            <li> </li>
+            <li>Fixed a problem preventing JMRI application web services from working with iOS 9.3.6</li>
         </ul>
 
    <h3>WiThrottle Server</h3>
@@ -482,12 +482,17 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li></li>
+            <li>Fixed a crashing bug with short sequences.</li>
         </ul>
 
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Added a feature which lets you set the height of rows
+                in the 
+                <a href="https://www.jmri.org/help/en/package/jmri/jmrit/cabsignals/CabSignalPane.shtml">cab display table</a>, 
+                so that signal icons can be made fully visible.</li>
+            <li>Lots of updates to the organization of the web site so that the sidebars
+                provide better navigation.</li>
         </ul>
 

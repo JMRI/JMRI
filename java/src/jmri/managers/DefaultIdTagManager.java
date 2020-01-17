@@ -197,7 +197,7 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
         if (!initialised && !loading) {
             init();
         }
-        log.debug("new IdTag:{};{}", systemName, (userName == null ? "null" : userName)); // NOI18N
+        log.debug("new IdTag:{};{}", systemName,userName); // NOI18N
         Objects.requireNonNull(systemName, "SystemName cannot be null.");
 
         // return existing if there is one
@@ -337,7 +337,7 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
         Date thresholdTime = new Date(lastWhenLastSeen.getTime() - threshold);
 
         // Now remove from the list all tags seen prior to the threshold time
-        out.removeIf((t) -> {
+        out.removeIf(t -> {
             Date tagLastSeen = t.getWhenLastSeen();
             return tagLastSeen == null || tagLastSeen.before(thresholdTime);
         });
@@ -378,7 +378,7 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
 
         @Override
         @Nonnull
-        public <T> Object getDefault(Class<T> type) throws IllegalArgumentException {
+        public <T> Object getDefault(Class<T> type) {
             if (type.equals(IdTagManager.class)) {
                 return new DefaultIdTagManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
             }
