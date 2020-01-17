@@ -81,7 +81,7 @@
           it's stored in the Block as a string. There is currently
           no way to manually add a Throttle object to a Block from
           the table. <a href=
-          "../../../../html/tools/tracker/index.shtml">More
+          "/help/en/html/tools/blocktracking/index.shtml">More
           information on Block tracking</a></p>
         </li>
 
@@ -254,7 +254,7 @@
       the right of a Block entry in the Block Table, see <a href=
       "BlockEdit.shtml">Edit Block</a>.</p>
 
-      <p><a href="../../../../html/tools/tracker/index.shtml">More
+      <p><a href="../../../../html/tools/blocktracking/index.shtml">More
       on Block Tracking</a></p>
 
       <p><a href="../display/LayoutEditor.shtml">Using Blocks with
