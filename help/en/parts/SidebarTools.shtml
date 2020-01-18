@@ -23,7 +23,7 @@
 		    <li><a href="/help/en/html/tools/IdTags.shtml">ID Tags</a>
 		    <li><a href="/help/en/html/tools/TimeTable.shtml">Timetable</a>
 
-            <li><a href="/help/en/html/tools/index.shtml#systemSpecificTools">System-specific...</a>
+            <li><i><a href="/help/en/html/tools/index.shtml#systemSpecificTools">System-specific...</a></i>
    	    </ul>
 		</dd>
 <!-- /SidebarTools.shtml -->
