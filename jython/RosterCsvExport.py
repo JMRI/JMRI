@@ -201,7 +201,7 @@ if ret == JFileChooser.APPROVE_OPTION:
     # We've got a valid filename
     outFile = fc.getSelectedFile().toString()
     print "Output file:", outFile
-    csvFile = org.apache.commons.csv.CSVPrinter(java.io.BufferedWriter(java.io.FileWriter(outFile)),java.nio.charset.Charset.defaultCharset(),org.apache.commons.csv.CSVFormat.DEFAULT)
+    csvFile = org.apache.commons.csv.CSVPrinter(java.io.BufferedWriter(java.io.FileWriter(outFile)),org.apache.commons.csv.CSVFormat.DEFAULT)
 
     # Output the header if required
     if outputHeader==True:
