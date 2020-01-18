@@ -404,9 +404,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
         }
     }
 
-    @SuppressFBWarnings(value= "IS2_INCONSISTENT_SYNC", justification="display of _speedType for viewing only")
     private void rampDone(boolean stop, String type) {
-        // ignore "IS2_INCONSISTENT_SYNC" warning here
         if (log.isDebugEnabled())
             log.debug("ThrottleRamp done: {} for \"{}\" at speed= {}. _normalScript={}, Thread.State= {} resume index= {}, current Index= {} on warrant {}",
                     (stop?"stopped":"completed"), type, getSpeedSetting(), _normalSpeed, (_ramp != null?_ramp.getState():"_ramp is null!"), 
@@ -907,7 +905,6 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
     }
 
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NN_NAKED_NOTIFY", justification="Notify passing event, not state")
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
         if (log.isDebugEnabled()) 
             log.debug("propertyChange {} new value= {}", evt.getPropertyName(), evt.getNewValue());
