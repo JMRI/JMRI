@@ -227,6 +227,7 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
      * {@link #getParser(org.apache.commons.csv.CSVParser, javax.swing.JFileChooser)}
      * instead
      */
+    @Deprecated
     void setupReadingFile() throws IOException {
         getParser(readingInput, readingFileChooser);
     }
