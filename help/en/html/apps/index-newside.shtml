@@ -22,7 +22,7 @@
 <body>
   <!--#include virtual="/Header" -->
   <div id="mBody">
-    <!--#include virtual="/help/en/html/sidebar-new.shtml" -->
+    <!--#include virtual="/help/en/html/SidebarNew.shtml" -->
     <div id="mainContent">
       <!-- Page Body -->
 
