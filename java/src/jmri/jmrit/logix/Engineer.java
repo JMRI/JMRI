@@ -51,7 +51,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
     private Sensor _waitSensor;
     private int _sensorWaitState;
     final ReentrantLock _lock = new ReentrantLock(true);    // Ramp needs to block script speeds
-    private static Object _lockObject = new Object(); // used for synchronizing threads for _ramp
+    private Object _lockObject = new Object(); // used for synchronizing threads for _ramp
     private ThrottleRamp _ramp;
     private boolean _atHalt = false;
     private boolean _atClear = false;
