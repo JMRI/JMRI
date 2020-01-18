@@ -404,26 +404,6 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
         }
     }
 
-    private void rampDone(boolean stop, String type) {
-        if (log.isDebugEnabled())
-            log.debug("ThrottleRamp done: {} for \"{}\" at speed= {}. _normalScript={}, Thread.State= {} resume index= {}, current Index= {} on warrant {}",
-                    (stop?"stopped":"completed"), type, getSpeedSetting(), _normalSpeed, (_ramp != null?_ramp.getState():"_ramp is null!"), 
-                    _idxSkipToSpeedCommand+1, _idxCurrentCommand+1, _warrant.getDisplayName());
-                    // Note: command indexes biased from 0 to 1 to match Warrant display of commands.
-        if (!stop) {
-            _warrant.fireRunStatus("RampDone", _halt, type);
-         }
-        if (!_atHalt && !_atClear) {
-            synchronized (this) {
-                notifyAll();  // let engineer run script
-                log.debug("rampDone called notify");
-            }
-            if (_currentCommand.equals("NOOP")) {
-                _idxCurrentCommand--;   // notify advances command.  Repeat wait for entry to next block
-            }
-        }
-    }
-
     /**
      * do throttle setting
      * @param s throttle setting
@@ -1268,6 +1248,26 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
             rampDone(stop, _endSpeedType);
             ready = true;
             stop = false;
+        }
+
+        private void rampDone(boolean stop, String type) {
+            if (log.isDebugEnabled())
+                log.debug("ThrottleRamp done: {} for \"{}\" at speed= {}. _normalScript={}, Thread.State= {} resume index= {}, current Index= {} on warrant {}",
+                        (stop?"stopped":"completed"), type, getSpeedSetting(), _normalSpeed, (_ramp != null?_ramp.getState():"_ramp is null!"),
+                        _idxSkipToSpeedCommand+1, _idxCurrentCommand+1, _warrant.getDisplayName());
+            // Note: command indexes biased from 0 to 1 to match Warrant display of commands.
+            if (!stop) {
+                _warrant.fireRunStatus("RampDone", _halt, type);
+            }
+            if (!_atHalt && !_atClear) {
+                synchronized (this) {
+                    notifyAll();  // let engineer run script
+                    log.debug("rampDone called notify");
+                }
+                if (_currentCommand.equals("NOOP")) {
+                    _idxCurrentCommand--;   // notify advances command.  Repeat wait for entry to next block
+                }
+            }
         }
     }
 
