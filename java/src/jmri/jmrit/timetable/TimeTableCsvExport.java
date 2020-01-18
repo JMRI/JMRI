@@ -31,7 +31,6 @@ public class TimeTableCsvExport {
     FileWriter fileWriter;
     BufferedWriter bufferedWriter;
     CSVPrinter csvFile;
-    char comma = ',';
 
     HashMap<Integer, TrainEntry> trainMap = new HashMap<>();
     int trainIndex = 0;
@@ -118,42 +117,39 @@ public class TimeTableCsvExport {
             Arrays.fill(stopRow, "_");
 
             // Get list of all stops for this station
-            for (Stop stop : tdm.getStops(0, station.getStationId(), false)) {
+            tdm.getStops(0, station.getStationId(), false).forEach((stop) -> {
                 Train chkTrain = tdm.getTrain(stop.getTrainId());
-
                 // Ignore stops in other schedules
-                if (chkTrain.getScheduleId() != schedule.getScheduleId()) {
-                    continue;
-                }
-
-                // Get stored data for this train
-                TrainEntry trainEntry = trainMap.get(stop.getTrainId());
-                int idx = trainEntry.getTrainIndex();
-                int lastStop = trainEntry.getLastStation();
-                String direction = trainEntry.getDirection();
-
-                // Collect required stop data
-                int thisStop = stop.getSeq();
-                int arrive = stop.getArriveTime();
-                int depart = stop.getDepartTime();
-
-                if (thisStop != 1 && thisStop != lastStop) {
-                    // neither first nor last stop
-                    if (arrive == depart) {
+                if (!(chkTrain.getScheduleId() != schedule.getScheduleId())) {
+                    // Get stored data for this train
+                    TrainEntry trainEntry = trainMap.get(stop.getTrainId());
+                    int idx = trainEntry.getTrainIndex();
+                    int lastStop = trainEntry.getLastStation();
+                    String direction = trainEntry.getDirection();
+                    
+                    // Collect required stop data
+                    int thisStop = stop.getSeq();
+                    int arrive = stop.getArriveTime();
+                    int depart = stop.getDepartTime();
+                    
+                    if (thisStop != 1 && thisStop != lastStop) {
+                        // neither first nor last stop
+                        if (arrive == depart) {
+                            stopRow[idx] = String.format("%s (d)", formatTime(depart));
+                        } else if (direction.equals("Down")) {
+                            stopRow[idx] = String.format("%s (a)%n%s (d)", formatTime(arrive), formatTime(depart));
+                        } else {
+                            stopRow[idx] = String.format("%s (d)%n%s (a)", formatTime(depart), formatTime(arrive));
+                        }
+                    } else if (thisStop == 1) {
+                        // first stop (aka start)
                         stopRow[idx] = String.format("%s (d)", formatTime(depart));
-                    } else if (direction.equals("Down")) {
-                        stopRow[idx] = String.format("%s (a)%n%s (d)", formatTime(arrive), formatTime(depart));
-                    } else {
-                        stopRow[idx] = String.format("%s (d)%n%s (a)", formatTime(depart), formatTime(arrive));
+                    } else if (thisStop == lastStop) {
+                        // last stop
+                        stopRow[idx] = String.format("%s (a)", formatTime(arrive));
                     }
-                } else if (thisStop == 1) {
-                    // first stop (aka start)
-                    stopRow[idx] = String.format("%s (d)", formatTime(depart));
-                } else if (thisStop == lastStop) {
-                    // last stop
-                    stopRow[idx] = String.format("%s (a)", formatTime(arrive));
                 }
-            }
+            });
 
             // end of stops, output station line
             record = new ArrayList<>();
@@ -214,6 +210,4 @@ public class TimeTableCsvExport {
                     _train.getTrainName(), _direction, _lastStation, _trainIndex);
         }
     }
-
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TimeTableCsvExport.class);
 }

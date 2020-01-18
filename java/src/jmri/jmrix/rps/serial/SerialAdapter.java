@@ -387,9 +387,9 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
     void setReceivers(String s) {
         try {
             // parse string
-            java.io.StringReader b = new java.io.StringReader(s);
-            CSVParser c = new CSVParser(b, CSVFormat.DEFAULT);
+            CSVParser c = CSVParser.parse(s, CSVFormat.DEFAULT);
             CSVRecord r = c.getRecords().get(0);
+            c.close();
 
             // first two are "Data, ," so are ignored.
             // rest are receiver numbers
@@ -425,9 +425,9 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
 
         if (version == 1) {
             // parse string
-            java.io.StringReader b = new java.io.StringReader(s);
-            CSVParser c = new CSVParser(b, CSVFormat.DEFAULT);
+            CSVParser c = CSVParser.parse(s, CSVFormat.DEFAULT);
             CSVRecord record = c.getRecords().get(0);
+            c.close();
 
             // values are stored in 1-N of the output array; 0 not used
             int count = record.size() - SKIPCOLS;
@@ -440,9 +440,9 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
             return r;
         } else if (version == 2) {
             // parse string
-            java.io.StringReader b = new java.io.StringReader(s);
-            CSVParser c = new CSVParser(b, CSVFormat.DEFAULT);
+            CSVParser c = CSVParser.parse(s, CSVFormat.DEFAULT);
             CSVRecord record = c.getRecords().get(0);
+            c.close();
 
             int count = (record.size() - 2) / 2;  // skip 'ADR, DAT,'
             double[] vals = new double[Engine.instance().getMaxReceiverNumber() + 1]; // Receiver 2 goes in element 2
