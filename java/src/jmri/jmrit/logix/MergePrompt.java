@@ -35,16 +35,16 @@ import jmri.util.table.ButtonRenderer;
  */
 public class MergePrompt extends JDialog {
 
-    HashMap<String, Boolean> _candidates;   // merge candidate choices
+    Map<String, Boolean> _candidates;   // merge candidate choices
     HashMap<String, RosterSpeedProfile> _mergeProfiles;  // candidate's speedprofile
     HashMap<String, RosterSpeedProfile> _sessionProfiles;  // candidate's speedprofile
-    HashMap<String, HashMap<Integer, Boolean>> _anomalyMap;
+    Map<String, Map<Integer, Boolean>> _anomalyMap;
     JPanel _viewFrame;
     JTable _mergeTable;
     JmriJFrame _anomolyFrame;
     static int STRUT = 20;
 
-    MergePrompt(String name, HashMap<String, Boolean> cand, HashMap<String, HashMap<Integer, Boolean>> anomalies) {
+    MergePrompt(String name, Map<String, Boolean> cand, Map<String, Map<Integer, Boolean>> anomalies) {
         super();
         _candidates = cand;
         _anomalyMap = anomalies;
@@ -136,7 +136,7 @@ public class MergePrompt extends JDialog {
 
     private void noMerge() {
         for (Map.Entry<String, Boolean> ent : _candidates.entrySet()) {
-            _candidates.put(ent.getKey(), Boolean.valueOf(false));
+            _candidates.put(ent.getKey(), false);
         }
     }
 
@@ -151,7 +151,7 @@ public class MergePrompt extends JDialog {
         panel.add(MergePrompt.makeEditInfoPanel(id));
         _viewFrame.add(panel);
 
-        HashMap<Integer, Boolean> anomalies = _anomalyMap.get(id);
+        Map<Integer, Boolean> anomalies = _anomalyMap.get(id);
 
         JPanel spPanel = new JPanel();
         spPanel.setLayout(new BoxLayout(spPanel, BoxLayout.LINE_AXIS));
@@ -212,7 +212,7 @@ public class MergePrompt extends JDialog {
     }
 
     static JPanel makeSpeedProfilePanel(String title, RosterSpeedProfile profile, 
-                boolean edit, HashMap<Integer, Boolean> anomalies) {
+                boolean edit, Map<Integer, Boolean> anomalies) {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         panel.add(new JLabel(Bundle.getMessage(title)));
@@ -301,7 +301,7 @@ public class MergePrompt extends JDialog {
 
         ArrayList<Map.Entry<String, Boolean>> candidateArray = new ArrayList<>();
 
-        MergeTableModel(HashMap<String, Boolean> map) {
+        MergeTableModel(Map<String, Boolean> map) {
             Iterator<java.util.Map.Entry<String, Boolean>> iter = map.entrySet().iterator();
             while (iter.hasNext()) {
                 candidateArray.add(iter.next());
@@ -310,7 +310,7 @@ public class MergePrompt extends JDialog {
 
         boolean hasAnomaly(int row) {
             Map.Entry<String, Boolean> entry = candidateArray.get(row);
-            HashMap<Integer, Boolean> anomaly = _anomalyMap.get(entry.getKey());
+            Map<Integer, Boolean> anomaly = _anomalyMap.get(entry.getKey());
             return(anomaly != null && anomaly.size() > 0);
         }
 

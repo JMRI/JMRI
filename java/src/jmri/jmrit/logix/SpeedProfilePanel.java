@@ -50,7 +50,7 @@ public class SpeedProfilePanel extends JPanel {
      * @param editable allow editing.
      * @param anomalies map of entries where speed decreases from previous speed
      */
-    public SpeedProfilePanel(RosterSpeedProfile speedProfile, boolean editable, HashMap<Integer, Boolean> anomalies) {
+    public SpeedProfilePanel(RosterSpeedProfile speedProfile, boolean editable, Map<Integer, Boolean> anomalies) {
         SpeedTableModel model = new SpeedTableModel(speedProfile, editable, anomalies);
         _table = new JTable(model);
         int tablewidth = 0;
@@ -100,7 +100,7 @@ public class SpeedProfilePanel extends JPanel {
                 _table.setDragEnabled(true);
             }
         } catch (ClassNotFoundException cnfe) {
-            log.error("SpeedProfilePanel unable to Drag and Drop" + cnfe);
+            log.error("SpeedProfilePanel unable to Drag and Drop {}",cnfe);
         }
         add(_scrollPane);
         if (anomalies != null) {
@@ -108,7 +108,7 @@ public class SpeedProfilePanel extends JPanel {
         }
     }
 
-    void setAnomalies(HashMap<Integer, Boolean> anomalies) {
+    void setAnomalies(Map<Integer, Boolean> anomalies) {
         SpeedTableModel model = (SpeedTableModel)_table.getModel();
         model.setAnomaly(anomalies);
         if (anomalies != null && anomalies.size() > 0) {
@@ -149,7 +149,7 @@ public class SpeedProfilePanel extends JPanel {
             Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
 
             SpeedTableModel model = (SpeedTableModel) table.getModel();
-            HashMap<Integer, Boolean> anomalies = model.getAnomalies();
+            Map<Integer, Boolean> anomalies = model.getAnomalies();
   
             if (anomalies == null || anomalies.size() == 0) {
                 c.setBackground(table.getBackground());                                
@@ -195,9 +195,9 @@ public class SpeedProfilePanel extends JPanel {
         ArrayList<Map.Entry<Integer, SpeedStep>> speedArray = new  ArrayList<>();
         RosterSpeedProfile _profile;
         Boolean _editable;
-        HashMap<Integer, Boolean> _anomaly;
+        Map<Integer, Boolean> _anomaly;
         
-        SpeedTableModel(RosterSpeedProfile sp, boolean editable, HashMap<Integer, Boolean> anomalies) {
+        SpeedTableModel(RosterSpeedProfile sp, boolean editable, Map<Integer, Boolean> anomalies) {
             _profile = sp;
             _editable = editable; // allow mergeProfile editing
             _anomaly = anomalies;
@@ -209,14 +209,14 @@ public class SpeedProfilePanel extends JPanel {
             }
         }
 
-        HashMap<Integer, Boolean> getAnomalies() {
+        Map<Integer, Boolean> getAnomalies() {
             return _anomaly;
         }
 
-        void setAnomaly(HashMap<Integer, Boolean> an) {
+        void setAnomaly(Map<Integer, Boolean> an) {
             _anomaly = an;
         }
-        private HashMap<Integer, Boolean> updateAnomaly(Map.Entry<Integer, SpeedStep> entry) {
+        private Map<Integer, Boolean> updateAnomaly(Map.Entry<Integer, SpeedStep> entry) {
             SpeedStep ss = entry.getValue();
             _profile.setSpeed(entry.getKey(), ss.getForwardSpeed(), ss.getReverseSpeed());
             _anomaly = MergePrompt.validateSpeedProfile(_profile);
