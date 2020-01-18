@@ -155,7 +155,7 @@ public class GuiLafPreferencesManagerTest {
         // change to setFont(String) when removing deprecated method
         t.setFontByName(f1.getFontName());
         // without calling setFontSize(int), font size == 0
-        assertEquals("Font is 0 size", f1.deriveFont((float) 0), t.getFont());
+        assertEquals("Font is 0 size", f1.deriveFont((float) 0).getSize(), t.getFont().getSize());
         assertNotEquals("Font is not Font default", Font.decode(null), t.getFont());
         assertNotEquals("Font is not derived font", f1, t.getFont());
         t.setFont(f2);
@@ -181,7 +181,7 @@ public class GuiLafPreferencesManagerTest {
         // change to setFont(String) when removing deprecated method
         t.setFontByName(f1.getFontName());
         // without calling setFontSize(int), font size == 0
-        assertEquals("Font is 0 size", f1.deriveFont((float) 0), t.getFont());
+        assertEquals("Font is 0 size", f1.deriveFont((float) 0).getSize(), t.getFont().getSize());
         assertNotEquals("Font is not Font default", Font.decode(null), t.getFont());
         assertNotEquals("Font is not derived font", f1, t.getFont());
         assertTrue("Changes made", t.isDirty());
