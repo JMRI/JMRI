@@ -972,6 +972,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
 
         Warrant oldWarrant;
         Warrant newWarrant;
+        Object termLock =new Object();
         int num;
 
         CheckForTermination(Warrant oldWar, Warrant newWar, int n) {
@@ -993,8 +994,8 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                     if (oldWarrant.getRunMode() == Warrant.MODE_NONE) {
                         break;
                     }
-                    synchronized (_lockObject) {
-                        _lockObject.wait(200);
+                    synchronized (termLock) {
+                        termLock.wait(200);
                         time += 200;
                     }
                 }
