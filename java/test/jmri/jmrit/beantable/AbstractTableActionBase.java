@@ -17,8 +17,6 @@ import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JTableOperator;
 import org.netbeans.jemmy.operators.JTextFieldOperator;
 import org.netbeans.jemmy.util.NameComponentChooser;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This is an abstract base class for testing bean table action objects derived
@@ -30,7 +28,6 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AbstractTableActionBase<B extends NamedBean> {
 
-    private static final Logger log = LoggerFactory.getLogger(AbstractTableActionBase.class);
     protected AbstractTableAction<B> a = null;
     protected String helpTarget = "index"; // index is default value specified in AbstractTableAction.
 
