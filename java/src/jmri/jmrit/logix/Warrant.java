@@ -85,6 +85,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     private boolean _waitForBlock; // train may not move until false
     private boolean _waitForWarrant;
     protected String _message; // last message returned from an action
+    private ThrottleManager tm;
 
     // Throttle modes
     public static final int MODE_NONE = 0;
@@ -136,6 +137,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         _orders = new ArrayList<>();
         _runBlind = false;
         _speedUtil = new SpeedUtil(_orders);
+        tm = InstanceManager.getNullableDefault(ThrottleManager.class);
     }
 
     @Override
@@ -872,7 +874,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         if (dccAddress == null) {
             msg = Bundle.getMessage("NoAddress", getDisplayName());
         } else {
-            jmri.ThrottleManager tm = InstanceManager.getNullableDefault(jmri.ThrottleManager.class);
             if (tm == null) {
                 msg = Bundle.getMessage("noThrottle", _speedUtil.getDccAddress().getNumber());
             } else {
@@ -935,7 +936,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
 
     protected void releaseThrottle(DccThrottle throttle) {
         if (throttle != null) {
-            jmri.ThrottleManager tm = InstanceManager.getNullableDefault(jmri.ThrottleManager.class);
             if (tm != null) {
                 tm.releaseThrottle(throttle, this);
             } else {
