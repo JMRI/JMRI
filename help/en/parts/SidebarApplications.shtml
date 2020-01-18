@@ -8,7 +8,7 @@
 	             <li><a href="/help/en/html/apps/DispatcherPro/index.shtml">DispatcherPro&trade;</a></li>
 	             <li><a href="/help/en/package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a></li>
 	             <li><a href="/help/en/html/apps/SoundPro/SoundPro.shtml">SoundPro&trade;</a></li>
-	             <li><a href="/help/en/html/apps/index.shtml#addonApplications">Apps with JMRI connections...</a></li>			
+	             <li><i><a href="/help/en/html/apps/index.shtml#addonApplications">Apps with JMRI connections...</a></i></li>			
 		  </ul>
           </dd>
 <!-- /SidebarApplications.shtml -->
