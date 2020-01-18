@@ -36,13 +36,11 @@ public abstract class AbstractTableActionBase<B extends NamedBean> {
 
     @Test
     public void testGetTableDataModel() {
-        log.warn("testGetTableDataModel");
         Assert.assertNotNull("Table Data Model Exists", a.getTableDataModel());
     }
 
     @Test
     public void testExecute() {
-        log.warn("testExecute");
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         a.actionPerformed(null);
         JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
@@ -62,7 +60,6 @@ public abstract class AbstractTableActionBase<B extends NamedBean> {
      */
     @Test
     public void testGetPanel() {
-        log.warn("testGetPanel");
         Assert.assertNull("Default getPanel returns null", a.getPanel());
     }
 
@@ -73,7 +70,6 @@ public abstract class AbstractTableActionBase<B extends NamedBean> {
      */
     @Test
     public void testGetClassDescription() {
-        log.warn("testGetClassDescription");
         Assert.assertEquals("Default class description", "Abstract Table Action", a.getClassDescription());
     }
 
@@ -84,13 +80,11 @@ public abstract class AbstractTableActionBase<B extends NamedBean> {
      */
     @Test
     public void testIncludeAddButton() {
-        log.warn("testIncludeAddButton");
         Assert.assertFalse("Default include add button", a.includeAddButton());
     }
 
     @Test
     public void testHelpTarget(){
-        log.warn("testHelpTarget");
         Assert.assertEquals("help target",helpTarget,a.helpTarget());
     }
 
@@ -151,7 +145,6 @@ public abstract class AbstractTableActionBase<B extends NamedBean> {
 
     @Test
     public void testEditButton() {
-        log.warn("testEditButton");
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assume.assumeTrue(a.includeAddButton());
         a.actionPerformed(null);

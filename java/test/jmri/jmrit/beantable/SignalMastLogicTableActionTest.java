@@ -41,7 +41,6 @@ public class SignalMastLogicTableActionTest extends AbstractTableActionBase<Sign
     @Override
     @Test
     public void testIncludeAddButton() {
-        log.warn("testIncludeAddButton");
         Assert.assertTrue("Default include add button", a.includeAddButton());
     }
 
@@ -65,9 +64,7 @@ public class SignalMastLogicTableActionTest extends AbstractTableActionBase<Sign
 
     @Test
     @Override
-
     public void testEditButton() {
-        log.warn("testEditButton");
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         VirtualSignalMast sm1 = new VirtualSignalMast("IF$vsm:basic:one-searchlight($1)", "mast 1");
@@ -105,7 +102,6 @@ public class SignalMastLogicTableActionTest extends AbstractTableActionBase<Sign
 
     @Test
     public void testSmlTableMenuRoutingCancel() {
-        log.warn("testSmlTableMenuRoutingCancel");
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         a.actionPerformed(null);
@@ -146,7 +142,6 @@ public class SignalMastLogicTableActionTest extends AbstractTableActionBase<Sign
 
     @Test
     public void testSmlTableMenuYes() {
-        log.warn("testSmlTableMenuYes");
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         a.actionPerformed(null);
@@ -221,8 +216,6 @@ public class SignalMastLogicTableActionTest extends AbstractTableActionBase<Sign
 
     @Test
     public void testSmlTableMenuAutoSections() {
-        log.warn("testSmlTableMenuAutoSections");
-
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         a.actionPerformed(null);
