@@ -59,7 +59,6 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
     private static final int reverseKey = KeyEvent.VK_DOWN;
     private static final int forwardKey = KeyEvent.VK_UP;
     private static final int stopKey = 111; // numpad /
-    private static final int idleKey = 106; // numpad *
 
     private ControlPanel _controlPanel;
     private FunctionPanel _functionPanel;
