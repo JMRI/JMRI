@@ -7,6 +7,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 
 /**
  * CSV Record Types. The first field is the record type keyword (not I18N).
@@ -75,7 +78,7 @@ public class TimeTableCsvImport {
     List<String> importFeedback = new ArrayList<>();
     FileReader fileReader;
     BufferedReader bufferedReader;
-    com.csvreader.CsvReader csvFile;
+    CSVParser csvFile;
 
     int recordNumber = 0;
     int layoutId = 0;       //Current layout object id
@@ -91,16 +94,16 @@ public class TimeTableCsvImport {
         try {
             fileReader = new FileReader(file);
             bufferedReader = new BufferedReader(fileReader);
-            csvFile = new com.csvreader.CsvReader(bufferedReader);
-            csvFile.setUseComments(true);
-            while (csvFile.readRecord()) {
+            csvFile = new CSVParser(bufferedReader, CSVFormat.DEFAULT);
+            for (CSVRecord record : csvFile.getRecords()) {
                 if (errorOccurred) {
                     break;
                 }
                 recordNumber += 1;
-                if (csvFile.getColumnCount() > 0) {
-                    String[] values;
-                    values = csvFile.getValues();
+                if (record.size() > 0) {
+                    List<String> list = new ArrayList<>();
+                    record.forEach(list::add);
+                    String[] values = list.toArray(new String[record.size()]);
                     String recd = values[0];
 
                     if (recd.equals("Layout") && layoutId == 0) {
@@ -120,7 +123,7 @@ public class TimeTableCsvImport {
                     } else {
                         log.warn("Unable to process record {}, content = {}", recordNumber, values);
                         importFeedback.add(String.format("Unable to process record %d, content = %s",
-                                recordNumber, csvFile.getRawRecord()));
+                                recordNumber, record.toString()));
                         errorOccurred = true;
                     }
                 }
@@ -206,7 +209,7 @@ public class TimeTableCsvImport {
 
         String metric = (values.length > 5) ? values[5] : "No";
         if (metric.equals("Yes") || metric.equals("No")) {
-            newLayout.setMetric((metric.equals("Yes")) ? true : false);
+            newLayout.setMetric((metric.equals("Yes")));
         }
     }
 
@@ -221,9 +224,9 @@ public class TimeTableCsvImport {
 
         String typeName = values[1];
         if (typeName.equals("UseLayoutTypes")) {
-            for (TrainType currType : tdm.getTrainTypes(layoutId, true)) {
+            tdm.getTrainTypes(layoutId, true).forEach((currType) -> {
                 trainTypes.add(currType.getTypeId());
-            }
+            });
             return;
         }
         for (TrainType trainType : tdm.getTrainTypes(layoutId, false)) {
@@ -290,9 +293,9 @@ public class TimeTableCsvImport {
 
         String stationName = values[1];
         if (stationName.equals("UseSegmentStations")) {
-            for (Station currStation : tdm.getStations(segmentId, true)) {
+            tdm.getStations(segmentId, true).forEach((currStation) -> {
                 stations.add(currStation.getStationId());
-            }
+            });
             return;
         }
         for (Station station : tdm.getStations(segmentId, false)) {
@@ -317,7 +320,7 @@ public class TimeTableCsvImport {
 
         String doubleTrack = (values.length > 3) ? values[3] : "No";
         if (doubleTrack.equals("Yes") || doubleTrack.equals("No")) {
-            newStation.setDoubleTrack((doubleTrack.equals("Yes")) ? true : false);
+            newStation.setDoubleTrack((doubleTrack.equals("Yes")));
         }
 
         String sidingsString = (values.length > 4) ? values[4] : "0";
