@@ -1167,7 +1167,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                                 break;
                             }
                             speed = iter.previous().floatValue();
-                            log.trace("next speed {}",iter.previous());
+                            log.trace("next speed {}",speed);
                             if (_useIndex) {
                                 if ( _warrant._idxCurrentOrder > _endBlockIdx) { // loco overran end block
                                     speed = endSpeed;

@@ -10,7 +10,6 @@ import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 import javax.swing.JComponent;
@@ -78,14 +77,17 @@ public class SpeedProfilePanel extends JPanel {
                     }
                 }
                 @Override
-                public void keyPressed(KeyEvent e) {}
+                public void keyPressed(KeyEvent e) {
+                    // only handling keyTyped events
+                }
                 @Override
-                public void keyReleased(KeyEvent e) {}
+                public void keyReleased(KeyEvent e) {
+                    // only handling keyTyped events
+                }
             });
             _table.getColumnModel().getColumn(SpeedTableModel.FORWARD_SPEED_COL).setCellRenderer(new ColorCellRenderer());
             _table.getColumnModel().getColumn(SpeedTableModel.REVERSE_SPEED_COL).setCellRenderer(new ColorCellRenderer());
         }
-//        _table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
        _scrollPane = new JScrollPane(_table);
         int barWidth = 5+_scrollPane.getVerticalScrollBar().getPreferredSize().width;
         tablewidth += barWidth;
@@ -178,11 +180,6 @@ public class SpeedProfilePanel extends JPanel {
         model.fireTableDataChanged();
     }
 
-    private void rePack(Integer key) {
-        SpeedTableModel model = (SpeedTableModel)_table.getModel();
-        setAnomalies(model.updateAnomaly(model.getKeyEntry(key)));
-        model.fireTableDataChanged();
-    }
 
     static class SpeedTableModel extends javax.swing.table.AbstractTableModel {
         static final int STEP_COL = 0;
@@ -241,10 +238,6 @@ public class SpeedProfilePanel extends JPanel {
             return _profile.getProfileSpeeds();
         }
         
-        void setSelectionData(Integer key) {
-            
-        }
-
         void addEntry( Map.Entry<Integer, SpeedStep> entry) {
             SpeedStep ss = entry.getValue();
             Integer key = entry.getKey();
@@ -314,10 +307,7 @@ public class SpeedProfilePanel extends JPanel {
         
         @Override
         public boolean isCellEditable(int row, int col) {
-            if (_editable && (col == FORWARD_SPEED_COL || col == REVERSE_SPEED_COL)) {
-                return true;
-            }
-            return false;
+            return (_editable && (col == FORWARD_SPEED_COL || col == REVERSE_SPEED_COL));
         }
 
         @Override
@@ -452,12 +442,16 @@ public class SpeedProfilePanel extends JPanel {
                 rePack(key);
 
                 return true;
-            } catch (UnsupportedFlavorException ufe) {
-                log.warn("MergeTranferHandler.importData: " + ufe);
-            } catch (IOException ioe) {
-                log.warn("MergeTranferHandler.importData: " + ioe);
+            } catch (UnsupportedFlavorException | IOException ufe) {
+                log.warn("MergeTranferHandler.importData: {}",ufe);
             }
             return false;
+        }
+
+        private void rePack(Integer key) {
+            SpeedTableModel model = (SpeedTableModel)_table.getModel();
+            setAnomalies(model.updateAnomaly(model.getKeyEntry(key)));
+            model.fireTableDataChanged();
         }
     }
 
@@ -487,8 +481,7 @@ public class SpeedProfilePanel extends JPanel {
         @Override
         public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
             if (_entryFlavor.equals(flavor)) {
-                SimpleEntry<Integer, SpeedStep> entry = new SimpleEntry<>(_key, _step);
-                return entry;
+                return new SimpleEntry<Integer, SpeedStep>(_key, _step);
             } else if (DataFlavor.stringFlavor.equals(flavor)) {
                 StringBuilder  msg = new StringBuilder ();
                 msg.append(_key.toString());
@@ -498,9 +491,9 @@ public class SpeedProfilePanel extends JPanel {
                 msg.append(_step.getReverseSpeed());
                 return msg.toString();
             }
-            log.warn("EntrySelection.getTransferData: " + flavor);
+            log.warn("EntrySelection.getTransferData: {}",flavor);
             throw(new UnsupportedFlavorException(flavor));
         }
     }
-    private final static Logger log = LoggerFactory.getLogger(SpeedProfilePanel.class);
+    private static final Logger log = LoggerFactory.getLogger(SpeedProfilePanel.class);
 }
