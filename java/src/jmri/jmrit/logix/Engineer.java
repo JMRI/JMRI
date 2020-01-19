@@ -42,7 +42,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
     private boolean _waitForClear = false;  // waits for signals/occupancy/allocation to clear
     private boolean _waitForSync = false;  // waits for train to catch up to commands
     private boolean _waitForSensor = false; // wait for sensor event
-    private boolean _runOnET = false;   // Execute commands on ET only - do not synchn
+    private boolean _runOnET = false;   // Execute commands on ET only - do not synch
     private boolean _setRunOnET = false; // Need to delay _runOnET from the block that set it
     private int _syncIdx;           // block order index of current command
     protected DccThrottle _throttle;
@@ -51,7 +51,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
     private Sensor _waitSensor;
     private int _sensorWaitState;
     final ReentrantLock _lock = new ReentrantLock(true);    // Ramp needs to block script speeds
-    private Object _lockObject = new Object(); // used for synchronizing threads for _ramp
+    private Object _rampLockObject = new Object(); // used for synchronizing threads for _ramp
     private ThrottleRamp _ramp;
     private boolean _atHalt = false;
     private boolean _atClear = false;
@@ -386,8 +386,8 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
             }
             if (_ramp.ready) {
                 _ramp.setParameters(endSpeedType, endBlockIdx, useIndex);
-                synchronized (_lockObject) {
-                    _lockObject.notifyAll(); // free wait at ThrottleRamp.run()
+                synchronized (_rampLockObject) {
+                    _rampLockObject.notifyAll(); // free wait at ThrottleRamp.run()
                     log.debug("rampSpeedTo called notify _ramp.ready={}", _ramp.ready);
                 }
             } else {
@@ -849,12 +849,12 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
             if (log.isDebugEnabled()) 
                 log.debug("Listen for propertyChange of {}, wait for State= {}", _waitSensor.getDisplayName(), _sensorWaitState);
             // suspend commands until sensor changes state
-            synchronized (this) {
+            synchronized (_waitSensor) {
                 _waitForSensor = true;
                 while (_waitForSensor) {
                     try {
                         _warrant.fireRunStatus("SensorWaitCommand", act, _waitSensor.getDisplayName());
-                        wait();
+                        _waitSensor.wait();
                         String name =  _waitSensor.getDisplayName();    // save name, _waitSensor will be null 'eventually' 
                         _warrant.fireRunStatus("SensorWaitCommand", null, name);
                     } catch (InterruptedException ie) {
@@ -890,8 +890,8 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
             log.debug("propertyChange {} new value= {}", evt.getPropertyName(), evt.getNewValue());
         if ((evt.getPropertyName().equals("KnownState")
                 && ((Number) evt.getNewValue()).intValue() == _sensorWaitState)) {
-            synchronized (_lockObject) {
-                    _lockObject.notifyAll();  // free sensor wait
+            synchronized (_waitSensor) {
+                    _waitSensor.notifyAll();  // free sensor wait
             }
         }
     }
@@ -1033,9 +1033,9 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
              if (die) { // once set to true, do not allow resetting to false
                  _die = die;
              }
-             synchronized (_lockObject) {
+             synchronized (_rampLockObject) {
                  log.debug("ThrottleRamp.quit calls notify)");
-                 _lockObject.notifyAll(); // free waits at ramp time interval
+                 _rampLockObject.notifyAll(); // free waits at ramp time interval
              }
          }
 
@@ -1055,9 +1055,9 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
         public void run() {
             ready = true;
             while (!_die) {
-                synchronized (_lockObject) {
+                synchronized (_rampLockObject) {
                     try {
-                        _lockObject.wait(); // wait until notified by rampSpeedTo() calls quit()
+                        _rampLockObject.wait(); // wait until notified by rampSpeedTo() calls quit()
                     } catch (InterruptedException ie) {
                         log.debug("As expected {}", ie);
                     }
