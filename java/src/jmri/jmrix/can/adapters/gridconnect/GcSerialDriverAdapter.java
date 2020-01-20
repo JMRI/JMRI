@@ -35,6 +35,15 @@ public class GcSerialDriverAdapter extends GcPortController {
         this.manufacturerName = jmri.jmrix.merg.MergConnectionTypeList.MERG;
     }
 
+    // Allow for default systemPrefix other than "M"
+    public GcSerialDriverAdapter(String prefix) {
+        super(new jmri.jmrix.can.CanSystemConnectionMemo(prefix));
+        option1Name = "Protocol"; // NOI18N
+        options.put(option1Name, new Option(Bundle.getMessage("ConnectionProtocol"),
+                jmri.jmrix.can.ConfigurationManager.getSystemOptions()));
+        this.manufacturerName = jmri.jmrix.merg.MergConnectionTypeList.MERG;
+    }
+
     @Override
     public String openPort(String portName, String appName) {
         // open the port, check ability to set moderators

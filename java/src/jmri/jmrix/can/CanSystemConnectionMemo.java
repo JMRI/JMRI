@@ -34,9 +34,20 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         storeCanMemotoInstance();
     }
     
+    // Allow for default systemPrefix other than "M"
+    public CanSystemConnectionMemo(String prefix) {
+        super(prefix, DEFAULT_USERNAME);
+        super.register(); // registers general type
+        storeCanMemotoInstance();
+    }
+
     protected final void storeCanMemotoInstance() {
         InstanceManager.store(this, CanSystemConnectionMemo.class); // also register as specific type
     }
+
+    protected String _protocol = new String(ConfigurationManager.MERGCBUS);
+    
+    jmri.jmrix.swing.ComponentFactory cf = null;
 
     protected TrafficController tm;
 
@@ -96,9 +107,15 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         return super.get(T);
     }
 
+    public String getProtocol() {
+        return _protocol;
+    }
+    
     public void setProtocol(String protocol) {
         if (null != protocol) {
+            _protocol = new String(protocol);
             switch (protocol) {
+                case ConfigurationManager.SPROGCBUS:
                 case ConfigurationManager.MERGCBUS:
                     manager = new jmri.jmrix.can.cbus.CbusConfigurationManager(this);
                     break;

@@ -15,12 +15,13 @@ import org.slf4j.LoggerFactory;
  */
 abstract public class ConfigurationManager {
 
+    final public static String SPROGCBUS = "SPROG CBUS";
     final public static String MERGCBUS = "MERG CBUS";
     final public static String OPENLCB = "OpenLCB";
     final public static String RAWCAN = "Raw CAN"; // TODO I18N
     final public static String TEST = "Test - do not use";
 
-    private static String[] options = new String[]{MERGCBUS, OPENLCB, RAWCAN, TEST};
+    private static String[] options = new String[]{SPROGCBUS, MERGCBUS, OPENLCB, RAWCAN, TEST};
 
     /**
      * Provide the current set of "Option1" values
@@ -43,6 +44,14 @@ abstract public class ConfigurationManager {
     static public void setMERG() {
         log.debug("setMERG");
         options = new String[]{MERGCBUS, OPENLCB, RAWCAN, TEST};
+    }
+
+    /**
+     * Set the list of protocols to start with SPROG.
+     */
+    static public void setSPROG() {
+        log.debug("setSPROG");
+        options = new String[]{SPROGCBUS};
     }
 
     public ConfigurationManager(CanSystemConnectionMemo memo) {
