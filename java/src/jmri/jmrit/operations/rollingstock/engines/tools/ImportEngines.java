@@ -4,7 +4,12 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.text.MessageFormat;
+
 import javax.swing.JOptionPane;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -16,8 +21,6 @@ import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.rollingstock.engines.EngineModels;
 import jmri.jmrit.operations.setup.Control;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This routine will import engines into the operation database.
@@ -134,12 +137,12 @@ public class ImportEngines extends ImportRollingStock {
             } else {
                 inputLine = line.split("\\s+"); // NOI18N
             }
-            if (inputLine.length < 1 || line.equals("")) {
+            if (inputLine.length < 1 || line.isEmpty()) {
                 log.debug("Skipping blank line");
                 continue;
             }
             int base = 1;
-            if (comma || !inputLine[0].equals("")) {
+            if (comma || !inputLine[0].isEmpty()) {
                 base--; // skip over any spaces at start of line
             }
 
@@ -159,19 +162,19 @@ public class ImportEngines extends ImportRollingStock {
 
                 log.debug("Checking engine number ({}) road ({}) model ({}) length ({})", engineNumber, engineRoad,
                         engineModel, engineLength); // NOI18N
-                if (engineNumber.trim().equals("")) {
+                if (engineNumber.trim().isEmpty()) {
                     log.info("Import line {} missing engine number", lineNum);
                     break;
                 }
-                if (engineRoad.trim().equals("")) {
+                if (engineRoad.trim().isEmpty()) {
                     log.info("Import line {} missing engine road", lineNum);
                     break;
                 }
-                if (engineModel.trim().equals("")) {
+                if (engineModel.trim().isEmpty()) {
                     log.info("Import line {} missing engine model", lineNum);
                     break;
                 }
-                if (engineLength.trim().equals("")) {
+                if (engineLength.trim().isEmpty()) {
                     log.info("Import line {} missing engine length", lineNum);
                     break;
                 }
@@ -330,7 +333,7 @@ public class ImportEngines extends ImportRollingStock {
                 }
                 Location location = InstanceManager.getDefault(LocationManager.class).getLocationByName(engineLocation);
                 Track track = null;
-                if (location == null && !engineLocation.equals("")) {
+                if (location == null && !engineLocation.isEmpty()) {
                     JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
                             .getMessage("EngineLocationDoesNotExist"),
                             new Object[]{
@@ -349,7 +352,7 @@ public class ImportEngines extends ImportRollingStock {
                         break;
                     }
                 }
-                if (location != null && !engineTrack.equals("")) {
+                if (location != null && !engineTrack.isEmpty()) {
                     track = location.getTrackByName(engineTrack, null);
                     if (track == null) {
                         JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
@@ -405,7 +408,7 @@ public class ImportEngines extends ImportRollingStock {
                 engine.setLength(engineLength);
                 // does this model already have a type?
                 if (engine.getTypeName().equals(Engine.NONE)) {
-                    if (!engineType.equals("")) {
+                    if (!engineType.isEmpty()) {
                         engine.setTypeName(engineType);
                     } else {
                         engine.setTypeName(DEFAULT_ENGINE_TYPE);
@@ -413,7 +416,7 @@ public class ImportEngines extends ImportRollingStock {
                 }
                 // does this model already have a HP?
                 if (engine.getHp().equals(Engine.NONE)) {
-                    if (!engineHp.equals("")) {
+                    if (!engineHp.isEmpty()) {
                         engine.setHp(engineHp);
                     } else {
                         engine.setHp(DEFAULT_ENGINE_HP);
@@ -426,7 +429,7 @@ public class ImportEngines extends ImportRollingStock {
                 engine.setOwner(engineOwner);
                 engine.setBuilt(engineBuilt);
                 // consist?
-                if (!engineConsistName.equals("")) {
+                if (!engineConsistName.isEmpty()) {
                     Consist consist = engineManager.newConsist(engineConsistName);
                     engine.setConsist(consist);
                 }
@@ -489,7 +492,7 @@ public class ImportEngines extends ImportRollingStock {
                 } else {
                     // log.debug("No location for engine ("+engineRoad+" "+engineNumber+")");
                 }
-            } else if (!line.equals("")) {
+            } else if (!line.isEmpty()) {
                 log.info("Engine import line " + lineNum + " missing attributes: " + line);
                 JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("ImportMissingAttributes"),
                         new Object[]{lineNum}), Bundle.getMessage("EngineAttributeMissing"),

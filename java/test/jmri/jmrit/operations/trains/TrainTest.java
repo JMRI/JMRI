@@ -1,5 +1,10 @@
 package jmri.jmrit.operations.trains;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
@@ -8,13 +13,7 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.locations.schedules.Schedule;
 import jmri.jmrit.operations.locations.schedules.ScheduleItem;
 import jmri.jmrit.operations.locations.schedules.ScheduleManager;
-import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.rollingstock.cars.CarLoad;
-import jmri.jmrit.operations.rollingstock.cars.CarLoads;
-import jmri.jmrit.operations.rollingstock.cars.CarManager;
-import jmri.jmrit.operations.rollingstock.cars.CarRoads;
-import jmri.jmrit.operations.rollingstock.cars.CarTypes;
-import jmri.jmrit.operations.rollingstock.cars.Kernel;
+import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.rollingstock.engines.Consist;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
@@ -24,10 +23,6 @@ import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.JUnitOperationsUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for the Operations Trains class Last manually cross-checked on 20090131
@@ -701,6 +696,7 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertTrue(train.build());
         Assert.assertTrue("Train should build, two location route", train.isBuilt());
 
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     @Test
@@ -735,6 +731,8 @@ public class TrainTest extends OperationsTestCase {
         Control.fullTrainOnly = false;
         Assert.assertTrue(train.build());
         Assert.assertTrue("Train should build, build doesn't require cars", train.isBuilt());
+        
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     @Test
@@ -780,6 +778,8 @@ public class TrainTest extends OperationsTestCase {
 
         Assert.assertTrue(train.build());
         Assert.assertTrue("Train should build, only needs a single engine", train.isBuilt());
+        
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     @Test
@@ -828,6 +828,8 @@ public class TrainTest extends OperationsTestCase {
 
         Assert.assertEquals("e1 should be assigned to train", train, e1.getTrain());
         Assert.assertEquals("e2 should be assigned to train", train, e2.getTrain());
+        
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     @Test
@@ -880,6 +882,8 @@ public class TrainTest extends OperationsTestCase {
         e4.setConsist(c);
         Assert.assertTrue(train.build());
         Assert.assertTrue("Train should build, four engines available", train.isBuilt());
+        
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     @Test
@@ -932,6 +936,8 @@ public class TrainTest extends OperationsTestCase {
         c.delete(e4);
         Assert.assertTrue(train.build());
         Assert.assertTrue("Train should build, three engines available", train.isBuilt());
+        
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     // test siding and yard moves
@@ -1476,6 +1482,7 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertFalse(t1.build());
         Assert.assertFalse("need car doesn't have a track assignment", t1.isBuilt());
 
+        JUnitOperationsUtil.checkOperationsShutDownTask();
         // end testSidingsYards
     }
 
@@ -1958,7 +1965,8 @@ public class TrainTest extends OperationsTestCase {
         train1.move();
         Assert.assertEquals("Train 1 terminated", Train.TERMINATED, getTrainStatus(train1));
         Assert.assertEquals("Train 1 terminated", Train.CODE_TERMINATED, train1.getStatusCode());
-
+        
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     /**
@@ -2307,6 +2315,7 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertEquals("c13 track from staging terminated", "Chelmsford Freight 2", c13.getTrackName());
         Assert.assertEquals("c13 load from staging terminated", "Tin", c13.getLoadName());
 
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     @Test
@@ -2980,6 +2989,7 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertEquals("Caboose road", "UP", train1.getCabooseRoad());
         Assert.assertEquals("Engine road", "UP", train1.getEngineRoad());
 
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     @Test
@@ -3579,6 +3589,8 @@ public class TrainTest extends OperationsTestCase {
 
         Assert.assertEquals("e1 location 24", "Boston Engine Yard", e1.getTrackName());
         Assert.assertEquals("e2 location 24", "Boston Engine Yard", e2.getTrackName());
+        
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     @Test
@@ -3956,7 +3968,7 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertEquals("e8 destination 5", "", e8.getDestinationTrackName());
 
         train1.reset();
-
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     @Test
@@ -4414,6 +4426,8 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertEquals("e6 location", "Harvard Yard 1", e6.getTrackName());
         Assert.assertEquals("e7 location", "Harvard Yard 1", e7.getTrackName());
         Assert.assertEquals("e8 location", "Harvard Yard 1", e8.getTrackName());
+        
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     @Test

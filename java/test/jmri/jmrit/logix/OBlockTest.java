@@ -257,8 +257,9 @@ public class OBlockTest {
 
     @After
     public void tearDown() {
-        JUnitUtil.tearDown();
         blkMgr = null;
+        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
+        JUnitUtil.tearDown();
     }
 
 }

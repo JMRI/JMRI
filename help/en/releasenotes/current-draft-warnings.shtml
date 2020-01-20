@@ -1,22 +1,8 @@
 
     <!-- contains new warnings for the release under development -->
-
-    <li>The system names for Routes are required to start with "IO" to avoid
-    	ambiguity or confusion with Reporters (the system names of which start
-    	with "IR"). JMRI 4.19.2 or later should automatically rename Routes
-    	correctly, but it is possible that references to those Routes will need
-    	to be updated.
-	  </li>
-    <li>The Logix system names for LRoutes (RTX*) and Sensor Groups (SYS) now start with
-    "IX:".  These changes are <strong>NOT</strong> backward compatible.  Once a panel
-    xml file has been saved with the new names, opening it in previous versions of JMRI will
-    result in errors.
-      <ul>
-        <li>The RTXINITIALIZER Logix will fail with an error message.</li>
-        <li>The Sensor groups will not be active.  Attempting to edit them will result
-        in a Java null pointer exception.</li>
-      </ul>
-    To recover, delete IX:SYS and/or IX:RTXINITIALIZER from the Logix table and re-create
-    them.  Hint:  Use the Logix table Select >> Browse feature to get the current contents
-    before deleting them.
+    <li>
+        <code>Manager.getSystemNameArray()</code> has been removed after being 
+        deprecated for two years. Please migrate to using
+        <code>Manager.getNamedBeanSet()</code> instead.  If you really
+        must have an array, use <code>Manager.getNamedBeanSet().toSet()</code>
     </li>

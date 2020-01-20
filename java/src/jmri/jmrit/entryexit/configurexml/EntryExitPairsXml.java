@@ -48,6 +48,7 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
         }
 
         element.addContent(new Element("cleardown").addContent("" + p.getClearDownOption()));  // NOI18N
+        element.addContent(new Element("overlap").addContent("" + p.getOverlapOption()));  // NOI18N
         if (p.getDispatcherIntegration()) {
             element.addContent(new Element("dispatcherintegration").addContent("yes"));  // NOI18N
         }
@@ -160,6 +161,12 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
         try {
             String clearoption = shared.getChild("cleardown").getText();  // NOI18N
             eep.setClearDownOption(Integer.parseInt(clearoption));
+        } catch (java.lang.NullPointerException e) {
+            //Considered normal if it doesn't exist
+        }
+        try {
+            String overlapoption = shared.getChild("overlap").getText();  // NOI18N
+            eep.setOverlapOption(Integer.parseInt(overlapoption));
         } catch (java.lang.NullPointerException e) {
             //Considered normal if it doesn't exist
         }

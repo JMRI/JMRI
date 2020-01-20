@@ -6,7 +6,7 @@
     <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>4.19.2-SNAPSHOT</version>
+    <version>4.19.3-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
@@ -416,8 +416,11 @@
                         <exclude>**.PackageTest</exclude>
                         <!-- ignore since the test is not intended to be normally used -->
                         <exclude>jmri.util.FailTest</exclude>
+			<!-- exclude the archunit tests from automatic execution -->
+                        <exclude>jmri.ArchitectureTest</exclude>
+			<!-- exclude the line endings tests from automatic execution -->
+                        <exclude>jmri.util.FileLineEndings</exclude>
                         <!-- ignore since base classes for other tests -->
-                        <exclude>jmri.util.SwingTestCase</exclude>
                         <exclude>jmri.jmrit.operations.OperationsTestCase</exclude>
                         <exclude>jmri.jmrit.operations.OperationsSwingTestCase</exclude>
                         <!-- exclude since intentionally waits forever -->
@@ -614,7 +617,7 @@
                         <link>http://docs.oracle.com/javase/8/docs/api/</link>
                         <link>http://java.sun.com/products/javacomm/reference/api/</link>
                         <link>http://www.jdom.org/docs/apidocs/</link>
-                        <link>http://javacsv.sourceforge.net/</link>
+                        <link>https://commons.apache.org/proper/commons-csv/apidocs/</link>
                         <link>https://static.javadoc.io/com.fasterxml.jackson.core/jackson-databind/${jackson.version}/</link>
                         <link>http://logging.apache.org/log4j/1.2/apidocs/</link>
                         <link>http://download.java.net/media/java3d/javadoc/1.3.2/</link>
@@ -700,6 +703,8 @@
                                 <File>jmri/jmris/srcp/parser/SRCPParserTreeConstants.class</File>
                                 <File>jmri/jmrit/audio/AudioSource.class</File>
                                 <File>jmri/jmrix/srcp/parser/SRCPClientParserTreeConstants.class</File>
+                                <!-- exclude the archunit check -->
+				<File>jmri.ArchitectureCheck.class</File>
                                 <!-- deprecated classes -->
                                 <File>jmri/jmrix/loconet/AbstractAlmImplementation.class</File>
                                 <!-- Exclude files meant to check SpotBugs. -->
@@ -1240,9 +1245,9 @@
             <version>1.5</version>
         </dependency>
         <dependency>
-            <groupId>net.sourceforge.javacsv</groupId>
-            <artifactId>javacsv</artifactId>
-            <version>2.0</version>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-csv</artifactId>
+            <version>1.7</version>
         </dependency>
         <dependency>
             <groupId>org.openlcb</groupId>
@@ -1252,7 +1257,7 @@
         <dependency>
             <groupId>org.usb4java</groupId>
             <artifactId>usb4java-javax</artifactId>
-            <version>1.2.0</version>
+            <version>1.3.0</version>
         </dependency>
         <!-- SpotBugs annotations -->
         <dependency>

@@ -731,9 +731,11 @@ class Diesel3Sound extends EngineSound {
                 // queue up the transition sound buffer
                 _notch = _parent.getNotch(new_notch);
                 _sound.queueBuffer(transition_buf);
-                try {
-                    sleep(SoundBite.calcLength(transition_buf) - 50);
-                } catch (InterruptedException e) {
+                if (SoundBite.calcLength(transition_buf) > 50) {
+                    try {
+                        sleep(SoundBite.calcLength(transition_buf) - 50);
+                    } catch (InterruptedException e) {
+                    }
                 }
             }
             return;

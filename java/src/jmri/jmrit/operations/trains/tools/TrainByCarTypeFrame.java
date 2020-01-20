@@ -392,7 +392,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
             // check to see if train schedule allows delivery
             if (attribute.equals(TRAIN_SCHEDULE) &&
                     si.getTypeName().equals(carType) &&
-                    (si.getSetoutTrainScheduleId().equals("") ||
+                    (si.getSetoutTrainScheduleId().isEmpty() ||
                             InstanceManager.getDefault(TrainScheduleManager.class).getTrainScheduleActiveId()
                                     .equals(si.getSetoutTrainScheduleId()))) {
                 return true;

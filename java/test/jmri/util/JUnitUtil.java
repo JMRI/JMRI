@@ -1375,20 +1375,6 @@ public class JUnitUtil {
     /**
      * Press a button after finding it in a container by title.
      * 
-     * @param clazz an object no longer used
-     * @param frame container containing button to press
-     * @param text button title
-     * @return the pressed button
-     * @deprecated use {@link #pressButton(Container, String)} instead
-     */
-    @Deprecated // for removal after 4.18
-    public static AbstractButton pressButton(SwingTestCase clazz, Container frame, String text) {
-        return pressButton(frame, text);
-    }
-
-    /**
-     * Press a button after finding it in a container by title.
-     * 
      * @param frame container containing button to press
      * @param text button title
      * @return the pressed button
