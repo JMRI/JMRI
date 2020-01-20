@@ -1,7 +1,7 @@
 package jmri.jmrit.ctc.ctcserialdata;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.lang.reflect.Field;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,7 +15,7 @@ import javax.swing.ButtonGroup;
 public class ProjectsCommonSubs {
     static final public String CSV_SEPARATOR = ","; // NOI18N
     static final public String SSV_SEPARATOR = ";"; // NOI18N
-    
+
     static public ArrayList<String> getArrayListFromCSV(String csvString) { return helper1(csvString, CSV_SEPARATOR);}
     static public ArrayList<String> getArrayListFromSSV(String ssvString) { return helper1(ssvString, SSV_SEPARATOR); }
 //  IMHO "split" should return an array size of 0 if passed "".  One can argue that.  Here I compensate for that situation:
@@ -31,7 +31,7 @@ public class ProjectsCommonSubs {
         while (returnArray.size() < returnArrayListSize) returnArray.add("");
         return returnArray;
     }
-    
+
     static public int getIntFromStringNoThrow(String aString, int defaultValueIfProblem) {
         int returnValue = defaultValueIfProblem;    // Default if error
         try { returnValue = Integer.parseInt(aString); } catch (NumberFormatException e) {}
@@ -40,33 +40,29 @@ public class ProjectsCommonSubs {
 
     static public String constructCSVStringFromArrayList(ArrayList<String> stringArrayList) { return constructSeparatorStringFromArray(stringArrayList, CSV_SEPARATOR); }
     static public String constructSSVStringFromArrayList(ArrayList<String> stringArrayList) { return constructSeparatorStringFromArray(stringArrayList, ProjectsCommonSubs.SSV_SEPARATOR); }
-    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION", justification = "I don't want to introduce bugs, CPU no big deal here.")
+
     static private String constructSeparatorStringFromArray(ArrayList<String> stringArrayList, String separator) {
-        String returnString = "";
-        if (stringArrayList.size() > 0) { // Safety:
-            returnString = stringArrayList.get(0);
-            if (returnString == null) returnString = "";        // Safety
-            for (int index = 1; index < stringArrayList.size(); index++) {
-                String gottenString = stringArrayList.get(index);
-                if (gottenString == null) gottenString = "";    // Safety
-                returnString += separator + gottenString;
+        StringBuilder returnString = new StringBuilder("");
+        stringArrayList.forEach((str) -> {
+            if (str == null) {
+                str = "";
             }
-        }
-        return returnString;
-    }
-    
-    public static String removeFileExtension(String filename) {
-        final int lastIndexOf = filename.lastIndexOf('.');
-        return lastIndexOf >= 1 ? filename.substring(0, lastIndexOf) : filename;  
+            if (returnString.length() > 0) {
+                returnString.append(separator);
+            }
+            returnString.append(str);
+        });
+        return returnString.toString();
     }
 
-//  Regarding "SuppressFBWarn":    
-//  Nothing I can find says it returns "null" in any of these lines.
-//  So either Java's documentation is wrong, or SpotBugs is wrong.  I'll let
-//  someone in the future deal with this, since it should never happen:    
-    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Nothing is documented as returning null")
+    public static String removeFileExtension(String filename) {
+        final int lastIndexOf = filename.lastIndexOf('.');
+        return lastIndexOf >= 1 ? filename.substring(0, lastIndexOf) : filename;
+    }
+
     public static String getFilenameOnly(String path) {
-        return Paths.get(path).getFileName().toString(); 
+        Path tempPath = Paths.get(path).getFileName();
+        return tempPath == null ? "" : tempPath.toString();
     }
 
     public static String addExtensionIfMissing(String path, String missingExtension) {
@@ -77,17 +73,17 @@ public class ProjectsCommonSubs {
 
     public static String changeExtensionTo(String path, String newExtension) {
         return addExtensionIfMissing(removeFileExtension(path), newExtension);
-    }    
-    
+    }
+
     public static boolean isNullOrEmptyString(String aString) {
         return aString == null || aString.trim().length() == 0;
     }
-    
+
     public static String getSafeTrimmedString(String aString) {
         if (aString == null) return "";
         return aString.trim();
     }
-    
+
 //  If you used "CommonSubs.numberButtonGroup" above to setup the button group, then
 //  you can call this routine to get the switch value as an int value,
 //  since exception "NumberFormatException" should NEVER be thrown!
@@ -98,7 +94,7 @@ public class ProjectsCommonSubs {
     public static String getButtonSelectedString(ButtonGroup buttonGroup) {
         return buttonGroup.getSelection().getActionCommand();
     }
-    
+
     public static ArrayList<Field> getAllPartialVariableNameStringFields(String partialVariableName, Field[] fields) {
         ArrayList <Field> stringFields = new ArrayList<>();
         for (Field field : fields) {
@@ -110,4 +106,6 @@ public class ProjectsCommonSubs {
         }
         return stringFields;
     }
+
+//     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ProjectsCommonSubs.class);
 }
