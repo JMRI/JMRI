@@ -1,3 +1,4 @@
+<!-- SidebarInstall.shtml -->
 <!-- Sidebar Part to list installation and setup files -->
 
 <dt><h3 style="padding-left: 1em;"><a href="/help/en/html/setup">JMRI Setup and Installation</a></h3></dt>
@@ -11,4 +12,4 @@
 		    </ul>
 		</dd>
         
-<!-- /sidebar-short.shtml -->
+<!-- /SidebarInstall.shtml -->
