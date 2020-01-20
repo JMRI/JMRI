@@ -1,18 +1,19 @@
 package jmri.jmrix.bachrus;
 
-import java.io.FileOutputStream;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import javax.swing.JFileChooser;
 import jmri.util.FileUtil;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVPrinter;
+import org.apache.commons.csv.CSVRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,7 +30,7 @@ public class DccSpeedProfile {
     protected float _max;
     // index of last valid data point, -1 means no data
     protected int _lastPoint;
-    protected List<String> dccProfileData = new ArrayList<String>();
+    protected List<CSVRecord> dccProfileData;
 
     public DccSpeedProfile(int len) {
         _length = len;
@@ -91,7 +92,7 @@ public class DccSpeedProfile {
         return _lastPoint;
     }
 
-    public static void printHeading(PrintWriter p, int address) {
+    public static void printHeading(CSVPrinter p, int address) throws IOException {
         if (p != null) {
             Date today;
             String result;
@@ -110,71 +111,79 @@ public class DccSpeedProfile {
 
     // Save data as CSV
     public static void export(DccSpeedProfile sp, int address, String dirString, int units) {
-        openExportFile();
+        try {
+            openExportFile();
 
-        String unitsString;
-        if (units == Speed.MPH) {
-            unitsString = "MPH";
-        } else {
-            unitsString = "KPH";
-        }
-        // Save rows
-        if ((out != null) && (p != null)) {
-            printHeading(p, address);
-            p.print("Step,Speed(" + dirString + " " + unitsString + ")");
-            p.println();
-            // for each data point
-            for (int i = 0; i < sp.getLength(); i++) {
-                p.print(i);
-                p.print(",");
-                if (units == Speed.MPH) {
-                    p.println(Speed.kphToMph(sp.getPoint(i)));
-                } else {
-                    p.println(sp.getPoint(i));
+            String unitsString;
+            if (units == Speed.MPH) {
+                unitsString = "MPH";
+            } else {
+                unitsString = "KPH";
+            }
+            // Save rows
+            if (p != null) {
+                printHeading(p, address);
+                p.print("Step");
+                p.print("Speed(" + dirString + " " + unitsString + ")");
+                p.println();
+                // for each data point
+                for (int i = 0; i < sp.getLength(); i++) {
+                    p.print(i);
+                    if (units == Speed.MPH) {
+                        p.print(Speed.kphToMph(sp.getPoint(i)));
+                    } else {
+                        p.print(sp.getPoint(i));
+                    }
+                    p.println();
                 }
             }
+            closeExportFile();
+        } catch (IOException ex) {
+            log.error("Error exporting speed profile", ex);
         }
-        closeExportFile();
     }
 
     public static void export(DccSpeedProfile[] sp, int address, int units) {
-        openExportFile();
+        try {
+            openExportFile();
 
-        String unitsString;
-        if (units == Speed.MPH) {
-            unitsString = "MPH";
-        } else {
-            unitsString = "KPH";
-        }
-        // Save rows
-        if ((out != null) && (p != null)) {
-            printHeading(p, address);
-            p.print("Step,Speed(fwd " + unitsString + "),Speed(rev " + unitsString + ")");
-            p.println();
-            // for each data point
-            for (int i = 0; i < sp[0].getLength(); i++) {
-                p.print(i);
-                // for each profile
-                for (int j = 0; j < sp.length; j++) {
-                    p.print(",");
-                    if (units == Speed.MPH) {
-                        p.print(Speed.kphToMph(sp[j].getPoint(i)));
-                    } else {
-                        p.print(sp[j].getPoint(i));
-                    }
-                }
-                p.println();
+            String unitsString;
+            if (units == Speed.MPH) {
+                unitsString = "MPH";
+            } else {
+                unitsString = "KPH";
             }
+            // Save rows
+            if (p != null) {
+                printHeading(p, address);
+                p.print("Step");
+                p.print("Speed(fwd " + unitsString + ")");
+                p.print("Speed(rev " + unitsString + ")");
+                p.println();
+                // for each data point
+                for (int i = 0; i < sp[0].getLength(); i++) {
+                    p.print(i);
+                    // for each profile
+                    for (DccSpeedProfile item : sp) {
+                        if (units == Speed.MPH) {
+                            p.print(Speed.kphToMph(item.getPoint(i)));
+                        } else {
+                            p.print(item.getPoint(i));
+                        }
+                    }
+                    p.println();
+                }
+            }
+            closeExportFile();
+        } catch (IOException ex) {
+            log.error("Error exporting speed profile", ex);
         }
-        closeExportFile();
     }
 
-    private static FileOutputStream out = null;
-    private static PrintWriter p = null;
+    private static CSVPrinter p = null;
 
     private static void openExportFile() {
         JFileChooser fileChooser = new JFileChooser(FileUtil.getUserFilesPath());
-        String fileName = null;
 
         // get filename
         // start at current file, show dialog
@@ -182,18 +191,14 @@ public class DccSpeedProfile {
 
         // handle selection or cancel
         if (retVal == JFileChooser.APPROVE_OPTION) {
-            fileName = fileChooser.getSelectedFile().getPath();
+            File file = fileChooser.getSelectedFile();
             try {
                 // Create a print writer based on the file, so we can print to it.
-                out = new FileOutputStream(fileName);
-                p = new PrintWriter(out, true);
+                p = new CSVPrinter(new FileWriter(file), CSVFormat.DEFAULT);
             } catch (IOException ex) {
                 if (log.isDebugEnabled()) {
                     log.debug("Problem creating output stream " + ex);
                 }
-            }
-            if (out == null) {
-                log.error("Null File Output Stream");
             }
             if (p == null) {
                 log.error("Null Print Writer");
@@ -201,17 +206,10 @@ public class DccSpeedProfile {
         }
     }
 
-    private static void closeExportFile() {
-        try {
-            if (p != null) {
-                p.flush();
-                p.close();
-            }
-            if (out != null) {
-                out.close();
-            }
-        } catch (IOException ex) {
-            log.error("Exception writing CSV " + ex);
+    private static void closeExportFile() throws IOException {
+        if (p != null) {
+            p.flush();
+            p.close();
         }
     }
 
@@ -223,7 +221,7 @@ public class DccSpeedProfile {
             return -1;
         }
 
-        String secondLine = dccProfileData.get(1);
+        String secondLine = dccProfileData.get(1).toString();
         if (!(secondLine.contains("MPH") || secondLine.contains("KPH"))) {
             log.error("Bad 'units' format on line 2 of reference speed profile file");
             clear();
@@ -231,7 +229,7 @@ public class DccSpeedProfile {
         }
         for (int i = 2; i < dccProfileData.size(); i++) {
             try {
-                String value = dccProfileData.get(i).split("\\s*,\\s*")[1];
+                String value = dccProfileData.get(i).get(1);
                 float speed = Float.valueOf(value);
                 // speed values from the speedometer are calc'd and stored in 
                 // the DccSpeedProfile object as KPH so need to convert
@@ -259,10 +257,9 @@ public class DccSpeedProfile {
 
         // handle selection or cancel
         if (retVal == JFileChooser.APPROVE_OPTION) {
-            String selectedPath = fileChooser.getSelectedFile().getPath();
-            Path filePath = Paths.get(selectedPath);
+            File file = fileChooser.getSelectedFile();
             try {
-                dccProfileData = Files.readAllLines(filePath);
+                dccProfileData = CSVParser.parse(file, StandardCharsets.UTF_8, CSVFormat.DEFAULT).getRecords();
             } catch (IOException ex) {
                 log.error("Failed to read reference profile file " + ex);
             }
