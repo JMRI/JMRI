@@ -1,6 +1,7 @@
 package jmri.jmrit.timetable.swing;
 
 import java.awt.GraphicsEnvironment;
+import java.beans.PropertyVetoException;
 import javax.swing.JPopupMenu;
 import javax.swing.JMenuItem;
 import jmri.util.JUnitUtil;
@@ -219,7 +220,7 @@ public class TimeTableFrameTest {
         _jtxt = new JTextFieldOperator(_jfo, 0);
         _jtxt.clickMouse();
         new JButtonOperator(_jfo, Bundle.getMessage("ButtonUpdate")).doClick();  // NOI18N
-        Assert.assertEquals(new JLabelOperator(_jfo, 6).getText(), "6.60 feet");
+        Assert.assertEquals("6.60 feet", new JLabelOperator(_jfo, 6).getText());
 
         // Station:  Distance and staging track.
         _jto.clickOnPath(_jto.findPath(new String[]{"Sample", "Segments", "Mainline", "Alpha"}));  // NOI18N
@@ -300,12 +301,12 @@ public class TimeTableFrameTest {
         // Indirect layout listener veto tests
         try {
             jmri.ScaleManager.getScale("N").setScaleRatio(500.0);
-        } catch (java.beans.PropertyVetoException ex) {
+        } catch (PropertyVetoException ex) {
         }
 
         try {
             jmri.ScaleManager.getScale("UK-N").setScaleRatio(150.0);
-        } catch (Exception ex) {
+        } catch (PropertyVetoException ex) {
         }
     }
 
