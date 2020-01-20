@@ -93,6 +93,7 @@ public class CbusNodeEditEventFrameTest {
     @After
     public void tearDown() {
         if (!GraphicsEnvironment.isHeadless()) {
+            memo.dispose();
             t.dispose();
             mainpane.dispose();
             nodeModel.dispose();
