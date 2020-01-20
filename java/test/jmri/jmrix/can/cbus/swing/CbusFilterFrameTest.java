@@ -149,7 +149,9 @@ public class CbusFilterFrameTest extends jmri.util.JmriJFrameTestBase {
     @Override
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
-        _testConsole.dispose();
+        if(!GraphicsEnvironment.isHeadless()){
+            _testConsole.dispose();
+        }
         super.tearDown();
     }
 
