@@ -18,13 +18,13 @@ If you make a change in this directory (add/change/remove a file), please make c
 - nbproject/ide-file-targets.xml, nbproject/project.xml - used by NetBeans
 - .factorypath - used by Visual Studio Code
 
-On macOS, most of these changes can be affected with:
+On macOS, most of these changes can be affected with (Javadoc links will need to fixed manually):
 ```
 find . -type f -not -path './.git/*' -exec gsed -i 's/OLD_JAR_NAME/NEW_JAR_NAME/g' {} \;
 ```
-(you may need to install gsed using [Homebrew](http://brew.sh)), although this probably doesn't fix the Javadoc links.
+(you may need to install gsed using [Homebrew](http://brew.sh)) by running `brew install gnu-sed`)
 
-On Linux, these same changes can be affected with:
+On Linux, these same changes can be affected with (Javadoc links will need to fixed manually):
 ```
 find . -type f -not -path './.git/*' -exec sed -i 's/OLD_JAR_NAME/NEW_JAR_NAME/g' {} \;
 ```
@@ -65,9 +65,10 @@ After that, add and commit the additional files that were created within lib/
 - provides Apache Commons string utilities
 - from https://commons.apache.org/proper/commons-text/
 
-##### javacsv.jar
-- version 2.0 of 2006-12-12
-- from <http://javacsv.sourceforge.net/>
+##### commons-csv-1.7.jar
+- version 1.7
+- provides Apache Commons CSV file parsing
+- from https://commons.apache.org/proper/commons-csv/
 
 ##### jhall.jar
 - version 2.03
@@ -321,6 +322,11 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 
 
 ## Older, no longer present:
+
+##### javacsv.jar
+- version 2.0
+- from http://javacsv.sourceforge.net
+- No longer used as of JMRI 4.19.3
 
 ##### crimson.jar    
 - version 1.1.3

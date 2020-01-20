@@ -1,6 +1,9 @@
 package jmri.jmrix.rps.swing.debugger;
 
 import java.awt.FlowLayout;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -19,6 +22,9 @@ import jmri.jmrix.rps.MeasurementListener;
 import jmri.jmrix.rps.Reading;
 import jmri.jmrix.rps.ReadingListener;
 import jmri.jmrix.rps.RpsSystemConnectionMemo;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -138,17 +144,12 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
         // add controls at bottom
         p = new JPanel();
 
-        mode = new JComboBox<String>(new String[]{"From time fields", "from X,Y,Z fields", "from time file", "from X,Y,Z file"});
+        mode = new JComboBox<>(new String[]{"From time fields", "from X,Y,Z fields", "from time file", "from X,Y,Z file"});
         p.add(mode);
         p.setLayout(new FlowLayout());
 
         doButton = new JButton("Do Once");
-        doButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                doOnce();
-            }
-        });
+        doButton.addActionListener(e -> doOnce());
         p.add(doButton);
         getContentPane().add(p);
 
@@ -175,91 +176,97 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
      * Invoked by button to do one cycle
      */
     void doOnce() {
-        switch (mode.getSelectedIndex()) {
-            default: // should not happen
-                log.error("Did not expect selected mode {}", mode.getSelectedIndex());
-                return;
-            case 0: // From time fields
-                doReadingFromTimeFields();
-                return;
-            case 1: // From X,Y,Z fields
-                doMeasurementFromPositionFields();
-                return;
-            case 2: // From time file
-                try {
+        try {
+            switch (mode.getSelectedIndex()) {
+                case 0: // From time fields
+                    doReadingFromTimeFields();
+                    break;
+                case 1: // From X,Y,Z fields
+                    doMeasurementFromPositionFields();
+                    break;
+                case 2: // From time file
                     doLoadReadingFromFile();
                     doReadingFromTimeFields();
-                } catch (java.io.IOException e) {
-                    log.error("exception ", e);
-                }
-                return;
-            case 3: // From X,Y,Z file
-                try {
+                    break;
+                case 3: // From X,Y,Z file
                     doLoadMeasurementFromFile();
-                } catch (java.io.IOException e) {
-                    log.error("exception ", e);
-                }
-                return;
-
+                    break;
+                default: // should not happen
+                    log.error("Did not expect selected mode {}", mode.getSelectedIndex());
+            }
+        } catch (IOException e) {
+            log.error("exception ", e);
         }
-        // Should not actually get here
     }
 
-    void doLoadReadingFromFile() throws java.io.IOException {
+    void doLoadReadingFromFile() throws IOException {
         if (readingInput == null) {
-            setupReadingFile();
+            getParser(readingInput, readingFileChooser);
         }
 
         // get and load a line
-        if (!readingInput.readRecord()) {
+        if (readingInput.getRecords().isEmpty()) {
             // read failed, try once to get another file
-            setupReadingFile();
-            if (!readingInput.readRecord()) {
-                throw new java.io.IOException("no valid file");
+            getParser(readingInput, readingFileChooser);
+            if (readingInput.getRecords().isEmpty()) {
+                throw new IOException("no valid file");
             }
         }
+        CSVRecord readingRecord = readingInput.getRecords().get(0);
+
         // item 0 is the ID, not used right now
-        for (int i = 0; i < Math.min(NUMSENSORS, readingInput.getColumnCount() + 1); i++) {
-            timep.times[i].setText(readingInput.get(i + 1));
+        for (int i = 0; i < Math.min(NUMSENSORS, readingRecord.size() + 1); i++) {
+            timep.times[i].setText(readingRecord.get(i + 1));
         }
     }
 
-    void setupReadingFile() throws java.io.IOException {
-        // get file
-        readingInput = null;
+    /**
+     *
+     * @throws IOException if unable to read file
+     * @deprecated since 4.19.3; use
+     * {@link #getParser(org.apache.commons.csv.CSVParser, javax.swing.JFileChooser)}
+     * instead
+     */
+    @Deprecated
+    void setupReadingFile() throws IOException {
+        getParser(readingInput, readingFileChooser);
+    }
 
-        readingFileChooser.rescanCurrentDirectory();
-        int retVal = readingFileChooser.showOpenDialog(this);
+    private void getParser(CSVParser parser, JFileChooser chooser) throws IOException {
+        // get file
+        parser = null;
+
+        chooser.rescanCurrentDirectory();
+        int retVal = chooser.showOpenDialog(this);
 
         // handle selection or cancel
-        if (retVal != JFileChooser.APPROVE_OPTION) {
-            return;  // give up if no file selected
+        if (retVal == JFileChooser.APPROVE_OPTION) {
+            // create and keep reader
+            Reader reader = new FileReader(chooser.getSelectedFile());
+            parser = new CSVParser(reader, CSVFormat.DEFAULT.withSkipHeaderRecord());
         }
-        // create and keep reader
-        java.io.Reader reader = new java.io.FileReader(
-                readingFileChooser.getSelectedFile());
-        readingInput = new com.csvreader.CsvReader(reader);
     }
 
-    void doLoadMeasurementFromFile() throws java.io.IOException {
+    void doLoadMeasurementFromFile() throws IOException {
         if (measurementInput == null) {
-            setupMeasurementFile();
+            getParser(measurementInput, measurementFileChooser);
         }
 
         // get and load a line
-        if (!measurementInput.readRecord()) {
+        if (measurementInput.getRecords().isEmpty()) {
             // read failed, try once to get another file
-            setupMeasurementFile();
-            if (!measurementInput.readRecord()) {
-                throw new java.io.IOException("no valid file");
+            getParser(measurementInput, measurementFileChooser);
+            if (measurementInput.getRecords().isEmpty()) {
+                throw new IOException("no valid file");
             }
         }
+        CSVRecord measurementRecord = measurementInput.getRecords().get(0);
 
         // item 0 is the ID, not used right now
         Measurement m = new Measurement(null,
-                Double.valueOf(measurementInput.get(1)).doubleValue(),
-                Double.valueOf(measurementInput.get(2)).doubleValue(),
-                Double.valueOf(measurementInput.get(3)).doubleValue(),
+                Double.valueOf(measurementRecord.get(1)),
+                Double.valueOf(measurementRecord.get(2)),
+                Double.valueOf(measurementRecord.get(3)),
                 Engine.instance().getVSound(),
                 0,
                 "Data File"
@@ -269,21 +276,16 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
         Distributor.instance().submitMeasurement(m);
     }
 
-    void setupMeasurementFile() throws java.io.IOException {
-        // get file
-        measurementInput = null;
-
-        measurementFileChooser.rescanCurrentDirectory();
-        int retVal = measurementFileChooser.showOpenDialog(this);
-
-        // handle selection or cancel
-        if (retVal != JFileChooser.APPROVE_OPTION) {
-            return;  // give up if no file selected
-        }
-        // create and keep reader
-        java.io.Reader reader = new java.io.FileReader(
-                measurementFileChooser.getSelectedFile());
-        measurementInput = new com.csvreader.CsvReader(reader);
+    /**
+     *
+     * @throws IOException if unable to read file
+     * @deprecated since 4.19.3; use
+     * {@link #getParser(org.apache.commons.csv.CSVParser, javax.swing.JFileChooser)}
+     * instead
+     */
+    @Deprecated
+    void setupMeasurementFile() throws IOException {
+        getParser(measurementInput, measurementFileChooser);
     }
 
     Measurement lastPoint = null;
@@ -296,7 +298,7 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
         for (int i = 0; i <= NUMSENSORS; i++) {
             values[i] = 0.;
             if ((timep.times[i] != null) && !timep.times[i].getText().equals("")) {
-                values[i] = Double.valueOf(timep.times[i].getText()).doubleValue();
+                values[i] = Double.valueOf(timep.times[i].getText());
             }
         }
 
@@ -330,9 +332,9 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
         Reading r = new Reading(id.getText(), new double[]{0., 0., 0., 0.});
 
         Measurement m = new Measurement(r,
-                Double.valueOf(x.getText()).doubleValue(),
-                Double.valueOf(y.getText()).doubleValue(),
-                Double.valueOf(z.getText()).doubleValue(),
+                Double.valueOf(x.getText()),
+                Double.valueOf(y.getText()),
+                Double.valueOf(z.getText()),
                 Engine.instance().getVSound(),
                 0,
                 "Position Data"
@@ -354,11 +356,11 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
     }
 
     // to find and remember the input files
-    com.csvreader.CsvReader readingInput = null;
-    final javax.swing.JFileChooser readingFileChooser = new JFileChooser("rps/readings.csv");
+    CSVParser readingInput = null;
+    final JFileChooser readingFileChooser = new JFileChooser("rps/readings.csv");
 
-    com.csvreader.CsvReader measurementInput = null;
-    final javax.swing.JFileChooser measurementFileChooser = new JFileChooser("rps/positions.csv");
+    CSVParser measurementInput = null;
+    final JFileChooser measurementFileChooser = new JFileChooser("rps/positions.csv");
 
     private final static Logger log = LoggerFactory.getLogger(DebuggerFrame.class);
 
