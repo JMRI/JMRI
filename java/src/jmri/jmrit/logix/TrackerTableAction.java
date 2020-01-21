@@ -616,7 +616,7 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
             r = new JRadioButtonMenuItem(Bundle.getMessage("showAllTrackers"));
             r.addActionListener((ActionEvent e) -> _requirePaths = false);
             pathButtonGroup.add(r);
-            r.setSelected(_requirePaths);
+            r.setSelected(!_requirePaths);
             pathkMenu.add(r);
 
             r = new JRadioButtonMenuItem(Bundle.getMessage("showMostLikely"));
