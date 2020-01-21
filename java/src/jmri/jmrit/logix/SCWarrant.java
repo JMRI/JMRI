@@ -224,7 +224,7 @@ public class SCWarrant extends Warrant {
      */
     protected boolean isStartBlockOccupied() {
         int blockState = getBlockOrderAt(0).getBlock().getState();
-        return (blockState & Block.UNOCCUPIED) == Block.UNOCCUPIED;
+        return (blockState & Block.UNOCCUPIED) != Block.UNOCCUPIED;
     }
 
     protected synchronized void waitForStartblockToGetOccupied() {

@@ -159,6 +159,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
 
     @Override
     public void setState(int state) {
+        // warrant state is computed from other values
     }
 
     public SpeedUtil getSpeedUtil() {
