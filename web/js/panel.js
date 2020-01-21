@@ -3590,7 +3590,7 @@ var $setWidgetState = function($id, $newState, data) {
 
         //override the state with idTag's "name" in a very specific circumstance
         if (($widget.jsonType=="memory" || $widget.jsonType=="block" || $widget.jsonType=="reporter" ) &&
-        		$widget.widgetFamily=="icon" && data.value.type=="idTag") {
+        		$widget.widgetFamily=="icon" && data.value!==null && data.value.type=="idTag") {
         	$widget.state = data.value.data.name;
         }
 
