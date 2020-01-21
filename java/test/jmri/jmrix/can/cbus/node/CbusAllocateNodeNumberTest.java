@@ -265,6 +265,7 @@ public class CbusAllocateNodeNumberTest {
         t = null;
         nodeModel.dispose();
         nodeModel = null;
+        memo.dispose();
         memo = null;
         tcis.terminateThreads();
         tcis = null;

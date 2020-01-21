@@ -94,8 +94,11 @@ public class HexFileServer {
 
             @Override
             public boolean disposeThrottle(DccThrottle t, jmri.ThrottleListener l) {
-                connectedAddresses--;
-                return super.disposeThrottle(t, l);
+                if (super.disposeThrottle(t, l)) {
+                    connectedAddresses--;
+                    return true;
+                }
+                return false;
             }    
         };
 
