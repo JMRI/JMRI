@@ -632,28 +632,32 @@ public class LevelXing extends LayoutTrack {
 
     public void setConnectA(LayoutTrack o, int type) {
         connectA = o;
-        if ((connectA == null) ? (type != NONE) : ((!(o instanceof TrackSegment)) || (type != TRACK))) {
+        if (((connectA == null) && (type != NONE))
+                || ((connectA != null) && (o instanceof TrackSegment) && (type != TRACK))) {
             log.error("unexpected type of A connection to levelXing - " + type);
         }
     }
 
     public void setConnectB(LayoutTrack o, int type) {
         connectB = o;
-        if ((connectB == null) ? (type != NONE) : ((!(o instanceof TrackSegment)) || (type != TRACK))) {
+        if (((connectB == null) && (type != NONE))
+                || ((connectB != null) && (o instanceof TrackSegment) && (type != TRACK))) {
             log.error("unexpected type of B connection to levelXing - " + type);
         }
     }
 
     public void setConnectC(LayoutTrack o, int type) {
         connectC = o;
-        if ((connectC == null) ? (type != NONE) : ((!(o instanceof TrackSegment)) || (type != TRACK))) {
+        if (((connectC == null) && (type != NONE))
+                || ((connectC != null) && (o instanceof TrackSegment) && (type != TRACK))) {
             log.error("unexpected type of C connection to levelXing - " + type);
         }
     }
 
     public void setConnectD(LayoutTrack o, int type) {
         connectD = o;
-        if ((connectD == null) ? (type != NONE) : ((!(o instanceof TrackSegment)) || (type != TRACK))) {
+        if (((connectD == null) && (type != NONE))
+                || ((connectD != null) && (o instanceof TrackSegment) && (type != TRACK))) {
             log.error("unexpected type of D connection to levelXing - " + type);
         }
     }
