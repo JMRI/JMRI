@@ -719,19 +719,19 @@ public class TrackSegment extends LayoutTrack {
     /**
      * Maximum length of the bumper decoration.
      */
-    public static final int MAX_BUMPER_LENGTH = 200;
-    public static final int MAX_BUMPER_WIDTH = 200;
+    public static final int MAX_BUMPER_LENGTH = 40;
+    public static final int MAX_BUMPER_WIDTH = 10;
 
-    private static final int MAX_ARROW_LINE_WIDTH = 200;
-    private static final int MAX_ARROW_LENGTH = 200;
-    private static final int MAX_ARROW_GAP = 200;
-    private static final int MAX_BRIDGE_LINE_WIDTH = 200;
-    private static final int MAX_BRIDGE_APPROACH_WIDTH = 200;
-    private static final int MAX_BRIDGE_DECK_WIDTH = 200;
-    private static final int MAX_BUMPER_LINE_WIDTH = 200;
-    private static final int MAX_TUNNEL_FLOOR_WIDTH = 200;
-    private static final int MAX_TUNNEL_LINE_WIDTH = 200;
-    private static final int MAX_TUNNEL_ENTRANCE_WIDTH = 200;
+    private static final int MAX_ARROW_LINE_WIDTH = 5;
+    private static final int MAX_ARROW_LENGTH = 60;
+    private static final int MAX_ARROW_GAP = 40;
+    private static final int MAX_BRIDGE_LINE_WIDTH = 5;
+    private static final int MAX_BRIDGE_APPROACH_WIDTH = 100;
+    private static final int MAX_BRIDGE_DECK_WIDTH = 80;
+    private static final int MAX_BUMPER_LINE_WIDTH = 9;
+    private static final int MAX_TUNNEL_FLOOR_WIDTH = 40;
+    private static final int MAX_TUNNEL_LINE_WIDTH = 9;
+    private static final int MAX_TUNNEL_ENTRANCE_WIDTH = 80;
 
     /**
      * Helper method, which adds "Set value" item to the menu. The value can be
@@ -1198,7 +1198,7 @@ public class TrackSegment extends LayoutTrack {
         addNumericMenuItem(bridgeMenu,
                 "DecorationLineWidthMenuItemTitle", "DecorationLineWidthMenuItemToolTip",
                 this::getBridgeLineWidth, this::setBridgeLineWidth,
-                QuickPromptUtil.checkIntRange(10, MAX_BRIDGE_LINE_WIDTH, null));
+                QuickPromptUtil.checkIntRange(1, MAX_BRIDGE_LINE_WIDTH, null));
 
         addNumericMenuItem(bridgeMenu,
                 "BridgeApproachWidthMenuItemTitle", "BridgeApproachWidthMenuItemToolTip",
