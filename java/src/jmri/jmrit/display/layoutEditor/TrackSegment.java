@@ -289,32 +289,32 @@ public class TrackSegment extends LayoutTrack {
                 if (bezier) {
                     //then use control point to calculate arc
                     // adjacent connections must be defined...
-                    if ((connect1 != null) && (connect2 != null)) {
-                        Point2D end1 = LayoutEditor.getCoords(connect1, type1);
-                        Point2D end2 = LayoutEditor.getCoords(connect2, type2);
-                        double chordLength = MathUtil.distance(end1, end2);
-
-                        //get first and last control points
-                        int cnt = bezierControlPoints.size();
-
-                        Point2D cp0 = bezierControlPoints.get(0);
-                        Point2D cpN = bezierControlPoints.get(cnt - 1);
-                        //calculate orthoginal points
-                        Point2D op1 = MathUtil.add(end1, MathUtil.orthogonal(MathUtil.subtract(cp0, end1)));
-                        Point2D op2 = MathUtil.add(end2, MathUtil.orthogonal(MathUtil.subtract(cpN, end2)));
-                        //use them to find center point
-                        Point2D ip = MathUtil.intersect(end1, op1, end2, op2);
-                        if (ip != null) {   //single intersection point found
-                            double r1 = MathUtil.distance(ip, end1);
-                            double r2 = MathUtil.distance(ip, end2);
-                            if (MathUtil.equals(r1, r2)) {
-                                //calculate arc: θ = 2 sin-1(c/(2r))
-                                setAngle(Math.toDegrees(2.0 * Math.asin(chordLength / (2.0 * r1))));
-                                // the sign of the distance tells what side of the line the center point is on
-                                double ipSide = Math.signum(MathUtil.distance(end1, end2, ip));
-                            }
-                        }
-                    }
+//                    if ((connect1 != null) && (connect2 != null)) {
+//                        Point2D end1 = LayoutEditor.getCoords(connect1, type1);
+//                        Point2D end2 = LayoutEditor.getCoords(connect2, type2);
+//                        double chordLength = MathUtil.distance(end1, end2);
+//
+//                        //get first and last control points
+//                        int cnt = bezierControlPoints.size();
+//
+//                        Point2D cp0 = bezierControlPoints.get(0);
+//                        Point2D cpN = bezierControlPoints.get(cnt - 1);
+//                        //calculate orthoginal points
+//                        Point2D op1 = MathUtil.add(end1, MathUtil.orthogonal(MathUtil.subtract(cp0, end1)));
+//                        Point2D op2 = MathUtil.add(end2, MathUtil.orthogonal(MathUtil.subtract(cpN, end2)));
+//                        //use them to find center point
+//                        Point2D ip = MathUtil.intersect(end1, op1, end2, op2);
+//                        if (ip != null) {   //single intersection point found
+//                            double r1 = MathUtil.distance(ip, end1);
+//                            double r2 = MathUtil.distance(ip, end2);
+//                            if (MathUtil.equals(r1, r2)) {
+//                                //calculate arc: θ = 2 sin-1(c/(2r))
+//                                setAngle(Math.toDegrees(2.0 * Math.asin(chordLength / (2.0 * r1))));
+//                                // the sign of the distance tells what side of the line the center point is on
+//                                double ipSide = Math.signum(MathUtil.distance(end1, end2, ip));
+//                            }
+//                        }
+//                    }
                     bezier = false;
                 }
                 hideConstructionLines(SHOWCON);

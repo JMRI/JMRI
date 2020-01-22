@@ -15,6 +15,7 @@ import org.junit.Assume;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.netbeans.jemmy.operators.Operator;
 
 /**
  * Test simple functioning of TrackSegment
@@ -537,11 +538,17 @@ public class TrackSegmentTest {
      * @throws Exception
      */
     @BeforeClass
-    static public void setUpAll() throws Exception {
+    public static void setUpClass() throws Exception {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
         if (!GraphicsEnvironment.isHeadless()) {
+            JUnitUtil.resetProfileManager();
+
             layoutEditor = new LayoutEditor();
+
+            //save the old string comparator
+            stringComparator = Operator.getDefaultStringComparator();
+            //set default string matching comparator to one that exactly matches and is case sensitive
+            Operator.setDefaultStringComparator(new Operator.DefaultStringComparator(true, true));
         }
     }
 
@@ -551,16 +558,18 @@ public class TrackSegmentTest {
      * @throws Exception
      */
     @AfterClass
-    static public void tearDownAll() throws Exception {
-        if (layoutEditor != null) {
-            JUnitUtil.dispose(layoutEditor);
+    public static void tearDownClass() throws Exception {
+        if (!GraphicsEnvironment.isHeadless()) {
+            if (layoutEditor != null) {
+                JUnitUtil.dispose(layoutEditor);
+                // release refereces to layout editor
+                layoutEditor = null;
+            }
+            //restore the default string matching comparator
+            Operator.setDefaultStringComparator(stringComparator);
         }
-
-        // release refereces to layout editor
-        layoutEditor = null;
-
-        JUnitUtil.tearDown();
     }
+    private static Operator.StringComparator stringComparator = null;
 
     /**
      * This is called before each test
@@ -569,8 +578,8 @@ public class TrackSegmentTest {
      */
     @Before
     public void setUpEach() throws Exception {
-        //JUnitUtil.setUp();
-        //jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         if (!GraphicsEnvironment.isHeadless()) {
             if (layoutEditor != null) {
                 PositionablePoint p1 = new PositionablePoint("A1", PositionablePoint.ANCHOR, new Point2D.Double(10.0, 20.0), layoutEditor);
@@ -589,6 +598,6 @@ public class TrackSegmentTest {
     public void tearDownEach() throws Exception {
         // release refereces to track segment
         trackSegment = null;
-        //JUnitUtil.tearDown();
+        JUnitUtil.tearDown();
     }
 }

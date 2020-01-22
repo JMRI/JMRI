@@ -74,8 +74,8 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
                 elementControlpoint.setAttribute("index", "" + i);
 
                 Point2D pt = p.getBezierControlPoint(i);
-                elementControlpoint.setAttribute("x", "" + pt.getX());
-                elementControlpoint.setAttribute("y", "" + pt.getY());
+                elementControlpoint.setAttribute("x", String.format("%.2f", pt.getX()));
+                elementControlpoint.setAttribute("y", String.format("%.2f", pt.getY()));
 
                 elementControlpoints.addContent(elementControlpoint);
             }

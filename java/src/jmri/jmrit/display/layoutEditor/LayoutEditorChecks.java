@@ -711,38 +711,41 @@ public class LayoutEditorChecks {
                         Point2D cpN = ts.getBezierControlPoint(cnt - 1);
                         //calculate orthoginal points
                         Point2D op1 = MathUtil.add(end1, MathUtil.orthogonal(MathUtil.subtract(cp0, end1)));
-                        Point2D op2 = MathUtil.add(end2, MathUtil.orthogonal(MathUtil.subtract(cpN, end2)));
+                        Point2D op2 = MathUtil.subtract(end2, MathUtil.orthogonal(MathUtil.subtract(cpN, end2)));
                         //use them to find center point
                         Point2D ip = MathUtil.intersect(end1, op1, end2, op2);
                         if (ip != null) {   //single intersection point found
                             double r1 = MathUtil.distance(ip, end1);
                             double r2 = MathUtil.distance(ip, end2);
-                            if (MathUtil.equals(r1, r2)) {
+                            if (Math.abs(r1 - r2) <= 1.0) {
                                 // the sign of the distance tells what side of the line the center point is on
                                 double ipSide = Math.signum(MathUtil.distance(end1, end2, ip));
 
                                 // if all control midpoints are equal distance from intersection point
                                 boolean good = true; //assume success (optimist!)
 
-                                for (int idx = 0; idx < cnt; idx++) {
-                                    Point2D cp = ts.getBezierControlPoint(idx);
-                                    double rN = MathUtil.distance(ip, cp);
-                                    if (!MathUtil.equals(r1, rN)) {
+                                for (int idx = 0; idx < cnt - 1; idx++) {
+                                    Point2D cp1 = ts.getBezierControlPoint(idx);
+                                    Point2D cp2 = ts.getBezierControlPoint(idx + 1);
+                                    Point2D mp = MathUtil.midPoint(cp1, cp2);
+                                    double rM = MathUtil.distance(ip, mp);
+                                    if (Math.abs(r1 - rM) <= 1.0) {
                                         good = false;
                                         break;
                                     }
-                                    // the sign of the distance tells what side of line the point is on
-                                    double cpSide = Math.signum(MathUtil.distance(end1, end2, ip));
-                                    if (ipSide == cpSide) {
-                                        //can't be on same side as center point (if so then not circular)
-                                        good = false;
-                                    }
+//                                    // the sign of the distance tells what side of line the point is on
+//                                    double cpSide = Math.signum(MathUtil.distance(end1, end2, ip));
+//                                    if (ipSide == cpSide) {
+//                                        //can't be on same side as center point (if so then not circular)
+//                                        good = false;
+//                                        break;
+//                                    }
                                 }
                                 if (good) {
                                     linearBezierTrackSegments.add(ts);
-//                                    ts.setArc(true);
-//                                    //calculate arc: θ = 2 sin-1(c/(2r))
-//                                    ts.setAngle(Math.toDegrees(2.0 * Math.asin(chordLength / (2.0 * r1))));
+                                    ts.setCircle(true);
+                                    //calculate arc: θ = 2 sin-1(c/(2r))
+                                    ts.setAngle(Math.toDegrees(2.0 * Math.asin(chordLength / (2.0 * r1))));
                                 }
                             } else {
                                 log.error("unequal radius");
