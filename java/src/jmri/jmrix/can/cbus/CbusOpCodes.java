@@ -1,6 +1,5 @@
 package jmri.jmrix.can.cbus;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.EnumSet;
@@ -12,6 +11,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import jmri.jmrix.AbstractMessage;
 import jmri.jmrix.can.CanFrame;
+import jmri.util.FileUtil;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -328,8 +328,7 @@ public class CbusOpCodes {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
-            Document document = builder.parse(new File(
-                "java/src/jmri/jmrix/can/cbus/CbusOpcData.xml"));
+            Document document = builder.parse(FileUtil.getFile("program:xml/cbus/CbusOpcData.xml"));
             document.getDocumentElement().normalize();
  
             //Get all opcs
