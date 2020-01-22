@@ -123,6 +123,15 @@
       <li>Stack Route - Stack the route.</li>
     </ul>
 
+    <p><strong>Memory Variable (Optional)</strong> &mdash; Select a memory variable that
+    will contain any route allocation messages.  This provides feedback that can be added
+    to a panel.  This helpful when the route overlap is set to cancel or stack since the
+    dialog is not displayed, such as when using browser based panels.  The message will
+    be cleared when the next route is selected or after a delay (see below).</p>
+
+    <p><strong>Automatic Memory Clear Delay</strong> &mdash; Automatically clear the memory
+    variable after a number of seconds.  Set to 0 to disable automatic memory clearing.</p>
+
     <p><strong>Initial color of path while route it set up</strong> &mdash;
     While the route is being setup, set the track color to that in the drop
     down, after a predetermined time the track will revert back to that defined
