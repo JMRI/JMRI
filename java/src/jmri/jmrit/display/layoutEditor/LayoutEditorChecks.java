@@ -4,22 +4,12 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import javax.annotation.CheckForNull;
-import javax.annotation.Nonnull;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.event.MenuEvent;
-import javax.swing.event.MenuListener;
+import java.util.*;
+import javax.annotation.*;
+import javax.swing.*;
+import javax.swing.event.*;
 import jmri.util.MathUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.slf4j.*;
 
 /**
  * A collection of tools to check various things on the layout editor panel.
@@ -649,7 +639,7 @@ public class LayoutEditorChecks {
                 if (checkMarkedMenuItemNamesSet.contains(name)) {
                     jmi.setSelected(true);
                 }
-                ///ts.setBezier(false);
+                //ts.setBezier(false);
             }
         }   //count == 0
     }   // setupCheckLinearBezierTrackSegmentsMenu
@@ -729,26 +719,24 @@ public class LayoutEditorChecks {
                                     Point2D cp2 = ts.getBezierControlPoint(idx + 1);
                                     Point2D mp = MathUtil.midPoint(cp1, cp2);
                                     double rM = MathUtil.distance(ip, mp);
-                                    if (Math.abs(r1 - rM) <= 1.0) {
+                                    if (Math.abs(r1 - rM) > 1.0) {
                                         good = false;
                                         break;
                                     }
-//                                    // the sign of the distance tells what side of line the point is on
-//                                    double cpSide = Math.signum(MathUtil.distance(end1, end2, ip));
-//                                    if (ipSide == cpSide) {
-//                                        //can't be on same side as center point (if so then not circular)
-//                                        good = false;
-//                                        break;
-//                                    }
+                                    // the sign of the distance tells what side of line the midpoint is on
+                                    double cpSide = Math.signum(MathUtil.distance(end1, end2, mp));
+                                    if (ipSide == cpSide) {
+                                        //can't be on same side as center point (if so then not circular)
+                                        good = false;
+                                        break;
+                                    }
                                 }
                                 if (good) {
                                     linearBezierTrackSegments.add(ts);
                                     ts.setCircle(true);
-                                    //calculate arc: θ = 2 sin-1(c/(2r))
-                                    ts.setAngle(Math.toDegrees(2.0 * Math.asin(chordLength / (2.0 * r1))));
                                 }
                             } else {
-                                log.error("unequal radius");
+                                log.error("checkFixedRadiusBezierTrackSegments(): unequal radius");
                             }
                         }
                     }
