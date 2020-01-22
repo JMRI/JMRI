@@ -1345,7 +1345,7 @@ public final class MathUtil {
     }
 
     /**
-     * calculate the distance p3 is from a line segment defined by p1 <-> p2
+     * get (signed) distance p3 is from line segment defined by p1 and p2
      *
      * @param p1 the first point on the line segment
      * @param p2 the second point on the line segment
@@ -1357,14 +1357,16 @@ public final class MathUtil {
     public static double distance(
             @Nonnull Point2D p1,
             @Nonnull Point2D p2,
-            @Nonnull Point2D p3
-    ) {
-        // pull these out for convenience
-        Point2D d32 = MathUtil.subtract(p3, p2);
-        double x32 = d32.getX(), y32 = d32.getY();
-        Point2D d21 = MathUtil.subtract(p2, p1);
-        double x21 = d21.getX(), y21 = d21.getY();
-        return ((x32 * y21) - (x21 * y32)) / Math.sqrt((x32 * x32) + (y32 * y32));
+            @Nonnull Point2D p3) {
+        double p1X = p1.getX(), p1Y = p1.getY();
+        double p2X = p2.getX(), p2Y = p2.getY();
+        double p3X = p3.getX(), p3Y = p3.getY();
+
+        double a = p1Y - p2Y;
+        double b = p2X - p1X;
+        double c = (p1X * p2Y) - (p2X * p1Y);
+
+        return (a * p3X + b * p3Y + c) / Math.sqrt(a * a + b * b);
     }
     // private transient final static Logger log = LoggerFactory.getLogger(MathUtil.class);
 }

@@ -591,6 +591,9 @@ public class LayoutEditorChecks {
         for (TrackSegment ts : layoutEditor.getTrackSegments()) {
             // has to be a bezier
             if (ts.isBezier()) {
+//                if (ts.getName().equals("T104")) {
+//                    log.debug("T104");
+//                }
                 // adjacent connections must be defined...
                 LayoutTrack c1 = ts.getConnect1();
                 LayoutTrack c2 = ts.getConnect2();
@@ -598,23 +601,21 @@ public class LayoutEditorChecks {
                     // if length is zero...
                     Point2D end1 = LayoutEditor.getCoords(ts.getConnect1(), ts.getType1());
                     Point2D end2 = LayoutEditor.getCoords(ts.getConnect2(), ts.getType2());
-                    if (MathUtil.distance(end1, end2) < 2.0) {
+                    if (MathUtil.distance(end1, end2) <= 4.0) {
                         linearBezierTrackSegments.add(ts);
                         continue;   // so we don't get added again
                     }
-                    // if adjacent tracks are collinear...
+                    // if control points are collinear...
                     boolean good = true; //assume success (optimist!)
-                    double angleRAD = MathUtil.computeAngleRAD(end1, end2);
-                    for (int idx = 0; idx < ts.getNumberOfBezierControlPoints(); idx++) {
-                        Point2D cp = ts.getBezierControlPoint(idx);
-                        double cpAngleRAD = MathUtil.computeAngleRAD(end1, cp);
-                        if (MathUtil.absDiffAngleRAD(angleRAD, cpAngleRAD) > Math.toRadians(1.0)) {
+                    for (Point2D cp : ts.getBezierControlPoints()) {
+                        if (Math.abs(MathUtil.distance(end1, end2, cp)) > 1.0) {
                             good = false;
                             break;
                         }
                     }
                     if (good) {
                         linearBezierTrackSegments.add(ts);
+//                        ts.setBezier(false);
                     }
                 }   // c1 & c2 aren't null
             }   // is bezier
@@ -623,7 +624,7 @@ public class LayoutEditorChecks {
         // clear the "in progress..." menu item
         checkLinearBezierTrackSegmentsMenu.removeAll();
         // if we didn't find any...
-        if (checkLinearBezierTrackSegmentsMenu.getMenuComponentCount() == 0) {
+        if (linearBezierTrackSegments.size() == 0) {
             checkLinearBezierTrackSegmentsMenu.add(checkNoResultsMenuItem);
         } else {
             // for each linear bezier track segment we found

@@ -313,7 +313,7 @@ public class TrackSegment extends LayoutTrack {
                                 setAngle(Math.toDegrees(2.0 * Math.asin(chordLength / (2.0 * r1))));
                                 // the sign of the distance tells what side of the line the center point is on
                                 double distance = MathUtil.distance(end1, end2, ip);
-                                setFlip(distance >= 0.0);
+                                setFlip(distance < 0.0);
                             }
                         }
                     }
@@ -484,6 +484,9 @@ public class TrackSegment extends LayoutTrack {
         }
     }
 
+    public ArrayList<Point2D>  getBezierControlPoints() {
+        return bezierControlPoints;
+    }
     /**
      * Set up a Layout Block for a Track Segment.
      */
@@ -2172,7 +2175,6 @@ public class TrackSegment extends LayoutTrack {
      * Called when the user changes the angle dynamically in edit mode
      * by dragging the centre of the cirle.
      */
-    //NOTE: AFAICT this isn't called from anywhere
     protected void reCalculateTrackSegmentAngle(double x, double y) {
         if (!isBezier()) {
             double pt2x;
