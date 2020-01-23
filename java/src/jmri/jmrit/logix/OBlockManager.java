@@ -88,12 +88,12 @@ public class OBlockManager extends AbstractManager<OBlock>
     }
 
     @Override
-    public OBlock provide(@Nonnull String name) throws IllegalArgumentException {
+    public OBlock provide(@Nonnull String name) {
         return provideOBlock(name);
     }
 
     @Nonnull
-    public OBlock provideOBlock(@Nonnull String name) throws IllegalArgumentException {
+    public OBlock provideOBlock(@Nonnull String name) {
         if (name.trim().length() == 0) {
             throw new IllegalArgumentException("name \"" + name + "\" invalid");
         }
