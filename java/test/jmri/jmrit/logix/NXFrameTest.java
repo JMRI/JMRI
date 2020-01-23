@@ -47,6 +47,7 @@ public class NXFrameTest {
     @Test
     public void testRoutePanel() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
 
         NXFrame nxFrame = new NXFrame();
         Assert.assertNotNull("NXFrame", nxFrame);
@@ -72,6 +73,7 @@ public class NXFrameTest {
     @Test
     public void testNXWarrantSetup() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
 
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml");
@@ -139,6 +141,7 @@ public class NXFrameTest {
         // then goes on to test a Warrant through the WarrantTableFrame.
         // it is the WarrantTableframe portion of this test that hangs.
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
 
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml");
@@ -257,6 +260,7 @@ public class NXFrameTest {
     @Test
     public void testWarrantLoopRun() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
 
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml");
@@ -300,6 +304,7 @@ public class NXFrameTest {
     @Test
     public void testWarrantRampHalt() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
 
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml");
