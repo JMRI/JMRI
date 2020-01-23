@@ -726,7 +726,7 @@ public class LayoutEditorChecks {
                                     }
                                     // the sign of the distance tells what side of line the midpoint is on
                                     double cpSide = Math.signum(MathUtil.distance(end1, end2, mp));
-                                    if (ipSide == cpSide) {
+                                    if (MathUtil.equals(ipSide, cpSide)) {
                                         //can't be on same side as center point (if so then not circular)
                                         good = false;
                                         break;
