@@ -11,6 +11,9 @@ import jmri.jmrix.rps.Distributor;
 import jmri.jmrix.rps.Engine;
 import jmri.jmrix.rps.Reading;
 import jmri.jmrix.rps.RpsSystemConnectionMemo;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -336,7 +339,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
         Reading r;
         try {
             r = makeReading(s);
-        } catch (Exception e) {
+        } catch (IOException e) {
             log.error("Exception formatting input line \"{}\": ", s, e);
             // r = new Reading(-1, new double[]{-1, -1, -1, -1} );
             // skip handling this line
@@ -361,23 +364,23 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
     void setReceivers(String s) {
         try {
             // parse string
-            java.io.StringReader b = new java.io.StringReader(s);
-            com.csvreader.CsvReader c = new com.csvreader.CsvReader(b);
-            c.readRecord();
+            CSVParser c = CSVParser.parse(s, CSVFormat.DEFAULT);
+            CSVRecord r = c.getRecords().get(0);
+            c.close();
 
             // first two are "Data, ," so are ignored.
             // rest are receiver numbers
             // Find how many
-            int n = c.getColumnCount() - 2;
+            int n = r.size() - 2;
             log.debug("Found {} receivers", n);
 
             // find max receiver number
-            int max = Integer.valueOf(c.get(c.getColumnCount() - 1)).intValue();
+            int max = Integer.valueOf(r.get(r.size() - 1));
             log.debug("Highest receiver address is {}", max);
 
             offsetArray = new int[n];
             for (int i = 0; i < n; i++) {
-                offsetArray[i] = Integer.valueOf(c.get(i + 2)).intValue();
+                offsetArray[i] = Integer.valueOf(r.get(i + 2));
             }
 
         } catch (IOException e) {
@@ -385,7 +388,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
         }
     }
 
-    static private int SKIPCOLS = 0; // used to skip DATA,TIME; was there a trailing "'"?
+    static private final int SKIPCOLS = 0; // used to skip DATA,TIME; was there a trailing "'"?
     private boolean first = true;
 
     /**
@@ -399,32 +402,32 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
 
         if (version == 1) {
             // parse string
-            java.io.StringReader b = new java.io.StringReader(s);
-            com.csvreader.CsvReader c = new com.csvreader.CsvReader(b);
-            c.readRecord();
+            CSVParser c = CSVParser.parse(s, CSVFormat.DEFAULT);
+            CSVRecord record = c.getRecords().get(0);
+            c.close();
 
             // values are stored in 1-N of the output array; 0 not used
-            int count = c.getColumnCount() - SKIPCOLS;
+            int count = record.size() - SKIPCOLS;
             double[] vals = new double[count + 1];
             for (int i = 1; i < count + 1; i++) {
-                vals[i] = Double.valueOf(c.get(i + SKIPCOLS - 1)).doubleValue();
+                vals[i] = Double.valueOf(record.get(i + SKIPCOLS - 1));
             }
 
             return new Reading(Engine.instance().getPolledID(), vals, s);
         } else if (version == 2) {
             // parse string
-            java.io.StringReader b = new java.io.StringReader(s);
-            com.csvreader.CsvReader c = new com.csvreader.CsvReader(b);
-            c.readRecord();
+            CSVParser c = CSVParser.parse(s, CSVFormat.DEFAULT);
+            CSVRecord record = c.getRecords().get(0);
+            c.close();
 
-            int count = (c.getColumnCount() - 2) / 2;  // skip 'ADR, DAT,'
+            int count = (record.size() - 2) / 2;  // skip 'ADR, DAT,'
             double[] vals = new double[Engine.instance().getMaxReceiverNumber() + 1]; // Receiver 2 goes in element 2
             for (int i = 0; i < vals.length; i++) {
                 vals[i] = 0.0;
             }
             try {
                 for (int i = 0; i < count; i++) {  // i is zero-based count of input pairs
-                    int index = Integer.parseInt(c.get(2 + i * 2));  // index is receiver number
+                    int index = Integer.parseInt(record.get(2 + i * 2));  // index is receiver number
                     // numbers are from one for valid receivers
                     // the null message starts with index zero
                     if (index < 0) {
@@ -444,10 +447,10 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
                         //vals = temp;
                     }
                     if (index < vals.length) {
-                        vals[index] = Double.valueOf(c.get(2 + i * 2 + 1)).doubleValue();
+                        vals[index] = Double.valueOf(record.get(2 + i * 2 + 1));
                     }
                 }
-            } catch (IOException | NumberFormatException e) {
+            } catch (NumberFormatException e) {
                 log.warn("Exception handling input.", e);
                 return null;
             }

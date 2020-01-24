@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 
 class OpSessionLog {
 
+    private static final String OP_SESSION_LOG_ERROR = "Op session log error {}";
     static BufferedWriter _outBuff;
 
     private OpSessionLog() {
@@ -59,7 +60,7 @@ class OpSessionLog {
         return true;
     }
 
-    static private void writeHeader(String fileName) {
+    private static void writeHeader(String fileName) {
         if (_outBuff==null) {
             return;
         }
@@ -75,11 +76,11 @@ class OpSessionLog {
             _outBuff.newLine();
             writeLn(Bundle.getMessage("startLog"));
         } catch (IOException ioe) {
-            log.error("Op session log error " + ioe.getMessage());
+            log.error(OP_SESSION_LOG_ERROR,ioe.getMessage());
         }
     }
 
-    static synchronized public void writeLn(String text) {
+    public static synchronized void writeLn(String text) {
         if (_outBuff==null) {
             return;
         }
@@ -89,22 +90,22 @@ class OpSessionLog {
             _outBuff.append(text);
             _outBuff.newLine();
         } catch (IOException ioe) {
-            log.error("Op session log error " + ioe.getMessage());
+            log.error(OP_SESSION_LOG_ERROR,ioe.getMessage());
         }
     }
 
-    static synchronized public void flush() {
+    public static synchronized void flush() {
         if (_outBuff==null) {
             return;
         }
         try {
             _outBuff.flush();
         } catch (IOException ioe) {
-            log.error("Op session log error " + ioe.getMessage());
+            log.error(OP_SESSION_LOG_ERROR,ioe.getMessage());
         }
     }
 
-    static synchronized public void close() {
+    public static synchronized void close() {
         if (_outBuff==null) {
             return;
         }
@@ -113,9 +114,9 @@ class OpSessionLog {
             _outBuff.flush();
             _outBuff.close();
         } catch (IOException ioe) {
-            log.error("Op session log error " + ioe.getMessage());
+            log.error(OP_SESSION_LOG_ERROR,ioe.getMessage());
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OpSessionLog.class);
+    private static final Logger log = LoggerFactory.getLogger(OpSessionLog.class);
 }
