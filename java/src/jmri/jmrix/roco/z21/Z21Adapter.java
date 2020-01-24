@@ -83,7 +83,7 @@ public class Z21Adapter extends jmri.jmrix.AbstractNetworkPortController {
 
     }
 
-    /*
+    /**
      * @return the DatagramSocket of this connection.  Returns null
      *         if not connected.
      */
@@ -117,7 +117,7 @@ public class Z21Adapter extends jmri.jmrix.AbstractNetworkPortController {
     @Override
     public void dispose(){
        super.dispose();
-       if(opened) {
+       if (opened) {
           socket.close();
        }
        opened = false;
