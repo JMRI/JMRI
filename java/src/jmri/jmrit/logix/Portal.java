@@ -34,6 +34,9 @@ import org.slf4j.LoggerFactory;
  */
 public class Portal {
 
+    private static final String NAME_CHANGE = "NameChange";
+    private static final String SIGNAL_CHANGE = "signalChange";
+    private static final String ENTRANCE = "entrance";
     private final ArrayList<OPath> _fromPaths = new ArrayList<>();
     private OBlock _fromBlock;
     private NamedBean _fromSignal;          // may be either SignalHead or SignalMast
@@ -114,7 +117,7 @@ public class Portal {
             log.error("Path \"{}\" has no block.", path.getName());
             return;
         }
-        log.debug("removePath: {}", toString());
+        log.debug("removePath: {}", this);
         if (!this.equals(path.getFromPortal())
                 && !this.equals(path.getToPortal())) {
             return;
@@ -151,12 +154,12 @@ public class Portal {
         // for some unknown reason, PortalManager firePropertyChange is not read by PortalTableModel
         // so let OBlock do it
         if (_toBlock != null) {
-            _toBlock.pseudoPropertyChange("NameChange", oldName, this);
+            _toBlock.pseudoPropertyChange(NAME_CHANGE, oldName, this);
         } else if (_fromBlock != null) {
-            _fromBlock.pseudoPropertyChange("NameChange", oldName, this);
+            _fromBlock.pseudoPropertyChange(NAME_CHANGE, oldName, this);
         }
         // CircuitBuilder PortalList needs this property change
-        pcs.firePropertyChange("NameChange", oldName, newName);
+        pcs.firePropertyChange(NAME_CHANGE, oldName, newName);
         return null;
     }
 
@@ -185,8 +188,8 @@ public class Portal {
         } else if (!verify(_toPaths, block)) {
             return false;
         }
-        //log.debug("setToBlock: oldBlock= \"{}\" newBlock \"{}\".", getToBlockName(),
-        //      (block != null ? block.getDisplayName() : null));
+        log.debug("setToBlock: oldBlock= \"{}\" newBlock \"{}\".", getToBlockName(),
+              (block != null ? block.getDisplayName() : null));
         OBlock oldBlock = _toBlock;
         if (_toBlock != null) {
             _toBlock.removePortal(this);    // may should not
@@ -232,8 +235,8 @@ public class Portal {
         } else if (!verify(_fromPaths, block)) {
             return false;
         }
-        // log.debug("setFromBlock: oldBlock= \"{}\" newBlock \"{}\".", getFromBlockName(),
-        //     (block!=null ? block.getDisplayName() : null));
+        log.debug("setFromBlock: oldBlock= \"{}\" newBlock \"{}\".", getFromBlockName(),
+             (block!=null ? block.getDisplayName() : null));
         OBlock oldBlock = _fromBlock;
         if (_fromBlock != null) {
             _fromBlock.removePortal(this);
@@ -286,8 +289,8 @@ public class Portal {
             ret = true;
         }
         if (ret) {
-            protectedBlock.pseudoPropertyChange("signalChange", false, true);
-            pcs.firePropertyChange("signalChange", false, true);
+            protectedBlock.pseudoPropertyChange(SIGNAL_CHANGE, false, true);
+            pcs.firePropertyChange(SIGNAL_CHANGE, false, true);
             log.debug("setProtectSignal: \"{}\" for Block= {} at portal {}",
                     (signal != null?signal.getDisplayName() : "null"), protectedBlock.getDisplayName(), _name);
         }
@@ -356,20 +359,20 @@ public class Portal {
             _toSignal = null;
             _toSignalOffset = 0;
             if (_fromBlock != null) {
-                _fromBlock.pseudoPropertyChange("signalChange", false, false);
-                pcs.firePropertyChange("signalChange", false, false);
+                _fromBlock.pseudoPropertyChange(SIGNAL_CHANGE, false, false);
+                pcs.firePropertyChange(SIGNAL_CHANGE, false, false);
             }
         } else if (signal.equals(_fromSignal)) {
             _fromSignal = null;
             _toSignalOffset = 0;
             if (_toBlock != null) {
-                _toBlock.pseudoPropertyChange("signalChange", false, false);
-                pcs.firePropertyChange("signalChange", false, false);
+                _toBlock.pseudoPropertyChange(SIGNAL_CHANGE, false, false);
+                pcs.firePropertyChange(SIGNAL_CHANGE, false, false);
             }
         }
     }
 
-    static public NamedBean getSignal(String name) {
+    public static NamedBean getSignal(String name) {
         NamedBean signal = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(name);
         if (signal == null) {
             signal = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(name);
@@ -578,17 +581,17 @@ public class Portal {
      * @param entrance true for EntranceSpeed, false for ExitSpeed
      * @return permissible speed, Restricted if no speed set on signal
      */
-    static private @Nonnull String getPermissibleSignalSpeed(@Nonnull SignalHead signal, boolean entrance) {
+    private static @Nonnull String getPermissibleSignalSpeed(@Nonnull SignalHead signal, boolean entrance) {
         int appearance = signal.getAppearance();
         String speed = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getAppearanceSpeed(signal.getAppearanceName(appearance));
         // on head, speed is the same for entry and exit
         if (speed == null) {
             log.error("SignalHead \"{}\" has no {} speed specified for appearance \"{}\"! - Restricting Movement!",
-                    signal.getDisplayName(), (entrance ? "entrance" : "exit"), signal.getAppearanceName(appearance));
+                    signal.getDisplayName(), (entrance ? ENTRANCE : "exit"), signal.getAppearanceName(appearance));
             speed = "Restricted";
         }
         log.debug("SignalHead \"{}\" has {} speed notch= {} from appearance \"{}\"",
-                signal.getDisplayName(), (entrance ? "entrance" : "exit"), speed, signal.getAppearanceName(appearance));
+                signal.getDisplayName(), (entrance ? ENTRANCE : "exit"), speed, signal.getAppearanceName(appearance));
         return speed;
     }
 
@@ -599,7 +602,7 @@ public class Portal {
      * @param entrance true for EntranceSpeed, false for ExitSpeed
      * @return permissible speed, Restricted if no speed set on signal
      */
-    static private @Nonnull String getPermissibleSignalSpeed(@Nonnull SignalMast signal, boolean entrance) {
+    private static @Nonnull String getPermissibleSignalSpeed(@Nonnull SignalMast signal, boolean entrance) {
         String aspect = signal.getAspect();
         String speed;
         if (entrance) {
@@ -609,11 +612,11 @@ public class Portal {
         }
         if (speed == null) {
             log.error("SignalMast \"{}\" has no {} speed specified for aspect \"{}\"! - Restricting Movement!",
-                    signal.getDisplayName(), (entrance ? "entrance" : "exit"), aspect);
+                    signal.getDisplayName(), (entrance ? ENTRANCE : "exit"), aspect);
             speed = "Restricted";
         }
         log.debug("SignalMast \"{}\" has {} speed notch= {} from aspect \"{}\"",
-                signal.getDisplayName(), (entrance ? "entrance" : "exit"), speed, aspect);
+                signal.getDisplayName(), (entrance ? ENTRANCE : "exit"), speed, aspect);
         return speed;
     }
 
@@ -623,9 +626,9 @@ public class Portal {
      * block is a potential _fromBlock and paths are the current _fromPaths
      * Verify that each path has this potential block as its owning block
      */
-    static private boolean verify(List<OPath> paths, OBlock block) {
+    private static boolean verify(List<OPath> paths, OBlock block) {
         if (block == null) {
-            return (paths.size() == 0);
+            return (paths.isEmpty());
         }
         String name = block.getSystemName();
         for (OPath path : paths) {
@@ -714,6 +717,6 @@ public class Portal {
         return sb.toString();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Portal.class);
+    private static final Logger log = LoggerFactory.getLogger(Portal.class);
 
 }

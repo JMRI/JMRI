@@ -1,13 +1,12 @@
-    <!-- SidebarTail.shtml -->
+ <!-- SidebarTail.shtml -->
     <!-- Final items in typical sidebar -->
-    
-       <dt><h3 style="padding-left: 1em;"><a href="/help/en/webtoc.shtml">Help Table of Contents</a></h3></dt>
-       <br>
-       <dt><h3 style="padding-left: 1em;"><a href="/help/en/webindex.shtml">Help Index</a></h3></dt>
-       <br>    
+    <p class="example">
+       <dt><h3 style="padding-left: 1em;"><a href="/help/en/webtoc.shtml">Help: Table of Contents</a></h3></dt>
+       <dt><h3 style="padding-left: 1em;"><a href="/help/en/webindex.shtml">Help: Index</a></h3></dt>  
        <a href="/donations.shtml">
      <img src="http://sourceforge.net/images/project-support.jpg" width="88" height="32" border="0" ALIGN="CENTER" alt="Donate to JMRI" />
     </a>
+    </p>
 
 
     <!-- JS to highlight items in the sidebar -->

@@ -13,6 +13,7 @@ import jmri.util.swing.JemmyUtil;
 
 import org.junit.*;
 
+import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JRadioButtonOperator;
@@ -342,15 +343,20 @@ public class NXFrameTest {
         Assert.assertEquals("Train in block OB3", block.getSensor().getDisplayName(), runtimes(route1,_OBlockMgr).getDisplayName());
 
         warrant.controlRunTrain(Warrant.RAMP_HALT); // user interrupts script
+        new QueueTool().waitEmpty(10);
         jmri.util.JUnitUtil.waitFor(() -> {
             String m =  warrant.getRunningMessage();
             return (m.startsWith("Halted in block"));
         }, "Train Halted");
 
         warrant.controlRunTrain(Warrant.RESUME);
+        new QueueTool().waitEmpty(10);
+
+
         jmri.util.JUnitUtil.waitFor(() -> {
             String m =  warrant.getRunningMessage();
-            return m.startsWith("Overdue for arrival at block");
+            return m.startsWith("Running in Block OB3") ||
+                    m.startsWith("Overdue for arrival at block");
         }, "Train Resumed");
 
         String[] route2 = {"OB3", "OB7", "OB5"};

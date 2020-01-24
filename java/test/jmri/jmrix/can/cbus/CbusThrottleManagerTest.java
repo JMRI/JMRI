@@ -191,6 +191,8 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         CanReply r = new CanReply( new int[]{CbusConstants.CBUS_DSPD, 1, 0 },0x12 );
         cbtmb.reply(r);
         Assert.assertEquals("speed setting 0",0.0f,cbtmb.getThrottleInfo(addr,Throttle.SPEEDSETTING));
+        
+        JUnitUtil.waitFor(()->{ return(cbtmb.getThrottleInfo(addr,Throttle.ISFORWARD).equals(false)); }, "Throttle didn't update");
         Assert.assertEquals("is forward 0",false,cbtmb.getThrottleInfo(addr,Throttle.ISFORWARD));
         
         r = new CanReply( new int[]{CbusConstants.CBUS_DSPD, 77, 77 },0x12 );

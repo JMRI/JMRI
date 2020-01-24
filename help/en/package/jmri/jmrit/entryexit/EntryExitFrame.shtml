@@ -102,7 +102,7 @@
     its Options menu allows you to set shared settings for the tool.<br>
     The <b>Entry Exit Options</b> pane contains the following items:
     </p>
-    <p><strong>Route Re-selection Result</strong> &mdash; Determines what should occur when the
+    <p><strong>Route Reselection Result</strong> &mdash; Determines what should occur when the
     NX route is reselected by the user.</p>
 
     <ul>
@@ -112,6 +112,15 @@
       the route. The final block will left active.</li>
       <li>Cancel Route - Cancel the route.</li>
       <li>Stack Route - Stack the route.<span class="since">since 3.4</span></li>
+    </ul>
+
+    <p><strong>Route Overlap Result</strong> &mdash; Determines what should occur when the
+    NX route overlaps an active route.</p>
+
+    <ul>
+      <li>Prompt User - Ask the user what they would like to do.</li>
+      <li>Cancel Route - Cancel the proposed route.</li>
+      <li>Stack Route - Stack the route.</li>
     </ul>
 
     <p><strong>Initial color of path while route it set up</strong> &mdash;
