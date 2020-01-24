@@ -367,9 +367,7 @@ public class SprogCSThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Before
     @Override
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
-        // prepare an interface
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
 
         m = new SprogSystemConnectionMemo(jmri.jmrix.sprog.SprogConstants.SprogMode.OPS);
         stcs = new SprogTrafficControlScaffold(m);
