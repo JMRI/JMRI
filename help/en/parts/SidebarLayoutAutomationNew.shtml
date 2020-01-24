@@ -11,6 +11,7 @@
             <li><a href="/help/en/html/tools/EntryExit.shtml">Entry/Exit Routing...</a>
             <li><a href="/help/en/html/tools/Logix.shtml">Logix...</a>
             <li><a href="/help/en/html/tools/scripting/index.shtml">Scripting...</a>
+            <li><a href="/help/en/html/tools/automation/viaJava.shtml">Automate with Java...</a>
             <li><a href="/help/en/package/jmri/jmrit/ctc/CTC.shtml">CTC</a>
           </ul>
         </dd>
