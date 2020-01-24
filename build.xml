@@ -1390,7 +1390,7 @@
         <mkdir dir="${tempdir}"/>
         <mkdir dir="${testreport}"/>
         <jacoco:coverage destfile="${jacocoexec}" excludes="org.slf4j.*">
-        <junit haltonerror="false" haltonfailure="false" showoutput="yes" printsummary="withOutAndErr" fork="yes" dir="." timeout="3600000">
+        <junit haltonerror="false" haltonfailure="false" showoutput="yes" printsummary="withOutAndErr" fork="yes" dir="." timeout="7200000">
 
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
@@ -1597,7 +1597,7 @@
         <mkdir dir="${tempdir}"/>
         <mkdir dir="${testreport}"/>
         <jacoco:coverage destfile="${jacocoexec}" excludes="org.slf4j.*">
-        <junit haltonerror="false" haltonfailure="false" showoutput="yes" printsummary="withOutAndErr" fork="yes" dir="." timeout="3600000">
+        <junit haltonerror="false" haltonfailure="false" showoutput="yes" printsummary="withOutAndErr" fork="yes" dir="." timeout="7200000">
 
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
