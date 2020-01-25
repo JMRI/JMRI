@@ -21,22 +21,22 @@ public class LightControlTest {
 
     @Test
     public void testCtor() {
-        LightControl l = new LightControl();
-        Assert.assertNotNull("LightControl not null", l);
+        lc = new LightControl();
+        Assert.assertNotNull("LightControl not null", lc);
     }
 
     @Test
     public void testCLighttor() {
-        Light o = new AbstractLight("IL1", "test light") {
+        l = new AbstractLight("IL1", "test light") {
         };
-        LightControl l = new LightControl(o);
-        Assert.assertNotNull("LightControl not null", l);
+        lc = new LightControl(l);
+        Assert.assertNotNull("LightControl not null", lc);
     }
 
     @Test
     public void testLightControlCopyCtor() {
-        LightControl l = new LightControl();
-        LightControl copyOfl = new LightControl(l);
+        lc = new LightControl();
+        LightControl copyOfl = new LightControl(lc);
         Assert.assertNotNull("LightControl Copy not null", copyOfl);
     }
 
@@ -154,15 +154,15 @@ public class LightControlTest {
     @Test
     public void testSetGetNames() {
         // used while editing the control with no Sensors / turnouts etc. attached
-        LightControl t = new LightControl();
-        t.setControlSensorName("MySensor");
-        Assert.assertEquals("Same Name", "MySensor", t.getControlSensorName());
+        lc = new LightControl();
+        lc.setControlSensorName("MySensor");
+        Assert.assertEquals("Same Name", "MySensor", lc.getControlSensorName());
 
-        t.setControlTimedOnSensorName("Shirley");
-        Assert.assertEquals("Same Name", "Shirley", t.getControlTimedOnSensorName());
+        lc.setControlTimedOnSensorName("Shirley");
+        Assert.assertEquals("Same Name", "Shirley", lc.getControlTimedOnSensorName());
 
-        t.setControlSensor2Name("DownMain7");
-        Assert.assertEquals("Same Name", "DownMain7", t.getControlSensor2Name());
+        lc.setControlSensor2Name("DownMain7");
+        Assert.assertEquals("Same Name", "DownMain7", lc.getControlSensor2Name());
     }
 
     @Test
@@ -894,6 +894,8 @@ public class LightControlTest {
     @After
     public void tearDown() {
         JUnitUtil.tearDown();
+        l = null;
+        lc = null;
     }
 
     // private final static Logger log = LoggerFactory.getLogger(LightControlTest.class);
