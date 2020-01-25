@@ -53,7 +53,7 @@ public class SpeedUtil {
     private float _ma;  // milliseconds needed to increase speed by throttle step amount 
     private float _md;  // milliseconds needed to decrease speed by throttle step amount
 
-    public static float SCALE_FACTOR = 110; // divided by _scale, gives a rough correction for track speed
+    public static final float SCALE_FACTOR = 110; // divided by _scale, gives a rough correction for track speed
 
     protected SpeedUtil(List<BlockOrder> orders) {
         if (orders !=null) {
@@ -189,7 +189,7 @@ public class SpeedUtil {
             try {
                 int num = Integer.parseInt(numId);
                 List<RosterEntry> l = Roster.getDefault().matchingList(null, null, numId, null, null, null, null);
-                if (l.size() > 0) {
+                if (!l.isEmpty()) {
                 	RosterEntry re = l.get(0);
                     if (num != 0) {
                         // In some systems, such as Maerklin MFX or ESU ECOS M4, the DCC address is always 0.
@@ -332,7 +332,7 @@ public class SpeedUtil {
             } catch (NullPointerException npe) { 
                 return;
             } catch (IOException | JDOMException eb) {
-                log.error("Exception while loading warrant preferences: " + eb);
+                log.error("Exception while loading warrant preferences: {}",eb);
                 return;
             }
             if (root == null) {
@@ -431,10 +431,7 @@ public class SpeedUtil {
         if (speedProfile == null) {
             return false;
         }
-        if (speedProfile.hasForwardSpeeds() || speedProfile.hasReverseSpeeds()) {
-            return true;
-        }
-        return false;
+        return (speedProfile.hasForwardSpeeds() || speedProfile.hasReverseSpeeds());
     }
 
     protected void stopRun(boolean updateSpeedProfile) {
@@ -480,7 +477,7 @@ public class SpeedUtil {
      * @return modified throttle setting
      */
     protected float modifySpeed(float tSpeed, String sType) {
-//        if (log.isTraceEnabled()) log.trace("modifySpeed speed= {} for SpeedType= \"{}\"", tSpeed, sType);
+        log.trace("modifySpeed speed= {} for SpeedType= \"{}\"", tSpeed, sType);
         if (sType.equals(Warrant.Stop)) {
             return 0.0f;
         }
@@ -654,8 +651,8 @@ public class SpeedUtil {
         while (iter.hasNext()) {
             nextSetting = iter.next().floatValue();
             rampLength += getDistanceOfSpeedChange(prevSetting, nextSetting, _rampTimeIncrement);
-//            if (log.isDebugEnabled()) log.debug("makeUpRamp()= {} for fromSpeed= {} toSpeed= {} dist= {}",
-//                    ramp.getRampLength(), prevSetting, nextSetting, getDistanceOfSpeedChange(prevSetting, nextSetting, _rampTimeIncrement));
+            log.debug("makeUpRamp()= {} for fromSpeed= {} toSpeed= {} dist= {}",
+                    ramp.getRampLength(), prevSetting, nextSetting, getDistanceOfSpeedChange(prevSetting, nextSetting, _rampTimeIncrement));
             prevSetting = nextSetting;
         }
         ramp.setRampLength(rampLength);
@@ -672,8 +669,8 @@ public class SpeedUtil {
         while (iter.hasPrevious()) {
             nextSetting = iter.previous().floatValue();
             rampLength += getDistanceOfSpeedChange(prevSetting, nextSetting, _rampTimeIncrement);
-//            if (log.isDebugEnabled()) log.debug("makeDownRamp()= {} for fromSpeed= {} toSpeed= {} dist= {}",
-//                    ramp.getRampLength(), prevSetting, nextSetting, getDistanceOfSpeedChange(prevSetting, nextSetting, _rampTimeIncrement));
+            log.debug("makeDownRamp()= {} for fromSpeed= {} toSpeed= {} dist= {}",
+                    ramp.getRampLength(), prevSetting, nextSetting, getDistanceOfSpeedChange(prevSetting, nextSetting, _rampTimeIncrement));
             prevSetting = nextSetting;
         }
         ramp.setRampLength(rampLength);
@@ -751,12 +748,12 @@ public class SpeedUtil {
             // measuredSpeed is the actual measured speed
             measuredSpeed = length / elapsedTime;
             aveSettings = _settingsTravelled / _timeAtSpeed;
-            /*  if (log.isDebugEnabled()) {
+            if (log.isDebugEnabled()) {
                 float aveSpeed = 1000 * _distanceTravelled / _timeAtSpeed;
                 float profileSpeed =  getSpeedProfile().getSpeed(aveSettings, isForward);
                 log.debug("{} changes on block {}: length={} exitSetting={} speed={}. calcDist={} aveThrottleSetting={} aveProfileSpeed={} calcAveSpeed={}",
                        _numchanges, fromBlock.getDisplayName(), length, throttle, measuredSpeed, _distanceTravelled, aveSettings, profileSpeed, aveSpeed);
-            }*/
+            }
             // check for legitimate speed - derailing, abort, etc. can make bogus measurement.
             float ratio = getTrackSpeed(aveSettings) / measuredSpeed;
             if (ratio > 0.0f && (ratio < 0.5f || ratio > 2.0f)) {
@@ -779,10 +776,6 @@ public class SpeedUtil {
         }
 
         setSpeed(_mergeProfile, aveSettings, measuredSpeed, isForward);
-/*        throttle = stepIncrement * Math.round(throttle/stepIncrement);
-        if (_numchanges == 0 || _mergeProfile.getProfileSize() <= _sessionProfile.getProfileSize()) {
-            setSpeed(_mergeProfile, throttle, measuredSpeed, isForward);
-        }*/
         clearStats();
     }
  
@@ -847,5 +840,5 @@ public class SpeedUtil {
         _distanceTravelled = dist;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SpeedUtil.class);
+    private static final Logger log = LoggerFactory.getLogger(SpeedUtil.class);
 }

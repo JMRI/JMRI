@@ -20,6 +20,7 @@ import org.junit.runners.Suite;
         CbusConstantsTest.class,
         CbusEventHighlighterTest.class,
         CbusFilterTest.class,
+        CbusFilterTypeTest.class,
         CbusMessageTest.class,
         CbusOpCodesTest.class,
         CbusCommandStationTest.class,
