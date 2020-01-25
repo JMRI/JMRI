@@ -794,7 +794,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>3.1.0</version>
                 <configuration>
                     <failOnViolation>true</failOnViolation>
                     <includeTestSourceDirectory>true</includeTestSourceDirectory>
@@ -1011,9 +1010,15 @@
             <version>1.5.4</version>
         </dependency>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.5.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.vintage</groupId>
+            <artifactId>junit-vintage-engine</artifactId>
+            <version>5.5.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -1081,14 +1086,48 @@
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
         </dependency>
-        <!--
+        <!-- the following dependency required for Eclipse IDE -->
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-server</artifactId>
             <version>${jetty.version}</version>
             <type>jar</type>
         </dependency>
-        -->
+        <!-- the following dependency required for Eclipse IDE -->
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-io</artifactId>
+            <version>${jetty.version}</version>
+            <type>jar</type>
+        </dependency>
+        <!-- the following dependency required for Eclipse IDE -->
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-http</artifactId>
+            <version>${jetty.version}</version>
+            <type>jar</type>
+        </dependency>
+        <!-- the following dependency required for Eclipse IDE -->
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-security</artifactId>
+            <version>${jetty.version}</version>
+            <type>jar</type>
+        </dependency>
+        <!-- the following dependency required for Eclipse IDE -->
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-client</artifactId>
+            <version>${jetty.version}</version>
+            <type>jar</type>
+        </dependency>
+        <!-- the following dependency required for Eclipse IDE -->
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-xml</artifactId>
+            <version>${jetty.version}</version>
+            <type>jar</type>
+        </dependency>
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-servlet</artifactId>
@@ -1131,6 +1170,13 @@
             <version>${jetty.version}</version>
             <type>jar</type>
         </dependency>
+        <!-- the following dependency required for Eclipse IDE -->
+        <dependency>
+            <groupId>org.eclipse.jetty.websocket</groupId>
+            <artifactId>websocket-common</artifactId>
+            <version>${jetty.version}</version>
+            <type>jar</type>
+        </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
@@ -1153,8 +1199,7 @@
             <groupId>org.python</groupId>
             <artifactId>jython-standalone</artifactId>
             <version>2.7.1</version>
-        </dependency>
-        <!--
+        </dependency> 
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
@@ -1170,7 +1215,7 @@
             <artifactId>jaxen</artifactId>
             <version>1.1.6</version>
         </dependency>
-        -->
+
         <dependency>
             <groupId>org.jmdns</groupId>
             <artifactId>jmdns</artifactId>
@@ -1232,6 +1277,12 @@
         <dependency>
             <groupId>net.java.dev.jna</groupId>
             <artifactId>jna-platform</artifactId>
+            <version>4.4.0</version>
+        </dependency>
+        <!-- the following dependency required for Eclipse IDE -->
+        <dependency>
+            <groupId>net.java.dev.jna</groupId>
+            <artifactId>jna</artifactId>
             <version>4.4.0</version>
         </dependency>
         <dependency>

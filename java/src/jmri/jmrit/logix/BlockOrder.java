@@ -1,8 +1,9 @@
 package jmri.jmrit.logix;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-//import jmri.Path;
-//import jmri.SignalHead;
+
 /**
  * A BlockOrder is a row in the route of the warrant. It contains 
  * where the warranted train enters a block, the path it takes and
@@ -12,6 +13,9 @@ package jmri.jmrit.logix;
  * @author Pete Cressman Copyright (C) 2009
  */
 public class BlockOrder {
+
+    private static final Logger log = LoggerFactory.getLogger(BlockOrder.class);
+
 
     private OBlock _block;     // OBlock of these orders
     private String _pathName;  // path the train is to take in the block
@@ -36,7 +40,7 @@ public class BlockOrder {
         _pathName = path;
         _entryName = entry;
         _exitName = exit;
-        //if (log.isDebugEnabled()) log.debug("ctor1: "+this.toString());
+         log.debug("ctor1: {}",this);
     }
 
     // for use by WarrantTableFrame 
@@ -45,7 +49,7 @@ public class BlockOrder {
         _pathName = bo._pathName;
         _entryName = bo._entryName;
         _exitName = bo._exitName;
-        //if (log.isDebugEnabled()) log.debug("ctor2: "+this.toString());
+        log.debug("ctor2: {}",this);
     }
 
     protected void setEntryName(String name) {
@@ -63,38 +67,6 @@ public class BlockOrder {
     public String getExitName() {
         return _exitName;
     }
-    /*
-     static String getOppositePortalName(OPath path, String portalName) {
-     if (portalName==null) {
-     if (path.getFromPortalName() == null) {
-     return path.getToPortalName();
-     } else if (path.getToPortalName() == null) {
-     return path.getFromPortalName();
-     }
-     } else if (portalName.equals(path.getFromPortalName())) {
-     return path.getToPortalName();
-     } else if (portalName.equals(path.getToPortalName())) {
-     return path.getFromPortalName();
-     } else {
-     log.error("getOppositePortalName failed. portalName \""+portalName+
-     "\" not found in Path \""+path.getName()+"\".");
-     }
-     return null;
-     }
-
-    protected String getPermissibleExitSpeed() {
-        Portal portal = _block.getPortalByName(getEntryName());
-        if (portal != null) {
-            return portal.getPermissibleSpeed(_block, false);
-        }
-        // OK if this is first block
-//        log.warn("getPermissibleSpeed (Exit), no entry portal! {}", this.toString());
-        return null;
-    }
-
-    protected boolean validateOrder() {
-        return true;
-    }*/
 
     /**
      * Set Path. Note that the Path's 'fromPortal' and 'toPortal' have no
@@ -166,7 +138,7 @@ public class BlockOrder {
             return portal.getPermissibleSpeed(_block, true);
         }
         // OK if this is first block
-        //log.warn("getPermissibleSpeed (Entrance), no entry portal! {}", this.toString());
+        log.warn("getPermissibleSpeed (Entrance), no entry portal! {}", this);
         return null;
     }
 

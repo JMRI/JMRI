@@ -3,10 +3,7 @@ package jmri.jmrit.logix;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Hashtable;
+import java.util.*;
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
@@ -42,10 +39,11 @@ public class PortalManager implements jmri.InstanceManagerAutoDefault, PropertyC
 
     private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
     private ArrayList<Portal> _nameList = new ArrayList<>();          // stores Portal in loaded order
-    private Hashtable<String, Portal> _portalMap = new Hashtable<>(); // stores portal by current name
+    private HashMap<String, Portal> _portalMap = new HashMap<>(); // stores portal by current name
     private Integer _nextIndex = 1;
 
     public PortalManager() {
+        // no setup currently required
     }
 
     public int getPortalCount() {
@@ -138,6 +136,6 @@ public class PortalManager implements jmri.InstanceManagerAutoDefault, PropertyC
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PortalManager.class);
+    private static final Logger log = LoggerFactory.getLogger(PortalManager.class);
 
 }

@@ -1,7 +1,6 @@
 package jmri.jmrit.logix;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
@@ -57,7 +56,7 @@ public class OPath extends jmri.Path {
      * @param exit     Portal where path exits
      * @param settings array of turnout settings of the path
      */
-    public OPath(String name, OBlock owner, Portal entry, Portal exit, ArrayList<BeanSetting> settings) {
+    public OPath(String name, OBlock owner, Portal entry, Portal exit, List<BeanSetting> settings) {
         super(owner, 0, 0);
         _name = name;
         _fromPortal = entry;
@@ -160,7 +159,7 @@ public class OPath extends jmri.Path {
                 _timer.start();
                 _timerActive = true;
             } else {
-                log.warn("timer already active for delayed turnout action on path {}", toString());
+                log.warn("timer already active for delayed turnout action on path {}", this);
             }
         } else {
             fireTurnouts(getSettings(), set, lockState, lock);
@@ -199,6 +198,7 @@ public class OPath extends jmri.Path {
         boolean lock;
 
         public TimeTurnout() {
+            // no actions required to construct
         }
 
         void setList(List<BeanSetting> l) {
@@ -338,6 +338,6 @@ public class OPath extends jmri.Path {
         return true;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OPath.class);
+    private static final Logger log = LoggerFactory.getLogger(OPath.class);
 
 }
