@@ -862,12 +862,12 @@ public class LightControl {
                 _namedTimedControlSensor.getBean().removePropertyChangeListener(_timedSensorListener);
                 _timedSensorListener = null;
             }
+            if (_timedControlListener != null && _timedControlTimer != null) {
+                _timedControlTimer.removeActionListener(_timedControlListener);
+                _timedControlListener = null;
+            }
             if (_timedControlTimer != null) {
                 _timedControlTimer.stop();
-                if (_timedControlListener != null && _timedControlTimer != null) {
-                    _timedControlTimer.removeActionListener(_timedControlListener);
-                    _timedControlListener = null;
-                }
                 _timedControlTimer = null;
             }
             if (_sensor2Listener != null) {
