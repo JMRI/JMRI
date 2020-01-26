@@ -3,21 +3,18 @@ package jmri.jmrit.operations.locations.tools;
 
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
+
+import javax.swing.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.locations.TrackEditFrame;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Planned Pick ups.
@@ -118,6 +115,11 @@ class IgnoreUsedTrackFrame extends OperationsFrame {
             }
             if (_track != null) {
                 _track.setIgnoreUsedLengthPercentage(percentage);
+                if (_track.getAlternateTrack() != null && percentage > 0) {
+                    JOptionPane.showMessageDialog(null, Bundle.getMessage("PPWarningAlternate"),
+                            Bundle.getMessage("PPWarningConfiguration"),
+                            JOptionPane.ERROR_MESSAGE);
+                }
             }
             // save location file
             OperationsXml.save();

@@ -3,27 +3,20 @@ package jmri.jmrit.operations.trains;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Frame;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
+
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.davidflanagan.HardcopyWriter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Train print utilities. Used for train manifests and build reports.
@@ -78,7 +71,7 @@ public class TrainPrintUtilities {
             return;
         }
         // set font
-        if (!fontName.equals("")) {
+        if (!fontName.isEmpty()) {
             writer.setFontName(fontName);
         }
 
@@ -129,7 +122,7 @@ public class TrainPrintUtilities {
             // check for build report print level
             if (isBuildReport) {
                 line = filterBuildReport(line, false); // no indent
-                if (line.equals("")) {
+                if (line.isEmpty()) {
                     continue;
                 }
                 // printing the train manifest
@@ -152,32 +145,24 @@ public class TrainPrintUtilities {
                 }
 
                 // determine if line is a pickup or drop
-                if ((!Setup.getPickupEnginePrefix().equals("") &&
-                        line.startsWith(Setup
-                                .getPickupEnginePrefix())) ||
-                        (!Setup.getPickupCarPrefix().equals("") &&
-                                line.startsWith(Setup
-                                        .getPickupCarPrefix())) ||
-                        (!Setup.getSwitchListPickupCarPrefix().equals("") &&
-                                line
-                                        .startsWith(Setup.getSwitchListPickupCarPrefix()))) {
+                if ((!Setup.getPickupEnginePrefix().trim().isEmpty() &&
+                        line.startsWith(Setup.getPickupEnginePrefix())) ||
+                        (!Setup.getPickupCarPrefix().trim().isEmpty() &&
+                                line.startsWith(Setup.getPickupCarPrefix())) ||
+                        (!Setup.getSwitchListPickupCarPrefix().trim().isEmpty() &&
+                                line.startsWith(Setup.getSwitchListPickupCarPrefix()))) {
                     c = Setup.getPickupColor();
-                } else if ((!Setup.getDropEnginePrefix().equals("") &&
-                        line.startsWith(Setup
-                                .getDropEnginePrefix())) ||
-                        (!Setup.getDropCarPrefix().equals("") &&
-                                line.startsWith(Setup
-                                        .getDropCarPrefix())) ||
-                        (!Setup.getSwitchListDropCarPrefix().equals("") &&
-                                line.startsWith(Setup
-                                        .getSwitchListDropCarPrefix()))) {
+                } else if ((!Setup.getDropEnginePrefix().trim().isEmpty() &&
+                        line.startsWith(Setup.getDropEnginePrefix())) ||
+                        (!Setup.getDropCarPrefix().trim().isEmpty() &&
+                                line.startsWith(Setup.getDropCarPrefix())) ||
+                        (!Setup.getSwitchListDropCarPrefix().trim().isEmpty() &&
+                                line.startsWith(Setup.getSwitchListDropCarPrefix()))) {
                     c = Setup.getDropColor();
-                } else if ((!Setup.getLocalPrefix().equals("") &&
-                        line.startsWith(Setup
-                                .getLocalPrefix())) ||
-                        (!Setup.getSwitchListLocalPrefix().equals("") &&
-                                line.startsWith(Setup
-                                        .getSwitchListLocalPrefix()))) {
+                } else if ((!Setup.getLocalPrefix().trim().isEmpty() &&
+                        line.startsWith(Setup.getLocalPrefix())) ||
+                        (!Setup.getSwitchListLocalPrefix().trim().isEmpty() &&
+                                line.startsWith(Setup.getSwitchListLocalPrefix()))) {
                     c = Setup.getLocalColor();
                 } else if (line.contains(TrainCommon.TEXT_COLOR_START)) {
                     c = TrainCommon.getTextColor(line);
@@ -294,7 +279,7 @@ public class TrainPrintUtilities {
                     break;
                 }
                 line = filterBuildReport(line, Setup.isBuildReportIndentEnabled());
-                if (line.equals("")) {
+                if (line.isEmpty()) {
                     continue;
                 }
                 out.println(line); // indent lines for each level

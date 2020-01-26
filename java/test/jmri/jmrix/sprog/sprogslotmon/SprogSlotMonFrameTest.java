@@ -36,6 +36,7 @@ public class SprogSlotMonFrameTest extends jmri.util.JmriJFrameTestBase {
     public void tearDown() {
         m.getSlotThread().interrupt();
         stcs.dispose();
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         super.tearDown();
     }
 }

@@ -364,7 +364,9 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
     public void tearDown() {
         l.dispose();
         memo.dispose();
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusLightManagerTest.class);

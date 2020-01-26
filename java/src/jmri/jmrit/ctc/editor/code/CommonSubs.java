@@ -48,7 +48,8 @@ public class CommonSubs {
 
     public static boolean allowClose(Component parentComponent, boolean dataChanged) {
         if (dataChanged) {
-            return JOptionPane.showConfirmDialog(parentComponent, Bundle.getMessage("CommonSubsDataModified"), Bundle.getMessage("Warning"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;  // NOI18N
+            return JOptionPane.showConfirmDialog(parentComponent, Bundle.getMessage("CommonSubsDataModified"),
+                    Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;  // NOI18N
         }
         return true;    // NO change, ok to exit
     }
@@ -304,7 +305,8 @@ public class CommonSubs {
         } else {
             stringBuffer.append(Bundle.getMessage("CommonSubsPleaseFix2")); // NOI18N
         }
-        JOptionPane.showMessageDialog(parentComponent, stringBuffer.toString(), Bundle.getMessage("Error"), JOptionPane.ERROR_MESSAGE);   // NOI18N
+        JOptionPane.showMessageDialog(parentComponent, stringBuffer.toString(),
+                Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);   // NOI18N
         return true;
     }
 

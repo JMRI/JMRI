@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Pete Cressman Copyright (c) 2012
  */
-class IndicatorTrackPaths {
+public class IndicatorTrackPaths {
 
     protected ArrayList<String> _paths;      // list of paths that this icon displays
     private boolean _showTrain;         // this track icon should display _loco when occupied
@@ -108,7 +108,7 @@ class IndicatorTrackPaths {
         return status;
     }
 
-    private void removeLocoIcon() {
+    public void removeLocoIcon() {
         if (_loco != null) {
             _loco.remove();
             _loco = null;
@@ -125,7 +125,7 @@ class IndicatorTrackPaths {
             removeLocoIcon();
             return;
         }
-        if (_loco != null) {
+        if (_loco != null || pt == null) {
             return;
         }
         trainName = trainName.trim();

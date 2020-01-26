@@ -92,6 +92,7 @@ public class NceSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBas
     @After
     public void tearDown() {
         l.dispose();
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

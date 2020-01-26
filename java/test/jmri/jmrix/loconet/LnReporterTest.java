@@ -1,12 +1,9 @@
 package jmri.jmrix.loconet;
 
 import jmri.IdTag;
-import jmri.InstanceManager;
 import jmri.Reportable;
 import jmri.LocoAddress;
-import jmri.NamedBean;
 import jmri.PhysicalLocationReporter;
-import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import jmri.util.PhysicalLocation;
 import org.junit.After;
@@ -413,8 +410,9 @@ public class LnReporterTest extends jmri.implementation.AbstractReporterTestBase
     @After
     @Override
     public void tearDown() {
-	r = null;
-	tc = null;
+	    r = null;
+	    tc = null;
+	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

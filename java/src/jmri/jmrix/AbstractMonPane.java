@@ -298,6 +298,7 @@ public abstract class AbstractMonPane extends JmriPanel {
         pane1.add(alwaysOnTopCheckBox);
         pane1.add(autoScrollCheckBox);
         paneA.add(pane1);
+        addCustomControlPanes(paneA);
 
         JPanel pane2 = new JPanel();
         pane2.setLayout(new BoxLayout(pane2, BoxLayout.X_AXIS));
@@ -350,6 +351,13 @@ public abstract class AbstractMonPane extends JmriPanel {
         // connect to data source
         init();
 
+    }
+
+    /**
+     * Expand the display with additional options specific to the hardware.
+     * @param parent a Panel (with vertical BoxLayout); overrides should add a new Panel with horizontal BoxLayout to hold the additional options.
+     */
+    protected void addCustomControlPanes(JPanel parent) {
     }
 
     private int timerCount = 0;

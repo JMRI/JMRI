@@ -133,7 +133,9 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
     public static final String TYPE = Bundle.getMessage("Type");
     public static final String MODEL = Bundle.getMessage("Model");
     public static final String LENGTH = Bundle.getMessage("Length");
+    public static final String WEIGHT = Bundle.getMessage("Weight");
     public static final String LOAD = Bundle.getMessage("Load");
+    public static final String LOAD_TYPE = Bundle.getMessage("Load_Type");
     public static final String COLOR = Bundle.getMessage("Color");
     public static final String TRACK = Bundle.getMessage("Track");
     public static final String DESTINATION = Bundle.getMessage("Destination");
@@ -172,15 +174,15 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
     public static final String METER = Bundle.getMessage("Meter");
 
     private static final String[] CAR_ATTRIBUTES
-            = {ROAD, NUMBER, TYPE, LENGTH, LOAD, HAZARDOUS, COLOR, KERNEL, KERNEL_SIZE, OWNER,
+            = {ROAD, NUMBER, TYPE, LENGTH, WEIGHT, LOAD, LOAD_TYPE, HAZARDOUS, COLOR, KERNEL, KERNEL_SIZE, OWNER,
                 TRACK, LOCATION, DESTINATION, DEST_TRACK, FINAL_DEST, FINAL_DEST_TRACK, COMMENT, DROP_COMMENT,
                 PICKUP_COMMENT, RWE};
-    private static final String[] ENGINE_ATTRIBUTES = {ROAD, NUMBER, TYPE, MODEL, LENGTH, CONSIST, OWNER, TRACK,
+    private static final String[] ENGINE_ATTRIBUTES = {ROAD, NUMBER, TYPE, MODEL, LENGTH, WEIGHT, CONSIST, OWNER, TRACK,
         LOCATION, DESTINATION, COMMENT};
     /*
      * The print Manifest and switch list user selectable options are stored in the xml file using the English translation.
      */
-    private static final String[] KEYS = {"Road", "Number", "Type", "Model", "Length", "Load", "Color", // NOI18N
+    private static final String[] KEYS = {"Road", "Number", "Type", "Model", "Length", "Weight", "Load", "Load_Type", "Color", // NOI18N
         "Track", "Destination", "Dest&Track", "Final_Dest", "FD&Track", "Location", "Consist", "Kernel", // NOI18N
         "Kernel_Size", "Owner", "RWE", "Comment", "SetOut_Msg", "PickUp_Msg", "Hazardous", "Tab", "Tab2", "Tab3"}; // NOI18N
 
@@ -1660,24 +1662,6 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
         return box;
     }
 
-    /**
-     *
-     * @return the available text colors used for printing
-     * @deprecated since 4.9.6 use a {@link javax.swing.JColorChooser } instead.
-     */
-    @Deprecated
-    public static JComboBox<String> getPrintColorComboBox() {
-        JComboBox<String> box = new JComboBox<>();
-        box.addItem(ColorUtil.ColorBlack);
-        box.addItem(ColorUtil.ColorRed);
-        box.addItem(ColorUtil.ColorOrange);
-        box.addItem(ColorUtil.ColorYellow);
-        box.addItem(ColorUtil.ColorGreen);
-        box.addItem(ColorUtil.ColorBlue);
-        box.addItem(ColorUtil.ColorGray);
-        return box;
-    }
-
     public static JComboBox<String> getEngineMessageComboBox() {
         JComboBox<String> box = new JComboBox<>();
         box.addItem(BLANK);
@@ -1839,20 +1823,6 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
         values.setAttribute(Xml.RFID_LABEL, getRfidLabel());
         values.setAttribute(Xml.LENGTH_UNIT, getLengthUnit());
         values.setAttribute(Xml.YEAR_MODELED, getYearModeled());
-        // next 7 manifest attributes for backward compatibility TODO remove in future release 2014
-        //        values.setAttribute(Xml.PRINT_LOC_COMMENTS, isPrintLocationCommentsEnabled() ? Xml.TRUE : Xml.FALSE);
-        //        values.setAttribute(Xml.PRINT_ROUTE_COMMENTS, isPrintRouteCommentsEnabled() ? Xml.TRUE : Xml.FALSE);
-        //        values.setAttribute(Xml.PRINT_LOADS_EMPTIES, isPrintLoadsAndEmptiesEnabled() ? Xml.TRUE : Xml.FALSE);
-        //        values.setAttribute(Xml.PRINT_TRAIN_SCHEDULE, isPrintTrainScheduleNameEnabled() ? Xml.TRUE : Xml.FALSE);
-        //        values.setAttribute(Xml.USE12HR_FORMAT, is12hrFormatEnabled() ? Xml.TRUE : Xml.FALSE);
-        //        values.setAttribute(Xml.PRINT_VALID, isPrintValidEnabled() ? Xml.TRUE : Xml.FALSE);
-        //        values.setAttribute(Xml.SORT_BY_TRACK, isSortByTrackEnabled() ? Xml.TRUE : Xml.FALSE);
-        // This one was left out, wait until 2016
-        values.setAttribute(Xml.PRINT_HEADERS, isPrintHeadersEnabled() ? Xml.TRUE : Xml.FALSE);
-        // next three logger attributes for backward compatibility TODO remove in future release 2014
-        //        values.setAttribute(Xml.CAR_LOGGER, isCarLoggerEnabled() ? Xml.TRUE : Xml.FALSE);
-        //        values.setAttribute(Xml.ENGINE_LOGGER, isEngineLoggerEnabled() ? Xml.TRUE : Xml.FALSE);
-        //        values.setAttribute(Xml.TRAIN_LOGGER, isTrainLoggerEnabled() ? Xml.TRUE : Xml.FALSE);
 
         e.addContent(values = new Element(Xml.PICKUP_ENG_FORMAT));
         storeXmlMessageFormat(values, getPickupEnginePrefix(), getPickupEngineMessageFormat());
@@ -1941,9 +1911,6 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
         values.setAttribute(Xml.PRINT_PASSENGER_LOAD, isPrintPassengerLoadEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.HAZARDOUS_MSG, getHazardousMsg());
 
-        // backward compatible, remove in 2015
-        //        e.addContent(values = new Element(Xml.COLUMN_FORMAT));
-        //        values.setAttribute(Xml.TWO_COLUMNS, getManifestFormat() == TWO_COLUMN_FORMAT ? Xml.TRUE : Xml.FALSE);
         // new format June 2014
         e.addContent(values = new Element(Xml.MANIFEST_FORMAT));
 

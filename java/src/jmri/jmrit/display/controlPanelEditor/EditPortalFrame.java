@@ -37,7 +37,6 @@ import jmri.jmrit.logix.PortalManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  *
@@ -102,7 +101,7 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
         panel.add(new JLabel(Bundle.getMessage("PortalTitle", _homeBlock.getDisplayName())));
         portalPanel.add(panel);
         _portalName = new JTextField();
-        _portalList = new PortalList(_homeBlock);
+        _portalList = new PortalList(_homeBlock, this);
         _portalList.addListSelectionListener(this);
         portalPanel.add(new JScrollPane(_portalList));
 
@@ -229,8 +228,6 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
         }
     }
 
-    @SuppressWarnings("fallthrough")
-    @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
     private void deletePortal() {
         String name = _portalName.getText();
         if (name == null || name.length() == 0) {
@@ -239,22 +236,34 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
         Portal portal = _portalList.getSelectedValue();
         if (portal == null) {
             PortalManager portalMgr = InstanceManager.getDefault(jmri.jmrit.logix.PortalManager.class);
-            portal = portalMgr.getByUserName(name);
+            portal = portalMgr.getPortal(name);
         }
-        if (portal != null) {
-            int result = JOptionPane.showConfirmDialog(this, Bundle.getMessage("confirmPortalDelete", portal.getName()),
-                    Bundle.getMessage("makePortal"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (result == JOptionPane.YES_OPTION) {
-                OBlock oppBlock = portal.getOpposingBlock(_homeBlock);
-                portal.dispose();
-                _portalList.dataChange();
-                _portalName.setText(null);
-                ArrayList<PortalIcon> removeList = new ArrayList<>(_parent.getPortalIconMap(portal));
-                for (PortalIcon icon : removeList) {
-//                    deletePortalIcon(icon);
-                    _parent.getCircuitIcons(oppBlock).remove(icon);
-                    icon.remove();  // will call deletePortalIcon()
-                }
+        if (portal == null) {
+            return;
+        }        
+        if (!_suppressWarnings) {
+            int val = JOptionPane.showOptionDialog(this, Bundle.getMessage("confirmPortalDelete", portal.getName()),
+                    Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.QUESTION_MESSAGE, null,
+                    new Object[]{Bundle.getMessage("ButtonYes"),
+                            Bundle.getMessage("ButtonYesPlus"),
+                            Bundle.getMessage("ButtonNo"),},
+                    Bundle.getMessage("ButtonNo")); // default NO
+            if (val == 2) {
+                return;
+            }
+            if (val == 1) { // suppress future warnings
+                _suppressWarnings = true;
+            }
+        }
+        if (portal.dispose()) {
+            _portalList.dataChange();
+            _portalName.setText(null);
+            OBlock oppBlock = portal.getOpposingBlock(_homeBlock);
+            ArrayList<PortalIcon> removeList = new ArrayList<>(_parent.getPortalIconMap(portal));
+            for (PortalIcon icon : removeList) {
+                _parent.getCircuitIcons(oppBlock).remove(icon);
+                icon.remove();  // will call _parent.deletePortalIcon(icon)
             }
         }
     }
@@ -282,7 +291,7 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
             log.error("Removed PortalIcon without Portal");
             return null;
         }
-        String name = portal.getDisplayName();
+        String name = portal.getName();
         String msg = null;
         OBlock fromBlock = portal.getFromBlock();
         OBlock toBlock = portal.getToBlock();
@@ -461,7 +470,6 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
             super(flavor);
         }
 
-        /** {@inheritDoc} */
         @Override
         protected boolean okToDrag() {
             String name = _portalName.getText();
@@ -471,7 +479,7 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
                 return false;
             }
             PortalManager portalMgr = InstanceManager.getDefault(jmri.jmrit.logix.PortalManager.class);
-            Portal portal = portalMgr.getByUserName(name);
+            Portal portal = portalMgr.getPortal(name);
             if (portal == null) {
                 return true;
             }
@@ -525,7 +533,7 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
             Portal portal = _homeBlock.getPortalByName(name);
             if (portal == null) {
                 PortalManager portalMgr = InstanceManager.getDefault(PortalManager.class);
-                portal = portalMgr.createNewPortal(null, name);
+                portal = portalMgr.createNewPortal(name);
                 portal.setFromBlock(_homeBlock, false);
                 _portalList.dataChange();
             }

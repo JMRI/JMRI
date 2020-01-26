@@ -3,44 +3,15 @@ package jmri.jmrix.can.cbus.swing.nodeconfig;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
-import javax.swing.border.Border;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
-import javax.swing.table.JTableHeader;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
+import javax.swing.*;
+import javax.swing.event.*;
 import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableRowSorter;
-import jmri.jmrix.can.cbus.node.CbusNode;
-import jmri.jmrix.can.cbus.node.CbusNodeFromBackup;
-import jmri.jmrix.can.cbus.node.CbusNodeConstants;
+import jmri.jmrix.can.cbus.node.*;
 import jmri.jmrix.can.cbus.node.CbusNodeConstants.BackupType;
-import jmri.jmrix.can.cbus.node.CbusNodeEventTableDataModel;
-import jmri.jmrix.can.cbus.node.CbusNodeNVTableDataModel;
-import jmri.jmrix.can.cbus.node.CbusNodeXml;
-import jmri.util.table.ButtonEditor;
-import jmri.util.table.ButtonRenderer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,11 +35,11 @@ public class CbusNodeBackupsPane extends JPanel implements TableModelListener {
     private JTable backupTable;
     private JTabbedPane tabbedPane;
     private CbusNodeNVTableDataModel nodeNVModel;
-    private CbusNodeNVTablePane nodevarPane;
+    private CbusNodeNVEditTablePane nodevarPane;
     private CbusNodeEventTablePane nodeEventPane;
     private CbusNodeInfoPane nodeInfoPane;
     private CbusNodeBackupTableModel cbusNodeBackupTableModel = null;
-    private NodeConfigToolPane _mainPane;
+    private final NodeConfigToolPane _mainPane;
     
     // table stuff
     public static final Color VERY_LIGHT_RED = new Color(255,176,173);
@@ -77,6 +48,7 @@ public class CbusNodeBackupsPane extends JPanel implements TableModelListener {
 
     /**
      * Create a new instance of CbusNodeBackupsPane.
+     * @param main the master Node Manager Pane
      */
     protected CbusNodeBackupsPane( NodeConfigToolPane main ) {
         super();
@@ -87,7 +59,7 @@ public class CbusNodeBackupsPane extends JPanel implements TableModelListener {
     /**
      * Create the Pane components with a null Node
      */
-    public void initComponents() {
+    public final void initComponents() {
         
         if (eventScroll != null ){ 
             eventScroll.setVisible(false);
@@ -126,7 +98,8 @@ public class CbusNodeBackupsPane extends JPanel implements TableModelListener {
         
         nodeNVModel = new CbusNodeNVTableDataModel(null, 5,
             CbusNodeNVTableDataModel.MAX_COLUMN); // controller, row, column
-        nodevarPane = new CbusNodeNVTablePane(nodeNVModel);
+        nodevarPane = new CbusNodeNVEditTablePane(nodeNVModel);
+        nodevarPane.setNonEditable();
         
         CbusNodeEventTableDataModel nodeEvModel = new CbusNodeEventTableDataModel( null, null, 10,
             CbusNodeEventTableDataModel.MAX_COLUMN); // controller, row, column
@@ -162,12 +135,9 @@ public class CbusNodeBackupsPane extends JPanel implements TableModelListener {
         newBackupButton.addActionListener(newBackupListener);
         
         // add listener for bottom pane
-        backupTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                if ( !e.getValueIsAdjusting() ) {
-                    userBackupViewChanged();
-                }
+        backupTable.getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
+            if ( !e.getValueIsAdjusting() ) {
+                userBackupViewChanged();
             }
         });
     }
@@ -369,7 +339,7 @@ public class CbusNodeBackupsPane extends JPanel implements TableModelListener {
                 f.setHorizontalAlignment(JTextField.CENTER);
                 f.setBorder( table.getBorder() );
                 
-                String string="";
+                String string;
                 if ( row % 2 == 0 ) {
                     f.setBackground( table.getBackground() );
                 } else {
@@ -467,10 +437,7 @@ public class CbusNodeBackupsPane extends JPanel implements TableModelListener {
         /** {@inheritDoc} */
         @Override
         public boolean isCellEditable(int r, int c) {
-            if (c == COMMENT_COLUMN) {
-                return true;
-            }
-            return false;
+            return c == COMMENT_COLUMN;
         }
 
         /** {@inheritDoc} */

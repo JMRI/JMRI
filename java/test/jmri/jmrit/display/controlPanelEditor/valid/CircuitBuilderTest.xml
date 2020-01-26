@@ -130,7 +130,7 @@
       <userName>West</userName>
       <sensor systemName="West" />
       <path pathName="Main" blockName="OB1" fromPortal="EastWest" toPortal="West-WestExit" fromDirection="0" toDirection="0" length="0.0" />
-      <portal systemName="IP1" portalName="West-WestExit">
+      <portal portalName="West-WestExit">
         <fromBlock blockName="OB1">
           <path pathName="Main" blockName="OB1" />
         </fromBlock>
@@ -138,7 +138,7 @@
           <path pathName="Main" blockName="OB2" />
         </toBlock>
       </portal>
-      <portal systemName="IP2" portalName="EastWest">
+      <portal portalName="EastWest">
         <fromBlock blockName="OB8">
           <path pathName="Main" blockName="OB8" />
         </fromBlock>
@@ -151,7 +151,7 @@
       <userName>WestExit</userName>
       <sensor systemName="WestExit.sen" />
       <path pathName="Main" blockName="OB2" fromPortal="WestExit-WestJunction" toPortal="West-WestExit" fromDirection="0" toDirection="0" length="0.0" />
-      <portal systemName="IP1" portalName="West-WestExit">
+      <portal portalName="West-WestExit">
         <fromBlock blockName="OB1">
           <path pathName="Main" blockName="OB1" />
         </fromBlock>
@@ -159,7 +159,7 @@
           <path pathName="Main" blockName="OB2" />
         </toBlock>
       </portal>
-      <portal systemName="IP3" portalName="WestExit-WestJunction">
+      <portal portalName="WestExit-WestJunction">
         <fromBlock blockName="OB2">
           <path pathName="Main" blockName="OB2" />
         </fromBlock>
@@ -178,7 +178,7 @@
       <path pathName="Diverge" blockName="OB3" fromPortal="WestJunction-WestMain" toPortal="WestExit-WestJunction" fromDirection="0" toDirection="0" length="2540.0">
         <setting turnout="IT1" set="4" />
       </path>
-      <portal systemName="IP3" portalName="WestExit-WestJunction">
+      <portal portalName="WestExit-WestJunction">
         <fromBlock blockName="OB2">
           <path pathName="Main" blockName="OB2" />
         </fromBlock>
@@ -187,7 +187,7 @@
           <path pathName="Diverge" blockName="OB3" />
         </toBlock>
       </portal>
-      <portal systemName="IP4" portalName="WestJunction-WestMain">
+      <portal portalName="WestJunction-WestMain">
         <fromBlock blockName="OB3">
           <path pathName="Diverge" blockName="OB3" />
         </fromBlock>
@@ -195,7 +195,7 @@
           <path pathName="Siding" blockName="OB4" />
         </toBlock>
       </portal>
-      <portal systemName="IP5" portalName="WestJunction-EastMain">
+      <portal portalName="WestJunction-EastMain">
         <fromBlock blockName="OB3">
           <path pathName="Main" blockName="OB3" />
         </fromBlock>
@@ -203,7 +203,7 @@
           <path pathName="Main" blockName="OB5" />
         </toBlock>
       </portal>
-      <portal systemName="IP6" portalName="Crapolla">
+      <portal portalName="Crapolla">
         <fromBlock blockName="OB4" />
         <toBlock blockName="OB3" />
       </portal>
@@ -212,7 +212,7 @@
       <userName>WestSiding</userName>
       <sensor systemName="WestMain.sen" />
       <path pathName="Siding" blockName="OB4" fromPortal="EastJunction-WestSiding" toPortal="WestJunction-WestMain" fromDirection="0" toDirection="0" length="1905.0" />
-      <portal systemName="IP4" portalName="WestJunction-WestMain">
+      <portal portalName="WestJunction-WestMain">
         <fromBlock blockName="OB3">
           <path pathName="Diverge" blockName="OB3" />
         </fromBlock>
@@ -220,11 +220,11 @@
           <path pathName="Siding" blockName="OB4" />
         </toBlock>
       </portal>
-      <portal systemName="IP6" portalName="Crapolla">
+      <portal portalName="Crapolla">
         <fromBlock blockName="OB4" />
         <toBlock blockName="OB3" />
       </portal>
-      <portal systemName="IP7" portalName="EastJunction-WestSiding">
+      <portal portalName="EastJunction-WestSiding">
         <fromBlock blockName="OB6">
           <path pathName="Divergent" blockName="OB6" />
         </fromBlock>
@@ -237,7 +237,7 @@
       <userName>EastMain</userName>
       <sensor systemName="EastMain.sen" />
       <path pathName="Main" blockName="OB5" fromPortal="EastJunction-EastMain" toPortal="WestJunction-EastMain" fromDirection="0" toDirection="0" length="0.0" />
-      <portal systemName="IP5" portalName="WestJunction-EastMain">
+      <portal portalName="WestJunction-EastMain">
         <fromBlock blockName="OB3">
           <path pathName="Main" blockName="OB3" />
         </fromBlock>
@@ -245,7 +245,7 @@
           <path pathName="Main" blockName="OB5" />
         </toBlock>
       </portal>
-      <portal systemName="IP8" portalName="EastJunction-EastMain">
+      <portal portalName="EastJunction-EastMain">
         <fromBlock blockName="OB6">
           <path pathName="Main" blockName="OB6" />
         </fromBlock>
@@ -263,7 +263,7 @@
       <path pathName="Main" blockName="OB6" fromPortal="EastJunction-EastMain" toPortal="EastExit-EastJunction" fromDirection="0" toDirection="0" length="1270.0">
         <setting turnout="IT2" set="2" />
       </path>
-      <portal systemName="IP7" portalName="EastJunction-WestSiding">
+      <portal portalName="EastJunction-WestSiding">
         <fromBlock blockName="OB6">
           <path pathName="Divergent" blockName="OB6" />
         </fromBlock>
@@ -271,7 +271,7 @@
           <path pathName="Siding" blockName="OB4" />
         </toBlock>
       </portal>
-      <portal systemName="IP8" portalName="EastJunction-EastMain">
+      <portal portalName="EastJunction-EastMain">
         <fromBlock blockName="OB6">
           <path pathName="Main" blockName="OB6" />
         </fromBlock>
@@ -279,7 +279,7 @@
           <path pathName="Main" blockName="OB5" />
         </toBlock>
       </portal>
-      <portal systemName="IP9" portalName="EastExit-EastJunction">
+      <portal portalName="EastExit-EastJunction">
         <fromBlock blockName="OB6">
           <path pathName="Divergent" blockName="OB6" />
           <path pathName="Main" blockName="OB6" />
@@ -293,7 +293,7 @@
       <userName>EastExit</userName>
       <sensor systemName="EastExit.sen" />
       <path pathName="Main" blockName="OB7" fromPortal="East-EastExit" toPortal="EastExit-EastJunction" fromDirection="0" toDirection="0" length="1905.0" />
-      <portal systemName="IP9" portalName="EastExit-EastJunction">
+      <portal portalName="EastExit-EastJunction">
         <fromBlock blockName="OB6">
           <path pathName="Divergent" blockName="OB6" />
           <path pathName="Main" blockName="OB6" />
@@ -302,7 +302,7 @@
           <path pathName="Main" blockName="OB7" />
         </toBlock>
       </portal>
-      <portal systemName="IP10" portalName="East-EastExit">
+      <portal portalName="East-EastExit">
         <fromBlock blockName="OB8">
           <path pathName="Main" blockName="OB8" />
         </fromBlock>
@@ -315,7 +315,7 @@
       <userName>East</userName>
       <sensor systemName="East.sen" />
       <path pathName="Main" blockName="OB8" fromPortal="EastWest" toPortal="East-EastExit" fromDirection="0" toDirection="0" length="0.0" />
-      <portal systemName="IP2" portalName="EastWest">
+      <portal portalName="EastWest">
         <fromBlock blockName="OB8">
           <path pathName="Main" blockName="OB8" />
         </fromBlock>
@@ -323,7 +323,7 @@
           <path pathName="Main" blockName="OB1" />
         </toBlock>
       </portal>
-      <portal systemName="IP10" portalName="East-EastExit">
+      <portal portalName="East-EastExit">
         <fromBlock blockName="OB8">
           <path pathName="Main" blockName="OB8" />
         </fromBlock>
@@ -334,18 +334,18 @@
     </oblock>
     <oblock systemName="OBX" length="0.0" units="false" curve="0" permissive="false" speedNotch="">
       <sensor systemName="IS100" />
-      <portal systemName="IP11" portalName="PortalXY">
+      <portal portalName="PortalXY">
         <fromBlock blockName="OBX" />
         <toBlock blockName="OBY" />
       </portal>
     </oblock>
     <oblock systemName="OBY" length="0.0" units="false" curve="0" permissive="false" speedNotch="">
       <path pathName="YMain" blockName="OBY" toPortal="PortalYZ" fromDirection="0" toDirection="0" length="0.0" />
-      <portal systemName="IP11" portalName="PortalXY">
+      <portal portalName="PortalXY">
         <fromBlock blockName="OBX" />
         <toBlock blockName="OBY" />
       </portal>
-      <portal systemName="IP13" portalName="PortalYZ">
+      <portal portalName="PortalYZ">
         <fromBlock blockName="OBY">
           <path pathName="YMain" blockName="OBY" />
         </fromBlock>
@@ -356,7 +356,7 @@
     </oblock>
     <oblock systemName="OBZ" length="254.0" units="false" curve="0" permissive="false" speedNotch="">
       <path pathName="ZMain" blockName="OBZ" toPortal="PortalYZ" fromDirection="0" toDirection="0" length="0.0" />
-      <portal systemName="IP13" portalName="PortalYZ">
+      <portal portalName="PortalYZ">
         <fromBlock blockName="OBY">
           <path pathName="YMain" blockName="OBY" />
         </fromBlock>

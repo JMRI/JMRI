@@ -2,7 +2,6 @@ package jmri.jmrix.openlcb.configurexml;
 
 import jmri.configurexml.LoadAndStoreTestBase;
 import jmri.jmrix.openlcb.*;
-import jmri.util.*;
 
 import java.io.File;
 import org.junit.*;
@@ -63,7 +62,7 @@ public class LoadAndStoreTest extends LoadAndStoreTestBase {
             }
         });
         
-        jmri.util.JUnitUtil.waitFor(()->{return (messages.size()>0);},"Initialization Complete message");
+        jmri.util.JUnitUtil.waitFor(()->{return (messages.size()>0);}, "Initialization Complete message");
     }
 
     @After
@@ -75,4 +74,5 @@ public class LoadAndStoreTest extends LoadAndStoreTestBase {
         connection = null;
         nodeID = null;
     }
+
 }

@@ -248,7 +248,7 @@ public class SplitTextVariableValue extends SplitVariableValue {
 
     @Override
     public int getIntValue() {
-        log.warn("getValue doesn't make sense for a split text value");
+        log.error("getValue doesn't make sense for a split text value");
         return 0;
     }
 

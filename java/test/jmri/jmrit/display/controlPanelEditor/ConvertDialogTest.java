@@ -22,7 +22,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
 //import org.netbeans.jemmy.operators.JComponentOperator;
 //import org.netbeans.jemmy.*;
 /**
@@ -78,7 +77,6 @@ public class ConvertDialogTest {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initOBlockManager();
-        JUnitUtil.initShutDownManager();
     }
 
     @After

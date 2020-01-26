@@ -257,18 +257,6 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
         return this.dirty;
     }
 
-    /**
-     * Get dirty (needs to be saved) state. Protected so that subclasses can
-     * manipulate this state.
-     *
-     * @return true if needs to be saved
-     * @deprecated since 4.9.7; use {@link #isDirty()} instead
-     */
-    @Deprecated
-    protected boolean getDirty() {
-        return this.isDirty();
-    }
-
     @Override
     public void setPaused(boolean paused) {
         boolean old = this.paused;

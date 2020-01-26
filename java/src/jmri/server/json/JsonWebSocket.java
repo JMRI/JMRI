@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 @WebSocket
 public class JsonWebSocket {
 
-    private final static Logger log = LoggerFactory.getLogger(JsonWebSocket.class);
+    private static final Logger log = LoggerFactory.getLogger(JsonWebSocket.class);
     private JsonConnection connection;
     private JsonClientHandler handler;
     private QuietShutDownTask shutDownTask;

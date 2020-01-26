@@ -2,9 +2,7 @@ package jmri.jmrix.tams;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
@@ -26,6 +24,7 @@ public class TamsOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgram
     @Override
     public void tearDown() {
         programmer = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

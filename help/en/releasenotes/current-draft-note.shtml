@@ -51,12 +51,7 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li><span class="since">Since <a href="jmri4.17.5.shtml">JMRI 4.17.5</a></span>
-                    Automatically refresh the slot information when the DCS240/DCS210/DCS52 
-                    "Loco Reset" feature is executed as a result of pressing the 
-                    "Loco Reset" button.  This feature is active only when the 
-                    JMRI connection is configured for DCS240, DCS210, or DCS52 
-                    acting as the command station.</li>
+                <li></li>
             </ul>
 
         <h4>Maple</h4>
@@ -269,6 +264,11 @@
                 <li></li>
             </ul>
 
+        <h4>TAMS</h4>
+            <ul>
+                <li></li>
+            </ul>
+
         <h4>TCS</h4>
             <ul>
                 <li></li>
@@ -393,8 +393,15 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>jmri_bindings.py is no longer needed by JMRI to inject default bindings into
-              Jython/Python scripts.</li>
+            <li>The JavaCSV API has been replaced with the Apache Commons CSV API.
+                This may impact some scripts. See
+                <a href="https://github.com/JMRI/JMRI/blob/master/jython/TurnoutStatePersistence.py">TurnoutStatePersistence.py</a>
+                for an example of how to use the new CSV parsing API. If unable to
+                use the new API, the JAR for the old API can be
+                <a href="https://repo1.maven.org/maven2/net/sourceforge/javacsv/javacsv/2.0/javacsv-2.0.jar">downloaded</a>
+                and added to jmri.conf using the
+                <em><a href="https://www.jmri.org/help/en/html/doc/Technical/StartUpScripts.shtml">--cp:a=path/to/javacsv.jar</a></em>
+                parameter.</li>
         </ul>
 
     <h3>Signals</h3>
@@ -449,6 +456,12 @@
             <li></li>
         </ul>
 
+   <h3>Tracker</h3>
+        <a id="Tr" name="Tr"></a>
+        <ul>
+            <li></li>
+        </ul>
+
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
@@ -458,7 +471,7 @@
    <h3>Web Access</h3>
         <a id="WA" name="WA"></a>
         <ul>
-            <li> </li>
+            <li>Fixed a problem preventing JMRI application web services from working with iOS 9.3.6</li>
         </ul>
 
    <h3>WiThrottle Server</h3>
@@ -470,16 +483,17 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li></li>
+            <li>Fixed a crashing bug with short sequences.</li>
         </ul>
 
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Added basic support for developer architecture checks via
-                <a href="https://www.archunit.org">ArchUnit</a>,
-                see the 
-                <a href="http://jmri.org/help/en/html/doc/Technical/IntroStructure.shtml">Introduction to JMRI Library Structure</a>
-                page.</li>
+            <li>Added a feature which lets you set the height of rows
+                in the 
+                <a href="https://www.jmri.org/help/en/package/jmri/jmrit/cabsignals/CabSignalPane.shtml">cab display table</a>, 
+                so that signal icons can be made fully visible.</li>
+            <li>Lots of updates to the organization of the web site so that the sidebars
+                provide better navigation.</li>
         </ul>
 

@@ -51,9 +51,6 @@ import jmri.implementation.DefaultConditionalAction;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Swing action to create and register groups of Logix Condtionals to perform a
  * railroad control task.
@@ -328,6 +325,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
     JTextField _userName = new JTextField(25);
 
     JmriJFrame _addFrame = null;
+    JTabbedPane _tabbedPane = null;
 
     RouteInputModel _inputModel;
     JScrollPane _inputScrollPane;
@@ -402,7 +400,6 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             outputTS.add(new RouteOutputSensor(systemName, userName));
             alignTS.add(new AlignElement(systemName, userName));
         });
-
         jmri.LightManager lm = InstanceManager.lightManagerInstance();
         lm.getNamedBeanSet().forEach((nb) -> {
             String userName = nb.getUserName();
@@ -873,6 +870,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
     @Override
     protected void addPressed(ActionEvent e) {
         makeEditWindow();
+        _tabbedPane.setSelectedIndex(0);
         createButton.setVisible(true);
         cancelButton.setVisible(true);
         _typePanel.setVisible(true);
@@ -886,13 +884,13 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
      * Set up Create/Edit LRoute pane
      */
     void makeEditWindow() {
+        buildLists();
         if (_addFrame == null) {
-            buildLists();
             _addFrame = new JmriJFrame(rbx.getString("LRouteAddTitle"), false, false);
             _addFrame.addHelpMenu("package.jmri.jmrit.beantable.LRouteAddEdit", true);
             _addFrame.setLocation(100, 30);
 
-            JTabbedPane tabbedPane = new JTabbedPane();
+            _tabbedPane = new JTabbedPane();
 
             //////////////////////////////////// Tab 1 /////////////////////////////
             JPanel tab1 = new JPanel();
@@ -981,7 +979,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             tab1.add(pb);
 
             tab1.setVisible(true);
-            tabbedPane.addTab(rbx.getString("BasicTab"), null, tab1, rbx.getString("BasicTabHint"));
+            _tabbedPane.addTab(rbx.getString("BasicTab"), null, tab1, rbx.getString("BasicTabHint"));
 
             //////////////////////////////////// Tab 2 /////////////////////////////
             JPanel tab2 = new JPanel();
@@ -1012,7 +1010,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             _outputScrollPane = makeColumns(routeOutputTable, _setStateCombo, true);
             tab2.add(_outputScrollPane, BorderLayout.CENTER);
             tab2.setVisible(true);
-            tabbedPane.addTab(rbx.getString("ActionTab"), null, tab2, rbx.getString("ActionTabHint"));
+            _tabbedPane.addTab(rbx.getString("ActionTab"), null, tab2, rbx.getString("ActionTabHint"));
 
             //////////////////////////////////// Tab 3 /////////////////////////////
             JPanel tab3 = new JPanel();
@@ -1044,7 +1042,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             _inputScrollPane = makeColumns(routeInputTable, _testStateCombo, true);
             tab3.add(_inputScrollPane, BorderLayout.CENTER);
             tab3.setVisible(true);
-            tabbedPane.addTab(rbx.getString("TriggerTab"), null, tab3, rbx.getString("TriggerTabHint"));
+            _tabbedPane.addTab(rbx.getString("TriggerTab"), null, tab3, rbx.getString("TriggerTabHint"));
 
             ////////////////////// Tab 4 /////////////////
             JPanel tab4 = new JPanel();
@@ -1117,14 +1115,14 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             }
             tab4.add(alignScrollPane, BorderLayout.CENTER);
             tab4.setVisible(true);
-            tabbedPane.addTab(rbx.getString("MiscTab"), null, tab4, rbx.getString("MiscTabHint"));
+            _tabbedPane.addTab(rbx.getString("MiscTab"), null, tab4, rbx.getString("MiscTabHint"));
 
             Container contentPane = _addFrame.getContentPane();
             //tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 
             ///////////////////////////////////
             JPanel pt = new JPanel();
-            pt.add(tabbedPane);
+            pt.add(_tabbedPane);
             contentPane.add(pt);
 
             // set listener for window closing
@@ -1133,11 +1131,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                 public void windowClosing(java.awt.event.WindowEvent e) {
                     // remind to save, if Route was created or edited
                     if (routeDirty) {
-                        InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage(Bundle.getMessage("ReminderTitle"), Bundle.getMessage("ReminderSaveString", Bundle.getMessage("BeanNameLRoute")),
-                                        getClassName(),
-                                        "remindSaveRoute"); // NOI18N
-                        routeDirty = false;
+                        showReminderMessage();
                     }
                     clearPage();
                     _addFrame.setVisible(false);
@@ -1158,7 +1152,14 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         } else {
             _addFrame.setVisible(true);
         }
-    }   // addPressed
+    }
+
+    void showReminderMessage() {
+        InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+            showInfoMessage(Bundle.getMessage("ReminderTitle"), Bundle.getMessage("ReminderSaveString", Bundle.getMessage("BeanNameLRoute")),
+                    getClassName(),
+                    "remindSaveRoute"); // NOI18N
+    }
 
     /*
      * Utility for addPressed
@@ -1979,6 +1980,10 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         _newRouteType = true;
         _newRouteButton.doClick();
         _lockCheckBox.setSelected(_lock);
+        if (routeDirty) {
+            showReminderMessage();
+            routeDirty = false;
+        }
         _addFrame.setVisible(false);
     }
 
@@ -2372,10 +2377,17 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         }
     }
 
-    public final static String LOGIX_SYS_NAME = "RTX";
-    public final static String LOGIX_INITIALIZER = LOGIX_SYS_NAME + "INITIALIZER";
-    public final static String CONDITIONAL_SYS_PREFIX = LOGIX_SYS_NAME + "C";
+    public final static String LOGIX_SYS_NAME;
+    public final static String LOGIX_INITIALIZER;
+    public final static String CONDITIONAL_SYS_PREFIX;
     public final static String CONDITIONAL_USER_PREFIX = "Route ";
+
+    static {
+        String logixPrefix = InstanceManager.getDefault(jmri.LogixManager.class).getSystemNamePrefix();
+        LOGIX_SYS_NAME = logixPrefix + ":RTX";
+        LOGIX_INITIALIZER = LOGIX_SYS_NAME + "INITIALIZER";
+        CONDITIONAL_SYS_PREFIX = LOGIX_SYS_NAME + "C";
+    }
 
     public final static int SENSOR_TYPE = 1;
     public final static int TURNOUT_TYPE = 2;
@@ -2477,12 +2489,12 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         }
 
         static jmri.util.AlphanumComparator ac = new jmri.util.AlphanumComparator();
-    
+
         @Override
         public int compare(RouteElement e1, RouteElement e2) {
             String s1 = e1.getSysName();
             String s2 = e2.getSysName();
-            
+
             int p1len = Manager.getSystemPrefixLength(s1);
             int p2len = Manager.getSystemPrefixLength(s2);
 
@@ -2491,11 +2503,11 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
 
             char c1 = s1.charAt(p1len);
             char c2 = s2.charAt(p2len);
-           
+
             if (c1 == c2) return ac.compare(s1.substring(p1len+1), s2.substring(p2len+1));
             else return (c1 > c2) ? +1 : -1 ;
         }
-        
+
     }
 
     /**
@@ -3039,5 +3051,5 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         return Bundle.getMessage("TitleLRouteTable");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LRouteTableAction.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LRouteTableAction.class);
 }

@@ -3,8 +3,6 @@ package jmri.jmrix;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
@@ -37,7 +35,6 @@ import org.slf4j.LoggerFactory;
  */
 public class JmrixConfigPane extends JPanel implements PreferencesPanel {
 
-    private static final ResourceBundle acb = ResourceBundle.getBundle("apps.AppsConfigBundle");
     public static final String NONE_SELECTED = Bundle.getMessage("noneSelected");
     public static final String NO_PORTS_FOUND = Bundle.getMessage("noPortsFound");
     public static final String NONE = Bundle.getMessage("none");
@@ -374,7 +371,7 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
 
     @Override
     public String getPreferencesItemText() {
-        return acb.getString("MenuConnections"); // NOI18N
+        return Bundle.getMessage("MenuConnections"); // NOI18N
     }
 
     @Override

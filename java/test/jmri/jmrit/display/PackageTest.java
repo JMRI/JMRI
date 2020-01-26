@@ -40,6 +40,7 @@ import org.junit.runners.Suite;
         IndicatorTrackIconTest.class,
         IndicatorTrackPathsTest.class,
         LightIconTest.class,
+        LoadAndStoreTest.class,
         LocoIconTest.class,
         MemoryComboIconTest.class,
         MemoryIconCoordinateEditTest.class,

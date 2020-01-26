@@ -7,13 +7,15 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <meta name="Author" content="Bob Jacobsen, Egbert Broerse">
 
-  <title>JMRI Help</title><!-- Style -->
+  <title>JMRI Help</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print"><!-- /Style -->
+  media="print">
+  <!-- /Style -->
 </head>
 
 <body>

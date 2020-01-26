@@ -12,14 +12,12 @@ import java.util.Set;
 import jmri.Block;
 import jmri.IdTag;
 import jmri.LocoAddress;
-import jmri.DccLocoAddress;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.PhysicalLocationReporter;
 import jmri.Reporter;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
-import jmri.jmrit.vsdecoder.VSDConfig;
 import jmri.jmrit.vsdecoder.listener.ListeningSpot;
 import jmri.jmrit.vsdecoder.listener.VSDListener;
 import jmri.jmrit.vsdecoder.swing.VSDManagerFrame;
@@ -114,7 +112,7 @@ public class VSDecoderManager implements PropertyChangeListener {
     private float distance_rest_new = 0.0f; // Block distance to go, copy
 
     private float xPosi;
-    static final int max_decoder = 4; // For now only four locos allowed (arbitrary)
+    public static final int max_decoder = 4; // For now only four locos allowed (arbitrary)
     private int remove_index;
     boolean is_tunnel = false;
     boolean geofile_ok = false;
@@ -189,25 +187,30 @@ public class VSDecoderManager implements PropertyChangeListener {
                         if (entry_counter < max_decoder) {
                             VSDConfig config = new VSDConfig();
                             config.setLocoAddress(entry.getDccLocoAddress());
-                            log.debug("Roster entry VSD address: {}", config.getLocoAddress());
-                            boolean is_loaded = LoadVSDFileAction.loadVSDFile(entry.getAttribute("VSDecoder_Path"));
-                            if (!is_loaded) {
-                                log.error("loading VSD file {}: {}", entry.getAttribute("VSDecoder_Path"), is_loaded);
+                            log.info("Loading Roster \"{}\", VSDecoder {} ...", entry.getId(), config.getLocoAddress());
+                            if (entry.getAttribute("VSDecoder_Path") != null && entry.getAttribute("VSDecoder_Profile") != null) {
+                                if (LoadVSDFileAction.loadVSDFile(entry.getAttribute("VSDecoder_Path"))) {
+                                    // config.xml OK
+                                    log.info(" VSD path: {}", entry.getAttribute("VSDecoder_Path"));
+                                    config.setProfileName(entry.getAttribute("VSDecoder_Profile"));
+                                    log.debug(" entry VSD profile: {}", entry.getAttribute("VSDecoder_Profile"));
+                                    VSDecoder newDecoder = VSDecoderManager.instance().getVSDecoder(config);
+                                    if (newDecoder != null) {
+                                        log.info("VSD {}, profile \"{}\" ready.", config.getLocoAddress(), config.getProfileName());
+                                        entry_counter++;
+                                    } else {
+                                        log.warn("VSD {} failed", config.getProfileName());
+                                    }
+                                }
+                            } else {
+                                log.error("Cannot load VSD File - path or profile missing - check your Roster Media");
                             }
-                            log.debug(" entry full VSD path: {}", entry.getAttribute("VSDecoder_Path"));
-                            config.setProfileName(entry.getAttribute("VSDecoder_Profile"));
-                            log.debug(" entry VSD profile: {}", entry.getAttribute("VSDecoder_Profile"));
-                            VSDecoder newDecoder = VSDecoderManager.instance().getVSDecoder(config);
-                            if (newDecoder != null) {
-                                log.info("VSD profile {} loaded", config.getProfileName());
-                            }
-                            entry_counter++;
                         } else {
                             log.warn("Only {} roster entries allowed. Disgarded {}", max_decoder, rosterList.size() - max_decoder);
                         }
                     }
                     if (entry_counter == 0) {
-                        log.info("No Roster entry found in Roster Group {}", vsdRosterGroup);
+                        log.warn("No Roster entry found in Roster Group {}", vsdRosterGroup);
                     }
                 } else {
                     log.warn("Roster group \"{}\" not found", vsdRosterGroup);
@@ -217,7 +220,7 @@ public class VSDecoderManager implements PropertyChangeListener {
                 managerFrame = new VSDManagerFrame();
             }
         } else {
-            log.warn("Virtual Sound Decoder Manager is already running"); // VSDManagerFrameTitle?
+            log.warn("Virtual Sound Decoder Manager is already running");
         }
         return managerFrame;
     }
@@ -301,7 +304,7 @@ public class VSDecoderManager implements PropertyChangeListener {
             //debugPrintDecoderList();
             if (geofile_ok) {
                 if (vsd.topspeed == 0) {
-                    log.warn("Top-speed not defined. No advanced location following possible.");
+                    log.info("Top-speed not defined. No advanced location following possible.");
                 } else {
                     initSoundPositionTimer(vsd);
                 }
@@ -502,25 +505,6 @@ public class VSDecoderManager implements PropertyChangeListener {
         return profiletable.get(profile);
     }
 
-    /**
-     * Load Profiles from a VSD file Not deprecated anymore. used by the new
-     * ConfigDialog.
-     */
-    public void loadProfiles(String path) {
-        try {
-            VSDFile vsdfile = new VSDFile(path);
-            if (vsdfile.isInitialized()) {
-                this.loadProfiles(vsdfile);
-            }
-        } catch (java.util.zip.ZipException e) {
-            log.error("ZipException loading VSDecoder from {}", path);
-            // would be nice to pop up a dialog here...
-        } catch (java.io.IOException ioe) {
-            log.error("IOException loading VSDecoder from {}", path);
-            // would be nice to pop up a dialog here...
-        }
-    }
-
     protected void registerReporterListener(String sysName) {
         Reporter r = jmri.InstanceManager.getDefault(jmri.ReporterManager.class).getReporter(sysName);
         if (r == null) {
@@ -536,7 +520,7 @@ public class VSDecoderManager implements PropertyChangeListener {
     }
 
     protected void registerBeanListener(Manager beanManager, String sysName) {
-        NamedBean b = beanManager.getBeanBySystemName(sysName);
+        NamedBean b = beanManager.getBySystemName(sysName);
         if (b == null) {
             log.debug("No bean by name {}", sysName);
             return;
@@ -609,6 +593,9 @@ public class VSDecoderManager implements PropertyChangeListener {
                 stopSoundPositionTimer(v);
             }
         }
+        // Empty the timertable
+        timertable.clear();
+
         // Empty the DecoderTable
         decodertable.clear();
         /*
@@ -674,7 +661,6 @@ public class VSDecoderManager implements PropertyChangeListener {
                 // Note this assumes there is only one VSDManagerFrame open at a time.
                 shutdownDecoders();
                 if (managerFrame != null) {
-                    managerFrame.dispose();
                     managerFrame = null;
                 }
             }
@@ -937,7 +923,8 @@ public class VSDecoderManager implements PropertyChangeListener {
     public void loadProfiles(VSDFile vf) {
         Element root;
         String pname;
-        if ((root = vf.getRoot()) == null) {
+        root = vf.getRoot();
+        if (root == null) {
             return;
         }
 
@@ -946,10 +933,13 @@ public class VSDecoderManager implements PropertyChangeListener {
         java.util.Iterator<Element> i = root.getChildren("profile").iterator(); // NOI18N
         while (i.hasNext()) {
             Element e = i.next();
-            log.debug(e.toString());
-            if ((pname = e.getAttributeValue("name")) != null) { // NOI18N
+            pname = e.getAttributeValue("name");
+            log.debug("Profile name: {}", pname);
+            if ((pname != null) && !(pname.isEmpty())) { // NOI18N
                 profiletable.put(pname, vf.getName());
                 new_entries.add(pname);
+            } else {
+                log.error("Profile name is not valid");
             }
         }
 

@@ -29,6 +29,7 @@ public class DetectionPanelTest {
         DetectionPanel t = new DetectionPanel(tip);
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(ip);
+        JUnitUtil.dispose(es);
     }
 
     // The minimal setup for log4J

@@ -164,7 +164,7 @@ public class CircuitBuilder {
         return _circuitMenu;
     }
 
-    protected void openWindow() {
+    protected void openCBWindow() {
         if (_cbFrame != null) {
             _cbFrame.toFront();
         } else {
@@ -188,49 +188,37 @@ public class CircuitBuilder {
         JMenuItem editItem = new JMenuItem(Bundle.getMessage("newCircuitItem"));
         _circuitMenu.add(editItem);
         editItem.addActionListener((ActionEvent event) -> {
-            if (_cbFrame !=null) {
-                _cbFrame.dispose();
-            }
+            closeCBWindow();
             newCircuit();
         });
         editItem = new JMenuItem(Bundle.getMessage("editCircuitItem"));
         _circuitMenu.add(editItem);
         editItem.addActionListener((ActionEvent event) -> {
-            if (_cbFrame !=null) {
-                _cbFrame.dispose();
-            }
+            closeCBWindow();
             editCircuit("editCircuitItem", true);
         });
         editItem = new JMenuItem(Bundle.getMessage("editPortalsItem"));
         _circuitMenu.add(editItem);
         editItem.addActionListener((ActionEvent event) -> {
-            if (_cbFrame !=null) {
-                _cbFrame.dispose();
-            }
+            closeCBWindow();
             editPortals("editPortalsItem", true);
         });
         editItem = new JMenuItem(Bundle.getMessage("editCircuitPathsItem"));
         _circuitMenu.add(editItem);
         editItem.addActionListener((ActionEvent event) -> {
-            if (_cbFrame !=null) {
-                _cbFrame.dispose();
-            }
+            closeCBWindow();
             editCircuitPaths("editCircuitPathsItem", true);
         });
         editItem = new JMenuItem(Bundle.getMessage("editDirectionItem"));
         _circuitMenu.add(editItem);
         editItem.addActionListener((ActionEvent event) -> {
-            if (_cbFrame !=null) {
-                _cbFrame.dispose();
-            }
+            closeCBWindow();
             editPortalDirection("editDirectionItem", true);
         });
         editItem = new JMenuItem(Bundle.getMessage("editSignalItem"));
         _circuitMenu.add(editItem);
         editItem.addActionListener((ActionEvent event) -> {
-            if (_cbFrame !=null) {
-                _cbFrame.dispose();
-            }
+            closeCBWindow();
             editSignalFrame("editSignalItem", true);
         });
         _todoMenu = new JMenu(Bundle.getMessage("circuitErrorsItem"));
@@ -450,7 +438,7 @@ public class CircuitBuilder {
             for (int i = 0; i < _noPortalIcon.size(); i++) {
                 Portal portal = _noPortalIcon.get(i);
                 JMenuItem mi = new JMenuItem(portal.toString());
-                mi.setActionCommand(portal.getSystemName());
+                mi.setActionCommand(portal.getName());
                 mi.addActionListener(editPortalAction);
                 blockNeeds.add(mi);
             }
@@ -1029,7 +1017,7 @@ public class CircuitBuilder {
                         _signalMap.put(mast, portal);
                     }
                     if (log.isDebugEnabled()) {
-                        log.debug("Portal {} in block {} has {} icons", portal.getDisplayName(), block.getDisplayName(), piArray.size());
+                        log.debug("Portal {} in block {} has {} icons", portal.getName(), block.getDisplayName(), piArray.size());
                     }
                 }
             }
@@ -1069,7 +1057,7 @@ public class CircuitBuilder {
         }
 
         // check positioning of portal icons for 'direction arrow' state.
-        for (Portal portal : portalMgr.getNamedBeanSet()) {
+        for (Portal portal : portalMgr.getPortalSet()) {
             List<PortalIcon> piArray = getPortalIconMap(portal);
             if (piArray.isEmpty()) {
                 _noPortalIcon.add(portal);
@@ -1188,8 +1176,8 @@ public class CircuitBuilder {
         for (Positionable pos : list) {
             if (pos instanceof IndicatorTrack) {
                 ((IndicatorTrack) pos).setOccBlockHandle(null);
-            } else if (pos instanceof PortalIcon) {
-                pos.remove();
+/*            } else if (pos instanceof PortalIcon) {
+                pos.remove();*/
             }
             _darkTrack.add(pos);
         }
@@ -1206,12 +1194,12 @@ public class CircuitBuilder {
         } else {
             for (Portal portal : portals) {
                 if (portal.getToBlock() == null || portal.getFromBlock() == null) {
-                    return  Bundle.getMessage("portalNeedsBlock", portal.getDisplayName());
+                    return  Bundle.getMessage("portalNeedsBlock", portal.getName());
                 }
             }
             for (Portal portal : portals) {
                 if (!block.equals(portal.getToBlock()) && !block.equals(portal.getFromBlock())) {
-                    return Bundle.getMessage("portalNotInCircuit", portal.getDisplayName(), block.getDisplayName());
+                    return Bundle.getMessage("portalNotInCircuit", portal.getName(), block.getDisplayName());
                 }
             }
         }
@@ -1660,6 +1648,12 @@ public class CircuitBuilder {
         }
     }
 
+    protected void closeCBWindow() {
+        if (_cbFrame !=null) {
+            _cbFrame.dispose();
+        }
+    }
+    
     static int NONE = 0;
     static int OBLOCK = 1;
     static int PORTAL = 2;

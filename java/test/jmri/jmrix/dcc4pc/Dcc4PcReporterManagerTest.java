@@ -36,7 +36,9 @@ public class Dcc4PcReporterManagerTest extends jmri.managers.AbstractReporterMgr
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
 }

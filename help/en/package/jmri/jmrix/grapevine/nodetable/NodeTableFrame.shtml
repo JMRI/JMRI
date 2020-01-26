@@ -24,9 +24,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Grapevine Node Table</h1>
 
       <p>The "Node Table" tool lets you see all your Grapevine nodes at

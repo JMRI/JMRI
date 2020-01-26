@@ -1,13 +1,14 @@
 package jmri.managers;
 
+import java.util.List;
+import java.util.ArrayList;
+import java.util.SortedSet;
 import javax.annotation.Nonnull;
 
 import jmri.IdTag;
 import jmri.IdTagManager;
 import jmri.Manager;
 import jmri.Reporter;
-import java.util.List;
-import java.util.ArrayList;
 import jmri.InstanceManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 
@@ -40,7 +41,20 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
 
     @Override
     public boolean isInitialised() {
-        return InstanceManager.getNullableDefault(IdTagManager.class) != null;
+        return defaultManager!= null &&
+                getManagerList().stream().noneMatch(o->((IdTagManager)o).isInitialised());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Nonnull
+    public Manager<IdTag> getDefaultManager() {
+        if(defaultManager != getInternalManager()){
+           defaultManager = getInternalManager();
+        }
+        return defaultManager;
     }
 
     @Override
@@ -58,19 +72,30 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
      * @return Null if nothing by that name exists
      */
     @Override
-    public IdTag getIdTag(String name) {
+    public IdTag getIdTag(@Nonnull String name) {
+        init();
         return super.getNamedBean(name);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @Nonnull
+    public SortedSet<IdTag> getNamedBeanSet() {
+        init();
+        return super.getNamedBeanSet();
     }
 
     @Override
     protected IdTag makeBean(int i, String systemName, String userName) {
+        init();
         return ((IdTagManager) getMgr(i)).newIdTag(systemName, userName);
     }
 
-    @Override
     /**
      * {@inheritDoc}
      */
+    @Override
+    @Nonnull
     public IdTag provide(@Nonnull String name) throws IllegalArgumentException {
         return provideIdTag(name);
     }
@@ -84,34 +109,14 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
      * @return Never null under normal circumstances
      */
     @Override
-    public IdTag provideIdTag(String name) throws IllegalArgumentException {
+    @Nonnull
+    public IdTag provideIdTag(@Nonnull String name) throws IllegalArgumentException {
+        init();
         return super.provideNamedBean(name);
     }
 
     /**
-     * Locate an instance based on a system name. Returns null if no instance
-     * already exists.
-     *
-     * @return requested IdTag object or null if none exists
-     */
-    @Override
-    public IdTag getBySystemName(String systemName) {
-        return super.getBeanBySystemName(systemName);
-    }
-
-    /**
-     * Locate an instance based on a user name. Returns null if no instance
-     * already exists.
-     *
-     * @return requested Turnout object or null if none exists
-     */
-    @Override
-    public IdTag getByUserName(String userName) {
-        return super.getBeanByUserName(userName);
-    }
-
-    /**
-     * Return an instance with the specified system and user names. Note that
+     * Get an instance with the specified system and user names. Note that
      * two calls with the same arguments will get the same instance; there is
      * only one IdTag object representing a given physical light and therefore
      * only one with a specific system or user name.
@@ -139,12 +144,15 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
      * @return requested IdTag object (never null)
      */
     @Override
-    public IdTag newIdTag(String systemName, String userName) {
+    @Nonnull
+    public IdTag newIdTag(@Nonnull String systemName, String userName) {
+        init();
         return newNamedBean(systemName, userName);
     }
 
     @Override
-    public IdTag getByTagID(String tagID) {
+    public IdTag getByTagID(@Nonnull String tagID) {
+        init();
         return getBySystemName(makeSystemName(tagID));
     }
 
@@ -157,8 +165,17 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
     }
 
     @Override
+    @Nonnull
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameIdTags" : "BeanNameIdTag");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<IdTag> getNamedBeanClass() {
+        return IdTag.class;
     }
 
     private boolean stateSaved = false;
@@ -206,9 +223,10 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
     }
 
     @Override
-    public List<IdTag> getTagsForReporter(Reporter reporter, long threshold) {
-        List<IdTag> out = new ArrayList<>();
-        return out;
+    @Nonnull
+    public List<IdTag> getTagsForReporter(@Nonnull Reporter reporter, long threshold) {
+        init();
+        return new ArrayList<>();
     }
 
 }

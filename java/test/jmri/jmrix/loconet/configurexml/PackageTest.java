@@ -10,7 +10,8 @@ import org.junit.runners.Suite;
     LnReporterManagerXmlTest.class,
     LnSensorManagerXmlTest.class,
     LnTurnoutManagerXmlTest.class,
-    SE8cSignalHeadXmlTest.class
+    SE8cSignalHeadXmlTest.class,
+    LoadAndStoreTest.class
 })
 /**
  * Tests for the jmri.jmrix.loconet.configurexml package.

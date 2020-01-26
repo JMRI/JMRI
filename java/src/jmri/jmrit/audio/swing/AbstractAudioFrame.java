@@ -42,9 +42,9 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
     static final float FLT_PRECISION = 1 / (float) INT_PRECISION;
 
     // Common UI components for Add/Edit Audio
-    private static final JLabel sysNameLabel = new JLabel(Bundle.getMessage("LabelSystemName"));
+    private static final JLabel SYS_NAME_LABEL = new JLabel(Bundle.getMessage("LabelSystemName"));
     JTextField sysName = new JTextField(5);
-    private static final JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
+    private static final JLabel USER_NAME_LABEL = new JLabel(Bundle.getMessage("LabelUserName"));
     JTextField userName = new JTextField(15);
 
     /**
@@ -74,13 +74,13 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
 
         p = new JPanel();
         p.setLayout(new FlowLayout());
-        p.add(sysNameLabel);
+        p.add(SYS_NAME_LABEL);
         p.add(sysName);
         frame.getContentPane().add(p);
 
         p = new JPanel();
         p.setLayout(new FlowLayout());
-        p.add(userNameLabel);
+        p.add(USER_NAME_LABEL);
         p.add(userName);
         frame.getContentPane().add(p);
 

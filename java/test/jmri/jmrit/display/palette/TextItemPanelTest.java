@@ -29,6 +29,7 @@ public class TextItemPanelTest {
         TextItemPanel t = new TextItemPanel(ip, "test", es);
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(ip);
+        JUnitUtil.dispose(es);
    }
 
     // The minimal setup for log4J

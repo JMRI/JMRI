@@ -53,7 +53,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
 
     /**
      * Get the system connection for this manager.
-     * 
+     *
      * @return the system connection for this manager
      */
     @CheckReturnValue
@@ -61,7 +61,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     public SystemConnectionMemo getMemo();
 
     /**
-     * Provides access to the system prefix string. This was previously called
+     * Provide access to the system prefix string. This was previously called
      * the "System letter"
      *
      * @return the system prefix
@@ -75,6 +75,14 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      */
     @CheckReturnValue
     public char typeLetter();
+
+    /**
+     * Get the class of NamedBean supported by this Manager. This should be the
+     * generic class used in the Manager's class declaration.
+     * 
+     * @return the class supported by this Manager.
+     */
+    public abstract Class<E> getNamedBeanClass();
 
     /**
      * Get the prefix and type for the system name of the NamedBeans handled by
@@ -158,11 +166,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     /**
      * Validate the format of a system name, returning it unchanged if valid.
      * <p>
-     * Although further restrictions may be added by system-specific
-     * implementations, at a minimum, the implementation must consider a name
-     * that does not start with the System Name prefix for this manager to be
-     * invalid, and must consider a name that is the same as the System Name
-     * prefix to be invalid.
+     * This is a convenience form of {@link #validateSystemNameFormat(java.lang.String, java.util.Locale)}.
      * <p>
      * This method should not be overridden;
      * {@link #validateSystemNameFormat(java.lang.String, java.util.Locale)}
@@ -191,8 +195,9 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      * Overriding implementations may rely on
      * {@link #validSystemNameFormat(java.lang.String)}, however they must
      * provide an actionable message in the thrown exception if that method does
-     * not return {@link NameValidity#VALID}. Implementations of
-     * this method <em>must not</em> throw an exception, log an error, or
+     * not return {@link NameValidity#VALID}. When overriding implementations
+     * of this method rely on validSystemNameFormat(), implementations of
+     * that method <em>must not</em> throw an exception, log an error, or
      * otherwise disrupt the user.
      *
      * @param name      the system name to validate
@@ -241,7 +246,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      * <p>
      * <strong>Note</strong> this <em>must</em> only be used if the connection
      * type is externally documented to require these restrictions.
-     * 
+     *
      * @param name   the system name to validate
      * @param locale the locale for a localized exception; this is needed for
      *               the JMRI web server, which supports multiple locales
@@ -318,7 +323,6 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
         }
         return name;
     }
-
 
     /**
      * Convenience implementation of
@@ -413,23 +417,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     public int getObjectCount();
 
     /**
-     * This provides an array of system names.
-     * <p>
-     * Note: this is ordered by the underlying NamedBeans, not on the Strings
-     * themselves.
-     * <p>
-     * Note: this is not a live array; the contents don't stay up to date
-     *
-     * @return (slow) copy of system names in array form
-     * @deprecated 4.11.5 - use direct access via {@link #getNamedBeanSet()}
-     */
-    @Deprecated // 4.11.5
-    @CheckReturnValue
-    @Nonnull
-    public String[] getSystemNameArray();
-
-    /**
-     * This provides an
+     * Provide an
      * {@linkplain java.util.Collections#unmodifiableList unmodifiable} List of
      * system names.
      * <p>
@@ -449,7 +437,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     public List<String> getSystemNameList();
 
     /**
-     * This provides an
+     * Provide an
      * {@linkplain java.util.Collections#unmodifiableList unmodifiable} List of
      * NamedBeans in system-name order.
      * <p>
@@ -466,7 +454,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     public List<E> getNamedBeanList();
 
     /**
-     * This provides an
+     * Provide an
      * {@linkplain java.util.Collections#unmodifiableSet unmodifiable} SortedSet
      * of NamedBeans in system-name order.
      * <p>
@@ -482,8 +470,41 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     public SortedSet<E> getNamedBeanSet();
 
     /**
-     * Locate an existing instance based on a system name. Returns null if no
-     * instance already exists.
+     * Deprecated form to locate an existing instance based on a system name.
+     *
+     * @param systemName System Name of the required NamedBean
+     * @return requested NamedBean object or null if none exists
+     * @throws IllegalArgumentException if provided name is invalid
+     * @deprecated since 4.19.1
+     */
+    @CheckReturnValue
+    @CheckForNull
+    @Deprecated // 4.19.1
+    public default E getBeanBySystemName(@Nonnull String systemName) {
+        jmri.util.Log4JUtil.deprecationWarning(deprecatedManagerLogger, "getBeanBySystemName");
+        return getBySystemName(systemName);
+    }
+
+    /**
+     * Deprecated form to locate an existing instance based on a user name.
+     *
+     * @param userName System Name of the required NamedBean
+     * @return requested NamedBean object or null if none exists
+     * @deprecated since 4.19.1
+     */
+    @CheckReturnValue
+    @CheckForNull
+    @Deprecated // 4.19.1
+    public default E getBeanByUserName(@Nonnull String userName) {
+        jmri.util.Log4JUtil.deprecationWarning(deprecatedManagerLogger, "getBeanByUserName");
+        return getByUserName(userName);
+    }
+
+    // needed for deprecationWarning call above
+    static final org.slf4j.Logger deprecatedManagerLogger = org.slf4j.LoggerFactory.getLogger(Manager.class);
+
+    /**
+     * Locate an existing instance based on a system name.
      *
      * @param systemName System Name of the required NamedBean
      * @return requested NamedBean object or null if none exists
@@ -491,22 +512,20 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      */
     @CheckReturnValue
     @CheckForNull
-    public E getBeanBySystemName(@Nonnull String systemName);
+    public E getBySystemName(@Nonnull String systemName);
 
     /**
-     * Locate an existing instance based on a user name. Returns null if no
-     * instance already exists.
+     * Locate an existing instance based on a user name.
      *
      * @param userName System Name of the required NamedBean
      * @return requested NamedBean object or null if none exists
      */
     @CheckReturnValue
     @CheckForNull
-    public E getBeanByUserName(@Nonnull String userName);
+    public E getByUserName(@Nonnull String userName);
 
     /**
-     * Locate an existing instance based on a name. Returns null if no instance
-     * already exists.
+     * Locate an existing instance based on a name.
      *
      * @param name User Name or System Name of the required NamedBean
      * @return requested NamedBean object or null if none exists
@@ -519,7 +538,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      * Return the descriptors for the system-specific properties of the
      * NamedBeans that are kept in this manager.
      *
-     * @return list of known properties, or empty list if there are none.
+     * @return list of known properties, or empty list if there are none
      */
     @Nonnull
     default public List<NamedBeanPropertyDescriptor<?>> getKnownBeanProperties() {
@@ -575,10 +594,10 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      * @param n        The NamedBean to be deleted
      * @param property The programmatic name of the request. "CanDelete" will
      *                 enquire with all listeners if the item can be deleted.
-     *                 "DoDelete" tells the listener to delete the item.
+     *                 "DoDelete" tells the listener to delete the item
      * @throws java.beans.PropertyVetoException - If the recipients wishes the
      *                                          delete to be aborted (see
-     *                                          above).
+     *                                          above)
      */
     public void deleteBean(@Nonnull E n, @Nonnull String property) throws java.beans.PropertyVetoException;
 
@@ -644,7 +663,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     public int getXMLOrder();
 
     /**
-     * Returns the user-readable name of the type of NamedBean handled by this
+     * Get the user-readable name of the type of NamedBean handled by this
      * manager.
      * <p>
      * For instance, in the code where we are dealing with just a bean and a
@@ -660,7 +679,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     }
 
     /**
-     * Returns the user-readable name of the type of NamedBean handled by this
+     * Get the user-readable name of the type of NamedBean handled by this
      * manager.
      * <p>
      * For instance, in the code where we are dealing with just a bean and a
@@ -677,7 +696,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     public String getBeanTypeHandled(boolean plural);
 
     /**
-     * Provides length of the system prefix of the given system name.
+     * Provide length of the system prefix of the given system name.
      * <p>
      * This is a common operation across JMRI, as the system prefix can be
      * parsed out without knowledge of the type of NamedBean involved.
@@ -697,20 +716,6 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
             throw new NamedBean.BadSystemNameException();
         }
 
-        // As a very special case, check for legacy prefixes - to be removed
-        // This is also quite a bit slower than the tuned implementation below
-        int p = startsWithLegacySystemPrefix(inputName);
-        if (p > 0) {
-            if (legacyNameSet.isEmpty()) {
-                // register our own shutdown
-                InstanceManager.getDefault(ShutDownManager.class)
-                        .register(legacyReportTask);
-            }
-            legacyNameSet.add(inputName);
-            return p;
-        }
-
-        // implementation for well-formed names
         int i;
         for (i = 1; i < inputName.length(); i++) {
             if (!Character.isDigit(inputName.charAt(i))) {
@@ -719,54 +724,6 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
         }
         return i;
     }
-
-    @Deprecated  // as part of name migration, Issue #4670
-    static Set<String> legacyNameSet = Collections.synchronizedSet(new HashSet<String>(200)); // want fast search and insert
-    @Deprecated  // as part of name migration, Issue #4670
-    static ShutDownTask legacyReportTask = new jmri.implementation.AbstractShutDownTask("Legacy Name List") {
-        @Override
-        public boolean execute() {
-            if (legacyNameSet.isEmpty()) {
-                return true;
-            }
-
-            // as an extremely ugly hack, handle the special case of 
-            // Reporters-with-an-M-system letter, e.g. from MERG
-            //
-            // We couldn't do this earlier because the name might be checked
-            // before the bean is created
-            ReporterManager rm = InstanceManager.getDefault(ReporterManager.class);
-            java.util.SortedSet<String> tempSet = new java.util.TreeSet<>();
-            legacyNameSet.stream()
-                    // The legacy MR name for MRC can't do Reporters
-                    .filter((name) -> !(name.startsWith("MR") && rm.getReporter(name) != null))
-                    .forEachOrdered((name) -> {
-                tempSet.add(name);
-            });
-            if (tempSet.isEmpty()) {
-                return true;
-            }
-
-            org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Manager.class);
-            log.warn("The following legacy names need to be migrated:");
-            tempSet.forEach((name) -> {
-                log.warn("    {}", name);
-            });
-
-            // now create the legacy.csv file
-            try (java.io.PrintWriter writer = new java.io.PrintWriter(jmri.util.FileUtil.getUserFilesPath() + java.io.File.separator + "legacy_bean_names.csv");) {
-                tempSet.forEach((name) -> {
-                    writer.println(name);
-                });
-            } catch (java.io.IOException e) {
-                log.error("Failed to write legacy name file", e);
-            }
-
-            // clean up in case invoked twice
-            legacyNameSet.clear();
-            return true;
-        }
-    };
 
     /**
      * Provides the system prefix of the given system name.
@@ -784,55 +741,6 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     static public @Nonnull
     String getSystemPrefix(@Nonnull String inputName) throws NamedBean.BadSystemNameException {
         return inputName.substring(0, getSystemPrefixLength(inputName));
-    }
-
-    /**
-     * Indicate whether a system-prefix is one of the legacy non-parsable ones
-     * that are being removed during the JMRI 4.11 cycle.
-     *
-     * @param prefix the system prefix
-     * @deprecated 4.11.2 to make sure we remember to remove this post-migration
-     * @since 4.11.2
-     * @return true if a legacy prefix, hence non-parsable
-     */
-    @Deprecated // 4.11.2 to make sure we remember to remove this post-migration
-    @CheckReturnValue
-    public static boolean isLegacySystemPrefix(@Nonnull String prefix) {
-        return LEGACY_PREFIXES.contains(prefix);
-    }
-
-    @Deprecated // 4.11.2 to make sure we remember to remove this post-migration
-    static final TreeSet<String> LEGACY_PREFIXES = new TreeSet<>(Arrays.asList(
-            new String[]{
-                "DX", "DCCPP", "DP", "MR", "MC", "PI", "TM"
-            }));
-
-    /**
-     * If the argument starts with one of the legacy prefixes, detect that and
-     * indicate its length.
-     * <p>
-     * This is a slightly-expensive operation, and should be used sparingly
-     *
-     * @param prefix the system prefix
-     * @deprecated // 4.11.2 to make sure we remember to remove this
-     * post-migration
-     * @since 4.11.2
-     * @return length of a legacy prefix, if present, otherwise -1
-     */
-    @Deprecated // 4.11.2 to make sure we remember to remove this post-migration
-    @CheckReturnValue
-    public static int startsWithLegacySystemPrefix(@Nonnull String prefix) {
-        // implementation replies on legacy suffix length properties to gain a bit of speed...
-        if (prefix.length() < 2) {
-            return -1;
-        }
-        if (LEGACY_PREFIXES.contains(prefix.substring(0, 2))) {
-            return 2;
-        } else if (prefix.startsWith("DCCPP")) {
-            return 5;
-        } else {
-            return -1;
-        }
     }
 
     /**
@@ -907,7 +815,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     }
 
     /**
-     * Defines an event that encapsulates changes to a list.
+     * Define an event that encapsulates changes to a list.
      * <p>
      * Intended to be equivalent to {@link javax.swing.event.ListDataEvent}
      * without introducing a Swing dependency into core JMRI.
@@ -938,7 +846,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
         final private Manager<E> source;
 
         /**
-         * Creates a <code>ListDataEvent</code> object.
+         * Create a <code>ListDataEvent</code> object.
          *
          * @param source      the source of the event (<code>null</code> not
          *                    permitted).
@@ -963,7 +871,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
         }
 
         /**
-         * Returns the source of the event in a type-safe manner.
+         * Get the source of the event in a type-safe manner.
          *
          * @return the event source
          */
@@ -973,29 +881,27 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
         }
 
         /**
-         * Returns the index of the first item in the range of modified list
+         * Get the index of the first item in the range of modified list
          * items.
          *
-         * @return The index of the first item in the range of modified list
-         *         items.
+         * @return index of the first item in the range of modified list items
          */
         public int getIndex0() {
             return index0;
         }
 
         /**
-         * Returns the index of the last item in the range of modified list
+         * Get the index of the last item in the range of modified list
          * items.
          *
-         * @return The index of the last item in the range of modified list
-         *         items.
+         * @return index of the last item in the range of modified list items
          */
         public int getIndex1() {
             return index1;
         }
 
         /**
-         * Returns the changed bean or null
+         * Get the changed bean or null.
          *
          * @return null if more than one bean was changed
          */
@@ -1004,24 +910,24 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
         }
 
         /**
-         * Returns a code representing the type of this event, which is usually
+         * Get a code representing the type of this event, which is usually
          * one of {@link #CONTENTS_CHANGED}, {@link #INTERVAL_ADDED} or
          * {@link #INTERVAL_REMOVED}.
          *
-         * @return The event type.
+         * @return the event type
          */
         public int getType() {
             return type;
         }
 
         /**
-         * Returns a string representing the state of this event.
+         * Get a string representing the state of this event.
          *
-         * @return A string.
+         * @return event state as a string
          */
         @Override
         public String toString() {
-            return getClass().getName() + "[type=" + type + ",index0=" + index0 + ",index1=" + index1 + "]";
+            return getClass().getName() + "[type=" + type + ", index0=" + index0 + ", index1=" + index1 + "]";
         }
     }
 

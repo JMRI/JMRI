@@ -8,9 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import jmri.DccLocoAddress;
-import jmri.InstanceManager;
 import jmri.server.json.JsonMockConnection;
-import jmri.util.JUnitAppender;
 
 /**
  *
@@ -18,13 +16,6 @@ import jmri.util.JUnitAppender;
  * @author Randall Wood Copyright (C) 2019
  */
 public class JsonThrottleManagerTest {
-
-    @Test
-    public void testGetDefault() {
-        Assert.assertEquals("Default instance", InstanceManager.getDefault(JsonThrottleManager.class),
-                JsonThrottleManager.getDefault());
-        JUnitAppender.assertWarnMessage("getDefault is deprecated, please remove references to it");
-    }
 
     /**
      * Testing

@@ -4,7 +4,6 @@ import com.digi.xbee.api.RemoteXBeeDevice;
 import com.digi.xbee.api.models.XBee16BitAddress;
 import com.digi.xbee.api.models.XBee64BitAddress;
 import org.junit.*;
-import org.junit.runner.RunWith;
 
 /**
  * Tests for XBeeIOStream.
@@ -80,7 +79,9 @@ public class XBeeIOStreamTest {
         tc.terminate();
         tc = null;
         node = null;
+        jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         jmri.util.JUnitUtil.tearDown();
+
     }
 
 }

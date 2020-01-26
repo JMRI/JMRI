@@ -3,11 +3,11 @@ package jmri.script;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Properties;
 
@@ -44,6 +44,7 @@ import jmri.SignalMastManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
+import jmri.jmrit.entryexit.EntryExitPairs;
 import jmri.jmrit.logix.WarrantManager;
 import jmri.util.FileUtil;
 import jmri.util.FileUtilSupport;
@@ -135,6 +136,7 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
         bindings.put("shutdown", InstanceManager.getNullableDefault(ShutDownManager.class));
         bindings.put("layoutblocks", InstanceManager.getNullableDefault(LayoutBlockManager.class));
         bindings.put("warrants", InstanceManager.getNullableDefault(WarrantManager.class));
+        bindings.put("entryExitPairs", InstanceManager.getNullableDefault(EntryExitPairs.class));
         bindings.put("CLOSED", Turnout.CLOSED);
         bindings.put("THROWN", Turnout.THROWN);
         bindings.put("CABLOCKOUT", Turnout.CABLOCKOUT);
@@ -279,7 +281,7 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
      * @param engine The script engine.
      * @return The results of evaluating the script.
      * @throws javax.script.ScriptException if there is an error in the script.
-     * @deprecated since 4.17.5 without direct replacement
+     * @deprecated since 4.17.5; use {@link ScriptEngine#eval(Reader)} instead
      */
     @Deprecated
     public Object eval(Reader reader, ScriptEngine engine) throws ScriptException {
@@ -294,7 +296,7 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
      * @param bindings Bindings passed to the script.
      * @return The results of evaluating the script.
      * @throws javax.script.ScriptException if there is an error in the script.
-     * @deprecated since 4.17.5 without direct replacement
+     * @deprecated since 4.17.5; use {@link ScriptEngine#eval(Reader, Bindings)} instead
      */
     @Deprecated
     public Object eval(Reader reader, ScriptEngine engine, Bindings bindings) throws ScriptException {
@@ -309,7 +311,7 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
      * @param context Context for the script.
      * @return The results of evaluating the script.
      * @throws javax.script.ScriptException if there is an error in the script.
-     * @deprecated since 4.17.5 without direct replacement
+     * @deprecated since 4.17.5; use {@link ScriptEngine#eval(Reader, ScriptContext)} instead
      */
     @Deprecated
     public Object eval(Reader reader, ScriptEngine engine, ScriptContext context) throws ScriptException {
@@ -385,13 +387,13 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
         ScriptEngine engine;
         Object result = null;
         if ((engine = getEngineOrEval(file)) != null) {
-            try (FileReader fr = new FileReader(file)) {
+            try (InputStreamReader reader = new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8)) {
                 if (context != null) {
-                    result = engine.eval(fr, context);
+                    result = engine.eval(reader, context);
                 } else if (bindings != null) {
-                    result = engine.eval(fr, bindings);
+                    result = engine.eval(reader, bindings);
                 } else {
-                    result = engine.eval(fr);
+                    result = engine.eval(reader);
                 }
             }
         }
@@ -542,6 +544,18 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
     }
 
     /**
+     * Create a new PythonInterpreter with the default bindings.
+     * 
+     * @return a new interpreter
+     */
+    public PythonInterpreter newPythonInterpreter() {
+        initializePython();
+        PythonInterpreter pi = new PythonInterpreter();
+        context.getBindings(ScriptContext.GLOBAL_SCOPE).forEach(pi::set);
+        return pi;
+    }
+
+    /**
      * Initialize the Python ScriptEngine state including Python global state.
      * 
      * @return true if the Python interpreter will be used outside a
@@ -595,13 +609,13 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
             log.debug("create interpreter");
             ScriptEngine python = this.manager.getEngineByName(PYTHON);
             python.setContext(this.context);
+            engines.put(PYTHON, python);
             InputStream is = FileUtil.findInputStream(JYTHON_DEFAULTS,
                     FileUtil.getUserFilesPath(),
                     FileUtil.getProfilePath(),
                     FileUtil.getPreferencesPath());
             if (execJython) {
-                this.jython = new PythonInterpreter();
-                context.getBindings(ScriptContext.GLOBAL_SCOPE).forEach((name, value) -> jython.set(name, value));
+                jython = newPythonInterpreter();
             }
             if (is != null) {
                 python.eval(new InputStreamReader(is));
@@ -609,7 +623,6 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
                     this.jython.execfile(is);
                 }
             }
-            this.engines.put(PYTHON, python);
         } catch (ScriptException e) {
             log.error("Exception creating jython system objects", e);
         }

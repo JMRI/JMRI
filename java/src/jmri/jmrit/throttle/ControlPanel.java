@@ -1280,9 +1280,9 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         @Override
         public void mousePressed(MouseEvent e) {
             if (log.isDebugEnabled()) {
-                log.debug("pressed " + (e.getModifiers() & MouseEvent.BUTTON1_MASK) + " " + e.isPopupTrigger()
-                        + " " + (e.getModifiers() & (MouseEvent.ALT_MASK + MouseEvent.META_MASK + MouseEvent.CTRL_MASK))
-                        + (" " + MouseEvent.ALT_MASK + "/" + MouseEvent.META_MASK + "/" + MouseEvent.CTRL_MASK));
+                log.debug("pressed " + (e.getModifiersEx() & MouseEvent.BUTTON1_DOWN_MASK) + " " + e.isPopupTrigger()
+                        + " " + (e.getModifiersEx() & (MouseEvent.ALT_DOWN_MASK + MouseEvent.META_DOWN_MASK + MouseEvent.CTRL_DOWN_MASK))
+                        + (" " + MouseEvent.ALT_DOWN_MASK + "/" + MouseEvent.META_DOWN_MASK + "/" + MouseEvent.CTRL_DOWN_MASK));
             }
             if (e.isPopupTrigger() && parentFrame.isSelected()) {
                 try {
@@ -1305,8 +1305,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         @Override
         public void mouseReleased(MouseEvent e) {
             if (log.isDebugEnabled()) {
-                log.debug("released " + (e.getModifiers() & MouseEvent.BUTTON1_MASK) + " " + e.isPopupTrigger()
-                        + " " + (e.getModifiers() & (MouseEvent.ALT_MASK + InputEvent.META_MASK + MouseEvent.CTRL_MASK)));
+                log.debug("released " + (e.getModifiersEx() & MouseEvent.BUTTON1_DOWN_MASK) + " " + e.isPopupTrigger()
+                        + " " + (e.getModifiersEx() & (MouseEvent.ALT_DOWN_MASK + InputEvent.META_DOWN_MASK + MouseEvent.CTRL_DOWN_MASK)));
             }
             if (e.isPopupTrigger()) {
                 try {

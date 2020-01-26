@@ -4,14 +4,16 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
+import java.util.Comparator;
 import java.util.ResourceBundle;
 import java.util.TooManyListenersException;
 import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.jmrix.AbstractSerialPortController;
 import jmri.jmrix.SystemConnectionMemo;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import purejavacomm.CommPortIdentifier;
@@ -38,6 +40,11 @@ public class SerialSensorAdapter extends AbstractSerialPortController {
             @Override
             protected ResourceBundle getActionModelResourceBundle() {
                 return null;
+            }
+
+            @Override
+            public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
+                return (o1, o2) -> o1.getSystemName().compareTo(o2.getSystemName());
             }
         });
     }

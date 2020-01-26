@@ -414,6 +414,12 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
             Assert.assertEquals("java.lang.IllegalArgumentException: Wrong number of events in address: S", ex.getMessage());
         }
     }
+    
+    @Test
+    @Override
+    public void testAutoSystemNames() {
+        Assert.assertEquals("No auto system names",0,tcis.numListeners());
+    }
 
     // The minimal setup for log4J
     @Override
@@ -430,7 +436,9 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     public void tearDown() {
         l.dispose();
         memo.dispose();
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusSensorManagerTest.class);

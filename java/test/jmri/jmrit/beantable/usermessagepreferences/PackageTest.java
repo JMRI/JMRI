@@ -5,7 +5,8 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    UserMessagePreferencesPaneTest.class
+    UserMessagePreferencesPaneTest.class,
+    BundleTest.class
 })
 
 /**

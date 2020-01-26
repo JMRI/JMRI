@@ -7,12 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.*;
 
 import javax.annotation.Nonnull;
 import javax.swing.AbstractButton;
@@ -28,30 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import apps.gui.GuiLafPreferencesManager;
-import jmri.AddressedProgrammerManager;
-import jmri.ConditionalManager;
-import jmri.ConfigureManager;
-import jmri.GlobalProgrammerManager;
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.LightManager;
-import jmri.LogixManager;
-import jmri.MemoryManager;
-import jmri.NamedBean;
-import jmri.PowerManager;
-import jmri.PowerManagerScaffold;
-import jmri.ReporterManager;
-import jmri.RouteManager;
-import jmri.SensorManager;
-import jmri.ShutDownManager;
-import jmri.ShutDownTask;
-import jmri.SignalHeadManager;
-import jmri.SignalMastLogicManager;
-import jmri.SignalMastManager;
-import jmri.ThrottleManager;
-import jmri.TurnoutManager;
-import jmri.TurnoutOperationManager;
-import jmri.UserPreferencesManager;
+import jmri.*;
 import jmri.implementation.JmriConfigurationManager;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.EditorFrameOperator;
@@ -65,15 +37,7 @@ import jmri.jmrix.debugthrottle.DebugThrottleManager;
 import jmri.jmrix.internal.InternalReporterManager;
 import jmri.jmrix.internal.InternalSensorManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
-import jmri.managers.AbstractSignalHeadManager;
-import jmri.managers.DefaultConditionalManager;
-import jmri.managers.DefaultIdTagManager;
-import jmri.managers.DefaultLogixManager;
-import jmri.managers.DefaultMemoryManager;
-import jmri.managers.DefaultRailComManager;
-import jmri.managers.DefaultSignalMastLogicManager;
-import jmri.managers.DefaultSignalMastManager;
-import jmri.managers.TestUserPreferencesManager;
+import jmri.managers.*;
 import jmri.profile.NullProfile;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
@@ -203,6 +167,7 @@ public class JUnitUtil {
     
     static private boolean isLoggingInitialized = false;
     static private String initPrefsDir = null;
+
     /**
      * JMRI standard setUp for tests. This should be the first line in the {@code @Before}
      * annotated method.
@@ -296,6 +261,9 @@ public class JUnitUtil {
      */
     public static void tearDown() {
 
+        // check for hanging shutdown tasks
+        checkShutDownManager();
+        
         // checking time?
         if (checkTestDuration) {
             long duration = System.currentTimeMillis() - checkTestDurationStartTime;
@@ -820,9 +788,30 @@ public class JUnitUtil {
         InstanceManager.setDefault(PowerManager.class, new PowerManagerScaffold());
     }
 
+    /**
+     * Initialize an {@link IdTagManager} that does not use persistent storage.
+     * If needing an IdTagManager that does use persistent storage use
+     * {@code InstanceManager.setDefault(IdTagManager.class, new DefaultIdTagManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class)));}
+     * to initialize an IdTagManager in the {@code @Before} annotated method of
+     * the test class or allow the {@link DefaultIdTagManager} to be
+     * automatically initialized when needed.
+     */
     public static void initIdTagManager() {
-        InstanceManager.reset(jmri.IdTagManager.class);
-        InstanceManager.store(new DefaultIdTagManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class)), jmri.IdTagManager.class);
+        InstanceManager.reset(IdTagManager.class);
+        InstanceManager.setDefault(IdTagManager.class,
+                new DefaultIdTagManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class)) {
+                    @Override
+                    public void writeIdTagDetails() {
+                        // do not actually write tags
+                        this.dirty = false;
+                    }
+
+                    @Override
+                    public void readIdTagDetails() {
+                        // do not actually read tags
+                        this.dirty = false;
+                    }
+                });
     }
 
     public static void initRailComManager() {
@@ -897,15 +886,16 @@ public class JUnitUtil {
      * stopped all services it is managing.
      */
     public static void resetZeroConfServiceManager() {
-        ZeroConfServiceManager manager = InstanceManager.containsDefault(ZeroConfServiceManager.class)
-                ? InstanceManager.getDefault(ZeroConfServiceManager.class)
-                : null;
-        if (manager != null) {
-            manager.stopAll();
-            JUnitUtil.waitFor(() -> {
-                return (manager.allServices().isEmpty());
-            }, "Stopping all ZeroConf Services");
-        }
+        if (! InstanceManager.containsDefault(ZeroConfServiceManager.class)) return; // not present, don't create on by asking for it.
+
+        ZeroConfServiceManager manager = InstanceManager.getDefault(ZeroConfServiceManager.class);
+        manager.stopAll();
+        
+        JUnitUtil.waitFor(() -> {
+            return (manager.allServices().isEmpty());
+        }, "Stopping all ZeroConf Services");
+        
+        manager.dispose();
     }
 
     /**
@@ -917,15 +907,51 @@ public class JUnitUtil {
     
     /**
      * Leaves ShutDownManager, if any, in place,
-     * but removes its contents.
+     * but removes its contents.  Instead of using this,
+     * it's better to have your test code remove _and_ _check_
+     * for specific items; this just suppresses output from the 
+     * {@link #checkShutDownManager()} check down as part of the 
+     * default end-of-test code.
+     *
+     * @see #checkShutDownManager()
+     * @see #initShutDownManager()
+     * @deprecated 4.17.4 because tests should directly test and remove queued items;
+     *             we do not intend to remove this method soon but you should not use
+     *             it in new code.
+     */
+    @Deprecated // 4.17.4 because tests should directly test and remove queued items;
+                // we do not intend to remove this method soon but you should not use
+                // it in new code.
+    public static void clearShutDownManager() {
+        if (!  InstanceManager.containsDefault(ShutDownManager.class)) return; // not present, stop (don't create)
+
+        ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
+        List<ShutDownTask> list = sm.tasks();
+        while (list != null && list.size() > 0) {
+            ShutDownTask task = list.get(0);
+            sm.deregister(task);
+            list = sm.tasks();  // avoid ConcurrentModificationException
+        }
+    }
+
+    /**
+     * Errors if the {@link jmri.ShutDownManager} was not left empty. Normally
+     * run as part of the default end-of-test code. Considered an error so that
+     * CI will flag these and tests will be improved.
+     *
+     * @see #clearShutDownManager()
      * @see #initShutDownManager()
      */
-    public static void clearShutDownManager() {
-        ShutDownManager sm = InstanceManager.getNullableDefault(jmri.ShutDownManager.class);
-        if (sm == null) return;
+    static void checkShutDownManager() {
+        if (!  InstanceManager.containsDefault(ShutDownManager.class)) return; // not present, stop (don't create)
+        
+        ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
         List<ShutDownTask> list = sm.tasks();
-        while (!list.isEmpty()) {
-            sm.deregister(list.get(0));
+        while (list != null && !list.isEmpty()) {
+            ShutDownTask task = list.get(0);
+            log.error("Test {} left ShutDownTask registered: {} (of type {})}", getTestClassName(), task.getName(), task.getClass(), 
+                        Log4JUtil.shortenStacktrace(new Exception("traceback")));
+            sm.deregister(task);
             list = sm.tasks();  // avoid ConcurrentModificationException
         }
 
@@ -942,10 +968,15 @@ public class JUnitUtil {
     }
 
     /**
-     * Creates, if needed, a new ShutDownManager, clearing any existing
-     * ShutDownManager, and ensuring the ShutDownManager is not in the state of
-     * ShuttingDown if the ShutDownManager is a MockShutDownManager.
+     * Creates a new ShutDownManager.
+     * Does not remove the contents (i.e. kill the future actions) of any existing ShutDownManager.
+     * Normally, this is not needed for tests, as 
+     * a {@link MockShutDownManager} is created and provided when a {@link ShutDownManager}
+     * is requested from the {@link InstanceManager} via a {@link InstanceManager#getDefault()} call.
+     * @see #clearShutDownManager()
+     * @deprecated 4.17.5 should not be needed in new test code
      */
+    @Deprecated // 4.17.5 should not be needed in new test code
     public static void initShutDownManager() {
         ShutDownManager manager = InstanceManager.getDefault(ShutDownManager.class);
         List<ShutDownTask> tasks = manager.tasks();
@@ -1222,7 +1253,7 @@ public class JUnitUtil {
             window.dispose();
         });
     }
-    
+        
     public static Thread getThreadByName(String threadName) {
         for (Thread t : Thread.getAllStackTraces().keySet()) {
             if (t.getName().equals(threadName)) return t;
@@ -1259,7 +1290,10 @@ public class JUnitUtil {
         "JMRI Common Timer",
         "BluecoveAsynchronousShutdownThread", // from LocoNet BlueTooth implementation
         "Keep-Alive-Timer",                 // from "system" group
-        "process reaper"                    // observed in macOS JRE
+        "process reaper",                   // observed in macOS JRE
+        "SIGINT handler",                   // observed in JmDNS; clean shutdown takes time
+        "Multihomed mDNS.Timer",            // observed in JmDNS; clean shutdown takes time
+        "Direct Clip",                      // observed in macOS JRE, associated with javax.sound.sampled.AudioSystem
     }));
     static List<Thread> threadsSeen = new ArrayList<>();
 
@@ -1278,12 +1312,15 @@ public class JUnitUtil {
                 if (t.getState() == Thread.State.TERMINATED) return; // going away, just not cleaned up yet
                 String name = t.getName();
                 if (! (threadNames.contains(name)
+                     || name.startsWith("Timer-")  // we separately scan for JMRI-resident timers
                      || name.startsWith("RMI TCP Accept")
                      || name.startsWith("AWT-EventQueue")
                      || name.startsWith("Aqua L&F")
                      || name.startsWith("Image Fetcher ")
+                     || name.startsWith("Image Animator ")
                      || name.startsWith("JmDNS(")
                      || name.startsWith("SocketListener(")
+                     || ( t.getThreadGroup() != null && t.getThreadGroup().getName().contains("FailOnTimeoutGroup")) // JUnit timeouts
                      || name.startsWith("SocketListener(")
                      || (name.startsWith("SwingWorker-pool-1-thread-") && 
                             ( t.getThreadGroup() != null && 
@@ -1333,20 +1370,6 @@ public class JUnitUtil {
      */
     public static Container findContainer(String title) {
         return new JDialogOperator(title).getContentPane();
-    }
-
-    /**
-     * Press a button after finding it in a container by title.
-     * 
-     * @param clazz an object no longer used
-     * @param frame container containing button to press
-     * @param text button title
-     * @return the pressed button
-     * @deprecated use {@link #pressButton(Container, String)} instead
-     */
-    @Deprecated // for removal after 4.18
-    public static AbstractButton pressButton(SwingTestCase clazz, Container frame, String text) {
-        return pressButton(frame, text);
     }
 
     /**

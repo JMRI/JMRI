@@ -49,10 +49,11 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
 
     @After
     public void tearDown() {
-        JUnitUtil.tearDown();
         if (tcis != null) tcis.terminateThreads();
         tcis = null;
         memo = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.tearDown();
     }
 
     int startingNumListeners; // number at creation, before tests start allocating them.

@@ -389,7 +389,6 @@ public class IconEditorWindowTest {
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initMemoryManager();
         JUnitUtil.initInternalSignalHeadManager();
-        JUnitUtil.initShutDownManager();
 
         if (!GraphicsEnvironment.isHeadless()) {
             _editor = new PanelEditor("IconEditorTestPanel");
@@ -407,7 +406,32 @@ public class IconEditorWindowTest {
         // event - this is the method called to delete a panel if a user
         // selects that in the Hide/Delete dialog triggered by WindowClosing().
         if (_editor != null) {
-            _editor.dispose();
+            //_editor.dispose();  // this sometimes Disposal was interrupted:
+            //java.lang.InterruptedException
+            //	at java.lang.Object.wait(Native Method)
+            //	at java.lang.Object.wait(Object.java:502)
+            //	at java.awt.EventQueue.invokeAndWait(EventQueue.java:1343)
+            //	at java.awt.Window.doDispose(Window.java:1210)
+            //	at java.awt.Window.dispose(Window.java:1147)
+            //	at jmri.util.JmriJFrame.dispose(JmriJFrame.java:983)
+            //	at jmri.jmrit.display.Editor.dispose(Editor.java:2666)
+            //	at jmri.jmrit.display.IconEditorWindowTest.tearDown(IconEditorWindowTest.java:409)
+            //	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+            //	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+            //	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+            //	at java.lang.reflect.Method.invoke(Method.java:498)
+            //	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
+            //	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+            //	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
+            //	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:33)
+            //	at org.junit.internal.runners.statements.FailOnTimeout$CallableStatement.call(FailOnTimeout.java:298)
+            //	at org.junit.internal.runners.statements.FailOnTimeout$CallableStatement.call(FailOnTimeout.java:292)
+            //	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+            //	at java.lang.Thread.run(Thread.java:748)causes the test to fail with the exception below:
+
+            // using the EditorFrameOperator to close causes these tests to timeout because the window can't be found.
+
+            JUnitUtil.dispose(_editor); // this seems to be more reliable, though it doesn't answer the question about saving.
         }
         _editor = null;
         

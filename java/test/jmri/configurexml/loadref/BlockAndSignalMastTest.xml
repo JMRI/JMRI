@@ -1,121 +1,154 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" href="/xml/XSLT/panelfile-2-9-6.xsl"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
 <layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
-  <!-- tests against a regression in block and signal mast logic from 3.6 to 3.8 -->
   <jmriversion>
-    <major>3</major>
-    <minor>6</minor>
-    <test>0</test>
-    <modifier />
+    <major>4</major>
+    <minor>17</minor>
+    <test>5</test>
+    <modifier>ish</modifier>
   </jmriversion>
   <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">
+    <operations automate="false">
+      <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+    </operations>
     <defaultclosedspeed>Normal</defaultclosedspeed>
     <defaultthrownspeed>Restricted</defaultthrownspeed>
-    <turnout systemName="IT1" userName="Turnout:1" feedback="DIRECT" inverted="false" automate="Default">
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
       <systemName>IT1</systemName>
       <userName>Turnout:1</userName>
     </turnout>
-    <turnout systemName="IT2" userName="Turnout:2" feedback="DIRECT" inverted="false" automate="Default">
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
       <systemName>IT2</systemName>
       <userName>Turnout:2</userName>
       <divergingSpeed>Limited</divergingSpeed>
     </turnout>
-    <turnout systemName="IT3" userName="Turnout:3" feedback="DIRECT" inverted="false" automate="Default">
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
       <systemName>IT3</systemName>
       <userName>Turnout:3</userName>
       <divergingSpeed>Medium</divergingSpeed>
     </turnout>
-    <turnout systemName="IT4" userName="Turnout:4" feedback="DIRECT" inverted="false" automate="Default">
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
       <systemName>IT4</systemName>
       <userName>Turnout:4</userName>
     </turnout>
-    <turnout systemName="IT5" userName="Turnout:5" feedback="DIRECT" inverted="false" automate="Default">
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
       <systemName>IT5</systemName>
       <userName>Turnout:5</userName>
     </turnout>
-    <turnout systemName="IT6" userName="Turnout:6" feedback="DIRECT" inverted="false" automate="Default">
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
       <systemName>IT6</systemName>
       <userName>Turnout:6</userName>
     </turnout>
-    <turnout systemName="IT7" userName="Turnout:7" feedback="DIRECT" inverted="false" automate="Default">
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
       <systemName>IT7</systemName>
       <userName>Turnout:7</userName>
     </turnout>
-    <turnout systemName="IT8" userName="Turnout:8" feedback="DIRECT" inverted="false" automate="Default">
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
       <systemName>IT8</systemName>
       <userName>Turnout:8</userName>
     </turnout>
-    <turnout systemName="IT9" userName="Turnout:9" feedback="DIRECT" inverted="false" automate="Default">
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
       <systemName>IT9</systemName>
       <userName>Turnout:9</userName>
     </turnout>
   </turnouts>
   <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml">
-    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml" userName="Mast full 1">
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
       <systemName>IF$vsm:AAR-1946:SL-2-high-abs($0001)</systemName>
       <userName>Mast full 1</userName>
       <unlit allowed="yes" />
     </virtualsignalmast>
-    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml" userName="Mast full 3">
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
       <systemName>IF$vsm:AAR-1946:SL-2-high-abs($0002)</systemName>
       <userName>Mast full 3</userName>
       <properties>
         <property>
-          <key class="java.lang.String">intermediateSignal</key>
+          <key>intermediateSignal</key>
           <value class="java.lang.Boolean">true</value>
         </property>
       </properties>
       <unlit allowed="yes" />
     </virtualsignalmast>
-    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml" userName="Mast full 4">
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
       <systemName>IF$vsm:AAR-1946:SL-2-high-abs($0003)</systemName>
       <userName>Mast full 4</userName>
       <properties>
         <property>
-          <key class="java.lang.String">intermediateSignal</key>
+          <key>intermediateSignal</key>
           <value class="java.lang.Boolean">true</value>
         </property>
       </properties>
       <unlit allowed="yes" />
     </virtualsignalmast>
-    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml" userName="Mast full 5">
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
       <systemName>IF$vsm:AAR-1946:SL-2-high-abs($0004)</systemName>
       <userName>Mast full 5</userName>
       <properties>
         <property>
-          <key class="java.lang.String">intermediateSignal</key>
+          <key>intermediateSignal</key>
           <value class="java.lang.Boolean">true</value>
         </property>
       </properties>
       <unlit allowed="yes" />
     </virtualsignalmast>
-    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml" userName="Mast full 6">
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
       <systemName>IF$vsm:AAR-1946:SL-2-high-abs($0005)</systemName>
       <userName>Mast full 6</userName>
       <unlit allowed="yes" />
     </virtualsignalmast>
-    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml" userName="Mast full 7">
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
       <systemName>IF$vsm:AAR-1946:SL-2-high-abs($0006)</systemName>
       <userName>Mast full 7</userName>
       <unlit allowed="yes" />
     </virtualsignalmast>
-    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml" userName="Mast full 8">
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
       <systemName>IF$vsm:AAR-1946:SL-2-high-abs($0007)</systemName>
       <userName>Mast full 8</userName>
       <unlit allowed="yes" />
     </virtualsignalmast>
-    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml" userName="Mast full 9">
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
       <systemName>IF$vsm:AAR-1946:SL-2-high-abs($0008)</systemName>
       <userName>Mast full 9</userName>
       <unlit allowed="yes" />
     </virtualsignalmast>
   </signalmasts>
-  <signalgroups class="jmri.managers.configurexml.DefaultSignalGroupManagerXml" />
   <blocks class="jmri.configurexml.BlockManagerXml">
     <defaultspeed>Normal</defaultspeed>
     <block systemName="IB1">
       <systemName>IB1</systemName>
       <userName>AUTOBLK:1</userName>
+    </block>
+    <block systemName="IB2">
+      <systemName>IB2</systemName>
+      <userName>AUTOBLK:2</userName>
+    </block>
+    <block systemName="IB3">
+      <systemName>IB3</systemName>
+      <userName>AUTOBLK:3</userName>
+    </block>
+    <block systemName="IB4">
+      <systemName>IB4</systemName>
+      <userName>AUTOBLK:4</userName>
+    </block>
+    <block systemName="IB5">
+      <systemName>IB5</systemName>
+      <userName>AUTOBLK:5</userName>
+    </block>
+    <block systemName="IB6">
+      <systemName>IB6</systemName>
+      <userName>AUTOBLK:6</userName>
+    </block>
+    <block systemName="IB7">
+      <systemName>IB7</systemName>
+      <userName>AUTOBLK:7</userName>
+    </block>
+    <block systemName="IB8">
+      <systemName>IB8</systemName>
+      <userName>AUTOBLK:8</userName>
+    </block>
+    <block systemName="IB9">
+      <systemName>IB9</systemName>
+      <userName>AUTOBLK:9</userName>
     </block>
     <block systemName="IB10">
       <systemName>IB10</systemName>
@@ -157,10 +190,6 @@
       <systemName>IB19</systemName>
       <userName>AUTOBLK:19</userName>
     </block>
-    <block systemName="IB2">
-      <systemName>IB2</systemName>
-      <userName>AUTOBLK:2</userName>
-    </block>
     <block systemName="IB20">
       <systemName>IB20</systemName>
       <userName>AUTOBLK:20</userName>
@@ -193,35 +222,7 @@
       <systemName>IB27</systemName>
       <userName>AUTOBLK:27</userName>
     </block>
-    <block systemName="IB3">
-      <systemName>IB3</systemName>
-      <userName>AUTOBLK:3</userName>
-    </block>
-    <block systemName="IB4">
-      <systemName>IB4</systemName>
-      <userName>AUTOBLK:4</userName>
-    </block>
-    <block systemName="IB5">
-      <systemName>IB5</systemName>
-      <userName>AUTOBLK:5</userName>
-    </block>
-    <block systemName="IB6">
-      <systemName>IB6</systemName>
-      <userName>AUTOBLK:6</userName>
-    </block>
-    <block systemName="IB7">
-      <systemName>IB7</systemName>
-      <userName>AUTOBLK:7</userName>
-    </block>
-    <block systemName="IB8">
-      <systemName>IB8</systemName>
-      <userName>AUTOBLK:8</userName>
-    </block>
-    <block systemName="IB9">
-      <systemName>IB9</systemName>
-      <userName>AUTOBLK:9</userName>
-    </block>
-    <block systemName="IB1" length="0.0" curve="0" userName="AUTOBLK:1">
+    <block systemName="IB1" length="0.0" curve="0">
       <systemName>IB1</systemName>
       <userName>AUTOBLK:1</userName>
       <permissive>no</permissive>
@@ -237,90 +238,9 @@
         </beansetting>
       </path>
     </block>
-    <block systemName="IB10" length="0.0" curve="0" userName="AUTOBLK:10">
-      <systemName>IB10</systemName>
-      <userName>AUTOBLK:10</userName>
-      <permissive>no</permissive>
-      <path todir="144" fromdir="96" block="IB2">
-        <beansetting setting="4">
-          <turnout systemName="Turnout:3" />
-        </beansetting>
-      </path>
-      <path todir="96" fromdir="144" block="IB3" />
-    </block>
-    <block systemName="IB11" length="0.0" curve="0" userName="AUTOBLK:11">
-      <systemName>IB11</systemName>
-      <userName>AUTOBLK:11</userName>
-      <permissive>no</permissive>
-      <path todir="128" fromdir="64" block="IB9" />
-      <path todir="64" fromdir="128" block="IB12" />
-    </block>
-    <block systemName="IB12" length="0.0" curve="0" userName="AUTOBLK:12">
-      <systemName>IB12</systemName>
-      <userName>AUTOBLK:12</userName>
-      <permissive>no</permissive>
-      <path todir="128" fromdir="64" block="IB11" />
-      <path todir="64" fromdir="128" block="IB13" />
-    </block>
-    <block systemName="IB13" length="0.0" curve="0" userName="AUTOBLK:13">
-      <systemName>IB13</systemName>
-      <userName>AUTOBLK:13</userName>
-      <permissive>no</permissive>
-      <path todir="128" fromdir="64" block="IB12" />
-      <path todir="64" fromdir="128" block="IB14" />
-    </block>
-    <block systemName="IB14" length="0.0" curve="0" userName="AUTOBLK:14">
-      <systemName>IB14</systemName>
-      <userName>AUTOBLK:14</userName>
-      <permissive>no</permissive>
-      <path todir="128" fromdir="64" block="IB13" />
-    </block>
-    <block systemName="IB15" length="0.0" curve="0" userName="AUTOBLK:15">
-      <systemName>IB15</systemName>
-      <userName>AUTOBLK:15</userName>
-      <permissive>no</permissive>
-      <path todir="144" fromdir="96" block="IB3">
-        <beansetting setting="2">
-          <turnout systemName="Turnout:2" />
-        </beansetting>
-      </path>
-      <path todir="64" fromdir="128" block="IB16" />
-    </block>
-    <block systemName="IB16" length="0.0" curve="0" userName="AUTOBLK:16">
-      <systemName>IB16</systemName>
-      <userName>AUTOBLK:16</userName>
-      <permissive>no</permissive>
-      <path todir="128" fromdir="64" block="IB15" />
-      <path todir="64" fromdir="128" block="IB17" />
-    </block>
-    <block systemName="IB17" length="0.0" curve="0" userName="AUTOBLK:17">
-      <systemName>IB17</systemName>
-      <userName>AUTOBLK:17</userName>
-      <permissive>no</permissive>
-      <path todir="128" fromdir="64" block="IB16" />
-      <path todir="64" fromdir="128" block="IB18" />
-    </block>
-    <block systemName="IB18" length="0.0" curve="0" userName="AUTOBLK:18">
-      <systemName>IB18</systemName>
-      <userName>AUTOBLK:18</userName>
-      <permissive>no</permissive>
-      <path todir="128" fromdir="64" block="IB17" />
-    </block>
-    <block systemName="IB19" length="0.0" curve="0" userName="AUTOBLK:19">
-      <systemName>IB19</systemName>
-      <userName>AUTOBLK:19</userName>
-      <permissive>no</permissive>
-      <path todir="128" fromdir="64" block="IB3">
-        <beansetting setting="4">
-          <turnout systemName="Turnout:2" />
-        </beansetting>
-      </path>
-      <path todir="64" fromdir="128" block="IB20" />
-    </block>
-    <block systemName="IB2" length="0.0" curve="0" userName="AUTOBLK:2">
+    <block systemName="IB2" length="0.0" curve="0">
       <systemName>IB2</systemName>
       <userName>AUTOBLK:2</userName>
-      <comment />
       <speed>Normal</speed>
       <permissive>no</permissive>
       <path todir="128" fromdir="64" block="IB8" />
@@ -335,65 +255,7 @@
         </beansetting>
       </path>
     </block>
-    <block systemName="IB20" length="0.0" curve="0" userName="AUTOBLK:20">
-      <systemName>IB20</systemName>
-      <userName>AUTOBLK:20</userName>
-      <permissive>no</permissive>
-      <path todir="128" fromdir="64" block="IB19" />
-      <path todir="64" fromdir="128" block="IB21" />
-    </block>
-    <block systemName="IB21" length="0.0" curve="0" userName="AUTOBLK:21">
-      <systemName>IB21</systemName>
-      <userName>AUTOBLK:21</userName>
-      <permissive>no</permissive>
-      <path todir="128" fromdir="64" block="IB20" />
-      <path todir="64" fromdir="128" block="IB22" />
-    </block>
-    <block systemName="IB22" length="0.0" curve="0" userName="AUTOBLK:22">
-      <systemName>IB22</systemName>
-      <userName>AUTOBLK:22</userName>
-      <permissive>no</permissive>
-      <path todir="128" fromdir="64" block="IB21" />
-    </block>
-    <block systemName="IB23" length="0.0" curve="0" userName="AUTOBLK:23">
-      <systemName>IB23</systemName>
-      <userName>AUTOBLK:23</userName>
-      <permissive>no</permissive>
-      <path todir="144" fromdir="96" block="IB1">
-        <beansetting setting="4">
-          <turnout systemName="Turnout:4" />
-        </beansetting>
-      </path>
-      <path todir="96" fromdir="144" block="IB24" />
-    </block>
-    <block systemName="IB24" length="0.0" curve="0" userName="AUTOBLK:24">
-      <systemName>IB24</systemName>
-      <userName>AUTOBLK:24</userName>
-      <permissive>no</permissive>
-      <path todir="144" fromdir="96" block="IB23" />
-      <path todir="64" fromdir="128" block="IB25" />
-    </block>
-    <block systemName="IB25" length="0.0" curve="0" userName="AUTOBLK:25">
-      <systemName>IB25</systemName>
-      <userName>AUTOBLK:25</userName>
-      <permissive>no</permissive>
-      <path todir="128" fromdir="64" block="IB24" />
-      <path todir="64" fromdir="128" block="IB26" />
-    </block>
-    <block systemName="IB26" length="0.0" curve="0" userName="AUTOBLK:26">
-      <systemName>IB26</systemName>
-      <userName>AUTOBLK:26</userName>
-      <permissive>no</permissive>
-      <path todir="128" fromdir="64" block="IB25" />
-      <path todir="64" fromdir="128" block="IB27" />
-    </block>
-    <block systemName="IB27" length="0.0" curve="0" userName="AUTOBLK:27">
-      <systemName>IB27</systemName>
-      <userName>AUTOBLK:27</userName>
-      <permissive>no</permissive>
-      <path todir="128" fromdir="64" block="IB26" />
-    </block>
-    <block systemName="IB3" length="0.0" curve="0" userName="AUTOBLK:3">
+    <block systemName="IB3" length="0.0" curve="0">
       <systemName>IB3</systemName>
       <userName>AUTOBLK:3</userName>
       <permissive>no</permissive>
@@ -409,34 +271,34 @@
         </beansetting>
       </path>
     </block>
-    <block systemName="IB4" length="0.0" curve="0" userName="AUTOBLK:4">
+    <block systemName="IB4" length="0.0" curve="0">
       <systemName>IB4</systemName>
       <userName>AUTOBLK:4</userName>
       <permissive>no</permissive>
       <path todir="64" fromdir="128" block="IB5" />
     </block>
-    <block systemName="IB5" length="0.0" curve="0" userName="AUTOBLK:5">
+    <block systemName="IB5" length="0.0" curve="0">
       <systemName>IB5</systemName>
       <userName>AUTOBLK:5</userName>
       <permissive>no</permissive>
       <path todir="128" fromdir="64" block="IB4" />
       <path todir="64" fromdir="128" block="IB6" />
     </block>
-    <block systemName="IB6" length="0.0" curve="0" userName="AUTOBLK:6">
+    <block systemName="IB6" length="0.0" curve="0">
       <systemName>IB6</systemName>
       <userName>AUTOBLK:6</userName>
       <permissive>no</permissive>
       <path todir="128" fromdir="64" block="IB5" />
       <path todir="64" fromdir="128" block="IB7" />
     </block>
-    <block systemName="IB7" length="0.0" curve="0" userName="AUTOBLK:7">
+    <block systemName="IB7" length="0.0" curve="0">
       <systemName>IB7</systemName>
       <userName>AUTOBLK:7</userName>
       <permissive>no</permissive>
       <path todir="128" fromdir="64" block="IB6" />
       <path todir="64" fromdir="128" block="IB1" />
     </block>
-    <block systemName="IB8" length="0.0" curve="0" userName="AUTOBLK:8">
+    <block systemName="IB8" length="0.0" curve="0">
       <systemName>IB8</systemName>
       <userName>AUTOBLK:8</userName>
       <permissive>no</permissive>
@@ -447,7 +309,7 @@
       </path>
       <path todir="64" fromdir="128" block="IB2" />
     </block>
-    <block systemName="IB9" length="0.0" curve="0" userName="AUTOBLK:9">
+    <block systemName="IB9" length="0.0" curve="0">
       <systemName>IB9</systemName>
       <userName>AUTOBLK:9</userName>
       <permissive>no</permissive>
@@ -458,138 +320,152 @@
       </path>
       <path todir="64" fromdir="128" block="IB11" />
     </block>
-  </blocks>
-  <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml" />
-  <layoutblocks class="jmri.jmrit.display.configurexml.LayoutBlockManagerXml" blockrouting="yes">
-    <layoutblock systemName="ILB1" userName="AUTOBLK:1" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="white">
-      <systemName>ILB1</systemName>
-      <userName>AUTOBLK:1</userName>
-    </layoutblock>
-    <layoutblock systemName="ILB10" userName="AUTOBLK:10" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="white">
-      <systemName>ILB10</systemName>
+    <block systemName="IB10" length="0.0" curve="0">
+      <systemName>IB10</systemName>
       <userName>AUTOBLK:10</userName>
-    </layoutblock>
-    <layoutblock systemName="ILB11" userName="AUTOBLK:11" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="white">
-      <systemName>ILB11</systemName>
+      <permissive>no</permissive>
+      <path todir="144" fromdir="96" block="IB2">
+        <beansetting setting="4">
+          <turnout systemName="Turnout:3" />
+        </beansetting>
+      </path>
+      <path todir="96" fromdir="144" block="IB3" />
+    </block>
+    <block systemName="IB11" length="0.0" curve="0">
+      <systemName>IB11</systemName>
       <userName>AUTOBLK:11</userName>
-    </layoutblock>
-    <layoutblock systemName="ILB12" userName="AUTOBLK:12" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="white">
-      <systemName>ILB12</systemName>
+      <permissive>no</permissive>
+      <path todir="128" fromdir="64" block="IB9" />
+      <path todir="64" fromdir="128" block="IB12" />
+    </block>
+    <block systemName="IB12" length="0.0" curve="0">
+      <systemName>IB12</systemName>
       <userName>AUTOBLK:12</userName>
-    </layoutblock>
-    <layoutblock systemName="ILB13" userName="AUTOBLK:13" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="white">
-      <systemName>ILB13</systemName>
+      <permissive>no</permissive>
+      <path todir="128" fromdir="64" block="IB11" />
+      <path todir="64" fromdir="128" block="IB13" />
+    </block>
+    <block systemName="IB13" length="0.0" curve="0">
+      <systemName>IB13</systemName>
       <userName>AUTOBLK:13</userName>
-    </layoutblock>
-    <layoutblock systemName="ILB14" userName="AUTOBLK:14" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="white">
-      <systemName>ILB14</systemName>
+      <permissive>no</permissive>
+      <path todir="128" fromdir="64" block="IB12" />
+      <path todir="64" fromdir="128" block="IB14" />
+    </block>
+    <block systemName="IB14" length="0.0" curve="0">
+      <systemName>IB14</systemName>
       <userName>AUTOBLK:14</userName>
-    </layoutblock>
-    <layoutblock systemName="ILB15" userName="AUTOBLK:15" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="white">
-      <systemName>ILB15</systemName>
+      <permissive>no</permissive>
+      <path todir="128" fromdir="64" block="IB13" />
+    </block>
+    <block systemName="IB15" length="0.0" curve="0">
+      <systemName>IB15</systemName>
       <userName>AUTOBLK:15</userName>
-    </layoutblock>
-    <layoutblock systemName="ILB16" userName="AUTOBLK:16" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="white">
-      <systemName>ILB16</systemName>
+      <permissive>no</permissive>
+      <path todir="144" fromdir="96" block="IB3">
+        <beansetting setting="2">
+          <turnout systemName="Turnout:2" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB16" />
+    </block>
+    <block systemName="IB16" length="0.0" curve="0">
+      <systemName>IB16</systemName>
       <userName>AUTOBLK:16</userName>
-    </layoutblock>
-    <layoutblock systemName="ILB17" userName="AUTOBLK:17" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="white">
-      <systemName>ILB17</systemName>
+      <permissive>no</permissive>
+      <path todir="128" fromdir="64" block="IB15" />
+      <path todir="64" fromdir="128" block="IB17" />
+    </block>
+    <block systemName="IB17" length="0.0" curve="0">
+      <systemName>IB17</systemName>
       <userName>AUTOBLK:17</userName>
-    </layoutblock>
-    <layoutblock systemName="ILB18" userName="AUTOBLK:18" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="white">
-      <systemName>ILB18</systemName>
+      <permissive>no</permissive>
+      <path todir="128" fromdir="64" block="IB16" />
+      <path todir="64" fromdir="128" block="IB18" />
+    </block>
+    <block systemName="IB18" length="0.0" curve="0">
+      <systemName>IB18</systemName>
       <userName>AUTOBLK:18</userName>
-    </layoutblock>
-    <layoutblock systemName="ILB19" userName="AUTOBLK:19" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="white">
-      <systemName>ILB19</systemName>
+      <permissive>no</permissive>
+      <path todir="128" fromdir="64" block="IB17" />
+    </block>
+    <block systemName="IB19" length="0.0" curve="0">
+      <systemName>IB19</systemName>
       <userName>AUTOBLK:19</userName>
-    </layoutblock>
-    <layoutblock systemName="ILB2" userName="AUTOBLK:2" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="white">
-      <systemName>ILB2</systemName>
-      <userName>AUTOBLK:2</userName>
-    </layoutblock>
-    <layoutblock systemName="ILB20" userName="AUTOBLK:20" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="white">
-      <systemName>ILB20</systemName>
+      <permissive>no</permissive>
+      <path todir="128" fromdir="64" block="IB3">
+        <beansetting setting="4">
+          <turnout systemName="Turnout:2" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB20" />
+    </block>
+    <block systemName="IB20" length="0.0" curve="0">
+      <systemName>IB20</systemName>
       <userName>AUTOBLK:20</userName>
-    </layoutblock>
-    <layoutblock systemName="ILB21" userName="AUTOBLK:21" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="white">
-      <systemName>ILB21</systemName>
+      <permissive>no</permissive>
+      <path todir="128" fromdir="64" block="IB19" />
+      <path todir="64" fromdir="128" block="IB21" />
+    </block>
+    <block systemName="IB21" length="0.0" curve="0">
+      <systemName>IB21</systemName>
       <userName>AUTOBLK:21</userName>
-    </layoutblock>
-    <layoutblock systemName="ILB22" userName="AUTOBLK:22" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="white">
-      <systemName>ILB22</systemName>
+      <permissive>no</permissive>
+      <path todir="128" fromdir="64" block="IB20" />
+      <path todir="64" fromdir="128" block="IB22" />
+    </block>
+    <block systemName="IB22" length="0.0" curve="0">
+      <systemName>IB22</systemName>
       <userName>AUTOBLK:22</userName>
-    </layoutblock>
-    <layoutblock systemName="ILB23" userName="AUTOBLK:23" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="white">
-      <systemName>ILB23</systemName>
+      <permissive>no</permissive>
+      <path todir="128" fromdir="64" block="IB21" />
+    </block>
+    <block systemName="IB23" length="0.0" curve="0">
+      <systemName>IB23</systemName>
       <userName>AUTOBLK:23</userName>
-    </layoutblock>
-    <layoutblock systemName="ILB24" userName="AUTOBLK:24" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="white">
-      <systemName>ILB24</systemName>
+      <permissive>no</permissive>
+      <path todir="144" fromdir="96" block="IB1">
+        <beansetting setting="4">
+          <turnout systemName="Turnout:4" />
+        </beansetting>
+      </path>
+      <path todir="96" fromdir="144" block="IB24" />
+    </block>
+    <block systemName="IB24" length="0.0" curve="0">
+      <systemName>IB24</systemName>
       <userName>AUTOBLK:24</userName>
-    </layoutblock>
-    <layoutblock systemName="ILB25" userName="AUTOBLK:25" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="white">
-      <systemName>ILB25</systemName>
+      <permissive>no</permissive>
+      <path todir="144" fromdir="96" block="IB23" />
+      <path todir="64" fromdir="128" block="IB25" />
+    </block>
+    <block systemName="IB25" length="0.0" curve="0">
+      <systemName>IB25</systemName>
       <userName>AUTOBLK:25</userName>
-    </layoutblock>
-    <layoutblock systemName="ILB26" userName="AUTOBLK:26" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="white">
-      <systemName>ILB26</systemName>
+      <permissive>no</permissive>
+      <path todir="128" fromdir="64" block="IB24" />
+      <path todir="64" fromdir="128" block="IB26" />
+    </block>
+    <block systemName="IB26" length="0.0" curve="0">
+      <systemName>IB26</systemName>
       <userName>AUTOBLK:26</userName>
-    </layoutblock>
-    <layoutblock systemName="ILB27" userName="AUTOBLK:27" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="white">
-      <systemName>ILB27</systemName>
+      <permissive>no</permissive>
+      <path todir="128" fromdir="64" block="IB25" />
+      <path todir="64" fromdir="128" block="IB27" />
+    </block>
+    <block systemName="IB27" length="0.0" curve="0">
+      <systemName>IB27</systemName>
       <userName>AUTOBLK:27</userName>
-    </layoutblock>
-    <layoutblock systemName="ILB3" userName="AUTOBLK:3" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="white">
-      <systemName>ILB3</systemName>
-      <userName>AUTOBLK:3</userName>
-    </layoutblock>
-    <layoutblock systemName="ILB4" userName="AUTOBLK:4" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="white">
-      <systemName>ILB4</systemName>
-      <userName>AUTOBLK:4</userName>
-    </layoutblock>
-    <layoutblock systemName="ILB5" userName="AUTOBLK:5" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="white">
-      <systemName>ILB5</systemName>
-      <userName>AUTOBLK:5</userName>
-    </layoutblock>
-    <layoutblock systemName="ILB6" userName="AUTOBLK:6" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="white">
-      <systemName>ILB6</systemName>
-      <userName>AUTOBLK:6</userName>
-    </layoutblock>
-    <layoutblock systemName="ILB7" userName="AUTOBLK:7" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="white">
-      <systemName>ILB7</systemName>
-      <userName>AUTOBLK:7</userName>
-    </layoutblock>
-    <layoutblock systemName="ILB8" userName="AUTOBLK:8" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="white">
-      <systemName>ILB8</systemName>
-      <userName>AUTOBLK:8</userName>
-    </layoutblock>
-    <layoutblock systemName="ILB9" userName="AUTOBLK:9" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="white">
-      <systemName>ILB9</systemName>
-      <userName>AUTOBLK:9</userName>
-    </layoutblock>
-  </layoutblocks>
-  <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml" />
+      <permissive>no</permissive>
+      <path todir="128" fromdir="64" block="IB26" />
+    </block>
+  </blocks>
+  <layoutblocks class="jmri.jmrit.display.layoutEditor.configurexml.LayoutBlockManagerXml" blockrouting="yes" />
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
-    <signalmastlogic source="Mast full 5">
-      <sourceSignalMast>Mast full 5</sourceSignalMast>
-      <destinationMast destination="Mast full 4">
-        <destinationSignalMast>Mast full 4</destinationSignalMast>
-        <comment />
-        <enabled>yes</enabled>
-        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
-        <useLayoutEditor>no</useLayoutEditor>
-        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
-        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
-        <lockTurnouts>no</lockTurnouts>
-      </destinationMast>
-    </signalmastlogic>
-    <signalmastlogic source="Mast full 4">
-      <sourceSignalMast>Mast full 4</sourceSignalMast>
-      <destinationMast destination="Mast full 3">
-        <destinationSignalMast>Mast full 3</destinationSignalMast>
+    <signalmastlogic source="Mast full 1">
+      <sourceSignalMast>Mast full 1</sourceSignalMast>
+      <destinationMast destination="Mast full 6">
+        <destinationSignalMast>Mast full 6</destinationSignalMast>
         <comment />
         <enabled>yes</enabled>
         <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
@@ -612,10 +488,23 @@
         <lockTurnouts>no</lockTurnouts>
       </destinationMast>
     </signalmastlogic>
-    <signalmastlogic source="Mast full 1">
-      <sourceSignalMast>Mast full 1</sourceSignalMast>
-      <destinationMast destination="Mast full 6">
-        <destinationSignalMast>Mast full 6</destinationSignalMast>
+    <signalmastlogic source="Mast full 4">
+      <sourceSignalMast>Mast full 4</sourceSignalMast>
+      <destinationMast destination="Mast full 3">
+        <destinationSignalMast>Mast full 3</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="Mast full 5">
+      <sourceSignalMast>Mast full 5</sourceSignalMast>
+      <destinationMast destination="Mast full 4">
+        <destinationSignalMast>Mast full 4</destinationSignalMast>
         <comment />
         <enabled>yes</enabled>
         <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
@@ -637,8 +526,8 @@
         <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
         <lockTurnouts>no</lockTurnouts>
       </destinationMast>
-      <destinationMast destination="Mast full 9">
-        <destinationSignalMast>Mast full 9</destinationSignalMast>
+      <destinationMast destination="Mast full 8">
+        <destinationSignalMast>Mast full 8</destinationSignalMast>
         <comment />
         <enabled>yes</enabled>
         <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
@@ -647,8 +536,8 @@
         <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
         <lockTurnouts>no</lockTurnouts>
       </destinationMast>
-      <destinationMast destination="Mast full 8">
-        <destinationSignalMast>Mast full 8</destinationSignalMast>
+      <destinationMast destination="Mast full 9">
+        <destinationSignalMast>Mast full 9</destinationSignalMast>
         <comment />
         <enabled>yes</enabled>
         <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
@@ -661,64 +550,142 @@
   </signalmastlogics>
   <filehistory>
     <operation>
-      <type>app</type>
-      <date>Sat Sep 27 13:22:52 BST 2014</date>
-      <filename>PanelPro version 3.6-r24520 starts under Java 1.6.0_24 at Sat Sep 27 13:22:52 BST 2014</filename>
-    </operation>
-    <operation>
       <type>Load OK</type>
-      <date>Sat Sep 27 13:22:52 BST 2014</date>
-      <filename>/C:/Users/Suzie/JMRI/UserPrefsPanelProConfig2.xml</filename>
-    </operation>
-    <operation>
-      <type>Load OK</type>
-      <date>Sat Sep 27 13:23:15 BST 2014</date>
-      <filename>/C:/Users/Suzie/JMRI/My_JMRI_Railroad/B&amp;O%20test%20panel%201.xml</filename>
+      <date>Wed Oct 30 07:22:06 PDT 2019</date>
+      <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/configurexml/load/BlockAndSignalMastTest.xml</filename>
       <filehistory>
         <operation>
           <type>app</type>
-          <date>Sat Sep 27 13:02:10 BST 2014</date>
-          <filename>PanelPro version 3.6-r24520 starts under Java 1.6.0_24 at Sat Sep 27 13:02:10 BST 2014</filename>
+          <date>Sat Sep 27 13:22:52 BST 2014</date>
+          <filename>PanelPro version 3.6-r24520 starts under Java 1.6.0_24 at Sat Sep 27 13:22:52 BST 2014</filename>
         </operation>
         <operation>
           <type>Load OK</type>
-          <date>Sat Sep 27 13:02:44 BST 2014</date>
-          <filename>/C:/Users/Paul/JMRI/My_JMRI_Railroad/B&amp;O%20test%20panel%201.xml</filename>
+          <date>Sat Sep 27 13:22:52 BST 2014</date>
+          <filename>/C:/Users/Suzie/JMRI/UserPrefsPanelProConfig2.xml</filename>
+        </operation>
+        <operation>
+          <type>Load OK</type>
+          <date>Sat Sep 27 13:23:15 BST 2014</date>
+          <filename>/C:/Users/Suzie/JMRI/My_JMRI_Railroad/B&amp;O%20test%20panel%201.xml</filename>
           <filehistory>
             <operation>
               <type>app</type>
-              <date>Sat Sep 27 12:07:11 BST 2014</date>
-              <filename>JMRI program</filename>
+              <date>Sat Sep 27 13:02:10 BST 2014</date>
+              <filename>PanelPro version 3.6-r24520 starts under Java 1.6.0_24 at Sat Sep 27 13:02:10 BST 2014</filename>
             </operation>
             <operation>
               <type>Load OK</type>
-              <date>Sat Sep 27 12:07:12 BST 2014</date>
-              <filename>/C:/Users/Paul/JMRI/My_JMRI_Railroad/UserPrefsProfileConfig.xml</filename>
-            </operation>
-            <operation>
-              <type>Load with errors</type>
-              <date>Sat Sep 27 12:07:26 BST 2014</date>
-              <filename>/C:/Users/Paul/JMRI/My_JMRI_Railroad/ProfileConfig.xml</filename>
+              <date>Sat Sep 27 13:02:44 BST 2014</date>
+              <filename>/C:/Users/Paul/JMRI/My_JMRI_Railroad/B&amp;O%20test%20panel%201.xml</filename>
+              <filehistory>
+                <operation>
+                  <type>app</type>
+                  <date>Sat Sep 27 12:07:11 BST 2014</date>
+                  <filename>JMRI program</filename>
+                </operation>
+                <operation>
+                  <type>Load OK</type>
+                  <date>Sat Sep 27 12:07:12 BST 2014</date>
+                  <filename>/C:/Users/Paul/JMRI/My_JMRI_Railroad/UserPrefsProfileConfig.xml</filename>
+                </operation>
+                <operation>
+                  <type>Load with errors</type>
+                  <date>Sat Sep 27 12:07:26 BST 2014</date>
+                  <filename>/C:/Users/Paul/JMRI/My_JMRI_Railroad/ProfileConfig.xml</filename>
+                </operation>
+                <operation>
+                  <type>Store</type>
+                  <date>Sat Sep 27 12:30:06 BST 2014</date>
+                  <filename />
+                </operation>
+              </filehistory>
             </operation>
             <operation>
               <type>Store</type>
-              <date>Sat Sep 27 12:30:06 BST 2014</date>
+              <date>Sat Sep 27 13:22:36 BST 2014</date>
               <filename />
             </operation>
           </filehistory>
         </operation>
         <operation>
           <type>Store</type>
-          <date>Sat Sep 27 13:22:36 BST 2014</date>
+          <date>Sat Sep 27 14:06:06 BST 2014</date>
+          <filename />
+        </operation>
+      </filehistory>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Wed Oct 30 07:22:06 PDT 2019</date>
+      <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/configurexml/load/BlockAndSignalMastTest.xml</filename>
+      <filehistory>
+        <operation>
+          <type>app</type>
+          <date>Sat Sep 27 13:22:52 BST 2014</date>
+          <filename>PanelPro version 3.6-r24520 starts under Java 1.6.0_24 at Sat Sep 27 13:22:52 BST 2014</filename>
+        </operation>
+        <operation>
+          <type>Load OK</type>
+          <date>Sat Sep 27 13:22:52 BST 2014</date>
+          <filename>/C:/Users/Suzie/JMRI/UserPrefsPanelProConfig2.xml</filename>
+        </operation>
+        <operation>
+          <type>Load OK</type>
+          <date>Sat Sep 27 13:23:15 BST 2014</date>
+          <filename>/C:/Users/Suzie/JMRI/My_JMRI_Railroad/B&amp;O%20test%20panel%201.xml</filename>
+          <filehistory>
+            <operation>
+              <type>app</type>
+              <date>Sat Sep 27 13:02:10 BST 2014</date>
+              <filename>PanelPro version 3.6-r24520 starts under Java 1.6.0_24 at Sat Sep 27 13:02:10 BST 2014</filename>
+            </operation>
+            <operation>
+              <type>Load OK</type>
+              <date>Sat Sep 27 13:02:44 BST 2014</date>
+              <filename>/C:/Users/Paul/JMRI/My_JMRI_Railroad/B&amp;O%20test%20panel%201.xml</filename>
+              <filehistory>
+                <operation>
+                  <type>app</type>
+                  <date>Sat Sep 27 12:07:11 BST 2014</date>
+                  <filename>JMRI program</filename>
+                </operation>
+                <operation>
+                  <type>Load OK</type>
+                  <date>Sat Sep 27 12:07:12 BST 2014</date>
+                  <filename>/C:/Users/Paul/JMRI/My_JMRI_Railroad/UserPrefsProfileConfig.xml</filename>
+                </operation>
+                <operation>
+                  <type>Load with errors</type>
+                  <date>Sat Sep 27 12:07:26 BST 2014</date>
+                  <filename>/C:/Users/Paul/JMRI/My_JMRI_Railroad/ProfileConfig.xml</filename>
+                </operation>
+                <operation>
+                  <type>Store</type>
+                  <date>Sat Sep 27 12:30:06 BST 2014</date>
+                  <filename />
+                </operation>
+              </filehistory>
+            </operation>
+            <operation>
+              <type>Store</type>
+              <date>Sat Sep 27 13:22:36 BST 2014</date>
+              <filename />
+            </operation>
+          </filehistory>
+        </operation>
+        <operation>
+          <type>Store</type>
+          <date>Sat Sep 27 14:06:06 BST 2014</date>
           <filename />
         </operation>
       </filehistory>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Sat Sep 27 14:06:06 BST 2014</date>
+      <date>Wed Oct 30 07:22:06 PDT 2019</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 3.6-r24520 on Sat Sep 27 14:06:06 BST 2014 $Id: XmlFile.java 22821 2013-02-25 01:18:12Z rhwood $-->
+  <!--Written by JMRI version 4.17.5ish+jake+20191030T0612Z+R8c99e77554 on Wed Oct 30 07:22:06 PDT 2019-->
 </layout-config>

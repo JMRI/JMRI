@@ -24,9 +24,9 @@
   charset=iso-8859-1"&gt; <!-- Style -->
    <!-- /Style -->
    <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+<div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>L'&Eacute;diteurd'Ic&ocirc;ne Multicapteurs</h1>
 
       <p>La fa&ccedil;on dont les ic&ocirc;nes sont

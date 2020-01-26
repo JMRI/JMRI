@@ -13,8 +13,6 @@ import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.jmrit.automat.Siglet;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Drives the "simple signal" logic for one signal.
@@ -127,7 +125,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     static public final int TRAILINGDIVERGING = 3;
     static public final int FACING = 4;
 
-    int mode = 0;
+    private int mode = 0;
 
     /**
      * Create an object to drive a specific signal head.
@@ -136,6 +134,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
      */
     public BlockBossLogic(@Nonnull String name) {
         super(name + Bundle.getMessage("_BlockBossLogic"));
+        java.util.Objects.requireNonNull(name, "BlockBossLogic name cannot be null");
         this.name = name;
         log.trace("Create BBL {}", name);
 
@@ -231,7 +230,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     }
 
     /**
-     * Return the system name of the sensors 1-5 being monitored.
+     * Get the system name of the sensors 1-5 being monitored.
      *
      * @return system name; null if no sensor configured
      */
@@ -283,7 +282,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     }
 
     /**
-     * Return the system name of the turnout being monitored.
+     * Get the system name of the turnout being monitored.
      *
      * @return system name; null if no turnout configured
      */
@@ -328,7 +327,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     }
 
     /**
-     * Return the system name of the signal head being monitored for first route.
+     * Get the system name of the signal head being monitored for first route.
      *
      * @return system name; null if no primary signal head is configured
      */
@@ -354,7 +353,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     }
 
     /**
-     * Return the system name of the alternate signal head being monitored for first
+     * Get the system name of the alternate signal head being monitored for first
      * route.
      *
      * @return system name; null if no signal head is configured
@@ -381,7 +380,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     }
 
     /**
-     * Return the system name of the signal head being monitored for the 2nd route.
+     * Get the system name of the signal head being monitored for the 2nd route.
      *
      * @return system name; null if no signal head is configured
      */
@@ -407,7 +406,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     }
 
     /**
-     * Return the system name of the secondary signal head being monitored for the
+     * Get the system name of the secondary signal head being monitored for the
      * 2nd route.
      *
      * @return system name; null if no secondary signal head is configured
@@ -433,7 +432,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     }
 
     /**
-     * Return the original name of the sensor1 being monitored.
+     * Get the original name of the sensor1 being monitored.
      *
      * @return original name; null if no sensor is configured
      */
@@ -458,7 +457,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     }
 
     /**
-     * Return the system name of the sensor1Alt being monitored.
+     * Get the system name of the sensor1Alt being monitored.
      *
      * @return system name; null if no sensor is configured
      */
@@ -483,7 +482,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     }
 
     /**
-     * Return the system name of the sensor2 being monitored.
+     * Get the system name of the sensor2 being monitored.
      *
      * @return system name; null if no sensor is configured
      */
@@ -508,7 +507,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     }
 
     /**
-     * Return the system name of the sensor2Alt being monitored.
+     * Get the system name of the sensor2Alt being monitored.
      *
      * @return system name; null if no sensor is configured
      */
@@ -563,7 +562,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
         return distantSignal;
     }
 
-    boolean mHold = false;
+    private boolean mHold = false;
 
     /**
      * Provide the current value of the "hold" parameter.
@@ -591,7 +590,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
         setOutput();  // to invoke the new state
     }
 
-    String name;
+    private String name;
 
     @Nonnull NamedBeanHandle<SignalHead> driveSignal;
 
@@ -628,11 +627,10 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
         if (approachSensor1.getBean() == null) {
             log.warn(Bundle.getMessage("BeanXNotFound", Bundle.getMessage("Approach_Sensor1_"), name));
         }
-
     }
 
     /**
-     * Return the system name of the sensor being monitored.
+     * Get the system name of the sensor being monitored.
      *
      * @return system name; null if no sensor configured
      */
@@ -1147,7 +1145,6 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
                 driveSignal.getBean().setLit(true);
             }
         }
-        return;
     }
 
     // Due to an older configuration & storage paradigm, this class
@@ -1186,7 +1183,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     }
 
     /**
-     * Return the BlockBossLogic item governing a specific signal head by its name,
+     * Get the BlockBossLogic item governing a specific signal head by its name,
      * having removed it from use.
      *
      * @param signal name of the signal head object
@@ -1204,7 +1201,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     }
 
     /**
-     * Return the BlockBossLogic item governing a specific signal head, having
+     * Get the BlockBossLogic item governing a specific signal head, having
      * removed it from use.
      *
      * @param sh signal head object
@@ -1233,7 +1230,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     }
 
     /**
-     * Return the BlockBossLogic item governing a specific signal head located from its name.
+     * Get the BlockBossLogic item governing a specific signal head located from its name.
      * <p>
      * Unlike {@link BlockBossLogic#getStoppedObject(String signal)} this does
      * not remove the object from being used.
@@ -1252,7 +1249,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     }
 
     /**
-     * Return the BlockBossLogic item governing a specific signal head object.
+     * Get the BlockBossLogic item governing a specific signal head object.
      * <p>
      * Unlike {@link BlockBossLogic#getStoppedObject(String signal)} this does
      * not remove the object from being used.
@@ -1438,6 +1435,6 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
         bblList.clear();
     }
     
-    private final static Logger log = LoggerFactory.getLogger(BlockBossLogic.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BlockBossLogic.class);
 
 }

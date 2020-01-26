@@ -1,9 +1,7 @@
 package jmri.jmrix.secsi.swing;
 
 import java.awt.GraphicsEnvironment;
-import jmri.jmrix.secsi.SerialTrafficControlScaffold;
 import jmri.jmrix.secsi.SecsiSystemConnectionMemo;
-import jmri.jmrix.secsi.SerialTrafficController;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;

@@ -1,18 +1,16 @@
 package jmri.jmrit.logix;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -166,9 +164,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         });
 
         JPanel panel = new JPanel();
-//        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         panel.add(makeTextBoxPanel(vertical, _calculateButton, "CalculateRoute", null));
-//        panel.add(Box.createVerticalStrut(STRUT_SIZE));
         panel.add(makeTextBoxPanel(vertical, _stopButton, "StopSearch", null));
         return panel;
     }
@@ -243,7 +239,6 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
             RosterEntry r = list.get(i);
             _rosterBox.addItem(r.titleString());
         }
-        //_rosterBox = Roster.getDefault().fullRosterComboBox();
         _rosterBox.setMaximumSize(_rosterBox.getPreferredSize());
         _rosterBox.addActionListener((ActionEvent e) -> {
             String selection = (String) _rosterBox.getSelectedItem();
@@ -296,7 +291,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
         panel.add(Box.createGlue());
 
-        HashMap<Integer, Boolean> an = MergePrompt.validateSpeedProfile(speedProfile);
+        Map<Integer, Boolean> an = MergePrompt.validateSpeedProfile(speedProfile);
         if (an != null && an.size() > 0) {
             framePanel.add(MergePrompt.makeAnomalyPanel());
         }
@@ -388,7 +383,6 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     }
 
     @SuppressWarnings("unchecked") // parameter can be any of several types, including JComboBox<String>
-//    @SuppressFBWarnings(value = "UCF_USELESS_CONTROL_FLOW", justification = "checkBlockBox in the internal class RouteLocation is a method with side effects that returns a boolean value. This code basically says try all possibilities until one succeeds.")
     void doAction(Object obj) {
         if (obj instanceof JTextField) {
             JTextField box = (JTextField) obj;

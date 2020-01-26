@@ -24,7 +24,7 @@
     Provides build services for JMRI libraries and applications
     </description>
 
-    <property name="jmri.copyright.year" value="1997-2019"/>
+    <property name="jmri.copyright.year" value="1997-2020"/>
 
     <property environment="env"/>
 
@@ -33,6 +33,8 @@
     <!-- Things you might want to set:                                                   -->
     <!--    # JVM arguments to pass to the JVM running the JMRI application              -->
     <!--    jvm.args=                                                                    -->
+    <!--    # JVM arguments to pass to the JVM running single tests                      -->
+    <!--    test-single.jvmargs=                                                         -->
     <!--    # paths to append to the classpath                                           -->
     <!--    cp.append=                                                                   -->
     <!--    # paths to prepend to the classpath                                          -->
@@ -58,18 +60,8 @@
     <!-- set any properties not overridden by local.properties -->
     <property file="${basedir}/release.properties"/>
 
-    <!-- The Jenkins official release builds force: -->
-    <!--    release.official=true                   -->
-    <!--    nsis.home=/opt/nsis/nsis-2.46/          -->
-    <!-- in their "invoke ant" step                 -->
-    <!-- The Packages build (dev downloads) forces: -->
-    <!--    release.official=false                  -->
-    <!--    nsis.home=/opt/nsis/nsis-2.46/          -->
-    <!-- in its "invoke ant" step                   -->
-
-    <property name="release.build_user" value="${user.name}"/>
-
-    <property name="release" value="${release.major}.${release.minor}.${release.build}"/>
+    <!-- set global properties for this build -->
+    <property file="${basedir}/project.properties"/>
 
     <!-- Retrieve Git revision via 'git describe' -->
     <exec executable="git" outputproperty="git.revision" failifexecutionfails="false" errorproperty="">
@@ -93,15 +85,6 @@
       <isset property="RELEASED"/>
     </condition>
 
-    <!-- Should compiler warn of use of deprecated APIs? (on/off) -->
-    <!-- This is overridden in a number of targets -->
-    <property name="deprecation" value="off"/>
-
-    <!-- SDK version (1.8 as of JMRI 3.11.1 [3.12/4.0 pre-releases]) -->
-    <property name="sdk_version"    value="1.8"/>
-    <property name="source_version" value="${sdk_version}"/>
-    <property name="jre_version"    value="${sdk_version}"/>
-
     <condition property="nsis.home" value="">
         <not><isset property="nsis.home"/></not>
     </condition>
@@ -110,6 +93,9 @@
         <not>
             <isset property="jvm.args"/>
         </not>
+    </condition>
+    <condition property="test-single.jvmargs" value="">
+        <not><isset property="test-single.jvmargs"/></not>
     </condition>
     <condition property="cp.append" value="">
         <not>
@@ -128,31 +114,6 @@
         </and>
     </condition>
 
-    <!-- set global properties for this build -->
-    <property name="dist"           value="${basedir}/dist"/>
-    <property name="jartarget"      value="${basedir}"/>
-    <property name="libdir"         value="${basedir}/lib"/>
-    <property name="resourcedir"    value="${basedir}/resources"/>
-    <property name="scriptdir"      value="${basedir}/scripts"/>
-    <property name="javadir"        value="${basedir}/java"/>
-    <property name="doctarget"      value="${javadir}/doc"/>
-    <property name="coveragetarget" value="${basedir}/coveragereport"/>
-    <property name="source"         value="${javadir}/src"/>
-    <property name="maventarget"    value="${basedir}/target"/>
-    <property name="target"         value="${maventarget}/classes"/>
-    <property name="testtarget"     value="${maventarget}/test-classes"/>
-    <property name="test"           value="${javadir}/test"/>
-    <property name="acceptancetest" value="${javadir}/acceptancetest"/>
-    <property name="templatedir"    value="${javadir}/template"/>
-    <property name="tmptarget"      value="${javadir}/tmp"/>
-    <property name="lineendtmp"     value="${tmptarget}/lineend"/>
-    <property name="tempdir"        value="${basedir}/temp"/>    <!-- actual tmp files -->
-    <property name="jacocoexec"     value="${maventarget}/jacoco.exec"/>
-    <property name="java.debugging" value="yes" />
-
-    <!-- location for all generated java code -->
-    <property name="genjavasrcdir" value="${tmptarget}/"/>
-
     <!-- this is the list of jar files and class path elements that are not
          a part of the JMRI codebase itself but which are needed at runtime
          for the various apps.  These will all be copied into the release
@@ -161,17 +122,17 @@
     <path id="runtime.class.path">
         <pathelement location="${libdir}/purejavacomm-1.0.1.jar"/>
         <pathelement location="${libdir}/xercesImpl.jar"/>
+        <pathelement location="${libdir}/xml-apis-1.4.01.jar"/>
         <pathelement location="${libdir}/gluegen-rt.jar"/>
-        <pathelement location="${libdir}/javacsv.jar"/>
-        <pathelement location="${libdir}/jdom-2.0.5.jar"/>
-        <pathelement location="${libdir}/jdom.jar"/>
+        <pathelement location="${libdir}/commons-csv-1.7.jar"/>
+        <pathelement location="${libdir}/jdom2-2.0.6.jar"/>
         <pathelement location="${libdir}/jhall.jar"/>
         <pathelement location="${libdir}/jinput.jar"/>
         <pathelement location="${libdir}/jmdns-3.5.5.jar"/>
         <pathelement location="${libdir}/openlcb.jar"/>
         <pathelement location="${libdir}/jlfgr-1_0.jar"/>
         <pathelement location="${libdir}/joal.jar"/>
-        <pathelement location="${libdir}/jython-standalone-2.7.0.jar"/>
+        <pathelement location="${libdir}/jython-standalone-2.7.1.jar"/>
         <pathelement location="${libdir}/log4j-1.2.17.jar"/>
         <pathelement location="${libdir}/javax.servlet-api-3.1.0.jar"/>
         <pathelement location="${libdir}/vecmath-1.5.2.jar"/>
@@ -183,9 +144,9 @@
         <pathelement location="${libdir}/commons-lang3-3.7.jar"/>
         <pathelement location="${libdir}/commons-text-1.2.jar"/>
         <pathelement location="${libdir}/commons-compress-1.18.jar"/>
-        <pathelement location="${libdir}/jackson-core-2.9.8.jar"/>
-        <pathelement location="${libdir}/jackson-annotations-2.9.8.jar"/>
-        <pathelement location="${libdir}/jackson-databind-2.9.8.jar"/>
+        <pathelement location="${libdir}/jackson-core-2.10.0.jar"/>
+        <pathelement location="${libdir}/jackson-annotations-2.10.0.jar"/>
+        <pathelement location="${libdir}/jackson-databind-2.10.0.jar"/>
         <pathelement location="${libdir}/jetty-http-9.4.7.v20170914.jar"/>
         <pathelement location="${libdir}/jetty-security-9.4.7.v20170914.jar"/>
         <pathelement location="${libdir}/jetty-server-9.4.7.v20170914.jar"/>
@@ -208,20 +169,20 @@
         <pathelement location="${libdir}/bluecove-gpl-2.1.1-SNAPSHOT.jar"/>
         <pathelement location="${libdir}/jhidrawplugin.jar"/>
         <pathelement location="${libdir}/beansbinding-1.2.1.jar"/>
-        <pathelement location="${libdir}/libusb4java-1.2.0-linux-arm.jar"/>
-        <pathelement location="${libdir}/libusb4java-1.2.0-linux-x86.jar"/>
-        <pathelement location="${libdir}/libusb4java-1.2.0-linux-x86_64.jar"/>
-        <pathelement location="${libdir}/libusb4java-1.2.0-osx-x86.jar"/>
-        <pathelement location="${libdir}/libusb4java-1.2.0-osx-x86_64.jar"/>
-        <pathelement location="${libdir}/libusb4java-1.2.0-windows-x86.jar"/>
-        <pathelement location="${libdir}/libusb4java-1.2.0-windows-x86_64.jar"/>
+        <pathelement location="${libdir}/libusb4java-1.3.0-linux-aarch64.jar"/>
+        <pathelement location="${libdir}/libusb4java-1.3.0-linux-arm.jar"/>
+        <pathelement location="${libdir}/libusb4java-1.3.0-linux-x86.jar"/>
+        <pathelement location="${libdir}/libusb4java-1.3.0-linux-x86-64.jar"/>
+        <pathelement location="${libdir}/libusb4java-1.3.0-darwin-x86-64.jar"/>
+        <pathelement location="${libdir}/libusb4java-1.3.0-win32-x86.jar"/>
+        <pathelement location="${libdir}/libusb4java-1.3.0-win32-x86-64.jar"/>
         <pathelement location="${libdir}/usb-api-1.0.2.jar"/>
-        <pathelement location="${libdir}/usb4java-1.2.0.jar"/>
-        <pathelement location="${libdir}/usb4java-javax-1.2.0.jar"/>
+        <pathelement location="${libdir}/usb4java-1.3.0.jar"/>
+        <pathelement location="${libdir}/usb4java-javax-1.3.0.jar"/>
         <pathelement location="${libdir}/hid4java-0.5.0.jar"/>
         <pathelement location="${libdir}/mqtt-client-0.4.0.jar"/>
-        <pathelement location="${libdir}/json-schema-validator-1.0.10.jar"/>
-        <pathelement location="${libdir}/jinputvalidator-0.6.0.jar"/>
+        <pathelement location="${libdir}/json-schema-validator-1.0.28.jar"/>
+        <pathelement location="${libdir}/jinputvalidator-0.8.0.jar"/>
         <pathelement location="${libdir}/jsplitbutton-1.3.1.jar"/>
         <pathelement location="${libdir}/thumbnailator-0.4.8.jar"/>
     </path>
@@ -240,6 +201,12 @@
         <pathelement path="${runtime.class.jars}"/>
         <pathelement location="${libdir}/AppleJavaExtensions.jar"/> <!-- build with Mac OS X-specific support -->
         <pathelement location="${libdir}/junit-4.12.jar"/>
+        <pathelement location="${libdir}/junit-platform-commons-1.5.2.jar"/>
+        <pathelement location="${libdir}/junit-platform-engine-1.5.2.jar"/>
+        <pathelement location="${libdir}/junit-platform-launcher-1.2.0.jar"/>
+        <pathelement location="${libdir}/junit-vintage-engine-5.5.2.jar"/>
+        <pathelement location="${libdir}/junit-jupiter-engine-5.5.2.jar"/>
+        <pathelement location="${libdir}/opentest4j-1.2.0.jar"/>
         <pathelement location="${libdir}/hamcrest-core-1.3.jar"/>
         <pathelement location="${libdir}/archunit-junit4-0.11.0.jar"/>
         <pathelement location="${libdir}/archunit-0.11.0.jar"/>
@@ -303,9 +270,6 @@
         <pathelement location="${testtarget}"/> <!-- test resources in classpath that collide with stock resources -->
     </path>
 
-    <!-- PureJavaComm default log level - override in local.properties or Ant command line -->
-    <property name="purejavacomm.loglevel" value="0"/>
-
     <macrodef name="quiet">
         <element name="body" implicit="yes"/>
         <sequential>
@@ -333,7 +297,7 @@
 
     <!-- Java Code Coverage -->
     <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
-        <classpath path="lib/org.jacoco.ant-0.8.2-nodeps.jar" />
+        <classpath path="lib/org.jacoco.ant-0.8.5-nodeps.jar" />
     </taskdef>
 
     <!-- fileset for the jacoco targets. -->
@@ -341,6 +305,8 @@
         <include name="**/*.class" />
         <!-- Exclude classes necessary for testing only from the code coverage report-->
         <exclude name="**/*Test*.class" />
+        <exclude name="**/*IT.class" />
+        <exclude name="**/IT*.class" />
         <!-- Exclude testing infrastructure classes -->
         <exclude name="**/*Scaffold.class" />
         <exclude name="**/*JUnit*.class" />
@@ -353,19 +319,10 @@
         <exclude name="jmri/util/web/BrowserFactory.class" />
         <!-- Exclude pure interfaces and classes only providing constants. -->
         <exclude name="jmri/AddressedProgrammerManager.class" />
-        <exclude name="jmri/PhysicalLocationReporter.class" />
         <exclude name="jmri/jmris/simpleserver/parser/JmriServerParserTreeConstants.class" />
         <exclude name="jmri/jmris/srcp/parser/SRCPParserTreeConstants.class" />
         <exclude name="jmri/jmrit/audio/AudioSource.class" />
-        <exclude name="jmri/jmrit/operations/locations/Xml.class" />
-        <exclude name="jmri/jmrit/operations/rollingstock/cars/Xml.class"/>
-        <exclude name="jmri/jmrit/operations/rollingstock/engines/Xml.class" />
-        <exclude name="jmri/jmrit/operations/trains/Xml.class" />
-        <exclude name="jmri/jmrit/ussctc/Lock.class" />
         <exclude name="jmri/jmrix/srcp/parser/SRCPClientParserTreeConstants.class" />
-        <exclude name="jmri/server/json/reporter/JsonReporter.class" />
-        <exclude name="jmri/server/json/roster/JsonRoster.class" />
-        <exclude name="jmri/server/json/signalmast/JsonSignalMast.class" />
         <!-- Exclude deprecated classes. -->
         <exclude name="jmri/jmrix/loconet/AbstractAlmImplementation.class" />
         <!-- Exclude files meant to check SpotBugs. -->
@@ -497,6 +454,7 @@
             <fileset file="jacoco.exec"/>
             <fileset file="jmri-fb.html"/>
             <fileset file="coveragereport"/>
+            <fileset file="testreport"/>
             <fileset file="tests.log"/>
             <fileset file="cucumber-results.xml"/>
             <!-- .gitignore runtime artifacts -->
@@ -504,6 +462,9 @@
             <fileset file="session.log"/>
         </delete>
         <ant dir="xml/XSLT" target="clean" inheritAll="false"  />
+        <!-- Eclipse artifacts -->
+        <delete dir=".apt_generated"/>
+        <delete dir=".apt_generated_tests"/>
     </target>
 
     <!-- end of utility targets -->
@@ -615,8 +576,8 @@
          compilation - normal code, generated code and tests -->
     <!-- Deprecated, use the java-compile macro instead -->
     <target name="-java-compile-internal"> <!-- Internal target for compiling Java source from a specified directory -->
-        <java-compile 
-                javac.source="${java.source.directory}" 
+        <java-compile
+                javac.source="${java.source.directory}"
                 javac.target="${target}"
             />
     </target>
@@ -651,7 +612,7 @@
     <target name="compile-generated-source"
             depends="javacc, update-template-code"><!-- compile all generated Java source; internal target -->
         <!-- Compile the java code from ${genjavasrcdir} into ${target} -->
-        <java-compile 
+        <java-compile
                 javac.source="${genjavasrcdir}"
                 javac.deprecation="off"
         />
@@ -665,7 +626,7 @@
             description="compile source, omitting tests - identical to debug target"
             depends="init, copyfiles, compile-generated-source">
         <!-- Compile the java code from ${source} into ${target} -->
-        <java-compile 
+        <java-compile
                 javac.source="${source}"
                 javac.deprecation="on"
             />
@@ -677,14 +638,14 @@
             description="compile source with debugging on, omitting tests - identical to compile target"
             depends="compile">
     </target>
-
+    
     <target name="tests"
             description="compile test classes"
             depends="debug">
         <!-- Compile the test java code from ${source} into ${target} -->
-        <java-compile 
-                javac.source="${test};${acceptancetest}" 
-                javac.target="${testtarget}" 
+        <java-compile
+                javac.source="${test};${acceptancetest}"
+                javac.target="${testtarget}"
                 javac.classpath="test.class.path"
                 javac.deprecation="off"
             />
@@ -757,7 +718,6 @@
         <property name="test.test" value="${test.includes}Test"/>
     </target>
     <target depends="-test-single-src,-test-single-test,tests,runtime-library-selection" description="Run single unit test." name="test-single">
-        <property name="test-single.jvmargs" value=""/>
         <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." errorProperty="test.failed" failureProperty="test.failed">
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
@@ -765,7 +725,7 @@
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
-            <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
+            <!-- <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/> no longer specify specific library -->
 
             <classpath refid="test.class.path"/>
 
@@ -782,7 +742,6 @@
     </target>
 
     <target depends="-test-single-src,-test-single-test,tests,runtime-library-selection" description="Run single unit test." name="test-single-coverage">
-        <property name="test-single.jvmargs" value=""/>
         <jacoco:coverage destfile="${jacocoexec}" excludes="org.slf4j.*">
         <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." errorProperty="test.failed" failureProperty="test.failed">
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
@@ -791,7 +750,7 @@
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
-            <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
+            <!-- <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/> no longer specify specific library -->
 
             <classpath refid="test.class.path"/>
 
@@ -844,7 +803,7 @@
     <target name="warnings"
             description="compile source with ECJ warning generation on, omitting tests"
             depends="check-ant-requirements, clean, init, copyfiles, compile-generated-source">
-        <ecj-compile 
+        <ecj-compile
                 javac.source="${source}"
                 javac.deprecation="on"
             >
@@ -857,7 +816,7 @@
     <target name="warnings-check"
             description="compile source with ECJ warning generation on and fail if any warnings, omitting tests"
             depends="check-ant-requirements, clean, init, copyfiles, compile-generated-source">
-        <ecj-compile 
+        <ecj-compile
                 javac.source="${source}"
                 javac.deprecation="on"
             >
@@ -870,9 +829,9 @@
     <target name="tests-warnings"
             description="compile test sources with ECJ warning generation on"
             depends="warnings">
-        <ecj-compile 
-                javac.source="${test}" 
-                javac.target="${testtarget}" 
+        <ecj-compile
+                javac.source="${test}"
+                javac.target="${testtarget}"
                 javac.classpath="test.class.path"
                 javac.deprecation="off"
             >
@@ -886,9 +845,9 @@
     <target name="tests-warnings-check"
             description="compile test sources with ECJ warning generation on and fail if any warnings"
             depends="warnings-check">
-        <ecj-compile 
-                javac.source="${test}" 
-                javac.target="${testtarget}" 
+        <ecj-compile
+                javac.source="${test}"
+                javac.target="${testtarget}"
                 javac.classpath="test.class.path"
                 javac.deprecation="off"
             >
@@ -1030,7 +989,7 @@
             <sysproperty key="java.library.path"
                          path=".:${arch.lib.path}:${libdir}"/>
             <sysproperty key="jinput.plugins"
-                         path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
+                         path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/><!-- not in tests, left here for historical reasons -->
             <sysproperty key="purejavacomm.loglevel" value="${purejavacomm.loglevel}"/>
             <jvmarg value="-Xms256m"/>
             <jvmarg value="-Xmx640m"/>
@@ -1062,7 +1021,7 @@
             <sysproperty key="java.library.path"
                          path=".:${arch.lib.path}:${libdir}"/>
             <sysproperty key="jinput.plugins"
-                         path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
+                         path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/><!-- not in tests, left here for historical reasons -->
             <sysproperty key="purejavacomm.loglevel" value="${purejavacomm.loglevel}"/>
 
             <jvmarg value="-Xdebug"/>
@@ -1234,7 +1193,7 @@
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
-            <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
+            <!-- <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/> no longer specify specific library -->
             <jvmarg value="-Xrunhprof:cpu=samples,heap=sites,file=log.txt,depth=10"/>
         </java>
     </target>
@@ -1252,7 +1211,7 @@
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
-            <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
+            <!-- <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/> no longer specify specific library -->
        <!--      <jvmarg value="${profiler.info.jvmargs.agent}"/> -->
        <!-- <jvmarg value="-verbose"/> -->
        <!-- <jvmarg value="-verbosegc"/> -->
@@ -1277,7 +1236,7 @@
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
-            <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
+            <!-- <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/> no longer specify specific library -->
             <jvmarg line="${jvm.args}"/>
             <arg value="${antargline}"/>
         </java>
@@ -1296,12 +1255,12 @@
                 <include name="messageformat check"/>
                 <include name="unicode check"/>
                 <include name="invalid char check"/> <!-- c.f. native2ascii -->
-                
+
                 <!-- someday want to get to these -->
                 <exclude name="placeholder check"/> <!-- Is this _global_ on name?  C.f. ConnectionName -->
                 <exclude name="upper lower check"/>
                 <exclude name="line end check"/> <!-- replace trailing spaces with \s - see "Checkstyle" discussion previously -->
-                
+
                 <!-- our usage may be inconsistent with these, needs further thought -->
                 <exclude name="empty value check"/>
                 <exclude name="cross bundle check"/>
@@ -1390,7 +1349,7 @@
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
             <sysproperty key="cucumber.options" value="--tags 'not @Ignore' --tags 'not @Headed' --tags 'not @webtest'"/>
-            <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
+            <!-- <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/> no longer specify specific library -->
 
             <sysproperty key="java.awt.headless" value="true"/>
 
@@ -1415,7 +1374,7 @@
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
-            <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
+            <!-- <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/> no longer specify specific library -->
             <sysproperty key="cucumber.options" value="--tags 'not @Ignore' --tags 'not @Headed'"/>
 
             <sysproperty key="java.awt.headless" value="true"/>
@@ -1425,17 +1384,19 @@
 
             <classpath refid="test.class.path"/>
 
-            <jvmarg value="-Xmx512m"/><!-- checking that memory doesnt run away -->
+            <jvmarg value="-Xmx1536m"/>
             <jvmarg line="${jvm.args}"/>
-            
+
             <arg value="${antargline}"/>
         </java>
 
     </target>
 
     <target name="logheadlesstest" depends="tests, runtime-library-selection" description="run headlesstest test suite with jacoco output">
+        <mkdir dir="${tempdir}"/>
+        <mkdir dir="${testreport}"/>
         <jacoco:coverage destfile="${jacocoexec}" excludes="org.slf4j.*">
-        <junit haltonerror="false" haltonfailure="false" showoutput="yes" printsummary="withOutAndErr" fork="yes" dir="." timeout="3600000">
+        <junit haltonerror="false" haltonfailure="false" showoutput="yes" printsummary="withOutAndErr" fork="yes" dir="." timeout="7200000">
 
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
@@ -1444,7 +1405,7 @@
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
             <sysproperty key="cucumber.options" value="--tags 'not @Ignore' --tags 'not @Headed' --tags 'not @webtest'"/>
-            <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
+            <!-- <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/> no longer specify specific library -->
 
             <sysproperty key="java.awt.headless" value="true"/>
 
@@ -1459,9 +1420,16 @@
             <!-- use different log4j settings to pick up additional coverage -->
             <sysproperty key="jmri.log4jconfigfilename" value="tests_jacoco.lcf"/>
 
-            <test name="jmri.HeadLessTest" outfile="junit-results">
+            <test name="jmri.HeadLessTest" todir="${testreport}" outfile="junit-results">
                 <formatter type="xml"/>
             </test>
+            <batchtest todir="${testreport}">
+                <formatter type="xml"/>
+                <fileset dir="${test}">
+                    <include name="**/*IT.java"/>
+                    <include name="**/IT*.java"/>
+                </fileset>
+            </batchtest>
 
         </junit>
         </jacoco:coverage>
@@ -1516,13 +1484,15 @@
                  <limit counter="CLASS" value="COVEREDCOUNT" minimum="1"/>
               </rule>
               <rule element="SOURCEFILE">
-                 <limit counter="LINE" value="COVEREDCOUNT" minimum="1"/>
+                 <limit counter="LINE" value="COVEREDRATIO" minimum="0.00001"/>
               </rule>
           </check>
        </jacoco:report>
     </target>
 
     <target name="ci-test" depends="tests, runtime-library-selection" description="run AllTest CI tests">
+        <mkdir dir="${tempdir}"/>
+        <mkdir dir="${testreport}"/>
         <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." errorProperty="test.failed" failureProperty="test.failed">
 
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
@@ -1531,7 +1501,7 @@
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
-            <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
+            <!-- <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/> no longer specify specific library -->
 
             <sysproperty key="user.language" value="en"/>
             <sysproperty key="user.country" value="US"/>
@@ -1541,6 +1511,14 @@
             <test name="apps.tests.AllTest">
                 <formatter usefile="no" type="brief"/>
             </test>
+            <batchtest todir="${testreport}"> 
+                <formatter usefile="no" type="brief"/>
+                <fileset dir="${test}">
+                    <include name="**/*IT.java"/>
+                    <include name="**/IT*.java"/>
+                </fileset>
+                <formatter usefile="no" type="brief"/>
+            </batchtest>
         </junit>
         <fail>
             <condition>
@@ -1551,13 +1529,15 @@
 
     <target name="ci-test-appveyor" depends="tests, runtime-library-selection" description="run ci-test using Appveyor">
         <!-- identical to ci-test target except test output is different -->
+        <mkdir dir="${tempdir}"/>
+        <mkdir dir="${testreport}"/>
         <jacoco:coverage destfile="${jacocoexec}" excludes="org.slf4j.*">
         <junit haltonerror="false" haltonfailure="false" printsummary="yes" showoutput="yes" fork="yes" maxmemory="2048m" dir="." errorProperty="test.failed" failureProperty="test.failed">
 
             <sysproperty key="cucumber.options" value="--tags 'not @Ignore'"/>
             <sysproperty key="wdm.forceCache" value="true"/>
             <!-- wdm.targetPath specifies the locaion of the web drivers on appveyor. -->
-            <sysproperty key="wdm.targetPath" value="C:\Tools\WebDriver"/> 
+            <sysproperty key="wdm.targetPath" value="C:\Tools\WebDriver"/>
 
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
@@ -1565,16 +1545,25 @@
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
-            <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
+            <!-- <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/> no longer specify specific library -->
+
+            <sysproperty key="jmri.skipTestsRequiringSeparateRunning" value="true"/><!-- skip intermittent tests -->
 
             <sysproperty key="user.language" value="en"/>
             <sysproperty key="user.country" value="US"/>
 
             <classpath refid="test.class.path"/>
             
-            <test name="apps.tests.AllTest" outfile="junit-results">
+            <test name="apps.tests.AllTest" outfile="junit-results" todir="${testreport}">
                 <formatter type="xml"/>
             </test>
+            <batchtest todir="${testreport}"> 
+                <formatter type="xml"/>
+                <fileset dir="${test}">
+                    <include name="**/*IT.java"/>
+                    <include name="**/IT*.java"/>
+                </fileset>
+            </batchtest>
         </junit>
         </jacoco:coverage>
         <fail>
@@ -1597,7 +1586,7 @@
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
-            <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
+            <!-- <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/> no longer specify specific library -->
 
             <sysproperty key="user.language" value="en"/>
             <sysproperty key="user.country" value="US"/>
@@ -1611,8 +1600,10 @@
     </target>
 
     <target name="logalltest" depends="tests, runtime-library-selection" description="run AllTest test suite with jacoco output">
+        <mkdir dir="${tempdir}"/>
+        <mkdir dir="${testreport}"/>
         <jacoco:coverage destfile="${jacocoexec}" excludes="org.slf4j.*">
-        <junit haltonerror="false" haltonfailure="false" showoutput="yes" printsummary="withOutAndErr" fork="yes" dir="." timeout="3600000">
+        <junit haltonerror="false" haltonfailure="false" showoutput="yes" printsummary="withOutAndErr" fork="yes" dir="." timeout="7200000">
 
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
@@ -1620,7 +1611,7 @@
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
-            <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
+            <!-- <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/> no longer specify specific library -->
 
             <sysproperty key="user.language" value="en"/>
             <sysproperty key="user.country" value="US"/>
@@ -1633,9 +1624,16 @@
             <!-- use different log4j settings to pick up additional coverage -->
             <sysproperty key="jmri.log4jconfigfilename" value="tests_jacoco.lcf"/>
 
-            <test name="apps.tests.AllTest" outfile="junit-results">
+            <test name="apps.tests.AllTest" todir="${testreport}" outfile="junit-results">
                 <formatter type="xml"/>
             </test>
+            <batchtest todir="${testreport}"> 
+                <formatter type="xml"/>
+                <fileset dir="${test}">
+                    <include name="**/*IT.java"/>
+                    <include name="**/IT*.java"/>
+                </fileset>
+            </batchtest>
         </junit>
 
         </jacoco:coverage>
@@ -1651,17 +1649,17 @@
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
-            <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
+            <!-- <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/> no longer specify specific library -->
 
             <sysproperty key="user.language" value="en"/>
             <sysproperty key="user.country" value="US"/>
 
             <classpath refid="test.class.path"/>
 
-            <test name="jmri.RunCucumberTest">
+            <test name="jmri.RunCucumberIT">
                 <formatter usefile="no" type="brief"/>
             </test>
-            <test name="apps.RunCucumberTest">
+            <test name="apps.RunCucumberIT">
                 <formatter usefile="no" type="brief"/>
             </test>
         </junit>
@@ -1729,7 +1727,7 @@
                  <limit counter="CLASS" value="COVEREDCOUNT" minimum="1"/>
               </rule>
               <rule element="SOURCEFILE">
-                 <limit counter="LINE" value="COVEREDCOUNT" minimum="1"/>
+                 <limit counter="LINE" value="COVEREDRATIO" minimum="0.00001"/>
               </rule>
           </check>
        </jacoco:report>
@@ -1831,16 +1829,17 @@
 
     <target name="javadoc" depends="init, jjdoc, compile-generated-source, plantuml" description="create Javadocs">
         <javadoc packagenames="jmri.*, apps.*"
-           maxmemory="512m"
-           overview="${source}/jmri/overview.html"
-           destdir="${doctarget}"
-           additionalparam="-breakiterator"
-           author="true"
-           version="false"
-           public="yes"
-           use="true"
-           failonerror="true"
-           windowtitle="JMRI API">
+                 maxmemory="512m"
+                 overview="${source}/jmri/overview.html"
+                 destdir="${doctarget}"
+                 additionalparam="-breakiterator"
+                 author="true"
+                 version="false"
+                 public="yes"
+                 use="true"
+                 failonerror="true"
+                 source="8"
+                 windowtitle="JMRI API">
 
             <packageset dir="${source}" defaultexcludes="yes">
                 <include name="jmri/**"/>
@@ -1867,7 +1866,7 @@
             <group title="XML persistance" packages="jmri.configurexml:jmri.configurexml.*:apps.configurexml:apps.configurexml.*"/>
             <group title="Web Services" packages="jmri.web:jmri.web.*:jmri.server:jmri.server.*"/>
             <group title="Interface Server Support" packages="jmri.jmris:jmri.jmris.*"/>
-      <!-- Layout Connections last because so large -->
+            <!-- Layout Connections last because so large -->
             <group title="Layout Connections" packages="jmri.jmrix:jmri.jmrix.*"/>
 
             <classpath refid="compile.class.path"/>
@@ -1876,26 +1875,24 @@
             <bottom><![CDATA[<i>Copyright &copy; ${jmri.copyright.year} JMRI Community.
                     <br>JMRI&reg;, DecoderPro&reg;, PanelPro, SignalPro, SoundPro, DispatcherPro, TrainPro and associated logos are our trademarks.</i>
                        <br><a href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
-                    <br>Site hosted by:<br><!-- SSI require .shtml suffix, so this file can't include the following as Icon via SSI -->
-                        <A href="http://www.tagadab.com"> 
-                        <IMG src="https://www.tagadab.com/sites/default/files/logo-tagadab-nostrap.png" height="28" width="103" border="0" alt="Tagadab Logo"> </A> 
                 ]]>
             </bottom>
             <link href="https://docs.oracle.com/javase/8/docs/api/"/>
             <link href="http://java.sun.com/products/javacomm/reference/api/"/>
             <link href="http://www.jdom.org/docs/apidocs/"/>
-            <link href="http://javacsv.sourceforge.net/"/>
-            <link href="http://fasterxml.github.io/jackson-databind/javadoc/2.0.6"/>
+            <link href="https://commons.apache.org/proper/commons-csv/apidocs/"/>
+            <link href="https://static.javadoc.io/com.fasterxml.jackson.core/jackson-databind/2.9.8/"/>
             <link href="http://logging.apache.org/log4j/1.2/apidocs/"/>
             <link href="http://download.java.net/media/java3d/javadoc/1.3.2/"/>
-            <link href="http://www.openlcb.org/trunk/prototypes/java/doc/"/>
+            <link href="https://static.javadoc.io/org.openlcb/openlcb/0.7.23/"/>
             <link href="https://commons.apache.org/proper/commons-lang/javadocs/api-release"/>
-            <link href="https://javadoc.io/doc/com.tngtech.archunit/archunit/0.11.0"/>
+            <!-- marking this one offline as it doesn't currently serve the 'package-list' document -->
             <link offline="true" href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/" packagelistLoc="lib/joal-2.3.1-packagelist"/>
-            <!-- it might be possible to set the user agent to access the following, see https://stackoverflow.com/questions/33866209/linking-to-javadoc-io-using-javadoc-link-option -->
-            <link offline="true" href="https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE"  packagelistLoc="lib/purejavacomm-1.0.1-package-list" />
-            <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jinputvalidator/0.6.0" packagelistLoc="lib/jinputvalidator-0.6.0-package-list" />
-            <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jsplitbutton/1.3.1" packagelistLoc="lib/jsplitbutton-1.3.1-package-list" />
+            <link href="https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE/" packagelistLoc="lib/purejavacomm-1.0.1-package-list"/>
+            <link href="https://static.javadoc.io/com.alexandriasoftware.swing/jsplitbutton/1.3.1/" packagelistLoc="lib/jsplitbutton-1.3.1-package-list"/>
+            <!-- The following Javadocs were built with JDK 11+ and can't be directly linked -->
+            <link offline="true" href="https://static.javadoc.io/com.alexandriasoftware.swing/jinputvalidator/0.8.0/" packagelistLoc="lib/jinputvalidator-0.8.0-package-list"/>
+            <link offline="true" href="https://static.javadoc.io/com.tngtech.archunit/archunit/0.11.0/" packagelistLoc="lib/archunit-0.11.0-package-list"/>
         </javadoc>
     </target>
 
@@ -1904,16 +1901,17 @@
     <!-- keep the maxwarns value in sync with javadoc target -->
     <target name="javadoc-lint" depends="init, jjdoc, compile-generated-source, plantuml" description="create Javadocs">
         <javadoc packagenames="jmri.*, apps.*"
-           maxmemory="512m"
-           overview="${source}/jmri/overview.html"
-           destdir="${doctarget}"
-           additionalparam="-breakiterator"
-           author="true"
-           version="false"
-           public="yes"
-           use="true"
-           failonerror="true"
-           windowtitle="JMRI API">
+                 maxmemory="512m"
+                 overview="${source}/jmri/overview.html"
+                 destdir="${doctarget}"
+                 additionalparam="-breakiterator"
+                 author="true"
+                 version="false"
+                 public="yes"
+                 use="true"
+                 failonerror="true"
+                 source="8"
+                 windowtitle="JMRI API">
 
             <packageset dir="${source}" defaultexcludes="yes">
                 <include name="jmri/**"/>
@@ -1927,7 +1925,8 @@
             <arg value="1650"/><!-- change from default 100 warnings; keep synced with pom.xml, other javadoc targets -->
             <arg value="-quiet"/>
             <arg value="-splitindex"/>
-            
+            <arg value="-J-Dhttp.agent=javadoc"/>
+
             <!-- disable output of custom @navassoc tag - used for UML image generation -->
             <tag name="navassoc" enabled="false"/>
 
@@ -1939,7 +1938,7 @@
             <group title="XML persistance" packages="jmri.configurexml:jmri.configurexml.*:apps.configurexml:apps.configurexml.*"/>
             <group title="Web Services" packages="jmri.web:jmri.web.*:jmri.server:jmri.server.*"/>
             <group title="Interface Server Support" packages="jmri.jmris:jmri.jmris.*"/>
-      <!-- Layout Connections last because so large -->
+            <!-- Layout Connections last because so large -->
             <group title="Layout Connections" packages="jmri.jmrix:jmri.jmrix.*"/>
 
             <classpath refid="compile.class.path"/>
@@ -1948,46 +1947,46 @@
             <bottom><![CDATA[<i>Copyright &copy; ${jmri.copyright.year} JMRI Community.
                     <br>JMRI&reg;, DecoderPro&reg;, PanelPro, SignalPro, SoundPro, DispatcherPro, TrainPro and associated logos are our trademarks.</i>
                        <br><a href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
-                    <br>Site hosted by:<br><!-- SSI require .shtml suffix, so this file can't include the following as Icon via SSI -->
-                        <A href="http://www.tagadab.com"> 
-                        <IMG src="https://www.tagadab.com/sites/default/files/logo-tagadab-nostrap.png" height="28" width="103" border="0" alt="Tagadab Logo"> </A> 
                 ]]>
             </bottom>
             <link href="https://docs.oracle.com/javase/8/docs/api/"/>
             <link href="http://java.sun.com/products/javacomm/reference/api/"/>
             <link href="http://www.jdom.org/docs/apidocs/"/>
-            <link href="http://javacsv.sourceforge.net/"/>
-            <link href="http://fasterxml.github.io/jackson-databind/javadoc/2.0.6"/>
+            <link href="https://commons.apache.org/proper/commons-csv/apidocs/"/>
+            <link href="https://static.javadoc.io/com.fasterxml.jackson.core/jackson-databind/2.9.8/"/>
             <link href="http://logging.apache.org/log4j/1.2/apidocs/"/>
             <link href="http://download.java.net/media/java3d/javadoc/1.3.2/"/>
-            <link href="http://www.openlcb.org/trunk/prototypes/java/doc/"/>
+            <link href="https://static.javadoc.io/org.openlcb/openlcb/0.7.23/"/>
             <link href="https://commons.apache.org/proper/commons-lang/javadocs/api-release"/>
-            <link href="https://javadoc.io/doc/com.tngtech.archunit/archunit/0.11.0"/>
+            <!-- marking this one offline as it doesn't currently serve the 'package-list' document -->
             <link offline="true" href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/" packagelistLoc="lib/joal-2.3.1-packagelist"/>
-            <!-- it might be possible to set the user agent to access the following, see https://stackoverflow.com/questions/33866209/linking-to-javadoc-io-using-javadoc-link-option -->
-            <link offline="true" href="https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE"  packagelistLoc="lib/purejavacomm-1.0.1-package-list" />
-            <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jinputvalidator/0.6.0" packagelistLoc="lib/jinputvalidator-0.6.0-package-list" />
-            <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jsplitbutton/1.3.1" packagelistLoc="lib/jsplitbutton-1.3.1-package-list" />
+            <link href="https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE/" packagelistLoc="lib/purejavacomm-1.0.1-package-list"/>
+            <link href="https://static.javadoc.io/com.alexandriasoftware.swing/jsplitbutton/1.3.1/" packagelistLoc="lib/jsplitbutton-1.3.1-package-list"/>
+            <!-- The following Javadocs were built with JDK 11+ and can't be directly linked -->
+            <link offline="true" href="https://static.javadoc.io/com.alexandriasoftware.swing/jinputvalidator/0.8.0/" packagelistLoc="lib/jinputvalidator-0.8.0-package-list"/>
+            <link offline="true" href="https://static.javadoc.io/com.tngtech.archunit/archunit/0.11.0/" packagelistLoc="lib/archunit-0.11.0-package-list"/>
         </javadoc>
     </target>
 
-  <!-- The structure of the following should closely follow the  -->
-  <!-- main 'javadoc' target directly above. The only difference -->
-  <!-- is the doclet clause referencing the UML generator, the   -->
-  <!-- use of the public option in the main task definition, and -->
-  <!-- the execution of "dot" at the bottom.                     -->
-  <!-- Requires Graphviz from http://www.graphviz.org            -->
+    <!-- The structure of the following should closely follow the  -->
+    <!-- main 'javadoc' target directly above. The only difference -->
+    <!-- is the doclet clause referencing the UML generator, the   -->
+    <!-- use of the public option in the main task definition, and -->
+    <!-- the execution of "dot" at the bottom.                     -->
+    <!-- Requires Graphviz from http://www.graphviz.org            -->
     <target name="javadoc-uml" depends="init, jjdoc, compile-generated-source, plantuml" description="create Javadocs with UML">
         <javadoc packagenames="jmri.*, apps.*"
-           maxmemory="512m"
-           overview="${source}/jmri/overview.html"
-           destdir="${doctarget}"
-           additionalparam="-breakiterator"
-           author="true"
-           version="false"
-           public="yes"
-           use="true"
-           windowtitle="JMRI API">
+                 maxmemory="512m"
+                 overview="${source}/jmri/overview.html"
+                 destdir="${doctarget}"
+                 additionalparam="-breakiterator"
+                 author="true"
+                 version="false"
+                 public="yes"
+                 use="true"
+                 failonerror="true"
+                 source="8"
+                 windowtitle="JMRI API">
 
             <packageset dir="${source}" defaultexcludes="yes">
                 <include name="jmri/**"/>
@@ -2001,17 +2000,18 @@
             <arg value="1650"/><!-- change from default 100 warnings; keep synced with pom.xml, other javadoc targets -->
             <arg value="-quiet"/>
             <arg value="-splitindex"/>
-            
+            <arg value="-J-Dhttp.agent=javadoc"/>
+
             <!-- disable output of custom @navassoc tag - used for UML image generation -->
             <tag name="navassoc" enabled="false"/>
 
             <doclet name="org.umlgraph.doclet.UmlGraphDoc"
-                                  path="${libdir}/UmlGraph-5.7.jar">
+                    path="${libdir}/UmlGraph-5.7.jar">
                 <param name="-attributes"/>
                 <param name="-operations"/>
                 <param name="-qualify"/>
                 <param name="-types"/>
-                                <!-- <param name="-visibility"/> not used, as only showing public visibility -->
+                <!-- <param name="-visibility"/> not used, as only showing public visibility -->
                 <param name="-collapsible"/>  <!-- hide images at first on web pages -->
                 <param name="-inferdepvis" value="public"/> <!-- only show public -->
             </doclet>
@@ -2021,9 +2021,9 @@
             <group title="Implementations" packages="jmri.implementation:jmri.implementation.*:jmri.managers:jmri.managers.*:jmri.progdebugger:jmri.layout"/>
             <group title="Utilities" packages="jmri.util:jmri.util.*"/>
             <group title="XML persistance" packages="jmri.configurexml:jmri.configurexml.*:apps.configurexml:apps.configurexml.*"/>
-            <group title="Web Services" packages="jmri.web:jmri.web.*"/>
+            <group title="Web Services" packages="jmri.web:jmri.web.*:jmri.server:jmri.server.*"/>
             <group title="Interface Server Support" packages="jmri.jmris:jmri.jmris.*"/>
-      <!-- Layout Connections last because so large -->
+            <!-- Layout Connections last because so large -->
             <group title="Layout Connections" packages="jmri.jmrix:jmri.jmrix.*"/>
 
             <classpath refid="compile.class.path"/>
@@ -2032,26 +2032,29 @@
             <bottom><![CDATA[<i>Copyright &copy; ${jmri.copyright.year} JMRI Community.
                     <br>JMRI&reg;, DecoderPro&reg;, PanelPro, SignalPro, SoundPro, DispatcherPro, TrainPro and associated logos are our trademarks.</i>
                        <br><a href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
-                    <br>Site hosted by:<br><!-- SSI require .shtml suffix, so this file can't include the following as Icon via SSI -->
-                        <A href="http://www.tagadab.com"> 
-                        <IMG src="https://www.tagadab.com/sites/default/files/logo-tagadab-nostrap.png" height="28" width="103" border="0" alt="Tagadab Logo"> </A> 
                 ]]>
             </bottom>
             <link href="https://docs.oracle.com/javase/8/docs/api/"/>
             <link href="http://java.sun.com/products/javacomm/reference/api/"/>
             <link href="http://www.jdom.org/docs/apidocs/"/>
-            <link href="http://javacsv.sourceforge.net/"/>
-            <link href="http://fasterxml.github.io/jackson-databind/javadoc/2.0.6"/>
+            <link href="https://commons.apache.org/proper/commons-csv/apidocs/"/>
+            <!-- marking this offline as linking to JavaDoc hosted on javadoc.io seems to break the build -->
+            <!-- due to UmlGraph doclet attempting to interpret the injected Google Tag Manager script on javadoc.io -->
+            <link offline="true" href="https://static.javadoc.io/com.fasterxml.jackson.core/jackson-databind/2.9.8/" packagelistLoc="lib/jackson-databind-2.9.8-package-list"/>
             <link href="http://logging.apache.org/log4j/1.2/apidocs/"/>
             <link href="http://download.java.net/media/java3d/javadoc/1.3.2/"/>
-            <link href="http://www.openlcb.org/trunk/prototypes/java/doc/"/>
+            <!-- marking this offline as linking to JavaDoc hosted on javadoc.io seems to break the build -->
+            <link offline="true" href="https://static.javadoc.io/org.openlcb/openlcb/0.7.23/" packagelistLoc="lib/openlcb-0.7.23-package-list" />
             <link href="https://commons.apache.org/proper/commons-lang/javadocs/api-release"/>
-            <link href="https://javadoc.io/doc/com.tngtech.archunit/archunit/0.11.0"/>
+            <!-- marking this one offline as it doesn't currently serve the 'package-list' document -->
             <link offline="true" href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/" packagelistLoc="lib/joal-2.3.1-packagelist"/>
-            <!-- it might be possible to set the user agent to access the following, see https://stackoverflow.com/questions/33866209/linking-to-javadoc-io-using-javadoc-link-option -->
-            <link offline="true" href="https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE"  packagelistLoc="lib/purejavacomm-1.0.1-package-list" />
-            <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jinputvalidator/0.6.0" packagelistLoc="lib/jinputvalidator-0.6.0-package-list" />
-            <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jsplitbutton/1.3.1" packagelistLoc="lib/jsplitbutton-1.3.1-package-list" />
+            <!-- marking this offline as linking to JavaDoc hosted on javadoc.io seems to break the build -->
+            <link offline="true" href="https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE/" packagelistLoc="lib/purejavacomm-1.0.1-package-list"/>
+            <!-- marking this offline as linking to JavaDoc hosted on javadoc.io seems to break the build -->
+            <link offline="true" href="https://static.javadoc.io/com.alexandriasoftware.swing/jsplitbutton/1.3.1/" packagelistLoc="lib/jsplitbutton-1.3.1-package-list"/>
+            <!-- The following Javadocs were built with JDK 11+ and can't be directly linked -->
+            <link offline="true" href="https://static.javadoc.io/com.alexandriasoftware.swing/jinputvalidator/0.8.0/" packagelistLoc="lib/jinputvalidator-0.8.0-package-list"/>
+            <link offline="true" href="https://static.javadoc.io/com.tngtech.archunit/archunit/0.11.0/" packagelistLoc="lib/archunit-0.11.0-package-list"/>
         </javadoc>
         <apply executable="dot" dest="${doctarget}" parallel="false">
             <arg value="-Tpng"/>
@@ -2094,15 +2097,15 @@
     </target>
 
     <target name="scanhelp"
-            description="scan English-language help for HTML errors">
+            description="scan English + French language help for HTML errors">
         <exec executable="./scripts/tidy-check.sh"
               osFamily="unix"
               failonerror="true">
             <arg value="help/en/*/*"/>
+            <arg value="help/fr/*/*"/>
         </exec>
-            
     </target>
-    
+
     <target name="remakedecoderindex"
             depends="debug"
             description="rebuild the decoder index into the preferences directory">
@@ -2208,10 +2211,21 @@
         </spotbugs>
     </target>
 
+    <!-- Checkstyle -->
+
+    <target name="checkstyle:check" depends="tests" description="Run Checkstyle checks">
+        <taskdef resource="com/puppycrawl/tools/checkstyle/ant/checkstyle-ant-task.properties"
+            classpath="${libdir}/checkstyle-8.24-all.jar" />
+        <checkstyle config="checkstyle.xml">
+            <fileset dir="${source}" />
+            <fileset dir="${test}" />
+            <fileset dir="${acceptancetest}" />
+        </checkstyle>
+    </target>
+
     <!--  Start for checker framework -->
 
     <property environment="env"/>
-    <property name="checkerframework" value="${libdir}/checker-framework/" />
     <!-- On Mac/Linux, use the javac shell script; on Windows, use javac.bat -->
     <condition property="cfJavac" value="javac.bat" else="javac">
         <os family="windows" />
@@ -2269,14 +2283,6 @@
             description="create all OS-specific release packages"
             depends="package-windows, package-macosx, package-linux">
     </target>
-
-    <property name="dist.release" value="${dist}/release"/>
-    <property name="dist.windows" value="${dist}/Windows"/>
-    <property name="dist.macosx"  value="${dist}/MacOSX"/>
-    <property name="dist.linux"   value="${dist}/Linux"/>
-
-    <property name="dist.scripts" value="${dist}/scripts"/>
-    <property name="dist.apps"    value="${dist}/apps"/>
 
     <target name="launchjmri.exe"
             description="recreate the LaunchJMRI.exe used by the Windows release package">
@@ -2405,7 +2411,10 @@
         <exec executable="wget"
               osFamily="unix"
               failonerror="true">
-            <arg value="-t 1200"/>
+            <arg value="--tries=1"/> <!-- don't retry, just fail, because you're firing off a process -->
+            <arg value="--dns-timeout=10"/>     <!-- default is wait forever -->
+            <arg value="--connect-timeout=10"/> <!-- default is wait forever -->
+            <arg value="--read-timeout=3600"/>  <!-- wait a long time for the process to run and data return -->
             <arg value="-O signing-wget.log"/>
             <arg value="http://${env.signinghost}/selfsign.php?get=${dist.release}/JMRI.${release.version-encoded-string}%2bunsigned.dmg&amp;rel=${release.version-encoded-string}&amp;put=${dist.release}/JMRI.${release.version-encoded-string}.dmg"/>
         </exec>
@@ -2549,12 +2558,6 @@
         <create-macosx-application-directory script.name="InstallTest"   script.class="apps.InstallTest.InstallTest"/>
     </target>
 
-
-    <!-- set this next to a standard remote, e.g. "origin", if you don't want to
-    go directly back to the main repo; direct JMRI/JMRI require write access -->
-    <property name="jmri.repository.url" value="https://github.com/JMRI/JMRI.git"/>
-
-    <property name="branch-name" value="release-${release}" />
 
     <!-- several steps are involved in creating a new test release
     branch from the head of the master branch.  This target intends to manage as

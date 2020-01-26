@@ -50,6 +50,7 @@ public class XBeeAddNodeFrameTest extends jmri.util.JmriJFrameTestBase {
            JUnitUtil.dispose(parent);
         }
         parent = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         super.tearDown();
     }
 }

@@ -100,10 +100,6 @@
       <systemName>IMRATEFACTOR</systemName>
     </memory>
   </memories>
-  <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml" />
-  <signalgroups class="jmri.managers.configurexml.DefaultSignalGroupManagerXml" />
-  <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml" />
-  <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml" />
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
   </signalmastlogics>
@@ -194,29 +190,17 @@
       <conditionalAction option="2" type="11" systemName="IL502" data="2" delay="0" string="" />
     </conditional>
   </conditionals>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Fri Nov 23 18:09:00 PST 2018" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Sat Nov 24 03:09:00 CET 2018" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <filehistory>
     <operation>
-      <type>Load OK</type>
-      <date>Sat Sep 07 07:14:10 PDT 2019</date>
-      <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/implementation/configurexml/load/ActiveLogixTestDefinitions.xml</filename>
-      <filehistory>
-        <operation>
-          <type>app</type>
-          <date>Fri Nov 23 15:27:07 PST 2018</date>
-          <filename>JMRI program</filename>
-        </operation>
-        <operation>
-          <type>Store</type>
-          <date>Fri Nov 23 20:29:00 PST 2018</date>
-          <filename />
-        </operation>
-      </filehistory>
+      <type>app</type>
+      <date>Mon Sep 09 20:25:45 CEST 2019</date>
+      <filename>JMRI program</filename>
     </operation>
     <operation>
       <type>Load OK</type>
-      <date>Sat Sep 07 07:14:10 PDT 2019</date>
-      <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/implementation/configurexml/load/ActiveLogixTestDefinitions.xml</filename>
+      <date>Mon Sep 09 20:28:19 CEST 2019</date>
+      <filename>/Users/egbertbroerse/Documents/Egbert/Computers/IntelliJ%20local/JMRI/java/test/jmri/implementation/configurexml/load/ActiveLogixTestDefinitions.xml</filename>
       <filehistory>
         <operation>
           <type>app</type>
@@ -232,9 +216,9 @@
     </operation>
     <operation>
       <type>Store</type>
-      <date>Sat Sep 07 07:14:10 PDT 2019</date>
+      <date>Mon Sep 09 20:28:30 CEST 2019</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.17.4ish+jake+20190907T0616Z+R38a2975465 on Sat Sep 07 07:14:10 PDT 2019-->
+  <!--Written by JMRI version 4.17.4ish+egbertbroerse+20190909T1825Z+R25fa767d4c on Mon Sep 09 20:28:30 CEST 2019-->
 </layout-config>

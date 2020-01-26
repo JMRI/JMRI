@@ -66,6 +66,8 @@ public abstract class AbstractAudioFactory implements AudioFactory {
         return true;
     }
 
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+            justification = "OK to write to static variables to record static library status")
     @Override
     public void cleanup() {
 
@@ -88,6 +90,7 @@ public abstract class AbstractAudioFactory implements AudioFactory {
                 AbstractAudioThread.snooze(100);
             }
         }
+        initialised = false;
     }
 
     @Override

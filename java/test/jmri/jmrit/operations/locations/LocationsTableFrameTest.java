@@ -1,14 +1,16 @@
 package jmri.jmrit.operations.locations;
 
 import java.awt.GraphicsEnvironment;
-import jmri.jmrit.operations.OperationsTestCase;
-import jmri.util.JUnitOperationsUtil;
-import jmri.util.JUnitUtil;
-import jmri.util.JmriJFrame;
+
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Test;
 import org.netbeans.jemmy.operators.JFrameOperator;
+
+import jmri.jmrit.operations.OperationsTestCase;
+import jmri.util.JUnitOperationsUtil;
+import jmri.util.JUnitUtil;
+import jmri.util.JmriJFrame;
 
 /**
  * Tests for the Operations Locations GUI class
@@ -26,7 +28,8 @@ public class LocationsTableFrameTest extends OperationsTestCase {
         Assert.assertNotNull("exists", f);
         // close windows
         JFrameOperator jfof = new JFrameOperator(f);
-        jfof.close();
+        jfof.dispose();
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     @Test
@@ -54,7 +57,8 @@ public class LocationsTableFrameTest extends OperationsTestCase {
 
         // close windows
         JFrameOperator jfof = new JFrameOperator(f);
-        jfof.close();
+        jfof.dispose();
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     @Test
@@ -76,12 +80,12 @@ public class LocationsTableFrameTest extends OperationsTestCase {
 
         // close windows
         JFrameOperator jfolef = new JFrameOperator(lef);
-        jfolef.close();
+        jfolef.dispose();
         JFrameOperator jfof = new JFrameOperator(f);
-        jfof.close();
+        jfof.dispose();
 
         Assert.assertNull(JmriJFrame.getFrame(Bundle.getMessage("TitleLocationEdit")));
-
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     @Test
@@ -107,10 +111,11 @@ public class LocationsTableFrameTest extends OperationsTestCase {
 
         // close windows
         JFrameOperator jfolef = new JFrameOperator(lef);
-        jfolef.close();
+        jfolef.dispose();
         JFrameOperator jfof = new JFrameOperator(f);
-        jfof.close();
+        jfof.dispose();
 
         Assert.assertNull(JmriJFrame.getFrame(Bundle.getMessage("AddLocation")));
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 }

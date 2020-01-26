@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * An implementation of DccThrottle with code specific to an XpressNet
  * connection.
  *
- * @author Paul Bender (C) 2002-2010
+ * @author Paul Bender (C) 2002-2019
  */
 public class XNetThrottle extends AbstractThrottle implements XNetListener {
 
@@ -616,7 +616,6 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         }
     }
 
-
     /**
      * Get Speed and Direction information.
      */
@@ -716,83 +715,51 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         log.trace("Parsing Function F0-F12 status, function bytes: {} and {}",
                   b3,b4);
         /* data byte 3 is the status of F0 F4 F3 F2 F1 */
-        if ((b3 & 0x10) == 0x10 && !getF0()) {
-           notifyFunctionChanged(Throttle.F0,true);
-        } else if ((b3 & 0x10) == 0x00 && getF0()) {
-            notifyFunctionChanged(Throttle.F0,false);
-        }
-
-        if ((b3 & 0x01) == 0x01 && !getF1()) {
-            notifyFunctionChanged(Throttle.F1,true);
-        } else if ((b3 & 0x01) == 0x01 && getF1()) {
-            notifyFunctionChanged(Throttle.F1,false);
-        }
-
-        if ((b3 & 0x02) == 0x02 && !getF2()) {
-            notifyFunctionChanged(Throttle.F2,true);
-        } else if ((b3 & 0x02) == 0x00 && getF2()) {
-            notifyFunctionChanged(Throttle.F2,false);
-        }
-
-        if ((b3 & 0x04) == 0x04 && !getF3()) {
-            notifyFunctionChanged(Throttle.F3,true);
-        } else if ((b3 & 0x04) == 0x00 && getF3()) {
-            notifyFunctionChanged(Throttle.F3,false);
-        }
-
-        if ((b3 & 0x08) == 0x08 && !getF4()) {
-            notifyFunctionChanged(Throttle.F4,true);
-        } else if ((b3 & 0x08) == 0x00 && getF4()) {
-            notifyFunctionChanged(Throttle.F4,false);
-        }
-
+        checkForFunctionValueChange(Throttle.F0,b3,0x10,getF0());
+        checkForFunctionValueChange(Throttle.F1,b3,0x01,getF1());
+        checkForFunctionValueChange(Throttle.F2,b3,0x02,getF2());
+        checkForFunctionValueChange(Throttle.F3,b3,0x04,getF3());
+        checkForFunctionValueChange(Throttle.F4,b3,0x08,getF4());
         /* data byte 4 is the status of F12 F11 F10 F9 F8 F7 F6 F5 */
-        if ((b4 & 0x01) == 0x01 && !getF5()) {
-            notifyFunctionChanged(Throttle.F5,true);
-        } else if ((b4 & 0x01) == 0x00 && getF5()) {
-            notifyFunctionChanged(Throttle.F5,false);
-        }
+        checkForFunctionValueChange(Throttle.F5,b4,0x01,getF5());
+        checkForFunctionValueChange(Throttle.F6,b4,0x02,getF6());
+        checkForFunctionValueChange(Throttle.F7,b4,0x04,getF7());
+        checkForFunctionValueChange(Throttle.F8,b4,0x08,getF8());
+        checkForFunctionValueChange(Throttle.F9,b4,0x10,getF9());
+        checkForFunctionValueChange(Throttle.F10,b4,0x20,getF10());
+        checkForFunctionValueChange(Throttle.F11,b4,0x40,getF11());
+        checkForFunctionValueChange(Throttle.F12,b4,0x80,getF12());
+    }
 
-        if ((b4 & 0x02) == 0x02 && !getF6()) {
-            notifyFunctionChanged(Throttle.F6,true);
-        } else if ((b4 & 0x02) == 0x00 && getF6()) {
-            notifyFunctionChanged(Throttle.F6,false);
-        }
+    protected void parseFunctionHighInformation(int b3, int b4) {
+        log.trace("Parsing Function F13-F28 status, function bytes: {} and {}",
+                b3,b4);
+        /* data byte 3 is the status of F20 F19 F18 F17 F16 F15 F14 F13 */
+        checkForFunctionValueChange(Throttle.F13,b3,0x01,getF13());
+        checkForFunctionValueChange(Throttle.F14,b3,0x02,getF14());
+        checkForFunctionValueChange(Throttle.F15,b3,0x04,getF15());
+        checkForFunctionValueChange(Throttle.F16,b3,0x08,getF16());
+        checkForFunctionValueChange(Throttle.F17,b3,0x10,getF17());
+        checkForFunctionValueChange(Throttle.F18,b3,0x20,getF18());
+        checkForFunctionValueChange(Throttle.F19,b3,0x40,getF19());
+        checkForFunctionValueChange(Throttle.F20,b3,0x80,getF20());
+        /* data byte 4 is the status of F28 F27 F26 F25 F24 F23 F22 F21 */
+        checkForFunctionValueChange(Throttle.F21,b4,0x01,getF21());
+        checkForFunctionValueChange(Throttle.F22,b4,0x02,getF22());
+        checkForFunctionValueChange(Throttle.F23,b4,0x04,getF23());
+        checkForFunctionValueChange(Throttle.F24,b4,0x08,getF24());
+        checkForFunctionValueChange(Throttle.F25,b4,0x10,getF25());
+        checkForFunctionValueChange(Throttle.F26,b4,0x20,getF26());
+        checkForFunctionValueChange(Throttle.F27,b4,0x40,getF27());
+        checkForFunctionValueChange(Throttle.F28,b4,0x80,getF28());
+    }
 
-        if ((b4 & 0x04) == 0x04 && !getF7()) {
-            notifyFunctionChanged(Throttle.F7,true);
-        } else if ((b4 & 0x04) == 0x00 && getF7()) {
-            notifyFunctionChanged(Throttle.F7,false);
-        }
 
-        if ((b4 & 0x08) == 0x08 && !getF8()) {
-            notifyFunctionChanged(Throttle.F8,true);
-        } else if ((b4 & 0x08) == 0x00 && getF8()) {
-            notifyFunctionChanged(Throttle.F8,false);
-        }
-
-        if ((b4 & 0x10) == 0x10 && !getF9()) {
-            notifyFunctionChanged(Throttle.F9,true);
-        } else if ((b4 & 0x10) == 0x00 && getF9()) {
-            notifyFunctionChanged(Throttle.F9,false);
-        }
-
-        if ((b4 & 0x20) == 0x20 && !getF10()) {
-            notifyFunctionChanged(Throttle.F10,true);
-        } else if ((b4 & 0x20) == 0x00 && getF10()) {
-            notifyFunctionChanged(Throttle.F10,false);
-        }
-
-        if ((b4 & 0x40) == 0x40 && !getF11()) {
-            notifyFunctionChanged(Throttle.F11,true);
-        } else if ((b4 & 0x40) == 0x00 && getF11()) {
-            notifyFunctionChanged(Throttle.F11,false);
-        }
-
-        if ((b4 & 0x80) == 0x80 && !getF12()) {
-            notifyFunctionChanged(Throttle.F12,true);
-        } else if ((b4 & 0x80) == 0x00 && getF12()) {
-            notifyFunctionChanged(Throttle.F12,false);
+    protected void checkForFunctionValueChange(String Function,int bytevalue,int bitmask,boolean currentValue){
+        if ((bytevalue & bitmask) == bitmask && !currentValue) {
+            notifyFunctionChanged(Function,true);
+        } else if ((bytevalue & bitmask) == 0x00 && currentValue) {
+            notifyFunctionChanged(Function,false);
         }
     }
 
@@ -948,293 +915,53 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         }
     }
 
-
-    protected void parseFunctionHighInformation(int b3, int b4) {
-        log.trace("Parsing Function F13-F28 status, function bytes: {} and {}",
-                  b3,b4);
-        /* data byte 3 is the status of F20 F19 F18 F17 F16 F15 F14 F13 */
-        if ((b3 & 0x01) == 0x01 && !getF13()) {
-            notifyFunctionChanged(Throttle.F13,true);
-        } else if ((b3 & 0x01) == 0x00 && getF13()) {
-            notifyFunctionChanged(Throttle.F13,false);
-        }
-
-        if ((b3 & 0x02) == 0x02 && !getF14()) {
-            notifyFunctionChanged(Throttle.F14,true);
-        } else if ((b3 & 0x02) == 0x00 && getF14()) {
-            notifyFunctionChanged(Throttle.F14,false);
-        }
-
-        if ((b3 & 0x04) == 0x04 && !getF15()) {
-            notifyFunctionChanged(Throttle.F15,true);
-        } else if ((b3 & 0x04) == 0x00 && getF15()) {
-            notifyFunctionChanged(Throttle.F15,false);
-        }
-
-        if ((b3 & 0x08) == 0x08 && !getF16()) {
-            notifyFunctionChanged(Throttle.F16,true);
-        } else if ((b3 & 0x08) == 0x00 && getF16()) {
-            notifyFunctionChanged(Throttle.F16,false);
-        }
-
-        if ((b3 & 0x10) == 0x10 && !getF17()) {
-            notifyFunctionChanged(Throttle.F17,true);
-        } else if ((b3 & 0x10) == 0x00 && getF17()) {
-            notifyFunctionChanged(Throttle.F17,false);
-        }
-
-        if ((b3 & 0x20) == 0x20 && !getF18()) {
-            notifyFunctionChanged(Throttle.F18,true);
-        } else if ((b3 & 0x20) == 0x00 && getF18()) {
-            notifyFunctionChanged(Throttle.F18,false);
-        }
-
-        if ((b3 & 0x40) == 0x40 && !getF19()) {
-            notifyFunctionChanged(Throttle.F19,true);
-        } else if ((b3 & 0x40) == 0x00 && getF19()) {
-            notifyFunctionChanged(Throttle.F19,false);
-        }
-
-        if ((b3 & 0x80) == 0x80 && !getF20()) {
-            notifyFunctionChanged(Throttle.F20,true);
-        } else if ((b3 & 0x80) == 0x00 && getF20()) {
-            notifyFunctionChanged(Throttle.F20,false);
-        }
-        /* data byte 4 is the status of F28 F27 F26 F25 F24 F23 F22 F21 */
-
-        if ((b4 & 0x01) == 0x01 && !getF21()) {
-            notifyFunctionChanged(Throttle.F21,true);
-        } else if ((b4 & 0x01) == 0x00 && getF21()) {
-            notifyFunctionChanged(Throttle.F21,false);
-        }
-
-        if ((b4 & 0x02) == 0x02 && !getF22()) {
-            notifyFunctionChanged(Throttle.F22,true);
-        } else if ((b4 & 0x02) == 0x00 && getF22()) {
-            notifyFunctionChanged(Throttle.F22,false);
-        }
-
-        if ((b4 & 0x04) == 0x04 && !getF23()) {
-            notifyFunctionChanged(Throttle.F23,true);
-        } else if ((b4 & 0x04) == 0x00 && getF23()) {
-            notifyFunctionChanged(Throttle.F23,false);
-        }
-
-        if ((b4 & 0x08) == 0x08 && !getF24()) {
-            notifyFunctionChanged(Throttle.F24,true);
-        } else if ((b4 & 0x08) == 0x00 && getF24()) {
-            notifyFunctionChanged(Throttle.F24,false);
-        }
-
-        if ((b4 & 0x10) == 0x10 && !getF25()) {
-            notifyFunctionChanged(Throttle.F25,true);
-        } else if ((b4 & 0x10) == 0x00 && getF25()) {
-            notifyFunctionChanged(Throttle.F25,false);
-        }
-
-        if ((b4 & 0x20) == 0x20 && !getF26()) {
-            notifyFunctionChanged(Throttle.F26,true);
-        } else if ((b4 & 0x20) == 0x00 && getF26()) {
-            notifyFunctionChanged(Throttle.F26,false);
-        }
-
-        if ((b4 & 0x40) == 0x40 && !getF27()) {
-            notifyFunctionChanged(Throttle.F27,true);
-        } else if ((b4 & 0x40) == 0x00 && getF27()) {
-            notifyFunctionChanged(Throttle.F27,false);
-        }
-
-        if ((b4 & 0x80) == 0x80 && !getF28()) {
-            notifyFunctionChanged(Throttle.F28,true);
-        } else if ((b4 & 0x80) == 0x00 && getF28()) {
-            notifyFunctionChanged(Throttle.F28,false);
-        }
-    }
-
     protected void parseFunctionMomentaryInformation(int b3, int b4) {
         log.trace("Parsing Function Momentary status, function bytes: {} and {}",
                   b3,b4);
         /* data byte 3 is the momentary status of F0 F4 F3 F2 F1 */
-        if ((b3 & 0x10) == 0x10 && !this.f0Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F0Momentary,true);
-        } else if ((b3 & 0x10) == 0x00 && this.f0Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F0Momentary,false);
-        }
-
-        if ((b3 & 0x01) == 0x01 && !this.f1Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F1Momentary,true);
-        } else if ((b3 & 0x01) == 0x00 && this.f1Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F1Momentary,false);
-        }
-
-        if ((b3 & 0x02) == 0x02 && !this.f2Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F2Momentary,true);
-        } else if ((b3 & 0x02) == 0x00 && this.f2Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F2Momentary,false);
-        }
-
-        if ((b3 & 0x04) == 0x04 && !this.f3Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F3Momentary,true);
-        } else if ((b3 & 0x04) == 0x00 && this.f3Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F3Momentary,false);
-        }
-
-        if ((b3 & 0x08) == 0x08 && !this.f4Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F4Momentary,true);
-        } else if ((b3 & 0x08) == 0x00 && this.f4Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F4Momentary,false);
-        }
-
+        checkForFunctionValueChange(Throttle.F0Momentary,b3,0x10,getF0Momentary());
+        checkForFunctionValueChange(Throttle.F1Momentary,b3,0x01,getF1Momentary());
+        checkForFunctionValueChange(Throttle.F2Momentary,b3,0x02,getF2Momentary());
+        checkForFunctionValueChange(Throttle.F3Momentary,b3,0x04,getF3Momentary());
+        checkForFunctionValueChange(Throttle.F4Momentary,b3,0x08,getF4Momentary());
         /* data byte 4 is the momentary status of F12 F11 F10 F9 F8 F7 F6 F5 */
-        if ((b4 & 0x01) == 0x01 && !this.f5Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F5Momentary,true);
-        } else if ((b4 & 0x01) == 0x00 && this.f5Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F5Momentary,false);
-        }
-
-        if ((b4 & 0x02) == 0x02 && !this.f6Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F6Momentary,true);
-        } else if ((b4 & 0x02) == 0x00 && this.f6Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F6Momentary,false);
-        }
-
-        if ((b4 & 0x04) == 0x04 && !this.f7Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F7Momentary,true);
-        } else if ((b4 & 0x04) == 0x00 && this.f7Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F7Momentary,false);
-        }
-
-        if ((b4 & 0x08) == 0x08 && !this.f8Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F8Momentary,true);
-        } else if ((b4 & 0x08) == 0x00 && this.f8Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F8Momentary,false);
-        }
-
-        if ((b4 & 0x10) == 0x10 && !this.f9Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F9Momentary,true);
-        } else if ((b4 & 0x10) == 0x00 && this.f9Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F9Momentary,false);
-        }
-
-        if ((b4 & 0x20) == 0x20 && !this.f10Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F10Momentary,true);
-        } else if ((b4 & 0x20) == 0x00 && this.f10Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F10Momentary,false);
-        }
-
-        if ((b4 & 0x40) == 0x40 && !this.f11Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F11Momentary,true);
-        } else if ((b4 & 0x40) == 0x00 && this.f11Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F11Momentary,false);
-        }
-
-        if ((b4 & 0x80) == 0x80 && !this.f12Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F12Momentary,true);
-        } else if ((b4 & 0x80) == 0x00 && this.f12Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F12Momentary,false);
-        }
+        checkForFunctionValueChange(Throttle.F5Momentary,b4,0x01,getF5Momentary());
+        checkForFunctionValueChange(Throttle.F6Momentary,b4,0x02,getF6Momentary());
+        checkForFunctionValueChange(Throttle.F7Momentary,b4,0x04,getF7Momentary());
+        checkForFunctionValueChange(Throttle.F8Momentary,b4,0x08,getF8Momentary());
+        checkForFunctionValueChange(Throttle.F9Momentary,b4,0x10,getF9Momentary());
+        checkForFunctionValueChange(Throttle.F10Momentary,b4,0x20,getF10Momentary());
+        checkForFunctionValueChange(Throttle.F11Momentary,b4,0x40,getF11Momentary());
+        checkForFunctionValueChange(Throttle.F12Momentary,b4,0x80,getF12Momentary());
     }
 
     protected void parseFunctionHighMomentaryInformation(int b3, int b4) {
         log.trace("Parsing Function F13-F28 Momentary status, function bytes: {} and {}",
                   b3,b4);
         /* data byte 3 is the momentary status of F20 F19 F17 F16 F15 F14 F13 */
-
-        if ((b3 & 0x01) == 0x01 && !this.f13Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F13Momentary,true);
-        } else if ((b3 & 0x01) == 0x00 && this.f13Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F13Momentary,false);
-        }
-
-        if ((b3 & 0x02) == 0x02 && !this.f14Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F14Momentary,true);
-        } else if ((b3 & 0x02) == 0x00 && this.f14Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F14Momentary,false);
-        }
-
-        if ((b3 & 0x04) == 0x04 && !this.f15Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F15Momentary,true);
-        } else if ((b3 & 0x04) == 0x00 && this.f15Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F15Momentary,false);
-        }
-
-        if ((b3 & 0x08) == 0x08 && !this.f16Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F16Momentary,true);
-        } else if ((b3 & 0x08) == 0x00 && this.f16Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F16Momentary,false);
-        }
-
-        if ((b3 & 0x10) == 0x10 && !this.f17Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F17Momentary,true);
-        } else if ((b3 & 0x10) == 0x00 && this.f17Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F17Momentary,false);
-        }
-
-        if ((b3 & 0x20) == 0x20 && !this.f18Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F18Momentary,true);
-        } else if ((b3 & 0x20) == 0x00 && this.f18Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F18Momentary,false);
-        }
-
-        if ((b3 & 0x40) == 0x40 && !this.f19Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F19Momentary,true);
-        } else if ((b3 & 0x40) == 0x00 && this.f19Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F19Momentary,false);
-        }
-
-        if ((b3 & 0x80) == 0x80 && !this.f20Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F20Momentary,true);
-        } else if ((b3 & 0x80) == 0x00 && this.f20Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F20Momentary,false);
-        }
-
+        checkForFunctionValueChange(Throttle.F14Momentary,b3,0x02,getF14Momentary());
+        checkForFunctionValueChange(Throttle.F15Momentary,b3,0x04,getF15Momentary());
+        checkForFunctionValueChange(Throttle.F16Momentary,b3,0x08,getF16Momentary());
+        checkForFunctionValueChange(Throttle.F17Momentary,b3,0x10,getF17Momentary());
+        checkForFunctionValueChange(Throttle.F18Momentary,b3,0x20,getF18Momentary());
+        checkForFunctionValueChange(Throttle.F19Momentary,b3,0x40,getF19Momentary());
+        checkForFunctionValueChange(Throttle.F20Momentary,b3,0x80,getF20Momentary());
         /* data byte 4 is the momentary status of F28 F27 F26 F25 F24 F23 F22 F21 */
-        if ((b4 & 0x01) == 0x01 && !this.f21Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F21Momentary,true);
-        } else if ((b4 & 0x01) == 0x00 && this.f21Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F21Momentary,false);
-        }
+        checkForFunctionValueChange(Throttle.F21Momentary,b4,0x01,getF21Momentary());
+        checkForFunctionValueChange(Throttle.F22Momentary,b4,0x02,getF22Momentary());
+        checkForFunctionValueChange(Throttle.F23Momentary,b4,0x04,getF23Momentary());
+        checkForFunctionValueChange(Throttle.F24Momentary,b4,0x08,getF24Momentary());
+        checkForFunctionValueChange(Throttle.F25Momentary,b4,0x10,getF25Momentary());
+        checkForFunctionValueChange(Throttle.F26Momentary,b4,0x20,getF26Momentary());
+        checkForFunctionValueChange(Throttle.F27Momentary,b4,0x40,getF27Momentary());
+        checkForFunctionValueChange(Throttle.F28Momentary,b4,0x80,getF28Momentary());
+    }
 
-        if ((b4 & 0x02) == 0x02 && !this.f22Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F22Momentary,true);
-        } else if ((b4 & 0x02) == 0x00 && this.f22Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F22Momentary,false);
-        }
-
-        if ((b4 & 0x04) == 0x04 && !this.f23Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F23Momentary,true);
-        } else if ((b4 & 0x04) == 0x00 && this.f23Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F23Momentary,false);
-        }
-
-        if ((b4 & 0x08) == 0x08 && !this.f24Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F24Momentary,true);
-        } else if ((b4 & 0x08) == 0x00 && this.f24Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F24Momentary,false);
-        }
-
-        if ((b4 & 0x10) == 0x10 && !this.f25Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F25Momentary,true);
-        } else if ((b4 & 0x10) == 0x00 && this.f25Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F25Momentary,false);
-        }
-
-        if ((b4 & 0x20) == 0x20 && !this.f26Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F26Momentary,true);
-        } else if ((b4 & 0x20) == 0x00 && this.f26Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F26Momentary,false);
-        }
-
-        if ((b4 & 0x40) == 0x40 && !this.f27Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F27Momentary,true);
-        } else if ((b4 & 0x40) == 0x00 && this.f27Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F27Momentary,false);
-        }
-
-        if ((b4 & 0x80) == 0x80 && !this.f28Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F28Momentary,true);
-        } else if ((b4 & 0x80) == 0x00 && this.f28Momentary) {
-            notifyFunctionMomentaryChanged(Throttle.F28Momentary,false);
+    protected void checkForFunctionMomentaryValueChange(String Function,int bytevalue,int bitmask,boolean currentValue){
+        if ((bytevalue & bitmask) == bitmask && !currentValue) {
+            notifyFunctionMomentaryChanged(Function,true);
+        } else if ((bytevalue & bitmask) == 0x00 && currentValue) {
+            notifyFunctionMomentaryChanged(Function,false);
         }
     }
 
@@ -1378,7 +1105,11 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     protected void stopStatusTimer() {
         log.debug("Status Timer Stopped");
         if (statusTask != null) {
-            statusTask.cancel();
+            try{
+               statusTask.cancel();
+            } catch(IllegalStateException ise){
+               log.debug("Timer already canceled");
+            }
             statusTask = null;
         }
     }

@@ -26,6 +26,7 @@ public abstract class EditFrame extends jmri.util.JmriJFrame {
     protected final OBlock _homeBlock;
     protected final CircuitBuilder _parent;
     protected boolean _canEdit = true;
+    protected boolean _suppressWarnings = false;
 
     static int STRUT_SIZE = 10;
     static Point _loc = new Point(-1, -1);

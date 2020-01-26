@@ -1,7 +1,6 @@
 package jmri.jmrix.jmriclient;
 
 import org.junit.*;
-import jmri.Turnout;
 import jmri.util.JUnitUtil;
 
 /**
@@ -56,6 +55,7 @@ public class JMRIClientTurnoutTest extends jmri.implementation.AbstractTurnoutTe
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
 
         jcins = null;

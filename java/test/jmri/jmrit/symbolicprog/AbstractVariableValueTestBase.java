@@ -11,8 +11,6 @@ import jmri.util.JUnitUtil;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Base for tests of classes inheriting from VariableValue abstract class
@@ -476,8 +474,6 @@ public abstract class AbstractVariableValueTestBase {
         return m;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractVariableValueTestBase.class);
-
     public void setUp() {
         JUnitUtil.setUp();
     }
@@ -485,5 +481,7 @@ public abstract class AbstractVariableValueTestBase {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
+
+    private final static  org.slf4j.Logger log =  org.slf4j.LoggerFactory.getLogger(AbstractVariableValueTestBase.class);
 
 }

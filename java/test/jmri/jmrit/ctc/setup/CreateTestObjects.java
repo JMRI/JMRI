@@ -164,6 +164,7 @@ public class CreateTestObjects {
         bb.setLimitSpeed2(limitspeed2);
         bb.setSensor1(sensor1);
         bb.setSensor2(sensor2);
+        bb.retain();
         bb.start();
     }
 
@@ -179,7 +180,7 @@ public class CreateTestObjects {
             log.debug("Copying from {} to {}", propsFile, CTCFiles.getFile(props));
             Files.copy(propsFile.toPath(), CTCFiles.getFile(props).toPath(), StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException ex) {
-            log.error("Copy CTC Poperties demo file failed", ex);  // NOI18N
+            log.error("Copy CTC Properties demo file failed", ex);  // NOI18N
         }
         try {
             log.debug("Copying from {} to {}", systemFile, CTCFiles.getFile(system));

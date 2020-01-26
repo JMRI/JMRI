@@ -34,7 +34,9 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
     }
 
     @Test
-    public void testIncomingFuntions() {
+    public void testIncomingFunctions() {
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+    
         CbusThrottleManager cbtm = (CbusThrottleManager) tm;
         Assert.assertNotNull("exists",cbtm);
         DccLocoAddress addr = new DccLocoAddress(1234,true);
@@ -47,7 +49,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
 
         CanReply r = new CanReply( new int[]{CbusConstants.CBUS_DFUN, 1, 0x00, 0x00 },0x12 );
         cbtm.reply(r);
-        JUnitAppender.assertErrorMessageStartsWith("Unrecognised function group");
+        
         r.setElement(2, 1);
         r.setElement(3, 0x1f);
         cbtm.reply(r);
@@ -136,10 +138,12 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         Assert.assertEquals("F27 off",false,cbtm.getThrottleInfo(addr,Throttle.F27));
         Assert.assertEquals("F28 off",false,cbtm.getThrottleInfo(addr,Throttle.F28));
         
+        JUnitAppender.assertErrorMessageStartsWith("Unrecognised function group");
+        
     }
     
     @Test
-    public void testIncomingFuntionsDecimal() {
+    public void testIncomingFunctionsDecimal() {
         CbusThrottleManager cbtmb = ( CbusThrottleManager) tm;
         Assert.assertNotNull("exists",cbtmb);
         DccLocoAddress addr = new DccLocoAddress(221,true);
@@ -149,24 +153,28 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         
         JUnitUtil.waitFor(()->{ return(cbtmb.getThrottleInfo(addr,"F0")!=null); }, "throttle not created");
         CanReply r = new CanReply( new int[]{CbusConstants.CBUS_DFNON, 1, 0 },0x12 );
-
+        r.setElement(2, 0xff);
+        cbtmb.reply(r);
+        
         for ( int i=0 ; (i < 29 ) ; i++){
             String _f = "F" + i;            
             r.setElement(0, CbusConstants.CBUS_DFNON);
             r.setElement(2, i);
             cbtmb.reply(r);
-            Assert.assertEquals("Function loop on " + i,true,cbtmb.getThrottleInfo(addr,_f));
+            JUnitUtil.waitFor(()->{ return(cbtmb.getThrottleInfo(addr,_f).equals(true)); }, "Function loop on " + i);
+            // Assert.assertEquals("Function loop on " + i,true,cbtmb.getThrottleInfo(addr,_f));
             r.setElement(0, CbusConstants.CBUS_DFNOF);
-            cbtmb.reply(r);            
-            Assert.assertEquals("Function loop off " + i,false,cbtmb.getThrottleInfo(addr,_f));            
+            cbtmb.reply(r);
+            JUnitUtil.waitFor(()->{ return(cbtmb.getThrottleInfo(addr,_f).equals(false)); }, "Function loop off " + i);          
         }
-        r.setElement(2, 0xff);
-        cbtmb.reply(r);
+        
         JUnitAppender.assertWarnMessage("Unhandled function number: 255");
     }
     
     @Test
     public void testIncomingSpeedDirection() {
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+
         CbusThrottleManager cbtmb = (CbusThrottleManager) tm;
         Assert.assertNotNull("exists",cbtmb);
         DccLocoAddress addr = new DccLocoAddress(422,true);
@@ -183,6 +191,8 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         CanReply r = new CanReply( new int[]{CbusConstants.CBUS_DSPD, 1, 0 },0x12 );
         cbtmb.reply(r);
         Assert.assertEquals("speed setting 0",0.0f,cbtmb.getThrottleInfo(addr,Throttle.SPEEDSETTING));
+        
+        JUnitUtil.waitFor(()->{ return(cbtmb.getThrottleInfo(addr,Throttle.ISFORWARD).equals(false)); }, "Throttle didn't update");
         Assert.assertEquals("is forward 0",false,cbtmb.getThrottleInfo(addr,Throttle.ISFORWARD));
         
         r = new CanReply( new int[]{CbusConstants.CBUS_DSPD, 77, 77 },0x12 );
@@ -284,6 +294,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
 
     @Test
     public void testMessage() {
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         
         CbusThrottleManager cbtmb = (CbusThrottleManager) tm;
         Assert.assertNotNull("exists",cbtmb);
@@ -1026,7 +1037,9 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         memo.dispose();
         memo = null;
         JUnitUtil.resetWindows(false,false);
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
     private final static Logger log = LoggerFactory.getLogger(CbusThrottleManagerTest.class);

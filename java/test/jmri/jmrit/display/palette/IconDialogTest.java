@@ -29,6 +29,7 @@ public class IconDialogTest {
         TableItemPanel<Turnout> tip = new TableItemPanel<>(df,"IS01","",tableModel,editor);
         IconDialog t = new IconDialog("Icon","Icon",tip,null);
         Assert.assertNotNull("exists",t);
+        JUnitUtil.dispose(t);
         JUnitUtil.dispose(df);
     }
 

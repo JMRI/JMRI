@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
  * @author Paul Bender Copyright (C) 2003-2010
  * @author Mark Underwood Copyright (C) 2015
  * @author Costin Grigoras Copyright (C) 2018
+ * @author Harald Barth Copyright (C) 2019
  *
  * Based on XNetMessage by Bob Jacobsen and Paul Bender
  */
@@ -225,6 +226,8 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
                 }
             case DCCppConstants.READ_CS_STATUS:
                 return(new DCCppMessage(DCCppConstants.READ_CS_STATUS, DCCppConstants.READ_CS_STATUS_REGEX));
+            case DCCppConstants.READ_CS_MAXNUMSLOTS:
+                return(new DCCppMessage(DCCppConstants.READ_CS_MAXNUMSLOTS, DCCppConstants.READ_CS_MAXNUMSLOTS_REGEX));
             case DCCppConstants.READ_TRACK_CURRENT:
                 return(DCCppMessage.makeReadTrackCurrentMsg());
             case DCCppConstants.SENSOR_CMD:
@@ -1921,6 +1924,20 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      */
     public static DCCppMessage makeCSStatusMsg() {
         return(new DCCppMessage(DCCppConstants.READ_CS_STATUS, DCCppConstants.READ_CS_STATUS_REGEX));
+    }
+
+    /**
+     * Get number of supported slots for this DCC++ Base Station Status
+     *
+     * Format: {@code <N>}
+     *
+     *    returns number of slots
+     *    NOTE: this is not implemented in older versions which then do not return anything at all
+     *
+     *    returns: status message with to get number of slots
+     */
+    public static DCCppMessage makeCSMaxNumSlotsMsg() {
+        return(new DCCppMessage(DCCppConstants.READ_CS_MAXNUMSLOTS, DCCppConstants.READ_CS_MAXNUMSLOTS_REGEX));
     }
 
     /**

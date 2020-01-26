@@ -2,7 +2,6 @@ package jmri.jmrix.jmriclient.swing;
 
 import java.awt.GraphicsEnvironment;
 import jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo;
-import jmri.jmrix.jmriclient.JMRIClientTrafficController;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -39,6 +38,7 @@ public class JMRIClientMenuTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
         // tc = null;
     }

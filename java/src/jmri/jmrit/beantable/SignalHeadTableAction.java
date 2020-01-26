@@ -10,7 +10,6 @@ import java.awt.event.ActionListener;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Vector;
-import javax.annotation.Nonnull;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -213,10 +212,10 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                         if (newState == 99) {
                             if (stateNameList.length == 0) {
                                 newState = SignalHead.DARK;
-                                log.warn("New signal state not found so setting to Dark " + s.getDisplayName());
+                                log.warn("New signal state not found so setting to Dark {}", s.getDisplayName());
                             } else {
                                 newState = validStateList[0];
-                                log.warn("New signal state not found so setting to the first available " + s.getDisplayName());
+                                log.warn("New signal state not found so setting to the first available {}", s.getDisplayName());
                             }
                         }
                         if (log.isDebugEnabled()) {
@@ -386,7 +385,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
 
             /**
              * Clear the old appearance comboboxes and force them to be rebuilt.
-             * Used with the Single Output Signal Head to capture reconguration.
+             * Used with the Single Output Signal Head to capture reconfiguration.
              *
              * @param row Index of the signal mast (in TableDataModel) to be
              *            rebuilt in the Hashtables
@@ -418,8 +417,8 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
             Hashtable<Object, JComboBox<String>> editorMap = new Hashtable<>();
 
             /**
-             * returns a list of all the valid appearances that have not been
-             * disabled
+             * Get a list of all the valid appearances that have not been
+             * disabled.
              *
              * @param head the name of the signal head
              * @return List of valid signal head appearance names
@@ -2850,7 +2849,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
             SpinnerNumberModel DccSpinnerModel = new SpinnerNumberModel(1, 0, 31, 1);
             JSpinner tmp = new JSpinner(DccSpinnerModel);
             //tmp.setFocusable(false);
-            tmp.setValue(DccSignalHead.getDefaultNumberForApperance(DccSignalHead.getDefaultValidStates()[i]));
+            tmp.setValue(DccSignalHead.getDefaultNumberForAppearance(DccSignalHead.getDefaultValidStates()[i]));
             dccAspect[i] = tmp; // store the whole JSpinner
             dccSignalPanel.add(tmp); // and display that copy on the JPanel
             tmp.setToolTipText(Bundle.getMessage("DccAccessoryAspect", i));

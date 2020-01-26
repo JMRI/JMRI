@@ -1,6 +1,8 @@
 package jmri.script;
 
 import jmri.InstanceManager;
+import jmri.Memory;
+import jmri.MemoryManager;
 import jmri.TurnoutManager;
 import jmri.profile.NullProfile;
 import jmri.profile.ProfileManager;
@@ -59,8 +61,7 @@ public class JmriScriptEngineManagerTest {
         TurnoutManager manager = InstanceManager.getDefault(TurnoutManager.class);
         assertNull(result);
         assertNull(manager.getBySystemName("IT1"));
-        JUnitUtil.resetProfileManager(new NullProfile(new File("java/test/jmri/script/exec-file-profile")));
-        result = jsem.eval(FileUtil.getFile("profile:turnout.py"));
+        result = jsem.eval(FileUtil.getFile("program:java/test/jmri/script/exec-file-profile/turnout.py"));
         assertNotNull(result);
         assertNotNull(manager.getBySystemName("IT1"));
         assertEquals(InstanceManager.getDefault(TurnoutManager.class).getBySystemName("IT1"), result);
@@ -69,18 +70,25 @@ public class JmriScriptEngineManagerTest {
     @Test
     public void testEval_File_Bindings() throws IOException, ScriptException {
         // first test that test binding is not in default bindings
-        // to ensure later part of tests are not obscured by existing binding
+        // to ensure later part of tests are not obscured by default binding
         jsem.getDefaultContext().getBindings(ScriptContext.GLOBAL_SCOPE).forEach((name, value) -> assertNotEquals("profiles", name));
         // and now test
-        JUnitUtil.resetProfileManager(new NullProfile(new File("java/test/jmri/script/exec-file-profile")));
+        JUnitUtil.resetProfileManager();
         Bindings bindings = new SimpleBindings();
         bindings.put("profiles", ProfileManager.getDefault());
         Object result = null;
         ProfileManager manager = ProfileManager.getDefault();
         assertNull(result);
-        result = jsem.eval(FileUtil.getFile("profile:profile.py"), bindings);
+        result = jsem.eval(FileUtil.getFile("program:java/test/jmri/script/exec-file-profile/profile.py"), bindings);
         assertNotNull(result);
         assertEquals(Integer.valueOf(manager.getAutoStartActiveProfileTimeout()), result);
+    }
+
+    @Test
+    public void testEval_File_Imports() throws IOException, ScriptException {
+        Memory result = InstanceManager.getDefault(MemoryManager.class).provide("result");
+        jsem.eval(FileUtil.getFile("program:java/test/jmri/script/import/imports.py"));
+        assertEquals("foo", result.getValue());
     }
 
     @Test

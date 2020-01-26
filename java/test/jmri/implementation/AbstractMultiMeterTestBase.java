@@ -24,8 +24,9 @@ public abstract class AbstractMultiMeterTestBase {
     @After
     @javax.annotation.OverridingMethodsMustInvokeSuper
     public void tearDown(){
-       mm.dispose();
-       jmri.util.JUnitUtil.tearDown();
+        mm.dispose();
+        jmri.util.JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
+        jmri.util.JUnitUtil.tearDown();
     }
 
     protected MultiMeter mm = null;	// holds objects under test

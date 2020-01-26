@@ -18,11 +18,13 @@ import jmri.util.swing.DedupingPropertyChangeListenerTest;
     JmriJTablePersistenceManagerTest.class,
     ConnectionLabelTest.class,
     AboutDialogTest.class,
+    AboutActionTest.class,
     DefaultEditableListModelTest.class,
     RowSorterUtilTest.class,
     JTitledSeparatorTest.class,
     DefaultListCellEditorTest.class,
     DedupingPropertyChangeListenerTest.class,
+    ManagerComboBoxTest.class,
     NamedBeanComboBoxTest.class,
     SystemNameValidatorTest.class
 })

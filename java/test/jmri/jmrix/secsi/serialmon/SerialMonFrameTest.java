@@ -21,13 +21,14 @@ public class SerialMonFrameTest extends jmri.util.JmriJFrameTestBase {
         memo = new SecsiSystemConnectionMemo();
         if(!GraphicsEnvironment.isHeadless()){
            frame = new SerialMonFrame(memo);
-	}
+	    }
     }
 
     @After
     @Override
     public void tearDown() {
+        memo.getTrafficController().terminateThreads();
 	    memo = null;
-    	    super.tearDown();
+    	super.tearDown();
     }
 }

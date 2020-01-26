@@ -76,6 +76,8 @@ public class SplitDateTimeVariableValue extends SplitVariableValue {
         factor = Long.parseLong(extra2);
         unit = extra3;
         display = extra4;
+        _minVal = 0;
+        _maxVal = ~0;
     }
 
     @Override

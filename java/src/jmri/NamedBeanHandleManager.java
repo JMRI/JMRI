@@ -45,7 +45,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson Copyright (C) 2011
  */
-public class NamedBeanHandleManager extends AbstractManager implements InstanceManagerAutoDefault {
+public class NamedBeanHandleManager extends AbstractManager<NamedBean> implements InstanceManagerAutoDefault {
 
     public NamedBeanHandleManager() {
         // use Internal memo as connection for this manager
@@ -208,18 +208,14 @@ public class NamedBeanHandleManager extends AbstractManager implements InstanceM
     }
 
     @Override
+    @Nonnull
     @CheckReturnValue
-    public String makeSystemName(String s) {
+    public String makeSystemName(@Nonnull String s) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    @Deprecated  // will be removed when superclass method is removed due to @Override
-    public String[] getSystemNameArray() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
+    @Nonnull
     @CheckReturnValue
     @Deprecated  // will be removed when superclass method is removed due to @Override
     public List<String> getSystemNameList() {
@@ -244,12 +240,12 @@ public class NamedBeanHandleManager extends AbstractManager implements InstanceM
     }
 
     @Override
-    public void register(NamedBean n) {
+    public void register(@Nonnull NamedBean n) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public void deregister(NamedBean n) {
+    public void deregister(@Nonnull NamedBean n) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -260,10 +256,20 @@ public class NamedBeanHandleManager extends AbstractManager implements InstanceM
     }
 
     @Override
+    @Nonnull
     @CheckReturnValue
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNames" : "BeanName");
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<NamedBean> getNamedBeanClass() {
+        return NamedBean.class;
+    }
+
     private final static Logger log = LoggerFactory.getLogger(NamedBeanHandleManager.class);
+
 }

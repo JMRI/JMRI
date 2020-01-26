@@ -28,7 +28,7 @@ abstract public class Trigger implements PropertyChangeListener {
 
     static public enum TargetAction {
 
-        PLAY, LOOP, STOP, FADEIN, FADEOUT, NOTCH, CHANGE, NOTHING
+        PLAY, LOOP, STOP, FADEIN, FADEOUT, NOTCH, CHANGE, NOTHING, STOP_AT_ZERO
     }
 
     static public enum CompareType {

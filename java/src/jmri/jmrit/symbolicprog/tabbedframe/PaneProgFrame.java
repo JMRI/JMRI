@@ -11,21 +11,8 @@ import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
-import javax.swing.AbstractAction;
-import javax.swing.AbstractButton;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
-import javax.swing.JTabbedPane;
-import javax.swing.JToggleButton;
-import javax.swing.WindowConstants;
+import javax.swing.*;
+
 import jmri.AddressedProgrammerManager;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
@@ -36,44 +23,19 @@ import jmri.implementation.swing.SwingShutDownTask;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
-import jmri.jmrit.roster.FunctionLabelPane;
-import jmri.jmrit.roster.PrintRosterEntry;
-import jmri.jmrit.roster.Roster;
-import jmri.jmrit.roster.RosterEntry;
-import jmri.jmrit.roster.RosterEntryPane;
-import jmri.jmrit.roster.RosterMediaPane;
-import jmri.jmrit.symbolicprog.CsvExportAction;
-import jmri.jmrit.symbolicprog.CsvImportAction;
-import jmri.jmrit.symbolicprog.CvTableModel;
-import jmri.jmrit.symbolicprog.CvValue;
-import jmri.jmrit.symbolicprog.DccAddressVarHandler;
-import jmri.jmrit.symbolicprog.EnumVariableValue;
-import jmri.jmrit.symbolicprog.FactoryResetAction;
-import jmri.jmrit.symbolicprog.LokProgImportAction;
-import jmri.jmrit.symbolicprog.Pr1ExportAction;
-import jmri.jmrit.symbolicprog.Pr1ImportAction;
-import jmri.jmrit.symbolicprog.Pr1WinExportAction;
-import jmri.jmrit.symbolicprog.PrintAction;
-import jmri.jmrit.symbolicprog.PrintCvAction;
-import jmri.jmrit.symbolicprog.ProgrammerConfigManager;
-import jmri.jmrit.symbolicprog.Qualifier;
-import jmri.jmrit.symbolicprog.QualifierAdder;
-import jmri.jmrit.symbolicprog.QuantumCvMgrImportAction;
-import jmri.jmrit.symbolicprog.ResetTableModel;
-import jmri.jmrit.symbolicprog.VariableTableModel;
-import jmri.jmrit.symbolicprog.VariableValue;
+import jmri.jmrit.roster.*;
+import jmri.jmrit.symbolicprog.*;
 import jmri.util.BusyGlassPane;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
+
 import org.jdom2.Attribute;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame providing a command station programmer from decoder definition files.
  *
- * @author Bob Jacobsen Copyright (C) 2001, 2004, 2005, 2008, 2014
+ * @author Bob Jacobsen Copyright (C) 2001, 2004, 2005, 2008, 2014, 2018, 2019
  * @author D Miller Copyright 2003, 2005
  * @author Howard G. Penny Copyright (C) 2005
  */
@@ -139,11 +101,9 @@ abstract public class PaneProgFrame extends JmriJFrame
 
         // create ShutDownTasks
         if (decoderDirtyTask == null) {
-            decoderDirtyTask
-                    = new SwingShutDownTask("DecoderPro Decoder Window Check",
-                            Bundle.getMessage("PromptQuitWindowNotWrittenDecoder"),
-                            (String) null, this
-                    ) {
+            decoderDirtyTask = new SwingShutDownTask("DecoderPro Decoder Window Check",
+                    Bundle.getMessage("PromptQuitWindowNotWrittenDecoder"),
+                    (String) null, this) {
                 @Override
                 public boolean checkPromptNeeded() {
                     return !checkDirtyDecoder();
@@ -152,11 +112,9 @@ abstract public class PaneProgFrame extends JmriJFrame
         }
         jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(decoderDirtyTask);
         if (fileDirtyTask == null) {
-            fileDirtyTask
-                    = new SwingShutDownTask("DecoderPro Decoder Window Check",
-                            Bundle.getMessage("PromptQuitWindowNotWrittenConfig"),
-                            Bundle.getMessage("PromptSaveQuit"), this
-                    ) {
+            fileDirtyTask = new SwingShutDownTask("DecoderPro Decoder Window Check",
+                    Bundle.getMessage("PromptQuitWindowNotWrittenConfig"),
+                    Bundle.getMessage("PromptSaveQuit"), this) {
                 @Override
                 public boolean checkPromptNeeded() {
                     return !checkDirtyFile();
@@ -164,7 +122,8 @@ abstract public class PaneProgFrame extends JmriJFrame
 
                 @Override
                 public boolean doPrompt() {
-                    boolean result = storeFile(); // storeFile false if failed, abort shutdown
+                    // storeFile false if failed, abort shutdown
+                    boolean result = storeFile();
                     return result;
                 }
             };
@@ -1303,6 +1262,7 @@ abstract public class PaneProgFrame extends JmriJFrame
 
     @Override
     public void paneFinished() {
+        log.debug("paneFinished with isBusy={}", isBusy());
         if (!isBusy()) {
             if (glassPane != null) {
                 glassPane.setVisible(false);
@@ -1324,6 +1284,7 @@ abstract public class PaneProgFrame extends JmriJFrame
      */
     @Override
     public void enableButtons(boolean stat) {
+        log.debug("enableButtons({})", stat);
         if (stat) {
             enableReadButtons();
         } else {
@@ -1346,6 +1307,7 @@ abstract public class PaneProgFrame extends JmriJFrame
     private boolean _busy = false;
 
     private void setBusy(boolean stat) {
+        log.debug("setBusy({})", stat);
         _busy = stat;
 
         for (int i = 0; i < paneList.size(); i++) {
@@ -1819,6 +1781,6 @@ abstract public class PaneProgFrame extends JmriJFrame
         return _rosterEntry;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PaneProgFrame.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PaneProgFrame.class);
 
 }

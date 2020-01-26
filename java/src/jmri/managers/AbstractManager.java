@@ -1,18 +1,12 @@
 package jmri.managers;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
-import java.beans.PropertyVetoException;
-import java.beans.VetoableChangeListener;
-import java.beans.VetoableChangeSupport;
+import java.beans.*;
+import java.text.DecimalFormat;
 import java.util.*;
-
-import jmri.util.NamedBeanComparator;
-
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.Consumer;
 import javax.annotation.CheckReturnValue;
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import jmri.ConfigureManager;
@@ -22,9 +16,6 @@ import jmri.NamedBean;
 import jmri.NamedBean.DuplicateSystemNameException;
 import jmri.NamedBeanPropertyDescriptor;
 import jmri.jmrix.SystemConnectionMemo;
-import jmri.NmraPacket;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Abstract partial implementation for all Manager-type classes.
@@ -42,19 +33,34 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2003
  */
-abstract public class AbstractManager<E extends NamedBean> implements Manager<E>, PropertyChangeListener, VetoableChangeListener {
+public abstract class AbstractManager<E extends NamedBean> implements Manager<E>, PropertyChangeListener, VetoableChangeListener {
 
     // The data model consists of several components:
     // * The primary reference is _beans, a SortedSet of NamedBeans, sorted automatically on system name.
     //      Currently that's implemented as a TreeSet; further performance work might change that
-    //      Live access is available as a unmodifiableSortedSet via getNamedBeanSet()
+    //      Live access is available as an unmodifiableSortedSet via getNamedBeanSet()
     // * The manager also maintains synchronized maps from SystemName -> NamedBean (_tsys) and UserName -> NamedBean (_tuser)
     //      These are not made available: get access through the manager calls
     //      These use regular HashMaps instead of some sorted form for efficiency
-    // * Caches for the String[] getSystemNameArray(), List<String> getSystemNameList() and List<E> getNamedBeanList() calls
-            
+    // * Caches for the List<String> getSystemNameList() and List<E> getNamedBeanList() calls
+
+    protected final SystemConnectionMemo memo;
+    protected final TreeSet<E> _beans;
+    protected final Hashtable<String, E> _tsys = new Hashtable<>();   // stores known E (NamedBean, i.e. Turnout) instances by system name
+    protected final Hashtable<String, E> _tuser = new Hashtable<>();  // stores known E (NamedBean, i.e. Turnout) instances by user name
+
+    // caches
+    private ArrayList<String> cachedSystemNameList = null;
+    private ArrayList<E> cachedNamedBeanList = null;
+
+    // Auto names. The atomic integer is always created even if not used, to
+    // simplify concurrency.
+    AtomicInteger lastAutoNamedBeanRef = new AtomicInteger(0);
+    DecimalFormat paddedNumber = new DecimalFormat("0000");
+
     public AbstractManager(SystemConnectionMemo memo) {
         this.memo = memo;
+        this._beans = new TreeSet<>(memo.getNamedBeanComparator(getNamedBeanClass()));
         registerSelf();
     }
 
@@ -65,7 +71,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     @OverridingMethodsMustInvokeSuper
     protected void registerSelf() {
         log.debug("registerSelf for config of type {}", getClass());
-        InstanceManager.getOptionalDefault(ConfigureManager.class).ifPresent((cm) -> {
+        InstanceManager.getOptionalDefault(ConfigureManager.class).ifPresent(cm -> {
             cm.registerConfig(this, getXMLOrder());
             log.debug("registering for config of type {}", getClass());
         });
@@ -73,13 +79,10 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
 
     /** {@inheritDoc} */
     @Override
+    @Nonnull
     public SystemConnectionMemo getMemo() {
         return memo;
     }
-
-    /** {@inheritDoc} */
-    @Override
-    abstract public int getXMLOrder();
 
     /** {@inheritDoc} */
     @Override
@@ -99,69 +102,57 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     @Override
     @OverridingMethodsMustInvokeSuper
     public void dispose() {
-        InstanceManager.getOptionalDefault(ConfigureManager.class).ifPresent((cm) -> {
-            cm.deregister(this);
-        });
+        InstanceManager.getOptionalDefault(ConfigureManager.class).ifPresent(cm -> cm.deregister(this));
         _beans.clear();
         _tsys.clear();
         _tuser.clear();
     }
 
-    protected final SystemConnectionMemo memo;
-    protected TreeSet<E> _beans = new TreeSet<>(new jmri.util.NamedBeanComparator<>());
-    protected Hashtable<String, E> _tsys = new Hashtable<>();   // stores known E (NamedBean, i.e. Turnout) instances by system name
-    protected Hashtable<String, E> _tuser = new Hashtable<>();   // stores known E (NamedBean, i.e. Turnout) instances by user name
-
-    // caches
-    private String[] cachedSystemNameArray = null;
-    private ArrayList<String> cachedSystemNameList = null;
-    private ArrayList<E> cachedNamedBeanList = null;
-    
     /**
      * Get a NamedBean by its system name.
      *
      * @param systemName the system name
-     * @return the result of {@link #getBeanBySystemName(java.lang.String)}
+     * @return the result of {@link #getBySystemName(java.lang.String)}
      *         with systemName
      * @deprecated since 4.15.6; use
-     * {@link #getBeanBySystemName(java.lang.String)} instead
+     * {@link #getBySystemName(java.lang.String)} instead
      */
     @Deprecated
     protected E getInstanceBySystemName(String systemName) {
-        return getBeanBySystemName(systemName);
+        return getBySystemName(systemName);
     }
 
     /**
      * Get a NamedBean by its user name.
      *
      * @param userName the user name
-     * @return the result of {@link #getBeanByUserName(java.lang.String)} call,
+     * @return the result of {@link #getByUserName(java.lang.String)} call,
      *         with userName
      * @deprecated since 4.15.6; use
-     * {@link #getBeanByUserName(java.lang.String)} instead
+     * {@link #getByUserName(java.lang.String)} instead
      */
     @Deprecated
     protected E getInstanceByUserName(String userName) {
-        return getBeanByUserName(userName);
+        return getByUserName(userName);
     }
 
     /** {@inheritDoc} */
     @Override
-    public E getBeanBySystemName(String systemName) {
+    public E getBySystemName(@Nonnull String systemName) {
         return _tsys.get(systemName);
     }
 
     /**
      * Protected method used by subclasses to over-ride the default behavior of
-     * getBeanBySystemName when a simple string lookup is not sufficient
+     * getBySystemName when a simple string lookup is not sufficient.
      *
-     * @param systemName the system name to check.
-     * @param comparator a Comparator encapsulating the system specific comparison behavior.
-     * @return A named bean of the appropriate type, or null if not found.
+     * @param systemName the system name to check
+     * @param comparator a Comparator encapsulating the system specific comparison behavior
+     * @return a named bean of the appropriate type, or null if not found
      */
-    protected E getBySystemName(String systemName,Comparator<String> comparator){
-        for(Map.Entry<String,E> e:_tsys.entrySet()){
-            if(0==comparator.compare(e.getKey(),systemName)){
+    protected E getBySystemName(String systemName, Comparator<String> comparator){
+        for (Map.Entry<String,E> e : _tsys.entrySet()) {
+            if (0 == comparator.compare(e.getKey(), systemName)) {
                 return e.getValue();
             }
         }
@@ -170,33 +161,31 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
 
     /** {@inheritDoc} */
     @Override
-    public E getBeanByUserName(String userName) {
+    @CheckForNull
+    public E getByUserName(@Nonnull String userName) {
         String normalizedUserName = NamedBean.normalizeUserName(userName);
         return normalizedUserName != null ? _tuser.get(normalizedUserName) : null;
     }
 
     /** {@inheritDoc} */
     @Override
-    public E getNamedBean(String name) {
+    public E getNamedBean(@Nonnull String name) {
         String normalizedUserName = NamedBean.normalizeUserName(name);
         if (normalizedUserName != null) {
-            E b = getBeanByUserName(normalizedUserName);
+            E b = getByUserName(normalizedUserName);
             if (b != null) {
                 return b;
             }
         }
-        return getBeanBySystemName(name);
+        return getBySystemName(name);
     }
 
     /** {@inheritDoc} */
     @Override
     @OverridingMethodsMustInvokeSuper
     public void deleteBean(@Nonnull E bean, @Nonnull String property) throws PropertyVetoException {
-        try {
-            fireVetoableChange(property, bean, null);
-        } catch (PropertyVetoException e) {
-            throw e;  // don't go on to check for delete.
-        }
+        // throws PropertyVetoException if vetoed
+        fireVetoableChange(property, bean, null);
         if (property.equals("DoDelete")) { // NOI18N
             deregister(bean);
             bean.dispose();
@@ -206,10 +195,10 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     /** {@inheritDoc} */
     @Override
     @OverridingMethodsMustInvokeSuper
-    public void register(E s) {
+    public void register(@Nonnull E s) {
         String systemName = s.getSystemName();
 
-        E existingBean = getBeanBySystemName(systemName);
+        E existingBean = getBySystemName(systemName);
         if (existingBean != null) {
             if (s == existingBean) {
                 log.debug("the named bean is registered twice: {}", systemName);
@@ -223,8 +212,8 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
             // system names are treated as the same. For example LT1 and LT01.
             if (_beans.contains(s)) {
                 final AtomicReference<String> oldSysName = new AtomicReference<>();
-                NamedBeanComparator<NamedBean> c = new NamedBeanComparator<>();
-                _beans.forEach((NamedBean t) -> {
+                Comparator<E> c = memo.getNamedBeanComparator(getNamedBeanClass());
+                _beans.forEach(t -> {
                     if (c.compare(s, t) == 0) {
                         oldSysName.set(t.getSystemName());
                     }
@@ -239,7 +228,6 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         }
 
         // clear caches
-        cachedSystemNameArray = null;
         cachedSystemNameList = null;
         cachedNamedBeanList = null;
         
@@ -260,9 +248,10 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     // not efficient, but does job for now
     private int getPosition(E s) {
         int position = 0;
-        Iterator<E> iter = _beans.iterator();
-        while (iter.hasNext()) {
-            if (s == iter.next()) return position;
+        for (E bean : _beans) {
+            if (s == bean) {
+                return position;
+            }
             position++;
         }
         return -1;
@@ -294,24 +283,21 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
      */
     protected void handleUserNameUniqueness(E s) {
         String userName = s.getUserName();
-        if (userName != null) {
-            // enforce uniqueness of user names
-            // by setting username to null in any existing bean with the same name
-            // Note that this is not a "move" operation for the user name
-            if (_tuser.get(userName) != null && _tuser.get(userName) != s) {
-                _tuser.get(userName).setUserName(null);
-            }
+        // enforce uniqueness of user names
+        // by setting username to null in any existing bean with the same name
+        // Note that this is not a "move" operation for the user name
+        if (userName != null && _tuser.get(userName) != null && _tuser.get(userName) != s) {
+            _tuser.get(userName).setUserName(null);
         }
     }
 
     /** {@inheritDoc} */
     @Override
     @OverridingMethodsMustInvokeSuper
-    public void deregister(E s) {
+    public void deregister(@Nonnull E s) {
         int position = getPosition(s);
 
         // clear caches
-        cachedSystemNameArray = null;
         cachedSystemNameList = null;
         cachedNamedBeanList = null;
 
@@ -339,6 +325,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
      * @return empty list
      */
     @Override
+    @Nonnull
     public List<NamedBeanPropertyDescriptor<?>> getKnownBeanProperties() {
         return new LinkedList<>();
     }
@@ -369,7 +356,6 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
                         // If so, clear. Note that this is not a "move" operation
                         _tuser.get(now).setUserName(null);
                     }
-
                     _tuser.put(now, t); // put new name for this bean
                 }
             } catch (ClassCastException ex) {
@@ -388,19 +374,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
 
     /** {@inheritDoc} */
     @Override
-    @Deprecated  // will be removed when superclass method is removed due to @Override
-    public String[] getSystemNameArray() {
-        jmri.util.Log4JUtil.deprecationWarning(log, "getSystemNameArray");
-        if (log.isTraceEnabled()) log.trace("Manager#getSystemNameArray() called", new Exception("traceback"));
-
-        if (cachedSystemNameArray == null) {
-            cachedSystemNameArray = getSystemNameList().toArray(new String[_beans.size()]);
-        }
-        return cachedSystemNameArray;
-    }
-
-    /** {@inheritDoc} */
-    @Override
+    @Nonnull
     @Deprecated  // will be removed when superclass method is removed due to @Override
     public List<String> getSystemNameList() {
         // jmri.util.Log4JUtil.deprecationWarning(log, "getSystemNameList");
@@ -415,6 +389,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
 
     /** {@inheritDoc} */
     @Override
+    @Nonnull
     @Deprecated  // will be removed when superclass method is removed due to @Override
     public List<E> getNamedBeanList() {
         jmri.util.Log4JUtil.deprecationWarning(log, "getNamedBeanList");
@@ -426,15 +401,12 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
 
     /** {@inheritDoc} */
     @Override
+    @Nonnull
     public SortedSet<E> getNamedBeanSet() {
         return Collections.unmodifiableSortedSet(_beans);
     }
 
-    /** {@inheritDoc} */
-    @Override
-    abstract public String getBeanTypeHandled(boolean plural);
-
-    PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+    private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
     /** {@inheritDoc} */
     @Override
@@ -459,6 +431,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
 
     /** {@inheritDoc} */
     @Override
+    @Nonnull
     @OverridingMethodsMustInvokeSuper
     public PropertyChangeListener[] getPropertyChangeListeners() {
         return pcs.getPropertyChangeListeners();
@@ -466,6 +439,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
 
     /** {@inheritDoc} */
     @Override
+    @Nonnull
     @OverridingMethodsMustInvokeSuper
     public PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
         return pcs.getPropertyChangeListeners(propertyName);
@@ -488,7 +462,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         pcs.fireIndexedPropertyChange(propertyName, index, oldValue, newValue);
     }
 
-    VetoableChangeSupport vcs = new VetoableChangeSupport(this);
+    private VetoableChangeSupport vcs = new VetoableChangeSupport(this);
 
     /** {@inheritDoc} */
     @Override
@@ -513,6 +487,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
 
     /** {@inheritDoc} */
     @Override
+    @Nonnull
     @OverridingMethodsMustInvokeSuper
     public VetoableChangeListener[] getVetoableChangeListeners() {
         return vcs.getVetoableChangeListeners();
@@ -520,6 +495,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
 
     /** {@inheritDoc} */
     @Override
+    @Nonnull
     @OverridingMethodsMustInvokeSuper
     public VetoableChangeListener[] getVetoableChangeListeners(String propertyName) {
         return vcs.getVetoableChangeListeners(propertyName);
@@ -533,7 +509,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     }
 
     /**
-     * Method to inform all registered listeners of a vetoable change. If the
+     * Inform all registered listeners of a vetoable change. If the
      * propertyName is "CanDelete" ALL listeners with an interest in the bean
      * will throw an exception, which is recorded returned back to the invoking
      * method, so that it can be presented back to the user. However if a
@@ -606,11 +582,8 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
             }
         } else {
             for (NamedBean nb : _beans) {
-                try {
-                    nb.vetoableChange(evt);
-                } catch (PropertyVetoException e) {
-                    throw e;
-                }
+                // throws PropertyVetoException if vetoed
+                nb.vetoableChange(evt);
             }
         }
     }
@@ -626,12 +599,11 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
      *         not perform more specific validation to be considered valid.
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
-        return getSystemNamePrefix().equals(systemName)
-                ? NameValidity.VALID_AS_PREFIX_ONLY
-                : systemName.startsWith(getSystemNamePrefix())
-                ? NameValidity.VALID
-                : NameValidity.INVALID;
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
+        if (getSystemNamePrefix().equals(systemName)) {
+            return NameValidity.VALID_AS_PREFIX_ONLY;
+        }
+        return systemName.startsWith(getSystemNamePrefix()) ? NameValidity.VALID : NameValidity.INVALID;
     }
 
     /**
@@ -641,6 +613,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
      * for four managers that have arbitrary prefixes.
      */
     @Override
+    @Nonnull
     public final String getSystemPrefix() {
         return memo.getSystemPrefix();
     }
@@ -657,7 +630,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         if (e != null) listeners.remove(e);
     }
 
-    final List<ManagerDataListener<E>> listeners = new ArrayList<>();    
+    private final List<ManagerDataListener<E>> listeners = new ArrayList<>();
 
     private boolean muted = false;
     
@@ -689,6 +662,29 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractManager.class);
+    public void updateAutoNumber(String systemName) {
+        /* The following keeps track of the last created auto system name.
+         currently we do not reuse numbers, although there is nothing to stop the
+         user from manually recreating them */
+        String autoPrefix = getSystemNamePrefix() + ":AUTO:";
+        if (systemName.startsWith(autoPrefix)) {
+            try {
+                int autoNumber = Integer.parseInt(systemName.substring(autoPrefix.length()));
+                lastAutoNamedBeanRef.accumulateAndGet(autoNumber, Math::max);
+            } catch (NumberFormatException e) {
+                log.warn("Auto generated SystemName {} is not in the correct format", systemName);
+            }
+        }
+    }
+
+    public String getAutoSystemName() {
+        int nextAutoBlockRef = lastAutoNamedBeanRef.incrementAndGet();
+        StringBuilder b = new StringBuilder(getSystemNamePrefix() + ":AUTO:");
+        String nextNumber = paddedNumber.format(nextAutoBlockRef);
+        b.append(nextNumber);
+        return b.toString();
+    }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractManager.class);
 
 }

@@ -27,7 +27,6 @@ public class MultipartMessageTest {
         // and clean it up in teardown.
         jmri.util.JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
-        jmri.util.JUnitUtil.initShutDownManager();
         jmri.util.JUnitUtil.initDebugPowerManager();
         server = new WebServer(); // a webserver using default preferences.
         server.start();
@@ -57,6 +56,7 @@ public class MultipartMessageTest {
             log.debug("NPE shutting down web server", npe2);
             //Assert.fail("Null Pointer Exception occured during teardown:" + npe2);
         }
+        JUnitUtil.resetZeroConfServiceManager();
         jmri.util.JUnitUtil.tearDown();
     }
 

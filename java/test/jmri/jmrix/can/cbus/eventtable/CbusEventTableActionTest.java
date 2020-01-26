@@ -151,15 +151,15 @@ public class CbusEventTableActionTest {
         event2.setTotalOut(4);
         event2.setComment("My Test Event 2 Comment");
         
-        Assert.assertTrue(model.getRowCount()==2);
+        Assert.assertTrue("Row Count after adding 2 events",model.getRowCount()==2);
         
         t.storeEventsToXml();
         
         model.clearAllEvents();
-        Assert.assertTrue(model.getRowCount()==0);
+        Assert.assertTrue("Row Count before restore 0",model.getRowCount()==0);
         
         t.restoreEventsFromXmlTablestart();
-        Assert.assertTrue(model.getRowCount()==2);
+        Assert.assertTrue("Row Count after restore 2",model.getRowCount()==2);
         
         CbusTableEvent te = model.provideEvent(111,222);
         Assert.assertNotNull("te 1 exists",te);
@@ -193,7 +193,6 @@ public class CbusEventTableActionTest {
     @Before
     public void setUp() throws java.io.IOException {
         JUnitUtil.setUp();
-        JUnitUtil.initShutDownManager();
         JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
         
         TrafficControllerScaffold tcis = new TrafficControllerScaffold();
@@ -206,7 +205,9 @@ public class CbusEventTableActionTest {
     @After
     public void tearDown() {
         model.dispose();
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusEventTableActionTest.class);

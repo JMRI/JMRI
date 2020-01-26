@@ -46,7 +46,7 @@ public class DefaultSignalMastManager extends AbstractManager<SignalMast>
     }
 
     @Override
-    public SignalMast getSignalMast(String name) {
+    public SignalMast getSignalMast(@Nonnull String name) {
         if (Objects.isNull(name) || name.length() == 0) {
             return null;
         }
@@ -59,10 +59,11 @@ public class DefaultSignalMastManager extends AbstractManager<SignalMast>
     }
 
     @Override
-    public SignalMast provideSignalMast(String prefix, // nominally IF$shsm
-            String signalSystem,
-            String mastName,
-            String[] heads) {
+    @Nonnull
+    public SignalMast provideSignalMast(@Nonnull String prefix, // nominally IF$shsm
+                                        @Nonnull String signalSystem,
+                                        @Nonnull String mastName,
+                                        @Nonnull String[] heads) {
         StringBuilder name = new StringBuilder(prefix);
         name.append(":");
         name.append(signalSystem);
@@ -76,7 +77,8 @@ public class DefaultSignalMastManager extends AbstractManager<SignalMast>
     }
 
     @Override
-    public SignalMast provideSignalMast(String name) {
+    @Nonnull
+    public SignalMast provideSignalMast(@Nonnull String name) {
         SignalMast m = getSignalMast(name);
         if (m == null) {
             m = new SignalHeadSignalMast(name);
@@ -110,18 +112,27 @@ public class DefaultSignalMastManager extends AbstractManager<SignalMast>
     }
 
     @Override
-    public SignalMast getBySystemName(String key) {
+    public SignalMast getBySystemName(@Nonnull String key) {
         return _tsys.get(key);
     }
 
     @Override
-    public SignalMast getByUserName(String key) {
+    public SignalMast getByUserName(@Nonnull String key) {
         return _tuser.get(key);
     }
 
-    @Override
+   @Override
+   @Nonnull
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameSignalMasts" : "BeanNameSignalMast");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<SignalMast> getNamedBeanClass() {
+        return SignalMast.class;
     }
 
     ArrayList<SignalMastRepeater> repeaterList = new ArrayList<>();

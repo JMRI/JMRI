@@ -53,6 +53,7 @@ public class DebuggerTest {
     public void setUp(){
         jmri.util.JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
+        jmri.util.JUnitUtil.initRosterConfigManager();
 
         memo = new RpsSystemConnectionMemo();
     }

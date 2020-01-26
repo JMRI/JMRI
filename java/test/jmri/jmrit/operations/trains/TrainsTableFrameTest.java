@@ -3,6 +3,11 @@ package jmri.jmrit.operations.trains;
 import java.awt.GraphicsEnvironment;
 import java.text.MessageFormat;
 
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Rule;
+import org.junit.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
@@ -13,9 +18,6 @@ import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JemmyUtil;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
 
 /**
  *
@@ -23,12 +25,19 @@ import org.junit.Test;
  */
 public class TrainsTableFrameTest extends OperationsTestCase {
 
+    @Rule
+    public org.junit.rules.Timeout globalTimeout = org.junit.rules.Timeout.seconds(10);
+
+    @Rule
+    public jmri.util.junit.rules.RetryRule retryRule = new jmri.util.junit.rules.RetryRule(3); // first, plus three retries
+
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TrainsTableFrame t = new TrainsTableFrame();
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(t);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     @Test
@@ -84,6 +93,7 @@ public class TrainsTableFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(tef);
         JUnitUtil.dispose(tsle);
         JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     @Test
@@ -101,6 +111,7 @@ public class TrainsTableFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(f.moveRB);
 
         JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     @Test
@@ -143,6 +154,7 @@ public class TrainsTableFrameTest extends OperationsTestCase {
         }
 
         JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     @Test
@@ -223,6 +235,7 @@ public class TrainsTableFrameTest extends OperationsTestCase {
         }
 
         JUnitUtil.dispose(ttf);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     @Test
@@ -245,6 +258,7 @@ public class TrainsTableFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(f.terminateButton);
 
         JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TrainsTableFrameTest.class);

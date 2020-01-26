@@ -1,20 +1,19 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-
     <title>
  	JMRI: CI Status
     </title>
-
 <!--#include virtual="/Style.shtml" -->
-</head><!--#include virtual="/Header.shtml" -->
+</head>
 
 <body>
-  <div id="mBody">
-    <!--#include virtual="Sidebar.shtml" --> <!-- select the local or global Sidebar file -->
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
 
-	    <h1>CI Status</h1>
+      <h1>CI Status</h1>
 		
 		<table>
 		<tr><td align="right">
@@ -32,17 +31,30 @@
 		<a href='http://builds.jmri.org/jenkins/job/Development/job/SpotBugs/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=Development/SpotBugs' title="SpotBugs"></a>
 		</td></tr><tr><td align="right">
 		<a href="http://builds.jmri.org/jenkins/job/Development/job/VersionChecks/">Version Checks</a>:</td><td>
-		JDK:
-		<a href='http://builds.jmri.org/jenkins/job/Development/job/VersionChecks/job/JDK%2011/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=Development/VersionChecks/JDK%2011' title="JDK 11"></a>
-		<a href='http://builds.jmri.org/jenkins/job/Development/job/VersionChecks/job/JDK%2010.0.1/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=Development/VersionChecks/JDK%2010.0.1' title="JDK 10"></a>
-		<a href='http://builds.jmri.org/jenkins/job/Development/job/VersionChecks/job/JDK%209.0.4/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=Development/VersionChecks/JDK%209.0.4' title="JDK 9"></a>
-        <br>
-        JRE:
-		<a href='http://builds.jmri.org/jenkins/job/Development/job/VersionChecks/job/JRE%2011/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=Development/VersionChecks/JRE%2011' title="JRE 11"></a>
-		<a href='http://builds.jmri.org/jenkins/job/Development/job/VersionChecks/job/JRE%2010.0.1/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=Development/VersionChecks/JRE%2010.0.1' title="JRE 10"></a>
-		<a href='http://builds.jmri.org/jenkins/job/Development/job/VersionChecks/job/JRE%209.0.4/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=Development/VersionChecks/JRE%209.0.4' title="JRE 9"></a>
-		<a href='http://builds.jmri.org/jenkins/job/Development/VersionChecks/JRE%208u181'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=Development/VersionChecks/JRE%208u181' title="JRE 8u181"></a>
-		</td></tr><tr><td align="right">
+		    <table><tr>
+		    <td>JDK:</td>
+		    <td><table>
+                <tr><td align="right">11:</td><td><a href='http://builds.jmri.org/jenkins/job/Development/job/VersionChecks/job/JDK%2011/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=Development/VersionChecks/JDK%2011' title="JDK 11"></a>
+                    on JRE 8u181:
+                    <a href='http://jmri.tagadab.com/jenkins/job/Development/job/VersionChecks/job/JDK%2011%20to%20JRE%208/'><img src='http://jmri.tagadab.com/jenkins/buildStatus/icon?job=Development%2FVersionChecks%2FJDK+11+to+JRE+8'></a>
+                    </td></tr>
+                <tr><td align="right">10:</td><td><a href='http://builds.jmri.org/jenkins/job/Development/job/VersionChecks/job/JDK%2010.0.1/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=Development/VersionChecks/JDK%2010.0.1' title="JDK 10"></a>
+                    </td></tr>
+                <tr><td align="right"> 9:</td><td><a href='http://builds.jmri.org/jenkins/job/Development/job/VersionChecks/job/JDK%209.0.4/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=Development/VersionChecks/JDK%209.0.4' title="JDK 9"></a>
+                    on JRE 8u181:
+                    <a href='http://jmri.tagadab.com/jenkins/job/Development/job/VersionChecks/job/JDK%209.0.4%20to%20JRE%208/'><img src='http://jmri.tagadab.com/jenkins/buildStatus/icon?job=Development%2FVersionChecks%2FJDK+9.0.4+to+JRE+8'></a>
+                    </td></tr>
+            </table></td>
+            <td>JDK 8u151 on JRE:</td>
+		    <td><table>
+                <tr><td align="right">11:</td><td><a href='http://builds.jmri.org/jenkins/job/Development/job/VersionChecks/job/JRE%2011/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=Development/VersionChecks/JRE%2011' title="JRE 11"></a></td></tr>
+                <tr><td align="right">10:</td><td><a href='http://builds.jmri.org/jenkins/job/Development/job/VersionChecks/job/JRE%2010.0.1/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=Development/VersionChecks/JRE%2010.0.1' title="JRE 10"></a></td></tr>
+                <tr><td align="right">9:</td><td><a href='http://builds.jmri.org/jenkins/job/Development/job/VersionChecks/job/JRE%209.0.4/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=Development/VersionChecks/JRE%209.0.4' title="JRE 9"></a></td></tr>
+                <tr><td align="right">8u181:</td><td><a href='http://builds.jmri.org/jenkins/job/Development/VersionChecks/JRE%208u181'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=Development/VersionChecks/JRE%208u181' title="JRE 8u181"></a></td></tr>
+            </table>
+            </td>
+            </table></td>
+		</tr><tr><td align="right">
 		<a href="http://builds.jmri.org/jenkins/job/WebSite/">Web Site</a>:</td><td>
 		<a href='http://builds.jmri.org/jenkins/job/WebSite/job/generate-website/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=WebSite/generate-website' title="generate website"></a>
 		<a href='http://builds.jmri.org/jenkins/job/WebSite/job/JMRI_repository/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=WebSite/JMRI_repository' title="JMRI repository"></a>
@@ -108,14 +120,18 @@
 
         <tr>
             <td>
-                <a href="http://builds.jmri.org/jenkins/job/Development/job/Separate_Tests/">Separate Tests</a> - Runtime Warnings Results<br>
+                <a href="http://builds.jmri.org/jenkins/job/Development/job/Separate_Tests/">Separate Tests</a> - Runtime Warnings Results
+                    <br><a href='http://builds.jmri.org/jenkins/job/Development/job/Separate_Tests/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=Development/Separate_Tests' title="Separate Tests"></a>
+                    <br>
                 <a href="http://builds.jmri.org/jenkins/job/Development/job/Separate_Tests/lastBuild/testReport/">
                     <img src="http://builds.jmri.org/jenkins/job/Development/job/Separate_Tests/warnings5/trendGraph/png?url=PRIORITY">
                 </a>
             </td>
 
             <td>
-                <a href="http://builds.jmri.org/jenkins/job/Development/job/Ignored%20Test%20Scan/">Ignored Tests</a><br>
+                <a href="http://builds.jmri.org/jenkins/job/Development/job/Ignored%20Test%20Scan/">Ignored Tests</a>
+                    <br><a href='http://jmri.tagadab.com/jenkins/job/Development/job/Ignored%20Test%20Scan/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=Development/Ignored%20Test%20Scan' title="Ignored Test Scan"></a>
+                    <br>
                 <a href="http://builds.jmri.org/jenkins/job/Development/job/Ignored%20Test%20Scan/lastBuild/testReport/">
                     <img src="http://builds.jmri.org/jenkins/job/Development/job/Ignored%20Test%20Scan/warnings6/trendGraph/png?url=PRIORITY">
                 </a>
@@ -124,14 +140,18 @@
 
         <tr>
             <td>
-                <a href="http://builds.jmri.org/jenkins/job/Development/job/AllTest/">AllTest</a> - Unit Tests Run and Skipped<br>
+                <a href="http://builds.jmri.org/jenkins/job/Development/job/AllTest/">AllTest</a> - Unit Tests Run and Skipped
+                    <br><a href='http://builds.jmri.org/jenkins/job/Development/job/AllTest/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=Development/AllTest' title="AllTest"></a>
+                    <br>
                 <a href="http://builds.jmri.org/jenkins/job/Development/job/AllTest/lastBuild/testReport/">
                     <img src="http://builds.jmri.org/jenkins/job/Development/job/AllTest/test/trend">
                 </a>
             </td>
 
             <td>
-                <a href="http://builds.jmri.org/jenkins/job/Development/job/AllTest/">AllTest</a> - Unit Test Failures<br>
+                <a href="http://builds.jmri.org/jenkins/job/Development/job/AllTest/">AllTest</a> - Unit Test Failures
+                    <br><a href='http://builds.jmri.org/jenkins/job/Development/job/AllTest/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=Development/AllTest' title="AllTest"></a>
+                    <br>
                 <a href="http://builds.jmri.org/jenkins/job/Development/job/AllTest/lastBuild/testReport/">
                     <img src="http://builds.jmri.org/jenkins/job/Development/job/AllTest/test/trend?failureOnly=true">
                 </a>
@@ -179,6 +199,32 @@
             </td>
 
             <td>
+                <a href="http://builds.jmri.org/jenkins/job/Development/job/HTML%20Scan/">HTML Scan</a>
+                    <br><a href='http://jmri.tagadab.com/jenkins/job/Development/job/HTML%20Scan/'><img src='http://jmri.tagadab.com/jenkins/buildStatus/icon?job=Development%2FHTML+Scan'></a>
+                    <br>
+                <a href="http://builds.jmri.org/jenkins/job/Development/job/HTML%20Scan/lastBuild/warnings25Result/NORMAL/">
+                    <img src="http://builds.jmri.org/jenkins/job/Development/job/HTML%20Scan/warnings4/trendGraph/png?url=PRIORITY">
+                </a>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <a href="http://builds.jmri.org/jenkins/job/Development/job/VersionChecks/job/JDK%2011/">JDK 11 build</a> - Java warnings
+                    <br><a href='http://builds.jmri.org/jenkins/job/Development/job/VersionChecks/job/JDK%2011/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=Development/VersionChecks/JDK%2011' title="JDK 11"></a>
+                    <br>
+                <a href="http://builds.jmri.org/jenkins/job/Development/job/VersionChecks/job/JDK%2011/lastBuild/warnings10Result/">
+                    <img src="http://builds.jmri.org/jenkins/job/Development/job/VersionChecks/job/JDK%2011/warnings10/trendGraph/png?url=PRIORITY">
+                </a>
+            </td>
+
+            <td>
+                <a href="http://builds.jmri.org/jenkins/job/Development/job/VersionChecks/job/JDK%209.0.4//">Java 9 build</a> - Java warnings
+                    <br><a href='http://builds.jmri.org/jenkins/job/Development/job/VersionChecks/job/JDK%209.0.4/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=Development/VersionChecks/JDK%209.0.4' title="JDK 9"></a>
+                    <br>
+                <a href="http://builds.jmri.org/jenkins/job/Development/job/VersionChecks/job/JDK%209.0.4/lastBuild/">
+                    <img src="http://builds.jmri.org/jenkins/job/Development/job/VersionChecks/job/JDK%209.0.4/warnings10/trendGraph/png?url=PRIORITY">
+                </a>
             </td>
         </tr>
 

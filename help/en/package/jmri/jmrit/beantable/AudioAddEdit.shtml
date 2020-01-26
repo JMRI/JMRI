@@ -16,9 +16,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Adding/Editing Audio objects</h1>To create an audio
       object, click either the "Add Source..." or the "Add
       Buffer..." button at the bottom of the <a href=

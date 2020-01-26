@@ -17,7 +17,6 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Iterator;
 import javax.annotation.CheckForNull;
-import javax.annotation.CheckForNull;
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
@@ -40,9 +39,9 @@ import org.slf4j.LoggerFactory;
  * provide rotation {@literal &} scaling services.
  * <p>
  * We store both a "URL" for finding the file this was made from (so we can load
- * this later), plus a shorter "name" for display.
+ * this later), plus a shorter (localized) "name" for display in GUI.
  * <p>
- * These can be persisted by storing their name and rotation
+ * These can be persisted by storing their name and rotation.
  *
  * @see jmri.jmrit.display.configurexml.PositionableLabelXml
  * @author Bob Jacobsen Copyright 2002, 2008
@@ -291,7 +290,8 @@ public class NamedIcon extends ImageIcon {
      }*/
 
     /**
-     * Valid values are <ul>
+     * Valid values are
+     * <ul>
      * <li>0 - no rotation
      * <li>1 - 90 degrees counter-clockwise
      * <li>2 - 180 degrees counter-clockwise

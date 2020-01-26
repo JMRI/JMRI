@@ -65,7 +65,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
         Mnemonics.put("SensorTab", KeyEvent.VK_E); // NOI18N
         Mnemonics.put("TurnoutTab", KeyEvent.VK_T); // NOI18N
         Mnemonics.put("OutputTab", KeyEvent.VK_O); // NOI18N
-        Mnemonics.put("AddButton", KeyEvent.VK_A); // NOI18N
+        Mnemonics.put("ButtonAdd", KeyEvent.VK_A); // NOI18N
         Mnemonics.put("CloseButton", KeyEvent.VK_O); // NOI18N
         Mnemonics.put("SaveButton", KeyEvent.VK_S); // NOI18N
     }
@@ -120,7 +120,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
 
         JButton addButton = new JButton(Bundle.getMessage("ButtonAddX", Bundle.getMessage("BeanNameSensor")));
         addButton.setToolTipText(Bundle.getMessage("ToolTipButtonMSFAdd"));
-        addButton.setMnemonic(Mnemonics.get("AddButton")); // NOI18N
+        addButton.setMnemonic(Mnemonics.get("ButtonAdd")); // NOI18N
         addButton.addActionListener((ActionEvent e) -> {
             addButtonPressed(e);
         });

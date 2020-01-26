@@ -20,14 +20,15 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Le Tableau M&eacute;moire</h1>Vous pouvez utiliser le
       tableau de la m&eacute;moire pour regarder le contenu des
       variables de la m&eacute;moire JMRI.
@@ -50,6 +51,7 @@
       consultez le <a href=
       "../../../../html/tools/Memories.shtml">page d'aide
       m&eacute;moire</a>.</p>
+
       <!--#include virtual="/Footer" -->
     </div>
   </div>

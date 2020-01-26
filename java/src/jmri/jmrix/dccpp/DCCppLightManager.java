@@ -1,7 +1,7 @@
 package jmri.jmrix.dccpp;
 
 import static jmri.jmrix.dccpp.DCCppConstants.MAX_TURNOUT_ADDRESS;
-
+import javax.annotation.Nonnull;
 import java.util.Locale;
 import jmri.Light;
 import jmri.managers.AbstractLightManager;
@@ -35,6 +35,7 @@ public class DCCppLightManager extends AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public DCCppSystemConnectionMemo getMemo() {
         return (DCCppSystemConnectionMemo) memo;
     }
@@ -56,15 +57,14 @@ public class DCCppLightManager extends AbstractLightManager {
         // Normalize the systemName
         String sName = getSystemNamePrefix() + bitNum;   // removes any leading zeros
         // make the new Light object
-        Light lgt = new DCCppLight(tc, this, sName, userName);
-        return lgt;
+        return new DCCppLight(tc, this, sName, userName);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
     }
 
@@ -72,7 +72,8 @@ public class DCCppLightManager extends AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
-    public String validateSystemNameFormat(String systemName, Locale locale) {
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String systemName, @Nonnull Locale locale) {
         return validateIntegerSystemNameFormat(systemName, 1, MAX_TURNOUT_ADDRESS, locale);
     }
 
@@ -94,7 +95,7 @@ public class DCCppLightManager extends AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
-    public boolean validSystemNameConfig(String systemName) {
+    public boolean validSystemNameConfig(@Nonnull String systemName) {
         return (true);
     }
 
@@ -102,7 +103,7 @@ public class DCCppLightManager extends AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 

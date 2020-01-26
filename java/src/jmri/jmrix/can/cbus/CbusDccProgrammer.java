@@ -20,18 +20,19 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
 
     public CbusDccProgrammer(jmri.jmrix.can.TrafficController tc) {
         this.tc = tc;
-        tc.addCanListener(this);
+        addTc(tc);
     }
 
     jmri.jmrix.can.TrafficController tc;
 
     /**
+     * {@inheritDoc}
      * Types implemented here.
      */
     @Override
     @Nonnull
     public List<ProgrammingMode> getSupportedModes() {
-        List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
+        List<ProgrammingMode> ret = new ArrayList<>();
         ret.add(ProgrammingMode.PAGEMODE);
         ret.add(ProgrammingMode.DIRECTBITMODE);
         ret.add(ProgrammingMode.DIRECTBYTEMODE);
@@ -116,7 +117,6 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
             throw new jmri.ProgrammerException("programmer in use");
         } else {
             _usingProgrammer = p;
-            return;
         }
     }
 
@@ -133,13 +133,10 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
      */
     @Override
     synchronized public void reply(CanReply m) {
-        if ( m.isExtended() || m.isRtr() ) {
+        if ( m.extendedOrRtr() ) {
             return;
         }
-        if (progState == NOTPROGRAMMING) {
-            // we get the complete set of replies now, so ignore these
-            return;
-        } else if (progState == COMMANDSENT) {
+        if (progState == COMMANDSENT) {
             log.debug("reply in COMMANDSENT state");
             // operation done, capture result, then have to leave programming mode
             // check for errors
@@ -173,9 +170,6 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
                     log.debug("Reply ignored: {}", m);
                 }
             }
-
-        } else {
-            log.debug("reply in un-decoded state");
         }
     }
 

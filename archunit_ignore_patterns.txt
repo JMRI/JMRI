@@ -5,6 +5,7 @@
 
 # For checkStandardStreams
 Method <jmri\.jmrit\.XmlFile\.lambda\$dumpElement\$.*\(org\.jdom2\.Element\)> gets field <java\.lang\.System\.out>.*
+Method <jmri\.jmrit\.XmlFile\.lambda\$0\(org\.jdom2\.Element\)> gets field <java\.lang\.System\.out>.*
 Method <jmri\.jmrit\.XmlFileValidateAction\$2\.showFailResults\(java\.awt\.Component, java\.lang\.String\)> gets field <java\.lang\.System\.out>.*
 Method <jmri\.jmrit\.automat\.JythonAutomaton\.handle\(\)> gets field <java\.lang\.System\.out>.*
 Method <jmri\.jmrit\.automat\.JythonSiglet\.defineIO\(\)> gets field <java\.lang\.System\.out>.*
@@ -18,6 +19,7 @@ Class <jmri\.jmrit\.symbolicprog\.SymbolicProgBundle> is not assignable to jmri\
 
 # For checkBundleNames
 Class <apps\.ConfigBundle> does not have simple name \'Bundle\'.*
+Class <jmri\.web\.servlet\.json\.JsonBundle> does not have simple name \'Bundle\'.*
 
 # For checkJmriPackageAwt
 Method <jmri\.ConditionalAction\.getListener\(\)> has return type <java\.awt\.event\.ActionListener>.*

@@ -19,6 +19,7 @@ coveragereport
 tests.log
 cucumber-results.xml
 cucumber-results.json
+failed_files.txt
 
 # runtime artifacts
 messages.log*
@@ -57,6 +58,7 @@ local.properties
 .metadata
 RemoteSystemsTempFiles
 .idea/libraries/**
+.idea/sonarlint/issuestore
 
 # user-installed components
 /web/TrainCrew

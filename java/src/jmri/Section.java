@@ -486,14 +486,19 @@ public class Section extends AbstractNamedBean {
             mFirstBlock = b;
         } else {
             // check that block is unique
-            for (Block block : mBlockEntries) if (block == b) return false; // already present
-            // Note: connectivity to current block is assumed to have been checked
+            for (Block block : mBlockEntries) {
+                if (block == b) {
+                    return false; // already present
+                }            // Note: connectivity to current block is assumed to have been checked
+            }
         }
 
         // a lot of this code searches for blocks by their user name.
         // warn if there isn't one.
-        if (b.getUserName() == null) log.warn("Block {} does not have a user name, may not work correctly in Section {}",
-                b.getSystemName(), getSystemName());
+        if (b.getUserName() == null) {
+            log.warn("Block {} does not have a user name, may not work correctly in Section {}",
+                    b.getSystemName(), getSystemName());
+        }
         // add Block to the Block list
         mBlockEntries.add(b);
         mLastBlock = b;
@@ -678,8 +683,8 @@ public class Section extends AbstractNamedBean {
     }
     /**
      * Gets Blocks in order. If state is FREE or FORWARD, returns Blocks in
-     * forward order. If state is REVERSE, returns Blocks in reverse order. First
-     * call getEntryBlock, then call getNextBlock until null is returned.
+     * forward order. If state is REVERSE, returns Blocks in reverse order.
+     * First call getEntryBlock, then call getNextBlock until null is returned.
      */
     private int blockIndex = 0;  // index of last block returned
 
@@ -753,7 +758,7 @@ public class Section extends AbstractNamedBean {
         }
         String s = mFirstBlock.getSystemName();
         String uName = mFirstBlock.getUserName();
-        if ((uName != null) && (!uName.equals(""))) {
+        if ((uName != null) && !uName.isEmpty()) {
             return (s + "( " + uName + " )");
         }
         return s;
@@ -1580,8 +1585,9 @@ public class Section extends AbstractNamedBean {
     }
 
     /**
-     * @return 'true' if successfully checked direction sensor by follow connectivity from specified
-     * track node; 'false' if an error occurred
+     * @return 'true' if successfully checked direction sensor by follow
+     *         connectivity from specified track node; 'false' if an error
+     *         occurred
      */
     private boolean setDirectionSensorByConnectivity(TrackNode tNode, TrackNode altNode, SignalHead sh,
             Block cBlock, ConnectivityUtil cUtil) {
@@ -1640,12 +1646,11 @@ public class Section extends AbstractNamedBean {
      * Place direction sensors in SSL for all Signal Heads in this Section if
      * the Sensors are not already present in the SSL.
      * <p>
-     * Only anchor point block
-     * boundaries that have assigned signals are considered. Only turnouts that
-     * have assigned signals are considered. Only level crossings that have
-     * assigned signals are considered. Turnouts and anchor points without
-     * signals are counted, and reported in warning messages during this
-     * procedure, if there are any missing signals.
+     * Only anchor point block boundaries that have assigned signals are
+     * considered. Only turnouts that have assigned signals are considered. Only
+     * level crossings that have assigned signals are considered. Turnouts and
+     * anchor points without signals are counted, and reported in warning
+     * messages during this procedure, if there are any missing signals.
      * <p>
      * If this method has trouble, an error message is placed in the log
      * describing the trouble.
@@ -2269,7 +2274,7 @@ public class Section extends AbstractNamedBean {
                                 }
                             }
                         }
-                    } else if (t.getTurnoutType() == LayoutSlip.SINGLE_SLIP || t.getTurnoutType() == LayoutSlip.DOUBLE_SLIP) {
+                    } else if (t.isTurnoutTypeSlip()) {
                         int direction = getDirectionSlip(t, cUtil);
                         int altDirection = EntryPoint.FORWARD;
                         if (direction == EntryPoint.FORWARD) {
@@ -2394,12 +2399,11 @@ public class Section extends AbstractNamedBean {
         }
 
         // need code to fully implement checkSignals if (getListOfForwardBlockEntryPoints(getEntryBlock()).size() > 0)
-
         return true;
     }
 
     @SuppressWarnings("unused") // not used now, preserved for later use
-    @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification="was previously marked with @SuppressWarnings, reason unknown")
+    @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification = "was previously marked with @SuppressWarnings, reason unknown")
     private List<EntryPoint> getListOfForwardBlockEntryPoints(Block b) {
         if (initializationNeeded) {
             initializeBlocks();
@@ -2533,9 +2537,9 @@ public class Section extends AbstractNamedBean {
     }
 
     /**
-     * Set/reset the display to use alternate color for
-     * unoccupied blocks in this section. If Layout Editor panel is not present,
-     * Layout Blocks will not be present, and nothing will be set.
+     * Set/reset the display to use alternate color for unoccupied blocks in
+     * this section. If Layout Editor panel is not present, Layout Blocks will
+     * not be present, and nothing will be set.
      *
      * @param set true to use alternate unoccupied color; false otherwise
      */
@@ -2552,13 +2556,12 @@ public class Section extends AbstractNamedBean {
     }
 
     /**
-     * Set/reset the display to use alternate color for
-     * unoccupied blocks in this Section. If the Section already contains an
-     * active block, then the alternative color will be set from the active
-     * block, if no active block is found or we are clearing the alternative
-     * color then all the blocks in the Section will be set. If Layout Editor
-     * panel is not present, Layout Blocks will not be present, and nothing will
-     * be set.
+     * Set/reset the display to use alternate color for unoccupied blocks in
+     * this Section. If the Section already contains an active block, then the
+     * alternative color will be set from the active block, if no active block
+     * is found or we are clearing the alternative color then all the blocks in
+     * the Section will be set. If Layout Editor panel is not present, Layout
+     * Blocks will not be present, and nothing will be set.
      *
      * @param set true to use alternate unoccupied color; false otherwise
      */

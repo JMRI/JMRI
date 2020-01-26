@@ -45,6 +45,7 @@ public class DCCppStreamPortControllerTest extends jmri.jmrix.AbstractStreamPort
     @Override
     @After 
     public void tearDown() {
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
 

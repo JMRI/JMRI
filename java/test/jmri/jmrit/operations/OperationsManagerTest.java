@@ -1,8 +1,10 @@
 package jmri.jmrit.operations;
 
-import jmri.InstanceManager;
 import org.junit.Assert;
 import org.junit.Test;
+
+import jmri.InstanceManager;
+import jmri.util.JUnitOperationsUtil;
 
 /**
  *
@@ -14,6 +16,7 @@ public class OperationsManagerTest extends OperationsTestCase {
     public void testGetInstance() {
         OperationsManager t = InstanceManager.getDefault(OperationsManager.class);
         Assert.assertNotNull("exists", t);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(OperationsManagerTest.class);

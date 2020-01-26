@@ -17,7 +17,8 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 
   <!-- FAQ-Head -->
   <script type="text/javascript">
@@ -26,13 +27,14 @@
   <link rel="stylesheet" type="text/css" href="/web/css/faq.css"
   media="screen">
   <!-- /FAQ-Head -->
-</head><!--#include virtual="/Header.shtml" -->
+</head>
 
 <body>
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-
     <div id="mainContent">
+
       <h1>JMRI Code: Git FAQ</h1>
 
       <p>This is a list of Frequently Asked Questions for Git,
@@ -192,15 +194,12 @@
           content with that of the remote repo you originally
           cloned things from.</p>
 
-          <p>The following reference should get you started using
-          either the git command line or GitHub Desktop:</p>
-
-          <ul>
-            <li>Log in to GitHub and clone your own copy of the
+          <h3>Getting Started</h3>
+            The first step is to log in to GitHub and clone your own copy of the
             main JMRI repo. This will give you a safe place to push
-            and pull from without impacting others.</li>
+            and pull from without impacting others.
 
-            <li>Using git:
+            <h4>Using Git from the command line</h4>
 
               <ul>
                 <li>Clone the JMRI repo to your local system (or
@@ -256,10 +255,17 @@
 </pre>
                 </li>
               </ul>
-            </li>
 
-            <li>Using GitHub Desktop:
+            <h4>Using GitHub Desktop application</h4>
 
+            GitHub Desktop is a free application that 
+            can do many of the same things that the git command-line tool does,
+            but provides an interface that many people find easier and more friendly.
+            <p>
+            For more on GitHub Desktop,
+            please see our
+            <a href="githubdesktopinto.shtml">page on using GitHub Desktop</a>.
+            
               <ul>
                 <li>Clone the JMRI repo to your local system by
                 picking an item from the "Clone" tab in the File
@@ -375,8 +381,6 @@
                   delete the branch safely.</p>
                 </li>
               </ul>
-            </li>
-          </ul>
         </dd>
 
         <dt id="branchexamples">Branch Examples</dt>
@@ -552,7 +556,7 @@
             </li>
 
             <li>Using GitHub Desktop:
-
+            
               <ul>
                 <li>Click the "Add a Branch (+)" button, provide a
                 name for your new branch and using the From:
@@ -1158,16 +1162,7 @@
           that users are likely to edit and submit back for
           inclusion.</p>
 
-          <p>But with Git, <!-- 
-                  there's really no good way to maintain these automatically,
-                  http://thomas-cokelaer.info/blog/2014/12/moving-from-svn-to-git-id-equivalent/
- 
-                  see .git/info/attributes
-                  # see man gitattributes
-                  # expands $Id$ but not $Revision$ $Author$
-                  *.xml ident
-              -->
-           there's less need for these. So we'll be removing these
+          <p>But with Git, there's less need for these. So we'll be removing these
           lines as time allows. If you're working on a file and
           happen to see one, usually in the header, you can just
           delete it (if it has somebody's name, you might want to

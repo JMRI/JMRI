@@ -1,12 +1,9 @@
 package jmri.jmrix.ieee802154.swing.mon;
 
-import java.awt.GraphicsEnvironment;
-import jmri.InstanceManager;
 import jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 

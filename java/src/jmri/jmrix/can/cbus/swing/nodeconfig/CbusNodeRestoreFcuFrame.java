@@ -1,45 +1,23 @@
 package jmri.jmrix.can.cbus.swing.nodeconfig;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JFileChooser;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel;
-import jmri.jmrix.can.cbus.node.CbusNode;
-import jmri.jmrix.can.cbus.node.CbusNodeEvent;
-import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
-import jmri.jmrix.can.cbus.node.CbusNodeEventTableDataModel;
-import jmri.jmrix.can.cbus.node.CbusNodeFromBackup;
-import jmri.jmrix.can.cbus.node.CbusNodeFromFcuTableDataModel;
-import jmri.jmrix.can.cbus.node.CbusNodeNVTableDataModel;
+import jmri.jmrix.can.cbus.node.*;
 import jmri.util.JmriJFrame;
 import jmri.util.StringUtil;
-import jmri.util.ThreadingUtil;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -47,6 +25,7 @@ import org.w3c.dom.NodeList;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.xml.sax.SAXException;
 
 /**
  *
@@ -60,8 +39,8 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
     private JTabbedPane tabbedPane;
     private CbusNodeTableDataModel nodeModel = null;
     private CanSystemConnectionMemo _memo;
-    private NodeConfigToolPane mainpane;
-    private CbusNodeNVTablePane nodevarPane;
+    private final NodeConfigToolPane mainpane;
+    private CbusNodeNVEditTablePane nodevarPane;
     private CbusNodeEventTablePane nodeEventPane;
     public JSplitPane split;
     private CbusNodeInfoPane nodeinfoPane;
@@ -81,6 +60,7 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
 
     /**
      * Create a new instance of CbusNodeRestoreFcuFrame.
+     * @param main the main node table pane
      */
     public CbusNodeRestoreFcuFrame( NodeConfigToolPane main ) {
         super();
@@ -89,7 +69,7 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
 
     public void initComponents(CanSystemConnectionMemo memo) {
         _memo = memo;
-        cbusNodeFcuDataModel = new CbusNodeFromFcuTableDataModel(_memo, 2, CbusNodeFromFcuTableDataModel.MAX_COLUMN);
+        cbusNodeFcuDataModel = new CbusNodeFromFcuTableDataModel(_memo, 2, CbusNodeFromFcuTableDataModel.FCU_MAX_COLUMN);
         
         try {
             nodeModel = jmri.InstanceManager.getDefault(CbusNodeTableDataModel.class);
@@ -141,20 +121,20 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
         JPanel nodeToBeTaughtPane = new JPanel();
         nodeToBeTaughtPane.setLayout(new BoxLayout(nodeToBeTaughtPane, BoxLayout.Y_AXIS));
         
-        ArrayList<String> nodeTableNodeArr = new ArrayList<String>();
+        ArrayList<String> nodeTableNodeArr = new ArrayList<>();
         
-        for (String ref : nodeModel.getListOfNodeNumberNames()) {
+        nodeModel.getListOfNodeNumberNames().forEach((ref) -> {
             nodeTableNodeArr.add(ref);
-        }
+        });
         
-        if ( nodeTableNodeArr.size()==0 ){
+        if ( nodeTableNodeArr.isEmpty() ){
             nodeTableNodeArr.add("<html><span style='color:red'>Node Table Empty</span></html>");
         }
 
         Object[] strArray = new Object[nodeTableNodeArr.size()];
         nodeTableNodeArr.toArray(strArray);
         
-        list = new JList<Object>(strArray);
+        list = new JList<>(strArray);
         list.setLayoutOrientation(JList.VERTICAL);
         list.setVisibleRowCount(-1);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -197,7 +177,8 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
         
         CbusNodeNVTableDataModel nodeNVModel = new CbusNodeNVTableDataModel(_memo, 5,
             CbusNodeNVTableDataModel.MAX_COLUMN); // controller, row, column
-        nodevarPane = new CbusNodeNVTablePane(nodeNVModel);
+        nodevarPane = new CbusNodeNVEditTablePane(nodeNVModel);
+        nodevarPane.setNonEditable();
         
         CbusNodeEventTableDataModel nodeEvModel = new CbusNodeEventTableDataModel( null, _memo, 10,
             CbusNodeEventTableDataModel.MAX_COLUMN); // controller, row, column
@@ -289,22 +270,16 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
         };
         importNodeNamesButton.addActionListener(importNodeNames);
         
-        nodeTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                if ( !e.getValueIsAdjusting() ) {
-                    updateTabs();
-                    updateRestoreNodeButton();
-                }
+        nodeTable.getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
+            if ( !e.getValueIsAdjusting() ) {
+                updateTabs();
+                updateRestoreNodeButton();
             }
         });
         
-        list.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                if ( !e.getValueIsAdjusting() ) {
-                    updateRestoreNodeButton();
-                }
+        list.getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
+            if ( !e.getValueIsAdjusting() ) {
+                updateRestoreNodeButton();
             }
         });
         updateRestoreNodeButton();
@@ -315,7 +290,8 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
         if ( sel > -1 ) {
         
             int modelIndex = nodeTable.convertRowIndexToModel(sel);
-            int nodenum = (int) nodeTable.getModel().getValueAt(modelIndex, CbusNodeFromFcuTableDataModel.NODE_NUMBER_COLUMN);
+            int nodenum = (int) nodeTable.getModel().getValueAt(modelIndex, 
+                CbusNodeFromFcuTableDataModel.FCU_NODE_NUMBER_COLUMN);
             
             return cbusNodeFcuDataModel.getNodeByNodeNum(nodenum);
         
@@ -341,13 +317,18 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
 
         if ( nodeTable.getSelectedRow() > -1 ) {
             
-            if ( tabbedPane.getSelectedIndex() == 1 ){ // nv pane
-                nodevarPane.setNode( nodeFromSelectedRow() );
-            }
-            else if ( tabbedPane.getSelectedIndex() == 2 ) { // ev pane
-                nodeEventPane.setNode( nodeFromSelectedRow() );
-            } else {
-                nodeinfoPane.initComponents( nodeFromSelectedRow() );
+            switch (tabbedPane.getSelectedIndex()) {
+                case 1:
+                    // nv pane
+                    nodevarPane.setNode( nodeFromSelectedRow() );
+                    break;
+                case 2:
+                    // ev pane
+                    nodeEventPane.setNode( nodeFromSelectedRow() );
+                    break;
+                default:
+                    nodeinfoPane.initComponents( nodeFromSelectedRow() );
+                    break;
             }
         }
         else {
@@ -513,12 +494,12 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
             }
         }
         catch (RuntimeException e) {
-            log.warn("Error importing xml file ", e);
+            log.warn("Error importing xml file {}", e);
             JOptionPane.showMessageDialog(null, (Bundle.getMessage("ImportError")),
                 Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
         } 
-        catch (Exception e) {
-            log.warn("Error importing xml file. Valid xml?", e);
+        catch (IOException | ParserConfigurationException | SAXException e) {
+            log.warn("Error importing xml file. Valid xml? {}", e);
             JOptionPane.showMessageDialog(null, (Bundle.getMessage("ImportError") + " Valid XML?"),
                 Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
         }

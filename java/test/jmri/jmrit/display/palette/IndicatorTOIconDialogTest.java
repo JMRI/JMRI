@@ -27,6 +27,7 @@ public class IndicatorTOIconDialogTest {
         IndicatorTOItemPanel itp = new IndicatorTOItemPanel(df,"IT01","",tableModel,editor);
         IndicatorTOIconDialog t = new IndicatorTOIconDialog("Turnout","Turnout",itp,"",null);
         Assert.assertNotNull("exists",t);
+        JUnitUtil.dispose(t);
         JUnitUtil.dispose(df);
     }
 

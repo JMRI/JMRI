@@ -9,8 +9,6 @@ import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.CbusSend;
-import jmri.jmrix.can.cbus.simulator.CbusSimulator;
-import jmri.jmrix.can.cbus.simulator.CbusDummyCSSession;
 import jmri.jmrix.can.cbus.swing.simulator.CsPane;
 import jmri.jmrix.can.TrafficController;
 import org.slf4j.Logger;
@@ -55,7 +53,7 @@ public class CbusDummyCS implements CanListener {
         memo = sysmemo;
         if (memo != null) {
             tc = memo.getTrafficController();
-            tc.addCanListener(this);
+            addTc(tc);
         }
         init();
     }

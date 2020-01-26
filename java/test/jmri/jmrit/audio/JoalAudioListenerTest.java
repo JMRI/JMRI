@@ -17,12 +17,15 @@ public class JoalAudioListenerTest {
     public void testCtor() {
         JoalAudioListener l = new JoalAudioListener("test");
         Assert.assertNotNull("exists", l);
+        Assert.assertEquals("test", l.getSystemName());
     }
 
     @Test
     public void testC2Stringtor() {
         JoalAudioListener l = new JoalAudioListener("testsysname","testusername");
         Assert.assertNotNull("exists", l);
+        Assert.assertEquals("testsysname", l.getSystemName());
+        Assert.assertEquals("testusername", l.getUserName());
     }
 
     @Before
@@ -31,5 +34,7 @@ public class JoalAudioListenerTest {
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
 }

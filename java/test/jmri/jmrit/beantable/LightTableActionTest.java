@@ -4,10 +4,8 @@ import apps.gui.GuiLafPreferencesManager;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
-import jmri.InstanceManager;
-import jmri.Light;
-import jmri.Sensor;
-import jmri.Turnout;
+
+import jmri.*;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
 import org.junit.After;
@@ -28,7 +26,11 @@ import org.netbeans.jemmy.util.NameComponentChooser;
  *
  * @author Paul Bender Copyright (C) 2017
  */
-public class LightTableActionTest extends AbstractTableActionBase {
+public class LightTableActionTest extends AbstractTableActionBase<Light> {
+
+    private LightManager lightManager;
+    private SensorManager sensorManager;
+    private TurnoutManager turnoutManager;
 
     @Test
     public void testCTor() {
@@ -67,8 +69,8 @@ public class LightTableActionTest extends AbstractTableActionBase {
 
         a.actionPerformed(null); // show table
         // create 2 lights and see if they exist
-        Light il1 = InstanceManager.lightManagerInstance().provideLight("IL1");
-        InstanceManager.lightManagerInstance().provideLight("IL2");
+        Light il1 = lightManager.provideLight("IL1");
+        lightManager.provideLight("IL2");
         il1.setState(Light.ON);
         il1.setState(Light.OFF);
 
@@ -94,10 +96,6 @@ public class LightTableActionTest extends AbstractTableActionBase {
         // TODO Add more Light Add pane tests in new LightTableWindowTest? see TurnoutEtc
 
         // clean up
-        JFrame f = a.getFrame();
-        if (f != null) {
-            JUnitUtil.dispose(f);
-        }
         JUnitUtil.dispose(af);
         _lTable.dispose();
         _l1Table.dispose();
@@ -138,7 +136,6 @@ public class LightTableActionTest extends AbstractTableActionBase {
         JemmyUtil.pressButton(new JFrameOperator(f2), Bundle.getMessage("ButtonCancel"));
         JUnitUtil.dispose(f2);
         JUnitUtil.dispose(f1);
-        JUnitUtil.dispose(f);
     }
 
     @Override
@@ -152,8 +149,8 @@ public class LightTableActionTest extends AbstractTableActionBase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // create 2 Sensors to pick from
-        Sensor sOne = InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("S1");
-        Sensor sTwo = InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("S2");
+        Sensor sOne = sensorManager.provideSensor("S1");
+        Sensor sTwo = sensorManager.provideSensor("S2");
 
         a.actionPerformed(null); // show table
 
@@ -188,7 +185,8 @@ public class LightTableActionTest extends AbstractTableActionBase {
         // new / edit light frame stays open
 
         // confirm light has been created with correct control
-        Light created = InstanceManager.getDefault(jmri.LightManager.class).provideLight("IL1234");
+        Light created = lightManager.getLight("IL1234");
+        Assert.assertNotNull(created);
         sOne.setState(Sensor.ON);
         Assert.assertEquals("OFF state, light does not react to sOne", Light.OFF, created.getState());
         sTwo.setState(Sensor.ON);
@@ -248,8 +246,6 @@ public class LightTableActionTest extends AbstractTableActionBase {
         Assert.assertEquals("1 Control", 1, created.getLightControlList().size());
 
         JUnitUtil.dispose(f1);
-        JUnitUtil.dispose(f);  // close Light Table window
-
     }
 
     @Test
@@ -293,7 +289,7 @@ public class LightTableActionTest extends AbstractTableActionBase {
         JemmyUtil.pressButton(jfob, Bundle.getMessage("ButtonCreate"));
         // new light frame closes
 
-        Light created = InstanceManager.getDefault(jmri.LightManager.class).provideLight("IL4321");
+        Light created = lightManager.provideLight("IL4321");
         Assert.assertEquals("1 Control", 1, created.getLightControlList().size());
         Assert.assertEquals("Correct Light Control Type and Times", "ON at 01:02, OFF at 03:04.",
                 LightTableAction.getDescriptionText(created.getLightControlList().get(0),
@@ -408,17 +404,14 @@ public class LightTableActionTest extends AbstractTableActionBase {
         Assert.assertEquals("Unchanged Light Control Type and Times", "ON at 21:22, OFF at 23:24.",
                 LightTableAction.getDescriptionText(created.getLightControlList().get(0),
                         created.getLightControlList().get(0).getControlType()));
-
-        JUnitUtil.dispose(f);  // close Light Table window
-
     }
     
     @Test
     public void testAddEditTurnoutLightControl() throws jmri.JmriException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
-        Turnout tOne = InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout("T1");
-        Turnout tTwo = InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout("T2");
+        Turnout tOne = turnoutManager.provideTurnout("T1");
+        Turnout tTwo = turnoutManager.provideTurnout("T2");
 
         Assert.assertNotNull("exists", tOne);
         Assert.assertNotNull("exists", tTwo);
@@ -444,14 +437,14 @@ public class LightTableActionTest extends AbstractTableActionBase {
 
         new JComboBoxOperator(jfoc, 1).setSelectedItem(tTwo); // select Turnout T2
         new JComboBoxOperator(jfoc, 2).selectItem(
-                InstanceManager.getDefault(jmri.TurnoutManager.class).getThrownText());
+                turnoutManager.getThrownText());
 
         JemmyUtil.pressButton(jfoc, Bundle.getMessage("ButtonCreate"));
         // light new control frame closes
         JemmyUtil.pressButton(jfob, Bundle.getMessage("ButtonCreate"));
         JemmyUtil.pressButton(jfob, Bundle.getMessage("ButtonClose"));
 
-        Light created = InstanceManager.getDefault(jmri.LightManager.class).getLight("IL333");
+        Light created = lightManager.getLight("IL333");
         Assert.assertNotNull(created);
         Assert.assertEquals("1 Control", 1, created.getLightControlList().size());
 
@@ -481,12 +474,11 @@ public class LightTableActionTest extends AbstractTableActionBase {
                 new JComboBoxOperator(jfof3, 0).getSelectedItem());
         Assert.assertEquals("Turnout selected ", tTwo,
                 new JComboBoxOperator(jfof3, 1).getSelectedItem());
-        Assert.assertEquals("Turnout thrown ", InstanceManager.getDefault(jmri.TurnoutManager.class).getThrownText(),
+        Assert.assertEquals("Turnout thrown ", turnoutManager.getThrownText(),
                 new JComboBoxOperator(jfof3, 2).getSelectedItem());
 
         new JComboBoxOperator(jfof3, 1).setSelectedItem(tOne); // select Turnout T1
-        new JComboBoxOperator(jfof3, 2).selectItem(
-                InstanceManager.getDefault(jmri.TurnoutManager.class).getClosedText());
+        new JComboBoxOperator(jfof3, 2).selectItem(turnoutManager.getClosedText());
 
         JemmyUtil.pressButton(jfof3, Bundle.getMessage("ButtonUpdate"));
         // light new control frame closes
@@ -498,9 +490,6 @@ public class LightTableActionTest extends AbstractTableActionBase {
         Assert.assertEquals("Correct LightControl", "ON when ITT1 is Closed.",
                 LightTableAction.getDescriptionText(created.getLightControlList().get(0),
                         created.getLightControlList().get(0).getControlType()));
-
-        JUnitUtil.dispose(f);  // close Light Table window
-
     }
 
     @Test
@@ -508,8 +497,8 @@ public class LightTableActionTest extends AbstractTableActionBase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // create 2 Sensors to pick from
-        Sensor sOne = InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("S1");
-        Sensor sTwo = InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("S2");
+        Sensor sOne = sensorManager.provideSensor("S1");
+        Sensor sTwo = sensorManager.provideSensor("S2");
 
         Assert.assertNotNull("exists", sOne);
         Assert.assertNotNull("exists", sTwo);
@@ -542,7 +531,7 @@ public class LightTableActionTest extends AbstractTableActionBase {
         JemmyUtil.pressButton(jfob, Bundle.getMessage("ButtonCreate"));
         // new light frame closes
 
-        Light created = InstanceManager.getDefault(jmri.LightManager.class).provideLight("IL444");
+        Light created = lightManager.provideLight("IL444");
         Assert.assertEquals("1 Control", 1, created.getLightControlList().size());
         Assert.assertEquals("Correct Light Control Type and Settings", "ON for 20 msec. when ISS2 goes Active.",
                 LightTableAction.getDescriptionText(created.getLightControlList().get(0),
@@ -586,9 +575,6 @@ public class LightTableActionTest extends AbstractTableActionBase {
         Assert.assertEquals("Correct Light Control Type", "ON for 777 msec. when ISS1 goes Active.",
                 LightTableAction.getDescriptionText(created.getLightControlList().get(0),
                         created.getLightControlList().get(0).getControlType()));
-
-        JUnitUtil.dispose(f); // close Light Table window
-
     }
 
     @Test
@@ -597,9 +583,9 @@ public class LightTableActionTest extends AbstractTableActionBase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // create 3 Sensors to pick from
-        Sensor sOne = InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("S1");
-        Sensor sTwo = InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("S2");
-        Sensor sThree = InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("S3");
+        Sensor sOne = sensorManager.provideSensor("S1");
+        Sensor sTwo = sensorManager.provideSensor("S2");
+        Sensor sThree = sensorManager.provideSensor("S3");
 
         Assert.assertNotNull("exists", sOne);
         Assert.assertNotNull("exists", sTwo);
@@ -638,7 +624,7 @@ public class LightTableActionTest extends AbstractTableActionBase {
         JemmyUtil.pressButton(jfob, Bundle.getMessage("ButtonClose"));
 
         // confirm light has been created with correct control
-        Light created = InstanceManager.getDefault(jmri.LightManager.class).provideLight("IL555");
+        Light created = lightManager.provideLight("IL555");
 
         Assert.assertEquals("Correct Light Control Type", "ON when either ISS3 or ISS1 is Active.",
                 LightTableAction.getDescriptionText(created.getLightControlList().get(0),
@@ -687,10 +673,6 @@ public class LightTableActionTest extends AbstractTableActionBase {
         Assert.assertEquals("Correct Light Control Type", "ON when either ISS2 or ISS3 is Inactive.",
                 LightTableAction.getDescriptionText(created.getLightControlList().get(0),
                         created.getLightControlList().get(0).getControlType()));
-
-        JUnitUtil.dispose(f); // close Light Table window
-
-        // JemmyUtil.pressButton(new JFrameOperator(f),("Pause"));
     }
 
     // sensors with usernames
@@ -700,8 +682,8 @@ public class LightTableActionTest extends AbstractTableActionBase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // create 3 Sensors to pick from
-        Sensor sOne = InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("S1");
-        Sensor sTwo = InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("S2");
+        Sensor sOne = sensorManager.provideSensor("S1");
+        Sensor sTwo = sensorManager.provideSensor("S2");
 
         sOne.setUserName("My Sensor One");
         sTwo.setUserName("My Sensor Two");
@@ -739,15 +721,11 @@ public class LightTableActionTest extends AbstractTableActionBase {
         JemmyUtil.pressButton(jfob, Bundle.getMessage("ButtonClose"));
 
         // confirm light has been created with correct control
-        Light created = InstanceManager.getDefault(jmri.LightManager.class).provideLight("IL777");
+        Light created = lightManager.provideLight("IL777");
 
         Assert.assertEquals("Correct Light Control Type", "ON when either My Sensor Two or My Sensor One is Active.",
                 LightTableAction.getDescriptionText(created.getLightControlList().get(0),
                         created.getLightControlList().get(0).getControlType()));
-
-        JUnitUtil.dispose(f); // close Light Table window
-
-        // JemmyUtil.pressButton(new JFrameOperator(f),("Pause Test"));
     }
 
     // test the feedback message displayed in-pane for an Edit / New Light pane WITH variable intensity
@@ -769,12 +747,22 @@ public class LightTableActionTest extends AbstractTableActionBase {
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         helpTarget = "package.jmri.jmrit.beantable.LightTable";
         a = new LightTableAction();
+        lightManager = InstanceManager.getDefault(LightManager.class);
+        sensorManager = InstanceManager.getDefault(SensorManager.class);
+        turnoutManager = InstanceManager.getDefault(TurnoutManager.class);
     }
 
     @After
     @Override
     public void tearDown() {
+        JFrame f = a.getFrame();
+        if (f != null) {
+            JUnitUtil.dispose(f);
+        }
         a = null;
+        lightManager = null;
+        sensorManager = null;
+        turnoutManager = null;
         jmri.util.JUnitUtil.tearDown();
     }
 

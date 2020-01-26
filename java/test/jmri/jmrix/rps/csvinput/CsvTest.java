@@ -1,5 +1,11 @@
 package jmri.jmrix.rps.csvinput;
 
+import java.io.File;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 import org.junit.Test;
 import org.junit.Assert;
 
@@ -12,29 +18,32 @@ public class CsvTest {
 
     @Test
     public void testCreateReader() throws java.io.IOException {
-        Object o = new com.csvreader.CsvReader("java/test/jmri/jmrix/rps/csvinput/testdata.csv");
-        Assert.assertNotNull("exists", o);
+        CSVParser parser = CSVParser.parse(new File("java/test/jmri/jmrix/rps/csvinput/testdata.csv"), StandardCharsets.UTF_8, CSVFormat.DEFAULT.withSkipHeaderRecord());
+        Assert.assertNotNull("exists", parser);
     }
 
     @Test
     public void testReading() throws java.io.IOException {
-        com.csvreader.CsvReader o = new com.csvreader.CsvReader("java/test/jmri/jmrix/rps/csvinput/testdata.csv");
-        Assert.assertTrue("read 1st line", o.readRecord());
-        Assert.assertEquals("1st line column count", 4, o.getColumnCount());
+        CSVParser parser = CSVParser.parse(new File("java/test/jmri/jmrix/rps/csvinput/testdata.csv"), StandardCharsets.UTF_8, CSVFormat.DEFAULT);
+        List<CSVRecord> records = parser.getRecords();
+        Assert.assertEquals("2 lines", 2, records.size());
+        
+        CSVRecord record = records.get(0);
+        Assert.assertNotNull("read 1st line", record);
+        Assert.assertEquals("1st line column count", 4, record.size());
 
-        Assert.assertEquals("1st line datum 1", "1", o.get(0));
-        Assert.assertEquals("1st line datum 2", "2", o.get(1));
-        Assert.assertEquals("1st line datum 3", "3", o.get(2));
-        Assert.assertEquals("1st line datum 4", "4", o.get(3));
+        Assert.assertEquals("1st line datum 1", "1", record.get(0));
+        Assert.assertEquals("1st line datum 2", "2", record.get(1));
+        Assert.assertEquals("1st line datum 3", "3", record.get(2));
+        Assert.assertEquals("1st line datum 4", "4", record.get(3));
 
-        Assert.assertTrue("read 2nd line", o.readRecord());
+        record = records.get(1);
+        Assert.assertNotNull("read 2nd line", record);
 
-        Assert.assertEquals("2nd line datum 1", "4", o.get(0));
-        Assert.assertEquals("2nd line datum 2", "3", o.get(1));
-        Assert.assertEquals("2nd line datum 3", "2", o.get(2));
-        Assert.assertEquals("2nd line datum 4", "1", o.get(3));
-
-        Assert.assertTrue("can't read 3rd line", !o.readRecord());
+        Assert.assertEquals("2nd line datum 1", "4", record.get(0));
+        Assert.assertEquals("2nd line datum 2", "3", record.get(1));
+        Assert.assertEquals("2nd line datum 3", "2", record.get(2));
+        Assert.assertEquals("2nd line datum 4", "1", record.get(3));
     }
 
 }

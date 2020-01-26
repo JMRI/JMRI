@@ -1298,25 +1298,43 @@
 
    
 <li>
-<a href="">Frequently Asked Questions </a>
+<a href="html/tools/scripting/Python.shtml">Python/Jython </a>
 <ul></ul>
 </li>
 
    
 <li>
-<a href="html/tools/scripting/Python.shtml">Python </a>
+<a href="html/tools/scripting/ex_set_turnouts.shtml">Example: Setting Turnouts </a>
 <ul></ul>
 </li>
 
    
 <li>
-<a href="html/tools/scripting/AppleScript.shtml">AppleScript </a>
+<a href="html/tools/scripting/Examples.shtml">Examples (Links) </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="html/tools/scripting/HowTo.shtml">Scripting How To... </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="html/tools/scripting/WhatWhere.shtml">Scripting What...Where </a>
 <ul></ul>
 </li>
 
    
 <li>
 <a href="html/tools/scripting/Jynstruments.shtml">Jynstruments </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="html/tools/scripting/AppleScript.shtml">Open Scripting Arch (Apple) </a>
 <ul></ul>
 </li>
 
@@ -1598,6 +1616,12 @@
    
 <li>
 <a href="package/jmri/jmrit/logix/SpeedChanges.shtml">When Warrant Speeds Are Modified </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="package/jmri/jmrit/logix/Tracker.shtml">Train Trackers </a>
 <ul></ul>
 </li>
 

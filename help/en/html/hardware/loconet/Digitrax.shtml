@@ -17,14 +17,16 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
   <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
+
       <h1>Support: Digitrax LocoNet&reg;</h1>
 
       <div class="toc">
@@ -149,16 +151,16 @@
         command station</li>
       </ul>
 
-      <p>For systems which do not provide a LocoNet command
-      station, two additional options are supported. When a layout
+      <p>For systems which do not provide a real LocoNet Command
+      Station, two additional options are supported. When a layout
       uses LocoNet peripheral devices but not a LocoNet-based
-      command station, a "Standalone" LocoNet is used. See <a href=
-      "StandaloneLocoNet.shtml">Standalone LocoNet</a>. In
-      addition, JMRI software may be configured to use a simulated
+      command station, a "<a href="StandaloneLocoNet.shtml">Standalone
+      LocoNet</a>" is used.<br>
+      In addition, JMRI software may be configured to use a simulated
       LocoNet connection instead of a real LocoNet connection. This
-      is the "LocoNet Simulator".</p><a name="adapters" id=
-      "adapters"></a>
+      is the "<a href="LocoNetSim.shtml">LocoNet&reg; Simulator</a>".</p>
 
+      <a name="adapters" id="adapters"></a>
       <h3>Computer Interfaces</h3>
 
       <p>To connect your computer to the LocoNet, and hence to the
@@ -185,7 +187,8 @@
 
         <li><a title="BT LocoBridge" href=
         "BTLocoBridge.shtml">Bluetooth LocoBridge</a></li>
-      </ul>(Note: The Digitrax DSC240 has a built-in adapter that's
+      </ul>
+      (Note: The Digitrax DSC240 has a built-in adapter that's
       similar to the Digitrax PR3; if you have a DCS240, configure
       JMRI for it by selecting a PR3 connection type and a DCS240
       command station type)
@@ -199,7 +202,7 @@
       port, which may be the only suitable connection type
       available on some older computers.</p>
 
-      <p>The MS100 is not recommended; it sometimes fails to
+      <p>The MS100 is <em>not</em> recommended; it sometimes fails to
       provide reliable communications, and it cannot be used with
       JMRI if you are using Mac OS X or on most Windows Vista
       machines. If you have problems with the MS100, you might not
@@ -270,9 +273,9 @@
       "LocoBufferII.shtml">LocoBuffer-II</a>, <a title=
       "Original Kit Version" href="LocoBuffer.shtml">LocoBuffer</a>
       or <a title="Digitrax Serial interface" href=
-      "MS100.shtml">MS100</a> to act as an adapter. See below for
-      more information on these. The LocoBuffer-USB is highly
-      recommended.</p>
+      "MS100.shtml">MS100</a> to act as an adapter. The LocoBuffer-USB is highly
+      recommended. See <a href="#adapters">below</a> for more on
+      adapters.</p>
 
       <p>Note that except for the PR3 and PR4, these are only LocoNet
       interfaces, not stand alone programmers like the Digitrax PR2.
@@ -709,14 +712,14 @@
               nor the "alternate" LocoNet turnout control messages used with the
               command station "Bushby" feature, described below.
               <p>See <a href="../../../package/jmri/jmrit/beantable/TurnoutTable.shtml#automation">
-              Turnouts Table "automation"</a>help for more information on this 
+              Turnout Table "automation"</a>help for more information on this
               mechanism.
               <p>When using this mechanism with LocoNet connections, the turnout
               must not be configured for "MONITORING" feedback mode, as the
               messaging used with this mechanism does not use the messages required
               by "MONITORING" feedback mode.
               This may be done in the JMRI <a href="../../../package/jmri/jmrit/beantable/TurnoutTable.shtml">
-              "Turnouts Table"</a> by setting a turnout's  "Feedback" mode to one
+              "Turnout Table"</a> by setting a turnout's  "Feedback" mode to one
               of "Direct", "OneSensor", "TwoSensor", "Indirect" or "Exact" (choose
               one depending on the usable mode), and then configure the "Turnout
               Automation" mode to "RAW".
@@ -758,7 +761,7 @@
               <p>To configure this JMRI operating mode, it is necessary to
               configure each individual JMRI turnout, via the JMRI
               <a href="../../../package/jmri/jmrit/beantable/TurnoutTable.shtml">
-              "Turnouts Table"</a>.  The image below shows that turnouts
+              "Turnout Table"</a>.  The image below shows that turnouts
               LT10 and LT12 are configured to send both "ON" and "OFF" messages -
               each of these turnouts have the "Send ON and OFF" checkbox checked.
               In the image, turnouts LT11 and LT13 have the checkbox unchecked, so
@@ -817,7 +820,7 @@
                   information on the DCC track signal.  This requires configuration
                   of individual JMRI Turnouts (via the
                   <a href="../../../package/jmri/jmrit/beantable/TurnoutTable.shtml">
-                  "Turnouts Table"</a>) to have their "Bypass Bushby Bit" checkbox
+                  "Turnout Table"</a>) to have their "Bypass Bushby Bit" checkbox
                   checked.  This enables JMRI to send "alternate" LocoNet Turnout
                   control messages to the command station, and these "alternate"
                   messages will be buffered so that they may be passed to the DCC
@@ -825,7 +828,7 @@
                   "Bushby" feature.
                   <p>To configure this JMRI feature for a turnout, define the
                   turnout (if necessary) in the JMRI <a href="../../../package/jmri/jmrit/beantable/TurnoutTable.shtml">
-                  "Turnouts Table"</a>, and place a check in the turnout's "Bypass
+                  "Turnout Table"</a>, and place a check in the turnout's "Bypass
                   Bushby Bit" checkbox.  If the "Bypass Bushby Bit" column is not
                   visible in the table, you may right-click on the table column header
                   row and check "Bypass Bushby Bit", or check the "Show system-specific
@@ -915,7 +918,7 @@
       <p>JMRI supports a wide variety of LocoNet hardware and features.  JMRI provides
       a wide variety of hardware-specific tools to assist in configuring the devices.
       And JMRI provides a number of tools to monitor the operation of LocoNet.  Most
-      of these features are described in the JMRI "Help" pages linked below.</p>
+      of these features are described in the JMRI "Help" pages linked below (also refer to the sidebar).</p>
 
       <a name="devicetoolhelp" id="devicetoolhelp"></a><h3>JMRI LocoNet-specific Help pages</h3>
 
@@ -1065,7 +1068,7 @@
             Structures for LocoNet&reg; Interfacing</a></li>
 
             <li>A technically-oriented study of <a href=
-            "DigitraxPower/index.shtml">Power Supply issues</a> in
+            "DigitraxPower.shtml">Power Supply issues</a> in
             some Digitrax products</li>
 
           </ul>

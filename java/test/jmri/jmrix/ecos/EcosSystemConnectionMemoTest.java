@@ -38,6 +38,8 @@ public class EcosSystemConnectionMemoTest  extends jmri.jmrix.SystemConnectionMe
     @After
     @Override
     public void tearDown() {
+        memo.getLocoAddressManager().terminateThreads();
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

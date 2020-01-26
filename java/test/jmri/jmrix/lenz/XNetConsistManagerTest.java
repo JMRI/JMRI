@@ -1,5 +1,7 @@
 package jmri.jmrix.lenz;
 
+import jmri.util.JUnitUtil;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -18,7 +20,7 @@ public class XNetConsistManagerTest extends jmri.implementation.AbstractConsistM
     @Before
     @Override
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
         XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
         cm = new XNetConsistManager(new XNetSystemConnectionMemo(tc));
     }
@@ -27,7 +29,8 @@ public class XNetConsistManagerTest extends jmri.implementation.AbstractConsistM
     @Override
     public void tearDown() {
         cm = null;
-        jmri.util.JUnitUtil.tearDown();
+	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.tearDown();
     }
 
     @Test

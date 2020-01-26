@@ -24,6 +24,12 @@
         <authorinitials>GM</authorinitials>
         <revremark>Initial version</revremark>
     </revision>    
+    <revision>
+        <revnumber>1.1</revnumber>
+        <date>2019-12-30</date>
+        <authorinitials>BM</authorinitials>
+        <revremark>Correct 'held' specific appearance</revremark>
+    </revision>    
   </revhistory>
 
   <aspecttable>B&amp;O 1980</aspecttable>
@@ -116,7 +122,7 @@
     </danger>
 	
     <held>
-      <aspect>Stop</aspect>
+      <aspect>Stop and Proceed</aspect>
     </held>
 	
 	<dark>

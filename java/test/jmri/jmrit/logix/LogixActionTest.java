@@ -166,11 +166,14 @@ public class LogixActionTest {
 
         JUnitUtil.initLogixManager();
         JUnitUtil.initConditionalManager();
+        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
+        JUnitUtil.initWarrantManager();
     }
 
     @After
     public void tearDown() {
         InstanceManager.getDefault(WarrantManager.class).dispose();
+        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
         JUnitUtil.tearDown();
     }
 }

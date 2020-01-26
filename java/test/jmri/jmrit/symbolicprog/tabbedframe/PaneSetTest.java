@@ -1,6 +1,8 @@
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 import java.awt.GraphicsEnvironment;
+import java.awt.event.WindowEvent;
+
 import javax.swing.JPanel;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.JUnitUtil;
@@ -33,7 +35,7 @@ public class PaneSetTest {
         PaneSet t = new PaneSet(pc, re, p);
         Assert.assertNotNull("exists", t);
         new org.netbeans.jemmy.QueueTool().waitEmpty(10);
-        pc.dispose();
+        pc.dispatchEvent(new WindowEvent(pc, WindowEvent.WINDOW_CLOSING));
     }
 
     // The minimal setup for log4J

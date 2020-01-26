@@ -26,6 +26,7 @@ public class MultiSensorItemPanelTest {
         Editor editor = new EditorScaffold();
         MultiSensorItemPanel t = new MultiSensorItemPanel(df,"IS01","",tableModel,editor);
         Assert.assertNotNull("exists",t);
+        JUnitUtil.dispose(df);
     }
 
     // The minimal setup for log4J
