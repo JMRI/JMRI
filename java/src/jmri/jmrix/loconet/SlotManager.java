@@ -430,16 +430,18 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         }
         int addr = -1;
         // check long address
-        if ((m.getElement(5) & 0x40) != 0) {
-            addr = (m.getElement(5) & 0x3F) * 256 + (m.getElement(6) & 0xFF);
-            if ((m.getElement(4) & 0x02) != 0) {
-                addr += 128;  // and high bit
-            }
-        } else {
+        if ((m.getElement(4) & 0x01) == 0) { //bit 7=0 short
             addr = (m.getElement(5) & 0xFF);
             if ((m.getElement(4) & 0x01) != 0) {
                 addr += 128;  // and high bit
             }
+        } else if ((m.getElement(5) & 0x40) == 0x40) { // bit 7 = 1 if bit 6 = 1 then long
+            addr = (m.getElement(5) & 0x3F) * 256 + (m.getElement(6) & 0xFF);
+            if ((m.getElement(4) & 0x02) != 0) {
+                addr += 128;  // and high bit
+            }
+        } else { // accessory decoder or extended accessory decoder
+            addr = (m.getElement(5) & 0x3F);
         }
         return addr;
     }
@@ -472,11 +474,11 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         int start;
         int high = m.getElement(4);
         // check long or short address
-        if ((m.getElement(5) & 0x40) != 0) {
+        if ((m.getElement(4) & 0x01) == 1 && (m.getElement(5) & 0x40) == 0x40 ) {  //long address bit 7 im1 = 1 and bit6 im1 = 1
             start = 7;
             high = high >> 2;
             n = n - 2;
-        } else {
+         } else {  //short or accessory
             start = 6;
             high = high >> 1;
             n = n - 1;
