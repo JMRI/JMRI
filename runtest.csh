@@ -93,4 +93,4 @@ fi
 # tests to the classpaths
 testclasspath="--cp:a=${dirname}/target/test-classes"
 
-java -jar junit-platform-console-standalone-1.6.0.jar "${settingsdir}" "${prefsdir}" "${testclasspath}" --select-class $@
+"${dirname}/.run.sh" "${settingsdir}" "${prefsdir}" "${testclasspath}" $@
