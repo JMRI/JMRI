@@ -1,7 +1,9 @@
 package apps.tests;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
+import org.junit.platform.suite.api.SuiteDisplayName;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
 import jmri.util.junit.TestClassMainMethod;
 
@@ -21,14 +23,11 @@ import jmri.util.junit.TestClassMainMethod;
  *
  * @author Bob Jacobsen
  */
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        jmri.PackageTest.class,
-        apps.PackageTest.class,
-        // at the end, we check for logging messages again
-        jmri.util.Log4JErrorIsErrorTest.class
-})
 
+@RunWith(JUnitPlatform.class)
+@SuiteDisplayName("AllTest")
+@SelectPackages({"jmri","apps"})
+@ExcludeClassNamePatterns({"HeadLessTest","*PackageTest*"})
 public class AllTest {
 
     @Deprecated // 4.13.3  No longer needed so long as there's a call to jmri.util.JUnitUtil.setup() in the usual way
