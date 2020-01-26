@@ -100,7 +100,7 @@ public class EntryExitPairsTest {
         JUnitUtil.setUp();
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         jmri.util.JUnitUtil.resetProfileManager();
-
+        JUnitUtil.initConfigureManager();
         tools = new EntryExitTestTools();
         panels = EntryExitTestTools.getPanels();
         Assert.assertNotNull("Get LE panels", panels);  // NOI18N
