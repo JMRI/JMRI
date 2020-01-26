@@ -31,6 +31,8 @@ if [[ "${HEADLESS}" == "true" ]] ; then
         mvn javadoc:javadoc -U --batch-mode
         # check html
         mvn exec:exec -P travis-scanhelp
+        #run Architecture tests
+        mvn -Dtest=jmri.ArchitectureTest,jmri.util.FileLineEndingsTest test
     else
         # run headless tests
         mvn test integration-test failsafe:verify -U -P travis-headless --batch-mode \

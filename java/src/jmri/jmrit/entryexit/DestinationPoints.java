@@ -1172,16 +1172,25 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
     }
 
     void handleNoCurrentRoute(boolean reverse, String message) {
-        Object[] options = {Bundle.getMessage("ButtonYes"), // NOI18N
-            Bundle.getMessage("ButtonNo")};  // NOI18N
-        int n = JOptionPane.showOptionDialog(null,
-                message + "\n" + Bundle.getMessage("StackRouteAsk"), Bundle.getMessage("RouteNotClear"), // NOI18N
-                JOptionPane.YES_NO_CANCEL_OPTION,
-                JOptionPane.QUESTION_MESSAGE,
-                null,
-                options,
-                options[1]);
-        if (n == 0) {
+        int opt = manager.getOverlapOption();
+
+        if (opt == EntryExitPairs.PROMPTUSER) {
+            Object[] options = {
+                    Bundle.getMessage("ButtonYes"),  // NOI18N
+                    Bundle.getMessage("ButtonNo")};  // NOI18N
+            int ans = JOptionPane.showOptionDialog(null,
+                    message + "\n" + Bundle.getMessage("StackRouteAsk"), Bundle.getMessage("RouteNotClear"), // NOI18N
+                    JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    options,
+                    options[1]);
+            if (ans == 0) {
+                opt = EntryExitPairs.OVERLAP_STACK;
+            }
+        }
+
+        if (opt == EntryExitPairs.OVERLAP_STACK) {
             manager.stackNXRoute(this, reverse);
             firePropertyChange("stacked", null, null);  // NOI18N
         } else {

@@ -1271,14 +1271,13 @@ public class LayoutEditorToolsTest {
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initConfigureManager();
+        JUnitUtil.initLayoutBlockManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initInternalSignalHeadManager();
 
         if (!GraphicsEnvironment.isHeadless()) {
-
-            JUnitUtil.initLayoutBlockManager();
-            JUnitUtil.initInternalTurnoutManager();
-            JUnitUtil.initInternalSignalHeadManager();
-            JUnitUtil.initInternalSensorManager();
-
             layoutEditor = new LayoutEditor();
             layoutEditor.setVisible(true);
 

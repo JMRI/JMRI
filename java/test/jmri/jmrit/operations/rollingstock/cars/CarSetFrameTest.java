@@ -1,14 +1,16 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.awt.GraphicsEnvironment;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
 
 /**
  * Tests for the Operations CarSetFrame class
@@ -31,6 +33,7 @@ public class CarSetFrameTest extends OperationsTestCase {
         f.loadCar(c3);
 
         JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkIdTagsShutDownTask();
     }
 
     @Test
@@ -77,5 +80,6 @@ public class CarSetFrameTest extends OperationsTestCase {
         Assert.assertFalse("Location unknown", c3.isLocationUnknown());
 
         JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkIdTagsShutDownTask();
     }
 }

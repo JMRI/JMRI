@@ -1,6 +1,11 @@
 package jmri.jmrit.operations.locations;
 
 import java.awt.GraphicsEnvironment;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.trains.Train;
@@ -8,9 +13,6 @@ import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
 
 /**
  *
@@ -64,6 +66,8 @@ public class YardmasterFrameTest extends OperationsTestCase {
         JemmyUtil.enterPushAndLeave(ymPanel.modifyButton);
 
         JUnitUtil.dispose(ymFrame);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+        JUnitOperationsUtil.checkIdTagsShutDownTask();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(YardmasterFrameTest.class);

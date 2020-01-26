@@ -3,7 +3,10 @@ package jmri.jmrit.operations.rollingstock.cars;
 import java.awt.GraphicsEnvironment;
 import java.text.MessageFormat;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Rule;
+import org.junit.Test;
 import org.junit.rules.Timeout;
 
 import jmri.InstanceManager;
@@ -91,7 +94,8 @@ public class CarEditFrameTest extends OperationsTestCase {
     }
 
     @Test
-    @Ignore("AppVeyor:giving up after 3 failures. 12/31/2019")
+    //@Ignore("AppVeyor:giving up after 3 failures. 12/31/2019")
+ // please detail failure so test can be fixed
     public void testWeightErrorConditions() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -327,6 +331,7 @@ public class CarEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("track", testSpur, car.getTrack());
 
         JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkIdTagsShutDownTask();
     }
 
     @Test
@@ -446,6 +451,7 @@ public class CarEditFrameTest extends OperationsTestCase {
         Assert.assertNotNull("Car create", c6);
 
         JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkIdTagsShutDownTask();
     }
 
     @Test
@@ -489,10 +495,12 @@ public class CarEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("car id", "SP54321", car.getId());
 
         Assert.assertFalse("window closed", f.isVisible());
+        JUnitOperationsUtil.checkIdTagsShutDownTask();
     }
 
     @Test
-    @Ignore("AppVeyor:giving up after 3 failures. 12/31/2019")
+    //@Ignore("AppVeyor:giving up after 3 failures. 12/31/2019")
+ // please detail failure so test can be fixed
     public void testSaveExistingCar() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -514,10 +522,12 @@ public class CarEditFrameTest extends OperationsTestCase {
                 new Object[]{car.getTypeName()}), Bundle.getMessage("ButtonOK"));
 
         JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkIdTagsShutDownTask();
     }
 
     @Test
-    @Ignore("AppVeyor:giving up after 3 failures. 12/31/2019")
+    //@Ignore("AppVeyor:giving up after 3 failures. 12/31/2019")
+ // please detail failure so test can be fixed
     public void testSaveCarPassenger() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -588,10 +598,12 @@ public class CarEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("blocking order", 99, car2.getBlocking());
 
         JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkIdTagsShutDownTask();
     }
 
     @Test
-    @Ignore("AppVeyor:giving up after 3 failures. 12/31/2019")
+    //@Ignore("AppVeyor:giving up after 3 failures. 12/31/2019")
+ // please detail failure so test can be fixed
     public void testSaveCarCaboose() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -637,6 +649,7 @@ public class CarEditFrameTest extends OperationsTestCase {
         Assert.assertTrue(car2.isCaboose());
 
         JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkIdTagsShutDownTask();
     }
 
     @Test
@@ -663,10 +676,12 @@ public class CarEditFrameTest extends OperationsTestCase {
         Assert.assertFalse(car.hasFred());
 
         JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkIdTagsShutDownTask();
     }
 
     @Test
-    @Ignore("AppVeyor:giving up after 3 failures. 12/31/2019")
+    //@Ignore("AppVeyor:giving up after 3 failures. 12/31/2019")
+ // please detail failure so test can be fixed
     public void testSaveCarUtility() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -712,10 +727,12 @@ public class CarEditFrameTest extends OperationsTestCase {
         Assert.assertTrue(car2.isUtility());
 
         JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkIdTagsShutDownTask();
     }
 
     @Test
-    @Ignore("AppVeyor:giving up after 3 failures. 12/31/2019")
+    //@Ignore("AppVeyor:giving up after 3 failures. 12/31/2019")
+    // please detail failure so test can be fixed
     public void testSaveCarHazardous() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -761,6 +778,7 @@ public class CarEditFrameTest extends OperationsTestCase {
         Assert.assertTrue(car2.isHazardous());
 
         JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkIdTagsShutDownTask();
     }
 
     @Test
@@ -832,6 +850,7 @@ public class CarEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("Load", "L", car2.getLoadName());
 
         JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkIdTagsShutDownTask();
     }
 
     @Test
@@ -875,6 +894,7 @@ public class CarEditFrameTest extends OperationsTestCase {
         Assert.assertNull("car doesn't exist", cManager.getByRoadAndNumber("CP", "C10099"));
 
         JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkIdTagsShutDownTask();
     }
 
     @Test
@@ -932,6 +952,7 @@ public class CarEditFrameTest extends OperationsTestCase {
         Assert.assertTrue(InstanceManager.getDefault(CarRoads.class).containsName("TEST_ROAD"));
 
         JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkIdTagsShutDownTask();
     }
 
     @Test
@@ -989,6 +1010,7 @@ public class CarEditFrameTest extends OperationsTestCase {
         Assert.assertTrue(InstanceManager.getDefault(CarTypes.class).containsName("TEST_TYPE"));
 
         JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkIdTagsShutDownTask();
     }
 
     @Test
@@ -1046,6 +1068,7 @@ public class CarEditFrameTest extends OperationsTestCase {
         Assert.assertTrue(InstanceManager.getDefault(CarLengths.class).containsName("123"));
 
         JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkIdTagsShutDownTask();
     }
 
     @Test
@@ -1103,6 +1126,7 @@ public class CarEditFrameTest extends OperationsTestCase {
         Assert.assertTrue(InstanceManager.getDefault(CarOwners.class).containsName("TEST_OWNER"));
 
         JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkIdTagsShutDownTask();
     }
 
     @Test
@@ -1160,6 +1184,7 @@ public class CarEditFrameTest extends OperationsTestCase {
         Assert.assertTrue(InstanceManager.getDefault(CarColors.class).containsName("TEST_COLOR"));
 
         JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkIdTagsShutDownTask();
     }
 
     @Test
@@ -1217,5 +1242,6 @@ public class CarEditFrameTest extends OperationsTestCase {
         Assert.assertTrue(InstanceManager.getDefault(CarLoads.class).containsName(c1.getTypeName(), "TEST_LOAD"));
 
         JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkIdTagsShutDownTask();
     }
 }

@@ -35,6 +35,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initConfigureManager();
         JUnitUtil.initLayoutBlockManager();
         if (!GraphicsEnvironment.isHeadless()) {
             e = new LayoutEditor("Layout Editor Test Layout");

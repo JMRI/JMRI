@@ -311,6 +311,9 @@ public class LayoutTurnout extends LayoutTrack {
         dispA = pt;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     // this should only be used for debugging...
     @Override
     public String toString() {
@@ -1369,10 +1372,7 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     /**
-     * return the coordinates for a specified connection type
-     *
-     * @param connectionType the connection type
-     * @return the coordinates for the specified connection type
+     * {@inheritDoc}
      */
     @Override
     public Point2D getCoordsForConnectionType(int connectionType) {
@@ -1399,7 +1399,7 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     /**
-     * @return the bounds of this turnout
+     * {@inheritDoc}
      */
     @Override
     public Rectangle2D getBounds() {
@@ -1983,6 +1983,9 @@ public class LayoutTurnout extends LayoutTrack {
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isMainline() {
         return (isMainlineA() || isMainlineB() || isMainlineC() || isMainlineD());
@@ -2069,10 +2072,9 @@ public class LayoutTurnout extends LayoutTrack {
     /*
      * Modify coordinates methods
      */
+
     /**
-     * Set center coordinates
-     *
-     * @param p the coordinates to set
+     * {@inheritDoc}
      */
     @Override
     public void setCoordsCenter(@Nonnull Point2D p) {
@@ -4335,13 +4337,16 @@ public class LayoutTurnout extends LayoutTrack {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void drawTurnoutControls(Graphics2D g2) {
         if (!disabled && !(disableWhenOccupied && isOccupied())) {
             Color foregroundColor = g2.getColor();
-            // if turnout is thrown...
-            if (getState() == Turnout.THROWN) {
-                // ...then switch to background color
+            //if turnout is not continuing state
+            if (getState() != continuingSense) {
+                //then switch to background color
                 g2.setColor(g2.getBackground());
             }
             if (layoutEditor.isTurnoutFillControlCircles()) {
@@ -4349,14 +4354,17 @@ public class LayoutTurnout extends LayoutTrack {
             } else {
                 g2.draw(trackControlCircleAt(center));
             }
-            // if turnout is thrown...
-            if (getState() == Turnout.THROWN) {
-                // ... then restore foreground color
+            //if turnout is not continuing state
+            if (getState() != continuingSense) {
+                //then restore foreground color
                 g2.setColor(foregroundColor);
             }
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void drawEditControls(Graphics2D g2) {
         Point2D pt = getCoordsA();
@@ -4528,7 +4536,7 @@ public class LayoutTurnout extends LayoutTrack {
     }   // getConnectivityStateForLayoutBlocks
 
 
-    /*
+    /**
      * {@inheritDoc}
      */
     //TODO: on the cross-overs, check the internal boundary details.
@@ -4642,7 +4650,7 @@ public class LayoutTurnout extends LayoutTrack {
         }
     }   // reCheckBlockBoundary
 
-    /*
+    /**
      * {@inheritDoc}
      */
     @Override

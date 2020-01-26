@@ -157,6 +157,7 @@ public class MatrixSignalMastTest {
         m.setAspectEnabled("Approach");
         m.setAspectEnabled("Stop");
         m.setAspectEnabled("Unlit");
+        m.resetPreviousStates(false);
 
         m.aspect = "Stop"; // define some initial aspect before setting any aspect
         m.setMatrixMastCommandDelay(0);

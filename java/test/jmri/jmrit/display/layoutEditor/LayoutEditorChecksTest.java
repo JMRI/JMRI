@@ -214,9 +214,9 @@ public class LayoutEditorChecksTest {
     @BeforeClass
     public static void setUpClass() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initConfigureManager();
         if (!GraphicsEnvironment.isHeadless()) {
-            JUnitUtil.resetProfileManager();
-
             //save the old string comparator
             stringComparator = Operator.getDefaultStringComparator();
             //set default string matching comparator to one that exactly matches and is case sensitive
