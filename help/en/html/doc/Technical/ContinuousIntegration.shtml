@@ -131,7 +131,7 @@
         Builds</a> page, showing status of the builds done after
         every series of commits. Successful builds are followed by
         builds installers via the <a href=
-        "http://builds.jmri.org/jenkins/view/All/job/Development/job/Packages">
+        "http://builds.jmri.org/jenkins/job/Development/job/Packages">
         Packages</a> job.</li>
 
         <li>
