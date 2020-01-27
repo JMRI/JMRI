@@ -202,7 +202,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
      * To get the current selection <em>without</em> potentially creating a
      * NamedBean call {@link #getItemAt(int)} with {@link #getSelectedIndex()}
      * as the index instead (as in {@code getItemAt(getSelectedIndex())}).
-     * 
+     *
      * @return the selected item as the supported type of NamedBean, creating a
      *         new NamedBean as needed if {@link #isEditable()} and
      *         {@link #isProviding()} are true, or null if there is no
@@ -454,7 +454,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
                 jc.setInputVerifier(new JInputValidator(jc, true, false) {
                     @Override
                     protected Validation getValidation(JComponent component, JInputValidatorPreferences preferences) {
-                        if (component instanceof JTextComponent) {
+                        if (component instanceof JTextComponent && getSelectedIndex() != -1) {
                             JTextComponent jtc = (JTextComponent) component;
                             String text = jtc.getText();
                             if (text != null && !text.isEmpty()) {
