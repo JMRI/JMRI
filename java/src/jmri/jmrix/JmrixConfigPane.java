@@ -238,7 +238,10 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
     public void updateComboConnection() {
         modeBox.removeAllItems();
         modeBox.addItem(NONE_SELECTED);
-        classConnectionNameList = InstanceManager.getDefault(ConnectionConfigManager.class).getConnectionTypes((String) manuBox.getSelectedItem());
+        String selectedItem = (String) manuBox.getSelectedItem();
+        if (selectedItem != null) {
+            classConnectionNameList = InstanceManager.getDefault(ConnectionConfigManager.class).getConnectionTypes(selectedItem);
+        }
         classConnectionList = new jmri.jmrix.ConnectionConfig[classConnectionNameList.length + 1];
 
         if (manuBox.getSelectedIndex() != 0) {
