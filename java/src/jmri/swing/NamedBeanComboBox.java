@@ -454,7 +454,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
                 jc.setInputVerifier(new JInputValidator(jc, true, false) {
                     @Override
                     protected Validation getValidation(JComponent component, JInputValidatorPreferences preferences) {
-                        if (component instanceof JTextComponent && getSelectedIndex() != -1) {
+                        if (component instanceof JTextComponent) {
                             JTextComponent jtc = (JTextComponent) component;
                             String text = jtc.getText();
                             if (text != null && !text.isEmpty()) {
@@ -463,12 +463,14 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
                                     // selection won't change if bean is not in model
                                     setSelectedItem(bean);
                                     if (!bean.equals(getItemAt(getSelectedIndex()))) {
-                                        jtc.setText(text);
-                                        if (validatingInput) {
-                                            return new Validation(Validation.Type.DANGER,
-                                                    getBeanInUseMessage(manager.getBeanTypeHandled(),
-                                                            bean.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME)),
-                                                    preferences);
+                                        if (getSelectedIndex() != -1) {
+                                            jtc.setText(text);
+                                            if (validatingInput) {
+                                                return new Validation(Validation.Type.DANGER,
+                                                        getBeanInUseMessage(manager.getBeanTypeHandled(),
+                                                                bean.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME)),
+                                                        preferences);
+                                            }
                                         }
                                     }
                                 } else {
