@@ -1,17 +1,12 @@
 package jmri.jmrix.xpa.swing;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    jmri.jmrix.xpa.swing.xpamon.PackageTest.class,
-    jmri.jmrix.xpa.swing.xpaconfig.PackageTest.class,
-    jmri.jmrix.xpa.swing.packetgen.PackageTest.class,
-    XpaMenuTest.class,
-    XpaComponentFactoryTest.class,
-    BundleTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.xpa.swing")
 
 /**
  * Tests for the jmri.jmrix.xpa.swing package.

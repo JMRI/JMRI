@@ -1,13 +1,12 @@
 package jmri.jmrit.beantable.sensor;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        BundleTest.class,
-        SensorTableDataModelTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrit.beantable.sensor")
 
 /**
  * Tests for classes in the jmri.jmrit.beantable.sensor package

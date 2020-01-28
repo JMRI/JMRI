@@ -1,14 +1,12 @@
 package jmri.jmrix.can.cbus.swing.configtool;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    ConfigToolActionTest.class,
-    ConfigToolPaneTest.class,
-    BundleTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.can")
 
 /**
  * Tests for the jmri.jmrix.can.cbus.swing package

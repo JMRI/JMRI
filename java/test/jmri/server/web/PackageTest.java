@@ -1,19 +1,15 @@
 package jmri.server.web;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
+
 
 /**
  *
  * @author Randall Wood (C) 2016, 2017
  */
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    jmri.server.web.app.PackageTest.class,
-    jmri.server.web.spi.PackageTest.class,
-    AbstractWebServerConfigurationTest.class,
-    DefaultWebServerConfigurationTest.class,
-    BundleTest.class
-})
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.server.web")
 public class PackageTest {
 }

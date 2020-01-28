@@ -1,14 +1,12 @@
 package jmri.jmrix.openlcb.swing.downloader;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    BundleTest.class,
-    LoaderActionTest.class,
-    LoaderPaneTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.openlcb.swing.downloader")
 
 /**
  * Tests for the jmri.jmrix.openlcb.swing.downloader package.

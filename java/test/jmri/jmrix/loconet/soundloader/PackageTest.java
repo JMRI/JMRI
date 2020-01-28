@@ -1,17 +1,12 @@
 package jmri.jmrix.loconet.soundloader;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        LoaderEngineTest.class,
-        BundleTest.class,
-        EditorPaneTest.class,
-        LoaderPaneTest.class,
-        EditorTableDataModelTest.class,
-        EditorFilePaneTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.loconet.soundloader")
 
 /**
  * Tests for the jmri.jmrix.loconet.soundloader package

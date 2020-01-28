@@ -1,15 +1,12 @@
 package jmri.jmrix.loconet.bluetooth;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   ConnectionConfigTest.class,
-   jmri.jmrix.loconet.bluetooth.configurexml.PackageTest.class,
-   LocoNetBluetoothAdapterTest.class,
-   BundleTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.loconet.bluetooth")
 /**
  * Tests for the jmri.jmrix.loconet.bluetooth package.
  *

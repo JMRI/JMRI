@@ -1,17 +1,12 @@
 package jmri.jmrix.marklin.swing;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    jmri.jmrix.marklin.swing.packetgen.PackageTest.class,
-    jmri.jmrix.marklin.swing.monitor.PackageTest.class,
-    MarklinComponentFactoryTest.class,
-    MarklinMenuTest.class,
-    BundleTest.class,
-    MarklinNamedPaneActionTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.marklin.swing")
 /**
  * Tests for the jmri.jmrix.marklin.swing package.
  *

@@ -1,15 +1,11 @@
 package jmri.jmrit.automat.monitor;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   AutomatTableActionTest.class,
-   AutomatTableDataModelTest.class,
-   AutomatTableFrameTest.class
-})
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrit.automat.monitor")
 /**
  * Tests for the jmri.jmrit.automat.monitor package
  *

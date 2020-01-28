@@ -1,17 +1,12 @@
 package jmri.jmrix.roco;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        RocoConnectionTypeListTest.class,
-        jmri.jmrix.roco.z21.PackageTest.class,
-        BundleTest.class,
-        RocoCommandStationTest.class,
-        RocoXNetThrottleTest.class,
-        RocoXNetThrottleManagerTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.roco")
 
 /**
  * Tests for the jmri.jmrix.roco package

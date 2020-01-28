@@ -1,14 +1,12 @@
 package jmri.jmrit.revhistory;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   FileHistoryTest.class,
-   jmri.jmrit.revhistory.configurexml.PackageTest.class,
-   jmri.jmrit.revhistory.swing.PackageTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrit.revhistory")
 /**
  * Tests for the jmri.jmrit.revhistory package.
  *

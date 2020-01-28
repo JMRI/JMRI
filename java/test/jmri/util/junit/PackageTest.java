@@ -1,13 +1,12 @@
 package jmri.util.junit;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        jmri.util.junit.rules.PackageTest.class,
-        jmri.util.junit.annotations.PackageTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.util.junit")
 
 /**
  * Invokes complete set of tests in the jmri.util.junit tree

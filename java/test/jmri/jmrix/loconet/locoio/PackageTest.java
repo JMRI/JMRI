@@ -1,17 +1,12 @@
 package jmri.jmrix.loconet.locoio;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        BundleTest.class,
-        LocoIOPanelTest.class,
-        LocoIOModeListTest.class,
-        LocoIOTest.class,
-        LocoIODataTest.class,
-        LocoIOModeTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.loconet.locoio")
 
 /**
  * Tests for the jmri.jmrix.loconet.locoio package

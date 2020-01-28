@@ -1,16 +1,12 @@
 package jmri.jmrix.dccpp.serial;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   ConnectionConfigTest.class,
-   jmri.jmrix.dccpp.serial.configurexml.PackageTest.class,
-   SerialDCCppPacketizerTest.class,
-   DCCppAdapterTest.class,
-   BundleTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.dccpp.serial")
 /**
  * Tests for the jmri.jmrix.dccpp.serial package.
  *

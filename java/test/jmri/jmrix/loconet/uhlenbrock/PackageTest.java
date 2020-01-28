@@ -1,20 +1,12 @@
 package jmri.jmrix.loconet.uhlenbrock;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   ConnectionConfigTest.class,
-   jmri.jmrix.loconet.uhlenbrock.configurexml.PackageTest.class,
-   UhlenbrockAdapterTest.class,
-   UhlenbrockConnectionTypeListTest.class,
-   UhlenbrockPacketizerTest.class,
-   UhlenbrockSystemConnectionMemoTest.class,
-   UhlenbrockProgrammerManagerTest.class,
-   UhlenbrockLnThrottleManagerTest.class,
-   BundleTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.loconet.uhlenbrock")
 /**
  * Tests for the jmri.jmrix.loconet.uhlenbrock package.
  *

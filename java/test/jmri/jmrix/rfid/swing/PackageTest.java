@@ -1,17 +1,12 @@
 package jmri.jmrix.rfid.swing;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   jmri.jmrix.rfid.swing.serialmon.PackageTest.class,
-   RfidMenuTest.class,
-   RfidComponentFactoryTest.class,
-   RfidNamedPaneActionTest.class,
-   RfidPanelTest.class,
-   BundleTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.rfid.swing")
 /**
  * Tests for the jmri.jmrix.rfid.swing package
  *

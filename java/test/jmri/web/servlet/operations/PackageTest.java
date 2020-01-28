@@ -1,16 +1,12 @@
 package jmri.web.servlet.operations;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    BundleTest.class,
-    OperationsServletTest.class,
-    HtmlConductorTest.class,
-    HtmlTrainCommonTest.class,
-    HtmlManifestTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.web.servlet.operations")
 
 /**
  * Invokes complete set of tests in the jmri.web.servlet.operations tree

@@ -1,15 +1,12 @@
 package jmri.jmrix.wangrow.serialdriver;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   ConnectionConfigTest.class,
-   SerialDriverAdapterTest.class,
-   jmri.jmrix.wangrow.serialdriver.configurexml.PackageTest.class,
-   BundleTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.wangrow.serialdriver")
 /**
  * Tests for the jmri.jmrix.wangrow.serialdriver package.
  *

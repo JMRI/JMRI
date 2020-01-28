@@ -1,17 +1,12 @@
 package jmri.jmrix.ieee802154.swing;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    BundleTest.class,
-    jmri.jmrix.ieee802154.swing.mon.PackageTest.class,
-    jmri.jmrix.ieee802154.swing.nodeconfig.PackageTest.class,
-    jmri.jmrix.ieee802154.swing.packetgen.PackageTest.class,
-    IEEE802154MenuTest.class,
-    IEEE802154ComponentFactoryTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.ieee802154.swing")
 
 /**
  * Tests for the jmri.jmrix.ieee802154.swing package

@@ -1,15 +1,12 @@
 package jmri.jmrix.openlcb.swing.networktree;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-     CdiPanelDemo.class,
-     TreePaneDemo.class,
-     NetworkTreePaneTest.class,
-     NetworkTreeActionTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.openlcb.swing.networktree")
 /**
  * Tests for the jmri.jmrix.openlcb package.
  *

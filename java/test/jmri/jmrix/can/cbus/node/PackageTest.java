@@ -1,24 +1,12 @@
 package jmri.jmrix.can.cbus.node;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    BundleTest.class,
-    CbusAllocateNodeNumberTest.class,
-    CbusNodeTest.class,
-    CbusNodeConstantsTest.class,
-    CbusNodeEventTest.class,
-    CbusNodeEventTableDataModelTest.class,
-    CbusNodeFromBackupTest.class,
-    CbusNodeFromFcuTableDataModelTest.class,
-    CbusNodeNVTableDataModelTest.class,
-    CbusNodeSingleEventTableDataModelTest.class,
-    CbusNodeTableDataModelTest.class,
-    CbusNodeTrickleFetchTest.class,
-    CbusNodeXmlTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.can")
 
 /**
  * Tests for the jmri.jmrix.can.cbus package.

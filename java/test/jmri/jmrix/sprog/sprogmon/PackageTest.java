@@ -1,14 +1,12 @@
 package jmri.jmrix.sprog.sprogmon;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    SprogMonFrameTest.class,
-    SprogMonActionTest.class,
-    BundleTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.sprog.sprogmon")
 
 /**
  * Tests for the jmri.jmrix.sprog.sprogmon package

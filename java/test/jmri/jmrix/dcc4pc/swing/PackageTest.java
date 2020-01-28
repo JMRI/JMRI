@@ -1,18 +1,12 @@
 package jmri.jmrix.dcc4pc.swing;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   jmri.jmrix.dcc4pc.swing.boardlists.PackageTest.class,
-   jmri.jmrix.dcc4pc.swing.monitor.PackageTest.class,
-   jmri.jmrix.dcc4pc.swing.packetgen.PackageTest.class,
-   Dcc4PcMenuTest.class,
-   Dcc4PcComponentFactoryTest.class,
-   StatusPanelTest.class,
-   Dcc4PcNamedPaneActionTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.dcc4pc.swing")
 /**
  * Tests for the jmri.jmrix.pi package
  *

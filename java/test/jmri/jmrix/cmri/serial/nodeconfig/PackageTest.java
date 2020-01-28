@@ -1,14 +1,12 @@
 package jmri.jmrix.cmri.serial.nodeconfig;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    NodeConfigActionTest.class,
-    NodeConfigFrameTest.class,
-    BundleTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.cmri")
 
 /**
  * Tests for the jmri.jmrix.cmri.serial.nodeconfig package

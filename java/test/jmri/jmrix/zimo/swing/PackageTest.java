@@ -1,17 +1,12 @@
 package jmri.jmrix.zimo.swing;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        jmri.jmrix.zimo.swing.packetgen.PackageTest.class,
-        BundleTest.class,
-        jmri.jmrix.zimo.swing.monitor.PackageTest.class,
-        Mx1ComponentFactoryTest.class,
-        Mx1MenuTest.class,
-        Mx1NamedPaneActionTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.zimo.swing")
 
 /**
  * Tests for the jmri.jmrix.zimo.swing package

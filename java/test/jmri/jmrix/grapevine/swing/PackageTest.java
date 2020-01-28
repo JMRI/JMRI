@@ -1,13 +1,13 @@
 package jmri.jmrix.grapevine.swing;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   GrapevineComponentFactoryTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.grapevine.swing")
 /**
  * Tests for the jmri.jmrix.grapevine.swing package
  *

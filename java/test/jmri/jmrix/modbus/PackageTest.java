@@ -1,14 +1,12 @@
 package jmri.jmrix.modbus;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        jmri.jmrix.modbus.common.PackageTest.class,
-        jmri.jmrix.modbus.slave.PackageTest.class,
-        jmri.jmrix.modbus.master.PackageTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.modbus")
 
 /**
  * Tests for the jmri.jmrix.modbus package.

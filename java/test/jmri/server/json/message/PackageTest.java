@@ -1,20 +1,16 @@
 package jmri.server.json.message;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
+
 import org.junit.runners.Suite.SuiteClasses;
 
 /**
  *
  * @author Randall Wood (C) 2017
  */
-@RunWith(Suite.class)
-@SuiteClasses({
-    BundleTest.class,
-    JsonMessageTest.class,
-    JsonMessageClientManagerTest.class,
-    JsonMessageHttpServiceTest.class,
-    JsonMessageSocketServiceTest.class
-})
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.server.json.message")
 public class PackageTest {
 }

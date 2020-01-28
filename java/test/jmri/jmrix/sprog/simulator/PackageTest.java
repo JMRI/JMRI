@@ -1,20 +1,17 @@
 package jmri.jmrix.sprog.simulator;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
+
 
 /**
  * Tests for the jmri.jmrix.sprog.simulator package.
  *
  * @author Paul Bender Copyright (C) 2016
  */
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   SimulatorAdapterTest.class,
-   ConnectionConfigTest.class,
-   jmri.jmrix.sprog.simulator.configurexml.PackageTest.class,
-   BundleTest.class
-})
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.sprog.simulator")
 
 public class PackageTest {
 }

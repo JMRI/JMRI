@@ -1,15 +1,12 @@
 package jmri.jmrix.maple.serialdriver;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   ConnectionConfigTest.class,
-   SerialDriverAdapterTest.class,
-   jmri.jmrix.maple.serialdriver.configurexml.PackageTest.class,
-   BundleTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.maple.serialdriver")
 /**
  * Tests for the jmri.jmrix.maple.serialdriver package.
  *

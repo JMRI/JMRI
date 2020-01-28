@@ -1,12 +1,12 @@
 package jmri.jmrit.audio.configurexml;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   DefaultAudioManagerXmlTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrit.configurexml")
 /**
  * Tests for the jmri.jmrit.audio.configurexml package.
  *

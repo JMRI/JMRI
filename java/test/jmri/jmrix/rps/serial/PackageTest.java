@@ -1,15 +1,12 @@
 package jmri.jmrix.rps.serial;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   SerialAdapterTest.class,
-   ConnectionConfigTest.class,
-   jmri.jmrix.rps.serial.configurexml.PackageTest.class
 
-})
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.rps.serial")
 /**
  * Tests for the jmri.jmrix.rps.serial package.
  *

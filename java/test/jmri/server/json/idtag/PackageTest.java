@@ -1,19 +1,16 @@
 package jmri.server.json.idtag;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
+
 import org.junit.runners.Suite.SuiteClasses;
 
 /**
  *
  * @author Randall Wood (C) 2019
  */
-@RunWith(Suite.class)
-@SuiteClasses({
-    BundleTest.class,
-    JsonIdTagHttpServiceTest.class,
-    JsonIdTagSocketServiceTest.class,
-    JsonIdTagTest.class
-})
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.server.json.idtag")
 public class PackageTest {
 }

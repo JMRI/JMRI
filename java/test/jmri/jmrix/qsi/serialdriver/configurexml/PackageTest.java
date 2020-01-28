@@ -1,12 +1,12 @@
 package jmri.jmrix.qsi.serialdriver.configurexml;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   ConnectionConfigXmlTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.qsi.serialdriver.configurexml")
 /**
  * Tests for the jmri.jmrix.qsi.serialdriver.configurexml package.
  *

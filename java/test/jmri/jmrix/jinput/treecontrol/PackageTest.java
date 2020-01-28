@@ -1,14 +1,12 @@
 package jmri.jmrix.jinput.treecontrol;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    TreeFrameTest.class,
-    TreePanelTest.class,
-    TreeActionTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.jinput.treecontrol")
 
 /**
  * Tests for the jmri.jmrix.jinput.treecontrol package

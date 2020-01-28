@@ -1,18 +1,12 @@
 package jmri.jmrix.rfid.generic.standalone;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    jmri.jmrix.rfid.generic.standalone.configurexml.PackageTest.class,
-    StandaloneReporterManagerTest.class,
-    StandaloneSystemConnectionMemoTest.class,
-    StandaloneTrafficControllerTest.class,
-    StandaloneSensorManagerTest.class,
-    StandaloneMessageTest.class,
-    StandaloneReplyTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.rfid.generic.standalone")
 /**
  * Tests for the jmri.jmrix.rfid.generic.standalone package.
  *

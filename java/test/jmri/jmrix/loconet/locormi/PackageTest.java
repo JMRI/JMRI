@@ -1,20 +1,12 @@
 package jmri.jmrix.loconet.locormi;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   ConnectionConfigTest.class,
-   jmri.jmrix.loconet.locormi.configurexml.PackageTest.class,
-   LnMessageBufferTest.class,
-   LnMessageClientTest.class,
-   LnMessageServerActionTest.class,
-   LnMessageClientActionTest.class,
-   LnMessageClientPollThreadTest.class,
-   LnMessageServerTest.class,
-   BundleTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.loconet.locormi")
 /**
  * Tests for the jmri.jmrix.loconet.locormi package.
  *

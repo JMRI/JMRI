@@ -1,15 +1,12 @@
 package jmri.jmrix.can.nmranet;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-     jmri.jmrix.can.nmranet.configurexml.PackageTest.class,
-     jmri.jmrix.can.nmranet.swing.PackageTest.class,
-     jmri.jmrix.can.nmranet.NmraConfigurationManagerTest.class,
-     BundleTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.can")
 /**
  * Tests for the jmri.jmrix.can.nmranet.configurexml package.
  *

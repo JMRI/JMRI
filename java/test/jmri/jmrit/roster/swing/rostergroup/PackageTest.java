@@ -1,15 +1,12 @@
 package jmri.jmrit.roster.swing.rostergroup;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        BundleTest.class,
-        RosterGroupTableActionTest.class,
-        RosterGroupTableModelTest.class,
-        RosterGroupTableFrameTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrit.roster.swing.rostergroup")
 
 /**
  * Tests for the jmrit.roster.swing package

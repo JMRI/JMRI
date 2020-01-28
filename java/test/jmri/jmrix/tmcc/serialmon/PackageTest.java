@@ -1,15 +1,13 @@
 package jmri.jmrix.tmcc.serialmon;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    SerialMonActionTest.class,
-    SerialMonFrameTest.class,
-    BundleTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.tmcc.serialmon")
 /**
  * Tests for the jmri.jmrix.tmcc.serialmon package
  *

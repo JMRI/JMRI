@@ -1,14 +1,12 @@
 package jmri.jmrix.oaktree.configurexml;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   SerialLightManagerXmlTest.class,
-   SerialSensorManagerXmlTest.class,
-   SerialTurnoutManagerXmlTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.oaktree.configurexml")
 /**
  * Tests for the jmri.jmrix.oaktree.configurexml package.
  *

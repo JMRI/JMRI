@@ -1,14 +1,12 @@
 package jmri.jmrit.ampmeter;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        BundleTest.class,
-        AmpMeterActionTest.class,
-        AmpMeterFrameTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrit.ampmeter")
 
 /**
  * Invokes complete set of tests in the jmri.jmrit.ampmeter tree

@@ -1,14 +1,12 @@
 package jmri.jmrix.ecos.swing.locodatabase;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        BundleTest.class,
-        EcosLocoTableActionTest.class,
-        EcosLocoTableTabActionTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.ecos.swing.locodatabase")
 
 /**
  * Tests for the jmri.jmrix.ecos.swing.locodatabase package

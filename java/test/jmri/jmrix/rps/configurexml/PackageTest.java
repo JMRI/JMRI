@@ -1,13 +1,12 @@
 package jmri.jmrix.rps.configurexml;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   RpsReporterManagerXmlTest.class,
-   RpsSensorManagerXmlTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.rps.configurexml")
 /**
  * Tests for the jmri.jmrix.rps.configurexml package.
  *

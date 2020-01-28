@@ -1,24 +1,12 @@
 package jmri.managers.configurexml;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        AbstractNamedBeanManagerConfigXMLTest.class,
-        AbstractSignalHeadManagerXmlTest.class,
-        DefaultConditionalManagerXmlTest.class,
-        DefaultLogixManagerXmlTest.class,
-        DefaultMemoryManagerXmlTest.class,
-        DefaultRouteManagerXmlTest.class,
-        DefaultSignalGroupManagerXmlTest.class,
-        DefaultSignalMastLogicManagerXmlTest.class,
-        DefaultSignalMastManagerXmlTest.class,
-        DefaultUserMessagePreferencesXmlTest.class,
-        ManagerDefaultSelectorXmlTest.class,
-        ProxyTurnoutManagerXmlTest.class,
-        BundleTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.managers.configurexml")
 
 /**
  * Invoke complete set of tests for the jmri.managers.configurexml package

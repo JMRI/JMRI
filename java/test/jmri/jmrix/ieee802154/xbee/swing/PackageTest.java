@@ -1,16 +1,12 @@
 package jmri.jmrix.ieee802154.xbee.swing;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    BundleTest.class,
-    XBeeMenuTest.class,
-    XBeeComponentFactoryTest.class,
-    jmri.jmrix.ieee802154.xbee.swing.nodeconfig.PackageTest.class,
-    jmri.jmrix.ieee802154.xbee.swing.packetgen.PackageTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.ieee802154.xbee.swing")
 
 /**
  * Tests for the jmri.jmrix.ieee802154.xbee.swing package

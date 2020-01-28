@@ -1,17 +1,12 @@
 package jmri.jmrix.loconet.Intellibox;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   ConnectionConfigTest.class,
-   jmri.jmrix.loconet.Intellibox.configurexml.PackageTest.class,
-   IBLnPacketizerTest.class,
-   IbxConnectionTypeListTest.class,
-   IntelliboxAdapterTest.class,
-   BundleTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.loconet.Intellibox")
 /**
  * Tests for the jmri.jmrix.loconet.Intellibox package.
  *

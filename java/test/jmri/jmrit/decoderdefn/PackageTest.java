@@ -1,24 +1,12 @@
 package jmri.jmrit.decoderdefn;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        IdentifyDecoderTest.class,
-        DecoderIndexFileTest.class,
-        DecoderFileTest.class,
-        SchemaTest.class,
-        DecoderIndexBuilderTest.class,
-        NameCheckActionTest.class,
-        DecoderIndexCreateActionTest.class,
-        InstallDecoderFileActionTest.class,
-        InstallDecoderURLActionTest.class,
-        PrintDecoderListActionTest.class,
-        BundleTest.class,
-        // Disabled until #2601 is resolved
-        // DuplicateTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrit.decoderdefn")
 
 /**
  * Tests for the jmrit.decoderdefn package

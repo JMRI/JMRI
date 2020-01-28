@@ -1,16 +1,12 @@
 package jmri.jmrix.dccpp.network;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        DCCppEthernetAdapterTest.class,
-        DCCppEthernetPacketizerTest.class,
-        ConnectionConfigTest.class,
-        jmri.jmrix.dccpp.network.configurexml.PackageTest.class,
-	BundleTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.dccpp.network")
 
 /**
  * Tests for the jmri.jmrix.dccpp.network package

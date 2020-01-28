@@ -1,13 +1,12 @@
 package jmri.jmrix.loconet.downloader;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        BundleTest.class,
-        LoaderPaneTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.loconet.downloader")
 
 /**
  * Tests for the jmri.jmrix.loconet.downloader package.

@@ -7,16 +7,13 @@
  */
 package jmri.script;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        BundleTest.class,
-        JmriScriptEngineManagerTest.class,
-        ScriptFileChooserTest.class,
-        ScriptOutputTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.script")
 
 public class PackageTest  {
 }

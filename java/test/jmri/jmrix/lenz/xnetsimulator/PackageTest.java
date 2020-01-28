@@ -1,15 +1,12 @@
 package jmri.jmrix.lenz.xnetsimulator;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        XNetSimulatorAdapterTest.class,
-        ConnectionConfigTest.class,
-        jmri.jmrix.lenz.xnetsimulator.configurexml.PackageTest.class,
-        BundleTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.lenz.xnetsimulator")
 
 /**
  * Tests for the jmri.jmrix.lenz.xnetsimulator package

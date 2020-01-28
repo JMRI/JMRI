@@ -1,14 +1,13 @@
 package jmri.jmrix.mrc.swing.monitor;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   BundleTest.class,
-   MrcMonPanelTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.mrc.swing.monitor")
 
 /**
  * Tests for the jmri.jmrix.mrc.swing.monitor package

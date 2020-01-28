@@ -1,21 +1,12 @@
 package jmri.jmrit.vsdecoder.swing;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    BundleTest.class,
-    DieselPaneTest.class,
-    VSDecoderPreferencesPaneTest.class,
-    ManageLocationsActionTest.class,
-    VSDPreferencesActionTest.class,
-    VSDControlTest.class,
-    VSDManagerFrameTest.class,
-    VSDOptionsDialogTest.class,
-    VSDConfigDialogTest.class,
-    ManageLocationsFrameTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrit.vsdecoder.swing")
 
 
 /**

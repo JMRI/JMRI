@@ -1,12 +1,12 @@
 package jmri.jmrix.mrc.configurexml;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    MrcTurnoutManagerXmlTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.mrc.configurexml")
 /**
  * Tests for the jmri.jmrix.mrc.configurexml package.
  *

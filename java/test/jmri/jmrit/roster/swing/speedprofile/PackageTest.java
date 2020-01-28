@@ -1,16 +1,12 @@
 package jmri.jmrit.roster.swing.speedprofile;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        BundleTest.class,
-        SpeedProfileFrameTest.class,
-        SpeedProfilePanelTest.class,
-        SpeedProfileTableTest.class,
-        SpeedProfileActionTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrit.roster.swing.speedprofile")
 
 /**
  * Tests for the jmrit.roster.swing package

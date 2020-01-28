@@ -1,16 +1,12 @@
 package jmri.jmrix.ecos.configurexml;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    EcosLocoAddressManagerXmlTest.class,
-    EcosPreferencesXmlTest.class,
-    EcosReporterManagerXmlTest.class,
-    EcosSensorManagerXmlTest.class,
-    EcosTurnoutManagerXmlTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.ecos.configurexml")
 /**
  * Tests for the jmri.jmrix.ecos.configurexml package.
  *

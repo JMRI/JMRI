@@ -1,17 +1,12 @@
 package jmri.jmrix.ecos.utilities;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    RosterToEcosTest.class,
-    RemoveObjectFromEcosTest.class,
-    GetEcosObjectNumberTest.class,
-    EcosLocoToRosterTest.class,
-    BundleTest.class,
-    AddRosterEntryToEcosTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.ecos.utilities")
 /**
  * Tests for the jmri.jmrix.ecos.utilities package.
  *

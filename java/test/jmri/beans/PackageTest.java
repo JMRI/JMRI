@@ -1,16 +1,12 @@
 package jmri.beans;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        BeansTest.class,
-        UnboundBeanTest.class,
-        ArbitraryPropertySupportTest.class,
-        UnboundArbitraryBeanTest.class,
-	    ConstrainedArbitraryBeanTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.beans")
 
 /**
  * Invoke complete set of tests for the Jmri package

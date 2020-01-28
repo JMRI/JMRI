@@ -1,15 +1,11 @@
 package jmri.configurexml.turnoutoperations;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   NoFeedbackTurnoutOperationXmlTest.class,
-   RawTurnoutOperationXmlTest.class,
-   SensorTurnoutOperationXmlTest.class,
-})
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.configurexml.turnoutoperations")
 /**
  * Tests for the jmri.configurexml.turnoutoperations package
  *

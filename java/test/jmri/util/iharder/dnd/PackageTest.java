@@ -1,16 +1,13 @@
 package jmri.util.iharder.dnd;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    DnDListTest.class,
-    FileDropTest.class,
-    FileDropEventTest.class,
-    TransferableObjectTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.util.iharder.dnd")
 /**
  * Tests for the jmri.util.iharder.dnd package
  *

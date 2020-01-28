@@ -1,12 +1,12 @@
 package jmri.jmrix.zimo.swing.monitor;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    Mx1MonPanelTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.zimo.swing.monitor")
 
 /**
  * Tests for the jmri.jmrix.zimo.swing.monitor package

@@ -1,12 +1,12 @@
 package jmri.jmrix.srcp.networkdriver.configurexml;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   ConnectionConfigXmlTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.srcp.networkdriver.configurexml")
 /**
  * Tests for the jmri.jmrix.srcp.networkdriver.configurexml package.
  *

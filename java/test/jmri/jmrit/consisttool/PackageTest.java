@@ -1,17 +1,12 @@
 package jmri.jmrit.consisttool;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   ConsistFileTest.class,
-   ConsistToolActionTest.class,
-   ConsistDataModelTest.class,
-   ConsistToolFrameTest.class,
-   ConsistToolPrefsPanelTest.class,
-   BundleTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrit.consisttool")
 
 /**
  * Invokes complete set of tests in the jmri.jmrit.consisttool tree

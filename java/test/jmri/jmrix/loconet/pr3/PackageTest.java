@@ -1,16 +1,12 @@
 package jmri.jmrix.loconet.pr3;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        BundleTest.class,
-        jmri.jmrix.loconet.pr3.configurexml.PackageTest.class,
-        jmri.jmrix.loconet.pr3.swing.PackageTest.class,
-        PR3AdapterTest.class,
-        PR3SystemConnectionMemoTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.loconet.pr3")
 
 /**
  * Tests for the jmri.jmrix.loconet.pr3 package.

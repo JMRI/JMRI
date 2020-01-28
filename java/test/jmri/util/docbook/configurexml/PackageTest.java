@@ -1,12 +1,12 @@
 package jmri.util.docbook.configurexml;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   RevHistoryXmlTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.util.docbook.configurexml")
 /**
  * Tests for the jmri.util.docbook.configurexml package.
  *

@@ -1,12 +1,12 @@
 package jmri.jmrit.catalog.configurexml;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   DefaultCatalogTreeManagerXmlTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrit.catalog.configurexml")
 /**
  * Tests for the jmri.jmrit.catalog.configurexml package.
  *

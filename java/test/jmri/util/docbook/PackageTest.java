@@ -1,14 +1,12 @@
 package jmri.util.docbook;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        RevHistoryTest.class,
-        jmri.util.docbook.configurexml.PackageTest.class,
-        RevisionTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.util.docbook")
 
 /**
  * Tests for the jmri.util.docbook package

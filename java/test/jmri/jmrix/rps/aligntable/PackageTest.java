@@ -1,14 +1,12 @@
 package jmri.jmrix.rps.aligntable;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    AlignTableFrameTest.class,
-    AlignTablePaneTest.class,
-    AlignTableActionTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.rps.aligntable")
 
 /**
  * Tests for the jmri.jmrix.rso.aligntable package

@@ -1,27 +1,13 @@
 package jmri.jmrit.automat;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   AbstractAutomatonTest.class,
-   AutomatTest.class,
-   jmri.jmrit.automat.monitor.PackageTest.class,
-   SampleAutomaton2Test.class,
-   SampleAutomaton3Test.class,
-   SampleAutomatonTest.class,
-   SigletTest.class,
-   SampleAutomaton2ActionTest.class,
-   SampleAutomaton3ActionTest.class,
-   SampleAutomatonActionTest.class,
-   JythonAutomatonTest.class,
-   JythonAutomatonActionTest.class,
-   JythonSigletTest.class,
-   JythonSigletActionTest.class,
-   AutomatSummaryTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrit.automat")
 /**
  * Tests for the jmri.jmrit.automat package
  *

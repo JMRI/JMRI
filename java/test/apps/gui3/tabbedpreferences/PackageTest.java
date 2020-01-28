@@ -1,17 +1,12 @@
 package apps.gui3.tabbedpreferences;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    BundleTest.class,
-    EditConnectionPreferencesDialogTest.class,
-    TabbedPreferencesActionTest.class,
-    TabbedPreferencesFrameTest.class,
-    TabbedPreferencesProfileActionTest.class,
-    TabbedPreferencesTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("apps.gui3.tabbedpreferences")
 
 /**
  * Tests for GUI3 base class.

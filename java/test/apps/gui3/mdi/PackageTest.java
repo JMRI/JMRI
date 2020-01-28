@@ -1,12 +1,12 @@
 package apps.gui3.mdi;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    MDITest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("apps.gui3.mdi")
 
 /**
  * Invoke complete set of tests for the apps.gui3.mdi package

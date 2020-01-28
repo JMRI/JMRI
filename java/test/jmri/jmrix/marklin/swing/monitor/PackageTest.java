@@ -1,14 +1,12 @@
 package jmri.jmrix.marklin.swing.monitor;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    MarklinMonPaneTest.class,
-    MarklinMonTest.class,
-    BundleTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.marklin.swing.monitor")
 
 /**
  * Tests for the jmri.jmrix.marklin.swing.monitor package

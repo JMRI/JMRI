@@ -1,18 +1,12 @@
 package jmri.jmrix.ieee802154.xbee.swing.nodeconfig;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    BundleTest.class,
-    XBeeNodeConfigActionTest.class,
-    XBeeNodeConfigFrameTest.class,
-    XBeeAddNodeFrameTest.class,
-    XBeeEditNodeFrameTest.class,
-    AssignmentTableModelTest.class,
-    StreamConfigPaneTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.ieee802154.xbee.swing.nodeconfig")
 
 /**
  * Tests for the jmri.jmrix.ieee802154.xbee.swing.nodeconfig package

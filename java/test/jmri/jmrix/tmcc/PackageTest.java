@@ -1,29 +1,12 @@
 package jmri.jmrix.tmcc;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        SerialTurnoutTest.class,
-        SerialTurnoutManagerTest.class,
-        SerialMessageTest.class,
-        SerialReplyTest.class,
-        SerialTrafficControllerTest.class,
-        jmri.jmrix.tmcc.serialdriver.PackageTest.class,
-        jmri.jmrix.tmcc.simulator.PackageTest.class,
-        jmri.jmrix.tmcc.configurexml.PackageTest.class,
-        jmri.jmrix.tmcc.packetgen.PackageTest.class,
-        TmccMenuTest.class,
-        jmri.jmrix.tmcc.serialmon.PackageTest.class,
-        TmccSystemConnectionMemoTest.class,
-        SerialPortControllerTest.class,
-        SerialConnectionTypeListTest.class,
-        SerialThrottleManagerTest.class,
-        SerialThrottleTest.class,
-        BundleTest.class,
-        jmri.jmrix.tmcc.swing.PackageTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.tmcc")
 
 /**
  * Tests for the jmri.jmrix.tmcc package.

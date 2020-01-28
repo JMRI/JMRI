@@ -1,17 +1,12 @@
 package jmri.jmrit.log;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    BundleTest.class,
-    Log4JTreePaneTest.class,
-    LogActionTest.class,
-    LogFrameTest.class,
-    LogPanelTest.class,
-    LogOutputWindowActionTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrit.log")
 /**
  * Invokes complete set of tests in the jmri.jmrit.log tree
  *

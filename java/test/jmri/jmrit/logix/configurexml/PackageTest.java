@@ -1,13 +1,12 @@
 package jmri.jmrit.logix.configurexml;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   OBlockManagerXmlTest.class,
-   WarrantManagerXmlTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrit.logix.configurexml")
 /**
  * Tests for the jmri.jmrit.logix.configurexml package.
  *

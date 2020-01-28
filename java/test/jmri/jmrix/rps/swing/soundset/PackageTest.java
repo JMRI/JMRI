@@ -1,14 +1,12 @@
 package jmri.jmrix.rps.swing.soundset;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    SoundSetFrameTest.class,
-    SoundSetPaneTest.class,
-    SoundSetActionTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.rps.swing.soundset")
 
 /**
  * Tests for the jmri.jmrix.rso.swing.soundset package

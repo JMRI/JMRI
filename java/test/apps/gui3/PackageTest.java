@@ -1,17 +1,11 @@
 package apps.gui3;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    BundleTest.class,
-    apps.gui3.dp3.PackageTest.class,
-    apps.gui3.mdi.PackageTest.class,
-    apps.gui3.paned.PackageTest.class,
-    apps.gui3.tabbedpreferences.PackageTest.class,
-    FirstTimeStartUpWizardTest.class,
-    FirstTimeStartUpWizardActionTest.class,})
+@RunWith(JUnitPlatform.class)
+@SelectPackages("apps.gui3")
 
 /**
  * Tests for GUI3 base class.

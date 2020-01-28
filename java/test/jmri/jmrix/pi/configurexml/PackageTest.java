@@ -1,15 +1,12 @@
 package jmri.jmrix.pi.configurexml;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    RaspberryPiConnectionConfigXmlTest.class,
-    RaspberryPiSensorManagerXmlTest.class,
-    RaspberryPiTurnoutManagerXmlTest.class,
-    RaspberryPiClassMigrationTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.pi.configurexml")
 /**
  * Tests for the jmri.jmrix.pi.configurexml package.
  *

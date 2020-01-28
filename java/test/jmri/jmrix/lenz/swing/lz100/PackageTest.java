@@ -1,19 +1,16 @@
 package jmri.jmrix.lenz.swing.lz100;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
+
 
 /**
  * Tests for the jmri.jmrix.lenz.swing.lz100 package
  *
  * @author Paul Bender
  */
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    LZ100FrameTest.class,
-    LZ100InternalFrameTest.class,
-    LZ100ActionTest.class,
-    BundleTest.class
-})
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.lenz.swing.lz100")
 public class PackageTest {
 }

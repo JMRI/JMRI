@@ -1,14 +1,12 @@
 package jmri.jmrix.sprog.console;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    SprogConsoleFrameTest.class,
-    SprogConsoleActionTest.class,
-    BundleTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.sprog.console")
 
 /**
  * Tests for the jmri.jmrix.sprog.console package.

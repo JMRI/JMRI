@@ -1,12 +1,12 @@
 package jmri.jmrit.roster.configurexml;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    RosterConfigPaneXmlTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrit.roster.configurexml")
 /**
  * Tests for the jmri.jmrit.roster.configurexml package.
  *

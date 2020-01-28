@@ -1,15 +1,13 @@
 package jmri.jmrix.lenz.swing.mon;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    XNetMonPaneTest.class,
-    XNetMonActionTest.class,
-    BundleTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.lenz.swing.mon")
 
 /**
  * Tests for the jmri.jmrix.lenz.swing.mon package

@@ -1,15 +1,12 @@
 package jmri.jmrix.can.cbus.eventtable;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        CbusEventTableActionTest.class,
-        CbusEventTableDataModelTest.class,
-        CbusTableEventTest.class,
-        BundleTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.can")
 
 /**
  * Tests for the jmri.jmrix.can.cbus.simulator package.

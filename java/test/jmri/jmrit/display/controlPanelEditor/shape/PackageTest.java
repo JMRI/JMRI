@@ -1,27 +1,12 @@
 package jmri.jmrit.display.controlPanelEditor.shape;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    SchemaTest.class,
-    BundleTest.class,
-    jmri.jmrit.display.controlPanelEditor.shape.configurexml.PackageTest.class,
-    LocoLabelTest.class,
-    PositionableCircleTest.class,
-    PositionableEllipseTest.class,
-    PositionablePolygonTest.class,
-    PositionableRectangleTest.class,
-    PositionableRoundRectTest.class,
-    PositionableShapeTest.class,
-    ShapeDrawerTest.class,
-    DrawCircleTest.class,
-    DrawEllipseTest.class,
-    DrawPolygonTest.class,
-    DrawRectangleTest.class,
-    DrawRoundRectTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrit.controlPanelEditor.shape")
 
 /**
  * Tests for the jmrit.display.controlPanelEditor.shape package

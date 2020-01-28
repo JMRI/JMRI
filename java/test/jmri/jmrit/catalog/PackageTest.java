@@ -5,27 +5,13 @@
  */
 package jmri.jmrit.catalog;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    CatalogTreeFSTest.class,
-    CatalogTreeIndexTest.class,
-    ImageIndexEditorTest.class,     
-    BundleTest.class,
-    jmri.jmrit.catalog.configurexml.PackageTest.class,
-    CatalogPaneTest.class,
-    CatalogPanelTest.class,
-    CatalogTreeModelTest.class,
-    DefaultCatalogTreeManagerTest.class,
-    CatalogTreeNodeTest.class,
-    NamedIconTest.class,
-    DirectorySearcherTest.class,
-    CatalogTreeLeafTest.class,
-    DragJLabelTest.class,
-    PreviewDialogTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrit.catalog")
 
 public class PackageTest {
 }

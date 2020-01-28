@@ -1,19 +1,12 @@
 package jmri.web.server;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    BundleTest.class,
-    WebServerTest.class,
-    FrameServletPreferencesPanelTest.class,
-    RailroadNamePreferencesPanelTest.class,
-    WebServerActionTest.class,
-    WebServerPreferencesInstanceInitializerTest.class,
-    WebServerPreferencesPanelTest.class,
-    WebServerPreferencesTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.web.server")
 
 /**
  * Invokes complete set of tests in the jmri.web.server tree

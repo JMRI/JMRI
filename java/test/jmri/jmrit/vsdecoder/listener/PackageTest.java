@@ -1,13 +1,12 @@
 package jmri.jmrit.vsdecoder.listener;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    ListeningSpotTest.class,
-    VSDListenerTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrit.vsdecoder.listener")
 
 /**
  * Tests for the jmri.jmrit.vsdecoder.listener package

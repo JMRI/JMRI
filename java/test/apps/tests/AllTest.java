@@ -28,7 +28,7 @@ import jmri.util.junit.TestClassMainMethod;
 @RunWith(JUnitPlatform.class)
 @SuiteDisplayName("AllTest")
 @SelectPackages({"jmri","apps"})
-@ExcludeClassNamePatterns({"HeadLessTest","*PackageTest*"})
+@ExcludeClassNamePatterns({"^HeadLessTest$","^PackageTest$"})
 public class AllTest {
 
     @Deprecated // 4.13.3  No longer needed so long as there's a call to jmri.util.JUnitUtil.setup() in the usual way

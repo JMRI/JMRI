@@ -1,24 +1,12 @@
 package jmri.jmrix.powerline.insteon2412s;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   ConnectionConfigTest.class,
-   jmri.jmrix.powerline.insteon2412s.configurexml.PackageTest.class,
-   SpecificDriverAdapterTest.class,
-   SpecificInsteonLightTest.class,
-   SpecificX10LightTest.class,
-   SpecificLightManagerTest.class,
-   SpecificSensorManagerTest.class,
-   SpecificMessageTest.class,
-   SpecificReplyTest.class,
-   SpecificSystemConnectionMemoTest.class,
-   SpecificTrafficControllerTest.class,
-   ConstantsTest.class,
-   BundleTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.powerline.insteon2412s")
 /**
  * Tests for the jmri.jmrix.powerline.insteon2412s package.
  *

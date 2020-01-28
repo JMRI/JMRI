@@ -1,22 +1,12 @@
 package jmri.jmrix.can.adapters.gridconnect;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        GridConnectMessageTest.class,
-        GridConnectReplyTest.class,
-        jmri.jmrix.can.adapters.gridconnect.canrs.PackageTest.class,
-        jmri.jmrix.can.adapters.gridconnect.lccbuffer.PackageTest.class,
-        jmri.jmrix.can.adapters.gridconnect.net.PackageTest.class,
-        jmri.jmrix.can.adapters.gridconnect.canusb.PackageTest.class,
-        jmri.jmrix.can.adapters.gridconnect.can2usbino.PackageTest.class,
-        GcPortControllerTest.class,
-        GcTrafficControllerTest.class,
-        GcSerialDriverAdapterTest.class,
-        BundleTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.can")
 
 /**
  * Tests for the jmri.jmrix.can.adapters.gridconnect package.

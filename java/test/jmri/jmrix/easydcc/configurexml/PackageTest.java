@@ -1,12 +1,12 @@
 package jmri.jmrix.easydcc.configurexml;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    EasyDccTurnoutManagerXmlTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.easydcc.configurexml")
 /**
  * Tests for the jmri.jmrix.easydcc.configurexml package.
  *

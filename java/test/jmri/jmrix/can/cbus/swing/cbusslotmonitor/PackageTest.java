@@ -1,15 +1,12 @@
 package jmri.jmrix.can.cbus.swing.cbusslotmonitor;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    BundleTest.class,
-    CbusSlotMonitorPaneTest.class,
-    CbusSlotMonitorDataModelTest.class,
-    CbusSlotMonitorSessionTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.can")
 
 /**
  * Tests for the jmri.jmrix.can.cbus.swing.cbusslotmonitor package

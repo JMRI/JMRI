@@ -1,16 +1,12 @@
 package jmri.jmrix.loconet.usb_dcs52;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        BundleTest.class,
-        jmri.jmrix.loconet.usb_dcs52.configurexml.PackageTest.class,
-        jmri.jmrix.loconet.usb_dcs52.swing.PackageTest.class,
-        UsbDcs52AdapterTest.class,
-        UsbDcs52SystemConnectionMemoTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.loconet.usb_dcs52")
 
 /**
  * Tests for the jmri.jmrix.loconet.usb_dcs52 package.

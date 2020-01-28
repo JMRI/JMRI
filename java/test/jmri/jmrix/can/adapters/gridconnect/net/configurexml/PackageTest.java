@@ -1,13 +1,12 @@
 package jmri.jmrix.can.adapters.gridconnect.net.configurexml;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   ConnectionConfigXmlTest.class,
-   MergConnectionConfigXmlTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.can")
 /**
  * Tests for the jmri.jmrix.can.adapters.gridconnect.net.configurexml package.
  *

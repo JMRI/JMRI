@@ -1,15 +1,12 @@
 package jmri.jmrix.pricom;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        jmri.jmrix.pricom.pockettester.PackageTest.class,
-        jmri.jmrix.pricom.downloader.PackageTest.class,
-        PricomMenuTest.class,
-        BundleTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.pricom")
 
 /**
  * Tests for the jmri.jmrix.pricom package.

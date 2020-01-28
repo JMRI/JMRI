@@ -1,20 +1,12 @@
 package jmri.jmrix.anyma;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    AnymaDMX_ConnectionConfigTest.class,
-    AnymaDMX_ConnectionTypeListTest.class,
-    AnymaDMX_SystemConnectionMemoTest.class,
-    AnymaDMX_TrafficControllerTest.class,
-    AnymaDMX_UsbLightTest.class,
-    AnymaDMX_UsbPortAdapterTest.class,
-    UsbLightManagerTest.class,
-    jmri.jmrix.anyma.configurexml.PackageTest.class,
-    BundleTest.class,
-    })
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.anyma")
 
 /**
  * Tests for the jmri.jmrix.acela.configurexml package.

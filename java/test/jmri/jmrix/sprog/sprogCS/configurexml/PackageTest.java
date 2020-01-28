@@ -1,12 +1,12 @@
 package jmri.jmrix.sprog.sprogCS.configurexml;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   ConnectionConfigXmlTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.sprog.sprogCS.configurexml")
 /**
  * Tests for the jmri.jmrix.sprog.sprogCS.configurexml package.
  *

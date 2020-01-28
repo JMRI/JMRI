@@ -1,18 +1,16 @@
 package jmri.server.json.turnout;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
+
 import org.junit.runners.Suite.SuiteClasses;
 
 /**
  *
  * @author Randall Wood (C) 2016
  */
-@RunWith(Suite.class)
-@SuiteClasses({
-    BundleTest.class,
-    JsonTurnoutHttpServiceTest.class,
-    JsonTurnoutSocketServiceTest.class
-})
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.server.json.turnout")
 public class PackageTest {
 }

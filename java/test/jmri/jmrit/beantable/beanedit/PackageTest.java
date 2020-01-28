@@ -1,19 +1,12 @@
 package jmri.jmrit.beantable.beanedit;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    BundleTest.class,
-    BeanItemPanelTest.class,
-    BlockEditActionTest.class,
-    SensorDebounceEditActionTest.class,
-    SensorEditActionTest.class,
-    TurnoutEditActionTest.class,
-    SensorPullUpEditActionTest.class,
-    BeanEditItemTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrit.beantable.beanedit")
 
 /**
  * Tests for classes in the jmri.jmrit.beantable.beanedit package

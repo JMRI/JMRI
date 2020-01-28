@@ -1,14 +1,12 @@
 package jmri.jmrit.operations.router;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        OperationsCarRouterTest.class,
-        BundleTest.class,
-        RouterTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrit.operations.router")
 
 /**
  * Tests for the jmrit.operations.router package

@@ -1,16 +1,12 @@
 package jmri.jmrix.lenz.configurexml;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   XNetLightManagerXmlTest.class,
-   XNetSensorManagerXmlTest.class,
-   XNetTurnoutManagerXmlTest.class,
-   AbstractXNetSerialConnectionConfigXmlTest.class,
-   XNetStreamConnectionConfigXmlTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.lenz.configurexml")
 /**
  * Tests for the jmri.jmrix.lenz.configurexml package.
  *

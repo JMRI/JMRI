@@ -1,24 +1,12 @@
 package jmri.jmrix.xpa;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        XpaMessageTest.class,
-        XpaTrafficControllerTest.class,
-        XpaSystemConnectionMemoTest.class,
-        XpaTurnoutTest.class,
-        XpaThrottleTest.class,
-        XpaTurnoutManagerTest.class,
-        XpaPowerManagerTest.class,
-        XpaThrottleManagerTest.class,
-        jmri.jmrix.xpa.serialdriver.PackageTest.class,
-        jmri.jmrix.xpa.configurexml.PackageTest.class,
-        jmri.jmrix.xpa.swing.PackageTest.class,
-        XpaPortControllerTest.class,
-        BundleTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.xpa")
 
 /**
  * Tests for the jmri.jmrix.xpa package.

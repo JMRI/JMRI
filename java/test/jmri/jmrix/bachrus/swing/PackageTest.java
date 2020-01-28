@@ -1,14 +1,13 @@
 package jmri.jmrix.bachrus.swing;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   SpeedoComponentFactoryTest.class,
-   BundleTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.bachrus.swing")
 /**
  * Tests for the jmri.jmrix.bachrus.swing package
  *

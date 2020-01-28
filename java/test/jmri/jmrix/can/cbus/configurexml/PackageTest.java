@@ -1,15 +1,12 @@
 package jmri.jmrix.can.cbus.configurexml;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    CbusLightManagerXmlTest.class,
-    CbusSensorManagerXmlTest.class,
-    CbusReporterManagerXmlTest.class,
-    CbusTurnoutManagerXmlTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.can")
 /**
  * Tests for the jmri.jmrix.can.cbus.configurexml package.
  *

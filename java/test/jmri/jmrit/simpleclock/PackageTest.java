@@ -1,16 +1,12 @@
 package jmri.jmrit.simpleclock;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        jmri.jmrit.simpleclock.SimpleTimebaseTest.class,
-        BundleTest.class,
-        jmri.jmrit.simpleclock.configurexml.PackageTest.class,
-        SimpleClockActionTest.class,
-        SimpleClockFrameTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrit.simpleclock")
 
 /**
  * Tests for the jmrit.simpleclock package

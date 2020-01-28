@@ -1,17 +1,13 @@
 package jmri.util.prefs;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
+
 import org.junit.runners.Suite.SuiteClasses;
 
-@RunWith(Suite.class)
-@SuiteClasses({
-    JmriConfigurationProviderTest.class,
-    JmriPreferencesProviderTest.class,
-    InitializationExceptionTest.class,
-    HasConnectionButUnableToConnectExceptionTest.class,
-    JmriUserInterfaceConfigurationProviderTest.class
-})
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.util.prefs")
 /**
  * Invokes complete set of tests in the jmri.util tree
  *

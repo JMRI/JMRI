@@ -1,30 +1,13 @@
 package jmri.jmrix.marklin;
 
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   jmri.jmrix.marklin.networkdriver.PackageTest.class,
-   jmri.jmrix.marklin.configurexml.PackageTest.class,
-   jmri.jmrix.marklin.swing.PackageTest.class,
-   MarklinConnectionTypeListTest.class,
-   MarklinSystemConnectionMemoTest.class,
-   MarklinTrafficControllerTest.class,
-   MarklinPortControllerTest.class,
-   MarklinConstantsTest.class,
-   MarklinMessageTest.class,
-   MarklinReplyTest.class,
-   MarklinPowerManagerTest.class,
-   MarklinSensorManagerTest.class,
-   MarklinSensorTest.class,
-   MarklinThrottleManagerTest.class,
-   MarklinThrottleTest.class,
-   MarklinTurnoutManagerTest.class,
-   MarklinTurnoutTest.class,
-   BundleTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.marklin")
 /**
  * Tests for the jmri.jmrix.marklin package
  *

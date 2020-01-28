@@ -1,13 +1,12 @@
 package jmri.jmrix.serialsensor;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    SerialSensorAdapterTest.class,
-    BundleTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.serialsensor")
 
 /**
  * Tests for the jmri.jmrix.serialsensor package

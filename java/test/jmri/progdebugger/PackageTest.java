@@ -1,14 +1,12 @@
 package jmri.progdebugger;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        jmri.progdebugger.DebugProgrammerTest.class,
-        jmri.progdebugger.DebugProgrammerManagerTest.class,
-        ProgDebuggerTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.progdebugger")
 
 /**
  * Invoke complete set of tests for the Jmri.progdebugger package.

@@ -1,15 +1,14 @@
 package jmri.web.servlet.directory;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    BundleTest.class,
-    DirectoryHandlerTest.class,
-    DirectoryResourceTest.class,
-    DirectoryServiceTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.web.servlet.directory")
 
 /**
  * Invokes complete set of tests in the jmri.web.servlet.directory tree

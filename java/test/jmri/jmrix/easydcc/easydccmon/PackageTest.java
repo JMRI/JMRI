@@ -1,15 +1,13 @@
 package jmri.jmrix.easydcc.easydccmon;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   BundleTest.class,
-   EasyDccMonFrameTest.class,
-   EasyDccMonActionTest.class   
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.easydcc.easydccmon")
 /**
  * Tests for the jmri.jmrix.easydcc.easydccmon package
  *

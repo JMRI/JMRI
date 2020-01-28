@@ -1,12 +1,12 @@
 package jmri.jmrit.display.panelEditor.configurexml;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-  PanelEditorXmlTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrit.display.panelEditor.configurexml")
 /**
  * Tests for the jmri.jmrit.display.panelEditor.configurexml package.
  *

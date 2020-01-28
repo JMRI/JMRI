@@ -1,13 +1,13 @@
 package jmri.util.iharder;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    jmri.util.iharder.dnd.PackageTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.util.iharder")
 /**
  * Tests for the jmri.util.iharder.dnd package
  *

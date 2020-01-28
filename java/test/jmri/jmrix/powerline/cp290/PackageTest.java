@@ -1,23 +1,12 @@
 package jmri.jmrix.powerline.cp290;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   ConnectionConfigTest.class,
-   jmri.jmrix.powerline.cp290.configurexml.PackageTest.class,
-   SpecificDriverAdapterTest.class,
-   SpecificLightTest.class,
-   SpecificLightManagerTest.class,
-   SpecificSensorManagerTest.class,
-   SpecificMessageTest.class,
-   SpecificReplyTest.class,
-   SpecificSystemConnectionMemoTest.class,
-   SpecificTrafficControllerTest.class,
-   ConstantsTest.class,
-   BundleTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.powerline.cp290")
 /**
  * Tests for the jmri.jmrix.powerline.cp290 package.
  *

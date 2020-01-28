@@ -1,20 +1,13 @@
 package jmri.jmrix.nce.consist;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    NceConsistEditPanelTest.class,
-    NceConsistRosterTest.class,
-    NceConsistRosterEntryTest.class,
-    NceConsistBackupTest.class,
-    NceConsistRestoreTest.class,
-    NceConsistRosterMenuTest.class,
-    PrintNceConsistRosterActionTest.class,
-    BundleTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.nce.consist")
 /**
  * Tests for the jmri.jmrix.nce.consist package
  *

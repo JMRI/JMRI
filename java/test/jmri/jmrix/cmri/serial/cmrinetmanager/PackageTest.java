@@ -1,16 +1,12 @@
 package jmri.jmrix.cmri.serial.cmrinetmanager;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    CMRInetManagerActionTest.class,
-    CMRInetManagerFrameTest.class,
-    CMRInetMetricsActionTest.class,
-    CMRInetMetricsFrameTest.class,
-    BundleTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.cmri")
 
 /**
  * Tests for the jmri.jmrix.cmri.serial.cmrinetmanager package

@@ -1,19 +1,11 @@
 package apps.configurexml;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   CreateButtonModelXmlTest.class,
-   FileLocationPaneXmlTest.class,
-   GuiLafConfigPaneXmlTest.class,
-   ManagerDefaultsConfigPaneXmlTest.class,
-   PerformActionModelXmlTest.class,
-   PerformFileModelXmlTest.class,
-   PerformScriptModelXmlTest.class,
-   SystemConsoleConfigPanelXmlTest.class
-})
+@RunWith(JUnitPlatform.class)
+@SelectPackages("apps.configurexml")
 /**
  * Tests for the apps.configurexml package.
  *

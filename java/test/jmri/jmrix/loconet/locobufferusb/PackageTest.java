@@ -1,15 +1,12 @@
 package jmri.jmrix.loconet.locobufferusb;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   ConnectionConfigTest.class,
-   jmri.jmrix.loconet.locobufferusb.configurexml.PackageTest.class,
-   LocoBufferUsbAdapterTest.class,
-   BundleTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.loconet.locobufferusb")
 /**
  * Tests for the jmri.jmrix.loconet.locobufferusb package.
  *

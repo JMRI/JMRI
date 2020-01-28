@@ -1,15 +1,12 @@
 package jmri.jmrix.direct.serial;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   ConnectionConfigTest.class,
-   SerialDriverAdapterTest.class,
-   jmri.jmrix.direct.serial.configurexml.PackageTest.class,
-   BundleTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.direct.serial")
 /**
  * Tests for the jmri.jmrix.direct.serial package.
  *

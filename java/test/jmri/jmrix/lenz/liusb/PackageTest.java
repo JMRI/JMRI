@@ -1,16 +1,12 @@
 package jmri.jmrix.lenz.liusb;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        LIUSBAdapterTest.class,
-        LIUSBXNetPacketizerTest.class,
-        ConnectionConfigTest.class,
-        jmri.jmrix.lenz.liusb.configurexml.PackageTest.class,
-        BundleTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.lenz.liusb")
 
 /**
  * Tests for the jmri.jmrix.lenz.liusb package

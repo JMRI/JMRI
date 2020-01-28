@@ -1,25 +1,12 @@
 package jmri.jmrix.can.cbus.swing.nodeconfig;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    BundleTest.class, 
-    CbusNodeEditEventFrameTest.class,
-    CbusNodeEditNVarPaneTest.class,
-    CbusNodeEventTablePaneTest.class,
-    CbusNodeEventVarPaneTest.class,
-    CbusNodeFcuTablePaneTest.class,
-    CbusNodeInfoPaneTest.class,
-    CbusNodeNVEditTablePaneTest.class,
-    CbusNodeRestoreFcuFrameTest.class,
-    CbusNodeSetupPaneTest.class,
-    CbusNodeSingleEventEditTablePaneTest.class,
-    CbusNodeTablePaneTest.class,
-    CbusNodeBackupsPaneTest.class,
-    NodeConfigToolPaneTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.can")
 
 /**
  * Tests for the jmri.jmrix.can.cbus.swing.nodeconfigpackage

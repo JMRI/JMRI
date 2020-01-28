@@ -1,12 +1,12 @@
 package jmri.jmrix.zimo.mxulf.configurexml;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   ConnectionConfigXmlTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.zimo.mxulf.configurexml")
 /**
  * Tests for the jmri.jmrix.zimo.mxulf.configurexml package.
  *

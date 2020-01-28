@@ -1,18 +1,12 @@
 package jmri.jmrix.dccpp.swing;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    BundleTest.class,
-    jmri.jmrix.dccpp.swing.mon.PackageTest.class,
-    jmri.jmrix.dccpp.swing.packetgen.PackageTest.class,
-    ConfigBaseStationActionTest.class,
-    ConfigBaseStationFrameTest.class,
-    DCCppComponentFactoryTest.class,
-    DCCppMenuTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.dccpp.swing")
 
 /**
  * Tests for the jmri.jmrix.dccpp.swing package

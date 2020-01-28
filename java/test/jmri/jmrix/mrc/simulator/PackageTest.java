@@ -1,14 +1,12 @@
 package jmri.jmrix.mrc.simulator;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   ConnectionConfigTest.class,
-   jmri.jmrix.mrc.simulator.configurexml.PackageTest.class,
-   SimulatorAdapterTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.mrc.simulator")
 /**
  * Tests for the jmri.jmrix.mrc.simulator package.
  *

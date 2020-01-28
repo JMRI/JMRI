@@ -1,15 +1,12 @@
 package jmri.jmrix.can.adapters.gridconnect.canrs;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        MergMessageTest.class,
-        MergReplyTest.class,
-        jmri.jmrix.can.adapters.gridconnect.canrs.serialdriver.PackageTest.class,
-        MergTrafficControllerTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.can")
 
 /**
  * Tests for the jmri.jmrix.can.adapters.gridconnect.canrs package.

@@ -1,28 +1,12 @@
 package jmri.jmrit.symbolicprog.tabbedframe;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        PaneProgPaneTest.class,
-        PaneProgFrameTest.class,
-        CheckProgrammerNamesTest.class,
-        SchemaTest.class,
-        QualifiedVarTest.class,
-        PaneEditActionTest.class,
-        PaneNewProgActionTest.class,
-        PaneOpsProgActionTest.class,
-        PaneProgActionTest.class,
-        BundleTest.class,
-        ProgCheckActionTest.class,
-        WatchingLabelTest.class,
-        PaneOpsProgFrameTest.class,
-        PaneServiceProgFrameTest.class,
-        PaneSetTest.class,
-        JComponentQualifierTest.class,
-        PaneQualifierTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrit.symbolicprog.tabbedframe")
 
 /**
  * Invokes complete set of tests in the jmri.jmrit.symbolicprog.tabbedframe tree

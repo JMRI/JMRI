@@ -1,14 +1,12 @@
 package jmri.util.com;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   jmri.util.com.rbnb.PackageTest.class,
-   jmri.util.com.sun.PackageTest.class,
-   jmri.util.com.dictiography.collections.PackageTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.util.com")
 /**
  * Tests for the jmri.util.com package.
  *

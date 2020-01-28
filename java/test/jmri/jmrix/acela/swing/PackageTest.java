@@ -1,13 +1,13 @@
 package jmri.jmrix.acela.swing;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   AcelaComponentFactoryTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.acela.swing")
 /**
  * Tests for the jmri.jmrix.acela.swing package
  *

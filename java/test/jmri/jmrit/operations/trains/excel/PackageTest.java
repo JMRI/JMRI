@@ -1,19 +1,12 @@
 package jmri.jmrit.operations.trains.excel;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        BundleTest.class,
-        SetupExcelProgramFrameTest.class,
-        SetupExcelProgramManifestFrameTest.class,
-        SetupExcelProgramSwitchListFrameTest.class,
-        TrainCustomManifestTest.class,
-        TrainCustomSwitchListTest.class,
-        SetupExcelProgramFrameActionTest.class,
-        SetupExcelProgramSwitchListFrameActionTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrit.operations.trains.excel")
 
 /**
  * Tests for the jmrit.operations.trains.excel package

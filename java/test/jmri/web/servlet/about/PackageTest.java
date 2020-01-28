@@ -1,13 +1,12 @@
 package jmri.web.servlet.about;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    BundleTest.class,
-    AboutServletTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.web.servlet.about")
 /**
  * Invokes complete set of tests in the jmri.web.servlet.about tree
  *

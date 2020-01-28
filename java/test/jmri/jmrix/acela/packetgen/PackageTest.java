@@ -1,14 +1,12 @@
 package jmri.jmrix.acela.packetgen;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    AcelaPacketGenActionTest.class,
-    AcelaPacketGenFrameTest.class,
-    BundleTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.acela.packetgen")
 
 /**
  * Tests for the jmri.jmrix.acela.packetgen.package

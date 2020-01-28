@@ -1,18 +1,12 @@
 package jmri.jmrix.openlcb.configurexml;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    OlcbLightManagerXmlTest.class,
-    OlcbSensorManagerXmlTest.class,
-    OlcbSignalMastXmlTest.class,
-    OlcbTurnoutManagerXmlTest.class,
-    ProtocolOptionsPersistenceTest.class,
-    SchemaTest.class,
-    LoadAndStoreTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.openlcb.configurexml")
 /**
  * Tests for the jmri.jmrix.openlcb.configurexml package.
  *

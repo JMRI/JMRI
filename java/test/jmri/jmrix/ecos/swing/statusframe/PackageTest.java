@@ -1,13 +1,12 @@
 package jmri.jmrix.ecos.swing.statusframe;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    StatusPanelTest.class,
-    BundleTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.ecos.swing.statusframe")
 
 /**
  * Tests for the jmri.jmrix.ecos.swing.statusframe package

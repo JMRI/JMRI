@@ -1,14 +1,12 @@
 package jmri.jmrix.oaktree.packetgen;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    SerialPacketGenActionTest.class,
-    SerialPacketGenFrameTest.class,
-    BundleTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.oaktree.packetgen")
 
 /**
  * Tests for the jmri.jmrix.oaktree.packetgen package

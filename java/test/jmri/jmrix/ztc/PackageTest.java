@@ -1,15 +1,13 @@
 package jmri.jmrix.ztc;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   ZTCConnectionTypeListTest.class,
-   jmri.jmrix.ztc.ztc611.PackageTest.class,
-   BundleTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.ztc")
 
 /**
  * Tests for the jmri.jmrix.ztc package

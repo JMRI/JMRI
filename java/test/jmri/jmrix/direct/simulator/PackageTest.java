@@ -1,16 +1,13 @@
 package jmri.jmrix.direct.simulator;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   ConnectionConfigTest.class,
-   SimulatorAdapterTest.class,
-   jmri.jmrix.direct.simulator.configurexml.PackageTest.class,
-   BundleTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.direct.simulator")
 /**
  * Tests for the jmri.jmrix.grapevine.simulator package.
  *

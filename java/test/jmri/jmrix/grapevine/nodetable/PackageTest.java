@@ -1,17 +1,13 @@
 package jmri.jmrix.grapevine.nodetable;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   NodeTableActionTest.class,
-   NodeTablePaneTest.class,
-   RenumberFrameTest.class,
-   NodeTableFrameTest.class,
-   BundleTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.grapevine.nodetable")
 /**
  * Tests for the jmri.jmrix.grapevine.nodetable package
  *

@@ -1,15 +1,12 @@
 package jmri.jmrix.sprog.sprogslotmon;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    SprogSlotMonFrameTest.class,
-    SprogSlotMonDataModelTest.class,
-    SprogSlotMonActionTest.class,
-    BundleTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.sprog.sprogslotmon")
 
 /**
  * Tests for the jmri.jmrix.sprog.sprogslotmon package

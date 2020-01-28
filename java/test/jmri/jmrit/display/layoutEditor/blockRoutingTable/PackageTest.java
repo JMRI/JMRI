@@ -1,17 +1,12 @@
 package jmri.jmrit.display.layoutEditor.blockRoutingTable;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    BundleTest.class,
-    LayoutBlockRouteTableModelTest.class,
-    LayoutBlockRouteTableTest.class,
-    LayoutBlockThroughPathsTableModelTest.class,
-    LayoutBlockRouteTableActionTest.class,
-    LayoutBlockNeighbourTableModelTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrit.display.layoutEditor.blockRoutingTable")
 
 
 /**

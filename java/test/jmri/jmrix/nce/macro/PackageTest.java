@@ -1,16 +1,12 @@
 package jmri.jmrix.nce.macro;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    NceMacroEditPanelTest.class,
-    NceMacroGenPanelTest.class,
-    NceMacroBackupTest.class,
-    NceMacroRestoreTest.class,
-    BundleTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.nce.macro")
 
 /**
  * Tests for the jmri.jmrix.nce.macro package

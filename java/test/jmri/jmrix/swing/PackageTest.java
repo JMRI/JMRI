@@ -1,15 +1,13 @@
 package jmri.jmrix.swing;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    ConnectionsPreferencesPanelTest.class,
-    BundleTest.class,
-    SystemConnectionComboBoxTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.swing")
 /**
  * Tests for the jmri.jmrix.swing package
  *

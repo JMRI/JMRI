@@ -1,14 +1,12 @@
 package jmri.jmrix.jmriclient.swing.packetgen;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    PacketGenFrameTest.class,
-    PacketGenActionTest.class,
-    BundleTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.jmriclient.swing.packetgen")
 
 /**
  * Tests for the jmri.jmrix.jmriclient.swing.packetgen package

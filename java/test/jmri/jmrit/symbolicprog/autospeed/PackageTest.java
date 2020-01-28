@@ -1,12 +1,12 @@
 package jmri.jmrit.symbolicprog.autospeed;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    AutoSpeedActionTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrit.symbolicprog.autospeed")
 
 /**
  * Tests for the jmri.jmrit.symbolicprog.autospeed package

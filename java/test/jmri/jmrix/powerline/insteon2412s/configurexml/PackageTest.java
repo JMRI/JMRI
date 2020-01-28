@@ -1,15 +1,12 @@
 package jmri.jmrix.powerline.insteon2412s.configurexml;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   ConnectionConfigXmlTest.class,
-   SpecificLightManagerXmlTest.class,
-   SpecificSensorManagerXmlTest.class
 
-})
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.powerline.insteon2412s.configurexml")
 /**
  * Tests for the jmri.jmrix.powerline.insteon2412s.configurexml package.
  *

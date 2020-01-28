@@ -1,15 +1,12 @@
 package jmri.jmrix.marklin.networkdriver;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   ConnectionConfigTest.class,
-   jmri.jmrix.marklin.networkdriver.configurexml.PackageTest.class,
-   NetworkDriverAdapterTest.class
 
-})
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.marklin.networkdriver")
 /**
  * Tests for the jmri.marklin.networkdriver package.
  *

@@ -1,13 +1,12 @@
 package jmri.jmrix.dccpp.swing.mon;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    DCCppMonActionTest.class,
-    DCCppMonPaneTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.dccpp.swing.mon")
 
 /**
  * Tests for the jmri.jmrix.dccpp.swing.mon package

@@ -1,27 +1,12 @@
 package jmri.jmrit.display.controlPanelEditor;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    jmri.jmrit.display.controlPanelEditor.shape.PackageTest.class,
-    BundleTest.class,
-    jmri.jmrit.display.controlPanelEditor.configurexml.PackageTest.class,
-    ControlPanelEditorTest.class,
-    ControlPanelEditorActionTest.class,
-    PortalIconTest.class,
-    PortalListTest.class,
-    SchemaTest.class,
-    LengthPanelTest.class,
-    CircuitBuilderTest.class,
-    EditPortalFrameTest.class,
-    EditPortalDirectionTest.class,
-    EditCircuitPathsTest.class,
-    EditSignalFrameTest.class,
-    EditCircuitFrameTest.class,
-    ConvertDialogTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrit.display.controlPanelEditor")
 
 /**
  * Tests for the jmrit.display.controlPanelEditor package

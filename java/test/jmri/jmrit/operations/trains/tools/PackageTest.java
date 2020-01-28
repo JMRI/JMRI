@@ -1,41 +1,12 @@
 package jmri.jmrit.operations.trains.tools;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        BundleTest.class,
-        ChangeDepartureTimesFrameTest.class,
-        ExportTimetableActionTest.class,
-        ExportTimetableTest.class,
-        ExportTrainRosterActionTest.class,
-        ExportTrainsTest.class,
-        ShowCarsInTrainFrameTest.class,
-        TrainByCarTypeFrameTest.class,
-        TrainManifestOptionFrameTest.class,
-        TrainScriptFrameTest.class,
-        TrainsScriptFrameTest.class,
-        TrainsScriptActionTest.class,
-        TrainsByCarTypeActionTest.class,
-        TrainsByCarTypeFrameTest.class,
-        TrainsScriptFrameTest.class,
-        TrainsTableSetColorActionTest.class,
-        TrainsTableSetColorFrameTest.class,
-        TrainCopyActionTest.class,
-        ChangeDepartureTimesActionTest.class,
-        TrainCopyFrameTest.class,
-        TrainByCarTypeActionTest.class,
-        ShowCarsInTrainActionTest.class,
-        PrintSavedTrainManifestActionTest.class,
-        PrintTrainActionTest.class,
-        PrintTrainsActionTest.class,
-        PrintTrainBuildReportActionTest.class,
-        PrintTrainManifestActionTest.class,
-        PrintTrainsByCarTypesActionTest.class,
-        TrainManifestOptionActionTest.class,
-        TrainScriptActionTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrit.operations.trains.tools")
 
 /**
  * Tests for the jmrit.operations.trains.tools package

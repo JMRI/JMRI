@@ -1,15 +1,12 @@
 package jmri.jmrix.loconet.locobuffer;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   ConnectionConfigTest.class,
-   jmri.jmrix.loconet.locobuffer.configurexml.PackageTest.class,
-   LocoBufferAdapterTest.class,
-   BundleTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.loconet.locobuffer")
 /**
  * Tests for the jmri.jmrix.loconet.locobuffer package.
  *

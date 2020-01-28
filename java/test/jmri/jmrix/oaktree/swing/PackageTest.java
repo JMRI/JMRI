@@ -1,13 +1,13 @@
 package jmri.jmrix.oaktree.swing;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   OakTreeComponentFactoryTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.oaktree.swing")
 /**
  * Tests for the jmri.jmrix.oaktree.swing package
  *

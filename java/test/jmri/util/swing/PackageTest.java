@@ -1,54 +1,12 @@
 package jmri.util.swing;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        BundleTest.class,
-        JmriAbstractActionTest.class,
-        jmri.util.swing.multipane.PackageTest.class,
-        jmri.util.swing.sdi.PackageTest.class,
-        jmri.util.swing.mdi.PackageTest.class,
-        jmri.util.swing.JCBHandleTest.class,
-        FontComboUtilTest.class,
-        EditableResizableImagePanelTest.class,
-        GuiUtilBaseTest.class,
-        JmriBeanComboBoxTest.class,
-        JMenuUtilTest.class,
-        JComboBoxUtilTest.class,
-        JToolBarUtilTest.class,
-        JTreeUtilTest.class,
-        JmriPanelTest.class,
-        ResizableImagePanelTest.class,
-        ScrollablePanelTest.class,
-        SliderSnapTest.class,
-        StatusBarTest.class,
-        SwingSettingsTest.class,
-        VerticalLabelUITest.class,
-        XTableColumnModelTest.class,
-        JFrameInterfaceTest.class,
-        JmriNamedPaneActionTest.class,
-        BusyDialogTest.class,
-        TextFilterTest.class,
-        BeanSelectCreatePanelTest.class,
-        ValidatedTextFieldTest.class,
-        ComboBoxColorChooserPanelTest.class,
-        ButtonGroupColorChooserPanelTest.class,
-        ButtonSwatchColorChooserPanelTest.class,
-        DrawSquaresTest.class,
-        ImagePanelTest.class,
-        RegexFormatterTest.class,
-        ExceptionContextTest.class,
-        ExceptionDisplayFrameTest.class,
-        UnexpectedExceptionContextTest.class,
-        SplitButtonColorChooserPanelTest.class,
-        JmriColorChooserPanelTest.class,
-        JmriColorChooserTest.class,
-        TextAreaFIFOTest.class,
-        ComboBoxToolTipRendererTest.class,
-        StayOpenCheckBoxItemTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.util.swing")
 
 /**
  * Invokes complete set of tests in the jmri.util.swing tree

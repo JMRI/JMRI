@@ -1,0 +1,14 @@
+#!/bin/bash
+
+for i in `find . -name PackageTest.java`
+do
+    n=`realpath $i --relative-to /home/paul/JMRI/java/test` 
+    n=`echo $n| sed -e "s/.PackageTest.java//g" | sed -e "s/\//./g"  `
+    echo $n
+    replace=`echo "s/SelectPackages(\"jmri.util\")/\SelectPackages(\"newdir\")/g" |sed -e "s/newdir/$n/g"`
+    echo $replace 
+    sed -e $replace $i > $i.new
+    mv $i.new $i
+    sed -e "s/import org.junit.runner.RunWith;/import org.junit.platform.runner.JUnitPlatform;\nimport org.junit.platform.suite.api.SelectPackages;\nimport org.junit.runner.RunWith;/g" $i > $i.new 
+    mv $i.new $i
+done 

@@ -1,17 +1,11 @@
 package apps.gui3.dp3;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-     BundleTest.class,
-     DecoderPro3Test.class,
-     DecoderPro3PanesTest.class,
-     DecoderPro3WindowTest.class,
-     PaneProgDp3ActionTest.class,
-     DecoderPro3ActionTest.class,
-})
+@RunWith(JUnitPlatform.class)
+@SelectPackages("apps.gui3.dp3")
 
 /**
  * Invoke complete set of tests for the apps package

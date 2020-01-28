@@ -1,13 +1,12 @@
 package jmri.jmrix.configurexml;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    JmrixConfigPaneXmlTest.class,
-    BundleTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.configurexml")
 /**
  * Tests for the jmri.jmrix.configurexml package.
  *

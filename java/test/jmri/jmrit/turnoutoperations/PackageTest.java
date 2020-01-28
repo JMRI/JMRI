@@ -1,18 +1,12 @@
 package jmri.jmrit.turnoutoperations;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   BundleTest.class,
-   CommonTurnoutOperationConfigTest.class,
-   NoFeedbackTurnoutOperationConfigTest.class,
-   RawTurnoutOperationConfigTest.class,
-   SensorTurnoutOperationConfigTest.class,
-   TurnoutOperationConfigTest.class,
-   TurnoutOperationFrameTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrit.turnoutoperations")
 
 /**
  * Invokes complete set of tests in the jmri.jmrit.turnoutoperations tree

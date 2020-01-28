@@ -1,17 +1,12 @@
 package jmri.jmrix.powerline.swing;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    jmri.jmrix.powerline.swing.packetgen.PackageTest.class,
-    jmri.jmrix.powerline.swing.serialmon.PackageTest.class,
-    PowerlineComponentFactoryTest.class,
-    PowerlineMenuTest.class,
-    PowerlineNamedPaneActionTest.class,
-    BundleTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.powerline.swing")
 /**
  * Tests for the jmri.jmrix.powerline.swing package.
  *

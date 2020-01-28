@@ -1,15 +1,12 @@
 package jmri.jmrix.easydcc.networkdriver;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   ConnectionConfigTest.class,
-   jmri.jmrix.easydcc.networkdriver.configurexml.PackageTest.class,
-   NetworkDriverAdapterTest.class,
-   BundleTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.easydcc.networkdriver")
 /**
  * Tests for the jmri.jmrix.easydcc.networkdriver package.
  *

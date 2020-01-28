@@ -1,15 +1,12 @@
 package jmri.jmrix.roco.z21.configurexml;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   ConnectionConfigXmlTest.class,
-   Z21ReporterManagerXmlTest.class,
-   Z21XNetTurnoutManagerXmlTest.class,
-   Z21SensorManagerXmlTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.roco.z21.configurexml")
 /**
  * Tests for the jmri.jmrix.roco.z21.configurexml package.
  *

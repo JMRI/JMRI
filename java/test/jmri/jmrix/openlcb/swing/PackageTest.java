@@ -1,23 +1,12 @@
 package jmri.jmrix.openlcb.swing;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        jmri.jmrix.openlcb.swing.hub.PackageTest.class,
-        jmri.jmrix.openlcb.swing.tie.PackageTest.class,
-        jmri.jmrix.openlcb.swing.networktree.PackageTest.class,
-        jmri.jmrix.openlcb.swing.monitor.PackageTest.class,
-        jmri.jmrix.openlcb.swing.clockmon.PackageTest.class,
-        jmri.jmrix.openlcb.swing.downloader.PackageTest.class,
-        jmri.jmrix.openlcb.swing.send.PackageTest.class,
-        jmri.jmrix.openlcb.swing.protocoloptions.PackageTest.class,
-        BundleTest.class,
-        OlcbSignalMastAddPaneTest.class,
-        OpenLcbComponentFactoryTest.class,
-        ClientActionsTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.openlcb.swing")
 
 /**
  * Tests for the jmri.jmrix.openlcb package.

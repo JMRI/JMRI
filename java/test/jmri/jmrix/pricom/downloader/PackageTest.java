@@ -1,16 +1,12 @@
 package jmri.jmrix.pricom.downloader;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        jmri.jmrix.pricom.downloader.PdiFileTest.class,
-        jmri.jmrix.pricom.downloader.LoaderPaneTest.class,
-        LoaderFrameTest.class,
-        LoaderPanelActionTest.class,
-        BundleTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.pricom.downloader")
 
 /**
  * Tests for the jmri.jmrix.pricom.downloader package.

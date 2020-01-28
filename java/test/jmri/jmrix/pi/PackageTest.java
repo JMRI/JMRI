@@ -1,21 +1,17 @@
 package jmri.jmrix.pi;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.ExcludeClassNamePatterns;
+import org.junit.platform.suite.api.SelectPackages;;
+import org.junit.platform.suite.api.SuiteDisplayName;
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   RaspberryPiConnectionConfigTest.class,
-   RaspberryPiAdapterTest.class,
-   RaspberryPiSystemConnectionMemoTest.class,
-   RaspberryPiSensorManagerTest.class,
-   RaspberryPiTurnoutManagerTest.class,
-   jmri.jmrix.pi.configurexml.PackageTest.class,
-   RaspberryPiConnectionTypeListTest.class,
-   RaspberryPiSensorTest.class,
-   RaspberryPiTurnoutTest.class,
-   BundleTest.class
-})
+@RunWith(JUnitPlatform.class)
+@SuiteDisplayName("Raspberry Pi Tests")
+@SelectPackages({"jmri.jmrix.pi"})
+@ExcludeClassNamePatterns({"PackageTest$"})
 /**
  * Tests for the jmri.jmrix.pi package
  *

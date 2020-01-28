@@ -1,19 +1,13 @@
 package jmri.util.usb;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   BundleTest.class,
-   UsbBrowserActionTest.class,
-   UsbBrowserFrameTest.class,
-   UsbBrowserPanelTest.class,
-   UsbBrowserStartupActionFactoryTest.class,
-   UsbUtilTest.class,
-   RailDriverMenuItemTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.util.usb")
 /**
  * Tests for the jmri.util.usb package
  *

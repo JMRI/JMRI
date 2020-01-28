@@ -1,12 +1,12 @@
 package jmri.jmrit.operations.trains.configurexml;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   TrainIconXmlTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrit.operations.trains.configurexml")
 /**
  * Tests for the jmri.jmrit.operations.trains.configurexml package.
  *

@@ -1,24 +1,12 @@
 package jmri.jmrix.qsi;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        jmri.jmrix.qsi.QsiTrafficControllerTest.class,
-        jmri.jmrix.qsi.QsiMessageTest.class,
-        jmri.jmrix.qsi.QsiReplyTest.class,
-        jmri.jmrix.qsi.serialdriver.PackageTest.class,
-        jmri.jmrix.qsi.qsimon.PackageTest.class,
-        jmri.jmrix.qsi.packetgen.PackageTest.class,
-        QsiSystemConnectionMemoTest.class,
-        QsiPortControllerTest.class,
-        jmri.jmrix.swing.PackageTest.class,
-        QSIConnectionTypeListTest.class,
-        QSIMenuTest.class,
-        QsiProgrammerTest.class,
-        BundleTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.qsi")
 
 /**
  * Tests for the jmri.jmrix.qsi package

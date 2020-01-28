@@ -7,8 +7,10 @@ import jmri.jmrix.rps.Ash2_0AlgorithmTest;
 import jmri.jmrix.rps.Ash2_1AlgorithmTest;
 import jmri.jmrix.rps.Ash2_2AlgorithmTest;
 import jmri.jmrix.rps.InitialAlgorithmTest;
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
+
 
 /**
  * Test all the RPS algorithms.
@@ -18,15 +20,7 @@ import org.junit.runners.Suite;
  *
  * @author Bob Jacobsen Copyright 2008
  */
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    InitialAlgorithmTest.class,
-    Ash1_0AlgorithmTest.class,
-    Ash1_1AlgorithmTest.class,
-    Ash2_0AlgorithmTest.class,
-    Ash2_1AlgorithmTest.class,
-    Ash2_2AlgorithmTest.class,
-    Analytic_AAlgorithmTest.class
-})
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.rps.algorithms")
 public class PackageTest {
 }

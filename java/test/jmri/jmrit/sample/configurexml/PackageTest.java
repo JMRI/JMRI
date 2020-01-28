@@ -1,12 +1,12 @@
 package jmri.jmrit.sample.configurexml;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    SampleFunctionalClassXmlTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrit.sample.configurexml")
 
 /**
  * Invokes complete set of tests in the jmri.jmrit tree

@@ -1,15 +1,12 @@
 package jmri.jmrix.lenz.lzv200;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        LZV200AdapterTest.class,
-        ConnectionConfigTest.class,
-        jmri.jmrix.lenz.lzv200.configurexml.PackageTest.class,
-        BundleTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.lenz.lzv200")
 
 /**
  * Tests for the jmri.jmrix.lenz.lzv200 package

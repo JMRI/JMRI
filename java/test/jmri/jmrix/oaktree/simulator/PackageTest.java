@@ -1,15 +1,12 @@
 package jmri.jmrix.oaktree.simulator;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   ConnectionConfigTest.class,
-   jmri.jmrix.oaktree.simulator.configurexml.PackageTest.class,
-   SimulatorAdapterTest.class,
-   BundleTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.oaktree.simulator")
 /**
  * Tests for the jmri.jmrix.oaktree.serialdriver package.
  *

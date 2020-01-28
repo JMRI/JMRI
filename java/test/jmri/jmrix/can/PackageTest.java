@@ -1,24 +1,12 @@
 package jmri.jmrix.can;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        jmri.jmrix.can.CanMessageTest.class,
-        jmri.jmrix.can.CanReplyTest.class,
-        jmri.jmrix.can.nmranet.PackageTest.class,
-        jmri.jmrix.can.adapters.PackageTest.class,
-        jmri.jmrix.can.swing.PackageTest.class,
-        jmri.jmrix.can.cbus.PackageTest.class,
-        AbstractCanTrafficControllerTest.class,
-        TrafficControllerTest.class,
-        CanConnectionTypeListTest.class,
-        CanConstantsTest.class,
-        CanSystemConnectionMemoTest.class,
-        CanConfigurationManagerTest.class,
-        BundleTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.can")
 
 /**
  * Tests for the jmri.jmrix.can package.

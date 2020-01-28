@@ -1,15 +1,12 @@
 package jmri.jmrix.loconet.ms100;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   ConnectionConfigTest.class,
-   jmri.jmrix.loconet.ms100.configurexml.PackageTest.class,
-   MS100AdapterTest.class,
-   BundleTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.loconet.ms100")
 /**
  * Tests for the jmri.jmrix.loconet.ms100 package.
  *

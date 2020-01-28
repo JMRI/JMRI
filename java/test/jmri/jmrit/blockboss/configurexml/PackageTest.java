@@ -1,12 +1,12 @@
 package jmri.jmrit.blockboss.configurexml;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    BlockBossLogicXmlTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrit.blockboss.configurexml")
 /**
  * Tests for the jmri.jmrit.blockboss.configurexml package.
  *

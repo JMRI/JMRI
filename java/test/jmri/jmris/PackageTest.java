@@ -1,23 +1,12 @@
 package jmri.jmris;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        jmri.jmris.srcp.PackageTest.class,
-        jmri.jmris.simpleserver.PackageTest.class,
-        jmri.jmris.json.PackageTest.class,
-        jmri.jmris.JmriServerTest.class,
-        jmri.jmris.JmriConnectionTest.class,
-        jmri.jmris.ServiceHandlerTest.class,
-        BundleTest.class,
-        JmriServerFrameTest.class,
-        JmriServerActionTest.class,
-        ServerMenuTest.class,
-        AbstractRouteServerTest.class,
-        AbstractSignalMastServerTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmris")
 
 /**
  * Set of tests for the jmri.jmris package

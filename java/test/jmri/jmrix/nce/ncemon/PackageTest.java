@@ -1,14 +1,12 @@
 package jmri.jmrix.nce.ncemon;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    NceMonPanelTest.class,
-    NceMonBinaryTest.class,
-    BundleTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.nce.ncemon")
 
 /**
  * Tests for the jmri.jmrix.nce.ncemon package

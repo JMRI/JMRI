@@ -1,14 +1,12 @@
 package jmri.jmris.simpleserver.parser;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   JmriServerTokenizerTest.class,
-   JmriServerParserTest.class,
-   SimpleVisitorTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmris.simpleserver.parser")
 
 /**
  * Tests for the jmri.jmris.simpleserver.parser package

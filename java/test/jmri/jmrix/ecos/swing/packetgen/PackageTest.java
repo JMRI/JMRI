@@ -1,13 +1,12 @@
 package jmri.jmrix.ecos.swing.packetgen;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    PacketGenPanelTest.class,
-    BundleTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.ecos.swing.packetgen")
 
 /**
  * Tests for the jmri.jmrix.ecos.swing.packetgen package

@@ -1,14 +1,13 @@
 package jmri.jmrix.ztc.ztc611.configurexml;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    ConnectionConfigXmlTest.class,
-    ZTC611XNetTurnoutManagerXmlTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.ztc.ztc611.configurexml")
 
 /**
  * Tests for the jmri.jmrix.ztc.configurexml package

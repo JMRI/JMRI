@@ -1,14 +1,12 @@
 package jmri.jmrix.loconet.locogen;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        LocoGenTest.class,
-        BundleTest.class,
-        LocoGenPanelTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.loconet.locogen")
 
 /**
  * Tests for the jmri.jmrix.loconet.locogen package

@@ -1,13 +1,12 @@
 package jmri.jmrix.zimo.swing.packetgen;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        BundleTest.class,
-        Mx1PacketGenPanelTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.zimo.swing.packetgen")
 
 /**
  * Tests for the jmri.jmrix.zimo.swing.packetgen package

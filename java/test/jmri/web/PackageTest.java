@@ -1,15 +1,13 @@
 package jmri.web;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   jmri.web.servlet.PackageTest.class,
-   jmri.web.server.PackageTest.class,
-   BundleTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.web")
 
 /**
  * Invokes complete set of tests in the jmri.web tree

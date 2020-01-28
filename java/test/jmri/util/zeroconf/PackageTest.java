@@ -1,15 +1,12 @@
 package jmri.util.zeroconf;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        ZeroConfServiceManagerTest.class,
-        ZeroConfServiceTest.class,
-        ZeroConfClientTest.class,
-        ZeroConfServiceEventTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.util.zeroconf")
 
 /**
  * Invokes complete set of tests in the jmri.util.zeroconf tree

@@ -1,13 +1,12 @@
 package jmri.jmrix.sprog.configurexml;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   SprogTurnoutManagerXmlTest.class,
-   SprogCSStreamConnectionConfigXmlTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.sprog.configurexml")
 /**
  * Tests for the jmri.jmrix.sprog.configurexml package.
  *

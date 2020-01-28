@@ -1,20 +1,12 @@
 package jmri.jmrix.dccpp.dccppovertcp;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   jmri.jmrix.dccpp.dccppovertcp.configurexml.PackageTest.class,
-   DCCppOverTcpPacketizerTest.class,
-   ServerTest.class,
-   ServerActionTest.class,
-   ServerFrameTest.class,
-   ConnectionConfigTest.class,
-   DCCppTcpDriverAdapterTest.class,
-   ClientRxHandlerTest.class,
-   BundleTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.dccpp.dccppovertcp")
 /**
  * Tests for the jmri.jmrix.dccpp.dccppovertcp package.
  *

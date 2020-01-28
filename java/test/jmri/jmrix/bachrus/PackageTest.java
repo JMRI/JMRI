@@ -1,26 +1,12 @@
 package jmri.jmrix.bachrus;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   SpeedoSystemConnectionMemoTest.class,
-   SpeedoTrafficControllerTest.class,
-   SpeedoReplyTest.class,
-   jmri.jmrix.bachrus.serialdriver.PackageTest.class,
-   SpeedoPortControllerTest.class,
-   GraphPaneTest.class,
-   SpeedTest.class,
-   SpeedoConnectionTypeListTest.class,
-   SpeedoDialTest.class,
-   jmri.jmrix.bachrus.swing.PackageTest.class,
-   DccSpeedProfileTest.class,
-   SpeedoMenuTest.class,
-   SpeedoConsoleActionTest.class,
-   SpeedoConsoleFrameTest.class,
-   BundleTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.bachrus")
 
 /**
  * Tests for the jmri.jmrix.bachrus package

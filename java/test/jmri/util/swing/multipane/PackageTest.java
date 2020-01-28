@@ -1,15 +1,12 @@
 package jmri.util.swing.multipane;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        MultiJfcUnitTest.class,
-        MultiPaneWindowTest.class,
-        PanedInterfaceTest.class,
-        ThreePaneTLRWindowTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.util.swing.multipane")
 
 /**
  * Invokes complete set of tests in the jmri.util tree

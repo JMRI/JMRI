@@ -1,16 +1,12 @@
 package jmri.jmrix.easydcc.simulator;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   ConnectionConfigTest.class,
-   SimulatorAdapterTest.class,
-   jmri.jmrix.easydcc.simulator.configurexml.PackageTest.class,
-   BundleTest.class,
-   EasyDccSimulatorTrafficControllerTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.easydcc.simulator")
 /**
  * Tests for the jmri.jmrix.easydcc.simulator package.
  *

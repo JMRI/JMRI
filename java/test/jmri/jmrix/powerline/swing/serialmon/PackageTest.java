@@ -1,15 +1,12 @@
 package jmri.jmrix.powerline.swing.serialmon;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    SerialMonFrameTest.class,
-    SerialMonPaneTest.class,
-    SerialMonActionTest.class,
-    BundleTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.powerline.swing.serialmon")
 
 /**
  * Tests for the jmri.jmrix.powerline.swing.serialmon package

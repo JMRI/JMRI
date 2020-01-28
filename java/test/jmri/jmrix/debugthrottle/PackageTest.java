@@ -1,14 +1,13 @@
 package jmri.jmrix.debugthrottle;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   DebugThrottleManagerTest.class,
-   DebugThrottleTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.debugthrottle")
 /**
  * Tests for the jmri.jmrix.debugthrottle package
  *

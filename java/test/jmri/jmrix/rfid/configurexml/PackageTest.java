@@ -1,14 +1,12 @@
 package jmri.jmrix.rfid.configurexml;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    RfidReporterManagerXmlTest.class,
-    RfidSensorManagerXmlTest.class,
-    RfidStreamConnectionConfigXmlTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.rfid.configurexml")
 /**
  * Tests for the jmri.jmrix.rfid.configurexml package.
  *

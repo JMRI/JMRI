@@ -1,14 +1,12 @@
 package jmri.jmrix.nce.configurexml;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   NceLightManagerXmlTest.class,
-   NceSensorManagerXmlTest.class,
-   NceTurnoutManagerXmlTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.nce.configurexml")
 /**
  * Tests for the jmri.jmrix.nce.configurexml package.
  *

@@ -1,23 +1,12 @@
 package jmri.jmrix.powerline.cm11;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   ConnectionConfigTest.class,
-   jmri.jmrix.powerline.cm11.configurexml.PackageTest.class,
-   SpecificDriverAdapterTest.class,
-   SpecificLightTest.class,
-   SpecificLightManagerTest.class,
-   SpecificSensorManagerTest.class,
-   SpecificMessageTest.class,
-   SpecificReplyTest.class,
-   SpecificSystemConnectionMemoTest.class,
-   SpecificTrafficControllerTest.class,
-   ConstantsTest.class,
-   BundleTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.powerline.cm11")
 /**
  * Tests for the jmri.jmrix.powerline.cm11 package.
  *

@@ -1,12 +1,12 @@
 package jmri.jmrix.tmcc.configurexml;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   SerialTurnoutManagerXmlTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.tmcc.configurexml")
 /**
  * Tests for the jmri.jmrix.tmcc.configurexml package.
  *

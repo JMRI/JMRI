@@ -1,14 +1,12 @@
 package jmri.jmrix.xpa.swing.packetgen;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    XpaPacketGenActionTest.class,
-    XpaPacketGenFrameTest.class,
-    BundleTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.xpa.swing.packetgen")
 
 /**
  * Tests for the jmri.jmrix.xpa.swing.mon package.

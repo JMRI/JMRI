@@ -1,7 +1,9 @@
 package jmri.jmrix.cmri.serial.nodeiolist;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
+
 
 /**
  * Tests for the jmri.jmrix.cmri.serial.nodeiolist package.
@@ -9,12 +11,8 @@ import org.junit.runners.Suite;
  * @author Bob Jacobsen Copyright 2003, 2017
  * @author Paul Bender Copyright (C) 2016
  */
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   NodeIOListFrameTest.class,
-   BundleTest.class,
-   NodeIOListActionTest.class,
-})
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.cmri")
 
 public class PackageTest{
 }

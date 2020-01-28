@@ -1,18 +1,12 @@
 package jmri.jmrit.display.controlPanelEditor.shape.configurexml;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    LocoLabelXmlTest.class,
-    PositionableCircleXmlTest.class,
-    PositionableEllipseXmlTest.class,
-    PositionablePolygonXmlTest.class,
-    PositionableRectangleXmlTest.class,
-    PositionableRoundRectXmlTest.class,
-    PositionableShapeXmlTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrit.display.controlPanelEditor.shape.configurexml")
 /**
  * Tests for the jmri.jmrit.display.controlPanelEditor.shape.configurexml package.
  *

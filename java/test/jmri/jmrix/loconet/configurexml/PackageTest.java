@@ -1,18 +1,12 @@
 package jmri.jmrix.loconet.configurexml;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    LNCPSignalMastXmlTest.class,
-    LnLightManagerXmlTest.class,
-    LnReporterManagerXmlTest.class,
-    LnSensorManagerXmlTest.class,
-    LnTurnoutManagerXmlTest.class,
-    SE8cSignalHeadXmlTest.class,
-    LoadAndStoreTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.loconet.configurexml")
 /**
  * Tests for the jmri.jmrix.loconet.configurexml package.
  *

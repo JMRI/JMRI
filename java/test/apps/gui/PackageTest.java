@@ -1,13 +1,12 @@
 package apps.gui;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   GuiLafPreferencesManagerTest.class,
-})
+@RunWith(JUnitPlatform.class)
+@SelectPackages("apps.gui")
 /**
  * Tests for the apps.gui package
  *

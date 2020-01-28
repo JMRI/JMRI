@@ -1,13 +1,12 @@
 package jmri.jmrix.nce.cab;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    NceShowCabPanelTest.class,
-    BundleTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.nce.cab")
 
 /**
  * Tests for the jmri.jmrix.nce.cab package

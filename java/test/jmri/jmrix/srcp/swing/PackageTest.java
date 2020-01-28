@@ -1,16 +1,12 @@
 package jmri.jmrix.srcp.swing;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    jmri.jmrix.srcp.swing.srcpmon.PackageTest.class,
-    jmri.jmrix.srcp.swing.packetgen.PackageTest.class,
-    SRCPComponentFactoryTest.class,
-    SystemMenuTest.class,
-    BundleTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.srcp.swing")
 
 /**
  * Tests for the jmri.jmrix.srcp.swing package.

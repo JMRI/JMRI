@@ -1,15 +1,13 @@
 package jmri.jmrix.grapevine.serialmon;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   SerialMonFrameTest.class,
-   SerialMonActionTest.class,
-   BundleTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.grapevine.serialmon")
 /**
  * Tests for the jmri.jmrix.grapevine.nodeconfig package
  *

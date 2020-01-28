@@ -1,27 +1,12 @@
 package jmri.jmrit.operations.rollingstock.engines;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        EngineTest.class,
-        EngineLengthsTest.class,
-        EngineTypesTest.class,
-        EngineModelsTest.class,
-        EngineManagerTest.class,
-        BundleTest.class,
-        EnginesTableFrameTest.class,
-        EngineEditFrameTest.class,
-        EngineSetFrameTest.class,
-        EngineManagerXmlTest.class,
-        EngineRosterMenuTest.class,
-        EnginesTableActionTest.class,
-        EnginesTableModelTest.class,
-        ConsistTest.class,
-        jmri.jmrit.operations.rollingstock.engines.tools.PackageTest.class, 
-        BundleTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrit.operations.rollingstock.engines")
 
 /**
  * Tests for the jmrit.operations.rollingstock package

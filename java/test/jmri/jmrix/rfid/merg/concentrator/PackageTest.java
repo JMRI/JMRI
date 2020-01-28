@@ -1,18 +1,12 @@
 package jmri.jmrix.rfid.merg.concentrator;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    jmri.jmrix.rfid.merg.concentrator.configurexml.PackageTest.class,
-    ConcentratorMessageTest.class,
-    ConcentratorReplyTest.class,
-    ConcentratorReporterManagerTest.class,
-    ConcentratorSensorManagerTest.class,
-    ConcentratorSystemConnectionMemoTest.class,
-    ConcentratorTrafficControllerTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.rfid.merg.concentrator")
 /**
  * Tests for the jmri.jmrix.rfid.merg.concentrator package.
  *

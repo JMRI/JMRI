@@ -1,16 +1,12 @@
 package apps.startup.configurexml;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   ScriptButtonModelXmlTest.class,
-   StartupActionsPreferencesPanelXmlTest.class,
-   StartupPauseModelXmlTest.class,
-   TriggerRouteModelXmlTest.class,
-   BundleTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("apps.startup.configurexml")
 /**
  * Tests for the apps.startup.configurexml package.
  *

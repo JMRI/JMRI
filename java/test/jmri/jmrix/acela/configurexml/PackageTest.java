@@ -1,15 +1,12 @@
 package jmri.jmrix.acela.configurexml;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   AcelaLightManagerXmlTest.class,
-   AcelaSensorManagerXmlTest.class,
-   AcelaSignalHeadXmlTest.class,
-   AcelaTurnoutManagerXmlTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.acela.configurexml")
 /**
  * Tests for the jmri.jmrix.acela.configurexml package.
  *

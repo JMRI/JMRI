@@ -1,17 +1,12 @@
 package jmri.jmris.json;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        JsonServerTest.class,
-        BundleTest.class,
-        JsonServerActionTest.class,
-        JsonServerPreferencesPanelTest.class,
-        JsonServerPreferencesTest.class,
-        JsonProgrammerServerTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmris.json")
 
 /**
  * Tests for the jmri.jmris.json package

@@ -1,16 +1,12 @@
 package jmri.jmrit.powerpanel;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        PowerPaneTest.class,
-        PowerButtonActionTest.class,
-        PowerPanelActionTest.class,
-        PowerPanelFrameTest.class,
-        BundleTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrit.powerpanel")
 
 /**
  * Tests for the jmrit.PowerPanel package

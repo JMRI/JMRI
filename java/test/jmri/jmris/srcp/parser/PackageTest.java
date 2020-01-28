@@ -1,14 +1,12 @@
 package jmri.jmris.srcp.parser;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    SRCPTokenizerTest.class,
-    SRCPParserTest.class,
-    SRCPVisitorTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmris.srcp.parser")
 
 
 /**

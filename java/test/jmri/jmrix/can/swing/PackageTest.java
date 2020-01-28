@@ -1,17 +1,12 @@
 package jmri.jmrix.can.swing;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    jmri.jmrix.can.swing.monitor.PackageTest.class,
-    jmri.jmrix.can.swing.send.PackageTest.class,
-    CanMenuTest.class,
-    CanComponentFactoryTest.class,
-    BundleTest.class,
-    CanNamedPaneActionTest.class
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.can")
 /**
  * Tests for the jmri.jmrix.can.swing.monitor package.
  *

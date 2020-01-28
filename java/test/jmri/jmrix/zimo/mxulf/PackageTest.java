@@ -1,15 +1,12 @@
 package jmri.jmrix.zimo.mxulf;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   ConnectionConfigTest.class,
-   SerialDriverAdapterTest.class,
-   jmri.jmrix.zimo.mxulf.configurexml.PackageTest.class,
-   BundleTest.class,
-})
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("jmri.jmrix.zimo.mxulf")
 /**
  * Tests for the jmri.jmrix.zimo.mxulf package.
  *
