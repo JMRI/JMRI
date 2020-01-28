@@ -97,8 +97,8 @@
     </ul>
 
     <h2>NX Options</h2>
-    <p><img src="images/NxOptionsPane.png" width="394" height="194"
-    alt="NX Window" align="right">While the Entry/Exit (NX) Tools is displayed,
+    <p><img src="images/NxOptionsPane.png" width="392" height="304"
+    alt="NX Options Window" align="right">While the Entry/Exit (NX) Tools is displayed,
     its Options menu allows you to set shared settings for the tool.<br>
     The <b>Entry Exit Options</b> pane contains the following items:
     </p>
@@ -113,6 +113,11 @@
       <li>Cancel Route - Cancel the route.</li>
       <li>Stack Route - Stack the route.<span class="since">since 3.4</span></li>
     </ul>
+
+    <p>The next 3 items provide alternate options for using NX when panels are displayed
+    using the JMRI Web Server.  The web server cannot handle dialogs so default responses
+    are necessary along with an alternate method for displaying route allocation messages.
+    Note:  The Web interface does not support flashing NX icons.<span class="since">since 4.19.3</span></p>
 
     <p><strong>Route Overlap Result</strong> &mdash; Determines what should occur when the
     NX route overlaps an active route.</p>
