@@ -248,14 +248,8 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
         classConnectionList = new jmri.jmrix.ConnectionConfig[classConnectionNameList.length + 1];
 
         if (manuBox.getSelectedIndex() != 0) {
+            int n = 1;
             modeBox.setEnabled(true);
-        } else {
-            modeBox.setSelectedIndex(0);
-            modeBox.setEnabled(false);
-        }
-
-        int n = 1;
-        if (manuBox.getSelectedIndex() != 0) {
             for (String classConnectionNameList1 : classConnectionNameList) {
                 try {
                     jmri.jmrix.ConnectionConfig config;
@@ -282,6 +276,8 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
                 modeBox.setSelectedItem(p.getComboBoxLastSelection((String) manuBox.getSelectedItem()));
             }
         } else {
+            modeBox.setSelectedIndex(0);
+            modeBox.setEnabled(false);
             if (ccCurrent != null) {
                 ccCurrent.dispose();
             }
@@ -307,6 +303,7 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
             }
         }
         if (old != this.ccCurrent) {
+            assert this.ccCurrent != null;
             this.ccCurrent.register();
         }
         validate();
@@ -416,7 +413,7 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
 
     @Override
     public void savePreferences() {
-        // do nothing - the persistant manager will take care of this
+        // do nothing - the persistent manager will take care of this
     }
 
     @Override
