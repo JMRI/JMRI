@@ -27,6 +27,7 @@
 <body>
   <!--#include virtual="/Header.shtml" -->
 <div class="nomenu" id="mBody">
+<!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
 
       <h1>JMRI: Turnout Feedback</h1>
