@@ -59,10 +59,10 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
     @Override
     public void configure() {
         // Connect the control objects:
-        //   connect an Engine to the Distributor
+        log.debug("configure() connecting RPS objects");
+        // connect an Engine to the Distributor
         Engine e = Engine.instance();
         Distributor.instance().addReadingListener(e);
-
         // start the reader
         readerThread = new Thread(new Reader());
         readerThread.start();
@@ -148,10 +148,10 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
             final byte endbyte = bytes[bytes.length - 1];
             ostream.write(endbyte);
         } catch (java.io.IOException e) {
-            log.error("Exception on output: " + e);
+            log.error("Exception on output: ", e);
         } catch (java.lang.InterruptedException e) {
             Thread.currentThread().interrupt(); // retain if needed later
-            log.error("Interrupted output: " + e);
+            log.error("Interrupted output: ", e);
         }
     }
 
@@ -173,7 +173,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
         } catch (java.io.IOException e) {
-            log.error("getOutputStream exception: " + e);
+            log.error("getOutputStream exception: ", e);
         }
         return null;
     }
@@ -243,29 +243,6 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
     // flag for protocol version
     int version = 1;
 
-    // use deprecated stop method to stop thread,
-    // which will be sitting waiting for input
-    @SuppressWarnings("deprecation")
-    void stopThread(Thread t) {
-        t.stop();
-    }
-
-    @Override
-    public synchronized void dispose() {
-        // stop operations here. This is a deprecated method, but OK for us.
-        if (readerThread != null) {
-            stopThread(readerThread);
-        }
-
-        // release port
-        if (activeSerialPort != null) {
-            activeSerialPort.close();
-        }
-        serialStream = null;    // flags state
-        activeSerialPort = null; // flags state
-        super.dispose();
-    }
-
     /**
      * Internal class to handle the separate character-receive thread.
      */
@@ -314,7 +291,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
                     break;
                 }
                 // Strip off the CR and LF
-                if (char1 != 10 && char1 != 13) {
+                if (char1 != 10) {
                     msg.append(char1);
                 }
             }
@@ -436,8 +413,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
                 vals[i] = Double.valueOf(record.get(i + SKIPCOLS - 1));
             }
 
-            Reading r = new Reading(Engine.instance().getPolledID(), vals, s);
-            return r;
+            return new Reading(Engine.instance().getPolledID(), vals, s);
         } else if (version == 2) {
             // parse string
             CSVParser c = CSVParser.parse(s, CSVFormat.DEFAULT);
@@ -458,7 +434,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
                         continue;
                     }
                     if (index >= vals.length) { // data for undefined Receiver
-                        log.warn("Data from unexpected receiver " + index + ", creating receiver");
+                        log.warn("Data from unexpected receiver {}, creating receiver", index);
                         Engine.instance().setMaxReceiverNumber(index + 1);
                         //
                         // Originally, we made vals[] longer if we got
@@ -478,10 +454,9 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
                 log.warn("Exception handling input.", e);
                 return null;
             }
-            Reading r = new Reading(Engine.instance().getPolledID(), vals, s);
-            return r;
+            return new Reading(Engine.instance().getPolledID(), vals, s);
         } else {
-            log.error("can't handle version " + version);
+            log.error("can't handle version {}", version);
             return null;
         }
     }
