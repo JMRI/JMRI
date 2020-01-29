@@ -8,12 +8,12 @@
             <ul>
                 <li></li>
             </ul>
-		
+
 	    <h4>Bachrus Speedo</h4>
             <ul>
                 <li></li>
             </ul>
-		
+
         <h4>C/MRI</h4>
             <ul>
                 <li></li>
@@ -273,7 +273,7 @@
             <ul>
                 <li></li>
             </ul>
-	    
+
 	    <h4>Team Digital</h4>
             <ul>
                 <li></li>
@@ -340,8 +340,24 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-	        <li></li>
+            <li></li>
         </ul>
+        <h4>NX - Entry/Exit Tool</h4>
+            <ul>
+                <li>Three new items have been added to the options dialog.  These make it
+                easier to use entry/exit capabilities when the panels are displayed using
+                the JMRI web server.  Note:  The NX icons do not flash when the panel
+                is displayed using the JMRI web server.
+                  <ul>
+                    <li>Route overlap action &mdash; Choices are Ask User, Cancel Route and Stack Route.</li>
+                    <li>Memory variable &mdash; Allocation messages can be sent to a memory
+                    variable instead of displaying a dialog.  The content can be displayed
+                    on a panel.</li>
+                    <li>Memory clear delay &mdash; Automatically clear the memory value after
+                    the selected amount of time. A value of zero disables automatic clearing.</li>
+                  </ul>
+                </li>
+            </ul>
 
     <h3>Logix</h3>
         <a id="Logix" name="Logix"></a>
@@ -425,18 +441,13 @@
                 it in Preferences &gt; Connection &gt; Additional Connection Settings. Default this is set to 250
                 Milliseconds.</li>
             </ul>
-            
+
     	<h4>Signal Groups</h4>
             <ul>
                 <li></li>
             </ul>
 
     	<h4>Simple Signal Logic</h4>
-            <ul>
-                <li></li>
-            </ul>
-
-	    <h4>NX Entry/Exit Logic</h4>
             <ul>
                 <li></li>
             </ul>
@@ -481,7 +492,7 @@
         <ul>
             <li></li>
         </ul>
-        
+
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
@@ -492,8 +503,8 @@
         <a id="Misc" name="Misc"></a>
         <ul>
             <li>Added a feature which lets you set the height of rows
-                in the 
-                <a href="https://www.jmri.org/help/en/package/jmri/jmrit/cabsignals/CabSignalPane.shtml">cab display table</a>, 
+                in the
+                <a href="https://www.jmri.org/help/en/package/jmri/jmrit/cabsignals/CabSignalPane.shtml">cab display table</a>,
                 so that signal icons can be made fully visible.</li>
             <li>Lots of updates to the organization of the web site so that the sidebars
                 provide better navigation.</li>

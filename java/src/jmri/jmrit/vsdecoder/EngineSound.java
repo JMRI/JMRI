@@ -60,18 +60,12 @@ class EngineSound extends VSDSound {
     @Override
     public void play() {
         log.debug("EngineSound Play");
-        //if (engine_started || auto_start_engine) {
-        //    is_playing = true;
-        //}
     }
 
     // Note:  Play and Loop do the same thing, since all of the notch sounds are set to loop.
     @Override
     public void loop() {
         log.debug("EngineSound Loop");
-        //if (engine_started || auto_start_engine) {
-        //    is_playing = true;
-        //}
     }
 
     @Override
@@ -147,7 +141,6 @@ class EngineSound extends VSDSound {
         if (notch < 1) {
             notch = 1;
         }
-        //log.warn("Throttle: {}, Notch: {}", throttle, notch);
         return notch;
     }
 
@@ -264,7 +257,6 @@ class EngineSound extends VSDSound {
         if (this.getName() == null) {
             this.setName(e.getAttributeValue("name"));
         }
-        //log.debug("EngineSound: " + this.getName());
         this.setFadeInTime(e.getChildText("fade-in-time"));
         this.setFadeOutTime(e.getChildText("fade-out-time"));
         log.debug("Name: {}, Fade-In-Time: {}, Fade-Out-Time: {}", this.getName(),

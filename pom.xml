@@ -1086,48 +1086,6 @@
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
         </dependency>
-        <!-- the following dependency required for Eclipse IDE
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-server</artifactId>
-            <version>${jetty.version}</version>
-            <type>jar</type>
-        </dependency> -->
-        <!-- the following dependency required for Eclipse IDE
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-io</artifactId>
-            <version>${jetty.version}</version>
-            <type>jar</type>
-        </dependency> -->
-        <!-- the following dependency required for Eclipse IDE
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-http</artifactId>
-            <version>${jetty.version}</version>
-            <type>jar</type>
-        </dependency> -->
-        <!-- the following dependency required for Eclipse IDE
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-security</artifactId>
-            <version>${jetty.version}</version>
-            <type>jar</type>
-        </dependency> -->
-        <!-- the following dependency required for Eclipse IDE
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-client</artifactId>
-            <version>${jetty.version}</version>
-            <type>jar</type>
-        </dependency> -->
-        <!-- the following dependency required for Eclipse IDE
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-xml</artifactId>
-            <version>${jetty.version}</version>
-            <type>jar</type>
-        </dependency> -->
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-servlet</artifactId>
@@ -1170,13 +1128,6 @@
             <version>${jetty.version}</version>
             <type>jar</type>
         </dependency>
-        <!-- the following dependency required for Eclipse IDE
-        <dependency>
-            <groupId>org.eclipse.jetty.websocket</groupId>
-            <artifactId>websocket-common</artifactId>
-            <version>${jetty.version}</version>
-            <type>jar</type>
-        </dependency> -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
@@ -1280,12 +1231,12 @@
             <artifactId>jna-platform</artifactId>
             <version>4.4.0</version>
         </dependency>
-        <!-- the following dependency required for Eclipse IDE
+        <!-- the following dependency required for Eclipse IDE -->
         <dependency>
             <groupId>net.java.dev.jna</groupId>
             <artifactId>jna</artifactId>
             <version>4.4.0</version>
-        </dependency> -->
+        </dependency>
         <dependency>
             <groupId>net.java.jinput</groupId>
             <artifactId>jinput</artifactId>

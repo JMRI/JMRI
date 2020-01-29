@@ -42,8 +42,8 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
     private final static Logger log = LoggerFactory.getLogger(JmrixConfigPane.class);
 
     /*
-     * Create panel is seperated off from the instance and synchronized, so that only
-     * one connection can be configured at once, this prevents multiple threads from
+     * Create panel is separated off from the instance and synchronized, so that only
+     * one connection can be configured at once. This prevents multiple threads from
      * trying to create the same panel at the same time.
      */
     /**
@@ -162,7 +162,10 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
         });
 
         // get the list of ConnectionConfig items into a selection box
-        classConnectionNameList = manager.getConnectionTypes((String) manuBox.getSelectedItem());
+        String selectedItem = (String) manuBox.getSelectedItem();
+        if (selectedItem != null) {
+            classConnectionNameList = manager.getConnectionTypes(selectedItem);
+        }
         classConnectionList = new jmri.jmrix.ConnectionConfig[classConnectionNameList.length + 1];
         modeBox.addItem(NONE_SELECTED);
         if (manuBox.getSelectedIndex() != 0) {
@@ -418,13 +421,13 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
 
     @Override
     public boolean isDirty() {
-        // avoid potentially expensive exrta test for isDirty
+        // avoid potentially expensive extra test for isDirty
         if (log.isDebugEnabled()) {
             log.debug("Connection \"{}\" is {}.",
                     this.getConnectionName(),
-                    (this.isDirty || ((this.ccCurrent != null) ? this.ccCurrent.isDirty() : true) ? "dirty" : "clean"));
+                    (this.isDirty || ((this.ccCurrent == null) || this.ccCurrent.isDirty()) ? "dirty" : "clean"));
         }
-        return this.isDirty || ((this.ccCurrent != null) ? this.ccCurrent.isDirty() : true);
+        return this.isDirty || ((this.ccCurrent == null) || this.ccCurrent.isDirty());
     }
 
     @Override

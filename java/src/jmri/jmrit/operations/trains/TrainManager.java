@@ -449,6 +449,7 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
     public boolean isAnyTrainBuilding() {
         for (Train train : getTrainsByIdList()) {
             if (train.getStatusCode() == Train.CODE_BUILDING) {
+                log.debug("Train {} is currently building", train.getName());
                 return true;
             }
         }
