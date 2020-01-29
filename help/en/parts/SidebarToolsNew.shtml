@@ -13,7 +13,7 @@
             <li><a href="/help/en/html/tools/Memories.shtml">Memory Variables</a>
             <li>Blocks...</li>
             <ul>
-              <li><a href="/help/en/html/tools/blocktracking/index.shtml">Block tracking...</a>
+              <!-- <li><a href="/help/en/html/tools/blocktracking/index.shtml">Block tracking...</a> -->
               <li><a href="/help/en/html/tools/Blocks.shtml">Blocks</a>
               <li><a href="/help/en/html/tools/Sections.shtml">Sections</a>
               <li><a href="/help/en/html/tools/Transits.shtml">Transits</a>
@@ -28,6 +28,7 @@
             <li>Other...</li>
             <ul>
               <li><a href="/help/en/html/tools/Audio.shtml">Audio</a>
+              <li><a href="/help/en/html/tools/CTC.shtml">CTC Tools</a>
               <li><a href="/help/en/html/tools/fastclock/index.shtml">Fast Clocks</a>
               <li><a href="/help/en/html/tools/IdTags.shtml">ID Tags</a>
               <li><a href="/help/en/html/tools/speedometer/index.shtml">Speedometer</a>

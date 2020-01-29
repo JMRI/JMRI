@@ -13773,6 +13773,9 @@
           <output name="05" label="Brown" />
         </model>
       </family>
+      <family name="dccdoma.cz" mfg="Public-domain and DIY" file="Public_Domain_dccdoma_ARD_8SCOM_4VYH_TC.xml">
+        <model model="ARD-8SCOM-4VYH-TC" lowVersionID="10" highVersionID="19" productID="16843521" maxInputVolts="24V AC" maxTotalCurrent="0.2A peak 3.3A" numOuts="16" connector="other" />
+      </family>
       <family name="dccdoma.cz" mfg="Public-domain and DIY" file="Public_Domain_dccdoma_ARD_SCOM_MX.xml">
         <model model="ARD-SCOM-MX" lowVersionID="10" highVersionID="19" productID="16843265" maxInputVolts="24V AC" maxTotalCurrent="0.2A peak 3.3A" numOuts="16" connector="other" />
       </family>
