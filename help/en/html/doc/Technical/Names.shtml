@@ -407,7 +407,7 @@
       the complete system name.<br>
       Here's a summary of the options per Connection, split up for
         outputs (eg. Turnouts) and inputs (eg. Sensors):</p>
-
+    <div style="overflow-x:auto;">
       <table>
         <tbody><tr>
           <th>Connection</th>
@@ -865,6 +865,7 @@
           <td>1024</td>
         </tr>
         </tbody></table>
+    </div>
       <!-- this table is maintained on the help/en/html/doc/Technical/Names.shtml based on information from the
       Hardware help pages by Egbert Broerse @silverailscolo July 2017 -->
     
