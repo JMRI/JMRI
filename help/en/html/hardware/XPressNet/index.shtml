@@ -49,12 +49,12 @@
       <ul>
         <!-- TOC -->
 
-        <li><a href="#hardware">Hardware</a></li>
+        <li><a href="#hardware">Hardware</a>
             <ul>
                 <li><a href="#commandstation">Command Stations</a></li>
                 <li><a href="#interfaces">Computer Interfaces</a></li>
             </ul>
-
+        </li>
         <li><a href="#limitations">Limitations</a></li>
 
         <li>
