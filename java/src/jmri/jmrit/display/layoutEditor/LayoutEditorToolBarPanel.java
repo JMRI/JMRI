@@ -368,7 +368,7 @@ public class LayoutEditorToolBarPanel extends JPanel {
         dashedLine.setToolTipText(Bundle.getMessage("DashedCheckBoxTip"));
 
         //the blockPanel is enabled/disabled via selectionListAction above
-        setupComboBox(blockIDComboBox, false, true, false);
+        setupComboBox(blockIDComboBox, false, true, true);
         blockIDComboBox.setToolTipText(Bundle.getMessage("BlockIDToolTip"));
 
         highlightBlockCheckBox.setToolTipText(Bundle.getMessage("HighlightSelectedBlockToolTip"));
