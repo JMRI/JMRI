@@ -4,5 +4,17 @@
         <code>Manager.getSystemNameArray()</code> has been removed after being 
         deprecated for two years. Please migrate to using
         <code>Manager.getNamedBeanSet()</code> instead.  If you really
-        must have an array, use <code>Manager.getNamedBeanSet().toSet()</code>
+        must have an array, use <code>Manager.getNamedBeanSet().toArray()</code>;
+        see <a href="https://www.techiedelight.com/convert-set-to-array-java/">this tutorial</a> for examples.
+    </li>
+    <li>
+        The JavaCSV API has been replaced with the Apache Commons CSV API.
+        This may impact some scripts. See
+        <a href="https://github.com/JMRI/JMRI/blob/master/jython/TurnoutStatePersistence.py">TurnoutStatePersistence.py</a>
+        for an example of how to use the new CSV parsing API. If unable to
+        use the new API, the JAR for the old API can be
+        <a href="https://repo1.maven.org/maven2/net/sourceforge/javacsv/javacsv/2.0/javacsv-2.0.jar">downloaded</a>
+        and added to jmri.conf using the
+        <em><a href="https://www.jmri.org/help/en/html/doc/Technical/StartUpScripts.shtml">--cp:a=path/to/javacsv.jar</a></em>
+        parameter.</li>
     </li>
