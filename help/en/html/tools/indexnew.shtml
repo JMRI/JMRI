@@ -99,10 +99,11 @@
           <dd>A JMRI Memory Variable can hold any type of object
           specified by the user.</dd>
 
-
+        </dl>
 
          <h2><a name="blocktools" id="blocktools">Block Tools...</a></h2>
-
+        <dl>
+        
           <dd><h3><a name="blocks" href="Blocks.shtml" id="blocks">Blocks</a></h3></dd>
           <dd>Blocks are sections of track whose occupancy may be
           individually monitored in JMRI. Dividing your track into
@@ -126,10 +127,11 @@
             "../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher</a>
           </dd>
 
-
+        </dl>
 
        <h2><a name="routingtools" id="routingtools">Routing and Control Tools...</a></h2>
-
+       
+        <dl>
           <dd><h3><a href="Routes.shtml">Routes</a></h3></dd>
           <dd>Routes are a tool for driving multiple turnouts when
           something happens on the layout. You can have a panel
@@ -161,9 +163,10 @@
           control, combine the logical reasoning of a Logix with
           the powerful output controls of a Route.</dd>
 
-
+        </dl>
 
         <h2><a name="othertools" id="othertools">Other Tools...</a></h2>
+          <dl>
           
           <dd>
             <h3><a href="Audio.shtml">Audio</a></h3>
