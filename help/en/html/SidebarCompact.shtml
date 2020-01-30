@@ -1,5 +1,5 @@
 <!-- Compact version of sidebar -->
-<!-- Sidebar-compact.shtml -->
+<!-- SidebarCompact.shtml -->
 <!-- This is the common sidebar definition for Help system pages -->
 	<hr class="hide">
 	
@@ -10,10 +10,10 @@
         <!--#include virtual="/help/en/parts/SidebarApplications.shtml" -->
 
         <dt><h3><a href="/help/en/html/tools/">Tools</a></h3></dt>
-		<dd>JMRI provides powerful tools for working with your layout.</dd>
+	<dd>JMRI provides powerful tools for working with your layout.</dd>
         
         <dt><h3><a href="/help/en/html/tools/automation/">Layout Automation</a></h3></dt>
-		<dd>Use JMRI to automate parts of your layout, from simply controlling a crossing gate
+	<dd>Use JMRI to automate parts of your layout, from simply controlling a crossing gate
 		to running trains in the background.</dd>
         
         <dt><h3 style="padding-left: 1em;"><a href="/help/en/html/hardware/">Supported Hardware</a></h3></dt>
@@ -30,4 +30,4 @@
     </div> <!-- closes #side -->  
 
 
-<!-- /Sidebar-compact.shtml -->
+<!-- /SidebarCompact.shtml -->
