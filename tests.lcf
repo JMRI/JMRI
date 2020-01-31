@@ -97,7 +97,7 @@ log4j.category.javax.jmdns=OFF
 log4j.category.io.github.bonigarcia.wdm=OFF
 
 # Turn off logging for the JUnit 5 discovery process.
-log4j.category. org.junit.vintage.engine.discovery=OFF
+log4j.category.org.junit.vintage.engine.discovery=OFF
 
 # ###################################################################
 #    Examples of how you can ask for more detailed logging
