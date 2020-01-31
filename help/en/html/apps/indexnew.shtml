@@ -20,7 +20,7 @@
 </head>
 
 <body>
-  <!--#include virtual="../../../Header.shtml" -->
+  <!--#include virtual="../../../../Header.shtml" -->
   <div id="mBody">
     <!--#include virtual="../SidebarNew.shtml" -->
     <div id="mainContent">
@@ -104,7 +104,7 @@
         tools index page</a>.  The tools themselves are invoked from their own menu pulldowns within 
         the JMRI applications when  you have JMRI configured for each specific System Connection.</li>
         
-      </ul><!--#include virtual="/Footer" -->
+      </ul><!--#include virtual="../../../../Footer.shtml" -->
     </div><!-- close #mainContent -->
   </div><!-- close #mBody -->
 </body>
