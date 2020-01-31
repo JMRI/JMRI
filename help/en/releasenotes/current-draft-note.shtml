@@ -66,7 +66,11 @@
 
         <h4>MERG CBUS</h4>
             <ul>
-                <li></li>
+                <li>Track Current Meter + Command Station Steal / Share are available unless proved otherwise.</li>
+                <li>Node Manager and Event Table no longer auto-start on JMRI startup.
+                <br>These can be added as Startup Actions in JMRI Preferences to enable
+                <br>Event or Node name translation in CBUS console, and other CBUS Tools.</li>
+                <li>Refactoring of CBUS OPC's, Filters and Node Manger functions for future maintainability.</li>
             </ul>
 
         <h4>MQTT</h4>
