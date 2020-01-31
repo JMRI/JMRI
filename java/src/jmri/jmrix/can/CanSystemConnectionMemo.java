@@ -40,10 +40,18 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     protected TrafficController tm;
 
+    /**
+     * Set Connection Traffic Controller
+     * @param tm System Connection Traffic Controller
+     */
     public void setTrafficController(TrafficController tm) {
         this.tm = tm;
     }
-
+    
+    /**
+     * Get Connection Traffic Controller
+     * @return System Connection Traffic Controller
+     */
     public TrafficController getTrafficController() {
         return tm;
     }
