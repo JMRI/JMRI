@@ -25,19 +25,12 @@ public class CbusNodeSetupPaneTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         CbusNodeSetupPane t = new CbusNodeSetupPane(null);
         Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists",nodeToEdit);
     }
     
     @Test
     public void testInit() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
-        CbusNodeTableDataModel nodeModel = new CbusNodeTableDataModel(memo, 3,CbusNodeTableDataModel.MAX_COLUMN);
-        jmri.InstanceManager.setDefault(CbusNodeTableDataModel.class,nodeModel );
-        CbusNode nodeWithEventToEdit = nodeModel.provideNodeByNodeNum(256);
-        // set node to 3 node vars , param6
-        nodeWithEventToEdit.setParameters(new int[]{8,1,2,3,4,5,3,7,8});
-        
-        Assert.assertNotNull("exists",nodeWithEventToEdit);
         
         CbusNodeSetupPane t = new CbusNodeSetupPane(null);
         t.initComponents(256); // node num 256
@@ -45,25 +38,36 @@ public class CbusNodeSetupPaneTest {
         Assert.assertNotNull("exists",t);
         
         nodeModel.dispose();
-        nodeModel = null;
-        t = null;
+
     }
     
     private CanSystemConnectionMemo memo;
     private TrafficControllerScaffold tcis;
+    private CbusNodeTableDataModel nodeModel;
+    private CbusNode nodeToEdit;
 
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        
+        JUnitUtil.resetInstanceManager();
         memo = new CanSystemConnectionMemo();
         tcis = new TrafficControllerScaffold();
         memo.setTrafficController(tcis);
+        
+        nodeModel = new CbusNodeTableDataModel(memo, 3,CbusNodeTableDataModel.MAX_COLUMN);
+        jmri.InstanceManager.setDefault(CbusNodeTableDataModel.class,nodeModel );
+        nodeToEdit = nodeModel.provideNodeByNodeNum(256);
+        // set node to 3 node vars , param6
+        nodeToEdit.getNodeParamManager().setParameters(new int[]{8,1,2,3,4,5,3,7,8});
+        
     }
 
     @After
     public void tearDown() {
-        
+        nodeToEdit.dispose();
+        nodeModel.dispose();
+        tcis.terminateThreads();
+        memo.dispose();
         memo = null;
         tcis = null;
         

@@ -154,6 +154,8 @@ public class CbusAllocateNodeNumberTest {
         rsna.setElement(2, 0x98); // 65432
         t.reply(rsna);
         
+        Assert.assertTrue("Node 65432 is in Node Model",null != nodeModel.getNodeByNodeNum(65432));
+
         t.dispose();
         
     }

@@ -1,7 +1,6 @@
 package jmri.jmrix.can.cbus;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 import jmri.util.JUnitUtil;
@@ -24,7 +23,6 @@ public class CbusNameServiceTest {
     public void testCTor() {
         CbusNameService t = new CbusNameService();
         Assert.assertNotNull("exists",t);
-        t = null;
     }
     
     @Test
@@ -38,13 +36,12 @@ public class CbusNameServiceTest {
         m.addEvent(123,456, 0, null, "Event Name", "Comment", 0, 0, 0, 0);
         Assert.assertEquals("Event and Node Name","Event Name",t.getEventName(123,456));
         
-        t = null;
     }
 
     @Test
     public void testgetEventNodeString() {
         
-        memo.setTrafficController(tcis);
+        // memo.setTrafficController(tcis);
         
         CbusNameService t = new CbusNameService(memo);
         
@@ -69,29 +66,24 @@ public class CbusNameServiceTest {
         Assert.assertEquals("js evstr Event and Node Name","NN:69 My Node EN:741 John Smith ",t.getEventNodeString(69,741));
         Assert.assertEquals("alonso evstr Event Name","EN:357 Alonso ",t.getEventNodeString(0,357));
         
-        m = null;
-        nodeModel = null;
-        t = null;
+        nodeModel.dispose();
     }
 
-    private TrafficControllerScaffold tcis;
     private CanSystemConnectionMemo memo;
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        
-        tcis = new TrafficControllerScaffold();
+        JUnitUtil.resetInstanceManager();
         memo = new CanSystemConnectionMemo();
-        memo.setTrafficController(tcis);
+        jmri.InstanceManager.store(new CbusPreferences(),CbusPreferences.class );
         
     }
 
     @After
     public void tearDown() {
-        tcis.terminateThreads();
-        tcis = null;
+        memo.dispose();
         memo = null;
         
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly

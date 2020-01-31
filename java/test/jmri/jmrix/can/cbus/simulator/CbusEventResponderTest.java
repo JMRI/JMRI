@@ -42,7 +42,6 @@ public class CbusEventResponderTest {
         
         t.dispose();
         Assert.assertTrue("0 listeners",tc.numListeners()==0);
-        t = null;
 
     }
     

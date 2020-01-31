@@ -22,7 +22,6 @@ public class CbusNodeInfoPaneTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         CbusNodeInfoPane t = new CbusNodeInfoPane();
         Assert.assertNotNull("exists",t);
-        t = null;
     }
     
     @Test
@@ -31,14 +30,12 @@ public class CbusNodeInfoPaneTest {
         CbusNodeInfoPane t = new CbusNodeInfoPane();
         
         CbusNode nd = new CbusNode(null,12345);
-        nd.setParameters(new int[]{8,165,89,10,4,5,3,4,8});
+        nd.getNodeParamManager().setParameters(new int[]{8,165,89,10,4,5,3,4,8});
         
         t.initComponents(nd);
         
         Assert.assertNotNull("exists",t);
         
-        nd = null;
-        t = null;
     }
 
     @Before

@@ -17,7 +17,14 @@ import org.junit.runners.Suite;
     CbusNodeSingleEventTableDataModelTest.class,
     CbusNodeTableDataModelTest.class,
     CbusNodeTrickleFetchTest.class,
-    CbusNodeXmlTest.class
+    CbusNodeBackupManagerTest.class,
+    CbusNodeCanListenerTest.class,
+    CbusNodeEventManagerTest.class,
+    CbusNodeNVManagerTest.class,
+    CbusNodeParameterManagerTest.class,
+    CbusNodeStatsTest.class,
+    CbusNodeTimerManagerTest.class,
+    CbusNodeBackupFileTest.class
 })
 
 /**

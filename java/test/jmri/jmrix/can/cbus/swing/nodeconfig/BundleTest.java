@@ -1,6 +1,7 @@
 package jmri.jmrix.can.cbus.swing.nodeconfig;
 
 
+import java.util.Locale;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -20,6 +21,15 @@ public class BundleTest  {
     @Test(expected = java.util.MissingResourceException.class)
     public void testBadKey() {
             Bundle.getMessage("FFFFFTTTTTTT");
+    }
+    
+    @Test public void testLocaleMessage() {
+        Assert.assertEquals("Scambio", Bundle.getMessage(Locale.ITALY, "BeanNameTurnout"));
+    }
+
+    @Test public void testLocaleMessageArg() {
+        Assert.assertEquals("Scambio", Bundle.getMessage(Locale.ITALY, "BeanNameTurnout", new Object[]{}));
+        Assert.assertEquals("Informazioni su Test", Bundle.getMessage(Locale.ITALY, "TitleAbout", "Test"));
     }
 
 }
