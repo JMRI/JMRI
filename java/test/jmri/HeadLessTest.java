@@ -28,7 +28,7 @@ import jmri.util.junit.TestClassMainMethod;
 @RunWith(JUnitPlatform.class)
 @SuiteDisplayName("Headless Tests")
 @SelectPackages({"jmri","apps"})
-@ExcludeClassNamePatterns({"^AllTest$","^FileLineEndingsTest$"})
+@ExcludeClassNamePatterns({"^AllTest$","^FileLineEndingsTest$","ArchitectureTest"})
 public class HeadLessTest {
 
     // Main entry point
