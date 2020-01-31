@@ -73,6 +73,13 @@ public class CbusDummyNodeCanListener extends jmri.jmrix.can.cbus.node.CbusNodeC
                 // Set Node Variable
                 _dummyNode.setDummyNV(m.getElement(3),m.getElement(4));
                 break;
+            default:
+                processDummyCanFLimModeEventStuff(m);
+        }
+    }
+    
+    private void processDummyCanFLimModeEventStuff(CanMessage m){
+        switch (m.getElement(0)) {    
             case CbusConstants.CBUS_RQEVN:
                 // Request number of events
                 _dummyNode.sendNUMEV();

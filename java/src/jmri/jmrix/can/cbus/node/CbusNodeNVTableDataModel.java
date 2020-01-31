@@ -153,7 +153,7 @@ public class CbusNodeNVTableDataModel extends javax.swing.table.AbstractTableMod
                     return String.valueOf(Integer.toHexString(nodeOfInterest.getNodeNvManager().getNV(row+1)));
                 }
                 else {
-                    return "";
+                    break;
                 }
             case NV_CURRENT_BIT_COLUMN:
                 int num =  nodeOfInterest.getNodeNvManager().getNV(row+1);
@@ -162,7 +162,7 @@ public class CbusNodeNVTableDataModel extends javax.swing.table.AbstractTableMod
                     (String.format("%8s", Integer.toBinaryString(num)).replace(' ', '0')).substring(4,8);
                 }
                 else {
-                    return "";
+                    break;
                 }
             case NV_SELECT_COLUMN:
                 if ( newNVs.length < row+1) {
@@ -175,27 +175,28 @@ public class CbusNodeNVTableDataModel extends javax.swing.table.AbstractTableMod
                 }
             case NV_SELECT_HEX_COLUMN:
                 if ( newNVs.length <= row+1) {
-                    return "";
+                    break;
                 }
                 if (newNVs[(row+1)]>-1) {
                     return String.valueOf(Integer.toHexString(newNVs[(row+1)])); 
                 }
                 else {
-                    return "";
+                    break;
                 }
             case NV_SELECT_BIT_COLUMN:
                 if ( newNVs.length <= row+1) {
-                    return "";
+                    break;
                 }
                 if (newNVs[(row+1)]>-1) {
                     return (String.format("%8s", Integer.toBinaryString(newNVs[(row+1)])).replace(' ', '0')).substring(0,4) + " " +
                         (String.format("%8s", Integer.toBinaryString(newNVs[(row+1)])).replace(' ', '0')).substring(4,8);
                 } else {
-                    return "";
+                    break;
                 }
             default:
                 return null;
         }
+        return "";
     }
     
     /**

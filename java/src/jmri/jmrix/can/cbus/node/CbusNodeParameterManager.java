@@ -192,6 +192,14 @@ public class CbusNodeParameterManager {
         return n.toString();
     }
     
+    public void requestEventTot() {
+        if ( _node.getNodeTimerManager().hasActiveTimers() ){
+            return;
+        }
+        _node.getNodeTimerManager().setNumEvTimeout();
+        _node.send.rQEVN( _node.getNodeNumber() );
+    }
+    
     /**
      * Request a single Parameter from a Physical Node
      * <p>
@@ -208,49 +216,45 @@ public class CbusNodeParameterManager {
         _node.send.rQNPN( _node.getNodeNumber(), param );
     }
     
+    private boolean sentParamRequest(int paramToCheck){
+        if ( getParameter(paramToCheck) < 0 ) {
+            requestParam(paramToCheck);
+            return true;
+        }
+        return false;
+    }
+    
     /**
      * Send a request for the next unknown parameter to the physical node
      * 
      */
     protected void sendRequestNextParam(){
-        if ( _node.getNodeTimerManager().hasActiveTimers() ){
-            return;
-        }
         if ( _parameters == null ) {
             requestParam(0);
             return;
         }
-        if ( getParameter(1) < 0 ) {
-            requestParam(1);
-            return;
-        }
-        else if ( getParameter(3) < 0 ) {
-            requestParam(3);
-            return;
-        }
-        else if ( getParameter(6) < 0 ) {
-            // initialise NV's
-            requestParam(6);
+        if ( sentParamRequest(1)  // Manufacturer ID
+            || ( sentParamRequest(3) )  // Module ID
+            || ( sentParamRequest(6) ) ) { // initialise NV's
             return;
         }
         
-        
-        else if ( getParameter(5) < 0 ) {
-            // get number event variables per event
-            requestParam(5);
-            return;
-        }        
-        else if ( getParameter(7) < 0 ) {
-            // get firmware pt1
-            requestParam(7);
-            return;
-        }
-        else if ( getParameter(2) < 0 ) {
-            // get firmware pt2
-            requestParam(2);
+        if ( sentParamRequest(5) // get number event variables per event
+            || ( sentParamRequest(7) ) // get firmware pt1
+            || ( sentParamRequest(2) ) ) { // get firmware pt2
             return;
         }
 
+        finishedWhenGotMainParams();
+        
+        for (int i = 1; i < _parameters.length; i++) {
+            if ( sentParamRequest(i) ) {
+                return;
+            }
+        }
+    }
+    
+    private void finishedWhenGotMainParams(){
         if ( ( _node.getCsNum() > -1 ) && ( _commandStationIdentified == false ) ) {
             // notify command station located
             log.info("{}",getNodeTypeString() );
@@ -266,16 +270,7 @@ public class CbusNodeParameterManager {
         
         // now traits are known request num. of events
         if ( _node.getNodeEventManager().getTotalNodeEvents()<0 ){
-            _node.getNodeTimerManager().setNumEvTimeout();
-            _node.send.rQEVN( _node.getNodeNumber() );
-            return;
-        }
-        
-        for (int i = 1; i < _parameters.length; i++) {
-            if ( _parameters[i] == -1 ) {
-                requestParam(i);
-                return;
-            }
+            requestEventTot();
         }
     }
     
