@@ -513,5 +513,10 @@
                 so that signal icons can be made fully visible.</li>
             <li>Lots of updates to the organization of the web site so that the sidebars
                 provide better navigation.</li>
+            <li><code>Manager.getSystemNameArray()</code> has been removed after being 
+                deprecated for two years. Please migrate to using
+                <code>Manager.getNamedBeanSet()</code> instead.  If you really
+                must have an array, use <code>Manager.getNamedBeanSet().toArray()</code>;
+                see <a href="https://www.techiedelight.com/convert-set-to-array-java/">this tutorial</a> for examples.</li>
         </ul>
 
