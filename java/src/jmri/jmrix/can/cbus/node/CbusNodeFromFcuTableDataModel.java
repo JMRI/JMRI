@@ -179,13 +179,13 @@ public class CbusNodeFromFcuTableDataModel extends CbusNodeTableDataModel {
             case FCU_NODE_USER_NAME_COLUMN:
                 return __mainArray.get(row).getUserName();
             case FCU_NODE_TYPE_NAME_COLUMN:
-                return __mainArray.get(row).getNodeTypeName();
+                return __mainArray.get(row).getNodeStats().getNodeTypeName();
             case FCU_NODE_EVENTS_COLUMN:
-                return __mainArray.get(row).getTotalNodeEvents();
+                return __mainArray.get(row).getNodeEventManager().getTotalNodeEvents();
             case NODE_NV_TOTAL_COLUMN:
-                return __mainArray.get(row).getTotalNVs();
+                return __mainArray.get(row).getNodeNvManager().getTotalNVs();
             case FCU_NODE_TOTAL_BYTES_COLUMN:
-                return __mainArray.get(row).totalNodeBytes();
+                return __mainArray.get(row).getNodeStats().totalNodeBytes();
             default:
                 return null;
         }
@@ -286,22 +286,6 @@ public class CbusNodeFromFcuTableDataModel extends CbusNodeTableDataModel {
     }
     
     /**
-     * Notify GUI that a table cell has been updated
-     * @param node Node Number, not node row number
-     * @param col Table Column number
-     */
-    @Override
-    public void updateFromNode( int node, int col){
-        // log.debug("table update from node {} column {}",node,col);
-        if ( col < getColumnCount() ) {
-        
-            ThreadingUtil.runOnGUI( ()->{
-                fireTableCellUpdated(getNodeRowFromNodeNum(node), col);
-            });
-        }
-    }
-    
-    /**
      * Single Node User Name
      * @param nn Node Number, NOT row number
      * @return Node Username, if unset returns node type name
@@ -315,8 +299,8 @@ public class CbusNodeFromFcuTableDataModel extends CbusNodeTableDataModel {
         if ( !__mainArray.get(rownum).getUserName().isEmpty() ) {
             return __mainArray.get(rownum).getUserName();
         }
-        if ( !__mainArray.get(rownum).getNodeTypeName().isEmpty() ) {
-            return __mainArray.get(rownum).getNodeTypeName();
+        if ( !__mainArray.get(rownum).getNodeStats().getNodeTypeName().isEmpty() ) {
+            return __mainArray.get(rownum).getNodeStats().getNodeTypeName();
         }        
         return "";
     }

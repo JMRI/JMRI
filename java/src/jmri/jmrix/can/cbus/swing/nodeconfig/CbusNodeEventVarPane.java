@@ -86,7 +86,7 @@ public class CbusNodeEventVarPane extends JPanel {
         evMenuPane.add(newEvButton);
         
         // check number of event variables per node event
-        if ( nodeOfI.getParameter(5) < 1 ) {
+        if ( nodeOfI.getNodeParamManager().getParameter(5) < 1 ) {
             newEvButton.setEnabled(false);
         }
         
@@ -105,8 +105,8 @@ public class CbusNodeEventVarPane extends JPanel {
             if (nodeOfInterest == null){
                 return;
             }
-            CbusNodeEvent newevent = new CbusNodeEvent(
-                -1,-1,nodeOfInterest.getNodeNumber(),-1,nodeOfInterest.getParameter(5));
+            CbusNodeEvent newevent = new CbusNodeEvent( _memo,
+                -1,-1,nodeOfInterest.getNodeNumber(),-1,nodeOfInterest.getNodeParamManager().getParameter(5));
             java.util.Arrays.fill(newevent._evVarArr,0);
             mainpane.getEditEvFrame().initComponents(_memo,newevent);
         };

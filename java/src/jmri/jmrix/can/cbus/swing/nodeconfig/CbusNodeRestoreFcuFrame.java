@@ -71,11 +71,7 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
         _memo = memo;
         cbusNodeFcuDataModel = new CbusNodeFromFcuTableDataModel(_memo, 2, CbusNodeFromFcuTableDataModel.FCU_MAX_COLUMN);
         
-        try {
-            nodeModel = jmri.InstanceManager.getDefault(CbusNodeTableDataModel.class);
-        } catch (NullPointerException e) {
-            log.error("Unable to get Node Table from Instance Manager");
-        }
+        nodeModel = jmri.InstanceManager.getDefault(CbusNodeTableDataModel.class);
         
         initMainPane();
     }
@@ -356,8 +352,8 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
             return;
         }
         
-        if ( ( nodeFromSelectedRow().getTotalNVs() == nodeFromSelectedList().getTotalNVs() ) 
-            && ( nodeFromSelectedRow().getParameter(5) == nodeFromSelectedList().getParameter(5) ) ) {
+        if ( ( nodeFromSelectedRow().getNodeNvManager().getTotalNVs() == nodeFromSelectedList().getNodeNvManager().getTotalNVs() ) 
+            && ( nodeFromSelectedRow().getNodeParamManager().getParameter(5) == nodeFromSelectedList().getNodeParamManager().getParameter(5) ) ) {
             
             nodeToBeTaughtButton.setEnabled(true);
             nodeToBeTaughtButton.setToolTipText(null);
@@ -423,7 +419,7 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
                 if ( nodenum>0 ) {
                     CbusNodeFromBackup actualnode = cbusNodeFcuDataModel.provideNodeByNodeNum( nodenum );
                     actualnode.setNameIfNoName( nodeName );
-                    actualnode.resetNodeEvents();
+                    actualnode.getNodeEventManager().resetNodeEvents();
                     
                     log.debug("node version {}",nodeVersion);
                     
@@ -431,10 +427,10 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
                     
                     // 1st value, ie 7 is total params
                     int [] myarray = new int[] {7,165,-1,nodetype,-1,-1,nvArray[0],-1}; 
-                    actualnode.setParameters(myarray);
+                    actualnode.getNodeParamManager().setParameters(myarray);
                     if (nvArray.length>1) {
                         // log.info("node {} has {} nvs",actualnode,numNvs);
-                        actualnode.setNVs( nvArray );
+                        actualnode.getNodeNvManager().setNVs( nvArray );
                     }
                 }
             }
@@ -464,14 +460,14 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
                     
                     if ( !eventVars.isEmpty() ) {
                         int[] evVarArray = StringUtil.intBytesWithTotalFromNonSpacedHexString(eventVars,false);
-                        if ( hostNode.getParameter(5) < 0 ) {
-                            hostNode.setParameter(5,evVarArray.length);
+                        if ( hostNode.getNodeParamManager().getParameter(5) < 0 ) {
+                            hostNode.getNodeParamManager().setParameter(5,evVarArray.length);
                         }
-                        CbusNodeEvent ev = new CbusNodeEvent(eventNodeNum,eventNum,hostNodeNum,-1,hostNode.getParameter(5));
+                        CbusNodeEvent ev = new CbusNodeEvent(_memo,eventNodeNum,eventNum,hostNodeNum,-1,hostNode.getNodeParamManager().getParameter(5));
                         ev.setEvArr(evVarArray);
                         ev.setName(eventName);
                         ev.setTempFcuNodeName(cbusNodeFcuDataModel.getNodeName( eventNodeNum ) );
-                        hostNode.addNewEvent(ev);
+                        hostNode.getNodeEventManager().addNewEvent(ev);
                     }
                 }
             }
@@ -482,7 +478,7 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
             }
             
             try {
-                CbusEventTableDataModel eventModel = jmri.InstanceManager.getDefault(
+                CbusEventTableDataModel eventModel = jmri.InstanceManager.getNullableDefault(
                     jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel.class);
                 log.debug("event table active {}",eventModel);
                 if ( eventList.getLength() > 0 ) {
@@ -509,16 +505,18 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
         
         CbusEventTableDataModel eventModel;
         // see if CBUS Event Table is running
-        try {
-            eventModel = jmri.InstanceManager.getDefault(jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel.class);
-        } catch (NullPointerException e) {
+        
+        eventModel = jmri.InstanceManager.getNullableDefault(jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel.class);
+        if ( eventModel == null ) {
             log.info("CBUS Event Table not running, no Event Names imported.");
             return;
         }
-        ArrayList<CbusNodeEvent> evList = nodeWithEvents.getEventArray();
-        for (int i = 0; i < evList.size(); i++) {
-            if ( !evList.get(i).getName().isEmpty() ){
-                eventModel.provideEvent(evList.get(i).getNn(),evList.get(i).getEn()).setName(evList.get(i).getName());
+        ArrayList<CbusNodeEvent> evList = nodeWithEvents.getNodeEventManager().getEventArray();
+        if (evList!=null) {
+            for (int i = 0; i < evList.size(); i++) {
+                if ( !evList.get(i).getName().isEmpty() ){
+                    eventModel.provideEvent(evList.get(i).getNn(),evList.get(i).getEn()).setName(evList.get(i).getName());
+                }
             }
         }
         eventModel.fireTableDataChanged();

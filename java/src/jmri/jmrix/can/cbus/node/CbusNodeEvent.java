@@ -25,14 +25,15 @@ public class CbusNodeEvent extends CbusEvent implements Comparable<CbusNodeEvent
     /**
      * Set the value of the event variable array by index
      *
+     * @param memo CAN System Connection
      * @param nn Event node Number
      * @param en Event event or device number
      * @param thisnode Host node number
      * @param index number assigned by node, -1 if unknown
      * @param maxEvVar Maximum event variables for the event
      */
-    public CbusNodeEvent( int nn, int en, int thisnode, int index, int maxEvVar){
-        super(nn,en);
+    public CbusNodeEvent( jmri.jmrix.can.CanSystemConnectionMemo memo, int nn, int en, int thisnode, int index, int maxEvVar){
+        super(memo,nn,en);
         _thisnode = thisnode;
         _index = index;
         _evVarArr = new int[maxEvVar];

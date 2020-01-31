@@ -17,7 +17,6 @@ import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.CanReply;
-import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.cbus.CbusSend;
@@ -30,7 +29,7 @@ import org.slf4j.LoggerFactory;
 public class CbusAllocateNodeNumber implements CanListener {
     
     private final CbusNodeTableDataModel nodeModel;    
-    private final TrafficController tc;
+    private final CanSystemConnectionMemo _memo;
     private final CbusSend send;
     
     private JLabel rqNNtext;
@@ -47,8 +46,8 @@ public class CbusAllocateNodeNumber implements CanListener {
         
         nodeModel = model;
         // connect to the CanInterface
-        tc = memo.getTrafficController();
-        addTc(tc);
+        _memo = memo;
+        addTc(memo);
         send = new CbusSend(memo);
         
         baseNodeNum = 256;
@@ -56,7 +55,7 @@ public class CbusAllocateNodeNumber implements CanListener {
         WAITINGRESPONSE_RQNN_PARAMS = false;
         NODE_NUM_DIALOGUE_OPEN = false;
         WAITING_RESPONSE_NAME = false;
-        _timeout = CbusNode.SINGLE_MESSAGE_TIMEOUT_TIME;
+        _timeout = CbusNodeTimerManager.SINGLE_MESSAGE_TIMEOUT_TIME;
     }
     
     private void startnodeallocation(int nn, String nodeText) {
@@ -206,7 +205,7 @@ public class CbusAllocateNodeNumber implements CanListener {
     }
     
     /**
-     * Capture node and event, check is event and send to parse from reply.
+     * Capture CBUS_RQNN, CBUS_PARAMS, CBUS_NNACK, CBUS_NAME
      * @param m incoming CanReply
      */
     @Override
@@ -231,7 +230,7 @@ public class CbusAllocateNodeNumber implements CanListener {
                     
                     // provide will add to table
                     CbusNode nd = nodeModel.provideNodeByNodeNum( ( m.getElement(1) * 256 ) + m.getElement(2) );
-                    nd.setParamsFromSetup(_paramsArr);
+                    nd.getCanListener().setParamsFromSetup(_paramsArr);
                     nd.setNodeNameFromName(_tempNodeName);
                 }   
                 _paramsArr = null;
@@ -293,7 +292,7 @@ public class CbusAllocateNodeNumber implements CanListener {
     
     public void dispose(){
         clearSendSNNTimeout();
-        tc.removeCanListener(this);
+        removeTc(_memo);
     }
 
     private final static Logger log = LoggerFactory.getLogger(CbusAllocateNodeNumber.class);

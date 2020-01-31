@@ -46,16 +46,16 @@ public class CbusNodeConstants {
         // defaults
         node.setsendsWRACKonNVSET(true);
         
-        if ( node.getParameter(1) == 165 ) { // MERG MODULE
-            if ( node.getParameter(3) == 29 ) { // CANPAN
+        if ( node.getNodeParamManager().getParameter(1) == 165 ) { // MERG MODULE
+            if ( node.getNodeParamManager().getParameter(3) == 29 ) { // CANPAN
                 node.setsendsWRACKonNVSET(false);
             }
-            if ( node.getParameter(3) == 10 // CANCMD
-                || node.getParameter(3) ==  55 // or CANCSB 
-                || node.getParameter(3) == 12 // or CANBC
+            if ( node.getNodeParamManager().getParameter(3) == 10 // CANCMD
+                || node.getNodeParamManager().getParameter(3) ==  55 // or CANCSB 
+                || node.getNodeParamManager().getParameter(3) == 12 // or CANBC
             ) { 
-                if ( node.getParameter(7) == 4 ) { // v4 Firmware
-                    node.resetNodeEvents(); // sets num events to 0 as does not respond to RQEVN
+                if ( node.getNodeParamManager().getParameter(7) == 4 ) { // v4 Firmware
+                    node.getNodeEventManager().resetNodeEvents(); // sets num events to 0 as does not respond to RQEVN
                     node.setStatResponseFlagsAccurate(false);
                 }
             }
@@ -92,8 +92,8 @@ public class CbusNodeConstants {
                 1, /* 20 Beta revision   */
                 };
                 
-                thisNode.setParameters(_params);
-                thisNode.setNVs( new int[]{ 1 , 0 } ); // 1 NV, NV1 set at 0
+                thisNode.getNodeParamManager().setParameters(_params);
+                thisNode.getNodeNvManager().setNVs( new int[]{ 1 , 0 } ); // 1 NV, NV1 set at 0
                 thisNode.setNodeNameFromName("PAN");
             }
             
@@ -126,7 +126,7 @@ public class CbusNodeConstants {
                 1, /* 20 Beta revision   */
                 };
                 
-                thisNode.setParameters(_params);
+                thisNode.getNodeParamManager().setParameters(_params);
                 
                 int[] nvArray = new int[256];
                 nvArray[0]=255;
@@ -142,13 +142,13 @@ public class CbusNodeConstants {
                 
                 for (int i = 1; i < 256; i++) {
                     
-                    CbusNodeEvent singleEv = new CbusNodeEvent(i,i,-1,i,255);
+                    CbusNodeEvent singleEv = new CbusNodeEvent(thisNode._memo,i,i,-1,i,255);
                     singleEv.setEvArr(evVarArray);
-                    thisNode.addNewEvent(singleEv);
+                    thisNode.getNodeEventManager().addNewEvent(singleEv);
                     
                 }
                 
-                thisNode.setNVs( nvArray );
+                thisNode.getNodeNvManager().setNVs( nvArray );
                 thisNode.setNodeNameFromName("TSTMAXND");
                 
             }
@@ -156,13 +156,13 @@ public class CbusNodeConstants {
             else {
             
                 // default MERG module in SLiM mode
-                thisNode.setParameters( new int[]{ 8,165,0,0,0,0,0,0,0 } );
-                thisNode.setNVs( new int[]{ 0 } );
+                thisNode.getNodeParamManager().setParameters( new int[]{ 8,165,0,0,0,0,0,0,0 } );
+                thisNode.getNodeNvManager().setNVs( new int[]{ 0 } );
             }
         }
         else {
-            thisNode.setParameters( new int[]{ 8,165,0,0,0,0,0,0,0 } );
-            thisNode.setNVs( new int[]{ 0 } );
+            thisNode.getNodeParamManager().setParameters( new int[]{ 8,165,0,0,0,0,0,0,0 } );
+            thisNode.getNodeNvManager().setNVs( new int[]{ 0 } );
         }
         
         setTraits( thisNode );

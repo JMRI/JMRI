@@ -57,7 +57,7 @@ public class NdPane extends JPanel {
             String option = CbusNodeConstants.getModuleType(165,intoption);
             _selectNd.addItem(option);
             tooltips.add(CbusNodeConstants.getModuleTypeExtra(165,intoption));
-            if ( intoption == _node.getParameter(3) ){ // module type
+            if ( intoption == _node.getNodeParamManager().getParameter(3) ){ // module type
                 getSelected = option;
             }
         }
@@ -104,7 +104,7 @@ public class NdPane extends JPanel {
     }
     
     private void updateNode(){
-        if ( _node.getParameter(3)>0 ) { // module type set
+        if ( _node.getNodeParamManager().getParameter(3)>0 ) { // module type set
             _resetNd.setEnabled(true); 
         } else {
             _resetNd.setEnabled(false); 

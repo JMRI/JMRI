@@ -4,23 +4,13 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JFormattedTextField;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSpinner;
-import javax.swing.JTextField;
-import javax.swing.SpinnerNumberModel;
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.text.DefaultFormatter;
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeConstants;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
+import jmri.jmrix.can.cbus.node.CbusNodeTimerManager;
 import jmri.util.ThreadingUtil;
 
 import org.slf4j.Logger;
@@ -47,6 +37,8 @@ public class CbusNodeSetupPane extends JPanel {
     protected CbusNodeSetupPane( NodeConfigToolPane main ) {
         super();
         //  mainpane = main;
+        // nodemodel = main.getNodeModel();
+        
     }
 
     public void initComponents(int node) {
@@ -61,11 +53,8 @@ public class CbusNodeSetupPane extends JPanel {
         
         _nodeNum = node;
 
-        try {
-            nodeModel = jmri.InstanceManager.getDefault(CbusNodeTableDataModel.class);
-        } catch (NullPointerException e) {
-            log.error("Unable to get Node Table from Instance Manager");
-        }
+        nodeModel = jmri.InstanceManager.getDefault(CbusNodeTableDataModel.class);
+        
         
         
         try {
@@ -77,11 +66,11 @@ public class CbusNodeSetupPane extends JPanel {
             nodeOfInterest = nodeModel.getNodeByNodeNum(_nodeNum);
             
             header = new JLabel("<html><h2>" 
-                + CbusNodeConstants.getManu(nodeOfInterest.getParameter(1)) 
+                + CbusNodeConstants.getManu(nodeOfInterest.getNodeParamManager().getParameter(1)) 
                 + " " 
-                + nodeOfInterest.getNodeTypeName()
+                + nodeOfInterest.getNodeStats().getNodeTypeName()
                 + "<p>" +
-                CbusNodeConstants.getModuleTypeExtra(nodeOfInterest.getParameter(1),nodeOfInterest.getParameter(3))
+                CbusNodeConstants.getModuleTypeExtra(nodeOfInterest.getNodeParamManager().getParameter(1),nodeOfInterest.getNodeParamManager().getParameter(3))
                 + "</p></html>");
 
             JPanel headerPanel = new JPanel();
@@ -100,8 +89,7 @@ public class CbusNodeSetupPane extends JPanel {
             
             namePanel.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), ("JMRI Node User Name : " 
-                
-                + nodeOfInterest.getNodeNumberName() ) ) );
+                + nodeOfInterest ) ) );
             JButton setNameButton = new JButton("Set Module Name");
             JTextField textFieldName = new JTextField(20);
             textFieldName.setText( nodeOfInterest.getUserName() );
@@ -177,11 +165,11 @@ public class CbusNodeSetupPane extends JPanel {
                 // CbusNode will pick the outgoing message up, start timer and show dialogue on error / timeout
                 nodeOfInterest.send.eNUM(_nodeNum);
                 // cancel the busy
-                ThreadingUtil.runOnGUIDelayed( () -> {
+                ThreadingUtil.runOnGUIDelayed(() -> {
                     initComponents(_nodeNum); // refresh pane with new CAN ID
                     busy_dialog.finish();
                     busy_dialog=null;
-                },CbusNode.SINGLE_MESSAGE_TIMEOUT_TIME );
+                },CbusNodeTimerManager.SINGLE_MESSAGE_TIMEOUT_TIME );
             };
             selfCanEnumerateButton.addActionListener(selfEnumerateListener);
             
@@ -215,12 +203,12 @@ public class CbusNodeSetupPane extends JPanel {
                         nodeOfInterest.send.nNCLR(_nodeNum);// no response expected
                     }, 150 );
                     
-                    ThreadingUtil.runOnLayoutDelayed( () -> {
+                    ThreadingUtil.runOnLayoutDelayed(() -> {
                         // node exit learn mode
                         nodeOfInterest.send.nodeExitLearnEvMode( _nodeNum ); // no response expected
-                    }, CbusNode.SINGLE_MESSAGE_TIMEOUT_TIME );
+                    }, CbusNodeTimerManager.SINGLE_MESSAGE_TIMEOUT_TIME );
                     
-                    ThreadingUtil.runOnGUIDelayed( () -> {
+                    ThreadingUtil.runOnGUIDelayed(() -> {
                     
                         // stop 
                         busy_dialog.finish();
@@ -230,7 +218,7 @@ public class CbusNodeSetupPane extends JPanel {
                         // RQEVN
                         nodeOfInterest.send.rQEVN( _nodeNum );
                     
-                    }, ( CbusNode.SINGLE_MESSAGE_TIMEOUT_TIME + 150 ) );
+                    }, ( CbusNodeTimerManager.SINGLE_MESSAGE_TIMEOUT_TIME + 150 ) );
                     
                 }
             };
@@ -307,13 +295,13 @@ public class CbusNodeSetupPane extends JPanel {
             nodeOfInterest.send.cANID(_nodeNum, newval);
             
             // cancel the busy
-            ThreadingUtil.runOnGUIDelayed( () -> {
+            ThreadingUtil.runOnGUIDelayed(() -> {
                 initComponents(_nodeNum); // refresh pane with new CAN ID
                 busy_dialog.finish();
                 busy_dialog=null;
                 CANID_DIALOGUE_OPEN=false;
                 
-            },CbusNode.SINGLE_MESSAGE_TIMEOUT_TIME );            
+            },CbusNodeTimerManager.SINGLE_MESSAGE_TIMEOUT_TIME );            
         }
     }
     

@@ -3,6 +3,8 @@ package jmri.jmrix.can.cbus.swing.nodeconfig;
 import java.awt.BorderLayout;
 import java.awt.Desktop;
 import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -21,7 +23,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Steve Young Copyright (C) 2018
  */
-public class CbusNodeInfoPane extends JPanel {
+public class CbusNodeInfoPane extends JPanel implements PropertyChangeListener {
     
     private JPanel infoPane;
     private final JButton nodesupportlinkbutton;
@@ -44,6 +46,11 @@ public class CbusNodeInfoPane extends JPanel {
         
     }
     
+    @Override
+    public void propertyChange(PropertyChangeEvent ev){
+        paramsHaveUpdated();
+    }
+    
     /**
      * Initialise the pane for a particular CbusNode ( or CbusBackupNode )
      * @param node the node to display info for
@@ -60,10 +67,12 @@ public class CbusNodeInfoPane extends JPanel {
             return;
         }
         if ( nodeOfInterest != null ) {
-            nodeOfInterest.removeInfoPane(this);
+            node.removePropertyChangeListener(this);
         }
+        
+        node.addPropertyChangeListener(this);
         nodeOfInterest = node;
-        nodeOfInterest.addInfoPane(this); // register for updates in case still loading from network
+        
         
         menuPane = new JPanel();
         
@@ -104,9 +113,9 @@ public class CbusNodeInfoPane extends JPanel {
         nodesupportlinkbutton.setVisible(false);
                 
         header.setText("<html><h3>" 
-            + CbusNodeConstants.getManu(nodeOfInterest.getParameter(1)) 
+            + CbusNodeConstants.getManu(nodeOfInterest.getNodeParamManager().getParameter(1)) 
             + " " 
-            + nodeOfInterest.getNodeTypeName()
+            + nodeOfInterest.getNodeStats().getNodeTypeName()
             + "</h3></html>");
         
         StringBuilder textAreaString = new StringBuilder();
@@ -116,102 +125,103 @@ public class CbusNodeInfoPane extends JPanel {
         textAreaString.append(nodeOfInterest.getNodeNumber());
         textAreaString.append(System.getProperty("line.separator"));
         
-        if (nodeOfInterest.getParameter(1) > -1 && nodeOfInterest.getParameter(3) > -1 ) {
+        if (nodeOfInterest.getNodeParamManager().getParameter(1) > -1 && 
+            nodeOfInterest.getNodeParamManager().getParameter(3) > -1 ) {
         
             textAreaString.append(Bundle.getMessage("ManufacturerType",
-                nodeOfInterest.getParameter(1),
-                CbusNodeConstants.getManu(nodeOfInterest.getParameter(1)),
-                nodeOfInterest.getParameter(3)));
+                nodeOfInterest.getNodeParamManager().getParameter(1),
+                CbusNodeConstants.getManu(nodeOfInterest.getNodeParamManager().getParameter(1)),
+                nodeOfInterest.getNodeParamManager().getParameter(3)));
                 
             textAreaString.append(System.getProperty("line.separator"));
         
         }
         
-        if (!nodeOfInterest.getNodeTypeName().isEmpty()){
+        if (!nodeOfInterest.getNodeStats().getNodeTypeName().isEmpty()){
             textAreaString.append(Bundle.getMessage("IdentifiesAs",
-                nodeOfInterest.getNodeTypeName(),
+                nodeOfInterest.getNodeStats().getNodeTypeName(),
                 CbusNodeConstants.getModuleTypeExtra(
-                    nodeOfInterest.getParameter(1),nodeOfInterest.getParameter(3)))
+                    nodeOfInterest.getNodeParamManager().getParameter(1),
+                    nodeOfInterest.getNodeParamManager().getParameter(3)))
             );
             textAreaString.append(System.getProperty("line.separator"));
         }
         
-        if ((nodeOfInterest.getParameter(2)>0) && (nodeOfInterest.getParameter(7)>0)) {
+        if ((nodeOfInterest.getNodeParamManager().getParameter(2)>0) && 
+            (nodeOfInterest.getNodeParamManager().getParameter(7)>0)) {
             textAreaString.append (Bundle.getMessage("FirmwareVer",
-                nodeOfInterest.getParameter(7),
-                Character.toString((char) nodeOfInterest.getParameter(2))));
+                nodeOfInterest.getNodeParamManager().getParameter(7),
+                Character.toString((char) nodeOfInterest.getNodeParamManager().getParameter(2))));
             
-            if ((nodeOfInterest.getParameter(0)>19) && (nodeOfInterest.getParameter(20)>0) ){
+            if ((nodeOfInterest.getNodeParamManager().getParameter(0)>19) && (nodeOfInterest.getNodeParamManager().getParameter(20)>0) ){
                 textAreaString.append (Bundle.getMessage("FWBeta")); 
-                textAreaString.append (nodeOfInterest.getParameter(20));
+                textAreaString.append (nodeOfInterest.getNodeParamManager().getParameter(20));
             }
             textAreaString.append(System.getProperty("line.separator"));
         }
 
-        if (nodeOfInterest.getParameter(6)>0) {
+        if (nodeOfInterest.getNodeParamManager().getParameter(6)>0) {
             textAreaString.append (Bundle.getMessage("NodeVariables"));
             textAreaString.append (" : ");
-            textAreaString.append ( nodeOfInterest.getParameter(6) );
+            textAreaString.append ( nodeOfInterest.getNodeParamManager().getParameter(6) );
             textAreaString.append(System.getProperty("line.separator"));
         }            
         
-        if (nodeOfInterest.getParameter(0) > -1) {
+        if (nodeOfInterest.getNodeParamManager().getParameter(0) > -1) {
             textAreaString.append (Bundle.getMessage("Parameters"));
             textAreaString.append (" : ");
-            textAreaString.append ( nodeOfInterest.getParameter(0) );
+            textAreaString.append ( nodeOfInterest.getNodeParamManager().getParameter(0) );
             textAreaString.append(System.getProperty("line.separator"));
         }
         
-        if ( nodeOfInterest.getTotalNodeEvents()> -1 ) {
+        if ( nodeOfInterest.getNodeEventManager().getTotalNodeEvents()> -1 ) {
             textAreaString.append ("Current Events : ");
-            textAreaString.append ( nodeOfInterest.getTotalNodeEvents() );
+            textAreaString.append ( nodeOfInterest.getNodeEventManager().getTotalNodeEvents() );
             textAreaString.append(System.getProperty("line.separator"));
         }
 
-        if (nodeOfInterest.getParameter(4)>0) {
+        if (nodeOfInterest.getNodeParamManager().getParameter(4)>0) {
             textAreaString.append ("Max Events : ");
-            textAreaString.append (nodeOfInterest.getParameter(4));
+            textAreaString.append (nodeOfInterest.getNodeParamManager().getParameter(4));
             textAreaString.append(System.getProperty("line.separator"));
         
         }            
         
-        if (nodeOfInterest.getParameter(5)>0) {
+        if (nodeOfInterest.getNodeParamManager().getParameter(5)>0) {
             textAreaString.append ("Max Event Variables per Event : ");
-            textAreaString.append (nodeOfInterest.getParameter(5));
+            textAreaString.append (nodeOfInterest.getNodeParamManager().getParameter(5));
             textAreaString.append(System.getProperty("line.separator"));
         }
         
-        if ((nodeOfInterest.getParameter(0)>9) && (nodeOfInterest.getParameter(10)>0)) {           
-            textAreaString.append (CbusNodeConstants.getBusType(nodeOfInterest.getParameter(10)));
+        if ((nodeOfInterest.getNodeParamManager().getParameter(0)>9) && (nodeOfInterest.getNodeParamManager().getParameter(10)>0)) {           
+            textAreaString.append (CbusNodeConstants.getBusType(nodeOfInterest.getNodeParamManager().getParameter(10)));
             textAreaString.append (" ");
             textAreaString.append (Bundle.getMessage("BusType"));
             textAreaString.append(System.getProperty("line.separator"));
         }
         
         textAreaString.append ("Current Node Data Bytes : ");
-        textAreaString.append ( Math.max(0,nodeOfInterest.totalNodeBytes()) );
+        textAreaString.append ( Math.max(0,nodeOfInterest.getNodeStats().totalNodeBytes()) );
         textAreaString.append(System.getProperty("line.separator"));
         
-        if ( nodeOfInterest.getNodeBackupFile() != null ) {
+        textAreaString.append(System.getProperty("line.separator"));
+
+        textAreaString.append ("Entries in Node xml file : ");
+        textAreaString.append (nodeOfInterest.getNodeBackupManager().getBackups().size());
+        textAreaString.append(System.getProperty("line.separator"));
+
+        textAreaString.append ("Num Backups in Node xml file : ");
+        textAreaString.append (nodeOfInterest.getNodeBackupManager().getNumCompleteBackups());
+        textAreaString.append(System.getProperty("line.separator"));
+        if( nodeOfInterest.getNodeBackupManager().getNumCompleteBackups()>0 ) {
+            textAreaString.append ("First entry : ");
+            textAreaString.append (nodeOfInterest.getNodeBackupManager().getFirstBackupTime());
             textAreaString.append(System.getProperty("line.separator"));
-            
-            textAreaString.append ("Entries in Node xml file : ");
-            textAreaString.append (nodeOfInterest.getNodeBackupFile().getBackups().size());
+
+            textAreaString.append ("Last entry : ");
+            textAreaString.append (nodeOfInterest.getNodeBackupManager().getLastBackupTime());
+
             textAreaString.append(System.getProperty("line.separator"));
-            
-            textAreaString.append ("Num Backups in Node xml file : ");
-            textAreaString.append (nodeOfInterest.getNumBackups());
-            textAreaString.append(System.getProperty("line.separator"));
-            if( nodeOfInterest.getNumBackups()>0 ) {
-                textAreaString.append ("First entry : ");
-                textAreaString.append (nodeOfInterest.getFirstBackupTime());
-                textAreaString.append(System.getProperty("line.separator"));
-            
-                textAreaString.append ("Last entry : ");
-                textAreaString.append (nodeOfInterest.getLastBackupTime());
-            
-                textAreaString.append(System.getProperty("line.separator"));
-            }
         }
         
         if ( !nodeOfInterest.getsendsWRACKonNVSET() ) {
@@ -220,20 +230,20 @@ public class CbusNodeInfoPane extends JPanel {
             textAreaString.append(System.getProperty("line.separator"));
         }
         
-        if (!nodeOfInterest.getParameterHexString().isEmpty()) {
+        if (!nodeOfInterest.getNodeParamManager().getParameterHexString().isEmpty()) {
             textAreaString.append(System.getProperty("line.separator"));
             textAreaString.append ("Parameter Hex String : ");
-            textAreaString.append (nodeOfInterest.getParameterHexString());
+            textAreaString.append (nodeOfInterest.getNodeParamManager().getParameterHexString());
             textAreaString.append(System.getProperty("line.separator"));
         }
         
         textAreaString.append(System.getProperty("line.separator"));
-        for (int i = 1; i <= nodeOfInterest.getParameter(0); i++) {
-            if ( nodeOfInterest.getParameter(i) > -1 ) {
+        for (int i = 1; i <= nodeOfInterest.getNodeParamManager().getParameter(0); i++) {
+            if ( nodeOfInterest.getNodeParamManager().getParameter(i) > -1 ) {
                 textAreaString.append ("Parameter ");
                 textAreaString.append (i);
                 textAreaString.append (" : ");
-                textAreaString.append ( nodeOfInterest.getParameter(i) );
+                textAreaString.append ( nodeOfInterest.getNodeParamManager().getParameter(i) );
                 textAreaString.append (" (dec)");
                 textAreaString.append(System.getProperty("line.separator"));
             }
@@ -243,11 +253,11 @@ public class CbusNodeInfoPane extends JPanel {
         //   nodePartTwobuilder.append ("<p> Processor : </p>");
         //   nodePartTwobuilder.append ("<p> Flags </p>");
         
-        nodesupportlinkbutton.setToolTipText("<html>" + CbusNodeConstants.getManu(nodeOfInterest.getParameter(1)) + 
-        " " + CbusNodeConstants.getModuleType(nodeOfInterest.getParameter(1),nodeOfInterest.getParameter(3)) + 
+        nodesupportlinkbutton.setToolTipText("<html>" + CbusNodeConstants.getManu(nodeOfInterest.getNodeParamManager().getParameter(1)) + 
+        " " + CbusNodeConstants.getModuleType(nodeOfInterest.getNodeParamManager().getParameter(1),nodeOfInterest.getNodeParamManager().getParameter(3)) + 
         " " + Bundle.getMessage("Support") + "</html>");
         
-        String supportLinkStr = CbusNodeConstants.getModuleSupportLink(nodeOfInterest.getParameter(1),nodeOfInterest.getParameter(3));
+        String supportLinkStr = CbusNodeConstants.getModuleSupportLink(nodeOfInterest.getNodeParamManager().getParameter(1),nodeOfInterest.getNodeParamManager().getParameter(3));
         
         if ( !supportLinkStr.isEmpty() ) {
             nodesupportlinkbutton.setText(supportLinkStr);
@@ -256,7 +266,7 @@ public class CbusNodeInfoPane extends JPanel {
                 nodesupportlinkbutton.setVisible(true);
             } 
             catch (URISyntaxException ex) {
-                log.warn("Unable to create support link URI for module type {} {}", nodeOfInterest.getParameter(3), ex);
+                log.warn("Unable to create support link URI for module type {} {}", nodeOfInterest.getNodeParamManager().getParameter(3), ex);
             }
             
         } else {
