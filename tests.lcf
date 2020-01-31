@@ -96,6 +96,9 @@ log4j.category.javax.jmdns=OFF
 # Turning off logging for the WebDriver Manager
 log4j.category.io.github.bonigarcia.wdm=OFF
 
+# Turn off logging for the JUnit 5 discovery process.
+log4j.category. org.junit.vintage.engine.discovery=OFF
+
 # ###################################################################
 #    Examples of how you can ask for more detailed logging
 # ###################################################################
