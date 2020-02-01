@@ -202,7 +202,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
      * To get the current selection <em>without</em> potentially creating a
      * NamedBean call {@link #getItemAt(int)} with {@link #getSelectedIndex()}
      * as the index instead (as in {@code getItemAt(getSelectedIndex())}).
-     * 
+     *
      * @return the selected item as the supported type of NamedBean, creating a
      *         new NamedBean as needed if {@link #isEditable()} and
      *         {@link #isProviding()} are true, or null if there is no
@@ -463,12 +463,14 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
                                     // selection won't change if bean is not in model
                                     setSelectedItem(bean);
                                     if (!bean.equals(getItemAt(getSelectedIndex()))) {
-                                        jtc.setText(text);
-                                        if (validatingInput) {
-                                            return new Validation(Validation.Type.DANGER,
-                                                    getBeanInUseMessage(manager.getBeanTypeHandled(),
-                                                            bean.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME)),
-                                                    preferences);
+                                        if (getSelectedIndex() != -1) {
+                                            jtc.setText(text);
+                                            if (validatingInput) {
+                                                return new Validation(Validation.Type.DANGER,
+                                                        getBeanInUseMessage(manager.getBeanTypeHandled(),
+                                                                bean.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME)),
+                                                        preferences);
+                                            }
                                         }
                                     }
                                 } else {
