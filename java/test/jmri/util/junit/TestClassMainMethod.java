@@ -60,13 +60,7 @@ public class TestClassMainMethod {
      * @param testClass the class containing tests to run
      */
     public static void run(Class<?> testClass) {
-        RunListener listener;
-        if (System.getProperty("jmri.util.junit.TestClassMainMethod.verbose", "false").equals("false")) {
-            listener = new TextListener(System.out);  // default form
-        } else {
-            listener = new jmri.util.junit.PrintingTestListener(System.out); // test-by-test output
-        }
-
+        RunListener listener = new jmri.util.junit.PrintingTestListener(System.out); // test-by-test output if enabled
         run(listener, testClass);
 
     } 

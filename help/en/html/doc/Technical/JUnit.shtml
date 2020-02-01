@@ -170,10 +170,6 @@
     The first line compiles all the test code, and the second
     runs a specific test or test suite.<br>
     (See also how to set this up <a href="IntelliJ.shtml#test">using IntelliJ</a>)
-    <p>
-    You can get detailed lists of tests run, failed and ignored by setting 
-    the "jmri.util.junit.TestClassMainMethod.verbose"
-    property to anything other than false.
 
     <h3><a name="testingvars" id="testingvars">Optional Checks</a></h3>
     There are a number of 
@@ -248,6 +244,11 @@
             <dd>If true, JUnit tests will print out each JUnitUtil.setUp() and JUnitUtil.teardown() call.
                 This can be useful if i.e. the CI tests are hanging, and you can't figure out which
                 test class is the problem.</dd>
+        <dt>jmri.util.junit.PrintingTestListener.verbose</dt>
+            <dd>Prints detailed lists of each test completed, failed and ignored to System.out.
+                It's a lot of output, but can help track down when an obscure message was
+                emitted or exception happened. It also can be used to see the order in 
+                which tests are being run.</dd>
 
      </dl>
     
