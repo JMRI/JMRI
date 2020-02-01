@@ -49,7 +49,7 @@
 
       <h4>Audio Table controls</h4>
 
-      <p>At the bottom of the Audio Table screen are buttons "Add
+      <p>At the bottom of the Audio Table window are buttons "Add
       Source..." and "Add Buffer..." to <a href=
       "../../package/jmri/jmrit/beantable/AudioAddEdit.shtml">create
       new Audio objects</a>.  At the current time, only a single listener can
