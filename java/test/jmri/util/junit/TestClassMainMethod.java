@@ -49,12 +49,20 @@ public class TestClassMainMethod {
     }
 
     /**
-     * Run tests with a default RunListener.
+     * Run tests with a compile-selected RunListener.
      * 
      * @param testClass the class containing tests to run
      */
     public static void run(Class<?> testClass) {
-        run(new TextListener(System.out), testClass);
+        RunListener listener;
+        if (System.getProperty("jmri.util.junit.TestClassMainMethod.verbose", "false").equals("false")) {
+            listener = new TextListener(System.out);  // default form
+        } else {
+            listener = new jmri.util.junit.PrintingTestListener(System.out); // test-by-test output
+        }
+
+        run(listener, testClass);
+
     } 
 
     /**
