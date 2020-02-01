@@ -8,7 +8,15 @@ import org.junit.runner.notification.*;
 
 public class PrintingTestListener extends TextListener {
 
-    // https://github.com/junit-team/junit4/blob/master/src/main/java/org/junit/internal/TextListener.java
+    /**
+     * A {@link TextListener} implementation that displays the name
+     * of run, failed and ignored tests run by JUnit
+     * <p>
+     * based on the shipped 
+     * <a href="https://github.com/junit-team/junit4/blob/master/src/main/java/org/junit/internal/TextListener.java">
+        JUnit4 implementation of TextListener
+     * </a>
+     */
     
     public PrintingTestListener(PrintStream writer) {
         super(writer);

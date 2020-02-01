@@ -167,7 +167,10 @@
 </pre>
     The first line compiles all the test code, and the second
     runs a specific test or test suite.<br>
-    (Hint: How to set this up <a href="IntelliJ.shtml#test">using IntelliJ</a>)
+    (See also how to set this up <a href="IntelliJ.shtml#test">using IntelliJ</a>)
+    <p>
+    You can get detailed lists of tests run, failed and ignored by setting the "jmri.util.junit.TestClassMainMethod.verbose"
+    environment variable to anything other than false.
 
     <h3><a name="testingvars" id="testingvars">Optional Checks</a></h3>
     There are a number of 
