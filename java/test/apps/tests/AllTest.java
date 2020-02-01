@@ -1,12 +1,15 @@
 package apps.tests;
 
+import org.junit.internal.TextListener;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.platform.suite.api.ExcludeClassNamePatterns;
 import org.junit.platform.suite.api.SelectPackages;
 import org.junit.platform.suite.api.SuiteDisplayName;
+import org.junit.runner.JUnitCore;
+import org.junit.runner.Result;
 import org.junit.runner.RunWith;
 
-import jmri.util.junit.TestClassMainMethod;
+import org.junit.runner.notification.RunListener;
 
 /**
  * Invoke all the JMRI project JUnit tests via a GUI interface.
@@ -24,7 +27,6 @@ import jmri.util.junit.TestClassMainMethod;
  *
  * @author Bob Jacobsen
  */
-
 @RunWith(JUnitPlatform.class)
 @SuiteDisplayName("AllTest")
 @SelectPackages({"jmri","apps"})
@@ -36,6 +38,29 @@ public class AllTest {
     }
 
     static public void main(String[] args) {
-        TestClassMainMethod.run(AllTest.class);
+        run(AllTest.class);
+    }
+
+    /**
+     * Run tests with a default RunListener.
+     *
+     * @param testClass the class containing tests to run
+     */
+    public static void run(Class<?> testClass){
+        run(new TextListener(System.out),testClass);
+    }
+
+    /**
+     * Run tests with a specified RunListener
+     *
+     * @param listener the listener for the tests
+     * @param testClass the class containing tests to run
+     */
+    public static void run(RunListener listener, Class<?> testClass) {
+        JUnitCore runner = new JUnitCore();
+        runner.addListener(listener);
+        Result result = runner.run(testClass);
+        System.exit(result.wasSuccessful() ? 0 : 1);
     }
 }
+
