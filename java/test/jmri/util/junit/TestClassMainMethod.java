@@ -75,7 +75,7 @@ public class TestClassMainMethod {
      * Run tests with a specified RunListener.
      * 
      * @param listener the listener for the tests
-     * @param testClass the class containing tests to run
+     * @param pattern the filter pattern used for test selection
      */
     public static void run(SummaryGeneratingListener listener, String pattern) {
         LauncherDiscoveryRequest request = LauncherDiscoveryRequestBuilder.request()
