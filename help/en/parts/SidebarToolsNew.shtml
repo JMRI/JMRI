@@ -2,30 +2,33 @@
 <!-- This is the common sidebar definition for Tools pages -->
         <dt><h3><a href="/help/en/html/tools/">Tools</a></h3></dt>
         <dd>JMRI tools for working with your layout:
-        <ul> <!-- Try to organize by frequency of use or alphabetical -->
-            <li><a href="/help/en/html/tools/throttle/ThrottleMain.shtml">Throttles</a>
-            <li><a href="/help/en/html/tools/Turnouts.shtml">Turnouts</a>
-            <li><a href="/help/en/html/tools/Lights.shtml">Lights</a>
-            <li><a href="/help/en/html/tools/Sensors.shtml">Sensors</a>
-            <li><a href="/help/en/html/tools/signaling/index.shtml">Signaling...</a>
-            <li><a href="/help/en/html/tools/consisttool/ConsistTool.shtml">Consisting...</a>           
-            <li><a href="/help/en/html/tools/Reporters.shtml">Reporters</a>
-            <li><a href="/help/en/html/tools/Memories.shtml">Memory Variables</a>
-            <li>Blocks...</li>
+        <ul> <!-- Try to organize within category by frequency of use or alphabetical -->
+            <li><i style="padding-left: 1em;">Common Tools...</i></li>
+            <ul>
+              <li><a href="/help/en/html/tools/throttle/ThrottleMain.shtml">Throttles</a>
+              <li><a href="/help/en/html/tools/Turnouts.shtml">Turnouts</a>
+              <li><a href="/help/en/html/tools/Lights.shtml">Lights</a>
+              <li><a href="/help/en/html/tools/Sensors.shtml">Sensors</a>
+              <li><a href="/help/en/html/tools/signaling/index.shtml">Signaling...</a>
+              <li><a href="/help/en/html/tools/consisttool/ConsistTool.shtml">Consisting...</a>           
+              <li><a href="/help/en/html/tools/Reporters.shtml">Reporters</a>
+              <li><a href="/help/en/html/tools/Memories.shtml">Memory Variables</a>
+            </ul>
+            <li><i style="padding-left: 1em;">Blocks...</i></li>
             <ul>
               <!-- <li><a href="/help/en/html/tools/blocktracking/index.shtml">Block tracking...</a> -->
               <li><a href="/help/en/html/tools/Blocks.shtml">Blocks</a>
               <li><a href="/help/en/html/tools/Sections.shtml">Sections</a>
               <li><a href="/help/en/html/tools/Transits.shtml">Transits</a>
             </ul>
-            <li>Routing and Control...</li>
+            <li><i style="padding-left: 1em;">Routing and Control...</i></li>
             <ul>
               <li><a href="/help/en/html/tools/Routes.shtml">Routes</a>
               <li><a href="/help/en/html/tools/LRoutes.shtml">LRoutes</a>
               <li><a href="/help/en/html/tools/EntryExit.shtml">Entry Exit (NX)</a>
               <li><a href="/help/en/html/tools/Logix.shtml">Logix</a>
             </ul>
-            <li>Other...</li>
+            <li><i style="padding-left: 1em;">Other...</i></li>
             <ul>
               <li><a href="/help/en/html/tools/Audio.shtml">Audio</a>
               <li><a href="/help/en/html/tools/CTC.shtml">CTC Tools</a>
@@ -35,7 +38,7 @@
               <li><a href="/help/en/html/tools/TimeTable.shtml">Timetable</a>
             </ul>
 
-            <li><i><a href="/help/en/html/tools/index.shtml#systemSpecificTools">System-specific...</a></i>
-           </ul>
+            <li><i style="padding-left: 1em;"><a href="/help/en/html/tools/index.shtml#systemSpecificTools">System-specific...</a></i>
+          </ul>
         </dd>
 <!-- /SidebarTools.shtml -->
