@@ -216,7 +216,7 @@ class Diesel3Sound extends EngineSound {
                 List<AudioBuffer> l = D3Notch.getBufferList(vf, fn, "n" + i + "_" + j, i + "_" + j);
                 log.debug("Buffers Created: ");
                 for (AudioBuffer b : l) {
-                    log.debug("\tSubBuffer: {}", b.getSystemName());
+                    log.debug("\tSubBuffer: {}, length: {}", b.getSystemName(), SoundBite.calcLength(b));
                 }
                 sb.addLoopBuffers(l);
                 j++;
@@ -731,9 +731,11 @@ class Diesel3Sound extends EngineSound {
                 // queue up the transition sound buffer
                 _notch = _parent.getNotch(new_notch);
                 _sound.queueBuffer(transition_buf);
-                try {
-                    sleep(SoundBite.calcLength(transition_buf) - 50);
-                } catch (InterruptedException e) {
+                if (SoundBite.calcLength(transition_buf) > 50) {
+                    try {
+                        sleep(SoundBite.calcLength(transition_buf) - 50);
+                    } catch (InterruptedException e) {
+                    }
                 }
             }
             return;

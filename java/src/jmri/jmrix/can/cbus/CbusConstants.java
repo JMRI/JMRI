@@ -61,7 +61,7 @@ public final class CbusConstants {
     public static final int CBUS_DFNON = 0x49;
     public static final int CBUS_DFNOF = 0x4A;
     public static final int CBUS_SSTAT = 0x4C;
-
+    public static final int CBUS_NNRSM = 0x4F;
     public static final int CBUS_RQNN = 0x50;
     public static final int CBUS_NNREL = 0x51;
     public static final int CBUS_NNACK = 0x52;
@@ -76,7 +76,7 @@ public final class CbusConstants {
     public static final int CBUS_RQDDS = 0x5B;
     public static final int CBUS_BOOTM = 0x5C;
     public static final int CBUS_ENUM = 0x5D;
-
+    public static final int CBUS_NNRST = 0x5E;
     public static final int CBUS_EXTC1 = 0x5F;
 
     // Opcodes with 3 data
@@ -176,6 +176,7 @@ public final class CbusConstants {
     public static final int CBUS_ASOF3 = 0xF9;
     public static final int CBUS_DDES = 0xFA;
     public static final int CBUS_DDRS = 0xFB;
+    public static final int CBUS_DDWS = 0xFC;
 
     public static final int CBUS_ARSON3 = 0xFD;
     public static final int CBUS_ARSOF3 = 0xFE;

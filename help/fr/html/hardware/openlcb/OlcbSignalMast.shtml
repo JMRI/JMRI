@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI Hardware Support - OpenLCB Signal Masts</title>
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+      <h1>Hardware Support: OpenLCB Signal Masts</h1>
+      <em>JMRI support for OpenLCB is rapidly evolving;
+      the actual code might be ahead or behind the documentation on
+      any given day.</em>
+
+      <p>This page describes JMRI's support for OpenLCB-native Signal Masts.
+      It's part of JMRI's <a href="index.shtml">documentation of its OpenLCB support</a>.</p>
+
+      <h2>OpenLCB Signal Masts</h2>
+
+      <p>A <a href="SignalMast.pdf">technical summary on masts</a> is available
+      as a <a href="SignalMast.pdf">PDF document</a>.
+      
+      <h3>Names</h3>
+      
+      Valid OpenLCB Signal Mast system names look like:
+      
+      <ul>
+      <li>MF$olm:basic:one-searchlight($1)
+      </ul>
+      
+      where the parts are
+      <ul>
+      <li>M - The system connection; these need a specific connection ID to use
+      <li>F - Indicates signal mast
+      <li>$olm - indicates an OpenLCB mast
+      <li>basic - signal system
+      <li>one-searchlight - mast type
+      <li>$1 - 1st mast (The $ indicates automatically assigned)
+      </ul>
+      
+      <h3>Adding and Editing OpenLCB Signal Masts</h3>
+      
+      You add and/or edit OpenLCB Signal Masts via the Signal Mast Table
+      using the usual "Add" and "Edit" buttons. For adding, select "OpenLCB Event Mast"
+      as the mast driver type.  You'll then get a pane that will let you configure a specific mast:
+      
+      <p>
+      <a href="images/Add_OlcbSignalMast.png"><img src="images/Add_OlcbSignalMast.png" height="293" width="204"/> </a>
+
+      <a href="images/Edit_OlcbSignalMast.png"><img src="images/Edit_OlcbSignalMast.png"  height="290" width="203"/> </a>
+
+      <p>Starting from the top of the pane, the options are:
+      <ul>
+      <li>"This Mast can be unlit" - same as for other mast types, this tells the signal logic
+            that it's OK for this mast to be unlit (set to dark).
+      <li>A scrolling set of aspects to configure:  For each one, enter the OpenLCB EventID 
+            that sets the mast to this aspect. You can use any of the 
+            <a href="Names.shtml">EventID formats that JMRI understands</a>
+            such as "x1234567890ABCDEF" or "00.01.02.03.04.05.06.07" or "0.1.2.3.4.5.6.7".  
+            Whatever format you enter will be retained for when you later edit the mast.
+      <li>A box for the EventIDs that tell the mast to be lit or unlit.
+      <li>A box for the EventIDs that tell the mast that it's held or not held.
+      <li>Cancel and Create or Apply buttons that do what's expected of them.
+      </ul>
+      
+      If you format one of those EventID entries improperly, you'll get a 
+      not-particularly specific error message dialog.  (Perhaps somebody will
+      improve this some day)
+      
+      <h3>JMRI Help</h3>
+
+      <p>Back to the <a href="index.shtml">main OpenLCB Help page</a></p>
+      
+      <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>

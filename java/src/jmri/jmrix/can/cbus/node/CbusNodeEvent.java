@@ -2,7 +2,6 @@ package jmri.jmrix.can.cbus.node;
 
 import java.util.Arrays;
 import java.util.Objects;
-import javax.annotation.Nonnull;
 import jmri.jmrix.can.cbus.CbusEvent;
 import jmri.util.StringUtil;
 
@@ -17,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * @author Steve Young Copyright (C) 2019
  */
 public class CbusNodeEvent extends CbusEvent implements Comparable<CbusNodeEvent> {
-    private int _thisnode;
+    private final int _thisnode;
     private int _index;
     public int[] _evVarArr;
     private String _fcuNodeName;
@@ -97,7 +96,7 @@ public class CbusNodeEvent extends CbusEvent implements Comparable<CbusNodeEvent
      *
      * @param newArray event variable array, 1st value index 0 should be 1st event value, NOT total
      */    
-    public void setEvArr( int[] newArray ){
+    public final void setEvArr( int[] newArray ){
         _evVarArr = newArray;
         notifyModel();
     }
@@ -219,6 +218,7 @@ public class CbusNodeEvent extends CbusEvent implements Comparable<CbusNodeEvent
      * Get the number of event variables
      * by Array Length
      * 
+     * @return number of event variables
      */      
     public int getNumEvVars() {
         return _evVarArr.length;
@@ -226,15 +226,15 @@ public class CbusNodeEvent extends CbusEvent implements Comparable<CbusNodeEvent
     
     /**
      * Set a temporary node name
-     * 
+     * @param tempName the name to use
      */
     public void setTempFcuNodeName( String tempName){
         _fcuNodeName = tempName;
     }
     
     /**
-     * Get a temporary node name
-     * 
+     * Get the temporary node name
+     * @return the name
      */
     public String getTempFcuNodeName(){
         return _fcuNodeName;
@@ -285,10 +285,7 @@ public class CbusNodeEvent extends CbusEvent implements Comparable<CbusNodeEvent
         if ( this.getParentNn()!=t.getParentNn() ) {
             return false;
         }
-        if (! this.getHexEvVarString().equals(t.getHexEvVarString()) ) {
-            return false;
-        }
-        return true;
+        return this.getHexEvVarString().equals(t.getHexEvVarString());
     }
     
     /** {@inheritDoc} */

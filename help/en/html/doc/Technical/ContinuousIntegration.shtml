@@ -23,14 +23,16 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
-</head><!--#include virtual="/Header.shtml" -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
+</head>
 
 <body>
-  <div id="mBody">
-    <!--#include virtual="Sidebar.shtml" -->
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+  <!--#include virtual="Sidebar.shtml" -->
+  <div id="mainContent">
 
-    <div id="mainContent">
       <h1>JMRI Code: Continuous Integration</h1>
       <p>"Continuous Integration" is the process of rebuilding a
       system every time it changes, so that you rapidly learn of
@@ -129,7 +131,7 @@
         Builds</a> page, showing status of the builds done after
         every series of commits. Successful builds are followed by
         builds installers via the <a href=
-        "http://builds.jmri.org/jenkins/view/All/job/Development/job/Packages">
+        "http://builds.jmri.org/jenkins/job/Development/job/Packages">
         Packages</a> job.</li>
 
         <li>

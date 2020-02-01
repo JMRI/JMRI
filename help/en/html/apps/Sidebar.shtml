@@ -1,0 +1,35 @@
+<!-- Sidebar.shtml -->
+<!-- This is the common sidebar definition for html/apps pages -->
+
+	  <hr class="hide">
+	  <div id="side"> <!-- Block of text on left side of page -->
+	    <div style="text-align: center">JMRI&reg; is...</div>
+        <dl>
+	 
+	    <!--#include virtual="/help/en/parts/SidebarApplications.shtml" -->
+
+            <!--#include virtual="/help/en/parts/SidebarTools.shtml" -->
+
+            <!--#include virtual="/help/en/parts/SidebarLayoutAutomation.shtml" -->
+	    
+	    <!--#include virtual="/help/en/parts/SidebarSupportedHardware.shtml" -->    
+		
+        	<div style="clear: both"></div>
+        	<dt><h3 style="padding-left: 1em;">Supported Computers</h3></dt>
+		<dd> 
+		  <ul>
+            <li><a href="http://jmri.org/install/WindowsNew.shtml">Windows</a></li>
+            <li><a href="http://jmri.org/install/MacOSX.shtml">Mac OS X</a></li>
+            <li><a href="http://jmri.org/install/Linux.shtml">Linux</a></li>
+            <li><a href="../setup/index.shtml">JMRI Setup</a></li>
+   		  </ul>
+		</dd>
+         </dl>
+    
+  
+    <a href="/donations.shtml">
+     <img src="https://sourceforge.net/images/project-support.jpg" width="88" height="32" border="0" ALIGN="RIGHT" alt="Donate to JMRI" />
+    </a>  
+
+	</div> <!-- closes #side -->
+<!-- /Sidebar.shtml -->

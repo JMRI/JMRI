@@ -56,7 +56,7 @@
                 "string",
                 "null"
             ],
-            "description": "The value of the block"
+            "description": "The block's value, can be idTag, Reporter, or text"
         },
         "sensor": {
             "type": [

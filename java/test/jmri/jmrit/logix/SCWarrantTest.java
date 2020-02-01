@@ -41,6 +41,7 @@ public class SCWarrantTest extends WarrantTest {
     @Test
     @Override
     public void testWarrant() throws JmriException {
+        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
         sEast.setState(Sensor.INACTIVE);
         sWest.setState(Sensor.INACTIVE);
         sSouth.setState(Sensor.INACTIVE);
@@ -145,20 +146,20 @@ public class SCWarrantTest extends WarrantTest {
         shMgr.register(shSE);
 
         _portalMgr = InstanceManager.getDefault(PortalManager.class);
-        Portal pNorthWest = _portalMgr.createNewPortal(null, "NorthWest");
+        Portal pNorthWest = _portalMgr.createNewPortal("NorthWest");
         pNorthWest.setToBlock(bWest, false);
         pNorthWest.setFromBlock(bNorth, false);
         pNorthWest.setProtectSignal(shNW, 20, bWest);
-        Portal pSouthWest = _portalMgr.createNewPortal(null, "SouthWest");
+        Portal pSouthWest = _portalMgr.createNewPortal("SouthWest");
         pSouthWest.setToBlock(bWest, false);
         pSouthWest.setFromBlock(bSouth, false);
         pSouthWest.setProtectSignal(shSW, 20, bWest);
 
-        Portal pNorthEast = _portalMgr.createNewPortal(null, "NorthEast");
+        Portal pNorthEast = _portalMgr.createNewPortal("NorthEast");
         pNorthEast.setToBlock(bEast, false);
         pNorthEast.setFromBlock(bNorth, false);
         pNorthEast.setProtectSignal(shNE, 20, bEast);
-        Portal pSouthEast = _portalMgr.createNewPortal(null, "SouthEast");
+        Portal pSouthEast = _portalMgr.createNewPortal("SouthEast");
         pSouthEast.setToBlock(bEast, false);
         pSouthEast.setFromBlock(bSouth, false);
         pSouthEast.setProtectSignal(shSE, 20, bEast);
@@ -214,6 +215,7 @@ public class SCWarrantTest extends WarrantTest {
     @After
     @Override
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
         super.tearDown();
     }
 

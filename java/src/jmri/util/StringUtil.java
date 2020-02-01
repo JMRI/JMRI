@@ -1,9 +1,5 @@
 package jmri.util;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;

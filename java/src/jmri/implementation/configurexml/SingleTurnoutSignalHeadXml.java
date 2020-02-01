@@ -112,7 +112,7 @@ public class SingleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
 
         SignalHead existingBean =
                 InstanceManager.getDefault(jmri.SignalHeadManager.class)
-                        .getBeanBySystemName(sys);
+                        .getBySystemName(sys);
 
         if ((existingBean != null) && (existingBean != h)) {
             log.error("systemName is already registered: {}", sys);

@@ -24,7 +24,7 @@ public class LoadAndCheckTest {
     /**
      * Test a file with current schema.
      *
-     * @throws Exception
+     * @throws Exception rethrows any exception
      */
     @Test
     public void testLoadFileTest() throws Exception {
@@ -89,8 +89,13 @@ public class LoadAndCheckTest {
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initMemoryManager();
+        System.setProperty("jmri.test.no-dialogs", "true");
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {
+        JUnitUtil.clearShutDownManager();
+        JUnitUtil.tearDown();
+        System.setProperty("jmri.test.no-dialogs", "false");
+    }
 }

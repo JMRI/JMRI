@@ -22,7 +22,7 @@ public class CbusPowerManager implements PowerManager, CanListener {
         // connect to the TrafficManager
         this.memo = memo;
         tc = memo.getTrafficController();
-        tc.addCanListener(this);
+        addTc(tc);
     }
 
     CanSystemConnectionMemo memo;
@@ -109,12 +109,12 @@ public class CbusPowerManager implements PowerManager, CanListener {
         pcs.removePropertyChangeListener(propertyName, listener);
     }
 
-    TrafficController tc = null;
+    private TrafficController tc;
 
     // to listen for status changes from Cbus system
     @Override
     public void reply(CanReply m) {
-        if ( m.isExtended() || m.isRtr() ) {
+        if ( m.extendedOrRtr() ) {
             return;
         }
         if (CbusMessage.isTrackOff(m)) {

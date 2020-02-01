@@ -1,13 +1,10 @@
 package jmri.jmrix.can.cbus.swing.cbusslotmonitor;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.TimerTask;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import jmri.InstanceManager;
 import jmri.DccLocoAddress;
 import jmri.util.swing.TextAreaFIFO;
 import jmri.jmrit.catalog.NamedIcon;
@@ -17,7 +14,6 @@ import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.CbusMessage;
-import jmri.jmrix.can.cbus.CbusOpCodes;
 import jmri.jmrix.can.TrafficController;
 import jmri.util.ThreadingUtil;
 import jmri.util.TimerUtil;
@@ -34,16 +30,16 @@ import org.slf4j.LoggerFactory;
  */
 public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableModel implements CanListener  {
 
-    private TextAreaFIFO tablefeedback;
-    private TrafficController tc;
-    private ArrayList<CbusSlotMonitorSession> _mainArray;
+    private final TextAreaFIFO tablefeedback;
+    private final TrafficController tc;
+    private final ArrayList<CbusSlotMonitorSession> _mainArray;
 
     protected int _contype=0; //  pane console message type
-    protected String _context=null; // pane console text
+    protected String _context; // pane console text
     private int cmndstat_fw =0; // command station firmware  TODO - get from node table
 
-    static public int CS_TIMEOUT = 2000; // command station timeout for estop and track messages
-    static private int MAX_LINES = 5000;
+    public static int CS_TIMEOUT = 2000; // command station timeout for estop and track messages
+    private static final int MAX_LINES = 5000;
     
     // column order needs to match list in column tooltips
     static public final int SESSION_ID_COLUMN = 0; 
@@ -59,25 +55,25 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
     
     static public final int MAX_COLUMN = 10;
     
-    static protected final int[] startupColumns = {0,1,2,4,5,6,9};
+    static protected final int[] CBUSSLOTMONINITIALCOLS = {0,1,2,4,5,6,9};
     
     CbusSlotMonitorDataModel(CanSystemConnectionMemo memo, int row, int column) {
         
-        _mainArray = new ArrayList<CbusSlotMonitorSession>();
+        _mainArray = new ArrayList<>();
 
         // connect to the CanInterface
         tc = memo.getTrafficController();
-        tc.addCanListener(this);
+        addTc(tc);
         tablefeedback = new TextAreaFIFO(MAX_LINES);
         
     }
     
-    TextAreaFIFO tablefeedback(){
+    protected TextAreaFIFO tablefeedback(){
         return tablefeedback;
     }
 
     // order needs to match column list top of tabledatamodel
-    static protected final String[] columnToolTips = {
+    static protected final String[] CBUSSLOTMONTOOLTIPS = {
         ("Session ID"),
         null, // loco id
         null, // estop
@@ -140,6 +136,7 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
     /**
     * Returns int of startup column widths
     * @param col int col number
+    * @return preferred initial width
     */
     public static int getPreferredWidth(int col) {
         switch (col) {
@@ -164,8 +161,8 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
     }
     
     /**
-    * Returns column class type.
-    */
+     * {@inheritDoc}
+     */
     @Override
     public Class<?> getColumnClass(int col) {
         switch (col) {
@@ -189,9 +186,8 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
     }
     
     /**
-    * Boolean return to edit table cell or not
-    * @return boolean
-    */
+     * {@inheritDoc}
+     */
     @Override
     public boolean isCellEditable(int row, int col) {
         switch (col) {
@@ -207,6 +203,7 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
      * <p>
      * This is optional, in that other table formats can use this table model.
      * But we put it here to help keep it consistent.
+     * @param cmdStatTable Table to be configured
      */
     public void configureTable(JTable cmdStatTable) {
         // allow reordering of the columns
@@ -233,7 +230,11 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
     public Object getValueAt(int row, int col) {
         switch (col) {
             case SESSION_ID_COLUMN:
-                return _mainArray.get(row).getSessionId();
+                if (_mainArray.get(row).getSessionId() > 0) {
+                    return _mainArray.get(row).getSessionId();
+                } else {
+                    return "";
+                }
             case LOCO_ID_COLUMN:
                 return _mainArray.get(row).getLocoAddr().getNumber();
             case LOCO_ID_LONG_COLUMN:
@@ -266,43 +267,41 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
     @Override
     public void setValueAt(Object value, int row, int col) {
         // log.debug("427 set valueat called row: {} col: {}", row, col);
-        if (col == SESSION_ID_COLUMN) {
-            _mainArray.get(row).setSessionId( (Integer) value );
-            updateGui(row,col);
-        }
-        else if (col == LOCO_CONSIST_COLUMN) {
-            _mainArray.get(row).setConsistId( (Integer) value );
-            updateGui(row,col);
-        }
-        else if (col == LOCO_COMMANDED_SPEED_COLUMN) {
-            _mainArray.get(row).setDccSpeed( (Integer) value );
-            updateGui(row,col);
-            updateGui(row,LOCO_DIRECTION_COLUMN);
-        }
-        else if (col == ESTOP_COLUMN) {
-            
-            int stopspeed=1;
-            if ( _mainArray.get(row).getDirection().equals(Bundle.getMessage("FWD")) ) {
-                if ( _mainArray.get(row).getSpeedSteps().equals("128") ) {
-                    stopspeed=129;
-                }
-            }
-            
-            CanMessage m = new CanMessage(tc.getCanid());
-            m.setNumDataElements(3);
-            CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
-            m.setElement(0, CbusConstants.CBUS_DSPD);
-            m.setElement(1, _mainArray.get(row).getSessionId() );
-            m.setElement(2, stopspeed);
-            tc.sendCanMessage(m, null);
-            
-        }
-        else if (col == SPEED_STEP_COLUMN) {
-            _mainArray.get(row).setSpeedSteps( (String) value );
-            updateGui(row,col);
-        }
-        else {
-            log.warn("Failed to set value at column {}",col);
+        switch (col) {
+            case SESSION_ID_COLUMN:
+                _mainArray.get(row).setSessionId( (Integer) value );
+                updateGui(row,col);
+                break;
+            case LOCO_CONSIST_COLUMN:
+                _mainArray.get(row).setConsistId( (Integer) value );
+                updateGui(row,col);
+                break;
+            case LOCO_COMMANDED_SPEED_COLUMN:
+                _mainArray.get(row).setDccSpeed( (Integer) value );
+                updateGui(row,col);
+                updateGui(row,LOCO_DIRECTION_COLUMN);
+                break;
+            case ESTOP_COLUMN:
+                int stopspeed=1;
+                if ( _mainArray.get(row).getDirection().equals(Bundle.getMessage("FWD")) ) {
+                    if ( _mainArray.get(row).getSpeedSteps().equals("128") ) {
+                        stopspeed=129;
+                    }
+                }   CanMessage m = new CanMessage(tc.getCanid());
+                m.setNumDataElements(3);
+                CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
+                m.setElement(0, CbusConstants.CBUS_DSPD);
+                m.setElement(1, _mainArray.get(row).getSessionId() );
+                m.setElement(2, stopspeed);
+                tc.sendCanMessage(m, null);
+                break;
+            case SPEED_STEP_COLUMN:
+                _mainArray.get(row).setSpeedSteps( (String) value );
+                updateGui(row,col);
+                break;
+            default:
+                log.warn("Failed to set value at column {}",col);
+                break;
         }
     }
     
@@ -360,76 +359,85 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
      */
     @Override
     public void message(CanMessage m) {
-        if ( m.isExtended() || m.isRtr() ) {
+        if ( m.extendedOrRtr() ) {
             return;
         }
         int opc = CbusMessage.getOpcode(m);
         // process is false as outgoing
-        
-        if (opc==CbusConstants.CBUS_PLOC) {
-            int rcvdIntAddr = (m.getElement(2) & 0x3f) * 256 + m.getElement(3);
-            boolean rcvdIsLong = (m.getElement(2) & 0xc0) != 0;
-            processploc(false,m.getElement(1),new DccLocoAddress(rcvdIntAddr,rcvdIsLong),m.getElement(4),
-            m.getElement(5),m.getElement(6),m.getElement(7));
-        }
-        else if (opc==CbusConstants.CBUS_RLOC) {
-            int rcvdIntAddr = (m.getElement(1) & 0x3f) * 256 + m.getElement(2);
-            boolean rcvdIsLong = (m.getElement(1) & 0xc0) != 0;
-            processrloc(false,new DccLocoAddress(rcvdIntAddr,rcvdIsLong));
-        }
-        else if (opc==CbusConstants.CBUS_DSPD) {
-            processdspd(false,m.getElement(1),m.getElement(2));
-        }
-        else if (opc==CbusConstants.CBUS_DKEEP) {
-            // log.warn(" kick dkeep ");
-            processdkeep(false,m.getElement(1));
-        }
-        else if (opc==CbusConstants.CBUS_KLOC) {
-            processkloc(false,m.getElement(1));
-        }
-        else if (opc==CbusConstants.CBUS_GLOC) {
-            int rcvdIntAddr = (m.getElement(1) & 0x3f) * 256 + m.getElement(2);
-            boolean rcvdIsLong = (m.getElement(1) & 0xc0) != 0;
-            processgloc(false,new DccLocoAddress(rcvdIntAddr,rcvdIsLong),m.getElement(3));
-        }
-        else if (opc==CbusConstants.CBUS_ERR) {
-            processerr(false,m.getElement(1),m.getElement(2),m.getElement(3));
-        }
-        else if (opc==CbusConstants.CBUS_STMOD) {
-            processstmod(false,m.getElement(1),m.getElement(2));
-        }
-        else if (opc==CbusConstants.CBUS_DFUN) {
-            processdfun(false,m.getElement(1),m.getElement(2),m.getElement(3));
-        }
-        else if (opc==CbusConstants.CBUS_DFNON) {
-            processdfnon(false,m.getElement(1),m.getElement(2),true);
-        }
-        else if (opc==CbusConstants.CBUS_DFNOF) {
-            processdfnon(false,m.getElement(1),m.getElement(2),false); // same routine as DFNON
-        }
-        else if (opc==CbusConstants.CBUS_PCON) {
-            processpcon(false,m.getElement(1),m.getElement(2));
-        }
-        else if (opc==CbusConstants.CBUS_KCON) {
-            processpcon(false,m.getElement(1),0); // same routine as PCON
-        }
-        else if (opc==CbusConstants.CBUS_DFLG) {
-            processdflg(false,m.getElement(1),m.getElement(2));
-        }
-        else if (opc==CbusConstants.CBUS_ESTOP) {
-            processestop(false);
-        }
-        else if (opc==CbusConstants.CBUS_RTON) {
-            processrton(false);
-        }
-        else if (opc==CbusConstants.CBUS_RTOF) {
-            processrtof(false);
-        }
-        else if (opc==CbusConstants.CBUS_TON) {
-            processton(false);
-        }
-        else if (opc==CbusConstants.CBUS_TOF) {
-            processtof(false);
+        switch (opc) {
+            case CbusConstants.CBUS_PLOC:
+                {
+                    int rcvdIntAddr = (m.getElement(2) & 0x3f) * 256 + m.getElement(3);
+                    boolean rcvdIsLong = (m.getElement(2) & 0xc0) != 0;
+                    processploc(false,m.getElement(1),new DccLocoAddress(rcvdIntAddr,rcvdIsLong),m.getElement(4),
+                            m.getElement(5),m.getElement(6),m.getElement(7));
+                    break;
+                }
+            case CbusConstants.CBUS_RLOC:
+                {
+                    int rcvdIntAddr = (m.getElement(1) & 0x3f) * 256 + m.getElement(2);
+                    boolean rcvdIsLong = (m.getElement(1) & 0xc0) != 0;
+                    processrloc(false,new DccLocoAddress(rcvdIntAddr,rcvdIsLong));
+                    break;
+                }
+            case CbusConstants.CBUS_DSPD:
+                processdspd(false,m.getElement(1),m.getElement(2));
+                break;
+            case CbusConstants.CBUS_DKEEP:
+                // log.warn(" kick dkeep ");
+                processdkeep(false,m.getElement(1));
+                break;
+            case CbusConstants.CBUS_KLOC:
+                processkloc(false,m.getElement(1));
+                break;
+            case CbusConstants.CBUS_GLOC:
+                {
+                    int rcvdIntAddr = (m.getElement(1) & 0x3f) * 256 + m.getElement(2);
+                    boolean rcvdIsLong = (m.getElement(1) & 0xc0) != 0;
+                    processgloc(false,new DccLocoAddress(rcvdIntAddr,rcvdIsLong),m.getElement(3));
+                    break;
+                }
+            case CbusConstants.CBUS_ERR:
+                processerr(false,m.getElement(1),m.getElement(2),m.getElement(3));
+                break;
+            case CbusConstants.CBUS_STMOD:
+                processstmod(false,m.getElement(1),m.getElement(2));
+                break;
+            case CbusConstants.CBUS_DFUN:
+                processdfun(false,m.getElement(1),m.getElement(2),m.getElement(3));
+                break;
+            case CbusConstants.CBUS_DFNON:
+                processdfnon(false,m.getElement(1),m.getElement(2),true);
+                break;
+            case CbusConstants.CBUS_DFNOF:
+                processdfnon(false,m.getElement(1),m.getElement(2),false); // same routine as DFNON
+                break;
+            case CbusConstants.CBUS_PCON:
+                processpcon(false,m.getElement(1),m.getElement(2));
+                break;
+            case CbusConstants.CBUS_KCON:
+                processpcon(false,m.getElement(1),0); // same routine as PCON
+                break;
+            case CbusConstants.CBUS_DFLG:
+                processdflg(false,m.getElement(1),m.getElement(2));
+                break;
+            case CbusConstants.CBUS_ESTOP:
+                processestop(false);
+                break;
+            case CbusConstants.CBUS_RTON:
+                processrton(false);
+                break;
+            case CbusConstants.CBUS_RTOF:
+                processrtof(false);
+                break;
+            case CbusConstants.CBUS_TON:
+                processton(false);
+                break;
+            case CbusConstants.CBUS_TOF:
+                processtof(false);
+                break;
+            default:
+                break;
         }
     }
 
@@ -438,87 +446,94 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
      */
     @Override
     public void reply(CanReply m) {
-        if ( m.isExtended() || m.isRtr() ) {
+        if ( m.extendedOrRtr() ) {
             return;
         }
         int opc = CbusMessage.getOpcode(m);
         // log.warn(" opc {}",opc);
         // process is true as incoming message
-        
-        if (opc==CbusConstants.CBUS_STAT) {
-            // todo more on this when finished tested v3 firmware with all opcs
-            // for now, if a stat opc is received then it's v4
-            // no stat received when < v4 Firmware
-            cmndstat_fw = 4;
-        }
-        
-        if (opc==CbusConstants.CBUS_PLOC) {
-            int rcvdIntAddr = (m.getElement(2) & 0x3f) * 256 + m.getElement(3);
-            boolean rcvdIsLong = (m.getElement(2) & 0xc0) != 0;
-            DccLocoAddress addr = new DccLocoAddress(rcvdIntAddr,rcvdIsLong);
-            
-            processploc(true,m.getElement(1),addr,m.getElement(4),
-            m.getElement(5),m.getElement(6),m.getElement(7));
-        }
-        else if (opc==CbusConstants.CBUS_RLOC) {
-            int rcvdIntAddr = (m.getElement(1) & 0x3f) * 256 + m.getElement(2);
-            boolean rcvdIsLong = (m.getElement(1) & 0xc0) != 0;
-            DccLocoAddress addr = new DccLocoAddress(rcvdIntAddr,rcvdIsLong);
-            processrloc(true,addr);
-        }
-        else if (opc==CbusConstants.CBUS_DSPD) {
-            processdspd(true,m.getElement(1),m.getElement(2));
-        }
-        else if (opc==CbusConstants.CBUS_DKEEP) {
-            processdkeep(true,m.getElement(1));
-        }
-        else if (opc==CbusConstants.CBUS_KLOC) {
-            processkloc(true,m.getElement(1));
-        }
-        else if (opc==CbusConstants.CBUS_GLOC) {
-            int rcvdIntAddr = (m.getElement(1) & 0x3f) * 256 + m.getElement(2);
-            boolean rcvdIsLong = (m.getElement(1) & 0xc0) != 0;
-            DccLocoAddress addr = new DccLocoAddress(rcvdIntAddr,rcvdIsLong);
-            processgloc(true,addr,m.getElement(3));
-        }
-        else if (opc==CbusConstants.CBUS_ERR) {
-            processerr(true,m.getElement(1),m.getElement(2),m.getElement(3));
-        }
-        else if (opc==CbusConstants.CBUS_STMOD) {
-            processstmod(true,m.getElement(1),m.getElement(2));
-        }        
-        else if (opc==CbusConstants.CBUS_DFUN) {
-            processdfun(true,m.getElement(1),m.getElement(2),m.getElement(3));
-        }
-        else if (opc==CbusConstants.CBUS_DFNON) {
-            processdfnon(true,m.getElement(1),m.getElement(2),true);
-        }
-        else if (opc==CbusConstants.CBUS_DFNOF) {
-            processdfnon(true,m.getElement(1),m.getElement(2),false);  // same routine as DFNON
-        }
-        else if (opc==CbusConstants.CBUS_PCON) {
-            processpcon(true,m.getElement(1),m.getElement(2));
-        }
-        else if (opc==CbusConstants.CBUS_KCON) {
-            processpcon(true,m.getElement(1),0); // same routine as PCON
-        }
-        else if (opc==CbusConstants.CBUS_DFLG) {
-            processdflg(true,m.getElement(1),m.getElement(2));
-        }
-        else if (opc==CbusConstants.CBUS_ESTOP) {
-            processestop(true);
-        }
-        else if (opc==CbusConstants.CBUS_RTON) {
-            processrton(true);
-        }
-        else if (opc==CbusConstants.CBUS_RTOF) {
-            processrtof(true);
-        }
-        else if (opc==CbusConstants.CBUS_TON) {
-            processton(true);
-        }
-        else if (opc==CbusConstants.CBUS_TOF) {
-            processtof(true);
+        switch (opc) {
+            case CbusConstants.CBUS_STAT:
+                // todo more on this when finished tested v3 firmware with all opcs
+                // for now, if a stat opc is received then it's v4
+                // no stat received when < v4 Firmware
+                cmndstat_fw = 4;
+                break;
+            case CbusConstants.CBUS_PLOC:
+                {
+                    int rcvdIntAddr = (m.getElement(2) & 0x3f) * 256 + m.getElement(3);
+                    boolean rcvdIsLong = (m.getElement(2) & 0xc0) != 0;
+                    DccLocoAddress addr = new DccLocoAddress(rcvdIntAddr,rcvdIsLong);
+                    processploc(true,m.getElement(1),addr,m.getElement(4),
+                            m.getElement(5),m.getElement(6),m.getElement(7));
+                    break;
+                }
+            case CbusConstants.CBUS_RLOC:
+                {
+                    int rcvdIntAddr = (m.getElement(1) & 0x3f) * 256 + m.getElement(2);
+                    boolean rcvdIsLong = (m.getElement(1) & 0xc0) != 0;
+                    DccLocoAddress addr = new DccLocoAddress(rcvdIntAddr,rcvdIsLong);
+                    processrloc(true,addr);
+                    break;
+                }
+            case CbusConstants.CBUS_DSPD:
+                processdspd(true,m.getElement(1),m.getElement(2));
+                break;
+            case CbusConstants.CBUS_DKEEP:
+                processdkeep(true,m.getElement(1));
+                break;
+            case CbusConstants.CBUS_KLOC:
+                processkloc(true,m.getElement(1));
+                break;
+            case CbusConstants.CBUS_GLOC:
+                {
+                    int rcvdIntAddr = (m.getElement(1) & 0x3f) * 256 + m.getElement(2);
+                    boolean rcvdIsLong = (m.getElement(1) & 0xc0) != 0;
+                    DccLocoAddress addr = new DccLocoAddress(rcvdIntAddr,rcvdIsLong);
+                    processgloc(true,addr,m.getElement(3));
+                    break;
+                }
+            case CbusConstants.CBUS_ERR:
+                processerr(true,m.getElement(1),m.getElement(2),m.getElement(3));
+                break;
+            case CbusConstants.CBUS_STMOD:
+                processstmod(true,m.getElement(1),m.getElement(2));
+                break;
+            case CbusConstants.CBUS_DFUN:
+                processdfun(true,m.getElement(1),m.getElement(2),m.getElement(3));
+                break;
+            case CbusConstants.CBUS_DFNON:
+                processdfnon(true,m.getElement(1),m.getElement(2),true);
+                break;
+            case CbusConstants.CBUS_DFNOF:
+                processdfnon(true,m.getElement(1),m.getElement(2),false);  // same routine as DFNON
+                break;
+            case CbusConstants.CBUS_PCON:
+                processpcon(true,m.getElement(1),m.getElement(2));
+                break;
+            case CbusConstants.CBUS_KCON:
+                processpcon(true,m.getElement(1),0); // same routine as PCON
+                break;
+            case CbusConstants.CBUS_DFLG:
+                processdflg(true,m.getElement(1),m.getElement(2));
+                break;
+            case CbusConstants.CBUS_ESTOP:
+                processestop(true);
+                break;
+            case CbusConstants.CBUS_RTON:
+                processrton(true);
+                break;
+            case CbusConstants.CBUS_RTOF:
+                processrtof(true);
+                break;
+            case CbusConstants.CBUS_TON:
+                processton(true);
+                break;
+            case CbusConstants.CBUS_TOF:
+                processtof(true);
+                break;
+            default:
+                break;
         }
     }
     
@@ -584,18 +599,19 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
             flagstring.append(Bundle.getMessage("CBUS_OUT_CMD"));
         }
 
-        boolean stealmode = ((flags >> 0 ) & 1) != 0;
+        boolean stealmode = ((flags ) & 1) != 0;
         boolean sharemode = ((flags >> 1 ) & 1) != 0;
         // log.debug("stealmode {} sharemode {} ",stealmode,sharemode);
         if (stealmode){
-            flagstring.append(Bundle.getMessage("CNFO_GLOC_ST") + addr );
+            flagstring.append(Bundle.getMessage("CNFO_GLOC_ST"));
         }
         else if (sharemode){
-            flagstring.append(Bundle.getMessage("CNFO_GLOC_SH") + addr );
+            flagstring.append(Bundle.getMessage("CNFO_GLOC_SH"));
         }
         else {
-            flagstring.append(Bundle.getMessage("CNFO_GLOC") + addr );
+            flagstring.append(Bundle.getMessage("CNFO_GLOC"));
         }
+        flagstring.append(addr);
         addToLog(1,flagstring.toString());
     }
     
@@ -610,7 +626,7 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
                 messagedir=( Bundle.getMessage("CBUS_OUT_CMD"));
             }            
             
-            boolean sm0 = ((flags >> 0 ) & 1) != 0;
+            boolean sm0 = ((flags ) & 1) != 0;
             boolean sm1 = ((flags >> 1 ) & 1) != 0;
             boolean servicemode = ((flags >> 2 ) & 1) != 0;
             boolean soundmode = ((flags >> 3 ) & 1) != 0;
@@ -678,44 +694,48 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
         //  log.warn("processing dfun, session {} range {} functionbyte {}",session,range,functionbyte);
         int row=getrowfromsession(session);
         if ( row > -1 ) {
-            if ( range == 1 ) {
-                _mainArray.get(row).setFunction(0, ((functionbyte & CbusConstants.CBUS_F0) == CbusConstants.CBUS_F0));
-                _mainArray.get(row).setFunction(1, ((functionbyte & CbusConstants.CBUS_F1) == CbusConstants.CBUS_F1));
-                _mainArray.get(row).setFunction(2, ((functionbyte & CbusConstants.CBUS_F2) == CbusConstants.CBUS_F2));
-                _mainArray.get(row).setFunction(3, ((functionbyte & CbusConstants.CBUS_F3) == CbusConstants.CBUS_F3));
-                _mainArray.get(row).setFunction(4, ((functionbyte & CbusConstants.CBUS_F4) == CbusConstants.CBUS_F4));
-            }
-            else if ( range == 2 ) {
-                _mainArray.get(row).setFunction(5, ((functionbyte & CbusConstants.CBUS_F5) == CbusConstants.CBUS_F5));
-                _mainArray.get(row).setFunction(6, ((functionbyte & CbusConstants.CBUS_F6) == CbusConstants.CBUS_F6));
-                _mainArray.get(row).setFunction(7, ((functionbyte & CbusConstants.CBUS_F7) == CbusConstants.CBUS_F7));
-                _mainArray.get(row).setFunction(8, ((functionbyte & CbusConstants.CBUS_F8) == CbusConstants.CBUS_F8));
-            }
-            else if ( range == 3 ) {
-                _mainArray.get(row).setFunction(9, ((functionbyte & CbusConstants.CBUS_F9) == CbusConstants.CBUS_F9));
-                _mainArray.get(row).setFunction(10, ((functionbyte & CbusConstants.CBUS_F10) == CbusConstants.CBUS_F10));
-                _mainArray.get(row).setFunction(11, ((functionbyte & CbusConstants.CBUS_F11) == CbusConstants.CBUS_F11));
-                _mainArray.get(row).setFunction(12, ((functionbyte & CbusConstants.CBUS_F12) == CbusConstants.CBUS_F12));
-            }
-            else if ( range == 4 ) {
-                _mainArray.get(row).setFunction(13, ((functionbyte & CbusConstants.CBUS_F13) == CbusConstants.CBUS_F13));
-                _mainArray.get(row).setFunction(14, ((functionbyte & CbusConstants.CBUS_F14) == CbusConstants.CBUS_F14));
-                _mainArray.get(row).setFunction(15, ((functionbyte & CbusConstants.CBUS_F15) == CbusConstants.CBUS_F15));
-                _mainArray.get(row).setFunction(16, ((functionbyte & CbusConstants.CBUS_F16) == CbusConstants.CBUS_F16));
-                _mainArray.get(row).setFunction(17, ((functionbyte & CbusConstants.CBUS_F17) == CbusConstants.CBUS_F17));
-                _mainArray.get(row).setFunction(18, ((functionbyte & CbusConstants.CBUS_F18) == CbusConstants.CBUS_F18));
-                _mainArray.get(row).setFunction(19, ((functionbyte & CbusConstants.CBUS_F19) == CbusConstants.CBUS_F19));
-                _mainArray.get(row).setFunction(20, ((functionbyte & CbusConstants.CBUS_F20) == CbusConstants.CBUS_F20));
-            }
-            else if ( range == 5 ) {
-                _mainArray.get(row).setFunction(21, ((functionbyte & CbusConstants.CBUS_F21) == CbusConstants.CBUS_F21));
-                _mainArray.get(row).setFunction(22, ((functionbyte & CbusConstants.CBUS_F22) == CbusConstants.CBUS_F22));
-                _mainArray.get(row).setFunction(23, ((functionbyte & CbusConstants.CBUS_F23) == CbusConstants.CBUS_F23));
-                _mainArray.get(row).setFunction(24, ((functionbyte & CbusConstants.CBUS_F24) == CbusConstants.CBUS_F24));
-                _mainArray.get(row).setFunction(25, ((functionbyte & CbusConstants.CBUS_F25) == CbusConstants.CBUS_F25));
-                _mainArray.get(row).setFunction(26, ((functionbyte & CbusConstants.CBUS_F26) == CbusConstants.CBUS_F26));
-                _mainArray.get(row).setFunction(27, ((functionbyte & CbusConstants.CBUS_F27) == CbusConstants.CBUS_F27));
-                _mainArray.get(row).setFunction(28, ((functionbyte & CbusConstants.CBUS_F28) == CbusConstants.CBUS_F28));
+            switch (range) {
+                case 1:
+                    _mainArray.get(row).setFunction(0, ((functionbyte & CbusConstants.CBUS_F0) == CbusConstants.CBUS_F0));
+                    _mainArray.get(row).setFunction(1, ((functionbyte & CbusConstants.CBUS_F1) == CbusConstants.CBUS_F1));
+                    _mainArray.get(row).setFunction(2, ((functionbyte & CbusConstants.CBUS_F2) == CbusConstants.CBUS_F2));
+                    _mainArray.get(row).setFunction(3, ((functionbyte & CbusConstants.CBUS_F3) == CbusConstants.CBUS_F3));
+                    _mainArray.get(row).setFunction(4, ((functionbyte & CbusConstants.CBUS_F4) == CbusConstants.CBUS_F4));
+                    break;
+                case 2:
+                    _mainArray.get(row).setFunction(5, ((functionbyte & CbusConstants.CBUS_F5) == CbusConstants.CBUS_F5));
+                    _mainArray.get(row).setFunction(6, ((functionbyte & CbusConstants.CBUS_F6) == CbusConstants.CBUS_F6));
+                    _mainArray.get(row).setFunction(7, ((functionbyte & CbusConstants.CBUS_F7) == CbusConstants.CBUS_F7));
+                    _mainArray.get(row).setFunction(8, ((functionbyte & CbusConstants.CBUS_F8) == CbusConstants.CBUS_F8));
+                    break;
+                case 3:
+                    _mainArray.get(row).setFunction(9, ((functionbyte & CbusConstants.CBUS_F9) == CbusConstants.CBUS_F9));
+                    _mainArray.get(row).setFunction(10, ((functionbyte & CbusConstants.CBUS_F10) == CbusConstants.CBUS_F10));
+                    _mainArray.get(row).setFunction(11, ((functionbyte & CbusConstants.CBUS_F11) == CbusConstants.CBUS_F11));
+                    _mainArray.get(row).setFunction(12, ((functionbyte & CbusConstants.CBUS_F12) == CbusConstants.CBUS_F12));
+                    break;
+                case 4:
+                    _mainArray.get(row).setFunction(13, ((functionbyte & CbusConstants.CBUS_F13) == CbusConstants.CBUS_F13));
+                    _mainArray.get(row).setFunction(14, ((functionbyte & CbusConstants.CBUS_F14) == CbusConstants.CBUS_F14));
+                    _mainArray.get(row).setFunction(15, ((functionbyte & CbusConstants.CBUS_F15) == CbusConstants.CBUS_F15));
+                    _mainArray.get(row).setFunction(16, ((functionbyte & CbusConstants.CBUS_F16) == CbusConstants.CBUS_F16));
+                    _mainArray.get(row).setFunction(17, ((functionbyte & CbusConstants.CBUS_F17) == CbusConstants.CBUS_F17));
+                    _mainArray.get(row).setFunction(18, ((functionbyte & CbusConstants.CBUS_F18) == CbusConstants.CBUS_F18));
+                    _mainArray.get(row).setFunction(19, ((functionbyte & CbusConstants.CBUS_F19) == CbusConstants.CBUS_F19));
+                    _mainArray.get(row).setFunction(20, ((functionbyte & CbusConstants.CBUS_F20) == CbusConstants.CBUS_F20));
+                    break;
+                case 5:
+                    _mainArray.get(row).setFunction(21, ((functionbyte & CbusConstants.CBUS_F21) == CbusConstants.CBUS_F21));
+                    _mainArray.get(row).setFunction(22, ((functionbyte & CbusConstants.CBUS_F22) == CbusConstants.CBUS_F22));
+                    _mainArray.get(row).setFunction(23, ((functionbyte & CbusConstants.CBUS_F23) == CbusConstants.CBUS_F23));
+                    _mainArray.get(row).setFunction(24, ((functionbyte & CbusConstants.CBUS_F24) == CbusConstants.CBUS_F24));
+                    _mainArray.get(row).setFunction(25, ((functionbyte & CbusConstants.CBUS_F25) == CbusConstants.CBUS_F25));
+                    _mainArray.get(row).setFunction(26, ((functionbyte & CbusConstants.CBUS_F26) == CbusConstants.CBUS_F26));
+                    _mainArray.get(row).setFunction(27, ((functionbyte & CbusConstants.CBUS_F27) == CbusConstants.CBUS_F27));
+                    _mainArray.get(row).setFunction(28, ((functionbyte & CbusConstants.CBUS_F28) == CbusConstants.CBUS_F28));
+                    break;
+                default:
+                    break;
             }
             updateGui(row,FUNCTION_LIST);
         }

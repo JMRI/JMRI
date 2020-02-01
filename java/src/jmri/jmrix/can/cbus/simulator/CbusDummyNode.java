@@ -5,7 +5,6 @@ import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusConstants;
-import jmri.jmrix.can.cbus.CbusSend;
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeConstants;
 import jmri.jmrix.can.cbus.node.CbusNodeEvent;
@@ -40,7 +39,7 @@ public class CbusDummyNode extends CbusNode {
         memo = sysmemo;
         if (memo != null) {
             tc = memo.getTrafficController();
-            tc.addCanListener(this);
+            addTc(tc);
         }
         setDummyType(manufacturer, nodeType);
         setCanId(canId);

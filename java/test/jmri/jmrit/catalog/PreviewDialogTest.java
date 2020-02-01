@@ -15,7 +15,6 @@ import jmri.util.JmriJFrame;
 import jmri.util.JUnitUtil;
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.operators.JFileChooserOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +37,7 @@ public class PreviewDialogTest {
         PreviewDialog t = new PreviewDialog(jf,"catalogs",folder.getRoot(),new String[0]);
         Assert.assertNotNull("exists",t);
         t.dispose();
+        jf.dispose();
     }
 
     @Test
@@ -103,12 +103,13 @@ public class PreviewDialogTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.resetWindows(false,false);
+        JUnitUtil.tearDown();
     }
 
     private final static Logger log = LoggerFactory.getLogger(PreviewDialogTest.class.getName());

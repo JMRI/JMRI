@@ -11,7 +11,6 @@ import org.junit.runners.Suite;
         TrainsScheduleEditFrameTest.class,
         TrainsScheduleTableFrameTest.class,
         TrainsScheduleTableModelTest.class,
-        XmlTest.class,
         TrainsScheduleActionTest.class,
         TrainScheduleTest.class,
 })

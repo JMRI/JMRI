@@ -34,6 +34,7 @@ public class SpeedProfileTableTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
 

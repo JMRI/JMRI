@@ -10,7 +10,6 @@ import org.junit.*;
 import org.junit.rules.Timeout;
 
 import org.netbeans.jemmy.operators.JDialogOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  *
@@ -19,7 +18,7 @@ import org.netbeans.jemmy.operators.JFrameOperator;
 public class MaintenanceTest {
 
     @Rule
-    public Timeout globalTimeout = Timeout.seconds(1000);
+    public Timeout globalTimeout = Timeout.seconds(10);
 
     @Rule
     public RetryRule retryRule = new RetryRule(1); // allow 1 retry

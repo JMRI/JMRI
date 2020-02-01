@@ -329,6 +329,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
     }
 
     void cancelPressed(ActionEvent e) {
+        removePrefixBoxListener(prefixBox);
         addFrame.setVisible(false);
         addFrame.dispose();
         addFrame = null;
@@ -372,7 +373,15 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
         String errorMessage = null;
         String uName = userNameTextField.getText();
         for (int x = 0; x < numberOfReporters; x++) {
-            curAddress = reporterManager.getNextValidAddress(curAddress, reporterPrefix);
+            try {
+                curAddress = reporterManager.getNextValidAddress(curAddress, reporterPrefix);
+            } catch (jmri.JmriException ex) {
+                displayHwError(curAddress, ex);
+                // directly add to statusBarLabel (but never called?)
+                statusBarLabel.setText(Bundle.getMessage("ErrorConvertHW", curAddress));
+                statusBarLabel.setForeground(Color.red);
+                return;
+            }
             if (curAddress == null) {
                 log.debug("Error converting HW or getNextValidAddress");
                 errorMessage = (Bundle.getMessage("WarningInvalidEntry"));
@@ -432,6 +441,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
         }
 
         pref.setComboBoxLastSelection(systemSelectionCombo, prefixBox.getSelectedItem().getMemo().getUserName());
+        removePrefixBoxListener(prefixBox);
         addFrame.setVisible(false);
         addFrame.dispose();
         addFrame = null;

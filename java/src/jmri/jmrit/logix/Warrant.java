@@ -5,14 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 import javax.annotation.concurrent.GuardedBy;
-import jmri.DccLocoAddress;
-import jmri.DccThrottle;
-import jmri.InstanceManager;
-import jmri.LocoAddress;
-import jmri.NamedBean;
-import jmri.SignalHead;
-import jmri.SignalMast;
-import jmri.ThrottleListener;
+
+import jmri.*;
 import jmri.implementation.SignalSpeedMap;
 import jmri.util.ThreadingUtil;
 
@@ -59,6 +53,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     private SpeedUtil _speedUtil;
     private boolean _runBlind; // Unable to use block detection, must run on et only
     private boolean _partialAllocate;// only allocate one block at a time for sharing route.
+    private boolean _addTracker;    // start tracker when warrant ends normally.
     private boolean _noRamp; // do not ramp speed changes. make immediate speed change when entering approach block.
     protected Warrant _self = this;
 
@@ -90,6 +85,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     private boolean _waitForBlock; // train may not move until false
     private boolean _waitForWarrant;
     protected String _message; // last message returned from an action
+    private ThrottleManager tm;
 
     // Throttle modes
     public static final int MODE_NONE = 0;
@@ -141,6 +137,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         _orders = new ArrayList<>();
         _runBlind = false;
         _speedUtil = new SpeedUtil(_orders);
+        tm = InstanceManager.getNullableDefault(ThrottleManager.class);
     }
 
     @Override
@@ -162,6 +159,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
 
     @Override
     public void setState(int state) {
+        // warrant state is computed from other values
     }
 
     public SpeedUtil getSpeedUtil() {
@@ -365,7 +363,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         if (b != null) {
             return b.getState();
         }
-        return OBlock.UNKNOWN;
+        return NamedBean.UNKNOWN;
     }
 
     /**
@@ -400,12 +398,20 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         _partialAllocate = set;
     }
 
+    public void setAddTracker (boolean set) {
+        _addTracker = set;
+    }
+
     public boolean getNoRamp() {
         return _noRamp;
     }
 
     public boolean getShareRoute() {
         return _partialAllocate;
+    }
+
+    public boolean getAddTracker() {
+        return _addTracker;
     }
 
     public String getTrainName() {
@@ -485,7 +491,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     public boolean routeIsOccupied() {
         for (int i = 1; i < _orders.size(); i++) {
             OBlock block = _orders.get(i).getBlock();
-            if ((block.getState() & OBlock.OCCUPIED) != 0) {
+            if ((block.getState() & Block.OCCUPIED) != 0) {
                 return true;
             }
         }
@@ -574,7 +580,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                 }
                 cmdIdx++;   // display is 1-based
                 OBlock block = getCurrentBlockOrder().getBlock();
-                if ((block.getState() & (OBlock.OCCUPIED | OBlock.UNDETECTED)) == 0) {
+                if ((block.getState() & (Block.OCCUPIED | Block.UNDETECTED)) == 0) {
                     return Bundle.getMessage("LostTrain", _trainName, block.getDisplayName());
                 }
                 String blockName = block.getDisplayName();
@@ -705,14 +711,13 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     }
 
     @jmri.InvokeOnLayoutThread
-    protected void startTracker() {
+    private void startTracker() {
         // error if not on Layout thread
         if (!ThreadingUtil.isLayoutThread()) {
             log.error("invoked on wrong thread", new Exception("traceback"));
         }
-
-        InstanceManager.getDefault(TrackerTableAction.class).markNewTracker(getCurrentBlockOrder().getBlock(),
-                _trainName, null);
+        new Tracker(getCurrentBlockOrder().getBlock(), _trainName, 
+                null, InstanceManager.getDefault(TrackerTableAction.class));
     }
 
     synchronized public void stopWarrant(boolean abort) {
@@ -743,13 +748,18 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             _student = null;
         }
         if (_engineer != null) {
-            _speedUtil.stopRun(!abort); // don't write speed profile measurements
             _engineer.stopRun(abort, turnOffFunctions); // release throttle
             _engineer = null;
         }
         if (abort) {
             fireRunStatus("runMode", oldMode, MODE_ABORT);
         } else {
+            if (_idxCurrentOrder == _orders.size()-1) { // run was complete to end
+                _speedUtil.stopRun(true);   // write speed profile measurements
+                if (_addTracker) {
+                    startTracker();
+                }
+            }
             fireRunStatus("runMode", oldMode, _runMode);
         }
         if (log.isDebugEnabled()) {
@@ -821,7 +831,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             // Delayed start is OK if block 0 is not occupied. Note can't delay start if block is dark
             if (!runBlind) {
                 int state = getBlockStateAt(0);
-                if ((state & (OBlock.OCCUPIED | OBlock.UNDETECTED)) == 0) {
+                if ((state & (Block.OCCUPIED | Block.UNDETECTED)) == 0) {
                     // continuing with no occupation of starting block
                     setStoppingBlock(getBlockAt(0));
                     _delayStart = true;
@@ -865,7 +875,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         if (dccAddress == null) {
             msg = Bundle.getMessage("NoAddress", getDisplayName());
         } else {
-            jmri.ThrottleManager tm = InstanceManager.getNullableDefault(jmri.ThrottleManager.class);
             if (tm == null) {
                 msg = Bundle.getMessage("noThrottle", _speedUtil.getDccAddress().getNumber());
             } else {
@@ -928,7 +937,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
 
     protected void releaseThrottle(DccThrottle throttle) {
         if (throttle != null) {
-            jmri.ThrottleManager tm = InstanceManager.getNullableDefault(jmri.ThrottleManager.class);
             if (tm != null) {
                 tm.releaseThrottle(throttle, this);
             } else {
@@ -1004,7 +1012,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                 case RESUME:
                     BlockOrder bo = getBlockOrderAt(_idxCurrentOrder);
                     OBlock block = bo.getBlock();
-                    if ((block.getState() & (OBlock.OCCUPIED | OBlock.UNDETECTED)) != 0) {
+                    if ((block.getState() & (Block.OCCUPIED | Block.UNDETECTED)) != 0) {
                         // we assume this occupation is this train. user should know
                         if (runState == WAIT_FOR_CLEAR || runState == HALT) {
                             // However user knows if condition may have cleared due to overrun.

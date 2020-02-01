@@ -51,10 +51,6 @@ public class PanedTest {
                 JUnitUtil.initDebugThrottleManager();
             }
 
-            @Override
-            protected void installShutDownManager() {
-                // done automatically now as part of InstanceManager default handling
-            }
         };
         Assert.assertNotNull(a);
         // shutdown the application
@@ -73,6 +69,7 @@ public class PanedTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager();  // eventually want to test ShutDownTasks?
         JUnitUtil.resetApplication();
         JUnitUtil.tearDown();
     }

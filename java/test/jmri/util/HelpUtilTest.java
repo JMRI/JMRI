@@ -1,9 +1,6 @@
 package jmri.util;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 import javax.swing.*;
 
@@ -17,6 +14,8 @@ public class HelpUtilTest {
 
     @Test
     public void testCTor() {
+        Assume.assumeFalse(java.awt.GraphicsEnvironment.isHeadless());
+        
         JMenuBar menuBar = new JMenuBar();
         int initialMenuCount = menuBar.getMenuCount();
         HelpUtil.helpMenu(menuBar,"test",true);

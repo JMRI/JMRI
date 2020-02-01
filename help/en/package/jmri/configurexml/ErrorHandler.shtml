@@ -29,9 +29,9 @@
 
     <body>
         <!--#include virtual="/Header" -->
-
         <div class="nomenu" id="mBody">
             <div id="mainContent">
+
                 <h1>XML Error Handling</h1>
                 <p>JMRI will sometimes encounter errors loading XML files including layout
                     and control panels. Some of these errors occur when loading a file

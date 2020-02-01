@@ -1,7 +1,6 @@
 package jmri.util;
 
 import javax.annotation.Nonnull;
-import javax.annotation.CheckForNull;
 import jmri.ExpectedState;
 import jmri.InstanceManager;
 import jmri.NamedBean;

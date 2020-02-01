@@ -42,27 +42,25 @@ public class DefaultRailComManager extends DefaultIdTagManager
     @SuppressFBWarnings(value="RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE", justification="defensive programming check of @Nonnull argument")
     private void checkSystemName(@Nonnull String systemName, @CheckForNull String userName) {
         if (systemName == null) {
-            log.error("SystemName cannot be null. UserName was "
-                    + ((userName == null) ? "null" : userName));
-            throw new IllegalArgumentException("SystemName cannot be null. UserName was "
+            log.error("SystemName cannot be null. UserName was {}",
+                    (userName == null ? "null" : userName));
+            throw new IllegalArgumentException("SystemName cannot be null. UserName was {}"
                     + ((userName == null) ? "null" : userName));
         }
     }
-    
+
     @Override
+    @Nonnull
     public IdTag newIdTag(@Nonnull String systemName, @CheckForNull String userName) {
-        if (log.isDebugEnabled()) {
-            log.debug("new IdTag:"
-                    + ((systemName == null) ? "null" : systemName)
-                    + ";" + ((userName == null) ? "null" : userName));
-        }
+        log.debug("new IdTag: {};{}", systemName, (userName == null ? "null" : userName));
         checkSystemName(systemName, userName);
-        
+
         // return existing if there is one
         RailCom s;
         if ((userName != null) && ((s = (RailCom)getByUserName(userName)) != null)) {
             if (getBySystemName(systemName) != s) {
-                log.error("inconsistent user (" + userName + ") and system name (" + systemName + ") results; userName related to (" + s.getSystemName() + ")");
+                log.error("inconsistent user ({}) and system name ({}) results; userName related to ({})",
+                        userName, systemName, s.getSystemName());
             }
             return s;
         }
@@ -70,15 +68,13 @@ public class DefaultRailComManager extends DefaultIdTagManager
             if ((s.getUserName() == null) && (userName != null)) {
                 s.setUserName(userName);
             } else if (userName != null) {
-                log.warn("Found IdTag via system name (" + systemName
-                        + ") with non-null user name (" + userName + ")");
+                log.warn("Found IdTag via system name ({}) with non-null user name ({})", systemName, userName);
             }
             return s;
         }
 
         // doesn't exist, make a new one
         s = createNewIdTag(systemName, userName);
-
         // save in the maps
         register(s);
 

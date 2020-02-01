@@ -450,5 +450,13 @@ public class DefaultSignalMastLogicManager
         return Bundle.getMessage(plural ? "BeanNameSignalMastLogics" : "BeanNameSignalMastLogic");
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<SignalMastLogic> getNamedBeanClass() {
+        return SignalMastLogic.class;
+    }
+
     private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastLogicManager.class);
 }

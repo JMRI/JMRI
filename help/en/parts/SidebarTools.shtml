@@ -1,0 +1,29 @@
+<!-- SidebarTools.shtml -->
+<!-- This is the common sidebar definition for Tools pages -->
+		<dt><h3><a href="/help/en/html/tools/">Tools</a></h3></dt>
+		<dd>JMRI provides powerful tools for working with your
+		layout.
+		<ul>
+		    <li><a href="/help/en/html/tools/Turnouts.shtml">Turnouts</a>
+            <li><a href="/help/en/html/tools/Lights.shtml">Lights</a>
+		    <li><a href="/help/en/html/tools/Sensors.shtml">Sensors</a>
+		    <li><a href="/help/en/html/tools/throttle/ThrottleMain.shtml">Throttles</a>
+		    <li><a href="/help/en/html/tools/consisttool/ConsistTool.shtml">Consisting</a>
+            <li><a href="/help/en/html/tools/Blocks.shtml">Blocks</a>
+            <li><a href="/help/en/html/tools/Reporters.shtml">Reporters</a>
+            <li><a href="/help/en/html/tools/Memories.shtml">Memory Variables</a>
+		    <li><a href="/help/en/html/tools/Routes.shtml">Routes</a>
+		    <li><a href="/help/en/html/tools/LRoutes.shtml">LRoutes</a>
+            <li><a href="/help/en/html/tools/Sections.shtml">Sections</a>
+            <li><a href="/help/en/html/tools/Transits.shtml">Transits</a>
+		    <li><a href="/help/en/html/tools/Logix.shtml">Logix</a>
+		    <li><a href="/help/en/html/tools/fastclock/index.shtml">Fast Clocks</a>
+		    <li><a href="/help/en/html/tools/speedometer/index.shtml">Speedometer</a>
+		    <li><a href="/help/en/html/tools/Audio.shtml">Audio</a>
+		    <li><a href="/help/en/html/tools/IdTags.shtml">ID Tags</a>
+		    <li><a href="/help/en/html/tools/TimeTable.shtml">Timetable</a>
+
+            <li><i><a href="/help/en/html/tools/index.shtml#systemSpecificTools">System-specific...</a></i>
+   	    </ul>
+		</dd>
+<!-- /SidebarTools.shtml -->

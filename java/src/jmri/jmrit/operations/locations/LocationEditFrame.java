@@ -7,47 +7,23 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.ScrollPaneConstants;
+import javax.swing.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.Reporter;
+import jmri.ReporterManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
-import jmri.jmrit.operations.locations.tools.ChangeTracksTypeAction;
-import jmri.jmrit.operations.locations.tools.EditCarTypeAction;
-import jmri.jmrit.operations.locations.tools.LocationTrackBlockingOrderAction;
-import jmri.jmrit.operations.locations.tools.LocationsByCarTypeFrame;
-import jmri.jmrit.operations.locations.tools.ModifyLocationsAction;
-import jmri.jmrit.operations.locations.tools.ModifyLocationsCarLoadsAction;
-import jmri.jmrit.operations.locations.tools.PrintLocationsAction;
-import jmri.jmrit.operations.locations.tools.SetPhysicalLocationAction;
-import jmri.jmrit.operations.locations.tools.ShowCarsByLocationAction;
-import jmri.jmrit.operations.locations.tools.ShowTrackMovesAction;
-import jmri.jmrit.operations.locations.tools.ShowTrainsServingLocationAction;
-import jmri.jmrit.operations.locations.tools.TrackCopyAction;
+import jmri.jmrit.operations.locations.tools.*;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainCommon;
+import jmri.swing.NamedBeanComboBox;
 
 /**
  * Frame for user edit of location
@@ -110,8 +86,8 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
             JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
     // Reader selection dropdown.
-    JComboBox<Reporter> readerSelector = new JComboBox<>();
-    
+    NamedBeanComboBox<Reporter> readerSelector;
+
     JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
 
     public static final String NAME = Bundle.getMessage("Name");
@@ -151,14 +127,6 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         opsGroup.add(interchangeRadioButton);
         opsGroup.add(stageRadioButton);
 
-        if (Setup.isRfidEnabled()) {
-            // setup the Reader dropdown.
-            readerSelector.addItem(null); // add an empty entry.
-            for (jmri.NamedBean r : jmri.InstanceManager.getDefault(jmri.ReporterManager.class).getNamedBeanSet()) {
-                readerSelector.addItem((Reporter) r);
-            }
-        }
-
         if (_location != null) {
             enableButtons(true);
             locationNameTextField.setText(_location.getName());
@@ -184,7 +152,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
                 stageRadioButton.setSelected(true);
             }
             setTrainDirectionBoxes();
-            if (Setup.isRfidEnabled()) {
+            if (Setup.isRfidEnabled() && readerSelector != null) {
                 readerSelector.setSelectedItem(_location.getReporter());
             }
         } else {
@@ -245,13 +213,18 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         // adjust text area width based on window size
         adjustTextAreaColumnWidth(commentScroller, commentTextArea);
 
-        // reader row
         JPanel readerPanel = new JPanel();
-        readerPanel.setLayout(new GridBagLayout());
-        readerPanel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("idReader")));
-        addItem(readerPanel, readerSelector, 0, 0);
-
-        readerPanel.setVisible(Setup.isRfidEnabled());
+        readerPanel.setVisible(false);
+        // reader row
+        if (Setup.isRfidEnabled()) {
+            ReporterManager reporterManager = InstanceManager.getDefault(ReporterManager.class);
+            readerSelector = new NamedBeanComboBox<Reporter>(reporterManager);
+            readerSelector.setAllowNull(true);
+            readerPanel.setLayout(new GridBagLayout());
+            readerPanel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("idReader")));
+            addItem(readerPanel, readerSelector, 0, 0);
+            readerPanel.setVisible(true);
+        }
 
         // row 12
         JPanel pB = new JPanel();
@@ -306,7 +279,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 
         // build menu
         JMenuBar menuBar = new JMenuBar();
-        
+
         loadToolMenu();
         menuBar.add(toolMenu);
         setJMenuBar(menuBar);
@@ -317,7 +290,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         setVisible(true);
 
     }
-    
+
     private void loadToolMenu() {
         toolMenu.removeAll();
         toolMenu.add(new TrackCopyAction(this));
@@ -494,8 +467,8 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         }
         _location.setName(locationNameTextField.getText());
         _location.setComment(commentTextArea.getText());
-        if (Setup.isRfidEnabled()) {
-            _location.setReporter((Reporter) readerSelector.getSelectedItem());
+        if (Setup.isRfidEnabled() && readerSelector != null) {
+            _location.setReporter(readerSelector.getSelectedItem());
         }
         setLocationOps();
         // save location file
@@ -503,19 +476,20 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
     }
 
     /**
-     *
      * @return true if name OK and is less than the maximum allowed length
      */
     private boolean checkName(String s) {
-        if (locationNameTextField.getText().trim().equals("")) {
+        if (locationNameTextField.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("MustEnterName"), MessageFormat.format(Bundle
                     .getMessage("CanNotLocation"), new Object[]{s}), JOptionPane.ERROR_MESSAGE);
             return false;
         }
         if (TrainCommon.splitString(locationNameTextField.getText()).length() > MAX_NAME_LENGTH) {
-            // log.error("Location name must be less than "+ Integer.toString(MAX_NAME_LENGTH+1) +" characters");
+            // log.error("Location name must be less than "+
+            // Integer.toString(MAX_NAME_LENGTH+1) +" characters");
             JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("LocationNameLengthMax"),
-                    new Object[]{Integer.toString(MAX_NAME_LENGTH + 1)}), MessageFormat.format(Bundle
+                    new Object[]{Integer.toString(MAX_NAME_LENGTH + 1)}),
+                    MessageFormat.format(Bundle
                             .getMessage("CanNotLocation"), new Object[]{s}),
                     JOptionPane.ERROR_MESSAGE);
             return false;
@@ -568,8 +542,10 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         stageRadioButton.setEnabled(enabled);
         //
         yardTable.setEnabled(enabled);
-        // enable readerSelect.
-        readerSelector.setEnabled(enabled && Setup.isRfidEnabled());
+        if (readerSelector != null) {
+            // enable readerSelect.
+            readerSelector.setEnabled(enabled && Setup.isRfidEnabled());
+        }
     }
 
     @Override
@@ -680,7 +656,8 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
     private void autoSelectCheckboxes() {
         for (int i = 0; i < checkBoxes.size(); i++) {
             checkBoxes.get(i).setSelected(false);
-            // check each track to determine which car types are serviced by this location
+            // check each track to determine which car types are serviced by
+            // this location
             List<Track> tracks = _location.getTrackList();
             for (Track track : tracks) {
                 if (track.acceptsTypeName(checkBoxes.get(i).getText())) {

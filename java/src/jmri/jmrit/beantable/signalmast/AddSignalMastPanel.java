@@ -5,17 +5,14 @@ import java.awt.event.*;
 import java.io.File;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.text.DecimalFormat;
 import java.util.*;
 import java.util.List;
 
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
 
 import jmri.*;
 import jmri.implementation.*;
 import jmri.util.*;
-import jmri.util.swing.*;
 
 import org.jdom2.Element;
 

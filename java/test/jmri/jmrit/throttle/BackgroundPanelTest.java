@@ -30,6 +30,7 @@ public class BackgroundPanelTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
 }

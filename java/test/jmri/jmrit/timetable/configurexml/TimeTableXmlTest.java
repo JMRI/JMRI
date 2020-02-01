@@ -2,7 +2,6 @@ package jmri.jmrit.timetable.configurexml;
 
 import java.awt.GraphicsEnvironment;
 import org.junit.*;
-import jmri.jmrit.timetable.*;
 import jmri.jmrit.timetable.swing.*;
 import jmri.util.JUnitUtil;
 
@@ -54,6 +53,7 @@ public class TimeTableXmlTest {
         } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) {
             Assert.fail("Failed to reset TimeTableXml static fileLocation " + x);
         }
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.resetWindows(false,false);
+        JUnitUtil.tearDown();
     }
 }

@@ -12,22 +12,13 @@ import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JPanel;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JToggleButton;
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
+import javax.swing.text.DefaultFormatter;
 import jmri.LocoAddress;
 import jmri.CabSignalListListener;
 import jmri.CabSignalManager;
@@ -36,6 +27,7 @@ import jmri.jmrit.DccLocoAddressSelector;
 import jmri.jmrit.roster.swing.GlobalRosterEntryComboBox;
 import jmri.jmrit.roster.swing.RosterEntryComboBox;
 import jmri.util.swing.XTableColumnModel;
+import jmri.util.swing.StayOpenCheckBoxItem;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
@@ -53,35 +45,57 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel implements CabSigna
 
     private CabSignalManager cabSignalManager;
 
-    protected JScrollPane slotScroll;
-    
-    protected CabSignalTableModel slotModel=null;
-    protected JTable slotTable=null;
-    protected final XTableColumnModel tcm = new XTableColumnModel();
+    private JScrollPane slotScroll;
+    private CabSignalTableModel slotModel;
+    private JTable _slotTable;
+    private XTableColumnModel tcm;
 
-    private JMenu cabSigColMenu = new JMenu(Bundle.getMessage("SigDataCol"));
-    
-    protected List<JCheckBoxMenuItem> colMenuList = new ArrayList<JCheckBoxMenuItem>();
-    protected List<JCheckBoxMenuItem> cabSigColMenuList = new ArrayList<JCheckBoxMenuItem>();    
+    private JMenu cabSigColMenu;
+    private List<JCheckBoxMenuItem> colMenuList;
     private JToggleButton masterPauseButton;
-    JLabel textLocoLabel = new JLabel();
-    DccLocoAddressSelector locoSelector = new DccLocoAddressSelector();
-    RosterEntryComboBox locoRosterBox;
-    JButton addLocoButton = new JButton();
-    JButton resetLocoButton = new JButton();
+    private JLabel textLocoLabel;
+    private DccLocoAddressSelector locoSelector;
+    private RosterEntryComboBox locoRosterBox;
+    private JButton addLocoButton;
+    private JButton resetLocoButton;
     private int _rotationOffset;
+    private int _defaultRowHeight;
     
+    public CabSignalPane() {
+        super();
+        cabSignalManager = jmri.InstanceManager.getNullableDefault(CabSignalManager.class);
+        if(cabSignalManager == null){
+           log.info("creating new DefaultCabSignalManager");
+           jmri.InstanceManager.store(new jmri.managers.DefaultCabSignalManager(),CabSignalManager.class);
+           cabSignalManager = jmri.InstanceManager.getNullableDefault(CabSignalManager.class); 
+        }
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void initComponents() {
         super.initComponents();
+        if (cabSignalManager != null) {
+            cabSignalManager.addCabSignalListListener(this);
+        }
         slotModel = new CabSignalTableModel(5,
             CabSignalTableModel.MAX_COLUMN); // row, column
+        
+        tcm = new XTableColumnModel();
+        cabSigColMenu = new JMenu(Bundle.getMessage("SigDataCol"));
+        colMenuList = new ArrayList<>();
+        textLocoLabel = new JLabel();
+        locoSelector = new DccLocoAddressSelector();
+        addLocoButton = new JButton();
+        resetLocoButton = new JButton();
+        _defaultRowHeight = 26;
         init();
     }
 
-
     public void init() {
-        JTable slotTable = new JTable(slotModel) {
+        _slotTable = new JTable(slotModel) {
             // Override JTable Header to implement table header tool tips.
             @Override
             protected JTableHeader createDefaultTableHeader() {
@@ -92,7 +106,7 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel implements CabSigna
                             java.awt.Point p = e.getPoint();
                             int index = columnModel.getColumnIndexAtX(p.x);
                             int realIndex = columnModel.getColumn(index).getModelIndex();
-                            return CabSignalTableModel.columnToolTips[realIndex];    
+                            return CabSignalTableModel.COLUMNTOOLTIPS[realIndex];    
                         } catch (RuntimeException e1) {
                             //catch null pointer exception if mouse is over an empty line
                         }
@@ -103,13 +117,14 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel implements CabSigna
         };        
         
         // Use XTableColumnModel so we can control which columns are visible
-        slotTable.setColumnModel(tcm);
-        slotTable.createDefaultColumnsFromModel();
+        _slotTable.setColumnModel(tcm);
+        _slotTable.createDefaultColumnsFromModel();
         
-        for (int i = 0; i < slotTable.getColumnCount(); i++) {
+        for (int i = 0; i < _slotTable.getColumnCount(); i++) {
             int colnumber=i;
-            String colName = slotTable.getColumnName(colnumber);
-            JCheckBoxMenuItem showcol = new JCheckBoxMenuItem(colName);
+            String colName = _slotTable.getColumnName(colnumber);
+            StayOpenCheckBoxItem showcol = new StayOpenCheckBoxItem(colName);
+            showcol.setToolTipText(CabSignalTableModel.COLUMNTOOLTIPS[i]);
             colMenuList.add(showcol);
             cabSigColMenu.add(showcol); // cabsig columns
         }
@@ -118,7 +133,7 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel implements CabSigna
             int colnumber=i;
                 TableColumn column  = tcm.getColumnByModelIndex(colnumber);
                 
-            if (Arrays.stream(CabSignalTableModel.startupColumns).anyMatch(j -> j == colnumber)) {
+            if (Arrays.stream(CabSignalTableModel.STARTUPCOLUMNS).anyMatch(j -> j == colnumber)) {
                 colMenuList.get(colnumber).setSelected(true);
                 tcm.setColumnVisible(column, true);
             } else {
@@ -126,25 +141,22 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel implements CabSigna
                 tcm.setColumnVisible(column, false);
             }
         
-            colMenuList.get(colnumber).addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    TableColumn column  = tcm.getColumnByModelIndex(colnumber);
-                    boolean     visible = tcm.isColumnVisible(column);
-                    tcm.setColumnVisible(column, !visible);
-                }
+            colMenuList.get(colnumber).addActionListener((ActionEvent e) -> {
+                TableColumn column1 = tcm.getColumnByModelIndex(colnumber);
+                boolean visible1 = tcm.isColumnVisible(column1);
+                tcm.setColumnVisible(column1, !visible1);
             });
         }
         
-        slotTable.setAutoCreateRowSorter(true);
+        _slotTable.setAutoCreateRowSorter(true);
         
-        final TableRowSorter<CabSignalTableModel> sorter = new TableRowSorter<CabSignalTableModel>(slotModel);
-        slotTable.setRowSorter(sorter);
+        final TableRowSorter<CabSignalTableModel> sorter = new TableRowSorter<>(slotModel);
+        _slotTable.setRowSorter(sorter);
         
-        slotTable.setRowHeight(26);
+        _slotTable.setRowHeight(_defaultRowHeight);
         
         // configure items for GUI
-        slotModel.configureTable(slotTable);
+        slotModel.configureTable(_slotTable);
         
         tcm.getColumnByModelIndex(CabSignalTableModel.REVERSE_BLOCK_DIR_BUTTON_COLUMN).setCellRenderer( 
             new ButtonRenderer() );
@@ -154,7 +166,7 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel implements CabSigna
         tcm.getColumnByModelIndex(CabSignalTableModel.NEXT_ASPECT_ICON).setCellRenderer( 
             tableSignalAspectRenderer() ); 
         
-        slotScroll = new JScrollPane(slotTable);
+        slotScroll = new JScrollPane(_slotTable);
         slotScroll.setPreferredSize(new Dimension(400, 200));
         
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -170,11 +182,8 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel implements CabSigna
         masterPauseButton.setSelected(false); // cabdata on
         refreshMasterPauseButton();
         masterPauseButton.setVisible(true);
-        masterPauseButton.addActionListener (new ActionListener () {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                refreshMasterPauseButton();
-            }
+        masterPauseButton.addActionListener ((ActionEvent e) -> {
+            refreshMasterPauseButton();
         });
         
         toppanelcontainer.add(masterPauseButton);
@@ -263,32 +272,24 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel implements CabSigna
         }
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTitle() {
         return Bundle.getMessage("CabSignalPaneTitle");
     }
-
-    public CabSignalPane() {
-        super();
-        cabSignalManager = jmri.InstanceManager.getNullableDefault(CabSignalManager.class);
-        if(cabSignalManager == null){
-           log.info("creating new DefaultCabSignalManager");
-           jmri.InstanceManager.store(new jmri.managers.DefaultCabSignalManager(),CabSignalManager.class);
-           cabSignalManager = jmri.InstanceManager.getNullableDefault(CabSignalManager.class); 
-        }
-        if (cabSignalManager != null) {
-            cabSignalManager.addCabSignalListListener(this);
-        }
-    }
     
     /**
-     * Creates a Menu List
+     * {@inheritDoc}
      */
     @Override
     public List<JMenu> getMenus() {
-        List<JMenu> menuList = new ArrayList<JMenu>();
+        List<JMenu> menuList = new ArrayList<>();
         
         menuList.add(cabSigColMenu);
+        
+        JMenu displayMenu = new JMenu(Bundle.getMessage("DisplayMenu"));
         
         JMenu iconMenu = new JMenu(Bundle.getMessage("AspectIconMenu"));
         ButtonGroup offsetGroup = new ButtonGroup();
@@ -308,7 +309,7 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel implements CabSigna
         iconMenu.add(offset2MenuItem);
         iconMenu.add(offset3MenuItem);
         
-        menuList.add(iconMenu);
+        displayMenu.add(iconMenu);
         
         _rotationOffset = 0; // startup
         offset0MenuItem.setSelected(true);
@@ -332,7 +333,40 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel implements CabSigna
         offset2MenuItem.addActionListener(iconMenuListener);
         offset3MenuItem.addActionListener(iconMenuListener);
         
+        ActionListener rowHeightMenuListener = ae -> {
+            JSpinner delaySpinner = getNewRowHeightSpinner();
+            int option = JOptionPane.showOptionDialog(this, 
+                delaySpinner, 
+                Bundle.getMessage("RowHeightOption"), 
+                JOptionPane.OK_CANCEL_OPTION, 
+                JOptionPane.QUESTION_MESSAGE, null, null, null);
+            if (option == JOptionPane.OK_OPTION) {
+                _defaultRowHeight = (Integer) delaySpinner.getValue();
+            }
+            else {
+                _slotTable.setRowHeight(_defaultRowHeight);
+            }
+        };
+
+        JMenuItem searchForNodesMenuItem = new JMenuItem(Bundle.getMessage("RowHeightOption"));
+        searchForNodesMenuItem.addActionListener(rowHeightMenuListener);
+        displayMenu.add(searchForNodesMenuItem);
+        
+        menuList.add(displayMenu);
+        
         return menuList;
+    }
+    
+    private JSpinner getNewRowHeightSpinner() {
+        JSpinner rqnnSpinner = new JSpinner(new SpinnerNumberModel(_defaultRowHeight, 10, 150, 1));
+        JComponent rqcomp = rqnnSpinner.getEditor();
+        JFormattedTextField rqfield = (JFormattedTextField) rqcomp.getComponent(0);
+        DefaultFormatter rqformatter = (DefaultFormatter) rqfield.getFormatter();
+        rqformatter.setCommitsOnValidEdit(true);
+        rqnnSpinner.addChangeListener((ChangeEvent e) -> {
+            _slotTable.setRowHeight((Integer) rqnnSpinner.getValue());
+        });
+        return rqnnSpinner;
     }
 
     public void addLocoButtonActionPerformed(ActionEvent e) {
@@ -350,11 +384,13 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel implements CabSigna
         }
     }
     
-    
     private TableCellRenderer tableSignalAspectRenderer() {
     
         return new TableCellRenderer() {
             JLabel f = new JLabel();
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
                 boolean hasFocus, int row, int column) {
@@ -386,17 +422,22 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel implements CabSigna
         return "package.jmri.jmrit.cabsignals.CabSignalPane";
     }    
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void dispose() {
         cabSignalManager.removeCabSignalListListener(this);
-        slotTable = null;
+        _slotTable = null;
         slotModel.dispose();
         cabSignalManager = null;
         super.dispose();
     }
 
-    // Cab Signal List Listener interface
-
+    /**
+     * {@inheritDoc}
+     * Cab Signal List Listener interface
+     */
     @Override
     public void notifyCabSignalListChanged(){
         slotModel.fireTableDataChanged();

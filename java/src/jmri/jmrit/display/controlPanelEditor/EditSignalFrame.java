@@ -1,6 +1,5 @@
 package jmri.jmrit.display.controlPanelEditor;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -79,7 +78,7 @@ public class EditSignalFrame extends EditFrame implements ListSelectionListener 
         panel.add(new JLabel(Bundle.getMessage("PortalTitle", _homeBlock.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME))));
         signalPanel.add(panel);
 
-        _portalList = new PortalList(_homeBlock);
+        _portalList = new PortalList(_homeBlock, this);
         _portalList.addListSelectionListener(this);
         signalPanel.add(new JScrollPane(_portalList));
         signalPanel.add(Box.createVerticalStrut(STRUT_SIZE));
@@ -317,8 +316,8 @@ public class EditSignalFrame extends EditFrame implements ListSelectionListener 
     public void valueChanged(ListSelectionEvent e) {
         Portal portal = _portalList.getSelectedValue();
         if (log.isDebugEnabled()) {
-            log.debug("valueChanged: portal = {}, _currentPortal = {}", (portal==null?"null":portal.getDisplayName()), 
-                    (_currentPortal==null?"null":_currentPortal.getDisplayName()));
+            log.debug("valueChanged: portal = {}, _currentPortal = {}", (portal==null?"null":portal.getName()), 
+                    (_currentPortal==null?"null":_currentPortal.getName()));
         }
         NamedBean mast = null;
         if (portal != null) {
@@ -362,12 +361,12 @@ public class EditSignalFrame extends EditFrame implements ListSelectionListener 
         StringBuffer sb = new StringBuffer(Bundle.getMessage("mastProtectsPortal", 
                 mast.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME), 
                 b.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME),
-                portal.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME)));
+                portal.getName()));
         sb.append("\n");
         if (newPortal != null) {
             sb.append(Bundle.getMessage("switchProtection",
                     _homeBlock.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME),
-                    newPortal.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME)));
+                    newPortal.getName()));
         } else {
             sb.append(Bundle.getMessage("attachMast",
                     _homeBlock.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME)));
@@ -413,7 +412,7 @@ public class EditSignalFrame extends EditFrame implements ListSelectionListener 
                 int answer = JOptionPane.showConfirmDialog(this, 
                         Bundle.getMessage("replaceSignalMast", oldMast.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME), 
                                 newMast.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME), 
-                                portal.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME)), 
+                                portal.getName()), 
                         Bundle.getMessage("configureSignal"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if (answer != JOptionPane.YES_OPTION) {
                     return;
@@ -480,7 +479,7 @@ public class EditSignalFrame extends EditFrame implements ListSelectionListener 
         if (oldMast != null) {
             int answer = JOptionPane.showConfirmDialog(this, 
                     Bundle.getMessage("removeSignalMast", oldMast.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME), 
-                            portal.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME)), 
+                            portal.getName()), 
                     Bundle.getMessage("configureSignal"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (answer == JOptionPane.YES_OPTION) {
                 portal.setProtectSignal(null, 0, _homeBlock);
@@ -490,7 +489,7 @@ public class EditSignalFrame extends EditFrame implements ListSelectionListener 
         } else {
             JOptionPane.showMessageDialog(this, 
                     Bundle.getMessage("noPortalProtection", _homeBlock.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME),
-                            portal.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME)),
+                            portal.getName()),
                     Bundle.getMessage("configureSignal"), JOptionPane.INFORMATION_MESSAGE);
         }
     }
@@ -514,11 +513,11 @@ public class EditSignalFrame extends EditFrame implements ListSelectionListener 
             mastName = currentMast.getDisplayName(DisplayOptions.DISPLAYNAME);
         }
         if (mastName == null) {
-            msg = Bundle.getMessage("noMast", portal.getDisplayName(DisplayOptions.DISPLAYNAME),
+            msg = Bundle.getMessage("noMast", portal.getName(),
                     newMast.getDisplayName(DisplayOptions.DISPLAYNAME));
         } else {
             if (!newMast.equals(currentMast)) {
-                msg = Bundle.getMessage("differentSignals", mastName, portal.getDisplayName(DisplayOptions.DISPLAYNAME),
+                msg = Bundle.getMessage("differentSignals", mastName, portal.getName(),
                         newMast.getDisplayName(DisplayOptions.DISPLAYNAME));
             } else if (!name.equals(mastName)) {
                 msg = Bundle.getMessage("differentName", mastName, name);

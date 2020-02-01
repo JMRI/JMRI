@@ -9,6 +9,10 @@ package jmri.jmrit.operations.trains;
  */
 public class Xml {
 
+    private Xml(){
+        //class of constants
+    }
+
     // Common to operation xml files
     static final String ID = "id"; // NOI18N
     static final String NAME = "name"; // NOI18N
@@ -191,7 +195,9 @@ public class Xml {
     static final String TYPE = "type"; // NOI18N
     static final String MODEL = "model"; // NOI18N
     static final String LENGTH = "length"; // NOI18N
+    static final String WEIGHT = "weight"; // NOI18N
     static final String LOAD = "load"; // NOI18N
+    static final String LOAD_TYPE = "load_type"; // NOI18N
     static final String COLOR = "color"; // NOI18N
     static final String TRACK = "track"; // NOI18N
     //static final String DESTINATION = "destination"; // NOI18N

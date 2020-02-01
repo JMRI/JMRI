@@ -16,9 +16,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>The Section Table</h1>
       <p>Before we dive into the workings of the Section Table, lets
       provide some background on Sections and how they are used with

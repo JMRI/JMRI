@@ -22,7 +22,7 @@
   Provides build services for JMRI web pages
   </description>
 
-  <property name="jmri.copyright.year" value="1997-2019"/>
+  <property name="jmri.copyright.year" value="1997-2020"/>
 
   <!-- set global properties for this build -->
   <property name="xml" value=".."/>

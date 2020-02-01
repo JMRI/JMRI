@@ -21,11 +21,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
+
       <h1><a name="Top" id="Top">JMRI&reg; DecoderPro&reg;
       Manual</a></h1>
 

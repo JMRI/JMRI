@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-
 <html lang="en">
 <head>
   <meta name="generator" content=
@@ -22,15 +21,17 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
-</head><!--#include virtual="/Header.shtml" -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
+</head>
 
 <body>
-  <div id="mBody">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-
     <div id="mainContent">
-      <h1>JMRI Code: CVS FAQ</h1>
+
+    <h1>JMRI Code: CVS FAQ</h1>
       <p>This is a list of Frequently Asked Questions for CVS,
       particularly regarding how we use it with JMRI.</p>
 
@@ -98,13 +99,6 @@ cvs -d:pserver:anonymous@jmri.cvs.sourceforge.net:/cvsroot/jmri -q co -rRelease-
 release. You can adjust that as needed. If you already have a
 release checked out and want to update it to a specific release,
 change the "co" command to "update -d"
-
-      <h3><a name="refid" id="refid">What are those lines like
-      <i>$Revision$</i> and <i>$Id$</i>?</a></h3>Those are
-      automatically updated by CVS every time a new version of the
-      file is checked-in to the repository. Please don't edit
-      them!!! If you contribute your changes to the project, those
-      line have to be intact in the contributed file.
 
       <h3><a name="update1" id="update1">How do I update an existing
       copy of the source to the current version?</a></h3>As the

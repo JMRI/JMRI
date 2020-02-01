@@ -3,7 +3,6 @@
 <!-- Translated by Herv&#233; BLOREC <bzh56420@yahoo.fr>in 2017-01-11 -->
 <head>
 <title>JMRI Hardware Support - XBee Node Configuration Tool</title>
-
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
@@ -15,13 +14,15 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
-  <div id="mainContent">
+<div id="mBody">
+	<!--#include virtual="Sidebar" -->
+	<div id="mainContent">
+        <!-- Page Body -->
 
 <h1>Structure Mat&#233;rielle: Outil de Configuration de N&#339;ud XBee</h1>
 
 <a name="tools"></a><h2>Outils JMRI</h2>
+
 <h4>Configuration de N&#339;ud XBee</h4>
 <p>
 L'outil de Configuration de N&#339;ud XBee peut &#234;tre utilis&#233; pour ajouter des n&#339;ud XBee &#224; la configuration JMRI.<br>

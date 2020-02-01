@@ -23,7 +23,13 @@
         <date>2017-03-16</date>
         <authorinitials>GPM</authorinitials>
         <revremark>Original Edition</revremark>
-    </revision>    
+    </revision>
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2019-12-30</date>
+        <authorinitials>BM</authorinitials>
+        <revremark>Correct specificaspects 'danger' and 'held'; remove mast's unsupported aspects from aspecttable.</revremark>
+    </revision>
   </revhistory>
   
   <aspecttable>SOU 1981</aspecttable>
@@ -80,7 +86,7 @@
    <specificappearances>
    
     <danger>
-      <aspect>Stop</aspect>
+      <aspect>Restricted Proceed</aspect>
     </danger>
 	
 	<permissive>
@@ -88,7 +94,7 @@
 	</permissive>
 	
     <held>
-      <aspect>Stop</aspect>
+      <aspect>Restricted Proceed</aspect>
     </held>
 	
   </specificappearances>
@@ -98,103 +104,78 @@
 	<aspectMapping>
 	  <advancedAspect>Clear</advancedAspect>
 	  <ourAspect>Clear</ourAspect>
-	  <ourAspect>Diverging Route Clear (Medium)</ourAspect>
-	  <ourAspect>Diverging Route Clear (Slow)</ourAspect>
 	  <ourAspect>Restricted Proceed</ourAspect>
 	</aspectMapping>
 	
 	<aspectMapping>
 	  <advancedAspect>Approach Diverging</advancedAspect>
 	  <ourAspect>Clear</ourAspect>
-	  <ourAspect>Diverging Route Clear (Medium)</ourAspect>
-	  <ourAspect>Diverging Route Clear (Slow)</ourAspect>
 	  <ourAspect>Restricted Proceed</ourAspect>
 	</aspectMapping>
 	
 	<aspectMapping>
 	  <advancedAspect>Advance Approach</advancedAspect>
 	  <ourAspect>Clear</ourAspect>
-	  <ourAspect>Diverging Route Clear (Medium)</ourAspect>
-	  <ourAspect>Diverging Route Clear (Slow)</ourAspect>
 	  <ourAspect>Restricted Proceed</ourAspect>
 	</aspectMapping>
 	
 	<aspectMapping>
 	  <advancedAspect>Diverging Route Clear (Medium)</advancedAspect>
 	  <ourAspect>Approach Diverging</ourAspect>
-	  <ourAspect>Diverging Route Clear (Medium)</ourAspect>
-	  <ourAspect>Diverging Route Clear (Slow)</ourAspect>
 	  <ourAspect>Restricted Proceed</ourAspect>
 	</aspectMapping>
 	
 	<aspectMapping>
 	  <advancedAspect>Diverging Route Clear (Slow)</advancedAspect>
 	  <ourAspect>Approach Slow</ourAspect>
-	  <ourAspect>Diverging Route Approach Slow (Medium)</ourAspect>
-	  <ourAspect>Diverging Route Approach Slow (Slow)</ourAspect>
 	  <ourAspect>Restricted Proceed</ourAspect>
 	</aspectMapping>
 	
 	<aspectMapping>
 	  <advancedAspect>Approach Slow</advancedAspect>
 	  <ourAspect>Clear</ourAspect>
-	  <ourAspect>Diverging Route Clear (Medium)</ourAspect>
-	  <ourAspect>Diverging Route Clear (Slow)</ourAspect>
 	  <ourAspect>Restricted Proceed</ourAspect>
 	</aspectMapping>
 	
 	<aspectMapping>
 	  <advancedAspect>Diverging Route Approach Slow (Medium)</advancedAspect>
 	  <ourAspect>Approach Diverging</ourAspect>
-	  <ourAspect>Diverging Route Clear (Medium)</ourAspect>
-	  <ourAspect>Diverging Route Clear (Slow)</ourAspect>
 	  <ourAspect>Restricted Proceed</ourAspect>
 	</aspectMapping>
 	
 	<aspectMapping>
 	  <advancedAspect>Diverging Route Approach Slow (Slow)</advancedAspect>
 	  <ourAspect>Approach Diverging</ourAspect>
-	  <ourAspect>Diverging Route Clear (Medium)</ourAspect>
-	  <ourAspect>Diverging Route Clear (Slow)</ourAspect>
 	  <ourAspect>Restricted Proceed</ourAspect>
 	</aspectMapping>
 	
 	<aspectMapping>
 	  <advancedAspect>Approach</advancedAspect>
 	  <ourAspect>Advance Approach</ourAspect>
-	  <ourAspect>Diverging Route Clear (Medium)</ourAspect>
-	  <ourAspect>Diverging Route Clear (Slow)</ourAspect>
 	  <ourAspect>Restricted Proceed</ourAspect>
 	</aspectMapping>
 	
 	<aspectMapping>
 	  <advancedAspect>Diverging Route Approach (Medium)</advancedAspect>
 	  <ourAspect>Approach Diverging</ourAspect>
-	  <ourAspect>Diverging Route Clear (Medium)</ourAspect>
-	  <ourAspect>Diverging Route Clear (Slow)</ourAspect>
 	  <ourAspect>Restricted Proceed</ourAspect>
 	</aspectMapping>
 	
 	<aspectMapping>
 	  <advancedAspect>Diverging Route Approach (Slow)</advancedAspect>
 	  <ourAspect>Approach Diverging</ourAspect>
-	  <ourAspect>Diverging Route Clear (Medium)</ourAspect>
-	  <ourAspect>Diverging Route Clear (Slow)</ourAspect>
 	  <ourAspect>Restricted Proceed</ourAspect>
 	</aspectMapping>
 	
 	<aspectMapping>
 	  <advancedAspect>Restricted Proceed</advancedAspect>
 	  <ourAspect>Approach</ourAspect>
-	  <ourAspect>Diverging Route Approach</ourAspect>
 	  <ourAspect>Restricted Proceed</ourAspect>
 	</aspectMapping>
 	
 	<aspectMapping>
 	  <advancedAspect>Stop</advancedAspect>
 	  <ourAspect>Approach</ourAspect>
-	  <ourAspect>Diverging Route Approach (Medium)</ourAspect>
-	  <ourAspect>Diverging Route Approach (Slow)</ourAspect>
 	  <ourAspect>Restricted Proceed</ourAspect>
 	</aspectMapping>	
 	

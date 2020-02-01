@@ -43,8 +43,14 @@ public class TestClassMainMethod {
                 run(cl);
             }
         } catch (ClassNotFoundException e) {
-            // log error
-            System.err.println("Unable to locate class " + className);
+            // try for a PackageTest
+            try {
+                run(Class.forName(className+".PackageTest"));
+            } catch (ClassNotFoundException ex) {
+                System.err.println("Did not find class "+className);
+            } catch (Exception ex) {
+                System.err.println(ex);
+            }
         }
     }
 

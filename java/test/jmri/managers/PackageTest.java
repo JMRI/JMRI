@@ -5,7 +5,6 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    AbstractManagerTest.class,
     DefaultConditionalManagerTest.class,
     DefaultIdTagManagerTest.class,
     DefaultLogixManagerTest.class,

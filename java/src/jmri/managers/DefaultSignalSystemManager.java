@@ -266,5 +266,13 @@ public class DefaultSignalSystemManager extends AbstractManager<SignalSystem>
         return Bundle.getMessage(plural ? "BeanNameSignalSystems" : "BeanNameSignalSystem");
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<SignalSystem> getNamedBeanClass() {
+        return SignalSystem.class;
+    }
+
     private final static Logger log = LoggerFactory.getLogger(DefaultSignalSystemManager.class);
 }

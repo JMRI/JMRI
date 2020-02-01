@@ -80,8 +80,8 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
     }
 
     /**
-     * Attach a SignalHead element to this display item by name.
-     * Taken from the Layout Editor.
+     * Attach a SignalHead element to this display item by name. Taken from the
+     * Layout Editor.
      *
      * @param pName Used as a system/user name to lookup the SignalHead object
      */
@@ -125,8 +125,8 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
     }
 
     /**
-     * Check that device supports the state.
-     * Valid state names returned by the bean are (non-localized) property key names.
+     * Check that device supports the state. Valid state names returned by the
+     * bean are (non-localized) property key names.
      */
     private boolean isValidState(String key) {
         if (key == null) {
@@ -168,7 +168,8 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
     }
 
     @Override
-    public @Nonnull String getNameString() {
+    public @Nonnull
+    String getNameString() {
         if (namedHead == null) {
             return Bundle.getMessage("NotConnected");
         }
@@ -296,7 +297,8 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
     }
 
     /**
-     * ************* popup AbstractAction.actionPerformed method overrides ***********
+     * ************* popup AbstractAction.actionPerformed method overrides
+     * ***********
      */
     @Override
     protected void rotateOrthogonal() {
@@ -480,13 +482,15 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
 
     void updateSignal() {
         _saveMap = _iconMap;  // setSignalHead() clears _iconMap. We need a copy for setIcons()
-        setSignalHead(_iconEditor.getTableSelection().getDisplayName());
-        setIcons(_iconEditor.getIconMap());
+        if (_iconEditor != null) {
+            setSignalHead(_iconEditor.getTableSelection().getDisplayName());
+            setIcons(_iconEditor.getIconMap());
+            _iconEditorFrame.dispose();
+            _iconEditorFrame = null;
+            _iconEditor = null;
+            invalidate();
+        }
         displayState(headState());
-        _iconEditorFrame.dispose();
-        _iconEditorFrame = null;
-        _iconEditor = null;
-        invalidate();
     }
 
     /**
@@ -526,7 +530,6 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
      * Change the SignalHead state when the icon is clicked. Note that this
      * change may not be permanent if there is logic controlling the signal
      * head.
-     *
      */
     @Override
     public void doMouseClicked(java.awt.event.MouseEvent e) {

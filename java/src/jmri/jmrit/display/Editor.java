@@ -34,9 +34,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
@@ -2656,20 +2654,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 Bundle.getMessage("ButtonCancel"));
         // return without deleting if "No" response
         return (selectedValue == JOptionPane.YES_OPTION);
-    }
-
-    /**
-     * Dispose of the editor.
-     *
-     * @param clear true to discard Positionables; false to retain Positionables
-     *              for future use
-     * @deprecated since 4.11.5. use {@link #dispose()} instead.
-     */
-    @Deprecated // 4.11.5
-    public void dispose(boolean clear) {
-        log.debug("Editor delete and dispose done. clear= {}", clear);
-        jmri.util.Log4JUtil.deprecationWarning(log, "dispose(boolean )");        
-        dispose();
     }
 
     /**

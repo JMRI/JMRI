@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 import jmri.InstanceInitializer;
-import jmri.InstanceManager;
 import jmri.implementation.AbstractInstanceInitializer;
 import jmri.jmrit.XmlFile;
 import org.jdom2.Element;
@@ -110,7 +109,7 @@ public class NameFile extends XmlFile {
     public static class Initializer extends AbstractInstanceInitializer {
 
         @Override
-        public <T> Object getDefault(Class<T> type) throws IllegalArgumentException {
+        public <T> Object getDefault(Class<T> type) {
             if (type.equals(NameFile.class)) {
                 if (log.isDebugEnabled()) {
                     log.debug("NameFile creating instance");

@@ -1,7 +1,6 @@
 package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
-import javax.swing.JComponent;
 import jmri.NamedBeanHandle;
 import jmri.Turnout;
 import jmri.jmrit.catalog.NamedIcon;
@@ -150,6 +149,7 @@ public class TurnoutIconWindowTest {
     
     @After
     public void tearDown() throws Exception {
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
 }

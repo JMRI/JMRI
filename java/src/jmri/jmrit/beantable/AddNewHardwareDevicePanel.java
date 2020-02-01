@@ -28,7 +28,7 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
 
     /**
      * Create the panel.
-     * 
+     *
      * @param sysAddress text field for the system name or address
      * @param sysAddressValidator validation control for sysAddress
      * @param userName text field for the optional user name
@@ -37,7 +37,7 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
      * @param addRange check box to allow creation of multiple NamedBeans
      * @param addButton button to trigger creation of NamedBean
      * @param cancelListener listener to attach to the cancel button
-     * @param rangeListener listener that controls if addRange is enabled 
+     * @param rangeListener listener that controls if addRange is enabled
      * @param statusBar area where status messages can be presented
      */
     public AddNewHardwareDevicePanel(@Nonnull JTextField sysAddress,
@@ -129,6 +129,7 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
         prefixBox.addActionListener((evt) -> {
             Manager<?> manager = prefixBox.getSelectedItem();
             if (manager != null) {
+                sysAddress.setText("");     // Reset saved text before switching managers
                 sysAddressValidator.setManager(manager);
             }
         });

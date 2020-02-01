@@ -16,9 +16,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>The Block Table</h1>
 
       <p>Blocks may be set up manually in the Block Table, using a

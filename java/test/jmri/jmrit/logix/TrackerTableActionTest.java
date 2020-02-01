@@ -3,13 +3,10 @@ package jmri.jmrit.logix;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.Sensor;
-import jmri.jmrit.display.EditorScaffold;
-import jmri.jmrit.display.LocoIcon;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.JUnitUtil;
 
 import java.awt.GraphicsEnvironment;
-import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.List;
 
@@ -41,11 +38,18 @@ public class TrackerTableActionTest {
     @Test
     public void testTracking1() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
+
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/IndicatorDemoTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
+        ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("Indicator Demo 1 Editor");
+        panel.setVisible(false);
+
         TrackerTableAction tta = jmri.InstanceManager.getDefault(TrackerTableAction.class);
         Assert.assertNotNull("TrackerTableAction not found", tta);
+
         OBlock Middle = _OBlockMgr.getByUserName("Middle");
         Sensor sMiddle = Middle.getSensor();
         Assert.assertNotNull("Senor sMiddle not found", sMiddle);
@@ -83,18 +87,24 @@ public class TrackerTableActionTest {
         Assert.assertEquals("Tkr1 1 Blocks Occupied", 1, occupied.size());
 
         tta.stopTracker(Tkr1, East);
-        ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("Indicator Demo 0 Editor");
         panel.dispose();
     }
 
     @Test
     public void testTrackingDark() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
+
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/IndicatorDemoTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
+        ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("Indicator Demo 1 Editor");
+        panel.setVisible(false);
+
         TrackerTableAction tta = jmri.InstanceManager.getDefault(TrackerTableAction.class);
         Assert.assertNotNull("TrackerTableAction not found", tta);
+
         OBlock Main = _OBlockMgr.getByUserName("Main");
         Sensor sMain = Main.getSensor();
         Assert.assertNotNull("Senor sMain found", sMain);
@@ -117,18 +127,24 @@ public class TrackerTableActionTest {
         Assert.assertEquals("TkrD 1 Blocks Occupied", 1, occupied.size());
 
         tta.stopTracker(TkrD, FarWest);
-        ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("Indicator Demo 0 Editor");
         panel.dispose();
     }
 
     @Test
     public void testMultipleTrackers() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
+
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/IndicatorDemoTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
+        ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("Indicator Demo 1 Editor");
+        panel.setVisible(false);
+
         TrackerTableAction tta = jmri.InstanceManager.getDefault(TrackerTableAction.class);
         Assert.assertNotNull("TrackerTableAction not found", tta);
+
         OBlock West = _OBlockMgr.getByUserName("West");
         Sensor sWest = West.getSensor();
         Assert.assertNotNull("Senor sWest found", sWest);
@@ -166,7 +182,6 @@ public class TrackerTableActionTest {
         occupied = TkrW.getBlocksOccupied();
         Assert.assertEquals("TkrW Blocks Occupied", 2, occupied.size());
 
-        ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("Indicator Demo 0 Editor");
         panel.dispose();
     }
 
@@ -177,11 +192,15 @@ public class TrackerTableActionTest {
         jmri.util.JUnitUtil.resetInstanceManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initOBlockManager();
+        JUnitUtil.initDebugThrottleManager();
         _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
     }
 
     @After
     public void tearDown() {
+        _OBlockMgr.dispose();
+        _OBlockMgr = null;
+        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
         JUnitUtil.tearDown();
     }
 

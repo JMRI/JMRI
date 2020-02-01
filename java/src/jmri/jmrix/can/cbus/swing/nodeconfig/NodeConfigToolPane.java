@@ -1,44 +1,16 @@
 package jmri.jmrix.can.cbus.swing.nodeconfig;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionListener;
-import java.awt.GridLayout;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.JFormattedTextField;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
-import javax.swing.JSpinner;
-import javax.swing.JSplitPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTable;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
+import javax.swing.*;
+import javax.swing.event.*;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusAddress;
@@ -64,26 +36,22 @@ import org.slf4j.LoggerFactory;
 public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
 
     private CanSystemConnectionMemo _memo;
-    public CbusNodeTableDataModel nodeModel=null;
-    public JTable nodeTable=null;
+    public CbusNodeTableDataModel nodeModel;
+    public JTable nodeTable;
     private CbusPreferences preferences;
     
-    protected CbusNodeTablePane nodeTablePane = null;
-    public CbusNodeEventVarPane nodeEventPane=null;
-    private CbusNodeInfoPane nodeinfoPane = null;
-    private CbusNodeUserCommentsPane commentsPane = null;
-    private CbusNodeEditNVarPane nodevarPane = null;
+    protected CbusNodeTablePane nodeTablePane;
+    public CbusNodeEventVarPane nodeEventPane;
+    private CbusNodeInfoPane nodeinfoPane;
+    private CbusNodeUserCommentsPane commentsPane;
+    private CbusNodeEditNVarPane nodevarPane;
     private CbusNodeSetupPane setupPane;
     private CbusNodeRestoreFcuFrame fcuFrame;
     private CbusNodeEditEventFrame _editEventFrame;
-    private CbusNodeBackupsPane _backupPane = null;
+    private CbusNodeBackupsPane _backupPane;
     
-    public JScrollPane eventScroll;
-    public JScrollPane tabbedScroll;
-    public JSplitPane split;
-    protected JPanel pane1;
-    // protected JPanel toppanelcontainer;
-    // protected JPanel buttoncontainer = new JPanel();
+    private JScrollPane eventScroll;
+    private JSplitPane split;
     private JTabbedPane tabbedPane;
     
     private int _selectedNode;
@@ -146,8 +114,8 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
        
         // main pane
-        JPanel pane1 = new JPanel();
-        pane1.setLayout(new BorderLayout());
+        JPanel _pane1 = new JPanel();
+        _pane1.setLayout(new BorderLayout());
         
         // basis for future menu-bar if one required
         
@@ -211,22 +179,19 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
         split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, mainNodePane, tabbedPane);
         split.setDividerLocation(100); // px from top of node table pane
         split.setContinuousLayout(true);
-        pane1.add(split, BorderLayout.CENTER);
+        _pane1.add(split, BorderLayout.CENTER);
         
-        add(pane1);
-        pane1.setVisible(true);
+        add(_pane1);
+        _pane1.setVisible(true);
         
         tabbedPane.addChangeListener((ChangeEvent e) -> {
             userViewChanged();
         });
         
         // also add listener to tab action
-        nodeTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                if ( !e.getValueIsAdjusting() ) {
-                    userViewChanged();
-                }
+        nodeTable.getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
+            if ( !e.getValueIsAdjusting() ) {
+                userViewChanged();
             }
         });
         
@@ -240,7 +205,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
     private boolean showingCommentDialogue=false;
     private boolean showingNvsChangedDialogue = false;
     
-    private JFrame topFrame = (JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
+    private final JFrame topFrame = (JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
     
     /**
      * Create a non-modal dialogue box with node search results
@@ -390,14 +355,18 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
         backgroundSlow.setSelected(false);
         backgroundFast.setSelected(false);
         
-        if ( preferences.getNodeBackgroundFetchDelay()==0L ) {
-            backgroundDisabled.setSelected(true);
-        }
-        else if ( preferences.getNodeBackgroundFetchDelay()==50L ) {
-            backgroundFast.setSelected(true);
-        }
-        else if ( preferences.getNodeBackgroundFetchDelay()==100L ) {
-            backgroundSlow.setSelected(true);
+        switch ((int) preferences.getNodeBackgroundFetchDelay()) {
+            case 0:
+                backgroundDisabled.setSelected(true);
+                break;
+            case 50:
+                backgroundFast.setSelected(true);
+                break;
+            case 100:
+                backgroundSlow.setSelected(true);
+                break;
+            default:
+                break;
         }
         
         addCommandStationMenuItem.setSelected( preferences.getAddCommandStations() );
@@ -412,17 +381,21 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
         tenBackups.setSelected(false);
         twentyBackups.setSelected(false);
         
-        if ( preferences.getMinimumNumBackupsToKeep()==0 ) {
-            zeroBackups.setSelected(true);
-        }
-        else if ( preferences.getMinimumNumBackupsToKeep()==5 ) {
-            fiveBackups.setSelected(true);
-        }
-        else if ( preferences.getMinimumNumBackupsToKeep()==10 ) {
-            tenBackups.setSelected(true);
-        }
-        else if ( preferences.getMinimumNumBackupsToKeep()==20 ) {
-            twentyBackups.setSelected(true);
+        switch (preferences.getMinimumNumBackupsToKeep()) {
+            case 0:
+                zeroBackups.setSelected(true);
+                break;
+            case 5:
+                fiveBackups.setSelected(true);
+                break;
+            case 10:
+                tenBackups.setSelected(true);
+                break;
+            case 20:
+                twentyBackups.setSelected(true);
+                break;
+            default:
+                break;
         }
         
     }
@@ -433,7 +406,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
      */
     @Override
     public List<JMenu> getMenus() {
-        List<JMenu> menuList = new ArrayList<JMenu>();
+        List<JMenu> menuList = new ArrayList<>();
         
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
         
@@ -631,10 +604,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
      */
     @Override
     public String getTitle() {
-        if (memo != null) {
-            return (memo.getUserName() + " " + Bundle.getMessage("MenuItemNodeConfig"));
-        }
-        return Bundle.getMessage("MenuItemNodeConfig");
+        return prependConnToString(Bundle.getMessage("MenuItemNodeConfig"));
     }
     
     /**
@@ -689,11 +659,10 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
                 String eventInJmriFormat;
                 try {
                     eventInJmriFormat = (String) t.getTransferData(DataFlavor.stringFlavor);
-                } catch (Exception e) {
-                    log.error("unable to get dragged address", e);
+                } catch (UnsupportedFlavorException | IOException e) {
+                    log.error("unable to get dragged address {}", e);
                     return false;
                 }
-                
                 return openNewOrEditEventFrame(eventInJmriFormat);
             }
             return false;
@@ -717,6 +686,16 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
             return false;
         }
         
+        if (nodeModel==null){
+            log.warn("No Node Model");
+            return false;
+        }
+        CbusNode _node = nodeModel.getNodeByNodeNum( _selectedNode );
+        if (_node==null){
+            log.warn("No Node");
+            return false;
+        }
+        
         CanMessage m = ( new CbusAddress(validatedAddr) ).makeMessage(0x12);
         
         CbusNodeEvent newev = new CbusNodeEvent(
@@ -724,7 +703,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
             CbusMessage.getEvent(m), 
             _selectedNode, 
             -1, 
-            nodeModel.getNodeByNodeNum( _selectedNode ).getParameter(5)
+            _node.getParameter(5)
             );
         java.util.Arrays.fill(newev._evVarArr,0);
         
@@ -741,6 +720,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
      * CbusNodeEventDataModel button click to edit event,
      * this class when it receives an event via drag n drop,
      * creating new event from CbusNodeEventVarPane
+     * @return the Frame
      */
     public CbusNodeEditEventFrame getEditEvFrame(){
         if (_editEventFrame == null ){
@@ -785,7 +765,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
             frame = topFrame;
         }
         
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         buf.append("<html> ");
         buf.append( ("Please Confirm Write ") );
         buf.append( ("to <br>") );
@@ -797,13 +777,13 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
             // Bundle.getMessage("NVConfirmWrite",nodeName)
             buf.append("Teaching ");
             buf.append(_toNode.getNvDifference(_fromNode));
-            buf.append(" of " + _fromNode.getTotalNVs() + " NV's<br>");
-        }       
+            buf.append(" of ").append(_fromNode.getTotalNVs()).append(" NV's<br>");
+        }
         if ( _clearEvents ){
-            buf.append("Clearing " + Math.max( 0,_toNode.getTotalNodeEvents() ) + " Events<br>");
+            buf.append("Clearing ").append(Math.max( 0,_toNode.getTotalNodeEvents() )).append(" Events<br>");
         } 
         if ( _teachEvents ){
-            buf.append("Teaching " + Math.max( 0,_fromNode.getTotalNodeEvents() ) + " Events<br>");
+            buf.append("Teaching ").append(Math.max( 0,_fromNode.getTotalNodeEvents() )).append(" Events<br>");
         }         
         buf.append("</html>");
         
@@ -812,9 +792,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
                 ( ("Please Confirm Write to Node")),
                 JOptionPane.OK_CANCEL_OPTION,
                 JOptionPane.QUESTION_MESSAGE);
-        if ( response != JOptionPane.OK_OPTION ) {
-            return;
-        } else {
+        if ( response == JOptionPane.OK_OPTION ) {
             busy_dialog = new jmri.util.swing.BusyDialog(frame, "Write NVs "+_fromNode.toString(), false);
             busy_dialog.start();
             // update main node name from fcu name
@@ -894,6 +872,10 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
             Bundle.getMessage("NdEvVarWriteError"), Bundle.getMessage("WarningTitle"),
             JOptionPane.ERROR_MESSAGE);
         }
+    }
+    
+    protected CbusNodeTableDataModel getNodeModel(){
+        return nodeModel;
     }
     
     /**

@@ -1,13 +1,12 @@
 package jmri.jmrit.operations.trains;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -21,8 +20,6 @@ import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.FileUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Builds a train's manifest using Comma Separated Values (csv).
@@ -63,7 +60,7 @@ public class TrainCsvManifest extends TrainCsvCommon {
         if (!train.getManifestLogoPathName().equals(Train.NONE)) {
             logoURL = FileUtil.getExternalFilename(train.getManifestLogoPathName());
         }
-        if (!logoURL.equals("")) {
+        if (!logoURL.isEmpty()) {
             addLine(fileOut, LOGO + logoURL);
         }
         addLine(fileOut, VT + getDate(true));

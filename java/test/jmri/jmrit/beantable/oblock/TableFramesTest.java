@@ -5,7 +5,6 @@ import java.awt.*;
 import jmri.Block;
 import jmri.InstanceManager;
 import jmri.Path;
-import jmri.Sensor;
 import jmri.implementation.AbstractSensor;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.util.JUnitUtil;
@@ -14,11 +13,6 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import org.netbeans.jemmy.operators.JButtonOperator;
-import org.netbeans.jemmy.operators.JDialogOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
-
-import javax.swing.*;
 
 /**
  *
@@ -72,7 +66,9 @@ public class TableFramesTest {
         //Assert.assertNotNull("Import complete dialog", pane);
         //new JButtonOperator(new JFrameOperator((JFrame) pane), Bundle.getMessage("ButtonOK")).doClick();
         // check import result
+
         Assert.assertNotNull("Imported OBlock", InstanceManager.getDefault(OBlockManager.class).getOBlock("OB0001"));
+        jmri.util.JUnitAppender.assertWarnMessage("Portal IP0001-0002 needs an OBlock on each side");
     }
 
     // The minimal setup for log4J

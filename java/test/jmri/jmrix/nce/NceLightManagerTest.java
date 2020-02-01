@@ -25,6 +25,7 @@ public class NceLightManagerTest {
     public void setUp() {
         JUnitUtil.setUp();
         tcis = new NceTrafficControlScaffold();
+        tcis.setAdapterMemo(new NceSystemConnectionMemo());
     }
 
     @After

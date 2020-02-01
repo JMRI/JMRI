@@ -273,7 +273,7 @@ public class BlockEditAction extends BeanEditAction<Block> {
         sensorComboBox.setAllowNull(true);
         basic.addItem(new BeanEditItem(sensorComboBox, Bundle.getMessage("BeanNameSensor"), Bundle.getMessage("BlockAssignSensorText")));
 
-      final SensorDebounceEditAction debounce = new SensorDebounceEditAction();
+        final SensorDebounceEditAction debounce = new SensorDebounceEditAction();
         //debounce.setBean(bean);
         debounce.sensorDebounce(basic);
 

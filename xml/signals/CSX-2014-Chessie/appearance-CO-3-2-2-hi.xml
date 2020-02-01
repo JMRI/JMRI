@@ -22,6 +22,12 @@
       <authorinitials>ST</authorinitials>
       <revremark>Initial Version</revremark>
     </revision>
+    <revision>
+        <revnumber>1.1</revnumber>
+        <date>2019-12-30</date>
+        <authorinitials>BM</authorinitials>
+        <revremark>Remove ourAspect values which cannot be displayed by this mast type</revremark>
+     </revision>    
   </revhistory>
   <aspecttable>CSX-2014-Chessie</aspecttable>
   <name>Triple head 3-2-2 slow/fast junction color light high signal</name>
@@ -184,7 +190,6 @@
     <aspectMapping>
       <advancedAspect>Approach</advancedAspect>
       <ourAspect>Clear</ourAspect>
-      <ourAspect>Limited Approach</ourAspect>
       <ourAspect>Medium Approach Medium</ourAspect>
       <ourAspect>Slow Clear</ourAspect>
       <ourAspect>Restricting</ourAspect>

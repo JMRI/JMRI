@@ -5,33 +5,25 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        OperationsRoutesTest.class,
         BundleTest.class,
         OperationsRoutesGuiTest.class,
-        RouteCopyFrameTest.class,
+        OperationsRoutesTest.class,
         RouteEditFrameTest.class,
         RouteEditTableModelTest.class,
+        RouteLocationTest.class,
         RouteManagerTest.class,
         RouteManagerXmlTest.class,
         RoutesTableActionTest.class,
         RoutesTableFrameTest.class,
         RoutesTableModelTest.class,
-        SetTrainIconPositionFrameTest.class,
-        XmlTest.class,
-        RouteCopyActionTest.class,
-        SetTrainIconPositionActionTest.class,
-        RouteLocationTest.class,
         RouteTest.class,
-        SetTrainIconRouteActionTest.class,
-        SetTrainIconRouteFrameTest.class,
-        PrintRoutesActionTest.class,
-        PrintRouteActionTest.class,
+        jmri.jmrit.operations.routes.tools.PackageTest.class,
 })
 
 /**
  * Tests for the jmrit.operations.routes package
  *
- * @author	Bob Coleman
+ * @author Bob Coleman
  */
-public class PackageTest  {
+public class PackageTest {
 }

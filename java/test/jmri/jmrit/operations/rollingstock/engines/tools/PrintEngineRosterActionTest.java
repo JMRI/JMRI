@@ -2,6 +2,11 @@ package jmri.jmrit.operations.rollingstock.engines.tools;
 
 import java.awt.GraphicsEnvironment;
 import java.util.ResourceBundle;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Test;
+
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.rollingstock.engines.EnginesTableFrame;
 import jmri.jmrit.operations.rollingstock.engines.tools.PrintEngineRosterAction.EnginePrintOptionFrame;
@@ -9,10 +14,6 @@ import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JemmyUtil;
-
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
 
 /**
  *
@@ -27,6 +28,8 @@ public class PrintEngineRosterActionTest extends OperationsTestCase {
         PrintEngineRosterAction t = new PrintEngineRosterAction("Test Action", true, etf);
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(etf);
+        
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     @Test
@@ -53,6 +56,8 @@ public class PrintEngineRosterActionTest extends OperationsTestCase {
 
         JUnitUtil.dispose(printPreviewFrame);
         JUnitUtil.dispose(ctf);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+        JUnitOperationsUtil.checkIdTagsShutDownTask();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(PrintEngineRosterActionTest.class);

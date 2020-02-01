@@ -25,6 +25,19 @@
             and controlling operation.
 
         <p>
+            For background on JInput, see their
+            <a href="https://static.javadoc.io/net.java.jinput/jinput/2.0.7/net/java/games/input/package-summary.html">Javadoc page</a>.
+            Note that are environment variables that control how 
+            plugins are found.  
+            Pre-2019 versions of JMRI routinely defined
+            <br>
+            <code>jinput.plugins=net.bobis.jinput.hidraw.HidRawEnvironmentPlugin</code>
+            <br>
+            to load a 32-bit only library needed for some early hardware. 
+            Due to how JInput handles errors, this was very verbose when
+            run in CI where the servers weren't compatible with the shipped library,
+            so that definition has been partially removed.
+        <p>
 
             @since 2.1.5
 

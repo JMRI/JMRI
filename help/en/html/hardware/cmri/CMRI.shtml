@@ -20,10 +20,23 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+  <div id="mBody">
+  <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
+
       <h1>Hardware Support: Chubb C/MRI</h1><a name="contents" id="contents"></a>
+      
+        <ul class="snav"> <!-- Pull out links to items on PanelPro CMRI Menu --> 
+          <li><a href="#L268">Configure Nodes</a></li>
+          <li><a href="#L568">Network Manager</a></li>
+          <li><a href="#L597">Metrics</a></li>
+          <li><a href="#L580">Monitor</a></li>
+          <li><a href="#L609">List I/O Bit Assignments</a></li>
+          <li><a href="#L624">Run Diagnostic</a></li>
+	</ul>
+      
+      <h2>Using JMRI with C/MRI</h2>
+      
 
   <p>This documentation discusses how JMRI may be used with C/MRI, and how
   to get started with connecting a C/MRI system to JMRI. It assumes a basic

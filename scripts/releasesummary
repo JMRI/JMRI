@@ -69,7 +69,7 @@ echo
 echo "Github note body:"
 echo '----------------------------------------------------------------------------------'
 echo
-echo "[Release notes](http://jmri.org/releasenotes/jmri${1}.shtml)"
+echo "[Release notes](https://jmri.org/releasenotes/jmri${1}.shtml)"
 echo
 echo 'Checksums:'
 echo

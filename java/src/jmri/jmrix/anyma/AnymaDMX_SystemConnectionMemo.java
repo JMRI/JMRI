@@ -1,12 +1,15 @@
 package jmri.jmrix.anyma;
 
+import java.util.Comparator;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.Light;
 import jmri.LightManager;
+import jmri.NamedBean;
 import jmri.Manager.NameValidity;
 import jmri.jmrix.SystemConnectionMemo;
+import jmri.util.NamedBeanComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -173,7 +176,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
      *
      * @return enum indicating current validity, which might be just as a prefix
      */
-    public NameValidity validSystemNameFormat(String systemName, char type) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName, char type) {
         log.debug("* validSystemNameFormat('{}', '{}')", systemName, type);
         NameValidity result = NameValidity.INVALID; // assume failure (pessimist!)
 
@@ -322,9 +325,14 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
         log.debug("* getActionModelResourceBundle()");
-        return null; //ResourceBundle.getBundle("jmri.jmrix.anyma.AnymaDMX_Bundle");
+        return null;
     }
 
+    @Override
+    public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
+        return new NamedBeanComparator<>();
+    }
+    
     /**
      * dispose
      */

@@ -1,6 +1,7 @@
 package jmri.jmrix.roco.z21;
 
 import java.util.Locale;
+import javax.annotation.Nonnull;
 import jmri.Manager;
 import jmri.Manager.NameValidity;
 import jmri.NamedBean;
@@ -144,7 +145,7 @@ public class Z21CanBusAddress {
      *
      * @return VALID if system name has a valid format, else return INVALID
      */
-    public static NameValidity validSystemNameFormat(String systemName, char type, String prefix) {
+    public static NameValidity validSystemNameFormat(@Nonnull String systemName, char type, String prefix) {
         // validate the system Name leader characters
         if (!(systemName.startsWith(prefix + type))) {
             // here if an illegal format 

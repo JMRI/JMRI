@@ -21,9 +21,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+  <div id="mBody">
+    <!--#include virtual="../SidebarUp.shtml" -->
     <div id="mainContent">
+
     <p>The DCC4PC hardware is a combined block occupancy detector and RailComm reader built into one. 
     each board allows for up to 16 blocks to be detected with RailComm feedback on each.
     <p>To get the full potential of RailCom this must be used with a system that generates a RailComm cutout in 

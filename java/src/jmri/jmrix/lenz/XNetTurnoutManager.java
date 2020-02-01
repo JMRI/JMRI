@@ -1,6 +1,7 @@
 package jmri.jmrix.lenz;
 
 import java.util.Locale;
+import javax.annotation.Nonnull;
 import jmri.Turnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +31,7 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public XNetSystemConnectionMemo getMemo() {
         return (XNetSystemConnectionMemo) memo;
     }
@@ -44,7 +46,7 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
      * @return null if the system name is not in a valid format
      */
     @Override
-    public Turnout createNewTurnout(String systemName, String userName) {
+    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
         // check if the output bit is available
         int bitNum = XNetAddress.getBitFromSystemName(systemName, getSystemPrefix());
         if (bitNum == -1) {
@@ -117,6 +119,7 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
      * represent the Turnout.CLOSED state.
      */
     @Override
+    @Nonnull
     public String getClosedText() {
         return Bundle.getMessage("TurnoutStateClosed");
     }
@@ -127,6 +130,7 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
      * represent the Turnout.THROWN state.
      */
     @Override
+    @Nonnull
     public String getThrownText() {
         return Bundle.getMessage("TurnoutStateThrown");
     }
@@ -148,7 +152,8 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
      * {@inheritDoc}
      */
     @Override
-    public String validateSystemNameFormat(String name, Locale locale) {
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
         return validateIntegerSystemNameFormat(name,
                 XNetAddress.MINSENSORADDRESS,
                 XNetAddress.MAXSENSORADDRESS,
@@ -159,12 +164,12 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return (XNetAddress.validSystemNameFormat(systemName, 'T', getSystemPrefix()));
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 

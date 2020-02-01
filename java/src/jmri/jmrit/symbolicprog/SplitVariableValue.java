@@ -329,8 +329,9 @@ public class SplitVariableValue extends VariableValue
         // there may be a lost focus event left in the queue when disposed so protect
         if (_textField != null && !oldContents.equals(_textField.getText())) {
             long newFieldVal = getValueFromText(_textField.getText());
-            log.debug("_minVal = {},_maxVal = {},newFieldVal = {}", _minVal, _maxVal, newFieldVal);
-            if (newFieldVal < _minVal || newFieldVal > _maxVal) {
+            log.debug("_minVal={};_maxVal={};newFieldVal={}",
+                    Long.toUnsignedString(_minVal), Long.toUnsignedString(_maxVal), Long.toUnsignedString(newFieldVal));
+            if (Long.compareUnsigned(newFieldVal, _minVal) < 0 || Long.compareUnsigned(newFieldVal, _maxVal) > 0) {
                 _textField.setText(oldContents);
             } else {
                 long newVal = (newFieldVal - mOffset) / mFactor;

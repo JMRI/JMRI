@@ -203,6 +203,7 @@ public class JsonClientHandlerTest {
         Assert.assertEquals("Response contains error code 500", 500, data.path(JsonException.CODE).asInt());
         Assert.assertEquals("Response contains error message", "Unsupported operation attempted: null.",
                 data.path(JsonException.MESSAGE).asText());
+        JUnitAppender.assertWarnMessage("Unsupported operation attempted {\"type\":\"test\",\"data\":{\"throws\":\"JmriException\"}}");
     }
 
     /**

@@ -233,8 +233,8 @@ public class OBlockTest {
         Assert.assertTrue("path2 in block", b.addPath(path2));
         Assert.assertEquals("get \"path1\"", path1, b.getPathByName("path1"));
         
-        b.removePath(path1);
-        b.removePath(path2);
+        b.removeOPath(path1);
+        b.removeOPath(path2);
         Assert.assertEquals("no paths", 0, b.getPaths().size());
         portalMgr = null;
     }
@@ -257,8 +257,9 @@ public class OBlockTest {
 
     @After
     public void tearDown() {
-        JUnitUtil.tearDown();
         blkMgr = null;
+        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
+        JUnitUtil.tearDown();
     }
 
 }

@@ -1,7 +1,5 @@
 package jmri.jmrix.loconet.usb_dcs240;
 
-import jmri.util.SystemType;
-
 /**
  * Definition of objects to handle configuring a DCS240 USB layout connection via a
  * PR2Adapter object.

@@ -45,5 +45,4 @@ public class CtcEditorStartupTest {
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }
-
 }

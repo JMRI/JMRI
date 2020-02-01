@@ -14,31 +14,38 @@ import org.junit.Test;
  * @author	Paul Bender Copyright (C) 2016
  */
 public class FunctionPanelTest {
+        
+    FunctionPanel frame; // not a panel despite class name
 
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        FunctionPanel frame = new FunctionPanel(); // not a panel despite class name
         Assert.assertNotNull("exists", frame);
     }
 
     @Test
     public void testGetFunctionButtons(){
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        FunctionPanel frame = new FunctionPanel(); // not a panel despite class name
         FunctionButton fba[] = frame.getFunctionButtons();
-	Assert.assertNotNull("Function Button Array exists",fba);
-	Assert.assertEquals("Function Button Array has right length",29,fba.length);
+	    Assert.assertNotNull("Function Button Array exists",fba);
+	    Assert.assertEquals("Function Button Array has right length",29,fba.length);
     }
 
     @Before
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        if(!GraphicsEnvironment.isHeadless()){
+           frame = new FunctionPanel();
+        }
     }
 
     @After
     public void tearDown() {
+        if(frame!=null){
+          frame.dispose();
+        }
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
 }

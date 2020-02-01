@@ -142,8 +142,6 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         
         List<String> sortedList = l.getSystemNameList();
         SortedSet<Sensor> beanSet = l.getNamedBeanSet();
-        String[] sortedArray = l.getSystemNameArray();  // deprecated, but we test until removed
-        jmri.util.JUnitAppender.suppressWarnMessage("Manager#getSystemNameArray() is deprecated");
         
         Assert.assertEquals("sorted list length", 2, sortedList.size());
         Assert.assertEquals("sorted list 1st", "IS2", sortedList.get(0));
@@ -154,10 +152,6 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         Assert.assertEquals("bean set 1st", s2, iter.next());
         Assert.assertEquals("bean set 2nd", s4, iter.next());
 
-        Assert.assertEquals("sorted array length", 2, sortedArray.length);
-        Assert.assertEquals("sorted array 1st", "IS2", sortedArray[0]);
-        Assert.assertEquals("sorted array 2nd", "IS4", sortedArray[1]);
-        
         // add and test (non) liveness
         Sensor s3 = l.provideSensor("IS3");
         Sensor s1 = l.provideSensor("IS1");
@@ -173,14 +167,9 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         Assert.assertEquals("bean set 3rd", s3, iter.next());
         Assert.assertEquals("bean set 4th", s4, iter.next());
 
-        Assert.assertEquals("sorted array length", 2, sortedArray.length);
-        Assert.assertEquals("sorted array 1st", "IS2", sortedArray[0]);
-        Assert.assertEquals("sorted array 2nd", "IS4", sortedArray[1]);
-        
         // update and test update
         sortedList = l.getSystemNameList();
         beanSet = l.getNamedBeanSet();
-        sortedArray = l.getSystemNameArray();
         
         Assert.assertEquals("sorted list length", 4, sortedList.size());
         Assert.assertEquals("sorted list 1st", "IS1", sortedList.get(0));
@@ -194,12 +183,6 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         Assert.assertEquals("bean set 2nd", s2, iter.next());
         Assert.assertEquals("bean set 3rd", s3, iter.next());
         Assert.assertEquals("bean set 4th", s4, iter.next());
-
-        Assert.assertEquals("sorted array length", 4, sortedArray.length);
-        Assert.assertEquals("sorted array 1st", "IS1", sortedArray[0]);
-        Assert.assertEquals("sorted array 2nd", "IS2", sortedArray[1]);
-        Assert.assertEquals("sorted array 3rd", "IS3", sortedArray[2]);
-        Assert.assertEquals("sorted array 4th", "IS4", sortedArray[3]);
 
     }
 

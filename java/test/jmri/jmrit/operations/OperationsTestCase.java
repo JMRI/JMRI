@@ -1,5 +1,6 @@
 package jmri.jmrit.operations;
 
+import java.util.List;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
@@ -10,6 +11,9 @@ import org.netbeans.jemmy.QueueTool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import jmri.InstanceManager;
+import jmri.ShutDownManager;
+import jmri.ShutDownTask;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 
@@ -39,6 +43,7 @@ public class OperationsTestCase {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initIdTagManager();
+        JUnitUtil.clearShutDownManager();
     }
 
     private final boolean waitOnEventQueueNotEmpty = false;
@@ -80,7 +85,15 @@ public class OperationsTestCase {
             }
         }
         
-        JUnitUtil.clearShutDownManager();
+        if (InstanceManager.containsDefault(ShutDownManager.class)) {
+            ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
+            List<ShutDownTask> list = sm.tasks();
+            for (ShutDownTask task : list) {
+                Assert.fail("Shutdown task found: " + task.getName());
+            }
+        }
+
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
 
