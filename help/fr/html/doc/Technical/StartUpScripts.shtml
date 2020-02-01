@@ -19,7 +19,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -355,7 +355,7 @@ La structure de cr&#233;ation des Ic&#244;nes du bureau est semblable &#224; cel
 </li>
 </ol>
 
-        <!--#include virtual="/Footer" -->
+        <!--#include virtual="/Footer.shtml" -->
         </div>
     </div>
 </body>

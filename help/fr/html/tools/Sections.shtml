@@ -12,7 +12,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -228,7 +228,7 @@ panneaux dans le m&#234;me fichier ( recommand&#233; ), s&#233;lectionnez <b>Fic
 Panneau dans le Fichier...</b> ou s&#233;lectionnez <b>Panneaux-->Sauvegarder le Panneau...</b> dans la fen&#234;tre 
 principale de JMRI.</p>
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
       </div><!-- closes #mainContent-->
     </div> <!-- closes #mBody-->
 </body>

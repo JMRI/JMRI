@@ -18,7 +18,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -120,7 +120,7 @@ voir la
 <a href="../../../../html/tools/consisttool/ConsistTool.shtml#tool"> page couplage</a> principale.
 <p>La page d'aide package\JMRI\jmrit\consisttool</p>
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

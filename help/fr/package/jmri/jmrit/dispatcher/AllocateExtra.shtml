@@ -23,7 +23,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -117,7 +117,7 @@
       Section d'une autre mani&egrave;re fera automatiquement
       annuler l'op&eacute;ration dans cette fen&ecirc;tre, et cette
       fen&ecirc;tre dispara&icirc;t.</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

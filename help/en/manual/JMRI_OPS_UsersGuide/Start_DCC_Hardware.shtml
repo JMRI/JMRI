@@ -20,7 +20,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -78,7 +78,7 @@
 
         <p><a href="index.shtml#GettingStarted">Back to
         Index</a></p>
-      </div><!--#include virtual="/Footer" -->
+      </div><!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

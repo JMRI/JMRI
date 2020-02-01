@@ -15,7 +15,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -79,7 +79,7 @@ Malheureusement, JMRI n'a pas un bon outil graphique pour la d&#233;finition des
 ic&#244;nes affich&#233;es lors de l'utilisation d'une ic&#244;ne de la m&#233;moire de cette fa&#231;on. Vous devez &#233;diter le fichier XML
 &#224; la main, en suivant l'un des exemples.
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
  </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->
 </body>

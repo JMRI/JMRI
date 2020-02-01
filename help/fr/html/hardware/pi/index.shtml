@@ -17,7 +17,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="../SidebarUp" -->
     <div id="mainContent">
@@ -90,7 +90,7 @@ sp&#233;cifiques au mod&#232;le.
 	<p>Le <a href="http://pi4j.com/">site web Pi4J</a> fournit des informations d'E/S Java sp&#233;cifiques au
 	mod&#232;le.</p>
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
    </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
  </body>

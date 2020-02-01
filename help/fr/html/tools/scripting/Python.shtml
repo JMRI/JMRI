@@ -19,7 +19,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -108,7 +108,7 @@ de savoir o&ugrave; l'{et }aller:
 regardez le num&eacute;ro de la ligne indiqu&eacute;e pour voir si
 votre indentation n'est pas align&eacute;e.</p>
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

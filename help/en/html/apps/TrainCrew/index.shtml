@@ -20,7 +20,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -48,7 +48,7 @@
      <br>it is not recommended to run JMRI as Administrator
      all of the time, just to install TrainCrew.</p>
      
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- close #mainContent -->
   </div><!-- close #mBody -->
 </body>

@@ -17,7 +17,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -182,7 +182,7 @@ Dans de tels cas, nous utilisons le "cvs watch on " option pour
 verrouiller efficacement le fichier. La version archiv&#233;e du fichier est prot&#233;g&#233;e en &#233;criture ainsi vous ne pouvez pas le modifier sans
 remarquer le probl&#232;me, et les changements ne peuvent pas &#234;tre v&#233;rifi&#233;es de nouveau dans CVS &#224; moins que la montre de fichier soit d&#233;sactiv&#233;e.
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
 
 	  </div><!-- closes #mainContent-->
 	</div> <!-- closes #mBody-->

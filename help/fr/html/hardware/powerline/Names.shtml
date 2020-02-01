@@ -19,7 +19,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
   <!--#include virtual="Sidebar" -->
   <div id="mainContent">
@@ -103,7 +103,7 @@
       <p><a href=
       "http://www.x10.com/support/technology1.htm">Technologie X10
       des Courants Porteurs (PLC) Technologie.</a></p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

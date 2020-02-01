@@ -26,7 +26,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -45,7 +45,7 @@
 
         <dd>
           <hr>
-          <!--#include virtual="/Footer" -->
+          <!--#include virtual="/Footer.shtml" -->
         </dd>
       </dl>
     </div><!-- closes #mainContent-->

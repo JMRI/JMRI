@@ -20,7 +20,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -100,7 +100,7 @@
       accessible &agrave; partir de Logix et de scripts.</p>
 
       <p>Chronom&eacute;trage heureux!</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>
