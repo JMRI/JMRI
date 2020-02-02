@@ -412,7 +412,7 @@ public class CbusNodeTest {
         Assert.assertTrue("after remove getTotalNodeEvents 4 wrong node number",t.getNodeEventManager().getTotalNodeEvents()==4 );
         r.setElement(2, 0x39);
         t.getCanListener().reply(r);
-        Assert.assertTrue("after remove getTotalNodeEvents 0",t.getNodeEventManager().getTotalNodeEvents()==0 );
+        Assert.assertEquals("after CBUS_NNCLR getTotalNodeEvents 0",0,t.getNodeEventManager().getTotalNodeEvents() );
         
         t.dispose();
         

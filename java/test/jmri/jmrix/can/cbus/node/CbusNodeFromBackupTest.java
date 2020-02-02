@@ -42,7 +42,7 @@ public class CbusNodeFromBackupTest {
         t = new CbusNodeFromBackup(existingNode,new Date());
         Assert.assertTrue("Backup No EVs",t.getBackupResult() == BackupType.COMPLETEDWITHERROR);
         
-        existingNode.getNodeEventManager().resetNodeEvents();
+        existingNode.getNodeEventManager().resetNodeEventsToZero();
         t = new CbusNodeFromBackup(existingNode,new Date());
         Assert.assertTrue("Backup No EVs",t.getBackupResult() == BackupType.COMPLETE);
         Assert.assertNotNull("Backup Time Set by Constructor",t.getBackupTimeStamp());

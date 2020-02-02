@@ -45,8 +45,8 @@ public class CbusNodeEventManagerTest {
         Assert.assertNotNull(list);
         
         t.resetNodeEvents();
-        Assert.assertEquals("0 events set",0,t.getTotalNodeEvents());
-        Assert.assertEquals("outstanding ev vars 0",0,t.getOutstandingEvVars());
+        Assert.assertEquals("0 events set",-1,t.getTotalNodeEvents());
+        Assert.assertEquals("outstanding ev vars 0",-1,t.getOutstandingEvVars());
         
         t.sendNewEvSToNode(list);
         

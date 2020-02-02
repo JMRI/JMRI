@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 import jmri.jmrix.can.cbus.node.CbusNodeConstants;
 import jmri.jmrix.can.cbus.simulator.CbusDummyNode;
+import jmri.jmrix.can.cbus.simulator.CbusSimCanListener;
 import jmri.util.swing.ComboBoxToolTipRenderer;
 
 import org.slf4j.Logger;
@@ -81,7 +82,7 @@ public class NdPane extends JPanel {
         
         _resetNd = new JButton("FLiM");
         
-        DirectionPane dp = new DirectionPane(_node);
+        DirectionPane dp = new DirectionPane( (CbusSimCanListener) _node.getCanListener());
         
         JPanel topPane = new JPanel();
         

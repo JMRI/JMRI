@@ -120,7 +120,6 @@ public class CbusEventResponderTest {
         JUnitUtil.waitFor(()->{ return(tc.inbound.size()>0); }, "reply didn't arrive");
         Assert.assertTrue("long message sent",tc.inbound.elementAt(tc.inbound.size() - 1).toString().contains("17 00 DE 00"));
         
-        m = null;
         t.dispose();
         
     }
@@ -177,7 +176,6 @@ public class CbusEventResponderTest {
         JUnitUtil.waitFor(()->{ return(tc.inbound.size()>3); }, "reply didn't arrive");
         Assert.assertEquals("Event on response", "[5f8] 93 17 00 DE 11",tc.inbound.elementAt(tc.inbound.size() - 1).toString());
         
-        m = null;
         t.dispose();
     
     }
@@ -198,9 +196,10 @@ public class CbusEventResponderTest {
     @After
     public void tearDown() {
         
+        tc.terminateThreads();
+        memo.dispose();
         tc = null;
         memo = null;
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
 
     }

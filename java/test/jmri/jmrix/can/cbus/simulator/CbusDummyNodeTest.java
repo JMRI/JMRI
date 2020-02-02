@@ -3,8 +3,8 @@ package jmri.jmrix.can.cbus.simulator;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.TrafficControllerScaffold;
+import jmri.jmrix.can.cbus.CbusConstants;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -37,9 +37,9 @@ public class CbusDummyNodeTest {
         
         Assert.assertTrue("1 listener",tcis.numListeners()==1);
         
-        Assert.assertTrue("start getDelay",t.getDelay()>0);
-        t.setDelay(7);
-        Assert.assertEquals("getSetDelay", 7,t.getDelay());
+        Assert.assertTrue("start getDelay", ((CbusSimCanListener) t.getCanListener()).getDelay()>0);
+        ((CbusSimCanListener) t.getCanListener()).setDelay(7);
+        Assert.assertEquals("getSetDelay", 7,((CbusSimCanListener) t.getCanListener()).getDelay());
         
         t.dispose();
         Assert.assertTrue("0 listeners after dispose",tcis.numListeners()==0);
@@ -49,13 +49,13 @@ public class CbusDummyNodeTest {
     public void testNodeRequestNumber() {
         
         CbusDummyNode t = new CbusDummyNode(1,2,3,4,memo); // nn, manufacturer, type, canid, memo
-        t.setDelay(0);
+        ((CbusSimCanListener) t.getCanListener()).setDelay(0);
         
-        Assert.assertFalse("start getProcessIn", t.getProcessIn() );
-        Assert.assertTrue("start getProcessOut", t.getProcessOut() );
-        Assert.assertTrue("start getSendIn", t.getSendIn() );
-        Assert.assertFalse("start getSendOut", t.getSendOut() );
-        Assert.assertTrue("start getsendsWRACKonNVSET",t.getsendsWRACKonNVSET());
+        Assert.assertFalse("start getProcessIn", ((CbusSimCanListener) t.getCanListener()).getProcessIn() );
+        Assert.assertTrue("start getProcessOut", ((CbusSimCanListener) t.getCanListener()).getProcessOut() );
+        Assert.assertTrue("start getSendIn", ((CbusSimCanListener) t.getCanListener()).getSendIn() );
+        Assert.assertFalse("start getSendOut", ((CbusSimCanListener) t.getCanListener()).getSendOut() );
+        Assert.assertTrue("start getsendsWRACKonNVSET", t.getsendsWRACKonNVSET());
         Assert.assertEquals(" getNodeType SLIM", "SLIM",t.getNodeStats().getNodeTypeName() );
         
         // set node to CANPAN from SLIM
@@ -76,16 +76,16 @@ public class CbusDummyNodeTest {
             tcis.inbound.elementAt(tcis.inbound.size() - 1).toString());
         // node in setup mode awaiting node allocation frame or further setup info request
         
-        t.setSendOut(true);
-        t.setSendIn(false);
-        Assert.assertTrue(" getSendOut", t.getSendOut() );
-        Assert.assertFalse(" getSendIn", t.getSendIn() );
+        ((CbusSimCanListener) t.getCanListener()).setSendOut(true);
+        ((CbusSimCanListener) t.getCanListener()).setSendIn(false);
+        Assert.assertTrue(" getSendOut", ((CbusSimCanListener) t.getCanListener()).getSendOut() );
+        Assert.assertFalse(" getSendIn", ((CbusSimCanListener) t.getCanListener()).getSendIn() );
         
-        t.setProcessIn(true);
-        t.setProcessOut(false);
+        ((CbusSimCanListener) t.getCanListener()).setProcessIn(true);
+        ((CbusSimCanListener) t.getCanListener()).setProcessOut(false);
         
-        Assert.assertTrue("start getProcessIn", t.getProcessIn() );
-        Assert.assertFalse("start getProcessOut", t.getProcessOut() );
+        Assert.assertTrue("start getProcessIn", ((CbusSimCanListener) t.getCanListener()).getProcessIn() );
+        Assert.assertFalse("start getProcessOut", ((CbusSimCanListener) t.getCanListener()).getProcessOut() );
         
         CanReply r = new CanReply();
         r.setHeader(tcis.getCanid());
@@ -106,13 +106,13 @@ public class CbusDummyNodeTest {
         Assert.assertEquals("node responds with parameters setup", "[5f8] EF A5 59 1D 80 0D 01 01",
             tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
         
-        t.setProcessIn(false);
-        t.setProcessOut(true);
+        ((CbusSimCanListener) t.getCanListener()).setProcessIn(false);
+        ((CbusSimCanListener) t.getCanListener()).setProcessOut(true);
         
-        t.setSendOut(false);
-        t.setSendIn(true);
-        Assert.assertFalse(" getSendOut f", t.getSendOut() );
-        Assert.assertTrue(" getSendIn t", t.getSendIn() );
+        ((CbusSimCanListener) t.getCanListener()).setSendOut(false);
+        ((CbusSimCanListener) t.getCanListener()).setSendIn(true);
+        Assert.assertFalse(" getSendOut f", ((CbusSimCanListener) t.getCanListener()).getSendOut() );
+        Assert.assertTrue(" getSendIn t", ((CbusSimCanListener) t.getCanListener()).getSendIn() );
         
         r = new CanReply();
         r.setHeader(tcis.getCanid());
@@ -170,7 +170,7 @@ public class CbusDummyNodeTest {
         
         // dummy CANPAN
         CbusDummyNode t = new CbusDummyNode(1234,165,29,4,memo); // nn, manufacturer, type, canid, memo
-        t.setDelay(0);
+        ((CbusSimCanListener) t.getCanListener()).setDelay(0);
         t.setNodeInFLiMMode(true);
         
         // get event variables with knowledge of index
@@ -204,7 +204,7 @@ public class CbusDummyNodeTest {
         
         // dummy CANPAN
         CbusDummyNode t = new CbusDummyNode(1234,165,29,4,memo); // nn, manufacturer, type, canid, memo
-        t.setDelay(0);
+        ((CbusSimCanListener) t.getCanListener()).setDelay(0);
         t.setNodeInFLiMMode(true);
         
         // get node variable
@@ -288,7 +288,7 @@ public class CbusDummyNodeTest {
     public void testNodeLearnEvent() {
         
         CbusDummyNode t = new CbusDummyNode(1234,165,29,4,memo); // nn, manufacturer, type, canid, memo
-        t.setDelay(0);
+        ((CbusSimCanListener) t.getCanListener()).setDelay(0);
         t.setNodeInFLiMMode(true);
         
         Assert.assertEquals(" 0 outbound not increased", 0,(tcis.outbound.size() ) );
@@ -304,7 +304,7 @@ public class CbusDummyNodeTest {
         Assert.assertTrue("message enter learn mode ",t.getNodeInLearnMode() );
         
         
-        Assert.assertTrue("start getTotalNodeEvents ",t.getNodeEventManager().getTotalNodeEvents()== 0 );
+        Assert.assertEquals("Initial FLiM getTotalNodeEvents ",-1,t.getNodeEventManager().getTotalNodeEvents() );
         
         // teach the node an event ( CANPAN has 13 event variables hence the loop )
         m = new CanMessage( tcis.getCanid() );
@@ -489,7 +489,7 @@ public class CbusDummyNodeTest {
     public void testNodeLearnTwoEventsThenDelete() {
     
         CbusDummyNode t = new CbusDummyNode(1234,165,29,4,memo); // nn, manufacturer, type, canid, memo
-        t.setDelay(0);
+        ((CbusSimCanListener) t.getCanListener()).setDelay(0);
         t.setNodeInFLiMMode(true);
         
         // frame to set node into learn
@@ -579,7 +579,7 @@ public class CbusDummyNodeTest {
         
         JUnitUtil.waitFor(()->{ return(tcis.inbound.size()>3); }, " inbound 4 didn't arrive");
         Assert.assertEquals(" 4 inbound increased", 4,(tcis.inbound.size() ) );
-        Assert.assertEquals("node responds to request number of events 0", "[5f8] 74 04 D2 00",
+        Assert.assertEquals("node responds 0 events following CBUS_NNCLR", "[5f8] 74 04 D2 00",
             tcis.inbound.elementAt(tcis.inbound.size() - 1).toString());
     
         t.dispose();
@@ -590,7 +590,7 @@ public class CbusDummyNodeTest {
     public void testResponseToNameRequest() {
     
         CbusDummyNode t = new CbusDummyNode(1234,165,29,4,memo); // nn, manufacturer, type, canid, memo
-        t.setDelay(0);
+        ((CbusSimCanListener) t.getCanListener()).setDelay(0);
         t.setNodeInFLiMMode(true);
         t.setNodeInSetupMode(true);
         
@@ -628,7 +628,6 @@ public class CbusDummyNodeTest {
         tcis = null;
         memo = null;
         
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
 
     }
