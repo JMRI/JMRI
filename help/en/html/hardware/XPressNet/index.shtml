@@ -49,8 +49,12 @@
       <ul>
         <!-- TOC -->
 
-        <li><a href="#hardware">Hardware</a></li>
-
+        <li><a href="#hardware">Hardware</a>
+            <ul>
+                <li><a href="#commandstation">Command Stations</a></li>
+                <li><a href="#interfaces">Computer Interfaces</a></li>
+            </ul>
+        </li>
         <li><a href="#limitations">Limitations</a></li>
 
         <li>
@@ -75,7 +79,7 @@
 
             <li><a href="#connectElite">Hornby Elite USB</a></li>
 
-            <li><a href="#connectXtncp">XnTcp adapter</a></li>
+            <li><a href="#connectXntcp">XnTcp adapter</a></li>
 
             <li><a href="#connectXpa">XPA and a modem</a></li>
           </ul>
@@ -84,10 +88,12 @@
         <li><a href="#tools">JMRI XpressNet Tools</a></li>
 
         <li><a href="#documentation">Documentation</a></li>
-      </ul><a name="hardware" id="hardware"></a>
-
+      </ul>
+      
+      <a name="hardware" id="hardware"></a>
       <h2>Supported Hardware</h2>
 
+      <a name="commandstation" id="commandstation"></a>
       <h3>Command Station</h3>
 
       <p>The XpressNet protocol allows the DCC manufacturers that
@@ -218,6 +224,7 @@
         </dl>
       </div>
 
+      <a name="interfaces" id="interfaces"></a>
       <h3>Computer Interfaces</h3>
 
       <p>Currently the following XpressNet computer interfaces are
@@ -363,7 +370,7 @@
         connection.</li>
       </ul>
 
-      <a name="Limitations" id="Limitations"></a>
+      <a name="limitations" id="limitations"></a>
       <h2>Limitations</h2>
 
       <div class="list">
@@ -908,9 +915,15 @@
         <li>Restart the program. You should be up and running.</li>
       </ol>
       
-      <a name="connectsim" id="connectsim"></a>
+      <a name="connectSim" id="connectSim"></a>
 
       <h3>Connecting to the XpressNet Simulator</h3>
+      
+      Use the XpressNet Simulator connection when 
+      you don't have hardware connected.  This will 
+      let JMRI still use XPressNet sensors, turnouts and
+      other objects so you can develop your panels and 
+      scripts without access to real devices.
 
       <ol>
         <li>Start one of the JMRI-based programs, Then go to the

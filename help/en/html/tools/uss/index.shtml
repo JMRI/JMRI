@@ -23,6 +23,14 @@
     <div id="mainContent">
 
       <h2>JMRI: Utils USS CTC Tools</h2>
+      
+      <p class="example">
+      This is the original implementation of CTC and provides capabilities that are enabled using scripting.
+      See also <a href="../../../package/jmri/jmrit/ctc/CTC.shtml">the newer CTC implementation</a> that provides
+      a GUI editor to configure the CTC rules and a run-time to implement CTC logic. It also builds a skeleton
+      Panel Editor CTC panel with the turnout levers/indicators, signal levers/indicators, code button, etc.,
+      and a minimal track plan.
+      </p>
 
       <p>JMRI contains tools to help in the automation of USS CTC
       Panels. These can be used for either screen-based Panels, or

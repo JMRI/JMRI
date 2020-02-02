@@ -1264,14 +1264,13 @@ function processPanelXML($returnedData, $success, $xhr) {
                         case "memoryicon" :
                             $widget['name'] = $widget.memory; //normalize name
                             $widget.jsonType = "memory"; // JSON object type
-                            $widget['state'] = $widget.memory; //use name for initial state as well
+                            $widget['state'] = null; //set initial state to null
+                            $widget['iconnull']="/web/images/transparent_19x16.png"; //transparent image for null value
                             var memorystates = $(this).find('memorystate');
                             memorystates.each(function(i, item) {  //get any memorystates defined
                                 //store icon url in "iconXX" where XX is the state to match
                                 $widget['icon' + item.attributes['value'].value] = item.attributes['icon'].value;
-                                $widget['state'] = item.attributes['value'].value; //use value for initial state
                             });
-                            $widget['iconnull']="/web/images/transparent_19x16.png"; //transparent for null value
                             if (typeof $widget["systemName"] === "undefined")
                                 $widget["systemName"] = $widget.name;
                             jmri.getMemory($widget["systemName"]);
@@ -2055,12 +2054,16 @@ function $drawTrackSegment($widget) {
     var $ep1, $ep2;
     [$ep1, $ep2] = $getEndPoints$($widget);
     if (typeof $ep1 === "undefined") {
-        jmri.log("can't draw tracksegment " + $widget.ident + ": connect1: " + $widget.connect1name + "." + $widget.type1 + " undefined.");
+    	if (jmri_logging) {
+    		jmri.log("can't draw tracksegment " + $widget.ident + ": connect1: " + $widget.connect1name + "." + $widget.type1 + " undefined.");
+    	}
         return;
     }
     if (typeof $ep2 === "undefined") {
-        jmri.log("can't draw tracksegment " + $widget.ident + ": connect2: " + $widget.connect2name + "." + $widget.type2 + " undefined.");
-        return;
+    	if (jmri_logging) {
+    		jmri.log("can't draw tracksegment " + $widget.ident + ": connect2: " + $widget.connect2name + "." + $widget.type2 + " undefined.");
+    	}
+    	return;
     }
 
     $gCtx.save();   // save current line width and color
@@ -3590,7 +3593,7 @@ var $setWidgetState = function($id, $newState, data) {
 
         //override the state with idTag's "name" in a very specific circumstance
         if (($widget.jsonType=="memory" || $widget.jsonType=="block" || $widget.jsonType=="reporter" ) &&
-        		$widget.widgetFamily=="icon" && data.value.type=="idTag") {
+        		$widget.widgetFamily=="icon" && data.value!==null && data.value.type=="idTag") {
         	$widget.state = data.value.data.name;
         }
 

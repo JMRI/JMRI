@@ -114,6 +114,8 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
 
     int routeClearOption = PROMPTUSER;
     int routeOverlapOption = PROMPTUSER;
+    String memoryOption = "";     // Optional memory variable to receive allocation messages
+    int memoryClearDelay = 0;     // Delay before clearing memory, 0 for clearing disabled
 
     static JPanel glassPane = new JPanel();
 
@@ -354,6 +356,22 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
 
     public int getOverlapOption() {
         return routeOverlapOption;
+    }
+
+    public void setMemoryOption(String memoryName) {
+        memoryOption = memoryName;
+    }
+
+    public String getMemoryOption() {
+        return memoryOption;
+    }
+
+    public void setMemoryClearDelay(int secs) {
+        memoryClearDelay = secs;
+    }
+
+    public int getMemoryClearDelay() {
+        return memoryClearDelay;
     }
 
     /** {@inheritDoc} */

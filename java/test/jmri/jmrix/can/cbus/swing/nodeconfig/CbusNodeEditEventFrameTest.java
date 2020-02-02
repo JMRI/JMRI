@@ -6,7 +6,6 @@ import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeEvent;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
-import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -93,6 +92,7 @@ public class CbusNodeEditEventFrameTest {
     @After
     public void tearDown() {
         if (!GraphicsEnvironment.isHeadless()) {
+            memo.dispose();
             t.dispose();
             mainpane.dispose();
             nodeModel.dispose();
