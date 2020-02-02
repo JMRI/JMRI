@@ -1179,8 +1179,32 @@ Memory Icon memory="<xsl:value-of select="@memory"/>"
 <br/>
 </xsl:template>
 
+<xsl:template match="indicatortrackicon">
+Indicator Track Icon block="<xsl:value-of select="occupancyblock"/>"
+paths:
+<xsl:for-each select="paths/*"> "<xsl:value-of select="."/>" <xsl:text> </xsl:text></xsl:for-each>
+<br/>
+</xsl:template>
+
+<xsl:template match="indicatorturnouticon">
+Indicator Turnout Icon 
+block="<xsl:value-of select="occupancyblock"/>"
+turnout="<xsl:value-of select="turnout"/>"
+paths:
+<xsl:for-each select="paths/*"> "<xsl:value-of select="."/>" <xsl:text> </xsl:text></xsl:for-each>
+<br/>
+</xsl:template>
+
 <xsl:template match="BlockContentsIcon">
 Block Contents Icon block="<xsl:value-of select="@blockcontents"/>"
+<br/>
+</xsl:template>
+
+<xsl:template match="PortalIcon">
+Portal Icon 
+portalName="<xsl:value-of select="@portalName"/>"
+to Block Name="<xsl:value-of select="@toBlockName"/>"
+from Block Name="<xsl:value-of select="@fromBlockName"/>"
 <br/>
 </xsl:template>
 
