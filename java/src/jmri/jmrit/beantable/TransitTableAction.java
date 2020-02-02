@@ -496,11 +496,13 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             actionColumn.setMinWidth(testButton.getPreferredSize().width);
             TableColumn directionColumn = sectionColumnModel.getColumn(SectionTableModel.SEC_DIRECTION_COLUMN);
             directionColumn.setResizable(true);
-            directionColumn.setMinWidth((int)new JLabel(rbx.getString("DirectionColName").substring(1,7)).getPreferredSize().getWidth());
+            String s = rbx.getString("DirectionColName");
+            directionColumn.setMinWidth((int)new JLabel(s.substring(1, Math.min(s.length(), 7))).getPreferredSize().getWidth());
             directionColumn.setMaxWidth((int)new JLabel(rbx.getString("DirectionColName").concat("WW")).getPreferredSize().getWidth());
             TableColumn alternateColumn = sectionColumnModel.getColumn(SectionTableModel.ALTERNATE_COLUMN);
             alternateColumn.setResizable(true);
-            alternateColumn.setMinWidth((int)new JLabel(rbx.getString("AlternateColName").substring(1,7)).getPreferredSize().getWidth());
+            s = rbx.getString("AlternateColName");
+            alternateColumn.setMinWidth((int)new JLabel(s.substring(1, Math.min(s.length(), 7))).getPreferredSize().getWidth());
             alternateColumn.setMaxWidth((int)new JLabel(rbx.getString("AlternateColName").concat("WW")).getPreferredSize().getWidth());
             JScrollPane sectionTableScrollPane = new JScrollPane(sectionTable);
             p12.add(sectionTableScrollPane, BorderLayout.CENTER);

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2020 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+
+    
+    <variable CV="35" item="Servo1_PosA" default="100" >
+        <decVal min="90" max="210" />
+        <label>Position 1-A</label>
+        <label xml:lang="cs">Pozice 1-A</label>
+        <tooltip>Servo 1: Position "A"</tooltip>
+        <tooltip xml:lang="cs">Pozice "A" pro Servo 1</tooltip>
+    </variable>
+    <variable CV="39" item="Servo1_PosB" default="200">
+        <decVal min="90" max="210" />
+        <label>Position 1-B</label>
+        <label xml:lang="cs">Pozice 1-B</label>
+        <tooltip>Servo 1: Position "B"</tooltip>
+        <tooltip xml:lang="cs">Pozice "B" pro Servo 1</tooltip>
+    </variable>
+
+    <variable CV="36" item="Servo2_PosA" default="100" >
+        <decVal min="90" max="210" />
+        <label>Position 2-A</label>
+        <label xml:lang="cs">Pozice 2-A</label>
+        <tooltip>Servo 2: Position "A"</tooltip>
+        <tooltip xml:lang="cs">Pozice "A" pro Servo 2</tooltip>
+    </variable>
+
+    <variable CV="37" item="Servo3_PosA" default="100" minOut="4">
+        <decVal min="90" max="210" />
+        <label>Position 3-A</label>
+        <label xml:lang="cs">Pozice 3-A</label>
+        <tooltip>Servo 3: Position "A"</tooltip>
+        <tooltip xml:lang="cs">Pozice "A" pro Servo 3</tooltip>
+    </variable>
+    <variable CV="38" item="Servo4_PosA" default="100" minOut="4">
+        <decVal min="90" max="210" />
+        <label>Position 4-A</label>
+        <label xml:lang="cs">Pozice 4-A</label>
+        <tooltip>Servo 4: Position "A"</tooltip>
+        <tooltip xml:lang="cs">Pozice "A" pro Servo 4</tooltip>
+    </variable>
+    
+    <variable CV="40" item="Servo2_PosB" default="200">
+        <decVal min="90" max="210" />
+        <label>Position 2-B</label>
+        <label xml:lang="cs">Pozice 2-B</label>
+        <tooltip>Servo 2: Position "B"</tooltip>
+        <tooltip xml:lang="cs">Pozice "B" pro Servo 2</tooltip>
+    </variable>
+
+    <variable CV="41" item="Servo3_PosB" default="200" minOut="4">
+        <decVal min="90" max="210" />
+        <label>Position 3-B</label>
+        <label xml:lang="cs">Pozice 3-B</label>
+        <tooltip>Servo 3: Position "B"</tooltip>
+        <tooltip xml:lang="cs">Pozice "B" pro Servo 3</tooltip>
+    </variable>
+    <variable CV="42" item="Servo4_PosB" default="200" minOut="4">
+        <decVal min="90" max="210" />
+        <label>Position 4-B</label>
+        <label xml:lang="cs">Pozice 4-B</label>
+        <tooltip>Servo 4: Position "B"</tooltip>
+        <tooltip xml:lang="cs">Pozice "B" pro Servo 4</tooltip>
+    </variable>
+
+    <variable CV="35" item="Servo1_PosC" default="100" include="2 ServoDecoder v3.2">
+        <decVal min="90" max="210" />
+        <label>Position 1-C</label>
+        <label xml:lang="cs">Pozice 1-C</label>
+        <tooltip>Servo 1: Position "C"</tooltip>
+        <tooltip xml:lang="cs">Pozice "C" pro Servo 1</tooltip>
+    </variable>
+    <variable CV="36" item="Servo2_PosC" default="100" minOut="2" include="2 ServoDecoder v3.2">
+        <decVal min="90" max="210" />
+        <label>Position 2-C</label>
+        <label xml:lang="cs">Pozice 2-C</label>
+        <tooltip>Servo 2: Position "C"</tooltip>
+        <tooltip xml:lang="cs">Pozice "C" pro Servo 2</tooltip>
+    </variable>
+
+    <variable CV="35" item="Servo1_PosD" default="100" include="2 ServoDecoder v3.2">
+        <decVal min="90" max="210" />
+        <label>Position 1-D</label>
+        <label xml:lang="cs">Pozice 1-D</label>
+        <tooltip>Servo 1: Position "D"</tooltip>
+        <tooltip xml:lang="cs">Pozice "D" pro Servo 1</tooltip>
+    </variable>
+    <variable CV="36" item="Servo2_PosD" default="100" include="2 ServoDecoder v3.2">
+        <decVal min="90" max="210" />
+        <label>Position 2-D</label>
+        <label xml:lang="cs">Pozice 2-D</label>
+        <tooltip>Servo 2: Position "D"</tooltip>
+        <tooltip xml:lang="cs">Pozice "A" pro Servo 2</tooltip>
+    </variable>
+</variables>
