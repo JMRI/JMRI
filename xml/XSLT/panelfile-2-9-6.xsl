@@ -108,7 +108,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 <xsl:template match="layout-config/signalmasts">
     <h3>Signal Masts</h3>
     <table border="1">
-      <tr><th>System Name</th><th>User Name</th><th>Type</th><th>CanBeUnlit</th><th>DisabledAspct</th><th>Comment</th></tr>
+      <tr><th>System Name</th><th>User Name</th><th>Type</th><th>Can Be<br/>Unlit</th><th>DisabledAspct</th><th>Comment</th><th>Output</th><th>Aspect<br/>Settings</th></tr>
       <!-- index through individual signal mast elements/classes, see below) -->
         <!--update for new types/elements-->
       <xsl:apply-templates/>
@@ -275,7 +275,8 @@ Logic delay: <xsl:value-of select="logicDelay"/> (ms)<br/>
     <!-- each one becomes a table -->
     <h3>Simple Signal Logic</h3>
         <table border="1">
-        <tr><th>Controls Signal</th><th></th>
+        <tr><th>Controls Signal</th>
+            <th><!-- match to --></th>
             <th>Mode</th>
             <th>Watch Signal</th>
             <th>Turnout</th>
@@ -515,12 +516,12 @@ Logic delay: <xsl:value-of select="logicDelay"/> (ms)<br/>
 <xsl:template match="signalmast">
     <tr><td><xsl:value-of select="systemName"/></td> <!--names as attributes deprecated since 2.9.6-->
         <td><xsl:value-of select="userName"/></td>
-        <td><xsl:choose>
+        <td align="center"><xsl:choose>
             <xsl:when test="( @class = 'jmri.implementation.configurexml.SignalHeadSignalMastXml' )" >SH Mast</xsl:when>
             <xsl:when test="( @class = 'jmri.implementation.configurexml.MatrixSignalMastXml' )" >MX Mast</xsl:when>
             <xsl:otherwise>Other</xsl:otherwise>
         </xsl:choose></td>
-        <td>
+        <td align="center">
             <xsl:for-each select="unlit">
                 <xsl:value-of select="@allowed"/><br/>
             </xsl:for-each>
@@ -533,13 +534,15 @@ Logic delay: <xsl:value-of select="logicDelay"/> (ms)<br/>
             </xsl:for-each>
         </td>
         <td><xsl:value-of select="comment"/></td>
+        <td></td>
+        <td></td>
     </tr>
 </xsl:template>
 <xsl:template match="dccsignalmast">
     <tr><td><xsl:value-of select="systemName"/></td>
         <td><xsl:value-of select="userName"/></td>
-        <td>DCC Mast</td>
-        <td>
+        <td align="center">DCC Mast</td>
+        <td align="center">
             <xsl:for-each select="unlit">
                 <xsl:value-of select="@allowed"/><br/>
             </xsl:for-each>
@@ -552,13 +555,20 @@ Logic delay: <xsl:value-of select="logicDelay"/> (ms)<br/>
             </xsl:for-each>
         </td>
         <td><xsl:value-of select="comment"/></td>
+        <td></td>
+        <td align="right">
+            <xsl:for-each select="aspect">
+                <xsl:value-of select="@defines"/>:
+                <xsl:value-of select="number"/><br/>
+            </xsl:for-each>
+        </td>
     </tr>
 </xsl:template>
 <xsl:template match="turnoutsignalmast">
     <tr><td><xsl:value-of select="systemName"/></td>
         <td><xsl:value-of select="userName"/></td>
-        <td>TO Mast</td>
-        <td>
+        <td align="center">Turnout<br/>Mast</td>
+        <td align="center">
             <xsl:for-each select="unlit">
                 <xsl:value-of select="@allowed"/><br/>
             </xsl:for-each>
@@ -571,13 +581,21 @@ Logic delay: <xsl:value-of select="logicDelay"/> (ms)<br/>
             </xsl:for-each>
         </td>
         <td><xsl:value-of select="comment"/></td>
+        <td></td>
+        <td align="right">
+            <xsl:for-each select="aspect">
+                <xsl:value-of select="@defines"/>:
+                <xsl:value-of select="turnout"/> =
+                <xsl:value-of select="turnoutstate"/><br/>
+            </xsl:for-each>
+        </td>
     </tr>
 </xsl:template>
 <xsl:template match="virtualsignalmast">
     <tr><td><xsl:value-of select="systemName"/></td>
         <td><xsl:value-of select="userName"/></td>
-        <td>Virtual</td>
-        <td>
+        <td align="center">Virtual<br/>Mast</td>
+        <td align="center">
             <xsl:for-each select="unlit">
                 <xsl:value-of select="@allowed"/><br/>
             </xsl:for-each>
@@ -590,6 +608,43 @@ Logic delay: <xsl:value-of select="logicDelay"/> (ms)<br/>
             </xsl:for-each>
         </td>
         <td><xsl:value-of select="comment"/></td>
+        <td></td>
+        <td></td>
+    </tr>
+</xsl:template>
+<xsl:template match="matrixsignalmast">
+    <tr><td><xsl:value-of select="systemName"/></td>
+        <td><xsl:value-of select="userName"/></td>
+        <td align="center">Matrix Mast</td>
+        <td align="center">
+            <xsl:for-each select="unlit">
+                <xsl:value-of select="@allowed"/><br/>
+            </xsl:for-each>
+        </td>
+        <td>
+            <xsl:for-each select="disabledAspects">
+                <xsl:for-each select="disabledAspect">
+                    <xsl:value-of select="."/><br/>
+                </xsl:for-each>
+            </xsl:for-each>
+        </td>
+        <td><xsl:value-of select="comment"/></td>
+        <td>
+            <xsl:for-each select="outputs">
+                <xsl:for-each select="output">
+                    <xsl:value-of select="@matrixCol"/> =
+                    <xsl:value-of select="."/><br/>
+                </xsl:for-each>
+            </xsl:for-each>
+        </td>
+        <td align="right">
+            <xsl:for-each select="bitStrings">
+                <xsl:for-each select="bitString">
+                    <xsl:value-of select="@aspect"/> =
+                    <xsl:value-of select="."/><br/>
+                </xsl:for-each>
+            </xsl:for-each>
+        </td>
     </tr>
 </xsl:template>
 
@@ -1101,19 +1156,29 @@ Multisensor Icon
 
 <!-- At the bottom, display JMRI load history -->
 <xsl:template match="filehistory">
-    <h3>History</h3>
+    <!-- title first time -->
+    <xsl:for-each select="..">
+      <xsl:choose>    
+        <xsl:when test="(name() != 'operation' )" >
+            <h3>History</h3>
+        </xsl:when>
+      </xsl:choose>
+    </xsl:for-each>
+    
     <table border="1">
-    <tr><th>Date</th><th>File</th><th>Result</th></tr>
+    <tr><th>Date</th><th>Operation</th><th></th></tr>
     <xsl:for-each select="operation">
         <tr>
             <td><xsl:value-of select="date"/></td>
-            <td><xsl:value-of select="filename"/></td>
             <td>
                 <xsl:choose>
                     <xsl:when test="type = 'app'" >Started JMRI</xsl:when>
                     <xsl:otherwise><xsl:value-of select="type"/></xsl:otherwise>
                 </xsl:choose>
             </td>
+            <td><xsl:value-of select="filename"/><br/>
+                <xsl:apply-templates select="filehistory"/>
+                </td>
         </tr>
     </xsl:for-each>
     </table>
