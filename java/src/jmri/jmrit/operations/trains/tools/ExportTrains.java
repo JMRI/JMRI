@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.trains.tools;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.text.MessageFormat;
 
 import javax.swing.JOptionPane;
@@ -70,8 +71,8 @@ public class ExportTrains extends XmlFile {
         PrintWriter fileOut = null;
 
         try {
-            fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8")), // NOI18N
-                    true); // NOI18N
+            fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)),
+                    true);
         } catch (IOException e) {
             log.error("Can not open export trains CSV file: " + file.getName());
             JOptionPane.showMessageDialog(null,

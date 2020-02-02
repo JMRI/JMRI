@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.routes.tools;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.text.MessageFormat;
 
 import javax.swing.JOptionPane;
@@ -63,7 +64,7 @@ public class ExportRoutes extends XmlFile {
 
         int count = 0;
         try (PrintWriter fileOut = new PrintWriter(
-                new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8")), true)) {
+                new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)), true)) {
 
             loadHeader(fileOut);
 

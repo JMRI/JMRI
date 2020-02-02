@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -426,13 +427,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             if (value == null || value.isEmpty()) {
                 contents.add((byte)0);
             } else {
-                byte[] bb;
-
-                try {
-                    bb = value.getBytes("UTF-8");
-                } catch (UnsupportedEncodingException e) {
-                    bb = new byte[] {'?'};
-                }
+                byte[] bb = value.getBytes(StandardCharsets.UTF_8);
                 for (byte b : bb) {
                     contents.add(b);
                 }

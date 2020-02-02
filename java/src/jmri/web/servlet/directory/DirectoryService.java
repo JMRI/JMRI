@@ -1,6 +1,7 @@
 package jmri.web.servlet.directory;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jmri.web.servlet.ServletUtil;
@@ -35,7 +36,7 @@ public class DirectoryService extends ResourceService {
                 String dir = r.getListHTML(request.getRequestURI(), 
                                              request.getPathInfo().lastIndexOf('/') > 0
                                             );
-                byte[] data = dir.getBytes("utf-8");
+                byte[] data = dir.getBytes(StandardCharsets.UTF_8);
                 response.setContentLength(data.length);
                 response.getOutputStream().write(data);
             }

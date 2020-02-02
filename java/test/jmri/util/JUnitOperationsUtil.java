@@ -1,6 +1,7 @@
 package jmri.util;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.ResourceBundle; // for access operations keys directly.
 
@@ -655,10 +656,8 @@ public class JUnitOperationsUtil {
     public static BufferedReader getBufferedReader(File file) {
         BufferedReader in = null;
         try {
-            in = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8")); // NOI18N
+            in = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8)); // NOI18N
         } catch (FileNotFoundException e) {
-
-        } catch (UnsupportedEncodingException e) {
 
         }
         Assert.assertNotNull(in);

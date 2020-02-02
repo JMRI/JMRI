@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -151,7 +152,7 @@ public class TrainLogger extends XmlFile implements InstanceManagerAutoDefault, 
         try {
             // FileOutputStream is set to append
             fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
-                    new FileOutputStream(_fileLogger, true), "UTF-8")), true); // NOI18N
+                    new FileOutputStream(_fileLogger, true), StandardCharsets.UTF_8)), true);
         } catch (IOException e) {
             log.error("Exception while opening log file: " + e.getLocalizedMessage());
             return;

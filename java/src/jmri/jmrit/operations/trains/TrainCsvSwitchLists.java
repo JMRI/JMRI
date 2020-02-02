@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import jmri.InstanceManager;
@@ -43,7 +44,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
         PrintWriter fileOut = null;
 
         try {
-            fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8")),// NOI18N
+            fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)),// NOI18N
                     true); // NOI18N
         } catch (IOException e) {
             log.error("Can not open CSV switch list file: {}", file.getName());

@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.text.MessageFormat;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -74,8 +75,8 @@ public class ExportCars extends XmlFile {
         PrintWriter fileOut = null;
 
         try {
-            fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8")), // NOI18N
-                    true); // NOI18N
+            fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)),
+                    true);
         } catch (IOException e) {
             log.error("Can not open export cars CSV file: {}", file.getName());
             JOptionPane.showMessageDialog(null,

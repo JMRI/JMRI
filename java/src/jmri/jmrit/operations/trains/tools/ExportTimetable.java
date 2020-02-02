@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.trains.tools;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -131,7 +132,7 @@ public class ExportTimetable extends XmlFile {
         }
 
         try (PrintWriter fileOut = new PrintWriter(
-                new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8")), true)) {
+                new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)), true)) {
 
             loadLayout(fileOut);
             loadTrainTypes(fileOut);

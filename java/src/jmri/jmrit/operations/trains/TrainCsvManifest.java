@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.trains;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +43,7 @@ public class TrainCsvManifest extends TrainCsvCommon {
         PrintWriter fileOut;
 
         try {
-            fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8")),// NOI18N
+            fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)),// NOI18N
             true); // NOI18N
         } catch (IOException e) {
             log.error("Can not open CSV manifest file: {}", file.getName());
