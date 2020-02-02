@@ -1077,24 +1077,115 @@ Sensor Icon "<xsl:value-of select="@sensor"/>"<br/>
 </xsl:template>
 
 <xsl:template match="positionablelabel">
-Positionable Label "<xsl:value-of select="@icon"/>"<br/>
+Positionable Label 
+<xsl:choose>
+  <xsl:when test="( @text != '' )" >
+  text: "<xsl:value-of select="@text"/>"
+  </xsl:when>
+</xsl:choose>
+<xsl:choose>
+  <xsl:when test="( icon/@url != '' )" >
+  icon: <xsl:value-of select="icon/@url"/>
+  </xsl:when>
+</xsl:choose>
+<br/>
 </xsl:template>
 
 <xsl:template match="layoutturnout">
-Layout Turnout ident="<xsl:value-of select="@ident"/>", 
+Layout Turnout 
+ (
+<xsl:choose>
+  <xsl:when test="( @type = 1 )" >RH</xsl:when>
+  <xsl:when test="( @type = 2 )" >LH</xsl:when>
+  <xsl:when test="( @type = 3 )" >Wye</xsl:when>
+  <xsl:when test="( @type = 4 )" >Double XOver</xsl:when>
+  <xsl:when test="( @type = 5 )" >RH XOver</xsl:when>
+  <xsl:when test="( @type = 6 )" >LH  XOver</xsl:when>
+  <xsl:when test="( @type = 7 )" >Single Slip</xsl:when>
+  <xsl:when test="( @type = 8 )" >Double Slip</xsl:when>
+  <xsl:otherwise>(type="<xsl:value-of select="@type"/>")</xsl:otherwise>
+</xsl:choose>
+ )
+ident="<xsl:value-of select="@ident"/>"
 turnoutname="<xsl:value-of select="@turnoutname"/>",
-blockname="<xsl:value-of select="@blockname"/>"<br/>
+<xsl:choose>
+  <xsl:when test="( @blockname != '' )" >
+  block: "<xsl:value-of select="@blockname"/>"
+  </xsl:when>
+</xsl:choose>
+<xsl:choose>
+  <xsl:when test="( @connectaname != '' )" >
+  A to "<xsl:value-of select="@connectaname"/>"
+  </xsl:when>
+</xsl:choose>
+<xsl:choose>
+  <xsl:when test="( @connectbname != '' )" >
+  B to "<xsl:value-of select="@connectbname"/>"
+  </xsl:when>
+</xsl:choose>
+<xsl:choose>
+  <xsl:when test="( @connectcname != '' )" >
+  C to "<xsl:value-of select="@connectcname"/>"
+  </xsl:when>
+</xsl:choose>
+<xsl:choose>
+  <xsl:when test="( @connectdname != '' )" >
+  D to "<xsl:value-of select="@connectdname"/>"
+  </xsl:when>
+</xsl:choose>
+<br/>
 </xsl:template>
 
 <xsl:template match="tracksegment">
-Track segment ident="<xsl:value-of select="@ident"/>": 
+Track Segment ident="<xsl:value-of select="@ident"/>"
+<xsl:choose>
+  <xsl:when test="( @blockname != '' )" >
+  block: "<xsl:value-of select="@blockname"/>"
+  </xsl:when>
+</xsl:choose>
 connects to "<xsl:value-of select="@connect1name"/>" (type=<xsl:value-of select="@type1"/>);
 connects to "<xsl:value-of select="@connect2name"/>" (type=<xsl:value-of select="@type2"/>)
 <br/>
 </xsl:template>
 
+<xsl:template match="layoutSlip">
+Layout Slip
+ident="<xsl:value-of select="@ident"/>"
+<xsl:choose>
+  <xsl:when test="( @blockname != '' )" >
+  block: "<xsl:value-of select="@blockname"/>"
+  </xsl:when>
+</xsl:choose>
+<xsl:choose>
+  <xsl:when test="( turnout != '' )" >
+  turnout: "<xsl:value-of select="turnout"/>"
+  </xsl:when>
+</xsl:choose>
+<xsl:choose>
+  <xsl:when test="( turnoutB != '' )" >
+  turnoutB: "<xsl:value-of select="turnoutB"/>"
+  </xsl:when>
+</xsl:choose>
+<xsl:for-each select="states/*">
+    (
+        <xsl:value-of select="name()"/>:<xsl:value-of select="turnout"/>,<xsl:value-of select="turnoutB"/>
+    )
+</xsl:for-each>
+<br/>
+</xsl:template>
+
+<xsl:template match="memoryicon">
+Memory Icon memory="<xsl:value-of select="@memory"/>"
+<br/>
+</xsl:template>
+
+<xsl:template match="BlockContentsIcon">
+Block Contents Icon block="<xsl:value-of select="@blockcontents"/>"
+<br/>
+</xsl:template>
+
 <xsl:template match="positionablepoint">
-Positionable point ident="<xsl:value-of select="@ident"/>"
+Positionable Point ident="<xsl:value-of select="@ident"/>"
 connects to "<xsl:value-of select="@connect1name"/>" (type=<xsl:value-of select="@text"/>);
 connects to "<xsl:value-of select="@connect2name"/>" (type=<xsl:value-of select="@text"/>)
 <br/>
