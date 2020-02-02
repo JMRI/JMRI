@@ -1,6 +1,6 @@
 package jmri.jmrix.can.cbus.simulator;
 
-import jmri.jmrix.can.CanMessage;
+import jmri.jmrix.AbstractMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusConstants;
@@ -13,12 +13,12 @@ import jmri.jmrix.can.cbus.CbusConstants;
  *
  * @author Steve Young Copyright (C) 2019,2020
  */
-public class CbusDummyNodeCanListener extends jmri.jmrix.can.cbus.node.CbusNodeCanListener {
+public class CbusDummyNodeCanListener extends CbusSimCanListener {
 
     private final CbusDummyNode _dummyNode;
     
     /**
-     * Create a new CbusNodeCanListener
+     * Create a new CbusDummyNodeCanListener
      *
      * @param connmemo The CAN Connection to listen to.
      * @param node The Node
@@ -26,12 +26,13 @@ public class CbusDummyNodeCanListener extends jmri.jmrix.can.cbus.node.CbusNodeC
     public CbusDummyNodeCanListener ( CanSystemConnectionMemo connmemo, CbusDummyNode node ){
         super(connmemo,node);
         _dummyNode = node;
+        setDelay (40);
     }
     
-    private void passMessage(CanMessage m) {
+    @Override
+    protected void startProcessFrame(AbstractMessage m) {
         // extended or module type unset
-        if ( m.extendedOrRtr() 
-            || _dummyNode.getNodeParamManager().getParameter(3) == 0 ) {
+        if ( _dummyNode.getNodeParamManager().getParameter(3) == 0 ) {
             return;
         }
 
@@ -51,7 +52,7 @@ public class CbusDummyNodeCanListener extends jmri.jmrix.can.cbus.node.CbusNodeC
         }
     }
     
-    private void processDummyCanFLimMode(CanMessage m){
+    private void processDummyCanFLimMode(AbstractMessage m){
         switch (m.getElement(0)) {
             case CbusConstants.CBUS_NNULN:
                 // Node exit learn mode
@@ -78,7 +79,7 @@ public class CbusDummyNodeCanListener extends jmri.jmrix.can.cbus.node.CbusNodeC
         }
     }
     
-    private void processDummyCanFLimModeEventStuff(CanMessage m){
+    private void processDummyCanFLimModeEventStuff(AbstractMessage m){
         switch (m.getElement(0)) {    
             case CbusConstants.CBUS_RQEVN:
                 // Request number of events
@@ -97,7 +98,7 @@ public class CbusDummyNodeCanListener extends jmri.jmrix.can.cbus.node.CbusNodeC
         }
     }
     
-    private void processDummyCanSetupMode(CanMessage m){
+    private void processDummyCanSetupMode(AbstractMessage m){
         
         switch (m.getElement(0)) {
             case CbusConstants.CBUS_RQNP:
@@ -121,8 +122,7 @@ public class CbusDummyNodeCanListener extends jmri.jmrix.can.cbus.node.CbusNodeC
                 r.setElement(5, byteArr[4] & 0xff);
                 r.setElement(6, byteArr[5] & 0xff);
                 r.setElement(7, byteArr[6] & 0xff);
-                _dummyNode.send.sendWithDelay(r,_dummyNode.getSendIn(),
-                    _dummyNode.getSendOut(),_dummyNode.getDelay());
+                send.sendWithDelay(r,getSendIn(),getSendOut(),getDelay());
                 break;
             default:
                 break;
@@ -130,7 +130,7 @@ public class CbusDummyNodeCanListener extends jmri.jmrix.can.cbus.node.CbusNodeC
         
     }
     
-    private void processDummyCanLearnMode(CanMessage m){
+    private void processDummyCanLearnMode(AbstractMessage m){
         switch (m.getElement(0)) {
             case CbusConstants.CBUS_EVLRN:
                 // Teach node event
@@ -149,7 +149,7 @@ public class CbusDummyNodeCanListener extends jmri.jmrix.can.cbus.node.CbusNodeC
                 // clear all events
                 if ( ( ( m.getElement(1) * 256 ) + m.getElement(2) ) ==  _dummyNode.getNodeNumber() ) {
                     // no response expected
-                    _dummyNode.getNodeEventManager().resetNodeEvents();
+                    _dummyNode.getNodeEventManager().resetNodeEventsToZero();
                 }   break;
             default:
                 break;
@@ -172,27 +172,6 @@ public class CbusDummyNodeCanListener extends jmri.jmrix.can.cbus.node.CbusNodeC
                 _dummyNode.getNodeEventManager().getNextFreeIndex() );
         }
         _dummyNode.sendWRACK();
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void message(CanMessage m) {
-        if ( _dummyNode.getProcessOut() ) {
-            passMessage(m);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void reply(CanReply r) {
-        if ( _dummyNode.getProcessIn() ) {
-            CanMessage msg = new CanMessage(r);
-            passMessage(msg);
-        }
     }
 
     // private static final Logger log = LoggerFactory.getLogger(CbusDummyNodeCanListener.class);

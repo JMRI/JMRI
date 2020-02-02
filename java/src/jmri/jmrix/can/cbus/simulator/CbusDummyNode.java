@@ -25,15 +25,8 @@ public class CbusDummyNode extends CbusNode {
     private NdPane _pane;
     public static ArrayList<Integer> ndTypes;
     
-    private int _networkDelay;
-    private Boolean _processIn;
-    private Boolean _processOut;
-    private Boolean _sendIn;
-    private Boolean _sendOut;
-    
     public CbusDummyNode( int nodenumber, int manufacturer, int nodeType, int canId, CanSystemConnectionMemo sysmemo ){
         super( sysmemo, nodenumber );
-        _memo = sysmemo;
         setDummyType(manufacturer, nodeType);
         setCanId(canId);
         init();
@@ -45,18 +38,16 @@ public class CbusDummyNode extends CbusNode {
      */    
     @Override
     public jmri.jmrix.can.cbus.node.CbusNodeCanListener getNewCanListener(){
-        return new CbusDummyNodeCanListener(_memo,this);
+        canListener = new CbusDummyNodeCanListener(_memo,this);
+        return canListener;
     }
+    
+    private CbusDummyNodeCanListener canListener;
     
     private void init(){
         
-        _networkDelay = 40;
+        
         _pane = null;
-
-        _processIn=false;
-        _processOut=true;
-        _sendIn=true;
-        _sendOut=false;
         
         // get available simulated nodes
         ndTypes = new ArrayList<>();
@@ -65,58 +56,14 @@ public class CbusDummyNode extends CbusNode {
         ndTypes.add(255); // 255 CANTSTMAX
     }
     
-    /**
-     * Set the simulated node delay
-     * @param nodeDelay Delay in ms
-     */
-    public void setDelay( int nodeDelay){
-        _networkDelay = nodeDelay;
-    }
-    
-    public int getDelay(){
-        return _networkDelay;
-    }
-    
-    public void setProcessIn( Boolean newval){
-        _processIn = newval;
-    }
-    
-    public void setProcessOut( Boolean newval){
-        _processOut = newval;
-    }
-
-    public void setSendIn( Boolean newval){
-        _sendIn = newval;
-    }
-
-    public void setSendOut( Boolean newval){
-        _sendOut = newval;
-    }
-    
-    public Boolean getProcessIn() {
-        return _processIn;
-    }
-    
-    public Boolean getProcessOut() {
-        return _processOut;
-    }    
-    
-    public Boolean getSendIn() {
-        return _sendIn;
-    }    
-    
-    public Boolean getSendOut() {
-        return _sendOut;
-    }
-
     // total events on module
     protected void sendNUMEV(){
         CanReply r = new CanReply(4);
         r.setElement(0, CbusConstants.CBUS_NUMEV);
         r.setElement(1, getNodeNumber() >> 8);
         r.setElement(2, getNodeNumber() & 0xff);
-        r.setElement(3, getNodeEventManager().getTotalNodeEvents() );
-        send.sendWithDelay(r,_sendIn,_sendOut,_networkDelay);
+        r.setElement(3, Math.max(0, getNodeEventManager().getTotalNodeEvents() & 0xff ) );
+        send.sendWithDelay(r,canListener.getSendIn(),canListener.getSendOut(),canListener.getDelay());
     }
 
     protected void sendENRSP(){
@@ -141,8 +88,7 @@ public class CbusDummyNode extends CbusNode {
             r.setElement(5, ndEv.getEn() >> 8);
             r.setElement(6, ndEv.getEn() & 0xff);
             r.setElement(7, ndEv.getIndex() & 0xff);
-            
-            send.sendWithDelay(r,_sendIn,_sendOut,( _networkDelay + ( extraDelay * i ) ) );
+            send.sendWithDelay(r,canListener.getSendIn(),canListener.getSendOut(),canListener.getDelay() + ( extraDelay * i ) );
         }
     }
     
@@ -169,24 +115,24 @@ public class CbusDummyNode extends CbusNode {
             r.setElement(0, CbusConstants.CBUS_NEVAL);
             r.setElement(1, getNodeNumber() >> 8);
             r.setElement(2, getNodeNumber() & 0xff);
-            r.setElement(3, index);
-            r.setElement(4, varIndex);
-            r.setElement(5, _ndEv.getEvVar(varIndex) );
-            send.sendWithDelay(r,_sendIn,_sendOut,_networkDelay);
+            r.setElement(3, index & 0xff);
+            r.setElement(4, varIndex & 0xff);
+            r.setElement(5, _ndEv.getEvVar(varIndex) & 0xff);
+            send.sendWithDelay(r,canListener.getSendIn(),canListener.getSendOut(),canListener.getDelay());
         }
     }
     
     protected void sendPARAMS() {
         CanReply r = new CanReply(8);
         r.setElement(0, CbusConstants.CBUS_PARAMS);
-        r.setElement(1, getNodeParamManager().getParameter(1));
-        r.setElement(2, getNodeParamManager().getParameter(2));
-        r.setElement(3, getNodeParamManager().getParameter(3));
-        r.setElement(4, getNodeParamManager().getParameter(4));
-        r.setElement(5, getNodeParamManager().getParameter(5));
-        r.setElement(6, getNodeParamManager().getParameter(6));
-        r.setElement(7, getNodeParamManager().getParameter(7));
-        send.sendWithDelay(r,_sendIn,_sendOut,_networkDelay);
+        r.setElement(1, getNodeParamManager().getParameter(1) & 0xff );
+        r.setElement(2, getNodeParamManager().getParameter(2) & 0xff );
+        r.setElement(3, getNodeParamManager().getParameter(3) & 0xff);
+        r.setElement(4, getNodeParamManager().getParameter(4) & 0xff);
+        r.setElement(5, getNodeParamManager().getParameter(5) & 0xff);
+        r.setElement(6, getNodeParamManager().getParameter(6) & 0xff);
+        r.setElement(7, getNodeParamManager().getParameter(7) & 0xff);
+        send.sendWithDelay(r,canListener.getSendIn(),canListener.getSendOut(),canListener.getDelay());
     }
     
     protected void sendPNN() {
@@ -194,10 +140,10 @@ public class CbusDummyNode extends CbusNode {
         r.setElement(0, CbusConstants.CBUS_PNN);
         r.setElement(1, getNodeNumber() >> 8);
         r.setElement(2, getNodeNumber() & 0xff);
-        r.setElement(3, getNodeParamManager().getParameter(1) );
-        r.setElement(4, getNodeParamManager().getParameter(3) );
-        r.setElement(5, getNodeParamManager().getParameter(8));
-        send.sendWithDelay(r,_sendIn,_sendOut,_networkDelay);
+        r.setElement(3, getNodeParamManager().getParameter(1) & 0xff );
+        r.setElement(4, getNodeParamManager().getParameter(3) & 0xff );
+        r.setElement(5, getNodeParamManager().getParameter(8) & 0xff );
+        send.sendWithDelay(r,canListener.getSendIn(),canListener.getSendOut(),canListener.getDelay());
     }
 
     // Parameter answer
@@ -208,9 +154,9 @@ public class CbusDummyNode extends CbusNode {
             r.setElement(0, CbusConstants.CBUS_PARAN);
             r.setElement(1, getNodeNumber() >> 8);
             r.setElement(2, getNodeNumber() & 0xff);
-            r.setElement(3, index);
-            r.setElement(4, getNodeParamManager().getParameter(index));
-            send.sendWithDelay(r,_sendIn,_sendOut,_networkDelay);
+            r.setElement(3, index & 0xff);
+            r.setElement(4, getNodeParamManager().getParameter(index) & 0xff);
+            send.sendWithDelay(r,canListener.getSendIn(),canListener.getSendOut(),canListener.getDelay());
         }
         catch (ArrayIndexOutOfBoundsException e) {
             sendCMDERR(9);
@@ -225,9 +171,9 @@ public class CbusDummyNode extends CbusNode {
             r.setElement(0, CbusConstants.CBUS_NVANS);
             r.setElement(1, getNodeNumber() >> 8);
             r.setElement(2, getNodeNumber() & 0xff);
-            r.setElement(3, index);
-            r.setElement(4, getNodeNvManager().getNV(index));
-            send.sendWithDelay(r,_sendIn,_sendOut,_networkDelay);
+            r.setElement(3, index & 0xff );
+            r.setElement(4, getNodeNvManager().getNV(index) & 0xff );
+            send.sendWithDelay(r,canListener.getSendIn(),canListener.getSendOut(),canListener.getDelay());
         }
         catch (ArrayIndexOutOfBoundsException e) {
             sendCMDERR(10);
@@ -261,8 +207,8 @@ public class CbusDummyNode extends CbusNode {
         r.setElement(0, CbusConstants.CBUS_CMDERR);
         r.setElement(1, getNodeNumber() >> 8);
         r.setElement(2, getNodeNumber() & 0xff);
-        r.setElement(3, errorId );
-        send.sendWithDelay(r,_sendIn,_sendOut,_networkDelay);
+        r.setElement(3, errorId & 0xff);
+        send.sendWithDelay(r,canListener.getSendIn(),canListener.getSendOut(),canListener.getDelay());
     }
     
     protected void sendWRACK(){
@@ -270,7 +216,7 @@ public class CbusDummyNode extends CbusNode {
         r.setElement(0, CbusConstants.CBUS_WRACK);
         r.setElement(1, getNodeNumber() >> 8);
         r.setElement(2, getNodeNumber() & 0xff);        
-        send.sendWithDelay(r,_sendIn,_sendOut,_networkDelay);
+        send.sendWithDelay(r,canListener.getSendIn(),canListener.getSendOut(),canListener.getDelay());
     }
     
     // sim of FiLM Button
@@ -282,7 +228,7 @@ public class CbusDummyNode extends CbusNode {
             r.setElement(0, CbusConstants.CBUS_RQNN);
             r.setElement(1, getNodeNumber() >> 8);
             r.setElement(2, getNodeNumber() & 0xff);
-            send.sendWithDelay(r,_sendIn,_sendOut,_networkDelay);
+            send.sendWithDelay(r,canListener.getSendIn(),canListener.getSendOut(),canListener.getDelay());
         }
     }
     
@@ -312,7 +258,7 @@ public class CbusDummyNode extends CbusNode {
         r.setElement(0, CbusConstants.CBUS_NNACK);
         r.setElement(1, getNodeNumber() >> 8);
         r.setElement(2, getNodeNumber() & 0xff);
-        send.sendWithDelay(r,_sendIn,_sendOut,_networkDelay);
+        send.sendWithDelay(r,canListener.getSendIn(),canListener.getSendOut(),canListener.getDelay());
     }
 
     private static final Logger log = LoggerFactory.getLogger(CbusDummyNode.class);
