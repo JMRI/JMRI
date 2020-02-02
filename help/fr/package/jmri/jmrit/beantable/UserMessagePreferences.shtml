@@ -23,7 +23,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -32,7 +32,7 @@
       d'information et d'alerte sont affich&eacute;s dans JMRI. Il
       vous permettra &eacute;galement de configurer un
       r&eacute;ponses par d&eacute;faut et la question
-      affich&eacute;e. <!--#include virtual="/Footer" -->
+      affich&eacute;e. <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

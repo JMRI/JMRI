@@ -13,7 +13,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -163,7 +163,7 @@ m&#234;me s'il est d&#233;j&#224; occup&#233;. Cette option est utilis&#233;e av
 
 Localis&#233; &#224; package/jmri/jmrt/beantable/BlockEdit
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
    </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
 </body>

@@ -16,7 +16,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -276,7 +276,7 @@ Cela complique grandement la classe, mais elle est acceptable pour l'instant.</p
 
 <p>LocoNet&reg; est une marque s&#233;pos&#233;e de <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
   </div>
   </div>
 </body>

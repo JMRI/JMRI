@@ -20,7 +20,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
     <!--#include virtual="../SidebarUp.shtml" -->
     <div id="mainContent">
@@ -244,7 +244,7 @@
       <p>The <a href=
       "http://legacy.lionel.com/GettingStarted/LionelTechnology/legacy/legacyHome.cfm">
       Lionel Legacy</a> website.</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

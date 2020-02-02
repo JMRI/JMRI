@@ -20,7 +20,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -277,7 +277,7 @@ ausi bien que des outils puissants pout travailler sur l'&#233;cran utilisateur.
 
 <p><b>*SearchLight:</b> Feu avec une seule lampe devant laquelle pivote un secteur ayant des &#233;crans color&#233;s.</p>
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
  </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->
 </body>

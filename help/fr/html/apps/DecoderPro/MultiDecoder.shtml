@@ -17,7 +17,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -188,7 +188,7 @@ Ceci peut &#234;tre fait plus rapidement dans l'avenir en ayant des centrales de
 qui essayent de lire simplement la valeur attendue, au lieu de 0 &#224; 255,
 en l'absence d'un accus&#233; de r&#233;ception
     
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
 </div> <!-- close #mainContent -->
 </div> <!-- close #mBody -->    
 </body>

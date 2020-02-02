@@ -22,7 +22,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
       <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -966,7 +966,7 @@
 
       <p>LocoNet&reg; is a registered trademark of <a href=
       "http://www.digitrax.com">Digitrax, Inc.</a></p>
-    </div><!--#include virtual="/Footer" -->
+    </div><!--#include virtual="/Footer.shtml" -->
   </div><!-- closes #mainContent-->
   <!-- closes #mBody-->
 </body>

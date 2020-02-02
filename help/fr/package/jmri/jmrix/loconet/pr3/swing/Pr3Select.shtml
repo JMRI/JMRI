@@ -22,7 +22,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -52,7 +52,7 @@
       pla&Atilde;&reg;t voir ses <a href=
       "../../../../../../html/hardware/loconet/PR3.shtml">page de
       r&Atilde;&copy;f&Atilde;&copy;rence JMRI</a>.</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>
