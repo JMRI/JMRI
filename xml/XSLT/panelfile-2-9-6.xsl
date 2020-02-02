@@ -195,6 +195,10 @@ Logic delay: <xsl:value-of select="logicDelay"/> (ms)<br/>
             <th>User Name</th>
             <th>Occupancy Sensor</th>
             <th>Memory</th>
+            <th>Occupied<br/>Sense</th>
+            <th>Track<br/>Color</th>
+            <th>Occupied<br/>Color</th>
+            <th>Extra<br/>Color</th>
         </tr>
         <!-- index through individual turnout elements -->
         <xsl:apply-templates/>
@@ -350,15 +354,22 @@ Logic delay: <xsl:value-of select="logicDelay"/> (ms)<br/>
                 <th>User Name</th>
                 <th>Sensor</th>
                 <th>Paths</th>
+                <th>Permissive</th>
             </tr>
             <!-- index through individual block elements -->
             <xsl:for-each select="block">
                 <tr><xsl:element name="a"><xsl:attribute name="id">Block-<xsl:value-of select="@systemName"/></xsl:attribute></xsl:element>
                     <td><xsl:value-of select="@systemName"/></td>
                     <td><xsl:value-of select="@userName"/></td>
-                    <td><xsl:for-each select="sensor">
+                    <td>
+                        <xsl:for-each select="sensor"><!-- is this clause actually necessary? -->
                         <xsl:value-of select="@systemName"/><br/>
-                        </xsl:for-each></td>
+                        </xsl:for-each>
+                        
+                        <xsl:for-each select="occupancysensor">
+                        <xsl:value-of select="."/><br/>
+                        </xsl:for-each>
+                        </td>
                     <td><table><xsl:for-each select="path">
                         <tr>
                             <td><xsl:choose>
@@ -402,6 +413,7 @@ Logic delay: <xsl:value-of select="logicDelay"/> (ms)<br/>
                                 </xsl:for-each>
                         </tr>
                         </xsl:for-each></table></td>
+                    <td><xsl:value-of select="permissive"/></td>
                 </tr>
             </xsl:for-each>
             </table>
@@ -459,6 +471,14 @@ Logic delay: <xsl:value-of select="logicDelay"/> (ms)<br/>
     <td><xsl:value-of select="userName"/></td>
     <td><xsl:value-of select="@occupancysensor"/></td>
     <td><xsl:value-of select="@memory"/></td>
+    <td><xsl:choose>
+        <xsl:when test="( @occupiedsense = 2 )" >ACTIVE</xsl:when>
+        <xsl:when test="( @occupiedsense = 4 )" >INACTIVE</xsl:when>
+        <xsl:otherwise><xsl:value-of select="@occupiedsense"/></xsl:otherwise>
+        </xsl:choose></td>
+    <td><xsl:value-of select="@trackcolor"/></td>
+    <td><xsl:value-of select="@occupiedcolor"/></td>
+    <td><xsl:value-of select="@extracolor"/></td>
 </tr>
 </xsl:template>
 
