@@ -193,6 +193,15 @@
             current status of the Sensor.</p>
           </li>
         </ol>
+        
+        <h3>Sensor Groups</h3>
+        <p>A group of sensors of which at most one can be active.
+        When a member of the group becomes active, all others are set to inactive.</p>
+        
+        <p>Sensor Groups are configured via the <a 
+            href="../../package/jmri/jmrit/sensorgroup/SensorGroupFrame.shtml"
+            >Sensor Group Tool</a>.</p>
+        
         <!--#include virtual="/Footer.shtml" -->
       </div><!-- closes #mainContent-->
     </div><!-- closes #mBody-->
