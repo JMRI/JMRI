@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * @author Steve Young Copyright (C) 2019,2020
  */
 public class CbusNodeCanListener implements jmri.jmrix.can.CanListener {
-    private final CanSystemConnectionMemo memo;
+    public final CanSystemConnectionMemo memo;
     private final CbusNode _node;
     private int[] tempSetupParams;
     
@@ -268,7 +268,7 @@ public class CbusNodeCanListener implements jmri.jmrix.can.CanListener {
             case CbusConstants.CBUS_NNCLR:
                 // instruction to delete all node events
                 if ( nn == _node.getNodeNumber() ) {
-                    _node.getNodeEventManager().resetNodeEvents();
+                    _node.getNodeEventManager().resetNodeEventsToZero();
                 }
                 break;
             case CbusConstants.CBUS_EVLRN:
@@ -341,7 +341,7 @@ public class CbusNodeCanListener implements jmri.jmrix.can.CanListener {
     /**
      * Disconnects from network
      */
-    protected void dispose(){
+    public void dispose(){
         removeTc(memo);
     }
     

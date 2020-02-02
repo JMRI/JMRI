@@ -89,7 +89,6 @@ public class CbusNode {
         thisNodeBackupFile = new CbusNodeBackupManager(this);
         _nodeStats = new CbusNodeStats(this);
         _listeners = new CopyOnWriteArraySet<>();
-        tableModel = null;
     }
     
     @Nonnull

@@ -1,12 +1,12 @@
 package jmri.jmrix.can.cbus.node;
 
+import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.util.ThreadingUtil;
 
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
@@ -20,9 +20,6 @@ import jmri.util.ThreadingUtil;
  */
 public class CbusNodeFromFcuTableDataModel extends CbusNodeTableDataModel {
 
-    private final ArrayList<CbusNodeFromBackup> __mainArray;
-    private final CanSystemConnectionMemo _memo;
-    
     // column order needs to match list in column tooltips
     static public final int FCU_NODE_NUMBER_COLUMN = 0; 
     static public final int FCU_NODE_TYPE_NAME_COLUMN = 1; 
@@ -35,9 +32,17 @@ public class CbusNodeFromFcuTableDataModel extends CbusNodeTableDataModel {
     public CbusNodeFromFcuTableDataModel(CanSystemConnectionMemo memo, int row, int column) {
         super (memo, row, column);
         
-        __mainArray = new ArrayList<>();
-        _memo = memo;
+        _mainArray = new ArrayList<>();
         
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void propertyChange(PropertyChangeEvent ev){
+        if (!(ev.getSource() instanceof CbusNode)) {
+            return;
+        }
+        this.fireTableDataChanged();
     }
     
     // order needs to match column list top of dtabledatamodel
@@ -60,7 +65,7 @@ public class CbusNodeFromFcuTableDataModel extends CbusNodeTableDataModel {
      */
     @Override
     public int getRowCount() {
-        return __mainArray.size();
+        return _mainArray.size();
     }
     
     /**
@@ -175,17 +180,17 @@ public class CbusNodeFromFcuTableDataModel extends CbusNodeTableDataModel {
     public Object getValueAt(int row, int col) {
         switch (col) {
             case FCU_NODE_NUMBER_COLUMN:
-                return __mainArray.get(row).getNodeNumber();
+                return _mainArray.get(row).getNodeNumber();
             case FCU_NODE_USER_NAME_COLUMN:
-                return __mainArray.get(row).getUserName();
+                return _mainArray.get(row).getUserName();
             case FCU_NODE_TYPE_NAME_COLUMN:
-                return __mainArray.get(row).getNodeStats().getNodeTypeName();
+                return _mainArray.get(row).getNodeStats().getNodeTypeName();
             case FCU_NODE_EVENTS_COLUMN:
-                return __mainArray.get(row).getNodeEventManager().getTotalNodeEvents();
+                return _mainArray.get(row).getNodeEventManager().getTotalNodeEvents();
             case NODE_NV_TOTAL_COLUMN:
-                return __mainArray.get(row).getNodeNvManager().getTotalNVs();
+                return _mainArray.get(row).getNodeNvManager().getTotalNVs();
             case FCU_NODE_TOTAL_BYTES_COLUMN:
-                return __mainArray.get(row).getNodeStats().totalNodeBytes();
+                return _mainArray.get(row).getNodeStats().totalNodeBytes();
             default:
                 return null;
         }
@@ -209,52 +214,26 @@ public class CbusNodeFromFcuTableDataModel extends CbusNodeTableDataModel {
     public void message(CanMessage m) { // outgoing cbus message
     }
     
-     /**
-     * returns the row number from a node number
-     * @param nodenum Node Number to search for
-     * @return Row number, else -1 if not on table
-     */
-    @Override
-    public int getNodeRowFromNodeNum( int nodenum ) {
-        for (int i = 0; i < getRowCount(); i++) {
-            if ( __mainArray.get(i).getNodeNumber() == nodenum ) {
-                return i;
-            }
-        }
-        return -1;
-    }
-    
     /**
      * Ignored as data from file
-     * @param m canframe
+     * @param m CanMessage
      */
     @Override
     public void reply(CanReply m) { // incoming cbus message
     }
     
     /**
-     * Register new CbusNodeFromBackup node to table
-     * @param node the node to add
+     * Returns a new or existing Backup node by node number
+     * @param nodenum Node Number
      */
-    public void addNode(CbusNodeFromBackup node ) {
-        __mainArray.add(node);
-        node.setTableModel(this);
-        // notify the JTable object that a row has changed; do that in the Swing thread!
-        ThreadingUtil.runOnGUI( ()->{
-            fireTableRowsInserted((getRowCount()-1), (getRowCount()-1));
-        });
-    }
-    
-    // returns a new or existing node by node number
-    // node number must be > 0
     @Override
     public CbusNodeFromBackup provideNodeByNodeNum( int nodenum ) {
         if ( nodenum < 1 ) {
             return null;
         }
         for (int i = 0; i < getRowCount(); i++) {
-            if ( __mainArray.get(i).getNodeNumber() == nodenum ) {
-                return __mainArray.get(i);
+            if ( _mainArray.get(i).getNodeNumber() == nodenum ) {
+                return (CbusNodeFromBackup) _mainArray.get(i);
             }
         }
         CbusNodeFromBackup cs = new CbusNodeFromBackup(_memo, nodenum);
@@ -262,55 +241,6 @@ public class CbusNodeFromFcuTableDataModel extends CbusNodeTableDataModel {
         addNode(cs);
         return cs;        
     }
-
-    // returns an existing node by node number
-    // null if not found
-    @Override
-    public CbusNodeFromBackup getNodeByNodeNum( int nodenum ) {
-        for (int i = 0; i < getRowCount(); i++) {
-            if ( __mainArray.get(i).getNodeNumber() == nodenum ) {
-                return __mainArray.get(i);
-            }
-        }
-        return null;        
-    }
     
-    /**
-     * Returns an existing node by table row number
-     * @param rowNum The Row Number
-     * @return the Node
-     */
-    @Override
-    public CbusNode getNodeByRowNum( int rowNum ) {
-        return __mainArray.get(rowNum);
-    }
-    
-    /**
-     * Single Node User Name
-     * @param nn Node Number, NOT row number
-     * @return Node Username, if unset returns node type name
-     */
-    @Override
-    public String getNodeName( int nn ) {
-        int rownum = getNodeRowFromNodeNum(nn);
-        if ( rownum < 0 ) {
-            return "";
-        }
-        if ( !__mainArray.get(rownum).getUserName().isEmpty() ) {
-            return __mainArray.get(rownum).getUserName();
-        }
-        if ( !__mainArray.get(rownum).getNodeStats().getNodeTypeName().isEmpty() ) {
-            return __mainArray.get(rownum).getNodeStats().getNodeTypeName();
-        }        
-        return "";
-    }
-    
-    /**
-     * No need to disconnect from the tc, we should not be connected in this type of node
-     */
-    @Override
-    public void dispose() {
-    }
-
     // private final static Logger log = LoggerFactory.getLogger(CbusNodeFromFcuTableDataModel.class);
 }

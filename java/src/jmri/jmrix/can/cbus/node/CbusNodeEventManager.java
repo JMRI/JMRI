@@ -85,13 +85,12 @@ public class CbusNodeEventManager {
      * @param newEvent the new event to be added
      */
     public void addNewEvent( @Nonnull CbusNodeEvent newEvent ) {
-        
         if (_nodeEvents == null) {
-            resetNodeEvents();
+            _nodeEvents = new ArrayList<>();
         }
         _nodeEvents.add(newEvent);
-        setEvIndexValid(false); // Also produces Property Change Event
         
+        setEvIndexValid(false); // Also produces Property Change Event
     }
 
     /**
@@ -114,6 +113,9 @@ public class CbusNodeEventManager {
      */
     @CheckForNull
     public CbusNodeEvent getNodeEvent(int nn, int en) {
+        if (_nodeEvents==null){
+            return null;
+        }
         for (int i = 0; i < _nodeEvents.size(); i++) {
             if ( ( _nodeEvents.get(i).getNn() == nn ) && ( _nodeEvents.get(i).getEn() == en )) {
                 return _nodeEvents.get(i);
@@ -138,16 +140,15 @@ public class CbusNodeEventManager {
     @Nonnull
     public CbusNodeEvent provideNodeEvent(int nn, int en) {
         if (_nodeEvents == null) {
-            resetNodeEvents();
+            _nodeEvents = new ArrayList<>();
         }
-        for (int i = 0; i < _nodeEvents.size(); i++) {
-            if ( ( _nodeEvents.get(i).getNn() == nn ) && ( _nodeEvents.get(i).getEn() == en )) {
-                return _nodeEvents.get(i);
-            }
+        CbusNodeEvent newev = getNodeEvent(nn,en);
+        if ( newev ==null){
+            newev = new CbusNodeEvent(_memo,nn, en, _node.getNodeNumber(),
+                -1, _node.getNodeParamManager().getParameter(5) );
+            addNewEvent(newev);
         }
-        CbusNodeEvent newev = new CbusNodeEvent(_memo,nn, en, _node.getNodeNumber(),
-            -1, _node.getNodeParamManager().getParameter(5) );
-        addNewEvent(newev);
+        setEvIndexValid(false); // Also produces Property Change Event
         return newev;
     }    
     
@@ -427,6 +428,8 @@ public class CbusNodeEventManager {
         
         _node.send.nodeEnterLearnEvMode( _node.getNodeNumber() ); // no response expected but we add a mini delay for other traffic
         
+        log.debug("sendNewEvSToNode {}",evArray);
+        
         ThreadingUtil.runOnLayoutDelayed( () -> {
             teachNewEvLoop();
         }, 50 );
@@ -490,23 +493,22 @@ public class CbusNodeEventManager {
     protected void teachNewEvLoop(){
         
         if ( nextEvVar > _node.getNodeParamManager().getParameter(5) ) {
-     //       log.info("Next Event in Array");
             nextEvVar = 1;
             nextEvInArray++;
         }
         
         if ( nextEvInArray >= eventsToTeachArray.size() ) {
             log.debug("all done");
-            
             teachEventsComplete();
             return;
-            
         }
         
         CbusNodeEvent wholeEvent = eventsToTeachArray.get(nextEvInArray);
         
         log.debug("teach event var {}  val {} ",nextEvVar,wholeEvent.getEvVar(nextEvVar));
         CbusNodeEvent existingEvent = getNodeEvent( wholeEvent.getNn(), wholeEvent.getEn() );
+        
+        log.debug("teach event {} with existing event {}",wholeEvent,existingEvent);
         
         // increment and restart loop if no change
         if ((existingEvent!=null) && (existingEvent.getEvVar(nextEvVar)==wholeEvent.getEvVar(nextEvVar))){
@@ -523,16 +525,30 @@ public class CbusNodeEventManager {
     }
     
     /**
-     * Resets Node Events with blank array
-     *
+     * Resets Node Events with null array.
+     * For when a CbusNode is reset to unknown events.
      */
     public void resetNodeEvents() {
+        _nodeEvents = null;
+        _node.notifyPropertyChangeListener("ALLEVUPDATE",null,null);
+    }
+    
+    /**
+     * Resets Node Events with zero length array.
+     * For when a CbusNode is reset to 0 events
+     *
+     */
+    public void resetNodeEventsToZero() {
         _nodeEvents = null;
         _nodeEvents = new ArrayList<>();
         _node.notifyPropertyChangeListener("ALLEVUPDATE",null,null);
     }
     
-    // finds the next event index for a CbusDummyNode NODE to allocate, NOT a software tool
+    /**
+     * the next event index for a CbusDummyNode NODE to allocate, 
+     * NOT a software tool.
+     * @return next available event index
+     */
     public int getNextFreeIndex(){
         int newIndex = 1;
         for (int i = 0; i < getTotalNodeEvents(); i++) {

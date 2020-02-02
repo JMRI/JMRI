@@ -29,7 +29,7 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
         implements CanListener, PropertyChangeListener {
 
     protected ArrayList<CbusNode> _mainArray;
-    private final CanSystemConnectionMemo _memo;
+    protected final CanSystemConnectionMemo _memo;
     private final CbusSend send;
     private CbusPreferences preferences;
     private ArrayList<Integer> _nodesFound;
