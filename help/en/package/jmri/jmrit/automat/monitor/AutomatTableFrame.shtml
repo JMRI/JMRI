@@ -19,7 +19,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -49,7 +49,7 @@ a.setName("Automat example script")
       
       <p>This is the
       help/jmri/jmrit/automat/monitor/AutomatTable help page 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

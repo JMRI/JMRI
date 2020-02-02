@@ -14,7 +14,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
 <div id="mainContent">
 
@@ -50,7 +50,7 @@ Le nom utilisateur est facultatif, mais si on leur en donne un, il doit &#234;tr
 Pour plus d'informations sur les objets audio, consultez la
 <a href="../../../../html/tools/Audio.shtml"> page d'aide audio</a>.
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
  </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->
 </body>

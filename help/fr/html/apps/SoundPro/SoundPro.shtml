@@ -23,7 +23,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -54,7 +54,7 @@ Plus d'information au sujet de <a href="../../setup/Files.shtml">Fichiers de Con
         "../../../html/tools/Audio.shtml">Audio</a></li>
     </ul>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

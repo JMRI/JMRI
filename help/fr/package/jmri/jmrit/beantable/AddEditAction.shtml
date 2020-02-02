@@ -23,7 +23,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -110,7 +110,7 @@
       une nouvelle action ou sans achever le montage d'une action
       existante . La fermeture de la fen&ecirc;tre Ajouter/Modifier
       l'Action &eacute;quivaut &agrave; cliquer sur le bouton
-      <b>Annuler</b>.</p><!--#include virtual="/Footer" -->
+      <b>Annuler</b>.</p><!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

@@ -19,7 +19,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -133,7 +133,7 @@ osascript-e 'tell application "DecoderPro" to get its |user.name|'
       </ul>Et, bien s&ucirc;r, une <a href=
       "http://www.google.com/search?client=safari&amp;rls=en-us&amp;q=applescript&amp;ie=iso-8859-1&amp;oe=iso-8859-1">
       recherche Google</a> retrouvera de nombreuses ressources
-      int&eacute;ressantes. <!--#include virtual="/Footer" -->
+      int&eacute;ressantes. <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

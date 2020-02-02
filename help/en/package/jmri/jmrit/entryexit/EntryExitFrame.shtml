@@ -21,7 +21,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
 
     <div id="mainContent">
@@ -157,7 +157,7 @@
       <a href="../../../../html/tools/EntryExit.shtml">Entry/Exit (NX)
         main help page</a>.</p>
 
-    <!--#include virtual="/Footer" -->
+    <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div>
 </body>

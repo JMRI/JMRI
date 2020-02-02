@@ -1,7 +1,6 @@
 package jmri.jmrix.can.cbus.swing;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import javax.annotation.Nonnull;
 import javax.swing.*;

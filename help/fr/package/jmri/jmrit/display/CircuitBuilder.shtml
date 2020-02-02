@@ -16,7 +16,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -251,7 +251,7 @@ Il y a un compromis ici sur l'apparence.
  Pour supprimer un chemin, le s&#233;lectionner dans la liste et appuyez sur le bouton <b>Supprimer le Chemin</b>
 </ol>
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
      </div>
    </div>
 </body>

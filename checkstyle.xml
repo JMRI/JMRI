@@ -59,4 +59,9 @@
     <property name="checks" value="InterfaceIsType"/>
     <property name="files" value="(\/ussctc\/|\/rps\/)Constants.java$"/>
   </module>
+  <!-- disable package name check on sample package-info.java -->
+  <module name="SuppressionSingleFilter">
+    <property name="checks" value="PackageDeclaration"/>
+    <property name="files" value="java\/package-info.java$"/>
+  </module>
 </module>
