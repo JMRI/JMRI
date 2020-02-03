@@ -23,7 +23,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -172,7 +172,7 @@
       situation particuli&egrave;re ne peut pas &ecirc;tre
       manipul&eacute;e par une logique simple signal, vous drevez
       vous reporte &agrave; Logix pour adapter le signal logique
-      &agrave; vos besoins.</p><!--#include virtual="/Footer" -->
+      &agrave; vos besoins.</p><!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

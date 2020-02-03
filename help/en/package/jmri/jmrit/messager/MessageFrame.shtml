@@ -18,7 +18,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -26,7 +26,7 @@
       ability to send messages to a hand-held throttle.
 
       <p>This is the jmri.jmrit.messager.MessageFrame help page.</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

@@ -195,6 +195,10 @@ Logic delay: <xsl:value-of select="logicDelay"/> (ms)<br/>
             <th>User Name</th>
             <th>Occupancy Sensor</th>
             <th>Memory</th>
+            <th>Occupied<br/>Sense</th>
+            <th>Track<br/>Color</th>
+            <th>Occupied<br/>Color</th>
+            <th>Extra<br/>Color</th>
         </tr>
         <!-- index through individual turnout elements -->
         <xsl:apply-templates/>
@@ -350,15 +354,22 @@ Logic delay: <xsl:value-of select="logicDelay"/> (ms)<br/>
                 <th>User Name</th>
                 <th>Sensor</th>
                 <th>Paths</th>
+                <th>Permissive</th>
             </tr>
             <!-- index through individual block elements -->
             <xsl:for-each select="block">
                 <tr><xsl:element name="a"><xsl:attribute name="id">Block-<xsl:value-of select="@systemName"/></xsl:attribute></xsl:element>
                     <td><xsl:value-of select="@systemName"/></td>
                     <td><xsl:value-of select="@userName"/></td>
-                    <td><xsl:for-each select="sensor">
+                    <td>
+                        <xsl:for-each select="sensor"><!-- is this clause actually necessary? -->
                         <xsl:value-of select="@systemName"/><br/>
-                        </xsl:for-each></td>
+                        </xsl:for-each>
+                        
+                        <xsl:for-each select="occupancysensor">
+                        <xsl:value-of select="."/><br/>
+                        </xsl:for-each>
+                        </td>
                     <td><table><xsl:for-each select="path">
                         <tr>
                             <td><xsl:choose>
@@ -402,6 +413,7 @@ Logic delay: <xsl:value-of select="logicDelay"/> (ms)<br/>
                                 </xsl:for-each>
                         </tr>
                         </xsl:for-each></table></td>
+                    <td><xsl:value-of select="permissive"/></td>
                 </tr>
             </xsl:for-each>
             </table>
@@ -459,6 +471,14 @@ Logic delay: <xsl:value-of select="logicDelay"/> (ms)<br/>
     <td><xsl:value-of select="userName"/></td>
     <td><xsl:value-of select="@occupancysensor"/></td>
     <td><xsl:value-of select="@memory"/></td>
+    <td><xsl:choose>
+        <xsl:when test="( @occupiedsense = 2 )" >ACTIVE</xsl:when>
+        <xsl:when test="( @occupiedsense = 4 )" >INACTIVE</xsl:when>
+        <xsl:otherwise><xsl:value-of select="@occupiedsense"/></xsl:otherwise>
+        </xsl:choose></td>
+    <td><xsl:value-of select="@trackcolor"/></td>
+    <td><xsl:value-of select="@occupiedcolor"/></td>
+    <td><xsl:value-of select="@extracolor"/></td>
 </tr>
 </xsl:template>
 
@@ -1057,24 +1077,139 @@ Sensor Icon "<xsl:value-of select="@sensor"/>"<br/>
 </xsl:template>
 
 <xsl:template match="positionablelabel">
-Positionable Label "<xsl:value-of select="@icon"/>"<br/>
+Positionable Label 
+<xsl:choose>
+  <xsl:when test="( @text != '' )" >
+  text: "<xsl:value-of select="@text"/>"
+  </xsl:when>
+</xsl:choose>
+<xsl:choose>
+  <xsl:when test="( icon/@url != '' )" >
+  icon: <xsl:value-of select="icon/@url"/>
+  </xsl:when>
+</xsl:choose>
+<br/>
 </xsl:template>
 
 <xsl:template match="layoutturnout">
-Layout Turnout ident="<xsl:value-of select="@ident"/>", 
+Layout Turnout 
+ (
+<xsl:choose>
+  <xsl:when test="( @type = 1 )" >RH</xsl:when>
+  <xsl:when test="( @type = 2 )" >LH</xsl:when>
+  <xsl:when test="( @type = 3 )" >Wye</xsl:when>
+  <xsl:when test="( @type = 4 )" >Double XOver</xsl:when>
+  <xsl:when test="( @type = 5 )" >RH XOver</xsl:when>
+  <xsl:when test="( @type = 6 )" >LH  XOver</xsl:when>
+  <xsl:when test="( @type = 7 )" >Single Slip</xsl:when>
+  <xsl:when test="( @type = 8 )" >Double Slip</xsl:when>
+  <xsl:otherwise>(type="<xsl:value-of select="@type"/>")</xsl:otherwise>
+</xsl:choose>
+ )
+ident="<xsl:value-of select="@ident"/>"
 turnoutname="<xsl:value-of select="@turnoutname"/>",
-blockname="<xsl:value-of select="@blockname"/>"<br/>
+<xsl:choose>
+  <xsl:when test="( @blockname != '' )" >
+  block: "<xsl:value-of select="@blockname"/>"
+  </xsl:when>
+</xsl:choose>
+<xsl:choose>
+  <xsl:when test="( @connectaname != '' )" >
+  A to "<xsl:value-of select="@connectaname"/>"
+  </xsl:when>
+</xsl:choose>
+<xsl:choose>
+  <xsl:when test="( @connectbname != '' )" >
+  B to "<xsl:value-of select="@connectbname"/>"
+  </xsl:when>
+</xsl:choose>
+<xsl:choose>
+  <xsl:when test="( @connectcname != '' )" >
+  C to "<xsl:value-of select="@connectcname"/>"
+  </xsl:when>
+</xsl:choose>
+<xsl:choose>
+  <xsl:when test="( @connectdname != '' )" >
+  D to "<xsl:value-of select="@connectdname"/>"
+  </xsl:when>
+</xsl:choose>
+<br/>
 </xsl:template>
 
 <xsl:template match="tracksegment">
-Track segment ident="<xsl:value-of select="@ident"/>": 
+Track Segment ident="<xsl:value-of select="@ident"/>"
+<xsl:choose>
+  <xsl:when test="( @blockname != '' )" >
+  block: "<xsl:value-of select="@blockname"/>"
+  </xsl:when>
+</xsl:choose>
 connects to "<xsl:value-of select="@connect1name"/>" (type=<xsl:value-of select="@type1"/>);
 connects to "<xsl:value-of select="@connect2name"/>" (type=<xsl:value-of select="@type2"/>)
 <br/>
 </xsl:template>
 
+<xsl:template match="layoutSlip">
+Layout Slip
+ident="<xsl:value-of select="@ident"/>"
+<xsl:choose>
+  <xsl:when test="( @blockname != '' )" >
+  block: "<xsl:value-of select="@blockname"/>"
+  </xsl:when>
+</xsl:choose>
+<xsl:choose>
+  <xsl:when test="( turnout != '' )" >
+  turnout: "<xsl:value-of select="turnout"/>"
+  </xsl:when>
+</xsl:choose>
+<xsl:choose>
+  <xsl:when test="( turnoutB != '' )" >
+  turnoutB: "<xsl:value-of select="turnoutB"/>"
+  </xsl:when>
+</xsl:choose>
+<xsl:for-each select="states/*">
+    (
+        <xsl:value-of select="name()"/>:<xsl:value-of select="turnout"/>,<xsl:value-of select="turnoutB"/>
+    )
+</xsl:for-each>
+<br/>
+</xsl:template>
+
+<xsl:template match="memoryicon">
+Memory Icon memory="<xsl:value-of select="@memory"/>"
+<br/>
+</xsl:template>
+
+<xsl:template match="indicatortrackicon">
+Indicator Track Icon block="<xsl:value-of select="occupancyblock"/>"
+paths:
+<xsl:for-each select="paths/*"> "<xsl:value-of select="."/>" <xsl:text> </xsl:text></xsl:for-each>
+<br/>
+</xsl:template>
+
+<xsl:template match="indicatorturnouticon">
+Indicator Turnout Icon 
+block="<xsl:value-of select="occupancyblock"/>"
+turnout="<xsl:value-of select="turnout"/>"
+paths:
+<xsl:for-each select="paths/*"> "<xsl:value-of select="."/>" <xsl:text> </xsl:text></xsl:for-each>
+<br/>
+</xsl:template>
+
+<xsl:template match="BlockContentsIcon">
+Block Contents Icon block="<xsl:value-of select="@blockcontents"/>"
+<br/>
+</xsl:template>
+
+<xsl:template match="PortalIcon">
+Portal Icon 
+portalName="<xsl:value-of select="@portalName"/>"
+to Block Name="<xsl:value-of select="@toBlockName"/>"
+from Block Name="<xsl:value-of select="@fromBlockName"/>"
+<br/>
+</xsl:template>
+
 <xsl:template match="positionablepoint">
-Positionable point ident="<xsl:value-of select="@ident"/>"
+Positionable Point ident="<xsl:value-of select="@ident"/>"
 connects to "<xsl:value-of select="@connect1name"/>" (type=<xsl:value-of select="@text"/>);
 connects to "<xsl:value-of select="@connect2name"/>" (type=<xsl:value-of select="@text"/>)
 <br/>

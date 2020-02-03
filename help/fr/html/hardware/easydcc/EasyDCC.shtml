@@ -16,7 +16,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="../SidebarUp" -->
     <div id="mainContent">
@@ -103,7 +103,7 @@
 <h3>Autre Source d'info</h3>
 		<p>Les <a href="http://www.cvpusa.com/easydcc_system.php">ManuelsCVP EasyDCC Manuals</a></p>
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
  </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->
 </body>

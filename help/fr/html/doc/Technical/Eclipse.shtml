@@ -19,7 +19,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -306,7 +306,7 @@ pour: <pre>-Djava.library.path=.;lib;lib/windows/x64
 	alt="Eclipse Error pane"></a>
 	</p>
 
-		<!--#include virtual="/Footer" -->
+		<!--#include virtual="/Footer.shtml" -->
   		</div><!-- closes #mainContent-->
 	</div><!-- closes #mBody-->
 </body>

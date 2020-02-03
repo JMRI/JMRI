@@ -25,7 +25,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -87,7 +87,7 @@
       (Orthogonal).
 
       <h2>Modification du texte</h2>Entrez le texte souhait&eacute;
-      dans la zone de texte. <!--#include virtual="/Footer" -->
+      dans la zone de texte. <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

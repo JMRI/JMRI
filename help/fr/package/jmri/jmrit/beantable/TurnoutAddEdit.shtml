@@ -23,7 +23,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -55,7 +55,7 @@
       Voir aide g&eacute;n&eacute;rale pour plus d'informations"sur
       les <a href=
       "../../../../html/doc/Technical/Names.shtml">Noms</a>". 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

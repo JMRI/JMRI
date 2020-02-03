@@ -25,7 +25,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -115,7 +115,7 @@
 
       <p>"Send Confirm" sends the confirmation to any datagrams you
       receive in reply.</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

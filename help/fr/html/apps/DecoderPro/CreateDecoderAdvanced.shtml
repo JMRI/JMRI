@@ -17,7 +17,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -755,7 +755,7 @@ variable version-number a une valeur trop faible:</p>
   affichage d&#233;pendra de la valeur par d&#233;faut depuis le fichier qui pourrait induire en erreur l'utilisateur.
 </p>
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
  </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->
 </body>

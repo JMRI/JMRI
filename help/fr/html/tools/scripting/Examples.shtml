@@ -19,7 +19,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
   <!--#include virtual="Sidebar" -->
   <div id="mainContent">
@@ -512,7 +512,7 @@
       du r&eacute;seau.</p>
     </div>
 
-  <!--#include virtual="/Footer" -->
+  <!--#include virtual="/Footer.shtml" -->
   </div>
 </body>
 </html>

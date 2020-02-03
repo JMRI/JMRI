@@ -18,7 +18,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -124,7 +124,7 @@ Une valeur de z&#233;ro r&#232;glera l'appareil pour changer l'intensit&#233; d'
 
 Ceci est la page d'aide help/fr/package/jmri/jmrit/simpleligghtctrl/SimpleLightCtrl.shtml
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

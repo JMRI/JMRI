@@ -21,14 +21,14 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
       <h2>JMRI: C/MRI Node Configuration Manager</h2>
       This is the cmri/serial/nodeconfig/NodeConfigFrame.shtml page.
       Help is on the way.
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>
