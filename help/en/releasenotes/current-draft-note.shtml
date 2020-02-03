@@ -399,6 +399,9 @@
         <ul>
             <li>The "Export Complete Roster" and "Import Exported Roster"
                 actions now transfer the icons and images from the roster.
+                Note that for this to work, you have to do the export
+                with this JMRI version or later, and also do the import
+                with this JMRI version or later.
                 </li>
         </ul>
 
