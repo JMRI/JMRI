@@ -1191,6 +1191,19 @@ turnoutname="<xsl:value-of select="@turnoutname"/>",
 <br/>
 </xsl:template>
 
+<xsl:template match="layoutTrackDrawingOptions">
+Track Drawing Options:<br/>
+<table border="1">
+<xsl:for-each select="*">
+    <tr>
+        <td><xsl:value-of select="name()"/></td>
+        <td><xsl:value-of select="."/></td>
+    </tr>
+</xsl:for-each>
+</table>
+<br/>
+</xsl:template>
+
 <xsl:template match="tracksegment">
 Track Segment ident="<xsl:value-of select="@ident"/>"
 <xsl:choose>
