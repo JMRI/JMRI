@@ -3,6 +3,7 @@ package jmri.jmrit.operations.trains.tools;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.text.MessageFormat;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -19,7 +20,6 @@ import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.TrainManager;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
-import org.assertj.core.util.Arrays;
 
 /**
  * Exports the train roster into a comma delimited file (CSV). Only trains that
