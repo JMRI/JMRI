@@ -19,7 +19,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -263,7 +263,7 @@ retourne &agrave; la ligne de commande.
       Mais ne vous souciez pas de cela jusqu'&agrave; ce que vous
       ayez eu plus d'exp&eacute;rience avec les scripts.</p>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

@@ -21,7 +21,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -160,7 +160,7 @@ avec les serial/network refactoring
       pr&eacute;f&eacute;rences pour les actions de
       d&eacute;marrage , boutons, etc Nous n'allons pas les faire
       migrer pour pour eux.</p>
-        <!--#include virtual="/Footer" -->
+        <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

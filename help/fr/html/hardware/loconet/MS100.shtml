@@ -25,7 +25,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
   <!--#include virtual="Sidebar" -->
   <div id="mainContent">
@@ -133,6 +133,6 @@ setserial /dev/ttyS0 spd_cust
       <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
       <hr class="hide">
     </div>
-  </div><!--#include virtual="/Footer" -->
+  </div><!--#include virtual="/Footer.shtml" -->
 </body>
 </html>

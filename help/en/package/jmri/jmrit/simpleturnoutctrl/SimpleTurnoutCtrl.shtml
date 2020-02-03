@@ -24,7 +24,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -117,7 +117,7 @@
       <p>To help you select a set of turnouts to lock, a route can
       be locked. All turnouts that are being monitored by the JMRI
       program and are included in the route will be locked.</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>
