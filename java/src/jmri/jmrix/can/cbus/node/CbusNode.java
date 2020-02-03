@@ -774,10 +774,10 @@ public class CbusNode implements CanListener {
      * @return Full Parameter String WITHOUT leading number of parameters
      */  
     public String getParameterHexString() {
-        if (getParameters()==null) {
+        if (getParameters() == null) {
             return "";
         } else {
-            return jmri.util.StringUtil.hexStringFromInts(getParameters()).replaceAll("\\s","").substring(2);
+            return jmri.util.StringUtil.hexStringFromInts(getParameters()).replaceAll("\\s", "").substring(2);
         }
     }
 
@@ -789,10 +789,10 @@ public class CbusNode implements CanListener {
      * @return Full NV String WITHOUT leading number of NVs
      */  
     public String getNvHexString() {
-        if ( getNvArray() == null ) {
+        if (getNvArray() == null) {
             return "";
         } else {
-            return jmri.util.StringUtil.hexStringFromInts(getNvArray()).replaceAll("\\s","").substring(2);
+            return jmri.util.StringUtil.hexStringFromInts(getNvArray()).replaceAll("\\s", "").substring(2);
         }
     }
 

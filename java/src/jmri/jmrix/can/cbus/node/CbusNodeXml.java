@@ -328,7 +328,7 @@ public class CbusNodeXml {
         for (CbusNodeFromBackup node : _backupInfos ) {
             Element e = new Element("BackupInfo");  // NOI18N
             e.setAttribute("dateTimeStamp",xmlDateStyle.format( node.getBackupTimeStamp() ));  // NOI18N
-            e.setAttribute("result","" + node.getBackupResult());  // NOI18N
+            e.setAttribute("result", "" + node.getBackupResult());  // NOI18N
             if (!node.getBackupComment().isEmpty()) {
                 e.addContent(new Element("Comment").addContent("" + node.getBackupComment() ));  // NOI18N
             }
@@ -344,9 +344,9 @@ public class CbusNodeXml {
                 Element bupev = new Element("NodeEvents"); // NOI18N
                 node.getEventArray().forEach((bupndev) -> {
                     Element ndev = new Element("NodeEvent"); // NOI18N
-                    ndev.setAttribute("NodeNum","" + bupndev.getNn());  // NOI18N
-                    ndev.setAttribute("EventNum","" + bupndev.getEn());  // NOI18N
-                    ndev.setAttribute("EvVars","" + bupndev.getHexEvVarString());  // NOI18N
+                    ndev.setAttribute("NodeNum", "" + bupndev.getNn());  // NOI18N
+                    ndev.setAttribute("EventNum", "" + bupndev.getEn());  // NOI18N
+                    ndev.setAttribute("EvVars", "" + bupndev.getHexEvVarString());  // NOI18N
                     bupev.addContent(ndev);
                 });
                 e.addContent(bupev);

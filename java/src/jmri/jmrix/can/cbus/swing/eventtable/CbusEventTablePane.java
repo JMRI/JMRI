@@ -301,7 +301,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements
         ActionListener newEventaction = ae -> {
             int ev = (Integer) newevnumberSpinner.getValue();
             int nd = (Integer) newnodenumberSpinner.getValue();
-            eventModel.addEvent(nd,ev,0,CbusTableEvent.EvState.UNKNOWN,"","",0,0,0,0);
+            eventModel.addEvent(nd, ev, 0, CbusTableEvent.EvState.UNKNOWN, "", "", 0, 0, 0, 0);
         };
         
         newevbutton.addActionListener(newEventaction);
@@ -418,7 +418,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements
             preferences.setSaveRestoreEventTable(saveRestoreEventTableItem.isSelected());
         });
         
-        JMenuItem saveAsItem = new JMenuItem(Bundle.getMessage("MenuItemSaveAs","csv"));
+        JMenuItem saveAsItem = new JMenuItem(Bundle.getMessage("MenuItemSaveAs", "csv"));
         saveAsItem.addActionListener((ActionEvent e) -> {
             eventModel.ta.saveAsTable();
         });

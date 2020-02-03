@@ -375,7 +375,7 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
     private void selectInputFile(){
         
         if (chooser == null) {
-            chooser = jmri.jmrit.XmlFile.userFileChooser("XML Files","xml","XML");
+            chooser = jmri.jmrit.XmlFile.userFileChooser("XML Files", "xml", "XML");
         }
         chooser.rescanCurrentDirectory();
         int retVal = chooser.showOpenDialog(this);

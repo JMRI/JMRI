@@ -329,7 +329,7 @@ public class EcosTurnout extends AbstractTurnout
             }
         }
         if ((m.isUnsolicited()) || (m.getReplyType().equals("get")) || (m.getReplyType().equals("set"))) {
-            //if (msg.startsWith("<REPLY get("+objectNumber+",") || msg.startsWith("<EVENT "+objectNumber+">")) {
+            //if (msg.startsWith("<REPLY get(" + objectNumber + ",") || msg.startsWith("<EVENT " + objectNumber + ">")) {
             int start = msg.indexOf("state[");
             int end = msg.indexOf("]");
             if (start > 0 && end > 0) {

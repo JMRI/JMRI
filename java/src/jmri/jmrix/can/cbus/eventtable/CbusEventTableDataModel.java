@@ -567,29 +567,37 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
      */
     public void parseMessage( int canid, int node, int event, CbusTableEvent.EvState state, int in, int out) {
         
-        int existingRow = seeIfEventOnTable( node, event);
-        
-        if (existingRow<0) {
-            int on=0;
-            int off=0;
-            if (state==CbusTableEvent.EvState.ON) {
-                on=1;
+        int existingRow = seeIfEventOnTable(node, event);
+
+        if (existingRow < 0) {
+            int on = 0;
+            int off = 0;
+            if (state == CbusTableEvent.EvState.ON) {
+                on = 1;
             }
-            if (state==CbusTableEvent.EvState.OFF) {
-                off=1;
+            if (state == CbusTableEvent.EvState.OFF) {
+                off = 1;
             }
-            addEvent(node,event,canid,state,"","",on,off,in,out); // on off in out
+            addEvent(node, event, canid, state, "", "", on, off, in, out); // on off in out
         } else {
             setValueAt(state, existingRow, STATE_COLUMN);
-             if ( (state==CbusTableEvent.EvState.ON) || (state==CbusTableEvent.EvState.OFF) ) {
+            if ((state == CbusTableEvent.EvState.ON) || (state == CbusTableEvent.EvState.OFF)) {
                 setValueAt(1, existingRow, LATEST_TIMESTAMP_COLUMN);
             }
             setValueAt(canid, existingRow, CANID_COLUMN);
-            if (state==CbusTableEvent.EvState.ON) { setValueAt(1, existingRow, SESSION_ON_COLUMN); }
-            if (state==CbusTableEvent.EvState.OFF) { setValueAt(1, existingRow, SESSION_OFF_COLUMN); }
-            if (in==1) {  setValueAt(1, existingRow, SESSION_IN_COLUMN); }
-            if (out==1) { setValueAt(1, existingRow, SESSION_OUT_COLUMN); }
-            
+            if (state == CbusTableEvent.EvState.ON) {
+                setValueAt(1, existingRow, SESSION_ON_COLUMN);
+            }
+            if (state == CbusTableEvent.EvState.OFF) {
+                setValueAt(1, existingRow, SESSION_OFF_COLUMN);
+            }
+            if (in == 1) {
+                setValueAt(1, existingRow, SESSION_IN_COLUMN);
+            }
+            if (out == 1) {
+                setValueAt(1, existingRow, SESSION_OUT_COLUMN);
+            }
+
         }
     }
     
