@@ -23,8 +23,7 @@ public class ProjectsCommonSubs {
     static public ArrayList<String> getArrayListFromSSV(String ssvString) { return helper1(ssvString, SSV_SEPARATOR); }
     static private ArrayList<String> helper1(String ssvString, char separator) {
         ArrayList<String> list = new ArrayList<>();
-        try {
-            CSVParser parser = new CSVParser(new StringReader(ssvString), CSVFormat.DEFAULT.withDelimiter(separator));
+        try (CSVParser parser = new CSVParser(new StringReader(ssvString), CSVFormat.DEFAULT.withDelimiter(separator))) {
             parser.getRecords().forEach(record -> record.forEach(item -> list.add(item)));
         } catch (IOException ex) {
             log.error("Unable to parse {}", ssvString, ex);

@@ -11,8 +11,6 @@ import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 import org.apache.commons.csv.CSVPrinter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Contains the csv operators for manifests and switch lists
@@ -22,8 +20,6 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class TrainCsvCommon extends TrainCommon {
-
-    private final static Logger log = LoggerFactory.getLogger(TrainCsvCommon.class);
 
     protected final void printDepartureTime(CSVPrinter printer, String time) throws IOException {
         printer.printRecord("DT", Bundle.getMessage("csvDepartureTime"), time); // NOI18N
