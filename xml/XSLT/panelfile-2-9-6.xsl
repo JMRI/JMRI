@@ -449,7 +449,7 @@ Logic delay: <xsl:value-of select="logicDelay"/> (ms)<br/>
 <!-- Index through route elements -->
 <xsl:template match="route">
     <tr>
-        <td><xsl:value-of select="@systemName"/></td> <!--names still stored as attributes in routes as of 2.9.6 up to 4.6-->
+        <td><xsl:value-of select="systemName"/></td>
         <td><xsl:value-of select="userName"/></td>
         <td><xsl:for-each select="routeSensor">
             <xsl:value-of select="@systemName"/>:&#160;&#160;&#160;<xsl:value-of select="@mode"/><br/>
@@ -764,7 +764,7 @@ Logic delay: <xsl:value-of select="logicDelay"/> (ms)<br/>
 
 <xsl:template match="section">
     <tr>
-        <td><xsl:value-of select="@systemName"/></td> <!--names as attributes deprecated since 2.9.6-->
+        <td><xsl:value-of select="@systemName"/></td> <!--names still stored as attributes in warrants as of 4.7.1 -->
         <td><xsl:value-of select="userName"/></td>
         <td>
             <xsl:for-each select="blockentry">

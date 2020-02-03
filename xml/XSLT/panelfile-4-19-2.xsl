@@ -764,7 +764,7 @@ Logic delay: <xsl:value-of select="logicDelay"/> (ms)<br/>
 
 <xsl:template match="section">
     <tr>
-        <td><xsl:value-of select="@systemName"/></td> <!--names as attributes deprecated since 2.9.6-->
+        <td><xsl:value-of select="@systemName"/></td> <!--names still stored as attributes in warrants as of 4.7.1 -->
         <td><xsl:value-of select="userName"/></td>
         <td>
             <xsl:for-each select="blockentry">
