@@ -1,6 +1,5 @@
 package jmri.jmrix.openlcb;
 
-import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
