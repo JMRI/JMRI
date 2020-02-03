@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 4.19.2ish+jake+20200112T0655Z+Raeeb18c0c6 on Sat Jan 11 22:56:18 PST 2020-->
-  <decoderIndex version="990">
+  <!--Written by JMRI version 4.19.3ish+jake+20200130T1305Z+R91a81e57f0 on Thu Jan 30 05:05:35 PST 2020-->
+  <decoderIndex version="992">
     <mfgList nmraListDate="2019-02-26" updated="2019-11-17" lastadd="225,166">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -13772,6 +13772,9 @@
           <output name="04" label="Green" />
           <output name="05" label="Brown" />
         </model>
+      </family>
+      <family name="dccdoma.cz" mfg="Public-domain and DIY" file="Public_Domain_dccdoma_ARD_8SCOM_4VYH_TC.xml">
+        <model model="ARD-8SCOM-4VYH-TC" lowVersionID="10" highVersionID="19" productID="16843521" maxInputVolts="24V AC" maxTotalCurrent="0.2A" numOuts="16" connector="other" />
       </family>
       <family name="dccdoma.cz" mfg="Public-domain and DIY" file="Public_Domain_dccdoma_ARD_SCOM_MX.xml">
         <model model="ARD-SCOM-MX" lowVersionID="10" highVersionID="19" productID="16843265" maxInputVolts="24V AC" maxTotalCurrent="0.2A peak 3.3A" numOuts="16" connector="other" />

@@ -26,7 +26,7 @@
   <!-- Updated by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-14-->
   <!-- Style -->
    <!-- /Style -->
-   <!--#include virtual="/Header" -->
+   <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -142,7 +142,7 @@
       <p>"Envoyer Confirmation" envoie la confirmation de tous les
       datagrammes que vous recevez en r&eacute;ponse.</p>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

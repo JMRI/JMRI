@@ -20,7 +20,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -348,7 +348,7 @@ d&#233;clench&#233;. Tous les "v&#233;to" des capteurs et des "v&#233;to" d'aigu
 d&#233;clenchement doit voir le Changement appropri&#233; pour que l'Itin&#233;raire soit fix&#233;
 </p>
 
-        <!--#include virtual="/Footer" -->
+        <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

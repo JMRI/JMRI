@@ -16,7 +16,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="../SidebarUp" -->
     <div id="mainContent">
@@ -395,7 +395,7 @@ Vous devriez &#234;tre capable de communiquer avec d'autres utilisateurs JMRI qu
 <p>Syst&#232;mes <a href="http://www.ncedcc.com/"> NCE et
 Catalogue Cabs</a></p>
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
 </div>
 </div>
 </body>

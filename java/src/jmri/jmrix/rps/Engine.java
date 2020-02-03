@@ -156,7 +156,7 @@ public class Engine implements ReadingListener {
         // make a list of receiver positions to provide
         // to the new Calculator.  Missing/unconfigured receivers
         // are null.
-        Point3d list[] = new Point3d[receivers.length];
+        Point3d[] list = new Point3d[receivers.length];
         for (int i = 0; i < receivers.length; i++) {
 
             if (receivers[i] == null) {

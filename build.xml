@@ -147,17 +147,17 @@
         <pathelement location="${libdir}/jackson-core-2.10.0.jar"/>
         <pathelement location="${libdir}/jackson-annotations-2.10.0.jar"/>
         <pathelement location="${libdir}/jackson-databind-2.10.0.jar"/>
-        <pathelement location="${libdir}/jetty-http-9.4.7.v20170914.jar"/>
-        <pathelement location="${libdir}/jetty-security-9.4.7.v20170914.jar"/>
-        <pathelement location="${libdir}/jetty-server-9.4.7.v20170914.jar"/>
-        <pathelement location="${libdir}/jetty-servlet-9.4.7.v20170914.jar"/>
-        <pathelement location="${libdir}/jetty-util-9.4.7.v20170914.jar"/>
-        <pathelement location="${libdir}/jetty-io-9.4.7.v20170914.jar"/>
-        <pathelement location="${libdir}/websocket-api-9.4.7.v20170914.jar"/>
-        <pathelement location="${libdir}/websocket-client-9.4.7.v20170914.jar"/>
-        <pathelement location="${libdir}/websocket-common-9.4.7.v20170914.jar"/>
-        <pathelement location="${libdir}/websocket-server-9.4.7.v20170914.jar"/>
-        <pathelement location="${libdir}/websocket-servlet-9.4.7.v20170914.jar"/>
+        <pathelement location="${libdir}/jetty-http-9.4.26.v20200117.jar"/>
+        <pathelement location="${libdir}/jetty-security-9.4.26.v20200117.jar"/>
+        <pathelement location="${libdir}/jetty-server-9.4.26.v20200117.jar"/>
+        <pathelement location="${libdir}/jetty-servlet-9.4.26.v20200117.jar"/>
+        <pathelement location="${libdir}/jetty-util-9.4.26.v20200117.jar"/>
+        <pathelement location="${libdir}/jetty-io-9.4.26.v20200117.jar"/>
+        <pathelement location="${libdir}/websocket-api-9.4.26.v20200117.jar"/>
+        <pathelement location="${libdir}/websocket-client-9.4.26.v20200117.jar"/>
+        <pathelement location="${libdir}/websocket-common-9.4.26.v20200117.jar"/>
+        <pathelement location="${libdir}/websocket-server-9.4.26.v20200117.jar"/>
+        <pathelement location="${libdir}/websocket-servlet-9.4.26.v20200117.jar"/>
         <pathelement location="${libdir}/slf4j-api-1.7.25.jar"/>
         <pathelement location="${libdir}/slf4j-log4j12-1.7.25.jar"/>
         <pathelement location="${libdir}/jul-to-slf4j-1.7.25.jar"/>
@@ -2215,11 +2215,17 @@
 
     <target name="checkstyle:check" depends="tests" description="Run Checkstyle checks">
         <taskdef resource="com/puppycrawl/tools/checkstyle/ant/checkstyle-ant-task.properties"
-            classpath="${libdir}/checkstyle-8.24-all.jar" />
+            classpath="${libdir}/checkstyle-8.29-all.jar" />
         <checkstyle config="checkstyle.xml">
-            <fileset dir="${source}" />
-            <fileset dir="${test}" />
-            <fileset dir="${acceptancetest}" />
+            <!-- should match maven checkstyle configs -->
+            <fileset dir="${basedir}">
+                <exclude name="**/*.jpg" />
+                <exclude name="**/*.jar" />
+                <exclude name="web/app/node_modules/**" />
+                <exclude name=".git/**" />
+                <exclude name="target/**" />
+                <exclude name="java/tmp/**" />
+            </fileset>
         </checkstyle>
     </target>
 

@@ -18,7 +18,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -174,7 +174,7 @@ Les fen&#234;tres principales de l'application JMRI et les fen&#234;tres "D&#233
 
 </dl>
     
-	<!--#include virtual="/Footer" -->
+	<!--#include virtual="/Footer.shtml" -->
   </div> <!-- close #mainContent -->
 </div> <!-- close #mBody -->    
 </body>

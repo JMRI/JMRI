@@ -13,19 +13,13 @@
             <!--#include virtual="/help/en/parts/SidebarLayoutAutomation.shtml" -->
 	    
             <!--#include virtual="/help/en/parts/SidebarSupportedHardware.shtml" -->    
+	    
+	    <!--#include virtual="/help/en/parts/SidebarInstall.shtml" -->
 
          </dl>
 
-    <a href="/donations.shtml">
-     <img src="http://sourceforge.net/images/project-support.jpg" width="88" height="32" border="0" ALIGN="CENTER" alt="Donate to JMRI" />
-    </a>
-
+    <!--#include virtual="/help/en/parts/SidebarTail.shtml" -->
 
     </div> <!-- closes #side -->
-
-    <!-- Sidebar-Tail -->
-    <script type="text/javascript" src="/web/js/jquery-2.0.3.min.js"></script>
-    <script type="text/javascript" src="/web/js/here.js"></script>
-    <!-- /Sidebar-Tail -->
 
 <!-- /Sidebar.shtml -->
