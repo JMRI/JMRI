@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -94,26 +95,21 @@ public class DccSpeedProfile {
 
     public static void printHeading(CSVPrinter p, int address) throws IOException {
         if (p != null) {
-            Date today;
-            String result;
-            SimpleDateFormat formatter;
-            formatter = new SimpleDateFormat("EEE d MMM yyyy", Locale.getDefault());
-            today = new Date();
-            result = formatter.format(today);
+            SimpleDateFormat formatter = new SimpleDateFormat("EEE d MMM yyyy", Locale.getDefault());
+            String today = formatter.format(new Date());
             // title 
             String annotate = "Bachrus MTS-DCC " + Bundle.getMessage("ProfileFor") + " "
                     + address + " " + Bundle.getMessage("CreatedOn")
-                    + " " + result;
-            p.print(annotate);
-            p.println();
+                    + " " + today;
+            // should this be printComment instead?
+            p.printRecord(annotate);
         }
     }
 
     // Save data as CSV
     public static void export(DccSpeedProfile sp, int address, String dirString, int units) {
-        try {
-            openExportFile();
-
+        File file = openExportFile();
+        try (CSVPrinter p = new CSVPrinter(new FileWriter(file), CSVFormat.DEFAULT)) {
             String unitsString;
             if (units == Speed.MPH) {
                 unitsString = "MPH";
@@ -123,29 +119,21 @@ public class DccSpeedProfile {
             // Save rows
             if (p != null) {
                 printHeading(p, address);
-                p.print("Step");
-                p.print("Speed(" + dirString + " " + unitsString + ")");
-                p.println();
+                p.printRecord("Step", "Speed(" + dirString + " " + unitsString + ")");
                 // for each data point
                 for (int i = 0; i < sp.getLength(); i++) {
-                    p.print(i);
-                    if (units == Speed.MPH) {
-                        p.print(Speed.kphToMph(sp.getPoint(i)));
-                    } else {
-                        p.print(sp.getPoint(i));
-                    }
-                    p.println();
+                    p.printRecord(i, units == Speed.MPH ? Speed.kphToMph(sp.getPoint(i)) : sp.getPoint(i));
                 }
             }
-            closeExportFile();
+            p.flush();
         } catch (IOException ex) {
             log.error("Error exporting speed profile", ex);
         }
     }
 
     public static void export(DccSpeedProfile[] sp, int address, int units) {
-        try {
-            openExportFile();
+        File file = openExportFile();
+        try (CSVPrinter p = new CSVPrinter(new FileWriter(file), CSVFormat.DEFAULT)) {
 
             String unitsString;
             if (units == Speed.MPH) {
@@ -156,61 +144,30 @@ public class DccSpeedProfile {
             // Save rows
             if (p != null) {
                 printHeading(p, address);
-                p.print("Step");
-                p.print("Speed(fwd " + unitsString + ")");
-                p.print("Speed(rev " + unitsString + ")");
-                p.println();
+                p.printRecord("Step", "Speed(fwd " + unitsString + ")", "Speed(rev " + unitsString + ")");
                 // for each data point
                 for (int i = 0; i < sp[0].getLength(); i++) {
-                    p.print(i);
+                    ArrayList<Object> list = new ArrayList<>();
+                    list.add(i);
                     // for each profile
                     for (DccSpeedProfile item : sp) {
-                        if (units == Speed.MPH) {
-                            p.print(Speed.kphToMph(item.getPoint(i)));
-                        } else {
-                            p.print(item.getPoint(i));
-                        }
+                        list.add(units == Speed.MPH ? Speed.kphToMph(item.getPoint(i)) : item.getPoint(i));
                     }
-                    p.println();
+                    p.printRecord(list);
                 }
             }
-            closeExportFile();
+            p.flush();
         } catch (IOException ex) {
             log.error("Error exporting speed profile", ex);
         }
     }
 
-    private static CSVPrinter p = null;
-
-    private static void openExportFile() {
+    private static File openExportFile() {
         JFileChooser fileChooser = new JFileChooser(FileUtil.getUserFilesPath());
-
-        // get filename
-        // start at current file, show dialog
-        int retVal = fileChooser.showSaveDialog(null);
-
-        // handle selection or cancel
-        if (retVal == JFileChooser.APPROVE_OPTION) {
-            File file = fileChooser.getSelectedFile();
-            try {
-                // Create a print writer based on the file, so we can print to it.
-                p = new CSVPrinter(new FileWriter(file), CSVFormat.DEFAULT);
-            } catch (IOException ex) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Problem creating output stream " + ex);
-                }
-            }
-            if (p == null) {
-                log.error("Null Print Writer");
-            }
+        if (fileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+            return fileChooser.getSelectedFile();
         }
-    }
-
-    private static void closeExportFile() throws IOException {
-        if (p != null) {
-            p.flush();
-            p.close();
-        }
+        return null;
     }
 
     public int importDccProfile(int units) {
@@ -251,12 +208,7 @@ public class DccSpeedProfile {
     private void openImportFile() {
         JFileChooser fileChooser = new JFileChooser(FileUtil.getUserFilesPath());
 
-        // get filename
-        // start at current file, show dialog
-        int retVal = fileChooser.showOpenDialog(null);
-
-        // handle selection or cancel
-        if (retVal == JFileChooser.APPROVE_OPTION) {
+        if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
             try {
                 dccProfileData = CSVParser.parse(file, StandardCharsets.UTF_8, CSVFormat.DEFAULT).getRecords();
