@@ -397,7 +397,9 @@
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
-            <li></li>
+            <li>The "Export Complete Roster" and "Import Exported Roster"
+                actions now transfer the icons and images from the roster.
+                </li>
         </ul>
 
     <h3>Turnouts, Lights, Sensors and other elements</h3>
