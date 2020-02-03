@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.trains.tools;
 
+import java.awt.Color;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.text.MessageFormat;
@@ -24,6 +25,9 @@ import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
+import jmri.util.ColorUtil;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 
 /**
  * Provides an export to the Timetable feature.
@@ -90,15 +94,20 @@ import jmri.jmrit.operations.trains.TrainManager;
  */
 public class ExportTimetable extends XmlFile {
 
-    static final String ESC = "\""; // escape character NOI18N
-    private String del = ","; // delimiter
-
     public ExportTimetable() {
-
+        // nothing to do
     }
 
+    /**
+     * Sets the delimiter for the CSV export. Does nothing, left in place to
+     * avoid API breakage during deprecation period.
+     *
+     * @param delimiter ignored
+     * @deprecated since 4.19.4 without replacement
+     */
+    @Deprecated
     public void setDeliminter(String delimiter) {
-        del = delimiter;
+        // nothing to do
     }
 
     public void writeOperationsTimetableFile() {
@@ -118,7 +127,7 @@ public class ExportTimetable extends XmlFile {
                 }
             }
             writeFile(defaultOperationsFilename());
-        } catch (Exception e) {
+        } catch (IOException e) {
             log.error("Exception while writing the new CSV operations file, may not be complete: " + e);
         }
     }
@@ -131,8 +140,8 @@ public class ExportTimetable extends XmlFile {
             file = new File(name);
         }
 
-        try (PrintWriter fileOut = new PrintWriter(
-                new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)), true)) {
+        try (CSVPrinter fileOut = new CSVPrinter(
+                new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)), CSVFormat.DEFAULT)) {
 
             loadLayout(fileOut);
             loadTrainTypes(fileOut);
@@ -154,132 +163,90 @@ public class ExportTimetable extends XmlFile {
                     MessageFormat.format(Bundle.getMessage("ExportedTimetableToFile"),
                             new Object[]{defaultOperationsFilename()}),
                     Bundle.getMessage("ExportFailed"), JOptionPane.ERROR_MESSAGE);
-            return;
         }
     }
 
     /*
      * "Layout", "layout name", "scale", fastClock, throttles, "metric"
      */
-    private void loadLayout(PrintWriter fileOut) {
-        String line = "Layout" +
-                del +
-                ESC +
-                Setup.getRailroadName() +
-                ESC +
-                del +
-                "HO" +
-                del +
-                "4" +
-                del +
-                "0" +
-                del +
-                "No";
-        fileOut.println(line);
+    private void loadLayout(CSVPrinter fileOut) throws IOException {
+        fileOut.printRecord("Layout",
+                Setup.getRailroadName(),
+                "HO",
+                "4",
+                "0",
+                "No");
     }
 
     /*
      * "TrainType", "type name", color number
      */
-    private void loadTrainTypes(PrintWriter fileOut) {
-        String line = "TrainType" +
-                del +
-                "Freight_Black" +
-                del +
-                jmri.util.ColorUtil.colorToHexString(java.awt.Color.BLACK);
-        fileOut.println(line);
-
-        line = "TrainType" +
-                del +
-                "Freight_Red" +
-                del +
-                jmri.util.ColorUtil.colorToHexString(java.awt.Color.RED);
-        fileOut.println(line);
-
-        line = "TrainType" +
-                del +
-                "Freight_Blue" +
-                del +
-                jmri.util.ColorUtil.colorToHexString(java.awt.Color.BLUE);
-        fileOut.println(line);
-
-        line = "TrainType" +
-                del +
-                "Freight_Yellow" +
-                del +
-                jmri.util.ColorUtil.colorToHexString(java.awt.Color.YELLOW);
-        fileOut.println(line);
+    private void loadTrainTypes(CSVPrinter fileOut) throws IOException {
+        fileOut.printRecord("TrainType",
+                "Freight_Black",
+                ColorUtil.colorToHexString(Color.BLACK));
+        fileOut.printRecord("TrainType",
+                "Freight_Red",
+                ColorUtil.colorToHexString(Color.RED));
+        fileOut.printRecord("TrainType",
+                "Freight_Blue",
+                ColorUtil.colorToHexString(Color.BLUE));
+        fileOut.printRecord("TrainType",
+                "Freight_Yellow",
+                ColorUtil.colorToHexString(Color.YELLOW));
     }
 
     /*
      * "Segment", "segment name"
      */
-    private void loadSegment(PrintWriter fileOut) {
-        String line = "Segment" +
-                del +
-                ESC +
-                "Locations" +
-                ESC;
-        fileOut.println(line);
+    private void loadSegment(CSVPrinter fileOut) throws IOException {
+        fileOut.printRecord("Segment", "Locations");
     }
 
-    List<Location> locationList = new ArrayList<Location>();
+    List<Location> locationList = new ArrayList<>();
 
     /*
      * "Station", "station name", distance, doubleTrack, sidings, staging
      */
-    private void loadStations(PrintWriter fileOut) {
+    private void loadStations(CSVPrinter fileOut) throws IOException {
         // provide a list of locations to use, use either a route called
         // "Timetable" or alphabetically
 
         Route route = InstanceManager.getDefault(RouteManager.class).getRouteByName("Timetable");
         if (route != null) {
-            for (RouteLocation rl : route.getLocationsBySequenceList()) {
-                locationList.add(rl.getLocation());
-            }
-
-        } else
-            for (Location location : InstanceManager.getDefault(LocationManager.class).getLocationsByNameList()) {
-                locationList.add(location);
-            }
+            route.getLocationsBySequenceList().forEach(rl -> locationList.add(rl.getLocation()));
+        } else {
+            InstanceManager.getDefault(LocationManager.class).getLocationsByNameList().forEach(location -> locationList.add(location));
+        }
 
         double distance = 0.0;
         for (Location location : locationList) {
             distance += 1.0;
-            String line = "Station" +
-                    del +
-                    ESC +
-                    location.getName() +
-                    ESC +
-                    del +
-                    distance +
-                    del +
-                    "No" +
-                    del +
-                    "0" +
-                    del +
-                    (location.isStaging() ? location.getTrackList().size() : "0");
-            fileOut.println(line);
+            fileOut.printRecord("Station",
+                    location.getName(),
+                    distance,
+                    "No",
+                    "0",
+                    location.isStaging() ? location.getTrackList().size() : "0");
         }
     }
 
     /*
      * "Schedule", "schedule name", "effective date", startHour, duration
      */
-    private void loadSchedule(PrintWriter fileOut) {
+    private void loadSchedule(CSVPrinter fileOut) throws IOException {
         // create schedule name based on date and time
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy_MM_dd kk:mm");
         String scheduleName = simpleDateFormat.format(Calendar.getInstance().getTime());
 
-        String line = "Schedule" + del + scheduleName + del + "Today" + del + "0" + del + "24";
-        fileOut.println(line);
+        fileOut.printRecord("Schedule", scheduleName, "Today", "0", "24");
     }
 
     /*
      * "Train", "train name", "train description", type, defaultSpeed,
      * starttime, throttle, notes
      */
-    private void loadTrains(PrintWriter fileOut) {
+    private void loadTrains(CSVPrinter fileOut) throws IOException {
         int type = 1; // cycle through the 4 train types (chart colors)
         int defaultSpeed = 4;
         
@@ -293,28 +260,14 @@ public class ExportTimetable extends XmlFile {
                 continue;
             }
 
-            String line = "Train" +
-                    del +
-                    ESC +
-                    train.getName() +
-                    ESC +
-                    del +
-                    ESC +
-                    train.getDescription() +
-                    ESC +
-                    del +
-                    type++ +
-                    del +
-                    defaultSpeed +
-                    del +
-                    train.getDepartTimeMinutes() +
-                    del +
-                    "0" +
-                    del +
-                    ESC +
-                    train.getComment() +
-                    ESC;
-            fileOut.println(line);
+            fileOut.printRecord("Train",
+                    train.getName(),
+                    train.getDescription(),
+                    type++,
+                    defaultSpeed,
+                    train.getDepartTimeMinutes(),
+                    "0",
+                    train.getComment());
 
             // reset train types
             if (type > 4) {
@@ -344,21 +297,12 @@ public class ExportTimetable extends XmlFile {
                         duration = rl.getMaxCarMoves() * Setup.getSwitchTime() + rl.getWait();
                     }
                 }
-                line = "Stop" +
-                        del +
-                        station +
-                        del +
-                        duration +
-                        del +
-                        "0" +
-                        del +
-                        "0" +
-                        del +
-                        ESC +
-                        rl.getComment() +
-                        ESC;
-
-                fileOut.println(line);
+                fileOut.printRecord("Stop",
+                        station,
+                        duration,
+                        "0",
+                        "0",
+                        rl.getComment());
             }
         }
     }
