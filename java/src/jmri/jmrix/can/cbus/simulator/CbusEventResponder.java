@@ -23,12 +23,14 @@ public class CbusEventResponder extends CbusSimCanListener {
     
     private int _node;
     private int _mode;
+    private final Random _random;
     
     public ArrayList<String> evModes;
     public ArrayList<String> evModesTip;
     
     public CbusEventResponder( CanSystemConnectionMemo memod ){
         super(memod,null);
+        _random = new Random();
         init();
     }
     
@@ -111,7 +113,7 @@ public class CbusEventResponder extends CbusSimCanListener {
         boolean sendOn = false;
         switch (_mode) {
             case 1: // random
-                sendOn = new Random().nextBoolean();
+                sendOn = _random.nextBoolean();
                 break;
             case 2: // Odd On / Even Off
                 sendOn = m.getElement(4) % 2 != 0;
