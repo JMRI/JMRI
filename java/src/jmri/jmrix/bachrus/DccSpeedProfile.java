@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import javax.annotation.Nonnull;
 import javax.swing.JFileChooser;
 import jmri.util.FileUtil;
 import org.apache.commons.csv.CSVFormat;
@@ -93,17 +94,15 @@ public class DccSpeedProfile {
         return _lastPoint;
     }
 
-    public static void printHeading(CSVPrinter p, int address) throws IOException {
-        if (p != null) {
-            SimpleDateFormat formatter = new SimpleDateFormat("EEE d MMM yyyy", Locale.getDefault());
-            String today = formatter.format(new Date());
-            // title 
-            String annotate = "Bachrus MTS-DCC " + Bundle.getMessage("ProfileFor") + " "
-                    + address + " " + Bundle.getMessage("CreatedOn")
-                    + " " + today;
-            // should this be printComment instead?
-            p.printRecord(annotate);
-        }
+    public static void printHeading(@Nonnull CSVPrinter p, int address) throws IOException {
+        SimpleDateFormat formatter = new SimpleDateFormat("EEE d MMM yyyy", Locale.getDefault());
+        String today = formatter.format(new Date());
+        // title 
+        String annotate = "Bachrus MTS-DCC " + Bundle.getMessage("ProfileFor") + " "
+                + address + " " + Bundle.getMessage("CreatedOn")
+                + " " + today;
+        // should this be printComment instead?
+        p.printRecord(annotate);
     }
 
     // Save data as CSV
@@ -117,13 +116,11 @@ public class DccSpeedProfile {
                 unitsString = "KPH";
             }
             // Save rows
-            if (p != null) {
-                printHeading(p, address);
-                p.printRecord("Step", "Speed(" + dirString + " " + unitsString + ")");
-                // for each data point
-                for (int i = 0; i < sp.getLength(); i++) {
-                    p.printRecord(i, units == Speed.MPH ? Speed.kphToMph(sp.getPoint(i)) : sp.getPoint(i));
-                }
+            printHeading(p, address);
+            p.printRecord("Step", "Speed(" + dirString + " " + unitsString + ")");
+            // for each data point
+            for (int i = 0; i < sp.getLength(); i++) {
+                p.printRecord(i, units == Speed.MPH ? Speed.kphToMph(sp.getPoint(i)) : sp.getPoint(i));
             }
             p.flush();
         } catch (IOException ex) {
@@ -142,19 +139,17 @@ public class DccSpeedProfile {
                 unitsString = "KPH";
             }
             // Save rows
-            if (p != null) {
-                printHeading(p, address);
-                p.printRecord("Step", "Speed(fwd " + unitsString + ")", "Speed(rev " + unitsString + ")");
-                // for each data point
-                for (int i = 0; i < sp[0].getLength(); i++) {
-                    ArrayList<Object> list = new ArrayList<>();
-                    list.add(i);
-                    // for each profile
-                    for (DccSpeedProfile item : sp) {
-                        list.add(units == Speed.MPH ? Speed.kphToMph(item.getPoint(i)) : item.getPoint(i));
-                    }
-                    p.printRecord(list);
+            printHeading(p, address);
+            p.printRecord("Step", "Speed(fwd " + unitsString + ")", "Speed(rev " + unitsString + ")");
+            // for each data point
+            for (int i = 0; i < sp[0].getLength(); i++) {
+                ArrayList<Object> list = new ArrayList<>();
+                list.add(i);
+                // for each profile
+                for (DccSpeedProfile item : sp) {
+                    list.add(units == Speed.MPH ? Speed.kphToMph(item.getPoint(i)) : item.getPoint(i));
                 }
+                p.printRecord(list);
             }
             p.flush();
         } catch (IOException ex) {
