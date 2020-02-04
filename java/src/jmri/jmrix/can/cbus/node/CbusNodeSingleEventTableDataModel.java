@@ -43,12 +43,12 @@ public class CbusNodeSingleEventTableDataModel extends javax.swing.table.Abstrac
             newEVs = new int[0];
         }
         else {
-            newEVs = new int[ ( _ndEv._evVarArr.length ) ];
+            newEVs = new int[ ( _ndEv.getEvVarArray().length ) ];
             log.debug(" set node newEVs length {} ",newEVs.length);
         
             newEVs = Arrays.copyOf(
-                _ndEv._evVarArr,
-                _ndEv._evVarArr.length);
+                _ndEv.getEvVarArray(),
+                _ndEv.getEvVarArray().length);
             log.debug(" set ev var arr length {} data {}",newEVs.length, newEVs);
         }
         setTableModel();

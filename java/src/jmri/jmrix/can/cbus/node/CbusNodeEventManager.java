@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * @author Steve Young Copyright (C) 2019,2020
  */
 public class CbusNodeEventManager {
-    private final CbusNode _node;
+    private final CbusBasicNodeWithManagers _node;
     private final CanSystemConnectionMemo _memo;
 
     protected int nextEvInArray;
@@ -30,7 +30,7 @@ public class CbusNodeEventManager {
      * @param memo System connection
      * @param node The Node
      */
-    public CbusNodeEventManager ( CanSystemConnectionMemo memo, CbusNode node ){
+    public CbusNodeEventManager ( CanSystemConnectionMemo memo, CbusBasicNodeWithManagers node ){
         _node = node;
         _memo = memo;
         _nodeEvents = null;

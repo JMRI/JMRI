@@ -107,7 +107,7 @@ public class CbusNodeEventVarPane extends JPanel {
             }
             CbusNodeEvent newevent = new CbusNodeEvent( _memo,
                 -1,-1,nodeOfInterest.getNodeNumber(),-1,nodeOfInterest.getNodeParamManager().getParameter(5));
-            java.util.Arrays.fill(newevent._evVarArr,0);
+            java.util.Arrays.fill(newevent.getEvVarArray(),0);
             mainpane.getEditEvFrame().initComponents(_memo,newevent);
         };
         newEvButton.addActionListener(newEvButtonClicked);
