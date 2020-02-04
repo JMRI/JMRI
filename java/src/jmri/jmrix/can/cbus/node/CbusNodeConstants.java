@@ -649,32 +649,10 @@ public class CbusNodeConstants {
     private static Map<Integer, String> createModMap() {
         Map<Integer, String> result = new HashMap<>();
         // Opcodes with no data
-        result.put(100, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
-        result.put(101, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
-        result.put(102, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
-        result.put(103, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
-        result.put(104, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
-        result.put(105, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
-        result.put(106, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
-        result.put(107, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
-        result.put(108, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
-        result.put(109, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
-        result.put(110, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
-        result.put(111, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
-        result.put(112, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
-        result.put(113, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
-        result.put(114, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
-        result.put(115, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
-        result.put(116, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
-        result.put(117, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
-        result.put(118, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
-        result.put(119, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
-        result.put(120, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
-        result.put(121, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
-        result.put(122, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
-        result.put(123, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
-        result.put(124, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
-        result.put(125, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
+        
+        for (int i = 100; i < 126; i++) {
+            result.put(i, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
+        }
         result.put(126, "Reserved for CAN_RS Modules");
         result.put(127, "Reserved for CAN_USB Modules");
         result.put(65534, "Reserved for Command Station");
