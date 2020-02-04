@@ -9,6 +9,7 @@ import org.junit.runners.Suite;
     CbusAllocateNodeNumberTest.class,
     CbusNodeTest.class,
     CbusNodeConstantsTest.class,
+    CbusBasicNodeEventTest.class,
     CbusNodeEventTest.class,
     CbusNodeEventTableDataModelTest.class,
     CbusNodeFromBackupTest.class,
@@ -24,7 +25,10 @@ import org.junit.runners.Suite;
     CbusNodeParameterManagerTest.class,
     CbusNodeStatsTest.class,
     CbusNodeTimerManagerTest.class,
-    CbusNodeBackupFileTest.class
+    CbusNodeBackupFileTest.class,
+    CbusBasicNodeTest.class,
+    CbusBasicNodeWithManagersTest.class,
+    CbusBasicNodeWithMgrsCommandStationTest.class,
 })
 
 /**
