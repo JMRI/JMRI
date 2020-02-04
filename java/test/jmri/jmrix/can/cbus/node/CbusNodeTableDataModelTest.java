@@ -22,13 +22,10 @@ import org.junit.rules.TemporaryFolder;
  */
 public class CbusNodeTableDataModelTest {
     
-    private CanSystemConnectionMemo memo;
-    private TrafficControllerScaffold tcis;
-
     @Test
     public void testCTor() {
         
-        CbusNodeTableDataModel t = new CbusNodeTableDataModel(
+        t = new CbusNodeTableDataModel(
             memo, 3,CbusNodeTableDataModel.MAX_COLUMN);
         Assert.assertNotNull("exists",t);
         t.dispose();
@@ -38,7 +35,7 @@ public class CbusNodeTableDataModelTest {
     @Test
     public void testDefaults() {
         
-        CbusNodeTableDataModel t = new CbusNodeTableDataModel(
+        t = new CbusNodeTableDataModel(
             memo, 3,CbusNodeTableDataModel.MAX_COLUMN);
         Assert.assertTrue("default getAnyNodeInLearnMode -1",t.getAnyNodeInLearnMode()== -1 );
         Assert.assertTrue("default getCsByNum0 null",t.getCsByNum(0)== null );
@@ -57,7 +54,7 @@ public class CbusNodeTableDataModelTest {
     @Test
     public void testCanListener() {
         Assert.assertTrue("no listener to start with",0 == tcis.numListeners());
-        CbusNodeTableDataModel t = new CbusNodeTableDataModel(
+        t = new CbusNodeTableDataModel(
             memo, 3,CbusNodeTableDataModel.MAX_COLUMN);
         Assert.assertTrue("listener attached",1 == tcis.numListeners());
         t.dispose();
@@ -71,7 +68,7 @@ public class CbusNodeTableDataModelTest {
         CbusConfigurationManager cbcfgm = new CbusConfigurationManager( memo );
         Assert.assertTrue("preferences available",cbcfgm.getCbusPreferences() != null );
         
-        CbusNodeTableDataModel t = new CbusNodeTableDataModel(
+        t = new CbusNodeTableDataModel(
             memo, 3,CbusNodeTableDataModel.MAX_COLUMN);
         t.startup(); // so preferences available in table model
 
@@ -160,7 +157,7 @@ public class CbusNodeTableDataModelTest {
     @Test
     public void testsendSystemResetAndColumns() {
         
-        CbusNodeTableDataModel t = new CbusNodeTableDataModel(
+        t = new CbusNodeTableDataModel(
             memo, 3,CbusNodeTableDataModel.MAX_COLUMN);
         
         Assert.assertEquals("tcis empty to start", 0 ,tcis.outbound.size() );
@@ -204,7 +201,7 @@ public class CbusNodeTableDataModelTest {
         TrafficControllerScaffold tcisl = new TrafficControllerScaffoldLoopback();
         memo.setTrafficController(tcisl);
         
-        CbusNodeTableDataModel t = new CbusNodeTableDataModel(
+        t = new CbusNodeTableDataModel(
             memo, 3,CbusNodeTableDataModel.MAX_COLUMN);
             
         CbusNode n1 = t.provideNodeByNodeNum(1);
@@ -371,6 +368,10 @@ public class CbusNodeTableDataModelTest {
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
 
+    private CanSystemConnectionMemo memo;
+    private TrafficControllerScaffold tcis;
+    private CbusNodeTableDataModel t;
+    
     // The minimal setup for log4J
     @Before
     public void setUp() throws java.io.IOException {
