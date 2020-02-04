@@ -4,6 +4,7 @@ import javax.swing.BoxLayout;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import javax.swing.*;
+import jmri.jmrix.can.cbus.node.CbusNodeCanListener;
 import jmri.jmrix.can.cbus.node.CbusNodeConstants;
 import jmri.jmrix.can.cbus.simulator.CbusDummyNode;
 import jmri.jmrix.can.cbus.simulator.CbusSimCanListener;
@@ -53,8 +54,8 @@ public class NdPane extends JPanel {
         tooltips = new ArrayList<>();
         String getSelected="";
         
-        for (int i = 0; i < CbusDummyNode.ndTypes.size(); i++) {
-            int intoption = CbusDummyNode.ndTypes.get(i);
+        for (int i = 0; i < CbusDummyNode.getNodeTypes().size(); i++) {
+            int intoption = CbusDummyNode.getNodeTypes().get(i);
             String option = CbusNodeConstants.getModuleType(165,intoption);
             _selectNd.addItem(option);
             tooltips.add(CbusNodeConstants.getModuleTypeExtra(165,intoption));
@@ -67,8 +68,8 @@ public class NdPane extends JPanel {
         _selectNd.addActionListener ((ActionEvent e) -> {
             String chosen = (String)_selectNd.getSelectedItem();
             
-            for (int i = 0; i < CbusDummyNode.ndTypes.size(); i++) {
-                int intoption = CbusDummyNode.ndTypes.get(i);
+            for (int i = 0; i < CbusDummyNode.getNodeTypes().size(); i++) {
+                int intoption = CbusDummyNode.getNodeTypes().get(i);
                 String option = CbusNodeConstants.getModuleType(165,intoption);
                 if (option.equals(chosen)) {
                     log.debug("chosen {} {}",i,chosen);
@@ -79,10 +80,9 @@ public class NdPane extends JPanel {
         });
 
         renderer.setTooltips(tooltips);
-        
+
         _resetNd = new JButton("FLiM");
         
-        DirectionPane dp = new DirectionPane( (CbusSimCanListener) _node.getCanListener());
         
         JPanel topPane = new JPanel();
         
@@ -95,8 +95,11 @@ public class NdPane extends JPanel {
         setBorder(BorderFactory.createEtchedBorder());
         
         add(topPane);
-        add(dp);
-        
+        CbusNodeCanListener cbncl = _node.getCanListener();
+        if ( cbncl instanceof CbusSimCanListener ) {
+            CbusSimCanListener cbcl = (CbusSimCanListener) cbncl ;
+            add( new DirectionPane( cbcl));
+        }
         _resetNd.addActionListener ((ActionEvent e) -> {
             _node.flimButton();
         });

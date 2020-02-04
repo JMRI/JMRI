@@ -11,14 +11,12 @@ import java.beans.PropertyChangeEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.CheckForNull;
 import javax.swing.*;
 import javax.swing.event.*;
 import jmri.InstanceManager;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusAddress;
-import jmri.jmrix.can.cbus.CbusConfigurationManager;
 import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.cbus.CbusPreferences;
 import jmri.jmrix.can.cbus.node.CbusNode;
@@ -712,7 +710,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
             -1, 
             _node.getNodeParamManager().getParameter(5)
             );
-        java.util.Arrays.fill(newev._evVarArr,0);
+        java.util.Arrays.fill(newev.getEvVarArray(),0);
         
         log.debug("dragged nodeevent {} ",newev);
         ThreadingUtil.runOnGUI( () -> {

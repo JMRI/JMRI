@@ -20,16 +20,13 @@ import org.slf4j.LoggerFactory;
  */
 public class CbusDummyNode extends CbusNode {
     
-    // private final CanSystemConnectionMemo memo;
-    
     private NdPane _pane;
-    public static ArrayList<Integer> ndTypes;
     
     public CbusDummyNode( int nodenumber, int manufacturer, int nodeType, int canId, CanSystemConnectionMemo sysmemo ){
         super( sysmemo, nodenumber );
         setDummyType(manufacturer, nodeType);
         setCanId(canId);
-        init();
+        _pane = null;
     }
     
     /**
@@ -44,16 +41,12 @@ public class CbusDummyNode extends CbusNode {
     
     private CbusDummyNodeCanListener canListener;
     
-    private void init(){
-        
-        
-        _pane = null;
-        
-        // get available simulated nodes
-        ndTypes = new ArrayList<>();
+    public final static ArrayList<Integer> getNodeTypes() {
+        ArrayList<Integer> ndTypes = new ArrayList<>();
         ndTypes.add(0); // 0 SlIM
         ndTypes.add(29); // 29 CANPAN
         ndTypes.add(255); // 255 CANTSTMAX
+        return ndTypes;
     }
     
     // total events on module
