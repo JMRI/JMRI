@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * @author Steve Young Copyright (C) 2019,2020
  */
 public class CbusNodeTimerManager {
-    private final CbusNode _node;
+    private final CbusBasicNodeWithManagers _node;
     
     protected int fetchNvTimeoutCount;
     private TimerTask nextNvTimerTask;
@@ -24,8 +24,8 @@ public class CbusNodeTimerManager {
     protected TimerTask allEvTimerTask;
     protected int paramRequestTimeoutCount;
     private TimerTask allParamTask;
-    protected TimerTask sendEditNvTask;
-    protected TimerTask sendEditEvTask;
+    private TimerTask sendEditNvTask;
+    private TimerTask sendEditEvTask;
     protected TimerTask sendEnumTask;    
     protected int sendEvErrorCount;
     protected int _sendNVErrorCount;
@@ -37,7 +37,7 @@ public class CbusNodeTimerManager {
      *
      * @param node The Node
      */
-    public CbusNodeTimerManager ( CbusNode node ){
+    public CbusNodeTimerManager ( CbusBasicNodeWithManagers node ){
         _node = node;
         resetTimeOutCounts();
     }
@@ -269,7 +269,9 @@ public class CbusNodeTimerManager {
                 paramRequestTimeoutCount++;
                 if ( paramRequestTimeoutCount == 10 ) {
                     log.warn("Aborting requests to parameter {} for node {}",index,_node );
-                    _node.nodeOnNetwork(false);
+                    if (_node instanceof CbusNode) {
+                        ((CbusNode) _node).nodeOnNetwork(false);
+                    }
                 }
             }
         };
@@ -292,12 +294,16 @@ public class CbusNodeTimerManager {
      * which handles the error
      */
     protected void setsendEditNvTimeout() {
+        if (!(_node instanceof CbusNode )){
+            return;
+        }
+        
         sendEditNvTask = new TimerTask() {
             @Override
             public void run() {
                 sendEditNvTask = null;
                 //  log.info(" getsendsWRACKonNVSET {} ",getsendsWRACKonNVSET()  ); 
-                if ( _node.getsendsWRACKonNVSET() ) {
+                if ( ((CbusNode)_node).getsendsWRACKonNVSET() ) {
                     log.warn("teach nv timeout");
                     _sendNVErrorCount++;
                 }

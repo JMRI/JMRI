@@ -28,7 +28,7 @@ public class CbusNodeBackupManager {
     
     public final SimpleDateFormat xmlDateStyle = new SimpleDateFormat ("yyyy-MM-dd HH:mm:ss"); // NOI18N
     private int _nodeNum = 0;
-    private final CbusNode _node;
+    private final CbusBasicNodeWithManagers _node;
     private ArrayList<CbusNodeFromBackup> _backupInfos;
     private final CbusPreferences preferences;
     private boolean backupInit; // node details loaded from file
@@ -38,7 +38,7 @@ public class CbusNodeBackupManager {
      * Create a new CbusNodeBackupManager
      * @param node the CbusNode which the xml is associated with
      */
-    public CbusNodeBackupManager(CbusNode node) {
+    public CbusNodeBackupManager(CbusBasicNodeWithManagers node) {
         _nodeNum = node.getNodeNumber();
         _node = node;
         _backupInfos = new ArrayList<>();
@@ -138,9 +138,14 @@ public class CbusNodeBackupManager {
     public final void doLoad(){
         CbusNodeBackupFile x = new CbusNodeBackupFile();
         
+        if (!( _node instanceof CbusNode)){
+            return;
+        }
+        
         if (backupInit) {
             return;
         }
+        
         backupInit = true;
         
         ThreadingUtil.runOnLayout( () -> {
@@ -167,19 +172,19 @@ public class CbusNodeBackupManager {
                 // UserName
                 details = root.getChild("UserName");  // NOI18N
                 if (details != null && (!details.getValue().isEmpty())) {
-                    _node.setUserName(details.getValue());
+                    ((CbusNode) _node).setUserName(details.getValue());
                 }
 
                 // Module Type Name
                 details = root.getChild("ModuleTypeName");  // NOI18N
                 if (details != null && (!details.getValue().isEmpty())) {
-                    _node.setNodeNameFromName(details.getValue());
+                   ((CbusNode) _node).setNodeNameFromName(details.getValue());
                 }
 
                 // user Comments Freetext
                 details = root.getChild("FreeText");  // NOI18N
                 if (details != null && (!details.getValue().isEmpty())) {
-                    _node.setUserComment(
+                    ((CbusNode) _node).setUserComment(
                         details.getValue().replaceAll("\\\\n",System.getProperty("line.separator")));
                 }
 
@@ -294,9 +299,13 @@ public class CbusNodeBackupManager {
      * trims backup list as per user pref.
      * @param createNew if true, creates a new backup then saves, false just saves
      * @param seenErrors if true sets backup completed with errors, else logs as backup complete
-     * @return true if all ok, else false if error ocurred
+     * @return true if all OK, else false if error occurred
      */
     public boolean doStore( boolean createNew, boolean seenErrors) {
+        
+        if (!( _node instanceof CbusNode)){
+            return false;
+        }
         
         setBackupStarted(true);
       
@@ -312,7 +321,7 @@ public class CbusNodeBackupManager {
         doRotate();
         
         if ( createNew ) {
-            _backupInfos.add(0,new CbusNodeFromBackup(_node,thisBackupDate));
+            _backupInfos.add(0,new CbusNodeFromBackup((CbusNode) _node,thisBackupDate));
             if (seenErrors){
                 _backupInfos.get(0).setBackupResult(BackupType.COMPLETEDWITHERROR);
             }
@@ -328,15 +337,15 @@ public class CbusNodeBackupManager {
             org.jdom2.Namespace.getNamespace("xsi", "http://www.w3.org/2001/XMLSchema-instance")); // NOI18N
         root.setAttribute("NodeNum", ""+_node.getNodeNumber() );  // NOI18N
         
-        if (!_node.getUserName().isEmpty()) {
-            root.addContent(new Element("UserName").addContent(_node.getUserName() )); // NOI18N
+        if (!((CbusNode) _node).getUserName().isEmpty()) {
+            root.addContent(new Element("UserName").addContent(((CbusNode) _node).getUserName() )); // NOI18N
         }
-        if (!_node.getNodeNameFromName().isEmpty()) {
-            root.addContent(new Element("ModuleTypeName").addContent(_node.getNodeNameFromName() )); // NOI18N
+        if (!((CbusNode) _node).getNodeNameFromName().isEmpty()) {
+            root.addContent(new Element("ModuleTypeName").addContent(((CbusNode) _node).getNodeNameFromName() )); // NOI18N
         }
-        if (!_node.getUserComment().isEmpty()) {
+        if (!((CbusNode) _node).getUserComment().isEmpty()) {
             root.addContent(new Element("FreeText").addContent( // NOI18N
-                _node.getUserComment().replaceAll("\r\n|\n|\r", "\\\\n")));
+                ((CbusNode) _node).getUserComment().replaceAll("\r\n|\n|\r", "\\\\n")));
         }
         
         Document doc = new Document(root);
@@ -395,20 +404,24 @@ public class CbusNodeBackupManager {
      * Add an xml entry advising Node Not on Network
      */
     protected void nodeNotOnNetwork(){
-        CbusNodeFromBackup newBup = new CbusNodeFromBackup(_node,new Date());
-        newBup.setBackupResult(BackupType.NOTONNETWORK);
-        _backupInfos.add(0,newBup);
-        doStore(false, false);
+        if (_node instanceof CbusNode) { 
+            CbusNodeFromBackup newBup = new CbusNodeFromBackup((CbusNode)_node,new Date());
+            newBup.setBackupResult(BackupType.NOTONNETWORK);
+            _backupInfos.add(0,newBup);
+            doStore(false, false);
+        }
     }
     
     /**
      * Add an xml entry advising Node in SLiM Mode
      */
     protected void nodeInSLiM(){
-        CbusNodeFromBackup newBup = new CbusNodeFromBackup(_node,new Date());
-        newBup.setBackupResult(BackupType.SLIM);
-        _backupInfos.add(0,newBup);
-        doStore(false, false);
+        if (_node instanceof CbusNode) { 
+            CbusNodeFromBackup newBup = new CbusNodeFromBackup((CbusNode)_node,new Date());
+            newBup.setBackupResult(BackupType.SLIM);
+            _backupInfos.add(0,newBup);
+            doStore(false, false);
+        }
     }
 
     /**

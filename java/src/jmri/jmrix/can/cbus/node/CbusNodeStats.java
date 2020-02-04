@@ -10,14 +10,14 @@ import org.slf4j.LoggerFactory;
  */
 public class CbusNodeStats {
 
-    private final CbusNode _node;
+    private final CbusBasicNodeWithManagers _node;
     
     /**
      * Create a new CbusNodeStats
      *
      * @param node Node to provide stats for
      */
-    public CbusNodeStats ( CbusNode node ){
+    public CbusNodeStats ( CbusBasicNodeWithManagers node ){
         _node = node;
     }
     
@@ -30,8 +30,11 @@ public class CbusNodeStats {
         if (!CbusNodeConstants.getModuleType(_node.getNodeParamManager().getParameter(1),_node.getNodeParamManager().getParameter(3)).isEmpty() ){
             return CbusNodeConstants.getModuleType(_node.getNodeParamManager().getParameter(1),_node.getNodeParamManager().getParameter(3));
         }
+        else if ( _node instanceof CbusNode ){
+            return ((CbusNode)_node).getNodeNameFromName();
+        }
         else {
-            return _node.getNodeNameFromName();
+            return "";
         }
     }
     

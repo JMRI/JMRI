@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
  * @author Steve Young Copyright (C) 2019,2020
  */
 public class CbusNodeParameterManager {
-    private final CbusNode _node;
+    private final CbusBasicNodeWithManagers _node;
     private int[] _parameters;
     private boolean _commandStationIdentified;
     private boolean _nodeTraitsSet;
@@ -19,7 +19,7 @@ public class CbusNodeParameterManager {
      *
      * @param node The Node
      */
-    public CbusNodeParameterManager ( CbusNode node ){
+    public CbusNodeParameterManager ( CbusBasicNodeWithManagers node ){
         _node = node;
         _parameters = null;
         _commandStationIdentified = false;
@@ -255,7 +255,12 @@ public class CbusNodeParameterManager {
     }
     
     private void finishedWhenGotMainParams(){
-        if ( ( _node.getCsNum() > -1 ) && ( _commandStationIdentified == false ) ) {
+        
+        if (!( _node instanceof CbusNode)){
+            return;
+        }
+        
+        if (( ( (CbusNode) _node).getCsNum() > -1 ) && ( _commandStationIdentified == false ) ) {
             // notify command station located
             log.info("{}",getNodeTypeString() );
             _commandStationIdentified = true;
@@ -263,8 +268,8 @@ public class CbusNodeParameterManager {
         
         // set node traits, eg CANPAN v1 send wrack on nv set, CANCMD v4 numevents 0
         // only do this once
-        if (!_nodeTraitsSet) {
-            CbusNodeConstants.setTraits(_node);
+        if (!_nodeTraitsSet ) {
+            CbusNodeConstants.setTraits((CbusNode) _node);
             _nodeTraitsSet = true;
         }
         

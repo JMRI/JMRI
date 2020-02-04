@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  */
 public class CbusNodeCanListener implements jmri.jmrix.can.CanListener {
     public final CanSystemConnectionMemo memo;
-    private final CbusNode _node;
+    private final CbusBasicNodeWithManagers _node;
     private int[] tempSetupParams;
     
     /**
@@ -25,7 +25,7 @@ public class CbusNodeCanListener implements jmri.jmrix.can.CanListener {
      * @param connmemo The CAN Connection to listen to.
      * @param node The Node
      */
-    public CbusNodeCanListener ( CanSystemConnectionMemo connmemo, CbusNode node ){
+    public CbusNodeCanListener ( CanSystemConnectionMemo connmemo, CbusBasicNodeWithManagers node ){
         memo = connmemo;
         _node = node;
         addTc(memo);
@@ -212,9 +212,9 @@ public class CbusNodeCanListener implements jmri.jmrix.can.CanListener {
             java.util.Arrays.fill(myarray, -1);
             // node may already be aware of some params via the initial PNN or STAT
 
-            myarray[1] = _node._manu;
+            myarray[1] = _node.getPnnManufacturer();
             myarray[2] = _node._fwMin;
-            myarray[3] = _node._type;
+            myarray[3] = _node.getPnnModule();
             myarray[7] = _node._fwMaj;
 
             if ( tempSetupParams !=null ) {

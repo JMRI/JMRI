@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
  * @author Steve Young Copyright (C) 2019,2020
  */
 public class CbusNodeNVManager {
-    private final CbusNode _node;
+    private final CbusBasicNodeWithManagers _node;
     private int[] _nvArray;
     private int[] newNvsToTeach;
     private int nextNvInLoop;
@@ -21,7 +21,7 @@ public class CbusNodeNVManager {
      *
      * @param node The Node
      */
-    public CbusNodeNVManager ( CbusNode node ){
+    public CbusNodeNVManager ( CbusBasicNodeWithManagers node ){
         _node = node;
 
     }
