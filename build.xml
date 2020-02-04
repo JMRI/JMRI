@@ -201,6 +201,7 @@
         <pathelement path="${runtime.class.jars}"/>
         <pathelement location="${libdir}/AppleJavaExtensions.jar"/> <!-- build with Mac OS X-specific support -->
         <pathelement location="${libdir}/junit-4.12.jar"/>
+        <pathelement location="${libdir}/junit-jupiter-5.5.2.jar"/>
         <pathelement location="${libdir}/junit-platform-commons-1.5.2.jar"/>
         <pathelement location="${libdir}/junit-platform-engine-1.5.2.jar"/>
         <pathelement location="${libdir}/junit-platform-launcher-1.5.2.jar"/>
