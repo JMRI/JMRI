@@ -3,6 +3,7 @@ package jmri.jmrit.operations.trains.tools;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -135,52 +136,44 @@ public class ExportTrains extends XmlFile {
                 }
 
                 if (train.isBuilt() && train.getRoute() != null) {
-                    List<Object> line = Arrays.asList(new Object[]{train.getName(), Bundle.getMessage("Route")});
-                    for (RouteLocation rl : train.getRoute().getLocationsBySequenceList()) {
-                        line.add(rl.getName());
-                    }
+                    ArrayList<Object> line = new ArrayList<>();
+                    line.addAll(Arrays.asList(new Object[]{train.getName(), Bundle.getMessage("Route")}));
+                    train.getRoute().getLocationsBySequenceList().forEach(rl -> line.add(rl.getName()));
                     fileOut.printRecord(line);
 
-                    line = Arrays.asList(new Object[]{train.getName(), Bundle.getMessage("csvArrivalTime")});
-                    for (RouteLocation rl : train.getRoute().getLocationsBySequenceList()) {
-                        line.add(train.getExpectedArrivalTime(rl));
-                    }
+                    line.clear();
+                    line.addAll(Arrays.asList(new Object[]{train.getName(), Bundle.getMessage("csvArrivalTime")}));
+                    train.getRoute().getLocationsBySequenceList().forEach(rl -> line.add(train.getExpectedArrivalTime(rl)));
                     fileOut.printRecord(line);
 
-                    line = Arrays.asList(new Object[]{train.getName(), Bundle.getMessage("csvDepartureTime")});
-                    for (RouteLocation rl : train.getRoute().getLocationsBySequenceList()) {
-                        line.add(train.getExpectedDepartureTime(rl));
-                    }
+                    line.clear();
+                    line.addAll(Arrays.asList(new Object[]{train.getName(), Bundle.getMessage("csvDepartureTime")}));
+                    train.getRoute().getLocationsBySequenceList().forEach(rl -> line.add(train.getExpectedDepartureTime(rl)));
                     fileOut.printRecord(line);
 
-                    line = Arrays.asList(new Object[]{train.getName(), Bundle.getMessage("csvTrainDirection")});
-                    for (RouteLocation rl : train.getRoute().getLocationsBySequenceList()) {
-                        line.add(rl.getTrainDirectionString());
-                    }
+                    line.clear();
+                    line.addAll(Arrays.asList(new Object[]{train.getName(), Bundle.getMessage("csvTrainDirection")}));
+                    train.getRoute().getLocationsBySequenceList().forEach(rl -> line.add(rl.getTrainDirectionString()));
                     fileOut.printRecord(line);
 
-                    line = Arrays.asList(new Object[]{train.getName(), Bundle.getMessage("csvTrainWeight")});
-                    for (RouteLocation rl : train.getRoute().getLocationsBySequenceList()) {
-                        line.add(train.getTrainWeight(rl));
-                    }
+                    line.clear();
+                    line.addAll(Arrays.asList(new Object[]{train.getName(), Bundle.getMessage("csvTrainWeight")}));
+                    train.getRoute().getLocationsBySequenceList().forEach(rl -> line.add(train.getTrainWeight(rl)));
                     fileOut.printRecord(line);
 
-                    line = Arrays.asList(new Object[]{train.getName(), Bundle.getMessage("csvTrainLength")});
-                    for (RouteLocation rl : train.getRoute().getLocationsBySequenceList()) {
-                        line.add(train.getTrainLength(rl));
-                    }
+                    line.clear();
+                    line.addAll(Arrays.asList(new Object[]{train.getName(), Bundle.getMessage("csvTrainLength")}));
+                    train.getRoute().getLocationsBySequenceList().forEach(rl -> line.add(train.getTrainLength(rl)));
                     fileOut.printRecord(line);
 
-                    line = Arrays.asList(new Object[]{train.getName(), Bundle.getMessage("Cars")});
-                    for (RouteLocation rl : train.getRoute().getLocationsBySequenceList()) {
-                        line.add(train.getNumberCarsInTrain(rl));
-                    }
+                    line.clear();
+                    line.addAll(Arrays.asList(new Object[]{train.getName(), Bundle.getMessage("Cars")}));
+                    train.getRoute().getLocationsBySequenceList().forEach(rl -> line.add(train.getNumberCarsInTrain(rl)));
                     fileOut.printRecord(line);
 
-                    line = Arrays.asList(new Object[]{train.getName(), Bundle.getMessage("csvEmpties")});
-                    for (RouteLocation rl : train.getRoute().getLocationsBySequenceList()) {
-                        line.add(train.getNumberEmptyCarsInTrain(rl));
-                    }
+                    line.clear();
+                    line.addAll(Arrays.asList(new Object[]{train.getName(), Bundle.getMessage("csvEmpties")}));
+                    train.getRoute().getLocationsBySequenceList().forEach(rl -> line.add(train.getNumberEmptyCarsInTrain(rl)));
                     fileOut.printRecord(line);
                     fileOut.println();
                 }
