@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
-import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -58,6 +57,13 @@ public class CbusAllocateNodeNumber implements CanListener {
         _timeout = CbusNodeTimerManager.SINGLE_MESSAGE_TIMEOUT_TIME;
     }
     
+    
+    /**
+     * 
+     * @param nn -1 if already in setup from unknown, 0 if entering from SLiM,
+     * else previous node number
+     * @param nodeText 
+     */
     private void startnodeallocation(int nn, String nodeText) {
         
         if (NODE_NUM_DIALOGUE_OPEN) {
@@ -77,6 +83,8 @@ public class CbusAllocateNodeNumber implements CanListener {
         
         String popuplabel;
         
+        baseNodeNum =  nodeModel.getNextAvailableNodeNumber(baseNodeNum);
+        
         switch (nn) {
             case 0:
                 popuplabel=Bundle.getMessage("NdEntrSlimTitle");
@@ -92,13 +100,12 @@ public class CbusAllocateNodeNumber implements CanListener {
             default:
                 popuplabel=Bundle.getMessage("NdEntrNumTitle",nn);
                 _paramsArr = null; // reset just in case
+                baseNodeNum = nn;
                 break;
         }
-     
-        baseNodeNum =  nodeModel.getNextAvailableNodeNumber(baseNodeNum);
         
         JSpinner rqnnSpinner = getNewRqnnSpinner();
-        
+        rqnnSpinner.firePropertyChange("open", false, true); // reset node text
         rqNNpane.add(rqNNtext, BorderLayout.CENTER);
         bottomrqNNpane.add(rqNNspinnerlabel);
         bottomrqNNpane.add(rqnnSpinner);
@@ -131,8 +138,11 @@ public class CbusAllocateNodeNumber implements CanListener {
     
         JSpinner rqnnSpinner = new JSpinner(new SpinnerNumberModel(baseNodeNum, 1, 65535, 1));
         rqnnSpinner.setToolTipText((Bundle.getMessage("ToolTipNodeNumber")));
-        JComponent rqcomp = rqnnSpinner.getEditor();
-        JFormattedTextField rqfield = (JFormattedTextField) rqcomp.getComponent(0);
+        
+        JSpinner.NumberEditor editor = new JSpinner.NumberEditor(rqnnSpinner, "#");
+        rqnnSpinner.setEditor(editor);
+        
+        JFormattedTextField rqfield = (JFormattedTextField) editor.getComponent(0);
         DefaultFormatter rqformatter = (DefaultFormatter) rqfield.getFormatter();
         rqformatter.setCommitsOnValidEdit(true);
         rqfield.setBackground(Color.white);
@@ -232,6 +242,8 @@ public class CbusAllocateNodeNumber implements CanListener {
                     CbusNode nd = nodeModel.provideNodeByNodeNum( ( m.getElement(1) * 256 ) + m.getElement(2) );
                     nd.getCanListener().setParamsFromSetup(_paramsArr);
                     nd.setNodeNameFromName(_tempNodeName);
+                    nd.resetNodeAll();
+                    nodeModel.startUrgentFetch();
                 }   
                 _paramsArr = null;
                 break;
