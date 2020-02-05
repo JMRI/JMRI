@@ -98,7 +98,7 @@ public class CbusAllocateNodeNumber implements CanListener {
                 }
                 break;
             default:
-                popuplabel=Bundle.getMessage("NdEntrNumTitle",nn);
+                popuplabel=Bundle.getMessage("NdEntrNumTitle",String.valueOf(nn));
                 _paramsArr = null; // reset just in case
                 baseNodeNum = nn;
                 break;
