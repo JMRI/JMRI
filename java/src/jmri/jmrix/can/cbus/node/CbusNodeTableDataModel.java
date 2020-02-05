@@ -55,7 +55,7 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
 
     public CbusNodeTableDataModel(@Nonnull CanSystemConnectionMemo memo, int row, int column) {
         
-        log.info("Starting MERG CBUS Node Table");
+        log.debug("Starting MERG CBUS Node Table");
         _mainArray = new ArrayList<>();
         _nodesFound = new ArrayList<>();
         _memo = memo;

@@ -126,13 +126,13 @@ public class CbusNodeInfoPane extends JPanel implements PropertyChangeListener {
     }
     
     private void setHeaderText() {
-    
-        header.setText("<html><h3>" 
-            + CbusNodeConstants.getManu(paramMgr.getParameter(1)) 
-            + " " 
-            + nodeOfInterest.getNodeStats().getNodeTypeName()
-            + "</h3></html>");
-    
+        StringBuilder buildheader = new StringBuilder();
+        buildheader.append("<html><h3>");
+        buildheader.append(CbusNodeConstants.getManu(paramMgr.getParameter(1)));
+        buildheader.append(" ");
+        buildheader.append(nodeOfInterest.getNodeStats().getNodeTypeName());
+        buildheader.append("</h3></html>");
+        header.setText(buildheader.toString());
     }
     
     /**
