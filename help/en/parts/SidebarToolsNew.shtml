@@ -1,6 +1,6 @@
 <!-- SidebarTools.shtml -->
 <!-- This is the common sidebar definition for Tools pages -->
-        <!--include virtual="sidebarLocalPart.shtml" -->
+        <!--include virtual="SidebarLocalPart.shtml" -->
 
         <dt><h3><a href="/help/en/html/tools/">Tools</a></h3></dt>
         <dd>JMRI tools for working with your layout:
