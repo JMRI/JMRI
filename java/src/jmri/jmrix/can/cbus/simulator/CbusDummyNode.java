@@ -55,7 +55,7 @@ public class CbusDummyNode extends CbusNode {
         r.setElement(0, CbusConstants.CBUS_NUMEV);
         r.setElement(1, getNodeNumber() >> 8);
         r.setElement(2, getNodeNumber() & 0xff);
-        r.setElement(3, Math.max(0, getNodeEventManager().getTotalNodeEvents() & 0xff ) );
+        r.setElement(3, (Math.max(0, (getNodeEventManager().getTotalNodeEvents())) & 0xff ) );
         send.sendWithDelay(r,canListener.getSendIn(),canListener.getSendOut(),canListener.getDelay());
     }
 
