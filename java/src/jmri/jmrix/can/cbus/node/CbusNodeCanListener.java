@@ -121,8 +121,8 @@ public class CbusNodeCanListener implements jmri.jmrix.can.CanListener {
                 // response from node
                 
                 int newEventsOnNode = m.getElement(3);
-                _node.getNodeEventManager().resetNodeEvents();
                 _node.getNodeTimerManager().clearNumEvTimeout();
+                _node.getNodeEventManager().resetNodeEventsToZero();
                 if ( _node.getNodeParamManager().getParameter(5)<0 ){
                     return;
                 }   for (int i = 0; i < newEventsOnNode; i++) {
