@@ -100,14 +100,16 @@ public class CbusNodeEditEventFrame extends JmriJFrame
         frameCopyButton = new JButton(("Copy Event"));
         
         numberSpinnernd = new JSpinner(new SpinnerNumberModel(Math.max(0,_ndEv.getNn()), 0, 65535, 1));
-        JComponent compNd = numberSpinnernd.getEditor();
-        JFormattedTextField fieldNd = (JFormattedTextField) compNd.getComponent(0);
+        JSpinner.NumberEditor editor = new JSpinner.NumberEditor(numberSpinnernd, "#");
+        numberSpinnernd.setEditor(editor);
+        JFormattedTextField fieldNd = (JFormattedTextField) editor.getComponent(0);
         DefaultFormatter formatterNd = (DefaultFormatter) fieldNd.getFormatter();
         formatterNd.setCommitsOnValidEdit(true);
 
         numberSpinnerEv = new JSpinner(new SpinnerNumberModel(Math.max(0,_ndEv.getEn()), 0, 65535, 1));
-        JComponent compEv = numberSpinnerEv.getEditor();
-        JFormattedTextField fieldEv = (JFormattedTextField) compEv.getComponent(0);
+        JSpinner.NumberEditor neditor = new JSpinner.NumberEditor(numberSpinnernd, "#");
+        numberSpinnernd.setEditor(neditor);
+        JFormattedTextField fieldEv = (JFormattedTextField) neditor.getComponent(0);
         DefaultFormatter formatterEv = (DefaultFormatter) fieldEv.getFormatter();
         formatterEv.setCommitsOnValidEdit(true);        
         

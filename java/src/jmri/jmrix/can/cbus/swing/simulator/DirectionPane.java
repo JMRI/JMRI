@@ -99,8 +99,9 @@ public class DirectionPane extends JPanel {
     
     private JSpinner getNewJSpinner(){
         delaySpinner = new JSpinner(new SpinnerNumberModel(777,0,999999,1));
-        JComponent compEv = delaySpinner.getEditor();
-        JFormattedTextField fieldEv = (JFormattedTextField) compEv.getComponent(0);
+        JSpinner.NumberEditor editor = new JSpinner.NumberEditor(delaySpinner, "#");
+        delaySpinner.setEditor(editor);
+        JFormattedTextField fieldEv = (JFormattedTextField) editor.getComponent(0);
         DefaultFormatter formatterEv = (DefaultFormatter) fieldEv.getFormatter();
         fieldEv.setColumns(4);
         formatterEv.setCommitsOnValidEdit(true);
