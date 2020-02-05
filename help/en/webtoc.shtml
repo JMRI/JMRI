@@ -16,7 +16,7 @@
 <!--/Style-->
 </HEAD>
 <BODY>
-<!--#include virtual="/Header.shtml" -->
+<!--#include virtual="/Header" -->
 <!--#include virtual="tocheader" -->
 <ul>
  
@@ -2535,6 +2535,6 @@
 
 
 </ul>
-<!--#include virtual="/Footer.shtml" -->
+<!--#include virtual="/Footer" -->
 </BODY>
 </HTML>
