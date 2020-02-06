@@ -97,7 +97,15 @@
         <profile>
             <id>appveyor</id>
             <build>
-                <plugins>
+	        <plugins>
+                <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <configuration>
+                             <skipMain>true</skipMain>
+                            <skip>true</skip>
+                        </configuration>
+                    </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-antrun-plugin</artifactId>
@@ -120,14 +128,14 @@
                         </executions>
                     </plugin>
                     <!-- use surefire (maven default test harness) only for line endings -->
-                    <plugin>
+		    <!--<plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
                         <version>${surefire.version}</version>
                         <configuration>
                             <test>jmri.util.FileLineEndingsTest</test>
                         </configuration>
-                    </plugin>
+		    </plugin> -->
                 </plugins>
             </build>
         </profile>

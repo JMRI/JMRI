@@ -264,8 +264,12 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         if (at != null) {
             if (tSource == ActiveTrain.ROSTER) {
                 RosterEntry re = Roster.getDefault().getEntryForId(trainNameToUse);
-                at.setRosterEntry(re);
-                at.setDccAddress(re.getDccAddress());
+                if (re != null) {
+                    at.setRosterEntry(re);
+                    at.setDccAddress(re.getDccAddress());
+                } else {
+                    log.warn("failed to retrieve Roster Entry '{}' for ActiveTrain '{}'", trainNameToUse, info.getTrainName());
+                }
             }
             at.setAllocateMethod(info.getAllocationMethod());
             at.setDelayedStart(info.getDelayedStart()); //this is a code: NODELAY, TIMEDDELAY, SENSORDELAY
