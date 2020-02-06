@@ -13,7 +13,7 @@ public class SensorWhereUsedTest {
 
     @Test
     public void testCreate() {
-        jmri.Sensor sensor = InstanceMaanger.getDefault(SensorManager.class).provideSensor("IT101");
+        jmri.Sensor sensor = jmri.InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IT101");
         String result = SensorWhereUsed.checkTurnouts(sensor);
     }
 
