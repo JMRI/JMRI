@@ -32,7 +32,7 @@ before_test:
 
 test_script:
 - ps: |
-    mvn -v test -P appveyor --batch-mode
+    mvn test -P appveyor --batch-mode
     #    mvn --quiet test -P appveyor --batch-mode
 
 after_test:
