@@ -3,6 +3,7 @@ package jmri.jmrit.withrottle;
 
 import java.beans.PropertyChangeListener;
 import java.util.TimeZone;
+
 import jmri.InstanceManager;
 import jmri.Timebase;
 
@@ -41,8 +42,10 @@ public class FastClockController extends AbstractController {
         rateListener = new PropertyChangeListener() {
             @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
-                setReSyncSetpoint();
-                sendFastRate();
+                if (e.getPropertyName().equals("rate")) {
+                    setReSyncSetpoint();
+                    sendFastRate();
+                }
             }
         };
         
@@ -135,6 +138,4 @@ public class FastClockController extends AbstractController {
     private void setReSyncSetpoint() {
         updateMinsSetpoint((short)(fastClock.userGetRate() * UPDATE_MINUTES));
     }
-
-    // private final static Logger log = LoggerFactory.getLogger(FastClockController.class);
 }
