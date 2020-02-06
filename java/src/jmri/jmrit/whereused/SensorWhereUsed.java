@@ -53,9 +53,13 @@ public class SensorWhereUsed {
     static String checkBlocks(Sensor sensor) {
         StringBuilder sb = new StringBuilder();
         InstanceManager.getDefault(BlockManager.class).getNamedBeanSet().forEach((block) -> {
-            if (sensor == block.getSensor()) {
+            block.getUsageReport(sensor).forEach((report) -> {
+                log.info("key = {}", report.getBundleKey());
                 sb.append(Bundle.getMessage("ReferenceLine", block.getUserName(), block.getSystemName()));  // NOI18N
-            }
+            });
+//             if (sensor == block.getSensor()) {
+//                 sb.append(Bundle.getMessage("ReferenceLine", block.getUserName(), block.getSystemName()));  // NOI18N
+//             }
         });
         return addHeader(sb, "ReferenceOccupancy");
     }
@@ -120,5 +124,5 @@ public class SensorWhereUsed {
         return sb.toString();
     }
 
-//     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SensorWhereUsed.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SensorWhereUsed.class);
 }

@@ -143,7 +143,7 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
 
     /**
      * Get the name to display, formatted per {@link NamedBean.DisplayOptions}.
-     * 
+     *
      * @param options the DisplayOptions to use
      * @return the display name formatted per options
      */
@@ -176,7 +176,7 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
                 return userName != null ? userName : systemName;
         }
     }
-    
+
     /**
      * Get a fully formatted display that includes the SystemName and, if set,
      * the UserName.
@@ -366,6 +366,14 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
     public void setComment(@CheckForNull String comment);
 
     /**
+     * Get a list of references to the specified bean.
+     *
+     * @param bean The bean to be checked.
+     * @return a list of NamedBeanUsageReports or an empty ArrayList.
+     */
+    default ArrayList<NamedBeanUsageReport> getUsageReport(@CheckForNull NamedBean bean) { return (new ArrayList<>()); }
+
+    /**
      * Attach a key/value pair to the NamedBean, which can be retrieved later.
      * These are not bound properties as yet, and don't throw events on
      * modification. Key must not be null.
@@ -499,7 +507,7 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
     public class BadNameException extends IllegalArgumentException {
 
         private final String localizedMessage;
-        
+
         /**
          * Create an exception with no message to the user or for logging.
          */
@@ -522,12 +530,12 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
             super(logging);
             localizedMessage = display;
         }
-        
+
         @Override
         public String getLocalizedMessage() {
             return localizedMessage;
         }
-        
+
     }
 
     public class BadUserNameException extends BadNameException {
@@ -553,7 +561,7 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
          * <p>
          * <strong>Note</strong> the message must be accessible by
          * {@link jmri.Bundle}.
-         * 
+         *
          * @param locale  the locale to be used
          * @param message bundle key to be translated
          * @param subs    One or more objects to be inserted into the message
@@ -629,7 +637,7 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
     public class DuplicateSystemNameException extends IllegalArgumentException {
 
         private final String localizedMessage;
-        
+
         /**
          * Create an exception with no message to the user or for logging. Use
          * only when calling methods likely have alternate mechanism for

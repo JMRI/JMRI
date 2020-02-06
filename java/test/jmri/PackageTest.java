@@ -15,6 +15,7 @@ import org.junit.runners.Suite;
     DccLocoAddressTest.class,
     InstanceManagerTest.class,
     NamedBeanTest.class,
+    NamedBeanUsageReportTest.class,
     LightTest.class,
     ManagerTest.class,
     NmraPacketTest.class,

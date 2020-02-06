@@ -15,6 +15,7 @@ public class SensorWhereUsedTest {
     public void testCreate() {
         jmri.Sensor sensor = jmri.InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IT101");
         String result = SensorWhereUsed.checkTurnouts(sensor);
+        Assert.assertEquals("",result);
     }
 
     @Before

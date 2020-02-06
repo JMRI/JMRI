@@ -152,6 +152,20 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         return result;
     }
 
+    @Override
+    public ArrayList<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
+        ArrayList<NamedBeanUsageReport> report = new ArrayList<>();
+        if (bean != null) {
+            if (bean.equals(getSensor())) {
+                report.add(new NamedBeanUsageReport(this, bean, "BlockSensor"));
+            }
+            if (bean.equals(getReporter())) {
+                report.add(new NamedBeanUsageReport(this, bean, "BlockReporter"));
+            }
+        }
+        return report;
+    }
+
     /**
      * Set the sensor by name.
      *
@@ -519,7 +533,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
      * Paths will inherit this length, if their length is not specifically set.
      * This length is the maximum length of any Path in the block. Path lengths
      * exceeding this will be set to the default length.
-     * 
+     *
      * @param l length in millimeters
      */
     public void setLength(float l) {
