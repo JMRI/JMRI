@@ -1704,7 +1704,7 @@
 
     <target name="alltest-coveragecheck" depends="logalltest, coveragecheck" description="Test Coverage check from logalltest" />
 
-    <target name="ci-test-appveyor-coveragecheck" depends="ci-test-appveyor, coveragecheck" description="Test Coverage check from ci-test-appveyor for Travis" />
+    <target name="ci-test-appveyor-coveragecheck" depends="ci-test-appveyor-consolelauncher, coveragecheck" description="Test Coverage check from ci-test-appveyor for Travis" />
 
     <!-- end of test execution targets -->
 
