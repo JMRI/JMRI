@@ -27,6 +27,7 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
     NamedBeanComboBox<?> _itemNameBox = new NamedBeanComboBox<Sensor>(
                         InstanceManager.getDefault(SensorManager.class));
     JPanel _topPanel;
+    JPanel _bottomPanel;
     JPanel _scrolltext = new JPanel();
     JTextArea _textContent;
 
@@ -40,6 +41,23 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
         contentPane.setLayout(new BorderLayout());
 
         // Build the top panel
+        buildTopPanel();
+        contentPane.add(_topPanel, BorderLayout.NORTH);
+
+        // Build the where used listing
+        JScrollPane scrollPane = null;
+        buildWhereUsedListing();
+        scrollPane = new JScrollPane(_scrolltext);
+        contentPane.add(scrollPane);
+
+        // Build the bottom panel
+        buildBottomPanel();
+        contentPane.add(_bottomPanel, BorderLayout.SOUTH);
+
+        pack();
+    }
+
+    void buildTopPanel() {
         _topPanel = new JPanel();
         _topPanel.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("LabelItemType"))));  // NOI18N
         _itemTypeBox = new JComboBox<>();
@@ -59,31 +77,22 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
                 setItemNameBox(_itemType);
             }
         });
-        contentPane.add(_topPanel, BorderLayout.NORTH);
+        return;
+    }
 
-        // Build the where used listing
-        JScrollPane scrollPane = null;
+    void buildBottomPanel() {
+        _bottomPanel = new JPanel();
+        _bottomPanel.setLayout(new BorderLayout());
 
-        buildWhereUsedListing();
-        scrollPane = new JScrollPane(_scrolltext);
-        contentPane.add(scrollPane);
-
-        // Build the bottom panel
-        JPanel bottomPanel = new JPanel();
-        bottomPanel.setLayout(new BorderLayout());
-
-        JButton saveBrowse = new JButton(Bundle.getMessage("SaveButton"));   // NOI18N
-        saveBrowse.setToolTipText(Bundle.getMessage("SaveButtonHint"));      // NOI18N
-        bottomPanel.add(saveBrowse, BorderLayout.EAST);
-        saveBrowse.addActionListener(new ActionListener() {
+        JButton saveButton = new JButton(Bundle.getMessage("SaveButton"));   // NOI18N
+        saveButton.setToolTipText(Bundle.getMessage("SaveButtonHint"));      // NOI18N
+        _bottomPanel.add(saveButton, BorderLayout.EAST);
+        saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 saveWhereUsedPressed();
             }
         });
-        contentPane.add(bottomPanel, BorderLayout.SOUTH);
-
-        pack();
     }
 
     /**
@@ -108,7 +117,7 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getModifiers() == 0) {
-                    log.info("ignore event");
+                    log.debug("ignore event");
                     return;
                 }
                 Object src = e.getSource();

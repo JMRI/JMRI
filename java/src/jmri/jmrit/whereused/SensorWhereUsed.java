@@ -48,11 +48,7 @@ public class SensorWhereUsed {
                 }
             }
         });
-        if (sb.length() > 0) {
-            sb.insert(0, Bundle.getMessage("ReferenceHeader", Bundle.getMessage("ReferenceFeedback")));  // NOI18N
-            sb.append("\n");
-        }
-        return sb.toString();
+        return addHeader(sb, "ReferenceFeedback");
     }
 
     static String checkBlocks(Sensor sensor) {
@@ -62,11 +58,7 @@ public class SensorWhereUsed {
                 sb.append(Bundle.getMessage("ReferenceLine", block.getUserName(), block.getSystemName()));  // NOI18N
             }
         });
-        if (sb.length() > 0) {
-            sb.insert(0, Bundle.getMessage("ReferenceHeader", Bundle.getMessage("ReferenceOccupancy")));  // NOI18N
-            sb.append("\n");
-        }
-        return sb.toString();
+        return addHeader(sb, "ReferenceOccupancy");
     }
 
     static String checkSignalHeadLogic(Sensor sensor) {
@@ -92,12 +84,7 @@ public class SensorWhereUsed {
                 sb.append(Bundle.getMessage("ReferenceLine", head.getUserName(), head.getSystemName()));  // NOI18N
             }
         }
-
-        if (sb.length() > 0) {
-            sb.insert(0, Bundle.getMessage("ReferenceHeader", Bundle.getMessage("ReferenceHeadSSL")));  // NOI18N
-            sb.append("\n");
-        }
-        return sb.toString();
+        return addHeader(sb, "ReferenceHeadSSL");
     }
 
     static String checkSignalMastLogic(Sensor sensor) {
@@ -110,12 +97,7 @@ public class SensorWhereUsed {
                 }
             });
         });
-
-        if (sb.length() > 0) {
-            sb.insert(0, Bundle.getMessage("ReferenceHeader", Bundle.getMessage("ReferenceMastSML")));  // NOI18N
-            sb.append("\n");
-        }
-        return sb.toString();
+        return addHeader(sb, "ReferenceMastSML");
     }
 
     static String checkPanels(Sensor sensor) {
@@ -128,13 +110,16 @@ public class SensorWhereUsed {
                 }
             });
         });
+        return addHeader(sb, "ReferencePanels");
+    }
 
+    static String addHeader(StringBuilder sb, String bundleKey) {
         if (sb.length() > 0) {
-            sb.insert(0, Bundle.getMessage("ReferenceHeader", Bundle.getMessage("ReferencePanels")));  // NOI18N
+            sb.insert(0, Bundle.getMessage("ReferenceHeader", Bundle.getMessage(bundleKey)));  // NOI18N
             sb.append("\n");
         }
         return sb.toString();
     }
 
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SensorWhereUsed.class);
+//     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SensorWhereUsed.class);
 }
