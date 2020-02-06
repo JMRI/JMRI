@@ -7324,6 +7324,59 @@ public class TrainBuilderTest extends OperationsTestCase {
         
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
+    
+    /**
+     * Test a local switcher that departs and returns to staging
+     * 
+     */
+    @Test
+    public void testLocalStaging() {
+        String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
+        String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
+
+        // Create staging and track
+        Location westford_staging = lmanager.newLocation("Westford-1");
+        westford_staging.setLocationOps(Location.STAGING);
+        Track staging = westford_staging.addTrack("Westford staging", Track.STAGING);
+        staging.setLength(500);
+        
+        // Create location and spur
+        Location westford_spur = lmanager.newLocation("Westford-2");
+        Track spur = westford_spur.addTrack("Westford Yard 2", Track.SPUR);
+        spur.setLength(500);
+
+        // Create local route
+        Route rte1 = rmanager.newRoute("Local Route");
+        rte1.addLocation(westford_staging);
+        rte1.addLocation(westford_spur);
+        rte1.addLocation(westford_staging);
+
+        // Create train
+        Train train1 = tmanager.newTrain("Test Local Staging");
+        train1.setRoute(rte1);
+
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar(roadNames[1], "1", carTypes[1], "90", staging, 0);
+        Car c2 = JUnitOperationsUtil.createAndPlaceCar(roadNames[1], "2", carTypes[2], "90", staging, 0);
+        c2.setCaboose(true);
+        Car c3 = JUnitOperationsUtil.createAndPlaceCar(roadNames[1], "3", carTypes[1], "90", spur, 0);
+ 
+        // Build train, will fail only 1 track in staging
+        Assert.assertFalse(train1.build());
+        
+        Setup.setBuildAggressive(true);
+        Assert.assertFalse(train1.build());
+        
+        Setup.setStagingTrackImmediatelyAvail(true);
+        Assert.assertTrue(train1.build());
+        Assert.assertTrue("Train 1 built", train1.isBuilt());
+        
+        Assert.assertEquals("confirm destination", spur, c1.getDestinationTrack());      
+        Assert.assertEquals("confirm destination", staging, c2.getDestinationTrack());
+        Assert.assertEquals("confirm destination", staging, c3.getDestinationTrack());
+        
+        train1.reset();
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
 
     @Test
     public void testScheduleLoads() {
