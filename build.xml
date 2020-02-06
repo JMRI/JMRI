@@ -1542,6 +1542,9 @@
 
         <java classpathref="test.class.path" classname="org.junit.platform.console.ConsoleLauncher" fork="true" failonerror="true">
             <arg value="--scan-classpath"/>
+            <arg value="--details=none"/>
+            <arg value="--include-engine=junit-jupiter"/>
+            <arg value="--include-engine=junit-vintage"/>
             <arg line="--reports-dir ${testreport}" />
             <sysproperty key="cucumber.options" value="--tags 'not @Ignore'"/>
             <sysproperty key="wdm.forceCache" value="true"/>
