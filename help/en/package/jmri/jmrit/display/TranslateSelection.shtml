@@ -23,7 +23,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -64,7 +64,7 @@
       needed.</p>
 
       <p><b>To retain your changes, please remember to save your
-      Panel!</b></p><!--#include virtual="/Footer" -->
+      Panel!</b></p><!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

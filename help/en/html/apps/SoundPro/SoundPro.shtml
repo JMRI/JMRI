@@ -23,7 +23,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -48,7 +48,7 @@
         "../../../html/tools/Audio.shtml">Audio</a></li>
       </ul>More information about the <a href=
       "../../setup/Files.shtml">JMRI Configuration Files</a> 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

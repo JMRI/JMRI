@@ -18,7 +18,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -91,7 +91,7 @@
       corresponds to the lower left corner. The lower-left corner
       is often set to 0,0, and the upper left set to large enough
       values to show your entire layout, but you don't have to do
-      it like that. <!--#include virtual="/Footer" -->
+      it like that. <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

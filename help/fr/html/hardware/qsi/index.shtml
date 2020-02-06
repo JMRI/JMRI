@@ -15,7 +15,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="../SidebarUp" -->
     <div id="mainContent">
@@ -137,7 +137,7 @@ Nous n'avons actuellement pas assez d'informations pour t&#233;l&#233;charger de
 Programmateur Quantum. Si nous obtenons l'information, nous allons certainement &#233;crire ce code.
     </p>
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
         </div>
       </div>
 </body>

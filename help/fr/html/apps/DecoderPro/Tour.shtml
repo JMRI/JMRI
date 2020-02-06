@@ -15,7 +15,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -278,7 +278,7 @@ Plus d'informations disponibles sur
 y compris la fa&#231;on d'<a href="CreateDecoder.shtml">ajouter de nouveaux Types de D&#233;codeur </a>.
 
 			</div>
- 		<!--#include virtual="/Footer" -->
+ 		<!--#include virtual="/Footer.shtml" -->
   	</div> <!-- close #mainContent -->
 	</div> <!-- close #mBody -->
 </body>

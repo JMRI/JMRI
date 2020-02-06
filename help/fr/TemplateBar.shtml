@@ -23,7 +23,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -32,7 +32,7 @@
       mati&egrave;re haut et en bas d'une page avec une barre de
       menu sur le c&ocirc;t&eacute;, qui vient du fichier "Sidebar"
       dans le m&ecirc;me r&eacute;pertoire. 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- ferme #mainContent-->
   </div><!-- ferme #mBody-->
 </body>

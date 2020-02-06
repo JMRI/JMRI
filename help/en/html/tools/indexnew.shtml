@@ -614,7 +614,7 @@
         <p>Run your own scripts or scripts shared by other JMRI
         user from the Panels &gt; Run Script... menu.</p>
 
-        <!--#include virtual="/Footer" -->
+        <!--#include virtual="/Footer.shtml" -->
       </div><!-- closes #mainContent-->
     </div><!-- closes #mBody-->
   </div><!-- closes #container -->
