@@ -26,7 +26,7 @@
   <div id="container">
     <p class="skipLink"><a href="#mainContent" accesskey="2">Skip
     to main content</a></p>
-    <!--#include virtual="/Header" -->
+    <!--#include virtual="/Header.shtml" -->
     <div id="mBody">
       <!--#include virtual="Sidebar" -->
       <div id="mainContent">
@@ -130,7 +130,7 @@
         <p>LocoNet&reg; est une marque d&eacute;pos&eacute;e de
         <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
 
-        <!--#include virtual="/Footer" -->
+        <!--#include virtual="/Footer.shtml" -->
       </div>
     </div>
   </div>

@@ -19,7 +19,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -107,7 +107,7 @@ autrement.
       <p>Voir aussi la <a href="index.shtml">page principale JMRI
       RPS</a> .</p>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

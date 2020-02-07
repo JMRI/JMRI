@@ -48,7 +48,6 @@ import org.junit.runners.Suite;
         XNetSerialPortControllerTest.class,
         XNetSimulatorPortControllerTest.class,
         XNetTimeSlotListenerTest.class,
-        XNetConstantsTest.class,
         XNetFeedbackMessageCacheTest.class,
         AbstractXNetSerialConnectionConfigTest.class,
         AbstractXNetInitializationManagerTest.class,

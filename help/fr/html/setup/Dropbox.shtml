@@ -17,7 +17,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -87,7 +87,7 @@ Nouvel utilisateur Fichiers Emplacement que vous venez de cr&#233;er. </li>
     dossier JMRI que vous avez cr&#233;&#233; dans Dropbox.
 </ul>
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
   </div><!-- closes #mainContent-->
  </div> <!-- closes #mBody-->
 </body>

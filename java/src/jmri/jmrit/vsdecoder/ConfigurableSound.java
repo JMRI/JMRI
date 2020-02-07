@@ -60,31 +60,46 @@ class ConfigurableSound extends VSDSound {
     }
 
     public boolean init(VSDFile vf) {
-
         if (!initialized) {
             if (use_start_sound) {
                 start_sound = new SoundBite(vf, start_file, name + "_Start", name + "_Start");
-                start_sound.setLooped(false);
-                start_sound.setReferenceDistance(rd);
-                start_sound.setGain(gain);
+                if (start_sound.isInitialized()) {
+                    start_sound.setLooped(false);
+                    start_sound.setReferenceDistance(rd);
+                    start_sound.setGain(gain);
+                } else {
+                    use_start_sound = false;
+                }
             }
             if (use_mid_sound) {
                 mid_sound = new SoundBite(vf, mid_file, name + "_Mid", name + "_Mid");
-                mid_sound.setLooped(false);
-                mid_sound.setReferenceDistance(rd);
-                mid_sound.setGain(gain);
+                if (mid_sound.isInitialized()) {
+                    mid_sound.setLooped(false);
+                    mid_sound.setReferenceDistance(rd);
+                    mid_sound.setGain(gain);
+                } else {
+                    use_mid_sound = false;
+                }
             }
             if (use_end_sound) {
                 end_sound = new SoundBite(vf, end_file, name + "_End", name + "_End");
-                end_sound.setLooped(false);
-                end_sound.setReferenceDistance(rd);
-                end_sound.setGain(gain);
+                if (end_sound.isInitialized()) {
+                    end_sound.setLooped(false);
+                    end_sound.setReferenceDistance(rd);
+                    end_sound.setGain(gain);
+                } else {
+                    use_end_sound = false;
+                }
             }
             if (use_short_sound) {
                 short_sound = new SoundBite(vf, short_file, name + "_Short", name + "_Short");
-                short_sound.setLooped(false);
-                short_sound.setReferenceDistance(rd);
-                short_sound.setGain(gain);
+                if (short_sound.isInitialized()) {
+                    short_sound.setLooped(false);
+                    short_sound.setReferenceDistance(rd);
+                    short_sound.setGain(gain);
+                } else {
+                    use_short_sound = false;
+                }
             }
         }
         return true;
@@ -102,13 +117,12 @@ class ConfigurableSound extends VSDSound {
             is_playing = false; // short sound, won't be playing long...
         } else {
             if (use_start_sound) {
-                t = newTimer(start_sound.getLengthAsInt(), false,
-                        new ActionListener() {
+                t = newTimer(start_sound.getLengthAsInt(), false, new ActionListener() {
                     @Override
-                            public void actionPerformed(ActionEvent e) {
-                                handleTimerPop(e);
-                            }
-                        });
+                    public void actionPerformed(ActionEvent e) {
+                        handleTimerPop(e);
+                    }
+                });
                 start_sound.play();
                 if (use_mid_sound) {
                     t.start();
@@ -126,13 +140,13 @@ class ConfigurableSound extends VSDSound {
         if (use_start_sound) {
             start_sound.setLooped(false);
             start_sound.play();
-            t = newTimer(start_sound.getLengthAsInt() - 100, false,
-                    new ActionListener() {
+            // The newTimer method in the super class makes sure that the delay value is positive
+            t = newTimer(start_sound.getLengthAsInt() - 100, false, new ActionListener() {
                 @Override
-                        public void actionPerformed(ActionEvent e) {
-                            handleTimerPop(e);
-                        }
-                    });
+                public void actionPerformed(ActionEvent e) {
+                    handleTimerPop(e);
+                }
+            });
             t.setRepeats(false); // timer pop only once to trigger the sustain sound.
             t.start();
         } else if (use_mid_sound) {
@@ -303,32 +317,27 @@ class ConfigurableSound extends VSDSound {
 
     public void setXml(Element e, VSDFile vf) {
         log.debug("ConfigurableSound: {}", e.getAttributeValue("name"));
-        //log.debug("  start file: {}", e.getChildText("start-file"));
         if (((start_file = e.getChildText("start-file")) != null) && (!start_file.isEmpty())) {
             use_start_sound = true;
         } else {
             use_start_sound = false;
         }
-        //log.debug("  mid file: {}", e.getChildText("mid-file"));
         if (((mid_file = e.getChildText("mid-file")) != null) && (!mid_file.isEmpty())) {
             use_mid_sound = true;
         } else {
             use_mid_sound = false;
         }
-        //log.debug("  end file: {}", e.getChildText("end-file"));
         if (((end_file = e.getChildText("end-file")) != null) && (!end_file.isEmpty())) {
             use_end_sound = true;
         } else {
             use_end_sound = false;
         }
-        //log.debug("  short file: {}", e.getChildText("short-file"));
         if (((short_file = e.getChildText("short-file")) != null) && (!short_file.isEmpty())) {
             use_short_sound = true;
         } else {
             use_short_sound = false;
         }
 
-        //log.debug("  start sound duration: {}", e.getChildText("start-sound-duration"));
         String ssd = e.getChildText("start-sound-duration");
         if ((ssd != null) && (!ssd.isEmpty())) {
             start_sound_duration = Integer.parseInt(ssd);
@@ -336,7 +345,6 @@ class ConfigurableSound extends VSDSound {
             start_sound_duration = 0;
         }
 
-        //log.debug("  gain: {}", e.getChildText("gain"));
         String g = e.getChildText("gain");
         if ((g != null) && (!g.isEmpty())) {
             gain = Float.parseFloat(g);
@@ -344,13 +352,11 @@ class ConfigurableSound extends VSDSound {
             gain = default_gain;
         }
 
-        log.debug("  referenceDistance: {}", e.getChildText("reference-distance"));
         String rds = e.getChildText("reference-distance");
         if ((rds != null) && (!rds.isEmpty())) {
             rd = Float.parseFloat(rds);
         } else {
             rd = default_reference_distance;
-            log.debug("  referenceDistance set to default: {}", rd);
         }
 
         /*
@@ -360,7 +366,6 @@ class ConfigurableSound extends VSDSound {
         // Reboot the sound
         initialized = false;
         this.init(vf);
-
     }
 
     private final static Logger log = LoggerFactory.getLogger(ConfigurableSound.class);

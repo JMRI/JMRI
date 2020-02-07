@@ -6,7 +6,6 @@ import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import org.junit.*;
-import org.mockito.Mockito;
 
 /**
  * Unit tests for the DefaultCabSignal 

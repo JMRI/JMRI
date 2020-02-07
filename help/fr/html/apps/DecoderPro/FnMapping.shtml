@@ -17,7 +17,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -189,7 +189,7 @@ Vous pourriez encore vouloir inclure les valeurs de mapping dans un fichier de c
 </PRE>
 Ceci sera affich&#233; de la m&#234;me mani&#232;re que les autres mappings, except&#233;es les cases individuelles qui seront inactives (gris&#233;es).
     
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

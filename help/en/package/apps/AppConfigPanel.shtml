@@ -22,7 +22,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -243,7 +243,7 @@
           bit of typing. It has no effect on existing entries, even
           if changed.</p>
         </dd>
-      </dl><!--#include virtual="/Footer" -->
+      </dl><!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

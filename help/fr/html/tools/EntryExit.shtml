@@ -21,7 +21,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
   <!--#include virtual="Sidebar" -->
   <div id="mainContent">
@@ -146,7 +146,7 @@
       pr&eacute;vu pour &ecirc;tre d&eacute;velopp&eacute; au cours
       de 2012.</p>
 
-    <!--#include virtual="/Footer" -->
+    <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

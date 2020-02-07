@@ -22,7 +22,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -669,7 +669,7 @@ pour de plus amples informations sue la maintenance du code JMRI.</p>
 
 </dl>
 
-  	<!--#include virtual="/Footer" -->
+  	<!--#include virtual="/Footer.shtml" -->
   </div><!-- closes #mainContent-->
  </div> <!-- closes #mBody-->
 

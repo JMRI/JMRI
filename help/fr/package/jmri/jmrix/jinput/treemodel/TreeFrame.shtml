@@ -22,7 +22,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -91,7 +91,7 @@
       quitt&Atilde;&copy; et red&Atilde;&copy;marr&Atilde;&copy;ez
       le programme. Ce sera ajout&Atilde;&copy; dans la prochaine
       Version JMRI.</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

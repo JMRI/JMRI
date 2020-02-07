@@ -7,7 +7,6 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.util.JUnitUtil;
-import jmri.util.swing.JemmyUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2020 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <name>Servos</name>
+    <name xml:lang="cs">Serva</name>
+    <column>
+        <label>
+            <text>Servo 1</text>
+            <text xml:lang="cs">Servo 1</text>
+        </label>
+        <display item="Servo1_PosA">
+            <label>Position A:</label>
+            <label xml:lang="cs">Pozice A:</label>
+        </display>
+        <display item="Servo1_PosB">
+            <label>Position B:</label>
+            <label xml:lang="cs">Pozice B:</label>
+        </display>
+        <display item="Servo1_PosC">
+            <label>Position C:</label>
+            <label xml:lang="cs">Pozice C:</label>
+        </display>
+        <display item="Servo1_PosD">
+            <label>Position D:</label>
+            <label xml:lang="cs">Pozice D:</label>
+        </display>
+        <display item="Servo1_Speed">
+            <label>Speed:</label>
+            <label xml:lang="cs">Rychlost:</label>
+        </display>
+        <label>
+            <text> </text>
+        </label>
+        <separator/>
+        <label>
+            <text> </text>
+        </label>
+        <label>
+            <text>Servo 2</text>
+            <text xml:lang="cs">Servo 2</text>
+        </label>
+        <display item="Servo2_PosA">
+            <label>Position A:</label>
+            <label xml:lang="cs">Pozice A:</label>
+        </display>
+        <display item="Servo2_PosB">
+            <label>Position B:</label>
+            <label xml:lang="cs">Pozice B:</label>
+        </display>
+        <display item="Servo2_PosC">
+            <label>Position C:</label>
+            <label xml:lang="cs">Pozice C:</label>
+        </display>
+        <display item="Servo2_PosD">
+            <label>Position D:</label>
+            <label xml:lang="cs">Pozice D:</label>
+        </display>
+        <display item="Servo2_Speed">
+            <label>Speed:</label>
+            <label xml:lang="cs">Rychlost:</label>
+        </display>
+    </column>
+    <column>
+        <group>
+            <qualifier>
+                <variableref>Decoder Version</variableref>
+                <relation>ne</relation>
+                <value>32</value>
+            </qualifier>
+            <qualifier>
+                <variableref>Decoder Version</variableref>
+                <relation>ne</relation>
+                <value>34</value>
+            </qualifier>
+            <column>
+                <label>
+                    <text>Servo 3</text>
+                    <text xml:lang="cs">Servo 3</text>
+                </label>
+                <display item="Servo3_PosA">
+                    <label>Position A:</label>
+                    <label xml:lang="cs">Pozice A:</label>
+                </display>
+                <display item="Servo3_PosB">
+                    <label>Position B:</label>
+                    <label xml:lang="cs">Pozice B:</label>
+                </display>
+                <display item="Servo3_Speed">
+                    <label>Speed:</label>
+                    <label xml:lang="cs">Rychlost:</label>
+                </display>
+                <label>
+                    <text> </text>
+                </label>
+                <separator/>
+                <label>
+                    <text> </text>
+                </label>
+                <label>
+                    <text>Servo 4</text>
+                    <text xml:lang="cs">Servo 4</text>
+                </label>
+                <display item="Servo4_PosA">
+                    <label>Position A:</label>
+                    <label xml:lang="cs">Pozice A:</label>
+                </display>
+                <display item="Servo4_PosB">
+                    <label>Position B:</label>
+                    <label xml:lang="cs">Pozice B:</label>
+                </display>
+                <display item="Servo4_Speed">
+                    <label>Speed:</label>
+                    <label xml:lang="cs">Rychlost:</label>
+                </display>
+            </column>
+        </group>
+    </column>
+</pane>

@@ -20,7 +20,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -103,6 +103,6 @@
       "http://www.digitrax.com/ftp/superchief.pdf">Super Chief
       manual</a>(PDF).</p>
     </div>
-  </div><!--#include virtual="/Footer" -->
+  </div><!--#include virtual="/Footer.shtml" -->
 </body>
 </html>

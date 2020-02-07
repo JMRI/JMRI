@@ -17,7 +17,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -256,7 +256,7 @@ vous pouvez aller directement &#224; lui par l'InstanceManager:
 
 <p>Retour &agrave; la <a href="index.shtml">page d'aide principale Signalisation</a>.</p>
 
-        <!--#include virtual="/Footer" -->
+        <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->
 </body>

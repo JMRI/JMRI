@@ -20,7 +20,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
   <div id="mainContent">
 
@@ -33,7 +33,7 @@
       automatically discover all the Signal Mast Logics based upon
       the Layout Editor Panel.</p>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

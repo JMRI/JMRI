@@ -17,7 +17,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
 	<!--#include virtual="Sidebar" -->
 
@@ -78,7 +78,7 @@
 	configur&#233; JMRI pour ce Syst&#232;me de Connexion.</li>
   </ul>
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
 </div> <!-- close #mainContent -->
 </div> <!-- close #mBody -->
 </body>
