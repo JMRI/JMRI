@@ -22,7 +22,6 @@ import org.junit.runners.Suite;
         MathUtilTest.class,
         TypeConversionUtilTest.class,
         JUnitSwingUtilTest.class,
-        SwingTestCaseTest.class,
         ReflectionUtilScaffoldTest.class,
 
         jmri.util.docbook.PackageTest.class,
