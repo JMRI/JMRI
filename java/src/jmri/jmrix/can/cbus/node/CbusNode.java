@@ -2,6 +2,7 @@ package jmri.jmrix.can.cbus.node;
 
 // import javax.annotation.Nonnull;
 import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.can.cbus.CbusSend;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,21 +17,13 @@ public class CbusNode extends CbusBasicNodeWithMgrsCommandStation {
     private int _flags;
     private String _userComment;
     private boolean _sendsWRACKonNVSET;
-//<<<<<<< HEAD
-    private boolean _eventIndexValid;
     public CbusSend send;
-    private CbusNodeTableDataModel tableModel;
-    private int _csNum;
-    private boolean _StatResponseFlagsAccurate;
-    private boolean _commandStationIdentified;
     public static int SINGLE_MESSAGE_TIMEOUT_TIME = 1500;
     public static int BOOT_ENTRY_TIMEOOUT_TIME = 1000;
     public static int BOOT_SINGLE_MESSAGE_TIMEOUT_TIME = 1000;
     public static int BOOT_PROG_TIMEOUT_TIME = 10;
     public static int BOOT_CONFIG_TIMEOUT_TIME = 50;
-//=======
     private String _nodeNameFromName;
-//>>>>>>> upstream/master
     
     /**
      * Create a new CbusNode
