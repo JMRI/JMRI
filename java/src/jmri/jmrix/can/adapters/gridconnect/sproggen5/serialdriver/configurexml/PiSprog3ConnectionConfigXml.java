@@ -3,7 +3,7 @@ package jmri.jmrix.can.adapters.gridconnect.sproggen5.serialdriver.configurexml;
 import org.jdom2.Element;
 
 import jmri.jmrix.PortAdapter;
-import jmri.jmrix.can.adapters.gridconnect.sproggen5.serialdriver.PiSprogThreeConnectionConfig;
+import jmri.jmrix.can.adapters.gridconnect.sproggen5.serialdriver.PiSprog3ConnectionConfig;
 import jmri.jmrix.can.adapters.gridconnect.sproggen5.serialdriver.Sprog3PlusSerialDriverAdapter;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 
@@ -21,9 +21,9 @@ import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
  * @author Andrew Crosland 2008
  * @author Andrew Crosland 2019
  */
-public class PiSprogThreeConnectionConfigXml extends AbstractSerialConnectionConfigXml {
+public class PiSprog3ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
-    public PiSprogThreeConnectionConfigXml() {
+    public PiSprog3ConnectionConfigXml() {
         super();
     }
 
@@ -34,12 +34,12 @@ public class PiSprogThreeConnectionConfigXml extends AbstractSerialConnectionCon
 
     @Override
     protected void getInstance(Object object) {
-        adapter = ((PiSprogThreeConnectionConfig) object).getAdapter();
+        adapter = ((PiSprog3ConnectionConfig) object).getAdapter();
     }
 
     @Override
     protected void register() {
-        this.register(new PiSprogThreeConnectionConfig(adapter));
+        this.register(new PiSprog3ConnectionConfig(adapter));
     }
 
     @Override

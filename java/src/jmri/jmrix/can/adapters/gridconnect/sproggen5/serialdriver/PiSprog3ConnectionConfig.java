@@ -10,7 +10,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * @author Andrew Crosland 2008
  * @author Andrew Crosland 2019
  */
-public class PiSprogThreeConnectionConfig extends jmri.jmrix.can.adapters.ConnectionConfig {
+public class PiSprog3ConnectionConfig extends jmri.jmrix.can.adapters.ConnectionConfig {
 
     /**
      * Create a connection configuration with a preexisting adapter. This is
@@ -19,7 +19,7 @@ public class PiSprogThreeConnectionConfig extends jmri.jmrix.can.adapters.Connec
      *
      * @param p the adapter to create a connection configuration for
      */
-    public PiSprogThreeConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
+    public PiSprog3ConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
         super(p);
     }
 
@@ -28,13 +28,13 @@ public class PiSprogThreeConnectionConfig extends jmri.jmrix.can.adapters.Connec
      * Ctor for a connection configuration with no preexisting adapter.
      * {@link #setInstance()} will fill the adapter member.
      */
-    public PiSprogThreeConnectionConfig() {
+    public PiSprog3ConnectionConfig() {
         super();
     }
 
     @Override
     public String name() {
-        return Bundle.getMessage("PiSprogThreeTitle");
+        return Bundle.getMessage("PiSprog3Title");
     }
 
     public boolean isOptList2Advanced() {

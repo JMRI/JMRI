@@ -490,7 +490,7 @@ public class CbusMessageTest {
     @Test
     public void testgetBootCheck() {
         CanMessage m = CbusMessage.getBootCheck(123,0x12);
-        Assert.assertEquals("getBootCheck","[16000004] 00 00 00 00 0D 03 00 7B",m.toString());
+        Assert.assertEquals("getBootCheck","[16000004] 00 00 00 00 0D 03 7B 00",m.toString());
     }
 
     @Test
@@ -505,6 +505,12 @@ public class CbusMessageTest {
         Assert.assertEquals("getBootWriteData","[16000005] 01 02 03 04 05 06 07 08",m.toString());
         
         m = CbusMessage.getBootWriteData( new int[]{0x01,0x02},0x12);
+        JUnitAppender.assertErrorMessageStartsWith("Exception in bootloader data");
+        
+        m = CbusMessage.getBootWriteData( new byte[]{0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08},0x12);
+        Assert.assertEquals("getBootWriteData","[16000005] 01 02 03 04 05 06 07 08",m.toString());
+        
+        m = CbusMessage.getBootWriteData( new byte[]{0x01,0x02},0x12);
         JUnitAppender.assertErrorMessageStartsWith("Exception in bootloader data");
     }
 

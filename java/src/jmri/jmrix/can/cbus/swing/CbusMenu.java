@@ -42,7 +42,7 @@ public class CbusMenu extends JMenu {
         new Item("MenuItemCbusSlotMonitor", "jmri.jmrix.can.cbus.swing.cbusslotmonitor.CbusSlotMonitorPane"),
         new Item("MenuItemEvRequestMon", "jmri.jmrix.can.cbus.swing.eventrequestmonitor.CbusEventRequestTablePane"),
         new Item("MenuItemNetworkSim", "jmri.jmrix.can.cbus.swing.simulator.SimulatorPane"),
-        new Item("MenuItemBootloader", "jmri.jmrix.can.cbus.swing.bootloader.BootloaderPane")
+        new Item("MenuItemBootloader", "jmri.jmrix.can.cbus.swing.bootloader.CbusBootloaderPane")
     };
 
     static class Item {
