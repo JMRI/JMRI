@@ -15,7 +15,7 @@ public class HexRecord {
     static final byte DATA = 0;
     static final byte END = 1;
     // Maximum data length
-    private static final int MAX_LEN = 16;
+    static final int MAX_LEN = 16;
     // Offsets of fields within the record
 
     // Record property members
