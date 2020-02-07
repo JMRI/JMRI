@@ -219,7 +219,8 @@ public class HexFile {
     
     /**
      * Get current file line number
-     * @return 
+     * 
+     * @return the file number
      */
     public int getLineNo() {
         return lineNo;

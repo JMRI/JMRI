@@ -53,7 +53,6 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
     protected JButton readNodeParamsButton;
     private final TextAreaFIFO bootConsole;
     private static final int MAX_LINES = 5000;
-    private final double splitRatio = 0.75;
     private final JFrame topFrame = (JFrame) getWindowAncestor(this);
     
     // to find and remember the hex file
@@ -363,14 +362,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
             // Extended messages are only used by the bootloader
             
             switch (bootState) {
-                case IDLE:
-                case START_BOOT:
-                case INIT_PROG_SENT:
-                case PROG_DATA:
-                case INIT_CONFIG_SENT:
-                case CONFIG_DATA:
-                case INIT_EEPROM_SENT:
-                case EEPROM_DATA:
+                default:
                     break;
                     
                 case CHECK_BOOT_MODE:
@@ -472,7 +464,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
      * <p>
      * Keeps a running checksum.
      * 
-     * @return 
+     * @return true if there was data to write
      */
     protected boolean writeNextData() {
         // getBootWriteData() expects an array of length 8
