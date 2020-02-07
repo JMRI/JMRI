@@ -10,7 +10,8 @@ import org.junit.runners.Suite;
         CbusDummyNodeTest.class,
         CbusEventResponderTest.class,
         CbusSimulatorTest.class,
-        BundleTest.class
+        BundleTest.class,
+        CbusSimCanListenerTest.class
 })
 
 /**

@@ -1,11 +1,14 @@
 package jmri.jmrix.can.cbus.node;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.TimerTask;
 import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import jmri.jmrix.can.*;
@@ -22,11 +25,11 @@ import org.slf4j.LoggerFactory;
  * @author Steve Young (c) 2019
  * 
  */
-public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel implements CanListener {
+public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
+        implements CanListener, PropertyChangeListener {
 
     protected ArrayList<CbusNode> _mainArray;
-    private final CanSystemConnectionMemo _memo;
-    private final TrafficController tc;
+    protected final CanSystemConnectionMemo _memo;
     private final CbusSend send;
     private CbusPreferences preferences;
     private ArrayList<Integer> _nodesFound;
@@ -50,16 +53,14 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
     static public final int LAST_BACKUP_COLUMN = 13;
     static public final int MAX_COLUMN = 14;
 
-    public CbusNodeTableDataModel(CanSystemConnectionMemo memo, int row, int column) {
+    public CbusNodeTableDataModel(@Nonnull CanSystemConnectionMemo memo, int row, int column) {
         
         log.debug("Starting MERG CBUS Node Table");
         _mainArray = new ArrayList<>();
         _nodesFound = new ArrayList<>();
         _memo = memo;
-        
         // connect to the CanInterface
-        tc = memo.getTrafficController();
-        addTc(tc);
+        addTc(memo);
         
         send = new CbusSend(memo);
 
@@ -158,7 +159,6 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
         }
         table.sizeColumnsToFit(-1);
     }
-
 
     /**
      * Returns String of column name from column int
@@ -294,29 +294,29 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
             case NODE_USER_NAME_COLUMN:
                 return _mainArray.get(row).getUserName();
             case NODE_TYPE_NAME_COLUMN:
-                return _mainArray.get(row).getNodeTypeName();
+                return _mainArray.get(row).getNodeStats().getNodeTypeName();
             case CANID_COLUMN:
                 return _mainArray.get(row).getNodeCanId();
             case COMMAND_STAT_NUMBER_COLUMN:
                 return _mainArray.get(row).getCsNum();
             case NODE_EVENTS_COLUMN:
-                return _mainArray.get(row).getTotalNodeEvents();
+                return _mainArray.get(row).getNodeEventManager().getTotalNodeEvents();
             case NODE_TOTAL_BYTES_COLUMN:
-                return _mainArray.get(row).totalNodeBytes();
+                return _mainArray.get(row).getNodeStats().totalNodeBytes();
             case BYTES_REMAINING_COLUMN:
-                return _mainArray.get(row).floatPercentageRemaining();
+                return _mainArray.get(row).getNodeStats().floatPercentageRemaining();
             case NODE_IN_LEARN_MODE_COLUMN:
                 return _mainArray.get(row).getNodeInLearnMode();
             case NODE_RESYNC_BUTTON_COLUMN:
                 return ("Re-Sync");
             case NODE_EVENT_INDEX_VALID_COLUMN:
-                return _mainArray.get(row).isEventIndexValid();
+                return _mainArray.get(row).getNodeEventManager().isEventIndexValid();
             case SESSION_BACKUP_STATUS_COLUMN:
-                return _mainArray.get(row).getSessionBackupStatus();
+                return _mainArray.get(row).getNodeBackupManager().getSessionBackupStatus();
             case NUMBER_BACKUPS_COLUMN:
-                return _mainArray.get(row).getNumBackups();
+                return _mainArray.get(row).getNodeBackupManager().getNumCompleteBackups();
             case LAST_BACKUP_COLUMN:
-                return _mainArray.get(row).getLastBackupTime();
+                return _mainArray.get(row).getNodeBackupManager().getLastBackupTime();
             default:
                 return null;
         }
@@ -372,7 +372,6 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
         int nodenum = ( m.getElement(1) * 256 ) + m.getElement(2);
         if (opc==CbusConstants.CBUS_STAT) {
             // log.debug("Command Station Updates Status {}",m);
-            jmri.InstanceManager.getDefault(jmri.jmrix.can.cbus.CbusConfigurationManager.class).enableMultiMeter();
             
             if ( preferences.getAddCommandStations() ) {
                 
@@ -414,6 +413,7 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
     public void addNode(CbusNode node ) {
         _mainArray.add(node);
         node.setTableModel(this);
+        node.addPropertyChangeListener(this);
         // notify the JTable object that a row has changed; do that in the Swing thread!
         ThreadingUtil.runOnGUI( ()->{
             fireTableRowsInserted((getRowCount()-1), (getRowCount()-1));
@@ -526,7 +526,7 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
     public String getNodeNameFromCanId ( int canId ) {
         for (int i = 0; i < getRowCount(); i++) {
             if ( _mainArray.get(i).getNodeCanId() == canId ) {
-                return _mainArray.get(i).getNodeNumberName();
+                return _mainArray.get(i).getNodeStats().getNodeNumberName();
             }
         }
         return ("");
@@ -541,7 +541,7 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
         
         for (int i = 0; i < getRowCount(); i++) {
             if ( _mainArray.get(i).getNodeNumber() == nodenum ) {
-                return _mainArray.get(i).getNodeNumberName();
+                return _mainArray.get(i).getNodeStats().getNodeNumberName();
             }
         }
         return ("");
@@ -554,22 +554,53 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
     public ArrayList<String> getListOfNodeNumberNames(){
         ArrayList<String> list = new ArrayList<>();
         for (int i = 0; i < getRowCount(); i++) {
-            list.add( _mainArray.get(i).getNodeNumberName() );
+            list.add( _mainArray.get(i).getNodeStats().getNodeNumberName() );
         }
         return list;
     }
     
-    /**
-     * Notify the GUI for main Node Table contents changing
-     * @param node Node Number, NOT row number
-     * @param col Table Column Number
-     */
-    public void updateFromNode( int node, int col){
+    /** {@inheritDoc} */
+    @Override
+    public void propertyChange(PropertyChangeEvent ev){
+        if (!(ev.getSource() instanceof CbusNode)) {
+            return;
+        }
         
-        log.debug("table update from node {} column {}",node,col);
-        ThreadingUtil.runOnGUI( ()->{
-            fireTableCellUpdated(getNodeRowFromNodeNum(node), col);
-        });
+        int evRow = getNodeRowFromNodeNum((( CbusNode ) ev.getSource()).getNodeNumber());
+
+        switch (ev.getPropertyName()) {
+            case "NVUPDATE":
+            case "ALLNVUPDATE":
+                fireTableCellUpdated(evRow, BYTES_REMAINING_COLUMN);
+                fireTableCellUpdated(evRow, NODE_TOTAL_BYTES_COLUMN);
+                break;
+            case "ALLEVUPDATE":
+            case "SINGLEEVUPDATE":
+                fireTableCellUpdated(evRow, NODE_EVENT_INDEX_VALID_COLUMN);
+                fireTableCellUpdated(evRow, NODE_EVENTS_COLUMN);
+                fireTableCellUpdated(evRow, BYTES_REMAINING_COLUMN);
+                fireTableCellUpdated(evRow, NODE_TOTAL_BYTES_COLUMN);
+                break;
+            case "BACKUPS":
+                fireTableCellUpdated(evRow, SESSION_BACKUP_STATUS_COLUMN);
+                fireTableCellUpdated(evRow, NUMBER_BACKUPS_COLUMN);
+                fireTableCellUpdated(evRow, LAST_BACKUP_COLUMN);
+                break;
+            case "PARAMETER":
+                fireTableRowsUpdated(evRow,evRow);
+                break;
+            case "LEARNMODE":
+                fireTableCellUpdated(evRow,NODE_IN_LEARN_MODE_COLUMN);
+                break;
+            case "NAMECHANGE":
+                fireTableCellUpdated(evRow,NODE_USER_NAME_COLUMN);
+                break;
+            case "CANID":
+                fireTableCellUpdated(evRow,CANID_COLUMN);
+                break;
+            default:
+                break;
+        }
     }
     
     /**
@@ -585,8 +616,8 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
         if ( !_mainArray.get(rownum).getUserName().isEmpty() ) {
             return _mainArray.get(rownum).getUserName();
         }
-        if ( !_mainArray.get(rownum).getNodeTypeName().isEmpty() ) {
-            return _mainArray.get(rownum).getNodeTypeName();
+        if ( !_mainArray.get(rownum).getNodeStats().getNodeTypeName().isEmpty() ) {
+            return _mainArray.get(rownum).getNodeStats().getNodeTypeName();
         }        
         return "";
     }
@@ -698,25 +729,26 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
             return;
         }
         for (int i = 0; i < getRowCount(); i++) {
-            _mainArray.get(i).startLoadFromXml();
-            if ( _mainArray.get(i).hasActiveTimers() ){
+            // _mainArray.get(i).startLoadFromXml();
+            _mainArray.get(i).getNodeBackupManager().doLoad();
+            if ( _mainArray.get(i).getNodeTimerManager().hasActiveTimers() ){
                 return;
             }
-            _mainArray.get(i).checkNodeFinishedLoad();
+            _mainArray.get(i).getNodeStats().checkNodeFinishedLoad();
         }
         
         // prioritise command station node variables 1-16
         for (int i = 0; i < getRowCount(); i++) {
             if ( _mainArray.get(i).getCsNum() > -1 ) { // is a command station
             
-                if ( _mainArray.get(i).getOutstandingParams() > 0 ) {
-                    _mainArray.get(i).sendRequestNextParam();
+                if ( _mainArray.get(i).getNodeParamManager().getOutstandingParams() > 0 ) {
+                    _mainArray.get(i).getNodeParamManager().sendRequestNextParam();
                     return;
                 }
             
-                if ( _mainArray.get(i).getParameter(6) > 15 ) { // If CS does has have more than 15 NV's
-                    if ( _mainArray.get(i).getNV(16) < 0 ) {
-                        _mainArray.get(i).sendNextNVToFetch();
+                if ( _mainArray.get(i).getNodeParamManager().getParameter(6) > 15 ) { // If CS does has have more than 15 NV's
+                    if ( _mainArray.get(i).getNodeNvManager().getNV(16) < 0 ) {
+                        _mainArray.get(i).getNodeNvManager().sendNextNVToFetch();
                         return;
                     }
                 }
@@ -725,8 +757,8 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
         
         // Get all node parameters fetched so basic node details ( type, num nv's etc. ) are known
         for (int i = 0; i < getRowCount(); i++) {
-            if ( _mainArray.get(i).getOutstandingParams() > 0 ) { // this param
-                _mainArray.get(i).sendRequestNextParam();
+            if ( _mainArray.get(i).getNodeParamManager().getOutstandingParams() > 0 ) { // this param
+                _mainArray.get(i).getNodeParamManager().sendRequestNextParam();
                 return;
             }
         }
@@ -738,21 +770,21 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
         if ( _urgentNode != null ) {
             
             if (urgentTab==2 ) { // NV's selected
-                if ( _urgentNode.getOutstandingNvCount() > 0 ){ // this nv
-                    _urgentNode.sendNextNVToFetch();
+                if ( _urgentNode.getNodeNvManager().getOutstandingNvCount() > 0 ){ // this nv
+                    _urgentNode.getNodeNvManager().sendNextNVToFetch();
                     return;
                 }
-                if ( _urgentNode.getOutstandingEvVars() > 0 ) { // this events
-                    _urgentNode.sendNextEvVarToFetch();
+                if ( _urgentNode.getNodeEventManager().getOutstandingEvVars() > 0 ) { // this events
+                    _urgentNode.getNodeEventManager().sendNextEvVarToFetch();
                     return;
                 }
             } else {
-                if ( _urgentNode.getOutstandingEvVars() > 0 ) { // this events
-                    _urgentNode.sendNextEvVarToFetch();
+                if ( _urgentNode.getNodeEventManager().getOutstandingEvVars() > 0 ) { // this events
+                    _urgentNode.getNodeEventManager().sendNextEvVarToFetch();
                     return;
                 }
-                if ( _urgentNode.getOutstandingNvCount() > 0 ){ // this nv
-                    _urgentNode.sendNextNVToFetch();
+                if ( _urgentNode.getNodeNvManager().getOutstandingNvCount() > 0 ){ // this nv
+                    _urgentNode.getNodeNvManager().sendNextNVToFetch();
                     return;
                 }
             }
@@ -762,28 +794,28 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
             
             if (urgentTab==2) { // NV's selected
                 if ( _afterNode != null ) {
-                    if ( _afterNode.getOutstandingNvCount() > 0 ){ // below nv
-                        _afterNode.sendNextNVToFetch();
+                    if ( _afterNode.getNodeNvManager().getOutstandingNvCount() > 0 ){ // below nv
+                        _afterNode.getNodeNvManager().sendNextNVToFetch();
                         return;
                     }
                 }
                 if ( _beforeNode != null ) {
-                    if ( _beforeNode.getOutstandingNvCount() > 0 ){ // above nv
-                        _beforeNode.sendNextNVToFetch();
+                    if ( _beforeNode.getNodeNvManager().getOutstandingNvCount() > 0 ){ // above nv
+                        _beforeNode.getNodeNvManager().sendNextNVToFetch();
                         return;
                     }
                 }
             }
             else { // events selected
                 if ( _afterNode != null ) {
-                    if ( _afterNode.getOutstandingEvVars() > 0 ) { // below events
-                        _afterNode.sendNextEvVarToFetch();
+                    if ( _afterNode.getNodeEventManager().getOutstandingEvVars() > 0 ) { // below events
+                        _afterNode.getNodeEventManager().sendNextEvVarToFetch();
                         return;
                     } 
                 }
                 if ( _beforeNode != null ) {
-                    if ( _beforeNode.getOutstandingEvVars() > 0 ) { // above events
-                        _beforeNode.sendNextEvVarToFetch();
+                    if ( _beforeNode.getNodeEventManager().getOutstandingEvVars() > 0 ) { // above events
+                        _beforeNode.getNodeEventManager().sendNextEvVarToFetch();
                         return;
                     } 
                 }
@@ -796,12 +828,12 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
         
         // default lookup routine
         for (int i = 0; i < getRowCount(); i++) {
-            if ( _mainArray.get(i).getOutstandingNvCount() > 0 ){ // this nv
-                _mainArray.get(i).sendNextNVToFetch();
+            if ( _mainArray.get(i).getNodeNvManager().getOutstandingNvCount() > 0 ){ // this nv
+                _mainArray.get(i).getNodeNvManager().sendNextNVToFetch();
                 return;
             }
-            if ( _mainArray.get(i).getOutstandingEvVars() > 0 ) { // above events
-                _mainArray.get(i).sendNextEvVarToFetch();
+            if ( _mainArray.get(i).getNodeEventManager().getOutstandingEvVars() > 0 ) { // above events
+                _mainArray.get(i).getNodeEventManager().sendNextEvVarToFetch();
                 return;
             }
         }
@@ -846,13 +878,13 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
         log.debug("{} Nodes found, {}",_nodesFound.size(),_nodesFound);
         for (int i = 0; i < getRowCount(); i++) {
             if ( ! _nodesFound.contains(_mainArray.get(i).getNodeNumber() )) {
-                log.debug("No network response from Node {}",_mainArray.get(i).getNodeNumberName());
+                log.debug("No network response from Node {}",_mainArray.get(i));
                 _mainArray.get(i).nodeOnNetwork(false);
             }
         }
         // if node heard but flagged as off-network, reset
         _nodesFound.stream().map((foundNodeNum) -> getNodeByNodeNum(foundNodeNum)).filter((foundNode) 
-                -> ( foundNode != null && foundNode.getSessionBackupStatus() == CbusNodeConstants.BackupType.NOTONNETWORK )).map((foundNode) -> {
+                -> ( foundNode != null && foundNode.getNodeBackupManager().getSessionBackupStatus() == CbusNodeConstants.BackupType.NOTONNETWORK )).map((foundNode) -> {
             foundNode.resetNodeAll();
             return foundNode;
         }).forEachOrdered((_item) -> {
@@ -920,9 +952,10 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
         CbusNode toRemove = getNodeByNodeNum( _mainArray.get(row).getNodeNumber() );
         _mainArray.remove(row);
         if (toRemove != null) {
+            toRemove.removePropertyChangeListener(this);
             if (removeXml) {
                 // delete xml file
-                if (!(toRemove.getNodeBackupFile().removeNode(true))){
+                if (!(toRemove.getNodeBackupManager().removeNode(true))){
                     log.error("Unable to delete node xml file");
                 }
             }
@@ -934,14 +967,14 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
     /**
      * Search the directory for nodes, ie userPref/cbus/123.xml
      * Add any found to the Node Manager Table
-     * (Modeled after a method in jmri.jmrit.dispatcher.TrainInfoFile )
+     * (Modelled after a method in jmri.jmrit.dispatcher.TrainInfoFile )
      */
     public void startupSearchNodeXmlFile() {
         // ensure preferences will be found for read
-        FileUtil.createDirectory(CbusNodeXml.CbusNodeBackupFile.getFileLocation());
+        FileUtil.createDirectory(CbusNodeBackupFile.getFileLocation());
         // create an array of file names from node dir in preferences, then loop
         List<String> names = new ArrayList<>();
-        File fp = new File(CbusNodeXml.CbusNodeBackupFile.getFileLocation());
+        File fp = new File(CbusNodeBackupFile.getFileLocation());
         if (fp.exists()) {
             String[] fpList = fp.list(new XmlFilenameFilter());
             if (fpList !=null ) {
@@ -953,7 +986,7 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
             int nodeNum =  jmri.util.StringUtil.getFirstIntFromString(nb);
             if (nodeNum>0 && nodeNum <65536) { // nn -1 is invalid, 0 is SLiM mode, 65535 is max hex. 0xFF
                 CbusNode nd = provideNodeByNodeNum(nodeNum);
-                nd.startLoadFromXml();
+                nd.getNodeBackupManager().doLoad();
                 log.debug("CbusNode {} added to table",nd);
             }
         });
@@ -975,11 +1008,11 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
         }
         
         setBackgroundAllocateListener(false); // stop listening for node number requests
-        if (tc != null) {
-            tc.removeCanListener(this);
-        }
+        
+        removeTc(_memo);
         
         for (int i = 0; i < getRowCount(); i++) {
+            _mainArray.get(i).removePropertyChangeListener(this);
             _mainArray.get(i).dispose();
         }
         // _mainArray = null;
