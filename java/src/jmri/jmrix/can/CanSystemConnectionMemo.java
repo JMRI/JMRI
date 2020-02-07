@@ -45,7 +45,7 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         InstanceManager.store(this, CanSystemConnectionMemo.class); // also register as specific type
     }
 
-    protected String _protocol = new String(ConfigurationManager.MERGCBUS);
+    protected String _protocol = ConfigurationManager.MERGCBUS;
     
     jmri.jmrix.swing.ComponentFactory cf = null;
 
@@ -113,7 +113,7 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     
     public void setProtocol(String protocol) {
         if (null != protocol) {
-            _protocol = new String(protocol);
+            _protocol = protocol;
             switch (protocol) {
                 case ConfigurationManager.SPROGCBUS:
                 case ConfigurationManager.MERGCBUS:

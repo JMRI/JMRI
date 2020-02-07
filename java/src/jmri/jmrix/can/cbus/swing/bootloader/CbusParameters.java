@@ -47,7 +47,7 @@ public class CbusParameters {
 
     protected int [] paramData = null;
     protected boolean valid = false;
-    protected boolean newVersion = false;
+//    protected boolean newVersion = false;
 
     
     /**
@@ -121,7 +121,7 @@ public class CbusParameters {
         // As a minimum, check manufacturer ID, module ID and processor type
         if (fp.paramData[MANU_ID_IDX] == hp.paramData[MANU_ID_IDX]) {
             if (fp.paramData[MODULE_ID_IDX] == hp.paramData[MODULE_ID_IDX]) {
-                checkVersion(fp, hp);
+//                checkVersion(fp, hp);
                 fp.valid = true;
                 if (hp.paramData[NUM_PARAM_IDX] > 7) {
                     fp.valid = fp.paramData[PROC_TYPE_IDX] == hp.paramData[PROC_TYPE_IDX];
@@ -135,19 +135,21 @@ public class CbusParameters {
     }
     
     
-    /**
-     * Compare two parameter blocks to see if one is a new version
-     * 
-     * @param pNew possible new version
-     * @param pOld original parameters
-     */
-    public void checkVersion(CbusParameters pNew, CbusParameters pOld) {
-        if (pNew.paramData[MAJOR_VER_IDX] > pOld.paramData[MAJOR_VER_IDX]) {
-            newVersion = true;
-        } else if (pNew.paramData[MAJOR_VER_IDX] < pOld.paramData[MAJOR_VER_IDX]) {
-            newVersion = false;
-        } else newVersion = pNew.paramData[MINOR_VER_IDX] > pOld.paramData[MINOR_VER_IDX];
-    }
+// Not yet used in any meaningful way.
+// Comment out to make spotbugs happy for now
+//    /**
+//     * Compare two parameter blocks to see if one is a new version
+//     * 
+//     * @param pNew possible new version
+//     * @param pOld original parameters
+//     */
+//    public void checkVersion(CbusParameters pNew, CbusParameters pOld) {
+//        if (pNew.paramData[MAJOR_VER_IDX] > pOld.paramData[MAJOR_VER_IDX]) {
+//            newVersion = true;
+//        } else if (pNew.paramData[MAJOR_VER_IDX] < pOld.paramData[MAJOR_VER_IDX]) {
+//            newVersion = false;
+//        } else newVersion = pNew.paramData[MINOR_VER_IDX] > pOld.paramData[MINOR_VER_IDX];
+//    }
     
     
     /**

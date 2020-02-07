@@ -239,6 +239,15 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
 
     
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getTitle() {
+        return prependConnToString(Bundle.getMessage("MenuItemBootloader"));
+    }
+
+
+    /**
      * Kick off the reading of parameters from the node
      * 
      * Start by reading parameter 0, the number of parameters

@@ -109,7 +109,7 @@ public class HexFile {
      * Track the highest used addresses
      */
     public void read() {
-        HexRecord r = new HexRecord();
+        HexRecord r;
         
         do {
             do {
