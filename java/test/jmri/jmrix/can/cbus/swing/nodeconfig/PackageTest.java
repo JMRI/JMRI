@@ -19,7 +19,8 @@ import org.junit.runners.Suite;
     CbusNodeTablePaneTest.class,
     CbusNodeBackupsPaneTest.class,
     NodeConfigToolPaneTest.class,
-    CbusNodeBackupTableModelTest.class
+    CbusNodeBackupTableModelTest.class,
+    CbusNodeConfigTabTest.class
 })
 
 /**
