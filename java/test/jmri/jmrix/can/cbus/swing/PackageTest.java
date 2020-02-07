@@ -5,6 +5,7 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+    jmri.jmrix.can.cbus.swing.bootloader.PackageTest.class,
     jmri.jmrix.can.cbus.swing.CbusMenuTest.class,
     jmri.jmrix.can.cbus.swing.CbusComponentFactoryTest.class,
     jmri.jmrix.can.cbus.swing.eventtable.PackageTest.class,
