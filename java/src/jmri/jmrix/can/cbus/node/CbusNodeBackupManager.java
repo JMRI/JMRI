@@ -484,7 +484,7 @@ public class CbusNodeBackupManager {
      */
     @Nonnull
     public BackupType getSessionBackupStatus() {
-        if (backupStarted ) {
+        if (backupStarted && getBackups().size() >0 ) {
             return getBackups().get(0).getBackupResult();
         } else {
             return BackupType.OUTSTANDING;

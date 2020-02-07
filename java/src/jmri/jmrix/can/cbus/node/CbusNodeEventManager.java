@@ -472,7 +472,7 @@ public class CbusNodeEventManager {
             String err;
             if ( _node.getNodeTimerManager().sendEvErrorCount==0 ) {
                 log.info("Completed Event Write with No errors, node {}.", _node );
-                err = null;
+                err = "";
             }
             else {
                 err = "Event Write Failed with "+ _node.getNodeTimerManager().sendEvErrorCount +" errors.";

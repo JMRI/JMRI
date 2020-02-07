@@ -37,12 +37,12 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
     
     private JPanel infoPane = new JPanel();
     private JTabbedPane tabbedPane;
-    private CbusNodeTableDataModel nodeModel = null;
+    private CbusNodeTableDataModel nodeModel;
     private CanSystemConnectionMemo _memo;
     private final NodeConfigToolPane mainpane;
     private CbusNodeNVEditTablePane nodevarPane;
     private CbusNodeEventTablePane nodeEventPane;
-    public JSplitPane split;
+    private JSplitPane split;
     private CbusNodeInfoPane nodeinfoPane;
     private JTable nodeTable;
     private JButton openFCUButton;
@@ -98,6 +98,8 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
         buttonPane.add(importEventNamesButton );
         buttonPane.add(importNodeNamesButton );
         
+        updateImportEventsButton();
+
         nvMenuPane.add(buttonPane);
         
         CbusNodeFcuTablePane fcuTablePane = new CbusNodeFcuTablePane();
@@ -169,7 +171,7 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
         
         tabbedPane = new JTabbedPane();
         
-        nodeinfoPane = new CbusNodeInfoPane();
+        nodeinfoPane = new CbusNodeInfoPane(null);
         
         CbusNodeNVTableDataModel nodeNVModel = new CbusNodeNVTableDataModel(_memo, 5,
             CbusNodeNVTableDataModel.MAX_COLUMN); // controller, row, column
@@ -323,12 +325,12 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
                     nodeEventPane.setNode( nodeFromSelectedRow() );
                     break;
                 default:
-                    nodeinfoPane.initComponents( nodeFromSelectedRow() );
+                    nodeinfoPane.setNode( nodeFromSelectedRow() );
                     break;
             }
         }
         else {
-            nodeinfoPane.initComponents( null );
+            nodeinfoPane.setNode( null );
         }
         
     }
@@ -471,23 +473,8 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
                     }
                 }
             }
-            
-            if ( nodeList.getLength() > 0 ) {
-                importNodeNamesButton.setEnabled(true);
-                importNodeNamesButton.setToolTipText(null);
-            }
-            
-            try {
-                CbusEventTableDataModel eventModel = jmri.InstanceManager.getNullableDefault(
-                    jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel.class);
-                log.debug("event table active {}",eventModel);
-                if ( eventList.getLength() > 0 ) {
-                    importEventNamesButton.setEnabled(true);
-                    importEventNamesButton.setToolTipText(null);
-                }
-            } catch (NullPointerException e) {
-                importEventNamesButton.setToolTipText("CBUS Event Table not running.");
-            }
+                        
+            updateImportEventsButton();
         }
         catch (RuntimeException e) {
             log.warn("Error importing xml file {}", e);
@@ -498,6 +485,34 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
             log.warn("Error importing xml file. Valid xml? {}", e);
             JOptionPane.showMessageDialog(null, (Bundle.getMessage("ImportError") + " Valid XML?"),
                 Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private boolean eventsOnTable() {
+        for (int i = 0; i < cbusNodeFcuDataModel.getRowCount(); i++){
+            if ( (int) cbusNodeFcuDataModel.getValueAt(i, CbusNodeFromFcuTableDataModel.FCU_NODE_EVENTS_COLUMN)>0){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    private void updateImportEventsButton() {
+        CbusEventTableDataModel eventModel = jmri.InstanceManager.getNullableDefault(
+            jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel.class);
+        if (eventModel==null){
+            importEventNamesButton.setEnabled(false);
+            importEventNamesButton.setToolTipText("CBUS Event Table Not Running");
+        }
+        else {
+            if ( eventsOnTable() ) {
+                importEventNamesButton.setEnabled(true);
+                importEventNamesButton.setToolTipText(null);
+            }
+            else {
+                importEventNamesButton.setEnabled(false);
+                importEventNamesButton.setToolTipText("No Events to Import");
+            }
         }
     }
     

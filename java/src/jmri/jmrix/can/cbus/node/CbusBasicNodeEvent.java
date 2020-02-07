@@ -40,11 +40,11 @@ public class CbusBasicNodeEvent extends CbusEvent {
     }
     
     protected void notifyModel(){
-        if ( eventDataModel != null ) {
-            jmri.util.ThreadingUtil.runOnGUI( ()->{
+        jmri.util.ThreadingUtil.runOnGUI( ()->{
+            if ( eventDataModel != null ) {
                 eventDataModel.fireTableDataChanged();
+            }
         });
-        }
     }
     
     /**
@@ -81,7 +81,9 @@ public class CbusBasicNodeEvent extends CbusEvent {
      * @param tempName the name to use
      */
     public final void setTempFcuNodeName( String tempName){
-        _fcuNodeName = tempName;
+        if ( tempName !=null ){
+            _fcuNodeName = tempName;
+        }
     }
     
     /**
