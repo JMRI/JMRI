@@ -188,15 +188,15 @@ public class CbusNodeConstants {
                 1, /* 20 Beta revision   */
                 };
                 
-                thisNode.setParameters(_params);
-                thisNode.setNVs( new int[]{ 1 , 0 } ); // 1 NV, NV1 set at 0
+                thisNode.getNodeParamManager().setParameters(_params);
+                thisNode.getNodeNvManager().setNVs( new int[]{ 1 , 0 } ); // 1 NV, NV1 set at 0
                 thisNode.setNodeNameFromName("PSPROG3");
             }
             
             else {
                 // default SPROG DCC module in SLiM mode
-                thisNode.setParameters( new int[]{ 8,44,0,0,0,0,0,0,0 } );
-                thisNode.setNVs( new int[]{ 0 } );
+                thisNode.getNodeParamManager().setParameters( new int[]{ 8,44,0,0,0,0,0,0,0 } );
+                thisNode.getNodeNvManager().setNVs( new int[]{ 0 } );
             }
         }
         
