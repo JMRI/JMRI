@@ -1541,11 +1541,6 @@
         <jacoco:agent property="jacocoagent" destfile="${jacocoexec}" excludes="org.slf4j.*" />
 
         <java classpathref="test.class.path" classname="org.junit.platform.console.ConsoleLauncher" fork="true" failonerror="true">
-            <arg value="--scan-classpath"/>
-            <arg value="--details=none"/>
-            <arg value="--include-engine=junit-jupiter"/>
-            <arg value="--include-engine=junit-vintage"/>
-            <arg line="--reports-dir ${testreport}" />
             <sysproperty key="cucumber.options" value="--tags 'not @Ignore'"/>
             <sysproperty key="wdm.forceCache" value="true"/>
             <!-- wdm.targetPath specifies the locaion of the web drivers on appveyor. -->
@@ -1563,6 +1558,14 @@
             <sysproperty key="user.language" value="en"/>
             <sysproperty key="user.country" value="US"/>
 
+            <arg value="--scan-classpath"/>
+            <arg value="--details=none"/>
+            <arg value="--include-engine=junit-jupiter"/>
+	    <arg value="--include-engine=junit-vintage"/>
+	    <arg line="-n '^(Test.*|.+[.$]Test.*|.*Tests?)$'" />
+	    <arg line="-n '.*IT.*'" />
+            <arg line="--reports-dir ${testreport}" />
+            <jvmarg value="-Xmx1536m"/>
             <jvmarg value="${jacocoagent}"/>
         </java>
     </target>
