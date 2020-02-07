@@ -1,6 +1,5 @@
 package jmri;
 
-import jmri.NamedBeanUsageReport;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 

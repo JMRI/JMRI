@@ -366,7 +366,7 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
     public void setComment(@CheckForNull String comment);
 
     /**
-     * Get a list of references to the specified bean.
+     * Get a list of references for the specified bean.
      *
      * @param bean The bean to be checked.
      * @return a list of NamedBeanUsageReports or an empty ArrayList.
