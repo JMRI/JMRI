@@ -29,9 +29,9 @@ public class MonitorFrameTest {
         MonitorFrame f = new MonitorFrame();
         f.initComponents();
         f.setVisible(true);
-        f.asciiFormattedMessage(PackageTest.version);
-        f.asciiFormattedMessage(PackageTest.speed0003A);
-        f.asciiFormattedMessage(PackageTest.idlePacket);
+        f.asciiFormattedMessage(TestConstants.version);
+        f.asciiFormattedMessage(TestConstants.speed0003A);
+        f.asciiFormattedMessage(TestConstants.idlePacket);
         f.dispose();
     }
 
