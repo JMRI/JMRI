@@ -118,7 +118,7 @@ public class CbusSlotMonitorPane extends jmri.jmrix.can.swing.CanPanel {
         
         JButton estopButton = new JButton("Stop All");
         estopButton.setIcon(new NamedIcon("resources/icons/throttles/estop.png", "resources/icons/throttles/estop.png"));
-        estopButton.setToolTipText(("ThrottleToolBarStopAllToolTip"));
+        estopButton.setToolTipText(Bundle.getMessage("ThrottleToolBarStopAllToolTip"));
        // estopButton.setVerticalTextPosition(JButton.BOTTOM);
        // estopButton.setHorizontalTextPosition(JButton.CENTER);
         estopButton.addActionListener((ActionEvent e) -> {

@@ -46,16 +46,16 @@ public class CbusNodeConstants {
         // defaults
         node.setsendsWRACKonNVSET(true);
         
-        if ( node.getParameter(1) == 165 ) { // MERG MODULE
-            if ( node.getParameter(3) == 29 ) { // CANPAN
+        if ( node.getNodeParamManager().getParameter(1) == 165 ) { // MERG MODULE
+            if ( node.getNodeParamManager().getParameter(3) == 29 ) { // CANPAN
                 node.setsendsWRACKonNVSET(false);
             }
-            if ( node.getParameter(3) == 10 // CANCMD
-                || node.getParameter(3) ==  55 // or CANCSB 
-                || node.getParameter(3) == 12 // or CANBC
+            if ( node.getNodeParamManager().getParameter(3) == 10 // CANCMD
+                || node.getNodeParamManager().getParameter(3) ==  55 // or CANCSB 
+                || node.getNodeParamManager().getParameter(3) == 12 // or CANBC
             ) { 
-                if ( node.getParameter(7) == 4 ) { // v4 Firmware
-                    node.resetNodeEvents(); // sets num events to 0 as does not respond to RQEVN
+                if ( node.getNodeParamManager().getParameter(7) == 4 ) { // v4 Firmware
+                    node.getNodeEventManager().resetNodeEvents(); // sets num events to 0 as does not respond to RQEVN
                     node.setStatResponseFlagsAccurate(false);
                 }
             }
@@ -92,8 +92,8 @@ public class CbusNodeConstants {
                 1, /* 20 Beta revision   */
                 };
                 
-                thisNode.setParameters(_params);
-                thisNode.setNVs( new int[]{ 1 , 0 } ); // 1 NV, NV1 set at 0
+                thisNode.getNodeParamManager().setParameters(_params);
+                thisNode.getNodeNvManager().setNVs( new int[]{ 1 , 0 } ); // 1 NV, NV1 set at 0
                 thisNode.setNodeNameFromName("PAN");
             }
             
@@ -126,7 +126,7 @@ public class CbusNodeConstants {
                 1, /* 20 Beta revision   */
                 };
                 
-                thisNode.setParameters(_params);
+                thisNode.getNodeParamManager().setParameters(_params);
                 
                 int[] nvArray = new int[256];
                 nvArray[0]=255;
@@ -142,13 +142,13 @@ public class CbusNodeConstants {
                 
                 for (int i = 1; i < 256; i++) {
                     
-                    CbusNodeEvent singleEv = new CbusNodeEvent(i,i,-1,i,255);
+                    CbusNodeEvent singleEv = new CbusNodeEvent(thisNode._memo,i,i,-1,i,255);
                     singleEv.setEvArr(evVarArray);
-                    thisNode.addNewEvent(singleEv);
+                    thisNode.getNodeEventManager().addNewEvent(singleEv);
                     
                 }
                 
-                thisNode.setNVs( nvArray );
+                thisNode.getNodeNvManager().setNVs( nvArray );
                 thisNode.setNodeNameFromName("TSTMAXND");
                 
             }
@@ -156,8 +156,8 @@ public class CbusNodeConstants {
             else {
             
                 // default MERG module in SLiM mode
-                thisNode.setParameters( new int[]{ 8,165,0,0,0,0,0,0,0 } );
-                thisNode.setNVs( new int[]{ 0 } );
+                thisNode.getNodeParamManager().setParameters( new int[]{ 8,165,0,0,0,0,0,0,0 } );
+                thisNode.getNodeNvManager().setNVs( new int[]{ 0 } );
             }
         }
         
@@ -201,8 +201,8 @@ public class CbusNodeConstants {
         }
         
         else {
-            thisNode.setParameters( new int[]{ 8,165,0,0,0,0,0,0,0 } );
-            thisNode.setNVs( new int[]{ 0 } );
+            thisNode.getNodeParamManager().setParameters( new int[]{ 8,165,0,0,0,0,0,0,0 } );
+            thisNode.getNodeNvManager().setNVs( new int[]{ 0 } );
         }
         
         setTraits( thisNode );
@@ -744,32 +744,10 @@ public class CbusNodeConstants {
     private static Map<Integer, String> createModMap() {
         Map<Integer, String> result = new HashMap<>();
         // Opcodes with no data
-        result.put(100, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
-        result.put(101, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
-        result.put(102, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
-        result.put(103, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
-        result.put(104, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
-        result.put(105, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
-        result.put(106, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
-        result.put(107, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
-        result.put(108, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
-        result.put(109, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
-        result.put(110, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
-        result.put(111, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
-        result.put(112, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
-        result.put(113, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
-        result.put(114, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
-        result.put(115, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
-        result.put(116, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
-        result.put(117, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
-        result.put(118, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
-        result.put(119, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
-        result.put(120, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
-        result.put(121, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
-        result.put(122, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
-        result.put(123, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
-        result.put(124, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
-        result.put(125, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
+        
+        for (int i = 100; i < 126; i++) {
+            result.put(i, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
+        }
         result.put(126, "Reserved for CAN_RS Modules");
         result.put(127, "Reserved for CAN_USB Modules");
         result.put(65534, "Reserved for Command Station");

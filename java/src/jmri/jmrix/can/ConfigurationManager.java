@@ -24,7 +24,16 @@ abstract public class ConfigurationManager {
     private static String[] options = new String[]{SPROGCBUS, MERGCBUS, OPENLCB, RAWCAN, TEST};
 
     /**
+     * Create a new ConfigurationManager
+     * @param memo System Connection
+     */
+    public ConfigurationManager(CanSystemConnectionMemo memo) {
+        adapterMemo = memo;
+    }
+    
+    /**
      * Provide the current set of "Option1" values
+     * @return Copy of System Options Array
      */
     static public String[] getSystemOptions() {
         return Arrays.copyOf(options, options.length);
@@ -54,10 +63,6 @@ abstract public class ConfigurationManager {
         options = new String[]{SPROGCBUS};
     }
 
-    public ConfigurationManager(CanSystemConnectionMemo memo) {
-        adapterMemo = memo;
-    }
-
     protected CanSystemConnectionMemo adapterMemo;
 
     abstract public void configureManagers();
@@ -69,6 +74,9 @@ abstract public class ConfigurationManager {
 
     abstract public <T> T get(Class<?> T);
 
+    /**
+     * Dispose of the ConfigurationManager
+     */
     abstract public void dispose();
 
     abstract protected ResourceBundle getActionModelResourceBundle();

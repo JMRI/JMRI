@@ -37,6 +37,9 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
     private Boolean _disposeSimOnWindowClose = false;
     private JScrollPane mainScroll;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void initComponents(CanSystemConnectionMemo memo) {
         super.initComponents(memo);
@@ -51,6 +54,9 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
         init();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTitle() {
         return prependConnToString(Bundle.getMessage("MenuItemNetworkSim"));
@@ -165,6 +171,9 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
         return "package.jmri.jmrix.can.cbus.swing.simulator.SimulatorPane";
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void dispose() {
         super.dispose();
