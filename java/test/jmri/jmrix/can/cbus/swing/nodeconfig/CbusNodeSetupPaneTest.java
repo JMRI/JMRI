@@ -33,7 +33,7 @@ public class CbusNodeSetupPaneTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
         CbusNodeSetupPane t = new CbusNodeSetupPane(null);
-        t.initComponents(256); // node num 256
+        t.setNode(nodeToEdit); // node num 256
         
         Assert.assertNotNull("exists",t);
         
@@ -71,7 +71,6 @@ public class CbusNodeSetupPaneTest {
         memo = null;
         tcis = null;
         
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
 
     }

@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -24,100 +23,93 @@ import org.slf4j.LoggerFactory;
  *
  * @author Steve Young Copyright (C) 2018
  */
-public class CbusNodeInfoPane extends JPanel implements PropertyChangeListener {
+public class CbusNodeInfoPane extends CbusNodeConfigTab {
     
-    private JPanel infoPane;
-    private final JButton nodesupportlinkbutton;
+    private JButton nodesupportlinkbutton;
     private URI supportlink;
-    private CbusNode nodeOfInterest;
     private JLabel header;
     private JPanel menuPane;
     private JTextArea textArea;
     private CbusNodeParameterManager paramMgr;
+    private JScrollPane textAreaPanel;
+    
+    private JPanel paneToDisplay;
 
     /**
      * Create a new instance of CbusNodeInfoPane.
+     * @param main the NodeConfigToolPane this is a component of
      */
-    public CbusNodeInfoPane() {
-        super();
-        
-        nodesupportlinkbutton = new JButton();
-        nodesupportlinkbutton.addActionListener((ActionEvent e) -> {
-            openUri(supportlink);
-        });
-        
+    public CbusNodeInfoPane(NodeConfigToolPane main) {
+        super(main);
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void propertyChange(PropertyChangeEvent ev){
         paramsHaveUpdated();
     }
     
-    private boolean proceedCreatePanel(CbusNode node) {
-
-        if ( node == null ){
-            if (infoPane != null ){ 
-                infoPane.setVisible(false);
-            }
-            return false;
-        }
-        if ( node == nodeOfInterest ){
-            return false;
-        }
-        if ( nodeOfInterest != null ) {
-            node.removePropertyChangeListener(this);
-        }
-        
-        node.addPropertyChangeListener(this);
-        nodeOfInterest = node;
-        paramMgr = node.getNodeParamManager();
-        return true;
-}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getTitle(){
+        return "Node Info";
+    }
     
     /**
      * Initialise the pane for a particular CbusNode ( or CbusBackupNode )
      * @param node the node to display info for
      */
-    public void initComponents(CbusNode node) {
-        
-        if (!proceedCreatePanel(node)){
-            return;
+    @Override
+    public void changedNode(CbusNode node) {
+        if (paneToDisplay==null) {
+            paneToDisplay = newInfoPane();
+            add(paneToDisplay);
         }
-        
-        menuPane = new JPanel();
-        
-        textArea = new JTextArea();
-        textArea.setEditable(false);
-        textArea.setMargin( new java.awt.Insets(10,10,10,10) );
-        JScrollPane textAreaPanel = new JScrollPane(textArea);
-        
-        header = new JLabel("");
-        menuPane.add(header);
-        menuPane.add(nodesupportlinkbutton);
-        
-        this.setLayout(new BorderLayout() );
-        
-        // sets the text area text and support link button etc.
+        paramMgr = node.getNodeParamManager();
         paramsHaveUpdated();
-        
-        if (infoPane != null ){ 
-            infoPane.setVisible(false);
-        }
-        infoPane = null;
-        infoPane = new JPanel();
-        infoPane.setLayout(new BorderLayout() );
-        
-        infoPane.add(menuPane, BorderLayout.PAGE_START);
-        infoPane.add(textAreaPanel, BorderLayout.CENTER);
-        this.add(infoPane);
         validate();
         repaint();
         
     }
     
+    private JPanel newInfoPane(){
+    
+        JPanel newPane = new JPanel();
+        newPane.setLayout(new BorderLayout() );
+        
+        nodesupportlinkbutton = new JButton("");
+        nodesupportlinkbutton.addActionListener((ActionEvent e) -> {
+            openUri(supportlink);
+        });
+        
+        textArea = new JTextArea();
+        textArea.setEditable(false);
+        textArea.setMargin( new java.awt.Insets(10,10,10,10) );
+        textAreaPanel = new JScrollPane(textArea);
+        
+        header = new JLabel("");
+        menuPane = new JPanel();
+        menuPane.add(header);
+        menuPane.add(nodesupportlinkbutton);
+        
+        newPane.add(menuPane, BorderLayout.PAGE_START);
+        newPane.add(textAreaPanel, BorderLayout.CENTER);
+        newPane.validate();
+        newPane.repaint();
+        
+        return newPane;
+    }
+    
     private void appendIfKnown( StringBuilder sb, int paramToCheck, String label ){
+        
+        // log.info("returning param index {} val {}",paramToCheck,paramMgr.getParameter(paramToCheck));
+        
         if (paramMgr.getParameter(paramToCheck) > -1) {
-                appendRaw(sb,paramMgr.getParameter(paramToCheck),label);
+                appendRaw(sb,String.valueOf(paramMgr.getParameter(paramToCheck)),label);
         }
     }
     
@@ -138,7 +130,7 @@ public class CbusNodeInfoPane extends JPanel implements PropertyChangeListener {
     /**
      * Recalculates pane following notification from CbusNode that parameters have changed
      */
-    public void paramsHaveUpdated() {
+    private void paramsHaveUpdated() {
         
         updateSupportButton();
                 
@@ -150,17 +142,17 @@ public class CbusNodeInfoPane extends JPanel implements PropertyChangeListener {
         
         appendNodeTypeInfo(textAreaString);
         
-        appendIfKnown(textAreaString, paramMgr.getParameter(6), Bundle.getMessage("NodeVariables"));
+        appendIfKnown(textAreaString, 6, Bundle.getMessage("NodeVariables"));
         
-        appendIfKnown(textAreaString, paramMgr.getParameter(0), "Parameters");
+        appendIfKnown(textAreaString, 0, "Parameters");
         
         if ( nodeOfInterest.getNodeEventManager().getTotalNodeEvents()> -1 ) {
             appendRaw(textAreaString,nodeOfInterest.getNodeEventManager()
                 .getTotalNodeEvents(), "Current Events");
         }
 
-        appendIfKnown(textAreaString, paramMgr.getParameter(4), "Max Events");
-        appendIfKnown(textAreaString, paramMgr.getParameter(5), "Max Event Variables per Event");
+        appendIfKnown(textAreaString, 4, "Max Events");
+        appendIfKnown(textAreaString, 5, "Max Event Variables per Event");
         
         if ((paramMgr.getParameter(0)>9) && (paramMgr.getParameter(10)>0)) {           
             textAreaString.append (CbusNodeConstants.getBusType(paramMgr.getParameter(10)));

@@ -5,114 +5,96 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeEvent;
 import jmri.jmrix.can.cbus.node.CbusNodeEventTableDataModel;
+
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author Steve Young Copyright (C) 2019
  */
-public class CbusNodeEventVarPane extends JPanel {
+public class CbusNodeEventVarPane extends CbusNodeConfigTab {
     
-    private JPanel infoPane = new JPanel();
-    private CanSystemConnectionMemo _memo;
     private CbusNodeEventTableDataModel nodeEvModel;
     private JButton newEvButton;
-    private final NodeConfigToolPane mainpane;
-    private CbusNode nodeOfInterest;
+    private CbusNodeEventTablePane genericEvTable;
 
     /**
-     * Create a new instance of CbusEventHighlightPanel.
+     * Create a new instance of CbusNodeEventVarPane.
      * @param main the main NodeConfigToolPane this is a pane of.
      */
     protected CbusNodeEventVarPane( NodeConfigToolPane main ) {
-        super();
-        mainpane = main;
+        super(main);
+        initPane();
     }
     
-    public void initComponents(CanSystemConnectionMemo memo) {
-        _memo = memo;
-        nodeOfInterest = null;
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getTitle(){
+        return "Node Events";
     }
     
-    public void setNode( CbusNode node ) {
-        
-        if ( node == nodeOfInterest){
-            return;
-        }
-        
-        if ( nodeEvModel != null ){
-            nodeEvModel.dispose();
-        }
-        
-        if ( node == null ){
-            return;
-        }
-        
-        nodeEvModel = new CbusNodeEventTableDataModel(  mainpane, _memo, 10,
-            CbusNodeEventTableDataModel.MAX_COLUMN); // mainpane, controller, row, column
-        
-        nodeOfInterest= node;
-
-        if (infoPane != null ){ 
-            infoPane.setVisible(false);
-            infoPane = null;
-        }
-
-        infoPane = newInfoPane(nodeOfInterest);
-        // Pane to hold Event
-        
-        setLayout(new BorderLayout() );
-        this.add(infoPane);
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void disposeOfNode(CbusNode node){
+        super.disposeOfNode(node);
+        nodeEvModel.dispose();
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void changedNode( CbusNode node ) {
+        // nodeEvModel.setNode( node );
+        genericEvTable.setNode(node);
+        nodeEvModel.fireTableDataChanged();
+        newEvButton.setEnabled(nodeOfInterest.getNodeParamManager().getParameter(5) > -1 );
         
         validate();
         repaint();
-        
     }
     
-    private JPanel newInfoPane(CbusNode nodeOfI){
+    private void initPane(){
     
-        JPanel newPane = new JPanel();
-        newPane.setLayout(new BorderLayout() );
-        
         JPanel evMenuPane = new JPanel();
       
         newEvButton = new JButton(Bundle.getMessage("AddNodeEvent"));
         newEvButton.setToolTipText(Bundle.getMessage("AddNodeEventTip"));
-        addButtonListener();
+        
+        addButtonListener(newEvButton);
         
         evMenuPane.add(newEvButton);
         
-        // check number of event variables per node event
-        if ( nodeOfI.getNodeParamManager().getParameter(5) < 1 ) {
-            newEvButton.setEnabled(false);
-        }
+        nodeEvModel = new CbusNodeEventTableDataModel(  getMainPane(), memo, 10,
+            CbusNodeEventTableDataModel.MAX_COLUMN); // mainpane, controller, row, column
         
-        CbusNodeEventTablePane genericEvTable = new CbusNodeEventTablePane(nodeEvModel);
-        genericEvTable.initComponents(_memo);
-        genericEvTable.setNode( nodeOfI );
+        genericEvTable = new CbusNodeEventTablePane(nodeEvModel);
+        genericEvTable.initComponents(memo);
+        genericEvTable.setVisible(true);
         
-        newPane.add(evMenuPane, BorderLayout.PAGE_START);
-        newPane.add(genericEvTable, BorderLayout.CENTER);
+        add(evMenuPane, BorderLayout.PAGE_START);
+        add(genericEvTable, BorderLayout.CENTER);
         
-        return newPane;
     }
     
-    private void addButtonListener(){
+    private void addButtonListener(JButton button){
         ActionListener newEvButtonClicked = ae -> {
-            if (nodeOfInterest == null){
-                return;
-            }
-            CbusNodeEvent newevent = new CbusNodeEvent( _memo,
+            CbusNodeEvent newevent = new CbusNodeEvent( memo,
                 -1,-1,nodeOfInterest.getNodeNumber(),-1,nodeOfInterest.getNodeParamManager().getParameter(5));
             java.util.Arrays.fill(newevent.getEvVarArray(),0);
-            mainpane.getEditEvFrame().initComponents(_memo,newevent);
+            getMainPane().getEditEvFrame().initComponents(memo,newevent);
         };
-        newEvButton.addActionListener(newEvButtonClicked);
+        button.addActionListener(newEvButtonClicked);
     }
-
+    
     // private final static Logger log = LoggerFactory.getLogger(CbusNodeEventVarPane.class);
     
 }

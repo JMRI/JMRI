@@ -20,19 +20,19 @@ public class CbusNodeInfoPaneTest {
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        CbusNodeInfoPane t = new CbusNodeInfoPane();
+        CbusNodeInfoPane t = new CbusNodeInfoPane(null);
         Assert.assertNotNull("exists",t);
     }
     
     @Test
     public void testInit() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        CbusNodeInfoPane t = new CbusNodeInfoPane();
+        CbusNodeInfoPane t = new CbusNodeInfoPane(null);
         
         CbusNode nd = new CbusNode(null,12345);
         nd.getNodeParamManager().setParameters(new int[]{8,165,89,10,4,5,3,4,8});
         
-        t.initComponents(nd);
+        t.setNode(nd);
         
         Assert.assertNotNull("exists",t);
         
