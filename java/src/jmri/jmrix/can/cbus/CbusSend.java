@@ -287,7 +287,7 @@ public class CbusSend {
     }
 
     /**
-     * Sends a Sysstem Reset ARST OPC.
+     * Sends a System Reset ARST OPC.
      * Full system reset
      */
     public void aRST(){

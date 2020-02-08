@@ -63,15 +63,15 @@ public class CbusNodeEventTablePaneTest {
 
         CbusNode node = new CbusNode(memo,12345);
         // set node to 4 ev vars per event, para 5
-        node.setParameters(new int[]{8,1,2,3,4,4,6,7,8});
+        node.getNodeParamManager().setParameters(new int[]{8,1,2,3,4,4,6,7,8});
         
-        CbusNodeEvent ev = new CbusNodeEvent(0,7,12345,-1,4);  // nn, en, thisnode, index, maxevvar
-        CbusNodeEvent eva = new CbusNodeEvent(257,111,12345,-1,4);  // nn, en, thisnode, index, maxevvar
+        CbusNodeEvent ev = new CbusNodeEvent(memo,0,7,12345,-1,4);  // nn, en, thisnode, index, maxevvar
+        CbusNodeEvent eva = new CbusNodeEvent(memo,257,111,12345,-1,4);  // nn, en, thisnode, index, maxevvar
         
         ev.setEvArr(new int[]{1,2,3,4});
         
-        node.addNewEvent(ev);
-        node.addNewEvent(eva);
+        node.getNodeEventManager().addNewEvent(ev);
+        node.getNodeEventManager().addNewEvent(eva);
         
         t.setNode(node);
         
@@ -108,6 +108,7 @@ public class CbusNodeEventTablePaneTest {
     public void tearDown() {
         t = null;
         nodeModel = null;
+        memo.dispose();
         memo = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
