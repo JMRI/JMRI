@@ -1528,7 +1528,7 @@
         <mkdir dir="${testreport}"/>
         <jacoco:agent property="jacocoagent" destfile="${jacocoexec}" excludes="org.slf4j.*" />
 
-        <java classpathref="test.class.path" classname="org.junit.platform.console.ConsoleLauncher" fork="true" failonerror="true" failureProperty="test.failed" >
+        <java classpathref="test.class.path" classname="org.junit.platform.console.ConsoleLauncher" fork="true" failonerror="true"  >
             <sysproperty key="cucumber.options" value="--tags 'not @Ignore'"/>
             <sysproperty key="wdm.forceCache" value="true"/>
             <!-- wdm.targetPath specifies the locaion of the web drivers on appveyor. -->
@@ -1556,11 +1556,6 @@
             <jvmarg value="-Xmx1536m"/>
             <jvmarg value="${jacocoagent}"/>
         </java>
-        <fail>
-            <condition>
-                <istrue value="${test.failed}" />
-            </condition>
-        </fail>
     </target>
 
     <!-- Note if modifying the alltest target, please be sure to up date the -->
