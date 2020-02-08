@@ -79,7 +79,7 @@ public class HexFile {
             //line = new StringBuffer("");
             return true;
         } catch (IOException e) {
-            log.error("I/O exception opening hex file {0}", e.toString());
+            log.error("I/O exception opening hex file {}", e.toString());
             return false;
         }
     }
@@ -248,7 +248,7 @@ public class HexFile {
         try {
             System.arraycopy(hexDataProg, offset, d, 0, end - offset);
         } catch (ArrayIndexOutOfBoundsException e) {
-            log.warn("Index out of bounds {0}", e);
+            log.warn("Index out of bounds {}", e);
         }
         return d;
     }
@@ -275,7 +275,7 @@ public class HexFile {
         try {
             System.arraycopy(hexDataConfig, offset, d, offset, end - offset);
         } catch (ArrayIndexOutOfBoundsException e) {
-            log.warn("Index out of bounds {0}", e);
+            log.warn("Index out of bounds {}", e);
         }
         return d;
     }
@@ -302,7 +302,7 @@ public class HexFile {
         try {
             System.arraycopy(hexDataEeprom, offset, d, offset, end - offset);
         } catch (ArrayIndexOutOfBoundsException e) {
-            log.warn("Index out of bounds {0}", e);
+            log.warn("Index out of bounds {}", e);
         }
         return d;
     }

@@ -1,4 +1,4 @@
-package jmri.jmrix.can.adapters.sprogconnect.sproggen5.serialdriver.configurexml;
+package jmri.jmrix.can.adapters.gridconnect.sproggen5.serialdriver.configurexml;
 
 import org.jdom2.Element;
 

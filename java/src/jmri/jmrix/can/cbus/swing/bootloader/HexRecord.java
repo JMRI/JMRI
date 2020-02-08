@@ -116,7 +116,7 @@ public class HexRecord {
         }
         if (c != ':') {
             valid = false;
-            log.error("No colon at start of line {0}", f.getLineNo());
+            log.error("No colon at start of line {}", f.getLineNo());
         }
         // length of data
         len = f.rdHexByte();
@@ -142,7 +142,7 @@ public class HexRecord {
         }
         int fileCheck = f.rdHexByte();
         if (((checksum + fileCheck) & 0xff) != 0) {
-            log.error("Bad checksum at {0}", address);
+            log.error("Bad checksum at {}", address);
             valid = false;
         }
     }

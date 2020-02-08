@@ -1,6 +1,5 @@
 package jmri.jmrix.sproggen5;
 
-import jmri.jmrix.sproggen5.*;
 import jmri.jmrix.ConnectionTypeList;
 import org.openide.util.lookup.ServiceProvider;
 
