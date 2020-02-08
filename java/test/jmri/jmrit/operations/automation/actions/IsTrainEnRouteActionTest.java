@@ -76,7 +76,7 @@ public class IsTrainEnRouteActionTest extends OperationsTestCase {
         Assert.assertTrue(automationItem.isActionSuccessful());
         
         JUnitOperationsUtil.checkOperationsShutDownTask();
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     @Test
@@ -121,7 +121,7 @@ public class IsTrainEnRouteActionTest extends OperationsTestCase {
         Assert.assertFalse(automationItem.isActionSuccessful());
         
         JUnitOperationsUtil.checkOperationsShutDownTask();
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(IsTrainEnRouteActionTest.class);

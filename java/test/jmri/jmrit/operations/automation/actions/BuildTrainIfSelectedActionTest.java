@@ -73,7 +73,7 @@ public class BuildTrainIfSelectedActionTest extends OperationsTestCase {
         Assert.assertFalse(automationItem.isActionSuccessful());
         
         JUnitOperationsUtil.checkOperationsShutDownTask();
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(BuildTrainIfSelectedActionTest.class);
