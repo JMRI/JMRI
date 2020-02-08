@@ -1,5 +1,6 @@
 package jmri.jmrix.can.cbus.node;
 
+import java.util.ArrayList;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -14,12 +15,12 @@ import org.junit.rules.TemporaryFolder;
  * @author Paul Bender Copyright (C) 2017
  * @author Steve Young Copyright (C) 2019
  */
-public class CbusNodeXmlTest {
+public class CbusNodeBackupManagerTest {
     
     @Test
     public void testCTor() {
         CbusNode node = new CbusNode(null,256);
-        CbusNodeXml t = new CbusNodeXml(node);
+        CbusNodeBackupManager t = new CbusNodeBackupManager(node);
         Assert.assertNotNull("exists",t);
         node.dispose();
     }
@@ -28,12 +29,12 @@ public class CbusNodeXmlTest {
     public void testNotOnNetwork() {
         
         CbusNode node = new CbusNode(null,257);
-        CbusNodeXml t = new CbusNodeXml(node);
+        CbusNodeBackupManager t = new CbusNodeBackupManager(node);
         
         Assert.assertNull(t.getFirstBackupTime());
         Assert.assertNull(t.getLastBackupTime());
         
-        Assert.assertTrue("node backup 0 entry exists",0 == t.getBackups().size());
+        Assert.assertTrue("node backup 0 entry exists",t.getBackups().isEmpty());
         Assert.assertTrue(t.getNumCompleteBackups()==0);
         
         t.nodeNotOnNetwork();
@@ -49,9 +50,9 @@ public class CbusNodeXmlTest {
     public void testNodeInSlim() {
         
         CbusNode node = new CbusNode(null,258);
-        CbusNodeXml t = new CbusNodeXml(node);
+        CbusNodeBackupManager t = new CbusNodeBackupManager(node);
         
-        Assert.assertTrue("node backup 0 entry exists",0 == t.getBackups().size());
+        Assert.assertTrue("node backup 0 entry exists",t.getBackups().isEmpty());
         Assert.assertTrue(t.getNumCompleteBackups()==0);
         
         t.nodeInSLiM();
@@ -67,9 +68,9 @@ public class CbusNodeXmlTest {
     public void testNodeBackupError() {
         
         CbusNode node = new CbusNode(null,259);
-        CbusNodeXml t = new CbusNodeXml(node);
+        CbusNodeBackupManager t = new CbusNodeBackupManager(node);
         
-        Assert.assertTrue("node backup 0 entry exists",0 == t.getBackups().size());
+        Assert.assertTrue("node backup 0 entry exists",t.getBackups().isEmpty());
         Assert.assertTrue(t.getNumCompleteBackups()==0);
         
         t.doStore(true, false); // create new, no existing errors logged
@@ -85,7 +86,7 @@ public class CbusNodeXmlTest {
     public void testOpenxistingFile() throws java.text.ParseException, java.io.IOException {
         
         CbusNode node = new CbusNode(null,41375);
-        CbusNodeXml t = new CbusNodeXml(node);
+        CbusNodeBackupManager t = new CbusNodeBackupManager(node);
         
        // jmri.util.FileUtil.createDirectory("cbus" + java.io.File.separator + "node");
         
@@ -98,7 +99,7 @@ public class CbusNodeXmlTest {
         java.nio.file.Files.copy(systemFile.toPath(), t.getFileLocation().toPath(), 
             java.nio.file.StandardCopyOption.REPLACE_EXISTING);
         
-        Assert.assertTrue("node backup 0 entry exists",0 == t.getBackups().size());
+        Assert.assertTrue("node backup 0 entry exists",t.getBackups().isEmpty());
         Assert.assertTrue(t.getNumCompleteBackups()==0);
         
         t.doLoad();
@@ -131,14 +132,24 @@ public class CbusNodeXmlTest {
         Assert.assertTrue("backup 2 comment", t.getBackups().get(2).getBackupComment().isEmpty());
         
         Assert.assertEquals("backup node parameters",
-            "A5591D800D01010D0D0100080000000000000101", t.getBackups().get(4).getParameterHexString());
-        Assert.assertEquals("backup node NVs","01", t.getBackups().get(4).getNvHexString());
+            "A5591D800D01010D0D0100080000000000000101", t.getBackups().get(4).getNodeParamManager().getParameterHexString());
+        Assert.assertEquals("backup node NVs","01", t.getBackups().get(4).getNodeNvManager().getNvHexString());
+        
+        
+        ArrayList tempList = t.getBackups().get(4).getNodeEventManager().getEventArray();
+        Assert.assertNotNull("Ev Array Not Null", tempList);
+        
+        
         Assert.assertEquals("backup node events",
             "[NN:127 EN:100 , NN:299 EN:203 , NN:127 EN:207 ]",
-            t.getBackups().get(4).getEventArray().toString());
+            tempList.toString());
+        
+        CbusNodeEvent tmpEv = t.getBackups().get(4).getNodeEventManager().getNodeEvent(299,203);
+        Assert.assertNotNull("Ev Not Null", tmpEv);
+        
         Assert.assertEquals("backup node event 203 nn 299 ev vars",
             "0102030405060708090A0B0CFF",
-            t.getBackups().get(4).getNodeEvent(299,203).getHexEvVarString());
+            tmpEv.getHexEvVarString());
         
         node.dispose();
     }
@@ -147,7 +158,7 @@ public class CbusNodeXmlTest {
     public void TestSaveFile() throws java.text.ParseException, java.io.IOException {
         
         CbusNode node = new CbusNode(null,41375);
-        CbusNodeXml t = new CbusNodeXml(node);
+        CbusNodeBackupManager t = new CbusNodeBackupManager(node);
         
         java.io.File dir = new java.io.File("java/test/jmri/jmrix/can/cbus/node/");
         java.io.File systemFile = new java.io.File(dir, "41375.xml");
@@ -165,10 +176,12 @@ public class CbusNodeXmlTest {
         
         // we can't do a direct comparison of the xml as the new entry will have a date stamp
         // but we can reload it and check a few things have saved ok
-        node.setBackupStarted(false);
+        node.getNodeBackupManager().setBackupStarted(false);
         t.resetBupArray();
         t.doLoad();
         
+        JUnitUtil.waitFor(()->{ return(t.getBackups().size()>6); }, "Not all backups loaded");
+                
         Assert.assertEquals("File loaded to ArrayList",7, t.getBackups().size());
         Assert.assertTrue(t.getNumCompleteBackups()==2);
         
@@ -199,14 +212,22 @@ public class CbusNodeXmlTest {
         Assert.assertTrue("backup 3 comment", t.getBackups().get(3).getBackupComment().isEmpty());
         
         Assert.assertEquals("backup node parameters",
-            "A5591D800D01010D0D0100080000000000000101", t.getBackups().get(5).getParameterHexString());
-        Assert.assertEquals("backup node NVs","01", t.getBackups().get(5).getNvHexString());
+            "A5591D800D01010D0D0100080000000000000101", t.getBackups().get(5).getNodeParamManager().getParameterHexString());
+        Assert.assertEquals("backup node NVs","01", t.getBackups().get(5).getNodeNvManager().getNvHexString());
+        
+        ArrayList tempList = t.getBackups().get(5).getNodeEventManager().getEventArray();
+        Assert.assertNotNull("Ev Array Not Null", tempList);
+        
         Assert.assertEquals("backup node events",
             "[NN:127 EN:100 , NN:299 EN:203 , NN:127 EN:207 ]",
-            t.getBackups().get(5).getEventArray().toString());
+            tempList.toString());
+        
+        CbusNodeEvent tmpEv = t.getBackups().get(5).getNodeEventManager().getNodeEvent(299,203);
+        Assert.assertNotNull("Ev Not Null", tmpEv);
+        
         Assert.assertEquals("backup node event 203 nn 299 ev vars",
             "0102030405060708090A0B0CFF",
-            t.getBackups().get(5).getNodeEvent(299,203).getHexEvVarString());
+            tmpEv.getHexEvVarString());
         
         node.dispose();
         
@@ -219,7 +240,7 @@ public class CbusNodeXmlTest {
         jmri.InstanceManager.setDefault(jmri.jmrix.can.cbus.CbusPreferences.class,pref );
         
         CbusNode node = new CbusNode(null,41376);
-        CbusNodeXml t = new CbusNodeXml(node);
+        CbusNodeBackupManager t = new CbusNodeBackupManager(node);
         
         java.io.File dir = new java.io.File("java/test/jmri/jmrix/can/cbus/node/");
         java.io.File systemFile = new java.io.File(dir, "41376.xml");
@@ -240,9 +261,11 @@ public class CbusNodeXmlTest {
         t.doStore(false,false);
         
         // reload it
-        node.setBackupStarted(false);
+        node.getNodeBackupManager().setBackupStarted(false);
         t.resetBupArray();
         t.doLoad();
+        
+        JUnitUtil.waitFor(()->{ return(t.getBackups().size()>10); }, "Not all backups loaded");
         
         Assert.assertEquals("File loaded to ArrayList",11, t.getBackups().size());
         Assert.assertEquals("Complete backups after save and trim",10,t.getNumCompleteBackups());
@@ -266,7 +289,7 @@ public class CbusNodeXmlTest {
         t.doStore(false,false);
         
         // reload it
-        node.setBackupStarted(false);
+        node.getNodeBackupManager().setBackupStarted(false);
         t.resetBupArray();
         t.doLoad();
         
@@ -288,7 +311,7 @@ public class CbusNodeXmlTest {
         t.doStore(false,false);
         
         // reload it 
-        node.setBackupStarted(false);
+        node.getNodeBackupManager().setBackupStarted(false);
         t.resetBupArray();
         t.doLoad();
 
@@ -299,7 +322,6 @@ public class CbusNodeXmlTest {
         Assert.assertEquals("Last Backup Time",t.xmlDateStyle.parse("2019-11-24 19:51:15"), t.getLastBackupTime());
         Assert.assertEquals(t.xmlDateStyle.parse("2019-11-24 19:51:15"), t.getBackups().get(0).getBackupTimeStamp());
         
-        pref = null;
         node.dispose();
     }
     
@@ -307,7 +329,7 @@ public class CbusNodeXmlTest {
     public void TestFailedBackups() throws java.text.ParseException, java.io.IOException {
         
         CbusNode node = new CbusNode(null,41377);
-        CbusNodeXml t = new CbusNodeXml(node);
+        CbusNodeBackupManager t = new CbusNodeBackupManager(node);
         
         java.io.File dir = new java.io.File("java/test/jmri/jmrix/can/cbus/node/");
         java.io.File systemFile = new java.io.File(dir, "41377.xml");
@@ -354,7 +376,7 @@ public class CbusNodeXmlTest {
     public void TestMalfordmedFile() throws java.text.ParseException, java.io.IOException {
         
         CbusNode node = new CbusNode(null,41378);
-        CbusNodeXml t = new CbusNodeXml(node);
+        CbusNodeBackupManager t = new CbusNodeBackupManager(node);
         
         java.io.File dir = new java.io.File("java/test/jmri/jmrix/can/cbus/node/");
         java.io.File systemFile = new java.io.File(dir, "41378.xml");

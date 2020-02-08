@@ -100,20 +100,12 @@ public class CbusNameService {
     @CheckForNull
     private CbusNodeTableDataModel getNodeModel(){
         log.debug("memo: {}",_memo);
-        // if (_memo!=null) {
-        //     return _memo.get(CbusNodeTableDataModel.class);
-        // } else {
-            return jmri.InstanceManager.getNullableDefault(CbusNodeTableDataModel.class);
-        // }
+        return jmri.InstanceManager.getNullableDefault(CbusNodeTableDataModel.class);
     }
     
     @CheckForNull
     private CbusEventTableDataModel getEventModel(){
-        // if (_memo!=null) {
-        //     return _memo.get(CbusEventTableDataModel.class);
-        // } else {
-            return jmri.InstanceManager.getNullableDefault(CbusEventTableDataModel.class);
-        // }
+        return jmri.InstanceManager.getNullableDefault(CbusEventTableDataModel.class);
     }
 
     private static final Logger log = LoggerFactory.getLogger(CbusNameService.class);

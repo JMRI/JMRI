@@ -22,4 +22,36 @@ public interface CanListener extends jmri.jmrix.AbstractMRListener {
             tcToAdd.addCanListener(this);
         }
     }
+    
+    /**
+     * Add a Traffic Controller Listener.
+     * Adding here, rather than in a class construction header
+     * avoids Leaking Constructor errors.
+     * @param memoToAdd The CAN system Connection
+     */
+    default void addTc(CanSystemConnectionMemo memoToAdd) {
+        if (memoToAdd != null) {
+            addTc(memoToAdd.getTrafficController());
+        }
+    }
+    
+    /**
+     * Remove a Traffic Controller Listener.
+     * @param tcToRemove The system memo CAN Traffic Controller
+     */
+    default void removeTc(TrafficController tcToRemove) {
+        if (tcToRemove != null) {
+            tcToRemove.removeCanListener(this);
+        }
+    }
+    
+    /**
+     * Remove a Traffic Controller Listener.
+     * @param memoToRemove The CAN system Connection
+     */
+    default void removeTc(CanSystemConnectionMemo memoToRemove) {
+        if (memoToRemove != null) {
+            removeTc(memoToRemove.getTrafficController());
+        }
+    }
 }

@@ -1,5 +1,7 @@
 package jmri.jmrix.can.cbus.node;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -17,7 +19,8 @@ import org.slf4j.LoggerFactory;
  * @author Steve Young (c) 2019
  * 
  */
-public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTableModel {
+public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTableModel 
+    implements PropertyChangeListener {
 
     private final CbusNameService nameService;
     private CbusNode nodeOfInterest;
@@ -49,7 +52,7 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
     @Override
     public int getRowCount() {
         try {
-            return Math.max(0,nodeOfInterest.getTotalNodeEvents() );
+            return Math.max(0,nodeOfInterest.getNodeEventManager().getTotalNodeEvents() );
         } catch (NullPointerException e) { // in case no node loaded
             return 0;
         }
@@ -175,33 +178,36 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
         if ( nodeOfInterest == null ){
             return null;
         }
-        int nnc = nodeOfInterest.getNodeEventByArrayID(row).getNn();
-        int enc = nodeOfInterest.getNodeEventByArrayID(row).getEn();
+        CbusNodeEvent toFetch = nodeOfInterest.getNodeEventManager().getNodeEventByArrayID(row);
+        if (toFetch==null){
+            return null;
+        }
+        
         switch (col) {
             case NODE_NUMBER_COLUMN:
-                return nnc;
+                return toFetch.getNn();
             case EVENT_NUMBER_COLUMN:
-                return enc;
+                return toFetch.getEn();
             case NODE_EDIT_BUTTON_COLUMN:
                 return "Edit";
             case NODE_NAME_COLUMN:
-                if ( !nodeOfInterest.getNodeEventByArrayID(row).getTempFcuNodeName().isEmpty() ) {
-                    return nodeOfInterest.getNodeEventByArrayID(row).getTempFcuNodeName();
+                if ( !toFetch.getTempFcuNodeName().isEmpty() ) {
+                    return toFetch.getTempFcuNodeName();
                 }
                 else {
-                    return nameService.getNodeName( nnc );
+                    return nameService.getNodeName( toFetch.getNn() );
                 }
             case EVENT_NAME_COLUMN:
-                if ( !nodeOfInterest.getNodeEventByArrayID(row).getName().isEmpty() ) {
-                    return nodeOfInterest.getNodeEventByArrayID(row).getName();
+                if ( !toFetch.getName().isEmpty() ) {
+                    return toFetch.getName();
                 }
                 else {
-                    return nameService.getEventName( nnc, enc  );
+                    return nameService.getEventName( toFetch.getNn(), toFetch.getEn()  );
                 }
             case EV_VARS_COLUMN:
-                return nodeOfInterest.getNodeEventByArrayID(row).getEvVarString();
+                return toFetch.getEvVarString();
             case EV_INDEX_COLUMN:
-                return nodeOfInterest.getNodeEventByArrayID(row).getIndex();
+                return toFetch.getIndex();
             default:
                 return null;
         }
@@ -213,12 +219,10 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
     @Override
     public void setValueAt(Object value, int row, int col) {
         if (col == NODE_EDIT_BUTTON_COLUMN && _mainpane!=null) {
-            
+            CbusNodeEvent ndEv = nodeOfInterest.getNodeEventManager().getNodeEventByArrayID(row);
             ThreadingUtil.runOnGUIDelayed( ()->{
-                _mainpane.getEditEvFrame().initComponents(_memo, nodeOfInterest.getNodeEventByArrayID(row) );
-                
+                _mainpane.getEditEvFrame().initComponents(_memo, ndEv );                
             },10);
-            
         }
     }
     
@@ -228,27 +232,31 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
             return;
         }
         if ( nodeOfInterest != null ){
-            nodeOfInterest.removeNodeEventTable(this);
+            nodeOfInterest.removePropertyChangeListener(this);
         }
         nodeOfInterest = node;
         if ( nodeOfInterest != null ){
-            nodeOfInterest.setNodeEventTable(this);
+            nodeOfInterest.addPropertyChangeListener(this);
         }
-       // fireTableDataChanged();
+        fireTableDataChanged();
         
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void propertyChange(PropertyChangeEvent ev){
+        if (ev.getPropertyName().equals("SINGLEEVUPDATE")) {
+            int newValue = (Integer) ev.getNewValue();
+            fireTableRowsUpdated(newValue,newValue);
+        }
+        else if (ev.getPropertyName().equals("ALLEVUPDATE")) {
+            fireTableDataChanged();
+        }
     }
     
     /**
-     * Receive update from CbusNode that table has changed
-     */  
-    public void updateFromNode( int arrayid, int col){
-        
-        ThreadingUtil.runOnGUI( ()->{
-            // fireTableCellUpdated(arrayid, col);
-            fireTableDataChanged();
-        });
-    }
-    
+     * Removes Node Listener if still monitoring a Node.
+     */
     public void dispose(){
         setNode( null);
     }
