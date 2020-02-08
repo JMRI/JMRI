@@ -39,7 +39,7 @@ after_test:
 # This works, but the Appveyor display is unreliable.
 - ps: |
     $wc = New-Object 'System.Net.WebClient'
-    $files = Get-ChildItem -INclude 'TEST-*.xml' - Recurse
+    $files = Get-ChildItem -Include 'TEST-*.xml' -Recurse
     $fileCount = $files.Count
     echo "uploading $filesCount test results to Appveyor"
     for ($I =1; $I -le ($filesCount -1); $I++){
