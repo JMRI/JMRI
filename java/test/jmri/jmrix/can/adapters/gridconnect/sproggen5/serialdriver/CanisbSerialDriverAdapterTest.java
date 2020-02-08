@@ -1,10 +1,7 @@
 package jmri.jmrix.can.adapters.gridconnect.sproggen5.serialdriver;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Tests for CanisbSerialDriverAdapter class.
@@ -13,21 +10,22 @@ import org.junit.Test;
  **/
 public class CanisbSerialDriverAdapterTest {
 
-   @Test
-   public void ConstructorTest(){
-      Assert.assertNotNull("SerialDriverAdapter constructor",new CanisbSerialDriverAdapter());
-   }
+    @Test
+    public void ConstructorTest(){
+        CanisbSerialDriverAdapter c = new CanisbSerialDriverAdapter();
+        Assert.assertNotNull("SerialDriverAdapter constructor", c);
+    }
 
-   @Before
-   public void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
 
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-   }
+    }
 
-   @After
-   public void tearDown(){
+    @After
+    public void tearDown(){
         JUnitUtil.tearDown();
-   }
+    }
 
 }

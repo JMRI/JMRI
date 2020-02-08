@@ -2,8 +2,7 @@ package jmri.jmrix.can.adapters.gridconnect.sproggen5.serialdriver.configurexml;
 
 import jmri.jmrix.can.adapters.gridconnect.sproggen5.serialdriver.CanSprogConnectionConfig;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.*;
 
 /**
  * CanSprogConnectionConfigXmlTest.java
@@ -13,7 +12,13 @@ import org.junit.Before;
  * @author   Andrew Crosland  Copyright (C) 2020
  */
 public class CanSprogConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSerialConnectionConfigXmlTestBase {
-
+    
+    @Test
+    public void testCTor() {
+        CanSprogConnectionConfigXml c = new CanSprogConnectionConfigXml();
+        Assert.assertNotNull("exists",c);
+    }
+    
     // The minimal setup for log4J
     @Before
     @Override

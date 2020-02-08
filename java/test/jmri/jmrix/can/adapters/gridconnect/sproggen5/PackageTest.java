@@ -1,7 +1,5 @@
 package jmri.jmrix.can.adapters.gridconnect.sproggen5;
 
-import jmri.jmrix.can.adapters.gridconnect.sproggen5.serialdriver.*;
-import jmri.jmrix.can.adapters.gridconnect.sproggen5.serialdriver.configurexml.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 

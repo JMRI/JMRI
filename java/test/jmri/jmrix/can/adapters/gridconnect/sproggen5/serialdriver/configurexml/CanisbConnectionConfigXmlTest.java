@@ -2,8 +2,7 @@ package jmri.jmrix.can.adapters.gridconnect.sproggen5.serialdriver.configurexml;
 
 import jmri.jmrix.can.adapters.gridconnect.sproggen5.serialdriver.CanisbConnectionConfig;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.*;
 
 /**
  * CanisbConnectionConfigXmlTest.java
@@ -14,6 +13,12 @@ import org.junit.Before;
  */
 public class CanisbConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSerialConnectionConfigXmlTestBase {
 
+    @Test
+    public void testCTor() {
+        CanisbConnectionConfigXml c = new CanisbConnectionConfigXml();
+        Assert.assertNotNull("exists",c);
+    }
+    
     // The minimal setup for log4J
     @Before
     @Override
