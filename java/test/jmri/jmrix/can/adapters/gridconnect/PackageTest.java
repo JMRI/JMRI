@@ -12,6 +12,7 @@ import org.junit.runners.Suite;
         jmri.jmrix.can.adapters.gridconnect.net.PackageTest.class,
         jmri.jmrix.can.adapters.gridconnect.canusb.PackageTest.class,
         jmri.jmrix.can.adapters.gridconnect.can2usbino.PackageTest.class,
+        jmri.jmrix.can.adapters.gridconnect.sproggen5.PackageTest.class,
         GcPortControllerTest.class,
         GcTrafficControllerTest.class,
         GcSerialDriverAdapterTest.class,
