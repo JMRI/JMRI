@@ -4,6 +4,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -371,7 +372,7 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
      * @param bean The bean to be checked.
      * @return a list of NamedBeanUsageReports or an empty ArrayList.
      */
-    default ArrayList<NamedBeanUsageReport> getUsageReport(@CheckForNull NamedBean bean) { return (new ArrayList<>()); }
+    default List<NamedBeanUsageReport> getUsageReport(@CheckForNull NamedBean bean) { return (new ArrayList<>()); }
 
     /**
      * Attach a key/value pair to the NamedBean, which can be retrieved later.

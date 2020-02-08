@@ -22,6 +22,8 @@ import jmri.jmrit.blockboss.BlockBossLogic;
  * <li>Panels - Sensor icons</li>
  * <li>CTC - OS sensors TODO</li>
  * </ul>
+ *
+ * @author Dave Sand Copyright (C) 2020
  */
 
 public class SensorWhereUsed {
@@ -42,9 +44,11 @@ public class SensorWhereUsed {
         InstanceManager.getDefault(TurnoutManager.class).getNamedBeanSet().forEach((turnout) -> {
             int feedback = turnout.getFeedbackMode();
             if (feedback == Turnout.ONESENSOR || feedback == Turnout.TWOSENSOR) {
-                if (sensor == turnout.getFirstSensor() || sensor == turnout.getSecondSensor()) {
-                    sb.append(Bundle.getMessage("ReferenceLine", turnout.getUserName(), turnout.getSystemName()));  // NOI18N
-                }
+                turnout.getUsageReport(sensor).forEach((report) -> {
+                    if (report.usageKey.startsWith("TurnoutFeedback")) {
+                        sb.append(Bundle.getMessage("ReferenceLine", turnout.getUserName(), turnout.getSystemName()));  // NOI18N
+                    }
+                });
             }
         });
         return addHeader(sb, "ReferenceFeedback");
@@ -54,7 +58,7 @@ public class SensorWhereUsed {
         StringBuilder sb = new StringBuilder();
         InstanceManager.getDefault(BlockManager.class).getNamedBeanSet().forEach((block) -> {
             block.getUsageReport(sensor).forEach((report) -> {
-                if (report.getBundleKey().equals("BlockSensor")) {
+                if (report.usageKey.equals("BlockSensor")) {
                     sb.append(Bundle.getMessage("ReferenceLine", block.getUserName(), block.getSystemName()));  // NOI18N
                 }
             });
@@ -64,33 +68,23 @@ public class SensorWhereUsed {
 
     static String checkSignalHeadLogic(Sensor sensor) {
         StringBuilder sb = new StringBuilder();
-        SensorManager sm = InstanceManager.getDefault(SensorManager.class);
 
         Enumeration<BlockBossLogic> e = BlockBossLogic.entries();
         while (e.hasMoreElements()) {
             BlockBossLogic ssl = e.nextElement();
-            List<Sensor> sensors = new ArrayList<>();
-            if (ssl.getApproachSensor1() != null) sensors.add(sm.getSensor(ssl.getApproachSensor1()));
-            if (ssl.getSensor1() != null) sensors.add(sm.getSensor(ssl.getSensor1()));
-            if (ssl.getSensor2() != null) sensors.add(sm.getSensor(ssl.getSensor2()));
-            if (ssl.getSensor3() != null) sensors.add(sm.getSensor(ssl.getSensor3()));
-            if (ssl.getSensor4() != null) sensors.add(sm.getSensor(ssl.getSensor4()));
-            if (ssl.getSensor5() != null) sensors.add(sm.getSensor(ssl.getSensor5()));
-            if (ssl.getWatchedSensor1() != null) sensors.add(sm.getSensor(ssl.getWatchedSensor1()));
-            if (ssl.getWatchedSensor1Alt() != null) sensors.add(sm.getSensor(ssl.getWatchedSensor1Alt()));
-            if (ssl.getWatchedSensor2() != null) sensors.add(sm.getSensor(ssl.getWatchedSensor2()));
-            if (ssl.getWatchedSensor2Alt() != null) sensors.add(sm.getSensor(ssl.getWatchedSensor2Alt()));
-            if (sensors.contains(sensor)) {
-                SignalHead head = ssl.getDrivenSignalNamedBean().getBean();
-                sb.append(Bundle.getMessage("ReferenceLine", head.getUserName(), head.getSystemName()));  // NOI18N
-            }
+            ssl.getUsageReport(sensor).forEach((report) -> {
+                if (report.usageKey.startsWith("SSLSensor")) {  // NOI18N
+                    sb.append(Bundle.getMessage("ReferenceLine", report.usingBean.getUserName(), report.usingBean.getSystemName()));  // NOI18N
+                }
+            });
         }
-        return addHeader(sb, "ReferenceHeadSSL");
+        return addHeader(sb, "ReferenceHeadSSL");  // NOI18N
     }
 
     static String checkSignalMastLogic(Sensor sensor) {
         StringBuilder sb = new StringBuilder();
         InstanceManager.getDefault(SignalMastLogicManager.class).getNamedBeanSet().forEach((sml) -> {
+            log.info("sml = {}", sml.getUsageReport(sensor));
             SignalMast src = sml.getSourceMast();
             sml.getDestinationList().forEach((dest) -> {
                 if (sml.getSensors(dest).contains(sensor)) {
@@ -98,7 +92,7 @@ public class SensorWhereUsed {
                 }
             });
         });
-        return addHeader(sb, "ReferenceMastSML");
+        return addHeader(sb, "ReferenceMastSML");  // NOI18N
     }
 
     static String checkPanels(Sensor sensor) {
@@ -111,7 +105,7 @@ public class SensorWhereUsed {
                 }
             });
         });
-        return addHeader(sb, "ReferencePanels");
+        return addHeader(sb, "ReferencePanels");  // NOI18N
     }
 
     static String addHeader(StringBuilder sb, String bundleKey) {
@@ -122,5 +116,5 @@ public class SensorWhereUsed {
         return sb.toString();
     }
 
-//     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SensorWhereUsed.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SensorWhereUsed.class);
 }

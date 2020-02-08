@@ -12,6 +12,10 @@ import jmri.*;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.swing.JComboBoxUtil;
 
+/**
+ *
+ * @author Dave Sand Copyright (C) 2020
+ */
 public class WhereUsedFrame extends jmri.util.JmriJFrame {
 
     public WhereUsedFrame() {

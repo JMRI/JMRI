@@ -2,10 +2,14 @@ package jmri.implementation;
 
 import java.beans.*;
 import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.*;
 import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.NamedBean;
 import jmri.NamedBeanHandle;
+import jmri.NamedBeanUsageReport;
 import jmri.PushbuttonPacket;
 import jmri.Sensor;
 import jmri.SensorManager;
@@ -156,7 +160,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * going to THROWN or CLOSED, because there may be others listening to
      * network state.
      * <p>
-     * This method is not intended for general use, e.g. for users to set the 
+     * This method is not intended for general use, e.g. for users to set the
      * KnownState, so it doesn't appear in the Turnout interface.
      *
      * @param s New state value
@@ -712,7 +716,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         if (temp != null) {
             temp.addPropertyChangeListener(this, s.getName(), "Feedback Sensor for " + getDisplayName());
         }
-        // set initial state 
+        // set initial state
         setInitialKnownStateFromFeedback();
     }
 
@@ -771,6 +775,20 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
             }
         // nothing required at this time for other modes
         }
+    }
+
+    @Override
+    public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
+        List<NamedBeanUsageReport> report = new ArrayList<>();
+        if (bean != null) {
+            if (bean.equals(getFirstSensor())) {
+                report.add(new NamedBeanUsageReport(this, bean, "TurnoutFeedback1"));
+            }
+            if (bean.equals(getSecondSensor())) {
+                report.add(new NamedBeanUsageReport(this, bean, "TurnoutFeedback2"));
+            }
+        }
+        return report;
     }
 
     /**

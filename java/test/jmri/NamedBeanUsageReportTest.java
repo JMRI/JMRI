@@ -15,8 +15,7 @@ public class NamedBeanUsageReportTest {
         Sensor usedBean = InstanceManager.getDefault(SensorManager.class).provideSensor("IT102");
         NamedBeanUsageReport report = new NamedBeanUsageReport(usingBean, usedBean, "Test_Bean_Report");
         Assert.assertNotNull("exists", report);
-        String key = report.getBundleKey();
-        Assert.assertEquals("Test_Bean_Report", key);
+        Assert.assertEquals("Test_Bean_Report", report.usageKey);
     }
 
     @Before

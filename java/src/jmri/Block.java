@@ -153,8 +153,8 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     }
 
     @Override
-    public ArrayList<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
-        ArrayList<NamedBeanUsageReport> report = new ArrayList<>();
+    public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
+        List<NamedBeanUsageReport> report = new ArrayList<>();
         if (bean != null) {
             if (bean.equals(getSensor())) {
                 report.add(new NamedBeanUsageReport(this, bean, "BlockSensor"));

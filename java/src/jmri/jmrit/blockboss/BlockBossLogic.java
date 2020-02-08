@@ -9,6 +9,7 @@ import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.NamedBeanHandle;
+import jmri.NamedBeanUsageReport;
 import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.Turnout;
@@ -309,6 +310,59 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
 
     public String getComment() {
         return this.comment;
+    }
+
+    public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
+        List<NamedBeanUsageReport> report = new ArrayList<>();
+        SignalHead head = driveSignal.getBean();
+        if (bean != null) {
+            if (watchSensor1 != null && bean.equals(watchSensor1.getBean())) {
+                report.add(new NamedBeanUsageReport(head, bean, "SSLSensor1"));
+            }
+            if (watchSensor2 != null && bean.equals(watchSensor2.getBean())) {
+                report.add(new NamedBeanUsageReport(head, bean, "SSLSensor2"));
+            }
+            if (watchSensor3 != null && bean.equals(watchSensor3.getBean())) {
+                report.add(new NamedBeanUsageReport(head, bean, "SSLSensor3"));
+            }
+            if (watchSensor4 != null && bean.equals(watchSensor4.getBean())) {
+                report.add(new NamedBeanUsageReport(head, bean, "SSLSensor4"));
+            }
+            if (watchSensor5 != null && bean.equals(watchSensor5.getBean())) {
+                report.add(new NamedBeanUsageReport(head, bean, "SSLSensor5"));
+            }
+            if (watchTurnout != null && bean.equals(watchTurnout.getBean())) {
+                report.add(new NamedBeanUsageReport(head, bean, "SSLTurnout"));
+            }
+            if (watchedSignal1 != null && bean.equals(watchedSignal1.getBean())) {
+                report.add(new NamedBeanUsageReport(head, bean, "SSLSignal1"));
+            }
+            if (watchedSignal1Alt != null && bean.equals(watchedSignal1Alt.getBean())) {
+                report.add(new NamedBeanUsageReport(head, bean, "SSLSignal1Alt"));
+            }
+            if (watchedSignal2 != null && bean.equals(watchedSignal2.getBean())) {
+                report.add(new NamedBeanUsageReport(head, bean, "SSLSignal2"));
+            }
+            if (watchedSignal2Alt != null && bean.equals(watchedSignal2Alt.getBean())) {
+                report.add(new NamedBeanUsageReport(head, bean, "SSLSignal2Alt"));
+            }
+            if (watchedSensor1 != null && bean.equals(watchedSensor1.getBean())) {
+                report.add(new NamedBeanUsageReport(head, bean, "SSLSensorWatched1"));
+            }
+            if (watchedSensor1Alt != null && bean.equals(watchedSensor1Alt.getBean())) {
+                report.add(new NamedBeanUsageReport(head, bean, "SSLSensorWatched1Alt"));
+            }
+            if (watchedSensor2 != null && bean.equals(watchedSensor2.getBean())) {
+                report.add(new NamedBeanUsageReport(head, bean, "SSLSensorWatched2"));
+            }
+            if (watchedSensor2Alt != null && bean.equals(watchedSensor2Alt.getBean())) {
+                report.add(new NamedBeanUsageReport(head, bean, "SSLSensorWatched2Alt"));
+            }
+            if (approachSensor1 != null && bean.equals(approachSensor1.getBean())) {
+                report.add(new NamedBeanUsageReport(head, bean, "SSLSensorApproach"));
+            }
+        }
+        return report;
     }
 
     public void setWatchedSignal1(String name, boolean useFlash) {
@@ -1151,7 +1205,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     // has to add itself to the configuration manager, but only once.
     // We do that the first time an instance is created and added to the active list
     private static volatile boolean addedToConfig = false;
-    
+
     // The list of existing instances. When the first is added,
     // the configuration connection is made.
     static List<BlockBossLogic> bblList = Collections.synchronizedList(
@@ -1193,7 +1247,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE",
                         justification="enforced dynamically, too hard to prove statically")
     public static BlockBossLogic getStoppedObject(String signal) {
-        // As a static requirement, the signal head must exist, but 
+        // As a static requirement, the signal head must exist, but
         // we can't express that statically.  We test it dynamically.
         SignalHead sh = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signal);
         java.util.Objects.requireNonNull(sh, "signal head must exist");
@@ -1434,7 +1488,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
         }
         bblList.clear();
     }
-    
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BlockBossLogic.class);
 
 }
