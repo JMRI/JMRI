@@ -36,8 +36,8 @@ public class CbusEventHighlightPanel extends JPanel {
 
     /**
      * Create a new instance of CbusEventHighlightPanel.
-     * @param highlightFrame
-     * @param index
+     * @param highlightFrame Parent Frame
+     * @param index Index position in parent Frame
      */
     public CbusEventHighlightPanel(CbusEventHighlightFrame highlightFrame, int index) {
         super();
