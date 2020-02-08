@@ -431,7 +431,8 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li></li>
+            <li>The Block Table and Memory Table attempt to use UserName for Reportable objects ( eg. ID Tags )</li>
+            <li>ID Tag Table attempts to use Reporter UserName for Location</li>
         </ul>
 
     <h3>Scripting</h3>

@@ -183,7 +183,13 @@ public class IdTagTableAction extends AbstractTableAction<IdTag> implements Prop
                     case WHERECOL:
                         Reporter r;
                         t = getBySystemName(sysNameList.get(row));
-                        return (t != null) ? (((r = t.getWhereLastSeen()) != null) ? r.getSystemName() : null) : null;
+                        if ( t !=null ){
+                            r = t.getWhereLastSeen();
+                            if (r!=null){
+                                return r.getDisplayName();                            
+                            }
+                        }
+                        return null;
                     case WHENCOL:
                         Date d;
                         t = getBySystemName(sysNameList.get(row));
