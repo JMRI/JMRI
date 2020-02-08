@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 4.19.3ish+jake+20200205T0450Z+Rbb45829ee5 on Tue Feb 04 20:50:09 PST 2020-->
-  <decoderIndex version="994">
+  <!--Written by JMRI version 4.19.3ish+jake+20200207T1509Z+R853a0f509d on Fri Feb 07 07:09:17 PST 2020-->
+  <decoderIndex version="996">
     <mfgList nmraListDate="2019-02-26" updated="2019-11-17" lastadd="225,166">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -22097,6 +22097,31 @@
           <output name="Coupler" />
           <functionlabels>
             <functionlabel num="5" lockable="true">Mars Light</functionlabel>
+            <functionlabel num="6" lockable="true"># Boards</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="GP7 NYC" numOuts="4" numFns="14" connector="other" productID="GP7NYC" comment="Diesel Prime Mover EMD567 Turbo">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
+          <output name="Reserved" />
+          <output name="Fans" label="RPM +" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Compressor" label="RPM -" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+          <functionlabels>
+            <functionlabel num="5" lockable="true">Gyralite</functionlabel>
             <functionlabel num="6" lockable="true"># Boards</functionlabel>
           </functionlabels>
         </model>
