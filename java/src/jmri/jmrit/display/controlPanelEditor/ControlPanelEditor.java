@@ -186,7 +186,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         makeCatalogWorker.execute();
         log.debug("Init SwingWorker launched");
     }
-    class MakeCatalog extends SwingWorker<CatalogPanel, Object> {
+    static class MakeCatalog extends SwingWorker<CatalogPanel, Object> {
 
         @Override
         public CatalogPanel doInBackground() {
