@@ -78,11 +78,11 @@ public class PrintingTestListener extends SummaryGeneratingListener {
                     writer.print(".");
                     break;
                 case ABORTED:
-                    writer.print("A");;
+                    writer.print("A");
                     writer.flush();
                     break;
                 case FAILED:
-                    writer.print("F");;
+                    writer.print("F");
                     writer.flush();
                     break;
                 default:
