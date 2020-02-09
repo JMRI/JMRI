@@ -68,6 +68,7 @@ public class ConvertDialogTest {
 
         dialog.dispose();
         frame.dispose();
+        if (frame.makeCatalogWorker != null) JUnitUtil.waitFor(() -> {return frame.makeCatalogWorker.isDone();}, "wait for catalog SwingWorker failed");
     }
 
     // The minimal setup for log4J
