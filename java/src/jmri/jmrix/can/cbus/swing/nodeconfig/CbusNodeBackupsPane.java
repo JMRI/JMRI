@@ -164,7 +164,7 @@ public class CbusNodeBackupsPane extends CbusNodeConfigTab implements TableModel
     
     /**
      * Set the node and display backup details.
-     * @param node
+     * {@inheritDoc}
      */
     @Override
     public void changedNode(CbusNode node){

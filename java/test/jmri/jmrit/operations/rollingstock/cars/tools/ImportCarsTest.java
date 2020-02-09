@@ -104,7 +104,7 @@ public class ImportCarsTest extends OperationsTestCase {
 
         // confirm import successful
         Assert.assertEquals("cars", 9, emanager.getNumEntries());
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ImportCarsTest.class);

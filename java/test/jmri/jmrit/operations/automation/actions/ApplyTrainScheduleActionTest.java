@@ -81,7 +81,7 @@ public class ApplyTrainScheduleActionTest extends OperationsTestCase {
         Assert.assertFalse(train1.isBuildEnabled());
         Assert.assertTrue(train2.isBuildEnabled());
         
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ApplyTrainScheduleActionTest.class);

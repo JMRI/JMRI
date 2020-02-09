@@ -27,7 +27,7 @@ public class ShowTrainsServingLocationFrameTest extends OperationsTestCase {
         ShowTrainsServingLocationFrame t = new ShowTrainsServingLocationFrame();
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(t);
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     @Test
@@ -40,7 +40,7 @@ public class ShowTrainsServingLocationFrameTest extends OperationsTestCase {
         stslf.initComponents(ni, track);
         Assert.assertNotNull("exists", stslf);
         JUnitUtil.dispose(stslf);
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ShowTrainsServingLocationFrameTest.class);

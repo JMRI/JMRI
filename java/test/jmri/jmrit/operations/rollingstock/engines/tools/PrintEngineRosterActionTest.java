@@ -57,7 +57,7 @@ public class PrintEngineRosterActionTest extends OperationsTestCase {
         JUnitUtil.dispose(printPreviewFrame);
         JUnitUtil.dispose(ctf);
         JUnitOperationsUtil.checkOperationsShutDownTask();
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(PrintEngineRosterActionTest.class);

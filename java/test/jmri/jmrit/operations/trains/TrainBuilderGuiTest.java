@@ -102,7 +102,7 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         Assert.assertFalse("Train status", train2.isBuilt());
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     /**
@@ -164,7 +164,7 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         Assert.assertFalse("Train status", train2.isBuilt());
         
         JUnitOperationsUtil.checkOperationsShutDownTask();
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
     
     @Test
@@ -202,7 +202,7 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         
         Assert.assertFalse("Train status", train2.isBuilt());
         
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
     
     /**
@@ -296,7 +296,7 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         Assert.assertEquals("Track assignment", northendStaging1, c3.getTrack());
         Assert.assertEquals("Track assignment", northendStaging1, c4.getTrack());
         
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
     
     /**
@@ -395,7 +395,7 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         Assert.assertEquals("Track assignment", northendStaging1, c3.getTrack());
         Assert.assertEquals("Track assignment", northendStaging1, c4.getTrack());
         
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
     
     /**
@@ -486,7 +486,7 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         Assert.assertEquals("Track assignment", null, c4.getTrack());
         Assert.assertEquals("Track assignment", null, c11.getTrack());
         
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
     
     /**
@@ -580,7 +580,7 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         Assert.assertEquals("Train assignment", null, e3.getTrain());
         Assert.assertEquals("Train assignment", null, e4.getTrain());
         
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
     
     /**
@@ -675,7 +675,7 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         Assert.assertEquals("Train assignment", train2, e3.getTrain());
         Assert.assertEquals("Train assignment", train2, e4.getTrain());
         
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     // Ensure minimal setup for log4J
