@@ -60,6 +60,8 @@ public class TestClassMainMethod {
                 System.err.println(ex);
             }
         }
+	// This shouldn't be necessary, but....
+	System.exit(0);
     }
 
     /**
