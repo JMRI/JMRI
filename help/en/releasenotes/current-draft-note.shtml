@@ -74,6 +74,8 @@
                 <br>These can be added as Startup Actions in JMRI Preferences to enable
                 <br>Event or Node name translation in CBUS console, and other CBUS Tools.</li>
                 <li>Refactoring of CBUS OPC's, Filters and Node Manger functions for future maintainability.</li>
+                <li>Bootloader client for CBUS node firmware update.</li>
+                <li>Support for SPROG Generation 5 hardware using MERG CBUS and Gridconnect.</li>
             </ul>
 
         <h4>MQTT</h4>
@@ -118,7 +120,7 @@
 
         <h4>SPROG</h4>
             <ul>
-                <li></li>
+                <li>Connection methods for SPROG Generation 5 hardware using MERG CBUS/Gridconnect.</li>
             </ul>
 
         <h4>TAMS</h4>
