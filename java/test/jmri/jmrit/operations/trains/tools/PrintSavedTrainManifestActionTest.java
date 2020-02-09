@@ -67,7 +67,7 @@ public class PrintSavedTrainManifestActionTest extends OperationsTestCase {
         fco.cancelSelection();
         
         JUnitOperationsUtil.checkOperationsShutDownTask();
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(PrintSavedTrainManifestActionTest.class);

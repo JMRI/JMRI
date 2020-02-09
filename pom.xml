@@ -31,7 +31,9 @@
         <jmri.prefsdir>${basedir}/temp</jmri.prefsdir>
         <jmri.shutdownmanager>jmri.util.MockShutDownManager</jmri.shutdownmanager>
         <jinput.useDefaultPlugin>false</jinput.useDefaultPlugin><!-- don't load JInput during CI tests -->
-        <ant.version>1.10.1</ant.version>
+        <ant.version>1.10.7</ant.version>
+        <junit5.version>5.6.0</junit5.version>
+        <junit.platform.version>1.6.0</junit.platform.version>
         <ant.jvm.args></ant.jvm.args>
         <argLine>-Xmx1536m -Duser.language=en -Duser.region=US</argLine>
         <surefire.version>2.22.0</surefire.version>
@@ -214,8 +216,8 @@
                             <compilerId>eclipse</compilerId>
                             <source>1.8</source>
                             <target>1.8</target>
-                            <properties>${basedir}/java/ecj.warning.options-ci</properties>
                             <compilerArgs>
+                                <properties>${basedir}/java/ecj.warning.options-ci</properties>
                                 <arg>-sourcepath</arg>
                                 <arg>${basedir}/java/src:${basedir}/target/generated-sources</arg>
                             </compilerArgs>
@@ -358,12 +360,12 @@
                     <!-- junit support is optional in ant maven packaging -->
                     <dependency>
                         <groupId>org.apache.ant</groupId>
-                        <artifactId>ant-junit4</artifactId>
+                        <artifactId>ant-junit</artifactId>
                         <version>${ant.version}</version>
                     </dependency>
                     <dependency>
                         <groupId>org.apache.ant</groupId>
-                        <artifactId>ant-junit</artifactId>
+                        <artifactId>ant-junitlauncher</artifactId>
                         <version>${ant.version}</version>
                     </dependency>
                 </dependencies>
@@ -1031,14 +1033,44 @@
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${junit5.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.5.2</version>
+            <version>${junit5.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.vintage</groupId>
             <artifactId>junit-vintage-engine</artifactId>
-            <version>5.5.2</version>
+            <version>${junit5.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${junit5.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-runner</artifactId>
+            <version>${junit.platform.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-commons</artifactId>
+            <version>${junit.platform.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-launcher</artifactId>
+            <version>${junit.platform.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>

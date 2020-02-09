@@ -26,7 +26,7 @@ import jmri.jmrit.picker.PickListModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SignalHeadItemPanel extends TableItemPanel<SignalHead> { 
+public class SignalHeadItemPanel extends TableItemPanel<SignalHead> {
 
     public SignalHeadItemPanel(DisplayFrame parentFrame, String type, String family, PickListModel<SignalHead> model, Editor editor) {
         super(parentFrame, type, family, model, editor);
@@ -78,8 +78,11 @@ public class SignalHeadItemPanel extends TableItemPanel<SignalHead> {
             return;
         }
         int row = _table.getSelectedRow();
-        log.debug("Table valueChanged: row= {}, {}({})",
-                row, _table.getValueAt(row, 0), _table.getValueAt(row, 1));
+        // Index error if only one row
+        if (_table.getRowCount() < 2) {
+            log.debug("Table valueChanged: row= {}, {}({})",
+                    row, _table.getValueAt(row, 0), _table.getValueAt(row, 1));
+        }
         if (row >= 0) {
             _updateButton.setEnabled(true);
             _updateButton.setToolTipText(null);
@@ -150,7 +153,7 @@ public class SignalHeadItemPanel extends TableItemPanel<SignalHead> {
     }
 
     @Override
-    protected JLabel getDragger(DataFlavor flavor, HashMap<String, 
+    protected JLabel getDragger(DataFlavor flavor, HashMap<String,
             NamedIcon> map, NamedIcon icon) {
         return new IconDragJLabel(flavor, map, icon);
     }
@@ -159,7 +162,7 @@ public class SignalHeadItemPanel extends TableItemPanel<SignalHead> {
 
         HashMap<String, NamedIcon> iMap;
 
-        public IconDragJLabel(DataFlavor flavor, HashMap<String, NamedIcon> map, 
+        public IconDragJLabel(DataFlavor flavor, HashMap<String, NamedIcon> map,
                 NamedIcon icon) {
             super(flavor, icon);
             iMap = map;
@@ -193,7 +196,7 @@ public class SignalHeadItemPanel extends TableItemPanel<SignalHead> {
                 Iterator<Entry<String, NamedIcon>> iter = map.entrySet().iterator();
                 while (iter.hasNext()) {
                     Entry<String, NamedIcon> ent = iter.next();
-                    sh.setIcon(Bundle.getMessage(ent.getKey()), new NamedIcon(ent.getValue()));
+                    sh.setIcon(ent.getKey(), new NamedIcon(ent.getValue()));
                 }
                 sh.setFamily(_family);
                 sh.setLevel(Editor.SIGNALS);

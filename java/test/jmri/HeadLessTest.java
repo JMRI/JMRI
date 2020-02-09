@@ -1,9 +1,15 @@
 package jmri;
 
+import org.junit.internal.TextListener;
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.ExcludeClassNamePatterns;
+import org.junit.platform.suite.api.SelectPackages;
+import org.junit.platform.suite.api.SuiteDisplayName;
+import org.junit.runner.JUnitCore;
+import org.junit.runner.Result;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
-import jmri.util.junit.TestClassMainMethod;
+import org.junit.runner.notification.RunListener;
 
 /**
  * Invoke complete set of tests for the jmri package
@@ -21,13 +27,10 @@ import jmri.util.junit.TestClassMainMethod;
  * 
  * @author Bob Jacobsen, Copyright (C) 2001, 2002, 2007
  */
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        jmri.PackageTest.class,
-        apps.PackageTest.class,
-        // at the end, we check for logging messages again
-        jmri.util.Log4JErrorIsErrorTest.class
-})
+@RunWith(JUnitPlatform.class)
+@SuiteDisplayName("Headless Tests")
+@SelectPackages({"jmri","apps"})
+@ExcludeClassNamePatterns({"^AllTest$","^FileLineEndingsTest$","ArchitectureTest"})
 public class HeadLessTest {
 
     // Main entry point
@@ -36,6 +39,30 @@ public class HeadLessTest {
         System.setProperty("java.awt.headless", "true");
 
         // start tests
-        TestClassMainMethod.run(HeadLessTest.class);
+        run(HeadLessTest.class);
     }
+
+    /**
+     * Run tests with a default RunListener.
+     *
+     * @param testClass the class containing tests to run
+     */
+     public static void run(Class<?> testClass){
+        run(new TextListener(System.out),testClass);
+    }
+
+    /**
+     * Run tests with a specified RunListener
+     *
+     * @param listener the listener for the tests
+     * @param testClass the class containing tests to run
+     */
+    public static void run(RunListener listener, Class<?> testClass) {
+        JUnitCore runner = new JUnitCore();
+        runner.addListener(listener);
+        Result result = runner.run(testClass);
+        System.exit(result.wasSuccessful() ? 0 : 1);
+    }
+
+
 }
