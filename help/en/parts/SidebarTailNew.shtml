@@ -6,8 +6,8 @@
      </p></h3>
      <p style="padding-left: 1em;">
        <a href="/donations.shtml">
-       <img src="https://sourceforge.net/images/project-support.jpg" width="88" height="32" border="0" ALIGN="CENTER" alt="Donate to JMRI" />
-       </a>
+       <img src="https://sourceforge.net/images/project-support.jpg" width="88" height="32" border="0" ALIGN="LEFT" alt="Donate to JMRI" />
+       Donate to JMRI.org</a>
      </p>
 
     <!-- JS to highlight items in the sidebar -->
