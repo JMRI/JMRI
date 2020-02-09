@@ -249,6 +249,11 @@
                 It's a lot of output, but can help track down when an obscure message was
                 emitted or exception happened. It also can be used to see the order in 
                 which tests are being run.</dd>
+        <dt>jmri.util.junit.PrintingTestListener.quiet</dt>
+            <dd>Reduces the information printed during a normmal JUnit run to 
+                dots (.) for passed tests, F for failed ones, A for aborted ones
+                (assumptions not met) and I for @Ignored ones. This is followed
+                by a one-line summary, then more detail on failures.</dd>
 
      </dl>
     

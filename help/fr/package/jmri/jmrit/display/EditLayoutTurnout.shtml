@@ -23,7 +23,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -190,7 +190,7 @@
       vides, le Canton par d&eacute;faut est utilis&eacute;. Les
       points de connexions des Cantons sont num&eacute;rot&eacute;s
       1, 2, 3 et 4, partant de la connexion en haut &agrave; gauche
-      dans le sens horaire.</p><!--#include virtual="/Footer" -->
+      dans le sens horaire.</p><!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

@@ -20,7 +20,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -96,7 +96,7 @@
           width="128" height="149" alt=
           "Filled-out configuration window"></a></td>
         </tr>
-      </table><!--#include virtual="/Footer" -->
+      </table><!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

@@ -11,7 +11,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -425,7 +425,7 @@ entier n'est pas entr&#233; pour le nombre de minutes d'horloge rapide, un
  message d'erreur en r&#233;sultera.</li>
 </ul>
 
-    <!--#include virtual="/Footer" -->
+    <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

@@ -17,7 +17,7 @@
         but if multiple dependencies are linked, use a property for single
         dependency source) -->
         <cucumber.version>4.3.1</cucumber.version>
-        <jetty.version>9.4.7.v20170914</jetty.version>
+        <jetty.version>9.4.26.v20200117</jetty.version>
         <jemmy.version>22-00c9f753cd0a</jemmy.version> <!-- this is a custom version, see lib/README.md -->
         <slf4j.version>1.7.25</slf4j.version>
         <jackson.version>2.10.0</jackson.version>
@@ -31,7 +31,9 @@
         <jmri.prefsdir>${basedir}/temp</jmri.prefsdir>
         <jmri.shutdownmanager>jmri.util.MockShutDownManager</jmri.shutdownmanager>
         <jinput.useDefaultPlugin>false</jinput.useDefaultPlugin><!-- don't load JInput during CI tests -->
-        <ant.version>1.10.1</ant.version>
+        <ant.version>1.10.7</ant.version>
+        <junit5.version>5.6.0</junit5.version>
+        <junit.platform.version>1.6.0</junit.platform.version>
         <ant.jvm.args></ant.jvm.args>
         <argLine>-Xmx1536m -Duser.language=en -Duser.region=US</argLine>
         <surefire.version>2.22.0</surefire.version>
@@ -97,7 +99,15 @@
         <profile>
             <id>appveyor</id>
             <build>
-                <plugins>
+	        <plugins>
+                <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <configuration>
+                             <skipMain>true</skipMain>
+                            <skip>true</skip>
+                        </configuration>
+                    </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-antrun-plugin</artifactId>
@@ -120,14 +130,14 @@
                         </executions>
                     </plugin>
                     <!-- use surefire (maven default test harness) only for line endings -->
-                    <plugin>
+		    <!--<plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
                         <version>${surefire.version}</version>
                         <configuration>
                             <test>jmri.util.FileLineEndingsTest</test>
                         </configuration>
-                    </plugin>
+		    </plugin> -->
                 </plugins>
             </build>
         </profile>
@@ -177,8 +187,14 @@
                                     <goal>check</goal>
                                 </goals>
                                 <configuration>
+                                    <!-- with exception of violationSeverity should match non-profiled checkstyle config and ant checkstyle config -->
                                     <failOnViolation>true</failOnViolation>
                                     <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                                    <sourceDirectories>
+                                        <sourceDirectory>${basedir}</sourceDirectory>
+                                    </sourceDirectories>
+                                    <includes>**/*</includes>
+                                    <excludes>**/*.jpg,**/*.jar,web/app/node_modules/**,.git/**,target/**,java/tmp/**</excludes>
                                     <!-- only show errors, not warnings or infos -->
                                     <violationSeverity>error</violationSeverity>
                                 </configuration>
@@ -200,8 +216,8 @@
                             <compilerId>eclipse</compilerId>
                             <source>1.8</source>
                             <target>1.8</target>
-                            <properties>${basedir}/java/ecj.warning.options-ci</properties>
                             <compilerArgs>
+                                <properties>${basedir}/java/ecj.warning.options-ci</properties>
                                 <arg>-sourcepath</arg>
                                 <arg>${basedir}/java/src:${basedir}/target/generated-sources</arg>
                             </compilerArgs>
@@ -344,12 +360,12 @@
                     <!-- junit support is optional in ant maven packaging -->
                     <dependency>
                         <groupId>org.apache.ant</groupId>
-                        <artifactId>ant-junit4</artifactId>
+                        <artifactId>ant-junit</artifactId>
                         <version>${ant.version}</version>
                     </dependency>
                     <dependency>
                         <groupId>org.apache.ant</groupId>
-                        <artifactId>ant-junit</artifactId>
+                        <artifactId>ant-junitlauncher</artifactId>
                         <version>${ant.version}</version>
                     </dependency>
                 </dependencies>
@@ -403,9 +419,9 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefire.version}</version>
                 <configuration>
-	                <additionalClasspathElements>
-	                	<additionalClasspathElement>${basedir}</additionalClasspathElement>
-	                </additionalClasspathElements>
+                    <additionalClasspathElements>
+                        <additionalClasspathElement>${basedir}</additionalClasspathElement>
+                    </additionalClasspathElements>
                     <excludes>
                         <!-- ignore until #3492 is resolved -->
                         <exclude>%regex[jmri.jmrix.loconet.locormi.LnMessage[Client|Server]Test]</exclude>
@@ -416,9 +432,9 @@
                         <exclude>**.PackageTest</exclude>
                         <!-- ignore since the test is not intended to be normally used -->
                         <exclude>jmri.util.FailTest</exclude>
-			<!-- exclude the archunit tests from automatic execution -->
+                        <!-- exclude the archunit tests from automatic execution -->
                         <exclude>jmri.ArchitectureTest</exclude>
-			<!-- exclude the line endings tests from automatic execution -->
+                        <!-- exclude the line endings tests from automatic execution -->
                         <exclude>jmri.util.FileLineEndings</exclude>
                         <!-- ignore since base classes for other tests -->
                         <exclude>jmri.jmrit.operations.OperationsTestCase</exclude>
@@ -643,7 +659,7 @@
                             <append>true</append>
                             <destFile>${jacoco.reportDir}/jacoco-unit.exec</destFile>
                             <propertyName>surefire.argLine</propertyName>
-                         </configuration>
+                        </configuration>
                     </execution>
                     <execution>
                         <id>prepare-agent-integration</id>
@@ -654,24 +670,24 @@
                             <append>true</append>
                             <destFile>${jacoco.reportDir}/jacoco-it.exec</destFile>
                             <propertyName>failsafe.argLine</propertyName>
-                         </configuration>
+                        </configuration>
                     </execution>
                     <execution>
-                       <id>merge</id>
-                       <phase>post-integration-test</phase>
-                       <goals>
-                          <goal>merge</goal>
-                       </goals>
-                       <configuration>
-                           <fileSets>
-                              <fileSet>
-                                 <directory>${jacoco.reportDir}</directory>
-                                 <includes>
-                                   <File>**/*.exec</File>
-                                 </includes>
-                              </fileSet>
-                           </fileSets>
-                       </configuration>
+                        <id>merge</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>merge</goal>
+                        </goals>
+                        <configuration>
+                            <fileSets>
+                                <fileSet>
+                                    <directory>${jacoco.reportDir}</directory>
+                                    <includes>
+                                        <File>**/*.exec</File>
+                                    </includes>
+                                </fileSet>
+                            </fileSets>
+                        </configuration>
                     </execution> 
                     <execution>
                         <id>report</id>
@@ -704,7 +720,7 @@
                                 <File>jmri/jmrit/audio/AudioSource.class</File>
                                 <File>jmri/jmrix/srcp/parser/SRCPClientParserTreeConstants.class</File>
                                 <!-- exclude the archunit check -->
-				<File>jmri.ArchitectureCheck.class</File>
+                                <File>jmri.ArchitectureCheck.class</File>
                                 <!-- deprecated classes -->
                                 <File>jmri/jmrix/loconet/AbstractAlmImplementation.class</File>
                                 <!-- Exclude files meant to check SpotBugs. -->
@@ -795,32 +811,38 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <configuration>
+                    <!-- with exception of violationSeverity should match travis-spotbugs profile checkstyle config and ant checkstyle config -->
                     <failOnViolation>true</failOnViolation>
                     <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                    <sourceDirectories>
+                        <sourceDirectory>${basedir}</sourceDirectory>
+                    </sourceDirectories>
+                    <includes>**/*</includes>
+                    <excludes>**/*.jpg,**/*.jar,web/app/node_modules/**,.git/**,target/**,java/tmp/**</excludes>
                     <!-- show errors, warnings, and infos -->
                     <violationSeverity>info</violationSeverity>
                 </configuration>
             </plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-clean-plugin</artifactId>
-				<version>3.1.0</version>
-				<configuration>
-					<filesets>
-						<!-- cleanup behind Eclipse -->
-						<fileset>
-							<directory>.apt_generated</directory>
-							<followSymlinks>false</followSymlinks>
-							<useDefaultExcludes>true</useDefaultExcludes>
-						</fileset>
-						<fileset>
-							<directory>.apt_generated_tests</directory>
-							<followSymlinks>false</followSymlinks>
-							<useDefaultExcludes>true</useDefaultExcludes>
-						</fileset>
-					</filesets>
-				</configuration>
-			</plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <filesets>
+                        <!-- cleanup behind Eclipse -->
+                        <fileset>
+                            <directory>.apt_generated</directory>
+                            <followSymlinks>false</followSymlinks>
+                            <useDefaultExcludes>true</useDefaultExcludes>
+                        </fileset>
+                        <fileset>
+                            <directory>.apt_generated_tests</directory>
+                            <followSymlinks>false</followSymlinks>
+                            <useDefaultExcludes>true</useDefaultExcludes>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
         </plugins>
         <pluginManagement>
             <plugins>
@@ -893,10 +915,10 @@
                     </configuration>
                 </plugin>
                 <plugin>
-                   <groupId>com.buschmais.jqassistant</groupId>
-                   <artifactId>jqassistant-maven-plugin</artifactId>
-                   <version>${jqassistant.version}</version>
-                   <executions>
+                    <groupId>com.buschmais.jqassistant</groupId>
+                    <artifactId>jqassistant-maven-plugin</artifactId>
+                    <version>${jqassistant.version}</version>
+                    <executions>
                         <execution>
                             <goals>
                                 <goal>scan</goal>
@@ -907,7 +929,7 @@
                                 <failOnSeverity>MAJOR</failOnSeverity>
                             </configuration>
                         </execution>
-                   </executions>
+                    </executions>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -917,7 +939,7 @@
                         <dependency>
                             <groupId>com.puppycrawl.tools</groupId>
                             <artifactId>checkstyle</artifactId>
-                            <version>8.24</version>
+                            <version>8.29</version>
                         </dependency>
                     </dependencies>
                 </plugin>
@@ -1011,14 +1033,44 @@
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${junit5.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.5.2</version>
+            <version>${junit5.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.vintage</groupId>
             <artifactId>junit-vintage-engine</artifactId>
-            <version>5.5.2</version>
+            <version>${junit5.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${junit5.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-runner</artifactId>
+            <version>${junit.platform.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-commons</artifactId>
+            <version>${junit.platform.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-launcher</artifactId>
+            <version>${junit.platform.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>

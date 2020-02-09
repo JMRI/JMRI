@@ -23,7 +23,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -367,7 +367,7 @@
       t&ecirc;te de signal est &eacute;quivalent &agrave; cliquer
       "Annuler". Une seule t&ecirc;te de signal peut &ecirc;tre
       &eacute;dit&eacute;e &agrave; la fois 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

@@ -21,7 +21,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -58,7 +58,7 @@
       cantons puissent &#234;tre entr&#233;s ou modifi&#233;s. Les
       cantons sont discut&#233;s plus en d&#233;tail sur la page
       d'aide de la bo&#238;te de dialogue Cr&#233;er/Modifier
-      Cantons.</p><!--#include virtual="/Footer" -->
+      Cantons.</p><!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

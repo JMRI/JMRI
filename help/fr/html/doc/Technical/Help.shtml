@@ -18,7 +18,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -218,7 +218,7 @@ apr&#232;s un court moment.Il y a une
 <a href="http://jmri.tagadab.com/jenkins/job/WebSite/job/generate-website/">t&#226;che Jenkins</a>
 qui manipule p&#233;riodiquement les actualisations pour les pages statistiques ( depuis le r&#233;pertoire, comme JavaDoc )
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
 </body>

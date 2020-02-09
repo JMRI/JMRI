@@ -18,7 +18,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
       <!-- Page Body -->
@@ -97,7 +97,7 @@
       "http://www.marathonmodel.cz/">http://www.marathonmodel.cz/</a>
 
       <p>DP2N 8 addresses 2 - 8 signal heads</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

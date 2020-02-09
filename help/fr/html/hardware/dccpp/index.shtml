@@ -16,7 +16,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
 	<!--#include virtual="../SidebarUp" -->
 	<div id="mainContent">
@@ -235,7 +235,7 @@ Pour des informations suppl&#233;mentaires pour savoir comment construire et pro
     <li><a href="http://www.sparkfun.com">Sparkfun</a> - Un des nombreux endroits o&#249; obtenir le logiciel</li>
 </ul>
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
  </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->
 </body>

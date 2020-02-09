@@ -19,7 +19,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -330,7 +330,7 @@
           # 1 serait mis &agrave; "Enter" et le capteur n&deg; 2
           serait fix&eacute; &agrave; "Exit".</p>
 
-          <!--#include virtual="/Footer" -->
+          <!--#include virtual="/Footer.shtml" -->
         </li>
       </ol>
     </div>

@@ -23,7 +23,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -75,7 +75,7 @@
         pas pr&eacute;sent sur le chemin de fer, comme un heurtoir,
         ou &agrave; marquer la fin d'une section de signalisation
         de la voie et le d&eacute;but du territoire sans
-        information. <!--#include virtual="/Footer" --></li>
+        information. <!--#include virtual="/Footer.shtml" --></li>
       </ul>
     </div>
   </div>

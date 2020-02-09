@@ -32,7 +32,7 @@ public class LocationsByCarLoadFrameTest extends OperationsTestCase {
         Assert.assertTrue("frame visible", t.isVisible());
         
         JUnitUtil.dispose(t);
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     @Test
@@ -51,7 +51,7 @@ public class LocationsByCarLoadFrameTest extends OperationsTestCase {
         Assert.assertTrue("frame visible", lclf.isVisible());
         
         JUnitUtil.dispose(lclf);
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
     
     @Test
@@ -81,7 +81,7 @@ public class LocationsByCarLoadFrameTest extends OperationsTestCase {
         Assert.assertFalse(track.acceptsLoad("E", "Flat"));
         
         JUnitUtil.dispose(lclf);
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(LocationsByCarLoadFrameTest.class);

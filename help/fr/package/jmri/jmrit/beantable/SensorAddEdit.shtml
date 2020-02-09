@@ -25,7 +25,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -298,7 +298,7 @@
         Si la seconde banque optionnelle de capteurs de
         s&eacute;rie est pr&eacute;sente, ils apparaissent comme
         des capteurs de 109 &agrave; 116 sur le n&#399;ud.</dd>
-      </dl><!--#include virtual="/Footer" -->
+      </dl><!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

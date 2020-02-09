@@ -4417,6 +4417,16 @@ public class TrainBuilder extends TrainCommon {
             }
             // is there a track assigned for staging cars?
             if (rld == _train.getTrainTerminatesRouteLocation() && _terminateStageTrack != null) {
+                // local switcher working staging?
+                if (_train.isLocalSwitcher() &&
+                        !car.isPassenger() &&
+                        !car.isCaboose() &&
+                        !car.hasFred() &&
+                        car.getTrack() == _terminateStageTrack) {
+                    addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCanNotDropCarSameTrack"),
+                            new Object[]{car.toString(), car.getTrack().getName()}));
+                    continue;
+                }                       
                 // no need to check train and track direction into staging, already done
                 String status = car.testDestination(testDestination, _terminateStageTrack);
                 if (status.equals(Track.OKAY)) {
@@ -4520,7 +4530,6 @@ public class TrainBuilder extends TrainCommon {
                                     car.getTrack()
                                             .isAddCustomLoadsAnySpurEnabled()) &&
                             car.getLoadName().equals(carLoads.getDefaultEmptyName())) {
-                        // can we use this staging track?
                         if (!testTrack.isSpaceAvailable(car)) {
                             addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
                                     .getMessage("buildNoDestTrackSpace"),

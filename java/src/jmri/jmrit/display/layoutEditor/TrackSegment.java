@@ -267,6 +267,7 @@ public class TrackSegment extends LayoutTrack {
         if (arc != boo) {
             arc = boo;
             if (arc) {
+                circle = false;
                 bezier = false;
                 hideConstructionLines(SHOWCON);
             }
@@ -285,7 +286,40 @@ public class TrackSegment extends LayoutTrack {
         if (circle != boo) {
             circle = boo;
             if (circle) {
-                bezier = false;
+                //if it was a bezier
+                if (bezier) {
+                    //then use control point to calculate arc
+                    // adjacent connections must be defined...
+                    if ((connect1 != null) && (connect2 != null)) {
+                        Point2D end1 = LayoutEditor.getCoords(connect1, type1);
+                        Point2D end2 = LayoutEditor.getCoords(connect2, type2);
+                        double chordLength = MathUtil.distance(end1, end2);
+
+                        //get first and last control points
+                        int cnt = bezierControlPoints.size();
+
+                        Point2D cp0 = bezierControlPoints.get(0);
+                        Point2D cpN = bezierControlPoints.get(cnt - 1);
+                        //calculate orthoginal points
+                        Point2D op1 = MathUtil.add(end1, MathUtil.orthogonal(MathUtil.subtract(cp0, end1)));
+                        Point2D op2 = MathUtil.subtract(end2, MathUtil.orthogonal(MathUtil.subtract(cpN, end2)));
+                        //use them to find center point
+                        Point2D ip = MathUtil.intersect(end1, op1, end2, op2);
+                        if (ip != null) {   //single intersection point found
+                            double r1 = MathUtil.distance(ip, end1);
+                            double r2 = MathUtil.distance(ip, end2);
+                            if (Math.abs(r1 - r2) <= 1.0) {
+                                //calculate arc: θ = 2 sin-1(c/(2r))
+                                setAngle(Math.toDegrees(2.0 * Math.asin(chordLength / (2.0 * r1))));
+                                // the sign of the distance tells what side of the line the center point is on
+                                double distance = MathUtil.distance(end1, end2, ip);
+                                setFlip(distance < 0.0);
+                            }
+                        }
+                    }
+                    bezier = false;
+                }
+                arc = true;
                 hideConstructionLines(SHOWCON);
             }
             changed = true;
@@ -450,6 +484,9 @@ public class TrackSegment extends LayoutTrack {
         }
     }
 
+    public ArrayList<Point2D>  getBezierControlPoints() {
+        return bezierControlPoints;
+    }
     /**
      * Set up a Layout Block for a Track Segment.
      */
@@ -626,47 +663,45 @@ public class TrackSegment extends LayoutTrack {
         int result = NONE;  //assume point not on connection
 
         if (!requireUnconnected) {
-            if (MathUtil.inset(getBounds(), -LayoutEditor.SIZE).contains(hitPoint)) {
-                //note: optimization here: instead of creating rectangles for all the
-                // points to check below, we create a rectangle for the test point
-                // and test if the points below are in that rectangle instead.
-                Rectangle2D r = layoutEditor.layoutEditorControlCircleRectAt(hitPoint);
-                Point2D p, minPoint = MathUtil.zeroPoint2D;
-                double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
-                double distance, minDistance = Float.POSITIVE_INFINITY;
+            //note: optimization here: instead of creating rectangles for all the
+            // points to check below, we create a rectangle for the test point
+            // and test if the points below are in that rectangle instead.
+            Rectangle2D r = layoutEditor.layoutEditorControlCircleRectAt(hitPoint);
+            Point2D p, minPoint = MathUtil.zeroPoint2D;
+            double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
+            double distance, minDistance = Float.POSITIVE_INFINITY;
 
-                if (isCircle()) {
-                    p = getCoordsCenterCircle();
+            if (isCircle()) {
+                p = getCoordsCenterCircle();
+                distance = MathUtil.distance(p, hitPoint);
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    minPoint = p;
+                    result = TRACK_CIRCLE_CENTRE;
+                }
+            } else if (isBezier()) {
+                // hit testing for the control points
+                for (int index = 0; index < bezierControlPoints.size(); index++) {
+                    p = bezierControlPoints.get(index);
                     distance = MathUtil.distance(p, hitPoint);
                     if (distance < minDistance) {
                         minDistance = distance;
                         minPoint = p;
-                        result = TRACK_CIRCLE_CENTRE;
-                    }
-                } else if (isBezier()) {
-                    // hit testing for the control points
-                    for (int index = 0; index < bezierControlPoints.size(); index++) {
-                        p = bezierControlPoints.get(index);
-                        distance = MathUtil.distance(p, hitPoint);
-                        if (distance < minDistance) {
-                            minDistance = distance;
-                            minPoint = p;
-                            result = BEZIER_CONTROL_POINT_OFFSET_MIN + index;
-                        }
+                        result = BEZIER_CONTROL_POINT_OFFSET_MIN + index;
                     }
                 }
-                p = getCentreSeg();
-                if (r.contains(p)) {
-                    distance = MathUtil.distance(p, hitPoint);
-                    if (distance <= minDistance) {
-                        minDistance = distance;
-                        minPoint = p;
-                        result = LayoutTrack.TRACK;
-                    }
+            }
+            p = getCentreSeg();
+            if (r.contains(p)) {
+                distance = MathUtil.distance(p, hitPoint);
+                if (distance <= minDistance) {
+                    minDistance = distance;
+                    minPoint = p;
+                    result = LayoutTrack.TRACK;
                 }
-                if ((result != NONE) && (useRectangles ? !r.contains(minPoint) : (minDistance > circleRadius))) {
-                    result = NONE;
-                }
+            }
+            if ((result != NONE) && (useRectangles ? !r.contains(minPoint) : (minDistance > circleRadius))) {
+                result = NONE;
             }
         }
         return result;
@@ -1814,10 +1849,10 @@ public class TrackSegment extends LayoutTrack {
                 setBezier(false);
                 break;
             case 1: //circle
-                setArc(true);
-                setAngle(90.0D);
                 setCircle(true);
-                setBezier(false);
+                setArc(true);
+//                setAngle(90.0D);
+//                setBezier(false); //this is done in setCircle
                 break;
             case 2: //arc
                 setArc(true);
@@ -1841,7 +1876,7 @@ public class TrackSegment extends LayoutTrack {
                     offset = MathUtil.normalize(offset, MathUtil.length(offset) / 3.0);
                     offset = MathUtil.orthogonal(offset);
 
-                    //add orthogonal offset0 to 1/3rd and 2/3rd points
+                    //add & subtract orthogonal offset0 to 1/3rd and 2/3rd points
                     Point2D pt1 = MathUtil.add(MathUtil.oneThirdPoint(ep1, ep2), offset);
                     Point2D pt2 = MathUtil.subtract(MathUtil.twoThirdsPoint(ep1, ep2), offset);
 
@@ -2140,7 +2175,6 @@ public class TrackSegment extends LayoutTrack {
      * Called when the user changes the angle dynamically in edit mode
      * by dragging the centre of the cirle.
      */
-    //NOTE: AFAICT this isn't called from anywhere
     protected void reCalculateTrackSegmentAngle(double x, double y) {
         if (!isBezier()) {
             double pt2x;

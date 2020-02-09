@@ -23,7 +23,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -243,7 +243,7 @@
       Courante:</b>. Lorsque les panneaux sont enregistr&eacute;s
       sur le disque, seuls les cantons dont le compteur
       d'utilisation est sup&eacute;rieur &agrave; 0 sont
-      sauv&eacute;s.</p><!--#include virtual="/Footer" -->
+      sauv&eacute;s.</p><!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

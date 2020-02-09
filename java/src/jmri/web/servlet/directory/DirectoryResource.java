@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Override
- * {@link org.eclipse.jetty.util.resource.Resource#getListHTML(java.lang.String, boolean)}
+ * {@link org.eclipse.jetty.util.resource.Resource#getListHTML(java.lang.String, boolean, java.lang.String)}
  * in {@link org.eclipse.jetty.util.resource.Resource} so that directory
  * listings can include the complete JMRI look and feel.
  *
@@ -38,10 +38,10 @@ public class DirectoryResource extends Resource {
     }
 
     @Override
-    public String getListHTML(String base, boolean parent)
+    public String getListHTML(String base, boolean parent, String query)
             throws IOException {
-        String resource = URIUtil.canonicalPath(base);
-        if (resource == null || !isDirectory()) {
+        String basePath = URIUtil.canonicalPath(base);
+        if (basePath == null || !isDirectory()) {
             return null;
         }
 
@@ -51,30 +51,30 @@ public class DirectoryResource extends Resource {
         }
         Arrays.sort(ls);
 
-        String decodedBase = URIUtil.decodePath(resource);
+        String decodedBase = URIUtil.decodePath(basePath);
         String title = Bundle.getMessage(this.locale, "DirectoryTitle", deTag(decodedBase)); // NOI18N
 
         StringBuilder table = new StringBuilder(4096);
         String row = Bundle.getMessage(this.locale, "TableRow"); // NOI18N
         if (parent) {
             table.append(String.format(this.locale, row,
-                    URIUtil.addPaths(resource, "../"),
+                    URIUtil.addPaths(basePath, "../"),
                     Bundle.getMessage(this.locale, "ParentDirectory"),
                     "",
                     ""));
         }
 
-        String encodedBase = hrefEncodeURI(resource);
+        String encodedBase = hrefEncodeURI(basePath);
 
         DateFormat dfmt = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM, this.locale);
         for (String l : ls) {
             Resource item = addPath(l);
-            String path = URIUtil.addPaths(encodedBase, URIUtil.encodePath(l));
-            if (item.isDirectory() && !path.endsWith("/")) {
-                path += URIUtil.SLASH;
+            String itemPath = URIUtil.addPaths(encodedBase, URIUtil.encodePath(l));
+            if (item.isDirectory() && !itemPath.endsWith("/")) {
+                itemPath += URIUtil.SLASH;
             }
             table.append(String.format(this.locale, row,
-                    path,
+                    itemPath,
                     deTag(l),
                     Bundle.getMessage(this.locale, "SizeInBytes", item.length()),
                     dfmt.format(new Date(item.lastModified())))
@@ -88,9 +88,9 @@ public class DirectoryResource extends Resource {
                         InstanceManager.getDefault(ServletUtil.class).getRailroadName(false),
                         title
                 ),
-                InstanceManager.getDefault(ServletUtil.class).getNavBar(this.locale, resource),
+                InstanceManager.getDefault(ServletUtil.class).getNavBar(this.locale, basePath),
                 InstanceManager.getDefault(ServletUtil.class).getRailroadName(false),
-                InstanceManager.getDefault(ServletUtil.class).getFooter(this.locale, resource),
+                InstanceManager.getDefault(ServletUtil.class).getFooter(this.locale, basePath),
                 title,
                 table
         );

@@ -444,7 +444,7 @@ public class EngineManagerTest extends OperationsTestCase {
         Assert.assertEquals("5th engine in list by rfid", e6, engineList.get(4));
         Assert.assertEquals("6th engine in list by rfid", e1, engineList.get(5));
         
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     @Test
@@ -478,7 +478,7 @@ public class EngineManagerTest extends OperationsTestCase {
         Assert.assertEquals("find e5 by rfid", e5, manager.getByRfid("93F"));
         Assert.assertEquals("find e6 by rfid", e6, manager.getByRfid("B12"));
 
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     @Test

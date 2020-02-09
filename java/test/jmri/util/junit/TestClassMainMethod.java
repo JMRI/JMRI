@@ -1,11 +1,22 @@
 package jmri.util.junit;
 
-import java.lang.reflect.*;
+import org.assertj.core.internal.Failures;
+import org.junit.platform.launcher.Launcher;
+import org.junit.platform.launcher.LauncherDiscoveryRequest;
+import org.junit.platform.launcher.TestPlan;
+import org.junit.platform.launcher.core.LauncherDiscoveryRequestBuilder;
+import org.junit.platform.launcher.core.LauncherFactory;
+import org.junit.platform.launcher.listeners.SummaryGeneratingListener;
+import org.junit.platform.launcher.TestExecutionListener;
+import org.junit.platform.launcher.listeners.TestExecutionSummary;
+import org.junit.runner.notification.Failure;
 
-import org.junit.internal.TextListener;
-import org.junit.runner.JUnitCore;
-import org.junit.runner.Result;
-import org.junit.runner.notification.RunListener;
+import java.io.PrintWriter;
+import java.lang.reflect.*;
+import java.util.List;
+
+import static org.junit.platform.engine.discovery.ClassNameFilter.includeClassNamePatterns;
+import static org.junit.platform.engine.discovery.DiscoverySelectors.*;
 
 /**
  * Main method to launch a JUnit test class
@@ -33,25 +44,26 @@ public class TestClassMainMethod {
             Class<?> cl = Class.forName(className);
             // first try to find a main in the class
             try {
+                // will directly invoke Maim in the class
                 Method method = cl.getMethod("main", String[].class);
                 method.invoke(null, new Object[] {new String[] { /* put args here */ }});
             } catch (InvocationTargetException e) {
                 // main threw an exception, report
                 System.err.println(e);
             } catch (NoSuchMethodException | IllegalAccessException e) {
-                // failed, now invoke manually
-                run(cl);
+                // failed, now invoke as JUnit tests
+                run(className);
             }
         } catch (ClassNotFoundException e) {
-            // try for a PackageTest
+            // try for a package pattern that handles all tests in a package
             try {
-                run(Class.forName(className+".PackageTest"));
-            } catch (ClassNotFoundException ex) {
-                System.err.println("Did not find class "+className);
+                run(className+".*");
             } catch (Exception ex) {
                 System.err.println(ex);
             }
         }
+	    // This shouldn't be necessary, but....
+	    System.exit(0);
     }
 
     /**
@@ -59,22 +71,32 @@ public class TestClassMainMethod {
      * 
      * @param testClass the class containing tests to run
      */
-    public static void run(Class<?> testClass) {
-        RunListener listener = new jmri.util.junit.PrintingTestListener(System.out); // test-by-test output if enabled
+    public static void run(String testClass) {
+        SummaryGeneratingListener listener = new jmri.util.junit.PrintingTestListener(System.out); // test-by-test output if enabled
+        // listener = new SummaryGeneratingListener();
         run(listener, testClass);
-
     } 
 
     /**
      * Run tests with a specified RunListener.
      * 
      * @param listener the listener for the tests
-     * @param testClass the class containing tests to run
+     * @param pattern the filter pattern used for test selection
      */
-    public static void run(RunListener listener, Class<?> testClass) {
-        JUnitCore runner = new JUnitCore();
-        runner.addListener(listener);
-        Result result = runner.run(testClass);
-        System.exit(result.wasSuccessful() ? 0 : 1);
+    public static void run(SummaryGeneratingListener listener, String pattern) {
+        LauncherDiscoveryRequest request = LauncherDiscoveryRequestBuilder.request()
+                .selectors(selectPackage("jmri"))
+                .selectors(selectPackage("apps"))
+                .filters(includeClassNamePatterns(pattern))
+                .build();
+        Launcher launcher = LauncherFactory.create();
+        TestPlan testPlan = launcher.discover(request);
+        launcher.registerTestExecutionListeners(listener);
+        launcher.execute(testPlan);
+
+        TestExecutionSummary summary = listener.getSummary();
+        PrintWriter p = new PrintWriter(System.out);
+        summary.printTo(p);
+        summary.printFailuresTo(p);
     }
 }

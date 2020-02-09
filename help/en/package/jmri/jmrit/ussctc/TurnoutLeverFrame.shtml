@@ -22,7 +22,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -68,7 +68,7 @@
         locked into position.</dd>
       </dl>
 
-      page <!--#include virtual="/Footer" -->
+      page <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

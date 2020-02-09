@@ -35,7 +35,7 @@ public class EngineSetFrameTest extends OperationsTestCase {
         Engine e3 = cManager.getByRoadAndNumber("AA", "3");
         f.loadEngine(e3);
         JUnitUtil.dispose(f);
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     private void loadEngines() {

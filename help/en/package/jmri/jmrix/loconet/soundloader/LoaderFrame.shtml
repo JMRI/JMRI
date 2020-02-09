@@ -22,7 +22,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -128,7 +128,7 @@
       to try out your new sounds via the PR2. JMRI takes care of
       converting the PR2/PR3 from a programmer/loader into a low
       power command station to run the locomotive.</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

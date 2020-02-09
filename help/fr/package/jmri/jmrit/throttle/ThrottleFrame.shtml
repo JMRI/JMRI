@@ -23,7 +23,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -90,7 +90,7 @@
 
       <p><a id="prefs" name="prefs">Ceci est la page d'aide
       help/en/package/jmri/jmrit/throttle/ThrottleFrame 
-      <!--#include virtual="/Footer" --></a></p>
+      <!--#include virtual="/Footer.shtml" --></a></p>
     </div>
   </div>
 </body>

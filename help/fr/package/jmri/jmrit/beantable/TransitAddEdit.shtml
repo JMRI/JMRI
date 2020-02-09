@@ -23,7 +23,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -238,7 +238,7 @@
         l'&eacute;dition, <b>Annuler</b> est automatiquement
         s&eacute;lectionn&eacute;, et aucune modification ne sera
         apport&eacute;e au Transit s&eacute;lectionn&eacute;</li>
-      </ol><!--#include virtual="/Footer" -->
+      </ol><!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

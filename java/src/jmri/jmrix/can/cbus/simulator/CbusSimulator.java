@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  */
 public class CbusSimulator {
 
-    private CanSystemConnectionMemo memo;
+    private final CanSystemConnectionMemo memo;
     public ArrayList<CbusDummyCS> _csArr;
     public ArrayList<CbusDummyNode> _ndArr;
     public ArrayList<CbusEventResponder> _evResponseArr;
@@ -33,15 +33,15 @@ public class CbusSimulator {
         init();
     }
     
-    public void init(){
+    public final void init(){
         log.info("Starting CBUS Network Simulation Tools");
-        _csArr = new ArrayList<CbusDummyCS>();
+        _csArr = new ArrayList<>();
         _csArr.add(new CbusDummyCS(memo)); // type, id, memo
         
-        _ndArr = new ArrayList<CbusDummyNode>();
+        _ndArr = new ArrayList<>();
         _ndArr.add(new CbusDummyNode(0,165,0,0,memo)); // nn, manufacturer, type, canid, memo
         
-        _evResponseArr = new ArrayList<CbusEventResponder>();
+        _evResponseArr = new ArrayList<>();
         _evResponseArr.add(new CbusEventResponder(memo) );
     }
     

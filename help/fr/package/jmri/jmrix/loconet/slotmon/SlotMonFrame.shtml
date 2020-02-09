@@ -25,7 +25,7 @@
 </head>
 
 <body>
-  charset=iso-8859-1"&gt; <!--#include virtual="/Header" -->
+  charset=iso-8859-1"&gt; <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -149,7 +149,7 @@
         actuelle.</dd>
       </dl>
 
-        <!--#include virtual="/Footer" -->
+        <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>
