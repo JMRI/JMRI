@@ -24,17 +24,20 @@
 		<table>
 		<tr><td align="right">
 		<a href="https://builds.jmri.org/jenkins/job/development/">Development</a>:</td><td>
-		<a href='https://builds.jmri.org/jenkins/job/development/job/alltest/'><img src='https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Falltest' title="AllTest"></a>
-		<a href='https://builds.jmri.org/jenkins/job/development/job/builds/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fbuilds' title="Builds"></a>
-		<a href='https://builds.jmri.org/jenkins/job/development/job/cucumber/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fcucumber' title="Cucumber"></a>
-		<a href='https://builds.jmri.org/jenkins/job/development/job/deprecations/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fdeprecations' title="Deprecations"></a>
-        <a href='https://builds.jmri.org/jenkins/job/development/job/html-scan/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fhtml-scan' title="HTML scan"></a>
-		<a href='https://jmri.tagadab.com/jenkins/job/development/job/ignored-test-scan/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fignored-test-scan' title="Ignored Test Scan"></a>
+		  <a href='https://builds.jmri.org/jenkins/job/development/job/builds/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fbuilds' title="Builds"></a>
+		  <a href='http://builds.jmri.org/jenkins/job/development/job/packages/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fpackages' title="Packages"></a>
+		<br/>
+		  <a href='https://builds.jmri.org/jenkins/job/development/job/alltest/'><img src='https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Falltest' title="AllTest"></a>
+		  <a href='https://builds.jmri.org/jenkins/job/development/job/deprecations/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fdeprecations' title="Deprecations"></a>
+          <a href='https://builds.jmri.org/jenkins/job/development/job/html-scan/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fhtml-scan' title="HTML scan"></a>
+		  <a href='https://jmri.tagadab.com/jenkins/job/development/job/ignored-test-scan/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fignored-test-scan' title="Ignored Test Scan"></a>
+          <a href='http://builds.jmri.org/jenkins/job/development/job/separate-tests/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fseparate-tests' title="Separate Tests"></a>
+		  <a href='http://builds.jmri.org/jenkins/job/development/job/spotbugs/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fspotbugs' title="SpotBugs"></a>
 		<br>
-		<a href='http://builds.jmri.org/jenkins/job/development/job/jacoco/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fjacoco' title="JaCoCo"></a>
-		<a href='http://builds.jmri.org/jenkins/job/development/job/packages/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fpackages' title="Packages"></a>
-        <a href='http://builds.jmri.org/jenkins/job/development/job/separate-tests/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fseparate-tests' title="Separate Tests"></a>
-		<a href='http://builds.jmri.org/jenkins/job/development/job/spotbugs/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fspotbugs' title="SpotBugs"></a>
+		  <a href='https://builds.jmri.org/jenkins/job/development/job/cucumber/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fcucumber' title="Cucumber"></a>
+		  <a href='http://builds.jmri.org/jenkins/job/development/job/jacoco/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fjacoco' title="JaCoCo"></a>
+		  <a href='https://builds.jmri.org/jenkins/job/development/job/jqassistant-reports/'><img src='https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fjqassistant-reports' title=""JQassistant></a>
+		  <a href='https://builds.jmri.org/jenkins/job/development/job/pit/'><img src='https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fpit' title="Pit"></a>
 		</td></tr><tr><td align="right">
 		<a href="http://builds.jmri.org/jenkins/job/development/job/versionchecks/">Version Checks</a>:</td><td>
 		    <table><tr>
