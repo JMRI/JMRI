@@ -50,7 +50,7 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("old color", "Black", f.comboBox.getItemAt(0));
 
         JUnitUtil.dispose(f);
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     @Test

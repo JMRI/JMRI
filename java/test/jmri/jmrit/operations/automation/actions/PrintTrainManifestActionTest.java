@@ -92,7 +92,7 @@ public class PrintTrainManifestActionTest extends OperationsTestCase {
         JUnitUtil.dispose(printPreviewFrame);
         
         JUnitOperationsUtil.checkOperationsShutDownTask();
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(PrintTrainManifestActionTest.class);

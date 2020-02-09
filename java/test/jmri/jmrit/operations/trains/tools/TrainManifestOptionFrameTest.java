@@ -52,7 +52,7 @@ public class TrainManifestOptionFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(trainEditFrame);
         Assert.assertFalse(t.isShowing());
         
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TrainManifestOptionFrameTest.class);

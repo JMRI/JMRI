@@ -47,7 +47,7 @@ public class ShowCarsInTrainFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(t);
         
         JUnitOperationsUtil.checkOperationsShutDownTask();
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ShowCarsInTrainFrameTest.class);
