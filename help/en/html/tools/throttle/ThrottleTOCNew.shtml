@@ -28,7 +28,7 @@
 <body>
   <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="../SidebarNew.shtml" -->
+    <!--#include virtual="SidebarNew.shtml" -->
     <div id="mainContent">
 
       <h1>Throttle Documentation</h1>
