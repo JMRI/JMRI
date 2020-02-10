@@ -453,7 +453,6 @@ public class CbusMessage {
         m.setElement(5, CbusConstants.CBUS_BOOT_NOP);
         m.setElement(6, 0);
         m.setElement(7, 0);
-        setPri(m, 0xb);
         return m;
     }
 
@@ -474,7 +473,6 @@ public class CbusMessage {
         m.setElement(5, CbusConstants.CBUS_BOOT_RESET);
         m.setElement(6, 0);
         m.setElement(7, 0);
-        setPri(m, 0xb);
         return m;
     }
 
@@ -496,7 +494,6 @@ public class CbusMessage {
         m.setElement(5, CbusConstants.CBUS_BOOT_INIT);
         m.setElement(6, 0);
         m.setElement(7, 0);
-        setPri(m, 0xb);
         return m;
     }
 
@@ -522,7 +519,6 @@ public class CbusMessage {
         m.setElement(5, CbusConstants.CBUS_BOOT_CHECK);
         m.setElement(6, c & 0xff);
         m.setElement(7, (c >> 8) & 0xff);
-        setPri(m, 0xb);
         return m;
     }
 
@@ -543,7 +539,6 @@ public class CbusMessage {
         m.setElement(5, CbusConstants.CBUS_BOOT_TEST);
         m.setElement(6, 0);
         m.setElement(7, 0);
-        setPri(m, 0xb);
         return m;
     }
 
@@ -569,7 +564,6 @@ public class CbusMessage {
         } catch (Exception e) {
             log.error("Exception in bootloader data {}", e);
         }
-        setPri(m, 0xb);
         return m;
     }
 
@@ -595,7 +589,6 @@ public class CbusMessage {
         } catch (Exception e) {
             log.error("Exception in bootloader data {}", e);
         }
-        setPri(m, 0xb);
         return m;
     }
 
