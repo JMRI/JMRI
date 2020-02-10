@@ -7,6 +7,7 @@ import org.junit.platform.launcher.TestPlan;
 import org.junit.platform.launcher.core.LauncherDiscoveryRequestBuilder;
 import org.junit.platform.launcher.core.LauncherFactory;
 import org.junit.platform.launcher.listeners.SummaryGeneratingListener;
+import org.junit.platform.launcher.TestExecutionListener;
 import org.junit.platform.launcher.listeners.TestExecutionSummary;
 import org.junit.runner.notification.Failure;
 
@@ -43,34 +44,37 @@ public class TestClassMainMethod {
             Class<?> cl = Class.forName(className);
             // first try to find a main in the class
             try {
+                // will directly invoke Maim in the class
                 Method method = cl.getMethod("main", String[].class);
                 method.invoke(null, new Object[] {new String[] { /* put args here */ }});
             } catch (InvocationTargetException e) {
                 // main threw an exception, report
                 System.err.println(e);
             } catch (NoSuchMethodException | IllegalAccessException e) {
-                // failed, now invoke manually
+                // failed, now invoke as JUnit tests
                 run(className);
             }
         } catch (ClassNotFoundException e) {
-            // try for a package pattern
+            // try for a package pattern that handles all tests in a package
             try {
                 run(className+".*");
             } catch (Exception ex) {
                 System.err.println(ex);
             }
         }
-	// This shouldn't be necessary, but....
-	System.exit(0);
+	    // This shouldn't be necessary, but....
+	    System.exit(0);
     }
 
     /**
-     * Run tests with a default RunListener.
+     * Run tests with a compile-selected RunListener.
      * 
      * @param testClass the class containing tests to run
      */
     public static void run(String testClass) {
-        run(new SummaryGeneratingListener(), testClass);
+        SummaryGeneratingListener listener = new jmri.util.junit.PrintingTestListener(System.out); // test-by-test output if enabled
+        // listener = new SummaryGeneratingListener();
+        run(listener, testClass);
     } 
 
     /**
@@ -91,8 +95,8 @@ public class TestClassMainMethod {
         launcher.execute(testPlan);
 
         TestExecutionSummary summary = listener.getSummary();
-        summary.printTo(new PrintWriter(System.out));
-        List<TestExecutionSummary.Failure> failuresList = summary.getFailures();
-        failuresList.forEach(System.out::println);
+        PrintWriter p = new PrintWriter(System.out);
+        summary.printTo(p);
+        summary.printFailuresTo(p);
     }
 }

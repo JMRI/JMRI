@@ -3956,6 +3956,8 @@
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_Cars_Top" url="manual/JMRI_OPS_UsersGuide/Ops_Cars.shtml#Top"/>
 
+<mapID target="html.tools.throttle.ThrottleTOCNew" url="html/tools/throttle/ThrottleTOCNew.shtml"/>
+
 <mapID target="html.hardware.cmri.CMRI_L395" url="html/hardware/cmri/CMRI.shtml#L395"/>
 
 <mapID target="html.doc.Technical.JUnit_tempFileCreation" url="html/doc/Technical/JUnit.shtml#tempFileCreation"/>
@@ -4077,6 +4079,8 @@
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_Locations_SwitchList_Top" url="manual/JMRI_OPS_UsersGuide/Ops_Locations_SwitchList.shtml#Top"/>
 
 <mapID target="package.jmri.jmrit.conditional.StateVariableActionList_variable" url="package/jmri/jmrit/conditional/StateVariableActionList.shtml#variable"/>
+
+<mapID target="html.tools.throttle.SidebarToolLocalPart" url="html/tools/throttle/SidebarToolLocalPart.shtml"/>
 
 <mapID target="html.doc.Technical.FileNames" url="html/doc/Technical/FileNames.shtml"/>
 
