@@ -472,43 +472,43 @@ public class CbusMessageTest {
     @Test
     public void testgetBootNop() {
         CanMessage m = CbusMessage.getBootNop(0x3D,0x12);
-        Assert.assertEquals("getBootNop","[16000004] 00 00 3D 00 0D 00 00 00",m.toString());
+        Assert.assertEquals("getBootNop","[4] 00 00 3D 00 0D 00 00 00",m.toString());
     }    
 
     @Test
     public void testgetBootReset() {
         CanMessage m = CbusMessage.getBootReset(0x12);
-        Assert.assertEquals("getBootReset","[16000004] 00 00 00 00 0D 01 00 00",m.toString());
+        Assert.assertEquals("getBootReset","[4] 00 00 00 00 0D 01 00 00",m.toString());
     }
 
     @Test
     public void testgetBootInitialise() {
         CanMessage m = CbusMessage.getBootInitialise(202,0x12);
-        Assert.assertEquals("getBootInitialise","[16000004] 00 00 CA 00 0D 02 00 00",m.toString());
+        Assert.assertEquals("getBootInitialise","[4] 00 00 CA 00 0D 02 00 00",m.toString());
     }
 
     @Test
     public void testgetBootCheck() {
         CanMessage m = CbusMessage.getBootCheck(123,0x12);
-        Assert.assertEquals("getBootCheck","[16000004] 00 00 00 00 0D 03 7B 00",m.toString());
+        Assert.assertEquals("getBootCheck","[4] 00 00 00 00 0D 03 7B 00",m.toString());
     }
 
     @Test
     public void testgetBootTest() {
         CanMessage m = CbusMessage.getBootTest(0x12);
-        Assert.assertEquals("getBootTest","[16000004] 00 00 00 00 0D 04 00 00",m.toString());
+        Assert.assertEquals("getBootTest","[4] 00 00 00 00 0D 04 00 00",m.toString());
     }
 
     @Test
     public void testgetBootWriteData() {
         CanMessage m = CbusMessage.getBootWriteData( new int[]{0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08},0x12);
-        Assert.assertEquals("getBootWriteData","[16000005] 01 02 03 04 05 06 07 08",m.toString());
+        Assert.assertEquals("getBootWriteData","[5] 01 02 03 04 05 06 07 08",m.toString());
         
         m = CbusMessage.getBootWriteData( new int[]{0x01,0x02},0x12);
         JUnitAppender.assertErrorMessageStartsWith("Exception in bootloader data");
         
         m = CbusMessage.getBootWriteData( new byte[]{0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08},0x12);
-        Assert.assertEquals("getBootWriteData","[16000005] 01 02 03 04 05 06 07 08",m.toString());
+        Assert.assertEquals("getBootWriteData","[5] 01 02 03 04 05 06 07 08",m.toString());
         
         m = CbusMessage.getBootWriteData( new byte[]{0x01,0x02},0x12);
         JUnitAppender.assertErrorMessageStartsWith("Exception in bootloader data");
