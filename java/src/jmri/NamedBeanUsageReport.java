@@ -1,7 +1,7 @@
 package jmri;
 
 import javax.annotation.Nonnull;
-import edu.umd.cs.findbugs.annotations;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * This is a data structure to pass usage information from getUsageReport() requests
@@ -13,8 +13,10 @@ import edu.umd.cs.findbugs.annotations;
 public class NamedBeanUsageReport {
 
     final public NamedBean usingBean;
-    @SuppressFBWarnings("URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD", "Redundant field available for reference")
+
+    @SuppressFBWarnings(value = "URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD", justification = "Redundant field available for reference")
     final public NamedBean usedBean;
+
     final public String usageKey;
 
     /**
