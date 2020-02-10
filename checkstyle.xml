@@ -53,6 +53,11 @@
     <property name="lineSeparator" value="lf"/>
     <property name="fileExtensions" value="java, xml, py"/>
   </module>
+  <!-- from https://stackoverflow.com/questions/32903412/how-to-tell-checkstyle-to-check-all-lines-for-linefeed-newline-lf-and-not-crlf/33000451 -->
+  <module name="RegexpMultiline">
+    <property name="format" value="\r\n"/>
+    <property name="message" value="CRLF line endings are prohibited"/>
+  </module> 
   <!-- disable warnings for existing interfaces that are not types -->
   <!-- serves as example of suppressing a check against a Regex of files -->
   <module name="SuppressionSingleFilter">

@@ -1,11 +1,14 @@
 package jmri.jmrix.can.cbus;
 
+import javax.annotation.CheckForNull;
 import jmri.CommandStation;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
+import jmri.jmrix.can.cbus.simulator.CbusSimulator;
+import jmri.util.ThreadingUtil;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,14 +29,15 @@ public class CbusCommandStation implements CommandStation {
         tc = memo.getTrafficController();
         adapterMemo = memo;
         if ( ( tc != null ) && ( tc.getClass().getName().contains("Loopback")) ) {
-            jmri.util.ThreadingUtil.runOnLayout( ()->{
-                new jmri.jmrix.can.cbus.simulator.CbusSimulator(adapterMemo);
+            ThreadingUtil.runOnLayout(() -> {
+                CbusSimulator sim = new jmri.jmrix.can.cbus.simulator.CbusSimulator(adapterMemo);
+                log.debug("sim {}",sim);
             });
         }
     }
-
-    TrafficController tc;
-    CanSystemConnectionMemo adapterMemo;
+    
+    private final TrafficController tc;
+    private CanSystemConnectionMemo adapterMemo;
 
     /**
      * Send a specific packet to the rails.
@@ -56,13 +60,12 @@ public class CbusCommandStation implements CommandStation {
         }        
 
         CanMessage m = new CanMessage(2 + packet.length, tc.getCanid());     // Account for opcode and repeat
-        int j = 0; // counter of byte in input packet
 
         m.setElement(0, CbusConstants.CBUS_RDCC3 + (((packet.length - 3) & 0x3) << 5));
         m.setElement(1, repeats);   // repeat
 
         // add each byte of the input message
-        for (j = 0; j < packet.length; j++) {
+        for (int j = 0; j < packet.length; j++) {
             m.setElement(j + 2, packet[j] & 0xFF);
         }
 
@@ -86,7 +89,7 @@ public class CbusCommandStation implements CommandStation {
 
     /**
      * Send keep alive (DKEEP) packet for a throttle.
-     *
+     * @param handle    The handle of the session to which it applies
      */
     protected void sendKeepAlive(int handle) {
         CanMessage msg = new CanMessage(2, tc.getCanid());
@@ -131,6 +134,7 @@ public class CbusCommandStation implements CommandStation {
     /**
      * Send a CBUS message to change the session speed step mode.
      *
+     * @param handle    The handle of the session to which it applies
      * @param mode the speed step mode
      */
     protected void setSpeedSteps(int handle, int mode) {
@@ -152,9 +156,11 @@ public class CbusCommandStation implements CommandStation {
      *
      * @return the Master Command Station, else null if not found
      */
+    @CheckForNull
     protected CbusNode getMasterCommandStation(){
-        if ( jmri.InstanceManager.getNullableDefault(CbusNodeTableDataModel.class) != null ) {
-            CbusNodeTableDataModel nodeModel =  jmri.InstanceManager.getDefault(CbusNodeTableDataModel.class);
+        // if NodeTable already has the node stored, use it
+        CbusNodeTableDataModel nodeModel =  jmri.InstanceManager.getNullableDefault(CbusNodeTableDataModel.class);
+        if (nodeModel!=null && nodeModel.getCsByNum(0)!=null) {
             return nodeModel.getCsByNum(0);
         }
         return null;
@@ -167,39 +173,49 @@ public class CbusCommandStation implements CommandStation {
      * Get if Steal is available on the Command Station
      * <p>
      * Steal availability can change, so CbusThrottleManager checks this value
-     * when it struggles on initial attempt to obtain a throttle 
+     * when it struggles on initial attempt to obtain a throttle
+     * @return false if not available, defaults to true
      */
     protected boolean isStealAvailable() {
-        if ( getMasterCommandStation() != null ) {
+        CbusNode mCs = getMasterCommandStation();
+        if ( mCs != null ) {
             log.debug("found master command station");
-            if ( getMasterCommandStation().getNV(2) > -1 ){
+            if ( mCs.getNodeNvManager().getNV(2) > -1 ){
                 log.debug("nv 2 has a value");
-                return (( getMasterCommandStation().getNV(2) >> 1 ) & 1) != 0; // NV2 bit 1 set
+                return (( mCs.getNodeNvManager().getNV(2) >> 1 ) & 1) != 0; // NV2 bit 1 set
             }
         }
-        return false;
+        return true;
     }
     
     /**
-     * Get if Share is available on the Command Station
+     * Get if Share is available on the Command Station.
      * <p>
      * Share availability can change, so CbusThrottleManager checks this value
-     * when it struggles on initial attempt to obtain a throttle 
-     */
+     * when it struggles on initial attempt to obtain a throttle.
+     * @return false if not available, defaults to true
+    */
     protected boolean isShareAvailable() {
-        if ( getMasterCommandStation() != null ) { // command station found
-            if ( getMasterCommandStation().getNV(2) > -1 ){ // NV2 is set
-                return (( getMasterCommandStation().getNV(2) >> 2 ) & 1) != 0; // NV2 bit 2 set
+        CbusNode mCs = getMasterCommandStation();
+        if ( mCs != null ) {
+            if ( mCs.getNodeNvManager().getNV(2) > -1 ){ // NV2 is set
+                return (( mCs.getNodeNvManager().getNV(2) >> 2 ) & 1) != 0; // NV2 bit 2 set
             }
-        }
-        return false;
+        } 
+        return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getUserName() {
         return adapterMemo.getUserName();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getSystemPrefix() {
         return adapterMemo.getSystemPrefix();

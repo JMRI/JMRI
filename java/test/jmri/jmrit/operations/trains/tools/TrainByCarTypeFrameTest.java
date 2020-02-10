@@ -42,7 +42,7 @@ public class TrainByCarTypeFrameTest extends OperationsTestCase {
         t.carsComboBox.setSelectedIndex(1);
 
         JUnitUtil.dispose(t);
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     @Override

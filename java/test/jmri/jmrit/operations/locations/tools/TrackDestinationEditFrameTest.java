@@ -38,7 +38,7 @@ public class TrackDestinationEditFrameTest extends OperationsTestCase {
         Assert.assertNotNull("exists",t);
         
         JUnitUtil.dispose(t);
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
     
     @Test
@@ -69,7 +69,7 @@ public class TrackDestinationEditFrameTest extends OperationsTestCase {
         Assert.assertTrue("Only cars with destinations", track.isOnlyCarsWithFinalDestinationEnabled());
         
         JUnitUtil.dispose(tdef);
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TrackDestinationEditFrameTest.class);

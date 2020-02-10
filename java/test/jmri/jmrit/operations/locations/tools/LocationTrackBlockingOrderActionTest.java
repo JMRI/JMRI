@@ -34,7 +34,7 @@ public class LocationTrackBlockingOrderActionTest extends OperationsTestCase {
         JmriJFrame bof = JmriJFrame.getFrame(Bundle.getMessage("TitleTrackBlockingOrder"));
         Assert.assertNotNull("exists", bof);
         JUnitUtil.dispose(bof);
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(LocationTrackBlockingOrderActionTest.class);

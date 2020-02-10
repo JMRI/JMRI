@@ -1332,23 +1332,41 @@ public final class MathUtil {
             @Nonnull Point2D p4) {
         Point2D result = null;  // assume failure (pessimist!)
 
-        // pull these out for convenience
-        double x1 = p1.getX(), y1 = p1.getY();
-        double x2 = p2.getX(), y2 = p2.getY();
-        double x3 = p3.getX(), y3 = p3.getY();
-        double x4 = p4.getX(), y4 = p4.getY();
+        Point2D delta31 = MathUtil.subtract(p3, p1);    //p
+        Point2D delta21 = MathUtil.subtract(p2, p1);    //q
+        Point2D delta43 = MathUtil.subtract(p4, p3);    //r
 
-        //
-        // equation from <https://en.wikipedia.org/wiki/Line-line_intersection>
-        //
-        double d = ((x1 - x2) * (y3 - y4)) - ((y1 - y2) * (x3 - x4));
-        // if d is zero the lines don't have one intersection point
-        if (d > 0.0) {
-            double t = ((x1 - x3) * (y3 - y4)) - ((y1 - y3) * (x3 - x4)) / d;
-            result = new Point2D.Double(x1 + (t * (x2 - x1)), y1 + (t * (y2 - y1)));
+        double det = delta21.getX() * delta43.getY() - delta21.getY() * delta43.getX();
+        if (!MathUtil.equals(det, 0.0)) {
+            double t = (delta21.getY() * delta31.getX() - delta21.getX() * delta31.getY()) / det;
+            result = lerp(p1, p2, t);
         }
         return result;
     }
 
+    /**
+     * get (signed) distance p3 is from line segment defined by p1 and p2
+     *
+     * @param p1 the first point on the line segment
+     * @param p2 the second point on the line segment
+     * @param p3 the point whose distance from the line segment you wish to
+     *           calculate
+     * @return the distance (note: plus/minus determines the (left/right) side
+     *         of the line)
+     */
+    public static double distance(
+            @Nonnull Point2D p1,
+            @Nonnull Point2D p2,
+            @Nonnull Point2D p3) {
+        double p1X = p1.getX(), p1Y = p1.getY();
+        double p2X = p2.getX(), p2Y = p2.getY();
+        double p3X = p3.getX(), p3Y = p3.getY();
+
+        double a = p1Y - p2Y;
+        double b = p2X - p1X;
+        double c = (p1X * p2Y) - (p2X * p1Y);
+
+        return (a * p3X + b * p3Y + c) / Math.sqrt(a * a + b * b);
+    }
     // private transient final static Logger log = LoggerFactory.getLogger(MathUtil.class);
 }

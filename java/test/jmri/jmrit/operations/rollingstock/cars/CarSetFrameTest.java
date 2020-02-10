@@ -33,7 +33,7 @@ public class CarSetFrameTest extends OperationsTestCase {
         f.loadCar(c3);
 
         JUnitUtil.dispose(f);
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     @Test
@@ -80,6 +80,6 @@ public class CarSetFrameTest extends OperationsTestCase {
         Assert.assertFalse("Location unknown", c3.isLocationUnknown());
 
         JUnitUtil.dispose(f);
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 }

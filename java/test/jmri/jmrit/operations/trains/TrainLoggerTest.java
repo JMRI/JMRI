@@ -44,7 +44,7 @@ public class TrainLoggerTest extends OperationsTestCase {
         Setup.setTrainLoggerEnabled(false);
         
         JUnitOperationsUtil.checkOperationsShutDownTask();
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TrainLoggerTest.class);

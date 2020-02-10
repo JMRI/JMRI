@@ -48,13 +48,9 @@ public class CbusNodeRestoreFcuFrameTest extends jmri.util.JmriJFrameTestBase {
         // Ask to close window
         jfo.requestClose();
         
-        jfo = null;
-        t = null;
         
         nodeModel.dispose();
-        nodeModel = null;
         mainpane.dispose();
-        mainpane = null;
         
     }
     

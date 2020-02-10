@@ -150,7 +150,7 @@ Logic delay: <xsl:value-of select="logicDelay"/> (ms)<br/>
 <!-- Index through memories elements -->
 <!-- each one becomes a table        -->
 <xsl:template match="layout-config/memories">
-<h3>Memories</h3>
+<h3>Memory Variables</h3>
     <table border="1">
     <tr><th>System Name</th><th>User Name</th><th>Comment</th></tr>
     <!-- index through individual memory elements -->
@@ -355,13 +355,15 @@ Logic delay: <xsl:value-of select="logicDelay"/> (ms)<br/>
                 <th>User Name</th>
                 <th>Sensor</th>
                 <th>Paths</th>
+                <th>Length</th>
                 <th>Permissive</th>
             </tr>
             <!-- index through individual block elements -->
             <xsl:for-each select="block">
-                <tr><xsl:element name="a"><xsl:attribute name="id">Block-<xsl:value-of select="@systemName"/></xsl:attribute></xsl:element>
-                    <td><xsl:value-of select="@systemName"/></td>
-                    <td><xsl:value-of select="@userName"/></td>
+                <tr><td>
+                        <xsl:element name="a"><xsl:attribute name="id">Block-<xsl:value-of select="@systemName"/></xsl:attribute></xsl:element>
+                        <xsl:value-of select="systemName"/></td>
+                    <td><xsl:value-of select="userName"/></td>
                     <td>
                         <xsl:for-each select="sensor"><!-- is this clause actually necessary? -->
                         <xsl:value-of select="@systemName"/><br/>
@@ -414,6 +416,7 @@ Logic delay: <xsl:value-of select="logicDelay"/> (ms)<br/>
                                 </xsl:for-each>
                         </tr>
                         </xsl:for-each></table></td>
+                    <td><xsl:value-of select="@length"/></td>
                     <td><xsl:value-of select="permissive"/></td>
                 </tr>
             </xsl:for-each>
@@ -449,8 +452,8 @@ Logic delay: <xsl:value-of select="logicDelay"/> (ms)<br/>
 <!-- Index through route elements -->
 <xsl:template match="route">
     <tr>
-        <td><xsl:value-of select="@systemName"/></td> <!--names still stored as attributes in routes as of 2.9.6 up to 4.6-->
-        <td><xsl:value-of select="@userName"/></td>
+        <td><xsl:value-of select="systemName"/></td>
+        <td><xsl:value-of select="userName"/></td>
         <td><xsl:for-each select="routeSensor">
             <xsl:value-of select="@systemName"/>:&#160;&#160;&#160;<xsl:value-of select="@mode"/><br/>
         </xsl:for-each></td>
@@ -604,9 +607,11 @@ Logic delay: <xsl:value-of select="logicDelay"/> (ms)<br/>
         <td></td>
         <td align="right">
             <xsl:for-each select="aspect">
-                <xsl:value-of select="@defines"/>:
-                <xsl:value-of select="turnout"/> =
-                <xsl:value-of select="turnoutstate"/><br/>
+                <xsl:if test='(turnout != "")'>
+                    <xsl:value-of select="@defines"/>:
+                    <xsl:value-of select="turnout"/> =
+                    <xsl:value-of select="turnoutstate"/><br/>
+                </xsl:if>
             </xsl:for-each>
         </td>
     </tr>
@@ -764,7 +769,7 @@ Logic delay: <xsl:value-of select="logicDelay"/> (ms)<br/>
 
 <xsl:template match="section">
     <tr>
-        <td><xsl:value-of select="@systemName"/></td> <!--names as attributes deprecated since 2.9.6-->
+        <td><xsl:value-of select="@systemName"/></td> <!--names still stored as attributes in warrants as of 4.7.1 -->
         <td><xsl:value-of select="userName"/></td>
         <td>
             <xsl:for-each select="blockentry">

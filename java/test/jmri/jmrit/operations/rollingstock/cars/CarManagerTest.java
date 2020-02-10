@@ -76,7 +76,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("5th car in list by id", c4, carList.get(4));
         Assert.assertEquals("6th car in list by id", c5, carList.get(5));
         
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     @Test
@@ -103,7 +103,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("5th car in list by built", c6, carList.get(4));
         Assert.assertEquals("6th car in list by built", c1, carList.get(5));
         
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     @Test
@@ -130,7 +130,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("5th car in list by move", c6, carList.get(4));
         Assert.assertEquals("6th car in list by move", c3, carList.get(5));
         
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     @Test
@@ -149,7 +149,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("5th car in list by owner", c2, carList.get(4));
         Assert.assertEquals("6th car in list by owner", c1, carList.get(5));
         
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     @Test
@@ -175,7 +175,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("5th car in list by color", c6, carList.get(4));
         Assert.assertEquals("6th car in list by color", c3, carList.get(5));
         
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     @Test
@@ -194,7 +194,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("5th car in list by road name", c4, carList.get(4));
         Assert.assertEquals("6th car in list by road name", c5, carList.get(5));
         
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     @Test
@@ -213,7 +213,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("5th car in list by load", c2, carList.get(4));
         Assert.assertEquals("6th car in list by load", c3, carList.get(5));
         
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     @Test
@@ -247,7 +247,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("5th car in list by kernel", c6, carList.get(4));
         Assert.assertEquals("6th car in list by kernel", c1, carList.get(5));
         
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     @Test
@@ -265,7 +265,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("5th car in list by location", c4, carList.get(4));
         Assert.assertEquals("6th car in list by location", c3, carList.get(5));
         
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     @Test
@@ -284,7 +284,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("5th car in list by destination", c3, carList.get(4));
         Assert.assertEquals("6th car in list by destination", c4, carList.get(5));
         
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     @Test
@@ -323,7 +323,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("5th car in list by train", c3, carList.get(4));
         Assert.assertEquals("6th car in list by train", c1, carList.get(5));
         
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     @Test
@@ -361,7 +361,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("2nd car in list by t3", c2, carList.get(1));
         Assert.assertEquals("3rd car in list by t3", c3, carList.get(2));
         
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     @Test
@@ -398,7 +398,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("2nd car in list by t3 by dest", c3, carList.get(1));
         Assert.assertEquals("3rd car in list by t3 by dest", c5, carList.get(2));
 
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     @Test
@@ -464,7 +464,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("2nd car in list available for t3", c2, carList.get(1));
         Assert.assertEquals("3rd car in list available for t3", c3, carList.get(2));
         
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     @Test
@@ -483,7 +483,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("5th car in list by number", c3, carList.get(4));
         Assert.assertEquals("6th car in list by number", c4, carList.get(5));
         
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     @Test
@@ -500,7 +500,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("find c5 by road and number", c5, manager.getByRoadAndNumber("PC", "2"));
         Assert.assertEquals("find c6 by road and number", c6, manager.getByRoadAndNumber("AA", "1"));
         
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     @Test
@@ -519,7 +519,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("5th car in list by rfid", c6, carList.get(4));
         Assert.assertEquals("6th car in list by rfid", c1, carList.get(5));
         
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     @Test
@@ -536,7 +536,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("find c5 by rfid", c5, manager.getByRfid("93F"));
         Assert.assertEquals("find c6 by rfid", c6, manager.getByRfid("B12"));
         
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     @Test
@@ -563,7 +563,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("5th car in list by type", c6, carList.get(4));
         Assert.assertEquals("6th car in list by type", c1, carList.get(5));
         
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     @Test
@@ -615,7 +615,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("5th car in list by move date", c3, carList.get(4));
         Assert.assertEquals("6th car in list by move date", c5, carList.get(5));
         
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     @Test
@@ -667,7 +667,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("5th car in list by move date", c3, carList.get(4));
         Assert.assertEquals("6th car in list by move date", c5, carList.get(5));
         
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     @Test
@@ -682,7 +682,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("1st road", "AA", cabooseRoads.get(0));
         Assert.assertEquals("2nd road", "CP", cabooseRoads.get(1));
         
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     @Test
@@ -696,7 +696,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("Number of FRED", 1, fredRoads.size());
         Assert.assertEquals("1st road", "PC", fredRoads.get(0));
         
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     @Test
@@ -710,7 +710,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertTrue("c2 in car list at location", carList.contains(c2));
         Assert.assertFalse("c3 not in car list at location", carList.contains(c3));
         
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     @Test
@@ -725,7 +725,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertFalse("c2 not in car list on track", carList.contains(c2));
         Assert.assertFalse("c3 not in car list on track", carList.contains(c3));
         
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     private void resetCarManager() {

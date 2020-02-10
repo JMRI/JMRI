@@ -55,7 +55,7 @@ public class TrainManagerTest extends OperationsTestCase {
         TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
         JUnitOperationsUtil.initOperationsData();
         Assert.assertNotNull("Retrieve Train", tmanager.getTrainByName("STF"));
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     /**
@@ -66,7 +66,7 @@ public class TrainManagerTest extends OperationsTestCase {
         TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
         JUnitOperationsUtil.initOperationsData();
         Assert.assertNotNull("Retrieve Train", tmanager.getTrainById("1"));
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     @Test
@@ -78,7 +78,7 @@ public class TrainManagerTest extends OperationsTestCase {
 
         Assert.assertEquals("Copied train", copiedTrain.getName());
         Assert.assertEquals(train.getRoute(), copiedTrain.getRoute());
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     @Test
@@ -118,7 +118,7 @@ public class TrainManagerTest extends OperationsTestCase {
         Assert.assertFalse("confirm load name", train.acceptsLoadName("Nuts"));
         Assert.assertFalse("confirm load name", train.acceptsLoadName("bolts"));    
         
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
     
     @Test
@@ -132,7 +132,7 @@ public class TrainManagerTest extends OperationsTestCase {
         Assert.assertTrue("One built train", tmanager.isAnyTrainBuilt());
         
         JUnitOperationsUtil.checkOperationsShutDownTask();
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
     
     @Test
@@ -165,7 +165,7 @@ public class TrainManagerTest extends OperationsTestCase {
         Assert.assertEquals(train1, trains.get(1));
         
         JUnitOperationsUtil.checkOperationsShutDownTask();
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
     
     @Test
@@ -177,7 +177,7 @@ public class TrainManagerTest extends OperationsTestCase {
         Assert.assertEquals("STF", trains.get(0).getName());
         Assert.assertEquals("SFF", trains.get(1).getName());
         
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
     
     @Test
@@ -194,7 +194,7 @@ public class TrainManagerTest extends OperationsTestCase {
         Assert.assertEquals("SFF", trains.get(0).getName());
         Assert.assertEquals("STF", trains.get(1).getName());
         
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
     
     @Test
@@ -206,7 +206,7 @@ public class TrainManagerTest extends OperationsTestCase {
         Assert.assertEquals("STF", trains.get(0).getName());
         Assert.assertEquals("SFF", trains.get(1).getName());
         
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
     
     @Test
@@ -227,7 +227,7 @@ public class TrainManagerTest extends OperationsTestCase {
         Assert.assertEquals("SFF", trains.get(0).getName());
         Assert.assertEquals("STF", trains.get(1).getName());     
         
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
     
     @Test
@@ -293,6 +293,6 @@ public class TrainManagerTest extends OperationsTestCase {
         Assert.assertFalse(train2.isBuilt());
         
         JUnitOperationsUtil.checkOperationsShutDownTask();
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 }
