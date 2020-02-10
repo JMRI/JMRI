@@ -13,7 +13,7 @@ public class NamedBeanUsageReportTest {
     public void testReport() {
         Block usingBean = InstanceManager.getDefault(BlockManager.class).provideBlock("BlockName");
         Sensor usedBean = InstanceManager.getDefault(SensorManager.class).provideSensor("IT102");
-        NamedBeanUsageReport report = new NamedBeanUsageReport(usingBean, usedBean, "Test_Bean_Report");
+        NamedBeanUsageReport report = new NamedBeanUsageReport("Test_Bean_Report");
         Assert.assertNotNull("exists", report);
         Assert.assertEquals("Test_Bean_Report", report.usageKey);
     }

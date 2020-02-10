@@ -1,7 +1,6 @@
 package jmri;
 
 import javax.annotation.Nonnull;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * This is a data structure to pass usage information from getUsageReport() requests
@@ -12,24 +11,22 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 @javax.annotation.concurrent.Immutable
 public class NamedBeanUsageReport {
 
-    final public NamedBean usingBean;
-
-    @SuppressFBWarnings(value = "URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD", justification = "Redundant field available for reference")
-    final public NamedBean usedBean;
-
     final public String usageKey;
+    final public NamedBean usageBean;
+
+    public NamedBeanUsageReport(@Nonnull String usageKey) {
+        this(usageKey, null);
+    }
 
     /**
      * Create a usage report.
      *
-     * @param usingBean Identifies the report creator.  Can be null.
-     * @param usedBean The search argument.
      * @param usageKey Identifies the report type.  Used to control result
      * processing.  Might also be used as a bundle key.
+     * @param usageBean Identifies a related bean suach as SML destination mast.  Can be null.
      */
-    public NamedBeanUsageReport(NamedBean usingBean, @Nonnull NamedBean usedBean, @Nonnull String usageKey) {
-        this.usingBean = usingBean;
-        this.usedBean = usedBean;
+    public NamedBeanUsageReport(@Nonnull String usageKey, NamedBean usageBean) {
         this.usageKey = usageKey;
+        this.usageBean = usageBean;
     }
 }

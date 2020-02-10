@@ -74,7 +74,7 @@ public class SensorWhereUsed {
             BlockBossLogic ssl = e.nextElement();
             ssl.getUsageReport(sensor).forEach((report) -> {
                 if (report.usageKey.startsWith("SSLSensor")) {  // NOI18N
-                    sb.append(Bundle.getMessage("ReferenceLine", report.usingBean.getUserName(), report.usingBean.getSystemName()));  // NOI18N
+                    sb.append(Bundle.getMessage("ReferenceLine", report.usageBean.getUserName(), report.usageBean.getSystemName()));  // NOI18N
                 }
             });
         }

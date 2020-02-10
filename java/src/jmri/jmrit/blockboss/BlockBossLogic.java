@@ -317,49 +317,49 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
         SignalHead head = driveSignal.getBean();
         if (bean != null) {
             if (watchSensor1 != null && bean.equals(watchSensor1.getBean())) {
-                report.add(new NamedBeanUsageReport(head, bean, "SSLSensor1"));
+                report.add(new NamedBeanUsageReport("SSLSensor1", head));
             }
             if (watchSensor2 != null && bean.equals(watchSensor2.getBean())) {
-                report.add(new NamedBeanUsageReport(head, bean, "SSLSensor2"));
+                report.add(new NamedBeanUsageReport("SSLSensor2", head));
             }
             if (watchSensor3 != null && bean.equals(watchSensor3.getBean())) {
-                report.add(new NamedBeanUsageReport(head, bean, "SSLSensor3"));
+                report.add(new NamedBeanUsageReport("SSLSensor3", head));
             }
             if (watchSensor4 != null && bean.equals(watchSensor4.getBean())) {
-                report.add(new NamedBeanUsageReport(head, bean, "SSLSensor4"));
+                report.add(new NamedBeanUsageReport("SSLSensor4", head));
             }
             if (watchSensor5 != null && bean.equals(watchSensor5.getBean())) {
-                report.add(new NamedBeanUsageReport(head, bean, "SSLSensor5"));
+                report.add(new NamedBeanUsageReport("SSLSensor5", head));
             }
             if (watchTurnout != null && bean.equals(watchTurnout.getBean())) {
-                report.add(new NamedBeanUsageReport(head, bean, "SSLTurnout"));
+                report.add(new NamedBeanUsageReport("SSLTurnout", head));
             }
             if (watchedSignal1 != null && bean.equals(watchedSignal1.getBean())) {
-                report.add(new NamedBeanUsageReport(head, bean, "SSLSignal1"));
+                report.add(new NamedBeanUsageReport("SSLSignal1", head));
             }
             if (watchedSignal1Alt != null && bean.equals(watchedSignal1Alt.getBean())) {
-                report.add(new NamedBeanUsageReport(head, bean, "SSLSignal1Alt"));
+                report.add(new NamedBeanUsageReport("SSLSignal1Alt", head));
             }
             if (watchedSignal2 != null && bean.equals(watchedSignal2.getBean())) {
-                report.add(new NamedBeanUsageReport(head, bean, "SSLSignal2"));
+                report.add(new NamedBeanUsageReport("SSLSignal2", head));
             }
             if (watchedSignal2Alt != null && bean.equals(watchedSignal2Alt.getBean())) {
-                report.add(new NamedBeanUsageReport(head, bean, "SSLSignal2Alt"));
+                report.add(new NamedBeanUsageReport("SSLSignal2Alt", head));
             }
             if (watchedSensor1 != null && bean.equals(watchedSensor1.getBean())) {
-                report.add(new NamedBeanUsageReport(head, bean, "SSLSensorWatched1"));
+                report.add(new NamedBeanUsageReport("SSLSensorWatched1", head));
             }
             if (watchedSensor1Alt != null && bean.equals(watchedSensor1Alt.getBean())) {
-                report.add(new NamedBeanUsageReport(head, bean, "SSLSensorWatched1Alt"));
+                report.add(new NamedBeanUsageReport("SSLSensorWatched1Alt", head));
             }
             if (watchedSensor2 != null && bean.equals(watchedSensor2.getBean())) {
-                report.add(new NamedBeanUsageReport(head, bean, "SSLSensorWatched2"));
+                report.add(new NamedBeanUsageReport("SSLSensorWatched2", head));
             }
             if (watchedSensor2Alt != null && bean.equals(watchedSensor2Alt.getBean())) {
-                report.add(new NamedBeanUsageReport(head, bean, "SSLSensorWatched2Alt"));
+                report.add(new NamedBeanUsageReport("SSLSensorWatched2Alt", head));
             }
             if (approachSensor1 != null && bean.equals(approachSensor1.getBean())) {
-                report.add(new NamedBeanUsageReport(head, bean, "SSLSensorApproach"));
+                report.add(new NamedBeanUsageReport("SSLSensorApproach", head));
             }
         }
         return report;
