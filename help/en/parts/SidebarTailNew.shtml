@@ -1,10 +1,10 @@
  <!-- SidebarTail.shtml -->
     <!-- Final items in typical sidebar -->
       <h3 style="padding-left: 1em;"><p class="noted">
-       <a href="/help/en/webtoc.shtml">Help: Table of Contents</a><br>
+       <a href="/help/en/webtoc.shtml">Help: Contents</a><br>
        <a href="/help/en/webindex.shtml">Help: Index</a>
      </p></h3>
-     <p style="padding-left: 1em;">
+     <p class="noted">
        <a href="/donations.shtml">
        <img src="https://sourceforge.net/images/project-support.jpg" width="88" height="32" border="0" ALIGN="LEFT" alt="Donate to JMRI" />
        Donate to JMRI.org</a>
