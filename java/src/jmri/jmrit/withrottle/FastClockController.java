@@ -4,6 +4,9 @@ package jmri.jmrit.withrottle;
 import java.beans.PropertyChangeListener;
 import java.util.TimeZone;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.Timebase;
 
@@ -30,20 +33,22 @@ public class FastClockController extends AbstractController {
     private short updateMinuteCount = 0;
 
     public FastClockController() {
-        
+               
         fastClock = InstanceManager.getDefault(jmri.Timebase.class);
         timeZoneOffset = TimeZone.getDefault().getOffset(System.currentTimeMillis());
         minuteListener = new PropertyChangeListener() {
             @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
+                log.trace("minuteListener propertyChange for '{}' from '{}' to '{}'",e.getPropertyName(),e.getOldValue(),e.getNewValue());                
                 sendFastTime();
             }
         };
         rateListener = new PropertyChangeListener() {
             @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
-                //skip time updates on this listener, only send changes (rate, run, other)
-                if (!e.getPropertyName().equals("time") && !e.getPropertyName().equals("minutes")) {
+                //skip minutes updates on this listener, handled in minuteListener
+                log.trace("rateListener propertyChange for '{}' from '{}' to '{}'",e.getPropertyName(),e.getOldValue(),e.getNewValue());                
+                if (!e.getPropertyName().equals("minutes")) {
                     setReSyncSetpoint();
                     sendFastRate();
                 }
@@ -133,10 +138,12 @@ public class FastClockController extends AbstractController {
     }
 
     private static void updateMinsSetpoint(short newVal) {
+        log.debug("updateMinSetPoint({});",newVal);                
         updateMinsSetpoint = newVal;
     }
 
     private void setReSyncSetpoint() {
         updateMinsSetpoint((short)(fastClock.userGetRate() * UPDATE_MINUTES));
     }
+    private final static Logger log = LoggerFactory.getLogger(FastClockController.class);
 }
