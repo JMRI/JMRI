@@ -127,7 +127,7 @@ public final class ImageIndexEditor extends JmriJFrame {
 
     @SuppressWarnings("deprecation") // needs careful unwinding for Set operations, generics
     private JPanel makeCatalogPanel() {
-        _catalog = new CatalogPanel("defaultCatalog", "selectNode", true); // make sure both these properties keys exist
+        _catalog = CatalogPanel.makeCatalog("defaultCatalog", "selectNode", true); // make sure both these properties keys exist
         // log.debug("init the new CatalogPanel for ImageIndexEditor.makeCatalogPanel()");
         _catalog.init(false, true);
         CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
@@ -196,7 +196,7 @@ public final class ImageIndexEditor extends JmriJFrame {
 
     @SuppressWarnings("deprecation") // needs careful unwinding for Set operations, generics
     private JPanel makeIndexPanel() {
-        _index = new CatalogPanel("ImageIndex", "selectIndexNode", true); // make sure both these properties keys exist
+        _index = CatalogPanel.makeCatalog("ImageIndex", "selectIndexNode", true); // make sure both these properties keys exist
         // log.debug("init the new CatalogPanel for ImageIndexEditor.makeIndexPanel()");
         // activate dragNdrop init(true,true) allows drop into same panel as the drag - i.e. duplicates icon in node
         _index.init(true, false);
