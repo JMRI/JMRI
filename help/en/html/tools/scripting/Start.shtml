@@ -62,7 +62,7 @@
         "../../../package/jmri/jmrit/beantable/images/jmriScriptWindow.png">
         <img src=
         "../../../package/jmri/jmrit/beantable/images/jmriScriptWindow.png"
-        width="250" height="136" align="right"></a>From the
+        width="250" height="136" align="right" alt="JMRI Jython Script Window"></a>From the
         "Panels" menu, select "Script Entry". This will give you a
         window where you can type one or more commands to execute.
         (Note that it might take a little while the first time you
@@ -81,7 +81,7 @@
 </pre>in the input window, and click "Execute". You should see the
 output in the Script Output window immediately:
           <pre>
-        &gt;&gt;&gt; print "Hello World"
+        &gt;&gt;&gt; <code>print "Hello World"</code>
         Hello World
         
 </pre>
@@ -91,7 +91,7 @@ output in the Script Output window immediately:
         contents of the input window (select it and hit delete),
         and enter
           <pre>
-        print 1+2
+       <code> print 1+2</code>
         
 </pre>then click execute. The output window should then show
 something like:
@@ -139,7 +139,7 @@ something like:
       <h2><a id="layoutcommands">Sample layout commands</a></h2>
       
       <div class="para">
-     <pre>
+     <pre><code>
 
 &gt;&gt;&gt; lt1 = turnouts.provideTurnout("1")
 
@@ -155,7 +155,7 @@ something like:
 
 &gt;&gt;&gt; turnouts.provideTurnout("1").getCommandedState()
 1
-
+</code>
     </pre>
 
       <p>Note that this is running a complete version of the JMRI
@@ -175,7 +175,7 @@ something like:
       can also be expressed in Jython as:
       
      <pre>
-        turnout.commandedState = CLOSED
+        <code>turnout.commandedState = CLOSED</code>
     </pre>
 
       <p>This results in much easier-to-read code.</p>
@@ -199,8 +199,8 @@ something like:
       extensively to get access to objects. In Java this results in
       verbose code like
       <pre>
-   Turnout t2 = InstanceManager.getDefault(TurnoutManager.class).newTurnout("LT2", "turnout 2");
-   t2.SetCommandedState(Turnout.THROWN)
+   <code>Turnout t2 = InstanceManager.getDefault(TurnoutManager.class).newTurnout("LT2", "turnout 2");
+   t2.SetCommandedState(Turnout.THROWN)</code>
 </pre>Jython simplifies that by allowing us to provide useful
 variables, and by shortening certain method calls.
 
@@ -246,7 +246,7 @@ variables, and by shortening certain method calls.
         
       </ul>These can then be referenced directly in Jython as
       <pre>
-   t2 = turnouts.provideTurnout("12");
+   <code>t2 = turnouts.provideTurnout("12");</code>
    
    dcc.sendPacket(new byte[]{0x12, 0x32, 0x4E}, 5)
 </pre>Note that the variable t2 did not need to be declared.
@@ -254,10 +254,10 @@ variables, and by shortening certain method calls.
       <p>Jython provides a shortcut for parameters that have been
       defined with Java-Bean-like get and set methods:</p>
       <pre>
-   t2.SetCommandedState(Turnout.THROWN)
+   <code>t2.SetCommandedState(Turnout.THROWN)</code>
 </pre>can be written as
       <pre>
-   t2.commandedState = THROWN
+   <code>t2.commandedState = THROWN</code>
 </pre>where the assignment is actually invoking the set method.
 Also note that THROWN was defined when running the Python script at
 startup; CLOSED, ACTIVE, INACTIVE, RED, YELLOW and GREEN are also
@@ -268,9 +268,9 @@ the distribution)
       <p>A similar mechanism can be used to check the state of
       something:</p>
       <pre>
-&gt;&gt;&gt; print sensors.provideSensor("3").knownState == ACTIVE 
+&gt;&gt;&gt; <code>print sensors.provideSensor("3").knownState == ACTIVE</code>
 1
-&gt;&gt;&gt; print sensors.provideSensor("3").knownState == INACTIVE
+&gt;&gt;&gt; <code>print sensors.provideSensor("3").knownState == INACTIVE</code>
 0
 </pre>Note that Jython uses "1" to indicate true, and "0" to
 indicate false, so sensor 3 is currently active in this example.
@@ -280,9 +280,25 @@ You can also use the symbols "True" and "False" respectively.
       send a DCC packet to the rails you type:</p>
       <pre>
    
-   dcc.sendPacket([0x01, 0x03, 0xbb], 4) 
+   <code>dcc.sendPacket([0x01, 0x03, 0xbb], 4) </code>
 </pre>This sends that three-byte packet four times, and then
 returns to the command line.
+
+
+    <p>If the returned object is an ID Tag or RailCom Object, the return value 
+    ( from Java #toString() ) is the Hardware Address.<br>
+    
+    If you require the ID Tag UserName, go via the Reportable Interface.<br>
+    Eg. For a Block with username "BlockUserName", you could use :
+    </p>
+<pre><code>mylocostring=blocks.getByUserName("BlockUserName").getValue() #Block Object could be a String or ID Tag
+if (isinstance(mylocostring,jmri.Reportable)) : # The object is a Reportable
+    mylocostring = mylocostring .toReportString() # Set to the Report String</code>
+print mylocostring
+</pre>
+    
+
+
 
     <p><a href="#StartTopOfPage">[Go to top of page]</a></p>
     
