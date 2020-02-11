@@ -49,7 +49,6 @@ public class HeadLessTest {
     /**
      * Run tests with a compile-selected RunListener.
      *
-     * @param testClass the class containing tests to run
      */
     public static void run() {
         SummaryGeneratingListener listener = new jmri.util.junit.PrintingTestListener(System.out); // test-by-test output if enabled
