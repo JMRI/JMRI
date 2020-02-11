@@ -41,6 +41,18 @@ public class SprogIIUpdateFrame
         // Get the SPROG version
         _memo.getSprogVersionQuery().requestVersion(this);
     }
+    
+    /** 
+     * {@inheritDoc}
+     * Also ensures timers are no longer running
+     */
+    @Override
+    public void dispose() {
+        // kill any timers still running 
+        stopTimer();
+            
+        super.dispose();
+    }
 
     int bootVer = 0;
 

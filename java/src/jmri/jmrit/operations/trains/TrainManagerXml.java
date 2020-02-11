@@ -2,6 +2,13 @@ package jmri.jmrit.operations.trains;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.ProcessingInstruction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.InstanceManagerAutoInitialize;
@@ -11,11 +18,6 @@ import jmri.jmrit.operations.automation.AutomationManager;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import jmri.util.FileUtil;
-import org.jdom2.Document;
-import org.jdom2.Element;
-import org.jdom2.ProcessingInstruction;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Loads and stores trains using xml files. Also stores various train parameters
@@ -124,6 +126,13 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
 
         log.debug("Trains have been loaded!");
         InstanceManager.getDefault(TrainLogger.class).enableTrainLogging(Setup.isTrainLoggerEnabled());
+        
+        for (Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByIdList()) {
+            if (train.getStatusCode() == Train.CODE_BUILDING) {
+                log.warn("Reseting train {}, was building when saved", train.getName());
+                train.reset();
+            }
+        }
         setDirty(false); // clear dirty flag
     }
 

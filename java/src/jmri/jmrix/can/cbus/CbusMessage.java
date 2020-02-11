@@ -1,8 +1,10 @@
 package jmri.jmrix.can.cbus;
 
 import jmri.ProgrammingMode;
+import jmri.jmrix.AbstractMessage;
 import jmri.jmrix.can.CanFrame;
 import jmri.jmrix.can.CanMessage;
+import jmri.jmrix.can.CanMutableFrame;
 import jmri.jmrix.can.CanReply;
 
 import org.slf4j.Logger;
@@ -53,120 +55,63 @@ public class CbusMessage {
         return msg;
     }
     
-    /**
-     * Get the CAN ID within the CanMessage Header
-     *
-     * @param m CanMessage
-     * @return CAN ID of the message
-     */
-    public static int getId(CanMessage m) {
-        if (m.isExtended()) {
-            return m.getHeader() & 0x1FFFFFF;
-        } else {
-            return m.getHeader() & 0x7f;
-        }
-    }
-    
-    /**
-     * Get the priority from within the CanMessage Header
-     *
-     * @param m CanMessage
-     * @return Priority of the message
-     */
-    public static int getPri(CanMessage m) {
-        if (m.isExtended()) {
-            return (m.getHeader() >> 25) & 0x0F;
-        } else {
-            return (m.getHeader() >> 7) & 0x0F;
-        }
-    }
 
     /**
      * Get the Op Code from the CanMessage
      *
-     * @param m CanMessage
+     * @param am CanMessage or CanReply
      * @return OPC of the message
      */
-    public static int getOpcode(CanMessage m) {
-        return m.getElement(0);
+    public static int getOpcode(AbstractMessage am) {
+        return  am.getElement(0);
     }
 
     /**
      * Get the Data Length from the CanMessage
      *
-     * @param m CanMessage
+     * @param am CanMessage or CanReply
      * @return the message data length
      */
-    public static int getDataLength(CanMessage m) {
-        return m.getElement(0) >> 5;
-    }
-
-    /**
-     * Get the Node Number from the CanMessage
-     *
-     * @param m CanMessage
-     * @return the node number
-     */
-    public static int getNodeNumber(CanMessage m) {
-        return getNodeNumber((CanFrame)m);
+    public static int getDataLength(AbstractMessage am) {
+        return am.getElement(0) >> 5;
     }
     
     /**
      * Get the Node Number from a CanFrame Event
      *
-     * @param m CanFrame
+     * @param am CanMessage or CanReply
      * @return the node number if not a short event
      */
-    public static int getNodeNumber(CanFrame m) {
-        if (isEvent(m) && !isShort(m) ) {
-            return m.getElement(1) * 256 + m.getElement(2);
+    public static int getNodeNumber(AbstractMessage am) {
+        if (isEvent(am) && !isShort(am) ) {
+            return am.getElement(1) * 256 + am.getElement(2);
         } else {
             return 0;
         }
     }
-
-    /**
-     * Get the Event Number from the CanMessage
-     *
-     * @param m CanMessage
-     * @return the message event ( device ) number
-     */
-    public static int getEvent(CanMessage m) {
-        return getEvent((CanFrame)m);
-    }
     
     /**
-     * Get the Event Number from a CUS Event CanFrame
+     * Get the Event Number from a CBUS Event
      *
-     * @param m CanFrame
+     * @param m CanMessage or CanReply
      * @return the message event ( device ) number, else -1 if not an event.
      */
-    public static int getEvent(CanFrame m) {
+    public static int getEvent(AbstractMessage m) {
         if (isEvent(m)) {
             return m.getElement(3) * 256 + m.getElement(4);
         } else {
             return -1;
         }
     }
-
-    /**
-     * Get the Event Type ( on or off ) from the CanMessage
-     *
-     * @param m CanMessage
-     * @return CbusConstant EVENT_ON or EVENT_OFF
-     */
-    public static int getEventType(CanMessage m) {
-        return getEventType((CanFrame)m);
-    }
     
     /**
      * Get the Event Type ( on or off ) from a CanFrame
      *
-     * @param m CanFrame
+     * @param am CanFrame or CanReply
      * @return CbusConstant EVENT_ON or EVENT_OFF
      */
-    public static int getEventType(CanFrame m) {
-        if ( CbusOpCodes.isOnEvent(m.getElement(0))) {
+    public static int getEventType(AbstractMessage am) {
+        if ( CbusOpCodes.isOnEvent(am.getElement(0))) {
             return CbusConstants.EVENT_ON;
         } else {
             return CbusConstants.EVENT_OFF;
@@ -174,86 +119,76 @@ public class CbusMessage {
     }
 
     /**
-     * Tests if a CanMessage is an Event.
+     * Tests if a CanMessage or CanReply is an Event.
      *
      * Adheres to cbus spec, ie on off responses to an AREQ are events
      *
-     * @param m CanMessage
+     * @param am CanMessage or CanReply
      * @return True if event, else False.
      */
-    public static boolean isEvent(CanMessage m) {
-        return CbusOpCodes.isEvent(m.getElement(0));
-    }
-    
-/**
-     * Tests if a CanFrame is an Event.
-     *
-     * Adheres to cbus spec, ie on off responses to an AREQ are events
-     *
-     * @param m CanFrame to test
-     * @return True if event, else False.
-     */
-    public static boolean isEvent(CanFrame m) {
-        return CbusOpCodes.isEvent(m.getElement(0));
-    }
-    
-    /**
-     * Tests if CanMessage is a short event
-     *
-     * @param m CanMessage
-     * @return true if Short Event, else false
-     */
-    public static boolean isShort(CanMessage m) {
-        return CbusOpCodes.isShortEvent(m.getElement(0));
+    public static boolean isEvent(AbstractMessage am) {
+        return CbusOpCodes.isEvent(am.getElement(0));
     }
     
     /**
      * Tests if CanFrame is a short event
      *
-     * @param m CanFrame
+     * @param am CanReply or CanMessage
      * @return true if Short Event, else false
      */
-    public static boolean isShort(CanFrame m) {
-        return CbusOpCodes.isShortEvent(m.getElement(0));
+    public static boolean isShort(AbstractMessage am) {
+        return CbusOpCodes.isShortEvent(am.getElement(0));
     }
 
     /**
-     * Set the CAN ID within a CanMessage Header
+     * Set the CAN ID within a CanMessage or CanReply Header
      *
-     * @param m CanMessage
+     * @param am CanMessage or CanReply
      * @param id CAN ID
      */
-    public static void setId(CanMessage m, int id) {
-        if (m.isExtended()) {
-            if ((id & ~0x1fffff) != 0) {
-                throw new IllegalArgumentException("invalid extended ID value: " + id);
+    public static void setId(AbstractMessage am, int id) throws IllegalArgumentException {
+        if (am instanceof CanMutableFrame){
+            CanMutableFrame m = (CanMutableFrame) am;
+            if (m.isExtended()) {
+                if ((id & ~0x1fffff) != 0) {
+                    throw new IllegalArgumentException("invalid extended ID value: " + id);
+                }
+                int update = m.getHeader();
+                m.setHeader((update & ~0x01ffffff) | id);
+            } else {
+                if ((id & ~0x7f) != 0) {
+                    throw new IllegalArgumentException("invalid standard ID value: " + id);
+                }
+                int update = m.getHeader();
+                m.setHeader((update & ~0x07f) | id);
             }
-            int update = m.getHeader();
-            m.setHeader((update & ~0x01ffffff) | id);
-        } else {
-            if ((id & ~0x7f) != 0) {
-                throw new IllegalArgumentException("invalid standard ID value: " + id);
-            }
-            int update = m.getHeader();
-            m.setHeader((update & ~0x07f) | id);
+        }
+        else {
+            throw new IllegalArgumentException(am + " is Not a CanMutableFrame");
         }
     }
 
     /**
-     * Set the priority within a CanMessage Header
+     * Set the priority within a CanMessage or CanReply Header.
      *
-     * @param m CanMessage
+     * @param am CanMessage or CanReply
      * @param pri Priority
      */
-    public static void setPri(CanMessage m, int pri) {
-        if ((pri & ~0x0F) != 0) {
-            throw new IllegalArgumentException("Invalid CBUS Priority value: " + pri);
+    public static void setPri(AbstractMessage am, int pri) throws IllegalArgumentException {
+        if (am instanceof CanMutableFrame){
+            CanMutableFrame m = (CanMutableFrame) am;
+            if ((pri & ~0x0F) != 0) {
+                throw new IllegalArgumentException("Invalid CBUS Priority value: " + pri);
+            }
+            int update = m.getHeader();
+            if (m.isExtended()) {
+                m.setHeader((update & ~0x1e000000) | (pri << 25));
+            } else {
+                m.setHeader((update & ~0x780) | (pri << 7));
+            }
         }
-        int update = m.getHeader();
-        if (m.isExtended()) {
-            m.setHeader((update & ~0x1e000000) | (pri << 25));
-        } else {
-            m.setHeader((update & ~0x780) | (pri << 7));
+        else {
+            throw new IllegalArgumentException(am + " is Not a CanMutableFrame");
         }
     }
 
@@ -261,10 +196,10 @@ public class CbusMessage {
      * Returns string form of a CanMessage ( a Can Frame sent by JMRI )
      * Short / Long events converted to Sensor / Turnout / Light hardware address
      * message priority not indicated
-     * @param  m Can Frame Message
+     * @param  m CanReply or CanMessage
      * @return String of hardware address form
      */
-    public static String toAddress(CanMessage m) {
+    public static String toAddress(AbstractMessage m) {
         switch (m.getElement(0)) {
             case CbusConstants.CBUS_ACON:
                 // + form
@@ -299,158 +234,50 @@ public class CbusMessage {
      * Checks if a CanMessage is requesting Track Power On
      * 
      * @param  m Can Frame Message
-     * @return boolean
+     * @return True if outgoing track power on request
      */
     public static boolean isRequestTrackOn(CanMessage m) {
         return m.getOpCode() == CbusConstants.CBUS_RTON;
     }
 
     /**
-     * Get the CAN ID within the CanReply Header
+     * Get the CAN ID within a CanReply or CanMessage Header
      *
-     * @param r CanReply
+     * @param f CanReply or CanMessage
      * @return CAN ID of the outgoing message
      */
-    public static int getId(CanReply r) {
-        if (r.isExtended()) {
-            return r.getHeader() & 0x1FFFFF;
-        } else {
-            return r.getHeader() & 0x7f;
+    public static int getId(AbstractMessage f) throws IllegalArgumentException {
+        if (f instanceof CanFrame){
+            CanFrame cfMsg = (CanFrame) f;
+            if (cfMsg.isExtended()) {
+                return cfMsg.getHeader() & 0x1FFFFF;
+            } else {
+                return cfMsg.getHeader() & 0x7f;
+            }
+        }
+        else {
+            throw new IllegalArgumentException(f + " is Not a CanFrame");
         }
     }
 
     /**
-     * Get the priority from within the CanReply Header
+     * Get the priority from within the CanReply or CanMessage Header
      *
-     * @param r CanReply
+     * @param r CanReply or CanMessage
      * @return Priority of the outgoing message
      */
-    public static int getPri(CanReply r) {
-        if (r.isExtended()) {
-            return (r.getHeader() >> 25) & 0x0F;
-        } else {
-            return (r.getHeader() >> 7) & 0x0F;
-        }
-    }
-
-    /**
-     * Get the Op Code from the CanReply
-     *
-     * @param r CanReply
-     * @return OPC of the message
-     */
-    public static int getOpcode(CanReply r) {
-        return r.getElement(0);
-    }
-
-    /**
-     * Get the Data Length from the CanReply
-     *
-     * @param r CanReply
-     * @return the message data length
-     */
-    public static int getDataLength(CanReply r) {
-        return r.getElement(0) >> 5;
-    }
-
-    /**
-     * Get the Node Number from the CanReply
-     *
-     * @param r CanReply
-     * @return the node number
-     */
-    public static int getNodeNumber(CanReply r) {
-        return getNodeNumber((CanFrame)r);
-    }
-
-    /**
-     * Get the Event Number from the CanReply
-     *
-     * @param r CanReply
-     * @return the message event ( device ) number
-     */
-    public static int getEvent(CanReply r) {
-        return getEvent((CanFrame)r);
-    }
-
-    /**
-     * Get the Event Type ( on or off ) from the CanReply
-     *
-     * @param r CanReply
-     * @return 0 or 1
-     */
-    public static int getEventType(CanReply r) {
-        return getEventType((CanFrame)r);
-    }
-
-    /**
-     * Tests if CanReply is an Event.
-     * Adheres to cbus spec, ie on off responses to an AREQ are events
-     * @param r CanReply
-     * @return True if frame is an event, else False
-     */
-    public static boolean isEvent(CanReply r) {
-        return CbusOpCodes.isEvent(r.getElement(0));
-    }
-    
-    /**
-     * Tests if CanReply is a short event
-     * @param r CanReply
-     * @return True if short, else False
-     */
-    public static boolean isShort(CanReply r) {
-        return CbusOpCodes.isShortEvent(r.getElement(0));
-    }
-    
-    /**
-     * Set the CAN ID within a CanReply Header
-     *
-     * @param r CanReply
-     * @param id CAN ID
-     */
-    public static void setId(CanReply r, int id) {
-        if (r.isExtended()) {
-            if ((id & ~0x1fffff) != 0) {
-                throw new IllegalArgumentException("invalid extended ID value: " + id);
+    public static int getPri(AbstractMessage r) throws IllegalArgumentException {
+        if (r instanceof CanFrame){
+            CanFrame cfMsg = (CanFrame) r;
+            if (cfMsg.isExtended()) {
+                return (cfMsg.getHeader() >> 25) & 0x0F;
+            } else {
+                return (cfMsg.getHeader() >> 7) & 0x0F;
             }
-            int update = r.getHeader();
-            r.setHeader((update & ~0x01fffff) | id);
-        } else {
-            if ((id & ~0x7f) != 0) {
-                throw new IllegalArgumentException("invalid standard ID value: " + id);
-            }
-            int update = r.getHeader();
-            r.setHeader((update & ~0x07f) | id);
         }
-    }
-
-    /**
-     * Set the priority within a CanReply Header
-     *
-     * @param r CanReply
-     * @param pri Priority
-     */
-    public static void setPri(CanReply r, int pri) {
-        if ((pri & ~0x0F) != 0) {
-            throw new IllegalArgumentException("invalid CBUS Pri value: " + pri);
+        else {
+            throw new IllegalArgumentException(r + " is Not a CanFrame");
         }
-        int update = r.getHeader();
-        if (r.isExtended()) {
-            r.setHeader((update & ~0x1e00000) | (pri << 25));
-        } else {
-            r.setHeader((update & ~0x780) | (pri << 7));
-        }
-    }
-    
-    /**
-     * Returns string form of a CanReply ( a Can Frame received by JMRI )
-     * Short / Long events converted to Sensor / Turnout / Light hardware address
-     * message priority not indicated
-     * @param  r Can Frame Reply
-     * @return String of hardware address form
-     */ 
-    public static String toAddress(CanReply r) {
-        return toAddress(new CanMessage(r));
     }
 
     /**
@@ -611,7 +438,7 @@ public class CbusMessage {
      * Microchip AN247 format NOP message to set address.
      * <p>
      * The CBUS bootloader uses extended ID frames
-     * @param header CAN ID
+     * @param header CAN ID - overridden by call to setHeader
      * @return ready to send CanMessage
      */
     static public CanMessage getBootNop(int a, int header) {
@@ -623,16 +450,15 @@ public class CbusMessage {
         m.setElement(2, a & 0xFF);
         m.setElement(3, 0);
         m.setElement(4, 0x0D);
-        m.setElement(5, 0);
+        m.setElement(5, CbusConstants.CBUS_BOOT_NOP);
         m.setElement(6, 0);
         m.setElement(7, 0);
-        setPri(m, 0xb);
         return m;
     }
 
     /**
      * Microchip AN247 format message to reset and enter normal mode.
-     * @param header CAN ID
+     * @param header CAN ID - overridden by call to setHeader
      * @return ready to send CanMessage
      */
     static public CanMessage getBootReset(int header) {
@@ -644,17 +470,16 @@ public class CbusMessage {
         m.setElement(2, 0);
         m.setElement(3, 0);
         m.setElement(4, 0x0D);
-        m.setElement(5, 1);
+        m.setElement(5, CbusConstants.CBUS_BOOT_RESET);
         m.setElement(6, 0);
         m.setElement(7, 0);
-        setPri(m, 0xb);
         return m;
     }
 
     /**
      * Microchip AN247 format message to initialise the bootloader and set the
      * start address.
-     * @param header CAN ID
+     * @param header CAN ID - overridden by call to setHeader
      * @return ready to send CanMessage
      */
     static public CanMessage getBootInitialise(int a, int header) {
@@ -666,17 +491,20 @@ public class CbusMessage {
         m.setElement(2, a & 0xFF);
         m.setElement(3, 0);
         m.setElement(4, 0x0D);
-        m.setElement(5, 2);
+        m.setElement(5, CbusConstants.CBUS_BOOT_INIT);
         m.setElement(6, 0);
         m.setElement(7, 0);
-        setPri(m, 0xb);
         return m;
     }
 
     /**
      * Microchip AN247 format message to send the checksum for comparison.
-     * @param c 0-65535
-     * @param header CAN ID
+     * 
+     * At time of writing [6th Feb '20] The MERG bootloader doc is incorrect and
+     * shows the checksum as being byte swapped.
+     * 
+     * @param c 0-65535 2's complement of sum of all program bytes sent
+     * @param header CAN ID - overridden by call to setHeader
      * @return ready to send CanMessage
      */
     static public CanMessage getBootCheck(int c, int header) {
@@ -688,16 +516,15 @@ public class CbusMessage {
         m.setElement(2, 0);
         m.setElement(3, 0);
         m.setElement(4, 0x0D);
-        m.setElement(5, 3);
-        m.setElement(6, (c / 256) & 0xff);
-        m.setElement(7, c & 0xff);
-        setPri(m, 0xb);
+        m.setElement(5, CbusConstants.CBUS_BOOT_CHECK);
+        m.setElement(6, c & 0xff);
+        m.setElement(7, (c >> 8) & 0xff);
         return m;
     }
 
     /**
      * Microchip AN247 format message to check if a module is in boot mode.
-     * @param header CAN ID
+     * @param header CAN ID - overridden by call to setHeader
      * @return ready to send CanMessage
      */
     static public CanMessage getBootTest(int header) {
@@ -709,17 +536,16 @@ public class CbusMessage {
         m.setElement(2, 0);
         m.setElement(3, 0);
         m.setElement(4, 0x0D);
-        m.setElement(5, 4);
+        m.setElement(5, CbusConstants.CBUS_BOOT_TEST);
         m.setElement(6, 0);
         m.setElement(7, 0);
-        setPri(m, 0xb);
         return m;
     }
 
     /**
      * Microchip AN247 format message to write 8 bytes of data
      * @param d data array, 8 length, values 0-255
-     * @param header CAN ID
+     * @param header CAN ID - overridden by call to setHeader
      * @return ready to send CanMessage
      */
     static public CanMessage getBootWriteData(int[] d, int header) {
@@ -738,7 +564,31 @@ public class CbusMessage {
         } catch (Exception e) {
             log.error("Exception in bootloader data {}", e);
         }
-        setPri(m, 0xb);
+        return m;
+    }
+
+    /**
+     * Microchip AN247 format message to write 8 bytes of data
+     * @param d data array, 8 length, values 0-255
+     * @param header CAN ID - overridden by call to setHeader
+     * @return ready to send CanMessage
+     */
+    static public CanMessage getBootWriteData(byte[] d, int header) {
+        CanMessage m = new CanMessage(8, header);
+        m.setExtended(true);
+        m.setHeader(0x5);
+        try {
+            m.setElement(0, d[0] & 0xff);
+            m.setElement(1, d[1] & 0xff);
+            m.setElement(2, d[2] & 0xff);
+            m.setElement(3, d[3] & 0xff);
+            m.setElement(4, d[4] & 0xff);
+            m.setElement(5, d[5] & 0xff);
+            m.setElement(6, d[6] & 0xff);
+            m.setElement(7, d[7] & 0xff);
+        } catch (Exception e) {
+            log.error("Exception in bootloader data {}", e);
+        }
         return m;
     }
 

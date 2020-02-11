@@ -15,7 +15,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -41,7 +41,7 @@ sur le tableau, qui vous emm&#232;ne &#224; la
 <p>Du tableau, vous pouvez d&#233;finir des M&#226;ts de Signalisation individuels avec tous les aspects qu'ils sont capables
 d'afficher en cliquant dans la colonne  "Aspect".</p>
 
-    <!--#include virtual="/Footer" -->
+    <!--#include virtual="/Footer.shtml" -->
     </div>
     </div>
 </body>

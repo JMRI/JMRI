@@ -21,7 +21,7 @@
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
   <!-- /Style -->
-</head><!--#include virtual="/Header" -->
+</head><!--#include virtual="/Header.shtml" -->
 
 <body>
   <div class="nomenu" id="mBody">
@@ -128,7 +128,7 @@
       fonctionnement en mode manuel &eacute;t&eacute;
       initi&eacute;. Ceci assure reprise automatique en douceur de
       l'op&eacute;ration. &lt;/p&gt;
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

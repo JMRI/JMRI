@@ -23,7 +23,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -283,7 +283,7 @@ ont &#233;t&#233; pr&#233;d&#233;finies dans le fichier signalSpeed.xml, en plus
 
 Localis&#233; &#224; package/jmri/jmrt/beantable/BlockTable
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

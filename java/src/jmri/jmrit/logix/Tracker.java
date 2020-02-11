@@ -21,6 +21,8 @@ import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+
+import jmri.Block;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,11 +36,12 @@ import jmri.jmrit.display.LocoIcon;
  */
 public class Tracker {
 
+    private static final String TRACKER_NO_CURRENT_BLOCK = "TrackerNoCurrentBlock";
     TrackerTableAction _parent;
     private String _trainName;
     private ArrayList<OBlock> _headRange; // blocks reachable from head block
     private ArrayList<OBlock> _tailRange; // blocks reachable from tail block
-    private ArrayList<OBlock> _lostRange = new ArrayList<OBlock>(); // blocks that lost detection
+    private ArrayList<OBlock> _lostRange = new ArrayList<>(); // blocks that lost detection
     private LinkedList<OBlock> _occupies = new LinkedList<>();     // blocks occupied by train
     long _startTime;
     String _statusMessage;
@@ -66,7 +69,7 @@ public class Tracker {
         _startTime = System.currentTimeMillis();
         block._entryTime = _startTime;
         List<OBlock> occupy = initialRange(_parent);
-        if (occupy.size() > 0) {
+        if (!occupy.isEmpty()) {
             new ChooseStartBlock(block, occupy, this, _parent);
         } else {
             _parent.addTracker(this);
@@ -89,7 +92,7 @@ public class Tracker {
         ArrayList<OBlock> occupy = new ArrayList<>();
         for (OBlock b : range) {
             if (!_occupies.contains(b) && 
-                    ((b.getState() & OBlock.OCCUPIED) != 0 || (b.getState() & OBlock.UNDETECTED) != 0)
+                    ((b.getState() & Block.OCCUPIED) != 0 || (b.getState() & Block.UNDETECTED) != 0)
                     && parent.checkBlock(b)) {
                 occupy.add(b);
             }
@@ -112,11 +115,11 @@ public class Tracker {
         return _trainName;
     }
 
-    final protected OBlock getHeadBlock() {
+    protected final OBlock getHeadBlock() {
         return _occupies.peekFirst();
     }
 
-    final protected OBlock getTailBlock() {
+    protected final OBlock getTailBlock() {
         return _occupies.peekLast();
     }
 
@@ -171,7 +174,7 @@ public class Tracker {
                } else if (!getPathsSet(blkB, portal).isEmpty()) {
                    hasEnterB = true;
                }
-           } else if ((block.getState() & OBlock.UNDETECTED) != 0) {
+           } else if ((block.getState() & Block.UNDETECTED) != 0) {
                darkBlocks.add(block);
            }
        }
@@ -185,8 +188,6 @@ public class Tracker {
        }
        if (darkBlocks.isEmpty()) {
            return PathSet.NOWAY;
-//           throw new JmriException("Block \""+blkA.getDisplayName()+"\" and \""+blkB.getDisplayName()+
-//                   "\" are NOT adjacent and have no intervening dark block!");
        }
        // blkA and blkB not adjacent, so look for a connecting dark block
        PathSet darkPathSet;
@@ -258,10 +259,7 @@ public class Tracker {
      * @param b block to be added
      */
     private boolean areDisjoint(OBlock b) {
-        if (_headRange.contains(b) || _occupies.contains(b) || _tailRange.contains(b)) {
-            return false;
-        }
-        return true;
+        return !(_headRange.contains(b) || _occupies.contains(b) || _tailRange.contains(b));
     }
 
     private void addtoHeadRange(OBlock b) {
@@ -308,15 +306,15 @@ public class Tracker {
      * @return range of reachable blocks
      */
      protected List<OBlock> makeRange() {
-        _headRange = new ArrayList<OBlock>();
-        _tailRange = new ArrayList<OBlock>();
+        _headRange = new ArrayList<>();
+        _tailRange = new ArrayList<>();
         OBlock headBlock = getHeadBlock();
         OBlock tailBlock = getTailBlock();
         if (headBlock != null) {
             for (Portal portal : headBlock.getPortals()) {
                 OBlock block = portal.getOpposingBlock(headBlock);
                 if (block != null) {
-                    if ((block.getState() & OBlock.UNDETECTED) != 0) {
+                    if ((block.getState() & Block.UNDETECTED) != 0) {
                         for (Portal p : block.getPortals()) {
                             OBlock blk = p.getOpposingBlock(block);
                             if (!blk.equals(headBlock)) {
@@ -333,7 +331,7 @@ public class Tracker {
             for (Portal portal : tailBlock.getPortals()) {
                 OBlock block = portal.getOpposingBlock(tailBlock);
                 if (block != null) {
-                    if ((block.getState() & OBlock.UNDETECTED) != 0) {
+                    if ((block.getState() & Block.UNDETECTED) != 0) {
                         for (Portal p : block.getPortals()) {
                             OBlock blk = p.getOpposingBlock(block);
                             if (!blk.equals(tailBlock)) {
@@ -351,8 +349,8 @@ public class Tracker {
 
      private List<OBlock> buildRange() {
         // make new list since tracker table is holding the old list
-        ArrayList<OBlock> range = new ArrayList<OBlock>();    // total range of train  
-        if (_occupies.size() == 0) {
+        ArrayList<OBlock> range = new ArrayList<>();    // total range of train
+        if (_occupies.isEmpty()) {
             log.warn("{} does not occupy any blocks!", _trainName);
         }
         for (OBlock b : _occupies) {
@@ -373,7 +371,7 @@ public class Tracker {
 
     protected void stop() {
         for (OBlock b : _occupies) {
-            if ((b.getState() & OBlock.UNDETECTED) != 0) {
+            if ((b.getState() & Block.UNDETECTED) != 0) {
                 removeName(b);
             }
         }
@@ -392,7 +390,7 @@ public class Tracker {
         // remove any adjacent dark block or mid-range lost block
         for (Portal p : block.getPortals()) {
             OBlock b = p.getOpposingBlock(block);
-            if ((b.getState() & (OBlock.UNDETECTED | OBlock.UNOCCUPIED)) != 0) {
+            if ((b.getState() & (Block.UNDETECTED | Block.UNOCCUPIED)) != 0) {
                 removeFromOccupies(b);
                 removeName(b);
             }
@@ -410,7 +408,7 @@ public class Tracker {
 
     protected boolean move(OBlock block, int state) {
         _statusMessage = null;
-        if ((state & OBlock.OCCUPIED) != 0) {
+        if ((state & Block.OCCUPIED) != 0) {
             if (_occupies.contains(block)) {
                 if (block.getValue() == null) { // must be a regained lost block
                     block.setValue(_trainName);
@@ -449,11 +447,11 @@ public class Tracker {
                 }
                 addtoOccupies(block, false);
             } else if (!_occupies.contains(block)) {
-                log.warn("Block \"" + block.getDisplayName() + "\" is not within range of  \"" + _trainName + "\"!");
+                log.warn("Block \"{}\" is not within range of  \"{}\"!",block.getDisplayName(),_trainName );
             }
             makeRange();
             return true;
-        } else if ((state & OBlock.UNOCCUPIED) != 0) {
+        } else if ((state & Block.UNOCCUPIED) != 0) {
             removeBlock(block);
             int size = _occupies.size();
             if (size == 0) {    // lost tracker
@@ -481,7 +479,7 @@ public class Tracker {
 
         java.awt.Toolkit.getDefaultToolkit().beep();
         new ChooseRecoverBlock(block, list, this, _parent);
-        _statusMessage = Bundle.getMessage("TrackerNoCurrentBlock", _trainName,
+        _statusMessage = Bundle.getMessage(TRACKER_NO_CURRENT_BLOCK, _trainName,
                 block.getDisplayName()) + "\n" + Bundle.getMessage("TrackingStopped");
     }
 
@@ -532,7 +530,7 @@ public class Tracker {
         JPanel makeBlurb() {
             JPanel panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-            panel.add(new JLabel(Bundle.getMessage("TrackerNoCurrentBlock", _trainName, block.getDisplayName())));
+            panel.add(new JLabel(Bundle.getMessage(TRACKER_NO_CURRENT_BLOCK, _trainName, block.getDisplayName())));
             panel.add(new JLabel(Bundle.getMessage("PossibleLocation", _trainName)));
             return panel;
         }
@@ -553,9 +551,7 @@ public class Tracker {
             panel.add(recoverButton);
 
             JButton cancelButton = new JButton(Bundle.getMessage("ButtonStop"));
-            cancelButton.addActionListener((ActionEvent a) -> {
-                doStopAction();
-            });
+            cancelButton.addActionListener((ActionEvent a) -> doStopAction());
             panel.add(cancelButton);
             return panel;
         }        
@@ -565,7 +561,7 @@ public class Tracker {
             OBlock blk = _jList.getSelectedValue();
             if (blk != null) {
                 String msg = null;
-                if ((blk.getState() & OBlock.OCCUPIED) == 0) {
+                if ((blk.getState() & Block.OCCUPIED) == 0) {
                     msg = Bundle.getMessage("blockUnoccupied", blk.getDisplayName());
                 } else {
                     Tracker t = parent.findTrackerIn(blk);
@@ -604,7 +600,7 @@ public class Tracker {
 
         void doStopAction() {
             parent.stopTracker(tracker, block);
-            parent.setStatus(Bundle.getMessage("TrackerNoCurrentBlock", _trainName,
+            parent.setStatus(Bundle.getMessage(TRACKER_NO_CURRENT_BLOCK, _trainName,
                     block.getDisplayName()) + "\n" + Bundle.getMessage("TrackingStopped"));
             dispose();
         }
@@ -677,12 +673,12 @@ public class Tracker {
                 addtoOccupies(b, false); // make additional block the tail
                 b._entryTime = System.currentTimeMillis();
                 _jList.removeListSelectionListener(this);
-                List<OBlock> list = initialRange(parent);
-                if (list.isEmpty()) {
+                List<OBlock> blockList = initialRange(parent);
+                if (blockList.isEmpty()) {
                     doAction();
                     dispose();
                 }
-                _jList.setModel(new BlockListModel(list));
+                _jList.setModel(new BlockListModel(blockList));
                 _jList.addListSelectionListener(this);
             }
         }
@@ -731,5 +727,5 @@ public class Tracker {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Tracker.class);
+    private static final Logger log = LoggerFactory.getLogger(Tracker.class);
 }

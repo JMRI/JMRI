@@ -28,7 +28,7 @@ import jmri.managers.AbstractCabSignalManager;
  */
 public class CbusCabSignalManager extends AbstractCabSignalManager {
 
-    private CanSystemConnectionMemo _memo = null;
+    private final CanSystemConnectionMemo _memo;
 
     public CbusCabSignalManager(CanSystemConnectionMemo memo){
         super();

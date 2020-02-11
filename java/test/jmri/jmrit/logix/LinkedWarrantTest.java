@@ -2,10 +2,8 @@ package jmri.jmrit.logix;
 
 import java.awt.GraphicsEnvironment;
 import java.io.File;
-import jmri.ConfigureManager;
-import jmri.InstanceManager;
-import jmri.Sensor;
-import jmri.SensorManager;
+
+import jmri.*;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.rules.RetryRule;

@@ -19,7 +19,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -65,7 +65,7 @@ conduire vos signaux dans de nombreuses applications.
         <dd>Les biblioth&egrave;ques JMRI simplifient grandement
         l'&eacute;criture d'un programme pour que votre
         r&eacute;seau fasse exactement ce que vous voulez.</dd>
-      </dl><!--#include virtual="/Footer" -->
+      </dl><!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

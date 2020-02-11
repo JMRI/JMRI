@@ -14,7 +14,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -214,7 +214,7 @@ Les informations RPS peuvent &#234;tre utilis&#233;es pour d&#233;tecter l'occup
 Il y a plus d'informations disponibles sur le
 <a href="http://www.proto87.com/RPS-MR-position-detection-system.html"> Site Web RPS</a>.
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
  </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->
 </body>

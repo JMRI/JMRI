@@ -2,16 +2,18 @@ package jmri.jmrit.operations.trains.tools;
 
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Test;
+import org.netbeans.jemmy.operators.JFileChooserOperator;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.JUnitOperationsUtil;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
-import org.netbeans.jemmy.operators.JFileChooserOperator;
 
 /**
  *
@@ -63,6 +65,9 @@ public class PrintSavedTrainManifestActionTest extends OperationsTestCase {
         Assert.assertTrue(text.contains("manifestsBackups"));
         Assert.assertTrue(text.contains("STF"));
         fco.cancelSelection();
+        
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(PrintSavedTrainManifestActionTest.class);

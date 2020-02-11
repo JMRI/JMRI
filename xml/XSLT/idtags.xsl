@@ -25,7 +25,7 @@
      In batch work via running Ant, this is defined
      via the build.xml file
 -->
-<xsl:param name="JmriCopyrightYear" select="1997-2020" />
+<xsl:param name="JmriCopyrightYear" select="concat('1997','-','2020')" />
 
 <!-- Need to instruct the XSLT processor to use HTML output rules.
      See http://www.w3.org/TR/xslt#output for more details
@@ -71,25 +71,35 @@ Use Fast Clock = "<xsl:value-of select="useFastClock"/>"
 <!-- Display ID Tags -->
 <xsl:template match="idtags">
 <h4>ID Tags</h4>
+<table border='1'>
+<tr>
+    <th>System<br/>Name</th>
+    <th>User<br/>Name</th>
+    <th>Comment</th>
+    <th>Where<br/>Last<br/>Seen</th>
+    <th>When<br/>Last<br/>Seen</th>
+</tr>
+
 <xsl:apply-templates/>
+</table>
 </xsl:template>
 
 <xsl:template match="idtag">
-ID Tag
-systemName="<xsl:value-of select="systemName"/>"
-<xsl:if test="userName">
-userName="<xsl:value-of select="userName"/>"
-</xsl:if>
-<xsl:if test="comment">
-comment="<xsl:value-of select="comment"/>"
-</xsl:if>
-<xsl:if test="whereLastSeen">
-whereLastSeen="<xsl:value-of select="whereLastSeen"/>"
-</xsl:if>
-<xsl:if test="whenLastSeen">
-whenLastSeen="<xsl:value-of select="whenLastSeen"/>"
-</xsl:if>
-<br/>
+<tr>
+<td><xsl:value-of select="systemName"/></td>
+<td><xsl:if test="userName">
+    <xsl:value-of select="userName"/>
+    </xsl:if></td>
+<td><xsl:if test="comment">
+    <xsl:value-of select="comment"/>
+    </xsl:if></td>
+<td><xsl:if test="whereLastSeen">
+    <xsl:value-of select="whereLastSeen"/>
+    </xsl:if></td>
+<td><xsl:if test="whenLastSeen">
+    <xsl:value-of select="whenLastSeen"/>
+    </xsl:if></td>
+</tr>
 </xsl:template>
 
 </xsl:stylesheet>

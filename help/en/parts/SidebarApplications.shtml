@@ -1,13 +1,14 @@
 <!-- SidebarApplications.shtml -->
-<!-- This is the common sidebar definition for Tools pages, originally made from help/en/html/apps/Sidebar.shtml -->
-		<dt><h3><a href="/help/en/html/apps/">Applications</a></h3></dt>
-		<dd>
+<!-- This is a sidebar page, originally made from help/en/html/apps/Sidebar.shtml -->
+	<dt><h3><a href="/help/en/html/apps/">Applications</a></h3></dt>
+	<dd>
 		  <ul>
-			<li><a href="DecoderPro/index.shtml">DecoderPro&reg;</a></li>
-			<li><a href="PanelPro/index.shtml">PanelPro&trade;</a></li>
-			<li><a href="DispatcherPro/index.shtml">DispatcherPro&trade;</a></li>
-	        <li><a href="../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a></li>
-			<li><a href="SoundPro/SoundPro.shtml">SoundPro&trade;</a></li>
+	             <li><a href="/help/en/html/apps/DecoderPro/index.shtml">DecoderPro&reg;</a></li>
+	             <li><a href="/help/en/html/apps/PanelPro/index.shtml">PanelPro&trade;</a></li>
+	             <li><a href="/help/en/html/apps/DispatcherPro/index.shtml">DispatcherPro&trade;</a></li>
+	             <li><a href="/help/en/package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a></li>
+	             <li><a href="/help/en/html/apps/SoundPro/SoundPro.shtml">SoundPro&trade;</a></li>
+	             <li><i><a href="/help/en/html/apps/index.shtml#addonApplications">Apps with JMRI connections...</a></i></li>			
 		  </ul>
-        </dd>
+          </dd>
 <!-- /SidebarApplications.shtml -->

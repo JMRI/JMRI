@@ -89,6 +89,7 @@
       <disabledAspects>
         <disabledAspect>Stop and Proceed</disabledAspect>
       </disabledAspects>
+      <resetPreviousStates>yes</resetPreviousStates>
     </matrixsignalmast>
   </signalmasts>
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">

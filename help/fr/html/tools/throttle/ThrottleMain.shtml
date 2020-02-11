@@ -22,7 +22,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -61,7 +61,7 @@ capacit&#233; de commander les fonctions de lumi&#232;re et du son.</p>
 
 <p><a href="ThrottleChapter1.shtml">Aide R&#233;gulateurs pour JMRI v 1.x/2.x</a>
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
 
       </div><!-- closes #mainContent-->
     </div> <!-- closes #mBody-->

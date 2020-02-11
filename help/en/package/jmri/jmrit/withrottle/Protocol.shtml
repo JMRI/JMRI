@@ -35,7 +35,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -1059,7 +1059,7 @@ HM error - long address &lt; 127 S23
     unknown at this time.</p>
 
     <p>This is the package/jmri/jmrit/withrottle/Protocol help
-      page</p><!--#include virtual="/Footer" -->
+      page</p><!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

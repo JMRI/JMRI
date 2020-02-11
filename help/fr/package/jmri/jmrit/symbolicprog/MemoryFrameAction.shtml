@@ -20,7 +20,7 @@
 
 <body>
   Memory Monitor Tool
-   Memory Monitor Tool <!--#include virtual="/Header" -->
+   Memory Monitor Tool <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -107,7 +107,7 @@
       At the top of the left column, the maximum memory that
       can be available to JMRI is displayed.
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

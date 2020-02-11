@@ -811,6 +811,12 @@ public class JUnitUtil {
                         // do not actually read tags
                         this.dirty = false;
                     }
+
+                    @Override
+                    protected void initShutdownTask(){
+                        //don't even register the shutdownTask
+                    }
+
                 });
     }
 
@@ -1370,20 +1376,6 @@ public class JUnitUtil {
      */
     public static Container findContainer(String title) {
         return new JDialogOperator(title).getContentPane();
-    }
-
-    /**
-     * Press a button after finding it in a container by title.
-     * 
-     * @param clazz an object no longer used
-     * @param frame container containing button to press
-     * @param text button title
-     * @return the pressed button
-     * @deprecated use {@link #pressButton(Container, String)} instead
-     */
-    @Deprecated // for removal after 4.18
-    public static AbstractButton pressButton(SwingTestCase clazz, Container frame, String text) {
-        return pressButton(frame, text);
     }
 
     /**

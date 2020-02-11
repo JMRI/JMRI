@@ -175,7 +175,7 @@
       contribute your changes, please read <a href=
       "../getgitcode.shtml">Using Git</a>.
       </p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

@@ -52,7 +52,7 @@ public class CbusAllocateNodeNumberTest {
         // create a thread that waits to close the dialog box opened later
         Thread dialog_thread = new Thread(() -> {
             // constructor for jdo will wait until the dialog is visible
-            JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("NdEntrNumTitle",1234));
+            JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("NdEntrNumTitle",String.valueOf(1234)));
             
             JLabelOperator labelOper = new JLabelOperator(jdo, Bundle.getMessage("NdRqNdDetails"));
             Assert.assertNotNull("labelOper exists",labelOper);
@@ -90,7 +90,7 @@ public class CbusAllocateNodeNumberTest {
             JSpinnerOperator spinner = new JSpinnerOperator(jdo, 0);
             
             JTextFieldOperator jtfo = new JTextFieldOperator(spinner);
-            Assert.assertEquals("originalFieldValue", "256", jtfo.getText());
+            Assert.assertEquals("originalFieldValue", "1234", jtfo.getText());
             
             jtfo.setText("123");
             JLabelOperator labelOper4 = new JLabelOperator(jdo, CbusNodeConstants.getReservedModule(123));
@@ -154,6 +154,8 @@ public class CbusAllocateNodeNumberTest {
         rsna.setElement(2, 0x98); // 65432
         t.reply(rsna);
         
+        Assert.assertTrue("Node 65432 is in Node Model",null != nodeModel.getNodeByNodeNum(65432));
+
         t.dispose();
         
     }
@@ -265,6 +267,7 @@ public class CbusAllocateNodeNumberTest {
         t = null;
         nodeModel.dispose();
         nodeModel = null;
+        memo.dispose();
         memo = null;
         tcis.terminateThreads();
         tcis = null;

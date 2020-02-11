@@ -325,6 +325,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
     JTextField _userName = new JTextField(25);
 
     JmriJFrame _addFrame = null;
+    JTabbedPane _tabbedPane = null;
 
     RouteInputModel _inputModel;
     JScrollPane _inputScrollPane;
@@ -869,6 +870,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
     @Override
     protected void addPressed(ActionEvent e) {
         makeEditWindow();
+        _tabbedPane.setSelectedIndex(0);
         createButton.setVisible(true);
         cancelButton.setVisible(true);
         _typePanel.setVisible(true);
@@ -888,7 +890,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             _addFrame.addHelpMenu("package.jmri.jmrit.beantable.LRouteAddEdit", true);
             _addFrame.setLocation(100, 30);
 
-            JTabbedPane tabbedPane = new JTabbedPane();
+            _tabbedPane = new JTabbedPane();
 
             //////////////////////////////////// Tab 1 /////////////////////////////
             JPanel tab1 = new JPanel();
@@ -977,7 +979,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             tab1.add(pb);
 
             tab1.setVisible(true);
-            tabbedPane.addTab(rbx.getString("BasicTab"), null, tab1, rbx.getString("BasicTabHint"));
+            _tabbedPane.addTab(rbx.getString("BasicTab"), null, tab1, rbx.getString("BasicTabHint"));
 
             //////////////////////////////////// Tab 2 /////////////////////////////
             JPanel tab2 = new JPanel();
@@ -1008,7 +1010,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             _outputScrollPane = makeColumns(routeOutputTable, _setStateCombo, true);
             tab2.add(_outputScrollPane, BorderLayout.CENTER);
             tab2.setVisible(true);
-            tabbedPane.addTab(rbx.getString("ActionTab"), null, tab2, rbx.getString("ActionTabHint"));
+            _tabbedPane.addTab(rbx.getString("ActionTab"), null, tab2, rbx.getString("ActionTabHint"));
 
             //////////////////////////////////// Tab 3 /////////////////////////////
             JPanel tab3 = new JPanel();
@@ -1040,7 +1042,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             _inputScrollPane = makeColumns(routeInputTable, _testStateCombo, true);
             tab3.add(_inputScrollPane, BorderLayout.CENTER);
             tab3.setVisible(true);
-            tabbedPane.addTab(rbx.getString("TriggerTab"), null, tab3, rbx.getString("TriggerTabHint"));
+            _tabbedPane.addTab(rbx.getString("TriggerTab"), null, tab3, rbx.getString("TriggerTabHint"));
 
             ////////////////////// Tab 4 /////////////////
             JPanel tab4 = new JPanel();
@@ -1113,14 +1115,14 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             }
             tab4.add(alignScrollPane, BorderLayout.CENTER);
             tab4.setVisible(true);
-            tabbedPane.addTab(rbx.getString("MiscTab"), null, tab4, rbx.getString("MiscTabHint"));
+            _tabbedPane.addTab(rbx.getString("MiscTab"), null, tab4, rbx.getString("MiscTabHint"));
 
             Container contentPane = _addFrame.getContentPane();
             //tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 
             ///////////////////////////////////
             JPanel pt = new JPanel();
-            pt.add(tabbedPane);
+            pt.add(_tabbedPane);
             contentPane.add(pt);
 
             // set listener for window closing

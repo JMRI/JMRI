@@ -181,15 +181,15 @@ public class CbusMessageTest {
         m.setElement(3, 0x4b);
         m.setElement(4, 0xb3);
 
-        Assert.assertEquals("string toAddressMessageAcon", CbusMessage.toAddress(m),"+n56747e19379");
+        Assert.assertEquals("string toAddressMessageAcon","+n56747e19379",CbusMessage.toAddress(m));
         m.setElement(0, 0x91); // ACOF OPC
-        Assert.assertEquals("toAddressMessageAcof", CbusMessage.toAddress(m),"-n56747e19379" );
+        Assert.assertEquals("toAddressMessageAcof","-n56747e19379",CbusMessage.toAddress(m) );
         m.setElement(0, 0x98); // ASON OPC
-        Assert.assertEquals("toAddressMessageAson", CbusMessage.toAddress(m),"+19379" );
+        Assert.assertEquals("toAddressMessageAson", "+19379",CbusMessage.toAddress(m) );
         m.setElement(0, 0x99); // ASOF OPC
-        Assert.assertEquals("toAddressMessageAsof", CbusMessage.toAddress(m),"-19379" );
+        Assert.assertEquals("toAddressMessageAsof", "-19379",CbusMessage.toAddress(m) );
         m.setElement(0, 0x9e); // ARSON OPC
-        Assert.assertEquals("toAddressMessageArson", CbusMessage.toAddress(m),"X9EDDAB4BB3" );
+        Assert.assertEquals("toAddressMessageArson", "X9EDDAB4BB3", CbusMessage.toAddress(m) );
     }
     
     @Test
@@ -202,15 +202,15 @@ public class CbusMessageTest {
         r.setElement(3, 0x4b);
         r.setElement(4, 0xb3);
 
-        Assert.assertEquals("toAddressReplyAcon", CbusMessage.toAddress(r),"+n56747e19379");
+        Assert.assertEquals("toAddressReplyAcon","+n56747e19379",CbusMessage.toAddress(r));
         r.setElement(0, 0x91); // ACOF OPC
-        Assert.assertEquals("toAddressReplyAcof", CbusMessage.toAddress(r),"-n56747e19379" );
+        Assert.assertEquals("toAddressReplyAcof", "-n56747e19379",CbusMessage.toAddress(r) );
         r.setElement(0, 0x98); // ASON OPC
-        Assert.assertEquals("toAddressReplyAson", CbusMessage.toAddress(r),"+19379" );
+        Assert.assertEquals("toAddressReplyAson", "+19379",CbusMessage.toAddress(r) );
         r.setElement(0, 0x99); // ASOF OPC
-        Assert.assertEquals("toAddressReplyAsof", CbusMessage.toAddress(r),"-19379" );
+        Assert.assertEquals("toAddressReplyAsof", "-19379",CbusMessage.toAddress(r) );
         r.setElement(0, 0x9e); // ARSON OPC
-        Assert.assertEquals("toAddressReplyArson", CbusMessage.toAddress(r),"X9EDDAB4BB3" );
+        Assert.assertEquals("toAddressReplyArson", "X9EDDAB4BB3",CbusMessage.toAddress(r) );
     }    
     
     @Test
@@ -293,12 +293,26 @@ public class CbusMessageTest {
         Assert.assertEquals("Data Length 7 r",7,CbusMessage.getDataLength(r));
         Assert.assertEquals("Data Length 7 m",7,CbusMessage.getDataLength(m));
         
-        r = null;
-        m = null;
     }
     
     @Test
     public void testsetgetPriority() {
+        
+        try {
+            CbusMessage.setPri(null,0x01);
+            Assert.fail("Should have thrown an exception");
+        } catch (IllegalArgumentException e) {
+            Assert.assertEquals("null is Not a CanMutableFrame", e.getMessage());
+        }
+        
+        try {
+            CbusMessage.getPri(null);
+            Assert.fail("Should have thrown an exception");
+        } catch (IllegalArgumentException e) {
+            Assert.assertEquals("null is Not a CanFrame", e.getMessage());
+        }
+        
+        
         CanReply r = new CanReply(0x00);
         CanMessage m = new CanMessage(0x00);
         Assert.assertEquals("Priority 0 r",0,CbusMessage.getPri(r));
@@ -308,7 +322,7 @@ public class CbusMessageTest {
             CbusMessage.setPri(r,0xff);
             Assert.fail("Should have thrown an exception");
         } catch (IllegalArgumentException e) {
-            Assert.assertEquals("invalid CBUS Pri value: 255", e.getMessage());
+            Assert.assertEquals("Invalid CBUS Priority value: 255", e.getMessage());
         }
         
         try {
@@ -344,6 +358,21 @@ public class CbusMessageTest {
     @Test
     public void testsetgetId() {
         
+        try {
+            CbusMessage.setId(null,0x01);
+            Assert.fail("Should have thrown an exception");
+        } catch (IllegalArgumentException e) {
+            Assert.assertEquals("null is Not a CanMutableFrame", e.getMessage());
+        }
+        
+        try {
+            CbusMessage.getId(null);
+            Assert.fail("Should have thrown an exception");
+        } catch (IllegalArgumentException e) {
+            Assert.assertEquals("null is Not a CanFrame", e.getMessage());
+        }
+        
+        
         CanReply r = new CanReply(0x00);
         CanMessage m = new CanMessage(0x00);
         Assert.assertEquals("getId 0 r",0,CbusMessage.getId(r));
@@ -359,13 +388,13 @@ public class CbusMessageTest {
         try {
             CbusMessage.setId(r,0xff);
             Assert.fail("Should have thrown an exception");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
         }
         
         try {
             CbusMessage.setId(m,0xff);
             Assert.fail("Should have thrown an exception");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
         }
         
         r.setExtended(true);
@@ -382,13 +411,13 @@ public class CbusMessageTest {
         try {
             CbusMessage.setId(r,0xffffff);
             Assert.fail("r Should have thrown an exception");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
         }
         
         try {
             CbusMessage.setId(m,0xffffff);
             Assert.fail("m Should have thrown an exception");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
         }        
         
     }
@@ -401,7 +430,6 @@ public class CbusMessageTest {
         Assert.assertTrue(CbusMessage.isArst(r));
         r.setElement(0, 0x06);
         Assert.assertFalse(CbusMessage.isArst(r));
-        r = null;
     }
     
     @Test
@@ -414,7 +442,6 @@ public class CbusMessageTest {
         Assert.assertEquals("DIRECTBYTEMODE","[592] 84 FF 00 D6 00",m.toString());
         m = CbusMessage.getReadCV(214,jmri.ProgrammingMode.REGISTERMODE,0x12);
         Assert.assertEquals("REGISTERMODE","[592] 84 FF 00 D6 03",m.toString());
-        m = null;
     }
     
     @Test
@@ -427,7 +454,6 @@ public class CbusMessageTest {
         Assert.assertEquals("DIRECTBYTEMODE","[592] A2 FF 00 D6 00 00",m.toString());
         m = CbusMessage.getWriteCV(214,123,jmri.ProgrammingMode.REGISTERMODE,0x12);
         Assert.assertEquals("REGISTERMODE","[592] A2 FF 00 D6 03 7B",m.toString());
-        m = null;
     }    
     
     
@@ -446,41 +472,46 @@ public class CbusMessageTest {
     @Test
     public void testgetBootNop() {
         CanMessage m = CbusMessage.getBootNop(0x3D,0x12);
-        Assert.assertEquals("getBootNop","[16000004] 00 00 3D 00 0D 00 00 00",m.toString());
+        Assert.assertEquals("getBootNop","[4] 00 00 3D 00 0D 00 00 00",m.toString());
     }    
 
     @Test
     public void testgetBootReset() {
         CanMessage m = CbusMessage.getBootReset(0x12);
-        Assert.assertEquals("getBootReset","[16000004] 00 00 00 00 0D 01 00 00",m.toString());
+        Assert.assertEquals("getBootReset","[4] 00 00 00 00 0D 01 00 00",m.toString());
     }
 
     @Test
     public void testgetBootInitialise() {
         CanMessage m = CbusMessage.getBootInitialise(202,0x12);
-        Assert.assertEquals("getBootInitialise","[16000004] 00 00 CA 00 0D 02 00 00",m.toString());
+        Assert.assertEquals("getBootInitialise","[4] 00 00 CA 00 0D 02 00 00",m.toString());
     }
 
     @Test
     public void testgetBootCheck() {
         CanMessage m = CbusMessage.getBootCheck(123,0x12);
-        Assert.assertEquals("getBootCheck","[16000004] 00 00 00 00 0D 03 00 7B",m.toString());
+        Assert.assertEquals("getBootCheck","[4] 00 00 00 00 0D 03 7B 00",m.toString());
     }
 
     @Test
     public void testgetBootTest() {
         CanMessage m = CbusMessage.getBootTest(0x12);
-        Assert.assertEquals("getBootTest","[16000004] 00 00 00 00 0D 04 00 00",m.toString());
+        Assert.assertEquals("getBootTest","[4] 00 00 00 00 0D 04 00 00",m.toString());
     }
 
     @Test
     public void testgetBootWriteData() {
         CanMessage m = CbusMessage.getBootWriteData( new int[]{0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08},0x12);
-        Assert.assertEquals("getBootWriteData","[16000005] 01 02 03 04 05 06 07 08",m.toString());
+        Assert.assertEquals("getBootWriteData","[5] 01 02 03 04 05 06 07 08",m.toString());
         
         m = CbusMessage.getBootWriteData( new int[]{0x01,0x02},0x12);
         JUnitAppender.assertErrorMessageStartsWith("Exception in bootloader data");
-        m = null;
+        
+        m = CbusMessage.getBootWriteData( new byte[]{0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08},0x12);
+        Assert.assertEquals("getBootWriteData","[5] 01 02 03 04 05 06 07 08",m.toString());
+        
+        m = CbusMessage.getBootWriteData( new byte[]{0x01,0x02},0x12);
+        JUnitAppender.assertErrorMessageStartsWith("Exception in bootloader data");
     }
 
     @Test
@@ -502,7 +533,7 @@ public class CbusMessageTest {
         r.setHeader(0x10000004);
         r.setElement(0,0);
         Assert.assertEquals("isBootError ppp",true,CbusMessage.isBootError(r)); // ppp
-        r = null;
+
     }
 
     @Test
@@ -524,7 +555,7 @@ public class CbusMessageTest {
         r.setHeader(0x10000004);
         r.setElement(0,1);
         Assert.assertEquals("isBootOK ppp",true,CbusMessage.isBootOK(r)); // ppp
-        r = null;
+
     }
 
 
@@ -548,7 +579,7 @@ public class CbusMessageTest {
         r.setHeader(0x10000004);
         r.setElement(0,2);
         Assert.assertEquals("isBootConfirm ppp",true,CbusMessage.isBootConfirm(r)); // ppp
-        r = null;
+
     }
     
     

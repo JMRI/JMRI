@@ -22,7 +22,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -267,7 +267,7 @@ uniquement en utilisant une transformation XSLT.
             pas mettre un contenu important dans ces
             r&eacute;pertoires ou les lier &agrave; d'autres
             parties de votre ordinateur.</p>
-            <!--#include virtual="/Footer" -->
+            <!--#include virtual="/Footer.shtml" -->
           </li>
         </ul>
       </div>

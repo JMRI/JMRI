@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 /**
  * SignalMast implemented via a Binary Matrix (Truth Table) of Apects x Turnout objects.
  * <p>
- * A MatrixSignalMast is built up from an array of 1 - 6 turnouts to control each aspect.
+ * A MatrixSignalMast is built up from an array of turnouts to control each aspect.
  * System name specifies the creation information (except for the actual output beans):
  * <pre>
  * IF$xsm:basic:one-searchlight:($0001)-3t
@@ -24,12 +24,12 @@ import org.slf4j.LoggerFactory;
  * <li>basic - name of the signaling system
  * <li>one-searchlight - name of the particular aspect map/mast model
  * <li>($0001) - small ordinal number for telling various matrix signal masts apart
- * <li>name ending in -nt for (binary) Turnout outputs or (TODO:) -nd for direct DCC packets,
- * where n = the number of binary outputs, between 1 and mastBitNum (= 6)</li>
+ * <li>name ending in -nt for (binary) Turnout outputs
+ * where n = the number of binary outputs, between 1 and mastBitNum i.e. -3t</li>
  * </ul>
  *
- * @author Bob Jacobsen Copyright (C) 2009, 2014
- * @author Egbert Broerse Copyright (C) 2016, 2018
+ * @author Bob Jacobsen Copyright (C) 2009, 2014, 2020
+ * @author Egbert Broerse Copyright (C) 2016, 2018, 2020
  */
 public class MatrixSignalMast extends AbstractSignalMast {
     /**
@@ -137,10 +137,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
         if (getLit()) {
             // If the signalmast is lit, then send the commands to change the aspect.
             if (resetPreviousStates) {
-                // Clear all the current states, this will result in the signalmast going blank (RED) for a very short time.
-                // ToDo: check if decoder will accept direct DCC packets
-                // or pick up drop down choice to choose between DCCPackets or Turnouts outputs
-                // c.sendPacket(NmraPacket.altAccSignalDecoderPkt(dccSignalDecoderAddress, aspectToOutput.get(aspect)), packetRepeatCount);
+                // Clear all the current states, this will result in the signalmast going "Stop" or unLit for a while
                 if (aspectToOutput.containsKey("Stop")) {
                     updateOutputs(getBitsForAspect("Stop")); // show Red
                 } else {
@@ -149,9 +146,8 @@ public class MatrixSignalMast extends AbstractSignalMast {
                     }
                 }
             }
+            // add a timer here to wait a while before setting new aspect?
             if (aspectToOutput.containsKey(aspect) && aspectToOutput.get(aspect) != errorBits) {
-                // ToDo: pick up drop down choice for either DCC direct packets or Turnouts as outputs
-                // c.sendPacket(NmraPacket.altAccSignalDecoderPkt(dccSignalDecoderAddress, aspectToOutput.get(aspect)), packetRepeatCount);
                 char[] bitArray = getBitsForAspect(aspect);
                 // for  MatrixMast nest a loop, using setBitsForAspect(), provides extra check on value
                 updateOutputs(bitArray);
@@ -227,7 +223,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
     /**
      *  Fetch output as Turnout from outputsToBeans hashmap.
      *
-     *  @param colNum int index (1 up to 6) for the column of the desired output
+     *  @param colNum int index (1 up to mastBitNum) for the column of the desired output
      *  @return Turnout object connected to configured output
      */
     @CheckForNull private Turnout getOutputBean(int colNum) { // as bean
@@ -243,7 +239,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
      *  Fetch output from outputsToBeans hashmap.
      *  Used?
      *
-     *  @param colNum int index (1 up to 6) for the column of the desired output
+     *  @param colNum int index (1 up to mastBitNum) for the column of the desired output
      *  @return NamedBeanHandle to the configured turnout output
      */
     @CheckForNull public NamedBeanHandle<Turnout> getOutputHandle(int colNum) {
@@ -259,7 +255,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
      *  Fetch output from outputsToBeans hashmap and provide to xml.
      *
      *  @see jmri.implementation.configurexml.MatrixSignalMastXml#store(java.lang.Object)
-     *  @param colnum int index (1 up to 6) for the column of the desired output
+     *  @param colnum int index (1 up to mastBitNum) for the column of the desired output
      *  @return String with the desplay name of the configured turnout output
      */
     @Nonnull public String getOutputName(int colnum) {
@@ -318,11 +314,11 @@ public class MatrixSignalMast extends AbstractSignalMast {
     /**
      *  Provide the names of the on/off turnout outputs from outputsToBeans hashmap to xml.
      *
-     *  @return outputlist List&lt;String&gt; of display names for the outputs in order 1 to (max) 6
+     *  @return outputlist List&lt;String&gt; of display names for the outputs in order 1 to (max) mastBitNum
      */
     @Nonnull public List<String> getOutputs() { // provide to xml
         // to do: use for loop
-        ArrayList<String> outputlist = new ArrayList<String>(); // (6) or (mastBitNum) ?
+        ArrayList<String> outputlist = new ArrayList<String>();
         //list = outputsToBeans.keySet();
         
         int index = 1;
@@ -378,7 +374,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
                 } else if (bits[i] == '0' && t != null && t.getCommandedState() != Turnout.THROWN) {
                     newState = Turnout.THROWN;
                 } else if (bits[i] == 'n' || bits[i] == 'u') {
-                    // let pass, extra chars up to 6 are not defined
+                    // let pass, extra chars up to mastBitNum are not defined
                     newState = -1;
                 } else {
                     // invalid char or state is already set

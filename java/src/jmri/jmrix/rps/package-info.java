@@ -31,8 +31,8 @@
  *
  *        <ol>
  *            <li>This provides only one computation at a time (through the Distributor),
- *                which is a bit of pain when doing comparative work.
- *            <li>The alignment contants are stored in a fixed file location in the
+ *                which is a bit of a pain when doing comparative work.
+ *            <li>The alignment constants are stored in a fixed file location in the
  *                JMRI preferences directory.
  *        </ol>
  *

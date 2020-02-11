@@ -20,7 +20,6 @@ import org.netbeans.jemmy.operators.JLabelOperator;
 import org.netbeans.jemmy.operators.JTableOperator;
 import org.netbeans.jemmy.operators.JTextFieldOperator;
 import org.netbeans.jemmy.util.NameComponentChooser;
-import org.picocontainer.behaviors.Stored;
 
 /**
  * Tests for the jmri.jmrit.beantable.LightTableAction class.

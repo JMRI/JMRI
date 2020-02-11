@@ -32,14 +32,21 @@ before_test:
 
 test_script:
 - ps: |
-    mvn --quiet test -P appveyor --batch-mode
+        mvn --quiet test -P appveyor --batch-mode
 
 after_test:
 # upload results to Appveyor
 # This works, but the Appveyor display is unreliable.
-#- ps: |
-#    $wc = New-Object 'System.Net.WebClient'
-#    $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\junit-results.xml))
+- ps: |
+    $wc = New-Object 'System.Net.WebClient'
+    $files = Get-ChildItem -Include 'TEST-*.xml' -Recurse
+    $fileCount = $files.Count
+    echo "uploading $filesCount test results to Appveyor"
+    for ($I =1; $I -le ($filesCount -1); $I++){
+            $file = $files.Get($I)
+            $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path $I))
+    }
+    echo "finished uploading results"
 
 deploy: off
 
@@ -50,13 +57,13 @@ artifacts:
 
 on_failure:
 - appveyor PushArtifact tests.log
-- appveyor PushArtifact target\testreport\junit-results.xml
-- ps: echo "Failing Tests"
-# modified from an example found at https://www.codeproject.com/Articles/61900/PowerShell-and-XML
-- ps: |
-    $xml = [xml](get-content .\target\testreport\junit-results.xml)
-    $xml.SelectNodes("//testcase") | where { $_.failure } | format-table classname,name,InnerXml
-    $xml.SelectNodes("//testcase") | where { $_.error } | format-table classname,name,InnerXml
+  #- appveyor PushArtifact target\testreport\junit-results.xml
+  #- ps: echo "Failing Tests"
+  ## modified from an example found at https://www.codeproject.com/Articles/61900/PowerShell-and-XML
+  #- ps: |
+  #  $xml = [xml](get-content .\target\testreport\junit-results.xml)
+  #  $xml.SelectNodes("//testcase") | where { $_.failure } | format-table classname,name,InnerXml
+  #  $xml.SelectNodes("//testcase") | where { $_.error } | format-table classname,name,InnerXml
 
 cache:
   - C:\Users\appveyor\.m2 -> pom.xml

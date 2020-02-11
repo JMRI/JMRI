@@ -587,9 +587,12 @@ abstract public class PaneProgFrame extends JmriJFrame
             }
         }
 
+        StringBuilder desiredModes = new StringBuilder();
         // first try specified modes
         for (Element el1 : programming.getChildren("mode")) {
             String name = el1.getText();
+            if (desiredModes.length() > 0) desiredModes.append(", ");
+            desiredModes.append(name);
             if (log.isDebugEnabled()) {
                 log.debug(" mode {} was specified", name);
             }
@@ -619,6 +622,11 @@ abstract public class PaneProgFrame extends JmriJFrame
             mProgrammer.setMode(ProgrammingMode.REGISTERMODE);
             log.debug("Set to REGISTERMODE");
         } else {
+            JOptionPane.showMessageDialog(
+                    this,
+                    Bundle.getMessage("ErrorCannotSetMode", desiredModes.toString()),
+                    Bundle.getMessage("ErrorCannotSetModeTitle"),
+                    JOptionPane.OK_OPTION);
             log.warn("No acceptable mode found, leave as found");
         }
 

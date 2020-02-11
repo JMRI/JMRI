@@ -2,13 +2,15 @@ package jmri.jmrit.operations.rollingstock.engines.tools;
 
 import java.awt.GraphicsEnvironment;
 import java.text.MessageFormat;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Test;
+
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
 
 /**
  * Tests for the Operations Engines GUI class
@@ -48,6 +50,7 @@ public class EngineAttributeEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("new model after delete", "New Model", f.comboBox.getItemAt(0));
 
         JUnitUtil.dispose(f);
+
     }
 
     @Test

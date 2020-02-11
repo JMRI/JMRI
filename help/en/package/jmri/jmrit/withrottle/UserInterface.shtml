@@ -18,8 +18,13 @@
 <!-- /Style -->
 </head>
 
+
+<!-- Page needs to be split into (1) WiFi Throttles page including intro and table and section on remote use (file location in repository TBD), and (2) section on WiThrottle and its UI (the original intent of this page based on the name of the file and where this file resides in the JMRI repository). @jerryg2003 01/12/2020 -->
+
+
+
 <body>
-	<!--#include virtual="/Header" -->
+	<!--#include virtual="/Header.shtml" -->
 	<div class="nomenu" id="mBody">
 		<div id="mainContent">
 
@@ -79,8 +84,11 @@
 				<tr>
 					<td><a target="_blank" href="https://withrottle.com">WiThrottle</a></td>
 					<td>An easy-to-use interface to allow iPhone, iPad, and iPod
-						touch users to link to their model railroad with the popular JMRI
-						software</td>
+						touch users to link to JMRI roster and tables and also web pages.
+						Will download function key labels stored in JMRI.
+						Available in a free version (control a 
+						single locomotive) and a purchased version (control up to four locomotives at once).
+					</td>
 					<td><a target="_blank" href="https://withrottle.com"><img
 							src="images/WiT150x250.png" height="125" width="75"
 							alt="WiThrottle for Apple devices"
@@ -107,16 +115,11 @@
 				</tr>
 				<tr>
 					<td><a target="_blank" href="https://digitrainspro.hu">DigiTrainsPro</a></td>
-					<td>You can control your model railroad layout from your
-						phone, tablet, or computer with WIFI. From the locomotive library
-						you can easily and quickly select the locomotive you want to
-						control, which you can create a unique photo. You can reach the
-						speed, direction and all the functions of the locomotive with a
-						single touch while you are free to move around your layout.
-						Finally, you do not have to remember the addresses, you can play
-						very simply, even with multiple trains. Use the Dispatcher game,
-						simply set up routes, track occupied sections on the layout, play
-						Station speaker announcements. With the Model Time function,
+					<td>NOTE: THIS WIFI THROTTLE DOES NOT USE JMRI's WiThrottle server, but rather
+					    communicates via JMRI's Web Server.  YOU MUST START Web Server before using this app.
+						You can then select the locomotive you want to
+						control from the JMRI roster and other objects such as turnouts from JMRI tables. You can also use its builtin
+						Dispatcher game and play station speaker announcements. With the Model Time function,
 						trains can run on schedule!</td>
 					<td><a target="_blank" href="https://digitrainspro.hu"> <img
 							src="images/DigiTrainsPro_screenshot.png"
@@ -154,7 +157,9 @@
 				<tr>
 					<td><a target="_blank"
 						href="/help/en/package/jmri/jmrit/webThrottle/webThrottle.shtml">WebThrottle</a></td>
-					<td>Web control for locos, panels, turnouts and routes.
+					<td>
+					NOTE: This WiFI Throttle uses JMRI's Web Server.  YOU MUST START Web Server before using this app.
+					Web control for locos, panels, turnouts and routes.
 						Included in JMRI, nothing to install!</td>
 					<td></td>
 					<td></td>
@@ -274,7 +279,7 @@
 				most introduce a several second delay -- something that could lead
 				to some very interesting railroad accidents!]</p>
 
-			<!--#include virtual="/Footer" -->
+			<!--#include virtual="/Footer.shtml" -->
 		</div>
 	</div>
 </body>

@@ -92,11 +92,11 @@
         this page</a> from the Java Tutorial.</li>
 
         <li>If you need to use comma-separated variable (CSV)
-        files, please use the <a href="http://javacsv.sourceforge.net/">javacsv API</a> if
+        files, please use the <a href="https://commons.apache.org/proper/commons-csv/">Apache Commons CSV API</a> if
         possible. We are already using that in a number of places,
-        and will probably use it in more. If that doesn't provide
+        and will probably use it in more. If that does not provide
         enough functionality, we might eventually move to the
-        <a href="http://opencsv.sourceforge.net/api/au/com/bytecode/opencsv/">opencsv API</a>, 
+        <a href="http://opencsv.sourceforge.net/">opencsv API</a>, 
         but since we only want to use one, the
         conversion will be a lot of work.</li>
       </ul>
@@ -346,9 +346,9 @@ That way, if something weird happens later on, at least there's a clue in the lo
 <li>If it's really routine, log at <code>debug</code> or even <code>trace</code> level. 
 That way if it turns out later to not actually be routine, turning on additional logging will help track it down.
 
-<li>Consider <u>not</u> catching the error, so that it propagates up. 
+<li>Consider <em>not</em> catching the error, so that it propagates up. 
 (The methods for targeting the catch block more narrowly in the prior section can help here) 
-It will eventually be caught, and will contain a more useful stach trace.  
+It will eventually be caught, and will contain a more useful stack trace.  
 This might require adding the exception to the signature of the current method so you can throw it upwards. 
 <p>
 Or, if absolutely can't change the signature, consider re-characterizing it, e.g.:

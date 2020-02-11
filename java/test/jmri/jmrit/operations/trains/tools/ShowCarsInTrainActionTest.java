@@ -61,6 +61,9 @@ public class ShowCarsInTrainActionTest extends OperationsTestCase {
         Assert.assertNotNull("exists", frame);
         
         JUnitUtil.dispose(frame);
+        
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ShowCarsInTrainActionTest.class);
