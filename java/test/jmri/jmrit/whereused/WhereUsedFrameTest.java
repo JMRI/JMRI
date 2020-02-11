@@ -33,7 +33,7 @@ public class WhereUsedFrameTest {
         JUnitUtil.resetInstanceManager();
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager();
-        java.io.File f = new java.io.File("java/test/jmri/jmrit/whereused/load/WhereUsedTesting.xml");
+        java.io.File f = new java.io.File("java/test/jmri/jmrit/whereused/load/WhereUsedTesting.xml");  // NOI18N
         cm.load(f);
    }
 
