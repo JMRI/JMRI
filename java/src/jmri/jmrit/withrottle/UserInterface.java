@@ -290,7 +290,9 @@ public class UserInterface extends JmriJFrame implements DeviceListener, RosterG
 
     @Override
     public void notifyDeviceAddressChanged(DeviceServer device) {
-        withrottlesListModel.updateDeviceList(deviceList);
+        if (withrottlesListModel != null) {
+            withrottlesListModel.updateDeviceList(deviceList);
+        }
     }
 
     /**
