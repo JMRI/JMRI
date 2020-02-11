@@ -23,7 +23,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -318,7 +318,7 @@ il suffit de cliquer sur le " <big>X</big>" dans le coin sup&eacute;rieur droit 
   </tbody>
 </table>
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
       </div><!-- closes #mainContent-->
     </div> <!-- closes #mBody-->
 </body>

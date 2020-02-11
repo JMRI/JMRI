@@ -21,7 +21,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -50,7 +50,7 @@
         the Manage VSD Locations window to have them appear.</li>
       </ul><a id="prefs" name="prefs">(This is the
       jmri.jmrit.vsdecoder.swing.ManageLocationsFrame help page) 
-      <!--#include virtual="/Footer" --></a>
+      <!--#include virtual="/Footer.shtml" --></a>
     </div>
   </div>
 </body>

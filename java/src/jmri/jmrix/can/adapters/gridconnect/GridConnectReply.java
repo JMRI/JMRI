@@ -39,9 +39,7 @@ public class GridConnectReply extends AbstractMRReply {
     public CanReply createReply() {
         CanReply ret = new CanReply();
 
-        if (log.isDebugEnabled()) {
-            log.debug("createReply converts from [" + this + "]");
-        }
+        log.debug("createReply converts from {}", this);
 
         // basic checks drop out the frame
         if (!basicFormatCheck()) {
@@ -68,6 +66,7 @@ public class GridConnectReply extends AbstractMRReply {
             ret.setElement(i, getByte(i));
         }
         ret.setNumDataElements(getNumBytes());
+        log.debug("createReply converted to {}", ret);
         return ret;
     }
 

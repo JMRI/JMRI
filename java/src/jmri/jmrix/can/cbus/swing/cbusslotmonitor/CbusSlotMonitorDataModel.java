@@ -22,7 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Table data model for display of Cbus Command Station Sessions and various Tools
+ * Table data model for display of CBUS Command Station Sessions and various Tools
  *
  * @author Steve Young (c) 2018 2019
  * @see CbusSlotMonitorPane

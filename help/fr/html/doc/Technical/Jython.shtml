@@ -17,7 +17,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -374,7 +374,7 @@ Une fois que la t&#226;che principale JMRI (ou t&#226;che Swing GUI ?) a commenc
 Il serait bon de comprendre ce qui emp&#234;cher le programme
 d'arr&#234;ter quand il obtient l'^D. 
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
         </div>
         </div>
 </body>

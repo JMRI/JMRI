@@ -24,7 +24,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -45,7 +45,7 @@
       N&Aring;"ud</a> et cliquez sur "V&Atilde;&copy;rifier" pour
       voir si le renum&Atilde;&copy;rotation a r&Atilde;&copy;ussi.</p>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

@@ -41,6 +41,8 @@ public class CircuitBuilderTest {
         ControlPanelEditor f = new ControlPanelEditor();
         CircuitBuilder builder = new CircuitBuilder(f);
         Assert.assertNotNull("exists", builder);
+        f.dispose();
+        if (f.makeCatalogWorker != null) JUnitUtil.waitFor(() -> {return f.makeCatalogWorker.isDone();}, "wait for catalog SwingWorker failed");
         JUnitUtil.dispose(f);
     }
 

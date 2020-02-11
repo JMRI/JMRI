@@ -32,10 +32,10 @@ public class DirectoryService extends ResourceService {
             response.setStatus(HttpServletResponse.SC_OK);
             response.setContentType(ServletUtil.UTF8_TEXT_HTML);
 
-            try ( DirectoryResource r = new DirectoryResource(request.getLocale(), resource) ) {           
-                String dir = r.getListHTML(request.getRequestURI(), 
-                                             request.getPathInfo().lastIndexOf('/') > 0
-                                            );
+            try (DirectoryResource r = new DirectoryResource(request.getLocale(), resource)) {
+                String dir = r.getListHTML(request.getRequestURI(),
+                        request.getPathInfo().lastIndexOf('/') > 0,
+                        request.getRequestURI());
                 byte[] data = dir.getBytes(StandardCharsets.UTF_8);
                 response.setContentLength(data.length);
                 response.getOutputStream().write(data);

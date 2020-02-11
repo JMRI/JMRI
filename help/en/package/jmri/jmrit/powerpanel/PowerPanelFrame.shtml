@@ -22,7 +22,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -37,7 +37,7 @@
           means is DCC system-dependent.  An example is shown in the image below.</p>
       <p><img src="images/PowerControlWithIdleButton.png" alt="Power control panel showing Idle pushbutton"></p>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

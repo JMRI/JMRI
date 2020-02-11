@@ -498,7 +498,7 @@ public class TrainEditFrameTest extends OperationsTestCase {
 
         JUnitUtil.dispose(trainEditFrame);
         JUnitOperationsUtil.checkOperationsShutDownTask();
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     // The minimal setup for log4J

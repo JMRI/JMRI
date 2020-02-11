@@ -42,7 +42,7 @@ public class SetPhysicalLocationActionTest extends OperationsTestCase {
         JmriJFrame plf = JmriJFrame.getFrame(Bundle.getMessage("MenuSetPhysicalLocation"));
         Assert.assertNotNull("exists", plf);
         JUnitUtil.dispose(plf);
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
     
     @Test
@@ -70,7 +70,7 @@ public class SetPhysicalLocationActionTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(splf.closeButton);
         
         JUnitUtil.dispose(plf);
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
         //log.debug("test done");
     }
 

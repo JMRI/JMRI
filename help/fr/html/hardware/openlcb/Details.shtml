@@ -14,7 +14,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -66,7 +66,7 @@ Une am&#233;lioration future rendra ceci persistant d'une ex&#233;cution &#224; 
 
 <p>Retour &#224; la <a href="index.shtml">page principale d'Aide OpenLCB</a></p>
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
   </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->
 </body>

@@ -21,7 +21,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -255,7 +255,7 @@
       <hr>
       <a id="prefs" name="prefs">(This is the
       jmri.jmrit.vsdecoder.swing.VSDManagerFrame help page) 
-      <!--#include virtual="/Footer" --></a>
+      <!--#include virtual="/Footer.shtml" --></a>
     </div>
   </div>
 </body>

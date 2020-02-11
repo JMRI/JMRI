@@ -33,7 +33,7 @@ public class DataSourceTest {
         f.nextLine(message);
         Assert.assertTrue("pass misc ", !message.equals(f.version.getText()));
 
-        message = PackageTest.version;
+        message = TestConstants.version;
         f.nextLine(message);
         Assert.assertTrue("show version ", message.equals(f.version.getText()));
 

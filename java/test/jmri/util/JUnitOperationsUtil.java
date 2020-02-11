@@ -681,22 +681,6 @@ public class JUnitOperationsUtil {
         sm.deregister(operationShutdownTask);
     }
     
-    public static void checkIdTagsShutDownTask() {
-        // remove the Id tags shut down tasks
-        Assert.assertTrue(InstanceManager.containsDefault(ShutDownManager.class));
-        ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
-        List<ShutDownTask> list = sm.tasks();
-        Assert.assertTrue("One shut down tasks max", list.size() < 2);
-        ShutDownTask idTagsShutdownTask = null;
-        for (ShutDownTask task : list) {
-            if (task.getName().equals("Writing IdTags")) {
-                idTagsShutdownTask = task;
-            }
-        }
-        Assert.assertNotNull(idTagsShutdownTask);
-        sm.deregister(idTagsShutdownTask);
-    }
-    
     /**
      * Only the NCE traffic controller shutdown task is running
      */

@@ -17,7 +17,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -153,7 +153,7 @@ divers composants auxiliaires (PM4, DS54) &#233;tait disponible pour les tests.
 
 <p>LocoNet&reg; est une marque d&#233;pos&#233; de <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
   </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->
 </body>

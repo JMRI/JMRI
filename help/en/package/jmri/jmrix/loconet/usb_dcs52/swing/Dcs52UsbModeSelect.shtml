@@ -18,7 +18,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -40,7 +40,7 @@
       <p>For more information on the DCS52, please see its <a href=
       "../../../../../../html/hardware/loconet/DCS52.shtml">JMRI
       reference page</a>.</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

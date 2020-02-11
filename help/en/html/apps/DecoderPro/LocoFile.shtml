@@ -21,7 +21,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -81,7 +81,7 @@
               &lt;CVvalue name="2" value="0" /&gt;<br>
               &lt;CVvalue name="3" value="0" /&gt;<br>
               &lt;CVvalue name="4" value="0" /&gt;<br></p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- close #mainContent -->
   </div><!-- close #mBody -->
 </body>

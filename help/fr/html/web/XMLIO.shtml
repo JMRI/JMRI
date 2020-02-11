@@ -22,7 +22,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -302,7 +302,7 @@ retourn&eacute; inchang&eacute;.
       "http://rr.informatik.tu-freiberg.de/index.php?con=home&amp;sel=&amp;lang=eng&amp;js=1&amp;">
       r&eacute;h&eacute;berg&eacute;e</a>.
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

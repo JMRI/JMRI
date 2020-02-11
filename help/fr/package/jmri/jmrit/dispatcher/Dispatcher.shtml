@@ -23,7 +23,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -1365,7 +1365,7 @@
           &eacute;t&eacute; r&eacute;solus. <b>Un train devrait
           fonctionner sans probl&egrave;me en mode manuel, avant de
           tenter de le lancer en automatique.</b></p>
-          <!--#include virtual="/Footer" -->
+          <!--#include virtual="/Footer.shtml" -->
         </li>
       </ul>
     </div>
