@@ -169,12 +169,12 @@
 </pre>
     The first line compiles all the test code, and the second
     runs a specific test or test suite.<br>
-    (Hint: How to set this up <a href="IntelliJ.shtml#test">using IntelliJ</a>)
+    (See also how to set this up <a href="IntelliJ.shtml#test">using IntelliJ</a>)
 
     <h3><a name="testingvars" id="testingvars">Optional Checks</a></h3>
     There are a number of 
     run-time optional checks
-    that can be turned on by setting environmental variables.
+    that can be turned on by setting properties.
     We periodically run them to check on how the overall test
     system is working, but they're too time intensive
     to leave on all the time.
@@ -209,7 +209,7 @@
 
     <h3><a name="testcontrols" id="testcontrols">Controlling Test Operation</a></h3>
     There are a number of 
-    environmental variables that can be used to modify standard behaviour
+    properties that can be used to modify standard behaviour
     in ways that make testing easier.
       <dl>
         <dt>jmri.demo</dt>
@@ -244,6 +244,16 @@
             <dd>If true, JUnit tests will print out each JUnitUtil.setUp() and JUnitUtil.teardown() call.
                 This can be useful if i.e. the CI tests are hanging, and you can't figure out which
                 test class is the problem.</dd>
+        <dt>jmri.util.junit.PrintingTestListener.verbose</dt>
+            <dd>Prints detailed lists of each test completed, failed and ignored to System.out.
+                It's a lot of output, but can help track down when an obscure message was
+                emitted or exception happened. It also can be used to see the order in 
+                which tests are being run.</dd>
+        <dt>jmri.util.junit.PrintingTestListener.quiet</dt>
+            <dd>Reduces the information printed during a normmal JUnit run to 
+                dots (.) for passed tests, F for failed ones, A for aborted ones
+                (assumptions not met) and I for @Ignored ones. This is followed
+                by a one-line summary, then more detail on failures.</dd>
 
      </dl>
     

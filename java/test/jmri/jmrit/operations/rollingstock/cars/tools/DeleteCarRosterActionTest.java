@@ -65,7 +65,7 @@ public class DeleteCarRosterActionTest extends OperationsTestCase {
         Assert.assertEquals("Number of cars", 0, InstanceManager.getDefault(CarManager.class).getNumEntries());
         JUnitUtil.dispose(ctf);
         JUnitOperationsUtil.checkOperationsShutDownTask();
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(DeleteCarRosterActionTest.class);

@@ -19,21 +19,16 @@ public class CbusNodeFromFcuTableDataModelTest {
     public void testCTor() {
         
         CbusNodeFromFcuTableDataModel t = new CbusNodeFromFcuTableDataModel(
-            new CanSystemConnectionMemo(), 3,CbusNodeFromFcuTableDataModel.FCU_MAX_COLUMN);
+            memo, 3,CbusNodeFromFcuTableDataModel.FCU_MAX_COLUMN);
         
         Assert.assertNotNull("exists",t);
         
         t.dispose();
-        t = null;
         
     }
     
     @Test
     public void testDefaults() {
-        
-        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
-        TrafficControllerScaffold tcis = new TrafficControllerScaffold();
-        memo.setTrafficController(tcis);
         
         CbusNodeFromFcuTableDataModel t = new CbusNodeFromFcuTableDataModel(
             memo, 3,CbusNodeFromFcuTableDataModel.FCU_MAX_COLUMN);
@@ -68,17 +63,11 @@ public class CbusNodeFromFcuTableDataModelTest {
         Assert.assertTrue("default getRowCount 0",t.getRowCount() == 1 );
         
         t.dispose();
-        t = null;
-        tcis = null;
-        memo = null;
+
     }
 
     @Test
     public void testLoaded() {
-        
-        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
-        TrafficControllerScaffold tcis = new TrafficControllerScaffold();
-        memo.setTrafficController(tcis);
         
         CbusNodeFromFcuTableDataModel t = new CbusNodeFromFcuTableDataModel(
             memo, 3,CbusNodeFromFcuTableDataModel.FCU_MAX_COLUMN);
@@ -86,11 +75,11 @@ public class CbusNodeFromFcuTableDataModelTest {
         CbusNodeFromBackup myNode = new CbusNodeFromBackup(memo,256);    
         
         // set node to 4 ev vars per event, para 5, 3 NV's, param 6
-        myNode.setParameters(new int[]{7,1,2,3,4,4,3,7});
+        myNode.getNodeParamManager().setParameters(new int[]{7,1,2,3,4,4,3,7});
         
-        myNode.setNV(1,1);
-        myNode.setNV(2,2);
-        myNode.setNV(3,3);
+        myNode.getNodeNvManager().setNV(1,1);
+        myNode.getNodeNvManager().setNV(2,2);
+        myNode.getNodeNvManager().setNV(3,3);
         
         t.addNode(myNode);
         
@@ -99,8 +88,8 @@ public class CbusNodeFromFcuTableDataModelTest {
         Assert.assertTrue(" getRowCount 0",t.getRowCount() == 1 );
         
         Assert.assertTrue("getValueAt fcu node", (Integer)t.getValueAt(0,CbusNodeFromFcuTableDataModel.FCU_NODE_NUMBER_COLUMN)== 256 );
-        Assert.assertTrue("getValueAt fcu user nm",(String)t.getValueAt(0,CbusNodeFromFcuTableDataModel.FCU_NODE_USER_NAME_COLUMN)=="" );
-        Assert.assertTrue("getValueAt fcu type nm",(String)t.getValueAt(0,CbusNodeFromFcuTableDataModel.FCU_NODE_TYPE_NAME_COLUMN)=="" );
+        Assert.assertTrue("getValueAt fcu user nm",(((String)t.getValueAt(0,CbusNodeFromFcuTableDataModel.FCU_NODE_USER_NAME_COLUMN)).isEmpty()) );
+        Assert.assertTrue("getValueAt fcu type nm",(((String)t.getValueAt(0,CbusNodeFromFcuTableDataModel.FCU_NODE_TYPE_NAME_COLUMN)).isEmpty()) );
         Assert.assertTrue("getValueAt fcu ev",(Integer)t.getValueAt(0,CbusNodeFromFcuTableDataModel.FCU_NODE_EVENTS_COLUMN)== -1 );
         Assert.assertTrue("getValueAt fcu tot bytes",(Integer)t.getValueAt(0,CbusNodeFromFcuTableDataModel.FCU_NODE_TOTAL_BYTES_COLUMN)== -1 );
         Assert.assertTrue("getValueAt fcu nv tot",(Integer)t.getValueAt(0,CbusNodeFromFcuTableDataModel.NODE_NV_TOTAL_COLUMN)== 3 );
@@ -110,21 +99,29 @@ public class CbusNodeFromFcuTableDataModelTest {
         Assert.assertTrue("setValueAt does nothing",(Integer)t.getValueAt(0,CbusNodeFromFcuTableDataModel.NODE_NV_TOTAL_COLUMN)== 3 );
         
         t.dispose();
-        t = null;
-        
-        tcis = null;
-        memo = null;
         
     }
+    
+    private CanSystemConnectionMemo memo;
+    private TrafficControllerScaffold tcis;
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        memo = new CanSystemConnectionMemo();
+        tcis = new TrafficControllerScaffold();
+        memo.setTrafficController(tcis);
     }
 
     @After
     public void tearDown() {
+        
+        tcis.terminateThreads();
+        tcis = null;
+        
+        memo.dispose();
+        memo = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
 

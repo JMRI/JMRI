@@ -8,6 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Configurable Sound initial version.
+ *
  * <hr>
  * This file is part of JMRI.
  * <p>
@@ -21,13 +23,8 @@ import org.slf4j.LoggerFactory;
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
  * for more details.
  *
- * @author   Mark Underwood Copyright (C) 2011
+ * @author Mark Underwood Copyright (C) 2011
  */
-// Usage:
-// HornSound() : constructor
-// play() : plays short horn pop
-// loop() : starts extended sustain horn
-// stop() : ends extended sustain horn (plays end sound)
 class ConfigurableSound extends VSDSound {
 
     protected String start_file;
@@ -47,7 +44,6 @@ class ConfigurableSound extends VSDSound {
     protected boolean use_end_sound = false;
     protected boolean use_short_sound = false;
 
-    int start_sound_duration = 136;
     private float rd;
 
     public ConfigurableSound(String name) {
@@ -277,7 +273,6 @@ class ConfigurableSound extends VSDSound {
     @Override
     public Element getXml() {
         Element me = new Element("sound");
-        Integer i;
 
         if (log.isDebugEnabled()) {
             log.debug("Configurable Sound:");
@@ -303,9 +298,6 @@ class ConfigurableSound extends VSDSound {
         if (use_short_sound) {
             me.addContent(new Element("short-file").addContent(short_file));
         }
-        i = start_sound_duration;
-        log.debug("  duration: {}", i);
-        me.addContent(new Element("start-sound-duration").addContent(i.toString()));
 
         return me;
     }
@@ -336,13 +328,6 @@ class ConfigurableSound extends VSDSound {
             use_short_sound = true;
         } else {
             use_short_sound = false;
-        }
-
-        String ssd = e.getChildText("start-sound-duration");
-        if ((ssd != null) && (!ssd.isEmpty())) {
-            start_sound_duration = Integer.parseInt(ssd);
-        } else {
-            start_sound_duration = 0;
         }
 
         String g = e.getChildText("gain");

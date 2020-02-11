@@ -29,7 +29,6 @@ public class CbusNodeEditNVarPaneTest {
         t = new CbusNodeEditNVarPane(mainpane);
         Assert.assertNotNull("exists",t);
         
-        mainpane = null;
     }
     
     @Test
@@ -51,14 +50,12 @@ public class CbusNodeEditNVarPaneTest {
         
         CbusNode nodeToEdit = nodeModel.provideNodeByNodeNum(256);
         // set node to 3 node vars , param6
-        nodeToEdit.setParameters(new int[]{8,1,2,3,4,5,3,7,8});
+        nodeToEdit.getNodeParamManager().setParameters(new int[]{8,1,2,3,4,5,3,7,8});
         
         t.setNode( nodeToEdit );
         
         nodeToEdit.dispose();
-        nodeToEdit = null;
-        
-        mainpane = null;
+
     }
 
     private CanSystemConnectionMemo memo;
