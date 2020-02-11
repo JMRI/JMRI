@@ -4,7 +4,6 @@ import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
-import org.junit.*;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 
@@ -36,6 +35,10 @@ public class SensorWhereUsedTest {
 
         sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Main");
         result = SensorWhereUsed.checkSignalHeadLogic(sensor);
+        Assert.assertTrue(result.length() > 0);
+
+        sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-SML-Sensor");
+        result = SensorWhereUsed.checkSignalMastLogic(sensor);
         Assert.assertTrue(result.length() > 0);
 
         sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Light-Control");

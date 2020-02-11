@@ -15,6 +15,7 @@ import jmri.Block;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.NamedBeanHandle;
+import jmri.NamedBeanUsageReport;
 import jmri.Section;
 import jmri.Sensor;
 import jmri.SignalMast;
@@ -197,6 +198,25 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
             return;
         }
         destList.get(dest).setComment(comment);
+    }
+
+    @Override
+    public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
+        List<NamedBeanUsageReport> report = new ArrayList<>();
+        if (bean != null) {
+            getDestinationList().forEach((dest) -> {
+                // Blocks
+                // Turnouts
+                // Sensors
+                getSensors(dest).forEach((sensor) -> {
+                    if (bean.equals(sensor)) {
+                        report.add(new NamedBeanUsageReport("SMLSensor", dest));
+                    }
+                });
+                // Masts
+            });
+        }
+        return report;
     }
 
     @Override

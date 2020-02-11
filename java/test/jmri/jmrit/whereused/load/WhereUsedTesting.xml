@@ -27,7 +27,7 @@
     </sensor>
     <sensor inverted="false">
       <systemName>IS105</systemName>
-      <userName>S-105</userName>
+      <userName>S-SML-Sensor</userName>
     </sensor>
     <sensor inverted="false">
       <systemName>IS201</systemName>
@@ -106,7 +106,7 @@
     </light>
   </lights>
   <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
-    <memory value="11:43 PM">
+    <memory value="12:23 AM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -377,7 +377,7 @@
       <routeOutputSensor systemName="S-Feedback-1" state="INACTIVE" />
       <routeOutputSensor systemName="S-Feedback-2" state="INACTIVE" />
       <routeOutputSensor systemName="S-Occupancy" state="INACTIVE" />
-      <routeOutputSensor systemName="S-105" state="INACTIVE" />
+      <routeOutputSensor systemName="S-SML-Sensor" state="INACTIVE" />
       <routeOutputSensor systemName="S-Left-Approach" state="INACTIVE" />
       <routeOutputSensor systemName="S-Left-TO" state="INACTIVE" />
       <routeOutputSensor systemName="S-Main" state="INACTIVE" />
@@ -451,6 +451,12 @@
         <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
         <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
         <lockTurnouts>no</lockTurnouts>
+        <sensors>
+          <sensor>
+            <sensorName>S-SML-Sensor</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
       </destinationMast>
       <destinationMast destination="Right-C">
         <destinationSignalMast>Right-C</destinationSignalMast>
@@ -1094,104 +1100,104 @@
   <filehistory>
     <operation>
       <type>app</type>
-      <date>Mon Feb 10 23:37:57 CST 2020</date>
+      <date>Tue Feb 11 00:21:06 CST 2020</date>
       <filename>JMRI program</filename>
     </operation>
     <operation>
       <type>Load OK</type>
-      <date>Mon Feb 10 23:38:06 CST 2020</date>
+      <date>Tue Feb 11 00:21:15 CST 2020</date>
       <filename>/Users/das/JMRI/_Profiles/WhereUsed.jmri/WhereUsedTesting.xml</filename>
       <filehistory>
         <operation>
           <type>app</type>
-          <date>Mon Feb 10 15:08:32 CST 2020</date>
+          <date>Mon Feb 10 23:37:57 CST 2020</date>
           <filename>JMRI program</filename>
         </operation>
         <operation>
           <type>Load OK</type>
-          <date>Mon Feb 10 15:08:39 CST 2020</date>
+          <date>Mon Feb 10 23:38:06 CST 2020</date>
           <filename>/Users/das/JMRI/_Profiles/WhereUsed.jmri/WhereUsedTesting.xml</filename>
           <filehistory>
             <operation>
               <type>app</type>
-              <date>Mon Feb 10 14:57:06 CST 2020</date>
+              <date>Mon Feb 10 15:08:32 CST 2020</date>
               <filename>JMRI program</filename>
             </operation>
             <operation>
               <type>Load OK</type>
-              <date>Mon Feb 10 14:57:18 CST 2020</date>
+              <date>Mon Feb 10 15:08:39 CST 2020</date>
               <filename>/Users/das/JMRI/_Profiles/WhereUsed.jmri/WhereUsedTesting.xml</filename>
               <filehistory>
                 <operation>
                   <type>app</type>
-                  <date>Mon Feb 10 14:41:41 CST 2020</date>
+                  <date>Mon Feb 10 14:57:06 CST 2020</date>
                   <filename>JMRI program</filename>
                 </operation>
                 <operation>
                   <type>Load OK</type>
-                  <date>Mon Feb 10 14:41:53 CST 2020</date>
+                  <date>Mon Feb 10 14:57:18 CST 2020</date>
                   <filename>/Users/das/JMRI/_Profiles/WhereUsed.jmri/WhereUsedTesting.xml</filename>
                   <filehistory>
                     <operation>
                       <type>app</type>
-                      <date>Sun Feb 09 22:58:29 CST 2020</date>
+                      <date>Mon Feb 10 14:41:41 CST 2020</date>
                       <filename>JMRI program</filename>
                     </operation>
                     <operation>
                       <type>Load OK</type>
-                      <date>Sun Feb 09 22:58:41 CST 2020</date>
+                      <date>Mon Feb 10 14:41:53 CST 2020</date>
                       <filename>/Users/das/JMRI/_Profiles/WhereUsed.jmri/WhereUsedTesting.xml</filename>
                       <filehistory>
                         <operation>
                           <type>app</type>
-                          <date>Sun Feb 09 22:20:38 CST 2020</date>
+                          <date>Sun Feb 09 22:58:29 CST 2020</date>
                           <filename>JMRI program</filename>
                         </operation>
                         <operation>
                           <type>Load OK</type>
-                          <date>Sun Feb 09 22:20:49 CST 2020</date>
+                          <date>Sun Feb 09 22:58:41 CST 2020</date>
                           <filename>/Users/das/JMRI/_Profiles/WhereUsed.jmri/WhereUsedTesting.xml</filename>
                         </operation>
                         <operation>
                           <type>Store</type>
-                          <date>Sun Feb 09 22:56:28 CST 2020</date>
+                          <date>Sun Feb 09 23:05:07 CST 2020</date>
                           <filename />
                         </operation>
                       </filehistory>
                     </operation>
                     <operation>
                       <type>Store</type>
-                      <date>Sun Feb 09 23:05:07 CST 2020</date>
+                      <date>Mon Feb 10 14:43:24 CST 2020</date>
                       <filename />
                     </operation>
                   </filehistory>
                 </operation>
                 <operation>
                   <type>Store</type>
-                  <date>Mon Feb 10 14:43:24 CST 2020</date>
+                  <date>Mon Feb 10 14:58:13 CST 2020</date>
                   <filename />
                 </operation>
               </filehistory>
             </operation>
             <operation>
               <type>Store</type>
-              <date>Mon Feb 10 14:58:13 CST 2020</date>
+              <date>Mon Feb 10 15:09:47 CST 2020</date>
               <filename />
             </operation>
           </filehistory>
         </operation>
         <operation>
           <type>Store</type>
-          <date>Mon Feb 10 15:09:47 CST 2020</date>
+          <date>Mon Feb 10 23:43:25 CST 2020</date>
           <filename />
         </operation>
       </filehistory>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Mon Feb 10 23:43:25 CST 2020</date>
+      <date>Tue Feb 11 00:23:38 CST 2020</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.19.3ish+das+20200211T0537Z+Ra8e0f94ab7 on Mon Feb 10 23:43:25 CST 2020-->
+  <!--Written by JMRI version 4.19.3ish+das+20200211T0620Z+Rd653dc6ef2 on Tue Feb 11 00:23:38 CST 2020-->
 </layout-config>

@@ -99,11 +99,9 @@ public class SensorWhereUsed {
     static String checkSignalMastLogic(Sensor sensor) {
         StringBuilder sb = new StringBuilder();
         InstanceManager.getDefault(SignalMastLogicManager.class).getNamedBeanSet().forEach((sml) -> {
-            log.info("sml = {}", sml.getUsageReport(sensor));
-            SignalMast src = sml.getSourceMast();
-            sml.getDestinationList().forEach((dest) -> {
-                if (sml.getSensors(dest).contains(sensor)) {
-                        sb.append(Bundle.getMessage("ReferenceLinePair", src.getDisplayName(), dest.getDisplayName()));  // NOI18N
+            sml.getUsageReport(sensor).forEach((report) -> {
+                if (report.usageKey.startsWith("SMLSensor")) {
+                    sb.append(Bundle.getMessage("ReferenceLinePair", sml.getSourceMast().getDisplayName(), report.usageBean.getDisplayName()));  // NOI18N
                 }
             });
         });
