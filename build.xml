@@ -1412,7 +1412,7 @@
                     <include name="**/*IT.class"/>
                     <include name="**/IT*.class"/>
                     <exclude name="AllTest.class"/>
-                    <exclude name="HeadlessTest.class"/>
+                    <exclude name="HeadLessTest.class"/>
                 </fileset>
                 <fork>
                     <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
@@ -1503,7 +1503,7 @@
                     <include name="**/*IT.class"/>
                     <include name="**/IT*.class"/>
                     <exclude name="AllTest.class"/>
-                    <exclude name="HeadlessTest.class"/>
+                    <exclude name="HeadLessTest.class"/>
                 </fileset>
                 <fork>
                     <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
@@ -1602,7 +1602,7 @@
                     <include name="**/*IT.class"/>
                     <include name="**/IT*.class"/>
                     <exclude name="AllTest.class"/>
-                    <exclude name="HeadlessTest.class"/>
+                    <exclude name="HeadLessTest.class"/>
                 </fileset>
                 <fork>
                     <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
