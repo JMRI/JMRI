@@ -128,7 +128,7 @@ public class RunTrainActionTest extends OperationsTestCase {
         jmri.util.JUnitAppender.assertWarnMessage("Train (STF) needs to be built before creating a custom manifest");
         
         JUnitOperationsUtil.checkOperationsShutDownTask();
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(RunTrainActionTest.class);

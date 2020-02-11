@@ -12,7 +12,10 @@
 	    
             <!--#include virtual="../../parts/SidebarApplications.shtml" -->
 
-  	        <!--#include virtual="../../parts/SidebarSupportedHardware.shtml" -->    
+        <dt><h3 style="padding-left: 1em;"><a href="/help/en/html/hardware/">Supported Hardware</a></h3></dt>
+        <dd>JMRI supports a wide range of DCC systems, command stations and protocols.</dd>
+	
+	<!-- If someday we want to show the whole list, use #include virtual="../../parts/SidebarSupportedHardware.shtml" -->    
 
          </dl>
 

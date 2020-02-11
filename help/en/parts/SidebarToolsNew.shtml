@@ -1,6 +1,5 @@
 <!-- SidebarTools.shtml -->
 <!-- This is the common sidebar definition for Tools pages -->
-        <!--include virtual="SidebarToolLocalPart.shtml" -->
 
         <dt><h3><a href="/help/en/html/tools/">Tools</a></h3></dt>
         <dd>JMRI tools for working with your layout:
@@ -40,7 +39,7 @@
               <li><a href="/help/en/html/tools/TimeTable.shtml">Timetable</a>
             </ul>
 
-            <li><i style="padding-left: 1em;"><a href="/help/en/html/tools/index.shtml#systemSpecificTools">System-specific...</a></i>
+            <li><i><a href="/help/en/html/tools/index.shtml#systemSpecificTools">System-specific...</a></i>
           </ul>
         </dd>
 <!-- /SidebarTools.shtml -->
