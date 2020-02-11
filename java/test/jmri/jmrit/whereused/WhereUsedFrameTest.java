@@ -31,6 +31,7 @@ public class WhereUsedFrameTest {
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager();
         java.io.File f = new java.io.File("java/test/jmri/jmrit/whereused/load/WhereUsedTesting.xml");
         cm.load(f);

@@ -106,7 +106,7 @@
     </light>
   </lights>
   <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
-    <memory value="3:09 PM">
+    <memory value="11:43 PM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -503,7 +503,7 @@
     </conditional>
   </conditionals>
   <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Sun Feb 09 21:41:14 CST 2020" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
-  <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="My Layout" x="182" y="0" windowheight="258" windowwidth="696" panelheight="188" panelwidth="690" sliders="no" scrollable="none" editable="no" positionable="yes" controlling="yes" animating="yes" showhelpbar="no" drawgrid="yes" snaponadd="no" snaponmove="no" antialiasing="no" turnoutcircles="no" tooltipsnotedit="no" tooltipsinedit="yes" mainlinetrackwidth="4" xscale="1.0" yscale="1.0" sidetrackwidth="2" defaulttrackcolor="darkGray" defaultoccupiedtrackcolor="red" defaultalternativetrackcolor="white" defaulttextcolor="black" turnoutcirclecolor="black" turnoutcirclesize="4" turnoutdrawunselectedleg="yes" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="10.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" autoblkgenerate="no" redBackground="192" greenBackground="192" blueBackground="192" gridSize="10" gridSize2nd="10" openDispatcher="no" useDirectTurnoutControl="no">
+  <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="My Layout" x="182" y="0" windowheight="258" windowwidth="696" panelheight="223" panelwidth="690" sliders="no" scrollable="none" editable="no" positionable="yes" controlling="yes" animating="yes" showhelpbar="no" drawgrid="yes" snaponadd="no" snaponmove="no" antialiasing="no" turnoutcircles="no" tooltipsnotedit="no" tooltipsinedit="yes" mainlinetrackwidth="4" xscale="1.0" yscale="1.0" sidetrackwidth="2" defaulttrackcolor="darkGray" defaultoccupiedtrackcolor="red" defaultalternativetrackcolor="white" defaulttextcolor="black" turnoutcirclecolor="black" turnoutcirclesize="4" turnoutdrawunselectedleg="yes" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="10.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" autoblkgenerate="no" redBackground="192" greenBackground="192" blueBackground="192" gridSize="10" gridSize2nd="10" openDispatcher="no" useDirectTurnoutControl="no">
     <layoutTrackDrawingOptions name="My Layout" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTrackDrawingOptionsXml">
       <mainBallastColor>#000000</mainBallastColor>
       <mainBallastWidth>0</mainBallastWidth>
@@ -770,6 +770,25 @@
       </icons>
       <iconmaps />
     </signalheadicon>
+    <sensoricon sensor="S-Light-Control" x="20" y="10" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="no" text="Off" fontname="LucidaGrande-Bold" size="13" style="1" red="0" green="255" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+      <activeText text="On" red="255" green="0" blue="0" />
+      <inactiveText text="Off" red="0" green="255" blue="0" />
+      <unknownText text="S-Light-Control" red="0" green="0" blue="255" />
+      <inconsistentText text="S-Light-Control" red="0" green="0" blue="0" />
+    </sensoricon>
     <layoutturnout ident="TO1" type="2" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="200.0" ycen="100.0" xa="180.0" ya="100.0" xb="220.0" yb="100.0" xc="230.0" yc="70.0" xd="180.0" yd="100.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTurnoutXml" turnoutname="LE Left" blockname="B-Left-TO" connectaname="T1" connectbname="T2" connectcname="T4" signala1name="Left-AU" signala2name="Left-AL" signalb1name="Left-B" signalc1name="Left-C">
       <signalAMast>Left-A</signalAMast>
       <signalBMast>Left-B</signalBMast>
@@ -1075,104 +1094,104 @@
   <filehistory>
     <operation>
       <type>app</type>
-      <date>Mon Feb 10 15:08:32 CST 2020</date>
+      <date>Mon Feb 10 23:37:57 CST 2020</date>
       <filename>JMRI program</filename>
     </operation>
     <operation>
       <type>Load OK</type>
-      <date>Mon Feb 10 15:08:39 CST 2020</date>
+      <date>Mon Feb 10 23:38:06 CST 2020</date>
       <filename>/Users/das/JMRI/_Profiles/WhereUsed.jmri/WhereUsedTesting.xml</filename>
       <filehistory>
         <operation>
           <type>app</type>
-          <date>Mon Feb 10 14:57:06 CST 2020</date>
+          <date>Mon Feb 10 15:08:32 CST 2020</date>
           <filename>JMRI program</filename>
         </operation>
         <operation>
           <type>Load OK</type>
-          <date>Mon Feb 10 14:57:18 CST 2020</date>
+          <date>Mon Feb 10 15:08:39 CST 2020</date>
           <filename>/Users/das/JMRI/_Profiles/WhereUsed.jmri/WhereUsedTesting.xml</filename>
           <filehistory>
             <operation>
               <type>app</type>
-              <date>Mon Feb 10 14:41:41 CST 2020</date>
+              <date>Mon Feb 10 14:57:06 CST 2020</date>
               <filename>JMRI program</filename>
             </operation>
             <operation>
               <type>Load OK</type>
-              <date>Mon Feb 10 14:41:53 CST 2020</date>
+              <date>Mon Feb 10 14:57:18 CST 2020</date>
               <filename>/Users/das/JMRI/_Profiles/WhereUsed.jmri/WhereUsedTesting.xml</filename>
               <filehistory>
                 <operation>
                   <type>app</type>
-                  <date>Sun Feb 09 22:58:29 CST 2020</date>
+                  <date>Mon Feb 10 14:41:41 CST 2020</date>
                   <filename>JMRI program</filename>
                 </operation>
                 <operation>
                   <type>Load OK</type>
-                  <date>Sun Feb 09 22:58:41 CST 2020</date>
+                  <date>Mon Feb 10 14:41:53 CST 2020</date>
                   <filename>/Users/das/JMRI/_Profiles/WhereUsed.jmri/WhereUsedTesting.xml</filename>
                   <filehistory>
                     <operation>
                       <type>app</type>
-                      <date>Sun Feb 09 22:20:38 CST 2020</date>
+                      <date>Sun Feb 09 22:58:29 CST 2020</date>
                       <filename>JMRI program</filename>
                     </operation>
                     <operation>
                       <type>Load OK</type>
-                      <date>Sun Feb 09 22:20:49 CST 2020</date>
+                      <date>Sun Feb 09 22:58:41 CST 2020</date>
                       <filename>/Users/das/JMRI/_Profiles/WhereUsed.jmri/WhereUsedTesting.xml</filename>
                       <filehistory>
                         <operation>
                           <type>app</type>
-                          <date>Sun Feb 09 21:53:50 CST 2020</date>
+                          <date>Sun Feb 09 22:20:38 CST 2020</date>
                           <filename>JMRI program</filename>
                         </operation>
                         <operation>
                           <type>Load OK</type>
-                          <date>Sun Feb 09 21:54:01 CST 2020</date>
+                          <date>Sun Feb 09 22:20:49 CST 2020</date>
                           <filename>/Users/das/JMRI/_Profiles/WhereUsed.jmri/WhereUsedTesting.xml</filename>
                         </operation>
                         <operation>
                           <type>Store</type>
-                          <date>Sun Feb 09 22:19:24 CST 2020</date>
+                          <date>Sun Feb 09 22:56:28 CST 2020</date>
                           <filename />
                         </operation>
                       </filehistory>
                     </operation>
                     <operation>
                       <type>Store</type>
-                      <date>Sun Feb 09 22:56:28 CST 2020</date>
+                      <date>Sun Feb 09 23:05:07 CST 2020</date>
                       <filename />
                     </operation>
                   </filehistory>
                 </operation>
                 <operation>
                   <type>Store</type>
-                  <date>Sun Feb 09 23:05:07 CST 2020</date>
+                  <date>Mon Feb 10 14:43:24 CST 2020</date>
                   <filename />
                 </operation>
               </filehistory>
             </operation>
             <operation>
               <type>Store</type>
-              <date>Mon Feb 10 14:43:24 CST 2020</date>
+              <date>Mon Feb 10 14:58:13 CST 2020</date>
               <filename />
             </operation>
           </filehistory>
         </operation>
         <operation>
           <type>Store</type>
-          <date>Mon Feb 10 14:58:13 CST 2020</date>
+          <date>Mon Feb 10 15:09:47 CST 2020</date>
           <filename />
         </operation>
       </filehistory>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Mon Feb 10 15:09:47 CST 2020</date>
+      <date>Mon Feb 10 23:43:25 CST 2020</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.19.3ish+das+20200210T2108Z+Re4a0d69f82 on Mon Feb 10 15:09:47 CST 2020-->
+  <!--Written by JMRI version 4.19.3ish+das+20200211T0537Z+Ra8e0f94ab7 on Mon Feb 10 23:43:25 CST 2020-->
 </layout-config>
