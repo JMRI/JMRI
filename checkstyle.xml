@@ -53,6 +53,11 @@
     <property name="lineSeparator" value="lf"/>
     <property name="fileExtensions" value="java, xml, py"/>
   </module>
+  <!-- disable newline at end of file check for JHelpDev generated content -->
+  <module name="SuppressionSingleFilter">
+    <property name="checks" value="NewlineAtEndOfFile"/>
+    <property name="files" value="help\/(en|fr)/JmriHelp_(en|fr)(Index|TOC)\.xml$"/>
+  </module>
   <!-- from https://stackoverflow.com/questions/32903412/how-to-tell-checkstyle-to-check-all-lines-for-linefeed-newline-lf-and-not-crlf/33000451 -->
   <module name="RegexpMultiline">
     <property name="format" value="\r\n"/>

@@ -1,7 +1,7 @@
  <!-- SidebarTail.shtml -->
     <!-- Final items in typical sidebar -->
-      <h3 style="padding-left: 1em;"><p class="noted">
-       <a href="/help/en/webtoc.shtml">Help: Table of Contents</a><br>
+      <h3 style="padding-left: 1em;"><p class="noted" align="center">
+       <a href="/help/en/webtoc.shtml">Help: Contents</a><br>
        <a href="/help/en/webindex.shtml">Help: Index</a>
      </p></h3>
      <p style="padding-left: 1em;">
