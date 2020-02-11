@@ -1,7 +1,8 @@
 package jmri.implementation.swing;
 
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectClasses;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
 /**
  * Demo runner for the SwingShutDownTask class.
@@ -14,10 +15,8 @@ import org.junit.runners.Suite;
  *
  * @author	Bob Jacobsen Copyright (C) 2008
  */
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    SwingShutDownTaskTest.class
-})
+@RunWith(JUnitPlatform.class)
+@SelectClasses(jmri.implementation.swing.SwingShutDownTaskDemo.class)
 public class SwingShutDownTaskDemo {
 
     // Main entry point

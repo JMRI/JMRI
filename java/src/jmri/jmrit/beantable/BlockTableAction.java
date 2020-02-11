@@ -139,7 +139,12 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                 }
                 Object m = b.getValue();
                 if (m != null) {
-                    return m.toString();
+                    if ( m instanceof jmri.Reportable) {
+                        return ((jmri.Reportable) m).toReportString();
+                    }
+                    else {
+                        return m.toString();
+                    }
                 } else {
                     return "";
                 }

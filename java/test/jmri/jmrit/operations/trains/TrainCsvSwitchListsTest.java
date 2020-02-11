@@ -41,7 +41,7 @@ public class TrainCsvSwitchListsTest extends OperationsTestCase {
         Assert.assertTrue(file.exists());
         
         JUnitOperationsUtil.checkOperationsShutDownTask();
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TrainCsvSwitchListsTest.class);
