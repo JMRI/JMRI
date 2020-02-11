@@ -5,11 +5,14 @@ import java.awt.Container;
 import java.awt.Font;
 import java.awt.event.*;
 import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 import jmri.*;
 import jmri.swing.NamedBeanComboBox;
+import jmri.util.FileUtil;
 import jmri.util.swing.JComboBoxUtil;
 
 /**
@@ -33,11 +36,11 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
     JPanel _topPanel;
     JPanel _bottomPanel;
     JPanel _scrolltext = new JPanel();
-    JTextArea _textContent;
+    JTextArea _textArea;
 
     /**
      * Create the window frame.  The top part contains the item type and item name
-     * combo boxes, the middle contains the scrollable where used text area and the
+     * combo boxes, the middle contains the scrollable "where used" text area and the
      * bottom part has a button for saving the content to a file.
      */
     void createFrame() {
@@ -121,7 +124,7 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getModifiers() == 0) {
-                    log.debug("ignore event");
+                    log.debug("Ignore non-user event");
                     return;
                 }
                 Object src = e.getSource();
@@ -132,6 +135,7 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
             }
         });
         pack();
+        repaint();
     }
 
     /**
@@ -142,90 +146,86 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
      * along with refreshing the scrollable panel.
      */
     void buildWhereUsedListing() {
-        JTextArea textArea = new JTextArea();
-        textArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
-        textArea.setText(null);
-        textArea.setTabSize(4);
-        textArea.setEditable(false);
+        _textArea = new JTextArea();
+        _textArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
+        _textArea.setText(null);
+        _textArea.setTabSize(4);
+        _textArea.setEditable(false);
 
         switch (_itemType) {
             case SENSOR:
                 Sensor sensor = (Sensor) _itemNameBox.getSelectedItem();
-                SensorWhereUsed.getSensorWhereUsed(sensor, textArea);
+                SensorWhereUsed.getSensorWhereUsed(sensor, _textArea);
                 break;
 
             case TURNOUT:
                 Turnout turnout = (Turnout) _itemNameBox.getSelectedItem();
-                textArea.append("turnout = " + turnout.getDisplayName());
+                _textArea.append("turnout = " + turnout.getDisplayName());
                 log.info("turnout = {}", turnout.getDisplayName());
                 // Invoke textarea
                 break;
 
             default:
-                textArea.append(" -- nothing yet --");
+                _textArea.append(Bundle.getMessage("TypePrompt"));
                 break;
         }
 
-        textArea.setCaretPosition(0);
+        _textArea.setCaretPosition(0);
         if (_scrolltext.getComponentCount() > 0) {
             _scrolltext.remove(0);
         }
-        _scrolltext.add(textArea);
+        _scrolltext.add(_textArea);
         pack();
         repaint();
         return;
     }
 
+    JFileChooser userFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
+
     /**
      * Save the where used textarea content to a text file.
      */
     void saveWhereUsedPressed() {
-//         userFileChooser.setApproveButtonText(Bundle.getMessage("BrowserSaveDialogApprove"));  // NOI18N
-//         userFileChooser.setDialogTitle(Bundle.getMessage("BrowserSaveDialogTitle"));  // NOI18N
-//         userFileChooser.rescanCurrentDirectory();
-//         // Default to logix system name.txt
-//         userFileChooser.setSelectedFile(new File(_curLogix.getSystemName() + ".txt"));  // NOI18N
-//         int retVal = userFileChooser.showSaveDialog(null);
-//         if (retVal != JFileChooser.APPROVE_OPTION) {
-//             log.debug("Save browser content stopped, no file selected");  // NOI18N
-//             return;  // give up if no file selected or cancel pressed
-//         }
-//         File file = userFileChooser.getSelectedFile();
-//         log.debug("Save browser content to '{}'", file);  // NOI18N
-//
-//         if (file.exists()) {
-//             Object[] options = {Bundle.getMessage("BrowserSaveDuplicateReplace"),  // NOI18N
-//                     Bundle.getMessage("BrowserSaveDuplicateAppend"),  // NOI18N
-//                     Bundle.getMessage("ButtonCancel")};               // NOI18N
-//             int selectedOption = JOptionPane.showOptionDialog(null,
-//                     Bundle.getMessage("BrowserSaveDuplicatePrompt", file.getName()), // NOI18N
-//                     Bundle.getMessage("BrowserSaveDuplicateTitle"),   // NOI18N
-//                     JOptionPane.DEFAULT_OPTION,
-//                     JOptionPane.WARNING_MESSAGE,
-//                     null, options, options[0]);
-//             if (selectedOption == 2 || selectedOption == -1) {
-//                 log.debug("Save browser content stopped, file replace/append cancelled");  // NOI18N
-//                 return;  // Cancel selected or dialog box closed
-//             }
-//             if (selectedOption == 0) {
-//                 FileUtil.delete(file);  // Replace selected
-//             }
-//         }
-//
-//         // Create the file content
-//         String tStr = Bundle.getMessage("BrowserLogix") + " " + _curLogix.getSystemName() + "    "  // NOI18N
-//                 + _curLogix.getUserName() + "    "
-//                 + (Boolean.valueOf(_curLogix.getEnabled())
-//                         ? Bundle.getMessage("BrowserEnabled")    // NOI18N
-//                         : Bundle.getMessage("BrowserDisabled"));  // NOI18N
-//         JTextArea textContent = buildConditionalListing();
-//         try {
-//             // ADD Logix Header inforation first
-//             FileUtil.appendTextToFile(file, tStr);
-//             FileUtil.appendTextToFile(file, textContent.getText());
-//         } catch (IOException e) {
-//             log.error("Unable to write browser content to '{}', exception: '{}'", file, e);  // NOI18N
-//         }
+        userFileChooser.setApproveButtonText(Bundle.getMessage("SaveDialogApprove"));  // NOI18N
+        userFileChooser.setDialogTitle(Bundle.getMessage("SaveDialogTitle"));  // NOI18N
+        userFileChooser.rescanCurrentDirectory();
+
+        String itemName = _itemNameBox.getSelectedItemDisplayName();
+        String fileName = Bundle.getMessage("SaveFileName", (itemName == null) ? "Unknown" : itemName);  // NOI18N
+        userFileChooser.setSelectedFile(new File(fileName));
+        int retVal = userFileChooser.showSaveDialog(null);
+        if (retVal != JFileChooser.APPROVE_OPTION) {
+            log.debug("Save where used content stopped, no file selected");  // NOI18N
+            return;  // give up if no file selected or cancel pressed
+        }
+        File file = userFileChooser.getSelectedFile();
+        log.debug("Save where used content to '{}'", file);  // NOI18N
+
+        if (file.exists()) {
+            Object[] options = {Bundle.getMessage("SaveDuplicateReplace"),  // NOI18N
+                    Bundle.getMessage("SaveDuplicateAppend"),  // NOI18N
+                    Bundle.getMessage("ButtonCancel")};               // NOI18N
+            int selectedOption = JOptionPane.showOptionDialog(null,
+                    Bundle.getMessage("SaveDuplicatePrompt", file.getName()), // NOI18N
+                    Bundle.getMessage("SaveDuplicateTitle"),   // NOI18N
+                    JOptionPane.DEFAULT_OPTION,
+                    JOptionPane.WARNING_MESSAGE,
+                    null, options, options[0]);
+            if (selectedOption == 2 || selectedOption == -1) {
+                log.debug("Save where used content stopped, file replace/append cancelled");  // NOI18N
+                return;  // Cancel selected or dialog box closed
+            }
+            if (selectedOption == 0) {
+                FileUtil.delete(file);  // Replace selected
+            }
+        }
+
+        // Create the file content
+        try {
+            FileUtil.appendTextToFile(file, _textArea.getText());
+        } catch (IOException e) {
+            log.error("Unable to write where used content to '{}', exception: '{}'", file, e);  // NOI18N
+        }
     }
 
     /**

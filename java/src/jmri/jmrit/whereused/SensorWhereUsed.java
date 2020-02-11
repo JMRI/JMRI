@@ -13,6 +13,8 @@ import jmri.jmrit.blockboss.BlockBossLogic;
  * Find sensor references.
  * <ul>
  * <li>Turnouts - Feedback sensors</li>
+ * <li>Lights - Light control sensor</li>
+ * <li>Routes - Route definitions TODO</li>
  * <li>Blocks - Occupancy sensors</li>
  * <li>LayoutBlocks - Occupancy sensors TODO</li>
  * <li>Signal Heads - SSL definitions</li>
@@ -33,6 +35,7 @@ public class SensorWhereUsed {
         textArea.append(Bundle.getMessage("ReferenceTitle", label, sensor.getDisplayName()));  // NOI18N
 //         textArea.append(String.format("\n\t\t\t%s %d\n", Bundle.getMessage("ListenerCount"), sensor.getNumPropertyChangeListeners()));
         textArea.append(checkTurnouts(sensor));
+        textArea.append(checkLights(sensor));
         textArea.append(checkBlocks(sensor));
         textArea.append(checkSignalHeadLogic(sensor));
         textArea.append(checkSignalMastLogic(sensor));
@@ -54,6 +57,18 @@ public class SensorWhereUsed {
         return addHeader(sb, "ReferenceFeedback");
     }
 
+    static String checkLights(Sensor sensor) {
+        StringBuilder sb = new StringBuilder();
+        InstanceManager.getDefault(LightManager.class).getNamedBeanSet().forEach((light) -> {
+            light.getUsageReport(sensor).forEach((report) -> {
+                if (report.usageKey.startsWith("Sensor")) {
+                    sb.append(Bundle.getMessage("ReferenceLineData", light.getUserName(), light.getSystemName(), report.usageData));  // NOI18N
+                }
+            });
+        });
+        return addHeader(sb, "ReferenceLightControl");  // NOI18N
+    }
+
     static String checkBlocks(Sensor sensor) {
         StringBuilder sb = new StringBuilder();
         InstanceManager.getDefault(BlockManager.class).getNamedBeanSet().forEach((block) -> {
@@ -63,7 +78,7 @@ public class SensorWhereUsed {
                 }
             });
         });
-        return addHeader(sb, "ReferenceOccupancy");
+        return addHeader(sb, "ReferenceOccupancy");  // NOI18N
     }
 
     static String checkSignalHeadLogic(Sensor sensor) {
