@@ -42,7 +42,8 @@ public class FastClockController extends AbstractController {
         rateListener = new PropertyChangeListener() {
             @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
-                if (e.getPropertyName().equals("rate")) {
+                //skip time updates on this listener, only send changes (rate, run, other)
+                if (!e.getPropertyName().equals("time") && !e.getPropertyName().equals("minutes")) {
                     setReSyncSetpoint();
                     sendFastRate();
                 }
