@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * the older 2.n Mini Web Server.
  *
  * @author Randall Wood Copyright 2017, 2019
- * @deprecated since 4.19.2 without direct replacement; users migrating from
+ * @deprecated since 4.19.4 without direct replacement; users migrating from
  *             JMRI versions older than 4.0 will need to manually migrate web
  *             server preferences
  */

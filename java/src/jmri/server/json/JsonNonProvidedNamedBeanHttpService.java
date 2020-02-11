@@ -118,7 +118,7 @@ public abstract class JsonNonProvidedNamedBeanHttpService<T extends NamedBean> e
      * @return a JSON description of the requested object
      * @throws JsonException if the named object does not exist or other error
      *                       occurs
-     * @deprecated since 4.19.2; use
+     * @deprecated since 4.19.4; use
      *             {@link #doGet(NamedBean, String, String, JsonRequest)}
      *             instead
      */
@@ -173,7 +173,7 @@ public abstract class JsonNonProvidedNamedBeanHttpService<T extends NamedBean> e
      * @param id     the message id set by the client
      * @return a JSON node
      * @throws JsonException if the bean is null
-     * @deprecated since 4.19.2; use
+     * @deprecated since 4.19.4; use
      *             {@link #getNamedBean(NamedBean, String, String, JsonRequest)}
      *             instead
      */
@@ -232,7 +232,7 @@ public abstract class JsonNonProvidedNamedBeanHttpService<T extends NamedBean> e
      * @param id     the message id set by the client
      * @return the bean so that this can be used in a method chain
      * @throws JsonException if the bean is null
-     * @deprecated since 4.19.2; use
+     * @deprecated since 4.19.4; use
      *             {@link #postNamedBean(NamedBean, JsonNode, String, String, JsonRequest)}
      *             instead
      */

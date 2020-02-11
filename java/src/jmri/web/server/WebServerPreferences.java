@@ -58,7 +58,7 @@ public class WebServerPreferences extends PreferencesBean implements InstanceMan
      * 
      * @param fileName name of XML file containing JMRI 3.x configuration; this
      *                 parameter is ignored
-     * @deprecated since 4.19.2; use {@link #WebServerPreferences()} instead
+     * @deprecated since 4.19.4; use {@link #WebServerPreferences()} instead
      */
     @Deprecated
     public WebServerPreferences(String fileName) {
@@ -107,7 +107,7 @@ public class WebServerPreferences extends PreferencesBean implements InstanceMan
      * 4.19.2, this method does nothing.
      * 
      * @param child the element to load JMRI 3.x web server preferences from
-     * @deprecated since 4.19.2 without replacement
+     * @deprecated since 4.19.4 without replacement
      */
     @Deprecated
     public void load(Element child) {
@@ -119,7 +119,7 @@ public class WebServerPreferences extends PreferencesBean implements InstanceMan
      * 
      * @param prefs the preferences to compare to this this preferences
      * @return true if different; false otherwise
-     * @deprecated since 4.19.2 without replacement
+     * @deprecated since 4.19.4 without replacement
      */
     @Deprecated
     public boolean compareValuesDifferent(WebServerPreferences prefs) {
@@ -151,7 +151,7 @@ public class WebServerPreferences extends PreferencesBean implements InstanceMan
      * Apply another set of WebServerPreferences to this set of preferences.
      * 
      * @param prefs the preferences to apply
-     * @deprecated since 4.19.2 without replacement
+     * @deprecated since 4.19.4 without replacement
      */
     @Deprecated
     public void apply(WebServerPreferences prefs) {
@@ -171,7 +171,7 @@ public class WebServerPreferences extends PreferencesBean implements InstanceMan
      * 
      * @param fileName the name of the preferences file
      * @throws FileNotFoundException if the requested file does not exist
-     * @deprecated since 4.19.2 without replacement
+     * @deprecated since 4.19.4 without replacement
      */
     @Deprecated
     public final void openFile(String fileName) throws FileNotFoundException {

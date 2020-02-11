@@ -106,7 +106,7 @@ public interface JsonServiceFactory<H extends JsonHttpService, S extends JsonSoc
      * If a service returns no types, it will never be used.
      *
      * @return An array of types this service responds to
-     * @deprecated since 4.19.2; use {@link #getTypes(String)} instead
+     * @deprecated since 4.19.4; use {@link #getTypes(String)} instead
      */
     @Deprecated
     @Nonnull
@@ -124,7 +124,7 @@ public interface JsonServiceFactory<H extends JsonHttpService, S extends JsonSoc
      * the JSON 3.0 or newer protocol.
      *
      * @return An array of types this service sends, but does not respond to
-     * @deprecated since 4.19.2; use {@link #getSentTypes(String)} instead
+     * @deprecated since 4.19.4; use {@link #getSentTypes(String)} instead
      */
     @Deprecated
     @Nonnull
@@ -142,7 +142,7 @@ public interface JsonServiceFactory<H extends JsonHttpService, S extends JsonSoc
      * the JSON 3.0 or newer protocol.
      *
      * @return An array of types this service sends, but does not respond to
-     * @deprecated since 4.19.2; use {@link #getReceivedTypes(String)} instead
+     * @deprecated since 4.19.4; use {@link #getReceivedTypes(String)} instead
      */
     @Deprecated
     @Nonnull
@@ -156,7 +156,7 @@ public interface JsonServiceFactory<H extends JsonHttpService, S extends JsonSoc
      *
      * @param connection The connection for this service to respond to
      * @return A service or null if the service does not support sockets
-     * @deprecated since 4.19.2; use {@link #getSocketService(JsonConnection, String)} instead
+     * @deprecated since 4.19.4; use {@link #getSocketService(JsonConnection, String)} instead
      */
     @Deprecated
     @Nonnull
@@ -169,7 +169,7 @@ public interface JsonServiceFactory<H extends JsonHttpService, S extends JsonSoc
      *
      * @param mapper The object mapper for the HTTP service to use
      * @return A servlet or null if the service does not support HTTP
-     * @deprecated since 4.19.2; use
+     * @deprecated since 4.19.4; use
      *             {@link #getHttpService(ObjectMapper, String)} instead
      */
     @Deprecated

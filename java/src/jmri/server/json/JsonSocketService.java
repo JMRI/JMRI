@@ -66,7 +66,7 @@ public abstract class JsonSocketService<H extends JsonHttpService> {
      *                             the client.
      * @throws JsonException       Thrown if the service needs to pass an error
      *                             message back to the client.
-     * @deprecated since 4.19.2; use
+     * @deprecated since 4.19.4; use
      *             {@link #onMessage(String, JsonNode, String, JsonRequest)}
      *             instead
      */
@@ -130,7 +130,7 @@ public abstract class JsonSocketService<H extends JsonHttpService> {
      *                             localized message "UnlistableService" to
      *                             indicate that {@code type} should not be
      *                             listed
-     * @deprecated since 4.19.2; use
+     * @deprecated since 4.19.4; use
      *             {@link #onList(String, JsonNode, JsonRequest)} instead
      */
     @Deprecated
@@ -178,7 +178,7 @@ public abstract class JsonSocketService<H extends JsonHttpService> {
      * Set the in-use locale
      *
      * @param locale the new locale
-     * @deprecated since 4.19.2 without direct replacement; rely on
+     * @deprecated since 4.19.4 without direct replacement; rely on
      *             {@link JsonClientHandler#onMessage(JsonNode)} to ensure this
      *             is correct
      */

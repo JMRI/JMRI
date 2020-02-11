@@ -175,7 +175,7 @@ public abstract class JsonNamedBeanHttpService<T extends NamedBean> extends Json
      * @param id     the message id set by the client
      * @return a JSON description of the requested object
      * @throws JsonException if an error occurs
-     * @deprecated since 4.19.2; use {@link #doPost(String, String, JsonNode, JsonRequest)} instead
+     * @deprecated since 4.19.4; use {@link #doPost(String, String, JsonNode, JsonRequest)} instead
      */
     @Deprecated
     @Nonnull
@@ -198,7 +198,7 @@ public abstract class JsonNamedBeanHttpService<T extends NamedBean> extends Json
      * @param locale the requesting client's Locale
      * @param id     the message id set by the client
      * @throws JsonException if an error occurs
-     * @deprecated since 4.19.2; use {@link #doDelete(NamedBean, String, String, JsonNode, JsonRequest)} instead
+     * @deprecated since 4.19.4; use {@link #doDelete(NamedBean, String, String, JsonNode, JsonRequest)} instead
      */
     @Deprecated
     protected void doDelete(@CheckForNull T bean, @Nonnull String name, @Nonnull String type, @Nonnull JsonNode data, @Nonnull Locale locale, int id) throws JsonException {
@@ -246,7 +246,7 @@ public abstract class JsonNamedBeanHttpService<T extends NamedBean> extends Json
      * @param locale the requesting client's Locale
      * @param id     the message id set by the client
      * @throws JsonException if an error occurs
-     * @deprecated since 4.19.2; use {@link #deleteBean(NamedBean, String, String, JsonNode, JsonRequest)} instead
+     * @deprecated since 4.19.4; use {@link #deleteBean(NamedBean, String, String, JsonNode, JsonRequest)} instead
      */
     @Deprecated
     protected final void deleteBean(@CheckForNull T bean, @Nonnull String name, @Nonnull String type, @Nonnull JsonNode data, @Nonnull Locale locale, int id) throws JsonException {

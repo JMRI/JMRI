@@ -199,7 +199,7 @@ public class JsonUtilHttpService extends JsonHttpService {
      * @param heartbeat seconds in which a client must send a message before its
      *                  connection is broken
      * @return the JSON hello message
-     * @deprecated since 4.19.2; use {@link #getHello(int, JsonRequest)} instead
+     * @deprecated since 4.19.4; use {@link #getHello(int, JsonRequest)} instead
      */
     @Deprecated
     public JsonNode getHello(Locale locale, int heartbeat, int id) {
@@ -267,7 +267,7 @@ public class JsonUtilHttpService extends JsonHttpService {
      * @return Array of JSON metadata elements
      * @throws JsonException if thrown by
      *                       {@link #getMetadata(java.util.Locale, java.lang.String, int)}
-     * @deprecated since 4.19.2; use {@link #getMetadata(JsonRequest)} instead
+     * @deprecated since 4.19.4; use {@link #getMetadata(JsonRequest)} instead
      */
     @Deprecated
     public ArrayNode getMetadata(Locale locale, int id) throws JsonException {
@@ -305,7 +305,7 @@ public class JsonUtilHttpService extends JsonHttpService {
      * @return the JSON networkService message
      * @throws JsonException if type is not a running zeroconf networking
      *                       protocol
-     * @deprecated since 4.19.2; use
+     * @deprecated since 4.19.4; use
      *             {@link #getNetworkService(String, JsonRequest)} instead
      */
     @Deprecated
@@ -372,7 +372,7 @@ public class JsonUtilHttpService extends JsonHttpService {
      * @param id     message id set by client
      * @return the JSON node message
      * @see jmri.util.node.NodeIdentity
-     * @deprecated since 4.19.2; use {@link #getNode(JsonRequest)} instead
+     * @deprecated since 4.19.4; use {@link #getNode(JsonRequest)} instead
      */
     @Deprecated
     public JsonNode getNode(Locale locale, int id) {
@@ -474,7 +474,7 @@ public class JsonUtilHttpService extends JsonHttpService {
      * @param locale the client's Locale
      * @param id     message id set by client
      * @return the JSON railroad name message
-     * @deprecated since 4.19.2; use {@link #getRailroad(JsonRequest)} instead
+     * @deprecated since 4.19.4; use {@link #getRailroad(JsonRequest)} instead
      */
     @Deprecated
     public JsonNode getRailroad(Locale locale, int id) {
@@ -511,7 +511,7 @@ public class JsonUtilHttpService extends JsonHttpService {
      * @param id     message id set by client
      * @return the JSON systemConnections message.
      * @throws JsonException if systemConnection not found
-     * @deprecated since 4.19.2; use
+     * @deprecated since 4.19.4; use
      *             {@link #getSystemConnection(String, JsonRequest)} instead
      */
     @Deprecated
@@ -574,7 +574,7 @@ public class JsonUtilHttpService extends JsonHttpService {
      * @param locale the client's Locale.
      * @param id     message id set by client
      * @return the JSON systemConnections message.
-     * @deprecated since 4.19.2; use {@link #getSystemConnections(JsonRequest)}
+     * @deprecated since 4.19.4; use {@link #getSystemConnections(JsonRequest)}
      *             instead
      */
     @Deprecated
@@ -636,7 +636,7 @@ public class JsonUtilHttpService extends JsonHttpService {
      * @param id     message id set by client
      * @return the JSON configProfiles message.
      * @throws JsonException if the requested configProfile is not found
-     * @deprecated since 4.19.2; use {@link #getConfigProfile(String, JsonRequest)} instead
+     * @deprecated since 4.19.4; use {@link #getConfigProfile(String, JsonRequest)} instead
      */
     @Deprecated
     public JsonNode getConfigProfile(Locale locale, String name, int id) throws JsonException {
@@ -666,7 +666,7 @@ public class JsonUtilHttpService extends JsonHttpService {
      * @param locale the client's Locale.
      * @param id     message id set by client
      * @return the JSON configProfiles message.
-     * @deprecated since 4.19.2; use
+     * @deprecated since 4.19.4; use
      *             {@link #getConfigProfiles(JsonRequest)} instead
      */
     @Deprecated

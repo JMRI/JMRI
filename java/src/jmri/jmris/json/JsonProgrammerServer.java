@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2012
  * @author Randall Wood Copyright (C) 2014
- * @deprecated since 4.19.2 without replacement; this is not, and has not been, used in the
+ * @deprecated since 4.19.4 without replacement; this is not, and has not been, used in the
  *             JSON protocol services
  */
 @Deprecated

@@ -91,7 +91,7 @@ public abstract class JsonHttpService {
      * @return a JSON description of the requested object
      * @throws JsonException if the named object does not exist or other error
      *                       occurs
-     * @deprecated since 4.19.2; use
+     * @deprecated since 4.19.4; use
      *             {@link #doGet(String, String, JsonNode, JsonRequest)} instead
      */
     @Deprecated
@@ -138,7 +138,7 @@ public abstract class JsonHttpService {
      *         been applied
      * @throws JsonException if the named object does not exist or other error
      *                       occurs
-     * @deprecated since 4.19.2; use
+     * @deprecated since 4.19.4; use
      *             {@link #doPost(String, String, JsonNode, JsonRequest)}
      *             instead
      */
@@ -185,7 +185,7 @@ public abstract class JsonHttpService {
      * @param id     the message id set by the client
      * @return a JSON description of the requested object
      * @throws JsonException if the method is not allowed or other error occurs
-     * @deprecated since 4.19.2; use
+     * @deprecated since 4.19.4; use
      *             {@link #doPut(String, String, JsonNode, JsonRequest)} instead
      */
     @Deprecated
@@ -231,7 +231,7 @@ public abstract class JsonHttpService {
      * @param locale the requesting client's Locale
      * @param id     the message id set by the client
      * @throws JsonException if this method is not allowed or other error occurs
-     * @deprecated since 4.19.2; use
+     * @deprecated since 4.19.4; use
      *             {@link #doDelete(String, String, JsonNode, JsonRequest)}
      *             instead
      */
@@ -280,7 +280,7 @@ public abstract class JsonHttpService {
      * @return a JSON list or message containing type {@value JSON#LIST}, the
      *         list as data, and the passed in id
      * @throws JsonException may be thrown by concrete implementations
-     * @deprecated since 4.19.2; use
+     * @deprecated since 4.19.4; use
      *             {@link #doGetList(String, JsonNode, JsonRequest)} instead
      */
     @Deprecated
@@ -346,7 +346,7 @@ public abstract class JsonHttpService {
      *                       not a type handled by this service, this must be
      *                       thrown with an error code of 500 and the localized
      *                       message ERROR_UNKNOWN_TYPE
-     * @deprecated since 4.19.2; use
+     * @deprecated since 4.19.4; use
      *             {@link #doSchema(String, boolean, JsonRequest)} instead
      */
     @Deprecated
@@ -471,7 +471,7 @@ public abstract class JsonHttpService {
      * @param locale    the client locale
      * @param id        the message id set by the client
      * @throws JsonException the exception
-     * @deprecated since 4.19.2; use
+     * @deprecated since 4.19.4; use
      *             {@link #throwDeleteConflictException(String, String, ArrayNode, JsonRequest)}
      *             instead
      */
