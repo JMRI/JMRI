@@ -53,7 +53,6 @@ else
             -Dsurefire.runOrder=${RUN_ORDER} \
             -Dant.jvm.args="-Djava.awt.headless=${HEADLESS}" \
             -Djava.awt.headless=${HEADLESS} \
-            -Djmri.util.junit.PrintingTestListener.verbose=true \
             -Djmri.skipschematests=true \
             -Dcucumber.options="--tags 'not @Ignore'" \
             -Dpython.cachedir=${PYTHON_CACHEDIR}
