@@ -47,8 +47,6 @@ public class HexRecord {
     
     /**
      * Read a new record from a file
-     * 
-     * @param f
      */
     public HexRecord(HexFile f) {
         this();

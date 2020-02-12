@@ -41,7 +41,6 @@ public class HexFile {
     /**
      * Create a new HexFile object and initialize data to unprogrammed state.
      * 
-     * @param fileName 
      */
     public HexFile(String fileName) {
         name = fileName;

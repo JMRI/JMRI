@@ -6,7 +6,7 @@
     <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>4.19.3-SNAPSHOT</version>
+    <version>4.19.4-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
@@ -428,8 +428,6 @@
                         <!-- ignore to avoid duplicate test runs -->
                         <exclude>apps.tests.AllTest</exclude>
                         <exclude>jmri.HeadLessTest</exclude>
-                        <!-- ignore package tests under assumption they only include other tests -->
-                        <exclude>**.PackageTest</exclude>
                         <!-- ignore since the test is not intended to be normally used -->
                         <exclude>jmri.util.FailTest</exclude>
                         <!-- exclude the archunit tests from automatic execution -->

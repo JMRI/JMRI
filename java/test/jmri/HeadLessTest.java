@@ -1,15 +1,22 @@
 package jmri;
 
+import jnr.ffi.Struct;
 import org.junit.internal.TextListener;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.platform.suite.api.ExcludeClassNamePatterns;
-import org.junit.platform.suite.api.SelectPackages;
+import org.junit.platform.launcher.Launcher;
+import org.junit.platform.launcher.LauncherDiscoveryRequest;
+import org.junit.platform.launcher.TestExecutionListener;
+import org.junit.platform.launcher.TestPlan;
+import org.junit.platform.launcher.core.LauncherDiscoveryRequestBuilder;
+import org.junit.platform.launcher.core.LauncherFactory;
+import org.junit.platform.launcher.listeners.SummaryGeneratingListener;
+import org.junit.platform.launcher.listeners.TestExecutionSummary;
 import org.junit.platform.suite.api.SuiteDisplayName;
-import org.junit.runner.JUnitCore;
-import org.junit.runner.Result;
-import org.junit.runner.RunWith;
 
-import org.junit.runner.notification.RunListener;
+import java.io.PrintWriter;
+
+import static org.junit.platform.engine.discovery.ClassNameFilter.excludeClassNamePatterns;
+import static org.junit.platform.engine.discovery.ClassNameFilter.includeClassNamePatterns;
+import static org.junit.platform.engine.discovery.DiscoverySelectors.selectPackage;
 
 /**
  * Invoke complete set of tests for the jmri package
@@ -27,10 +34,7 @@ import org.junit.runner.notification.RunListener;
  * 
  * @author Bob Jacobsen, Copyright (C) 2001, 2002, 2007
  */
-@RunWith(JUnitPlatform.class)
 @SuiteDisplayName("Headless Tests")
-@SelectPackages({"jmri","apps"})
-@ExcludeClassNamePatterns({"^AllTest$","^FileLineEndingsTest$","ArchitectureTest"})
 public class HeadLessTest {
 
     // Main entry point
@@ -39,29 +43,41 @@ public class HeadLessTest {
         System.setProperty("java.awt.headless", "true");
 
         // start tests
-        run(HeadLessTest.class);
+        run();
     }
 
     /**
-     * Run tests with a default RunListener.
+     * Run tests with a compile-selected RunListener.
      *
-     * @param testClass the class containing tests to run
      */
-     public static void run(Class<?> testClass){
-        run(new TextListener(System.out),testClass);
+    public static void run() {
+        SummaryGeneratingListener listener = new jmri.util.junit.PrintingTestListener(System.out); // test-by-test output if enabled
+        String[] includePatterns = {"Test.*",".*Test","IT.*",".*IT"};
+        String[] excludePatterns = {"AllTest","HeadLessTest","ArchitectureTest"};
+
+        run(listener,includePatterns,excludePatterns);
+        TestExecutionSummary summary = listener.getSummary();
+        PrintWriter p = new PrintWriter(System.out);
+        summary.printTo(p);
+        summary.printFailuresTo(p);
     }
 
     /**
-     * Run tests with a specified RunListener
+     * Run tests with a specified RunListener.
      *
      * @param listener the listener for the tests
-     * @param testClass the class containing tests to run
      */
-    public static void run(RunListener listener, Class<?> testClass) {
-        JUnitCore runner = new JUnitCore();
-        runner.addListener(listener);
-        Result result = runner.run(testClass);
-        System.exit(result.wasSuccessful() ? 0 : 1);
+    public static void run(TestExecutionListener listener,String[] includePatterns,String[] excludePatterns) {
+        LauncherDiscoveryRequest request = LauncherDiscoveryRequestBuilder.request()
+                .selectors(selectPackage("jmri"))
+                .selectors(selectPackage("apps"))
+                .filters(includeClassNamePatterns(includePatterns))
+                .filters(excludeClassNamePatterns(excludePatterns))
+                .build();
+        Launcher launcher = LauncherFactory.create();
+        TestPlan testPlan = launcher.discover(request);
+        launcher.registerTestExecutionListeners(listener);
+        launcher.execute(testPlan);
     }
 
 
