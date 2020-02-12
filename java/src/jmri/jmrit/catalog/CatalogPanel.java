@@ -145,7 +145,7 @@ public class CatalogPanel extends JPanel {
      * @param treeDnD true allows dropping into tree or panel
      * @param dragIcons true allows dragging icons from panel
      */
-    protected void init(boolean treeDnD, boolean dragIcons) {
+    private void init(boolean treeDnD, boolean dragIcons) {
         _model = new DefaultTreeModel(new CatalogTreeNode("mainRoot"));
         if (treeDnD) { // index editor (right pane)
             _dTree = new DropJTree(_model);
@@ -719,11 +719,15 @@ public class CatalogPanel extends JPanel {
      * @param label1 properties key to be used as the label for the icon tree
      * @param label2 properties key to be used as the instruction
      * @param addButtonPanel adds background select comboBox
+     * @param treeDnD true allows dropping into tree or panel
+     * @param dragIcons true allows dragging icons from panel
      * @return the created CatalogPanel
      */
-    public static CatalogPanel makeCatalog(String label1, String label2, boolean addButtonPanel) {
+    public static CatalogPanel makeCatalog(String label1, String label2, boolean addButtonPanel, boolean treeDnD, boolean dragIcons) {
         synchronized(_lock) {
-            return new CatalogPanel(label1, label2, addButtonPanel);
+            CatalogPanel cp = new CatalogPanel(label1, label2, addButtonPanel);
+            cp.init(treeDnD, dragIcons);
+            return cp;
         }
     }
 
