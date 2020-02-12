@@ -26,7 +26,7 @@
   <div id="container">
     <!--#include virtual="../../../../Header.shtml" -->
   <div id="mBody">
-      <!--#include virtual="SidebarNew.shtml" -->
+      <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
         <!-- Page Body -->
 
@@ -48,7 +48,7 @@
           <li><a href="#othertools">Other Tools</a></li>
         </ul>
 
-        <p>Or create your own tools by <a href="#scripting">Scripting JMRI</a></p>
+        <p>Or create your own tools by <a href="#scripting">Scripting JMRI</a>.</p>
         
         <h2><a name="commontools" id="commontools"></a>Common tools</h2>
 
