@@ -27,7 +27,12 @@
     <div id="mainContent">
 
       <h1>JMRI Code: System Properties</h1>
-      <p>This page lists the system properties that JMRI uses.</p>
+      <p>This page lists the system properties that JMRI uses.
+      See also the 
+      <a href="JUnit.shtml">JUnit testing page</a>
+      and the
+      <a href="StartUpScripts.shtml">Start Scripts page</a>.
+      </p>
 
       <h3>Operating System Properties</h3>
 
