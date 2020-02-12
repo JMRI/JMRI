@@ -438,6 +438,8 @@ public class CbusMessage {
      * Microchip AN247 format NOP message to set address.
      * <p>
      * The CBUS bootloader uses extended ID frames
+     * 
+     * @param a address
      * @param header CAN ID - overridden by call to setHeader
      * @return ready to send CanMessage
      */
@@ -445,9 +447,9 @@ public class CbusMessage {
         CanMessage m = new CanMessage(8, header);
         m.setExtended(true);
         m.setHeader(0x4);
-        m.setElement(0, (a / 65536) & 0xFF);
+        m.setElement(0, a & 0xFF);
         m.setElement(1, (a / 256) & 0xFF);
-        m.setElement(2, a & 0xFF);
+        m.setElement(2, (a / 65536) & 0xFF);
         m.setElement(3, 0);
         m.setElement(4, 0x0D);
         m.setElement(5, CbusConstants.CBUS_BOOT_NOP);
@@ -458,6 +460,7 @@ public class CbusMessage {
 
     /**
      * Microchip AN247 format message to reset and enter normal mode.
+     * 
      * @param header CAN ID - overridden by call to setHeader
      * @return ready to send CanMessage
      */
@@ -479,6 +482,8 @@ public class CbusMessage {
     /**
      * Microchip AN247 format message to initialise the bootloader and set the
      * start address.
+     * 
+     * @param a start address
      * @param header CAN ID - overridden by call to setHeader
      * @return ready to send CanMessage
      */
@@ -486,9 +491,9 @@ public class CbusMessage {
         CanMessage m = new CanMessage(8, header);
         m.setExtended(true);
         m.setHeader(0x4);
-        m.setElement(0, (a / 65536) & 0xFF);
+        m.setElement(0, a & 0xFF);
         m.setElement(1, (a / 256) & 0xFF);
-        m.setElement(2, a & 0xFF);
+        m.setElement(2, (a / 65536) & 0xFF);
         m.setElement(3, 0);
         m.setElement(4, 0x0D);
         m.setElement(5, CbusConstants.CBUS_BOOT_INIT);
@@ -524,6 +529,7 @@ public class CbusMessage {
 
     /**
      * Microchip AN247 format message to check if a module is in boot mode.
+     * 
      * @param header CAN ID - overridden by call to setHeader
      * @return ready to send CanMessage
      */
@@ -544,6 +550,7 @@ public class CbusMessage {
 
     /**
      * Microchip AN247 format message to write 8 bytes of data
+     * 
      * @param d data array, 8 length, values 0-255
      * @param header CAN ID - overridden by call to setHeader
      * @return ready to send CanMessage
@@ -569,6 +576,7 @@ public class CbusMessage {
 
     /**
      * Microchip AN247 format message to write 8 bytes of data
+     * 
      * @param d data array, 8 length, values 0-255
      * @param header CAN ID - overridden by call to setHeader
      * @return ready to send CanMessage

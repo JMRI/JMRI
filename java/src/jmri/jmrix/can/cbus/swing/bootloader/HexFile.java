@@ -41,6 +41,7 @@ public class HexFile {
     /**
      * Create a new HexFile object and initialize data to unprogrammed state.
      * 
+     * @param fileName file name to use for the hex file
      */
     public HexFile(String fileName) {
         name = fileName;
@@ -116,7 +117,7 @@ public class HexFile {
                 // Extended address record so update the address and read
                 // next record. Cast data from byte to int
                 address = (r.data[0]& 0xff) * 256 * 65536 + (r.data[1] & 0xff) * 65536;
-                log.debug("Found extended adress record. Address is now {}", address);
+                log.debug("Found extended adress record. Address is now {}", Integer.toHexString(address));
                 lineNo++;
                 r = new HexRecord(this);
             }
@@ -124,21 +125,21 @@ public class HexFile {
                 lineNo++;
                 r.setLineNo(lineNo);
                 address = (address & 0xffff0000) + r.getAddress();
-                log.debug("Hex record for address {}", address);
+                log.debug("Hex record for address {}", Integer.toHexString(address));
 
                 if ((address >= EE_START) && (address < (EE_START  + MAX_EEPROM_SIZE))) {
                     for (int i = 0; i < r.len; i++) {
                         hexDataEeprom[address - EE_START + i] = r.getData(i);
                     }
-                    if ((address - EE_START + r.len) > eeEnd) {
-                        eeEnd = address - EE_START + r.len;
+                    if ((address + r.len) > eeEnd) {
+                        eeEnd = address + r.len;
                     }
                 } else if ((address >= CONFIG_START) && (address < (CONFIG_START  + MAX_CONFIG_SIZE))) {
                     for (int i = 0; i < r.len; i++) {
                         hexDataConfig[address - CONFIG_START + i] = r.getData(i);
                     } 
-                    if ((address - CONFIG_START+ r.len) > configEnd) {
-                        configEnd = address - CONFIG_START+ r.len;
+                    if ((address + r.len) > configEnd) {
+                        configEnd = address + r.len;
                     }
                 } else if (address < MAX_PROG_SIZE) {
                     for (int i = 0; i < r.len; i++) {

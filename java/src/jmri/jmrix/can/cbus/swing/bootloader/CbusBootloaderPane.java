@@ -14,15 +14,12 @@ import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -36,7 +33,6 @@ import jmri.jmrix.can.cbus.CbusSend;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.CbusPreferences;
 import jmri.jmrix.can.cbus.node.CbusNode;
-import jmri.jmrix.can.cbus.swing.nodeconfig.CbusNodeRestoreFcuFrame;
 import jmri.util.FileUtil;
 import jmri.util.ThreadingUtil;
 import jmri.util.TimerUtil;
@@ -276,7 +272,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
         slowWrite.setSelected(false);
         fastWrite.setSelected(false);
         
-        switch ((int) preferences.getBootWriteDelay()) {
+        switch (preferences.getBootWriteDelay()) {
             case 10:
                 fastWrite.setSelected(true);
                 break;
@@ -417,7 +413,6 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
         }
         openFileChooserButton.setEnabled(false);
         programButton.setEnabled(false);
-        dataFramesSent = 0;
         busyDialog = new BusyDialog(topFrame, Bundle.getMessage("BootLoading"), false);
         busyDialog.start();
         setStartBootTimeout();
@@ -426,20 +421,6 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
         tc.sendCanMessage(m, null);  
     }
     
-    
-    /**
-     * Tidy up after programming success or failure
-     */
-    private void endProgramming() {
-        if (busyDialog != null) {
-            busyDialog.finish();
-            busyDialog = null;
-        }
-        openFileChooserButton.setEnabled(true);
-        programButton.setEnabled(true);
-        bootState = BootState.IDLE;
-    }
-
     
     /**
      * Process some outgoing CAN frames
@@ -576,39 +557,22 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                 clearCheckBootTimeout();
                 if (CbusMessage.isBootConfirm(r)) {
                     // The node is in boot mode so we can start programming
-                    bootState = BootState.INIT_PROG_SENT;
-                    bootAddress = hardwareParams.getLoadAddress();
-                    checksum = 0;
-                    log.debug("In boot mode, start writing at adress {}", bootAddress);
-                    addToLog(MessageFormat.format(Bundle.getMessage("BootStartAddress"), bootAddress));
-                    setInitTimeout();
-                    CanMessage m = CbusMessage.getBootInitialise(bootAddress, 0);
-                    tc.sendCanMessage(m, null);
+                    startProgramming(hardwareParams.getLoadAddress(), BootState.INIT_PROG_SENT);
                 }
                 break;
 
             case PROG_CHECK_SENT:
                 if (CbusMessage.isBootOK(r)) {
                     clearCheckTimeout();
+                    log.error("Node {} checksum OK", nodeNumber);
+                    addToLog(MessageFormat.format(Bundle.getMessage("BootChecksumOK"), nodeNumber));
                     // Move onto config words or eeprom
                     if (configCheckBox.isSelected()) {
                         // Move onto config words
-                        bootAddress = 0x300000;
-                        bootState = BootState.INIT_CONFIG_SENT;
-                        checksum = 0;
-                        addToLog(MessageFormat.format(Bundle.getMessage("BootConfigAddress"), bootAddress));
-                        setInitTimeout();
-                        CanMessage m = CbusMessage.getBootInitialise(bootAddress, 0);
-                        tc.sendCanMessage(m, null);
+                        startProgramming(0x300000, BootState.INIT_CONFIG_SENT);
                     } else if (eepromCheckBox.isSelected()) {
                         // Move onto eeprom
-                        bootAddress = 0xF00000;
-                        bootState = BootState.INIT_EEPROM_SENT;
-                        checksum = 0;
-                        addToLog(MessageFormat.format(Bundle.getMessage("BootEepromAddress"), bootAddress));
-                        setInitTimeout();
-                        CanMessage m = CbusMessage.getBootInitialise(bootAddress, 0);
-                        tc.sendCanMessage(m, null);
+                        startProgramming(0xF00000, BootState.INIT_EEPROM_SENT);
                     } else {
                         // Done writing
                         sendReset();
@@ -621,13 +585,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                     clearCheckTimeout();
                     if (eepromCheckBox.isSelected()) {
                         // Move onto eeprom words
-                        bootAddress = 0xF00000;
-                        bootState = BootState.INIT_EEPROM_SENT;
-                        checksum = 0;
-                        addToLog(MessageFormat.format(Bundle.getMessage("BootEepromAddress"), bootAddress));
-                        setInitTimeout();
-                        CanMessage m = CbusMessage.getBootInitialise(bootAddress, 0);
-                        tc.sendCanMessage(m, null);
+                        startProgramming(0xF00000, BootState.INIT_EEPROM_SENT);
                     } else {
                         // Done writing
                         sendReset();
@@ -660,8 +618,8 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
         writeInFlight = true;
         dataTimeout = timeout;
         CanMessage m = CbusMessage.getBootWriteData(d, 0);
-        log.debug("Write frame {} at address {} {}", dataFramesSent, address, m);
-        addToLog(MessageFormat.format(Bundle.getMessage("BootAddress"), address));
+        log.debug("Write frame {} at address {} {}", dataFramesSent, Integer.toHexString(address), m);
+        addToLog(MessageFormat.format(Bundle.getMessage("BootAddress"), Integer.toHexString(address)));
         tc.sendCanMessage(m, null);
     }
     
@@ -691,8 +649,26 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
             return true;
         }
         
-        log.debug("No more data to send");
+        log.debug("No more data to send {}", Integer.toHexString(bootAddress));
         return false;
+    }
+    
+    
+    /**
+     * Setup to start programming
+     * 
+     * @param address Start address
+     */
+    private void startProgramming(int address, BootState state) {
+        bootAddress = address;
+        checksum = 0;
+        dataFramesSent = 0;
+        bootState = state;
+        log.debug("Start writing at address {}", Integer.toHexString(bootAddress));
+        addToLog(MessageFormat.format(Bundle.getMessage("BootStartAddress"), Integer.toHexString(bootAddress)));
+        setInitTimeout();
+        CanMessage m = CbusMessage.getBootInitialise(bootAddress, 0);
+        tc.sendCanMessage(m, null);
     }
     
     
@@ -709,6 +685,20 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
         tc.sendCanMessage(m, null);
     }
     
+    
+    /**
+     * Tidy up after programming success or failure
+     */
+    private void endProgramming() {
+        if (busyDialog != null) {
+            busyDialog.finish();
+            busyDialog = null;
+        }
+        openFileChooserButton.setEnabled(true);
+        programButton.setEnabled(true);
+        bootState = BootState.IDLE;
+    }
+
     
     /**
      * Add array of bytes to checksum

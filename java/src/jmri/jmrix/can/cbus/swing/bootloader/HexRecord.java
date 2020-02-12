@@ -47,6 +47,8 @@ public class HexRecord {
     
     /**
      * Read a new record from a file
+     * 
+     * @param f hex file to read from
      */
     public HexRecord(HexFile f) {
         this();
@@ -77,6 +79,7 @@ public class HexRecord {
     /**
      * Get a data element from a hex record
      * 
+     * @param i index of the element to get
      * @return the data
      */
     protected byte getData(int i) {
@@ -168,7 +171,7 @@ public class HexRecord {
         
         int fileCheck = f.rdHexByte();
         if (((checksum + fileCheck) & 0xff) != 0) {
-            log.error("Bad checksum at {}", address);
+            log.error("Bad checksum at {}", Integer.toHexString(address));
             valid = false;
         }
     }
@@ -179,8 +182,6 @@ public class HexRecord {
      *
      */
     private void readRecord(HexFile f) {
-        int c;
-        
         startRecord(f);
         readHeader(f);
         readData(f);
