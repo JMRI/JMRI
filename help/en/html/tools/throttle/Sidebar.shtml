@@ -11,19 +11,19 @@
            <!-- To include specific sidebar info for this subdirectory... -->
            <!--#include virtual="SidebarToolLocalPart.shtml" --> 
            
-           <!--#include virtual="../../../parts/SidebarToolsNew.shtml" -->
+           <!--#include virtual="../../../parts/SidebarTools.shtml" -->
 
             <!--#include virtual="../../../parts/SidebarLayoutAutomation.shtml" -->
 	         
         <dt><h3 style="padding-left: 1em;"><a href="../../hardware/">Supported Hardware</a></h3></dt>
         <dd>JMRI supports a wide range of DCC systems, command stations and protocols.</dd>	
-    	<!-- If someday we want to show the whole list, use #include virtual="../../parts/SidebarSupportedHardware.shtml" -->    
+    	<!-- If someday we want to show the whole list, use #include virtual="../../../parts/SidebarSupportedHardware.shtml" -->    
 
         <!--#include virtual="../../../parts/SidebarApplications.shtml" -->
 
          </dl>
 
-	        <!--#include virtual="../../../parts/SidebarTailNew.shtml" -->  
+	        <!--#include virtual="../../../parts/SidebarTail.shtml" -->  
           
           </div>
  
