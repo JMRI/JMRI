@@ -3,6 +3,7 @@ package jmri.jmrix.can.cbus;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 import jmri.beans.PreferencesBean;
+import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.profile.ProfileManager;
 import jmri.profile.ProfileUtils;
 
@@ -26,6 +27,7 @@ public class CbusPreferences extends PreferencesBean {
     private boolean searchForNodesBackupXmlOnStartup = false;
     private boolean _saveRestoreEventTable = true;
     private int minimumNumBackupsToKeep = 10;
+    private int bootWriteDelay = CbusNode.BOOT_PROG_TIMEOUT_FAST;
     
     public CbusPreferences() {
         super(ProfileManager.getDefault().getActiveProfile());
@@ -47,6 +49,8 @@ public class CbusPreferences extends PreferencesBean {
             "searchForNodesBackupXmlOnStartup",this.getSearchForNodesBackupXmlOnStartup() );
         this.minimumNumBackupsToKeep = sharedPreferences.getInt(
             "minimumNumBackupsToKeep",this.getMinimumNumBackupsToKeep() );
+        this.bootWriteDelay = sharedPreferences.getInt(
+            "bootWriteDelay",this.getBootWriteDelay() );
         this._saveRestoreEventTable = sharedPreferences.getBoolean(
             "saveRestoreEventTable",this.getSaveRestoreEventTable() );
     }
@@ -65,6 +69,7 @@ public class CbusPreferences extends PreferencesBean {
         
         sharedPreferences.putBoolean("searchForNodesBackupXmlOnStartup", this.getSearchForNodesBackupXmlOnStartup() );
         sharedPreferences.putInt("minimumNumBackupsToKeep", this.getMinimumNumBackupsToKeep() );
+        sharedPreferences.putInt("bootWriteDelay", this.getBootWriteDelay() );
         sharedPreferences.putBoolean("saveRestoreEventTable", this.getSaveRestoreEventTable() );
         
         try {
@@ -234,6 +239,23 @@ public class CbusPreferences extends PreferencesBean {
      */
     public void setMinimumNumBackupsToKeep( int newVal ){
         minimumNumBackupsToKeep = newVal;
+        savePreferences();
+    }
+    
+    /**
+     * Get delay between bootloader data writes
+     * @return delay, in ms, defaults to CbusNode.BOOT_PROG_TIMEOUT_FAST
+     */
+    public int getBootWriteDelay(){
+        return bootWriteDelay;
+    }
+    
+    /**
+     * Set delay between bootloader data writes
+     * @param newVal the delay in ms
+     */
+    public void setBootWriteDelay( int newVal ){
+        bootWriteDelay = newVal;
         savePreferences();
     }
     

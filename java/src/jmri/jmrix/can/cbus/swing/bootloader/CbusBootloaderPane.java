@@ -4,16 +4,25 @@ import static javax.swing.SwingUtilities.getWindowAncestor;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.ActionListener;
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.TimerTask;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -25,7 +34,9 @@ import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.cbus.CbusSend;
 import jmri.jmrix.can.cbus.CbusConstants;
+import jmri.jmrix.can.cbus.CbusPreferences;
 import jmri.jmrix.can.cbus.node.CbusNode;
+import jmri.jmrix.can.cbus.swing.nodeconfig.CbusNodeRestoreFcuFrame;
 import jmri.util.FileUtil;
 import jmri.util.ThreadingUtil;
 import jmri.util.TimerUtil;
@@ -44,7 +55,10 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
 
     private TrafficController tc;
     private CbusSend send;
+    private CbusPreferences preferences;
 
+    private JRadioButtonMenuItem slowWrite;
+    private JRadioButtonMenuItem fastWrite;
     protected JTextField nodeNumberField = new JTextField(6);
     protected JCheckBox configCheckBox = new JCheckBox();
     protected JCheckBox eepromCheckBox = new JCheckBox();
@@ -67,8 +81,11 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
     int nodeNumber;
     int nextParam;
 
-    BusyDialog busy_dialog;
+    BusyDialog busyDialog;
     
+    /**
+     * Bootloader state machine states
+     */
     protected enum BootState {
         IDLE,
         START_BOOT,
@@ -86,6 +103,9 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
     protected BootState bootState = BootState.IDLE;
     protected int bootAddress;
     protected int checksum;
+    protected int dataFramesSent;
+    protected boolean writeInFlight = false;
+    protected int dataTimeout;
 
 
     public CbusBootloaderPane() {
@@ -106,11 +126,14 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
         
         send = new CbusSend(memo, bootConsole);
         
+        preferences = jmri.InstanceManager.getDefault(jmri.jmrix.can.cbus.CbusPreferences.class);
+        
         init();
     }
 
     
-    /*
+    /**
+     * Not sure this comment really applies here asa init() does not use the tc
      * Don't use initComponent() as memo doesn't yet exist when that gets called.
      * Instead, call init() function from initComponents(memo)
      */
@@ -129,7 +152,6 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
         nodeNumberField.setToolTipText(Bundle.getMessage("BootNodeNumberTT"));
         nodeNumberField.setMaximumSize(nodeNumberField.getPreferredSize());
         // Reset the buttons and clear parameters when a new node is selected
-        // TODO: Might want to allow same file to be used on multiple nodes?
         nodeNumberField.getDocument().addDocumentListener(
                 new DocumentListener() {
                     @Override
@@ -248,9 +270,89 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
 
 
     /**
-     * Kick off the reading of parameters from the node
+     * Set Menu Options, e.g., which checkboxes, etc., should be checked
+     */
+    private void setMenuOptions(){
+        slowWrite.setSelected(false);
+        fastWrite.setSelected(false);
+        
+        switch ((int) preferences.getBootWriteDelay()) {
+            case 10:
+                fastWrite.setSelected(true);
+                break;
+            case 50:
+                slowWrite.setSelected(true);
+                break;
+            default:
+                break;
+        }
+    }
+    
+    
+    /**
+     * Creates a Menu List.
      * 
-     * Start by reading parameter 0, the number of parameters
+     * {@inheritDoc}
+     */
+    @Override
+    public List<JMenu> getMenus() {
+        List<JMenu> menuList = new ArrayList<>();
+
+        JMenu optionsMenu = new JMenu(Bundle.getMessage("Options"));
+        
+        JMenu writeSpeedMenu = new JMenu(Bundle.getMessage("BootWriteSpeed"));
+        ButtonGroup backgroundFetchGroup = new ButtonGroup();
+
+        slowWrite = new JRadioButtonMenuItem(Bundle.getMessage("Slow"));
+        fastWrite = new JRadioButtonMenuItem(Bundle.getMessage("Fast"));
+        
+        backgroundFetchGroup.add(slowWrite);
+        backgroundFetchGroup.add(fastWrite);
+        
+        writeSpeedMenu.add(slowWrite);
+        writeSpeedMenu.add(fastWrite);
+        
+        optionsMenu.add(writeSpeedMenu);
+        
+        menuList.add(optionsMenu);
+        
+        // saved preferences go through the cbus table model so they can be actioned immediately
+        // they'll be also saved by the table, not here.
+        
+         // values need to match setMenuOptions()
+        ActionListener writeSpeedListener = ae -> {
+            if (slowWrite.isSelected()) { 
+                preferences.setBootWriteDelay(CbusNode.BOOT_PROG_TIMEOUT_SLOW);
+            }
+            else if (fastWrite.isSelected()) {
+                preferences.setBootWriteDelay(CbusNode.BOOT_PROG_TIMEOUT_FAST);
+            }
+        };
+        slowWrite.addActionListener(writeSpeedListener);
+        slowWrite.addActionListener(writeSpeedListener);
+        
+        setMenuOptions();
+        
+        return menuList;
+    }
+    
+    
+    /**
+     * Get the delay to be inserted between bootloader data writes
+     * 
+     * @return Delay in ms
+     */
+    int getWriteDelay() {
+        if (slowWrite.isSelected()) {
+            return CbusNode.BOOT_PROG_TIMEOUT_SLOW;
+        }
+        return CbusNode.BOOT_PROG_TIMEOUT_FAST;
+    }
+    
+    
+    /**
+     * Kick off the reading of parameters from the node, starting with parameter
+     * 0, the number of parameters
      * 
      * @param e 
      */
@@ -266,8 +368,8 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
         addToLog(Bundle.getMessage("BootReadingParams"));
         hardwareParams = new CbusParameters();
         nextParam = 0;
-        busy_dialog = new BusyDialog(topFrame, Bundle.getMessage("BootReadingParams"), false);
-        busy_dialog.start();
+        busyDialog = new BusyDialog(topFrame, Bundle.getMessage("BootReadingParams"), false);
+        busyDialog.start();
         requestParam(nextParam);
     }
     
@@ -313,21 +415,84 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
         if (hasActiveTimers()){
             return;
         }
+        openFileChooserButton.setEnabled(false);
+        programButton.setEnabled(false);
+        dataFramesSent = 0;
+        busyDialog = new BusyDialog(topFrame, Bundle.getMessage("BootLoading"), false);
+        busyDialog.start();
         setStartBootTimeout();
         bootState = BootState.START_BOOT;
         CanMessage m = CbusMessage.getBootEntry(nodeNumber, 0);
         tc.sendCanMessage(m, null);  
     }
-
     
-    @Override
-    public void message(CanMessage m) {
-//        log.debug("Message {}", m);
+    
+    /**
+     * Tidy up after programming success or failure
+     */
+    private void endProgramming() {
+        if (busyDialog != null) {
+            busyDialog.finish();
+            busyDialog = null;
+        }
+        openFileChooserButton.setEnabled(true);
+        programButton.setEnabled(true);
+        bootState = BootState.IDLE;
     }
 
     
     /**
-     * Processes all incoming and certain outgoing CAN Frames
+     * Process some outgoing CAN frames
+     * <p>
+     * The CBUS bootloader is "fire and forget", there is no positive
+     * acknowledgement. We have to wait an indeterminate time and assume the
+     * write was successful.
+     * <p>
+     * A PIC based node will halt execution for 2ms whilst FLASH operations
+     * (erase and/or write) complete, during which time I/O will not be serviced.
+     * This is probably OK with CAN transport, assuming the ECAN continues to
+     * accept frames. With serial (UART) transport, as used by Pi-SPROG, the
+     * timing is much more critical as a single missed character will corrupt
+     * the node firmware.
+     * <p>
+     * Furthermore, on some platforms, e.g., Raspberry Pi, there can be
+     * considerable delays between the call to the traffic controller
+     * sendMessage() method and the message being sent by the transmit thread.
+     * This may be due to Flash file system operations and could be affected by
+     * the speed of the SD card. Once the message leaves the transmit thread, we
+     * are at the mercy of the underlying OS, where there can be further delays.
+     * <p>
+     * We could set an overlong timeout, but that would slow down the bootloading
+     * process in all cases.
+     * <p>
+     * To improve things somewhat we wait until the message has definitely
+     * reached the TC transmit thread, by looking for bootloader data write
+     * messages here. Testing indicates this is a marked improvement with no
+     * failures observed.
+     * 
+     * @param m CanMessage
+     */
+    @Override
+    public void message(CanMessage m) {
+        if ((bootState == BootState.PROG_DATA)
+                || (bootState == BootState.CONFIG_DATA)
+                || (bootState == BootState.EEPROM_DATA)) {
+            if (m.isExtended() ) {
+                if (CbusMessage.isBootWriteData(m)) {
+                    log.debug("Boot data write message {}", m);
+                    writeInFlight = false;
+                    setDataTimeout(dataTimeout);
+                }
+            }
+        }
+    }
+    
+    
+    /**
+     * Processes incoming CAN replies
+     * <p>
+     * The bootloader is only interested in standard parameter responses and
+     * extended bootloader responses.
      *
      * {@inheritDoc} 
      */
@@ -341,177 +506,193 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
         if (!r.isExtended() ) {
             log.debug("Standard Reply {}", r);
             
-            int opc = CbusMessage.getOpcode(r);
-            int nn = (r.getElement(1) * 256 ) + r.getElement(2);
-            if (nn != nodeNumber) {
-                log.debug("NN {} Not for me {}", nn, nodeNumber);
-                return;
-            }
-
-            if ( opc == CbusConstants.CBUS_PARAN) { // response from node
-                clearAllParamTimeout();
-
-                hardwareParams.setParam(r.getElement(3), r.getElement(4));
-                if (++nextParam < (hardwareParams.getParam(0) + 1)) {
-                    // Read next
-                    requestParam(nextParam);
-                } else {
-                    // Done reading
-                    hardwareParams.setValid(true);
-                    addToLog(MessageFormat.format(Bundle.getMessage("BootNodeParametersFinished"), hardwareParams.toString()));
-                    busy_dialog.finish();
-                    busy_dialog = null;
-                    openFileChooserButton.setEnabled(true);
-                }
-            } else {
-                // ignoring OPC
-            }
+            handleStandardReply(r);
         } else {
             log.debug("Extended Reply {} in state {}", r, bootState);
             // Extended messages are only used by the bootloader
             
-            switch (bootState) {
-                default:
-                    break;
-                    
-                case CHECK_BOOT_MODE:
-                    clearCheckBootTimeout();
-                    if (CbusMessage.isBootConfirm(r)) {
-                        // The node is in boot mode so we can start programming
-                        bootState = BootState.INIT_PROG_SENT;
-                        bootAddress = hardwareParams.getLoadAddress();
+            handleExtendedReply(r);
+        }
+    }
+    
+    
+    /**
+     * Handle standard ID CAN replies
+     * 
+     * @param r Can reply
+     */
+    private void handleStandardReply(CanReply r) {
+        int opc = CbusMessage.getOpcode(r);
+        int nn = (r.getElement(1) * 256 ) + r.getElement(2);
+        if (nn != nodeNumber) {
+            log.debug("NN {} Not for me {}", nn, nodeNumber);
+            return;
+        }
+
+        if ( opc == CbusConstants.CBUS_PARAN) { // response from node
+            clearAllParamTimeout();
+
+            hardwareParams.setParam(r.getElement(3), r.getElement(4));
+            if (++nextParam < (hardwareParams.getParam(0) + 1)) {
+                // Read next
+                requestParam(nextParam);
+            } else {
+                // Done reading
+                hardwareParams.setValid(true);
+                addToLog(MessageFormat.format(Bundle.getMessage("BootNodeParametersFinished"), hardwareParams.toString()));
+                busyDialog.finish();
+                busyDialog = null;
+                openFileChooserButton.setEnabled(true);
+            }
+        } else {
+            // ignoring OPC
+        }
+    }
+    
+    
+    /**
+     * Handle extended ID CAN replies
+     * <p>
+     * Handle the reply in the bootloader state machine.
+     * 
+     * @param r Can reply
+     */
+    private void handleExtendedReply(CanReply r) {
+        // A boot error message indicates a checksum error
+        if (CbusMessage.isBootError(r)) {
+            clearCheckTimeout();
+            // Checksum verify failed
+            log.error("Node {} checksum failed", nodeNumber);
+            addToLog(MessageFormat.format(Bundle.getMessage("BootChecksumFailed"), nodeNumber));
+            endProgramming();
+            return;
+        }
+
+        switch (bootState) {
+            default:
+                break;
+
+            case CHECK_BOOT_MODE:
+                clearCheckBootTimeout();
+                if (CbusMessage.isBootConfirm(r)) {
+                    // The node is in boot mode so we can start programming
+                    bootState = BootState.INIT_PROG_SENT;
+                    bootAddress = hardwareParams.getLoadAddress();
+                    checksum = 0;
+                    log.debug("In boot mode, start writing at adress {}", bootAddress);
+                    addToLog(MessageFormat.format(Bundle.getMessage("BootStartAddress"), bootAddress));
+                    setInitTimeout();
+                    CanMessage m = CbusMessage.getBootInitialise(bootAddress, 0);
+                    tc.sendCanMessage(m, null);
+                }
+                break;
+
+            case PROG_CHECK_SENT:
+                if (CbusMessage.isBootOK(r)) {
+                    clearCheckTimeout();
+                    // Move onto config words or eeprom
+                    if (configCheckBox.isSelected()) {
+                        // Move onto config words
+                        bootAddress = 0x300000;
+                        bootState = BootState.INIT_CONFIG_SENT;
                         checksum = 0;
-                        log.debug("In boot mode, start writing at adress {}", bootAddress);
-                        addToLog(MessageFormat.format(Bundle.getMessage("BootStartAddress"), bootAddress));
+                        addToLog(MessageFormat.format(Bundle.getMessage("BootConfigAddress"), bootAddress));
                         setInitTimeout();
                         CanMessage m = CbusMessage.getBootInitialise(bootAddress, 0);
                         tc.sendCanMessage(m, null);
-                    }
-                    break;
-                    
-                case PROG_CHECK_SENT:
-                    if (CbusMessage.isBootOK(r)) {
-                        clearCheckTimeout();
-                        // Move onto config words or eeprom
-                        if (configCheckBox.isSelected()) {
-                            // Move onto config words
-                            bootAddress = 0x300000;
-                            bootState = BootState.INIT_CONFIG_SENT;
-                            checksum = 0;
-                            addToLog(MessageFormat.format(Bundle.getMessage("BootConfigAddress"), bootAddress));
-                            setInitTimeout();
-                            CanMessage m = CbusMessage.getBootInitialise(bootAddress, 0);
-                            tc.sendCanMessage(m, null);
-                        } else if (eepromCheckBox.isSelected()) {
-                            // Move onto eeprom
-                            bootAddress = 0xF00000;
-                            bootState = BootState.INIT_EEPROM_SENT;
-                            checksum = 0;
-                            addToLog(MessageFormat.format(Bundle.getMessage("BootEepromAddress"), bootAddress));
-                            setInitTimeout();
-                            CanMessage m = CbusMessage.getBootInitialise(bootAddress, 0);
-                            tc.sendCanMessage(m, null);
-                        } else {
-                            // Done writing
-                            sendReset();
-                        }
-                    } else if (CbusMessage.isBootError(r)) {
-                        clearCheckTimeout();
-                        // Checksum verify failed
-                        log.error("Node {} checksum failed", nodeNumber);
-                        addToLog(MessageFormat.format(Bundle.getMessage("BootChecksumFailed"), nodeNumber));
-                        bootState = BootState.IDLE;
-                    }
-                    break;
-                    
-                case CONFIG_CHECK_SENT:
-                    if (CbusMessage.isBootOK(r)) {
-                        clearCheckTimeout();
-                        // Move onto eeprom words
-                        if (eepromCheckBox.isSelected()) {
-                            bootAddress = 0xF00000;
-                            bootState = BootState.INIT_EEPROM_SENT;
-                            checksum = 0;
-                            addToLog(MessageFormat.format(Bundle.getMessage("BootEepromAddress"), bootAddress));
-                            setInitTimeout();
-                            CanMessage m = CbusMessage.getBootInitialise(bootAddress, 0);
-                            tc.sendCanMessage(m, null);
-                        } else {
-                            // Done writing
-                            sendReset();
-                        }
-                    } else if (CbusMessage.isBootError(r)) {
-                        clearCheckTimeout();
-                        // Checksum verify failed
-                        log.error("Node {} checksum failed", nodeNumber);
-                        addToLog(MessageFormat.format(Bundle.getMessage("BootChecksumFailed"), nodeNumber));
-                        bootState = BootState.IDLE;
-                    }
-                    break;
-                    
-                case EEPROM_CHECK_SENT:
-                    if (CbusMessage.isBootOK(r)) {
-                        clearCheckTimeout();
+                    } else if (eepromCheckBox.isSelected()) {
+                        // Move onto eeprom
+                        bootAddress = 0xF00000;
+                        bootState = BootState.INIT_EEPROM_SENT;
+                        checksum = 0;
+                        addToLog(MessageFormat.format(Bundle.getMessage("BootEepromAddress"), bootAddress));
+                        setInitTimeout();
+                        CanMessage m = CbusMessage.getBootInitialise(bootAddress, 0);
+                        tc.sendCanMessage(m, null);
+                    } else {
                         // Done writing
                         sendReset();
-                    } else if (CbusMessage.isBootError(r)) {
-                        clearCheckTimeout();
-                        // Checksum verify failed
-                        log.error("Node {} checksum failed", nodeNumber);
-                        addToLog(MessageFormat.format(Bundle.getMessage("BootChecksumFailed"), nodeNumber));
-                        bootState = BootState.IDLE;
                     }
-                    break;
-                    
-            }
+                }
+                break;
+
+            case CONFIG_CHECK_SENT:
+                if (CbusMessage.isBootOK(r)) {
+                    clearCheckTimeout();
+                    if (eepromCheckBox.isSelected()) {
+                        // Move onto eeprom words
+                        bootAddress = 0xF00000;
+                        bootState = BootState.INIT_EEPROM_SENT;
+                        checksum = 0;
+                        addToLog(MessageFormat.format(Bundle.getMessage("BootEepromAddress"), bootAddress));
+                        setInitTimeout();
+                        CanMessage m = CbusMessage.getBootInitialise(bootAddress, 0);
+                        tc.sendCanMessage(m, null);
+                    } else {
+                        // Done writing
+                        sendReset();
+                    }
+                }
+                break;
+
+            case EEPROM_CHECK_SENT:
+                if (CbusMessage.isBootOK(r)) {
+                    clearCheckTimeout();
+                    // Done writing
+                    sendReset();
+                }
+                break;
         }
+    }
+
+    
+    /**
+     * Send data to the hardware and keep a running checksum
+     * 
+     * @param address load address
+     * @param d       byte array of data being written
+     * @param timeout timeout for write operation
+     */
+    protected void sendData(int address, byte [] d, int timeout) {
+        updateChecksum(d);
+        bootAddress += 8;
+        dataFramesSent++;
+        writeInFlight = true;
+        dataTimeout = timeout;
+        CanMessage m = CbusMessage.getBootWriteData(d, 0);
+        log.debug("Write frame {} at address {} {}", dataFramesSent, address, m);
+        addToLog(MessageFormat.format(Bundle.getMessage("BootAddress"), address));
+        tc.sendCanMessage(m, null);
     }
     
     
     /**
      * Write the next data frame for the bootloader
      * <p>
-     * Keeps a running checksum.
+     * CONFIG and EEPROM require a longer timeout as the node bootloader writes
+     * them one byte at a time.
      * 
      * @return true if there was data to write
      */
     protected boolean writeNextData() {
-        // getBootWriteData() expects an array of length 8
-        byte [] d = new byte[8];
+        byte [] d;
         
-        int address = bootAddress;
-        
-        int timeout = CbusNode.BOOT_PROG_TIMEOUT_TIME;
-        boolean dataToSend = false;
-        
-        if (address < hexFile.getProgEnd()) {
-            d = hexFile.getData(address, 8);
-            dataToSend = true;
-        } else {
-            // CONFIG and EEPROM require a longer timeout as bootloader writes
-            // them one byte at a time
-            timeout = CbusNode.BOOT_CONFIG_TIMEOUT_TIME;
-            if ((address >= HexFile.CONFIG_START) && (address < hexFile.getConfigEnd())) {
-                d = hexFile.getConfig(address - HexFile.CONFIG_START, 8);
-                dataToSend = true;
-            } else if ((address >= HexFile.EE_START) && (address < hexFile.getEeEnd())) {
-                d = hexFile.getEeprom(address - HexFile.EE_START, 8);
-                dataToSend = true;
-            }
+        if (bootAddress < hexFile.getProgEnd()) {
+            d = hexFile.getData(bootAddress, 8);
+            sendData(bootAddress, d, getWriteDelay());
+            return true;
+        } else if ((bootAddress >= HexFile.CONFIG_START) && (bootAddress < hexFile.getConfigEnd())) {
+            d = hexFile.getConfig(bootAddress - HexFile.CONFIG_START, 8);
+            sendData(bootAddress, d, CbusNode.BOOT_CONFIG_TIMEOUT_TIME);
+            return true;
+        } else if ((bootAddress >= HexFile.EE_START) && (bootAddress < hexFile.getEeEnd())) {
+            d = hexFile.getEeprom(bootAddress - HexFile.EE_START, 8);
+            sendData(bootAddress, d, CbusNode.BOOT_CONFIG_TIMEOUT_TIME);
+            return true;
         }
         
-        if (dataToSend) {
-            updateChecksum(d);
-            bootAddress += 8;
-            setDataTimeout(timeout);
-            CanMessage m = CbusMessage.getBootWriteData(d, 0);
-            log.debug("Write at address {} {}", address, m);
-            addToLog(MessageFormat.format(Bundle.getMessage("BootAddress"), address));
-            tc.sendCanMessage(m, null);
-        } else {
-            log.debug("No more data to send");
-        }
-        return dataToSend;
+        log.debug("No more data to send");
+        return false;
     }
     
     
@@ -519,11 +700,9 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
      * Send bootloader reset frame to put the node back into operating mode.
      * 
      * There will be no reply to this.
-     * 
-     * TODO: Reread parameters and check version number is correct
      */
     protected void sendReset() {
-        bootState = BootState.IDLE;
+        endProgramming();
         CanMessage m = CbusMessage.getBootReset(0);
         log.debug("Done. Resetting node...");
         addToLog(Bundle.getMessage("BootFinished"));
@@ -543,9 +722,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
         }
     }
     
-    /*
-     * Copied and modified from CbusNode.java
-     */
+    
     /**
      * Request a single Parameter from a Physical Node
      * <p>
@@ -614,9 +791,9 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
             @Override
             public void run() {
                 allParamTask = null;
-                if (busy_dialog != null) {
-                    busy_dialog.finish();
-                    busy_dialog = null;
+                if (busyDialog != null) {
+                    busyDialog.finish();
+                    busyDialog = null;
                     hardwareParams.setValid(true);
                     log.error("Failed to read module parameters from node {}", nodeNumber);
                     addToLog(MessageFormat.format(Bundle.getMessage("BootNodeParametersFailed"), nodeNumber));
@@ -682,7 +859,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                 checkBootTask = null;
                 log.error("Timeout checking for boot mode");
                 addToLog(Bundle.getMessage("BootTimeout"));
-                bootState = BootState.IDLE;
+                endProgramming();
             }
         };
         TimerUtil.schedule(checkBootTask, CbusNode.BOOT_SINGLE_MESSAGE_TIMEOUT_TIME);
@@ -721,7 +898,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                 writeNextData();
             }
         };
-        TimerUtil.schedule(initTask, CbusNode.BOOT_PROG_TIMEOUT_TIME);
+        TimerUtil.schedule(initTask, CbusNode.BOOT_SINGLE_MESSAGE_TIMEOUT_TIME);
     }
     
     
@@ -788,7 +965,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
             @Override
             public void run() {
                 checkTask = null;
-                bootState = BootState.IDLE;
+                endProgramming();
                 log.error("Timeout verifying checksum");
                 addToLog(Bundle.getMessage("BootCheckTimeout"));
             }

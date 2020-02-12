@@ -112,45 +112,44 @@ public class HexFile {
         HexRecord r;
         
         do {
-            do {
+            r = new HexRecord(this);
+            if (r.type == HexRecord.EXT_ADDR) {
+                // Extended address record so update the address and read
+                // next record. Cast data from byte to int
+                address = (r.data[0]& 0xff) * 256 * 65536 + (r.data[1] & 0xff) * 65536;
+                log.debug("Found extended adress record. Address is now {}", address);
+                lineNo++;
                 r = new HexRecord(this);
-                if (r.type == HexRecord.EXT_ADDR) {
-                    // Extended address record so update the address and read
-                    // next record. Cast data from byte to int
-                    address = (address & 0xffff) + (r.data[0]& 0xff) * 256 * 65536 + (r.data[1] & 0xff) * 65536;
-                    log.debug("Found extended adress record. Address is now {}", address);
-                    lineNo++;
-                    r = new HexRecord(this);
-                }
-            } while ((r.type != HexRecord.DATA) && (r.type != HexRecord.END));
-            lineNo++;
-            r.setLineNo(lineNo);
-            address = (address & 0xffff0000) + r.getAddress();
-            log.debug("Hex record for address {}", address);
-            
-            if ((address >= EE_START) && (address < (EE_START  + MAX_EEPROM_SIZE))) {
-                for (int i = 0; i < r.len; i++) {
-                    hexDataEeprom[address - EE_START + i] = r.getData(i);
-                }
-                if ((address - EE_START + r.len) > eeEnd) {
-                    eeEnd = address - EE_START + r.len;
-                }
-            } else if ((address >= CONFIG_START) && (address < (CONFIG_START  + MAX_CONFIG_SIZE))) {
-                for (int i = 0; i < r.len; i++) {
-                    hexDataConfig[address - CONFIG_START + i] = r.getData(i);
-                } 
-                if ((address - CONFIG_START+ r.len) > configEnd) {
-                    configEnd = address - CONFIG_START+ r.len;
-                }
-            } else if (address < MAX_PROG_SIZE) {
-                for (int i = 0; i < r.len; i++) {
-                    hexDataProg[address + i] = r.getData(i);
-                } 
-                if ((address + r.len) > progEnd) {
-                    progEnd = address + r.len;
-                }
             }
-                    
+            if (r.type == HexRecord.DATA) {
+                lineNo++;
+                r.setLineNo(lineNo);
+                address = (address & 0xffff0000) + r.getAddress();
+                log.debug("Hex record for address {}", address);
+
+                if ((address >= EE_START) && (address < (EE_START  + MAX_EEPROM_SIZE))) {
+                    for (int i = 0; i < r.len; i++) {
+                        hexDataEeprom[address - EE_START + i] = r.getData(i);
+                    }
+                    if ((address - EE_START + r.len) > eeEnd) {
+                        eeEnd = address - EE_START + r.len;
+                    }
+                } else if ((address >= CONFIG_START) && (address < (CONFIG_START  + MAX_CONFIG_SIZE))) {
+                    for (int i = 0; i < r.len; i++) {
+                        hexDataConfig[address - CONFIG_START + i] = r.getData(i);
+                    } 
+                    if ((address - CONFIG_START+ r.len) > configEnd) {
+                        configEnd = address - CONFIG_START+ r.len;
+                    }
+                } else if (address < MAX_PROG_SIZE) {
+                    for (int i = 0; i < r.len; i++) {
+                        hexDataProg[address + i] = r.getData(i);
+                    } 
+                    if ((address + r.len) > progEnd) {
+                        progEnd = address + r.len;
+                    }
+                }
+            } 
         } while (r.type != HexRecord.END);
     }
 
@@ -168,13 +167,13 @@ public class HexFile {
     /**
      * Read a hex byte.
      *
-     * @return byte the byte that was read
+     * @return int the byte that was read
      */
-    public byte rdHexByte() {
+    public int rdHexByte() {
         int hi = rdHexDigit();
         int lo = rdHexDigit();
         if ((hi < 16) && (lo < 16)) {
-            return (byte)(hi * 16 + lo);
+            return hi * 16 + lo;
         } else {
             return 0;
         }
@@ -228,15 +227,17 @@ public class HexFile {
     
     
     /**
-     * Get program data bytes from the raw data array(s)
+     * Get program data bytes from a data array
      * <p>
      * Pad returned data at end with unprogrammed data (-1 or 0xFF)
      * 
-     * @param offset address of data to retrieve
-     * @param len   number of bytes to retrieve
-     * @return      array of bytes 
+     * 
+     * @param offset    address of data to retrieve
+     * @param len       number of bytes to retrieve
+     * @param hexData   the array to get the data from
+     * @return          array of bytes 
      */
-    public byte [] getData(int offset, int len) {
+    private byte [] getBytes(int offset, int len, byte [] hexData) {
         byte [] d = new byte[len];
         Arrays.fill(d, (byte)-1);
         
@@ -246,7 +247,7 @@ public class HexFile {
         }
         
         try {
-            System.arraycopy(hexDataProg, offset, d, 0, end - offset);
+            System.arraycopy(hexData, offset, d, 0, end - offset);
         } catch (ArrayIndexOutOfBoundsException e) {
             log.warn("Index out of bounds {}", e);
         }
@@ -255,55 +256,43 @@ public class HexFile {
     
     
     /**
-     * Get CONFIG bytes from the raw data array(s)
-     * <p>
-     * Pad returned data at end with unprogrammed data (-1 or 0xFF)
+     * Get program data bytes from the data array
+     * 
+     * @param offset address of data to retrieve
+     * @param len   number of bytes to retrieve
+     * @return      array of bytes 
+     */
+    public byte [] getData(int offset, int len) {
+        byte [] d;
+        d = getBytes(offset, len, hexDataProg);
+        return d;
+    }
+    
+    
+    /**
+     * Get CONFIG bytes from the data array
      * 
      * @param offset address of data to retrieve
      * @param len   number of bytes to retrieve
      * @return      array of bytes 
      */
     public byte [] getConfig(int offset, int len) {
-        byte [] d = new byte[len];
-        Arrays.fill(d, (byte)-1);
-        
-        int end = offset + len;
-        if ((offset + len) > MAX_CONFIG_SIZE) {
-            end = MAX_CONFIG_SIZE;
-        }
-        
-        try {
-            System.arraycopy(hexDataConfig, offset, d, offset, end - offset);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            log.warn("Index out of bounds {}", e);
-        }
+        byte [] d;
+        d = getBytes(offset, len, hexDataConfig);
         return d;
     }
     
     
     /**
-     * Get EEPROM data bytes from the raw data array
-     * <p>
-     * Pad returned data at end with unprogrammed data (-1 or 0xFF)
+     * Get EEPROM data bytes from the data array
      * 
      * @param offset offset of data to retrieve
      * @param len   number of bytes to retrieve
      * @return      array of bytes 
      */
     public byte [] getEeprom(int offset, int len) {
-        byte [] d = new byte[len];
-        Arrays.fill(d, (byte)-1);
-        
-        int end = offset + len;
-        if ((offset + len) > MAX_EEPROM_SIZE) {
-            end = MAX_EEPROM_SIZE;
-        }
-        
-        try {
-            System.arraycopy(hexDataEeprom, offset, d, offset, end - offset);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            log.warn("Index out of bounds {}", e);
-        }
+        byte [] d;
+        d = getBytes(offset, len, hexDataEeprom);
         return d;
     }
     

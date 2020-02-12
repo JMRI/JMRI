@@ -593,6 +593,19 @@ public class CbusMessage {
     }
 
     /**
+     * Tests if a message is a bootloader data write
+     * 
+     * @param m message
+     * @return true if the message is a bootloader data write
+     */
+    public static boolean isBootWriteData(CanMessage m) {
+        if (m.isExtended() && (m.getHeader() == 0x5)) {
+            return (true);
+        } 
+        return (false);
+    }
+
+    /**
      * Tests if incoming CanReply is a Boot Error.
      *
      * @param r CanReply
