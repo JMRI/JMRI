@@ -32,7 +32,7 @@ public class SprogIIUpdateFrameTest extends jmri.util.JmriJFrameTestBase {
     @After
     @Override
     public void tearDown() {
-        ((SprogIIUpdateFrame)frame).stopTimer();
+        if (frame!=null) ((SprogIIUpdateFrame)frame).stopTimer();
         // frame.dispose() called in super class
         m.getSlotThread().interrupt();
         JUnitUtil.waitFor(() -> {return m.getSlotThread().getState() == Thread.State.TERMINATED;}, "Slot thread failed to stop");
