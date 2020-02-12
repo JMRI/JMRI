@@ -40,6 +40,7 @@ if [[ "${HEADLESS}" == "true" ]] ; then
             -Dsurefire.runOrder=${RUN_ORDER} \
             -Dant.jvm.args="-Djava.awt.headless=${HEADLESS}" \
             -Djava.awt.headless=${HEADLESS} \
+            -Djmri.util.junit.PrintingTestListener.verbose=true \
             -Djmri.skipTestsRequiringSeparateRunning=${SKIPINTERMITTENT} \
             -Dcucumber.options="--tags 'not @Ignore' --tags 'not @Headed'" \
             -Dpython.cachedir=${PYTHON_CACHEDIR}
@@ -53,6 +54,7 @@ else
             -Dsurefire.runOrder=${RUN_ORDER} \
             -Dant.jvm.args="-Djava.awt.headless=${HEADLESS}" \
             -Djava.awt.headless=${HEADLESS} \
+            -Djmri.util.junit.PrintingTestListener.verbose=true \
             -Djmri.skipTestsRequiringSeparateRunning=${SKIPINTERMITTENT} \
             -Djmri.skipschematests=true \
             -Dcucumber.options="--tags 'not @Ignore'" \
