@@ -205,15 +205,41 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
         List<NamedBeanUsageReport> report = new ArrayList<>();
         if (bean != null) {
             getDestinationList().forEach((dest) -> {
-                // Blocks
-                // Turnouts
-                // Sensors
+                getAutoBlocks(dest).forEach((block) -> {
+                    if (bean.equals(block)) {
+                        report.add(new NamedBeanUsageReport("SMLBlockAuto", dest));
+                    }
+                });
+                getBlocks(dest).forEach((block) -> {
+                    if (bean.equals(block)) {
+                        report.add(new NamedBeanUsageReport("SMLBlockUser", dest));
+                    }
+                });
+                getAutoTurnouts(dest).forEach((turnout) -> {
+                    if (bean.equals(turnout)) {
+                        report.add(new NamedBeanUsageReport("SMLTurnoutAuto", dest));
+                    }
+                });
+                getTurnouts(dest).forEach((turnout) -> {
+                    if (bean.equals(turnout)) {
+                        report.add(new NamedBeanUsageReport("SMLTurnoutUser", dest));
+                    }
+                });
                 getSensors(dest).forEach((sensor) -> {
                     if (bean.equals(sensor)) {
                         report.add(new NamedBeanUsageReport("SMLSensor", dest));
                     }
                 });
-                // Masts
+                getAutoMasts(dest).forEach((mast) -> {
+                    if (bean.equals(mast)) {
+                        report.add(new NamedBeanUsageReport("SMLMastAuto", dest));
+                    }
+                });
+                getSignalMasts(dest).forEach((mast) -> {
+                    if (bean.equals(mast)) {
+                        report.add(new NamedBeanUsageReport("SMLMastUser", dest));
+                    }
+                });
             });
         }
         return report;

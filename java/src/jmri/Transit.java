@@ -4,6 +4,8 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import java.util.List;
+import jmri.NamedBean;
+import jmri.NamedBeanUsageReport;
 import jmri.implementation.AbstractNamedBean;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import org.slf4j.Logger;
@@ -606,6 +608,47 @@ public class Transit extends AbstractNamedBean {
         }
         // we ignore the property setConfigureManager
     }
+
+    @Override
+    public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
+        List<NamedBeanUsageReport> report = new ArrayList<>();
+        jmri.SensorManager sm = jmri.InstanceManager.getDefault(jmri.SensorManager.class);
+        jmri.SignalHeadManager head = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class);
+        jmri.SignalMastManager mast = jmri.InstanceManager.getDefault(jmri.SignalMastManager.class);
+        if (bean != null) {
+            getTransitSectionList().forEach((transitSection) -> {
+                if (bean.equals(sm.getSensor(transitSection.getStopAllocatingSensor()))) {
+                    report.add(new NamedBeanUsageReport("TransitSensorStopAllocation"));
+                }
+                // Process actions
+                transitSection.getTransitSectionActionList().forEach((action) -> {
+                    int whenCode = action.getWhenCode();
+                    int whatCode = action.getWhatCode();
+                    if (whenCode == TransitSectionAction.SENSORACTIVE || whenCode == TransitSectionAction.SENSORINACTIVE) {
+                        if (bean.equals(sm.getSensor(action.getStringWhen()))) {
+                            report.add(new NamedBeanUsageReport("TransitSensorActionWhen", transitSection.getSection()));
+                        }
+                    }
+                    if (whatCode == TransitSectionAction.SETSENSORACTIVE || whatCode == TransitSectionAction.SETSENSORINACTIVE) {
+                        if (bean.equals(sm.getSensor(action.getStringWhat()))) {
+                            report.add(new NamedBeanUsageReport("TransitSensorActionWhat", transitSection.getSection()));
+                        }
+                    }
+                    if (whatCode == TransitSectionAction.HOLDSIGNAL || whatCode == TransitSectionAction.RELEASESIGNAL) {
+                        // Could be a signal head or a signal mast.
+                        if (bean.equals(head.getSignalHead(action.getStringWhat()))) {
+                            report.add(new NamedBeanUsageReport("TransitSignalHeadActionWhat", transitSection.getSection()));
+                        }
+                        if (bean.equals(mast.getSignalMast(action.getStringWhat()))) {
+                            report.add(new NamedBeanUsageReport("TransitSignalMastActionWhat", transitSection.getSection()));
+                        }
+                    }
+                });
+            });
+        }
+        return report;
+    }
+
 
     private final static Logger log = LoggerFactory.getLogger(Transit.class);
 

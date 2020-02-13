@@ -23,8 +23,25 @@ public class WhereUsedFrameTest {
         // Select Sensor
         new JComboBoxOperator(jfo, 0).selectItem("Sensor");  // NOI18N
         new JComboBoxOperator(jfo, 1).selectItem(7);   // S-Main
-//         Assert.assertTrue(frame._textArea.getLineCount() > 5);
+
+        // Save to File
+        Thread saveFile = createModalDialogOperatorThread(Bundle.getMessage("SaveDialogTitle"), Bundle.getMessage("ButtonSave"), "saveFile");  // NOI18N
+        frame.saveWhereUsedPressed();
+        JUnitUtil.waitFor(()->{return !(saveFile.isAlive());}, "saveFile finished");
+
         JUnitUtil.dispose(frame);
+    }
+
+    Thread createModalDialogOperatorThread(String dialogTitle, String buttonText, String threadName) {
+        Thread t = new Thread(() -> {
+            // constructor for jdo will wait until the dialog is visible
+            JDialogOperator jdo = new JDialogOperator(dialogTitle);
+            JButtonOperator jbo = new JButtonOperator(jdo, buttonText);
+            jbo.pushNoBlock();
+        });
+        t.setName(dialogTitle + " Close Dialog Thread: " + threadName);  // NOI18N
+        t.start();
+        return t;
     }
 
     @Before

@@ -8,19 +8,22 @@ import javax.swing.JTextArea;
 
 import jmri.*;
 import jmri.jmrit.blockboss.BlockBossLogic;
-
+import jmri.jmrit.logix.OBlockManager;
+import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 /**
  * Find sensor references.
  * <ul>
  * <li>Turnouts - Feedback sensors</li>
  * <li>Lights - Light control sensor</li>
- * <li>Routes - Route definitions TODO</li>
+ * <li>Routes - Route definitions</li>
  * <li>Blocks - Occupancy sensors</li>
- * <li>LayoutBlocks - Occupancy sensors TODO</li>
+ * <li>LayoutBlocks - Occupancy sensors</li>
  * <li>Signal Heads - SSL definitions</li>
  * <li>Signal Masts - SML definitions</li>
- * <li>OBlocks TODO</li>
- * <li>Dispatcher TODO</li>
+ * <li>OBlocks</li>
+ * <li>Logix Conditionals</li>
+ * <li>Section - Direction and Stopping sensors</li>
+ * <li>Transit - Stop Allocation and Action sensors</li>
  * <li>Panels - Sensor icons</li>
  * <li>CTC - OS sensors TODO</li>
  * </ul>
@@ -33,15 +36,22 @@ public class SensorWhereUsed {
     static JTextArea getSensorWhereUsed(Sensor sensor, JTextArea textArea) {
         String label = Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameSensor"));  // NOI18N
         textArea.append(Bundle.getMessage("ReferenceTitle", label, sensor.getDisplayName()));  // NOI18N
-//         textArea.append(String.format("\n\t\t\t%s %d\n", Bundle.getMessage("ListenerCount"), sensor.getNumPropertyChangeListeners()));
+        textArea.append(Bundle.getMessage("ListenerCount", sensor.getNumPropertyChangeListeners()));
         textArea.append(checkTurnouts(sensor));
         textArea.append(checkLights(sensor));
+        textArea.append(checkRoutes(sensor));
         textArea.append(checkBlocks(sensor));
+        textArea.append(checkLayoutBlocks(sensor));
         textArea.append(checkSignalHeadLogic(sensor));
         textArea.append(checkSignalMastLogic(sensor));
+        textArea.append(checkOBlocks(sensor));
+        textArea.append(checkLogixConditionals(sensor));
+        textArea.append(checkSections(sensor));
+        textArea.append(checkTransits(sensor));
         textArea.append(checkPanels(sensor));
         return textArea;
     }
+
     static String checkTurnouts(Sensor sensor) {
         StringBuilder sb = new StringBuilder();
         InstanceManager.getDefault(TurnoutManager.class).getNamedBeanSet().forEach((turnout) -> {
@@ -69,6 +79,18 @@ public class SensorWhereUsed {
         return addHeader(sb, "ReferenceLightControl");  // NOI18N
     }
 
+    static String checkRoutes(Sensor sensor) {
+        StringBuilder sb = new StringBuilder();
+        InstanceManager.getDefault(RouteManager.class).getNamedBeanSet().forEach((route) -> {
+            route.getUsageReport(sensor).forEach((report) -> {
+                if (report.usageKey.startsWith("RouteSensor")) {
+                    sb.append(Bundle.getMessage("ReferenceLine", route.getUserName(), route.getSystemName()));  // NOI18N
+                }
+            });
+        });
+        return addHeader(sb, "ReferenceRoutes");  // NOI18N
+    }
+
     static String checkBlocks(Sensor sensor) {
         StringBuilder sb = new StringBuilder();
         InstanceManager.getDefault(BlockManager.class).getNamedBeanSet().forEach((block) -> {
@@ -78,12 +100,23 @@ public class SensorWhereUsed {
                 }
             });
         });
-        return addHeader(sb, "ReferenceOccupancy");  // NOI18N
+        return addHeader(sb, "ReferenceBlockOccupancy");  // NOI18N
+    }
+
+    static String checkLayoutBlocks(Sensor sensor) {
+        StringBuilder sb = new StringBuilder();
+        InstanceManager.getDefault(LayoutBlockManager.class).getNamedBeanSet().forEach((layoutBlock) -> {
+            layoutBlock.getUsageReport(sensor).forEach((report) -> {
+                if (report.usageKey.equals("LayoutBlockSensor")) {
+                    sb.append(Bundle.getMessage("ReferenceLine", layoutBlock.getUserName(), layoutBlock.getSystemName()));  // NOI18N
+                }
+            });
+        });
+        return addHeader(sb, "ReferenceLayoutBlockOccupancy");  // NOI18N
     }
 
     static String checkSignalHeadLogic(Sensor sensor) {
         StringBuilder sb = new StringBuilder();
-
         Enumeration<BlockBossLogic> e = BlockBossLogic.entries();
         while (e.hasMoreElements()) {
             BlockBossLogic ssl = e.nextElement();
@@ -106,6 +139,59 @@ public class SensorWhereUsed {
             });
         });
         return addHeader(sb, "ReferenceMastSML");  // NOI18N
+    }
+
+    static String checkOBlocks(Sensor sensor) {
+        StringBuilder sb = new StringBuilder();
+        InstanceManager.getDefault(OBlockManager.class).getNamedBeanSet().forEach((oblock) -> {
+            oblock.getUsageReport(sensor).forEach((report) -> {
+                if (report.usageKey.startsWith("OBlockSensor")) {
+                    sb.append(Bundle.getMessage("ReferenceLine", oblock.getUserName(), oblock.getSystemName()));  // NOI18N
+                }
+            });
+        });
+        return addHeader(sb, "ReferenceOBlockOccupancy");  // NOI18N
+    }
+
+    static String checkLogixConditionals(Sensor sensor) {
+        StringBuilder sb = new StringBuilder();
+        InstanceManager.getDefault(LogixManager.class).getNamedBeanSet().forEach((logix) -> {
+            logix.getUsageReport(sensor).forEach((report) -> {
+                if (report.usageKey.startsWith("ConditionalVariable") || report.usageKey.startsWith("ConditionalAction")) {  // NOI18N
+                    sb.append(Bundle.getMessage("ReferenceLineConditional", logix.getUserName(), logix.getSystemName(),  // NOI18N
+                            report.usageData));
+                }
+            });
+        });
+        return addHeader(sb, "ReferenceConditionals");  // NOI18N
+    }
+
+    static String checkSections(Sensor sensor) {
+        StringBuilder sb = new StringBuilder();
+        InstanceManager.getDefault(SectionManager.class).getNamedBeanSet().forEach((section) -> {
+            section.getUsageReport(sensor).forEach((report) -> {
+                if (report.usageKey.startsWith("SectionSensor")) {
+                    sb.append(Bundle.getMessage("ReferenceLine", section.getUserName(), section.getSystemName()));  // NOI18N
+                }
+            });
+        });
+        return addHeader(sb, "ReferenceSections");  // NOI18N
+    }
+
+    static String checkTransits(Sensor sensor) {
+        StringBuilder sb = new StringBuilder();
+        InstanceManager.getDefault(TransitManager.class).getNamedBeanSet().forEach((transit) -> {
+            transit.getUsageReport(sensor).forEach((report) -> {
+                if (report.usageKey.startsWith("TransitSensorStop")) {  // NOI18N
+                    sb.append(Bundle.getMessage("ReferenceLine", transit.getUserName(), transit.getSystemName()));  // NOI18N
+                }
+                if (report.usageKey.startsWith("TransitSensorAction")) {  // NOI18N
+                    sb.append(Bundle.getMessage("ReferenceLineAction", transit.getUserName(), transit.getSystemName(),  // NOI18N
+                            report.usageBean.getDisplayName()));
+                }
+            });
+        });
+        return addHeader(sb, "ReferenceTransits");  // NOI18N
     }
 
     static String checkPanels(Sensor sensor) {

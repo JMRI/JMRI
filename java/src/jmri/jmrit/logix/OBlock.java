@@ -9,7 +9,9 @@ import java.util.Map.Entry;
 import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import jmri.InstanceManager;
+import jmri.NamedBean;
 import jmri.NamedBeanHandle;
+import jmri.NamedBeanUsageReport;
 import jmri.Path;
 import jmri.Sensor;
 import jmri.Turnout;
@@ -119,7 +121,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     private boolean _metric = false; // desired display mode
     private NamedBeanHandle<Sensor> _errNamedSensor;
     // pathName keys a list of Blocks whose paths conflict with the path. These Blocks key
-    // a list of their conflicting paths. 
+    // a list of their conflicting paths.
     // A conflicting path has a turnout that is shared with a 'pathName'
     private final HashMap<String, List<HashMap<OBlock, List<OPath>>>> _sharedTO
             = new HashMap<>();
@@ -902,7 +904,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         }
         for (Portal portal : getPortals()) {
             if (log.isDebugEnabled()) {
-                log.debug("this = {}, toBlock = {}, fromblock= {}", getDisplayName(), 
+                log.debug("this = {}, toBlock = {}, fromblock= {}", getDisplayName(),
                         portal.getToBlock().getDisplayName(), portal.getFromBlock().getDisplayName());
             }
             if (this.equals(portal.getToBlock())) {
@@ -923,6 +925,23 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     public String getDescription() {
         return java.text.MessageFormat.format(
                 Bundle.getMessage("BlockDescription"), getDisplayName());
+    }
+
+    @Override
+    public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
+        List<NamedBeanUsageReport> report = new ArrayList<>();
+        if (bean != null) {
+            if (bean.equals(getSensor())) {
+                report.add(new NamedBeanUsageReport("OBlockSensor"));
+            }
+            if (bean.equals(getErrorSensor())) {
+                report.add(new NamedBeanUsageReport("OBlockSensorError"));
+            }
+            if (bean.equals(getReporter())) {
+                report.add(new NamedBeanUsageReport("OBlockReporter"));
+            }
+        }
+        return report;
     }
 
     @Override

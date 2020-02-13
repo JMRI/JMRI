@@ -7,6 +7,8 @@ import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
+import jmri.NamedBean;
+import jmri.NamedBeanUsageReport;
 import jmri.implementation.AbstractNamedBean;
 import jmri.jmrit.display.layoutEditor.ConnectivityUtil;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
@@ -2734,6 +2736,26 @@ public class Section extends AbstractNamedBean {
             }
         }
         // "DoDelete" case, if needed, should be handled here.
+    }
+
+    @Override
+    public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
+        List<NamedBeanUsageReport> report = new ArrayList<>();
+        if (bean != null) {
+            if (bean.equals(getForwardBlockingSensor())) {
+                report.add(new NamedBeanUsageReport("SectionSensorForwardBlocking"));
+            }
+            if (bean.equals(getForwardStoppingSensor())) {
+                report.add(new NamedBeanUsageReport("SectionSensorForwardStopping"));
+            }
+            if (bean.equals(getReverseBlockingSensor())) {
+                report.add(new NamedBeanUsageReport("SectionSensorReverseBlocking"));
+            }
+            if (bean.equals(getReverseStoppingSensor())) {
+                report.add(new NamedBeanUsageReport("SectionSensorReverseStopping"));
+            }
+        }
+        return report;
     }
 
     private final static Logger log = LoggerFactory.getLogger(Section.class);

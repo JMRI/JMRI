@@ -29,8 +29,16 @@ public class SensorWhereUsedTest {
         result = SensorWhereUsed.checkLights(sensor);
         Assert.assertTrue(result.length() > 0);
 
+        sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Main");
+        result = SensorWhereUsed.checkRoutes(sensor);
+        Assert.assertTrue(result.length() > 0);
+
         sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Occupancy");
         result = SensorWhereUsed.checkBlocks(sensor);
+        Assert.assertTrue(result.length() > 0);
+
+        sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Main");
+        result = SensorWhereUsed.checkLayoutBlocks(sensor);
         Assert.assertTrue(result.length() > 0);
 
         sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Main");
@@ -39,6 +47,26 @@ public class SensorWhereUsedTest {
 
         sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-SML-Sensor");
         result = SensorWhereUsed.checkSignalMastLogic(sensor);
+        Assert.assertTrue(result.length() > 0);
+
+        sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-OBlock-Error");
+        result = SensorWhereUsed.checkOBlocks(sensor);
+        Assert.assertTrue(result.length() > 0);
+
+        sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Fwd");
+        result = SensorWhereUsed.checkSections(sensor);
+        Assert.assertTrue(result.length() > 0);
+
+        sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Group-Center");
+        result = SensorWhereUsed.checkLogixConditionals(sensor);
+        Assert.assertTrue(result.length() > 0);
+
+        sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Stop-Allocation");
+        result = SensorWhereUsed.checkTransits(sensor);
+        Assert.assertTrue(result.length() > 0);
+
+        sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Transit-When-Action");
+        result = SensorWhereUsed.checkTransits(sensor);
         Assert.assertTrue(result.length() > 0);
 
         sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Light-Control");

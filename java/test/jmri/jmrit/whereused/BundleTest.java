@@ -22,7 +22,7 @@ public class BundleTest {
     @Test
     public void testGoodKeyMessageArg() {
         Assert.assertEquals("Where Used Report", Bundle.getMessage("TitleWhereUsed", new Object[]{}));  // NOI18N
-        Assert.assertEquals("Listener count: 1", Bundle.getMessage("ListenerCount", 1));  // NOI18N
+        Assert.assertEquals("Sensor Where Used.txt", Bundle.getMessage("SaveFileName", "Sensor"));  // NOI18N
     }
 
     @Test(expected = java.util.MissingResourceException.class)
