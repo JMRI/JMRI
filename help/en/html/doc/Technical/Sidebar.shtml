@@ -33,6 +33,7 @@
 			<li><a href="Swing.shtml">Swing Structure</a></li>
 			<li><a href="SystemStructure.shtml">External Connection Structure</a></li>
 			<li><a href="AppPreferences.shtml">Application Preferences</a></li>
+			<li><a href="ProfileFileStructure.shtml">Profile Files</a></li>
 			<li><a href="Threads.shtml">Threading</a></li>
 			<li><a href="XmlUsage.shtml">Use of XML</a>
 				<ul class="navigation">
