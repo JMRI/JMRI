@@ -559,7 +559,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
                     log.debug("Fast Clock Controller valid.");
                 }
                 fastClockC.addControllerListener(this);
-                fastClockC.sendFastRate();
+                fastClockC.sendFastTimeAndRate();
             }
         }
     }
