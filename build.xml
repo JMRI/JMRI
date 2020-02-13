@@ -338,6 +338,16 @@
         <exclude name="apps/CheckerFrameworkCheck.class" />
     </fileset>
 
+    <!-- fileset for the junitlauncher targets. -->
+    <fileset id="junitfileset" dir="${testtarget}">
+        <include name="**/Test*.class"/>
+        <include name="**/*Test.class"/>
+	<include name="**/*IT.class"/>
+	<include name="**/IT*.class"/>
+        <exclude name="apps.tests.AllTest.class"/>
+        <exclude name="jmri.HeadLessTest.class"/>
+        <exclude name="jmri.ArchitectureTest.class"/>
+    </fileset>
 
 
     <!-- end of definitions -->
@@ -764,8 +774,9 @@
                     <sysproperty key="user.language" value="en"/>
                     <sysproperty key="user.country" value="US"/>
                     <jvmarg value="${jacocoagent}"/>
-			        <jvmarg line="${test-single.jvmargs}"/>
+		    <jvmarg line="${test-single.jvmargs}"/>
                 </fork>
+                <listener type="legacy-brief" sendSysOut="false" sendSysErr="false" />
             </test>
         </junitlauncher>
         <fail>
@@ -1405,15 +1416,8 @@
 
         <junitlauncher haltOnFailure="false">
             <classpath refid="test.class.path"/>
-            <testclasses haltonfailure="false" failureProperty="test.failed" outputDir="${testreport}" includeEngines="junit-jupiter,junit-vintage" >
-                <fileset dir="${testtarget}">
-                    <include name="**/Test*.class"/>
-                    <include name="**/*Test.class"/>
-                    <include name="**/*IT.class"/>
-                    <include name="**/IT*.class"/>
-                    <exclude name="AllTest.class"/>
-                    <exclude name="HeadLessTest.class"/>
-                </fileset>
+            <testclasses haltonfailure="false" failureProperty="test.failed" outputDir="${testreport}" includeEngines="junit-jupiteri,junit-vintage" >
+                <fileset refid="junitfileset"/>
                 <fork>
                     <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
                     <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
@@ -1433,6 +1437,7 @@
                     <jvmarg line="${jvm.args}"/>
                 </fork>
                 <listener type="legacy-xml" sendSysOut="true" sendSysErr="true" outputDir="${testreport}" />
+                <listener type="legacy-brief" sendSysOut="false" sendSysErr="false" />
             </testclasses>
         </junitlauncher>
     </target>
@@ -1498,14 +1503,7 @@
         <junitlauncher haltOnFailure="false">
             <classpath refid="test.class.path"/>
             <testclasses haltonfailure="false" failureProperty="test.failed" outputDir="${testreport}" includeEngines="junit-jupiter,junit-vintage" >
-                <fileset dir="${testtarget}">
-                    <include name="**/Test*.class"/>
-                    <include name="**/*Test.class"/>
-                    <include name="**/*IT.class"/>
-                    <include name="**/IT*.class"/>
-                    <exclude name="AllTest.class"/>
-                    <exclude name="HeadLessTest.class"/>
-                </fileset>
+                <fileset refid="junitfileset"/>
                 <fork>
                     <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
                     <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
@@ -1577,7 +1575,7 @@
             <!-- <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/> no longer specify specific library -->
 
             <sysproperty key="user.language" value="en"/>
-            <sysproperty key="user.country" value="US"/>
+	    <sysproperty key="user.country" value="US"/>
 
             <classpath refid="test.class.path"/>
 
@@ -1593,16 +1591,9 @@
 	    <jacoco:agent property="jacocoagent" destfile="${jacocoexec}" excludes="org.slf4j.*" />
 
 	    <junitlauncher haltOnFailure="false">
-           <classpath refid="test.class.path"/>
-           <testclasses haltonfailure="false" failureProperty="test.failed" outputDir="${testreport}" includeEngines="junit-jupiter,junit-vintage" >
-                <fileset dir="${testtarget}">
-                    <include name="**/Test*.class"/>
-                    <include name="**/*Test.class"/>
-                    <include name="**/*IT.class"/>
-                    <include name="**/IT*.class"/>
-                    <exclude name="AllTest.class"/>
-                    <exclude name="HeadLessTest.class"/>
-                </fileset>
+               <classpath refid="test.class.path"/>
+               <testclasses haltonfailure="false" failureProperty="test.failed" outputDir="${testreport}" includeEngines="junit-jupiter,junit-vintage" >
+                <fileset refid="junitfileset"/>
                 <fork>
                     <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
                     <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
