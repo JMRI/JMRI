@@ -3,6 +3,7 @@ package jmri.jmrit.dispatcher;
 import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
+import jmri.util.JUnitAppender;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -28,6 +29,14 @@ public class AutoAllocateTest {
         JUnitUtil.dispose(d);
     }
 
+    @Test
+    public void testErrorCase() {
+        // present so there's some class test coverage when skipping intermittent
+        new AutoAllocate(null);
+        JUnitAppender.assertErrorMessage("null DispatcherFrame when constructing AutoAllocate");
+        
+    }
+    
     // The minimal setup for log4J
     @Before
     public void setUp() {
