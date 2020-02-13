@@ -4,8 +4,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import java.util.List;
-import jmri.NamedBean;
-import jmri.NamedBeanUsageReport;
 import jmri.implementation.AbstractNamedBean;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import org.slf4j.Logger;

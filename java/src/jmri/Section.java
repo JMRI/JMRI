@@ -7,8 +7,6 @@ import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
-import jmri.NamedBean;
-import jmri.NamedBeanUsageReport;
 import jmri.implementation.AbstractNamedBean;
 import jmri.jmrit.display.layoutEditor.ConnectivityUtil;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
