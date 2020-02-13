@@ -123,6 +123,7 @@ public class DccSpeedProfile {
                 p.printRecord(i, units == Speed.MPH ? Speed.kphToMph(sp.getPoint(i)) : sp.getPoint(i));
             }
             p.flush();
+            p.close();
         } catch (IOException ex) {
             log.error("Error exporting speed profile", ex);
         }
@@ -152,6 +153,7 @@ public class DccSpeedProfile {
                 p.printRecord(list);
             }
             p.flush();
+            p.close();
         } catch (IOException ex) {
             log.error("Error exporting speed profile", ex);
         }
