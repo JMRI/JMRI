@@ -20,7 +20,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -358,7 +358,7 @@
       </div>
     </div>
 
-    <!--#include virtual="/Footer" -->
+    <!--#include virtual="/Footer.shtml" -->
   </div>
 </body>
 </html>

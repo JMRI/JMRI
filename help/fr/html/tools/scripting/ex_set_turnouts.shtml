@@ -19,7 +19,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -224,7 +224,7 @@ setStartup (). start ()    # cr&eacute;ation de l'une d'elles, et  lancer son ex
         2006.</p>
       </div>
 
-        <!--#include virtual="/Footer" -->
+        <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

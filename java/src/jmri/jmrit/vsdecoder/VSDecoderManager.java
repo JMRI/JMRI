@@ -33,9 +33,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * VSDecoderFactory
+ * VSDecoderFactory, builds VSDecoders as needed, handles loading from XML if needed.
  *
- * Builds VSDecoders as needed.  Handles loading from XML if needed.
  * <hr>
  * This file is part of JMRI.
  * <p>
@@ -237,16 +236,6 @@ public class VSDecoderManager implements PropertyChangeListener {
         return ++locorow;
     }
 
-    // To be used in the future
-    /*
-     private String getNextListenerID() {
-     // ListenerID initialized to zero, pre-incremented before return...
-     // first returned ID value is 1.
-     // Prefix is added by the VSDListener constructor
-     return "VSDecoderID" + (++listenerID); // NOI18N
-     }
-     */
-
     @Deprecated
     public VSDecoder getVSDecoder(String profile_name) {
         VSDecoder vsd;
@@ -317,24 +306,6 @@ public class VSDecoderManager implements PropertyChangeListener {
         }
     }
 
-    /*
-     public void debugPrintDecoderList() {
-     log.debug("Current Decoder List by System ID:");
-     Set<Map.Entry<String, VSDecoder>> ids = decodertable.entrySet();
-     Iterator<Map.Entry<String, VSDecoder>> idi = ids.iterator();
-     while (idi.hasNext()) {
-     Map.Entry<String, VSDecoder> e = idi.next();
-     log.debug("    ID: {}, Val: {}", e.getKey(), e.getValue().getAddress().toString());
-     }
-     log.debug("Current Decoder List by Address:");
-     ids = decoderAddressMap.entrySet();
-     idi = ids.iterator();
-     while (idi.hasNext()) {
-     Map.Entry<String, VSDecoder> e = idi.next();
-     log.debug("    ID: {}, Val: {}", e.getKey(), e.getValue().getId());
-     }
-     }
-     */
     public VSDecoder getVSDecoderByID(String id) {
         VSDecoder v = decodertable.get(id);
         if (v == null) {
@@ -358,28 +329,6 @@ public class VSDecoderManager implements PropertyChangeListener {
         return rv;
     }
 
-    /*
-     public VSDecoder getVSDecoderByAddress(String sa) {
-     // First, translate the string into a DccLocoAddress
-     // no object if no address
-     if (sa.equals("")) return null;
-        
-     DccLocoAddress da = null;
-     // ask the Throttle Manager to handle this!
-     LocoAddress.Protocol protocol;
-     if(InstanceManager.throttleManagerInstance()!=null){
-     protocol = InstanceManager.throttleManagerInstance().getProtocolFromString(sa);
-     da = (DccLocoAddress)InstanceManager.throttleManagerInstance().getAddress(sa, protocol);
-     }
-
-     // now look up the decoder
-     if (da != null) {
-     return getVSDecoderByAddress(da);
-     }
-     return(null);
- 
-     }
-     */
     public void setDefaultVSDecoder(VSDecoder d) {
         default_decoder = d;
     }

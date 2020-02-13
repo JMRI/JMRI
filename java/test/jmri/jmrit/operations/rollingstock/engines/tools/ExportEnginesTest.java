@@ -49,7 +49,7 @@ public class ExportEnginesTest extends OperationsTestCase {
         java.io.File file = new java.io.File(ExportEngines.defaultOperationsFilename());
         Assert.assertTrue("Confirm file creation", file.exists());
         
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ExportEnginesTest.class);

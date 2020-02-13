@@ -23,8 +23,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Virtual Sound Decoder
- * <p>
  * Implements a software "decoder" that responds to throttle inputs and
  * generates sounds in responds to them.
  * <p>
@@ -382,7 +380,7 @@ public class VSDecoder implements PropertyChangeListener {
                 throttlePropertyChange(event);
             }
         });
-        log.debug("VSDecoder: Address set to {}", config.getLocoAddress().toString());
+        log.debug("VSDecoder: Address set to {}", config.getLocoAddress());
     }
 
     /**
@@ -615,54 +613,6 @@ public class VSDecoder implements PropertyChangeListener {
         return sound_list.get(name);
     }
 
-    /**
-     * Turn the bell sound on/off.
-     */
-    public void toggleBell() {
-        VSDSound snd = sound_list.get("BELL");
-        if (snd.isPlaying()) {
-            snd.stop();
-        } else {
-            snd.loop();
-        }
-    }
-
-    /**
-     * Turn the horn sound on/off.
-     */
-    public void toggleHorn() {
-        VSDSound snd = sound_list.get("HORN");
-        if (snd.isPlaying()) {
-            snd.stop();
-        } else {
-            snd.loop();
-        }
-    }
-
-    /**
-     * Turn the horn sound on.
-     */
-    public void playHorn() {
-        VSDSound snd = sound_list.get("HORN");
-        snd.loop();
-    }
-
-    /**
-     * Turn the horn sound on (Short burst).
-     */
-    public void shortHorn() {
-        VSDSound snd = sound_list.get("HORN");
-        snd.play();
-    }
-
-    /**
-     * Turn the horn sound off.
-     */
-    public void stopHorn() {
-        VSDSound snd = sound_list.get("HORN");
-        snd.stop();
-    }
-
     // Java Bean set/get Functions
     /**
      * Set the profile name to the given string
@@ -839,7 +789,7 @@ public class VSDecoder implements PropertyChangeListener {
         while (itr.hasNext()) {
             // Pull each element from the XML file.
             el = itr.next();
-            log.debug("Element: {}", el.toString());
+            log.debug("Element: {}", el);
             if (el.getAttribute("name") != null) {
                 log.debug("  Name: {}", el.getAttributeValue("name"));
                 log.debug("   type: {}", el.getAttributeValue("type"));

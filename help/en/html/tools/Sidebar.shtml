@@ -6,11 +6,15 @@
         <div style="text-align: center">JMRI&reg; is...</div>
         <dl>
 
-            <!--#include virtual="../../parts/SidebarTools.shtml" -->
+        <!--#include virtual="../../parts/SidebarTools.shtml" -->
 
-            <!--#include virtual="../../parts/SidebarLayoutAutomation.shtml" -->
+        <!--#include virtual="../../parts/SidebarLayoutAutomation.shtml" -->
 	    
-	    <!--#include virtual="../../parts/SidebarSupportedHardware.shtml" -->    
+        <dt><h3 style="padding-left: 1em;"><a href="../hardware/">Supported Hardware</a></h3></dt>
+        <dd>JMRI supports a wide range of DCC systems, command stations and protocols.</dd>
+	<!-- If someday we want to show the whole list, use #include virtual="../../parts/SidebarSupportedHardware.shtml" -->    
+	
+        <!--#include virtual="../../parts/SidebarApplications.shtml" -->
 
          </dl>
 	 
@@ -19,3 +23,9 @@
     </div> <!-- closes #side -->
 
 <!-- /Sidebar.shtml -->
+
+
+<!-- ===**======**======**=====**=======**==========**==========**=====**====**=====  -->
+
+<!-- Use Sidebar in Tools Directory unless something unique to add -->
+<!-- Use an #include virtual="Sidebar.shtml" -->   

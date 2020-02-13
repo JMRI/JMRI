@@ -13,7 +13,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
     <div id="mBody">
 <!--#include virtual="Sidebar.shtml" -->
 <div id="mainContent">
@@ -44,7 +44,7 @@ interface may be required.</p>
 <p><a href="index.shtml#GettingStarted">Back to Index</a>
 </div>
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
 </div>
 </div>
 </body>

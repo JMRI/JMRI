@@ -21,7 +21,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -201,7 +201,7 @@
             <p>IT6 mis Droitt</p>
           </td>
         </tr>
-      </table><!--#include virtual="/Footer" -->
+      </table><!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

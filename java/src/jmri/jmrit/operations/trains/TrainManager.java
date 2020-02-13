@@ -75,6 +75,7 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
 //    public static final String ACTIVE_TRAIN_SCHEDULE_ID = "ActiveTrainScheduleId"; // NOI18N
     public static final String ROW_COLOR_NAME_CHANGED_PROPERTY = "TrainsRowColorChange"; // NOI18N
     public static final String TRAINS_BUILT_CHANGED_PROPERTY = "TrainsBuiltChange"; // NOI18N
+    public static final String TRAINS_SHOW_FULL_NAME_PROPERTY = "TrainsShowFullName"; // NOI18N
 
     public TrainManager() {
     }
@@ -182,6 +183,12 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
      */
     public boolean isShowLocationHyphenNameEnabled() {
         return _showLocationHyphenName;
+    }
+    
+    public void setShowLocationHyphenNameEnabled(boolean enable) {
+        boolean old = _showLocationHyphenName;
+        _showLocationHyphenName = enable;
+        setDirtyAndFirePropertyChange(TRAINS_SHOW_FULL_NAME_PROPERTY, old, enable);
     }
 
     public String getTrainsFrameTrainAction() {

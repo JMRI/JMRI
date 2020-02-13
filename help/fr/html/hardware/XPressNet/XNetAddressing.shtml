@@ -15,7 +15,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
   <!--#include virtual="Sidebar" -->
   <div id="mainContent">
@@ -211,7 +211,7 @@ programmes affectera automatiquement un pr&#233;fixe XS pour vous</p>
 Paul Bender<br>
 paul.bender@acm.org
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
  </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->
 </body>

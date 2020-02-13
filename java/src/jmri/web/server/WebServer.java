@@ -116,7 +116,6 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
         if (!server.isRunning()) {
             ServerConnector connector = new ServerConnector(server);
             connector.setIdleTimeout(5 * 60 * 1000); // 5 minutes
-            connector.setSoLingerTime(-1);
             connector.setPort(preferences.getPort());
             server.setConnectors(new Connector[]{connector});
             server.setHandler(new ContextHandlerCollection());

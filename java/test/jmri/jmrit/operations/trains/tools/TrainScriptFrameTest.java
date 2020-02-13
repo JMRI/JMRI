@@ -37,7 +37,7 @@ public class TrainScriptFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(t);
         JUnitUtil.dispose(tef);
         
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TrainScriptFrameTest.class);

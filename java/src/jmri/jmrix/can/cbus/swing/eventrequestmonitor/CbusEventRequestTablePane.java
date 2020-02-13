@@ -194,8 +194,9 @@ public class CbusEventRequestTablePane extends jmri.jmrix.can.swing.CanPanel imp
 
         newnode.add(new JLabel(Bundle.getMessage("CbusNode")));
         newnodenumberSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 65535, 1));
-        JComponent comp = newnodenumberSpinner.getEditor();
-        JFormattedTextField field = (JFormattedTextField) comp.getComponent(0);
+        JSpinner.NumberEditor editor = new JSpinner.NumberEditor(newnodenumberSpinner, "#");
+        newnodenumberSpinner.setEditor(editor);
+        JFormattedTextField field = (JFormattedTextField) editor.getComponent(0);
         DefaultFormatter formatter = (DefaultFormatter) field.getFormatter();
         formatter.setCommitsOnValidEdit(true);
         newnodenumberSpinner.addChangeListener((ChangeEvent e) -> {
@@ -207,8 +208,9 @@ public class CbusEventRequestTablePane extends jmri.jmrix.can.swing.CanPanel imp
         
         newev.add(new JLabel(Bundle.getMessage("CbusEvent")));
         newevnumberSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 65535, 1));
-        JComponent compe = newevnumberSpinner.getEditor();
-        JFormattedTextField fielde = (JFormattedTextField) compe.getComponent(0);
+        JSpinner.NumberEditor neditor = new JSpinner.NumberEditor(newevnumberSpinner, "#");
+        newevnumberSpinner.setEditor(neditor);
+        JFormattedTextField fielde = (JFormattedTextField) neditor.getComponent(0);
         DefaultFormatter formattere = (DefaultFormatter) fielde.getFormatter();
         formattere.setCommitsOnValidEdit(true);
         newevnumberSpinner.addChangeListener((ChangeEvent e) -> {

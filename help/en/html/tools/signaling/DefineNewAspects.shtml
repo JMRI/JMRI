@@ -21,7 +21,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -377,7 +377,7 @@ For each specific appearance entered, the corresponding <code>
       <p>The advantage of placing new and amended signal mast
       Appearance files here is that when JMRI is updated, then
       these files will not get overwritten and lost!</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

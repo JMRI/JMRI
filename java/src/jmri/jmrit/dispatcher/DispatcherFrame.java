@@ -264,8 +264,14 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         if (at != null) {
             if (tSource == ActiveTrain.ROSTER) {
                 RosterEntry re = Roster.getDefault().getEntryForId(trainNameToUse);
-                at.setRosterEntry(re);
-                at.setDccAddress(re.getDccAddress());
+                if (re != null) {
+                    at.setRosterEntry(re);
+                    at.setDccAddress(re.getDccAddress());
+                } else {
+                    log.warn("Roster Entry '{}' not found, could not create ActiveTrain '{}'", 
+                            trainNameToUse, info.getTrainName());
+                    return -1;
+                }
             }
             at.setAllocateMethod(info.getAllocationMethod());
             at.setDelayedStart(info.getDelayedStart()); //this is a code: NODELAY, TIMEDDELAY, SENSORDELAY
@@ -309,7 +315,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             newTrainDone(at);
 
         } else {
-            log.warn("failed to create create Active Train {}", info.getTrainName());
+            log.warn("failed to create Active Train '{}'", info.getTrainName());
             return -1;
         }
         return 0;

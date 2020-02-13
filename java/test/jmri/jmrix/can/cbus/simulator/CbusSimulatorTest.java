@@ -55,8 +55,8 @@ public class CbusSimulatorTest {
 
     @After
     public void tearDown() {
-        JUnitUtil.tearDown();
         t.dispose();
+        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusSimulatorTest.class);

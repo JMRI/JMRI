@@ -51,15 +51,6 @@ public class NullAudioBuffer extends AbstractAudioBuffer {
     }
 
     @Override
-    public String toString() {
-        if (this.getState() != STATE_LOADED) {
-            return "Empty buffer";
-        } else {
-            return this.getURL() + " (" + parseFormat() + ", " + "?? Hz)";
-        }
-    }
-
-    @Override
     protected boolean loadBuffer(InputStream stream) {
         // No need to do this for the NullAudioBuffer - it's always successful ;-)
         return true;
@@ -102,15 +93,6 @@ public class NullAudioBuffer extends AbstractAudioBuffer {
     public int getFrequency() {
         // Nothing stored for the NullAudioBuffer - always zero
         return 0;
-    }
-
-    /**
-     * Internal method to return a string representation of the audio format
-     *
-     * @return string representation
-     */
-    private String parseFormat() {
-        return "unknown format";
     }
 
     @Override

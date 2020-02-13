@@ -23,7 +23,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -457,7 +457,7 @@
       pour un syst&egrave;me LocoNet, r&eacute;f&eacute;rerez vous
       au aiguillage LocoNet LTnn; ou un capteur LocoNet LSnn, etc
       (ou nn est le num&eacute;ro de l'&eacute;l&eacute;ment)</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

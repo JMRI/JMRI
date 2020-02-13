@@ -23,7 +23,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -452,7 +452,7 @@ Red, Red and Yellow respectively.
       Signal Logic help page</a>.</p>
 
       <p>Located at en\html\tools\signaling\ </p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

@@ -101,7 +101,7 @@ public class PrintTrainManifestIfSelectedActionTest extends OperationsTestCase {
         JUnitUtil.dispose(printPreviewFrame);
         
         JUnitOperationsUtil.checkOperationsShutDownTask();
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(PrintTrainManifestIfSelectedActionTest.class);

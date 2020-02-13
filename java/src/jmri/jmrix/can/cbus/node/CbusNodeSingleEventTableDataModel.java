@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Table data model for display of Cbus Nodes
+ * Table data model for display of CBUS Node Single Events
  *
  * @author Steve Young (c) 2019
  * 
@@ -22,6 +22,7 @@ public class CbusNodeSingleEventTableDataModel extends javax.swing.table.Abstrac
 
     public int[] newEVs;
     private final CbusNodeEvent _ndEv;
+    private final CanSystemConnectionMemo _memo;
     
     // column order needs to match list in column tooltips
     static public final int EV_NUMBER_COLUMN = 0;
@@ -36,18 +37,18 @@ public class CbusNodeSingleEventTableDataModel extends javax.swing.table.Abstrac
     public CbusNodeSingleEventTableDataModel(CanSystemConnectionMemo memo, int row, int column , CbusNodeEvent ndEv) {
         
         log.debug("Starting a Single Node Event Variable Model");
-
+        _memo = memo;
         _ndEv = ndEv;
         if ( _ndEv.getEvVarArray() == null ) {
             newEVs = new int[0];
         }
         else {
-            newEVs = new int[ ( _ndEv._evVarArr.length ) ];
+            newEVs = new int[ ( _ndEv.getEvVarArray().length ) ];
             log.debug(" set node newEVs length {} ",newEVs.length);
         
             newEVs = Arrays.copyOf(
-                _ndEv._evVarArr,
-                _ndEv._evVarArr.length);
+                _ndEv.getEvVarArray(),
+                _ndEv.getEvVarArray().length);
             log.debug(" set ev var arr length {} data {}",newEVs.length, newEVs);
         }
         setTableModel();
@@ -306,7 +307,7 @@ public class CbusNodeSingleEventTableDataModel extends javax.swing.table.Abstrac
     }
     
     public void passNewEvToNode ( CbusNodeEditEventFrame frame ) {
-        CbusNodeEvent newevent = new CbusNodeEvent(
+        CbusNodeEvent newevent = new CbusNodeEvent( _memo,
                 frame.getNodeVal(),
                 frame.getEventVal(),
                 _ndEv.getParentNn(),
@@ -321,7 +322,7 @@ public class CbusNodeSingleEventTableDataModel extends javax.swing.table.Abstrac
 
         CbusNode tmpNode = getEventNode();
         if (tmpNode!=null) {
-            tmpNode.sendNewEvSToNode( eventArray, frame, null);
+            tmpNode.getNodeEventManager().sendNewEvSToNode( eventArray );
         }
     }
 
@@ -329,7 +330,7 @@ public class CbusNodeSingleEventTableDataModel extends javax.swing.table.Abstrac
         if ( frame.spinnersDirty() ) {
             CbusNode tmpNode = getEventNode();
             if (tmpNode!=null) {
-                tmpNode.deleteEvOnNode(_ndEv.getNn(), _ndEv.getEn(), null );
+                tmpNode.getNodeEventManager().deleteEvOnNode(_ndEv.getNn(), _ndEv.getEn() );
             }
             
             // learn mode - to reset after unlearn, timeout, no feedback from node

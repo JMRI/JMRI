@@ -20,7 +20,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -78,7 +78,7 @@ les deux versions. SVP essayez de choisir la bonne la plupart du temps l'une lor
 ou javax.swing.SwingUtilities.invokeAndWait( r ); Ceux-ci seront migr&#233;s vers les nouvelles m&#233;thodes sp&#233;cifiques JMRI 
 &#224; l'avenir pour garder notre code juste un petit peu plus propre  et plus souple.)
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
 
 	  </div><!-- closes #mainContent-->
 	</div> <!-- closes #mBody-->

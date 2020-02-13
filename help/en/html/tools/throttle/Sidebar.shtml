@@ -1,46 +1,30 @@
-<!-- sidebar.shtml -->
+<!-- Sidebar.shtml -->
+<!-- Common sidebar for html/tools/[subdirectory] pages, mimics html/tools/Sidebar.shtml -->
+<!-- NOTE: subdirectory MUST have a SidebarToolLocalPart.shtml -->
 
 <hr class="hide">
-<!-- This is the common sidebar definition for html/tools/throttle pages -->
-  <div id="side"> <!-- Block of text on left side of page -->
-       <div style="text-align: center">JMRI&reg; is...</div>
- 
-	<dl>
-      <dt><h3><a href="ThrottleTOC.shtml" title="Click to view the Throttle Tool Table of Contents">Throttles</a></h3>
-      </dt>
-      <dd>
-		<ul>
-		  <li><a href="ThrottleMain.shtml" title="The Throttle tool">The Throttle Tool</a></li>
-		  <li><a href="ToolsMenuThrottleEntry.shtml">Open a...</a></li>
-		  <li><a href="BasicThrottleWindow.shtml">Throttle</a></li>
-		  <li><a href="ThrottleWindowMenus.shtml">Menus</a></li>
-		  <li><a href="ThrottleToolBar.shtml">Toolbar</a></li>
-		  <li><a href="AdvancedThrottleControl.shtml">Controls</a></li>
-		  <li><a href="ThrottlesListWindow.shtml">List</a></li>
-		  <li><a href="ThrottlesPreferencesPane.shtml">Preferences</a><br>
-		  </li>
-		</ul>
 	
-		<ul>
-		  <li>The <a href="RostersMediaPane.shtml">Media and Function Labels</a></li>
-		  <li><a href="../scripting/Jynstruments.shtml">Jynstruments</a></li>
-		  <li><a href="HowToJMRIOrientedThrottle.shtml">Building a Throttle oriented JMRI</a></li>
-		</ul>
-	  </dd>
-	  	        
-           <!--#include virtual="/help/en/parts/SidebarTools.shtml" -->
+    <div id="side"> <!-- Block of text on left side of page -->
+        <div style="text-align: center">JMRI&reg; is...</div>
+        <dl>
 
-           <!--#include virtual="/help/en/parts/SidebarLayoutAutomation.shtml" -->
-	    
-           <!--#include virtual="/help/en/parts/SidebarSupportedHardware.shtml" -->    
-		     
-</dl>
+           <!-- To include specific sidebar info for this subdirectory... -->
+           <!--#include virtual="SidebarToolLocalPart.shtml" --> 
+           
+           <!--#include virtual="../../../parts/SidebarTools.shtml" -->
 
-  </div> <!-- closes #side -->
-  
-    <!-- Sidebar-Tail -->
-    <script type="text/javascript" src="/web/js/jquery-2.0.3.min.js"></script>
-    <script type="text/javascript" src="/web/js/here.js"></script>
-    <!-- /Sidebar-Tail -->
+            <!--#include virtual="../../../parts/SidebarLayoutAutomation.shtml" -->
+	         
+        <dt><h3 style="padding-left: 1em;"><a href="../../hardware/">Supported Hardware</a></h3></dt>
+        <dd>JMRI supports a wide range of DCC systems, command stations and protocols.</dd>	
+    	<!-- If someday we want to show the whole list, use #include virtual="../../../parts/SidebarSupportedHardware.shtml" -->    
 
-<!-- /sidebar.shtml -->
+        <!--#include virtual="../../../parts/SidebarApplications.shtml" -->
+
+         </dl>
+
+	        <!--#include virtual="../../../parts/SidebarTail.shtml" -->  
+          
+          </div>
+ 
+ <!-- /Sidebar.shtml -->

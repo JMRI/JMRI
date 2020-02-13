@@ -17,7 +17,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="../SidebarUp" -->
     <div id="mainContent">
@@ -74,7 +74,7 @@ Il y a beaucoup de bonnes informations sur SRCP et comment il s'int&#232;gre dan
 <a href="http://www.der-moba.de/index.php/Digitalprojekt">der-moba.de ( en allemand )</a>
 </p>
 
-        <!--#include virtual="/Footer" -->
+        <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>
