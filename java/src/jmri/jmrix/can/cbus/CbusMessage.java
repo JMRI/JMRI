@@ -559,7 +559,10 @@ public class CbusMessage {
         CanMessage m = new CanMessage(8, header);
         m.setExtended(true);
         m.setHeader(0x5);
-        try {
+        if (d.length < 8) {
+            throw new ArrayIndexOutOfBoundsException("Array too short for message");
+        }
+//        try {
             m.setElement(0, d[0] & 0xff);
             m.setElement(1, d[1] & 0xff);
             m.setElement(2, d[2] & 0xff);
@@ -568,9 +571,9 @@ public class CbusMessage {
             m.setElement(5, d[5] & 0xff);
             m.setElement(6, d[6] & 0xff);
             m.setElement(7, d[7] & 0xff);
-        } catch (Exception e) {
-            log.error("Exception in bootloader data {}", e);
-        }
+//        } catch (Exception e) {
+//            log.error("Exception in bootloader data {}", e);
+//        }
         return m;
     }
 
@@ -585,7 +588,10 @@ public class CbusMessage {
         CanMessage m = new CanMessage(8, header);
         m.setExtended(true);
         m.setHeader(0x5);
-        try {
+        if (d.length < 8) {
+            throw new ArrayIndexOutOfBoundsException("Array too short for message");
+        }
+//        try {
             m.setElement(0, d[0] & 0xff);
             m.setElement(1, d[1] & 0xff);
             m.setElement(2, d[2] & 0xff);
@@ -594,9 +600,9 @@ public class CbusMessage {
             m.setElement(5, d[5] & 0xff);
             m.setElement(6, d[6] & 0xff);
             m.setElement(7, d[7] & 0xff);
-        } catch (Exception e) {
-            log.error("Exception in bootloader data {}", e);
-        }
+//        } catch (Exception e) {
+//            log.error("Exception in bootloader data {}", e);
+//        }
         return m;
     }
 

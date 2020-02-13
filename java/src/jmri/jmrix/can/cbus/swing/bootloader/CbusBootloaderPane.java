@@ -562,42 +562,11 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                 break;
 
             case PROG_CHECK_SENT:
-                if (CbusMessage.isBootOK(r)) {
-                    clearCheckTimeout();
-                    log.error("Node {} checksum OK", nodeNumber);
-                    addToLog(MessageFormat.format(Bundle.getMessage("BootChecksumOK"), nodeNumber));
-                    // Move onto config words or eeprom
-                    if (configCheckBox.isSelected()) {
-                        // Move onto config words
-                        startProgramming(0x300000, BootState.INIT_CONFIG_SENT);
-                    } else if (eepromCheckBox.isSelected()) {
-                        // Move onto eeprom
-                        startProgramming(0xF00000, BootState.INIT_EEPROM_SENT);
-                    } else {
-                        // Done writing
-                        sendReset();
-                    }
-                }
-                break;
-
             case CONFIG_CHECK_SENT:
-                if (CbusMessage.isBootOK(r)) {
-                    clearCheckTimeout();
-                    if (eepromCheckBox.isSelected()) {
-                        // Move onto eeprom words
-                        startProgramming(0xF00000, BootState.INIT_EEPROM_SENT);
-                    } else {
-                        // Done writing
-                        sendReset();
-                    }
-                }
-                break;
-
             case EEPROM_CHECK_SENT:
+                // Expecting reply to checksum verification, move on to next memory region
                 if (CbusMessage.isBootOK(r)) {
-                    clearCheckTimeout();
-                    // Done writing
-                    sendReset();
+                    nextRegion();
                 }
                 break;
         }
@@ -651,6 +620,25 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
         
         log.debug("No more data to send {}", Integer.toHexString(bootAddress));
         return false;
+    }
+    
+    
+    private void nextRegion() {
+        clearCheckTimeout();
+        log.debug("Node {} checksum OK", nodeNumber);
+        addToLog(MessageFormat.format(Bundle.getMessage("BootChecksumOK"), nodeNumber));
+        // Move onto next memory region
+        if ((bootState == BootState.PROG_CHECK_SENT) && configCheckBox.isSelected()) {
+            // Move onto config words
+            startProgramming(0x300000, BootState.INIT_CONFIG_SENT);
+        } else if ((bootState == BootState.PROG_CHECK_SENT) && eepromCheckBox.isSelected()
+                || (bootState == BootState.CONFIG_CHECK_SENT) && eepromCheckBox.isSelected()) {
+            // Move onto eeprom
+            startProgramming(0xF00000, BootState.INIT_EEPROM_SENT);
+        } else {
+            // Done writing
+            sendReset();
+        }   
     }
     
     
