@@ -35,6 +35,7 @@ public class LnClockControlTest {
         LnClockControl t = new LnClockControl(slotmanager, lnis, null);
  
         Assert.assertNotNull("exists",t);
+        slotmanager.dispose();
     }
 
     @Test

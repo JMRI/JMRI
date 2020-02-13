@@ -1007,12 +1007,11 @@ RCR&lt;;&gt;S74
 
     <p>The 'PFT' command is used to synchronize the fast clock time.  It is
     sent periodically from the server, indicating the "now" time and
-    (optionally) the current time ratio.  Examples include:</p>
+    the current time ratio.  Examples include:</p>
 
     <pre class="code">
 PFT65871&lt;;&gt;4
 PFT1550686525&lt;;&gt;4.0
-PFT1550686860
 </pre>
 
     <p>The first number is an integer number of seconds since 12:00
@@ -1020,16 +1019,15 @@ PFT1550686860
     and makes it easy to convert this value using the standard time
     libraries.  Only the hours and minutes are useful.  JMRI sends a value
     based on the system time when the fast clock was started, so will
-    return a value near the calendar date.   The Digitrax LnWI returns
+    return a value near the calendar date.   The Digitrax LnWi returns
     values within the range 0-86400 (all the values for January 1,
     1970).</p>
 
-    <p>The second number, if present, is the current fast time ratio.  It
+    <p>The second number is the current fast time ratio.  It
     may be an integer value (4) or a floating point value (4.0).  If this
     value is 0 (or 0.0), the clock is stopped.</p>
 
-    <p>JMRI will update the current fast time every 5 real-time minutes,
-    while the LnWI does so much more frequently.</p>
+    <p>Updates are sent on each change in time or rate.</p>
 
 
     <h3>Unknown commands</h3>

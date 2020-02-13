@@ -284,6 +284,10 @@ public class SprogIIUpdateFrame
             log.debug("Request bootloader version");
         }
         // allow parsing of bootloader replies
+        if (tc == null) {
+            log.warn("requestBoot with null tc, ignored");
+            return;
+        }
         tc.setSprogState(SprogState.SIIBOOTMODE);
         bootState = BootState.VERREQSENT;
         msg = SprogMessage.getReadBootVersion();
