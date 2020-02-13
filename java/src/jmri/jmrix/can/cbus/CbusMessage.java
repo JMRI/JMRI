@@ -658,5 +658,5 @@ public class CbusMessage {
         return (false);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusMessage.class);
+//    private final static Logger log = LoggerFactory.getLogger(CbusMessage.class);
 }
