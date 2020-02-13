@@ -23,6 +23,7 @@ public class WhereUsedFrameTest {
         // Select Sensor
         new JComboBoxOperator(jfo, 0).selectItem(1);
         new JComboBoxOperator(jfo, 1).selectItem(7);
+        new org.netbeans.jemmy.QueueTool().waitEmpty(); // wait for the list to finish
 
         JUnitUtil.dispose(frame);
     }

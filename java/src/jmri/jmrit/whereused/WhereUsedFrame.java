@@ -129,6 +129,7 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
                 }
                 Object src = e.getSource();
                 if (!(src instanceof NamedBeanComboBox)) {
+                    log.warn("setItemNameBox instance error");
                     return;
                 }
                 buildWhereUsedListing();
