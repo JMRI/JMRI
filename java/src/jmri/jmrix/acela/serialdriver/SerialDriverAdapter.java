@@ -144,7 +144,7 @@ public class SerialDriverAdapter extends AcelaPortController {
      */
     @Override
     public String[] validBaudRates() {
-    // Really just want 9600 Baud for Acela
+        // Really just want 9600 Baud for Acela
         return new String[]{Bundle.getMessage("Baud9600")};
     }
 

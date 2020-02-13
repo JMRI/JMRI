@@ -15,12 +15,6 @@ public class LnPortControllerTest extends jmri.jmrix.AbstractSerialPortControlle
 
     private LocoNetSystemConnectionMemo memo;
 
-    @Test
-    public void testGetAndSetOutputInterval() {
-        ((LnPortController) apc).getSystemConnectionMemo().setOutputInterval(52);
-        Assert.assertEquals("Output Interval after set", 52, ((LnPortController) apc).getSystemConnectionMemo().getOutputInterval());
-    }
-
     @Override
     @Before
     public void setUp(){
@@ -49,8 +43,7 @@ public class LnPortControllerTest extends jmri.jmrix.AbstractSerialPortControlle
 
             @Override
             public String[] validBaudRates(){
-               String[] retval = {"9600"};
-               return retval;
+               return new String[]{"9600"};
             }
 
             /**

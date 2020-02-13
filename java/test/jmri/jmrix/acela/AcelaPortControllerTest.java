@@ -13,12 +13,6 @@ import org.junit.Test;
  */
 public class AcelaPortControllerTest extends jmri.jmrix.AbstractSerialPortControllerTestBase {
 
-    @Test
-    public void testGetAndSetOutputInterval() {
-        ((AcelaPortController) apc).getSystemConnectionMemo().setOutputInterval(49);
-        Assert.assertEquals("Output Interval after set", 49, ((AcelaPortController) apc).getSystemConnectionMemo().getOutputInterval());
-    }
-
     @Override
     @Before
     public void setUp(){
@@ -44,8 +38,7 @@ public class AcelaPortControllerTest extends jmri.jmrix.AbstractSerialPortContro
 
             @Override
             public String[] validBaudRates(){
-               String[] retval = {"9600"};
-               return retval;
+               return new String[]{"9600"};
             }
 
             /**

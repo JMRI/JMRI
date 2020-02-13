@@ -14,9 +14,8 @@ import org.slf4j.LoggerFactory;
  */
 public class XpaTurnout extends AbstractTurnout {
 
-    // Private data member to keep track of what turnout we control.
+    // Private data member to keep track of what turnout we control
     private final int _number;
-    private String _prefix = "P"; // default
     private XpaTrafficController tc = null;
 
     /**
@@ -29,7 +28,6 @@ public class XpaTurnout extends AbstractTurnout {
     public XpaTurnout(int number, XpaSystemConnectionMemo m) {
         super(m.getSystemPrefix() + "T" + number);
         _number = number;
-        _prefix = m.getSystemPrefix();
         tc = m.getXpaTrafficController();
     }
 
@@ -61,8 +59,7 @@ public class XpaTurnout extends AbstractTurnout {
 
     @Override
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
-        log.debug("Send command to {} Pushbutton {}T{}", (_pushButtonLockout ? "Lock" : "Unlock"),
-                _prefix, _number);
+        log.debug("Send command to {} Pushbutton {}", (_pushButtonLockout ? "Lock" : "Unlock"), getSystemName());
     }
 
     @Override

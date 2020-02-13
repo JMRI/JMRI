@@ -87,7 +87,7 @@ public class InternalTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgr
     public void testSetAndGetOutputInterval() {
         Assert.assertEquals("default outputInterval", 250, l.getOutputInterval());
         l.getMemo().setOutputInterval(21);
-        Assert.assertEquals("new outputInterval in memo", 21, l.getMemo().getOutputInterval()); // set & get in memo
+        Assert.assertEquals("new outputInterval in memo", 21, l.getMemo().getOutputInterval()); // set + get in memo
         Assert.assertEquals("new outputInterval via manager", 21, l.getOutputInterval()); // get via turnoutManager
         l.setOutputInterval(50); // interval set via ProxyTurnoutManager
         Assert.assertEquals("new outputInterval in memo", 50, l.getMemo().getOutputInterval()); // get directly from memo
