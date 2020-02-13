@@ -21,13 +21,49 @@ public class WhereUsedFrameTest {
         Assert.assertNotNull(jfo);
 
         // Select Sensor
-        new JComboBoxOperator(jfo, 0).selectItem("Sensor");  // NOI18N
-        new JComboBoxOperator(jfo, 1).selectItem(7);   // S-Main
+        new JComboBoxOperator(jfo, 0).selectItem(1);
+        new JComboBoxOperator(jfo, 1).selectItem(7);
 
-        // Save to File
+        JUnitUtil.dispose(frame);
+    }
+
+    @Test
+    public void testSave() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        WhereUsedFrame frame = new WhereUsedFrame();
+        Assert.assertNotNull(frame);
+        frame.setVisible(true);
+
+        // Cancel save request
+        Thread cancelFile = createModalDialogOperatorThread(Bundle.getMessage("SaveDialogTitle"), Bundle.getMessage("ButtonCancel"), "cancelFile");  // NOI18N
+        frame.saveWhereUsedPressed();
+        JUnitUtil.waitFor(()->{return !(cancelFile.isAlive());}, "cancelFile finished");  // NOI18N
+
+        // Complete save request
         Thread saveFile = createModalDialogOperatorThread(Bundle.getMessage("SaveDialogTitle"), Bundle.getMessage("ButtonSave"), "saveFile");  // NOI18N
         frame.saveWhereUsedPressed();
-        JUnitUtil.waitFor(()->{return !(saveFile.isAlive());}, "saveFile finished");
+        JUnitUtil.waitFor(()->{return !(saveFile.isAlive());}, "saveFile finished");  // NOI18N
+
+        // Replace duplicate file
+        Thread saveFile2 = createModalDialogOperatorThread(Bundle.getMessage("SaveDialogTitle"), Bundle.getMessage("ButtonSave"), "saveFile2");  // NOI18N
+        Thread replaceFile = createModalDialogOperatorThread(Bundle.getMessage("SaveDuplicateTitle"), Bundle.getMessage("SaveDuplicateReplace"), "replaceFile");  // NOI18N
+        frame.saveWhereUsedPressed();
+        JUnitUtil.waitFor(()->{return !(saveFile2.isAlive());}, "saveFile2 finished");  // NOI18N
+        JUnitUtil.waitFor(()->{return !(replaceFile.isAlive());}, "replaceFile finished");  // NOI18N
+
+        // Append duplicate file
+        Thread saveFile3 = createModalDialogOperatorThread(Bundle.getMessage("SaveDialogTitle"), Bundle.getMessage("ButtonSave"), "saveFile3");  // NOI18N
+        Thread appendFile = createModalDialogOperatorThread(Bundle.getMessage("SaveDuplicateTitle"), Bundle.getMessage("SaveDuplicateAppend"), "appendFile");  // NOI18N
+        frame.saveWhereUsedPressed();
+        JUnitUtil.waitFor(()->{return !(saveFile3.isAlive());}, "saveFile3 finished");  // NOI18N
+        JUnitUtil.waitFor(()->{return !(appendFile.isAlive());}, "appendFile finished");  // NOI18N
+
+        // Cancel duplicate file
+        Thread saveFile4 = createModalDialogOperatorThread(Bundle.getMessage("SaveDialogTitle"), Bundle.getMessage("ButtonSave"), "saveFile4");  // NOI18N
+        Thread cancelFile2 = createModalDialogOperatorThread(Bundle.getMessage("SaveDuplicateTitle"), Bundle.getMessage("ButtonCancel"), "cancelFile2");  // NOI18N
+        frame.saveWhereUsedPressed();
+        JUnitUtil.waitFor(()->{return !(saveFile4.isAlive());}, "saveFile4 finished");  // NOI18N
+        JUnitUtil.waitFor(()->{return !(cancelFile2.isAlive());}, "cancelFile2 finished");  // NOI18N
 
         JUnitUtil.dispose(frame);
     }
