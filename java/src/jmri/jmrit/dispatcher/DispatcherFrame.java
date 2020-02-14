@@ -268,7 +268,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     at.setRosterEntry(re);
                     at.setDccAddress(re.getDccAddress());
                 } else {
-                    log.warn("failed to retrieve Roster Entry '{}' for ActiveTrain '{}'", trainNameToUse, info.getTrainName());
+                    log.warn("Roster Entry '{}' not found, could not create ActiveTrain '{}'", 
+                            trainNameToUse, info.getTrainName());
+                    return -1;
                 }
             }
             at.setAllocateMethod(info.getAllocationMethod());
@@ -313,7 +315,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             newTrainDone(at);
 
         } else {
-            log.warn("failed to create create Active Train {}", info.getTrainName());
+            log.warn("failed to create Active Train '{}'", info.getTrainName());
             return -1;
         }
         return 0;

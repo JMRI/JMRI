@@ -26,12 +26,13 @@ public class SprogIIUpdateFrameTest extends jmri.util.JmriJFrameTestBase {
         m.configureCommandStation();
         if(!GraphicsEnvironment.isHeadless()){
            frame = new SprogIIUpdateFrame(m);
-	}
+	    }
     }
 
     @After
     @Override
     public void tearDown() {
+        if (frame!=null) ((SprogIIUpdateFrame)frame).stopTimer();
         // frame.dispose() called in super class
         m.getSlotThread().interrupt();
         JUnitUtil.waitFor(() -> {return m.getSlotThread().getState() == Thread.State.TERMINATED;}, "Slot thread failed to stop");

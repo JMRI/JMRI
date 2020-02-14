@@ -169,6 +169,7 @@ public class LnPr2PowerManagerTest extends AbstractPowerManagerTestBase {
     @After
     public void tearDown() {
         pwr.dispose();
+        if (slotmanager != null) slotmanager.dispose();
         JUnitUtil.tearDown();
     }
 

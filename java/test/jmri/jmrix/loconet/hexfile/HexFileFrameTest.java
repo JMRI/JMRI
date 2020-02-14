@@ -30,7 +30,6 @@ public class HexFileFrameTest {
             f.dispose();
        });
             
-        p.getSystemConnectionMemo().dispose();
         p.dispose();
         f.sourceThread.stop();
         f.sourceThread.join();
