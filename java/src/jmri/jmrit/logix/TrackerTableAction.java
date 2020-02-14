@@ -574,7 +574,7 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
             pickerMenu.addActionListener((ActionEvent a) -> openPickList());
             optionMenu.add(pickerMenu);
 
-            optionMenu.add(WarrantTableAction.makeLogMenu());
+            optionMenu.add(WarrantTableAction.getDefault().makeLogMenu());
             menuBar.add(optionMenu);
             setJMenuBar(menuBar);
             addHelpMenu("package.jmri.jmrit.logix.Tracker", true);
@@ -781,7 +781,7 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
         private void setStatus(String msg) {
             _status.setText(msg);
             if (msg != null && msg.length() > 0) {
-                WarrantTableAction.writetoLog(msg);
+                WarrantTableAction.getDefault().writetoLog(msg);
                 _statusHistory.add(msg);
                 while (_statusHistory.size() > _maxHistorySize) {
                     _statusHistory.remove(0);
