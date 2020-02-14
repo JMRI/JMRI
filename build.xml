@@ -738,7 +738,7 @@
     <target depends="-test-single-src,-test-single-test,tests,runtime-library-selection" description="Run single unit test." name="test-single">
         <junitlauncher printSummary="true">
             <classpath refid="test.class.path" />
-            <test haltOnFailure="false" failureProperty="test.failed" includeEngines="junit-jupiter,junit-vintage" name="${test.test}" >
+            <test haltOnFailure="false" failureProperty="test.failed" includeEngines="junit-jupiter,junit-vintage" name="${test.test}" outputdir="${testreport}">
                 <fork>
                     <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
                     <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
@@ -748,8 +748,12 @@
                     <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
                     <sysproperty key="user.language" value="en"/>
                     <sysproperty key="user.country" value="US"/>
+                    <sysproperty key="jmri.util.junit.PrintingTestListener.verbose" value="true" />
                     <jvmarg line="${test-single.jvmargs}"/>
                 </fork>
+                <listener classname="jmri.util.junit.PrintingTestListener" />
+                <listener type="legacy-xml" sendSysOut="true" sendSysErr="true" />
+                <listener type="legacy-brief" sendSysOut="true" sendSysErr="true" />
             </test>
         </junitlauncher>
         <fail>
@@ -773,10 +777,13 @@
                     <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
                     <sysproperty key="user.language" value="en"/>
                     <sysproperty key="user.country" value="US"/>
+                    <sysproperty key="jmri.util.junit.PrintingTestListener.verbose" value="true" />
                     <jvmarg value="${jacocoagent}"/>
-		    <jvmarg line="${test-single.jvmargs}"/>
+		            <jvmarg line="${test-single.jvmargs}"/>
                 </fork>
-                <listener type="legacy-brief" sendSysOut="false" sendSysErr="false" />
+                <listener classname="jmri.util.junit.PrintingTestListener" />
+                <listener type="legacy-xml" sendSysOut="true" sendSysErr="true" />
+                <listener type="legacy-brief" sendSysOut="true" sendSysErr="true" />
             </test>
         </junitlauncher>
         <fail>
