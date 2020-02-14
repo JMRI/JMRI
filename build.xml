@@ -369,6 +369,7 @@
         <quiet>
         <mkdir dir="${target}"/>
         <mkdir dir="${target}/resources"/>
+        <mkdir dir="${basedir}/target/testreport"/>
         <mkdir dir="${genjavasrcdir}/jmri/jmris/srcp/parser"/>
         <mkdir dir="${genjavasrcdir}/jmri/jmrix/srcp/parser"/>
         </quiet>
