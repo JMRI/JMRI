@@ -163,7 +163,7 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel {
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
         try {
-            CanMessage m = createPacket(packetTextField.getText().replaceAll("\\s",""));
+            CanMessage m = createPacket(packetTextField.getText().replaceAll("\\s", ""));
             if (cbusPriorityCheckbox.isSelected()) {
                 CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
             }
@@ -277,7 +277,7 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel {
             
             try {
                 // make the packet
-                CanMessage m = createPacket(mPacketField[mNextSequenceElement].getText().replaceAll("\\s",""));
+                CanMessage m = createPacket(mPacketField[mNextSequenceElement].getText().replaceAll("\\s", ""));
                 if (cbusPriorityCheckbox.isSelected()) {
                     CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
                 }

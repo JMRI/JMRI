@@ -14,6 +14,7 @@ import org.junit.platform.launcher.listeners.TestExecutionSummary;
 
 public class PrintingTestListener extends SummaryGeneratingListener {
 
+
     /**
      * A {@link TextListener} implementation that can display the name
      * of run, failed and ignored tests run by JUnit
@@ -27,7 +28,11 @@ public class PrintingTestListener extends SummaryGeneratingListener {
      * property is non-empty and non-false, the output is reduced to a minimal
      * summary.
      */
-    
+
+    public PrintingTestListener(){
+        this(new PrintStream(System.out));
+    }
+
     public PrintingTestListener(PrintStream writer) {
         super();
         this.writer = writer;  

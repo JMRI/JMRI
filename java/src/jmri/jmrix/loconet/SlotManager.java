@@ -69,18 +69,17 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         // listen to the LocoNet
         tc.addLocoNetListener(~0, this);
 
-        // We will scan the slot table every 10 s for in-use slots that are stale
-        final int slotScanDelay = 10000; // 10 seconds; must be less than 90, see checkStaleSlots()
+        // We will scan the slot table every 0.3 s for in-use slots that are stale
+        final int slotScanDelay = 300; // Must be short enough that 128 can be scanned in 90 seconds, see checkStaleSlots()
         staleSlotCheckTimer = new javax.swing.Timer(slotScanDelay, new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 checkStaleSlots();
             }
-        }
-        );
+        });
 
         staleSlotCheckTimer.setRepeats(true);
-        staleSlotCheckTimer.setInitialDelay(3*slotScanDelay);  // wait a bit more at startup
+        staleSlotCheckTimer.setInitialDelay(30000);  // wait a bit at startup
         staleSlotCheckTimer.start();
     }
 
@@ -249,6 +248,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             if ((slot.slotStatus() == LnConstants.LOCO_IN_USE || slot.slotStatus() == LnConstants.LOCO_COMMON)
                     && (slot.getLastUpdateTime() <= staleTimeout)) {
                 sendReadSlot(i);
+                break; // only send the first one found
             }
         }
     }

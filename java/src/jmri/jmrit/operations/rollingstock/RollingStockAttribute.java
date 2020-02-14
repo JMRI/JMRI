@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.rollingstock;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JComboBox;
@@ -39,10 +40,8 @@ public abstract class RollingStockAttribute {
     protected List<String> list = new ArrayList<>();
 
     public String[] getNames() {
-        if (list.size() == 0) {
-            for (String name : getDefaultNames().split(",")) {
-                list.add(name);
-            }
+        if (list.isEmpty()) {
+            list.addAll(Arrays.asList(getDefaultNames().split(",")));
         }
         String[] names = new String[list.size()];
         for (int i = 0; i < list.size(); i++) {

@@ -258,16 +258,20 @@ public abstract class AbstractNamedBean implements NamedBean {
         return mSystemName;
     }
 
-    /**
-     * {@inheritDoc}
-     * <p>
-     * It would be good to eventually make this final to 
-     * keep it consistent system-wide, but 
-     * we have some existing classes to update first.
-     */
+    /** {@inheritDoc}
+    */
     @Nonnull
     @Override
-    public String toString() {
+    final public String toString() {
+        /*
+         * Implementation note:  This method is final to ensure that the
+         * contract for toString is properly implemented.  See the 
+         * comment in NamedBean#toString() for more info.
+         * If you ever do decide to allow extension:
+         *  - Consider just making that change here instead of releasing the final condition
+         *  - Add a JUnit or ArchUnit check or @OverridingMethodsMustInvokeSuper (which might not be being checked)
+         * to ensure that new code doesn't inadvertantly violate the contract
+         */
         return getSystemName();
     }
 

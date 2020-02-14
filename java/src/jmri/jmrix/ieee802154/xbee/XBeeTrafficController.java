@@ -54,7 +54,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
      * Make connection to an existing PortController object.
      */
     @Override
-    @SuppressFBWarnings(value = {"UW_UNCOND_WAIT","WA_NOT_IN_LOOP"}, justification="The unconditional wait outside of a loop is used to allow the hardware to react to a reset request.")
+    @SuppressFBWarnings(value = {"UW_UNCOND_WAIT", "WA_NOT_IN_LOOP"}, justification="The unconditional wait outside of a loop is used to allow the hardware to react to a reset request.")
     public void connectPort(AbstractPortController p) {
         // Attach XBee to the port
         try {
