@@ -48,11 +48,6 @@ public abstract class AbstractAudio extends AbstractNamedBean implements Audio {
         firePropertyChange("State", _old, _state); //NOI18N
     }
 
-    @Override
-    public String toString() {
-        return this.getClass().getName() + " (" + this.getSystemName() + ")"; //NOI18N
-    }
-
     /**
      * Abstract method that concrete classes will implement to perform necessary
      * cleanup routines.

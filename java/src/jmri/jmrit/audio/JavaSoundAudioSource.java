@@ -533,10 +533,10 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
 
                 this.gainControl.setValue(dB);
                 if (log.isDebugEnabled()) {
-                    log.debug("Actual gain value of JavaSoundAudioSource {} is {}", this.audio, this.gainControl.getValue());
+                    log.debug("Actual gain value of JavaSoundAudioSource {} is {}", this.audio.getDebugString(), this.gainControl.getValue());
                 }
             }
-            log.debug("Set gain of JavaSoundAudioSource {} to {}", this.audio, gain);
+            log.debug("Set gain of JavaSoundAudioSource {} to {}", this.audio.getDebugString(), gain);
         }
 
         /**
@@ -548,7 +548,7 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
             if (this.panControl != null) {
                 this.panControl.setValue(pan);
             }
-            log.debug("Set pan of JavaSoundAudioSource {} to {}", this.audio, pan);
+            log.debug("Set pan of JavaSoundAudioSource {} to {}", this.audio.getDebugString(), pan);
         }
 
         /**
@@ -562,7 +562,7 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
             if (this.sampleRateControl != null) {
                 this.sampleRateControl.setValue(pitch * this.initialSampleRate);
             }
-            log.debug("Set pitch of JavaSoundAudioSource {} to {}", this.audio, pitch);
+            log.debug("Set pitch of JavaSoundAudioSource {} to {}", this.audio.getDebugString(), pitch);
         }
 
     }

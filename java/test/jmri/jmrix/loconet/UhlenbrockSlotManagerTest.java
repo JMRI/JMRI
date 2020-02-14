@@ -11,12 +11,13 @@ import org.junit.Test;
  * @author Paul Bender Copyright (C) 2017	
  */
 public class UhlenbrockSlotManagerTest {
-
+    
     @Test
     public void testCTor() {
         LnTrafficController lnis = new LocoNetInterfaceScaffold();
         UhlenbrockSlotManager t = new UhlenbrockSlotManager(lnis);
         Assert.assertNotNull("exists",t);
+        t.dispose();
     }
 
     // The minimal setup for log4J

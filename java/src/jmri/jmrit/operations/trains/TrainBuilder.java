@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.trains;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.text.MessageFormat;
 import java.util.*;
 
@@ -124,7 +125,7 @@ public class TrainBuilder extends TrainCommon {
         File file = InstanceManager.getDefault(TrainManagerXml.class).createTrainBuildReportFile(_train.getName());
         try {
             _buildReport = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file),
-                    "UTF-8")), true); // NOI18N
+                    StandardCharsets.UTF_8)), true);
         } catch (IOException e) {
             log.error("Can not open build report file: " + file.getName());
             return;
@@ -937,7 +938,7 @@ public class TrainBuilder extends TrainCommon {
      * @return The departure track the user selected.
      */
     private Track promptFromStagingDialog() {
-        List<Track> tracksIn = _departLocation.getTrackList();
+        List<Track> tracksIn = _departLocation.getTrackByNameList(null);
         List<Track> validTracks = new ArrayList<>();
         // only show valid tracks
         for (Track track : tracksIn) {
