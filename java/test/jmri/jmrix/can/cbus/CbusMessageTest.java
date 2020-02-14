@@ -1,8 +1,10 @@
 package jmri.jmrix.can.cbus;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
+
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
-import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -504,14 +506,18 @@ public class CbusMessageTest {
         CanMessage m = CbusMessage.getBootWriteData( new int[]{0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08},0x12);
         Assert.assertEquals("getBootWriteData","[5] 01 02 03 04 05 06 07 08",m.toString());
         
-//        m = CbusMessage.getBootWriteData( new int[]{0x01,0x02},0x12);
-//        JUnitAppender.assertErrorMessageStartsWith("java.lang.ArrayIndexOutOfBounds");
+        Throwable thrown = catchThrowable(() -> {
+            CbusMessage.getBootWriteData( new int[]{0x01,0x02},0x12);
+        });
+        assertThat(thrown).isInstanceOf(ArrayIndexOutOfBoundsException.class);
         
         m = CbusMessage.getBootWriteData( new byte[]{0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08},0x12);
         Assert.assertEquals("getBootWriteData","[5] 01 02 03 04 05 06 07 08",m.toString());
         
-//        m = CbusMessage.getBootWriteData( new byte[]{0x01,0x02},0x12);
-//        JUnitAppender.assertErrorMessageStartsWith("java.lang.ArrayIndexOutOfBounds");
+        thrown = catchThrowable(() -> {
+            CbusMessage.getBootWriteData( new byte[]{0x01,0x02},0x12);
+        });
+        assertThat(thrown).isInstanceOf(ArrayIndexOutOfBoundsException.class);
     }
 
     @Test
