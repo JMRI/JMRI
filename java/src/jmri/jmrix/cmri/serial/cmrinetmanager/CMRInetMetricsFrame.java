@@ -547,8 +547,8 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
 		}
 	}
       
-    private String[] CMRInetMetricsErrColumnsNames  = {"Error","Count"," ","Reset"};
-    private String[] CMRInetMetricsDataColumnsNames = {"Metric","Count"," ","Reset"};
+    private String[] CMRInetMetricsErrColumnsNames = {"Error", "Count", " ", "Reset"};
+    private String[] CMRInetMetricsDataColumnsNames = {"Metric", "Count", " ", "Reset"};
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CMRInetMetricsFrame.class.getName());
 	

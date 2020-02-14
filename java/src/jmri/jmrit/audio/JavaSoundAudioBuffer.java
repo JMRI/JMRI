@@ -133,15 +133,6 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
     }
 
     @Override
-    public String toString() {
-        if (this.getState() != STATE_LOADED) {
-            return "Empty buffer";
-        } else {
-            return this.getURL() + " (" + parseFormat() + ", " + this.freq + " Hz)";
-        }
-    }
-
-    @Override
     protected boolean loadBuffer(InputStream stream) {
         if (!initialised) {
             return false;

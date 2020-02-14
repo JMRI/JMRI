@@ -78,8 +78,8 @@ public class CbusFilterPanel extends JPanel {
     private static double _iconScale = 0.25;
     
     private NamedIcon getCollapsed() {
-        NamedIcon collapsed = new NamedIcon("resources/icons/decorations/ArrowStyle2.png","resources/icons/decorations/ArrowStyle2.png");
-        collapsed.scale(_iconScale,this);
+        NamedIcon collapsed = new NamedIcon("resources/icons/decorations/ArrowStyle2.png", "resources/icons/decorations/ArrowStyle2.png");
+        collapsed.scale(_iconScale, this);
         return collapsed;
     }
     

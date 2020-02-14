@@ -21,7 +21,7 @@ public class RaspberryPiTurnoutManagerXml extends jmri.managers.configurexml.Abs
 
     @Override
     public void setStoreElementClass(Element turnouts) {
-        turnouts.setAttribute("class","jmri.jmrix.pi.configurexml.RaspberryPiTurnoutManagerXml");
+        turnouts.setAttribute("class", "jmri.jmrix.pi.configurexml.RaspberryPiTurnoutManagerXml");
     }
 
     @Override

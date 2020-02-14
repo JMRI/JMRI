@@ -9,6 +9,7 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -375,7 +376,7 @@ public class NodeIdentity {
             doc.getRootElement().addContent(uuidElement);
         }
         doc.getRootElement().addContent(formerIdentitiesElement);
-        try (Writer w = new OutputStreamWriter(new FileOutputStream(this.identityFile()), "UTF-8")) { // NOI18N
+        try (Writer w = new OutputStreamWriter(new FileOutputStream(this.identityFile()), StandardCharsets.UTF_8)) {
             XMLOutputter fmt = new XMLOutputter();
             fmt.setFormat(Format.getPrettyFormat()
                     .setLineSeparator(System.getProperty("line.separator"))
