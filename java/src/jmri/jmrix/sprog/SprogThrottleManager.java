@@ -66,7 +66,7 @@ public class SprogThrottleManager extends AbstractThrottleManager {
             notifyThrottleKnown(new SprogThrottle((SprogSystemConnectionMemo) adapterMemo, address), address);
         } else {
             failedThrottleRequest(address, "Only one Throttle can be in use at anyone time with the Sprog.");
-            //javax.swing.JOptionPane.showMessageDialog(null,"Only one Throttle can be in use at anyone time with the Sprog.","Sprog Throttle",javax.swing.JOptionPane.WARNING_MESSAGE);
+            //javax.swing.JOptionPane.showMessageDialog(null, "Only one Throttle can be in use at anyone time with the Sprog.", "Sprog Throttle", javax.swing.JOptionPane.WARNING_MESSAGE);
             log.warn("Single SPROG Throttle already in use");
         }
     }

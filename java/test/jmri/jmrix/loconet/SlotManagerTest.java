@@ -1300,6 +1300,7 @@ public class SlotManagerTest {
 
     @After
     public void tearDown() {
+        slotmanager.dispose();
         JUnitUtil.tearDown();
     }
 
