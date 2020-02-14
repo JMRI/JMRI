@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+import java.nio.charset.StandardCharsets;
 import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetInitializationManager;
@@ -164,7 +165,7 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
                 BufferedReader bufferedin
                         = new BufferedReader(
                                 new InputStreamReader(commAdapter.getInputStream(),
-                                        java.nio.charset.Charset.forName("UTF-8")));
+                                        StandardCharsets.UTF_8));
                 for (;;) {
                     try {
                         synchronized (commAdapter) {
@@ -204,7 +205,7 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
                 BufferedReader bufferedin
                         = new BufferedReader(
                                 new InputStreamReader(bcastAdapter.getInputStream(),
-                                        java.nio.charset.Charset.forName("UTF-8")));
+                                        StandardCharsets.UTF_8));
                 for (;;) {
                     try {
                         synchronized (bcastAdapter) {

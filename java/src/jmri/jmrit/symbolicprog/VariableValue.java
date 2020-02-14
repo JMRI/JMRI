@@ -494,7 +494,8 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
         }
 
         if (log.isDebugEnabled()) {
-            log.debug("setToRead(" + state + ") with overrides " + getInfoOnly() + "," + getWriteOnly() + "," + !getAvailable() + " sets " + newState);
+            // avoid method calls unless debugging
+            log.debug("setToRead({}) with overrides {},{},{} sets {}", state, getInfoOnly(), getWriteOnly(), !getAvailable(), newState);
         }
         _cvMap.get(getCvNum()).setToRead(newState);
     }
@@ -533,7 +534,8 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
         }
 
         if (log.isDebugEnabled()) {
-            log.debug("setToRead(" + state + ") with overrides " + getInfoOnly() + "," + getReadOnly() + "," + !getAvailable() + " sets " + newState);
+            // avoid method calls unless debugging
+            log.debug("setToRead({}) with overrides {},{},{} sets {}", state, getInfoOnly(), getWriteOnly(), !getAvailable(), newState);
         }
         _cvMap.get(getCvNum()).setToWrite(newState);
     }

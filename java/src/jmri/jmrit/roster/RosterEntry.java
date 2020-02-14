@@ -1152,7 +1152,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         e.setAttribute("owner", getOwner());
         e.setAttribute("model", getModel());
         e.setAttribute("dccAddress", getDccAddress());
-        //e.setAttribute("protocol",""+getProtocol());
+        //e.setAttribute("protocol", "" + getProtocol());
         e.setAttribute("comment", getComment());
         e.setAttribute(RosterEntry.MAX_SPEED, (Integer.toString(getMaxSpeedPCT())));
         // file path are saved without default xml config path
