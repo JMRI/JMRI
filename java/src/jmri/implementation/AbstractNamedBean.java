@@ -258,16 +258,10 @@ public abstract class AbstractNamedBean implements NamedBean {
         return mSystemName;
     }
 
-    /**
-     * {@inheritDoc}
-     * <p>
-     * It would be good to eventually make this final to 
-     * keep it consistent system-wide, but 
-     * we have some existing classes to update first.
-     */
+    /** {@inheritDoc} */
     @Nonnull
     @Override
-    public String toString() {
+    final public String toString() {
         return getSystemName();
     }
 
