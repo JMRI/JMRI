@@ -184,28 +184,30 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         }
         pack();
         setVisible(true);
-        class MakeCatalog extends SwingWorker<CatalogPanel, Object> {
-
-            @Override
-            public CatalogPanel doInBackground() {
-                return CatalogPanel.makeDefaultCatalog();
-            }
-            /**
-             * Minimal implementation to catch and log errors
-             */
-            @Override
-            protected void done() {
-                try {
-                    get();  // called to get errors
-                } catch (InterruptedException | java.util.concurrent.ExecutionException e) {
-                    log.error("Exception while in MakeCatalog", e);
-                }
-            }
-        }
-        (new MakeCatalog()).execute();
+        makeCatalogWorker = new MakeCatalog();
+        makeCatalogWorker.execute();
         log.debug("Init SwingWorker launched");
     }
+    static class MakeCatalog extends SwingWorker<CatalogPanel, Object> {
 
+        @Override
+        public CatalogPanel doInBackground() {
+            return CatalogPanel.makeDefaultCatalog();
+        }
+        /**
+         * Minimal implementation to catch and log errors
+         */
+        @Override
+        protected void done() {
+            try {
+                get();  // called to get errors
+            } catch (InterruptedException | java.util.concurrent.ExecutionException e) {
+                log.error("Exception while in MakeCatalog", e);
+            }
+        }
+    }
+    MakeCatalog makeCatalogWorker;
+    
     protected void makeIconMenu() {
         _iconMenu = new JMenu(Bundle.getMessage("MenuIcon"));
         _menuBar.add(_iconMenu, 0);

@@ -22,7 +22,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -59,7 +59,7 @@
       vous pouvez s&eacute;lectionner le format des valeurs
       d'entr&eacute;es soit en valeur D&eacute;cimale (base 10) ou
       hexad&eacute;cimale (base 16).</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

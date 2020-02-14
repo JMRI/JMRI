@@ -811,6 +811,12 @@ public class JUnitUtil {
                         // do not actually read tags
                         this.dirty = false;
                     }
+
+                    @Override
+                    protected void initShutdownTask(){
+                        //don't even register the shutdownTask
+                    }
+
                 });
     }
 

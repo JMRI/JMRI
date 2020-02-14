@@ -19,7 +19,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
       <!-- Page Body -->
@@ -520,7 +520,7 @@
       <p style="margin-bottom: 0in"><br></p>
 
       <p style="margin-bottom: 0in"><br></p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

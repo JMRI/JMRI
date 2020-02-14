@@ -39,7 +39,7 @@ public class RouteFinder implements Runnable {
         _maxBlocks = maxB;
     }
 
-    synchronized protected void quit() {
+    protected synchronized void quit() {
         log.debug("quit= {}", _quit);
         _quit = true;
     }
@@ -193,5 +193,5 @@ public class RouteFinder implements Runnable {
         return children;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RouteFinder.class);
+    private static final Logger log = LoggerFactory.getLogger(RouteFinder.class);
 }

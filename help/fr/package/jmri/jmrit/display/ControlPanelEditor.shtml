@@ -23,7 +23,7 @@
 
 <body>
 
-   <!--#include virtual="/Header" -->
+   <!--#include virtual="/Header.shtml" -->
 <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -306,7 +306,7 @@
       rapide a &eacute;t&eacute; incluse dans ce groupe, alors
       aucune modification ne serait apport&eacute;e &agrave;
       l'horloge.
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

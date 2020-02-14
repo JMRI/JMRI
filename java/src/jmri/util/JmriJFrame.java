@@ -55,7 +55,7 @@ import org.slf4j.LoggerFactory;
  * methods.
  * <li>Maintains a list of existing JmriJFrames
  * </ul>
- * <h3>Window Closing</h3>
+ * <h2>Window Closing</h2>
  * Normally, a JMRI window wants to be disposed when it closes. This is what's
  * needed when each invocation of the corresponding action can create a new copy
  * of the window. To do this, you don't have to do anything in your subclass.

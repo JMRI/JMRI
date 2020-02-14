@@ -17,7 +17,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -126,7 +126,7 @@ vous imprimez &#224; partir du format "de base", et une liste de tout lorsque vo
 </dd>
 </dl>
     
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
 </div>
 </div>
 </body>

@@ -18,7 +18,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
 <div id="mainContent">
 
@@ -172,7 +172,7 @@ la boite "Montrer Pr&#233;f&#233;rences Avanc&#233;es".</p>
     chang&#233;.</p></dd>
     </dl>
 
-    <!--#include virtual="/Footer" -->
+    <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

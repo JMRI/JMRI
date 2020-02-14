@@ -20,7 +20,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -310,7 +310,7 @@ if (log.isDebugEnabled ()) Log.DEBUG ("Change appearance of "+name+" to "+appear
 </pre>
       </div>
 
-    </div><!--#include virtual="/Footer" -->
+    </div><!--#include virtual="/Footer.shtml" -->
   </div>
 </body>
 </html>

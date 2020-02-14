@@ -17,7 +17,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -96,7 +96,7 @@ Pour une approche acyuellement prise en charge, impliquant l'ex&#233;cution d'un
 sur votre Smartphone, voir la page
     <a href="../../package/jmri/jmrit/withrottle/UserInterface.shtml">r&#233;gulateur Wi</a>.</p>
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
   </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->
 </body>

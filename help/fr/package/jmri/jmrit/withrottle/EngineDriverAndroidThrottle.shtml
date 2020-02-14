@@ -21,7 +21,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -164,7 +164,7 @@
         <p>Ceci est la page d'aide
         help/en/package/jmri/jmrit//withrottle/EngineDriverAndroidThrottle</p>
 
-        <p><!--#include virtual="/Footer" --> le</p>
+        <p><!--#include virtual="/Footer.shtml" --> le</p>
       </div>
     </div>
   </div>

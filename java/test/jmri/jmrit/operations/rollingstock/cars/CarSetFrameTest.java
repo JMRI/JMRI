@@ -33,7 +33,7 @@ public class CarSetFrameTest extends OperationsTestCase {
         f.loadCar(c3);
 
         JUnitUtil.dispose(f);
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     @Test
@@ -56,30 +56,38 @@ public class CarSetFrameTest extends OperationsTestCase {
         // change car's status
         JemmyUtil.enterClickAndLeave(f.outOfServiceCheckBox);
         JemmyUtil.enterClickAndLeave(f.saveButton);
-        Assert.assertTrue("Out of service", c3.isOutOfService());
+        JUnitUtil.waitFor(() -> {
+            return c3.isOutOfService();
+        }, "Out of service");
         Assert.assertFalse("Location unknown", c3.isLocationUnknown());
 
         // change car's status
         JemmyUtil.enterClickAndLeave(f.outOfServiceCheckBox);
         JemmyUtil.enterClickAndLeave(f.saveButton);
-        Assert.assertFalse("Out of service", c3.isOutOfService());
+        JUnitUtil.waitFor(() -> {
+            return !c3.isOutOfService();
+        }, "Out of service");
         Assert.assertFalse("Location unknown", c3.isLocationUnknown());
 
         // change car's status
         JemmyUtil.enterClickAndLeave(f.locationUnknownCheckBox);
         JemmyUtil.enterClickAndLeave(f.saveButton);
         // location unknown checkbox also causes the car to be out of service
-        Assert.assertTrue("Out of service", c3.isOutOfService());
+        JUnitUtil.waitFor(() -> {
+            return c3.isOutOfService();
+        }, "Out of service");
         Assert.assertTrue("Location unknown", c3.isLocationUnknown());
         
         // change car's status
         JemmyUtil.enterClickAndLeave(f.locationUnknownCheckBox);
         JemmyUtil.enterClickAndLeave(f.saveButton);
         // location unknown checkbox also causes the car to be out of service
-        Assert.assertFalse("Out of service", c3.isOutOfService());
+        JUnitUtil.waitFor(() -> {
+            return !c3.isOutOfService();
+        }, "Out of service");
         Assert.assertFalse("Location unknown", c3.isLocationUnknown());
 
         JUnitUtil.dispose(f);
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 }

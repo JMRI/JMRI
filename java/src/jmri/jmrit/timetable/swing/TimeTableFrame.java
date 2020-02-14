@@ -2403,9 +2403,6 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
                 return;
             }
 
-
-
-
             if (hasErrors) {
                 JOptionPane.showMessageDialog(null,
                         Bundle.getMessage("ExportFailed"),  // NOI18N

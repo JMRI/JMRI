@@ -16,14 +16,14 @@ public class CbusNodeEventTest {
 
     @Test
     public void testCTor() {
-        CbusNodeEvent t = new CbusNodeEvent(0,1,0,0,0);
+        CbusNodeEvent t = new CbusNodeEvent(null,0,1,0,0,0);
         Assert.assertNotNull("exists",t);
     }
     
     @Test
     public void testBasicSetGets() {
         // short event 7 on node 256, no index, 4 ev vars
-        CbusNodeEvent t = new CbusNodeEvent(0,7,256,-1,4);
+        CbusNodeEvent t = new CbusNodeEvent(null,0,7,256,-1,4);
         Assert.assertNotNull("exists",t);
         
         Assert.assertTrue("outstanding event vars 4",t.getOutstandingVars()== 4 );
@@ -47,7 +47,7 @@ public class CbusNodeEventTest {
         
         Assert.assertTrue("defalt no temp name set",t.getTempFcuNodeName().isEmpty() );
         t.setTempFcuNodeName("Alonso");
-        Assert.assertTrue("temp name set",t.getTempFcuNodeName()=="Alonso" );
+        Assert.assertTrue("temp name set",t.getTempFcuNodeName().equals("Alonso") );
         
         t.setEvVar(1,256);
         JUnitAppender.assertErrorMessageStartsWith("Event Variable value needs to be less than 255 (oxff)");
@@ -57,7 +57,7 @@ public class CbusNodeEventTest {
     @Test
     public void testEventHexString(){
         
-        CbusNodeEvent t = new CbusNodeEvent(0,7,256,-1,4);
+        CbusNodeEvent t = new CbusNodeEvent(null,0,7,256,-1,4);
         
         Assert.assertEquals("4 Ev Vars Unset","FFFFFFFF",t.getHexEvVarString());
         t.setEvArr(new int[]{0,0,0,0});
@@ -73,22 +73,21 @@ public class CbusNodeEventTest {
     @SuppressWarnings("unlikely-arg-type") // Makes sures different objects do not pass
     public void testNodeEventEquals() {
         
-        CbusNodeEvent t = new CbusNodeEvent(0,7,256,-1,4);
+        CbusNodeEvent t = new CbusNodeEvent(null,0,7,256,-1,4);
         // t.setEvArr(new int[]{1,2,3,4});
-        CbusNodeEvent tt = new CbusNodeEvent(0,7,256,-1,4);
+        CbusNodeEvent tt = new CbusNodeEvent(null,0,7,256,-1,4);
         // tt.setEvArr(new int[]{1,2,3,4});
         
-        Assert.assertFalse("Null Equals",t.equals(null));
         Assert.assertTrue("Equals t",t.equals(t));
         Assert.assertTrue("Equals tt",t.equals(tt));
         
         Assert.assertTrue("Same hashcode tt",t.hashCode()==tt.hashCode());
         
         
-        Assert.assertFalse("Equals Node different",t.equals(new CbusNodeEvent(1,7,256,-1,4)));
-        Assert.assertFalse("Equals Event Different",t.equals(new CbusNodeEvent(0,8,256,-1,4)));
-        Assert.assertFalse("Equals Host different",t.equals(new CbusNodeEvent(0,7,257,-1,4)));
-        Assert.assertFalse("Equals Event Length different",t.equals(new CbusNodeEvent(0,7,256,-1,5)));
+        Assert.assertFalse("Equals Node different",t.equals(new CbusNodeEvent(null,1,7,256,-1,4)));
+        Assert.assertFalse("Equals Event Different",t.equals(new CbusNodeEvent(null,0,8,256,-1,4)));
+        Assert.assertFalse("Equals Host different",t.equals(new CbusNodeEvent(null,0,7,257,-1,4)));
+        Assert.assertFalse("Equals Event Length different",t.equals(new CbusNodeEvent(null,0,7,256,-1,5)));
         
         t.setEvArr(new int[]{1,2,3,4});
         tt.setEvArr(new int[]{1,2,3,4});

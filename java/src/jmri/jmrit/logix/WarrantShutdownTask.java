@@ -2,6 +2,8 @@ package jmri.jmrit.logix;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
+
 import jmri.InstanceManager;
 import jmri.implementation.AbstractShutDownTask;
 import jmri.jmrit.roster.Roster;
@@ -24,7 +26,7 @@ public class WarrantShutdownTask extends AbstractShutDownTask {
 
     HashMap<String, Boolean> _mergeCandidates;
     HashMap<String, RosterSpeedProfile> _mergeProfiles;
-    HashMap<String, HashMap<Integer, Boolean>> _anomalies;
+    Map<String, Map<Integer, Boolean>> _anomalies;
 
     /**
      * Constructor specifies the warning message and action to take
@@ -95,7 +97,7 @@ public class WarrantShutdownTask extends AbstractShutDownTask {
         Iterator<java.util.Map.Entry<String, RosterSpeedProfile>> iter = _mergeProfiles.entrySet().iterator();
         while (iter.hasNext()) {
             java.util.Map.Entry<String, RosterSpeedProfile> entry = iter.next();
-            HashMap<Integer, Boolean> anomaly = MergePrompt.validateSpeedProfile(entry.getValue());
+            Map<Integer, Boolean> anomaly = MergePrompt.validateSpeedProfile(entry.getValue());
             if (anomaly.size() > 0) {
                 _anomalies.put(entry.getKey(), anomaly);
             }
@@ -134,6 +136,6 @@ public class WarrantShutdownTask extends AbstractShutDownTask {
         Roster.getDefault().writeRoster();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(WarrantShutdownTask.class);
+    private static final Logger log = LoggerFactory.getLogger(WarrantShutdownTask.class);
 
 }

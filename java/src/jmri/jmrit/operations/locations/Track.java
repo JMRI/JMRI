@@ -1318,17 +1318,17 @@ public class Track {
      * @return true if the train can set out cars to this track.
      */
     public boolean acceptsDropTrain(Train train) {
-        if (_dropOption.equals(ANY)) {
+        if (getDropOption().equals(ANY)) {
             return true;
         }
         // yard tracks accept all trains
         if (isYard()) {
             return true;
         }
-        if (_dropOption.equals(TRAINS)) {
+        if (getDropOption().equals(TRAINS)) {
             return containsDropId(train.getId());
         }
-        if (_dropOption.equals(EXCLUDE_TRAINS)) {
+        if (getDropOption().equals(EXCLUDE_TRAINS)) {
             return !containsDropId(train.getId());
         } else if (train.getRoute() == null) {
             return false;
@@ -1337,14 +1337,14 @@ public class Track {
     }
 
     public boolean acceptsDropRoute(Route route) {
-        if (_dropOption.equals(ANY) || _dropOption.equals(TRAINS) || _dropOption.equals(EXCLUDE_TRAINS)) {
+        if (getDropOption().equals(ANY) || getDropOption().equals(TRAINS) || getDropOption().equals(EXCLUDE_TRAINS)) {
             return true;
         }
         // yard tracks accept all routes
         if (isYard()) {
             return true;
         }
-        if (_dropOption.equals(EXCLUDE_ROUTES)) {
+        if (getDropOption().equals(EXCLUDE_ROUTES)) {
             return !containsDropId(route.getId());
         }
         return containsDropId(route.getId());

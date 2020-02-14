@@ -18,7 +18,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="../SidebarUp" -->
     <div id="mainContent">
@@ -74,7 +74,7 @@ remplit le nom d'utilisateur JMRI, par exemple:
 d'utilisateur JMRI pour tout ce que vous souhaitez via le tableau
 habituel, si d&eacute;sir&eacute;.</p>
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

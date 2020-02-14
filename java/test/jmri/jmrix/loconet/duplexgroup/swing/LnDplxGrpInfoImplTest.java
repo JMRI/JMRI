@@ -58,9 +58,6 @@ public class LnDplxGrpInfoImplTest {
         for (LocoNetListener listener : lnis.getListeners()) {
             if (listener == dpxGrpInfoImpl) Assert.fail("dispose did not remove");
         }
-
-        memo.dispose();
-
     }
 
     @Test

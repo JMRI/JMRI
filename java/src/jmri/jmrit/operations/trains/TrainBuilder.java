@@ -231,7 +231,7 @@ public class TrainBuilder extends TrainCommon {
                 firstPass = false;
             }
         } else {
-            placeCars(100, false);
+            placeCars(100, false); // normal build one pass
         }
 
         // done assigning cars to train
@@ -337,7 +337,7 @@ public class TrainBuilder extends TrainCommon {
     }
 
     /**
-     * show train build options in detailed mode
+     * show train build options when in detailed mode
      */
     private void showTrainBuildOptions() {
         ResourceBundle rb = ResourceBundle
@@ -937,7 +937,7 @@ public class TrainBuilder extends TrainCommon {
      * @return The departure track the user selected.
      */
     private Track promptFromStagingDialog() {
-        List<Track> tracksIn = _departLocation.getTrackList();
+        List<Track> tracksIn = _departLocation.getTrackByNameList(null);
         List<Track> validTracks = new ArrayList<>();
         // only show valid tracks
         for (Track track : tracksIn) {
@@ -1503,11 +1503,8 @@ public class TrainBuilder extends TrainCommon {
             addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildTrainReqCaboose"), new Object[]{
                     _train.getName(), roadCaboose, rl.getName(), rld.getName()}));
         }
-        // Does the route have enough moves?
-        // if (requiresCaboose && rl.getMaxCarMoves() - rl.getCarMoves() <= 0) {
-        // throw new BuildFailedException(MessageFormat.format(Bundle.getMessage("buildErrorNoMoves"), new Object[] {
-        // rl.getName(), rl.getId(), Bundle.getMessage("Caboose") }));
-        // }
+        // Ignore route moves for caboose
+ 
         // Now go through the car list looking for cabooses
         boolean cabooseTip = true; // add a user tip to the build report about cabooses if none found
         boolean cabooseAtDeparture = false; // set to true if caboose at departure location is found
@@ -4360,9 +4357,6 @@ public class TrainBuilder extends TrainCommon {
                 throw new BuildFailedException(MessageFormat.format(Bundle.getMessage("buildErrorRouteLoc"),
                         new Object[]{_train.getRoute().getName(), rld.getName()}));
             }
-            Track trackTemp = null;
-            Track finalDestinationTrackTemp = null;
-
             // don't move car to same location unless the train is a switcher (local moves) or is passenger,
             // caboose or car with FRED
             if (splitString(rl.getName()).equals(splitString(rld.getName())) &&
@@ -4415,38 +4409,17 @@ public class TrainBuilder extends TrainCommon {
                         new Object[]{_departLocation.getName(), _terminateLocation.getName()}));
                 continue;
             }
+            
+            Track trackTemp = null;
+            Track finalDestinationTrackTemp = null;
+            
             // is there a track assigned for staging cars?
             if (rld == _train.getTrainTerminatesRouteLocation() && _terminateStageTrack != null) {
-                // no need to check train and track direction into staging, already done
-                String status = car.testDestination(testDestination, _terminateStageTrack);
-                if (status.equals(Track.OKAY)) {
-                    trackTemp = _terminateStageTrack;
-                    // only generate a new load if there aren't any other tracks available for this car
-                } else if (status.startsWith(Track.LOAD) &&
-                        car.getTrack() == _departStageTrack &&
-                        car.getLoadName().equals(carLoads.getDefaultEmptyName()) &&
-                        rldSave == null &&
-                        (_departStageTrack.isAddCustomLoadsAnyStagingTrackEnabled() ||
-                                _departStageTrack.isAddCustomLoadsEnabled() ||
-                                _departStageTrack.isAddCustomLoadsAnySpurEnabled())) {
-                    // try and generate a load for this car into staging
-                    if (generateLoadCarDepartingAndTerminatingIntoStaging(car, _terminateStageTrack)) {
-                        trackTemp = _terminateStageTrack;
-                    } else {
-                        addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
-                                .getMessage("buildCanNotDropCarBecause"),
-                                new Object[]{car.toString(),
-                                        _terminateStageTrack.getName(), status,
-                                        _terminateStageTrack.getTrackTypeName()}));
-                        continue; // failed to create load
-                    }
-                } else {
-                    addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCanNotDropCarBecause"),
-                            new Object[]{car.toString(), _terminateStageTrack.getName(), status,
-                                    _terminateStageTrack.getTrackTypeName()}));
+                trackTemp = tryStaging(car, rldSave);
+                if (trackTemp == null) {
                     continue;
                 }
-                // no staging track assigned, start track search
+            // no staging track assigned, start track search
             } else {
                 // first report if there are any alternate tracks
                 for (Track track : testDestination.getTrackByNameList(null)) {
@@ -4455,9 +4428,8 @@ public class TrainBuilder extends TrainCommon {
                                 new Object[]{car.toString(), track.getTrackTypeName(), track.getName()}));
                     }
                 }
+                // now find a track for this car
                 for (Track testTrack : testDestination.getTrackByMovesList(null)) {
-                    // log.debug("track (" +testTrack.getName()+ ") has "+ testTrack.getMoves() + " moves");
-                    // dropping to the same track isn't allowed
                     if (testTrack == car.getTrack() && !car.isPassenger() && !car.isCaboose() && !car.hasFred()) {
                         addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
                                 .getMessage("buildCanNotDropCarSameTrack"),
@@ -4517,10 +4489,8 @@ public class TrainBuilder extends TrainCommon {
                             testTrack.isSpur() &&
                             !testTrack.getScheduleId().equals(Track.NONE) &&
                             (car.getTrack().isAddCustomLoadsEnabled() ||
-                                    car.getTrack()
-                                            .isAddCustomLoadsAnySpurEnabled()) &&
+                                    car.getTrack().isAddCustomLoadsAnySpurEnabled()) &&
                             car.getLoadName().equals(carLoads.getDefaultEmptyName())) {
-                        // can we use this staging track?
                         if (!testTrack.isSpaceAvailable(car)) {
                             addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
                                     .getMessage("buildNoDestTrackSpace"),
@@ -4667,8 +4637,7 @@ public class TrainBuilder extends TrainCommon {
                                 trackSave.getName(), trackSave.getScheduleName(), Double.toString(saveRatio));
                     }
                     log.debug("Saved {} = {}, {} = {}", rldSave.getName(), Double.toString(saveRatio), rld.getName(),
-                            Double
-                                    .toString(nextRatio));
+                            Double.toString(nextRatio));
                     if (saveRatio < nextRatio) {
                         rld = rldSave; // the saved is better than the last found
                         trackTemp = trackSave;
@@ -4700,6 +4669,48 @@ public class TrainBuilder extends TrainCommon {
         }
         adjustCarOrder(car);
         return false; // no build errors, but car not given destination
+    }
+    
+    private Track tryStaging(Car car, RouteLocation rldSave) {
+        // local switcher working staging?
+        if (_train.isLocalSwitcher() &&
+                !car.isPassenger() &&
+                !car.isCaboose() &&
+                !car.hasFred() &&
+                car.getTrack() == _terminateStageTrack) {
+            addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCanNotDropCarSameTrack"),
+                    new Object[]{car.toString(), car.getTrack().getName()}));
+            return null;
+        }                       
+        // no need to check train and track direction into staging, already done
+        String status = car.testDestination(_terminateStageTrack.getLocation(), _terminateStageTrack);
+        if (status.equals(Track.OKAY)) {
+            return _terminateStageTrack;
+            // only generate a new load if there aren't any other tracks available for this car
+        } else if (status.startsWith(Track.LOAD) &&
+                car.getTrack() == _departStageTrack &&
+                car.getLoadName().equals(carLoads.getDefaultEmptyName()) &&
+                rldSave == null &&
+                (_departStageTrack.isAddCustomLoadsAnyStagingTrackEnabled() ||
+                        _departStageTrack.isAddCustomLoadsEnabled() ||
+                        _departStageTrack.isAddCustomLoadsAnySpurEnabled())) {
+            // try and generate a load for this car into staging
+            if (generateLoadCarDepartingAndTerminatingIntoStaging(car, _terminateStageTrack)) {
+                return _terminateStageTrack;
+            } else {
+                addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
+                        .getMessage("buildCanNotDropCarBecause"),
+                        new Object[]{car.toString(),
+                                _terminateStageTrack.getName(), status,
+                                _terminateStageTrack.getTrackTypeName()}));
+                return null; // failed to create load
+            }
+        } else {
+            addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCanNotDropCarBecause"),
+                    new Object[]{car.toString(), _terminateStageTrack.getName(), status,
+                            _terminateStageTrack.getTrackTypeName()}));
+            return null;
+        }
     }
 
     /**

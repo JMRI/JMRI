@@ -169,42 +169,12 @@ public class CbusAddress {
     }
 
     /**
-     * Does the CbusAddress match a CanReply (CanFrame being received by JMRI).
+     * Does the CbusAddress match.
      *
-     * @param r CanReply being tested
+     * @param r CanReply or CanMessage being tested
      * @return true if matches
      */
-    public boolean match(CanReply r) {
-        if (r.getNumDataElements() != aFrame.length) {
-            return false;
-        }
-        if (CbusMessage.isShort(r)) {
-            // Skip node number for short events
-            if (aFrame[0] != r.getElement(0)) {
-                return false;
-            }
-            for (int i = 3; i < aFrame.length; i++) {
-                if (aFrame[i] != r.getElement(i)) {
-                    return false;
-                }
-            }
-        } else {
-            for (int i = 0; i < aFrame.length; i++) {
-                if (aFrame[i] != r.getElement(i)) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    /**
-     * Does the CbusAddress match a CanMessage (CanFrame being sent by JMRI).
-     *
-     * @param r CanMessage being tested
-     * @return true if matches
-     */
-    boolean match(CanMessage r) {
+    public boolean match(jmri.jmrix.AbstractMessage r) {
         if (r.getNumDataElements() != aFrame.length) {
             return false;
         }

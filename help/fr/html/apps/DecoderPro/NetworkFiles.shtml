@@ -17,7 +17,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -67,7 +67,7 @@ Configurer les machines Windows ainsi il y a un r&#233;pertoire partag&#233;, et
 		fen&#234;tre sera plus grande. Appuyez sur "Set" sous la  "Liste:" et suivez les instructions.</li>
 	</ol>
 
- <!--#include virtual="/Footer" -->
+ <!--#include virtual="/Footer.shtml" -->
  </div> <!-- close #mainContent -->
 </div> <!-- close #mBody -->    
 </body>

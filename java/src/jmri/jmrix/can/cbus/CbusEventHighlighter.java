@@ -1,7 +1,7 @@
 package jmri.jmrix.can.cbus;
 
 import java.awt.Color;
-import jmri.jmrix.can.CanFrame;
+import jmri.jmrix.AbstractMessage;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 
@@ -46,7 +46,7 @@ public class CbusEventHighlighter {
      * @param m CanFrame to test against
      * @return False if not an Event, or Node, or Event or On / Off does not match
      */
-    private boolean doNotHighlight(CanFrame m) {
+    private boolean doNotHighlight(AbstractMessage m) {
         return ((!CbusMessage.isEvent(m)) 
             || (_nnEnabled && (CbusMessage.getNodeNumber( m) != _nn))
             || (_evEnabled && (CbusMessage.getEvent(m) != _ev))

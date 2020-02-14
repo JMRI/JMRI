@@ -11,7 +11,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -216,7 +216,7 @@ Le <a href="WebSite.shtml">site web JMRI</a> est dans un r&#233;pertoire similai
 	<p>La meilleure m&#233;thode pour retrouver la source pour les version 4.1.2 et avant
 	est par le <a href="getcvscode.shtml">R&#233;pertoire CVS</a> SVP Voir ces instructions pour plus de d&#233;tails
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
 
   </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->

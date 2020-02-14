@@ -246,6 +246,7 @@ public class LnDeferProgrammerTest {
 
     @After
     public void tearDown() {
+        slotmanager.dispose();
         JUnitUtil.tearDown();
     }
 
