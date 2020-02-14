@@ -1414,32 +1414,33 @@
         <mkdir dir="${testreport}"/>
         <jacoco:agent property="jacocoagent" destfile="${jacocoexec}" excludes="org.slf4j.*" />
 
-        <junitlauncher haltOnFailure="false">
-            <classpath refid="test.class.path"/>
-            <testclasses haltonfailure="false" failureProperty="test.failed" outputDir="${testreport}" includeEngines="junit-jupiteri,junit-vintage" >
-                <fileset refid="junitfileset"/>
-                <fork>
-                    <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
-                    <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
-                    <sysproperty key="log4j.ignoreTCL" path="true/"/>
-                    <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
-                    <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
-                    <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
-                    <sysproperty key="jmri.skipTestsRequiringSeparateRunning" value="true"/>
-                    <sysproperty key="user.language" value="en"/>
-                    <sysproperty key="user.country" value="US"/>
-                    <!-- use different log4j settings to pick up additional coverage -->
-                    <sysproperty key="jmri.log4jconfigfilename" value="tests_jacoco.lcf"/>
-                    <sysproperty key="java.awt.headless" value="true"/>
-                    <sysproperty key="cucumber.options" value="--tags 'not @Ignore' --tags 'not @Headed' --tags 'not @webtest'"/>
-                    <jvmarg value="-Xmx1536m"/>
-                    <jvmarg value="${jacocoagent}"/>
-                    <jvmarg line="${jvm.args}"/>
-                </fork>
-                <listener type="legacy-xml" sendSysOut="true" sendSysErr="true" outputDir="${testreport}" />
-                <listener type="legacy-brief" sendSysOut="false" sendSysErr="false" />
-            </testclasses>
-        </junitlauncher>
+        <java classpathref="test.class.path" classname="org.junit.platform.console.ConsoleLauncher" fork="true" failonerror="true"  >
+            <sysproperty key="wdm.forceCache" value="true"/>
+            <!-- wdm.targetPath specifies the locaion of the web drivers on appveyor. -->
+            <sysproperty key="wdm.targetPath" value="C:\Tools\WebDriver"/>
+
+            <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
+            <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
+            <sysproperty key="log4j.ignoreTCL" path="true/"/>
+            <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
+            <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
+            <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
+            <sysproperty key="jmri.skipTestsRequiringSeparateRunning" value="true"/><!-- skip intermittent tests -->
+            <sysproperty key="user.language" value="en"/>
+            <sysproperty key="user.country" value="US"/>
+            <sysproperty key="java.awt.headless" value="true"/>
+
+            <arg value="--scan-classpath"/>
+            <arg value="--details=none"/>
+            <arg value="--include-engine=junit-jupiter"/>
+            <arg value="--include-engine=junit-vintage"/>
+            <arg line="-n '^(Test.*|.+[.$]Test.*|.*Tests?)$'" />
+            <arg line="-n '.*IT.*'" />
+            <arg line="--reports-dir ${testreport}" />
+            <jvmarg value="-Xmx1536m"/>
+            <jvmarg value="${jacocoagent}"/>
+            <jvmarg line="${jvm.args}"/>
+        </java>
     </target>
 
     <target name="headless-coveragereport" depends="logheadlesstest" description="Generate Test Coverage Report via logheadlesstest">
@@ -1556,6 +1557,7 @@
             <arg line="--reports-dir ${testreport}" />
             <jvmarg value="-Xmx1536m"/>
             <jvmarg value="${jacocoagent}"/>
+            <jvmarg line="${jvm.args}"/>
         </java>
     </target>
 
@@ -1588,32 +1590,34 @@
     <target name="logalltest" depends="tests, runtime-library-selection" description="run AllTest test suite with jacoco output">
         <mkdir dir="${tempdir}"/>
 	    <mkdir dir="${testreport}"/>
-	    <jacoco:agent property="jacocoagent" destfile="${jacocoexec}" excludes="org.slf4j.*" />
+        <jacoco:agent property="jacocoagent" destfile="${jacocoexec}" excludes="org.slf4j.*" />
 
-	    <junitlauncher haltOnFailure="false">
-               <classpath refid="test.class.path"/>
-               <testclasses haltonfailure="false" failureProperty="test.failed" outputDir="${testreport}" includeEngines="junit-jupiter,junit-vintage" >
-                <fileset refid="junitfileset"/>
-                <fork>
-                    <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
-                    <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
-                    <sysproperty key="log4j.ignoreTCL" path="true/"/>
-                    <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
-                    <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
-                    <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
-                    <sysproperty key="jmri.skipTestsRequiringSeparateRunning" value="true"/>
-                    <sysproperty key="user.language" value="en"/>
-                    <sysproperty key="user.country" value="US"/>
-                    <!-- use different log4j settings to pick up additional coverage -->
-                    <sysproperty key="jmri.log4jconfigfilename" value="tests_jacoco.lcf"/>
-                    <jvmarg value="-Xmx1536m"/>
-                    <jvmarg value="${jacocoagent}"/>
-                    <jvmarg line="${jvm.args}"/>
-                </fork>
-                <listener type="legacy-xml" sendSysOut="true" sendSysErr="true" outputDir="${testreport}" />
-                <listener type="legacy-brief" sendSysOut="false" sendSysErr="false" />
-            </testclasses>
-        </junitlauncher>
+        <java classpathref="test.class.path" classname="org.junit.platform.console.ConsoleLauncher" fork="true" failonerror="true"  >
+            <sysproperty key="wdm.forceCache" value="true"/>
+            <!-- wdm.targetPath specifies the locaion of the web drivers on appveyor. -->
+            <sysproperty key="wdm.targetPath" value="C:\Tools\WebDriver"/>
+
+            <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
+            <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
+            <sysproperty key="log4j.ignoreTCL" path="true/"/>
+            <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
+            <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
+            <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
+            <sysproperty key="jmri.skipTestsRequiringSeparateRunning" value="true"/><!-- skip intermittent tests -->
+            <sysproperty key="user.language" value="en"/>
+            <sysproperty key="user.country" value="US"/>
+
+            <arg value="--scan-classpath"/>
+            <arg value="--details=none"/>
+            <arg value="--include-engine=junit-jupiter"/>
+            <arg value="--include-engine=junit-vintage"/>
+            <arg line="-n '^(Test.*|.+[.$]Test.*|.*Tests?)$'" />
+            <arg line="-n '.*IT.*'" />
+            <arg line="--reports-dir ${testreport}" />
+            <jvmarg value="-Xmx1536m"/>
+            <jvmarg value="${jacocoagent}"/>
+            <jvmarg line="${jvm.args}"/>
+        </java>
     </target>
 
     <target name="cucumber" depends="tests, runtime-library-selection" description="run Cucumber tests">
