@@ -1,8 +1,10 @@
 package jmri.jmrix.bachrus;
 
+import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -108,7 +110,7 @@ public class DccSpeedProfile {
     // Save data as CSV
     public static void export(DccSpeedProfile sp, int address, String dirString, int units) {
         File file = openExportFile();
-        try (CSVPrinter p = new CSVPrinter(new FileWriter(file), CSVFormat.DEFAULT)) {
+        try (CSVPrinter p = new CSVPrinter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)), CSVFormat.DEFAULT)) {
             String unitsString;
             if (units == Speed.MPH) {
                 unitsString = "MPH";
@@ -131,7 +133,7 @@ public class DccSpeedProfile {
 
     public static void export(DccSpeedProfile[] sp, int address, int units) {
         File file = openExportFile();
-        try (CSVPrinter p = new CSVPrinter(new FileWriter(file), CSVFormat.DEFAULT)) {
+        try (CSVPrinter p = new CSVPrinter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)), CSVFormat.DEFAULT)) {
 
             String unitsString;
             if (units == Speed.MPH) {
