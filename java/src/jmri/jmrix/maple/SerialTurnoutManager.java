@@ -160,7 +160,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 //    "How many output bits should be used to control this turnout?",
 //     "Turnout Question",javax.swing.JOptionPane.DEFAULT_OPTION,
 //      javax.swing.JOptionPane.QUESTION_MESSAGE,
-//      null,new String[] {"Use 1 bit","Use 2 bits"},"Use 1 bit");
+//      null, new String[] {"Use 1 bit", "Use 2 bits"}, "Use 1 bit");
 //  return iNum;
 // }
 //    /**
@@ -175,7 +175,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 //    "Should the output bit(s) be 'steady state' or 'pulsed'?",
 //     "Output Bits Question",javax.swing.JOptionPane.DEFAULT_OPTION,
 //      javax.swing.JOptionPane.QUESTION_MESSAGE,
-//      null,new String[] {"Steady State Output","Pulsed Output"},"Steady State Output");
+//      null, new String[] {"Steady State Output", "Pulsed Output"}, "Steady State Output");
 //  return iType;
 // }
 //    /**
@@ -185,7 +185,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 // public void notifySecondBitConflict(String conflict,int bitNum) {
 //  javax.swing.JOptionPane.showMessageDialog(null,"The second output bit, "+bitNum+
 //   ", is currently assigned to "+conflict+". Turnout cannot be created as "+
-//     "you specified.","Assignment Conflict",
+//     "you specified.", "Assignment Conflict",
 //       javax.swing.JOptionPane.INFORMATION_MESSAGE,null);
 // }
 

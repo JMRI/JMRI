@@ -399,9 +399,9 @@ public class CMRInetManagerFrame extends jmri.util.JmriJFrame {
         
     }
     
-    private String[] pollListColumnsNames = {"Poll Seq","Enabled","Node","Type","Status","Description"};
-    private String[] nodeTypes = {"--","SMINI","SUSIC","CPNODE","PiNODE"};
-    private String[] pollStatus = {"ERROR","IDLE","POLLING","TIMEOUT","INIT"};
+    private String[] pollListColumnsNames = {"Poll Seq", "Enabled", "Node", "Type", "Status", "Description"};
+    private String[] nodeTypes = {"--", "SMINI", "SUSIC", "CPNODE", "PiNODE"};
+    private String[] pollStatus = {"ERROR", "IDLE", "POLLING", "TIMEOUT", "INIT"};
     
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CMRInetManagerFrame.class);
     

@@ -1,6 +1,7 @@
 package jmri.jmrix.lenz.liusbserver;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import java.nio.charset.StandardCharsets;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.lenz.XNetPacketizer;
@@ -47,7 +48,7 @@ public class LIUSBServerXNetPacketizer extends XNetPacketizer {
             if (ostream != null) {
                 while (m.getRetries() >= 0) {
                     if (portReadyToSend(controller)) {
-                        ostream.write((m + "\n\r").getBytes(java.nio.charset.Charset.forName("UTF-8")));
+                        ostream.write((m + "\n\r").getBytes(StandardCharsets.UTF_8));
                         ostream.flush();
                         log.debug("written");
                         break;

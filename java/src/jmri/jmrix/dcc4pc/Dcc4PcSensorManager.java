@@ -704,7 +704,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
                 if (log.isDebugEnabled()) {
                     StringBuilder buf = new StringBuilder();
                     for (int i = oldstart; i < currentByteLocation; i++) {
-                        buf.append(Integer.toHexString(r.getElement(i) & 0xff) + ",");
+                        buf.append(Integer.toHexString(r.getElement(i) & 0xff)).append(",");
                     }
                     log.debug(buf.toString());
                     log.debug("--- finish packet {} ---", (currentByteLocation - 1));
@@ -869,7 +869,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
 
                 StringBuilder buf = new StringBuilder();
                 for (int i = 0; i < packet.length; ++i) {
-                    buf.append(Integer.toHexString(packet[i]) + ",");
+                    buf.append(Integer.toHexString(packet[i])).append(",");
                 }
                 String s = buf.toString();
                 log.debug("bytes to process " + s);

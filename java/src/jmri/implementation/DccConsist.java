@@ -423,7 +423,7 @@ public class DccConsist implements Consist, ProgListener {
            return;
         }
         CvTableModel  cvTable = new CvTableModel(null, null);  // will hold CV objects
-        VariableTableModel varTable = new VariableTableModel(null,new String[]{"Name","Value"},cvTable);
+        VariableTableModel varTable = new VariableTableModel(null, new String[]{"Name", "Value"}, cvTable); // NOI18N
         entry.readFile();  // read, but don't yet process
 
         // load from decoder file

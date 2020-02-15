@@ -789,8 +789,9 @@ public class PanelEditor extends Editor implements ItemListener {
     public void mouseReleased(MouseEvent event) {
         setToolTip(null); // ends tooltip if displayed
         if (log.isDebugEnabled()) {
-            log.debug("mouseReleased at (" + event.getX() + "," + event.getY() + ") dragging= " + _dragging
-                    + " selectRect is " + (_selectRect == null ? "null" : "not null"));
+            // in if statement to avoid inline conditional unless logging
+            log.debug("mouseReleased at ({},{}) dragging= {} selectRect is {}", event.getX(), event.getY(), _dragging,
+                    _selectRect == null ? "null" : "not null");
         }
         List<Positionable> selections = getSelectedItems(event);
 
