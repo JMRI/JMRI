@@ -1,5 +1,5 @@
 # select image with Java 1.8 221
-image: Visual Studio 2019
+image: Visual Studio 2017
 
 version: '{build}'
 clone_depth: 50
