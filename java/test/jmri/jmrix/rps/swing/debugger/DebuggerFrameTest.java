@@ -21,7 +21,7 @@ public class DebuggerFrameTest extends jmri.util.JmriJFrameTestBase {
         jmri.util.JUnitUtil.resetProfileManager();
 
         memo = new RpsSystemConnectionMemo();
-        if(!GraphicsEnvironment.isHeadless()){
+        if (!GraphicsEnvironment.isHeadless()) {
            frame = new DebuggerFrame(memo);
 	    }
     }

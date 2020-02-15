@@ -103,9 +103,9 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
 
     /**
      * Public method to convert system name to its alternate format
-     * <p>
-     * Returns a normalized system name if system name is valid and has a valid
-     * alternate representation, else return "".
+     *
+     * @return a normalized system name if system name is valid and has a valid
+     * alternate representation, else return ""
      */
     public String convertSystemNameToAlternate(String systemName) {
         return (AcelaAddress.convertSystemNameToAlternate(systemName, getSystemPrefix()));
