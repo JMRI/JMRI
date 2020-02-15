@@ -504,13 +504,13 @@ public class CbusMessageTest {
         CanMessage m = CbusMessage.getBootWriteData( new int[]{0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08},0x12);
         Assert.assertEquals("getBootWriteData","[5] 01 02 03 04 05 06 07 08",m.toString());
         
-        m = CbusMessage.getBootWriteData( new int[]{0x01,0x02},0x12);
+        CbusMessage.getBootWriteData( new int[]{0x01,0x02},0x12);
         JUnitAppender.assertErrorMessageStartsWith("Exception in bootloader data");
         
-        m = CbusMessage.getBootWriteData( new byte[]{0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08},0x12);
+        CbusMessage.getBootWriteData( new byte[]{0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08},0x12);
         Assert.assertEquals("getBootWriteData","[5] 01 02 03 04 05 06 07 08",m.toString());
         
-        m = CbusMessage.getBootWriteData( new byte[]{0x01,0x02},0x12);
+        CbusMessage.getBootWriteData( new byte[]{0x01,0x02},0x12);
         JUnitAppender.assertErrorMessageStartsWith("Exception in bootloader data");
     }
 
