@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.trains;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -74,7 +75,7 @@ public class TrainSwitchLists extends TrainCommon {
         PrintWriter fileOut = null;
         try {
             fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file, append),
-                    "UTF-8")), true); // NOI18N
+                    StandardCharsets.UTF_8)), true);
         } catch (IOException e) {
             log.error("Can not open switchlist file: {}", file.getName());
             return;
