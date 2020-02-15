@@ -1253,10 +1253,14 @@ public class JUnitUtil {
      * @param window the window to dispose of
      */
     public static void dispose(@Nonnull Window window) {
-        java.util.Objects.requireNonNull(window, "Window cannot be null");
+        Objects.requireNonNull(window, "Window cannot be null");
         
         ThreadingUtil.runOnGUI(() -> {
-            window.dispose();
+            try {
+                window.dispose();
+            } catch (NullPointerException ex) {
+                // merely silencing error, so doing nothing
+            }
         });
     }
         
