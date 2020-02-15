@@ -447,9 +447,8 @@ public class EditSignalFrame extends EditFrame implements ListSelectionListener 
         _mastName.setText(null);
     }
 
-    /**
+    /*
      * A different portal has been selected. Check whether changes to _currentPortal should be saved.
-     * @return
      */
     @SuppressFBWarnings(value="NP_NULL_ON_SOME_PATH", justification="portal with a signal is not null and protects a non-null block")
     private String checkPortalChange() {
