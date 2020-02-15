@@ -294,8 +294,8 @@ public final class JmriPreferencesProvider {
         } else {
             dir = new File(this.path, Profile.PROFILE);
             if (!this.shared) {
-                if (Profile.isProfile(this.path)) { // protect against testing a
-                                                    // new profile
+                // protect against testing a new profile
+                if (Profile.isProfile(this.path)) {
                     try {
                         Profile profile = new Profile(this.path);
                         File nodeDir = new File(dir, NodeIdentity.storageIdentity(profile));
@@ -488,7 +488,7 @@ public final class JmriPreferencesProvider {
 
                     // If this node hasn't been removed, add back in any values
                     if (!isRemoved) {
-                        root.keySet().stream().forEach(s -> p.setProperty(path + s, root.get(s)));
+                        root.keySet().stream().forEach(s -> p.setProperty(pp + s, root.get(s)));
                     }
 
                     if (!JmriPreferencesProvider.this.isBackedUp() && file.exists()) {
