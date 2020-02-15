@@ -19,11 +19,12 @@ public class HexFile {
     private final File file;
     private FileInputStream in;
     private BufferedInputStream buffIn;
-    protected static final int MAX_PROG_SIZE = 256*10245;
+    protected static final int MAX_PROG_SIZE = 256*1024;
     protected static final int MAX_CONFIG_SIZE = 1024;
     protected static final int MAX_EEPROM_SIZE = 1024;
-    protected static final int EE_START = 0xf00000;
+    protected static final int ID_START = 0x200000;
     protected static final int CONFIG_START = 0x300000;
+    protected static final int EE_START = 0xf00000;
 
     private int address = 0;
     private boolean read;
@@ -75,7 +76,7 @@ public class HexFile {
             // Create an input reader based on the file, so we can read its data.
             in = new FileInputStream(file);
             buffIn = new BufferedInputStream(in);
-            address = 999999;
+            address = 0;
             //line = new StringBuffer("");
             return true;
         } catch (IOException e) {
@@ -141,7 +142,7 @@ public class HexFile {
                     if ((address + r.len) > configEnd) {
                         configEnd = address + r.len;
                     }
-                } else if (address < MAX_PROG_SIZE) {
+                } else if (address < ID_START) {
                     for (int i = 0; i < r.len; i++) {
                         hexDataProg[address + i] = r.getData(i);
                     } 
@@ -151,6 +152,7 @@ public class HexFile {
                 }
             } 
         } while (r.type != HexRecord.END);
+        log.debug("End addresses prog: {} config: {} EEPROM: {}", Integer.toHexString(progEnd), Integer.toHexString(configEnd), Integer.toHexString(eeEnd));
     }
 
 
