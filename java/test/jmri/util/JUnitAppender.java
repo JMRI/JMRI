@@ -28,6 +28,7 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
      */
     @Override
     public synchronized void append(LoggingEvent event) {
+        System.exit(1);
         if (hold) {
             list.add(event);
         } else {
