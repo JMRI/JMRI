@@ -1,9 +1,8 @@
 package jmri.profile;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Properties;
+
 import javax.annotation.Nonnull;
 
 /**
@@ -235,33 +234,6 @@ public class Profile implements Comparable<Profile> {
         ProfileProperties p = new ProfileProperties(this.path);
         this.id = p.get(ID, true);
         this.name = p.get(NAME, true);
-        if (this.id == null) {
-            this.readProfileXml();
-            this.save();
-        }
-    }
-
-    /**
-     * @deprecated since 4.1.1; Remove sometime after the new profiles get
-     * entrenched (JMRI 5.0, 6.0?)
-     */
-    @Deprecated
-    private void readProfileXml() throws IOException {
-        Properties p = new Properties();
-        File f = new File(this.path, PROPERTIES);
-        FileInputStream is = null;
-        try {
-            is = new FileInputStream(f);
-            p.loadFromXML(is);
-            is.close();
-        } catch (IOException ex) {
-            if (is != null) {
-                is.close();
-            }
-            throw ex;
-        }
-        this.id = p.getProperty(ID);
-        this.name = p.getProperty(NAME);
     }
 
     @Override
