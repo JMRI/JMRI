@@ -30,7 +30,6 @@ public class WebServerScaffold implements En {
             jmri.util.JUnitUtil.initInternalLightManager();
             jmri.util.JUnitUtil.initInternalSensorManager();
             jmri.util.JUnitUtil.initMemoryManager();
-            jmri.util.JUnitUtil.initShutDownManager();
             jmri.util.JUnitUtil.initConnectionConfigManager();
             jmri.util.JUnitUtil.initDebugPowerManager();
             server = new WebServer(); // a webserver using default preferences.
