@@ -62,13 +62,13 @@ public class Ash2_1Algorithm extends AbstractCalculator {
     public Measurement convert(Reading r) {
 
         if (log.isDebugEnabled()) {
-            log.debug("Reading: " + r.toString());
-            log.debug("Sensors: " + sensors.length);
+            log.debug("Reading: {}", r);
+            log.debug("Sensors: {}", sensors.length);
             if (sensors.length >= 1 && sensors[0] != null) {
-                log.debug("Sensor[0]: " + sensors[0].x + "," + sensors[0].y + "," + sensors[0].z);
+                log.debug("Sensor[0]: {},{},{}", sensors[0].x, sensors[0].y, sensors[0].z);
             }
             if (sensors.length >= 2 && sensors[1] != null) {
-                log.debug("Sensor[1]: " + sensors[1].x + "," + sensors[1].y + "," + sensors[1].z);
+                log.debug("Sensor[1]: {},{},{}", sensors[1].x, sensors[1].y, sensors[1].z);
             }
         }
 
@@ -80,7 +80,7 @@ public class Ash2_1Algorithm extends AbstractCalculator {
         Zt = result.z;
         Vs = result.vs;
 
-        log.debug("x = " + Xt + " y = " + Yt + " z0 = " + Zt + " code = " + result.code);
+        log.debug("x = {} y = {} z0 = {} code = {}", Xt, Yt, Zt, result.code);
         return new Measurement(r, Xt, Yt, Zt, Vs, result.code, "Ash2_1Algorithm");
     }
 

@@ -369,6 +369,7 @@
         <quiet>
         <mkdir dir="${target}"/>
         <mkdir dir="${target}/resources"/>
+        <mkdir dir="${basedir}/target/testreport"/>
         <mkdir dir="${genjavasrcdir}/jmri/jmris/srcp/parser"/>
         <mkdir dir="${genjavasrcdir}/jmri/jmrix/srcp/parser"/>
         </quiet>
@@ -1436,6 +1437,7 @@
             <sysproperty key="user.language" value="en"/>
             <sysproperty key="user.country" value="US"/>
             <sysproperty key="java.awt.headless" value="true"/>
+            <sysproperty key="cucumber.options" value="--tags 'not @Ignore' --tags 'not @Headed' --tags 'not @webtest'"/>
 
             <arg value="--scan-classpath"/>
             <arg value="--details=none"/>

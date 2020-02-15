@@ -22,7 +22,7 @@ public class RaspberryPiSensorManagerXml extends jmri.managers.configurexml.Abst
 
     @Override
     public void setStoreElementClass(Element sensors) {
-        sensors.setAttribute("class","jmri.jmrix.pi.configurexml.RaspberryPiSensorManagerXml");
+        sensors.setAttribute("class", "jmri.jmrix.pi.configurexml.RaspberryPiSensorManagerXml");
     }
 
     @Override

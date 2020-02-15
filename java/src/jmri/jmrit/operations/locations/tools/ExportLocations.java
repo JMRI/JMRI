@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.text.MessageFormat;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -20,6 +20,8 @@ import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,15 +33,19 @@ import org.slf4j.LoggerFactory;
  */
 public class ExportLocations extends XmlFile {
 
-    static final String ESC = "\""; // escape character NOI18N
-    private String del = ","; // delimiter
-
     TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
     RouteManager routeManager = InstanceManager.getDefault(RouteManager.class);
     LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
 
+    /**
+     * Does nothing.
+     *
+     * @param delimiter the new delimiter for the CSV file
+     * @deprecated since 4.19.4 without direct replacement
+     */
+    @Deprecated
     public void setDeliminter(String delimiter) {
-        del = delimiter;
+        // does nothing; maintained to prevent API breakage
     }
 
     public void writeOperationsLocationFile() {
@@ -59,353 +65,251 @@ public class ExportLocations extends XmlFile {
                 }
             }
             writeFile(defaultOperationsFilename());
-        } catch (Exception e) {
+        } catch (IOException e) {
             log.error("Exception while writing the new CSV operations file, may not be complete: " + e);
         }
     }
 
     public void writeFile(String name) {
         log.debug("writeFile {}", name);
-        // This is taken in large part from "Java and XML" page 368
         File file = findFile(name);
         if (file == null) {
             file = new File(name);
         }
 
-        PrintWriter fileOut = null;
+        try (CSVPrinter fileOut = new CSVPrinter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)),
+                CSVFormat.DEFAULT)) {
+            // create header
+            fileOut.printRecord(Bundle.getMessage("Location"),
+                    Bundle.getMessage("Track"),
+                    Bundle.getMessage("Type"),
+                    Bundle.getMessage("Length"),
+                    Bundle.getMessage("ServicedByTrains"),
+                    Bundle.getMessage("RollingStock"),
+                    Bundle.getMessage("ServiceOrder"),
+                    Bundle.getMessage("RoadOption"),
+                    Bundle.getMessage("Roads"),
+                    Bundle.getMessage("LoadOption"),
+                    Bundle.getMessage("Loads"),
+                    Bundle.getMessage("ShipLoadOption"),
+                    Bundle.getMessage("Ships"),
+                    Bundle.getMessage("SetOutRestrictions"),
+                    Bundle.getMessage("Restrictions"),
+                    Bundle.getMessage("PickUpRestrictions"),
+                    Bundle.getMessage("Restrictions"),
+                    Bundle.getMessage("ScheduleName"),
+                    Bundle.getMessage("ScheduleMode"),
+                    Bundle.getMessage("AlternateTrack"),
+                    Bundle.getMessage("PoolName"),
+                    Bundle.getMessage("Minimum"),
+                    Bundle.getMessage("TitleTrackBlockingOrder"),
+                    Bundle.getMessage("MenuItemPlannedPickups"),
+                    Bundle.getMessage("MenuItemDestinations"),
+                    Bundle.getMessage("Destinations"),
+                    Bundle.getMessage("SwapCarLoads"),
+                    Bundle.getMessage("EmptyDefaultCarLoads"),
+                    Bundle.getMessage("EmptyCarLoads"),
+                    Bundle.getMessage("LoadCarLoads"),
+                    Bundle.getMessage("LoadAnyCarLoads"),
+                    Bundle.getMessage("LoadsStaging"),
+                    Bundle.getMessage("BlockCars"),
+                    Bundle.getMessage("Comment"),
+                    Bundle.getMessage("CommentBoth"),
+                    Bundle.getMessage("CommentPickup"),
+                    Bundle.getMessage("CommentSetout"));
 
-        try {
-            fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8")), // NOI18N
-                    true); // NOI18N
+            List<Location> locations = locationManager.getLocationsByNameList();
+            for (Location location : locations) {
+                for (Track track : location.getTrackByNameList(null)) {
+
+                    StringBuilder trainDirections = new StringBuilder();
+                    String[] directions = Setup.getDirectionStrings(
+                            Setup.getTrainDirection() & location.getTrainDirections() & track.getTrainDirections());
+                    for (String dir : directions) {
+                        if (dir != null) {
+                            trainDirections.append(dir).append("; ");
+                        }
+                    }
+
+                    StringBuilder rollingStockNames = new StringBuilder();
+                    for (String rollingStockName : track.getTypeNames()) {
+                        rollingStockNames.append(rollingStockName).append("; ");
+                    }
+
+                    StringBuilder roadNames = new StringBuilder();
+                    if (!track.getRoadOption().equals(Track.ALL_ROADS)) {
+                        for (String roadName : track.getRoadNames()) {
+                            roadNames.append(roadName).append("; ");
+                        }
+                    }
+
+                    StringBuilder loadNames = new StringBuilder();
+                    if (!track.getLoadOption().equals(Track.ALL_LOADS)) {
+                        for (String loadName : track.getLoadNames()) {
+                            loadNames.append(loadName).append("; ");
+                        }
+                    }
+
+                    StringBuilder shipNames = new StringBuilder();
+                    if (!track.getShipLoadOption().equals(Track.ALL_LOADS)) {
+                        for (String shipName : track.getShipLoadNames()) {
+                            shipNames.append(shipName).append("; ");
+                        }
+                    }
+
+                    String setOutRestriction = Bundle.getMessage("None");
+                    switch (track.getDropOption()) {
+                        case Track.TRAINS:
+                            setOutRestriction = Bundle.getMessage("Trains");
+                            break;
+                        case Track.ROUTES:
+                            setOutRestriction = Bundle.getMessage("Routes");
+                            break;
+                        case Track.EXCLUDE_TRAINS:
+                            setOutRestriction = Bundle.getMessage("ExcludeTrains");
+                            break;
+                        case Track.EXCLUDE_ROUTES:
+                            setOutRestriction = Bundle.getMessage("ExcludeRoutes");
+                            break;
+                        default:
+                            break;
+                    }
+
+                    StringBuilder setOutRestrictions = new StringBuilder();
+                    if (track.getDropOption().equals(Track.TRAINS) || track.getDropOption().equals(Track.EXCLUDE_TRAINS)) {
+                        for (String id : track.getDropIds()) {
+                            Train train = trainManager.getTrainById(id);
+                            if (train != null) {
+                                setOutRestrictions.append(train.getName()).append("; ");
+                            }
+                        }
+                    }
+                    if (track.getDropOption().equals(Track.ROUTES) || track.getDropOption().equals(Track.EXCLUDE_ROUTES)) {
+                        for (String id : track.getDropIds()) {
+                            Route route = routeManager.getRouteById(id);
+                            if (route != null) {
+                                setOutRestrictions.append(route.getName()).append("; ");
+                            }
+                        }
+                    }
+
+                    String pickUpRestriction = Bundle.getMessage("None");
+                    switch (track.getPickupOption()) {
+                        case Track.TRAINS:
+                            pickUpRestriction = Bundle.getMessage("Trains");
+                            break;
+                        case Track.ROUTES:
+                            pickUpRestriction = Bundle.getMessage("Routes");
+                            break;
+                        case Track.EXCLUDE_TRAINS:
+                            pickUpRestriction = Bundle.getMessage("ExcludeTrains");
+                            break;
+                        case Track.EXCLUDE_ROUTES:
+                            pickUpRestriction = Bundle.getMessage("ExcludeRoutes");
+                            break;
+                        default:
+                            break;
+                    }
+
+                    StringBuilder pickUpRestrictions = new StringBuilder();
+                    if (track.getPickupOption().equals(Track.TRAINS)
+                            || track.getPickupOption().equals(Track.EXCLUDE_TRAINS)) {
+                        for (String id : track.getPickupIds()) {
+                            Train train = trainManager.getTrainById(id);
+                            if (train != null) {
+                                pickUpRestrictions.append(train.getName()).append("; ");
+                            }
+                        }
+                    }
+                    if (track.getPickupOption().equals(Track.ROUTES)
+                            || track.getPickupOption().equals(Track.EXCLUDE_ROUTES)) {
+                        for (String id : track.getPickupIds()) {
+                            Route route = routeManager.getRouteById(id);
+                            if (route != null) {
+                                pickUpRestrictions.append(route.getName()).append("; ");
+                            }
+                        }
+                    }
+
+                    String alternateTrackName = "";
+                    if (track.getAlternateTrack() != null) {
+                        alternateTrackName = track.getAlternateTrack().getName();
+                    }
+                    if (track.isAlternate()) {
+                        alternateTrackName = Bundle.getMessage("ButtonYes");
+                    }
+
+                    StringBuilder destinationNames = new StringBuilder();
+                    for (String id : track.getDestinationIds()) {
+                        Location destination = locationManager.getLocationById(id);
+                        if (destination != null) {
+                            destinationNames.append(destination.getName()).append("; ");
+                        }
+                    }
+
+                    fileOut.printRecord(location.getName(),
+                            track.getName(),
+                            track.getTrackTypeName(),
+                            track.getLength(),
+                            trainDirections.toString(),
+                            rollingStockNames.toString(),
+                            track.getServiceOrder(),
+                            track.getRoadOptionString(),
+                            roadNames.toString(),
+                            track.getLoadOptionString(),
+                            loadNames.toString(),
+                            track.getShipLoadOptionString(),
+                            shipNames.toString(),
+                            setOutRestriction,
+                            setOutRestrictions.toString(),
+                            pickUpRestriction,
+                            pickUpRestrictions.toString(),
+                            track.getScheduleName(),
+                            Bundle.getMessage(track.getScheduleMode() == Track.MATCH ? "Match" : "Sequential"),
+                            alternateTrackName,
+                            track.getPoolName(),
+                            track.getMinimumLength(),
+                            track.getBlockingOrder(),
+                            track.getIgnoreUsedLengthPercentage(),
+                            Bundle.getMessage(track.getDestinationOption().equals(Track.ALL_DESTINATIONS) ? "All" : "Include"),
+                            destinationNames.toString(),
+                            (track.isLoadSwapEnabled() ? Bundle.getMessage("ButtonYes") : ""),
+                            (track.isLoadEmptyEnabled() ? Bundle.getMessage("ButtonYes") : ""),
+                            (track.isRemoveCustomLoadsEnabled() ? Bundle.getMessage("ButtonYes") : ""),
+                            (track.isAddCustomLoadsEnabled() ? Bundle.getMessage("ButtonYes") : ""),
+                            (track.isAddCustomLoadsAnySpurEnabled() ? Bundle.getMessage("ButtonYes") : ""),
+                            (track.isAddCustomLoadsAnyStagingTrackEnabled() ? Bundle.getMessage("ButtonYes") : ""),
+                            (track.isBlockCarsEnabled() ? Bundle.getMessage("ButtonYes") : ""),
+                            track.getComment(),
+                            track.getCommentBoth(),
+                            track.getCommentPickup(),
+                            track.getCommentSetout());
+                }
+            }
+            fileOut.flush();
+            fileOut.close();
+            log.info("Exported {} locations to file {}", locations.size(), defaultOperationsFilename());
+            JOptionPane.showMessageDialog(null,
+                    MessageFormat.format(Bundle.getMessage("ExportedLocationsToFile"), new Object[]{
+                locations.size(), defaultOperationsFilename()}),
+                    Bundle.getMessage("ExportComplete"),
+                    JOptionPane.INFORMATION_MESSAGE);
         } catch (IOException e) {
             log.error("Can not open export locations CSV file: {}", file.getName());
             JOptionPane.showMessageDialog(null,
                     MessageFormat.format(Bundle.getMessage("ExportedLocationsToFile"), new Object[]{
-                            0, defaultOperationsFilename()}),
+                0, defaultOperationsFilename()}),
                     Bundle.getMessage("ExportFailed"),
                     JOptionPane.ERROR_MESSAGE);
-            return;
         }
-
-        // create header
-        String header = Bundle.getMessage("Location") +
-                del +
-                Bundle.getMessage("Track") +
-                del +
-                Bundle.getMessage("Type") +
-                del +
-                Bundle.getMessage("Length") +
-                del +
-                Bundle.getMessage("ServicedByTrains") +
-                del +
-                Bundle.getMessage("RollingStock") +
-                del +
-                Bundle.getMessage("ServiceOrder") +
-                del +
-                Bundle.getMessage("RoadOption") +
-                del +
-                Bundle.getMessage("Roads") +
-                del +
-                Bundle.getMessage("LoadOption") +
-                del +
-                Bundle.getMessage("Loads") +
-                del +
-                Bundle.getMessage("ShipLoadOption") +
-                del +
-                Bundle.getMessage("Ships") +
-                del +
-                Bundle.getMessage("SetOutRestrictions") +
-                del +
-                Bundle.getMessage("Restrictions") +
-                del +
-                Bundle.getMessage("PickUpRestrictions") +
-                del +
-                Bundle.getMessage("Restrictions") +
-                del +
-                Bundle.getMessage("ScheduleName") +
-                del +
-                Bundle.getMessage("ScheduleMode") +
-                del +
-                Bundle.getMessage("AlternateTrack") +
-                del +
-                Bundle.getMessage("PoolName") +
-                del +
-                Bundle.getMessage("Minimum") +
-                del +
-                Bundle.getMessage("TitleTrackBlockingOrder") +
-                del +
-                Bundle.getMessage("MenuItemPlannedPickups") +
-                del +
-                Bundle.getMessage("MenuItemDestinations") +
-                del +
-                Bundle.getMessage("Destinations") +
-                del +
-                Bundle.getMessage("SwapCarLoads") +
-                del +
-                Bundle.getMessage("EmptyDefaultCarLoads") +
-                del +
-                Bundle.getMessage("EmptyCarLoads") +
-                del +
-                Bundle.getMessage("LoadCarLoads") +
-                del +
-                Bundle.getMessage("LoadAnyCarLoads") +
-                del +
-                Bundle.getMessage("LoadsStaging") +
-                del +
-                Bundle.getMessage("BlockCars") +
-                del +
-                Bundle.getMessage("Comment") +
-                del +
-                Bundle.getMessage("CommentBoth") +
-                del +
-                Bundle.getMessage("CommentPickup") +
-                del +
-                Bundle.getMessage("CommentSetout");
-
-        fileOut.println(header);
-
-        List<Location> locations = locationManager.getLocationsByNameList();
-        for (Location location : locations) {
-            for (Track track : location.getTrackByNameList(null)) {
-
-                StringBuffer trainDirections = new StringBuffer();
-                String[] directions = Setup.getDirectionStrings(
-                        Setup.getTrainDirection() & location.getTrainDirections() & track.getTrainDirections());
-                for (String dir : directions) {
-                    if (dir != null) {
-                        trainDirections.append(dir + "; ");
-                    }
-                }
-
-                StringBuffer rollingStockNames = new StringBuffer();
-                for (String rollingStockName : track.getTypeNames()) {
-                    rollingStockNames.append(rollingStockName + "; ");
-                }
-
-                StringBuffer roadNames = new StringBuffer();
-                if (!track.getRoadOption().equals(Track.ALL_ROADS)) {
-                    for (String roadName : track.getRoadNames()) {
-                        roadNames.append(roadName + "; ");
-                    }
-                }
-
-                StringBuffer loadNames = new StringBuffer();
-                if (!track.getLoadOption().equals(Track.ALL_LOADS)) {
-                    for (String loadName : track.getLoadNames()) {
-                        loadNames.append(loadName + "; ");
-                    }
-                }
-
-                StringBuffer shipNames = new StringBuffer();
-                if (!track.getShipLoadOption().equals(Track.ALL_LOADS)) {
-                    for (String shipName : track.getShipLoadNames()) {
-                        shipNames.append(shipName + "; ");
-                    }
-                }
-
-                String setOutRestriction = Bundle.getMessage("None");
-                if (track.getDropOption().equals(Track.TRAINS)) {
-                    setOutRestriction = Bundle.getMessage("Trains");
-                } else if (track.getDropOption().equals(Track.ROUTES)) {
-                    setOutRestriction = Bundle.getMessage("Routes");
-                } else if (track.getDropOption().equals(Track.EXCLUDE_TRAINS)) {
-                    setOutRestriction = Bundle.getMessage("ExcludeTrains");
-                } else if (track.getDropOption().equals(Track.EXCLUDE_ROUTES)) {
-                    setOutRestriction = Bundle.getMessage("ExcludeRoutes");
-                }
-
-                StringBuffer setOutRestrictions = new StringBuffer();
-                if (track.getDropOption().equals(Track.TRAINS) || track.getDropOption().equals(Track.EXCLUDE_TRAINS)) {
-                    for (String id : track.getDropIds()) {
-                        Train train = trainManager.getTrainById(id);
-                        if (train != null) {
-                            setOutRestrictions.append(train.getName() + "; ");
-                        }
-                    }
-                }
-                if (track.getDropOption().equals(Track.ROUTES) || track.getDropOption().equals(Track.EXCLUDE_ROUTES)) {
-                    for (String id : track.getDropIds()) {
-                        Route route = routeManager.getRouteById(id);
-                        if (route != null) {
-                            setOutRestrictions.append(route.getName() + "; ");
-                        }
-                    }
-                }
-
-                String pickUpRestriction = Bundle.getMessage("None");
-                if (track.getPickupOption().equals(Track.TRAINS)) {
-                    pickUpRestriction = Bundle.getMessage("Trains");
-                } else if (track.getPickupOption().equals(Track.ROUTES)) {
-                    pickUpRestriction = Bundle.getMessage("Routes");
-                } else if (track.getPickupOption().equals(Track.EXCLUDE_TRAINS)) {
-                    pickUpRestriction = Bundle.getMessage("ExcludeTrains");
-                } else if (track.getPickupOption().equals(Track.EXCLUDE_ROUTES)) {
-                    pickUpRestriction = Bundle.getMessage("ExcludeRoutes");
-                }
-
-                StringBuffer pickUpRestrictions = new StringBuffer();
-                if (track.getPickupOption().equals(Track.TRAINS) ||
-                        track.getPickupOption().equals(Track.EXCLUDE_TRAINS)) {
-                    for (String id : track.getPickupIds()) {
-                        Train train = trainManager.getTrainById(id);
-                        if (train != null) {
-                            pickUpRestrictions.append(train.getName() + "; ");
-                        }
-                    }
-                }
-                if (track.getPickupOption().equals(Track.ROUTES) ||
-                        track.getPickupOption().equals(Track.EXCLUDE_ROUTES)) {
-                    for (String id : track.getPickupIds()) {
-                        Route route = routeManager.getRouteById(id);
-                        if (route != null) {
-                            pickUpRestrictions.append(route.getName() + "; ");
-                        }
-                    }
-                }
-
-                String alternateTrackName = "";
-                if (track.getAlternateTrack() != null) {
-                    alternateTrackName = track.getAlternateTrack().getName();
-                }
-                if (track.isAlternate()) {
-                    alternateTrackName = Bundle.getMessage("ButtonYes");
-                }
-
-                StringBuffer destinationNames = new StringBuffer();
-                for (String id : track.getDestinationIds()) {
-                    Location destination = locationManager.getLocationById(id);
-                    if (destination != null) {
-                        destinationNames.append(destination.getName() + "; ");
-                    }
-                }
-
-                String line = ESC +
-                        location.getName() +
-                        ESC +
-                        del +
-                        ESC +
-                        track.getName() +
-                        ESC +
-                        del +
-                        track.getTrackTypeName() +
-                        del +
-                        track.getLength() +
-                        del +
-                        trainDirections.toString() +
-                        del +
-                        ESC +
-                        rollingStockNames.toString() +
-                        ESC +
-                        del +
-                        track.getServiceOrder() +
-                        del +
-                        track.getRoadOptionString() +
-                        del +
-                        ESC +
-                        roadNames.toString() +
-                        ESC +
-                        del +
-                        track.getLoadOptionString() +
-                        del +
-                        ESC +
-                        loadNames.toString() +
-                        ESC +
-                        del +
-                        track.getShipLoadOptionString() +
-                        del +
-                        ESC +
-                        shipNames.toString() +
-                        ESC +
-                        del +
-                        setOutRestriction +
-                        del +
-                        ESC +
-                        setOutRestrictions.toString() +
-                        ESC +
-                        del +
-                        pickUpRestriction +
-                        del +
-                        ESC +
-                        pickUpRestrictions.toString() +
-                        ESC +
-                        del +
-                        ESC +
-                        track.getScheduleName() +
-                        ESC +
-                        del +
-                        (track.getScheduleMode() == Track.MATCH ? Bundle.getMessage("Match")
-                                : Bundle.getMessage("Sequential")) +
-                        del +
-                        ESC +
-                        alternateTrackName +
-                        ESC +
-                        del +
-                        ESC +
-                        track.getPoolName() +
-                        ESC +
-                        del +
-                        track.getMinimumLength() +
-                        del +
-                        track.getBlockingOrder() +
-                        del +
-                        track.getIgnoreUsedLengthPercentage() +
-                        del +
-                        (track.getDestinationOption().equals(Track.ALL_DESTINATIONS) ? Bundle.getMessage("All")
-                                : Bundle.getMessage("Include")) +
-                        del +
-                        ESC +
-                        destinationNames.toString() +
-                        ESC +
-                        del +
-                        (track.isLoadSwapEnabled() ? Bundle.getMessage("ButtonYes") : "") +
-                        del +
-                        (track.isLoadEmptyEnabled() ? Bundle.getMessage("ButtonYes") : "") +
-                        del +
-                        (track.isRemoveCustomLoadsEnabled() ? Bundle.getMessage("ButtonYes") : "") +
-                        del +
-                        (track.isAddCustomLoadsEnabled() ? Bundle.getMessage("ButtonYes") : "") +
-                        del +
-                        (track.isAddCustomLoadsAnySpurEnabled() ? Bundle.getMessage("ButtonYes") : "") +
-                        del +
-                        (track.isAddCustomLoadsAnyStagingTrackEnabled() ? Bundle.getMessage("ButtonYes") : "") +
-                        del +
-                        (track.isBlockCarsEnabled() ? Bundle.getMessage("ButtonYes") : "") +
-                        del +
-                        ESC +
-                        track.getComment() +
-                        ESC +
-                        del +
-                        ESC +
-                        track.getCommentBoth() +
-                        ESC +
-                        del +
-                        ESC +
-                        track.getCommentPickup() +
-                        ESC +
-                        del +
-                        ESC +
-                        track.getCommentSetout() +
-                        ESC;
-
-                fileOut.println(line);
-            }
-        }
-        fileOut.flush();
-        fileOut.close();
-        log.info("Exported " + locations.size() + " locations to file " + defaultOperationsFilename());
-        JOptionPane.showMessageDialog(null,
-                MessageFormat.format(Bundle.getMessage("ExportedLocationsToFile"), new Object[]{
-                        locations.size(), defaultOperationsFilename()}),
-                Bundle.getMessage("ExportComplete"),
-                JOptionPane.INFORMATION_MESSAGE);
     }
 
     // Operation files always use the same directory
     public static String defaultOperationsFilename() {
-        return OperationsSetupXml.getFileLocation() +
-                OperationsSetupXml.getOperationsDirectoryName() +
-                File.separator +
-                getOperationsFileName();
+        return OperationsSetupXml.getFileLocation()
+                + OperationsSetupXml.getOperationsDirectoryName()
+                + File.separator
+                + getOperationsFileName();
     }
 
     public static void setOperationsFileName(String name) {

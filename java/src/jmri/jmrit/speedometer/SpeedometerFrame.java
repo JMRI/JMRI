@@ -397,7 +397,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
                             speed = (feet / 100000.f) * (3600.f / secs);
                         }
                         if (log.isDebugEnabled()) {
-                            log.debug("calc from " + secs + "," + feet + ":" + speed);
+                            log.debug("calc from {},{}:{}", secs, feet, speed);
                         }
                         result1.setText(String.valueOf(speed).substring(0, 4));
                         String time = String.valueOf(secs);
@@ -451,7 +451,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
                             speed = (feet / 100000.f) * (3600.f / secs);
                         }
                         if (log.isDebugEnabled()) {
-                            log.debug("calc from " + secs + "," + feet + ":" + speed);
+                            log.debug("calc from {},{}:{}", secs, feet, speed);
                         }
                         result2.setText(String.valueOf(speed).substring(0, 4));
                         String time = String.valueOf(secs);

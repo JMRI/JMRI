@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.NoSuchElementException;
 import java.util.ResourceBundle;
 import java.util.Scanner;
@@ -45,7 +46,7 @@ public class SimpleServer extends JmriServer {
     // Handle communication to a client through inStream and outStream
     @Override
     public void handleClient(DataInputStream inStream, DataOutputStream outStream) throws IOException {
-        Scanner inputScanner = new Scanner(new InputStreamReader(inStream, "UTF-8"));
+        Scanner inputScanner = new Scanner(new InputStreamReader(inStream, StandardCharsets.UTF_8));
         // Listen for commands from the client until the connection closes
         String cmd;
 
