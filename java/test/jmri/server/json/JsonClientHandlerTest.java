@@ -14,12 +14,14 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
 import jmri.profile.NullProfile;
-import jmri.util.FileUtil;
+import jmri.profile.Profile;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 /**
  *
@@ -28,13 +30,15 @@ import org.junit.Test;
  */
 public class JsonClientHandlerTest {
 
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
+
     private Locale locale = Locale.ENGLISH;
 
     @Before
     public void setUp() throws IOException {
         JUnitUtil.setUp();
-        JUnitUtil.resetProfileManager(
-                new NullProfile("JsonClientHandlerTest", "12345678", FileUtil.getFile("program:test")));
+        JUnitUtil.resetProfileManager(new NullProfile(folder.newFolder(Profile.PROFILE)));
         JUnitUtil.initRosterConfigManager();
     }
 
