@@ -72,7 +72,7 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
      * 
      * @param type the JSON type requested
      * @return the supporting services or an empty set if none
-     * @deprecated since 4.19.4; use {@link #getServices(String, String)}
+     * @deprecated since 4.19.2; use {@link #getServices(String, String)}
      *             instead
      */
     @Deprecated
@@ -124,7 +124,7 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
      *
      * @return the union of the results from {@link #getClientTypes()} and
      *         {@link #getServerTypes()}
-     * @deprecated since 4.19.4; use {@link #getTypes(String)} instead
+     * @deprecated since 4.19.2; use {@link #getTypes(String)} instead
      */
     @Deprecated
     @Nonnull
@@ -136,7 +136,7 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
      * Get the types of JSON messages expected from clients.
      *
      * @return the message types
-     * @deprecated since 4.19.4; use {@link #getClientTypes(String)} instead
+     * @deprecated since 4.19.2; use {@link #getClientTypes(String)} instead
      */
     @Deprecated
     @Nonnull
@@ -148,7 +148,7 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
      * Get the types of JSON messages this application sends.
      *
      * @return the message types
-     * @deprecated since 4.19.4; use {@link #getServerTypes(String)} instead
+     * @deprecated since 4.19.2; use {@link #getServerTypes(String)} instead
      */
     @Deprecated
     @Nonnull
@@ -185,7 +185,7 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
      *                                  processing schema
      * @throws IllegalArgumentException if no JSON service provides schemas for
      *                                  type
-     * @deprecated since 4.19.4; use
+     * @deprecated since 4.19.2; use
      *             {@link #getClientSchema(String, JsonRequest)} instead
      */
     @Deprecated
@@ -223,7 +223,7 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
      *                                  processing schema
      * @throws IllegalArgumentException if no JSON service provides schemas for
      *                                  type
-     * @deprecated since 4.19.4; use
+     * @deprecated since 4.19.2; use
      *             {@link #getServerSchema(String, JsonRequest)} instead
      */
     @Deprecated
@@ -294,7 +294,7 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
      * @param id      the id to be included with any exceptions reported to
      *                clients
      * @throws JsonException if the message does not validate
-     * @deprecated since 4.19.4; use
+     * @deprecated since 4.19.2; use
      *             {@link #validateMessage(JsonNode, boolean, JsonRequest)}
      *             instead
      */
@@ -339,7 +339,7 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
      * @param id     the id to be included with any exceptions reported to
      *               clients
      * @throws JsonException if the message does not validate
-     * @deprecated since 4.19.4; use
+     * @deprecated since 4.19.2; use
      *             {@link #validateData(String, JsonNode, boolean, JsonRequest)}
      *             instead
      */

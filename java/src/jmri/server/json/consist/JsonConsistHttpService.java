@@ -250,7 +250,7 @@ public class JsonConsistHttpService extends JsonHttpService {
      * @return The JSON representation of the consist.
      * @throws JsonException This exception has code 404 if the consist does not
      *                       exist.
-     * @deprecated since 4.19.4; use
+     * @deprecated since 4.19.2; use
      *             {@link #getConsist(LocoAddress, JsonRequest)} instead
      */
     @Deprecated

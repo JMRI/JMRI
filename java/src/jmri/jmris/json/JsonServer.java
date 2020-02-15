@@ -8,7 +8,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  *
  * @author Paul Bender Copyright (C) 2010
  * @author Randall Wood Copyright (C) 2016
- * @deprecated since 4.19.4; use {@link jmri.server.json.JsonServer} instead
+ * @deprecated since 4.19.2; use {@link jmri.server.json.JsonServer} instead
  */
 @Deprecated
 @SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Deprecated for replacement.")

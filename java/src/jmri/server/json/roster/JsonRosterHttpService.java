@@ -239,7 +239,7 @@ public class JsonRosterHttpService extends JsonHttpService {
      * @param id the request id set by the client
      * @return a message containing the roster groups
      * @throws JsonException if a requested roster group does not exist
-     * @deprecated since 4.19.4; use {@link #getRosterGroups(JsonRequest)} instead
+     * @deprecated since 4.19.2; use {@link #getRosterGroups(JsonRequest)} instead
      */
     @Deprecated
     public JsonNode getRosterGroups(Locale locale, int id) throws JsonException {
