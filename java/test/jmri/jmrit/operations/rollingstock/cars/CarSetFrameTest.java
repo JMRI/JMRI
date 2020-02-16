@@ -11,6 +11,10 @@ import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
+import org.mockito.Mockito;
+import org.netbeans.jemmy.QueueTool;
+
+import javax.swing.*;
 
 /**
  * Tests for the Operations CarSetFrame class
@@ -54,24 +58,21 @@ public class CarSetFrameTest extends OperationsTestCase {
         Assert.assertFalse("Location unknown", c3.isLocationUnknown());
 
         // change car's status
-        JemmyUtil.enterClickAndLeave(f.outOfServiceCheckBox);
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        toggleCheckBoxThenClickSave(f,f.outOfServiceCheckBox);
         JUnitUtil.waitFor(() -> {
             return c3.isOutOfService();
-        }, "Out of service");
+            }, "Out of service");
         Assert.assertFalse("Location unknown", c3.isLocationUnknown());
 
         // change car's status
-        JemmyUtil.enterClickAndLeave(f.outOfServiceCheckBox);
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        toggleCheckBoxThenClickSave(f,f.outOfServiceCheckBox);
         JUnitUtil.waitFor(() -> {
             return !c3.isOutOfService();
         }, "Out of service");
         Assert.assertFalse("Location unknown", c3.isLocationUnknown());
 
         // change car's status
-        JemmyUtil.enterClickAndLeave(f.locationUnknownCheckBox);
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        toggleCheckBoxThenClickSave(f,f.locationUnknownCheckBox);
         // location unknown checkbox also causes the car to be out of service
         JUnitUtil.waitFor(() -> {
             return c3.isOutOfService();
@@ -79,8 +80,7 @@ public class CarSetFrameTest extends OperationsTestCase {
         Assert.assertTrue("Location unknown", c3.isLocationUnknown());
         
         // change car's status
-        JemmyUtil.enterClickAndLeave(f.locationUnknownCheckBox);
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        toggleCheckBoxThenClickSave(f,f.locationUnknownCheckBox);
         // location unknown checkbox also causes the car to be out of service
         JUnitUtil.waitFor(() -> {
             return !c3.isOutOfService();
@@ -89,5 +89,11 @@ public class CarSetFrameTest extends OperationsTestCase {
 
         JUnitUtil.dispose(f);
 
+    }
+
+    private void toggleCheckBoxThenClickSave(CarSetFrame frame, JCheckBox box){
+        JemmyUtil.enterClickAndLeave(box);
+        JemmyUtil.enterClickAndLeave(frame.saveButton);
+        new QueueTool().waitEmpty(100);
     }
 }
