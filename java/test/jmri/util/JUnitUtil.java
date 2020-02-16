@@ -933,7 +933,7 @@ public class JUnitUtil {
 
         ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
         List<ShutDownTask> list = sm.tasks();
-        while (list != null && list.size() > 0) {
+        while (!list.isEmpty()) {
             ShutDownTask task = list.get(0);
             sm.deregister(task);
             list = sm.tasks();  // avoid ConcurrentModificationException
@@ -953,7 +953,7 @@ public class JUnitUtil {
         
         ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
         List<ShutDownTask> list = sm.tasks();
-        while (list != null && !list.isEmpty()) {
+        while (!list.isEmpty()) {
             ShutDownTask task = list.get(0);
             log.error("Test {} left ShutDownTask registered: {} (of type {})}", getTestClassName(), task.getName(), task.getClass(), 
                         Log4JUtil.shortenStacktrace(new Exception("traceback")));
