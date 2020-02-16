@@ -101,9 +101,9 @@
     </ul>
     
     <p>
-    New blogs and videos are being created almost daily describing additional uses for Arduinos on the railroad. 
+    New blogs and videos are being created almost daily describing additional uses for arduinos on the railroad. 
     With the steady introduction of new sensors and controllers to connect to the pins on an arduino, there is 
-    hardly an electronically controllable item that won’t be controllable via JMRI.
+    hardly an electronically controllable item that cannot be controllable via JMRI.
     </p>
 
     <p><a href="#top">[Go to top of page]</a></p>     
@@ -259,7 +259,7 @@
     <p>
     This example will walk through main steps of using an arduino to monitor a block occupancy sensor and 
     and JMRI using that sensor to change the color of the track of the occupied section on a layout panel.
-    This is not meant to be a tutorial on either arduios or JMRI, but rather a basic guide for someone generally
+    This is not meant to be a tutorial on either arduinos or JMRI, but rather a basic guide for someone generally
     familiar with both but just trying to use them together.  Much more can be found by checking some of the 
     references listed in <a href="#intro">the Introduction above.</a>
     </p>
@@ -281,7 +281,7 @@
     <li>Select "CMRI" and "Serial" and then the serial port that your arduino is connected to.  NOTE: you will 
     not be able to simultaneously run the arduino IDE serial monitor and JMRI as whichever if opened second will
     see that the port is in use.</li>
-    XXX
+    <li>...MORE STEPS...</li>
     </ul>
      
     <p><a href="#top">[Go to top of page]</a></p>     
