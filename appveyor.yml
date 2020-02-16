@@ -42,9 +42,10 @@ after_test:
     $files = Get-ChildItem -Path .\target\testreport -Include 'TEST-*.xml' -Recurse
     $fileCount = $files.Count
     echo "uploading $filesCount test results to Appveyor"
-    for ($I =1; $I -le ($filesCount -1); $I++){
+    for ($I =1; $I -le ($filesCount -1); $I++) {
             $file = $files.Get($I)
-            $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path $I))
+            echo $file
+            $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path $file))
     }
     echo "finished uploading results"
 
