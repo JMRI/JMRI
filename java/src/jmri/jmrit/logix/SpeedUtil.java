@@ -715,7 +715,6 @@ public class SpeedUtil {
      */
     protected void enteredBlock(long fromTime, long toTime, float length) {
         if (fromTime <= 0) {
-            fromTime = _changetime;
             return;
         }
         boolean isForward = _throttle.getIsForward();

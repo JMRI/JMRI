@@ -126,9 +126,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             internalAdjust = true;
             float speed = ((Float) e.getNewValue()).floatValue();
             _throttleFrame.setSpeedSetting(speed);
-            if (speed < 0.0F) {
-//                _emergencyStop = (speed < 0.0F);
-            }
         } else if (e.getPropertyName().equals(Throttle.SPEEDSTEPS)) {
             SpeedStepMode steps = (SpeedStepMode)e.getNewValue();
             setSpeedSteps(steps);
