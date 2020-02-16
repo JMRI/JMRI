@@ -39,7 +39,7 @@ after_test:
 # This works, but the Appveyor display is unreliable.
 - ps: |
     $wc = New-Object 'System.Net.WebClient'
-    $files = Get-ChildItem -Path target/testresults -Include 'TEST-*.xml' -Recurse
+    $files = Get-ChildItem -Path .\target\testreport -Include 'TEST-*.xml' -Recurse
     $fileCount = $files.Count
     echo "uploading $filesCount test results to Appveyor"
     for ($I =1; $I -le ($filesCount -1); $I++){
@@ -66,6 +66,18 @@ on_failure:
   #  $xml = [xml](get-content .\target\testreport\junit-results.xml)
   #  $xml.SelectNodes("//testcase") | where { $_.failure } | format-table classname,name,InnerXml
   #  $xml.SelectNodes("//testcase") | where { $_.error } | format-table classname,name,InnerXml
+  # upload results to Appveyor
+  # This works, but the Appveyor display is unreliable.
+  - ps: |
+    $wc = New-Object 'System.Net.WebClient'
+    $files = Get-ChildItem -Path .\target\testreport -Include 'TEST-*.xml' -Recurse
+    $fileCount = $files.Count
+    echo "uploading $filesCount test results to Appveyor"
+    for ($I =1; $I -le ($filesCount -1); $I++){
+            $file = $files.Get($I)
+            $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path $I))
+    }
+    echo "finished uploading results"
 
 cache:
   - C:\Users\appveyor\.m2 -> pom.xml
