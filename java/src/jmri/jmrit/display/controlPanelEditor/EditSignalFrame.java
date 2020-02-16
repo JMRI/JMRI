@@ -457,8 +457,6 @@ public class EditSignalFrame extends EditFrame implements ListSelectionListener 
 
     /**
      * Check for questions about configuring this signal 
-     * @param textMast = getSignal() (results of _mastName.getText())
-     * @param portal = _portalList.getSelectedValue()
      * @return message of any concerns.
      */
     private String checkMastForSave(boolean atClose) {
