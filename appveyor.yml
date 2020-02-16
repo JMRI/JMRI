@@ -40,12 +40,13 @@ after_test:
 - ps: |
     $wc = New-Object 'System.Net.WebClient'
     dir .\target\testreport
-    $files = Get-ChildItem -Path .\target\testreport -Include 'TEST-*.xml' -Recurse
+    $files = Get-ChildItem -Path "$ENV:APPVEYOR_BUILD_FOLDER\target\testreport\TEST-*.xml" 
+    $files | ForEach-Object {
+            $Item = $_
     $fileCount = $files.Count
-    echo "uploading $filesCount test results to Appveyor"
+    echo "uploading $Item to Appveyor"
     for ($I =1; $I -le ($filesCount -1); $I++) {
-            $file = $files.Get($I)
-            $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path $file))
+            $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", $Item )
     }
     echo "finished uploading results"
 
