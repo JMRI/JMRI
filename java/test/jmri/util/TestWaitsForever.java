@@ -12,10 +12,10 @@ import org.junit.jupiter.api.Test;
  * thread or heap dump at the end of execution.
  * @author Bob Jacobsen 2019	
  */
+@Disabled("Tests test failure, should never be a part of a normal test suite")
 public class TestWaitsForever {
 
     @Test
-    @Disabled
     public synchronized void deliberatelyWaitForever() throws InterruptedException {
         Runtime.getRuntime().gc();
         System.err.println("start permanent wait");
