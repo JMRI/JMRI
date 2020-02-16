@@ -628,9 +628,9 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
         try {
             minutes = Integer.parseInt(minutesField.getText());
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, (Bundle.getMessage("HoursError") + "\n" + e),
+            JOptionPane.showMessageDialog(this, (Bundle.getMessage("MinutesError") + "\n" + e),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-            log.error("Exception when parsing hours Field: " + e);
+            log.error("Exception when parsing Minutes Field: " + e);
             return;
         }
         if ((minutes < 0) || (minutes > 59)) {
@@ -703,9 +703,9 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
         try {
             minutes = Integer.parseInt(startMinutesField.getText());
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, (Bundle.getMessage("HoursError") + "\n" + e),
+            JOptionPane.showMessageDialog(this, (Bundle.getMessage("MinutesError") + "\n" + e),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-            log.error("Exception when parsing hours Field: " + e);
+            log.error("Exception when parsing Minutes Field: " + e);
             return;
         }
         if ((minutes < 0) || (minutes > 59)) {
