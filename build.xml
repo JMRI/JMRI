@@ -15,7 +15,10 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 
-<project name="JMRI" default="debug" basedir="." xmlns:jacoco="antlib:org.jacoco.ant">
+<project name="JMRI" default="debug" basedir="." 
+        xmlns:jacoco="antlib:org.jacoco.ant" 
+        xmlns:if="ant:if"
+        xmlns:unless="ant:unless">
 
     <!-- basedir="." means all paths are relative to the top level -->
     <!-- directory in the project.  We expect that lib et al will  -->
@@ -88,6 +91,11 @@
 
     <condition property="nsis.home" value="">
         <not><isset property="nsis.home"/></not>
+    </condition>
+
+    <!-- Check for Java 8 vs later -->
+    <condition property="java.version.eight" value="true" else="false">
+      <equals arg1="${ant.java.version}" arg2="1.8"/>
     </condition>
 
     <condition property="jvm.args" value="">
@@ -278,10 +286,12 @@
         <pathelement location="${testtarget}"/> <!-- test resources in classpath that collide with stock resources -->
     </path>
 
+    <!-- macro to reduce output -->
+    <!-- JavaScript not available in JDK 9 or later -->
     <macrodef name="quiet">
         <element name="body" implicit="yes"/>
         <sequential>
-            <script language="javascript" >
+            <script language="javascript" if:true="java.version.eight">
                 // to see type of 1st logger, uncomment the following
                 //echo = JMRI.createTask("echo");
                 //echo.setMessage(Object.prototype.toString.call(project.getBuildListeners().firstElement()));
@@ -294,7 +304,7 @@
                 }
             </script>
             <body/>
-            <script language="javascript" >
+            <script language="javascript" if:true="java.version.eight">
                 // TODO: restore last log level instead of going to fixed value "2"
                 if (Object.prototype.toString.call(project.getBuildListeners().firstElement()) == "[object org.apache.tools.ant.DefaultLogger]") {
                     project.getBuildListeners().firstElement().setMessageOutputLevel(2);
