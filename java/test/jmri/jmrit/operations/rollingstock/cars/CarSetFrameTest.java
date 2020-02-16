@@ -11,6 +11,8 @@ import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
+import org.mockito.Mockito;
+import org.netbeans.jemmy.QueueTool;
 
 import javax.swing.*;
 
@@ -92,5 +94,6 @@ public class CarSetFrameTest extends OperationsTestCase {
     private void toggleCheckBoxThenClickSave(CarSetFrame frame, JCheckBox box){
         JemmyUtil.enterClickAndLeave(box);
         JemmyUtil.enterClickAndLeave(frame.saveButton);
+        new QueueTool().waitEmpty(100);
     }
 }
