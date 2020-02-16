@@ -491,7 +491,7 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li></li>
+            <li>Included the VSDecoderID instead of the file name to make the AudioBuffer system names unique for Diesel3Sound.</li>
         </ul>
 
     <h3>Miscellaneous</h3>
