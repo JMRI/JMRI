@@ -692,6 +692,9 @@
                         <goals>
                             <goal>report</goal>
                         </goals>      
+                        <configuration>
+                            <skip>${skipTests}</skip>
+                        </configuration>
                     </execution>
                     <execution>
                         <id>default-check</id>
@@ -699,6 +702,7 @@
                             <goal>check</goal>
                         </goals>
                         <configuration>
+                            <skip>${skipTests}</skip>
                             <excludes>
                                 <File>**/*Test*.class</File>
                                 <!-- Exclude testing infrastructure classes -->
