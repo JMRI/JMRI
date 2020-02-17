@@ -69,13 +69,17 @@ env:
 
 jobs:
   include:
-  - os: linux
+  - name: GUI Tests
+    os: linux
     env: HEADLESS=false STATIC=false
-  - os: linux
+  - name: Headless Tests
+    os: linux
     env: HEADLESS=true STATIC=false
-  - os: linux
+  - name: Static Analysis
+    os: linux
     env: HEADLESS=true STATIC=true
-  - os: linux
+  - name: Intermittently Failing GUI Tests
+    os: linux
     env: HEADLESS=false SKIPINTERMITTENT=false STATIC=true
 
 after_success:
