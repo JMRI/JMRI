@@ -1,9 +1,9 @@
 package jmri.jmris;
 
-import org.junit.After;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import jmri.DccLocoAddress;
 
@@ -65,12 +65,12 @@ abstract public class AbstractThrottleServerTestBase {
      */
     abstract public void confirmThrottleStatusSent();
 
-    @Before
+    @BeforeEach
     // derived classes must configure the ThrottleServer variable (ats)
     // and should also install a throttle manager.
     abstract public void setUp();
 
-    @After
+    @AfterEach
     public void postTestReset(){
        ats = null;
     }

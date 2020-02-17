@@ -1,10 +1,10 @@
 package jmri.jmris.simpleserver;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for the jmri.jmris.simpleserver.SimpleLightServer class
@@ -40,7 +40,7 @@ public class SimpleLightServerTest extends jmri.jmris.AbstractLightServerTestBas
         sendMessageMethod.setAccessible(true);
         try {
             sendMessageMethod.invoke(a, "Hello World");
-            Assert.assertEquals("SendMessage Check", "Hello World", sb.toString());
+            assertThat(sb.toString()).isEqualTo("Hello World").withErrorFailMessage("SendMessage Check");
         } catch (java.lang.IllegalAccessException iae) {
             Assert.fail("Could not access method sendMessage in SimpleLightServer class");
         } catch (java.lang.reflect.InvocationTargetException ite) {
@@ -67,7 +67,7 @@ public class SimpleLightServerTest extends jmri.jmris.AbstractLightServerTestBas
         sendMessageMethod.setAccessible(true);
         try {
             sendMessageMethod.invoke(a, "Hello World");
-            Assert.assertEquals("SendMessage Check", "Hello World", jcs.getOutput());
+            assertThat(jcs.getOutput()).isEqualTo("Hello World").withErrorFailMessage("SendMessage Check");
         } catch (java.lang.IllegalAccessException iae) {
             Assert.fail("Could not access method sendMessage in SimpleLightServer class");
         } catch (java.lang.reflect.InvocationTargetException ite) {
@@ -83,7 +83,7 @@ public class SimpleLightServerTest extends jmri.jmris.AbstractLightServerTestBas
         SimpleLightServer a = (SimpleLightServer)ls;
         try {
             a.sendErrorStatus("IT1");
-            Assert.assertEquals("sendErrorStatus check", "LIGHT ERROR\n", sb.toString());
+            assertThat(sb.toString()).isEqualTo("LIGHT ERROR\n").withErrorFailMessage("sendErrorStatus check");
         } catch (java.io.IOException ioe) {
             Assert.fail("Exception sending Error Status");
         }
@@ -95,7 +95,7 @@ public class SimpleLightServerTest extends jmri.jmris.AbstractLightServerTestBas
         SimpleLightServer a = (SimpleLightServer)ls;
         try {
             a.sendStatus("IL1", jmri.Light.ON);
-            Assert.assertEquals("sendErrorStatus check", "LIGHT IL1 ON\n", sb.toString());
+            assertThat(sb.toString()).isEqualTo("LIGHT IL1 ON\n").withErrorFailMessage("sendErrorStatus check");
         } catch (java.io.IOException ioe) {
             Assert.fail("Exception sending ON Status");
         }
@@ -107,7 +107,7 @@ public class SimpleLightServerTest extends jmri.jmris.AbstractLightServerTestBas
         SimpleLightServer a = (SimpleLightServer)ls;
         try {
             a.sendStatus("IL1", jmri.Light.OFF);
-            Assert.assertEquals("sendErrorStatus check", "LIGHT IL1 OFF\n", sb.toString());
+            assertThat(sb.toString()).isEqualTo("LIGHT IL1 OFF\n").withErrorFailMessage("sendErrorStatus check");
         } catch (java.io.IOException ioe) {
             Assert.fail("Exception sending OFF Status");
         }
@@ -119,7 +119,7 @@ public class SimpleLightServerTest extends jmri.jmris.AbstractLightServerTestBas
         SimpleLightServer a = (SimpleLightServer)ls;
         try {
             a.sendStatus("IL1", 255);
-            Assert.assertEquals("sendErrorStatus check", "LIGHT IL1 UNKNOWN\n", sb.toString());
+            assertThat(sb.toString()).isEqualTo("LIGHT IL1 UNKNOWN\n").withErrorFailMessage("sendErrorStatus check");
         } catch (java.io.IOException ioe) {
             Assert.fail("Exception sending UNKNOWN Status");
         }
@@ -132,11 +132,9 @@ public class SimpleLightServerTest extends jmri.jmris.AbstractLightServerTestBas
         try {
             a.parseStatus("LIGHT IL1 ON\n");
             jmri.Light light = (jmri.InstanceManager.getDefault(jmri.LightManager.class)).getLight("IL1");
-            Assert.assertEquals("Parse On Status Check",
-                    jmri.Light.ON,
-                    light.getState());
+            assertThat(light.getState()).isEqualTo(jmri.Light.ON).withErrorFailMessage("Parse On Status Check");
             // parsing the status also causes a message to return to the client.
-            Assert.assertEquals("sendErrorStatus check", "LIGHT IL1 ON\n", sb.toString());
+            assertThat(sb.toString()).isEqualTo("LIGHT IL1 ON\n").withErrorFailMessage("sendErrorStatus check");
         } catch (jmri.JmriException | java.io.IOException jmrie) {
             Assert.fail("Exception retrieving Status");
         }
@@ -149,9 +147,7 @@ public class SimpleLightServerTest extends jmri.jmris.AbstractLightServerTestBas
         try {
             a.parseStatus("LIGHT IL1 OFF\n");
             jmri.Light light = (jmri.InstanceManager.getDefault(jmri.LightManager.class)).getLight("IL1");
-            Assert.assertEquals("Parse OFF Status Check",
-                    jmri.Light.OFF,
-                    light.getState());
+            assertThat(light.getState()).isEqualTo(jmri.Light.OFF).withErrorFailMessage("Parse OFF Status Check");
             // parsing the status also causes a message to return to the client.
             //Assert.assertEquals("parse OFF Status check","LIGHT IL1 OFF\n",sb.toString());
         } catch (jmri.JmriException | java.io.IOException jmrie) {
@@ -173,7 +169,7 @@ public class SimpleLightServerTest extends jmri.jmris.AbstractLightServerTestBas
     }
 
     // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -195,7 +191,7 @@ public class SimpleLightServerTest extends jmri.jmris.AbstractLightServerTestBas
         ls = new SimpleLightServer(input, output);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

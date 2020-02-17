@@ -2,11 +2,11 @@ package jmri.jmris.simpleserver;
 
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 
 /**
@@ -28,11 +28,11 @@ public class SimpleServerMenuTest {
         Assert.assertNotNull(a);
     }
 
-    @Before public void setUp() {
+    @BeforeEach public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After public void tearDown() throws Exception {
+    @AfterEach public void tearDown() throws Exception {
         JUnitUtil.tearDown();
     }
 

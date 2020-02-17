@@ -1,9 +1,9 @@
 package jmri.jmris;
 
-import org.junit.After;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Common tests for classes derived from jmri.jmris.AbstractTimeServer class
@@ -24,9 +24,9 @@ abstract public class AbstractTimeServerTestBase {
         jmri.Timebase t = jmri.InstanceManager.getDefault(jmri.Timebase.class);
         int n = t.getMinuteChangeListeners().length;
         a.listenToTimebase(true);
-        Assert.assertEquals("added listener", n + 1, t.getMinuteChangeListeners().length);
+        assertThat(t.getMinuteChangeListeners().length).isEqualTo(n + 1).withErrorFailMessage("added listener");
         a.listenToTimebase(false);
-        Assert.assertEquals("removed listener", n, t.getMinuteChangeListeners().length);
+        assertThat(t.getMinuteChangeListeners().length).isEqualTo(n).withErrorFailMessage("removed listener");
     }
 
     @Test
@@ -82,11 +82,11 @@ abstract public class AbstractTimeServerTestBase {
         Assert.assertFalse("Timebase stopped", jmri.InstanceManager.getDefault(jmri.Timebase.class).getRun());
     }
 
-    @Before
+    @BeforeEach
     // derived classes must configure the TimeServer variable (a)
     abstract public void setUp();
 
-    @After
+    @AfterEach
     // derived classes must clean up the TimeServer variable (a)
     abstract public void tearDown();
 

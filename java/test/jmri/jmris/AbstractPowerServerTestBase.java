@@ -1,8 +1,8 @@
 package jmri.jmris;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Base set of tests for decendents of the jmri.jmris.AbstractPowerServer class
@@ -90,7 +90,7 @@ abstract public class AbstractPowerServerTestBase {
      * Setup ps and a power manager instance;
      *
      */
-    @Before
+    @BeforeEach
     abstract public void setUp(); 
 
 }

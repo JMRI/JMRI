@@ -2,10 +2,10 @@ package jmri.jmris.simpleserver.parser;
 
 import java.io.StringReader;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for the {@link jmri.jmris.simpleserver.parser.JmriServerParser} class.
@@ -500,12 +500,12 @@ public class JmriServerParserTest {
         Assert.assertFalse(exceptionOccured);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

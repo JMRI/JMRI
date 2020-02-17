@@ -1,10 +1,10 @@
 package jmri.jmris;
 
 import java.io.IOException;
-import org.junit.After;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Base set of tests for decendents of the jmri.jmris.AbstractSignalMastServer class
@@ -20,7 +20,7 @@ public class AbstractSignalMastServerTest {
         Assert.assertNotNull(sms);
     }
 
-    @Before
+    @BeforeEach
     public void setUp(){
        jmri.util.JUnitUtil.setUp();
        sms = new AbstractSignalMastServer(){
@@ -37,7 +37,7 @@ public class AbstractSignalMastServerTest {
        };
     }
 
-    @After
+    @AfterEach
     public void tearDown(){
        jmri.util.JUnitUtil.tearDown();
     }

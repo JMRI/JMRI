@@ -1,10 +1,10 @@
 package jmri.jmris.simpleserver;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for the jmri.jmris.simpleserver.SimpleSignalHeadServer class
@@ -66,7 +66,7 @@ public class SimpleSignalHeadServerTest {
         sendMessageMethod.setAccessible(true);
         try {
            sendMessageMethod.invoke(a,"Hello World");
-           Assert.assertEquals("SendMessage Check","Hello World",jcs.getOutput());
+           assertThat(jcs.getOutput()).isEqualTo("Hello World").withErrorFailMessage("SendMessage Check");
         } catch (java.lang.IllegalAccessException iae) {
            Assert.fail("Could not access method sendMessage in SimpleSignalHeadServer class");
         } catch (java.lang.reflect.InvocationTargetException ite){
@@ -100,7 +100,7 @@ public class SimpleSignalHeadServerTest {
         sendMessageMethod.setAccessible(true);
         try {
            sendMessageMethod.invoke(a,"Hello World");
-           Assert.assertEquals("SendMessage Check","Hello World",sb.toString());
+           assertThat(sb.toString()).isEqualTo("Hello World").withErrorFailMessage("SendMessage Check");
         } catch (java.lang.IllegalAccessException iae) {
            Assert.fail("Could not access method sendMessage in SimpleSignalHeadServer class");
         } catch (java.lang.reflect.InvocationTargetException ite){
@@ -124,7 +124,7 @@ public class SimpleSignalHeadServerTest {
         SimpleSignalHeadServer a = new SimpleSignalHeadServer(input, output);
         try {
             a.sendErrorStatus("IT1");
-            Assert.assertEquals("sendErrorStatus check","SIGNALHEAD ERROR\n",sb.toString());
+            assertThat(sb.toString()).isEqualTo("SIGNALHEAD ERROR\n").withErrorFailMessage("sendErrorStatus check");
         } catch(java.io.IOException ioe){
             Assert.fail("Exception sending Error Status");
         }
@@ -159,7 +159,7 @@ public class SimpleSignalHeadServerTest {
         SimpleSignalHeadServer a = new SimpleSignalHeadServer(input, output);
         try {
             a.sendStatus("IH1",jmri.SignalHead.DARK);
-            Assert.assertEquals("sendStatus check","SIGNALHEAD IH1 DARK\n",sb.toString());
+            assertThat(sb.toString()).isEqualTo("SIGNALHEAD IH1 DARK\n").withErrorFailMessage("sendStatus check");
         } catch(java.io.IOException ioe){
             Assert.fail("Exception sending DARK Status");
         }
@@ -179,7 +179,7 @@ public class SimpleSignalHeadServerTest {
         SimpleSignalHeadServer a = new SimpleSignalHeadServer(input, output);
         try {
             a.sendStatus("IH1",jmri.SignalHead.RED);
-            Assert.assertEquals("sendStatus check","SIGNALHEAD IH1 RED\n",sb.toString());
+            assertThat(sb.toString()).isEqualTo("SIGNALHEAD IH1 RED\n").withErrorFailMessage("sendStatus check");
         } catch(java.io.IOException ioe){
             Assert.fail("Exception sending RED Status");
         }
@@ -199,7 +199,7 @@ public class SimpleSignalHeadServerTest {
         SimpleSignalHeadServer a = new SimpleSignalHeadServer(input, output);
         try {
             a.sendStatus("IH1",jmri.SignalHead.UNKNOWN);
-            Assert.assertEquals("sendStatus check","SIGNALHEAD IH1 RED\n",sb.toString());
+            assertThat(sb.toString()).isEqualTo("SIGNALHEAD IH1 RED\n").withErrorFailMessage("sendStatus check");
         } catch(java.io.IOException ioe){
             Assert.fail("Exception sending UNKNOWN Status");
         }
@@ -220,12 +220,10 @@ public class SimpleSignalHeadServerTest {
         try {
             a.parseStatus("SIGNALHEAD IH1 DARK\n");
             jmri.SignalHead signalHead = (jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class)).getSignalHead("IH1");
-          Assert.assertEquals("Parse Active Status Check",
-                       jmri.SignalHead.DARK,
-                       signalHead.getAppearance());
+          assertThat(signalHead.getAppearance()).isEqualTo(jmri.SignalHead.DARK).withErrorFailMessage("Parse Active Status Check");
             // parsing the status also causes a message to return to
             // the client.
-            Assert.assertEquals("parse Dark check","SIGNALHEAD IH1 DARK\n",sb.toString());
+            assertThat(sb.toString()).isEqualTo("SIGNALHEAD IH1 DARK\n").withErrorFailMessage("parse Dark check");
         } catch(jmri.JmriException | java.io.IOException ioe){
             Assert.fail("Exception parsing DARK Status");
         }
@@ -246,12 +244,10 @@ public class SimpleSignalHeadServerTest {
         try {
             a.parseStatus("SIGNALHEAD IH1 RED\n");
             jmri.SignalHead signalHead = (jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class)).getSignalHead("IH1");
-          Assert.assertEquals("Parse Inactive Status Check",
-                       jmri.SignalHead.RED,
-                       signalHead.getAppearance());
+          assertThat(signalHead.getAppearance()).isEqualTo(jmri.SignalHead.RED).withErrorFailMessage("Parse Inactive Status Check");
             // parsing the status also causes a message to return to
             // the client.
-            Assert.assertEquals("parse Inactive check","SIGNALHEAD IH1 RED\n",sb.toString());
+            assertThat(sb.toString()).isEqualTo("SIGNALHEAD IH1 RED\n").withErrorFailMessage("parse Inactive check");
         } catch(jmri.JmriException | java.io.IOException ioe){
             Assert.fail("Exception parsing RED Status");
         }
@@ -272,7 +268,7 @@ public class SimpleSignalHeadServerTest {
         try {
             a.parseStatus("SIGNALHEAD IH1\n");
             // nothing has changed the Signal Head, so it should be DARK.
-            Assert.assertEquals("parse blank check","SIGNALHEAD IH1 DARK\n",sb.toString());
+            assertThat(sb.toString()).isEqualTo("SIGNALHEAD IH1 DARK\n").withErrorFailMessage("parse blank check");
         } catch(jmri.JmriException | java.io.IOException ioe){
             Assert.fail("Exception parsing RED Status");
         }
@@ -295,14 +291,14 @@ public class SimpleSignalHeadServerTest {
             // this isn't a known state, so it should be just like
             // blank.
             // nothing has changed the Signal Head, so it should be DARK.
-            Assert.assertEquals("parse blank check","SIGNALHEAD IH1 DARK\n",sb.toString());
+            assertThat(sb.toString()).isEqualTo("SIGNALHEAD IH1 DARK\n").withErrorFailMessage("parse blank check");
         } catch(jmri.JmriException | java.io.IOException ioe){
             Assert.fail("Exception parsing UNKNOWN Status");
         }
     }
 
     // The minimal setup for log4J
-    @Before public void setUp() throws Exception {
+    @BeforeEach public void setUp() throws Exception {
         JUnitUtil.setUp();
 
         JUnitUtil.initInternalTurnoutManager();
@@ -313,7 +309,7 @@ public class SimpleSignalHeadServerTest {
         jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).register(new jmri.implementation.VirtualSignalHead("IH1","Head 1"));
     }
 
-    @After public void tearDown() throws Exception {
+    @AfterEach public void tearDown() throws Exception {
         JUnitUtil.tearDown();
     }
 

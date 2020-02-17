@@ -1,7 +1,7 @@
 package jmri.jmris.srcp;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for the jmri.jmris.srcp.JmriSRCPServer class

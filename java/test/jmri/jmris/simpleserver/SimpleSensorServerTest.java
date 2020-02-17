@@ -1,10 +1,10 @@
 package jmri.jmris.simpleserver;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for the jmri.jmris.simpleserver.SimpleSensorServer class
@@ -44,7 +44,7 @@ public class SimpleSensorServerTest extends jmri.jmris.AbstractSensorServerTestB
         sendMessageMethod.setAccessible(true);
         try {
            sendMessageMethod.invoke(ss,"Hello World");
-           Assert.assertEquals("SendMessage Check","Hello World",sb.toString());
+           assertThat(sb.toString()).isEqualTo("Hello World").withErrorFailMessage("SendMessage Check");
         } catch (java.lang.IllegalAccessException iae) {
            Assert.fail("Could not access method sendMessage in SimpleSensorServer class");
         } catch (java.lang.reflect.InvocationTargetException ite){
@@ -77,7 +77,7 @@ public class SimpleSensorServerTest extends jmri.jmris.AbstractSensorServerTestB
         sendMessageMethod.setAccessible(true);
         try {
            sendMessageMethod.invoke(a,"Hello World");
-           Assert.assertEquals("SendMessage Check","Hello World",jcs.getOutput());
+           assertThat(jcs.getOutput()).isEqualTo("Hello World").withErrorFailMessage("SendMessage Check");
         } catch (java.lang.IllegalAccessException iae) {
            Assert.fail("Could not access method sendMessage in SimpleSensorServer class");
         } catch (java.lang.reflect.InvocationTargetException ite){
@@ -92,9 +92,7 @@ public class SimpleSensorServerTest extends jmri.jmris.AbstractSensorServerTestB
     public void parseActiveStatus() throws Exception {
         ss.parseStatus("SENSOR IS1 ACTIVE\n");
         jmri.Sensor sensor = (jmri.InstanceManager.getDefault(jmri.SensorManager.class)).getSensor("IS1");
-        Assert.assertEquals("Parse Active Status Check",
-                       jmri.Sensor.ACTIVE,
-                       sensor.getState());
+        assertThat(sensor.getState()).isEqualTo(jmri.Sensor.ACTIVE).withErrorFailMessage("Parse Active Status Check");
         // parsing the status also causes a message to return to
         // the client.
         checkSensorActiveSent();
@@ -105,9 +103,7 @@ public class SimpleSensorServerTest extends jmri.jmris.AbstractSensorServerTestB
     public void parseInactiveStatus() throws Exception {
          ss.parseStatus("SENSOR IS1 INACTIVE\n");
          jmri.Sensor sensor = (jmri.InstanceManager.getDefault(jmri.SensorManager.class)).getSensor("IS1");
-         Assert.assertEquals("Parse Inactive Status Check",
-                       jmri.Sensor.INACTIVE,
-                       sensor.getState());
+         assertThat(sensor.getState()).isEqualTo(jmri.Sensor.INACTIVE).withErrorFailMessage("Parse Inactive Status Check");
          // parsing the status also causes a message to return to
          // the client.
          checkSensorInActiveSent();
@@ -147,7 +143,7 @@ public class SimpleSensorServerTest extends jmri.jmris.AbstractSensorServerTestB
      */
     @Override
     public void checkErrorStatusSent(){
-         Assert.assertEquals("sendErrorStatus check","SENSOR ERROR\n",sb.toString());
+         assertThat(sb.toString()).isEqualTo("SENSOR ERROR\n").withErrorFailMessage("sendErrorStatus check");
     }
 
     /**
@@ -155,7 +151,7 @@ public class SimpleSensorServerTest extends jmri.jmris.AbstractSensorServerTestB
      */
     @Override
     public void checkSensorActiveSent(){
-         Assert.assertEquals("sendStatus check","SENSOR IS1 ACTIVE\n",sb.toString());
+         assertThat(sb.toString()).isEqualTo("SENSOR IS1 ACTIVE\n").withErrorFailMessage("sendStatus check");
     }
 
     /**
@@ -163,7 +159,7 @@ public class SimpleSensorServerTest extends jmri.jmris.AbstractSensorServerTestB
      */
     @Override
     public void checkSensorInActiveSent(){
-         Assert.assertEquals("sendStatus check","SENSOR IS1 INACTIVE\n",sb.toString());
+         assertThat(sb.toString()).isEqualTo("SENSOR IS1 INACTIVE\n").withErrorFailMessage("sendStatus check");
     }
 
     /**
@@ -171,11 +167,11 @@ public class SimpleSensorServerTest extends jmri.jmris.AbstractSensorServerTestB
      */
     @Override
     public void checkSensorUnknownSent(){
-         Assert.assertEquals("sendStatus check","SENSOR IS1 UNKNOWN\n",sb.toString());
+         assertThat(sb.toString()).isEqualTo("SENSOR IS1 UNKNOWN\n").withErrorFailMessage("sendStatus check");
     }
 
     // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -196,7 +192,7 @@ public class SimpleSensorServerTest extends jmri.jmris.AbstractSensorServerTestB
         ss = new SimpleSensorServer(input, output);
     }
 
-    @After public void tearDown() throws Exception {
+    @AfterEach public void tearDown() throws Exception {
         ss.dispose();
         ss = null;
         sb = null;

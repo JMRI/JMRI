@@ -1,8 +1,8 @@
 package jmri.jmris;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Base set of tests for decendents of the jmri.jmris.AbstractLightServer class
@@ -23,7 +23,7 @@ abstract public class AbstractLightServerTestBase {
         ls.initLight("IL1");
     }
 
-    @Before
+    @BeforeEach
     abstract public void setUp(); // must setup ls as a light server instance;
 
 }

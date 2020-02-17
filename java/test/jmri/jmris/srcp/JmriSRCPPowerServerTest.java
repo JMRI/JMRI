@@ -1,10 +1,10 @@
 package jmri.jmris.srcp;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 /**
@@ -20,20 +20,18 @@ public class JmriSRCPPowerServerTest extends jmri.jmris.AbstractPowerServerTestB
     @Test
     public void testParseOnStatus() throws Exception {
         ps.parseStatus("1234 SET 0 POWER ON\n");
-        Assert.assertEquals("Parse On Status Check",jmri.InstanceManager
-                      .getDefault(jmri.PowerManager.class).getPower(),
-                      jmri.PowerManager.ON);
-        Assert.assertTrue("status as a result of parsing on", sb.toString().endsWith("100 INFO 0 POWER ON\n\r"));
+        assertThat(jmri.PowerManager.ON).isEqualTo(jmri.InstanceManager
+                      .getDefault(jmri.PowerManager.class).getPower()).withFailMessage("Parse On Status Check");
+        assertThat(sb.toString()).endsWith("100 INFO 0 POWER ON\n\r").withFailMessage("status as a result of parsing on");
     }
 
     // test parsing an OFF status message.
     @Test
     public void testParseOffStatus() throws Exception {
         ps.parseStatus("1234 SET 0 POWER OFF\n");
-        Assert.assertEquals("Parse OFF Status Check",jmri.InstanceManager
-                      .getDefault(jmri.PowerManager.class).getPower(),
-                      jmri.PowerManager.OFF);
-        Assert.assertTrue("status as a result of parsing off", sb.toString().endsWith("100 INFO 0 POWER OFF\n\r"));
+        assertThat(jmri.PowerManager.OFF).isEqualTo(jmri.InstanceManager
+                      .getDefault(jmri.PowerManager.class).getPower()).withFailMessage("Parse OFF Status Check");
+        assertThat(sb.toString()).endsWith("100 INFO 0 POWER OFF\n\r").withFailMessage("status as a result of parsing off");
     }
 
     /**
@@ -41,7 +39,7 @@ public class JmriSRCPPowerServerTest extends jmri.jmris.AbstractPowerServerTestB
      */
     @Override
     public void checkPowerOnSent(){
-            Assert.assertTrue("status as a result of on property change", sb.toString().endsWith("100 INFO 0 POWER ON\n\r"));
+            assertThat(sb.toString()).endsWith("100 INFO 0 POWER ON\n\r").withFailMessage("status as a result of on property change");
     }
 
     /**
@@ -49,7 +47,7 @@ public class JmriSRCPPowerServerTest extends jmri.jmris.AbstractPowerServerTestB
      */
     @Override
     public void checkPowerOffSent(){
-            Assert.assertTrue("status as a result of off property change", sb.toString().endsWith("100 INFO 0 POWER OFF\n\r"));
+        assertThat(sb.toString()).endsWith("100 INFO 0 POWER OFF\n\r").withFailMessage("status as a result of off property change");
     }
 
     /**
@@ -57,7 +55,7 @@ public class JmriSRCPPowerServerTest extends jmri.jmris.AbstractPowerServerTestB
      */
     @Override
     public void checkErrorStatusSent() {
-        Assert.assertTrue("sendErrorStatus check", sb.toString().endsWith("499 ERROR unspecified error\n\r"));
+        assertThat(sb.toString()).endsWith("499 ERROR unspecified error\n\r").withFailMessage("sendErrorStatus check");
     }
 
     /**
@@ -65,11 +63,11 @@ public class JmriSRCPPowerServerTest extends jmri.jmris.AbstractPowerServerTestB
      */
     @Override
     public void checkUnknownStatusSent() {
-        Assert.assertTrue("send Unknown Status check", sb.toString().endsWith("411 ERROR unknown value\n\r"));
+        assertThat(sb.toString()).endsWith("411 ERROR unknown value\n\r").withFailMessage("send Unknown Status check");
     }
 
     // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -85,7 +83,7 @@ public class JmriSRCPPowerServerTest extends jmri.jmris.AbstractPowerServerTestB
         ps = new JmriSRCPPowerServer(output);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         ps.dispose();
         ps = null;

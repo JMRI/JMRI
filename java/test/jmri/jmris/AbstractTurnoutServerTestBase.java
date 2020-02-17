@@ -1,8 +1,8 @@
 package jmri.jmris;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for the jmri.jmris.AbstractTurnoutServer class
@@ -84,7 +84,7 @@ abstract public class AbstractTurnoutServerTestBase {
     /**
      * pre test setup.  Must setup TurnoutServer ts.
      */
-    @Before 
+    @BeforeEach
     abstract public void setUp(); 
 
     /**

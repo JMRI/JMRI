@@ -1,8 +1,8 @@
 package jmri.jmris;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for the jmri.jmris.AbstractSensorServer class
@@ -84,7 +84,7 @@ abstract public class AbstractSensorServerTestBase {
     /**
      * pre test setup.  Must setup SensorServer ss.
      */
-    @Before 
+    @BeforeEach
     abstract public void setUp(); 
 
     /**

@@ -1,10 +1,10 @@
 package jmri.jmris.simpleserver;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 
 /**
@@ -70,7 +70,7 @@ public class SimpleReporterServerTest {
         sendMessageMethod.setAccessible(true);
         try {
            sendMessageMethod.invoke(a,"Hello World");
-           Assert.assertEquals("SendMessage Check","Hello World",sb.toString());
+           assertThat(sb.toString()).isEqualTo("Hello World").withErrorFailMessage("SendMessage Check");
         } catch (java.lang.IllegalAccessException iae) {
            Assert.fail("Could not access method sendMessage in SimpleReporterServer class");
         } catch (java.lang.reflect.InvocationTargetException ite){
@@ -105,7 +105,7 @@ public class SimpleReporterServerTest {
         sendMessageMethod.setAccessible(true);
         try {
            sendMessageMethod.invoke(a,"Hello World");
-           Assert.assertEquals("SendMessage Check","Hello World",jcs.getOutput());
+           assertThat(jcs.getOutput()).isEqualTo("Hello World").withErrorFailMessage("SendMessage Check");
         } catch (java.lang.IllegalAccessException iae) {
            Assert.fail("Could not access method sendMessage in SimpleReporterServer class");
         } catch (java.lang.reflect.InvocationTargetException ite){
@@ -130,7 +130,7 @@ public class SimpleReporterServerTest {
         SimpleReporterServer a = new SimpleReporterServer(input, output);
         try {
             a.sendErrorStatus("IT1");
-            Assert.assertEquals("sendErrorStatus check","REPORTER ERROR\n",sb.toString());
+            assertThat(sb.toString()).isEqualTo("REPORTER ERROR\n").withErrorFailMessage("sendErrorStatus check");
         } catch(java.io.IOException ioe){
             Assert.fail("Exception sending Error Status");
         }
@@ -152,7 +152,7 @@ public class SimpleReporterServerTest {
         try {
             a.initReporter("IR1");
             a.sendReport("IR1","Hello World");
-            Assert.assertEquals("sendErrorStatus check","REPORTER IR1 Hello World\n",sb.toString());
+            assertThat(sb.toString()).isEqualTo("REPORTER IR1 Hello World\n").withErrorFailMessage("sendErrorStatus check");
         } catch(java.io.IOException ioe){
             Assert.fail("Exception sending Error Status");
         }
@@ -174,7 +174,7 @@ public class SimpleReporterServerTest {
         try {
             a.initReporter("IR1");
             a.sendReport("IR1",new jmri.implementation.DefaultIdTag("ID1234","Hello World"));
-            Assert.assertEquals("sendErrorStatus check","REPORTER IR1 Hello World\n",sb.toString());
+            assertThat(sb.toString()).isEqualTo("REPORTER IR1 Hello World\n").withErrorFailMessage("sendErrorStatus check");
         } catch(java.io.IOException ioe){
             Assert.fail("Exception sending Error Status");
         }
@@ -197,7 +197,7 @@ public class SimpleReporterServerTest {
             a.initReporter("IR1");
             a.sendReport("IR1",null);
             // null report, sends back the reporter name only.
-            Assert.assertEquals("sendErrorStatus check","REPORTER IR1\n",sb.toString());
+            assertThat(sb.toString()).isEqualTo("REPORTER IR1\n").withErrorFailMessage("sendErrorStatus check");
         } catch(java.io.IOException ioe){
             Assert.fail("Exception sending Error Status");
         }
@@ -218,7 +218,7 @@ public class SimpleReporterServerTest {
         SimpleReporterServer a = new SimpleReporterServer(input, output);
         try {
             a.parseStatus("REPORTER IR1 Hello World\n\r");
-            Assert.assertEquals("sendErrorStatus check","REPORTER IR1 Hello World\n",sb.toString());
+            assertThat(sb.toString()).isEqualTo("REPORTER IR1 Hello World\n").withErrorFailMessage("sendErrorStatus check");
         } catch(jmri.JmriException | java.io.IOException ioe){
             Assert.fail("Exception sending Error Status");
         }
@@ -239,7 +239,7 @@ public class SimpleReporterServerTest {
         SimpleReporterServer a = new SimpleReporterServer(input, output);
         try {
             a.parseStatus("REPORTER IR1\n\r");
-            Assert.assertEquals("sendErrorStatus check","REPORTER IR1\n",sb.toString());
+            assertThat(sb.toString()).isEqualTo("REPORTER IR1\n").withErrorFailMessage("sendErrorStatus check");
         } catch(jmri.JmriException | java.io.IOException ioe){
             Assert.fail("Exception sending Error Status");
         }
@@ -247,14 +247,14 @@ public class SimpleReporterServerTest {
 
 
     // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
 
         jmri.util.JUnitUtil.initReporterManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         JUnitUtil.tearDown();
     }

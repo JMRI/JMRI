@@ -1,10 +1,10 @@
 package jmri.jmris.simpleserver;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for the jmri.jmris.simpleserver.SimpleServerPreferences class
@@ -25,15 +25,15 @@ public class SimpleServerPreferencesTest {
 
     @Test public void defaultPort() {
         SimpleServerPreferences a = new SimpleServerPreferences();
-        Assert.assertEquals("Default Port",2048,a.getDefaultPort());
+        assertThat(a.getDefaultPort()).isEqualTo(2048).withErrorFailMessage("Default Port");
     }
 
-    @Before public void setUp() {
+    @BeforeEach public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
     }
 
-    @After public void tearDown() throws Exception {
+    @AfterEach public void tearDown() throws Exception {
         JUnitUtil.tearDown();
     }
 
