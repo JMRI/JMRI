@@ -57,8 +57,6 @@ os:
 
 dist: xenial
 
-sudo: required
-
 env:
   global:
   # false to silence most maven output; true to catch tests that do not complete
@@ -67,18 +65,18 @@ env:
   # see http://maven.apache.org/surefire/maven-surefire-plugin/test-mojo.html#runOrder for valid values
   - RUN_ORDER=filesystem
   - CC_TEST_REPORTER_ID=1d1326c4dfaeede878b46588cda440432d1dd6ec605d2c99af7b240ac7db0477
-  matrix:
-  - HEADLESS=false SKIPINTERMITTENT=true  STATIC=false 
-  - HEADLESS=true  SKIPINTERMITTENT=true  STATIC=false
-  - HEADLESS=true  SKIPINTERMITTENT=true  STATIC=true
-  - HEADLESS=false SKIPINTERMITTENT=false STATIC=true
+  - SKIPINTERMITTENT=true
 
-matrix:
-  exclude:
-  - os: osx
-    env: HEADLESS=true STATIC=true
-  - os: osx
+jobs:
+  include:
+  - os: linux
+    env: HEADLESS=false STATIC=false
+  - os: linux
     env: HEADLESS=true STATIC=false
+  - os: linux
+    env: HEADLESS=true STATIC=true
+  - os: linux
+    env: HEADLESS=false SKIPINTERMITTENT=false STATIC=true
 
 after_success:
   - if [[ "$TRAVIS_OS_NAME" == "linux" && "$HEADLESS" == "false" ]] ; then mvn jacoco:report coveralls:report -U -P travis-coverage ; fi
