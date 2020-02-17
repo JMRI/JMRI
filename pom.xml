@@ -36,6 +36,8 @@
         <junit.platform.version>1.6.0</junit.platform.version>
         <ant.jvm.args></ant.jvm.args>
         <argLine>-Xmx1536m -Duser.language=en -Duser.region=US -Dnashorn.args=--no-deprecation-warning</argLine>
+        <!-- define to allow running surefire:test -->
+        <surefire.argLine></surefire.argLine>
         <surefire.version>2.22.0</surefire.version>
         <failsafe.version>2.22.0</failsafe.version>
         <jqassistant.version>1.6.0</jqassistant.version>
@@ -129,15 +131,6 @@
                             </execution>
                         </executions>
                     </plugin>
-                    <!-- use surefire (maven default test harness) only for line endings -->
-		    <!--<plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <version>${surefire.version}</version>
-                        <configuration>
-                            <test>jmri.util.FileLineEndingsTest</test>
-                        </configuration>
-		    </plugin> -->
                 </plugins>
             </build>
         </profile>
