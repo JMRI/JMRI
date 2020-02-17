@@ -35,7 +35,6 @@
         <junit5.version>5.6.0</junit5.version>
         <junit.platform.version>1.6.0</junit.platform.version>
         <ant.jvm.args></ant.jvm.args>
-        <!-- add -Dnashorn.args=--no-deprecation-warning once requiring Java 9+ -->
         <argLine>-Xmx1536m -Duser.language=en -Duser.region=US</argLine>
         <surefire.version>2.22.0</surefire.version>
         <failsafe.version>2.22.0</failsafe.version>
