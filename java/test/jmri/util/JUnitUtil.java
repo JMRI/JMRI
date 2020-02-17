@@ -1069,8 +1069,8 @@ public class JUnitUtil {
      * test use {@link #resetProfileManager(jmri.profile.Profile)} with a
      * provided profile.
      * <p>
-     * The new profile will have the name {@literal TestProfile }, the id
-     * {@literal 00000000 }, and will be in the directory {@literal temp }
+     * The new profile will have the name {@literal TestProfile}, the id
+     * {@literal 00000000}, and will be in the directory {@literal temp}
      * within the sources working copy.
      */
     public static void resetProfileManager() {
