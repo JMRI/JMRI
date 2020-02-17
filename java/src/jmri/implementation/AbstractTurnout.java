@@ -777,20 +777,6 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         }
     }
 
-    @Override
-    public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
-        List<NamedBeanUsageReport> report = new ArrayList<>();
-        if (bean != null) {
-            if (bean.equals(getFirstSensor())) {
-                report.add(new NamedBeanUsageReport("TurnoutFeedback1"));
-            }
-            if (bean.equals(getSecondSensor())) {
-                report.add(new NamedBeanUsageReport("TurnoutFeedback2"));
-            }
-        }
-        return report;
-    }
-
     /**
      * React to sensor changes by changing the KnownState if using an
      * appropriate sensor mode.
@@ -1045,6 +1031,20 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
                 throw new java.beans.PropertyVetoException(Bundle.getMessage("InUseSensorTurnoutVeto", getDisplayName()), e); //IN18N
             }
         }
+    }
+
+    @Override
+    public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
+        List<NamedBeanUsageReport> report = new ArrayList<>();
+        if (bean != null) {
+            if (bean.equals(getFirstSensor())) {
+                report.add(new NamedBeanUsageReport("TurnoutFeedback1"));
+            }
+            if (bean.equals(getSecondSensor())) {
+                report.add(new NamedBeanUsageReport("TurnoutFeedback2"));
+            }
+        }
+        return report;
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractTurnout.class);

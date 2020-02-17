@@ -471,31 +471,6 @@ public abstract class AbstractLight extends AbstractNamedBean
         return mState;
     }
 
-    @Override
-    public List<jmri.NamedBeanUsageReport> getUsageReport(jmri.NamedBean bean) {
-        List<jmri.NamedBeanUsageReport> report = new ArrayList<>();
-        jmri.SensorManager sm = jmri.InstanceManager.getDefault(jmri.SensorManager.class);
-        jmri.TurnoutManager tm = jmri.InstanceManager.getDefault(jmri.TurnoutManager.class);
-        if (bean != null) {
-            getLightControlList().forEach((control) -> {
-                String descText = control.getDescriptionText("");
-                if (bean.equals(sm.getSensor(control.getControlSensorName()))) {
-                    report.add(new jmri.NamedBeanUsageReport("SensorControl1", descText));
-                }
-                if (bean.equals(sm.getSensor(control.getControlSensor2Name()))) {
-                    report.add(new jmri.NamedBeanUsageReport("SensorControl2", descText));
-                }
-                if (bean.equals(sm.getSensor(control.getControlTimedOnSensorName()))) {
-                    report.add(new jmri.NamedBeanUsageReport("SensorControlTimed", descText));
-                }
-                if (bean.equals(tm.getTurnout(control.getControlTurnoutName()))) {
-                    report.add(new jmri.NamedBeanUsageReport("TurnoutControl", descText));
-                }
-            });
-        }
-        return report;
-    }
-
     /**
      * Activate a light activating all its LightControl objects.
      */
@@ -590,6 +565,31 @@ public abstract class AbstractLight extends AbstractNamedBean
     @Override
     public AbsoluteOrRelative getAbsoluteOrRelative() {
         return AbsoluteOrRelative.ABSOLUTE;
+    }
+
+    @Override
+    public List<jmri.NamedBeanUsageReport> getUsageReport(jmri.NamedBean bean) {
+        List<jmri.NamedBeanUsageReport> report = new ArrayList<>();
+        jmri.SensorManager sm = jmri.InstanceManager.getDefault(jmri.SensorManager.class);
+        jmri.TurnoutManager tm = jmri.InstanceManager.getDefault(jmri.TurnoutManager.class);
+        if (bean != null) {
+            getLightControlList().forEach((control) -> {
+                String descText = control.getDescriptionText("");
+                if (bean.equals(sm.getSensor(control.getControlSensorName()))) {
+                    report.add(new jmri.NamedBeanUsageReport("LightControlSensor1", descText));
+                }
+                if (bean.equals(sm.getSensor(control.getControlSensor2Name()))) {
+                    report.add(new jmri.NamedBeanUsageReport("LightControlSensor2", descText));
+                }
+                if (bean.equals(sm.getSensor(control.getControlTimedOnSensorName()))) {
+                    report.add(new jmri.NamedBeanUsageReport("LightControlSensorTimed", descText));
+                }
+                if (bean.equals(tm.getTurnout(control.getControlTurnoutName()))) {
+                    report.add(new jmri.NamedBeanUsageReport("LightControlTurnout", descText));
+                }
+            });
+        }
+        return report;
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractLight.class);

@@ -8041,6 +8041,24 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return new TurnoutComboBoxPopupMenuListener(comboBox, currentTurnouts);
     }
 
+    @Override
+    public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
+        List<NamedBeanUsageReport> report = new ArrayList<>();
+        if (bean != null) {
+            report = super.getUsageReport(bean);
+            // LE Specific checks
+            for (LayoutTurnout turnout : getLayoutTurnoutsAndSlips()) {
+                if (bean.equals(turnout.getTurnout())) {
+                    report.add(new NamedBeanUsageReport("LayoutEditorTurnout", turnout.getClass().getSimpleName()));
+                }
+                if (bean.equals(turnout.getSecondTurnout())) {
+                    report.add(new NamedBeanUsageReport("LayoutEditorTurnout2", turnout.getClass().getSimpleName()));
+                }
+            }
+        }
+        return report;
+    }
+
     //initialize logging
     private transient final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditor.class);
 }

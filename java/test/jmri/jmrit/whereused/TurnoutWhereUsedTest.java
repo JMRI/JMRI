@@ -3,23 +3,23 @@ package jmri.jmrit.whereused;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JTextArea;
 import jmri.InstanceManager;
-import jmri.Sensor;
-import jmri.SensorManager;
+import jmri.Turnout;
+import jmri.TurnoutManager;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 
 /**
- * Tests for the SensorWhereUsed Class
+ * Tests for the TurnoutWhereUsed Class
  *
  * @author Dave Sand Copyright (C) 2020
  */
-public class SensorWhereUsedTest {
+public class TurnoutWhereUsedTest {
 
     @Test
-    public void testSensorWhereUsed() {
+    public void testTurnoutWhereUsed() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Sensor sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Feedback-1");
-        JTextArea result = SensorWhereUsed.getSensorWhereUsed(sensor);
+        Turnout turnout = InstanceManager.getDefault(jmri.TurnoutManager.class).getTurnout("LE Left");
+        JTextArea result = TurnoutWhereUsed.getTurnoutWhereUsed(turnout);
         Assert.assertFalse(result.getText().isEmpty());
     }
 

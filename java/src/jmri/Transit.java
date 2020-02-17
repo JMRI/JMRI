@@ -624,21 +624,21 @@ public class Transit extends AbstractNamedBean {
                     int whatCode = action.getWhatCode();
                     if (whenCode == TransitSectionAction.SENSORACTIVE || whenCode == TransitSectionAction.SENSORINACTIVE) {
                         if (bean.equals(sm.getSensor(action.getStringWhen()))) {
-                            report.add(new NamedBeanUsageReport("TransitSensorActionWhen", transitSection.getSection()));
+                            report.add(new NamedBeanUsageReport("TransitActionSensorWhen", transitSection.getSection()));
                         }
                     }
                     if (whatCode == TransitSectionAction.SETSENSORACTIVE || whatCode == TransitSectionAction.SETSENSORINACTIVE) {
                         if (bean.equals(sm.getSensor(action.getStringWhat()))) {
-                            report.add(new NamedBeanUsageReport("TransitSensorActionWhat", transitSection.getSection()));
+                            report.add(new NamedBeanUsageReport("TransitActionSensorWhat", transitSection.getSection()));
                         }
                     }
                     if (whatCode == TransitSectionAction.HOLDSIGNAL || whatCode == TransitSectionAction.RELEASESIGNAL) {
                         // Could be a signal head or a signal mast.
                         if (bean.equals(head.getSignalHead(action.getStringWhat()))) {
-                            report.add(new NamedBeanUsageReport("TransitSignalHeadActionWhat", transitSection.getSection()));
+                            report.add(new NamedBeanUsageReport("TransitActionSignalHeadWhat", transitSection.getSection()));
                         }
                         if (bean.equals(mast.getSignalMast(action.getStringWhat()))) {
-                            report.add(new NamedBeanUsageReport("TransitSignalMastActionWhat", transitSection.getSection()));
+                            report.add(new NamedBeanUsageReport("TransitActionSignalMastWhat", transitSection.getSection()));
                         }
                     }
                 });

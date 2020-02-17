@@ -201,51 +201,6 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
     }
 
     @Override
-    public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
-        List<NamedBeanUsageReport> report = new ArrayList<>();
-        if (bean != null) {
-            getDestinationList().forEach((dest) -> {
-                getAutoBlocks(dest).forEach((block) -> {
-                    if (bean.equals(block)) {
-                        report.add(new NamedBeanUsageReport("SMLBlockAuto", dest));
-                    }
-                });
-                getBlocks(dest).forEach((block) -> {
-                    if (bean.equals(block)) {
-                        report.add(new NamedBeanUsageReport("SMLBlockUser", dest));
-                    }
-                });
-                getAutoTurnouts(dest).forEach((turnout) -> {
-                    if (bean.equals(turnout)) {
-                        report.add(new NamedBeanUsageReport("SMLTurnoutAuto", dest));
-                    }
-                });
-                getTurnouts(dest).forEach((turnout) -> {
-                    if (bean.equals(turnout)) {
-                        report.add(new NamedBeanUsageReport("SMLTurnoutUser", dest));
-                    }
-                });
-                getSensors(dest).forEach((sensor) -> {
-                    if (bean.equals(sensor)) {
-                        report.add(new NamedBeanUsageReport("SMLSensor", dest));
-                    }
-                });
-                getAutoMasts(dest).forEach((mast) -> {
-                    if (bean.equals(mast)) {
-                        report.add(new NamedBeanUsageReport("SMLMastAuto", dest));
-                    }
-                });
-                getSignalMasts(dest).forEach((mast) -> {
-                    if (bean.equals(mast)) {
-                        report.add(new NamedBeanUsageReport("SMLMastUser", dest));
-                    }
-                });
-            });
-        }
-        return report;
-    }
-
-    @Override
     public void setStore(int store, SignalMast destination) {
         if (!destList.containsKey(destination)) {
             return;
@@ -2925,6 +2880,51 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
 
     @Override
     public void setState(int i) {
+    }
+
+    @Override
+    public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
+        List<NamedBeanUsageReport> report = new ArrayList<>();
+        if (bean != null) {
+            getDestinationList().forEach((dest) -> {
+                getAutoBlocks(dest).forEach((block) -> {
+                    if (bean.equals(block)) {
+                        report.add(new NamedBeanUsageReport("SMLBlockAuto", dest));
+                    }
+                });
+                getBlocks(dest).forEach((block) -> {
+                    if (bean.equals(block)) {
+                        report.add(new NamedBeanUsageReport("SMLBlockUser", dest));
+                    }
+                });
+                getAutoTurnouts(dest).forEach((turnout) -> {
+                    if (bean.equals(turnout)) {
+                        report.add(new NamedBeanUsageReport("SMLTurnoutAuto", dest));
+                    }
+                });
+                getTurnouts(dest).forEach((turnout) -> {
+                    if (bean.equals(turnout)) {
+                        report.add(new NamedBeanUsageReport("SMLTurnoutUser", dest));
+                    }
+                });
+                getSensors(dest).forEach((sensor) -> {
+                    if (bean.equals(sensor)) {
+                        report.add(new NamedBeanUsageReport("SMLSensor", dest));
+                    }
+                });
+                getAutoMasts(dest).forEach((mast) -> {
+                    if (bean.equals(mast)) {
+                        report.add(new NamedBeanUsageReport("SMLMastAuto", dest));
+                    }
+                });
+                getSignalMasts(dest).forEach((mast) -> {
+                    if (bean.equals(mast)) {
+                        report.add(new NamedBeanUsageReport("SMLMastUser", dest));
+                    }
+                });
+            });
+        }
+        return report;
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastLogic.class);

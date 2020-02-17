@@ -940,6 +940,24 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
             if (bean.equals(getReporter())) {
                 report.add(new NamedBeanUsageReport("OBlockReporter"));
             }
+            // OBlock paths
+            getPaths().forEach((path) -> {
+                OPath oPath = (OPath) path;
+                path.getSettings().forEach((setting) -> {
+                    if (bean.equals(setting.getBean())) {
+                        report.add(new NamedBeanUsageReport("OBlockPathTurnout"));
+                    }
+                });
+            });
+            // OBlock portals
+            getPortals().forEach((portal) -> {
+                if (bean.equals(portal.getFromSignal())) {
+                    report.add(new NamedBeanUsageReport("OBlockPortalFromSignal"));
+                }
+                if (bean.equals(portal.getToSignal())) {
+                    report.add(new NamedBeanUsageReport("OBlockPortalToSignal"));
+                }
+            });
         }
         return report;
     }

@@ -3,23 +3,23 @@ package jmri.jmrit.whereused;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JTextArea;
 import jmri.InstanceManager;
-import jmri.Sensor;
-import jmri.SensorManager;
+import jmri.SignalHead;
+import jmri.SignalHeadManager;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 
 /**
- * Tests for the SensorWhereUsed Class
+ * Tests for the SignalHeadWhereUsed Class
  *
  * @author Dave Sand Copyright (C) 2020
  */
-public class SensorWhereUsedTest {
+public class SignalHeadWhereUsedTest {
 
     @Test
-    public void testSensorWhereUsed() {
+    public void testSignalHeadWhereUsed() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Sensor sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Feedback-1");
-        JTextArea result = SensorWhereUsed.getSensorWhereUsed(sensor);
+        SignalHead signalHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead("Left-B");
+        JTextArea result = SignalHeadWhereUsed.getSignalHeadWhereUsed(signalHead);
         Assert.assertFalse(result.getText().isEmpty());
     }
 

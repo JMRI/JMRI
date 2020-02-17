@@ -3,23 +3,23 @@ package jmri.jmrit.whereused;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JTextArea;
 import jmri.InstanceManager;
-import jmri.Sensor;
-import jmri.SensorManager;
+import jmri.Light;
+import jmri.LightManager;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 
 /**
- * Tests for the SensorWhereUsed Class
+ * Tests for the LightWhereUsed Class
  *
  * @author Dave Sand Copyright (C) 2020
  */
-public class SensorWhereUsedTest {
+public class LightWhereUsedTest {
 
     @Test
-    public void testSensorWhereUsed() {
+    public void testTurnoutWhereUsed() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Sensor sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Feedback-1");
-        JTextArea result = SensorWhereUsed.getSensorWhereUsed(sensor);
+        Light light = InstanceManager.getDefault(jmri.LightManager.class).getLight("L-Sensor Control");
+        JTextArea result = LightWhereUsed.getLightWhereUsed(light);
         Assert.assertFalse(result.getText().isEmpty());
     }
 

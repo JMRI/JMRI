@@ -1106,38 +1106,6 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
         setRoute();
     }
 
-    @Override
-    public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
-        List<NamedBeanUsageReport> report = new ArrayList<>();
-        if (bean != null) {
-            for (int i = 0; i < getNumOutputTurnouts(); i++) {
-                if (bean.equals(getOutputTurnout(i))) {
-                    report.add(new NamedBeanUsageReport("RouteTurnoutOutput"));
-                }
-            }
-            for (int i = 0; i < getNumOutputSensors(); i++) {
-                if (bean.equals(getOutputSensor(i))) {
-                    report.add(new NamedBeanUsageReport("RouteSensorOutput"));
-                }
-            }
-            for (int i = 0; i < _controlSensorList.size(); i++) {
-                if (bean.equals(getRouteSensor(i))) {
-                    report.add(new NamedBeanUsageReport("RouteSensorControl"));
-                }
-            }
-            if (bean.equals(getTurnoutsAlgdSensor())) {
-                report.add(new NamedBeanUsageReport("RouteSensorAligned"));
-            }
-            if (bean.equals(getCtlTurnout())) {
-                report.add(new NamedBeanUsageReport("RouteTurnoutControl"));
-            }
-            if (bean.equals(getLockCtlTurnout())) {
-                report.add(new NamedBeanUsageReport("RouteTurnoutLock"));
-            }
-        }
-        return report;
-    }
-
     /** {@inheritDoc} */
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
@@ -1208,6 +1176,38 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
             }
             activateRoute();
         }
+    }
+
+    @Override
+    public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
+        List<NamedBeanUsageReport> report = new ArrayList<>();
+        if (bean != null) {
+            for (int i = 0; i < getNumOutputTurnouts(); i++) {
+                if (bean.equals(getOutputTurnout(i))) {
+                    report.add(new NamedBeanUsageReport("RouteTurnoutOutput"));
+                }
+            }
+            for (int i = 0; i < getNumOutputSensors(); i++) {
+                if (bean.equals(getOutputSensor(i))) {
+                    report.add(new NamedBeanUsageReport("RouteSensorOutput"));
+                }
+            }
+            for (int i = 0; i < _controlSensorList.size(); i++) {
+                if (bean.equals(getRouteSensor(i))) {
+                    report.add(new NamedBeanUsageReport("RouteSensorControl"));
+                }
+            }
+            if (bean.equals(getTurnoutsAlgdSensor())) {
+                report.add(new NamedBeanUsageReport("RouteSensorAligned"));
+            }
+            if (bean.equals(getCtlTurnout())) {
+                report.add(new NamedBeanUsageReport("RouteTurnoutControl"));
+            }
+            if (bean.equals(getLockCtlTurnout())) {
+                report.add(new NamedBeanUsageReport("RouteTurnoutLock"));
+            }
+        }
+        return report;
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultRoute.class);

@@ -142,35 +142,44 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
     /**
      * Build the where used content and update the JScrollPane.
      * <p>
-     * A textarea is created and then passed to the detail class be to populated, along with
-     * the selected object.  When the updated textarea is returned, final setup is done
-     * along with refreshing the scrollable panel.
+     * The selected object is passed to the appropriate detail class which returns a populated textarea.
+     * The textarea is formatted and inserted into a scrollable panel.
      */
     void buildWhereUsedListing() {
-        _textArea = new JTextArea();
-        _textArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
-        _textArea.setText(null);
-        _textArea.setTabSize(4);
-        _textArea.setEditable(false);
-
         switch (_itemType) {
             case SENSOR:
                 Sensor sensor = (Sensor) _itemNameBox.getSelectedItem();
-                SensorWhereUsed.getSensorWhereUsed(sensor, _textArea);
+                _textArea = SensorWhereUsed.getSensorWhereUsed(sensor);
                 break;
 
             case TURNOUT:
                 Turnout turnout = (Turnout) _itemNameBox.getSelectedItem();
-                _textArea.append("turnout = " + turnout.getDisplayName());
-                log.info("turnout = {}", turnout.getDisplayName());
-                // Invoke textarea
+                _textArea = TurnoutWhereUsed.getTurnoutWhereUsed(turnout);
+                break;
+
+            case LIGHT:
+                Light light = (Light) _itemNameBox.getSelectedItem();
+                _textArea = LightWhereUsed.getLightWhereUsed(light);
+                break;
+
+            case SIGNALHEAD:
+                SignalHead signalHead = (SignalHead) _itemNameBox.getSelectedItem();
+                _textArea = SignalHeadWhereUsed.getSignalHeadWhereUsed(signalHead);
+                break;
+
+            case SIGNALMAST:
+                SignalMast signalMast = (SignalMast) _itemNameBox.getSelectedItem();
+                _textArea = SignalMastWhereUsed.getSignalMastWhereUsed(signalMast);
                 break;
 
             default:
-                _textArea.append(Bundle.getMessage("TypePrompt"));
+                _textArea = new JTextArea(Bundle.getMessage("TypePrompt"));
                 break;
         }
 
+        _textArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
+        _textArea.setTabSize(4);
+        _textArea.setEditable(false);
         _textArea.setCaretPosition(0);
         if (_scrolltext.getComponentCount() > 0) {
             _scrolltext.remove(0);
@@ -246,18 +255,18 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
                 nameBox = new NamedBeanComboBox<Turnout>(
                         InstanceManager.getDefault(TurnoutManager.class));
                 break;
-//             case LIGHT:       // 3
-//                 nameBox = new NamedBeanComboBox<Light>(
-//                         InstanceManager.getDefault(LightManager.class), null, DisplayOptions.DISPLAYNAME);
-//                 break;
-//             case SIGNALHEAD:  // 4
-//                 nameBox = new NamedBeanComboBox<SignalHead>(
-//                         InstanceManager.getDefault(SignalHeadManager.class), null, DisplayOptions.DISPLAYNAME);
-//                 break;
-//             case SIGNALMAST:  // 5
-//                 nameBox = new NamedBeanComboBox<SignalMast>(
-//                         InstanceManager.getDefault(SignalMastManager.class), null, DisplayOptions.DISPLAYNAME);
-//                 break;
+            case LIGHT:
+                nameBox = new NamedBeanComboBox<Light>(
+                        InstanceManager.getDefault(LightManager.class));
+                break;
+            case SIGNALHEAD:
+                nameBox = new NamedBeanComboBox<SignalHead>(
+                        InstanceManager.getDefault(SignalHeadManager.class));
+                break;
+            case SIGNALMAST:
+                nameBox = new NamedBeanComboBox<SignalMast>(
+                        InstanceManager.getDefault(SignalMastManager.class));
+                break;
 //             case MEMORY:      // 6
 //                 nameBox = new NamedBeanComboBox<Memory>(
 //                         InstanceManager.getDefault(MemoryManager.class), null, DisplayOptions.DISPLAYNAME);
@@ -298,10 +307,10 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
     enum ItemType {
         NONE("ItemTypeNone"),
         SENSOR("ItemTypeSensor"),
-        TURNOUT("ItemTypeTurnout");
-//         LIGHT(ITEM_TYPE_LIGHT, IsStateVar.IS_STATE_VAR, "ItemTypeLight"),
-//         SIGNALHEAD(ITEM_TYPE_SIGNALHEAD, IsStateVar.IS_STATE_VAR, "ItemTypeSignalHead"),
-//         SIGNALMAST(ITEM_TYPE_SIGNALMAST, IsStateVar.IS_STATE_VAR, "ItemTypeSignalMast"),
+        TURNOUT("ItemTypeTurnout"),
+        LIGHT("ItemTypeLight"),
+        SIGNALHEAD("ItemTypeSignalHead"),
+        SIGNALMAST("ItemTypeSignalMast");
 //         MEMORY(ITEM_TYPE_MEMORY, IsStateVar.IS_STATE_VAR, "ItemTypeMemory"),
 //         CONDITIONAL(ITEM_TYPE_CONDITIONAL, IsStateVar.IS_STATE_VAR, "ItemTypeConditional"),  // used only by ConditionalVariable
 //         LOGIX(ITEM_TYPE_LOGIX, IsStateVar.IS_STATE_VAR, "ItemTypeLogix"),                    // used only by ConditionalAction
