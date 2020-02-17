@@ -3402,19 +3402,19 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
                 } else if (pos instanceof SlipTurnoutIcon) {
                     SlipTurnoutIcon slip3Scissor = (SlipTurnoutIcon) pos;
-                    if (bean.equals(slip3Scissor.getTurnout(slip3Scissor.EAST))) {
+                    if (bean.equals(slip3Scissor.getTurnout(SlipTurnoutIcon.EAST))) {
                         report.add(new NamedBeanUsageReport("PositionalIcon", pos.getClass().getSimpleName()));
                     }
-                    if (bean.equals(slip3Scissor.getTurnout(slip3Scissor.WEST))) {
+                    if (bean.equals(slip3Scissor.getTurnout(SlipTurnoutIcon.WEST))) {
                         report.add(new NamedBeanUsageReport("PositionalIcon", pos.getClass().getSimpleName()));
                     }
-                    if (slip3Scissor.getNamedTurnout(slip3Scissor.LOWEREAST) != null) {
-                        if (bean.equals(slip3Scissor.getTurnout(slip3Scissor.LOWEREAST))) {
+                    if (slip3Scissor.getNamedTurnout(SlipTurnoutIcon.LOWEREAST) != null) {
+                        if (bean.equals(slip3Scissor.getTurnout(SlipTurnoutIcon.LOWEREAST))) {
                             report.add(new NamedBeanUsageReport("PositionalIcon", pos.getClass().getSimpleName()));
                         }
                     }
-                    if (slip3Scissor.getNamedTurnout(slip3Scissor.LOWERWEST) != null) {
-                        if (bean.equals(slip3Scissor.getTurnout(slip3Scissor.LOWERWEST))) {
+                    if (slip3Scissor.getNamedTurnout(SlipTurnoutIcon.LOWERWEST) != null) {
+                        if (bean.equals(slip3Scissor.getTurnout(SlipTurnoutIcon.LOWERWEST))) {
                             report.add(new NamedBeanUsageReport("PositionalIcon", pos.getClass().getSimpleName()));
                         }
                     }

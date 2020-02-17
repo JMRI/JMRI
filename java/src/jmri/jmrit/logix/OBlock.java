@@ -942,7 +942,6 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
             }
             // OBlock paths
             getPaths().forEach((path) -> {
-                OPath oPath = (OPath) path;
                 path.getSettings().forEach((setting) -> {
                     if (bean.equals(setting.getBean())) {
                         report.add(new NamedBeanUsageReport("OBlockPathTurnout"));

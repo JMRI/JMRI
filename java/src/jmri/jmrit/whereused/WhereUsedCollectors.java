@@ -378,7 +378,7 @@ public class WhereUsedCollectors {
      * @return usage string
      */
     static String checkCTC(NamedBean bean) {
-        StringBuilder sb = new StringBuilder();
+        log.debug("CTC process pending: bean = {}", bean);
         return "";
     }
 
@@ -396,5 +396,5 @@ public class WhereUsedCollectors {
         return sb.toString();
     }
 
-//     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(WhereUsedCollectors.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(WhereUsedCollectors.class);
 }

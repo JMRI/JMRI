@@ -29,7 +29,7 @@ public class SignalMastWhereUsed {
 
     /**
      * Populate a textarea with the where used content for the supplied sensor.
-     * @param sensor The sensor bean.
+     * @param signalMast The signal mast bean.
      * @return a populated textarea.
      */
     static public JTextArea getSignalMastWhereUsed(SignalMast signalMast) {

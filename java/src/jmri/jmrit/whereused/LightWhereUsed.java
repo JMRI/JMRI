@@ -25,7 +25,7 @@ public class LightWhereUsed {
 
     /**
      * Populate a textarea with the where used content for the supplied sensor.
-     * @param sensor The sensor bean.
+     * @param light The light bean.
      * @return a populated textarea.
      */
     static public JTextArea getLightWhereUsed(Light light) {

@@ -29,7 +29,7 @@ public class SignalHeadWhereUsed {
 
     /**
      * Populate a textarea with the where used content for the supplied sensor.
-     * @param sensor The sensor bean.
+     * @param signalHead The signal head bean.
      * @return a populated textarea.
      */
     static public JTextArea getSignalHeadWhereUsed(SignalHead signalHead) {
