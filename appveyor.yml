@@ -43,9 +43,7 @@ after_test:
     $files = Get-ChildItem -Path "$ENV:APPVEYOR_BUILD_FOLDER\target\testreport\TEST-*.xml" 
     $files | ForEach-Object {
             $Item = $_
-    $fileCount = $files.Count
-    echo "uploading $Item to Appveyor"
-    for ($I =1; $I -le ($filesCount -1); $I++) {
+            echo "uploading $Item to Appveyor"
             $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", $Item )
     }
     echo "finished uploading results"
