@@ -2,7 +2,8 @@ package jmri.jmris.simpleserver;
 
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 
 /**
  * Tests for the jmri.jmris.simpleserver.SimpleServerFrame class

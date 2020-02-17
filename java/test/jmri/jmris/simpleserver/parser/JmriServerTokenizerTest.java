@@ -6,6 +6,9 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
+
 /**
  * Tests for the jmri.jmris.simpleserver.parser.JmriServerTokenizer class.
  *
@@ -20,8 +23,8 @@ public class JmriServerTokenizerTest {
         SimpleCharStream cs = new SimpleCharStream(new StringReader(cmd));
         JmriServerParserTokenManager stm = new JmriServerParserTokenManager(cs);
         Token t = stm.getNextToken();
-        assertThat(t.kind).isEqualTo(JmriServerParserConstants.ADDR).withErrorFailMessage("Wrong token kind for ADDR");
-        assertThat(t.image).isEqualTo("1234").withErrorFailMessage("Wrong image for ADDR");
+        assertThat(t.kind).isEqualTo(JmriServerParserConstants.ADDR).withFailMessage("Wrong token kind for ADDR");
+        assertThat(t.image).isEqualTo("1234").withFailMessage("Wrong image for ADDR");
     }
 
     // constants.
@@ -31,9 +34,9 @@ public class JmriServerTokenizerTest {
         SimpleCharStream cs = new SimpleCharStream(new StringReader(cmd));
         JmriServerParserTokenManager stm = new JmriServerParserTokenManager(cs);
         Token t = stm.getNextToken();
-        assertThat(t.kind).isEqualTo(JmriServerParserConstants.ONOFF).withErrorFailMessage("Wrong token kind for ON");
+        assertThat(t.kind).isEqualTo(JmriServerParserConstants.ONOFF).withFailMessage("Wrong token kind for ON");
         t = stm.getNextToken();
-        assertThat(t.kind).isEqualTo(JmriServerParserConstants.ONOFF).withErrorFailMessage("Wrong token kind for OFF");
+        assertThat(t.kind).isEqualTo(JmriServerParserConstants.ONOFF).withFailMessage("Wrong token kind for OFF");
     }
 
     @Test 
@@ -42,9 +45,9 @@ public class JmriServerTokenizerTest {
         SimpleCharStream cs = new SimpleCharStream(new StringReader(cmd));
         JmriServerParserTokenManager stm = new JmriServerParserTokenManager(cs);
         Token t = stm.getNextToken();
-        assertThat(t.kind).isEqualTo(JmriServerParserConstants.THROWNCLOSED).withErrorFailMessage("Wrong token kind for THROWN");
+        assertThat(t.kind).isEqualTo(JmriServerParserConstants.THROWNCLOSED).withFailMessage("Wrong token kind for THROWN");
         t = stm.getNextToken();
-        assertThat(t.kind).isEqualTo(JmriServerParserConstants.THROWNCLOSED).withErrorFailMessage("Wrong token kind for CLOSED");
+        assertThat(t.kind).isEqualTo(JmriServerParserConstants.THROWNCLOSED).withFailMessage("Wrong token kind for CLOSED");
     }
 
     // command types
@@ -54,9 +57,9 @@ public class JmriServerTokenizerTest {
         SimpleCharStream cs = new SimpleCharStream(new StringReader(cmd));
         JmriServerParserTokenManager stm = new JmriServerParserTokenManager(cs);
         Token t = stm.getNextToken();
-        assertThat(t.kind).isEqualTo(JmriServerParserConstants.POWER).withErrorFailMessage("Wrong token kind for POWER");
+        assertThat(t.kind).isEqualTo(JmriServerParserConstants.POWER).withFailMessage("Wrong token kind for POWER");
         t = stm.getNextToken();
-        assertThat(t.kind).isEqualTo(JmriServerParserConstants.ONOFF).withErrorFailMessage("Wrong token kind for ON");
+        assertThat(t.kind).isEqualTo(JmriServerParserConstants.ONOFF).withFailMessage("Wrong token kind for ON");
     }
 
     @Test 
@@ -65,7 +68,7 @@ public class JmriServerTokenizerTest {
         SimpleCharStream cs = new SimpleCharStream(new StringReader(cmd));
         JmriServerParserTokenManager stm = new JmriServerParserTokenManager(cs);
         Token t = stm.getNextToken();
-        Assert.assertTrue("Wrong token kind for TURNOUT", JmriServerParserConstants.TURNOUT == t.kind);
+        assertThat(t.kind).isEqualTo(JmriServerParserConstants.TURNOUT).withFailMessage("Wrong token kind for TURNOUT");
     }
 
     @Test 
@@ -74,7 +77,7 @@ public class JmriServerTokenizerTest {
         SimpleCharStream cs = new SimpleCharStream(new StringReader(cmd));
         JmriServerParserTokenManager stm = new JmriServerParserTokenManager(cs);
         Token t = stm.getNextToken();
-        Assert.assertTrue("Wrong token kind for REPORTER", JmriServerParserConstants.REPORTER == t.kind);
+        assertThat(t.kind).isEqualTo(JmriServerParserConstants.REPORTER).withFailMessage("Wrong token kind for REPORTER");
     }
 
     @Test 
@@ -83,7 +86,7 @@ public class JmriServerTokenizerTest {
         SimpleCharStream cs = new SimpleCharStream(new StringReader(cmd));
         JmriServerParserTokenManager stm = new JmriServerParserTokenManager(cs);
         Token t = stm.getNextToken();
-        Assert.assertTrue("Wrong token kind for LIGHT", JmriServerParserConstants.LIGHT == t.kind);
+        assertThat(t.kind).isEqualTo(JmriServerParserConstants.LIGHT).withFailMessage("Wrong token kind for LIGHT");
     }
 
     @Test 
@@ -92,7 +95,7 @@ public class JmriServerTokenizerTest {
         SimpleCharStream cs = new SimpleCharStream(new StringReader(cmd));
         JmriServerParserTokenManager stm = new JmriServerParserTokenManager(cs);
         Token t = stm.getNextToken();
-        Assert.assertTrue("Wrong token kind for SENSOR", JmriServerParserConstants.SENSOR == t.kind);
+        assertThat(t.kind).isEqualTo(JmriServerParserConstants.SENSOR).withFailMessage("Wrong token kind for SENSOR");
     }
 
     @Test 
@@ -101,7 +104,7 @@ public class JmriServerTokenizerTest {
         SimpleCharStream cs = new SimpleCharStream(new StringReader(cmd));
         JmriServerParserTokenManager stm = new JmriServerParserTokenManager(cs);
         Token t = stm.getNextToken();
-        Assert.assertTrue("Wrong token kind for THROTTLE", JmriServerParserConstants.THROTTLE == t.kind);
+        assertThat(t.kind).isEqualTo(JmriServerParserConstants.THROTTLE).withFailMessage("Wrong token kind for THROTTLE");
     }
 
     @Test 
@@ -110,7 +113,7 @@ public class JmriServerTokenizerTest {
         SimpleCharStream cs = new SimpleCharStream(new StringReader(cmd));
         JmriServerParserTokenManager stm = new JmriServerParserTokenManager(cs);
         Token t = stm.getNextToken();
-        Assert.assertTrue("Wrong token kind for OPERATIONS", JmriServerParserConstants.OPERATIONS == t.kind);
+        assertThat(t.kind).isEqualTo(JmriServerParserConstants.OPERATIONS).withFailMessage("Wrong token kind for OPERATIONS");
     }
 
     @Test 
@@ -119,7 +122,7 @@ public class JmriServerTokenizerTest {
         SimpleCharStream cs = new SimpleCharStream(new StringReader(cmd));
         JmriServerParserTokenManager stm = new JmriServerParserTokenManager(cs);
         Token t = stm.getNextToken();
-        Assert.assertTrue("Wrong token kind for TRAIN", JmriServerParserConstants.TRAIN == t.kind);
+        assertThat(t.kind).isEqualTo(JmriServerParserConstants.TRAIN).withFailMessage("Wrong token kind for TRAIN");
     }
     
     @Test 
@@ -128,7 +131,7 @@ public class JmriServerTokenizerTest {
         SimpleCharStream cs = new SimpleCharStream(new StringReader(cmd));
         JmriServerParserTokenManager stm = new JmriServerParserTokenManager(cs);
         Token t = stm.getNextToken();
-        Assert.assertTrue("Wrong token kind for TRAINS", JmriServerParserConstants.TRAINS == t.kind);
+        assertThat(t.kind).isEqualTo(JmriServerParserConstants.TRAINS).withFailMessage("Wrong token kind for TRAINS");
     }
 
     @Test 
@@ -137,7 +140,7 @@ public class JmriServerTokenizerTest {
         SimpleCharStream cs = new SimpleCharStream(new StringReader(cmd));
         JmriServerParserTokenManager stm = new JmriServerParserTokenManager(cs);
         Token t = stm.getNextToken();
-        Assert.assertTrue("Wrong token kind for TRAINWEIGHT", JmriServerParserConstants.TRAINWEIGHT == t.kind);
+        assertThat(t.kind).isEqualTo(JmriServerParserConstants.TRAINWEIGHT).withFailMessage("Wrong token kind for TRAINWEIGHT");
     }
 
     @Test 
@@ -146,7 +149,7 @@ public class JmriServerTokenizerTest {
         SimpleCharStream cs = new SimpleCharStream(new StringReader(cmd));
         JmriServerParserTokenManager stm = new JmriServerParserTokenManager(cs);
         Token t = stm.getNextToken();
-        Assert.assertTrue("Wrong token kind for TRAINCARS", JmriServerParserConstants.TRAINCARS == t.kind);
+        assertThat(t.kind).isEqualTo(JmriServerParserConstants.TRAINCARS).withFailMessage("Wrong token kind for TRAINCARS");
     }
 
     @Test 
@@ -155,7 +158,7 @@ public class JmriServerTokenizerTest {
         SimpleCharStream cs = new SimpleCharStream(new StringReader(cmd));
         JmriServerParserTokenManager stm = new JmriServerParserTokenManager(cs);
         Token t = stm.getNextToken();
-        Assert.assertTrue("Wrong token kind for TRAINLEADLOCO", JmriServerParserConstants.TRAINLEADLOCO == t.kind);
+        assertThat(t.kind).isEqualTo(JmriServerParserConstants.TRAINLEADLOCO).withFailMessage("Wrong token kind for TRAINLEADLOCO");
     }
 
     @Test 
@@ -164,7 +167,7 @@ public class JmriServerTokenizerTest {
         SimpleCharStream cs = new SimpleCharStream(new StringReader(cmd));
         JmriServerParserTokenManager stm = new JmriServerParserTokenManager(cs);
         Token t = stm.getNextToken();
-        Assert.assertTrue("Wrong token kind for TRAINCABOOSE", JmriServerParserConstants.TRAINCABOOSE == t.kind);
+        assertThat(t.kind).isEqualTo(JmriServerParserConstants.TRAINCABOOSE).withFailMessage("Wrong token kind for TRAINCABOOSE");
     }
 
     @Test 
@@ -173,7 +176,7 @@ public class JmriServerTokenizerTest {
         SimpleCharStream cs = new SimpleCharStream(new StringReader(cmd));
         JmriServerParserTokenManager stm = new JmriServerParserTokenManager(cs);
         Token t = stm.getNextToken();
-        Assert.assertTrue("Wrong token kind for TRAINSTATUS", JmriServerParserConstants.TRAINSTATUS == t.kind);
+        assertThat(t.kind).isEqualTo(JmriServerParserConstants.TRAINSTATUS).withFailMessage("Wrong token kind for TRAINSTATUS");
     }
 
     @Test 
@@ -182,7 +185,7 @@ public class JmriServerTokenizerTest {
         SimpleCharStream cs = new SimpleCharStream(new StringReader(cmd));
         JmriServerParserTokenManager stm = new JmriServerParserTokenManager(cs);
         Token t = stm.getNextToken();
-        Assert.assertTrue("Wrong token kind for TRAINLOCATION", JmriServerParserConstants.TRAINLOCATION == t.kind);
+        assertThat(t.kind).isEqualTo(JmriServerParserConstants.TRAINLOCATION).withFailMessage("Wrong token kind for TRAINLOCATION");
     }
 
     @Test 
@@ -191,7 +194,7 @@ public class JmriServerTokenizerTest {
         SimpleCharStream cs = new SimpleCharStream(new StringReader(cmd));
         JmriServerParserTokenManager stm = new JmriServerParserTokenManager(cs);
         Token t = stm.getNextToken();
-        Assert.assertTrue("Wrong token kind for TERMINANTE", JmriServerParserConstants.TERMINATE == t.kind);
+        assertThat(t.kind).isEqualTo(JmriServerParserConstants.TERMINATE).withFailMessage("Wrong token kind for TERMINANTE");
     }
 
 
@@ -203,7 +206,7 @@ public class JmriServerTokenizerTest {
         JmriServerParserTokenManager stm = new JmriServerParserTokenManager(cs);
         stm.SwitchTo(JmriServerParserConstants.DEVICENAME);
         Token t = stm.getNextToken();
-        Assert.assertTrue("Wrong token kind for Turnout Name", JmriServerParserConstants.JMRITURNOUT == t.kind);
+        assertThat(t.kind).isEqualTo(JmriServerParserConstants.JMRITURNOUT).withFailMessage("Wrong token kind for Turnout Name");
     }
 
     @Test 
@@ -213,7 +216,7 @@ public class JmriServerTokenizerTest {
         JmriServerParserTokenManager stm = new JmriServerParserTokenManager(cs);
         stm.SwitchTo(JmriServerParserConstants.DEVICENAME);
         Token t = stm.getNextToken();
-        Assert.assertTrue("Wrong token kind for Sensor Name", JmriServerParserConstants.JMRISENSOR == t.kind);
+        assertThat(t.kind).isEqualTo(JmriServerParserConstants.JMRISENSOR).withFailMessage("Wrong token kind for Sensor Name");
     }
 
     @Test 
@@ -223,7 +226,7 @@ public class JmriServerTokenizerTest {
         JmriServerParserTokenManager stm = new JmriServerParserTokenManager(cs);
         stm.SwitchTo(JmriServerParserConstants.DEVICENAME);
         Token t = stm.getNextToken();
-        Assert.assertTrue("Wrong token kind for Light Name", JmriServerParserConstants.JMRILIGHT == t.kind);
+        assertThat(t.kind).isEqualTo(JmriServerParserConstants.JMRILIGHT).withFailMessage("Wrong token kind for Light Name");
     }
 
     @Test 
@@ -233,18 +236,21 @@ public class JmriServerTokenizerTest {
         JmriServerParserTokenManager stm = new JmriServerParserTokenManager(cs);
         stm.SwitchTo(JmriServerParserConstants.DEVICENAME);
         Token t = stm.getNextToken();
-        Assert.assertTrue("Wrong token kind for Reporter Name", JmriServerParserConstants.JMRIREPORTER == t.kind);
+        assertThat(t.kind).isEqualTo(JmriServerParserConstants.JMRIREPORTER).withFailMessage("Wrong token kind for Reporter Name");
     }
 
     // This used to be an error.
     // now should check to see that the token produced
     // is the BADTOKEN token.
-    @Test(expected=TokenMgrError.class)
-    public void testTokenizeFailure() throws TokenMgrError {
-        String cmd = "this should fail";
-        SimpleCharStream cs = new SimpleCharStream(new StringReader(cmd));
-        JmriServerParserTokenManager stm = new JmriServerParserTokenManager(cs);
-        stm.getNextToken(); // called to provoke TokenMgrError
+    @Test
+    public void testTokenizeFailure() {
+        Throwable thrown = catchThrowable( () -> {
+            String cmd = "this should fail";
+            SimpleCharStream cs = new SimpleCharStream(new StringReader(cmd));
+            JmriServerParserTokenManager stm = new JmriServerParserTokenManager(cs);
+            stm.getNextToken(); // called to provoke TokenMgrError
+        });
+        assertThat(thrown).isNotNull();
     }
 
     @BeforeEach

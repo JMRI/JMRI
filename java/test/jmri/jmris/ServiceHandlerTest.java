@@ -3,9 +3,10 @@ package jmri.jmris;
 import java.io.IOException;
 import jmri.JmriException;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Tests for the jmri.jmris.ServiceHandler class 
@@ -17,7 +18,7 @@ public class ServiceHandlerTest {
     @Test
     public void testCtorDefault() {
         ServiceHandler a = new ServiceHandler();
-        Assert.assertNotNull(a);
+        assertThat(a).isNotNull();
     }
 
     @Test
@@ -34,7 +35,7 @@ public class ServiceHandlerTest {
         // set the value
         a.setPowerServer(ps);
         // make sure we can retrieve it.
-        assertThat(a.getPowerServer()).isEqualTo(ps).withErrorFailMessage("Power Server Get or Set failed");
+        assertThat(a.getPowerServer()).isEqualTo(ps).withFailMessage("Power Server Get or Set failed");
     }
 
     @Test
@@ -51,7 +52,7 @@ public class ServiceHandlerTest {
         // set the value
         a.setTurnoutServer(ts);
         // make sure we can retrieve it.
-        assertThat(a.getTurnoutServer()).isEqualTo(ts).withErrorFailMessage("Turnout Server Get or Set failed");
+        assertThat(a.getTurnoutServer()).isEqualTo(ts).withFailMessage("Turnout Server Get or Set failed");
    }
 
     @Test
@@ -68,7 +69,7 @@ public class ServiceHandlerTest {
         // set the value
         a.setSensorServer(ts);
         // make sure we can retrieve it.
-        assertThat(a.getSensorServer()).isEqualTo(ts).withErrorFailMessage("Sensor Server Get or Set failed");
+        assertThat(a.getSensorServer()).isEqualTo(ts).withFailMessage("Sensor Server Get or Set failed");
 
    }
 
@@ -86,7 +87,7 @@ public class ServiceHandlerTest {
         // set the value
         a.setLightServer(ts);
         // make sure we can retrieve it.
-        assertThat(a.getLightServer()).isEqualTo(ts).withErrorFailMessage("Light Server Get or Set failed");
+        assertThat(a.getLightServer()).isEqualTo(ts).withFailMessage("Light Server Get or Set failed");
     }
 
     @Test
@@ -103,7 +104,7 @@ public class ServiceHandlerTest {
         // set the value
         a.setProgrammerServer(ts);
         // make sure we can retrieve it.
-        assertThat(a.getProgrammerServer()).isEqualTo(ts).withErrorFailMessage("Programmer Server Get or Set failed");
+        assertThat(a.getProgrammerServer()).isEqualTo(ts).withFailMessage("Programmer Server Get or Set failed");
     }
 
     @Test
@@ -126,7 +127,7 @@ public class ServiceHandlerTest {
         // set the value
         a.setTimeServer(ts);
         // make sure we can retrieve it.
-        assertThat(a.getTimeServer()).isEqualTo(ts).withErrorFailMessage("Light Server Get or Set failed");
+        assertThat(a.getTimeServer()).isEqualTo(ts).withFailMessage("Light Server Get or Set failed");
     }
 
     @BeforeEach
