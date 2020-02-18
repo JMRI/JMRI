@@ -23,7 +23,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -302,7 +302,7 @@
 
       <p><b>S'il vous pla&icirc;t rappelez vous de sauver votre TCO
       apr&egrave;s l'utilisation de cet outil.</b></p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

@@ -1127,7 +1127,7 @@ public class Train implements java.beans.PropertyChangeListener {
         }
         java.util.Arrays.sort(roads);
         for (String road : roads) {
-            if (!road.equals("")) {
+            if (!road.isEmpty()) {
                 _roadList.add(road);
             }
         }
@@ -1260,7 +1260,7 @@ public class Train implements java.beans.PropertyChangeListener {
         }
         java.util.Arrays.sort(loads);
         for (String load : loads) {
-            if (!load.equals("")) {
+            if (!load.isEmpty()) {
                 _loadList.add(load);
             }
         }
@@ -1380,7 +1380,7 @@ public class Train implements java.beans.PropertyChangeListener {
         }
         java.util.Arrays.sort(owners);
         for (String owner : owners) {
-            if (!owner.equals("")) {
+            if (!owner.isEmpty()) {
                 _ownerList.add(owner);
             }
         }
@@ -2020,6 +2020,44 @@ public class Train implements java.beans.PropertyChangeListener {
 
         return number;
     }
+    
+    public int getNumberLoadedCarsInTrain(RouteLocation routeLocation) {
+        return getNumberCarsInTrain(routeLocation) - getNumberEmptyCarsInTrain(routeLocation);
+    }
+    
+    
+    /**
+     * Gets the number of cars pulled from a location
+     * 
+     * @param routeLocation the location
+     * @return number of pick ups
+     */
+    public int getNumberCarsPickedUp(RouteLocation routeLocation) {
+        int number = 0;
+        for (Car rs : InstanceManager.getDefault(CarManager.class).getList(this)) {
+            if (rs.getRouteLocation() == routeLocation) {
+                number++;
+            }
+        }
+        return number;
+    }
+    
+    /**
+     * Gets the number of cars delivered to a location
+     * 
+     * @param routeLocation the location
+     * @return number of set outs
+     */
+    public int getNumberCarsSetout(RouteLocation routeLocation) {
+        int number = 0;
+        for (Car rs : InstanceManager.getDefault(CarManager.class).getList(this)) {
+            if (rs.getRouteDestination() == routeLocation) {
+                number++;
+            }
+        }
+        return number;
+    }
+    
 
     /**
      * Gets the train's length at the current location in the train's route.

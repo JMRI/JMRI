@@ -1,7 +1,6 @@
 package jmri.configurexml;
 
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,7 +34,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      * See the <a href="package-summary.html#schema">Schema versioning
      * discussion</a>. Also controls the stylesheet file version.
      */
-    static final public String schemaVersion = "-2-9-6";
+    static final public String schemaVersion = "-4-19-2";
 
     public ConfigXmlManager() {
     }

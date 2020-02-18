@@ -218,14 +218,15 @@ scanning through the code.
       <p>We do not use these annotations:</p>
 
       <ul>
-        <li><a href=
+        <li><a name="nullable" id="nullable"></a>
+            <a href=
                "http://findbugs.sourceforge.net/manual/annotations.html"><code>
                     javax.annotation.Nullable</code></a> - This doesn't really
-        mean what people think it does, as SpotBugs doesn't really
-        check anything when this is used. From the SpotBugs documentation:
-        <blockquote>
-              SpotBugs will treat the annotated items as though they had
-              no annotation. In practice this annotation is useful only
+                mean what people think it does, as SpotBugs doesn't really
+                check anything when this is used. From the SpotBugs documentation:
+          <blockquote>
+            SpotBugs will treat the annotated items as though they had
+            no annotation. In practice this annotation is useful only
             for overriding an overarching NonNull annotation. Use
             javax.annotation.ParametersAreNullableByDefault to set it
             for an entire class. Prefer the use of

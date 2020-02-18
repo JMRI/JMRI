@@ -641,19 +641,15 @@ public class ConnectivityUtil {
             }
         }
         for (LayoutTurnout ls : layoutEditor.getLayoutTurnouts()) {
-            LayoutBlock layoutBlockA = ((TrackSegment) ls.getConnectA()).getLayoutBlock();
-            LayoutBlock layoutBlockB = ((TrackSegment) ls.getConnectB()).getLayoutBlock();
-            LayoutBlock layoutBlockC = ((TrackSegment) ls.getConnectC()).getLayoutBlock();
-            LayoutBlock layoutBlockD = ((TrackSegment) ls.getConnectD()).getLayoutBlock();
             if (ls.getBlockName().equals(userName)) {
                 result.add(ls);
-            } else if ((ls.getConnectA() != null) && (layoutBlockA == lBlock)) {
+            } else if ((ls.getConnectA() != null) && (((TrackSegment) ls.getConnectA()).getLayoutBlock() == lBlock)) {
                 result.add(ls);
-            } else if ((ls.getConnectB() != null) && (layoutBlockB == lBlock)) {
+            } else if ((ls.getConnectB() != null) && (((TrackSegment) ls.getConnectB()).getLayoutBlock() == lBlock)) {
                 result.add(ls);
-            } else if ((ls.getConnectC() != null) && (layoutBlockC == lBlock)) {
+            } else if ((ls.getConnectC() != null) && (((TrackSegment) ls.getConnectC()).getLayoutBlock() == lBlock)) {
                 result.add(ls);
-            } else if ((ls.getConnectD() != null) && (layoutBlockD == lBlock)) {
+            } else if ((ls.getConnectD() != null) && (((TrackSegment) ls.getConnectD()).getLayoutBlock() == lBlock)) {
                 result.add(ls);
             }
         }

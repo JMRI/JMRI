@@ -22,13 +22,13 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 <div class="nomenu" id="mBody">
     <div id="mainContent">
 
       <h2>JMRI: System Info Tool</h2>This is the
       jmri.jmrix.lenxz.systeminfo.SystemInfoFrame help page. 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

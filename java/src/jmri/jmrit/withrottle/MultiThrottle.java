@@ -2,8 +2,9 @@ package jmri.jmrit.withrottle;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,7 +37,7 @@ public class MultiThrottle {
     private ThrottleControllerListener parentTCL = null;
     private ControllerInterface parentController = null;
     char whichThrottle;
-    HashMap<String, MultiThrottleController> throttles;
+    ConcurrentHashMap<String, MultiThrottleController> throttles;
 
     public MultiThrottle(char id, ThrottleControllerListener tcl, ControllerInterface ci) {
         if (log.isDebugEnabled()) {
@@ -90,7 +91,7 @@ public class MultiThrottle {
             return null;
         }
         if (throttles == null) {
-            throttles = new HashMap<>(1);
+            throttles = new ConcurrentHashMap<>(1);
         }
 
         if (throttles.containsKey(key)) {

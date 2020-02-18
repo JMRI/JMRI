@@ -19,7 +19,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -210,7 +210,7 @@
           test.<br>
           Last Edited: 11 Nov 2015</td><!-- Type -->
         </tr>
-      </table><!--#include virtual="/Footer" -->
+      </table><!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

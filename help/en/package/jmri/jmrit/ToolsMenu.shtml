@@ -24,7 +24,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -134,7 +134,7 @@
         "../../../package/jmri/jmrit/operations/Operations.shtml">Operations</a></li>
       </ul>For more information, see also the <a href=
       "../../../html/tools/index.shtml">general tools index</a>. 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

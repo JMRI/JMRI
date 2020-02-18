@@ -127,11 +127,4 @@ public abstract class AbstractStringIO extends AbstractNamedBean implements Stri
         return suffix1.compareTo(suffix2);
     }
 
-    /** {@inheritDoc} */
-    @Override
-    @Nonnull
-    public String toString() {
-        return this.getClass().getName() + " (" + this.getSystemName() + ")"; //NOI18N
-    }
-
 }

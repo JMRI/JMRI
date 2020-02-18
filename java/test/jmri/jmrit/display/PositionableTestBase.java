@@ -30,6 +30,10 @@ abstract public class PositionableTestBase {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initInternalLightManager();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initReporterManager();
     }
 
     /**

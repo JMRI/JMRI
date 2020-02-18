@@ -1,6 +1,11 @@
 package jmri.jmrit.operations.locations.tools;
 
 import java.awt.GraphicsEnvironment;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
@@ -10,9 +15,6 @@ import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
 
 /**
  *
@@ -36,6 +38,7 @@ public class TrackRoadEditFrameTest extends OperationsTestCase {
         Assert.assertTrue(t.isVisible());
 
         JUnitUtil.dispose(t);
+
     }
 
     @Test
@@ -75,6 +78,7 @@ public class TrackRoadEditFrameTest extends OperationsTestCase {
         }
 
         JUnitUtil.dispose(tlef);
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TrackRoadEditFrameTest.class);

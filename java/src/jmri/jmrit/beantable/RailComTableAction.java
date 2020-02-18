@@ -9,8 +9,6 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import jmri.InstanceManager;
 import jmri.IdTag;
-import jmri.Manager;
-import jmri.NamedBean;
 import jmri.RailCom;
 import jmri.RailComManager;
 import jmri.Reporter;

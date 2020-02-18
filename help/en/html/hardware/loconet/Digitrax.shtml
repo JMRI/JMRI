@@ -22,7 +22,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -1068,7 +1068,7 @@
             Structures for LocoNet&reg; Interfacing</a></li>
 
             <li>A technically-oriented study of <a href=
-            "DigitraxPower/index.shtml">Power Supply issues</a> in
+            "DigitraxPower.shtml">Power Supply issues</a> in
             some Digitrax products</li>
 
           </ul>
@@ -1183,7 +1183,7 @@
 
       <p>LocoNet&reg; is a registered trademark of <a href=
       "http://www.digitrax.com">Digitrax, Inc.</a></p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

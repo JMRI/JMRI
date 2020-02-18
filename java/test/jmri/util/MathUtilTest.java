@@ -1,5 +1,6 @@
 package jmri.util;
 
+import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.Point2D;
@@ -580,14 +581,13 @@ public class MathUtilTest {
     public void test_origin() {
         Rectangle2D rD = new Rectangle2D.Double(3.14, 1.59, 33.3, 44.4);
         Assert.assertEquals("MathUtil.origin(r)", new Point2D.Double(3.14, 1.59),
-                MathUtil.origin(rD));
+                MathUtil.getOrigin(rD));
     }
 
     @Test
     public void test_size() {
         Rectangle2D rD = new Rectangle2D.Double(3.14, 1.59, 33.3, 44.4);
-        Assert.assertEquals("MathUtil.size(r)", new Point2D.Double(33.3, 44.4),
-                MathUtil.size(rD));
+        Assert.assertEquals("MathUtil.size(r)", new Dimension(33, 44), MathUtil.getSize(rD));
     }
 
     @Test
@@ -662,12 +662,12 @@ public class MathUtilTest {
 
     @Test
     public void test_intersect() {
-        Point2D p1 = new Point2D.Double(111.1, 222.2);
-        Point2D p2 = new Point2D.Double(151.1, 252.2);
-        Point2D p3 = new Point2D.Double(110.2, 210.5);
-        Point2D p4 = new Point2D.Double(101.9, 252.4);
+        Point2D p1 = new Point2D.Double(111.0, 222.0);
+        Point2D p2 = new Point2D.Double(151.0, 252.0);
+        Point2D p3 = new Point2D.Double(100.0, 350.0);
+        Point2D p4 = new Point2D.Double(140.0, 320.0);
         Assert.assertEquals("MathUtil.intersect(p1, p2, p3, p4)",
-                new Point2D.Double(-1399.3178701298561, -910.613402597392),
+                new Point2D.Double(201.83333333333334, 290.12499999999994),
                 MathUtil.intersect(p1, p2, p3, p4));
 
         // coliner lines (no solution)
@@ -677,9 +677,9 @@ public class MathUtilTest {
                 MathUtil.intersect(p1, p1, p2, p2));
 
         // parallel lines (no solution)
-        Point2D p1P = new Point2D.Double(121.1, 232.2);
-        Point2D p2P = new Point2D.Double(161.1, 262.2);
-        Assert.assertNull("MathUtil.intersect(p1, p1, p2, p2)",
+        Point2D p1P = new Point2D.Double(121.0, 232.0);
+        Point2D p2P = new Point2D.Double(161.0, 262.0);
+        Assert.assertNull("MathUtil.intersect(p1, p1, p1P, p2P)",
                 MathUtil.intersect(p1, p2, p1P, p2P));
     }
 

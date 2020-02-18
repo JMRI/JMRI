@@ -4,10 +4,7 @@ import java.awt.GraphicsEnvironment;
 import jmri.jmrix.maple.MapleSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import org.junit.*;
-import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Test simple functioning of ListFrame

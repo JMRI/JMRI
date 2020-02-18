@@ -32,7 +32,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -180,7 +180,7 @@
           <td>requi&egrave;re une liste de panneaux, r&eacute;pond
           avec un ensemble des d&eacute;tails de deux panneaux</td>
         </tr>
-      </table><!--#include virtual="/Footer" -->
+      </table><!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

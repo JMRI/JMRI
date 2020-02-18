@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 4.19.1ish+jake+20191225T2237Z+Rdaf4668949 on Wed Dec 25 14:37:59 PST 2019-->
-  <decoderIndex version="988">
+  <!--Written by JMRI version 4.19.3ish+jake+20200207T1509Z+R853a0f509d on Fri Feb 07 07:09:17 PST 2020-->
+  <decoderIndex version="996">
     <mfgList nmraListDate="2019-02-26" updated="2019-11-17" lastadd="225,166">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -463,7 +463,10 @@
         </functionlabels>
       </family>
       <family name="Paragon 3" mfg="Broadway Limited Imports, LLC" file="BLI_Rolling_Thunder.xml">
-        <model model="Rolling Thunder">
+        <model model="Rolling Thunder Receiver" comment="Device that connects to Subwoofer">
+          <versionCV lowVersionID="0" highVersionID="31" />
+        </model>
+        <model show="no" model="Rolling Thunder">
           <versionCV lowVersionID="0" highVersionID="31" />
         </model>
       </family>
@@ -1035,7 +1038,7 @@
           <output name="BEMF" />
         </model>
       </family>
-      <family name="DCC Concepts Zen" mfg="DCC Concepts" lowVersionID="34" highVersionID="35" file="DCC_Concepts_Zen.xml">
+      <family name="DCC Concepts Zen" mfg="DCCconcepts" lowVersionID="34" highVersionID="35" file="DCC_Concepts_Zen.xml">
         <model model="ZBHP Buddha" numOuts="6" numFns="14" maxMotorCurrent="3A (peak=5A)" productID="ZBHP" formFactor="O" connector="other" comment="O-scale, with screw connectors">
           <output name="1" label="White" connection="other" maxcurrent="250 mA" />
           <output name="2" label="Yellow" connection="other" maxcurrent="250 mA" />
@@ -9422,6 +9425,9 @@
           <output name="SH" label="Shunting Spd" />
         </model>
       </family>
+      <family name="fucik.name" mfg="Fucik" file="Fucik_Servo4.xml">
+        <model model="ServoDecoder v5.x" lowVersionID="53" highVersionID="55" numOuts="4" connector="other" />
+      </family>
       <family name="Turnouts" mfg="GFB Designs" comment="TT300 is a turnout motor with integral decoder, programmable by service mode or ops-mode for accessories" file="GFB_TT300.xml">
         <model model="TT300" lowVersionID="1" highVersionID="1" />
       </family>
@@ -9449,7 +9455,7 @@
           <output name="2" label="Yellow" />
         </model>
       </family>
-      <family name="Harman DIY Accessory Decoders" mfg="Harman-DIY" file="Harman_DIY_accessory_decoders.xml">
+      <family name="Harman DIY Accessory Decoders" mfg="Harman DCC" file="Harman_DIY_accessory_decoders.xml">
         <model model="Eight outputs" numOuts="8" numFns="16" formFactor="HO">
           <output name="1" label="Output A" />
           <output name="2" label="Output B" />
@@ -9465,7 +9471,7 @@
           <output name="2" label="Output B" />
         </model>
       </family>
-      <family name="Harman DIY Function Decoders" mfg="Harman-DIY" file="Harman_DIY_function_decoders.xml">
+      <family name="Harman DIY Function Decoders" mfg="Harman DCC" file="Harman_DIY_function_decoders.xml">
         <model model="Function1-8" numOuts="8" numFns="16" formFactor="HO">
           <output name="1" label="Output A" />
           <output name="2" label="Output B" />
@@ -9755,19 +9761,19 @@
           <versionCV lowVersionID="2" highVersionID="120" />
         </model>
       </family>
-      <family name="Ditch Light Decoder" mfg="Kato" lowVersionID="49" highVersionID="51" file="Kato_Ditch.xml">
+      <family name="Ditch Light Decoder" mfg="KATO Precision Models" lowVersionID="49" highVersionID="51" file="Kato_Ditch.xml">
         <model model="Ditch Light Decoder" numOuts="2" numFns="5" formFactor="HO" connector="unspecified">
           <output name="1" label="Ditch Lights" connection="unspecified" />
           <output name="2" label="Flashing" connection="unspecified" />
         </model>
       </family>
-      <family name="Function Only, with transponding" mfg="Kato" file="Kato_FL11.xml">
+      <family name="Function Only, with transponding" mfg="KATO Precision Models" file="Kato_FL11.xml">
         <model model="FL11" lowVersionID="0" />
       </family>
-      <family name="Function Only, with transponding" mfg="Kato" file="Kato_FL12.xml">
+      <family name="Function Only, with transponding" mfg="KATO Precision Models" file="Kato_FL12.xml">
         <model model="FL12" numOuts="2" lowVersionID="254" />
       </family>
-      <family name="EM13, silent, readback" mfg="Kato" lowVersionID="49" highVersionID="51" file="Kato_em13.xml">
+      <family name="EM13, silent, readback" mfg="KATO Precision Models" lowVersionID="49" highVersionID="51" file="Kato_em13.xml">
         <model model="EM13" numOuts="1" numFns="0" maxMotorCurrent="1.0A (peak=1.5A)" formFactor="N" connector="unspecified">
           <output name="4" label="Violet" connection="unspecified" />
           <size length=".55" width=".36" height=".13" units="inches" />
@@ -10854,16 +10860,16 @@
       <family name="DCCACC" mfg="MERG" comment="DCCACC is a stationary decoder, but it can be programmed in the usual way" file="MERG_DCCACC.xml">
         <model model="DCCACC" />
       </family>
-      <family name="BTLocobridge" mfg="MGP" type="stationary" comment="Bluetooth LocoNet interface" file="MGP_BT_LocoBridge.xml">
+      <family name="BTLocobridge" mfg="Möllehem Gårdsproduktion" type="stationary" comment="Bluetooth LocoNet interface" file="MGP_BT_LocoBridge.xml">
         <model model="BTLocobridge" lowVersionID="1" />
       </family>
-      <family name="Panel" mfg="MGP" type="stationary" comment="Panel, a LocoNet decoder control panels" file="MGP_Panel.xml">
+      <family name="Panel" mfg="Möllehem Gårdsproduktion" type="stationary" comment="Panel, a LocoNet decoder control panels" file="MGP_Panel.xml">
         <model model="Panel" lowVersionID="1" />
       </family>
-      <family name="Servo5" mfg="MGP" type="stationary" comment="Servo5, a LocoNet decoder for railway switches" file="MGP_Servo5.xml">
+      <family name="Servo5" mfg="Möllehem Gårdsproduktion" type="stationary" comment="Servo5, a LocoNet decoder for railway switches" file="MGP_Servo5.xml">
         <model model="Servo5" lowVersionID="1" />
       </family>
-      <family name="Signal10" mfg="MGP" type="stationary" comment="Signal10, a LocoNet decoder for railway signals" file="MGP_Signal10.xml">
+      <family name="Signal10" mfg="Möllehem Gårdsproduktion" type="stationary" comment="Signal10, a LocoNet decoder for railway signals" file="MGP_Signal10.xml">
         <model model="Signal10" lowVersionID="1" />
       </family>
       <family name="MRC 14/28/128 step decoders" mfg="MRC" file="MRC_128step.xml">
@@ -13699,23 +13705,31 @@
       <family name="NYB Dual Mode Decoder" mfg="New York Byano Limited" type="locomotive" file="NYB_dualmode.xml">
         <model model="NYB Dual Mode Decoder" numOuts="2" numFns="0" lowVersionID="46" nmraWarrant="yes" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no" />
       </family>
-      <family name="PpP Decoders" mfg="PpP" lowVersionID="22" highVersionID="22" comment="PpP-Des3 decoder." file="PpP_Des3.xml">
+      <family name="PpP Decoders" mfg="PpP Digital" lowVersionID="22" highVersionID="22" comment="PpP-Des3 decoder." file="PpP_Des3.xml">
         <model model="PpP-Des3" />
       </family>
-      <family name="PpP Decoders" mfg="PpP" lowVersionID="10" highVersionID="11" comment="PpP-LightFX decoder." file="PpP_LightFX.xml">
+      <family name="PpP Decoders" mfg="PpP Digital" lowVersionID="10" highVersionID="11" comment="PpP-LightFX decoder." file="PpP_LightFX.xml">
         <model model="PpP-LightFX" />
       </family>
-      <family name="PpP Decoders" mfg="PpP" lowVersionID="52" highVersionID="53" comment="PpP-Sem2 decoder." file="PpP_Sem2.xml">
+      <family name="PpP Decoders" mfg="PpP Digital" lowVersionID="52" highVersionID="53" comment="PpP-Sem2 decoder." file="PpP_Sem2.xml">
         <model model="PpP-Sem2" />
       </family>
-      <family name="PpP Decoders" mfg="PpP" lowVersionID="32" highVersionID="32" comment="PpP-Sem3 decoder." file="PpP_Sem3.xml">
+      <family name="PpP Decoders" mfg="PpP Digital" lowVersionID="32" highVersionID="32" comment="PpP-Sem3 decoder." file="PpP_Sem3.xml">
         <model model="PpP-Sem3" />
       </family>
-      <family name="PpP Decoders" mfg="PpP" lowVersionID="42" highVersionID="42" comment="PpP-Sem4 decoder." file="PpP_Sem4.xml">
+      <family name="PpP Decoders" mfg="PpP Digital" lowVersionID="42" highVersionID="42" comment="PpP-Sem4 decoder." file="PpP_Sem4.xml">
         <model model="PpP-Sem4" />
       </family>
       <family name="FREDi" mfg="Public-domain and DIY" file="Public_Domain_FREDi_LNSV2.xml">
         <model model="FREDi using LNSV2" productID="11" developerID="1" />
+      </family>
+      <family name="fucik.name DIY" mfg="Public-domain and DIY" file="Public_Domain_Fucik_1.xml">
+        <model model="1 ServoDecoder v3.4" lowVersionID="34" highVersionID="34" numOuts="2" connector="other" />
+      </family>
+      <family name="fucik.name DIY" mfg="Public-domain and DIY" file="Public_Domain_Fucik_2_4.xml">
+        <model model="4 ServoDecoder v3.0" lowVersionID="30" highVersionID="30" numOuts="4" connector="other" />
+        <model model="2 ServoDecoder v3.2" lowVersionID="32" highVersionID="32" numOuts="2" connector="other" />
+        <model model="4 ServoDecoder v3.5" lowVersionID="35" highVersionID="35" numOuts="4" connector="other" />
       </family>
       <family name="Hans Deloof LocoIO" mfg="Public-domain and DIY" file="Public_Domain_HDL_LocoIO.xml">
         <model model="HDL LocoIO v1.54" productID="154" />
@@ -13769,6 +13783,9 @@
           <output name="04" label="Green" />
           <output name="05" label="Brown" />
         </model>
+      </family>
+      <family name="dccdoma.cz" mfg="Public-domain and DIY" file="Public_Domain_dccdoma_ARD_8SCOM_4VYH_TC.xml">
+        <model model="ARD-8SCOM-4VYH-TC" lowVersionID="10" highVersionID="19" productID="16843521" maxInputVolts="24V AC" maxTotalCurrent="0.2A" numOuts="16" connector="other" />
       </family>
       <family name="dccdoma.cz" mfg="Public-domain and DIY" file="Public_Domain_dccdoma_ARD_SCOM_MX.xml">
         <model model="ARD-SCOM-MX" lowVersionID="10" highVersionID="19" productID="16843265" maxInputVolts="24V AC" maxTotalCurrent="0.2A peak 3.3A" numOuts="16" connector="other" />
@@ -18500,6 +18517,7 @@
         <model model="TSU-GN2200 SD70ACe w/ditch" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="792" comment="Model T0303.002B" />
         <model model="TSU-GN2200 SD70M/75M" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="778" comment="Model T0301.001B" />
         <model model="TSU-GN2200 SD70M w/ditch" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="779" comment="Model T0301.002B" />
+        <model model="TSU-GN2208 SD90MAC-H" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="908" comment="Model 8T0305.001" />
         <model model="TSU-GN2200 ES40DC w/ditch" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="816" comment="Model T1004.002B" />
         <model model="TSU-GN2208 ES44AC" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="855" comment="Model 8T1004.001" />
         <model model="TSU-GN2208 ES44AC 2" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="856" comment="Model T1004.004" />
@@ -22079,6 +22097,31 @@
           <output name="Coupler" />
           <functionlabels>
             <functionlabel num="5" lockable="true">Mars Light</functionlabel>
+            <functionlabel num="6" lockable="true"># Boards</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="GP7 NYC" numOuts="4" numFns="14" connector="other" productID="GP7NYC" comment="Diesel Prime Mover EMD567 Turbo">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
+          <output name="Reserved" />
+          <output name="Fans" label="RPM +" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Compressor" label="RPM -" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+          <functionlabels>
+            <functionlabel num="5" lockable="true">Gyralite</functionlabel>
             <functionlabel num="6" lockable="true"># Boards</functionlabel>
           </functionlabels>
         </model>
@@ -28569,56 +28612,56 @@
           <size length="0.500" width="0.375" height="0.125" units="inches" />
         </model>
       </family>
-      <family name="BlocD8" mfg="Team Digital" type="stationary" file="TD_BlocD8.xml">
+      <family name="BlocD8" mfg="Team Digital, LLC" type="stationary" file="TD_BlocD8.xml">
         <model model="BlocD8" lowVersionID="1" comment="BlocD8 can be programmed in the usual way" />
       </family>
-      <family name="CSC Family" mfg="Team Digital" type="stationary" comment="The CSC can be programmed in the usual way" file="TD_CSC.xml">
+      <family name="CSC Family" mfg="Team Digital, LLC" type="stationary" comment="The CSC can be programmed in the usual way" file="TD_CSC.xml">
         <model model="CSC" lowVersionID="10" comment="Original HW" />
         <model model="CSCe" lowVersionID="10" comment="Later HW" />
       </family>
-      <family name="Stationary Decoder" mfg="Team Digital" type="stationary" file="TD_SC8.xml">
+      <family name="Stationary Decoder" mfg="Team Digital, LLC" type="stationary" file="TD_SC8.xml">
         <model model="SC8" lowVersionID="1" comment="SC8 is a stationary decoder, but it can be programmed in the usual way" />
       </family>
-      <family name="Stationary Decoder" mfg="Team Digital" type="stationary" file="TD_SC82.xml">
+      <family name="Stationary Decoder" mfg="Team Digital, LLC" type="stationary" file="TD_SC82.xml">
         <model model="SC82" lowVersionID="1" comment="SC82 is a stationary decoder, but it can be programmed in the usual way" />
       </family>
-      <family name="Stationary Decoder" mfg="Team Digital" type="stationary" file="TD_SHD2.xml">
+      <family name="Stationary Decoder" mfg="Team Digital, LLC" type="stationary" file="TD_SHD2.xml">
         <model model="SHD2" lowVersionID="1" comment="SHD2 is a DCC Signal decoder" />
       </family>
-      <family name="SIC24" mfg="Team Digital" type="stationary" comment="SIC24 is not stationary decoder, but it can be programmed in the usual way" file="TD_SIC24.xml">
+      <family name="SIC24" mfg="Team Digital, LLC" type="stationary" comment="SIC24 is not stationary decoder, but it can be programmed in the usual way" file="TD_SIC24.xml">
         <model model="SIC24" lowVersionID="12" />
       </family>
-      <family name="SIC24AD" mfg="Team Digital" type="stationary" comment="The SIC24AD can be programmed in the usual way" file="TD_SIC24AD.xml">
+      <family name="SIC24AD" mfg="Team Digital, LLC" type="stationary" comment="The SIC24AD can be programmed in the usual way" file="TD_SIC24AD.xml">
         <model model="SIC24AD" lowVersionID="10" />
       </family>
-      <family name="SIC24e" mfg="Team Digital" type="stationary" comment="The SIC24e can be programmed in the usual way" file="TD_SIC24e.xml">
+      <family name="SIC24e" mfg="Team Digital, LLC" type="stationary" comment="The SIC24e can be programmed in the usual way" file="TD_SIC24e.xml">
         <model model="SIC24e" lowVersionID="10" />
       </family>
-      <family name="Stationary Decoder" mfg="Team Digital" type="stationary" file="TD_SMC4.xml">
+      <family name="Stationary Decoder" mfg="Team Digital, LLC" type="stationary" file="TD_SMC4.xml">
         <model model="SMC4" lowVersionID="1" comment="SMC4 is a stationary decoder, but it can be programmed in the usual way" />
       </family>
-      <family name="Stationary Decoder" mfg="Team Digital" type="stationary" comment="SMD2 is a stationary decoder, but it can be programmed in the usual way" file="TD_SMD2.xml">
+      <family name="Stationary Decoder" mfg="Team Digital, LLC" type="stationary" comment="SMD2 is a stationary decoder, but it can be programmed in the usual way" file="TD_SMD2.xml">
         <model model="SMD2" lowVersionID="1" />
       </family>
-      <family name="Stationary Decoder" mfg="Team Digital" type="stationary" file="TD_SMD8.xml">
+      <family name="Stationary Decoder" mfg="Team Digital, LLC" type="stationary" file="TD_SMD8.xml">
         <model model="SMD8" lowVersionID="52" comment="SMD8 is a stationary decoder, but it can be programmed in the usual way" />
       </family>
-      <family name="Stationary Decoder" mfg="Team Digital" type="stationary" file="TD_SMD82.xml">
+      <family name="Stationary Decoder" mfg="Team Digital, LLC" type="stationary" file="TD_SMD82.xml">
         <model model="SMD82" lowVersionID="1" comment="SMD82 is a stationary decoder, but it can be programmed in the usual way" />
       </family>
-      <family name="Stationary Decoder" mfg="Team Digital" type="stationary" file="TD_SMD84.xml">
+      <family name="Stationary Decoder" mfg="Team Digital, LLC" type="stationary" file="TD_SMD84.xml">
         <model model="SMD84" lowVersionID="1" comment="SMD84 is a stationary decoder, but it can be programmed in the usual way" />
       </family>
-      <family name="Stationary Decoder" mfg="Team Digital" type="stationary" file="TD_SRC16.xml">
+      <family name="Stationary Decoder" mfg="Team Digital, LLC" type="stationary" file="TD_SRC16.xml">
         <model model="SRC16" lowVersionID="1" comment="SRC16 is a stationary decoder with serial bus" />
       </family>
-      <family name="Stationary Decoder" mfg="Team Digital" type="stationary" file="TD_SRC162.xml">
+      <family name="Stationary Decoder" mfg="Team Digital, LLC" type="stationary" file="TD_SRC162.xml">
         <model model="SRC162" lowVersionID="1" comment="SRC162 is a stationary decoder with serial bus" />
       </family>
-      <family name="SRC8" mfg="Team Digital" type="stationary" comment="SRC8 is not stationary decoder, but it can be programmed in the usual way" file="TD_SRC8.xml">
+      <family name="SRC8" mfg="Team Digital, LLC" type="stationary" comment="SRC8 is not stationary decoder, but it can be programmed in the usual way" file="TD_SRC8.xml">
         <model model="SRC8" lowVersionID="12" />
       </family>
-      <family name="Stationary Decoder" mfg="Team Digital" type="stationary" file="TD_Servette.xml">
+      <family name="Stationary Decoder" mfg="Team Digital, LLC" type="stationary" file="TD_Servette.xml">
         <model model="Servette" lowVersionID="1" comment="Servette is a stationary decoder, but it can be programmed in the usual way" />
       </family>
       <family name="Quad-LN" mfg="Tam Valley Depot" type="stationary" comment="The Quad-LN is programmed in OPs mode except for the address." file="TamValleyDepot_QuadLn.xml">
@@ -33853,7 +33896,7 @@
           <output name="4" maxcurrent="100 mA" />
         </model>
       </family>
-      <family name="Wekomm for LSM" mfg="Wekomm" file="Wekomm_RRR.xml">
+      <family name="Wekomm for LSM" mfg="Wekomm Engineering, GmbH" file="Wekomm_RRR.xml">
         <model model="Wekomm_RRR" />
         <functionlabels>
           <functionlabel num="0" lockable="true">Cab Lights</functionlabel>

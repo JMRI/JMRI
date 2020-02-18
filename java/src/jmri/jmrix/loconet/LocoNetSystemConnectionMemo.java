@@ -21,7 +21,6 @@ import jmri.ThrottleManager;
 import jmri.TurnoutManager;
 import jmri.jmrix.SystemConnectionMemo;
 import jmri.jmrix.debugthrottle.DebugThrottleManager;
-import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.jmrix.loconet.swing.LnComponentFactory;
 import jmri.jmrix.swing.ComponentFactory;
 import jmri.managers.DefaultProgrammerManager;
@@ -496,26 +495,32 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
         InstanceManager.deregister(this, LocoNetSystemConnectionMemo.class);
         if (cf != null) {
             InstanceManager.deregister(cf, ComponentFactory.class);
+            cf = null;
         }
         if (powerManager != null) {
             powerManager.dispose();
             InstanceManager.deregister(powerManager, LnPowerManager.class);
+            powerManager = null;
         }
         if (turnoutManager != null) {
             turnoutManager.dispose();
             InstanceManager.deregister(turnoutManager, LnTurnoutManager.class);
+            turnoutManager = null;
         }
         if (lightManager != null) {
             lightManager.dispose();
             InstanceManager.deregister(lightManager, LnLightManager.class);
+            lightManager = null;
         }
         if (sensorManager != null) {
             sensorManager.dispose();
             InstanceManager.deregister(sensorManager, LnSensorManager.class);
+            sensorManager = null;
         }
         if (reporterManager != null) {
             reporterManager.dispose();
             InstanceManager.deregister(reporterManager, LnReporterManager.class);
+            reporterManager = null;
         }
         if (throttleManager != null) {
             if (throttleManager instanceof LnThrottleManager) {
@@ -523,18 +528,23 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
             } else if (throttleManager instanceof DebugThrottleManager) {
                 InstanceManager.deregister(((DebugThrottleManager) throttleManager), DebugThrottleManager.class);
             }
+            throttleManager = null;
         }
         if (clockControl != null) {
             InstanceManager.deregister(clockControl, LnClockControl.class);
+            clockControl = null;
         }
         if (tm != null){
             tm.dispose();
+            tm = null;
         }
         if (sm != null){
             sm.dispose();
+            sm = null;
         }
         if (lt != null){
             lt.dispose();
+            lt = null;
         }
         super.dispose();
     }

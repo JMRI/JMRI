@@ -322,8 +322,8 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         try {
             firePropertyChange("state", old, _current);
         } catch (Exception e) {
-            log.error(getDisplayName()+" got exception during fireProperTyChange("+old+","+_current+") in thread "+
-                    Thread.currentThread().getName()+" "+Thread.currentThread().getId()+": ", e);
+            log.error("{} got exception during firePropertyChange({},{}) in thread {} {}: {}", getDisplayName(), old, _current,
+                    Thread.currentThread().getName(), Thread.currentThread().getId(), e);
         }
     }
 
@@ -460,7 +460,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         }
         try {
             return InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(speed);
-        } catch (Exception ex) {
+        } catch (IllegalArgumentException ex) {
             return -1;
         }
     }
@@ -495,7 +495,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
             } catch (NumberFormatException nx) {
                 try {
                     InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(s);
-                } catch (Exception ex) {
+                } catch (IllegalArgumentException ex) {
                     throw new JmriException("Value of requested block speed is not valid");
                 }
             }

@@ -123,7 +123,7 @@ public class ConnectionStatus {
      * @return the status
      */
     public synchronized String getConnectionState(String systemName, @Nonnull String portName) {
-        log.debug("144 getConnectionState systemName: {} portName: {}", systemName, portName);
+        log.debug("getConnectionState systemName: {} portName: {}", systemName, portName);
         String stateText = CONNECTION_UNKNOWN;
         ConnectionKey newKey = new ConnectionKey(systemName, portName);
         if (portStatus.containsKey(newKey)) {
@@ -243,7 +243,7 @@ public class ConnectionStatus {
          */
         public ConnectionKey(String system, @Nonnull String port) {
             if (system == null && port == null) {
-                throw new IllegalArgumentException("At least one of system name or port name must be provided");
+                throw new IllegalArgumentException("At least the port name must be provided");
             }
             systemName = system;
             portName = port;

@@ -3,9 +3,6 @@ package jmri.jmrit;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import jmri.DccLocoAddress;
-import jmri.InstanceManager;
-import jmri.ThrottleManager;
-import jmri.jmrix.debugthrottle.DebugThrottleManager;
 import org.junit.*;
 
 /**

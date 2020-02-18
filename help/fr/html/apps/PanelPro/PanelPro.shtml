@@ -17,7 +17,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -331,7 +331,7 @@ acc&#233;der au 2&#232;me syst&#232;me, vous devrez utiliser les
 sur un syst&#232;me LocoNet, vous vous r&#233;f&#233;rez &#224; un aiguillage LocoNet tel que LT13, un capteur LocoNet tel que LS21, 
 etc. Voir la page sur les <a href="../../doc/Technical/Names.shtml"> Noms </a> pour plus d'informations.
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
   </div><!-- closes #mainContent-->
  </div> <!-- closes #mBody-->
  </body>

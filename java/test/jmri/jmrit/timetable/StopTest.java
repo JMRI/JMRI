@@ -1,7 +1,5 @@
 package jmri.jmrit.timetable;
 
-import java.awt.GraphicsEnvironment;
-import jmri.jmrit.timetable.swing.*;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 

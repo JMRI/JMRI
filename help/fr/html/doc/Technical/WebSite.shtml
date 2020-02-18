@@ -19,7 +19,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -300,7 +300,7 @@ L'installation d'un catalogue local XML, et ensuite dir &#224; vos outils pour l
 	dans le r&#233;pertoire "xml" sur votre serveur web local.</li>
 </ul>
 
-        <!--#include virtual="/Footer" -->
+        <!--#include virtual="/Footer.shtml" -->
 	  </div><!-- closes #mainContent-->
 	</div> <!-- closes #mBody-->
 </body>

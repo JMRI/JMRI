@@ -4,45 +4,26 @@ import java.awt.Frame;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.DropMode;
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
-import javax.swing.JButton;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JComponent;
-import javax.swing.JFormattedTextField;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
-import javax.swing.JSpinner;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.RowFilter;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.TransferHandler;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
@@ -50,6 +31,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultFormatter;
+import jmri.InstanceManager;
 import jmri.jmrix.can.cbus.CbusPreferences;
 import jmri.jmrix.can.cbus.eventtable.CbusTableEvent;
 import jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel;
@@ -59,12 +41,13 @@ import jmri.util.swing.StayOpenCheckBoxItem;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.util.ThreadingUtil;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Frame providing a Cbus event table. Menu code copied from BeanTableFrame.
+ * Frame providing a CBUS event table. Menu code copied from BeanTableFrame.
  *
  * @author Andrew Crosland (C) 2009
  * @author Kevin Dickerson (C) 2012
@@ -75,9 +58,9 @@ import org.slf4j.LoggerFactory;
  */
 public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements TableModelListener {
 
-    public CbusEventTableDataModel eventModel=null;
+    public CbusEventTableDataModel eventModel;
     public JTable eventTable=null;
-    private CbusPreferences preferences;
+    protected CbusPreferences preferences;
     
     public JScrollPane eventScroll;
     protected JPanel pane1;
@@ -100,20 +83,26 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements
     private final JMenu evColMenu = new JMenu(Bundle.getMessage("evColMenuName"));
     private final JMenu evStatMenu = new JMenu(Bundle.getMessage("evStatMenuName"));
     private final JMenu evJmMenu = new JMenu(Bundle.getMessage("evJmMenuName"));
-    private List<JCheckBoxMenuItem> colMenuList = new ArrayList<>();
+    // private final List<JCheckBoxMenuItem> colMenuList = new ArrayList<>();
 
     @Override
     public void initComponents(CanSystemConnectionMemo memo) {
         super.initComponents(memo);
-        try {
-            eventModel = jmri.InstanceManager.getDefault(jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel.class);
-        } catch (NullPointerException e) {
-            log.warn("no event table from instance manager");
-        }
         
-        preferences = jmri.InstanceManager.getDefault(jmri.jmrix.can.cbus.CbusPreferences.class);
+        preferences = InstanceManager.getDefault(CbusPreferences.class);
+        checkCreateNewEventTable();
         
         init();
+    }
+    
+    public final void checkCreateNewEventTable(){
+        eventModel = InstanceManager.getNullableDefault(CbusEventTableDataModel.class);
+        if (eventModel == null) {        
+            ThreadingUtil.runOnLayout(() -> {
+                eventModel = new CbusEventTableDataModel(memo, 5, CbusEventTableDataModel.MAX_COLUMN);
+                InstanceManager.store(eventModel, CbusEventTableDataModel.class);
+            });
+        }    
     }
 
     public CbusEventTablePane() {
@@ -138,7 +127,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements
                             java.awt.Point p = e.getPoint();
                             int index = columnModel.getColumnIndexAtX(p.x);
                             int realIndex = columnModel.getColumn(index).getModelIndex();
-                            return CbusEventTableDataModel.columnToolTips[realIndex];    
+                            return CbusEventTableDataModel.CBUS_EV_TABLE_COL_TOOLTIPS[realIndex];    
                         } catch (RuntimeException e1) {
                             //catch null pointer exception if mouse is over an empty line
                         }
@@ -213,8 +202,8 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements
             int colnumber=i;
             String colName = _eventTable.getColumnName(colnumber);
             StayOpenCheckBoxItem showcol = new StayOpenCheckBoxItem(colName);
-            colMenuList.add(showcol);
-            showcol.setToolTipText(CbusEventTableDataModel.columnToolTips[i]);
+            // colMenuList.add(showcol);
+            showcol.setToolTipText(CbusEventTableDataModel.CBUS_EV_TABLE_COL_TOOLTIPS[i]);
             
             if ( i < 7 ) {
                 //tcm.setColumnVisible(tcm.getColumnByModelIndex(colnumber), false);
@@ -268,7 +257,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements
             tcm.setColumnVisible(column, false);
         }
         
-        colMenuList = Collections.unmodifiableList(colMenuList);
+        // colMenuList = Collections.unmodifiableList(colMenuList);
         
         eventModel.addTableModelListener(this);
         
@@ -319,7 +308,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements
         ActionListener newEventaction = ae -> {
             int ev = (Integer) newevnumberSpinner.getValue();
             int nd = (Integer) newnodenumberSpinner.getValue();
-            eventModel.addEvent(nd,ev,0,CbusTableEvent.EvState.UNKNOWN,"","",0,0,0,0);
+            eventModel.addEvent(nd, ev, 0, CbusTableEvent.EvState.UNKNOWN, "", "", 0, 0, 0, 0);
         };
         
         newevbutton.addActionListener(newEventaction);
@@ -436,7 +425,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements
             preferences.setSaveRestoreEventTable(saveRestoreEventTableItem.isSelected());
         });
         
-        JMenuItem saveAsItem = new JMenuItem(Bundle.getMessage("MenuItemSaveAs","csv"));
+        JMenuItem saveAsItem = new JMenuItem(Bundle.getMessage("MenuItemSaveAs", "csv"));
         saveAsItem.addActionListener((ActionEvent e) -> {
             eventModel.ta.saveAsTable();
         });
@@ -585,6 +574,9 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements
         return prependConnToString(Bundle.getMessage("EventTableTitle"));
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void dispose() {
         if(eventModel != null) {
@@ -600,11 +592,17 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements
      */
     public static class CbusEventTableRowDnDHandler extends TransferHandler {
     
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public int getSourceActions(JComponent c) {
             return COPY;
         }
     
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public Transferable createTransferable(JComponent c) {
             

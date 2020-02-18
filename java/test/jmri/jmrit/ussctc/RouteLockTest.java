@@ -139,6 +139,7 @@ public class RouteLockTest {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
+        JUnitUtil.initInternalSignalHeadManager();
     }
 
     @After

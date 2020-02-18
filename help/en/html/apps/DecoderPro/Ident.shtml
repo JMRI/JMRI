@@ -22,7 +22,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -181,7 +181,7 @@
         with software like DecoderPro. And why not get credit for
         the new features from people who'll ask for the new
         model?</li>
-      </ul><!--#include virtual="/Footer" -->
+      </ul><!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

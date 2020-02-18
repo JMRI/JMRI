@@ -17,7 +17,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -371,7 +371,7 @@ d&#233;codeurs disponibles est construite .</p>
  <p>Pour des informations plus avanc&#233;es sur le contenu des fichiers, svp voir la page 
 <a href="CreateDecoderAdvanced.shtml">Advanced Decoder Definitions</a>.
 
-    <!--#include virtual="/Footer" -->
+    <!--#include virtual="/Footer.shtml" -->
     </div>
 </div>
 </body>

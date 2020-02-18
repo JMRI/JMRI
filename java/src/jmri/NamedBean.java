@@ -123,6 +123,12 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
 
     /**
      * Display the system-specific name.
+     * <p>Note that this is a firm contract:  toString() in
+     * all implementing classes must return the system name.
+     * At some point in the future we may choose to extend this to include additional
+     * information, 
+     * but using code can assume that the result of toString() will always be 
+     * or start with the system name followed by a separator character.
      *
      * @return the system-specific name
      */

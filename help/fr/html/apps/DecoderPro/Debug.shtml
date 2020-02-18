@@ -17,7 +17,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -80,7 +80,7 @@ fichier. DTD peut &#234;tre trouv&#233; dans le sous-r&#233;pertoire dtd du r&#2
 </dd>
 </dl>
 
-        <!--#include virtual="/Footer" -->
+        <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

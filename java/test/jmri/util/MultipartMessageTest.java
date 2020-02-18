@@ -1,5 +1,6 @@
 package jmri.util;
 
+import java.nio.charset.StandardCharsets;
 import org.junit.*;
 import jmri.web.server.WebServer;
 import org.slf4j.Logger;
@@ -15,7 +16,7 @@ public class MultipartMessageTest {
 
     @Test
     public void testCTor() throws java.io.IOException {
-        MultipartMessage t = new MultipartMessage("http://localhost:12080","UTF-8");
+        MultipartMessage t = new MultipartMessage("http://localhost:12080",StandardCharsets.UTF_8.name());
         Assert.assertNotNull("exists",t);
         t.finish(); // make sure the port closes.
     }

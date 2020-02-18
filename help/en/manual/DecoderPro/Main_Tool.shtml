@@ -20,7 +20,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -291,6 +291,16 @@
         "4" height="145" width="152"></p>
       </blockquote>
 
+      <ul>
+        <li><strong>Pragotron Clock</strong> <span class="since">since 4.19.2</span></li>
+      </ul>
+
+      <blockquote>
+        <p style="margin-left: 40px;"><img src=
+        "images/Main_FastClock_Pragotron.png" alt="Analog clock" border=
+        "4" height="115" width="209"></p>
+      </blockquote>
+
       <h3><strong>Power Control...</strong></h3>
 
       <p>Opens the Power Control Panel, which allows you to turn
@@ -379,7 +389,7 @@
         "Main_Roster.shtml">Next</a></p>
 
         <p><a href="index.shtml#Main">Back to Index</a></p>
-      </div><!--#include virtual="/Footer" -->
+      </div><!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

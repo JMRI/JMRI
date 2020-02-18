@@ -5,8 +5,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -22,6 +24,8 @@ import jmri.jmrix.can.cbus.CbusSensor;
 import jmri.jmrix.can.cbus.CbusTurnout;
 import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.util.FileUtil;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -69,7 +73,7 @@ public class CbusEventTableAction {
         int node = CbusMessage.getNodeNumber(m);
         int opc = CbusMessage.getOpcode(m);
         int row = _model.seeIfEventOnTable( node, event);
-        if (row<0) {
+        if (row<0 && event>-1) {
             _model.addEvent(node,event,0,CbusTableEvent.EvState.UNKNOWN,name,"",0,0,0,0);
             row = _model.seeIfEventOnTable( node, event );
         }
@@ -185,68 +189,31 @@ public class CbusEventTableAction {
     }
 
     private void saveToCSV() {
-        FileOutputStream out = null;
-        PrintWriter p = null;
         if (_saveFileName == null) {
             log.error("saveToCSV: No file name available. Aborted");
             return;
         }
-        try {
-            // Create a print writer based on the file, so we can print to it.
-            out = new FileOutputStream(_saveFileName);
-            p = new PrintWriter(out, true);
-        } catch (IOException e) {
-                log.error("Problem creating output stream");
-        }
-
-        if (out == null) {
-            log.error("Null File Output Stream");
-        }
-        if (p == null) { // certainly null if out == null
-            log.error("Null Print Writer");
-            return;
-        }
-
-        // Save table per row. We've checked for an empty table
-        // print header labels
-        
-        
-        for (int i = 0; i < CbusEventTableDataModel.saveColumns.length; i++) {
-            // log.debug("save column array column {}", Savecolumns[i]);
-            p.print(_model.getColumnName(CbusEventTableDataModel.saveColumns[i]));
-            
-            // last column, without comma
-            if (i!=CbusEventTableDataModel.saveColumns.length-1) {
-                p.print(",");
+        try (CSVPrinter p = new CSVPrinter(new OutputStreamWriter(new FileOutputStream(_saveFileName), StandardCharsets.UTF_8), CSVFormat.DEFAULT)) {
+            // Save table per row. We've checked for an empty table
+            // print header labels
+            ArrayList<String> headers = new ArrayList<>();
+            for (int i = 0; i < CbusEventTableDataModel.saveColumns.length; i++) {
+                headers.add(_model.getColumnName(CbusEventTableDataModel.saveColumns[i]));
             }
-        }
-        
-        p.println("");
+            p.printRecord(headers);
 
-        // print rows
-        for (int i = 0; i < _model.getRowCount(); i++) {
-            p.print(_model._mainArray.get(i).getEn());
-            p.print(",");
-            p.print(_model._mainArray.get(i).getNn());
-            p.print(",");
-            p.print('"' + _model._mainArray.get(i).getName() + '"');          
-            p.print(",");
-            p.print('"' + _model._mainArray.get(i).getNodeName() + '"');
-            p.print(",");
-            if ( _model._mainArray.get(i).getDate() != null ) {
-               p.print(_model._mainArray.get(i).getDate()); // Date format
+            // print rows
+            for (int i = 0; i < _model.getRowCount(); i++) {
+                p.printRecord(_model._mainArray.get(i).getEn(),
+                        _model._mainArray.get(i).getNn(),
+                        _model._mainArray.get(i).getName(),
+                        _model._mainArray.get(i).getNodeName(),
+                        _model._mainArray.get(i).getDate(),
+                        _model._mainArray.get(i).getComment());
             }
-            p.print(",");
-            p.print('"'+ _model._mainArray.get(i).getComment() + '"');
-            p.println("");
-        }
 
-        try {
             p.flush();
             p.close();
-            if (out != null) {
-                out.close();
-            }
         } catch (IOException e) {
             log.error("879 IO Exception");
         }
@@ -261,6 +228,8 @@ public class CbusEventTableAction {
      * Printed with headings and vertical lines between each column. Data is
      * word wrapped within a column. Can handle data as strings, integers,
      * comboboxes or booleans.
+     * 
+     * @param w the writer to print to
      */
     public void printTable(HardcopyWriter w) {
         // [AC] variable column sizes
@@ -310,7 +279,7 @@ public class CbusEventTableAction {
         // now print each row of data
         // create a base string the width of the column
         for (int i = 0; i < _model.getRowCount(); i++) {
-            StringBuffer buf = new StringBuffer();
+            StringBuilder buf = new StringBuilder();
             // log.debug (" 1070 row i  {} ", i);
             
             for (int k = 0; k < CbusEventTableDataModel.whichPrintColumns.length; k++) {
@@ -354,7 +323,7 @@ public class CbusEventTableAction {
             complete = true;
             for (int i = 0; i < columnStrings.length; i++) {
                 // create a base string the width of the column
-                StringBuffer buf = new StringBuffer();
+                StringBuilder buf = new StringBuilder();
                 for (int j = 0; j < columnWidth[i]; j++) {
                     buf.append(" ");
                 }
@@ -584,7 +553,6 @@ public class CbusEventTableAction {
             return FileUtil.getUserFilesPath() + "cbus" + File.separator;  // NOI18N
         }
     }
-
 
     private final static Logger log = LoggerFactory.getLogger(CbusEventTableAction.class);
 }

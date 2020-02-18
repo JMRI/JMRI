@@ -1,12 +1,14 @@
 package jmri.jmrit.operations.rollingstock.engines.tools;
 
 import java.awt.GraphicsEnvironment;
-import jmri.jmrit.operations.OperationsTestCase;
-import jmri.util.JUnitOperationsUtil;
-import jmri.util.swing.JemmyUtil;
+
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Test;
+
+import jmri.jmrit.operations.OperationsTestCase;
+import jmri.util.JUnitOperationsUtil;
+import jmri.util.swing.JemmyUtil;
 
 /**
  *
@@ -46,6 +48,8 @@ public class ExportEnginesTest extends OperationsTestCase {
 
         java.io.File file = new java.io.File(ExportEngines.defaultOperationsFilename());
         Assert.assertTrue("Confirm file creation", file.exists());
+        
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ExportEnginesTest.class);

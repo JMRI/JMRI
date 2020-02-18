@@ -1,6 +1,5 @@
 package jmri.jmrix.powerline.swing.serialmon;
 
-import java.util.ResourceBundle;
 import jmri.jmrix.powerline.SerialListener;
 import jmri.jmrix.powerline.SerialMessage;
 import jmri.jmrix.powerline.SerialReply;

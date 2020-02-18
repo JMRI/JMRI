@@ -15,7 +15,6 @@ import jmri.InstanceManager;
 import jmri.Reporter;
 import jmri.ShutDownManager;
 import jmri.ShutDownTask;
-import jmri.SignalHead;
 import jmri.implementation.AbstractInstanceInitializer;
 import jmri.implementation.DefaultIdTag;
 import jmri.jmrix.SystemConnectionMemo;
@@ -68,33 +67,36 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
             readIdTagDetails();
             loading = false;
             dirty = false;
-
-            // Create shutdown task to save
-            log.debug("Register ShutDown task");
-            if (this.shutDownTask == null) {
-                this.shutDownTask = new jmri.implementation.AbstractShutDownTask("Writing IdTags") { // NOI18N
-                    @Override
-                    public boolean execute() {
-                        // Save IdTag details prior to exit, if necessary
-                        log.debug("Start writing IdTag details...");
-                        try {
-                            writeIdTagDetails();
-                        } catch (java.io.IOException ioe) {
-                            log.error("Exception writing IdTags: {}", (Object) ioe);
-                        }
-
-                        // continue shutdown
-                        return true;
-                    }
-                };
-                InstanceManager.getDefault(ShutDownManager.class).register(this.shutDownTask);
-            }
+            initShutdownTask();
             initialised = true;
         }
     }
 
+    protected void initShutdownTask(){
+        // Create shutdown task to save
+        log.debug("Register ShutDown task");
+        if (this.shutDownTask == null) {
+            this.shutDownTask = new jmri.implementation.AbstractShutDownTask("Writing IdTags") { // NOI18N
+                @Override
+                public boolean execute() {
+                    // Save IdTag details prior to exit, if necessary
+                    log.debug("Start writing IdTag details...");
+                    try {
+                        writeIdTagDetails();
+                    } catch (java.io.IOException ioe) {
+                        log.error("Exception writing IdTags: {}", (Object) ioe);
+                    }
+
+                    // continue shutdown
+                    return true;
+                }
+            };
+            InstanceManager.getDefault(ShutDownManager.class).register(this.shutDownTask);
+        }
+    }
+
     /**
-     * {@inheritDoc} 
+     * {@inheritDoc}
      * Don't want to store this information
      */
     @Override
@@ -111,14 +113,14 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
     /** {@inheritDoc} */
     @Override
     @Nonnull
-    public IdTag provide(@Nonnull String name) throws IllegalArgumentException {
+    public IdTag provide(@Nonnull String name) {
         return provideIdTag(name);
     }
 
     /** {@inheritDoc} */
     @Override
     @Nonnull
-    public IdTag provideIdTag(@Nonnull String name) throws IllegalArgumentException {
+    public IdTag provideIdTag(@Nonnull String name) {
         if (!initialised && !loading) {
             init();
         }
@@ -198,7 +200,7 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
         if (!initialised && !loading) {
             init();
         }
-        log.debug("new IdTag:{};{}", systemName, (userName == null ? "null" : userName)); // NOI18N
+        log.debug("new IdTag:{};{}", systemName,userName); // NOI18N
         Objects.requireNonNull(systemName, "SystemName cannot be null.");
 
         // return existing if there is one
@@ -338,7 +340,7 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
         Date thresholdTime = new Date(lastWhenLastSeen.getTime() - threshold);
 
         // Now remove from the list all tags seen prior to the threshold time
-        out.removeIf((t) -> {
+        out.removeIf(t -> {
             Date tagLastSeen = t.getWhenLastSeen();
             return tagLastSeen == null || tagLastSeen.before(thresholdTime);
         });
@@ -353,7 +355,9 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
     /** {@inheritDoc} */
     @Override
     public void dispose() {
-        InstanceManager.getDefault(ShutDownManager.class).deregister(this.shutDownTask);
+        if(this.shutDownTask!=null) {
+            InstanceManager.getDefault(ShutDownManager.class).deregister(this.shutDownTask);
+        }
         super.dispose();
     }
 
@@ -379,7 +383,7 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
 
         @Override
         @Nonnull
-        public <T> Object getDefault(Class<T> type) throws IllegalArgumentException {
+        public <T> Object getDefault(Class<T> type) {
             if (type.equals(IdTagManager.class)) {
                 return new DefaultIdTagManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
             }

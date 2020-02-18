@@ -1,7 +1,6 @@
 package jmri.jmrix.rfid.swing;
 
 import java.awt.GraphicsEnvironment;
-import jmri.jmrix.rfid.RfidSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;

@@ -4,6 +4,7 @@ import static java.lang.Float.NEGATIVE_INFINITY;
 import static java.lang.Float.POSITIVE_INFINITY;
 import static java.lang.Math.PI;
 
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -120,11 +121,23 @@ public final class MathUtil {
      * @param pA the first point
      * @param pB the second point
      * @param pC the third point
-     * @return the coordinated of pA pined between pB and pC
+     * @return the coordinates of pA pined between pB and pC
      */
     @CheckReturnValue
     public static Point2D pin(@Nonnull Point2D pA, @Nonnull Point2D pB, @Nonnull Point2D pC) {
         return min(max(pA, min(pB, pC)), max(pB, pC));
+    }
+
+    /**
+     * Get the coordinates of a point pinned in a rectangle
+     *
+     * @param pA the point
+     * @param pR the rectangle
+     * @return the coordinates of point pA pined in rectangle pR
+     */
+    @CheckReturnValue
+    public static Point2D pin(@Nonnull Point2D pA, @Nonnull Rectangle2D pR) {
+        return min(max(pA, getOrigin(pR)), offset(getOrigin(pR), pR.getWidth(), pR.getHeight()));
     }
 
     /**
@@ -544,10 +557,10 @@ public final class MathUtil {
     }
 
     /**
-     * Round point to horzontal and vertical granular increments.
+     * Round point to horizontal and vertical granular increments.
      *
      * @param p  the point to granulize
-     * @param gH the horzontal granularity
+     * @param gH the horizontal granularity
      * @param gV the vertical granularity
      * @return the point granulized to the granularity
      */
@@ -557,7 +570,7 @@ public final class MathUtil {
     }
 
     /**
-     * Round point to granulur increment.
+     * Round point to granular increment.
      *
      * @param p the point to granulize
      * @param g the granularity
@@ -566,6 +579,22 @@ public final class MathUtil {
     @CheckReturnValue
     public static Point2D granulize(@Nonnull Point2D p, double g) {
         return granulize(p, g, g);
+    }
+
+    /**
+     * Round Rectangle2D to granular increment.
+     *
+     * @param r the rectangle to granulize
+     * @param g the granularity
+     * @return the rectangle granulized to the granularity
+     */
+    @CheckReturnValue
+    public static Rectangle2D granulize(@Nonnull Rectangle2D r, double g) {
+        return new Rectangle2D.Double(
+                granulize(r.getMinX(), g),
+                granulize(r.getMinY(), g),
+                granulize(r.getWidth(), g),
+                granulize(r.getHeight(), g));
     }
 
     /**
@@ -803,6 +832,18 @@ public final class MathUtil {
     }
 
     /**
+     * rectangle2DToString return a string to represent a rectangle
+     *
+     * @param r the rectangle2D
+     * @return the string
+     */
+    @Nonnull
+    public static String rectangle2DToString(@Nonnull Rectangle2D r) {
+        return String.format("{%.2f, %.2f, %.2f, %.2f}",
+                r.getMinX(), r.getMinY(), r.getWidth(), r.getHeight());
+    }
+
+    /**
      * Convert Rectangle to Rectangle2D.
      *
      * @param r the Rectangle
@@ -831,19 +872,66 @@ public final class MathUtil {
      * @return the origin of the rectangle
      */
     @CheckReturnValue
-    public static Point2D origin(@Nonnull Rectangle2D r) {
+    public static Point2D getOrigin(@Nonnull Rectangle2D r) {
         return new Point2D.Double(r.getX(), r.getY());
     }
 
     /**
-     * Get the size of the rectangle.
+     * Set the origin (top left) of the rectangle.
+     *
+     * @param r      the rectangle
+     * @param origin the origin
+     * @return a new rectangle with the new origin
+     */
+    @CheckReturnValue
+    public static Rectangle2D setOrigin(@Nonnull Rectangle2D r, @Nonnull Point2D origin) {
+        return new Rectangle2D.Double(origin.getX(), origin.getY(), r.getWidth(), r.getHeight());
+    }
+
+    /**
+     * dimensionToString return a string to represent a Dimension
+     *
+     * @param d the Dimension
+     * @return the string
+     */
+    @Nonnull
+    public static String dimensionToString(@Nonnull Dimension d) {
+        return String.format("{%.2f, %.2f}", d.getWidth(), d.getHeight());
+    }
+
+    /**
+     * Get the size of a rectangle.
      *
      * @param r the rectangle
      * @return the size of the rectangle
      */
     @CheckReturnValue
-    public static Point2D size(@Nonnull Rectangle2D r) {
-        return new Point2D.Double(r.getWidth(), r.getHeight());
+    public static Dimension getSize(@Nonnull Rectangle2D r) {
+        return new Dimension((int) r.getWidth(), (int) r.getHeight());
+    }
+
+    /**
+     * Set the size of a rectangle
+     *
+     * @param r the rectangle
+     * @param d the new size (as dimension)
+     * @return a new rectangle with the new size
+     */
+    @CheckReturnValue
+    public static Rectangle2D setSize(@Nonnull Rectangle2D r, @Nonnull Dimension d) {
+        return new Rectangle2D.Double(r.getMinX(), r.getMinY(), d.getWidth(), d.getHeight());
+    }
+
+    /**
+     * Set the size of a rectangle
+     *
+     * @param r the rectangle
+     * @param s the new size (as Point2D)
+     * @return a new rectangle with the new size
+     */
+    @CheckReturnValue
+    public static Rectangle2D setSize(@Nonnull Rectangle2D r, @Nonnull Point2D s) {
+        return new Rectangle2D.Double(r.getMinX(), r.getMinY(), s.getX(), s.getY());
     }
 
     /**
@@ -872,7 +960,7 @@ public final class MathUtil {
      * Offset a rectangle by distinct x,y values.
      *
      * @param r the rectangle
-     * @param x the horzontal offset
+     * @param x the horizontal offset
      * @param y the vertical offset
      * @return the offset rectangle
      */
@@ -902,7 +990,7 @@ public final class MathUtil {
      */
     @CheckReturnValue
     public static Rectangle2D inset(@Nonnull Rectangle2D r, double i) {
-        return new Rectangle2D.Double(r.getX() + i, r.getY() + i, r.getWidth() - (2 * i), r.getHeight() - (2 * i));
+        return inset(r, i, i);
     }
 
     /**
@@ -1177,8 +1265,8 @@ public final class MathUtil {
     /**
      * Draw a Bezier curve
      *
-     * @param g2 the Graphics2D context to draw to
-     * @param p  the control points
+     * @param g2           the Graphics2D context to draw to
+     * @param p            the control points
      * @param displacement right/left to draw a line parallel to the Bezier
      * @return the length of the Bezier curve
      */
@@ -1192,8 +1280,8 @@ public final class MathUtil {
     /**
      * Fill a Bezier curve.
      *
-     * @param g2 the Graphics2D context to draw to
-     * @param p  the control points
+     * @param g2           the Graphics2D context to draw to
+     * @param p            the control points
      * @param displacement right/left to draw a line parallel to the Bezier
      * @return the length of the Bezier curve
      */
@@ -1233,7 +1321,8 @@ public final class MathUtil {
      * @param p2 the second point on the first line
      * @param p3 the first point on the second line
      * @param p4 the second point on the second line
-     * @return the intersection point of the two lines or null if one doesn't exist
+     * @return the intersection point of the two lines or null if one doesn't
+     *         exist
      */
     @CheckReturnValue
     public static Point2D intersect(
@@ -1243,24 +1332,41 @@ public final class MathUtil {
             @Nonnull Point2D p4) {
         Point2D result = null;  // assume failure (pessimist!)
 
-        // pull these out for convenience
-        double x1 = p1.getX(), y1 = p1.getY();
-        double x2 = p2.getX(), y2 = p2.getY();
-        double x3 = p3.getX(), y3 = p3.getY();
-        double x4 = p4.getX(), y4 = p4.getY();
+        Point2D delta31 = MathUtil.subtract(p3, p1);    //p
+        Point2D delta21 = MathUtil.subtract(p2, p1);    //q
+        Point2D delta43 = MathUtil.subtract(p4, p3);    //r
 
-        //
-        // equation from <https://en.wikipedia.org/wiki/Line-line_intersection>
-        //
-        double d = ((x1 - x2) * (y3 - y4)) - ((y1 - y2) * (x3 - x4));
-        // if d is zero the lines don't have one intersection point
-        if (d > 0.0) {
-            double t = ((x1 - x3) * (y3 - y4)) - ((y1 - y3) * (x3 - x4)) / d;
-            result = new Point2D.Double(x1 + (t * (x2 - x1)), y1 + (t * (y2 - y1)));
+        double det = delta21.getX() * delta43.getY() - delta21.getY() * delta43.getX();
+        if (!MathUtil.equals(det, 0.0)) {
+            double t = (delta21.getY() * delta31.getX() - delta21.getX() * delta31.getY()) / det;
+            result = lerp(p1, p2, t);
         }
         return result;
     }
 
-    // private transient final static Logger log = LoggerFactory.getLogger(MathUtil.class);
+    /**
+     * get (signed) distance p3 is from line segment defined by p1 and p2
+     *
+     * @param p1 the first point on the line segment
+     * @param p2 the second point on the line segment
+     * @param p3 the point whose distance from the line segment you wish to
+     *           calculate
+     * @return the distance (note: plus/minus determines the (left/right) side
+     *         of the line)
+     */
+    public static double distance(
+            @Nonnull Point2D p1,
+            @Nonnull Point2D p2,
+            @Nonnull Point2D p3) {
+        double p1X = p1.getX(), p1Y = p1.getY();
+        double p2X = p2.getX(), p2Y = p2.getY();
+        double p3X = p3.getX(), p3Y = p3.getY();
 
+        double a = p1Y - p2Y;
+        double b = p2X - p1X;
+        double c = (p1X * p2Y) - (p2X * p1Y);
+
+        return (a * p3X + b * p3Y + c) / Math.sqrt(a * a + b * b);
+    }
+    // private transient final static Logger log = LoggerFactory.getLogger(MathUtil.class);
 }

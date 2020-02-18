@@ -437,6 +437,7 @@ public class BlockManagerXmlTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 

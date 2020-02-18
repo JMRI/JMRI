@@ -18,7 +18,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -791,7 +791,7 @@ LocoNet qui sont normalement fournies par une centrale de  bas&#233;e sur LocoNe
 		<p>LocoNet&reg; est une marque d&#233;pos&#233;e de <a href="http://www.digitrax.com">
 			Digitrax, Inc.</a></p>
 
-    <!--#include virtual="/Footer" -->
+    <!--#include virtual="/Footer.shtml" -->
   </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

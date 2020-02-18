@@ -20,7 +20,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -65,11 +65,14 @@
 
       <h2>How to set up for adding or editing LRoutes</h2>
 
-      <p>First make sure the Tables for Sensors, Turnouts, Lights
-      and/or SignalHeads contain all the entities involved in the
-      LRoutes to be defined. Next select
+      <p>
+      First make sure the Tables for Sensors, Turnouts, Lights and/or SignalHeads contain all
+      the entities involved in the LRoutes to be defined. Next select
       <b><a href="../../package/jmri/jmrit/beantable/LRouteTable.shtml">LRoute Table</a></b>
-      from the <b>Tools</b> menu.</p>
+      from the <b>Tools</b> menu.  If you add or change any entities with the LRoutes
+      table window open, you will have to close and reopen it for the list of entities seen by
+      LRoutes to be refreshed.
+      </p>
 
       <a name="addroute" id="addroute"></a>
       <h3>To add a new LRoute:</h3>
@@ -217,6 +220,12 @@
       button.</p>
 
       <h3>To edit an existing LRoute:</h3>
+      
+      <p><b>NOTE:</b> If you have edited the Logix created for a particular existing LRoute,
+      or have edited any of the entities used by an LRoute without closing and reopening
+      the LRoute table window, you will get an error message when you go to edit that
+      LRoute.  This can be avoided by closing and reopening the LRoute table window before
+      attempting any edits.</p>
 
       <ol>
         <li>Edit of an existing LRoute may be started in either of
@@ -504,7 +513,7 @@
       actions when all the 'veto's are removed, press the
       <b>New</b> button.</p>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

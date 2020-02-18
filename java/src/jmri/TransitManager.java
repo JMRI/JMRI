@@ -1,6 +1,5 @@
 package jmri;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import javax.annotation.Nonnull;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;

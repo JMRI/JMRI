@@ -12,8 +12,6 @@ import javax.swing.table.*;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.SerialNode;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for a message filter for CMRInet network packets.
@@ -450,7 +448,7 @@ public class SerialFilterFrame extends jmri.util.JmriJFrame {
         public static final int NUMCOLUMNS = ENABLED_COLUMN+1;
     }
 
-    private String[] nodeEnableColumnsNames = {"Node","Monitor"};
+    private String[] nodeEnableColumnsNames = {"Node", "Monitor"};
 
     // private final static Logger log = LoggerFactory.getLogger(SerialFilterFrame.class);
 

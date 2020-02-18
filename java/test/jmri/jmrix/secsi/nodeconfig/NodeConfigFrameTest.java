@@ -3,7 +3,6 @@ package jmri.jmrix.secsi.nodeconfig;
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
 import org.junit.*;
-import jmri.jmrix.secsi.SerialTrafficController;
 import jmri.jmrix.secsi.SerialTrafficControlScaffold;
 import jmri.jmrix.secsi.SecsiSystemConnectionMemo;
 

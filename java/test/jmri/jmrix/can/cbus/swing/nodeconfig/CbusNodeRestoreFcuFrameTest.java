@@ -4,7 +4,6 @@ import java.awt.GraphicsEnvironment;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusPreferences;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
-import jmri.util.JmriJFrame;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -49,13 +48,9 @@ public class CbusNodeRestoreFcuFrameTest extends jmri.util.JmriJFrameTestBase {
         // Ask to close window
         jfo.requestClose();
         
-        jfo = null;
-        t = null;
         
         nodeModel.dispose();
-        nodeModel = null;
         mainpane.dispose();
-        mainpane = null;
         
     }
     

@@ -1,13 +1,10 @@
 package jmri.jmrit.beantable.signalmast;
 
-import java.awt.*;
 
 import java.util.*;
-import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
 
 import jmri.*;
 import jmri.spi.JmriServiceProviderInterface;

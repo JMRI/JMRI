@@ -23,7 +23,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -535,7 +535,7 @@
         <li>Cliquez <b>Annuler</b> pour quitter cette
         fen&Atilde;&ordf;tre sans cr&Atilde;&copy;er un nouveau
         Train Actif.</li>
-      </ol><!--#include virtual="/Footer" -->
+      </ol><!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

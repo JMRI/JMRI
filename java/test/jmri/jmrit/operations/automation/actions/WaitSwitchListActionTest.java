@@ -1,13 +1,14 @@
 package jmri.jmrit.operations.automation.actions;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.automation.AutomationItem;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.JUnitOperationsUtil;
-import org.junit.Assert;
-import org.junit.Test;
 
 /**
  *
@@ -71,6 +72,8 @@ public class WaitSwitchListActionTest extends OperationsTestCase {
         action.cancelAction();
         Assert.assertFalse(automationItem.isActionRunning());
         Assert.assertFalse(automationItem.isActionSuccessful());
+        
+
     }
     
     @Test
@@ -99,6 +102,9 @@ public class WaitSwitchListActionTest extends OperationsTestCase {
 
         Assert.assertFalse(automationItem.isActionRunning());
         Assert.assertTrue(automationItem.isActionSuccessful());
+        
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(WaitSwitchListActionTest.class);

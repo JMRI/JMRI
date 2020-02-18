@@ -7,7 +7,6 @@ import jmri.JmriException;
 import jmri.Sensor;
 import jmri.util.JUnitUtil;
 import jmri.Turnout;
-import jmri.Sensor;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;

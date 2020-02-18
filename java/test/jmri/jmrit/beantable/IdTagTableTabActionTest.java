@@ -1,6 +1,5 @@
 package jmri.jmrit.beantable;
 
-import jmri.IdTag;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 

@@ -21,7 +21,6 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.Sensor;
-import jmri.SignalSystem;
 import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
@@ -110,7 +109,13 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     public final static int AUTOCANCEL = 0x02;
     public final static int AUTOSTACK = 0x03;
 
+    public final static int OVERLAP_CANCEL = 0x01;
+    public final static int OVERLAP_STACK = 0x02;
+
     int routeClearOption = PROMPTUSER;
+    int routeOverlapOption = PROMPTUSER;
+    String memoryOption = "";     // Optional memory variable to receive allocation messages
+    int memoryClearDelay = 0;     // Delay before clearing memory, 0 for clearing disabled
 
     static JPanel glassPane = new JPanel();
 
@@ -213,6 +218,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     }
 
     /** {@inheritDoc} */
+    @Override
     public DestinationPoints getBySystemName(String systemName) {
         for (Source e : nxpair.values()) {
             DestinationPoints pd = e.getByUniqueId(systemName);
@@ -275,7 +281,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     /** {@inheritDoc} */
     @Override
     @CheckReturnValue
-    public int getObjectCount() { 
+    public int getObjectCount() {
         return getNamedBeanList().size(); // not efficient
     }
 
@@ -342,6 +348,30 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
 
     public int getClearDownOption() {
         return routeClearOption;
+    }
+
+    public void setOverlapOption(int i) {
+        routeOverlapOption = i;
+    }
+
+    public int getOverlapOption() {
+        return routeOverlapOption;
+    }
+
+    public void setMemoryOption(String memoryName) {
+        memoryOption = memoryName;
+    }
+
+    public String getMemoryOption() {
+        return memoryOption;
+    }
+
+    public void setMemoryClearDelay(int secs) {
+        memoryClearDelay = secs;
+    }
+
+    public int getMemoryClearDelay() {
+        return memoryClearDelay;
     }
 
     /** {@inheritDoc} */
@@ -1436,7 +1466,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     }
 
     final List<ManagerDataListener<DestinationPoints>> listeners = new ArrayList<>();
-    
+
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(EntryExitPairs.class);
 

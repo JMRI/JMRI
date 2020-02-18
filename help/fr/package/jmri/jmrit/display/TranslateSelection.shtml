@@ -24,7 +24,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -83,7 +83,7 @@
 
       <p><b>Pour conserver vos modifications, s'il vous pla&icirc;t
       n'oubliez pas d'enregistrer votre panneau!</b></p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>
