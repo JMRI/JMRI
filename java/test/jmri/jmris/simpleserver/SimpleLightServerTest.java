@@ -1,5 +1,6 @@
 package jmri.jmris.simpleserver;
 
+import jmri.Light;
 import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -108,13 +109,14 @@ public class SimpleLightServerTest extends jmri.jmris.AbstractLightServerTestBas
     // test parsing an OFF status message.
     @Test
     public void testParseOffStatus() {
+        Light light = (jmri.InstanceManager.getDefault(jmri.LightManager.class)).provideLight("IL1");
+        light.setState(Light.ON);  // make sure the light is on before we parse the message.
         SimpleLightServer a = (SimpleLightServer)ls;
         Throwable thrown = catchThrowable( () -> a.parseStatus("LIGHT IL1 OFF\n"));
         assertThat(thrown).withFailMessage("Exception retrieving Status").isNull();
-        jmri.Light light = (jmri.InstanceManager.getDefault(jmri.LightManager.class)).getLight("IL1");
         assertThat(light.getState()).isEqualTo(jmri.Light.OFF).withFailMessage("Parse OFF Status Check");
         // parsing the status also causes a message to return to the client.
-        //assertThat(sb.toString()).isEqualTo("LIGHT IL1 OFF\n").withFailMessage("parse OFF Status check");
+        assertThat(sb.toString()).isEqualTo("LIGHT IL1 OFF\n").withFailMessage("parse OFF Status check");
     }
 
     // test parsing an UNKNOWN status message.
