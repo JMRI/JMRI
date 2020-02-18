@@ -5,6 +5,7 @@ import java.awt.Container;
 import java.awt.Font;
 import java.awt.event.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,10 +17,24 @@ import jmri.util.FileUtil;
 import jmri.util.swing.JComboBoxUtil;
 
 /**
- *
+ * Create a where used report based on the selected bean.  The selection combo box is
+ * based on the selected type.
+
  * @author Dave Sand Copyright (C) 2020
  */
 public class WhereUsedFrame extends jmri.util.JmriJFrame {
+    ItemType _itemType = ItemType.NONE;
+    JComboBox<ItemType> _itemTypeBox;
+
+    NamedBean _itemBean;
+    NamedBeanComboBox<?> _itemNameBox = new NamedBeanComboBox<Sensor>(
+                        InstanceManager.getDefault(SensorManager.class));
+
+    JPanel _topPanel;
+    JPanel _bottomPanel;
+    JPanel _scrolltext = new JPanel();
+    JTextArea _textArea;
+    JButton _createButton;
 
     public WhereUsedFrame() {
         super(true, true);
@@ -27,20 +42,9 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
         createFrame();
     }
 
-    ItemType _itemType = ItemType.NONE;
-    JComboBox<ItemType> _itemTypeBox;
-
-    String _itemName;
-    NamedBeanComboBox<?> _itemNameBox = new NamedBeanComboBox<Sensor>(
-                        InstanceManager.getDefault(SensorManager.class));
-    JPanel _topPanel;
-    JPanel _bottomPanel;
-    JPanel _scrolltext = new JPanel();
-    JTextArea _textArea;
-
     /**
-     * Create the window frame.  The top part contains the item type and item name
-     * combo boxes, the middle contains the scrollable "where used" text area and the
+     * Create the window frame.  The top part contains the item type, the item name
+     * combo box, and a Create button.  The middle contains the scrollable "where used" text area and the
      * bottom part has a button for saving the content to a file.
      */
     void createFrame() {
@@ -51,9 +55,9 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
         buildTopPanel();
         contentPane.add(_topPanel, BorderLayout.NORTH);
 
-        // Build the where used listing
+        // Build an empty where used listing
         JScrollPane scrollPane = null;
-        buildWhereUsedListing();
+        buildWhereUsedListing(ItemType.NONE, null);
         scrollPane = new JScrollPane(_scrolltext);
         contentPane.add(scrollPane);
 
@@ -76,14 +80,17 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
 
         _topPanel.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("LabelItemName"))));  // NOI18N
         _topPanel.add(_itemNameBox);
-        _itemNameBox.setEnabled(false);
-        _itemTypeBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                _itemType = _itemTypeBox.getItemAt(_itemTypeBox.getSelectedIndex());
-                setItemNameBox(_itemType);
-            }
+        _itemTypeBox.addActionListener((e) -> {
+            _itemType = _itemTypeBox.getItemAt(_itemTypeBox.getSelectedIndex());
+            setItemNameBox(_itemType);
         });
+
+        _createButton = new JButton(Bundle.getMessage("ButtonCreate"));  // NOI18N
+        _createButton.addActionListener((e) -> buildWhereUsedListing(_itemType, _itemBean));
+
+        _topPanel.add(_createButton);
+        _itemNameBox.setEnabled(false);
+        _createButton.setEnabled(false);
         return;
     }
 
@@ -94,20 +101,17 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
         JButton saveButton = new JButton(Bundle.getMessage("SaveButton"));   // NOI18N
         saveButton.setToolTipText(Bundle.getMessage("SaveButtonHint"));      // NOI18N
         _bottomPanel.add(saveButton, BorderLayout.EAST);
-        saveButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                saveWhereUsedPressed();
-            }
-        });
+        saveButton.addActionListener((ActionEvent e) -> saveWhereUsedPressed());
     }
 
     /**
      * Create a new NamedBeanComboBox based on the item type and refresh the panel.
-     * A selection listener invokes the buildWhereUsedListing method.
+     * A selection listener saves the selection and enables the Create button.
      * @param itemType The enum for the selected item type.
      */
     void setItemNameBox(ItemType itemType) {
+        _createButton.setEnabled(false);
+        buildWhereUsedListing(ItemType.NONE, null);
         NamedBeanComboBox<?> newNameBox = createNameBox(itemType);
         if (newNameBox == null) {
             _itemNameBox.setSelectedIndex(-1);
@@ -117,22 +121,13 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
         _itemNameBox = newNameBox;
         _itemNameBox.setSelectedIndex(-1);
         _topPanel.remove(3);
-        _topPanel.add(_itemNameBox);
+        _topPanel.add(_itemNameBox, 3);
 
         _itemNameBox.setEnabled(true);
-        _itemNameBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (e.getModifiers() == 0) {
-                    log.debug("Ignore non-user event");
-                    return;
-                }
-                Object src = e.getSource();
-                if (!(src instanceof NamedBeanComboBox)) {
-                    log.warn("setItemNameBox instance error");
-                    return;
-                }
-                buildWhereUsedListing();
+        _itemNameBox.addItemListener((e) -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                _itemBean = (NamedBean) e.getItem();
+                _createButton.setEnabled(true);
             }
         });
         pack();
@@ -145,33 +140,26 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
      * The selected object is passed to the appropriate detail class which returns a populated textarea.
      * The textarea is formatted and inserted into a scrollable panel.
      */
-    void buildWhereUsedListing() {
-        switch (_itemType) {
+    void buildWhereUsedListing(ItemType type, NamedBean bean) {
+        switch (type) {
             case SENSOR:
-                Sensor sensor = (Sensor) _itemNameBox.getSelectedItem();
-                _textArea = SensorWhereUsed.getSensorWhereUsed(sensor);
+                _textArea = SensorWhereUsed.getWhereUsed(bean);
                 break;
-
             case TURNOUT:
-                Turnout turnout = (Turnout) _itemNameBox.getSelectedItem();
-                _textArea = TurnoutWhereUsed.getTurnoutWhereUsed(turnout);
+                _textArea = TurnoutWhereUsed.getWhereUsed(bean);
                 break;
-
             case LIGHT:
-                Light light = (Light) _itemNameBox.getSelectedItem();
-                _textArea = LightWhereUsed.getLightWhereUsed(light);
+                _textArea = LightWhereUsed.getWhereUsed(bean);
                 break;
-
             case SIGNALHEAD:
-                SignalHead signalHead = (SignalHead) _itemNameBox.getSelectedItem();
-                _textArea = SignalHeadWhereUsed.getSignalHeadWhereUsed(signalHead);
+                _textArea = SignalHeadWhereUsed.getWhereUsed(bean);
                 break;
-
             case SIGNALMAST:
-                SignalMast signalMast = (SignalMast) _itemNameBox.getSelectedItem();
-                _textArea = SignalMastWhereUsed.getSignalMastWhereUsed(signalMast);
+                _textArea = SignalMastWhereUsed.getWhereUsed(bean);
                 break;
-
+            case MEMORY:
+                _textArea = MemoryWhereUsed.getWhereUsed(bean);
+                break;
             default:
                 _textArea = new JTextArea(Bundle.getMessage("TypePrompt"));
                 break;
@@ -241,36 +229,30 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
     /**
      * Create a combo name box for name selection.
      *
-     * @param itemType The selected variable or action type
-     * @return nameBox A combo box based on the item type or null if no match
+     * @param itemType The selected bean type
+     * @return a combo box based on the item type or null if no match
      */
     NamedBeanComboBox<?> createNameBox(ItemType itemType) {
         NamedBeanComboBox<?> nameBox;
         switch (itemType) {
             case SENSOR:
-                nameBox = new NamedBeanComboBox<Sensor>(
-                        InstanceManager.getDefault(SensorManager.class));
+                nameBox = new NamedBeanComboBox<Sensor>(InstanceManager.getDefault(SensorManager.class));
                 break;
             case TURNOUT:
-                nameBox = new NamedBeanComboBox<Turnout>(
-                        InstanceManager.getDefault(TurnoutManager.class));
+                nameBox = new NamedBeanComboBox<Turnout>(InstanceManager.getDefault(TurnoutManager.class));
                 break;
             case LIGHT:
-                nameBox = new NamedBeanComboBox<Light>(
-                        InstanceManager.getDefault(LightManager.class));
+                nameBox = new NamedBeanComboBox<Light>(InstanceManager.getDefault(LightManager.class));
                 break;
             case SIGNALHEAD:
-                nameBox = new NamedBeanComboBox<SignalHead>(
-                        InstanceManager.getDefault(SignalHeadManager.class));
+                nameBox = new NamedBeanComboBox<SignalHead>(InstanceManager.getDefault(SignalHeadManager.class));
                 break;
             case SIGNALMAST:
-                nameBox = new NamedBeanComboBox<SignalMast>(
-                        InstanceManager.getDefault(SignalMastManager.class));
+                nameBox = new NamedBeanComboBox<SignalMast>(InstanceManager.getDefault(SignalMastManager.class));
                 break;
-//             case MEMORY:      // 6
-//                 nameBox = new NamedBeanComboBox<Memory>(
-//                         InstanceManager.getDefault(MemoryManager.class), null, DisplayOptions.DISPLAYNAME);
-//                 break;
+            case MEMORY:
+                nameBox = new NamedBeanComboBox<Memory>(InstanceManager.getDefault(MemoryManager.class));
+                break;
 //             case LOGIX:       // 7
 //                 nameBox = new NamedBeanComboBox<Logix>(
 //                         InstanceManager.getDefault(LogixManager.class), null, DisplayOptions.DISPLAYNAME);
@@ -310,8 +292,8 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
         TURNOUT("ItemTypeTurnout"),
         LIGHT("ItemTypeLight"),
         SIGNALHEAD("ItemTypeSignalHead"),
-        SIGNALMAST("ItemTypeSignalMast");
-//         MEMORY(ITEM_TYPE_MEMORY, IsStateVar.IS_STATE_VAR, "ItemTypeMemory"),
+        SIGNALMAST("ItemTypeSignalMast"),
+        MEMORY("ItemTypeMemory");
 //         CONDITIONAL(ITEM_TYPE_CONDITIONAL, IsStateVar.IS_STATE_VAR, "ItemTypeConditional"),  // used only by ConditionalVariable
 //         LOGIX(ITEM_TYPE_LOGIX, IsStateVar.IS_STATE_VAR, "ItemTypeLogix"),                    // used only by ConditionalAction
 //         WARRANT(ITEM_TYPE_WARRANT, IsStateVar.IS_STATE_VAR, "ItemTypeWarrant"),

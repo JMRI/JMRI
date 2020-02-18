@@ -19,7 +19,7 @@ public class SignalHeadWhereUsedTest {
     public void testSignalHeadWhereUsed() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SignalHead signalHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead("Left-B");
-        JTextArea result = SignalHeadWhereUsed.getSignalHeadWhereUsed(signalHead);
+        JTextArea result = SignalHeadWhereUsed.getWhereUsed(signalHead);
         Assert.assertFalse(result.getText().isEmpty());
     }
 

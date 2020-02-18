@@ -21,9 +21,36 @@ public class WhereUsedFrameTest {
         Assert.assertNotNull(jfo);
 
         // Select Sensor
-        new JComboBoxOperator(jfo, 0).selectItem(1);
-        new JComboBoxOperator(jfo, 1).selectItem(7);
-        new org.netbeans.jemmy.QueueTool().waitEmpty(); // wait for the list to finish
+        jmri.Sensor bean = jmri.InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Main");
+        frame.buildWhereUsedListing(WhereUsedFrame.ItemType.SENSOR, bean);
+//         new JComboBoxOperator(jfo, 0).selectItem(1);
+//         new JComboBoxOperator(jfo, 1).selectItem(7);
+//         new org.netbeans.jemmy.QueueTool().waitEmpty(); // wait for the list to finish
+//
+//         Select Turnout
+//         new JComboBoxOperator(jfo, 0).selectItem(2);
+//         new JComboBoxOperator(jfo, 1).selectItem(1);
+//         new org.netbeans.jemmy.QueueTool().waitEmpty(); // wait for the list to finish
+//
+//         Select Light
+//         new JComboBoxOperator(jfo, 0).selectItem(3);
+//         new JComboBoxOperator(jfo, 1).selectItem(0);
+//         new org.netbeans.jemmy.QueueTool().waitEmpty(); // wait for the list to finish
+//
+//         Select Signal Head
+//         new JComboBoxOperator(jfo, 0).selectItem(4);
+//         new JComboBoxOperator(jfo, 1).selectItem(1);
+//         new org.netbeans.jemmy.QueueTool().waitEmpty(); // wait for the list to finish
+//
+//         Select Signal Mast
+//         new JComboBoxOperator(jfo, 0).selectItem(5);
+//         new JComboBoxOperator(jfo, 1).selectItem(1);
+//         new org.netbeans.jemmy.QueueTool().waitEmpty(); // wait for the list to finish
+//
+//         Select Memory
+//         new JComboBoxOperator(jfo, 0).selectItem(6);
+//         new JComboBoxOperator(jfo, 1).selectItem(2);
+//         new org.netbeans.jemmy.QueueTool().waitEmpty(); // wait for the list to finish
 
         JUnitUtil.dispose(frame);
     }

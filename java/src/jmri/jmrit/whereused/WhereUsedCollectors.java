@@ -54,13 +54,14 @@ public class WhereUsedCollectors {
             int feedback = turnout.getFeedbackMode();
             if (feedback == Turnout.ONESENSOR || feedback == Turnout.TWOSENSOR) {
                 turnout.getUsageReport(bean).forEach((report) -> {
-                    if (report.usageKey.startsWith("TurnoutFeedback")) {
-                        sb.append(Bundle.getMessage("ReferenceLine", turnout.getUserName(), turnout.getSystemName()));  // NOI18N
+                    if (report.usageKey.startsWith("TurnoutFeedback")) {  // NOI18N
+                        String name = turnout.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME);
+                        sb.append(Bundle.getMessage("ReferenceLineName", name));  // NOI18N
                     }
                 });
             }
         });
-        return addHeader(sb, "ReferenceFeedback");
+        return addHeader(sb, "ReferenceFeedback");  // NOI18N
     }
 
     /**
@@ -79,8 +80,9 @@ public class WhereUsedCollectors {
         StringBuilder sb = new StringBuilder();
         InstanceManager.getDefault(LightManager.class).getNamedBeanSet().forEach((light) -> {
             light.getUsageReport(bean).forEach((report) -> {
-                if (report.usageKey.startsWith("LightControl")) {
-                    sb.append(Bundle.getMessage("ReferenceLineData", light.getUserName(), light.getSystemName(), report.usageData));  // NOI18N
+                if (report.usageKey.startsWith("LightControl")) {  // NOI18N
+                    String name = light.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME);
+                    sb.append(Bundle.getMessage("ReferenceLineData", name, report.usageData));  // NOI18N
                 }
             });
         });
@@ -105,8 +107,9 @@ public class WhereUsedCollectors {
         StringBuilder sb = new StringBuilder();
         InstanceManager.getDefault(RouteManager.class).getNamedBeanSet().forEach((route) -> {
             route.getUsageReport(bean).forEach((report) -> {
-                if (report.usageKey.startsWith("Route")) {
-                    sb.append(Bundle.getMessage("ReferenceLine", route.getUserName(), route.getSystemName()));  // NOI18N
+                if (report.usageKey.startsWith("Route")) {  // NOI18N
+                    String name = route.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME);
+                    sb.append(Bundle.getMessage("ReferenceLineName", name));  // NOI18N
                 }
             });
         });
@@ -128,12 +131,13 @@ public class WhereUsedCollectors {
         StringBuilder sb = new StringBuilder();
         InstanceManager.getDefault(BlockManager.class).getNamedBeanSet().forEach((block) -> {
             block.getUsageReport(bean).forEach((report) -> {
-                if (report.usageKey.startsWith("Block")) {
-                    sb.append(Bundle.getMessage("ReferenceLine", block.getUserName(), block.getSystemName()));  // NOI18N
+                if (report.usageKey.startsWith("Block")) {  // NOI18N
+                    String name = block.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME);
+                    sb.append(Bundle.getMessage("ReferenceLineName", name));  // NOI18N
                 }
             });
         });
-        return addHeader(sb, "ReferenceBlockOccupancy");  // NOI18N
+        return addHeader(sb, "ReferenceBlock");  // NOI18N
     }
 
     /**
@@ -151,12 +155,13 @@ public class WhereUsedCollectors {
         StringBuilder sb = new StringBuilder();
         InstanceManager.getDefault(LayoutBlockManager.class).getNamedBeanSet().forEach((layoutBlock) -> {
             layoutBlock.getUsageReport(bean).forEach((report) -> {
-                if (report.usageKey.startsWith("LayoutBlock")) {
-                    sb.append(Bundle.getMessage("ReferenceLine", layoutBlock.getUserName(), layoutBlock.getSystemName()));  // NOI18N
+                if (report.usageKey.startsWith("LayoutBlock")) {  // NOI18N
+                    String name = layoutBlock.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME);
+                    sb.append(Bundle.getMessage("ReferenceLineName", layoutBlock.getUserName(), layoutBlock.getSystemName()));  // NOI18N
                 }
             });
         });
-        return addHeader(sb, "ReferenceLayoutBlockOccupancy");  // NOI18N
+        return addHeader(sb, "ReferenceLayoutBlock");  // NOI18N
     }
 
     /**
@@ -186,7 +191,8 @@ public class WhereUsedCollectors {
             BlockBossLogic ssl = e.nextElement();
             ssl.getUsageReport(bean).forEach((report) -> {
                 if (report.usageKey.startsWith("SSL")) {  // NOI18N
-                    sb.append(Bundle.getMessage("ReferenceLine", report.usageBean.getUserName(), report.usageBean.getSystemName()));  // NOI18N
+                    String name = report.usageBean.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME);
+                    sb.append(Bundle.getMessage("ReferenceLineName", name));  // NOI18N
                 }
             });
         }
@@ -236,8 +242,9 @@ public class WhereUsedCollectors {
         StringBuilder sb = new StringBuilder();
         InstanceManager.getDefault(SignalGroupManager.class).getNamedBeanSet().forEach((group) -> {
             group.getUsageReport(bean).forEach((report) -> {
-                if (report.usageKey.startsWith("SignalGroup")) {
-                    sb.append(Bundle.getMessage("ReferenceLine", group.getUserName(), group.getSystemName()));  // NOI18N
+                if (report.usageKey.startsWith("SignalGroup")) {  // NOI18N
+                    String name = group.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME);
+                    sb.append(Bundle.getMessage("ReferenceLineName", name));  // NOI18N
                 }
             });
         });
@@ -262,12 +269,13 @@ public class WhereUsedCollectors {
         StringBuilder sb = new StringBuilder();
         InstanceManager.getDefault(OBlockManager.class).getNamedBeanSet().forEach((oblock) -> {
             oblock.getUsageReport(bean).forEach((report) -> {
-                if (report.usageKey.startsWith("OBlock")) {
-                    sb.append(Bundle.getMessage("ReferenceLine", oblock.getUserName(), oblock.getSystemName()));  // NOI18N
+                if (report.usageKey.startsWith("OBlock")) {  // NOI18N
+                    String name = oblock.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME);
+                    sb.append(Bundle.getMessage("ReferenceLineName", name));  // NOI18N
                 }
             });
         });
-        return addHeader(sb, "ReferenceOBlockOccupancy");  // NOI18N
+        return addHeader(sb, "ReferenceOBlock");  // NOI18N
     }
 
     /**
@@ -286,8 +294,8 @@ public class WhereUsedCollectors {
         InstanceManager.getDefault(LogixManager.class).getNamedBeanSet().forEach((logix) -> {
             logix.getUsageReport(bean).forEach((report) -> {
                 if (report.usageKey.startsWith("ConditionalVariable") || report.usageKey.startsWith("ConditionalAction")) {  // NOI18N
-                    sb.append(Bundle.getMessage("ReferenceLineConditional", logix.getUserName(), logix.getSystemName(),  // NOI18N
-                            report.usageData));
+                    String name = logix.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME);
+                    sb.append(Bundle.getMessage("ReferenceLineConditional", name, report.usageData));  // NOI18N
                 }
             });
         });
@@ -310,8 +318,9 @@ public class WhereUsedCollectors {
         StringBuilder sb = new StringBuilder();
         InstanceManager.getDefault(SectionManager.class).getNamedBeanSet().forEach((section) -> {
             section.getUsageReport(bean).forEach((report) -> {
-                if (report.usageKey.startsWith("SectionSensor")) {
-                    sb.append(Bundle.getMessage("ReferenceLine", section.getUserName(), section.getSystemName()));  // NOI18N
+                if (report.usageKey.startsWith("SectionSensor")) {  // NOI18N
+                    String name = section.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME);
+                    sb.append(Bundle.getMessage("ReferenceLineName", name));  // NOI18N
                 }
             });
         });
@@ -335,12 +344,12 @@ public class WhereUsedCollectors {
         StringBuilder sb = new StringBuilder();
         InstanceManager.getDefault(TransitManager.class).getNamedBeanSet().forEach((transit) -> {
             transit.getUsageReport(bean).forEach((report) -> {
+                String name = transit.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME);
                 if (report.usageKey.startsWith("TransitSensorStop")) {  // NOI18N
-                    sb.append(Bundle.getMessage("ReferenceLine", transit.getUserName(), transit.getSystemName()));  // NOI18N
+                    sb.append(Bundle.getMessage("ReferenceLineName", name));  // NOI18N
                 }
                 if (report.usageKey.startsWith("TransitAction")) {  // NOI18N
-                    sb.append(Bundle.getMessage("ReferenceLineAction", transit.getUserName(), transit.getSystemName(),  // NOI18N
-                            report.usageBean.getDisplayName()));
+                    sb.append(Bundle.getMessage("ReferenceLineAction", name, report.usageBean.getDisplayName()));  // NOI18N
                 }
             });
         });
@@ -365,7 +374,7 @@ public class WhereUsedCollectors {
         StringBuilder sb = new StringBuilder();
         InstanceManager.getDefault(jmri.jmrit.display.EditorManager.class).getEditorsList().forEach((panel) -> {
             panel.getUsageReport(bean).forEach((report) -> {
-                sb.append(Bundle.getMessage("ReferenceLineData2", panel.getTitle(), report.usageData));  // NOI18N
+                sb.append(Bundle.getMessage("ReferenceLinePanel", panel.getTitle(), report.usageData));  // NOI18N
             });
         });
         return addHeader(sb, "ReferencePanels");  // NOI18N
@@ -378,7 +387,7 @@ public class WhereUsedCollectors {
      * @return usage string
      */
     static String checkCTC(NamedBean bean) {
-        log.debug("CTC process pending: bean = {}", bean);
+        log.debug("CTC process pending: bean = {}", bean);  // NOI18N
         return "";
     }
 

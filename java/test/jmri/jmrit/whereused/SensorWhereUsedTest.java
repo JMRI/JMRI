@@ -19,7 +19,7 @@ public class SensorWhereUsedTest {
     public void testSensorWhereUsed() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Sensor sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Feedback-1");
-        JTextArea result = SensorWhereUsed.getSensorWhereUsed(sensor);
+        JTextArea result = SensorWhereUsed.getWhereUsed(sensor);
         Assert.assertFalse(result.getText().isEmpty());
     }
 

@@ -1,7 +1,7 @@
 package jmri.jmrit.whereused;
 
 import javax.swing.JTextArea;
-import jmri.Turnout;
+import jmri.NamedBean;
 
 /**
  * Find turnout references.
@@ -16,11 +16,12 @@ public class TurnoutWhereUsed {
      * @param turnout The turnout bean.
      * @return a populated textarea.
      */
-    static public JTextArea getTurnoutWhereUsed(Turnout turnout) {
+    static public JTextArea getWhereUsed(NamedBean turnout) {
         JTextArea textArea = new JTextArea();
         String label = Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"));  // NOI18N
         textArea.append(Bundle.getMessage("ReferenceTitle", label, turnout.getDisplayName()));  // NOI18N
-        textArea.append(Bundle.getMessage("ListenerCount", turnout.getNumPropertyChangeListeners()));
+        textArea.append(Bundle.getMessage("ListenerCount", turnout.getNumPropertyChangeListeners()));  // NOI18N
+
         textArea.append(WhereUsedCollectors.checkLights(turnout));
         textArea.append(WhereUsedCollectors.checkRoutes(turnout));
         textArea.append(WhereUsedCollectors.checkBlocks(turnout));
