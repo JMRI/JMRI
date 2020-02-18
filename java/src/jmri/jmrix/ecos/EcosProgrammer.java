@@ -162,10 +162,10 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
                 EcosMessage m;
                 if (_progRead) {
                     // read was in progress - send read command
-                    m = new EcosMessage("set("+ecosObject+","+readCommand+",cv["+_cv+"])");
+                    m = new EcosMessage("set(" + ecosObject + "," + readCommand + ",cv[" + _cv + "])");
                 } else {
                     // write was in progress - send write command
-                    m = new EcosMessage("set("+ecosObject+","+writeCommand+",cv["+_cv+","+_val+"])");
+                    m = new EcosMessage("set(" + ecosObject + "," + writeCommand + ",cv[" + _cv + "," + _val + "])");
                 }
                 tc.sendEcosMessage(m, this);
             } catch (Exception e) {
@@ -194,7 +194,7 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
             tc.sendEcosMessage(m, this);
             // check for errors
             if (reply.match("error") >= 0 || reply.match(",ok]") == -1) {
-                log.debug("ERROR during programming " + reply);
+                log.debug("ERROR during programming {}", reply);
                 // ECOS is not very informative about the precise nature of errors.
                 // We might guess that there is no loco present
                 notifyProgListenerEnd(-1, jmri.ProgListener.NoLocoDetected);
@@ -203,8 +203,8 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
             // Get the CV value from the reply if reading
             if (_progRead) {
                 // read was in progress - get return value
-                _val = GetEcosObjectNumber.getEcosObjectNumber(reply.toString(),",",",ok]");
-                log.debug("read CV "+_cv+" value: "+_val);
+                _val = GetEcosObjectNumber.getEcosObjectNumber(reply.toString(), ",", ",ok]");
+                log.debug("read CV {} value: ", _cv, _val);
             }
             
             // if this was a read, we cached the value earlier.  If its a

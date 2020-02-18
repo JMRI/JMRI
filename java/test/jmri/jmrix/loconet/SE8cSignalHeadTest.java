@@ -259,6 +259,7 @@ public class SE8cSignalHeadTest {
 
     @After
     public void tearDown() {
+        memo.dispose();
         JUnitUtil.tearDown();
     }
 

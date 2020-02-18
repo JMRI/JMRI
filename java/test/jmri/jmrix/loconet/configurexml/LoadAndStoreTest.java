@@ -66,4 +66,15 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
         
         jmri.InstanceManager.setDefault(jmri.jmrix.loconet.LnTrafficController.class, lnis1);
     }
+
+    /**
+     * {@inheritDoc}
+     * Ensure that a LocoNet connection is available
+     */
+    @Override
+    public void tearDown() {
+        memo1.dispose();
+        memo2.dispose();
+        super.tearDown();
+    }
 }

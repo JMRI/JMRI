@@ -380,7 +380,7 @@ public abstract class BeanEditAction<B extends NamedBean> extends AbstractAction
     }
 
     public void save() {
-        String feedback = Bundle.getMessage("ItemUpdateFeedback", Bundle.getMessage("BeanNameTurnout"))
+        String feedback = Bundle.getMessage("ItemUpdateFeedback", getBeanType())
                 + " " + bean.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
         // provide feedback to user, can be overwritten by save action error handler
         statusBar.setText(feedback);

@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  * @author Bob Jacobsen Copyright 2015
  */
-@Disabled
+@Disabled("Tests test failure, should never be a part of a normal test suite")
 public class FailTest {
 
     @Test

@@ -1006,30 +1006,30 @@ RCR&lt;;&gt;S74
     <h3>Fast Clock Commands</h3>
 
     <p>The 'PFT' command is used to synchronize the fast clock time.  It is
-    sent periodically from the server, indicating the "now" time and
-    (optionally) the current time ratio.  Examples include:</p>
+    sent from the server when time or rate change, indicating the "now" time
+    and the current time ratio (or 0 when clock stopped). Examples include:</p>
 
     <pre class="code">
 PFT65871&lt;;&gt;4
 PFT1550686525&lt;;&gt;4.0
-PFT1550686860
+PFT1550681224&lt;;&gt;0.0
 </pre>
 
     <p>The first number is an integer number of seconds since 12:00
-    midnight, January 1st, 1970.  This start date is the Unix time epoch,
+    midnight, January 1st, 1970. This start date is the Unix time epoch,
     and makes it easy to convert this value using the standard time
-    libraries.  Only the hours and minutes are useful.  JMRI sends a value
+    libraries. Only the hours and minutes are useful. JMRI sends a value
     based on the system time when the fast clock was started, so will
-    return a value near the calendar date.   The Digitrax LnWI returns
+    return a value near the calendar date. The Digitrax LnWi returns
     values within the range 0-86400 (all the values for January 1,
     1970).</p>
 
-    <p>The second number, if present, is the current fast time ratio.  It
+    <p>The second number is the current fast time ratio.  It
     may be an integer value (4) or a floating point value (4.0).  If this
     value is 0 (or 0.0), the clock is stopped.</p>
 
-    <p>JMRI will update the current fast time every 5 real-time minutes,
-    while the LnWI does so much more frequently.</p>
+    <p>Updates are sent on each change in time or rate, and when clock stopped 
+    or started.</p>
 
 
     <h3>Unknown commands</h3>
@@ -1039,7 +1039,7 @@ PFT1550686860
 
     <h3>Observations</h3>
 
-    <p>The Digitrax LnWI sends multiple instances of the H command as part
+    <p>The Digitrax LnWi sends multiple instances of the H command as part
     of the initial information sent after the first command the client sends:</p>
 
     <pre class="code">

@@ -20,6 +20,7 @@ public class LocoNetSlotTest {
         Assert.assertEquals("slot request message",
                 "BF 00 15 00",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+        slotmanager.dispose();
     }
 
     @Test
@@ -938,6 +939,7 @@ public class LocoNetSlotTest {
             Assert.assertEquals("F8 value from LocoNet Message, loop "+i,((i & 0x08)== 0x08), s.isF8());
             Assert.assertTrue  ("Dir value from LocoNet Message, loop "+1, s.isForward());
         }
+        sm.dispose();
     }
 
     LocoNetInterfaceScaffold lnis;

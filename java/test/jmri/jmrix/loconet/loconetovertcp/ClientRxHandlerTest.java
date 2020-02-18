@@ -16,7 +16,8 @@ import org.junit.Test;
 public class ClientRxHandlerTest {
 
     private LocoNetInterfaceScaffold lnis;
-
+    LocoNetSystemConnectionMemo memo;
+    
     @Test
     public void testCTor() {
         ClientRxHandler t = new ClientRxHandler("127.0.0.1", new java.net.Socket(), lnis);
@@ -30,7 +31,7 @@ public class ClientRxHandlerTest {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
 
-        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo();
+        memo = new LocoNetSystemConnectionMemo();
         // ensure memo exists in order to later use InstanceManager.getDefault()
         lnis = new LocoNetInterfaceScaffold(memo);
         memo.setLnTrafficController(lnis);
@@ -40,8 +41,8 @@ public class ClientRxHandlerTest {
     @After
     public void tearDown() {
         lnis = null;
+        memo.dispose();
         JUnitUtil.tearDown();
-        JUnitUtil.resetInstanceManager();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ClientRxHandlerTest.class);

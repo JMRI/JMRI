@@ -64,13 +64,12 @@ public class CbusFilterFrame extends JmriJFrame {
      */
     @Nonnull
     protected String title() {
-        if ( _console != null) {
-            return _console.getTitle() + " " + Bundle.getMessage("EventFilterTitleX","");
+        if (_console != null) {
+            return _console.getTitle() + " " + Bundle.getMessage("EventFilterTitleX", "");
+        } else if (_evCap != null) {
+            return _evCap.getTitle() + " " + Bundle.getMessage("EventFilterTitleX", "");
         }
-        else if ( _evCap != null) {
-            return _evCap.getTitle() + " " + Bundle.getMessage("EventFilterTitleX","");
-        }
-        return Bundle.getMessage("EventFilterTitleX","");
+        return Bundle.getMessage("EventFilterTitleX", "");
     }
 
     /**

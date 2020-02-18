@@ -448,7 +448,7 @@ public class SerialFilterFrame extends jmri.util.JmriJFrame {
         public static final int NUMCOLUMNS = ENABLED_COLUMN+1;
     }
 
-    private String[] nodeEnableColumnsNames = {"Node","Monitor"};
+    private String[] nodeEnableColumnsNames = {"Node", "Monitor"};
 
     // private final static Logger log = LoggerFactory.getLogger(SerialFilterFrame.class);
 

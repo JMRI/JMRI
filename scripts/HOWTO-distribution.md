@@ -236,7 +236,7 @@ git push github
 
 - Check that the correct milestone is on all merged pulls. This is needed for the release note. Start with the list of PRs merged since the last test release was started:
 ```
-https://github.com/JMRI/JMRI/pulls?utf8=✓&q=is%3Apr+is%3Amerged+no%3Amilestone++merged%3A%3E2019-10-31+
+https://github.com/JMRI/JMRI/pulls?utf8=✓&q=is%3Apr+is%3Amerged+no%3Amilestone++merged%3A%3E2020-01-14+
 ```
 where the date at the end should be the date (and optionally time) of the last release. For each, if it doesn't have the right milestone set, and is a change to the release code (e.g. isn't just a change to the CI settings or similar), add the current milestone.  
 
@@ -433,16 +433,16 @@ Note: Once a GitHub Release is created it is *not* possible to change it to refe
    - Description should contain text like (the releasesummary script above provided the correct filenames and hashes):
 
 ```   
-
 [Release notes](https://jmri.org/releasenotes/jmri4.19.3.shtml)
 
 Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.4.17.7+R7411860.dmg](https://github.com/JMRI/JMRI/releases/download/v4.17.7/JMRI.4.17.7+R7411860.dmg) | ad8c38aa7d3758302b071357f6d5e5ce85dc445407fa54785082755bd71c1a43
-[JMRI.4.17.7+R7411860.exe](https://github.com/JMRI/JMRI/releases/download/v4.17.7/JMRI.4.17.7+R7411860.exe) | 54a7746febee8476e4f0167bf42d54e22bdf36dc4b3dbedf467212e6022d5cfe
-[JMRI.4.17.7+R7411860.tgz](https://github.com/JMRI/JMRI/releases/download/v4.17.7/JMRI.4.17.7+R7411860.tgz) | cc856922e907a81b01953ba6c9bd22d0b80f1883cf06c5c1e75f25112ec9832d
+[JMRI.4.19.3+R7364caf9c.dmg](https://github.com/JMRI/JMRI/releases/download/v4.19.3/JMRI.4.19.3+R7364caf9c.dmg) | 832ce84fb3e799a4fb7f245386b67fae3bb8791286f0f20eca652034d41eb18c
+[JMRI.4.19.3+R7364caf9c.exe](https://github.com/JMRI/JMRI/releases/download/v4.19.3/JMRI.4.19.3+R7364caf9c.exe) | e3f80296837eba7efd534301880ed10e18ea330256d579b480612077e06e3233
+[JMRI.4.19.3+R7364caf9c.tgz](https://github.com/JMRI/JMRI/releases/download/v4.19.3/JMRI.4.19.3+R7364caf9c.tgz) | fc3a3189c3518654717a13417a98c6846ee37a794e81812901555ab3d42fddc7
+
 
 ```
 
@@ -490,7 +490,7 @@ If there are any changes in other files, do both of:
 
 - Create the [next GitHub Issue](https://github.com/JMRI/JMRI/issues) to hold discussion with conventional title "Create Test Release 4.19.4". Add the next release milestone (created above) to it. Typical text (get the date from the [milestone page](https://github.com/JMRI/JMRI/milestones)); for later releases in the series copy specific text from the milestone page:
 ```
-This is the next release in the 4.20 cycle. It's intended to be created around (July 12) from the `HEAD` of the `master` branch.
+This is the next release in the 4.20 cycle. It's intended to be created from the `HEAD` of the `master` branch.
 ```
 
 - Confirm that the tag for the current release (v4.19.3 for release 4.19.3) is in place via the [tags page](https://github.com/JMRI/JMRI/tags), then manually delete the current release branch (release-4.19.3) via the [GitHub branches page](https://github.com/JMRI/JMRI/branches).  (N.B. We are experimenting with having the `release*` branches protected, in which case you may have to go to Setting; Branches; then edit the release* branch name to releaseX* to disable the protection before removing the branch.  If you do that, remember to replace the protection!)
@@ -532,7 +532,7 @@ git push github
     git pull
 ```
 
-- Wait for update on JMRI web server (or [ask Jenkins](http://builds.jmri.org/jenkins/job/WebSite/) to speed it along; note there are multiple components that need to run)
+- Wait for update on JMRI web server (or [ask Jenkins](http://builds.jmri.org/jenkins/job/website/) to speed it along; note there are multiple components that need to run)
 
 - Check the [web page](https://www.jmri.org) just in case you didn't push properly, etc
 
@@ -547,7 +547,7 @@ git push github
     
 Test version 4.19.3 of JMRI/DecoderPro is available for download.
 
-This is the next in a series of test releases that will culminate in a production release, hopefully in early summer 2020.
+This is the next in a series of test releases that will culminate in a production release, hopefully in early summer 2020. It’s really helpful when people download, install and use these test versions so we can find and fix any inadvertent new problems early.
 
 - Alt: There have been a lot of updates in this version, so it should be considered experimental.
 - Alt: We're getting close to the end of the development series, so we'd appreciate feedback on whether or not this release works for your layout.

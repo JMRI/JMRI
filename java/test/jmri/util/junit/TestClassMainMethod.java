@@ -73,9 +73,12 @@ public class TestClassMainMethod {
      */
     public static void run(String testClass) {
         SummaryGeneratingListener listener = new jmri.util.junit.PrintingTestListener(System.out); // test-by-test output if enabled
-        // listener = new SummaryGeneratingListener();
         run(listener, testClass);
-    } 
+        TestExecutionSummary summary = listener.getSummary();
+        PrintWriter p = new PrintWriter(System.out);
+        summary.printTo(p);
+        summary.printFailuresTo(p);
+    }
 
     /**
      * Run tests with a specified RunListener.
@@ -83,7 +86,7 @@ public class TestClassMainMethod {
      * @param listener the listener for the tests
      * @param pattern the filter pattern used for test selection
      */
-    public static void run(SummaryGeneratingListener listener, String pattern) {
+    public static void run(TestExecutionListener listener, String pattern) {
         LauncherDiscoveryRequest request = LauncherDiscoveryRequestBuilder.request()
                 .selectors(selectPackage("jmri"))
                 .selectors(selectPackage("apps"))
@@ -93,10 +96,5 @@ public class TestClassMainMethod {
         TestPlan testPlan = launcher.discover(request);
         launcher.registerTestExecutionListeners(listener);
         launcher.execute(testPlan);
-
-        TestExecutionSummary summary = listener.getSummary();
-        PrintWriter p = new PrintWriter(System.out);
-        summary.printTo(p);
-        summary.printFailuresTo(p);
     }
 }

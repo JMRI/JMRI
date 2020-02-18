@@ -64,7 +64,7 @@ public class Analytic_AAlgorithm extends AbstractCalculator {
             log.debug("Reading: " + r.toString());
             log.debug("Sensors: " + sensors.length);
             if (sensors.length >= 1 && sensors[0] != null) {
-                log.debug("Sensor[0]: " + sensors[0].x + "," + sensors[0].y + "," + sensors[0].z);
+                log.debug("Sensor[0]: {},{},{}", sensors[0].x, sensors[0].y, sensors[0].z);
             }
         }
 
@@ -97,14 +97,12 @@ public class Analytic_AAlgorithm extends AbstractCalculator {
                 Xs[j][1] = sensors[i].y;
                 Xs[j][2] = sensors[i].z;
                 SV[j] = true;
-                if (log.isDebugEnabled()) {
-                    log.debug("  " + j + "th point at " + Xs[j][0] + "," + Xs[j][1] + "," + Xs[j][2] + " time=" + r.getValue(i) + " is distance " + P[j]);
-                }
+                log.debug("  {}th point at {},{},{} time={} is distance {}", j, Xs[j][0], Xs[j][1], Xs[j][2], r.getValue(i), P[j]);
                 j++;
             }
         }
         nr = j;
-        log.debug("nr is " + nr);
+        log.debug("nr is {}", nr);
 
         double[] result = solve(Xs, SV, P, Xr);
 
