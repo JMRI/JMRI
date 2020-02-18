@@ -128,7 +128,7 @@ public class PanelEditor extends Editor implements ItemListener {
             public void run() {
                 try {
                     // Build resource catalog and load CatalogTree.xml now
-                    CatalogPanel catalog = new CatalogPanel();
+                    CatalogPanel catalog = CatalogPanel.makeDefaultCatalog();
                     catalog.createNewBranch("IFJAR", "Program Directory", "resources");
                     // log.debug("init run created (var=catalog)"); // where's this used, just a test run?
                 } catch (Exception ex) {
