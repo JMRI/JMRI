@@ -181,7 +181,19 @@
     </light>
   </lights>
   <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
-    <memory value="5:51 PM">
+    <memory>
+      <systemName>IM:AUTO:0001</systemName>
+      <userName>BlockMemory</userName>
+    </memory>
+    <memory>
+      <systemName>IM:AUTO:0002</systemName>
+      <userName>LogixVar</userName>
+    </memory>
+    <memory>
+      <systemName>IM:AUTO:0003</systemName>
+      <userName>LogixAction</userName>
+    </memory>
+    <memory value="6:34 PM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -573,7 +585,7 @@
     </oblock>
   </oblocks>
   <layoutblocks class="jmri.jmrit.display.layoutEditor.configurexml.LayoutBlockManagerXml" blockrouting="yes">
-    <layoutblock systemName="ILB1" occupancysensor="S-Left-Approach" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+    <layoutblock systemName="ILB1" occupancysensor="S-Left-Approach" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white" memory="BlockMemory">
       <systemName>ILB1</systemName>
       <userName>B-Left-Approach</userName>
     </layoutblock>
@@ -839,6 +851,11 @@
       <userName>Light Test</userName>
       <logixConditional systemName="IX:AUTO:0002C1" order="0" />
     </logix>
+    <logix userName="MemTest" enabled="yes">
+      <systemName>IX:AUTO:0003</systemName>
+      <userName>MemTest</userName>
+      <logixConditional systemName="IX:AUTO:0003C1" order="0" />
+    </logix>
     <logix enabled="yes">
       <systemName>IX:RTXINITIALIZER</systemName>
       <logixConditional systemName="IX:RTXINITIALIZER1T" order="0" />
@@ -863,6 +880,12 @@
       <conditionalStateVariable operator="4" negated="no" type="7" systemName="L-Sensor Control" dataString="" num1="0" num2="0" triggersCalc="yes" />
       <conditionalAction option="1" type="11" systemName="L-Turnout Control" data="2" delay="0" string="" />
     </conditional>
+    <conditional systemName="IX:AUTO:0003C1" userName="Memory Test" antecedent="R1" logicType="1" triggerOnChange="yes">
+      <systemName>IX:AUTO:0003C1</systemName>
+      <userName>Memory Test</userName>
+      <conditionalStateVariable operator="4" negated="no" type="9" systemName="BlockMemory" dataString="XX" num1="3" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" type="26" systemName="LogixAction" data="-1" delay="0" string="BlockMemory" />
+    </conditional>
     <conditional systemName="IX:RTXINITIALIZER1T" userName="Route 1C" antecedent="R1" logicType="3" triggerOnChange="yes">
       <systemName>IX:RTXINITIALIZER1T</systemName>
       <userName>Route 1C</userName>
@@ -882,7 +905,7 @@
     </conditional>
   </conditionals>
   <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Sun Feb 09 21:41:14 CST 2020" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
-  <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="LE Panel" x="182" y="0" windowheight="258" windowwidth="696" panelheight="285" panelwidth="707" sliders="no" scrollable="none" editable="no" positionable="yes" controlling="yes" animating="yes" showhelpbar="no" drawgrid="yes" snaponadd="no" snaponmove="no" antialiasing="no" turnoutcircles="no" tooltipsnotedit="no" tooltipsinedit="yes" mainlinetrackwidth="4" xscale="1.0" yscale="1.0" sidetrackwidth="2" defaulttrackcolor="darkGray" defaultoccupiedtrackcolor="red" defaultalternativetrackcolor="white" defaulttextcolor="black" turnoutcirclecolor="black" turnoutcirclesize="2" turnoutdrawunselectedleg="yes" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="10.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" autoblkgenerate="no" redBackground="192" greenBackground="192" blueBackground="192" gridSize="10" gridSize2nd="10" openDispatcher="no" useDirectTurnoutControl="no">
+  <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="LE Panel" x="182" y="23" windowheight="258" windowwidth="696" panelheight="285" panelwidth="707" sliders="no" scrollable="none" editable="no" positionable="yes" controlling="yes" animating="yes" showhelpbar="no" drawgrid="yes" snaponadd="no" snaponmove="no" antialiasing="no" turnoutcircles="no" tooltipsnotedit="no" tooltipsinedit="yes" mainlinetrackwidth="4" xscale="1.0" yscale="1.0" sidetrackwidth="2" defaulttrackcolor="darkGray" defaultoccupiedtrackcolor="red" defaultalternativetrackcolor="white" defaulttextcolor="black" turnoutcirclecolor="black" turnoutcirclesize="2" turnoutdrawunselectedleg="yes" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="10.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" autoblkgenerate="no" redBackground="192" greenBackground="192" blueBackground="192" gridSize="10" gridSize2nd="10" openDispatcher="no" useDirectTurnoutControl="no">
     <layoutTrackDrawingOptions name="LE Panel" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTrackDrawingOptionsXml">
       <mainBallastColor>#000000</mainBallastColor>
       <mainBallastWidth>0</mainBallastWidth>
@@ -1877,104 +1900,104 @@
   <filehistory>
     <operation>
       <type>app</type>
-      <date>Sun Feb 16 17:42:24 CST 2020</date>
+      <date>Mon Feb 17 18:20:54 CST 2020</date>
       <filename>JMRI program</filename>
     </operation>
     <operation>
       <type>Load OK</type>
-      <date>Sun Feb 16 17:42:36 CST 2020</date>
+      <date>Mon Feb 17 18:21:03 CST 2020</date>
       <filename>/Users/das/JMRI/_Profiles/WhereUsed.jmri/WhereUsedTesting.xml</filename>
       <filehistory>
         <operation>
           <type>app</type>
-          <date>Sun Feb 16 17:15:35 CST 2020</date>
+          <date>Sun Feb 16 17:42:24 CST 2020</date>
           <filename>JMRI program</filename>
         </operation>
         <operation>
           <type>Load OK</type>
-          <date>Sun Feb 16 17:15:50 CST 2020</date>
+          <date>Sun Feb 16 17:42:36 CST 2020</date>
           <filename>/Users/das/JMRI/_Profiles/WhereUsed.jmri/WhereUsedTesting.xml</filename>
           <filehistory>
             <operation>
               <type>app</type>
-              <date>Sun Feb 16 16:56:58 CST 2020</date>
+              <date>Sun Feb 16 17:15:35 CST 2020</date>
               <filename>JMRI program</filename>
             </operation>
             <operation>
               <type>Load OK</type>
-              <date>Sun Feb 16 16:57:07 CST 2020</date>
+              <date>Sun Feb 16 17:15:50 CST 2020</date>
               <filename>/Users/das/JMRI/_Profiles/WhereUsed.jmri/WhereUsedTesting.xml</filename>
               <filehistory>
                 <operation>
                   <type>app</type>
-                  <date>Sun Feb 16 13:12:40 CST 2020</date>
+                  <date>Sun Feb 16 16:56:58 CST 2020</date>
                   <filename>JMRI program</filename>
                 </operation>
                 <operation>
                   <type>Load OK</type>
-                  <date>Sun Feb 16 13:12:49 CST 2020</date>
+                  <date>Sun Feb 16 16:57:07 CST 2020</date>
                   <filename>/Users/das/JMRI/_Profiles/WhereUsed.jmri/WhereUsedTesting.xml</filename>
                   <filehistory>
                     <operation>
                       <type>app</type>
-                      <date>Sun Feb 16 13:07:32 CST 2020</date>
+                      <date>Sun Feb 16 13:12:40 CST 2020</date>
                       <filename>JMRI program</filename>
                     </operation>
                     <operation>
                       <type>Load OK</type>
-                      <date>Sun Feb 16 13:07:42 CST 2020</date>
+                      <date>Sun Feb 16 13:12:49 CST 2020</date>
                       <filename>/Users/das/JMRI/_Profiles/WhereUsed.jmri/WhereUsedTesting.xml</filename>
                       <filehistory>
                         <operation>
                           <type>app</type>
-                          <date>Sun Feb 16 13:02:24 CST 2020</date>
+                          <date>Sun Feb 16 13:07:32 CST 2020</date>
                           <filename>JMRI program</filename>
                         </operation>
                         <operation>
                           <type>Load OK</type>
-                          <date>Sun Feb 16 13:02:33 CST 2020</date>
+                          <date>Sun Feb 16 13:07:42 CST 2020</date>
                           <filename>/Users/das/JMRI/_Profiles/WhereUsed.jmri/WhereUsedTesting.xml</filename>
                         </operation>
                         <operation>
                           <type>Store</type>
-                          <date>Sun Feb 16 13:04:27 CST 2020</date>
+                          <date>Sun Feb 16 13:09:59 CST 2020</date>
                           <filename />
                         </operation>
                       </filehistory>
                     </operation>
                     <operation>
                       <type>Store</type>
-                      <date>Sun Feb 16 13:09:59 CST 2020</date>
+                      <date>Sun Feb 16 13:15:49 CST 2020</date>
                       <filename />
                     </operation>
                   </filehistory>
                 </operation>
                 <operation>
                   <type>Store</type>
-                  <date>Sun Feb 16 13:15:49 CST 2020</date>
+                  <date>Sun Feb 16 17:15:14 CST 2020</date>
                   <filename />
                 </operation>
               </filehistory>
             </operation>
             <operation>
               <type>Store</type>
-              <date>Sun Feb 16 17:15:14 CST 2020</date>
+              <date>Sun Feb 16 17:17:08 CST 2020</date>
               <filename />
             </operation>
           </filehistory>
         </operation>
         <operation>
           <type>Store</type>
-          <date>Sun Feb 16 17:17:08 CST 2020</date>
+          <date>Sun Feb 16 17:51:16 CST 2020</date>
           <filename />
         </operation>
       </filehistory>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Sun Feb 16 17:51:16 CST 2020</date>
+      <date>Mon Feb 17 18:34:33 CST 2020</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.19.3ish+das+20200216T2342Z+Ra4b64ad16a on Sun Feb 16 17:51:16 CST 2020-->
+  <!--Written by JMRI version 4.19.3ish+das+20200218T0020Z+R41461657b6 on Mon Feb 17 18:34:33 CST 2020-->
 </layout-config>

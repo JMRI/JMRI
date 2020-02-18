@@ -157,7 +157,7 @@ public class WhereUsedCollectors {
             layoutBlock.getUsageReport(bean).forEach((report) -> {
                 if (report.usageKey.startsWith("LayoutBlock")) {  // NOI18N
                     String name = layoutBlock.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME);
-                    sb.append(Bundle.getMessage("ReferenceLineName", layoutBlock.getUserName(), layoutBlock.getSystemName()));  // NOI18N
+                    sb.append(Bundle.getMessage("ReferenceLineName", name));  // NOI18N
                 }
             });
         });
