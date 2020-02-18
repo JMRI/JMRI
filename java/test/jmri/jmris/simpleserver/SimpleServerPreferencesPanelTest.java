@@ -2,9 +2,10 @@ package jmri.jmris.simpleserver;
 
 import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 /**
@@ -16,7 +17,7 @@ public class SimpleServerPreferencesPanelTest {
 
     @Test public void testCtor() {
         SimpleServerPreferencesPanel a = new SimpleServerPreferencesPanel();
-        Assert.assertNotNull(a);
+        assertThat(a).isNotNull();
     }
 
     @BeforeEach public void setUp() {

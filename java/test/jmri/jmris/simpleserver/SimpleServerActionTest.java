@@ -3,10 +3,11 @@ package jmri.jmris.simpleserver;
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 /**
@@ -19,13 +20,13 @@ public class SimpleServerActionTest {
     @Test public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SimpleServerAction a = new SimpleServerAction();
-        Assert.assertNotNull(a);
+        assertThat(a).isNotNull();
     }
 
     @Test public void testStringCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SimpleServerAction a = new SimpleServerAction("Hello World");
-        Assert.assertNotNull(a);
+        assertThat(a).isNotNull();
     }
 
     @BeforeEach public void setUp() {

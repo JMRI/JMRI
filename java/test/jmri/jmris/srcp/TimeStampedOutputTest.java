@@ -2,9 +2,10 @@ package jmri.jmris.srcp;
 
 import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
@@ -15,7 +16,7 @@ public class TimeStampedOutputTest {
     @Test
     public void testCTor() {
         TimeStampedOutput t = new TimeStampedOutput();
-        Assert.assertNotNull("exists",t);
+        assertThat(t).isNotNull().withFailMessage("exists");
     }
 
     // The minimal setup for log4J

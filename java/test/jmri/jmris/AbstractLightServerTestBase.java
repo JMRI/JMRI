@@ -1,8 +1,9 @@
 package jmri.jmris;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Base set of tests for decendents of the jmri.jmris.AbstractLightServer class
@@ -15,7 +16,7 @@ abstract public class AbstractLightServerTestBase {
 
     @Test
     public void testCtor() {
-        Assert.assertNotNull(ls);
+        assertThat(ls).isNotNull();
     }
 
     @Test

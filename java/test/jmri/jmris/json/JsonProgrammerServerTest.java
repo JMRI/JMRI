@@ -1,12 +1,13 @@
 package jmri.jmris.json;
 
-import org.junit.Assert;
 import jmri.server.json.JsonMockConnection;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.DataOutputStream;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
@@ -17,7 +18,7 @@ public class JsonProgrammerServerTest {
     @Test
     public void testCTor() {
         JsonProgrammerServer t = new JsonProgrammerServer(new JsonMockConnection((DataOutputStream) null));
-        Assert.assertNotNull("exists",t);
+        assertThat(t).isNotNull().withFailMessage("exists");
     }
 
     // The minimal setup for log4J

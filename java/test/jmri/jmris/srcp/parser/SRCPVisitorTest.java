@@ -3,9 +3,11 @@ package jmri.jmris.srcp.parser;
 import java.io.StringReader;
 import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 
 /**
@@ -20,7 +22,7 @@ public class SRCPVisitorTest {
     public void testCTor() {
         // test the constructor.
         SRCPVisitor v = new SRCPVisitor();
-        Assert.assertNotNull(v);
+        assertThat(v).isNotNull();
     }
 
     @Test
@@ -31,14 +33,12 @@ public class SRCPVisitorTest {
         String code = "GET 0 SERVER\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
         SRCPVisitor v = new SRCPVisitor();
-        try {
-            SimpleNode e = p.command();
-            e.jjtAccept(v, null);
-            Assert.assertEquals(v.getOutputString(), "100 INFO 0 SERVER RUNNING");
-        } catch (ParseException pe) {
-            exceptionOccured = true;
-        }
-        Assert.assertFalse(exceptionOccured);
+        Throwable thrown = catchThrowable( () -> {
+                    SimpleNode e = p.command();
+                    e.jjtAccept(v, null);
+                });
+        assertThat("100 INFO 0 SERVER RUNNING").isEqualTo(v.getOutputString());
+        assertThat(thrown).isNull();
     }
 
     @Test
@@ -49,14 +49,12 @@ public class SRCPVisitorTest {
         String code = "RESET 0 SERVER\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
         SRCPVisitor v = new SRCPVisitor();
-        try {
+        Throwable thrown = catchThrowable( () -> {
             SimpleNode e = p.command();
             e.jjtAccept(v, null);
-            Assert.assertEquals(v.getOutputString(), "413 ERROR temporarily prohibited");
-        } catch (ParseException pe) {
-            exceptionOccured = true;
-        }
-        Assert.assertFalse(exceptionOccured);
+        });
+        assertThat(thrown).isNull();
+        assertThat("413 ERROR temporarily prohibited").isEqualTo(v.getOutputString());
     }
 
     @Test
@@ -67,14 +65,12 @@ public class SRCPVisitorTest {
         String code = "TERM 0 SERVER\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
         SRCPVisitor v = new SRCPVisitor();
-        try {
+        Throwable thrown = catchThrowable( () -> {
             SimpleNode e = p.command();
             e.jjtAccept(v, null);
-            Assert.assertEquals(v.getOutputString(), "200 OK");
-        } catch (ParseException pe) {
-            exceptionOccured = true;
-        }
-        Assert.assertFalse(exceptionOccured);
+        });
+        assertThat("200 OK").isEqualTo(v.getOutputString());
+        assertThat(thrown).isNull();
     }
 
 

@@ -1,9 +1,10 @@
 package jmri.jmris.simpleserver;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Tests for the jmri.jmris.simpleserver.SimpleServerManager class 
@@ -15,7 +16,7 @@ public class SimpleServerManagerTest {
     @Test
     public void testGetInstance() {
         SimpleServerManager a = SimpleServerManager.getInstance();
-        Assert.assertNotNull(a);
+        assertThat(a).isNotNull();
     }
 
     @BeforeEach

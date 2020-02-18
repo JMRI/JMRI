@@ -5,11 +5,11 @@ import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 /**
  * Tests for the jmri.jmris.simpleserver.SimpleOperationsServer class
@@ -25,14 +25,14 @@ public class SimpleOperationsServerTest {
     @Test
     public void testCtor() {
         SimpleOperationsServer a = new SimpleOperationsServer(input, output);
-        Assert.assertNotNull(a);
+        assertThat(a).isNotNull();
     }
 
     @Test
     public void testConnectionCtor() {
         jmri.jmris.JmriConnectionScaffold jcs = new jmri.jmris.JmriConnectionScaffold(output);
         SimpleOperationsServer a = new SimpleOperationsServer(jcs);
-        Assert.assertNotNull(a);
+        assertThat(a).isNotNull();
     }
 
     // test sending a message.
@@ -40,24 +40,13 @@ public class SimpleOperationsServerTest {
     public void testSendMessage() {
         SimpleOperationsServer a = new SimpleOperationsServer(input, output);
         // NOTE: this test uses reflection to test a private method.
-        java.lang.reflect.Method sendMessageMethod = null;
-        try {
-            sendMessageMethod = a.getClass().getDeclaredMethod("sendMessage", String.class);
-        } catch (java.lang.NoSuchMethodException nsm) {
-            Assert.fail("Could not find method sendMessage in SimpleOperationsServer class. ");
-        }
-
-        Assert.assertNotNull(sendMessageMethod);
-        sendMessageMethod.setAccessible(true);
-        try {
-            sendMessageMethod.invoke(a, "Hello World");
-            assertThat(sb.toString()).isEqualTo("Hello World").withFailMessage("SendMessage Check");
-        } catch (java.lang.IllegalAccessException iae) {
-            Assert.fail("Could not access method sendMessage in SimpleOperationsServer class");
-        } catch (java.lang.reflect.InvocationTargetException ite) {
-            Throwable cause = ite.getCause();
-            Assert.fail("sendMessage executon failed reason: " + cause.getMessage());
-        }
+        Throwable thrown = catchThrowable( () -> {
+                java.lang.reflect.Method sendMessageMethod = a.getClass().getDeclaredMethod("sendMessage", String.class);
+                sendMessageMethod.setAccessible(true);
+                sendMessageMethod.invoke(a, "Hello World");
+        });
+        assertThat(thrown).withFailMessage("Could not execute sendMessage via reflection {}",thrown);
+        assertThat(sb.toString()).isEqualTo("Hello World").withFailMessage("SendMessage Check");
     }
 
     // test sending a message.
@@ -66,25 +55,14 @@ public class SimpleOperationsServerTest {
         jmri.jmris.JmriConnectionScaffold jcs = new jmri.jmris.JmriConnectionScaffold(output);
         SimpleOperationsServer a = new SimpleOperationsServer(jcs);
         // NOTE: this test uses reflection to test a private method.
-        java.lang.reflect.Method sendMessageMethod = null;
-        try {
-            sendMessageMethod = a.getClass().getDeclaredMethod("sendMessage", String.class);
-        } catch (java.lang.NoSuchMethodException nsm) {
-            Assert.fail("Could not find method sendMessage in SimpleOperationsServer class. ");
-        }
-
-        // override the default permissions.
-        Assert.assertNotNull(sendMessageMethod);
-        sendMessageMethod.setAccessible(true);
-        try {
+        Throwable thrown = catchThrowable( () -> {
+            java.lang.reflect.Method sendMessageMethod = a.getClass().getDeclaredMethod("sendMessage", String.class);
+            // override the default permissions.
+            sendMessageMethod.setAccessible(true);
             sendMessageMethod.invoke(a, "Hello World");
-            assertThat(jcs.getOutput()).isEqualTo("Hello World").withFailMessage("SendMessage Check");
-        } catch (java.lang.IllegalAccessException iae) {
-            Assert.fail("Could not access method sendMessage in SimpleOperationsServer class");
-        } catch (java.lang.reflect.InvocationTargetException ite) {
-            Throwable cause = ite.getCause();
-            Assert.fail("sendMessage executon failed reason: " + cause.getMessage());
-        }
+        });
+        assertThat(thrown).withFailMessage("Could not execute sendMessage via reflection {}",thrown);
+        assertThat(jcs.getOutput()).isEqualTo("Hello World").withFailMessage("SendMessage Check");
     }
 
     // test sending the train list.
@@ -146,7 +124,9 @@ public class SimpleOperationsServerTest {
         // instead of an assertEquals because the report ends in a date, which
         // changes with each run of the test.  We could generate the date, but
         // that is more work than required to verify the parsing was correct.
-        Assert.assertTrue("Terminate Command Response Check " + sb.toString(), sb.toString().startsWith("OPERATIONS , TRAIN=STF , TRAINLOCATION= , TRAINLENGTH=0 , TRAINWEIGHT=0 , TRAINCARS=0 , TRAINLEADLOCO , TRAINCABOOSE=\nOPERATIONS , TRAIN=STF , TERMINATE=Terminated"));
+        assertThat(sb.toString())
+                .startsWith("OPERATIONS , TRAIN=STF , TRAINLOCATION= , TRAINLENGTH=0 , TRAINWEIGHT=0 , TRAINCARS=0 , TRAINLEADLOCO , TRAINCABOOSE=\nOPERATIONS , TRAIN=STF , TERMINATE=Terminated")
+                .withFailMessage("Terminate Command Response Check {}",sb);
     }
 
     @Test

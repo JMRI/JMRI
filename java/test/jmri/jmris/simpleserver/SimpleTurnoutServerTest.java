@@ -30,7 +30,7 @@ public class SimpleTurnoutServerTest extends jmri.jmris.AbstractTurnoutServerTes
                 });
         jmri.jmris.JmriConnectionScaffold jcs = new jmri.jmris.JmriConnectionScaffold(output);
         SimpleTurnoutServer a = new SimpleTurnoutServer(jcs);
-        Assert.assertNotNull(a);
+        assertThat(a).isNotNull();
     }
 
     @Test
@@ -45,7 +45,7 @@ public class SimpleTurnoutServerTest extends jmri.jmris.AbstractTurnoutServerTes
         }
 
         // override the default permissions.
-        Assert.assertNotNull(sendMessageMethod);
+        assertThat(sendMessageMethod).isNotNull();
         sendMessageMethod.setAccessible(true);
         try {
            sendMessageMethod.invoke(ts,"Hello World");
@@ -79,7 +79,7 @@ public class SimpleTurnoutServerTest extends jmri.jmris.AbstractTurnoutServerTes
         }
 
         // override the default permissions.
-        Assert.assertNotNull(sendMessageMethod);
+        assertThat(sendMessageMethod).isNotNull();
         sendMessageMethod.setAccessible(true);
         try {
            sendMessageMethod.invoke(a,"Hello World");

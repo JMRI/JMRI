@@ -68,7 +68,7 @@ public class SimpleReporterServerTest {
         }
 
         // override the default permissions.
-        Assert.assertNotNull(sendMessageMethod);
+        assertThat(sendMessageMethod).isNotNull();
         sendMessageMethod.setAccessible(true);
         try {
            sendMessageMethod.invoke(a,"Hello World");
@@ -103,7 +103,7 @@ public class SimpleReporterServerTest {
         }
 
         // override the default permissions.
-        Assert.assertNotNull(sendMessageMethod);
+        assertThat(sendMessageMethod).isNotNull();
         sendMessageMethod.setAccessible(true);
         try {
            sendMessageMethod.invoke(a,"Hello World");

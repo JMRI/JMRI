@@ -1,9 +1,10 @@
 package jmri.jmris;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Tests for the jmri.jmris.JmriConnection class 
@@ -23,7 +24,7 @@ public class JmriConnectionTest {
                     }
                 });
         JmriConnection a = new JmriConnection(output);
-        Assert.assertNotNull(a);
+        assertThat(a).isNotNull();
     }
 
     @BeforeEach

@@ -5,6 +5,8 @@ import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
  * Tests for the jmri.jmris.JmriServerAction class
  *
@@ -15,7 +17,7 @@ public class JmriServerActionTest {
     @Test
     public void testCtorDefault() {
         JmriServerAction a = new JmriServerAction();
-        Assert.assertNotNull(a);
+        assertThat(a).isNotNull();
     }
 
     // The minimal setup for log4J

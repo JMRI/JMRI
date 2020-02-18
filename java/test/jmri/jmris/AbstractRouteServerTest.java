@@ -3,9 +3,10 @@ package jmri.jmris;
 import java.io.IOException;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * tests for decendents of the jmri.jmris.AbstractRouteServer class
@@ -18,7 +19,7 @@ public class AbstractRouteServerTest {
 
     @Test
     public void testCtor() {
-        Assert.assertNotNull(rs);
+        assertThat(rs).isNotNull();
     }
 
     @BeforeEach

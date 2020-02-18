@@ -2,9 +2,10 @@ package jmri.jmris.simpleserver;
 
 import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 /**
@@ -18,13 +19,13 @@ public class SimpleServerTest {
 
     @Test
     public void testCtor() {
-        Assert.assertNotNull(ss);
+        assertThat(ss).isNotNull();
     }
 
     @Test
     public void testCtorwithParameter() {
         SimpleServer a = new SimpleServer(2048);
-        Assert.assertNotNull(a);
+        assertThat(a).isNotNull();
         jmri.util.JUnitAppender.suppressErrorMessage("Failed to connect to port 2048");
     }
 

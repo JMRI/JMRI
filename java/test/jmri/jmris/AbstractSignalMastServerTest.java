@@ -2,9 +2,10 @@ package jmri.jmris;
 
 import java.io.IOException;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Base set of tests for decendents of the jmri.jmris.AbstractSignalMastServer class
@@ -17,7 +18,7 @@ public class AbstractSignalMastServerTest {
 
     @Test
     public void testCtor() {
-        Assert.assertNotNull(sms);
+        assertThat(sms).isNotNull();
     }
 
     @BeforeEach
