@@ -3,7 +3,6 @@
 		<dt><h3 style="padding-left: 1em;"><a href="/help/en/html/hardware/">Supported Hardware</a></h3></dt>
 		<dd>
 		    <ul>
-				<!-- copy this list from /root sidebar, compare with /help/en/html/index.shtml, checked 11/2019 -->
 				<li><a href="/help/en/html/hardware/arduino/index.shtml">Arduinos</a>
 				<li><a href="/help/en/html/hardware/XPressNet/index.shtml">Atlas Commander</a>
 				<li><a href="/help/en/html/hardware/bachrus/index.shtml">Bachrus</a>
