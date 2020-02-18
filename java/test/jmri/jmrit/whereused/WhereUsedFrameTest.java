@@ -1,6 +1,7 @@
 package jmri.jmrit.whereused;
 
 import java.awt.GraphicsEnvironment;
+import jmri.*;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 import org.netbeans.jemmy.operators.*;
@@ -20,37 +21,50 @@ public class WhereUsedFrameTest {
         JFrameOperator jfo = new JFrameOperator(Bundle.getMessage("TitleWhereUsed"));  // NOI18N
         Assert.assertNotNull(jfo);
 
-        // Select Sensor
-        jmri.Sensor bean = jmri.InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Main");
-        frame.buildWhereUsedListing(WhereUsedFrame.ItemType.SENSOR, bean);
-//         new JComboBoxOperator(jfo, 0).selectItem(1);
-//         new JComboBoxOperator(jfo, 1).selectItem(7);
-//         new org.netbeans.jemmy.QueueTool().waitEmpty(); // wait for the list to finish
-//
-//         Select Turnout
-//         new JComboBoxOperator(jfo, 0).selectItem(2);
-//         new JComboBoxOperator(jfo, 1).selectItem(1);
-//         new org.netbeans.jemmy.QueueTool().waitEmpty(); // wait for the list to finish
-//
-//         Select Light
-//         new JComboBoxOperator(jfo, 0).selectItem(3);
-//         new JComboBoxOperator(jfo, 1).selectItem(0);
-//         new org.netbeans.jemmy.QueueTool().waitEmpty(); // wait for the list to finish
-//
-//         Select Signal Head
-//         new JComboBoxOperator(jfo, 0).selectItem(4);
-//         new JComboBoxOperator(jfo, 1).selectItem(1);
-//         new org.netbeans.jemmy.QueueTool().waitEmpty(); // wait for the list to finish
-//
-//         Select Signal Mast
-//         new JComboBoxOperator(jfo, 0).selectItem(5);
-//         new JComboBoxOperator(jfo, 1).selectItem(1);
-//         new org.netbeans.jemmy.QueueTool().waitEmpty(); // wait for the list to finish
-//
-//         Select Memory
-//         new JComboBoxOperator(jfo, 0).selectItem(6);
-//         new JComboBoxOperator(jfo, 1).selectItem(2);
-//         new org.netbeans.jemmy.QueueTool().waitEmpty(); // wait for the list to finish
+        // For each item type, create the bean combo box and verify it.  Build the report using a direct call.
+        JComboBoxOperator jcoType = new JComboBoxOperator(jfo, 0);
+
+        // Sensor
+        jcoType.selectItem(1);
+        String mgr = frame._itemNameBox.getManager().getClass().getSimpleName();
+        Assert.assertEquals(mgr, "ProxySensorManager");
+        Sensor sensor = InstanceManager.getDefault(SensorManager.class).getSensor("S-Main");
+        frame.buildWhereUsedListing(WhereUsedFrame.ItemType.SENSOR, sensor);
+
+        // Turnout
+        jcoType.selectItem(2);
+        mgr = frame._itemNameBox.getManager().getClass().getSimpleName();
+        Assert.assertEquals(mgr, "ProxyTurnoutManager");
+        Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).getTurnout("LE Left");
+        frame.buildWhereUsedListing(WhereUsedFrame.ItemType.TURNOUT, turnout);
+
+        // Light
+        jcoType.selectItem(3);
+        mgr = frame._itemNameBox.getManager().getClass().getSimpleName();
+        Assert.assertEquals(mgr, "ProxyLightManager");
+        Light light = InstanceManager.getDefault(LightManager.class).getLight("L-Sensor Control");
+        frame.buildWhereUsedListing(WhereUsedFrame.ItemType.LIGHT, light);
+
+        // Signal Head
+        jcoType.selectItem(4);
+        mgr = frame._itemNameBox.getManager().getClass().getSimpleName();
+        Assert.assertEquals(mgr, "AbstractSignalHeadManager");
+        SignalHead signalHead = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead("Left-AU");
+        frame.buildWhereUsedListing(WhereUsedFrame.ItemType.SIGNALHEAD, signalHead);
+
+        // Signal Mast
+        jcoType.selectItem(5);
+        mgr = frame._itemNameBox.getManager().getClass().getSimpleName();
+        Assert.assertEquals(mgr, "DefaultSignalMastManager");
+        SignalMast signalMast = InstanceManager.getDefault(SignalMastManager.class).getSignalMast("Left-A");
+        frame.buildWhereUsedListing(WhereUsedFrame.ItemType.SIGNALMAST, signalMast);
+
+        // Memory
+        jcoType.selectItem(6);
+        mgr = frame._itemNameBox.getManager().getClass().getSimpleName();
+        Assert.assertEquals(mgr, "DefaultMemoryManager");
+        Memory memory = InstanceManager.getDefault(MemoryManager.class).getMemory("BlockMemory");
+        frame.buildWhereUsedListing(WhereUsedFrame.ItemType.MEMORY, memory);
 
         JUnitUtil.dispose(frame);
     }

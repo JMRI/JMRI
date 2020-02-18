@@ -18,6 +18,10 @@ public class TurnoutWhereUsedTest {
     @Test
     public void testTurnoutWhereUsed() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        TurnoutWhereUsed ctor = new TurnoutWhereUsed();
+        Assert.assertNotNull("exists", ctor);
+
         Turnout turnout = InstanceManager.getDefault(jmri.TurnoutManager.class).getTurnout("LE Left");
         JTextArea result = TurnoutWhereUsed.getWhereUsed(turnout);
         Assert.assertFalse(result.getText().isEmpty());

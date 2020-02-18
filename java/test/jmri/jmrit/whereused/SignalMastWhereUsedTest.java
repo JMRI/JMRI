@@ -18,6 +18,10 @@ public class SignalMastWhereUsedTest {
     @Test
     public void testSignalMastWhereUsed() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        SignalMastWhereUsed ctor = new SignalMastWhereUsed();
+        Assert.assertNotNull("exists", ctor);
+
         SignalMast signalMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast("Left-A");
         JTextArea result = SignalMastWhereUsed.getWhereUsed(signalMast);
         Assert.assertFalse(result.getText().isEmpty());

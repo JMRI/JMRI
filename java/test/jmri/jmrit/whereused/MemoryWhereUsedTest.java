@@ -18,6 +18,10 @@ public class MemoryWhereUsedTest {
     @Test
     public void testMemoryWhereUsed() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        MemoryWhereUsed ctor = new MemoryWhereUsed();
+        Assert.assertNotNull("exists", ctor);
+
         Memory memory = InstanceManager.getDefault(jmri.MemoryManager.class).getMemory("BlockMemory");
         JTextArea result = MemoryWhereUsed.getWhereUsed(memory);
         Assert.assertFalse(result.getText().isEmpty());

@@ -18,6 +18,10 @@ public class LightWhereUsedTest {
     @Test
     public void testTurnoutWhereUsed() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        LightWhereUsed ctor = new LightWhereUsed();
+        Assert.assertNotNull("exists", ctor);
+
         Light light = InstanceManager.getDefault(jmri.LightManager.class).getLight("L-Sensor Control");
         JTextArea result = LightWhereUsed.getWhereUsed(light);
         Assert.assertFalse(result.getText().isEmpty());
