@@ -28,6 +28,7 @@ public class SimpleReporterServerTest {
                 });
         java.io.DataInputStream input = new java.io.DataInputStream(System.in);
         SimpleReporterServer a = new SimpleReporterServer(input, output);
+        assertThat(a).isNotNull();
     }
 
     @Test
