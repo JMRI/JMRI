@@ -588,7 +588,7 @@ public class PanelEditor extends Editor implements ItemListener {
             }
         });
 
-        JMenu warrantMenu = jmri.jmrit.logix.WarrantTableAction.makeWarrantMenu(isEditable());
+        JMenu warrantMenu = jmri.jmrit.logix.WarrantTableAction.getDefault().makeWarrantMenu(isEditable());
         if (warrantMenu != null) {
             menuBar.add(warrantMenu);
         }

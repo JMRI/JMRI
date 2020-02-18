@@ -45,7 +45,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 
     private boolean _displaySlider = true;
     private boolean speedControllerEnable;
-    private boolean _emergencyStop = false;
 
     private DccThrottle _throttle;
     private boolean internalAdjust = false;
@@ -127,12 +126,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             internalAdjust = true;
             float speed = ((Float) e.getNewValue()).floatValue();
             _throttleFrame.setSpeedSetting(speed);
-            if (_emergencyStop && speed < 0.0F) {
-                _throttleFrame.stopRunTrain();
-            }
-            if (speed != 0.0F) {
-                _emergencyStop = (speed < 0.0F);
-            }
         } else if (e.getPropertyName().equals(Throttle.SPEEDSTEPS)) {
             SpeedStepMode steps = (SpeedStepMode)e.getNewValue();
             setSpeedSteps(steps);
