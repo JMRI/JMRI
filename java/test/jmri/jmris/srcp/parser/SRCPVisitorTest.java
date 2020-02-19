@@ -29,7 +29,6 @@ public class SRCPVisitorTest {
     public void testGetServer() {
         // test that an inbound "GET 0 SERVER" returns the
         // expected response.
-        boolean exceptionOccured = false;
         String code = "GET 0 SERVER\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
         SRCPVisitor v = new SRCPVisitor();
@@ -45,7 +44,6 @@ public class SRCPVisitorTest {
     public void testResetServer() {
         // test that an inbound "RESET 0 SERVER" returns the
         // expected response.
-        boolean exceptionOccured = false;
         String code = "RESET 0 SERVER\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
         SRCPVisitor v = new SRCPVisitor();
@@ -61,7 +59,6 @@ public class SRCPVisitorTest {
     public void testTERMServer() {
         // test that an inbound "TERM 0 SERVER" returns the
         // expected response.
-        boolean exceptionOccured = false;
         String code = "TERM 0 SERVER\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
         SRCPVisitor v = new SRCPVisitor();
