@@ -4,6 +4,7 @@ import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 import jmri.InstanceManagerAutoDefault;
 import jmri.beans.Bean;
+import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.profile.ProfileUtils;
 import jmri.util.FileUtil;
@@ -32,21 +33,14 @@ public class JsonServerPreferences extends Bean implements InstanceManagerAutoDe
 
     public JsonServerPreferences(String fileName) {
         boolean migrate = false;
-        Preferences sharedPreferences = ProfileUtils.getPreferences(ProfileManager.getDefault().getActiveProfile(), getClass(), true);
-        try {
-            if (sharedPreferences.keys().length == 0) {
-                log.info("No JsonServer preferences exist.");
-                migrate = true;
-            }
-        } catch (BackingStoreException ex) {
-            log.info("No preferences file exists.");
-            migrate = true;
-        }
+        Profile activeProfile = ProfileManager.getDefault().getActiveProfile();
+        Preferences sharedPreferences = ProfileUtils.getPreferences(activeProfile, getClass(), true);
+        migrate = sharedPreferences.get(PORT, null) == null;
         if (migrate) {
             // method is deprecated to discourage use, not for removal
             // using to allow migration from old package to new package
             @SuppressWarnings("deprecation")
-            Preferences oldPreferences = JmriPreferencesProvider.getPreferences(ProfileManager.getDefault().getActiveProfile(), "jmri.jmris.json", true);
+            Preferences oldPreferences = JmriPreferencesProvider.getPreferences(activeProfile, "jmri.jmris.json", true);
             readPreferences(oldPreferences);
         }
         readPreferences(sharedPreferences);

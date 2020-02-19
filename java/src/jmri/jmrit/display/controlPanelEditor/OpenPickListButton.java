@@ -21,6 +21,7 @@ import jmri.jmrit.picker.PickSinglePanel;
  *
  * @author Pete Cressman Copyright: Copyright (c) 2019
  *
+ * @param <T> type of NamedBean in PickList 
  */
 public class OpenPickListButton<T extends NamedBean> {
 

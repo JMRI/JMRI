@@ -14,7 +14,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import jmri.InstanceManager;
 import jmri.jmrit.logix.OBlock;
+import jmri.jmrit.logix.OBlockManager;
 
 /**
  * Abstract class for the editing frames of CircuitBulder
@@ -23,7 +25,7 @@ import jmri.jmrit.logix.OBlock;
  */
 public abstract class EditFrame extends jmri.util.JmriJFrame {
 
-    protected final OBlock _homeBlock;
+    protected OBlock _homeBlock;
     protected final CircuitBuilder _parent;
     protected boolean _canEdit = true;
     protected boolean _suppressWarnings = false;
@@ -34,9 +36,14 @@ public abstract class EditFrame extends jmri.util.JmriJFrame {
 
     public EditFrame(String title, CircuitBuilder parent, OBlock block) {
         super(false, false);
-        _homeBlock = block;
         _parent = parent;
-        setTitle(java.text.MessageFormat.format(title, _homeBlock.getDisplayName()));
+        if (block != null) {
+            setTitle(java.text.MessageFormat.format(title, block.getDisplayName()));
+            _homeBlock = block;
+        } else {
+            setTitle(Bundle.getMessage("newCircuitItem"));
+            _homeBlock = new OBlock(InstanceManager.getDefault(OBlockManager.class).getAutoSystemName(), null);
+        }
 
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
@@ -106,12 +113,11 @@ public abstract class EditFrame extends jmri.util.JmriJFrame {
     protected abstract void closingEvent(boolean close);
 
     protected boolean closingEvent(boolean close, String msg) {
-        if (msg != null) {
+        if (msg != null && msg.length() > 0) {
             if (close) {
                 JOptionPane.showMessageDialog(this, msg, Bundle.getMessage("editCiruit"), JOptionPane.INFORMATION_MESSAGE);
             } else {
                 StringBuilder sb = new StringBuilder(msg);
-                sb.append("\n");
                 sb.append(Bundle.getMessage("exitQuestion"));
                 int answer = JOptionPane.showConfirmDialog(this, sb.toString(), Bundle.getMessage("continue"),
                         JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
@@ -130,6 +136,5 @@ public abstract class EditFrame extends jmri.util.JmriJFrame {
         _loc = location;
         _dim = size;
     }
-
 //    private final static Logger log = LoggerFactory.getLogger(EditFrame.class);
 }

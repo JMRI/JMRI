@@ -933,7 +933,7 @@ public class JUnitUtil {
 
         ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
         List<ShutDownTask> list = sm.tasks();
-        while (list != null && list.size() > 0) {
+        while (!list.isEmpty()) {
             ShutDownTask task = list.get(0);
             sm.deregister(task);
             list = sm.tasks();  // avoid ConcurrentModificationException
@@ -953,7 +953,7 @@ public class JUnitUtil {
         
         ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
         List<ShutDownTask> list = sm.tasks();
-        while (list != null && !list.isEmpty()) {
+        while (!list.isEmpty()) {
             ShutDownTask task = list.get(0);
             log.error("Test {} left ShutDownTask registered: {} (of type {})}", getTestClassName(), task.getName(), task.getClass(), 
                         Log4JUtil.shortenStacktrace(new Exception("traceback")));
@@ -1069,8 +1069,8 @@ public class JUnitUtil {
      * test use {@link #resetProfileManager(jmri.profile.Profile)} with a
      * provided profile.
      * <p>
-     * The new profile will have the name {@literal TestProfile }, the id
-     * {@literal 00000000 }, and will be in the directory {@literal temp }
+     * The new profile will have the name {@literal TestProfile}, the id
+     * {@literal 00000000}, and will be in the directory {@literal temp}
      * within the sources working copy.
      */
     public static void resetProfileManager() {

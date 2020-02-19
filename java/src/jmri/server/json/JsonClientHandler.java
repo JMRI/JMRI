@@ -26,7 +26,6 @@ import javax.annotation.Nonnull;
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.JmriException;
-import jmri.jmris.json.JsonServerPreferences;
 import jmri.server.json.schema.JsonSchemaServiceCache;
 import jmri.spi.JsonServiceFactory;
 import org.slf4j.Logger;
@@ -147,14 +146,13 @@ public class JsonClientHandler {
                     for (JsonSocketService<?> service : services.get(type)) {
                         service.onList(type, data, request);
                     }
-                    return;
                 } else {
                     log.warn("Requested list type '{}' unknown.", type);
                     sendErrorMessage(HttpServletResponse.SC_NOT_FOUND,
                             Bundle.getMessage(connection.getLocale(), JsonException.ERROR_UNKNOWN_TYPE, type), id);
-                    return;
                 }
-            } else if (!data.isMissingNode()) {
+                return;
+            } else {
                 if (type.equals(HELLO) || type.equals(LOCALE) && !data.path(LOCALE).isMissingNode()) {
                     connection.setLocale(
                             Locale.forLanguageTag(data.path(LOCALE).asText(connection.getLocale().getLanguage())));
@@ -172,10 +170,6 @@ public class JsonClientHandler {
                     sendErrorMessage(HttpServletResponse.SC_NOT_FOUND,
                             Bundle.getMessage(connection.getLocale(), JsonException.ERROR_UNKNOWN_TYPE, type), id);
                 }
-            } else {
-                log.warn("Data property of JSON message missing");
-                sendErrorMessage(HttpServletResponse.SC_BAD_REQUEST,
-                        Bundle.getMessage(connection.getLocale(), "ErrorMissingData"), id);
             }
             if (type.equals(GOODBYE)) {
                 // close the connection if GOODBYE is received.
