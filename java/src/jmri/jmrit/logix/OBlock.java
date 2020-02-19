@@ -173,33 +173,37 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
      */
     @Override
     public boolean setSensor(String pName) {
-        boolean ret;
-        String oldName = null;
-        Sensor sensor = getSensor();
-        if (sensor != null) {
-            oldName = sensor.getDisplayName();
+        Sensor oldSensor = getSensor();
+        Sensor newSensor = null;
+        if (pName != null && pName.trim().length() > 2) {
+            newSensor = InstanceManager.sensorManagerInstance().getByUserName(pName);
+            if (newSensor == null) {
+                newSensor = InstanceManager.sensorManagerInstance().getBySystemName(pName);
+            }
+            if (newSensor == null) {
+                return false;   // no sensor named 'pName' exists
+            }
         }
+        if (oldSensor != null) {
+            if (oldSensor.equals(newSensor)) {
+                return true;
+            }
+        } else {
+            if (newSensor == null) {
+                return true;
+            }
+        }
+
         // save the non-sensor states
         int saveState = getState() & ~(UNKNOWN | OCCUPIED | UNOCCUPIED | INCONSISTENT | UNDETECTED);
-        if (pName == null || pName.trim().length() == 0) {
-            setNamedSensor(null);
-            ret = true;
+        if (newSensor == null || pName == null) {
+            setNamedSensor(null);                    
         } else {
-            sensor = InstanceManager.sensorManagerInstance().getByUserName(pName);
-            if (sensor == null) {
-                sensor = InstanceManager.sensorManagerInstance().getBySystemName(pName);
-            }
-            if (sensor == null) {
-                log.debug("no sensor named \"{}\" exists.", pName);
-                ret = false;
-            } else {
-                setNamedSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor));
-                ret = true;
-            }
+            setNamedSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, newSensor));
         }
-        setState(getState() | saveState);
-        firePropertyChange("OccupancySensorChange", oldName, pName);
-        return ret;
+        setState(getState() | saveState);   // add them back into new sensor
+        firePropertyChange("OccupancySensorChange", oldSensor, newSensor);
+        return true;
     }
 
     // override to determine if not UNDETECTED
@@ -212,38 +216,47 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     }
 
     /**
+     * @param pName name of error sensor
      * @return true if successful
      */
     public boolean setErrorSensor(String pName) {
-        if (getErrorSensor() != null) {
-            getErrorSensor().removePropertyChangeListener(this);
+        NamedBeanHandle<Sensor> newErrSensorHdl = null;
+        Sensor newErrSensor = null;
+        if (pName != null && pName.trim().length() > 2) {
+            newErrSensor = InstanceManager.sensorManagerInstance().getByUserName(pName);
+            if (newErrSensor == null) {
+                newErrSensor = InstanceManager.sensorManagerInstance().getBySystemName(pName);
+            }
+           if (newErrSensor != null) {
+                newErrSensorHdl = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, newErrSensor);
+           }
+           if (newErrSensor == null) {
+               return false;
+           }
         }
-        if (pName == null || pName.trim().length() == 0) {
-            setState(getState() & ~TRACK_ERROR);
-            _errNamedSensor = null;
-            return true;
-        }
-        Sensor sensor = InstanceManager.sensorManagerInstance().getByUserName(pName);
-        if (sensor == null) {
-            sensor = InstanceManager.sensorManagerInstance().getBySystemName(pName);
-        }
-        if (sensor == null) {
-            setState(getState() & ~TRACK_ERROR);
-            log.debug("no sensor named \"{}\" exists.", pName);
+        if (_errNamedSensor != null) {
+            if (_errNamedSensor.equals(newErrSensorHdl)) {
+                return true;
+            } else {
+                getErrorSensor().removePropertyChangeListener(this);
+            }
+        } else {
+            if (newErrSensorHdl == null) {
+                return true;
+            }
         }
 
-        sensor = jmri.InstanceManager.sensorManagerInstance().getSensor(pName);
-        if (sensor != null) {
-            _errNamedSensor = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor);
-            getErrorSensor().addPropertyChangeListener(this, _errNamedSensor.getName(), "OBlock Error Sensor " + getDisplayName());
-            if (sensor.getState() == Sensor.ACTIVE) {
+        _errNamedSensor = newErrSensorHdl;
+        setState(getState() & ~TRACK_ERROR);
+        if (newErrSensor  != null) {
+            newErrSensor.addPropertyChangeListener(this, _errNamedSensor.getName(), "OBlock Error Sensor " + getDisplayName());
+            if (newErrSensor.getState() == Sensor.ACTIVE) {
                 setState(getState() | TRACK_ERROR);
             } else {
                 setState(getState() & ~TRACK_ERROR);
             }
-            return true;
         }
-        return false;
+        return true;
     }
 
     public Sensor getErrorSensor() {

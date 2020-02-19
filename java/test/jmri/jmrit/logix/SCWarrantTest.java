@@ -68,8 +68,6 @@ public class SCWarrantTest extends WarrantTest {
         warrant.setRoute(false, orders);
         warrant.checkStartBlock();
         warrant.checkRoute();
-        SpeedUtil su = warrant.getSpeedUtil();
-        su.setOrders(orders);
 
         warrant.setTrainName("TestTrain");
         PropertyChangeListener listener = new WarrantListener(warrant);

@@ -14,7 +14,7 @@ public class CatalogPanelTest {
 
     @Test
     public void testCTor() {
-        CatalogPanel t = new CatalogPanel();
+        CatalogPanel t = CatalogPanel.makeDefaultCatalog();
         Assert.assertNotNull("exists",t);
     }
 

@@ -1,4 +1,4 @@
-<!-- Sidebar -->
+<!-- Sidebar.shtml -->
 <!-- This is the common sidebar definition for html/web pages -->
 	  <hr class="hide">
 	  <div id="side"> <!-- Block of text on left side of page -->
@@ -24,13 +24,11 @@
 		    </ul>
 		</dd>
 
+                <!--#include virtual="../../parts/SidebarApplications.shtml" -->
 	    </dl>
 
+            <!--#include virtual="../../parts/SidebarTail.shtml" -->
+	    
 	</div> <!-- closes #side -->
 
-    <!-- Sidebar-Tail -->
-    <script type="text/javascript" src="/web/js/jquery-2.0.3.min.js"></script>
-    <script type="text/javascript" src="/web/js/here.js"></script>
-    <!-- /Sidebar-Tail -->
-
-<!-- /Sidebar -->
+<!-- /Sidebar.shtml -->

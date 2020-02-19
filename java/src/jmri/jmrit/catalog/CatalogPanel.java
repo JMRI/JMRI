@@ -55,6 +55,8 @@ import org.slf4j.LoggerFactory;
  */
 public class CatalogPanel extends JPanel {
 
+    private static final Object _lock = new Object();
+    
     public static final double ICON_SCALE = 0.020;
     public static final int ICON_WIDTH = 100;
     public static final int ICON_HEIGHT = 100;
@@ -83,19 +85,23 @@ public class CatalogPanel extends JPanel {
 
     /**
      * Constructor
+     * 
+     * The constructor is private to force using the method makeCatalogPanel
      */
-    public CatalogPanel() {
+    private CatalogPanel() {
         _model = new DefaultTreeModel(new CatalogTreeNode("mainRoot"));
     }
 
     /**
      * Ctor for a named icon catalog split pane. Make sure both properties keys exist.
+     * 
+     * The constructor is private to force using the method makeCatalogPanel
      *
      * @param label1 properties key to be used as the label for the icon tree
      * @param label2 properties key to be used as the instruction
      * @param addButtonPanel adds background select comboBox
      */
-    public CatalogPanel(String label1, String label2, boolean addButtonPanel) {
+    private CatalogPanel(String label1, String label2, boolean addButtonPanel) {
         super(true);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setLayout(new BorderLayout());
@@ -112,11 +118,13 @@ public class CatalogPanel extends JPanel {
 
     /**
      * Ctor for a named icon catalog split pane. Make sure both properties keys exist.
+     * 
+     * The constructor is private to force using the method makeCatalogPanel
      *
      * @param label1 properties key to be used as the label for the icon tree
      * @param label2 properties key to be used as the instruction
      */
-    public CatalogPanel(String label1, String label2) {
+    private CatalogPanel(String label1, String label2) {
         this(label1, label2, true);
     }
     
@@ -137,7 +145,7 @@ public class CatalogPanel extends JPanel {
      * @param treeDnD true allows dropping into tree or panel
      * @param dragIcons true allows dragging icons from panel
      */
-    protected void init(boolean treeDnD, boolean dragIcons) {
+    private void init(boolean treeDnD, boolean dragIcons) {
         _model = new DefaultTreeModel(new CatalogTreeNode("mainRoot"));
         if (treeDnD) { // index editor (right pane)
             _dTree = new DropJTree(_model);
@@ -682,23 +690,45 @@ public class CatalogPanel extends JPanel {
 
     public static CatalogPanel makeDefaultCatalog() {
         log.debug("CatalogPanel catalog requested");
-        return makeDefaultCatalog(true, false, true); // deactivate dragNdrop? (true, true, false)
+        synchronized(_lock) {
+            return makeDefaultCatalog(true, false, true); // deactivate dragNdrop? (true, true, false)
+        }
     }
 
     public static CatalogPanel makeDefaultCatalog(boolean addButtonPanel, boolean treeDrop, boolean dragIcon) {
-        CatalogPanel catalog = new CatalogPanel("catalogs", "selectNode", addButtonPanel);
-        catalog.init(treeDrop, dragIcon);
-        CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
-        for (CatalogTree tree : manager.getNamedBeanSet()) {
-            String systemName = tree.getSystemName();
-            if (systemName.charAt(0) == 'I') {
-                catalog.addTree(manager.getBySystemName(systemName));
+        synchronized(_lock) {
+            CatalogPanel catalog = new CatalogPanel("catalogs", "selectNode", addButtonPanel);
+            catalog.init(treeDrop, dragIcon);
+            CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
+            for (CatalogTree tree : manager.getNamedBeanSet()) {
+                String systemName = tree.getSystemName();
+                if (systemName.charAt(0) == 'I') {
+                    catalog.addTree(manager.getBySystemName(systemName));
+                }
             }
+            catalog.createNewBranch("IFJAR", "Program Directory", "resources");
+            FileUtil.createDirectory(FileUtil.getUserResourcePath());
+            catalog.createNewBranch("IFPREF", "Preferences Directory", FileUtil.getUserResourcePath());
+            return catalog;
         }
-        catalog.createNewBranch("IFJAR", "Program Directory", "resources");
-        FileUtil.createDirectory(FileUtil.getUserResourcePath());
-        catalog.createNewBranch("IFPREF", "Preferences Directory", FileUtil.getUserResourcePath());
-        return catalog;
+    }
+
+    /**
+     * Create a named icon catalog split pane. Make sure both properties keys exist.
+     * 
+     * @param label1 properties key to be used as the label for the icon tree
+     * @param label2 properties key to be used as the instruction
+     * @param addButtonPanel adds background select comboBox
+     * @param treeDnD true allows dropping into tree or panel
+     * @param dragIcons true allows dragging icons from panel
+     * @return the created CatalogPanel
+     */
+    public static CatalogPanel makeCatalog(String label1, String label2, boolean addButtonPanel, boolean treeDnD, boolean dragIcons) {
+        synchronized(_lock) {
+            CatalogPanel cp = new CatalogPanel(label1, label2, addButtonPanel);
+            cp.init(treeDnD, dragIcons);
+            return cp;
+        }
     }
 
     public static Frame getParentFrame(Component comp) {

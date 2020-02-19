@@ -222,7 +222,7 @@ public abstract class AbstractPanelServlet extends HttpServlet {
             element.getAttributes().forEach((attr) -> {
                 String value = attr.getValue();
                 if (FileUtil.isPortableFilename(value)) {
-                    String url = WebServer.URIforPortablePath(value);
+                    String url = WebServer.portablePathToURI(value);
                     if (url != null) {
                         // if portable path conversion fails, don't change the value
                         attr.setValue(url);
