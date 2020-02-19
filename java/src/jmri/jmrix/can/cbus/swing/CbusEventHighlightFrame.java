@@ -6,6 +6,7 @@ import javax.swing.BoxLayout;
 import javax.swing.WindowConstants;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
+import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.CbusEventHighlighter;
 import jmri.jmrix.can.cbus.swing.console.CbusConsolePane;
 import jmri.jmrix.can.cbus.swing.configtool.ConfigToolPane;
@@ -33,11 +34,13 @@ public class CbusEventHighlightFrame extends JmriJFrame {
     // member to hold reference to my HIGHLIGHTERS
     protected CbusEventHighlighter[] _highlight = new CbusEventHighlighter[HIGHLIGHTERS];
     protected boolean[] _highlightActive = new boolean[HIGHLIGHTERS];
-    private CbusConsolePane _console = null;
-    private ConfigToolPane _evCap = null;
+    private CbusConsolePane _console;
+    private ConfigToolPane _evCap;
 
     /**
      * Create a new instance of CbusFilterFrame.
+     * @param console main Console Window, can be null
+     * @param evCap main Event Capture Window, can be null
      */
     public CbusEventHighlightFrame(CbusConsolePane console, ConfigToolPane evCap) {
         super();
@@ -59,8 +62,8 @@ public class CbusEventHighlightFrame extends JmriJFrame {
     protected String title() {
         if ( _console != null) {
             return _console.getTitle() + " " + Bundle.getMessage("EventHighlightTitle");
-        } else 
-        if ( _evCap != null) {
+        }
+        else if ( _evCap != null) {
             return _evCap.getTitle() + " " + Bundle.getMessage("EventHighlightTitle");
         }
         return(Bundle.getMessage("EventHighlightTitle"));
@@ -100,9 +103,7 @@ public class CbusEventHighlightFrame extends JmriJFrame {
     }
 
     public void enable(int index, int nn, boolean nnEn, int ev, boolean evEn, int ty, int dr) {
-        if ( _console != null) { 
-            _console.highlightOn(index, nn, nnEn, ev, evEn, ty, dr);
-        }
+        
         _highlight[index].setNn(nn);
         _highlight[index].setNnEnable(nnEn);
         _highlight[index].setEv(ev);
@@ -110,12 +111,51 @@ public class CbusEventHighlightFrame extends JmriJFrame {
         _highlight[index].setType(ty);
         _highlight[index].setDir(dr);
         _highlightActive[index] = true;
+        if ( _console != null) { 
+            updateConsole(index);
+        }
+    }
+    
+    private void updateConsole(int index) {
+    
+        // log.debug("Cbus Console highlight applied");
+        StringBuilder sb = new StringBuilder(80);
+        if ( _highlight[index].getNnEnable() ) {
+            sb.append(Bundle.getMessage("CbusNode")).append(_highlight[index].getNn()).append(" ");
+        }
+        if (_highlight[index].getEvEnable()) {
+            sb.append(Bundle.getMessage("CbusEvent")).append(_highlight[index].getEv()).append(" ");
+        }
+        switch (_highlight[index].getType()) {
+            case CbusConstants.EVENT_ON:
+                sb.append(Bundle.getMessage("CbusEventOn"));
+                break;
+            case CbusConstants.EVENT_OFF:
+                sb.append(Bundle.getMessage("CbusEventOff"));
+                break;
+            default:
+                sb.append(Bundle.getMessage("CbusEventOnOrOff"));
+                break;
+        }
+        switch (_highlight[index].getDir()) {
+            case CbusConstants.EVENT_DIR_IN:
+                sb.append(Bundle.getMessage("InEventsTooltip"));
+                break;
+            case CbusConstants.EVENT_DIR_OUT:
+                sb.append(Bundle.getMessage("OutEventsTooltip"));
+                break;        
+            default:
+                sb.append(Bundle.getMessage("InOrOutEventsToolTip"));
+                break;
+        }
+        sb.append("\n");
+        _console.nextLine(sb.toString(), sb.toString(), index);
     }
 
     public void disable(int index) {
         _highlightActive[index] = false;
         if ( _console != null) { 
-            _console.highlightOff(index);
+            _console.nextLine( Bundle.getMessage("HighlightDisabled") + " \n", Bundle.getMessage("HighlightDisabled") + " \n",  index);
         }
     }
 

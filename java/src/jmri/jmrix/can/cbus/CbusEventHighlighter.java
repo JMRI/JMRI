@@ -69,6 +69,10 @@ public class CbusEventHighlighter {
     public void setNnEnable(boolean b) {
         _nnEnabled = b;
     }
+    
+    public boolean getNnEnable(){
+        return _nnEnabled;
+    }
 
     /**
      * Set whether Ev (event number) will be included in highlight.
@@ -76,6 +80,10 @@ public class CbusEventHighlighter {
      */
     public void setEvEnable(boolean b) {
         _evEnabled = b;
+    }
+    
+    public boolean getEvEnable() {
+        return _evEnabled;
     }
 
     /**
@@ -85,6 +93,10 @@ public class CbusEventHighlighter {
     public void setNn(int n) {
         _nn = n;
     }
+    
+    public int getNn() {
+        return _nn;
+    }
 
     /**
      * Set an Event Number to highlight.
@@ -92,6 +104,10 @@ public class CbusEventHighlighter {
      */
     public void setEv(int n) {
         _ev = n;
+    }
+    
+    public int getEv() {
+        return _ev;
     }
 
     /**
@@ -103,6 +119,10 @@ public class CbusEventHighlighter {
     public void setType(int n) {
         _type = n;
     }
+    
+    public int getType() {
+        return _type;
+    }
 
     /**
      * Set value of direction to match.
@@ -110,6 +130,10 @@ public class CbusEventHighlighter {
      */
     public void setDir(int n) {
         _dir = n;
+    }
+    
+    public int getDir() {
+        return _dir;
     }
 
     /**
