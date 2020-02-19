@@ -55,7 +55,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     private boolean _partialAllocate;// only allocate one block at a time for sharing route.
     private boolean _addTracker;    // start tracker when warrant ends normally.
     private boolean _noRamp; // do not ramp speed changes. make immediate speed change when entering approach block.
-    protected Warrant _self = this;
+    private boolean _nxWarrant = false;
 
     // transient members
     private LearnThrottleFrame _student; // need to callback learning throttle in learn mode
@@ -136,8 +136,15 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         _idxLastOrder = 0;
         _orders = new ArrayList<>();
         _runBlind = false;
-        _speedUtil = new SpeedUtil(_orders);
+        _speedUtil = new SpeedUtil();
         tm = InstanceManager.getNullableDefault(ThrottleManager.class);
+    }
+
+    protected void setNXWarrant(boolean set) {
+        _nxWarrant = set;
+    }
+    protected boolean isNXWarrant() {
+        return _nxWarrant;
     }
 
     @Override
@@ -800,7 +807,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             log.error(_message);
             return _message;
         }
-        _idxLastOrder = 0;
         _delayStart = false;
         _curSpeedType = Normal;
         _waitForSignal = false;
@@ -904,7 +910,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                     throttle.getLocoAddress(), throttle.getClass().getName(), getDisplayName());
         }
         _speedUtil.setThrottle(throttle);
-        _speedUtil.setOrders(_orders);
         startupWarrant();
         runWarrant(throttle);
     } //end notifyThrottleFound
@@ -1448,10 +1453,12 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         if (log.isDebugEnabled()) {
             log.debug("checkRoute for warrant \"{}\".", getDisplayName());
         }
-        OBlock startBlock = _orders.get(0).getBlock();
-        for (BlockOrder bo : _orders) {
-            OBlock block = bo.getBlock();
-            if ((block.getState() & OBlock.OCCUPIED) != 0 && !startBlock.equals(block)) {
+        if (_orders==null || _orders.size() == 0) {
+            return Bundle.getMessage("noBlockOrders");
+        }
+        for (int i = 1; i < _orders.size(); i++) {
+            OBlock block = _orders.get(i).getBlock();
+            if ((block.getState() & OBlock.OCCUPIED) != 0) {
                 return Bundle.getMessage("BlockRougeOccupied", block.getDisplayName());
             }
             Warrant w = block.getWarrant();
@@ -1580,7 +1587,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             return true;
         }
         String blockName = _stoppingBlock.getDisplayName();
-        _stoppingBlock.removePropertyChangeListener(_self);
+        _stoppingBlock.removePropertyChangeListener(this);
         _stoppingBlock = null;
         if (log.isDebugEnabled())
             log.debug("Warrant \"{}\" Cleared _stoppingBlock= \"{}\".", getDisplayName(), blockName);
@@ -1978,8 +1985,20 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         block.setValue(_trainName);
         block.setState(block.getState() | OBlock.RUNNING);
         block._entryTime = System.currentTimeMillis();
-        if (_runMode == MODE_RUN) {
-            _speedUtil.enteredBlock(_idxLastOrder, _idxCurrentOrder);
+        if (_runMode == MODE_RUN && _idxCurrentOrder > 0) {
+            BlockOrder blkOrd = getBlockOrderAt(_idxLastOrder);
+            long fromTime =  0;
+            if (_idxLastOrder > 0) {
+                fromTime = blkOrd.getBlock()._entryTime;
+            }
+            float length = blkOrd.getPath().getLengthMm();
+            for (int i = _idxLastOrder+1; i < _idxCurrentOrder; i++) {
+                // add length of possible dark block
+                BlockOrder bo = getBlockOrderAt(i);
+                length += bo.getPath().getLengthMm();
+            }
+            long toTime = block._entryTime;
+            _speedUtil.enteredBlock(fromTime, toTime, length);
         }
     }
     /**

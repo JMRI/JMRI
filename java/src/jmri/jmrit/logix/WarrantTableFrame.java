@@ -183,7 +183,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         nxButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                nxAction();
+                WarrantTableAction.getDefault().makeNXFrame();
             }
         });
         panel.add(nxButton);
@@ -211,6 +211,10 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
+                if (_concatDialog !=null) {
+                    _concatDialog.dispose();
+                }
+                _model.dispose();
                 dispose();
             }
         });
@@ -224,16 +228,22 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
                 concatMenuAction();
             }
         });
-        warrantMenu.add(new jmri.jmrit.logix.WarrantTableAction("CreateWarrant"));
+//        warrantMenu.add(new jmri.jmrit.logix.WarrantTableAction("CreateWarrant"));
+        warrantMenu.add(new AbstractAction(Bundle.getMessage("CreateWarrant")) {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                WarrantTableAction.getDefault().makeWarrantFrame(null, null);
+            }
+         });
         warrantMenu.add(InstanceManager.getDefault(TrackerTableAction.class));
         warrantMenu.add(new AbstractAction(Bundle.getMessage("CreateNXWarrant")) {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                nxAction();
+                WarrantTableAction.getDefault().makeNXFrame();
             }
         });
-        warrantMenu.add(WarrantTableAction.makeLogMenu());
+        warrantMenu.add(WarrantTableAction.getDefault().makeLogMenu());
         menuBar.add(warrantMenu);
         setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.logix.WarrantTable", true);
@@ -247,23 +257,11 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         bar.setValue(bar.getMaximum());
     }
 
-    protected static void nxAction() {
-        NXFrame nxFrame = WarrantTableAction.getNXFrame();
-        if (nxFrame == null) {
-            nxFrame = new NXFrame();
-            WarrantTableAction.setNXFrame(nxFrame);
-        } else {
-            nxFrame.setState(java.awt.Frame.NORMAL);
-            nxFrame.setVisible(true);
-            nxFrame.toFront();            
-        }
-    }
-
     private void haltAllAction() {
         _model.haltAllTrains();
     }
 
-    protected void concatMenuAction() {
+    private void concatMenuAction() {
         _concatDialog = new JDialog(this, Bundle.getMessage("ConcatWarrants"), false);
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout(5, 5));
@@ -287,26 +285,22 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         concatButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                concatenate();
+                concatenate(_startWarrant.getText(), _endWarrant.getText());
             }
         });
         panel.add(concatButton, Box.CENTER_ALIGNMENT);
 
         mainPanel.add(panel);
         _concatDialog.getContentPane().add(mainPanel);
-        _concatDialog.setLocation(getLocation().x + 50, getLocation().y + 150);
+        _concatDialog.setLocation(getLocation().x + 200, getLocation().y + 200);
         _concatDialog.pack();
         _concatDialog.setVisible(true);
     }
 
-    private void concatenate() {
-        /*
+    private void concatenate(String startName, String endName) {
         WarrantManager manager = InstanceManager.getDefault(jmri.jmrit.logix.WarrantManager.class);
-        Warrant startW = manager.getWarrant(_startWarrant.getText().trim());
-        Warrant endW = manager.getWarrant(_endWarrant.getText().trim());
-         */
-        Warrant startW = _model.getWarrant(_startWarrant.getText());
-        Warrant endW = _model.getWarrant(_endWarrant.getText());
+        Warrant startW = manager.getWarrant(startName.trim());
+        Warrant endW = manager.getWarrant(endName.trim());
         if (startW == null || endW == null) {
             showWarning("BadWarrantNames");
             return;
@@ -321,17 +315,8 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
             showWarning("RoutesDontMatch");
             return;
         }
-        WarrantTableAction.CreateWarrantFrame f = new WarrantTableAction.CreateWarrantFrame();
-        try {
-            f.initComponents();
-            f.concatenate(startW, endW);
-        } catch (Exception ex) {
-            log.error("error making CreateWarrantFrame", ex);
-        }
-        f.setVisible(true);
-        if (_concatDialog != null) {
-            _concatDialog.dispose();
-        }
+        WarrantTableAction.getDefault().makeWarrantFrame(startW, endW);
+        _concatDialog.dispose();
     }
 
     public void showWarning(String msg) {
@@ -437,13 +422,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
      */
     public String runTrain(Warrant w, int mode) {
         w.deAllocate();
-        String msg = null;
-        if (w.getRunMode() != Warrant.MODE_NONE) {
-            msg = w.getRunModeMessage();
-        }
-        if (msg == null) {
-            msg = _model.checkAddressInUse(w);
-        }
+        String msg = _model.checkAddressInUse(w);
         if (msg == null) {
             msg = w.checkforTrackers();
         }
@@ -506,7 +485,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         _status.setForeground(c);
         _status.setText(msg);
         if (save && msg != null && msg.length() > 0) {
-            WarrantTableAction.writetoLog(msg);
+            WarrantTableAction.getDefault().writetoLog(msg);
             _statusHistory.add(msg);
             while (_statusHistory.size() > _maxHistorySize) {
                 _statusHistory.remove(0);

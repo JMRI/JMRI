@@ -280,6 +280,7 @@ public class JsonBlockHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<B
      *
      * @throws jmri.server.json.JsonException if something goes wrong
      */
+    @Override
     @Test
     public void testDoSchema() throws JsonException {
         testDoSchema(JsonBlock.BLOCK, JsonBlock.BLOCKS);

@@ -14,7 +14,7 @@ import jmri.swing.PreferencesPanel;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
- * @author Randall Wood Copyright (C) 2012, 2015
+ * @author Randall Wood Copyright (C) 2012, 2015, 2020
  */
 @ServiceProvider(service = PreferencesPanel.class)
 public class JsonServerPreferencesPanel extends JPanel implements PreferencesPanel {
@@ -53,7 +53,7 @@ public class JsonServerPreferencesPanel extends JPanel implements PreferencesPan
     }
 
     /**
-     * set the local prefs to match the GUI Local prefs are independent from the
+     * Set the preferences to match the GUI. Local prefs are independent from the
      * singleton instance prefs.
      *
      * @return true if set, false if values are unacceptable.

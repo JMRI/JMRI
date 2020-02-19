@@ -13,7 +13,6 @@ import java.util.Locale;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import jmri.InstanceManager;
-import jmri.jmris.json.JsonServerPreferences;
 import jmri.server.json.schema.JsonSchemaServiceCache;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;

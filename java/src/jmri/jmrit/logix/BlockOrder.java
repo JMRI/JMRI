@@ -137,8 +137,6 @@ public class BlockOrder {
         if (portal != null) {
             return portal.getPermissibleSpeed(_block, true);
         }
-        // OK if this is first block
-        log.warn("getPermissibleSpeed (Entrance), no entry portal! {}", this);
         return null;
     }
 

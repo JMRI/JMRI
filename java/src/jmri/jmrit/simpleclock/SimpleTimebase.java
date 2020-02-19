@@ -3,6 +3,7 @@ package jmri.jmrit.simpleclock;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.time.Instant;
+import java.util.Calendar;
 import java.util.Date;
 import jmri.ClockControl;
 import jmri.Memory;
@@ -598,16 +599,16 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
         }
     }
 
-    int oldMinutes = 0;
+    int oldHours = -1;
+    int oldMinutes = -1;
     Date oldDate = null;
 
     /**
      * Handle an "alarm", which is used to count off minutes.
      * <p>
-     * Listeners won't be notified if the minute value hasn't changed since the
-     * last time.
+     * Listeners will be notified if the hours or minutes changed 
+     * since the last time.
      */
-    @SuppressWarnings("deprecation")
     void handleAlarm() {
         // on first pass, set up the timer to call this routine
         if (timer == null) {
@@ -619,17 +620,21 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
             });
         }
 
+        Calendar calendar = Calendar.getInstance();
         timer.stop();
         Date date = getTime();
-        int waitSeconds = 60 - date.getSeconds();
+        calendar.setTime(date);
+        int waitSeconds = 60 - calendar.get(Calendar.SECOND);
         int delay = (int) (waitSeconds * 1000 / mFactor) + 100; // make sure you miss the time transition
         timer.setInitialDelay(delay);
         timer.setRepeats(true); // in case we run by
         timer.start();
 
         // and notify the others
-        int minutes = date.getMinutes();
-        if (minutes != oldMinutes) {
+        calendar.setTime(date);
+        int hours = calendar.get(Calendar.HOUR_OF_DAY);
+        int minutes = calendar.get(Calendar.MINUTE);
+        if (hours != oldHours || minutes != oldMinutes) {
             // update memory
             updateMemory(date);
             // notify listeners
@@ -637,6 +642,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
             firePropertyChange("time", oldDate != null ? new Date(oldDate.getTime()) : null, new Date(date.getTime())); // to ensure not modified outside
         }
         oldDate = date;
+        oldHours = hours;
         oldMinutes = minutes;
     }
 

@@ -94,10 +94,11 @@ public class BlockContentsIconTest {
 
     @After
     public void tearDown() throws Exception {
-	if(to!=null) {
-           JUnitUtil.dispose(to.getEditor());
-	}
-	to = null;
-        JUnitUtil.tearDown();
+        if(to!=null) {
+            JUnitUtil.dispose(to.getEditor());
+     }
+     to = null;
+     JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
+     JUnitUtil.tearDown();
     }
 }

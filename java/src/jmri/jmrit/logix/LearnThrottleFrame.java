@@ -9,6 +9,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.Point;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -120,7 +121,7 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                _warrantFrame.stopRunTrain();
+                _warrantFrame.close();
                 dispose();
             }
         });
@@ -129,8 +130,9 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
         // assumes button width of 54, height of 30 (set in class FunctionButton) with
         // horiz and vert gaps of 5 each (set in FunctionPanel class)
         // with 3 buttons across and 6 rows high
-        int width = 3 * (FunctionButton.getButtonWidth()) + 2 * 3 * 5;   // = 192
-        int height = 6 * (FunctionButton.getButtonHeight()) + 2 * 6 * 5 + 10; // = 240 (another 10 needed?)
+        int width = 3 * (FunctionButton.getButtonWidth()) + 2 * 3 * 5 + 11;   // = 192
+        int height = 6 * (FunctionButton.getButtonHeight()) + 2 * 6 * 5 + 20; // FunctionButton.BUT_IMG_SIZE = 45
+//        int height = 6 * 45 + 2 * 6 * 5 + 20;
         _functionPanel.setSize(width, height);
         _functionPanel.setVisible(true);
         _functionPanel.setEnabled(false);
@@ -162,6 +164,8 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
         // Install the Key bindings on all Components
         KeyListenerInstaller.installKeyListenerOnAllComponents(new ControlPadKeyListener(), this);
         setResizable(false);
+        Point loc = _warrantFrame.getLocation();
+        setLocation(loc.x + _warrantFrame.getWidth() - this.getWidth(), loc.y);
         pack();
     }
 
@@ -278,10 +282,6 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
         _throttle.setIsForward(isForward);
     }
 
-    protected void stopRunTrain() {
-        _warrantFrame.stopRunTrain();
-    }
-    
     /*
      * for JUnint testing
      */
