@@ -256,7 +256,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         setLocation(10, 30);
         setVisible(true);
         pack();
-        errorCheck();
+        WarrantTableAction.getDefault().errorCheck();
     }
 
     private String oblockPrefix() {
@@ -382,28 +382,10 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
             for (Portal po : oblk.getPortals()) {
                 obm.getByUserName(po.getFromBlockName()).addPortal(po);
                 obm.getByUserName(po.getToBlockName()).addPortal(po);
-                }
             }
+        }
         // storing and reloading will add in these items
-        errorCheck();
-//        JFrame readyFrame = new JFrame(Bundle.getMessage("MessageTitle"));
-//        JTextField readyMsg = new JTextField(Bundle.getMessage("ImportBlockComplete", blkList.size(), oblkList.size()));
-//        readyFrame.add(readyMsg);
-//        JButton ok = new JButton(Bundle.getMessage("ButtonOK"));
-//        ok.addActionListener(event -> {
-//            readyFrame.setVisible(false);
-//            readyFrame.dispose();
-//        });
-//        readyFrame.add(ok);
-//        readyFrame.setVisible(true);
-//        readyFrame.getRootPane().setDefaultButton(ok);
-//        readyFrame.addWindowListener(new java.awt.event.WindowAdapter() {
-//            @Override
-//            public void windowClosing(java.awt.event.WindowEvent evt) {
-//                readyFrame.dispose();
-//            }
-//        });
-//        readyFrame.pack();
+        WarrantTableAction.getDefault().errorCheck();
         if (_showWarnings) {
             JOptionPane.showMessageDialog(null,
                     Bundle.getMessage("ImportBlockComplete", blkList.size(), oblkList.size()),
@@ -455,20 +437,9 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
 
     @Override
     public void windowClosing(java.awt.event.WindowEvent e) {
-        errorCheck();
+        WarrantTableAction.getDefault().errorCheck();
         setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         log.debug("windowClosing: {}", toString());
-    }
-
-    private void errorCheck() {
-        WarrantTableAction.initPathPortalCheck();
-        OBlockManager manager = InstanceManager.getDefault(OBlockManager.class);
-        for (OBlock oblock : manager.getNamedBeanSet()) {
-            WarrantTableAction.checkPathPortals(oblock);
-        }
-        if (_showWarnings) {
-            WarrantTableAction.showPathPortalErrors();
-        }
     }
 
     protected void updateOpenMenu() {
@@ -1045,13 +1016,13 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         }
         if (name != null && name.startsWith("OB")) {
             _blockPathMap.remove(name);
-            WarrantTableAction.initPathPortalCheck();
             if (frame instanceof BlockPathFrame) {
-                WarrantTableAction.checkPathPortals(((BlockPathFrame) frame).getModel().getBlock());
+                String msg = WarrantTableAction.getDefault().checkPathPortals(((BlockPathFrame) frame).getModel().getBlock());
+                if (msg != null) {
+                    JOptionPane.showMessageDialog(this, msg,
+                            Bundle.getMessage("InfoTitle"), JOptionPane.INFORMATION_MESSAGE);
+                }
                 ((BlockPathFrame) frame).getModel().removeListener();
-            }
-            if (_showWarnings) {
-                WarrantTableAction.showPathPortalErrors();
             }
         } else {
             if (frame instanceof PathTurnoutFrame) {
@@ -1081,12 +1052,12 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
                     frame.getSize().getWidth(), frame.getSize().getHeight());
         }
         if (name != null && name.startsWith(oblockPrefix())) {
-            WarrantTableAction.initPathPortalCheck();
             if (frame instanceof BlockPathFrame) {
-                WarrantTableAction.checkPathPortals(((BlockPathFrame) frame).getModel().getBlock());
-            }
-            if (_showWarnings) {
-                WarrantTableAction.showPathPortalErrors();
+                String msg = WarrantTableAction.getDefault().checkPathPortals(((BlockPathFrame) frame).getModel().getBlock());
+                if (msg != null) {
+                    JOptionPane.showMessageDialog(this, msg,
+                            Bundle.getMessage("InfoTitle"), JOptionPane.INFORMATION_MESSAGE);
+                }
             }
         }
     }
