@@ -18,7 +18,7 @@ import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.Metadata;
 import jmri.Version;
-import jmri.jmris.json.JsonServerPreferences;
+import jmri.server.json.JsonServerPreferences;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.switchboardEditor.SwitchboardEditor;
 import jmri.profile.NullProfile;

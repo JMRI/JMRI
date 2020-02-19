@@ -7,7 +7,6 @@ import java.io.IOException;
 import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.jmris.JmriConnection;
-import jmri.jmris.json.JsonServerPreferences;
 import jmri.server.json.schema.JsonSchemaServiceCache;
 import org.eclipse.jetty.websocket.api.Session;
 
