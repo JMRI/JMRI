@@ -1,6 +1,10 @@
 package jmri.implementation;
 
+import jmri.IdTag;
 import jmri.Reporter;
+
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
 
 /**
  * Abstract base for the Reporter interface.
@@ -26,16 +30,25 @@ public abstract class AbstractReporter extends AbstractNamedBean implements Repo
         super(systemName, userName);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNameReporter");
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Object getCurrentReport() {
         return _currentReport;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Object getLastReport() {
         return _lastReport;
@@ -43,14 +56,22 @@ public abstract class AbstractReporter extends AbstractNamedBean implements Repo
 
     /**
      * Provide a general method for updating the report.
+     * {@inheritDoc}
      */
     @Override
     public void setReport(Object r) {
-        if (r == _currentReport) {
-            return;
-        }
+        
         Object old = _currentReport;
         Object oldLast = _lastReport;
+        
+        if ( dateChangedOnIdTag(r) ){
+            old = null;
+            oldLast = null;
+        }
+        else if (r == _currentReport) {
+            return;
+        }
+        
         _currentReport = r;
         if (r != null) {
             _lastReport = r;
@@ -60,9 +81,24 @@ public abstract class AbstractReporter extends AbstractNamedBean implements Repo
         // notify
         firePropertyChange("currentReport", old, _currentReport);
     }
+    
+    protected boolean dateChangedOnIdTag(Object r) {
+        if ( _currentReport!=null && _currentReport instanceof IdTag ) {
+            java.util.Date _lastSeenTime = null;
+            if (r !=null && r instanceof IdTag) {
+                _lastSeenTime = ((IdTag) r).getWhenLastSeen();
+            }
+            if (((IdTag)_currentReport).getWhenLastSeen() != _lastSeenTime ) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     // internal data members
     protected Object _lastReport = null;
     protected Object _currentReport = null;
+    
+    // private final static Logger log = LoggerFactory.getLogger(AbstractReporter.class);
 
 }

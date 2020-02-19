@@ -10,6 +10,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
+
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
@@ -19,27 +22,6 @@ public class CbusReporterTest extends jmri.implementation.AbstractReporterTestBa
     @Override
     protected Object generateObjectToReport(){
         return new jmri.implementation.DefaultIdTag("ID0413276BC1", "Test Tag");
-    }
-    
-    private TrafficControllerScaffold tcis;
-
-    // The minimal setup for log4J
-    @Before
-    @Override
-    public void setUp() {
-        JUnitUtil.setUp();
-        tcis = new TrafficControllerScaffold();
-        r = new CbusReporter(1, tcis, "Test");
-    }
-
-    @After
-    @Override
-    public void tearDown() {
-        tcis = null;
-        r = null;
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
-        JUnitUtil.tearDown();
-
     }
     
     @Test
@@ -136,6 +118,76 @@ public class CbusReporterTest extends jmri.implementation.AbstractReporterTestBa
         Assert.assertEquals("r4 seen after CBUS_ACDAT outgoing message",IdTag.SEEN,r4.getState());
         
         r.dispose();
+    }
+    
+    @Test(timeout=5000)
+    public void testReportIdTagPropertyChange() {
+    
+        CbusReporter r6 = new CbusReporter(6,tcis,"Reporter 6");
+        
+        CanReply m = new CanReply(tcis.getCanid());
+        m.setNumDataElements(8);
+        m.setElement(0, CbusConstants.CBUS_DDES);
+        m.setElement(1, 0x00); // ev hi
+        m.setElement(2, 0x06); // ev lo
+        m.setElement(3, 0x30); // tag1
+        m.setElement(4, 0x39); // tag2
+        m.setElement(5, 0x31); // tag3
+        m.setElement(6, 0x30); // tag4
+        m.setElement(7, 0xAB); // tag5
+        r6.reply(m);
+        
+        Assert.assertEquals("r4 state set",IdTag.SEEN,r6.getState());
+        Assert.assertNotNull("r4 report set",r6.getCurrentReport());
+        
+        r6.addPropertyChangeListener(new TestCbusReporterListener());
+        
+        Assert.assertFalse("ChangeListener not triggered",cbusCurrentReportSeen);
+        
+        JUnitUtil.waitFor(()->{ r6.reply(m); return( cbusCurrentReportSeen==true); }, 
+            "Change in IdTag value not passed" );
+        
+        r6.dispose();
+        
+    }
+    
+    public class TestCbusReporterListener implements java.beans.PropertyChangeListener {
+        @Override
+        public void propertyChange(java.beans.PropertyChangeEvent e){
+            if (e.getPropertyName().equals("currentReport")) {
+                cbusCurrentReportSeen = true;
+            }
+        }
+    }
+    
+    private TrafficControllerScaffold tcis;
+    private boolean cbusCurrentReportSeen;
+    
+    // The minimal setup for log4J
+    @Before
+    @Override
+    public void setUp() {
+        JUnitUtil.setUp();
+        
+        cbusCurrentReportSeen = false;
+        
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initIdTagManager();
+        
+        tcis = new TrafficControllerScaffold();
+        r = new CbusReporter(1, tcis, "Test");
+        
+        cbusCurrentReportSeen = false;
+    }
+
+    @After
+    @Override
+    public void tearDown() {
+        tcis.terminateThreads();
+        tcis = null;
+        r = null;
+        JUnitUtil.tearDown();
+
     }
     
     // private final static Logger log = LoggerFactory.getLogger(CbusReporterTest.class);
