@@ -394,22 +394,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
         }
         if (ae.getSource() == deleteTrackButton) {
             log.debug("track delete button activated");
-            if (_track != null) {
-                int rs = _track.getNumberRS();
-                if (rs > 0) {
-                    if (JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("ThereAreCars"),
-                            new Object[]{Integer.toString(rs)}), Bundle.getMessage("deleteTrack?"),
-                            JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
-                        return;
-                    }
-                }
-                selectCheckboxes(false);
-                _location.deleteTrack(_track);
-                _track = null;
-                enableButtons(false);
-                // save location file
-                OperationsXml.save();
-            }
+            deleteTrack();
         }
         if (ae.getSource() == addTrackButton) {
             addNewTrack();
@@ -557,6 +542,25 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
         enableButtons(true);
         // save location file
         OperationsXml.save();
+    }
+    
+    protected void deleteTrack() {
+        if (_track != null) {
+            int rs = _track.getNumberRS();
+            if (rs > 0) {
+                if (JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("ThereAreCars"),
+                        new Object[]{Integer.toString(rs)}), Bundle.getMessage("deleteTrack?"),
+                        JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+                    return;
+                }
+            }
+            selectCheckboxes(false);
+            _location.deleteTrack(_track);
+            _track = null;
+            enableButtons(false);
+            // save location file
+            OperationsXml.save();
+        }
     }
 
     // check to see if the route services this location
