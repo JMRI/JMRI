@@ -14,6 +14,8 @@ import javax.swing.*;
 import jmri.*;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
+import jmri.jmrit.logix.Warrant;
+import jmri.jmrit.logix.WarrantManager;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.FileUtil;
 import jmri.util.swing.JComboBoxUtil;
@@ -168,6 +170,9 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
             case OBLOCK:
                 _textArea = OBlockWhereUsed.getWhereUsed(bean);
                 break;
+            case WARRANT:
+                _textArea = WarrantWhereUsed.getWhereUsed(bean);
+                break;
             default:
                 _textArea = new JTextArea(Bundle.getMessage("TypePrompt"));
                 break;
@@ -267,13 +272,12 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
             case OBLOCK:
                 nameBox = new NamedBeanComboBox<OBlock>(InstanceManager.getDefault(OBlockManager.class));
                 break;
+            case WARRANT:
+                nameBox = new NamedBeanComboBox<Warrant>(InstanceManager.getDefault(WarrantManager.class));
+                break;
 //             case LOGIX:       // 7
 //                 nameBox = new NamedBeanComboBox<Logix>(
 //                         InstanceManager.getDefault(LogixManager.class), null, DisplayOptions.DISPLAYNAME);
-//                 break;
-//             case WARRANT:     // 8
-//                 nameBox = new NamedBeanComboBox<Warrant>(
-//                         InstanceManager.getDefault(WarrantManager.class), null, DisplayOptions.DISPLAYNAME);
 //                 break;
 //             case ENTRYEXIT:   // 11
 //                 nameBox = new NamedBeanComboBox<DestinationPoints>(
@@ -305,12 +309,12 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
         SIGNALMAST("ItemTypeSignalMast"),
         MEMORY("ItemTypeMemory"),
         BLOCK("ItemTypeBlock"),
-        OBLOCK("ItemTypeOBlock");
+        OBLOCK("ItemTypeOBlock"),
+        WARRANT("ItemTypeWarrant");
+//         ENTRYEXIT(ITEM_TYPE_ENTRYEXIT, IsStateVar.IS_STATE_VAR, "ItemTypeEntryExit"),
 //         CONDITIONAL(ITEM_TYPE_CONDITIONAL, IsStateVar.IS_STATE_VAR, "ItemTypeConditional"),  // used only by ConditionalVariable
 //         LOGIX(ITEM_TYPE_LOGIX, IsStateVar.IS_STATE_VAR, "ItemTypeLogix"),                    // used only by ConditionalAction
-//         WARRANT(ITEM_TYPE_WARRANT, IsStateVar.IS_STATE_VAR, "ItemTypeWarrant"),
 //         CLOCK(ITEM_TYPE_CLOCK, IsStateVar.IS_STATE_VAR, "ItemTypeClock"),
-//         ENTRYEXIT(ITEM_TYPE_ENTRYEXIT, IsStateVar.IS_STATE_VAR, "ItemTypeEntryExit"),
 //
 //         AUDIO(ITEM_TYPE_AUDIO, IsStateVar.IS_NOT_STATE_VAR, "ItemTypeAudio"),
 //         SCRIPT(ITEM_TYPE_SCRIPT, IsStateVar.IS_NOT_STATE_VAR, "ItemTypeScript"),

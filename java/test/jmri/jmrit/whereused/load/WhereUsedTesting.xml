@@ -66,6 +66,10 @@
       <userName>S-Group-Control-2</userName>
     </sensor>
     <sensor inverted="false">
+      <systemName>IS221</systemName>
+      <userName>S-Run-Warrant</userName>
+    </sensor>
+    <sensor inverted="false">
       <systemName>IS301</systemName>
       <userName>S-Fwd</userName>
     </sensor>
@@ -193,7 +197,7 @@
       <systemName>IM:AUTO:0003</systemName>
       <userName>LogixAction</userName>
     </memory>
-    <memory value="7:03 PM">
+    <memory value="11:59 AM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -436,6 +440,7 @@
         <fromBlock blockName="OB0002">
           <path pathName="PA::Left-App" blockName="OB0002" />
         </fromBlock>
+        <fromSignal signalName="IF$vsm:basic:two-searchlight($0007)" signalDelay="0.0" />
         <toBlock blockName="OB0003">
           <path pathName="PA::LeftTO-AB" blockName="OB0003" />
           <path pathName="PA::LeftTO-AC" blockName="OB0003" />
@@ -455,6 +460,7 @@
         <fromBlock blockName="OB0002">
           <path pathName="PA::Left-App" blockName="OB0002" />
         </fromBlock>
+        <fromSignal signalName="IF$vsm:basic:two-searchlight($0007)" signalDelay="0.0" />
         <toBlock blockName="OB0003">
           <path pathName="PA::LeftTO-AB" blockName="OB0003" />
           <path pathName="PA::LeftTO-AC" blockName="OB0003" />
@@ -467,6 +473,7 @@
         <toBlock blockName="OB0004">
           <path pathName="PA::LeftTO-B::RightTO-B" blockName="OB0004" />
         </toBlock>
+        <toSignal signalName="IF$vsm:basic:one-searchlight($0003)" signalDelay="0.0" />
       </portal>
       <portal portalName="PO::LeftTO-C">
         <fromBlock blockName="OB0003">
@@ -475,6 +482,7 @@
         <toBlock blockName="OB0005">
           <path pathName="PA::LeftTO-C::RightTO-C" blockName="OB0005" />
         </toBlock>
+        <toSignal signalName="IF$vsm:basic:one-searchlight($0004)" signalDelay="0.0" />
       </portal>
     </oblock>
     <oblock systemName="OB0004" userName="OB::Main" length="0.0" units="true" curve="0" permissive="false" speedNotch="">
@@ -488,6 +496,7 @@
         <toBlock blockName="OB0004">
           <path pathName="PA::LeftTO-B::RightTO-B" blockName="OB0004" />
         </toBlock>
+        <toSignal signalName="IF$vsm:basic:one-searchlight($0003)" signalDelay="0.0" />
       </portal>
       <portal portalName="PO::RightTO-B">
         <fromBlock blockName="OB0004">
@@ -511,6 +520,7 @@
         <toBlock blockName="OB0005">
           <path pathName="PA::LeftTO-C::RightTO-C" blockName="OB0005" />
         </toBlock>
+        <toSignal signalName="IF$vsm:basic:one-searchlight($0004)" signalDelay="0.0" />
       </portal>
       <portal portalName="PO::RightTO-C">
         <fromBlock blockName="OB0005">
@@ -704,6 +714,7 @@
       <routeOutputSensor systemName="S-Right-Approach" state="INACTIVE" />
       <routeOutputSensor systemName="S-Group-Control-1" state="INACTIVE" />
       <routeOutputSensor systemName="S-Group-Control-2" state="INACTIVE" />
+      <routeOutputSensor systemName="S-Run-Warrant" state="INACTIVE" />
       <routeOutputSensor systemName="S-Fwd" state="INACTIVE" />
       <routeOutputSensor systemName="S-Stop-Allocation" state="INACTIVE" />
       <routeOutputSensor systemName="S-Transit-When-Action" state="INACTIVE" />
@@ -713,6 +724,20 @@
       <routeOutputSensor systemName="S-Group-Right" state="INACTIVE" />
     </route>
   </routes>
+  <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml">
+    <warrant systemName="IW::TestWarrant" wtype="normal">
+      <blockOrder pathName="PA::Left-App" entryName="" exitName="PO::LeftTO-A">
+        <block systemName="OB0002" userName="OB::Left-Approach" />
+      </blockOrder>
+      <blockOrder pathName="PA::LeftTO-AC" entryName="PO::LeftTO-A" exitName="PO::LeftTO-C">
+        <block systemName="OB0003" userName="OB::Left-TO" />
+      </blockOrder>
+      <blockOrder pathName="PA::LeftTO-C::RightTO-C" entryName="PO::LeftTO-C" exitName="PO::RightTO-C">
+        <block systemName="OB0005" userName="OB::Side" />
+      </blockOrder>
+      <train trainId="" runBlind="false" shareRoute="false" noRamp="false" trainName="" />
+    </warrant>
+  </warrants>
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
     <signalmastlogic source="Left-B">
@@ -836,6 +861,11 @@
       <userName>MemTest</userName>
       <logixConditional systemName="IX:AUTO:0003C1" order="0" />
     </logix>
+    <logix userName="Test Warrant" enabled="yes">
+      <systemName>IX:AUTO:0004</systemName>
+      <userName>Test Warrant</userName>
+      <logixConditional systemName="IX:AUTO:0004C1" order="0" />
+    </logix>
     <logix enabled="yes">
       <systemName>IX:RTXINITIALIZER</systemName>
       <logixConditional systemName="IX:RTXINITIALIZER1T" order="0" />
@@ -865,6 +895,15 @@
       <userName>Memory Test</userName>
       <conditionalStateVariable operator="4" negated="no" type="9" systemName="BlockMemory" dataString="XX" num1="3" num2="0" triggersCalc="yes" />
       <conditionalAction option="1" type="26" systemName="LogixAction" data="-1" delay="0" string="BlockMemory" />
+    </conditional>
+    <conditional systemName="IX:AUTO:0004C1" userName="Test Warrant" antecedent="R1 and R2" logicType="1" triggerOnChange="yes">
+      <systemName>IX:AUTO:0004C1</systemName>
+      <userName>Test Warrant</userName>
+      <conditionalStateVariable operator="4" negated="no" type="1" systemName="S-Run-Warrant" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="1" negated="no" type="34" systemName="OB::Side" dataString="unoccupied" num1="0" num2="0" triggersCalc="no" />
+      <conditionalAction option="1" type="33" systemName="IW::TestWarrant" data="-1" delay="0" string="" />
+      <conditionalAction option="1" type="31" systemName="IW::TestWarrant" data="-1" delay="0" string="" />
+      <conditionalAction option="2" type="32" systemName="IW::TestWarrant" data="-1" delay="0" string="" />
     </conditional>
     <conditional systemName="IX:RTXINITIALIZER1T" userName="Route 1C" antecedent="R1" logicType="3" triggerOnChange="yes">
       <systemName>IX:RTXINITIALIZER1T</systemName>
@@ -1191,7 +1230,7 @@
         <rotation>0</rotation>
       </inconsistent>
     </multisensoricon>
-    <memoryicon memory="BlockMemory" x="504" y="132" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" borderSize="1" redBorder="255" greenBorder="0" blueBorder="0" fixedWidth="40" fixedHeight="20" justification="left" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif" />
+    <memoryicon memory="BlockMemory" x="504" y="132" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" borderSize="1" redBorder="255" greenBorder="0" blueBorder="0" fixedWidth="40" fixedHeight="20" justification="left" selectable="no" updateBlockValue="yes" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif" />
     <BlockContentsIcon blockcontents="B-Main" x="504" y="166" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" borderSize="1" redBorder="0" greenBorder="255" blueBorder="0" fixedWidth="40" fixedHeight="20" justification="left" selectable="no" class="jmri.jmrit.display.configurexml.BlockContentsIconXml" />
     <layoutturnout ident="TO1" type="2" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="200.0" ycen="100.0" xa="180.0" ya="100.0" xb="220.0" yb="100.0" xc="230.0" yc="70.0" xd="180.0" yd="100.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTurnoutXml" turnoutname="LE Left" blockname="B-Left-TO" connectaname="T1" connectbname="T2" connectcname="T4" signala1name="Left-AU" signala2name="Left-AL" signalb1name="Left-B" signalc1name="Left-C">
       <signalAMast>Left-A</signalAMast>
@@ -1882,110 +1921,132 @@
       <iconmaps family="LeftShortHeads" />
     </signalheadicon>
     <signalmasticon signalmast="Right-B" x="261" y="174" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="90" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
-    <signalmasticon signalmast="Right-C" x="262" y="108" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="90" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="Right-C" x="271" y="108" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="90" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
     <signalmasticon signalmast="Right-A" x="340" y="128" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <sensoricon sensor="S-Run-Warrant" x="95" y="224" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="no" text="Run Warrant" size="12" style="0" red="0" green="255" blue="0" hasBackground="no" fixedWidth="100" fixedHeight="20" justification="centre" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps family="SmallJewel" />
+      <activeText text="Warrant Running" red="255" green="0" blue="0" />
+      <inactiveText text="Run Warrant" red="0" green="255" blue="0" />
+      <unknownText text="S-Run-Warrant" red="0" green="0" blue="255" />
+      <inconsistentText text="S-Run-Warrant" red="255" green="255" blue="0" />
+    </sensoricon>
+    <signalmasticon signalmast="Left-A" x="149" y="179" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="90" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="Left-B" x="219" y="174" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="Left-C" x="228" y="108" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
   </paneleditor>
   <filehistory>
     <operation>
       <type>app</type>
-      <date>Wed Feb 19 18:41:33 CST 2020</date>
+      <date>Thu Feb 20 11:52:32 CST 2020</date>
       <filename>JMRI program</filename>
     </operation>
     <operation>
       <type>Load OK</type>
-      <date>Wed Feb 19 18:41:45 CST 2020</date>
+      <date>Thu Feb 20 11:52:41 CST 2020</date>
       <filename>/Users/das/JMRI/_Profiles/WhereUsed.jmri/WhereUsedTesting.xml</filename>
       <filehistory>
         <operation>
           <type>app</type>
-          <date>Wed Feb 19 15:13:37 CST 2020</date>
+          <date>Thu Feb 20 11:22:18 CST 2020</date>
           <filename>JMRI program</filename>
         </operation>
         <operation>
           <type>Load OK</type>
-          <date>Wed Feb 19 15:13:49 CST 2020</date>
+          <date>Thu Feb 20 11:22:28 CST 2020</date>
           <filename>/Users/das/JMRI/_Profiles/WhereUsed.jmri/WhereUsedTesting.xml</filename>
           <filehistory>
             <operation>
               <type>app</type>
-              <date>Wed Feb 19 14:25:34 CST 2020</date>
+              <date>Thu Feb 20 11:03:01 CST 2020</date>
               <filename>JMRI program</filename>
             </operation>
             <operation>
               <type>Load OK</type>
-              <date>Wed Feb 19 14:25:44 CST 2020</date>
+              <date>Thu Feb 20 11:03:11 CST 2020</date>
               <filename>/Users/das/JMRI/_Profiles/WhereUsed.jmri/WhereUsedTesting.xml</filename>
               <filehistory>
                 <operation>
                   <type>app</type>
-                  <date>Wed Feb 19 14:24:50 CST 2020</date>
+                  <date>Thu Feb 20 10:41:57 CST 2020</date>
                   <filename>JMRI program</filename>
                 </operation>
                 <operation>
                   <type>Load OK</type>
-                  <date>Wed Feb 19 14:25:02 CST 2020</date>
+                  <date>Thu Feb 20 10:42:07 CST 2020</date>
                   <filename>/Users/das/JMRI/_Profiles/WhereUsed.jmri/WhereUsedTesting.xml</filename>
                   <filehistory>
                     <operation>
                       <type>app</type>
-                      <date>Wed Feb 19 14:01:34 CST 2020</date>
+                      <date>Thu Feb 20 10:24:32 CST 2020</date>
                       <filename>JMRI program</filename>
                     </operation>
                     <operation>
                       <type>Load OK</type>
-                      <date>Wed Feb 19 14:01:46 CST 2020</date>
+                      <date>Thu Feb 20 10:24:42 CST 2020</date>
                       <filename>/Users/das/JMRI/_Profiles/WhereUsed.jmri/WhereUsedTesting.xml</filename>
                       <filehistory>
                         <operation>
                           <type>app</type>
-                          <date>Mon Feb 17 18:20:54 CST 2020</date>
+                          <date>Wed Feb 19 18:41:33 CST 2020</date>
                           <filename>JMRI program</filename>
                         </operation>
                         <operation>
                           <type>Load OK</type>
-                          <date>Mon Feb 17 18:21:03 CST 2020</date>
+                          <date>Wed Feb 19 18:41:45 CST 2020</date>
                           <filename>/Users/das/JMRI/_Profiles/WhereUsed.jmri/WhereUsedTesting.xml</filename>
                         </operation>
                         <operation>
                           <type>Store</type>
-                          <date>Mon Feb 17 18:34:33 CST 2020</date>
+                          <date>Wed Feb 19 19:03:34 CST 2020</date>
                           <filename />
                         </operation>
                       </filehistory>
                     </operation>
                     <operation>
                       <type>Store</type>
-                      <date>Wed Feb 19 14:24:26 CST 2020</date>
+                      <date>Thu Feb 20 10:40:11 CST 2020</date>
                       <filename />
                     </operation>
                   </filehistory>
                 </operation>
                 <operation>
                   <type>Store</type>
-                  <date>Wed Feb 19 14:25:20 CST 2020</date>
+                  <date>Thu Feb 20 10:52:59 CST 2020</date>
                   <filename />
                 </operation>
               </filehistory>
             </operation>
             <operation>
               <type>Store</type>
-              <date>Wed Feb 19 14:29:00 CST 2020</date>
+              <date>Thu Feb 20 11:16:39 CST 2020</date>
               <filename />
             </operation>
           </filehistory>
         </operation>
         <operation>
           <type>Store</type>
-          <date>Wed Feb 19 15:36:38 CST 2020</date>
+          <date>Thu Feb 20 11:27:36 CST 2020</date>
           <filename />
         </operation>
       </filehistory>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Wed Feb 19 19:03:34 CST 2020</date>
+      <date>Thu Feb 20 11:59:50 CST 2020</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.19.3ish+das+20200220T0041Z+Rc13a6f6f61 on Wed Feb 19 19:03:34 CST 2020-->
+  <!--Written by JMRI version 4.19.3ish+das+20200220T1752Z+Rb3a79036b9 on Thu Feb 20 11:59:50 CST 2020-->
 </layout-config>

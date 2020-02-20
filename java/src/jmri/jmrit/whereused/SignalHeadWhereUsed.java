@@ -25,6 +25,7 @@ public class SignalHeadWhereUsed {
         textArea.append(WhereUsedCollectors.checkSignalHeadLogic(signalHead));
         textArea.append(WhereUsedCollectors.checkSignalGroup(signalHead));
         textArea.append(WhereUsedCollectors.checkOBlocks(signalHead));
+        textArea.append(WhereUsedCollectors.checkWarrants(signalHead));
         textArea.append(WhereUsedCollectors.checkLogixConditionals(signalHead));
         textArea.append(WhereUsedCollectors.checkPanels(signalHead));
         textArea.append(WhereUsedCollectors.checkCTC(signalHead));

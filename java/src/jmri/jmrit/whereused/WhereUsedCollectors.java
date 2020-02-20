@@ -9,6 +9,7 @@ import javax.swing.JTextArea;
 import jmri.*;
 import jmri.jmrit.blockboss.BlockBossLogic;
 import jmri.jmrit.logix.OBlockManager;
+import jmri.jmrit.logix.WarrantManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 /**
  * Find references.  Each collector method calls a corresponding getUsageReport(NamedBean)
@@ -26,6 +27,7 @@ import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
  * <li>checkSignalMasts - SML definitions</li>
  * <li>checkSignalGroups - Signal mast, signal heads, sensors and turnouts</li>
  * <li>checkOBlocks</li>
+ * <li>checkWarrants</li>
  * <li>checkLogixConditionals</li>
  * <li>checkSections - Direction and Stopping sensors</li>
  * <li>checkTransits - Stop Allocation and Action sensors</li>
@@ -205,6 +207,8 @@ public class WhereUsedCollectors {
      * Create the Signal Mast Logic usage string.
      * Usage keys:
      * <ul>
+     * <li>SMLSourceMast</li>
+     * <li>SMLDestinationMast</li>
      * <li>SMLBlockAuto</li>
      * <li>SMLBlockUser</li>
      * <li>SMLTurnoutAuto</li>
@@ -220,6 +224,15 @@ public class WhereUsedCollectors {
         StringBuilder sb = new StringBuilder();
         InstanceManager.getDefault(SignalMastLogicManager.class).getNamedBeanSet().forEach((sml) -> {
             sml.getUsageReport(bean).forEach((report) -> {
+                String name = bean.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME);
+                if (report.usageKey.startsWith("SMLSource")) {  // NOI18N
+                    sb.append(Bundle.getMessage("ReferenceLineData", name, Bundle.getMessage("SourceMast")));  // NOI18N
+                    return;
+                }
+                if (report.usageKey.startsWith("SMLDest")) {  // NOI18N
+                    sb.append(Bundle.getMessage("ReferenceLineData", name, Bundle.getMessage("DestMast")));  // NOI18N
+                    return;
+                }
                 if (report.usageKey.startsWith("SML")) {  // NOI18N
                     sb.append(Bundle.getMessage("ReferenceLinePair", sml.getSourceMast().getDisplayName(), report.usageBean.getDisplayName()));  // NOI18N
                 }
@@ -262,8 +275,9 @@ public class WhereUsedCollectors {
      * <li>OBlockPortalNeighborOBlock</li>
      * <li>OBlockPortalSignal</li>
      * <li>OBlockPortalPathTurnout</li>
+     * <li>OBlockWarrant</li>
      * </ul>
-     * @param bean The requesting bean:  OBlock (Neightbor), Sensor, SignalHead, SignalMast, Turnout.
+     * @param bean The requesting bean:  OBlock (Neightbor), Sensor, SignalHead, SignalMast, Turnout, Warrant.
      * @return usage string
      */
     static String checkOBlocks(NamedBean bean) {
@@ -277,6 +291,30 @@ public class WhereUsedCollectors {
             });
         });
         return addHeader(sb, "ReferenceOBlock");  // NOI18N
+    }
+
+    /**
+     * Create the Warrant usage string.
+     * Usage keys:
+     * <ul>
+     * <li>WarrantBlocking</li>
+     * <li>WarrantBlock</li>
+     * <li>WarrantSignal</li>
+     * </ul>
+     * @param bean The requesting bean:  OBlock SignalHead, SignalMast, Warrant.
+     * @return usage string
+     */
+    static String checkWarrants(NamedBean bean) {
+        StringBuilder sb = new StringBuilder();
+        InstanceManager.getDefault(WarrantManager.class).getNamedBeanSet().forEach((warrant) -> {
+            warrant.getUsageReport(bean).forEach((report) -> {
+                if (report.usageKey.startsWith("Warrant")) {  // NOI18N
+                    String name = warrant.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME);
+                    sb.append(Bundle.getMessage("ReferenceLineName", name));  // NOI18N
+                }
+            });
+        });
+        return addHeader(sb, "ReferenceWarrant");  // NOI18N
     }
 
     /**
@@ -296,7 +334,8 @@ public class WhereUsedCollectors {
             logix.getUsageReport(bean).forEach((report) -> {
                 if (report.usageKey.startsWith("ConditionalVariable") || report.usageKey.startsWith("ConditionalAction")) {  // NOI18N
                     String name = logix.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME);
-                    sb.append(Bundle.getMessage("ReferenceLineConditional", name, report.usageData));  // NOI18N
+                    String cdlName = report.usageBean.getDisplayName();
+                    sb.append(Bundle.getMessage("ReferenceLineConditional", name, cdlName, Bundle.getMessage(report.usageKey), report.usageData));  // NOI18N
                 }
             });
         });

@@ -939,6 +939,9 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
             if (bean.equals(getErrorSensor())) {
                 report.add(new NamedBeanUsageReport("OBlockSensorError"));  // NOI18N
             }
+            if (bean.equals(getWarrant())) {
+                report.add(new NamedBeanUsageReport("OBlockWarant"));  // NOI18N
+            }
 
             getPortals().forEach((portal) -> {
                 log.debug("    portal: {}, fb = {}, tb = {}, fs = {}, ts = {}",  // NOI18N

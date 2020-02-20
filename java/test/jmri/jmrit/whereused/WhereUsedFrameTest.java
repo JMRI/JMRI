@@ -4,6 +4,8 @@ import java.awt.GraphicsEnvironment;
 import jmri.*;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
+import jmri.jmrit.logix.Warrant;
+import jmri.jmrit.logix.WarrantManager;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 import org.netbeans.jemmy.operators.*;
@@ -81,6 +83,13 @@ public class WhereUsedFrameTest {
         Assert.assertEquals(mgr, "OBlockManager");
         OBlock oblock = InstanceManager.getDefault(OBlockManager.class).getOBlock("OB::Main");
         frame.buildWhereUsedListing(WhereUsedFrame.ItemType.OBLOCK, oblock);
+
+        // Warrant
+        jcoType.selectItem(9);
+        mgr = frame._itemNameBox.getManager().getClass().getSimpleName();
+        Assert.assertEquals(mgr, "WarrantManager");
+        Warrant warrant = InstanceManager.getDefault(WarrantManager.class).getWarrant("IW::TestWarrant");
+        frame.buildWhereUsedListing(WhereUsedFrame.ItemType.WARRANT, warrant);
 
         JUnitUtil.dispose(frame);
     }

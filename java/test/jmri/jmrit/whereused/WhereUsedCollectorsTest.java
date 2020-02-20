@@ -25,61 +25,61 @@ public class WhereUsedCollectorsTest {
         String result = WhereUsedCollectors.checkTurnouts(sensor);
         Assert.assertTrue(result.length() == 0);    // Nothing found
 
-        sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Feedback-1");
-        result = WhereUsedCollectors.checkTurnouts(sensor);
-        Assert.assertTrue(result.length() > 0);
-
-        sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Light-Control");
-        result = WhereUsedCollectors.checkLights(sensor);
-        Assert.assertTrue(result.length() > 0);
-
-        sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Main");
-        result = WhereUsedCollectors.checkRoutes(sensor);
-        Assert.assertTrue(result.length() > 0);
-
-        sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Occupancy");
-        result = WhereUsedCollectors.checkBlocks(sensor);
-        Assert.assertTrue(result.length() > 0);
-
-        sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Main");
-        result = WhereUsedCollectors.checkLayoutBlocks(sensor);
-        Assert.assertTrue(result.length() > 0);
-
-        sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Main");
-        result = WhereUsedCollectors.checkSignalHeadLogic(sensor);
-        Assert.assertTrue(result.length() > 0);
-
-        sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-SML-Sensor");
-        result = WhereUsedCollectors.checkSignalMastLogic(sensor);
-        Assert.assertTrue(result.length() > 0);
-
-        sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Group-Control-1");
-        result = WhereUsedCollectors.checkSignalGroup(sensor);
-        Assert.assertTrue(result.length() > 0);
-
-        sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-OBlock-Error");
-        result = WhereUsedCollectors.checkOBlocks(sensor);
-        Assert.assertTrue(result.length() > 0);
-
-        sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Fwd");
-        result = WhereUsedCollectors.checkSections(sensor);
-        Assert.assertTrue(result.length() > 0);
-
-        sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Group-Center");
-        result = WhereUsedCollectors.checkLogixConditionals(sensor);
-        Assert.assertTrue(result.length() > 0);
-
-        sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Stop-Allocation");
-        result = WhereUsedCollectors.checkTransits(sensor);
-        Assert.assertTrue(result.length() > 0);
-
-        sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Transit-When-Action");
-        result = WhereUsedCollectors.checkTransits(sensor);
-        Assert.assertTrue(result.length() > 0);
-
-        sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Light-Control");
-        result = WhereUsedCollectors.checkPanels(sensor);
-        Assert.assertTrue(result.length() > 0);
+//         sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Feedback-1");
+//         result = WhereUsedCollectors.checkTurnouts(sensor);
+//         Assert.assertTrue(result.length() > 0);
+//
+//         sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Light-Control");
+//         result = WhereUsedCollectors.checkLights(sensor);
+//         Assert.assertTrue(result.length() > 0);
+//
+//         sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Main");
+//         result = WhereUsedCollectors.checkRoutes(sensor);
+//         Assert.assertTrue(result.length() > 0);
+//
+//         sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Occupancy");
+//         result = WhereUsedCollectors.checkBlocks(sensor);
+//         Assert.assertTrue(result.length() > 0);
+//
+//         sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Main");
+//         result = WhereUsedCollectors.checkLayoutBlocks(sensor);
+//         Assert.assertTrue(result.length() > 0);
+//
+//         sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Main");
+//         result = WhereUsedCollectors.checkSignalHeadLogic(sensor);
+//         Assert.assertTrue(result.length() > 0);
+//
+//         sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-SML-Sensor");
+//         result = WhereUsedCollectors.checkSignalMastLogic(sensor);
+//         Assert.assertTrue(result.length() > 0);
+//
+//         sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Group-Control-1");
+//         result = WhereUsedCollectors.checkSignalGroup(sensor);
+//         Assert.assertTrue(result.length() > 0);
+//
+//         sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-OBlock-Error");
+//         result = WhereUsedCollectors.checkOBlocks(sensor);
+//         Assert.assertTrue(result.length() > 0);
+//
+//         sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Fwd");
+//         result = WhereUsedCollectors.checkSections(sensor);
+//         Assert.assertTrue(result.length() > 0);
+//
+//         sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Group-Center");
+//         result = WhereUsedCollectors.checkLogixConditionals(sensor);
+//         Assert.assertTrue(result.length() > 0);
+//
+//         sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Stop-Allocation");
+//         result = WhereUsedCollectors.checkTransits(sensor);
+//         Assert.assertTrue(result.length() > 0);
+//
+//         sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Transit-When-Action");
+//         result = WhereUsedCollectors.checkTransits(sensor);
+//         Assert.assertTrue(result.length() > 0);
+//
+//         sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Light-Control");
+//         result = WhereUsedCollectors.checkPanels(sensor);
+//         Assert.assertTrue(result.length() > 0);
     }
 
     @Before

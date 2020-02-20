@@ -2886,7 +2886,13 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
     public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
         List<NamedBeanUsageReport> report = new ArrayList<>();
         if (bean != null) {
+            if (bean.equals(getSourceMast())) {
+                report.add(new NamedBeanUsageReport("SMLSourceMast"));  // NOI18N
+            }
             getDestinationList().forEach((dest) -> {
+                if (bean.equals(dest)) {
+                    report.add(new NamedBeanUsageReport("SMLDestinationMast"));  // NOI18N
+                }
                 getAutoBlocks(dest).forEach((block) -> {
                     if (bean.equals(block)) {
                         report.add(new NamedBeanUsageReport("SMLBlockAuto", dest));  // NOI18N

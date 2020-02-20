@@ -22,7 +22,9 @@ public class OBlockWhereUsed {
         textArea.append(Bundle.getMessage("ReferenceTitle", label, oblock.getDisplayName()));  // NOI18N
         textArea.append(Bundle.getMessage("ListenerCount", oblock.getNumPropertyChangeListeners()));  // NOI18N
 
+        textArea.append(WhereUsedCollectors.checkLogixConditionals(oblock));
         textArea.append(WhereUsedCollectors.checkOBlocks(oblock));
+        textArea.append(WhereUsedCollectors.checkWarrants(oblock));
         textArea.append(WhereUsedCollectors.checkPanels(oblock));
         return textArea;
     }

@@ -1105,15 +1105,16 @@ public class DefaultLogix extends AbstractNamedBean
                 DefaultConditional cdl = (DefaultConditional) getConditional(getConditionalByNumberOrder(i));
                 cdl.getStateVariableList().forEach((variable) -> {
                     if (bean.equals(variable.getBean())) {
-                        report.add(new NamedBeanUsageReport("ConditionalVariable", cdl.getDisplayName()));
+                        report.add(new NamedBeanUsageReport("ConditionalVariable", cdl, variable.toString()));
                     }
                     if (bean.equals(variable.getNamedBeanData())) {
-                        report.add(new NamedBeanUsageReport("ConditionalVariableData", cdl.getDisplayName()));
+                        report.add(new NamedBeanUsageReport("ConditionalVariableData", cdl, variable.toString()));
                     }
                 });
                 cdl.getActionList().forEach((action) -> {
                     if (bean.equals(action.getBean())) {
-                        report.add(new NamedBeanUsageReport("ConditionalAction", cdl.getDisplayName()));
+                        boolean triggerType = cdl.getTriggerOnChange();
+                        report.add(new NamedBeanUsageReport("ConditionalAction", cdl, action.description(triggerType)));
                     }
                 });
             }
