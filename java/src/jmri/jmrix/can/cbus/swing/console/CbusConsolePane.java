@@ -98,10 +98,9 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel {
      */
     @Override
     public void dispose() {
-        monTextPaneCan.dispose();
-        monTextPaneCbus.dispose();
-        decodePane.dispose();
-        displayPane.dispose();
+        if (decodePane!=null) {
+            decodePane.dispose();
+        }
         super.dispose();
     }
 
