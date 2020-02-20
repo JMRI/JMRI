@@ -2,6 +2,8 @@ package jmri.jmrit.whereused;
 
 import java.awt.GraphicsEnvironment;
 import jmri.*;
+import jmri.jmrit.logix.OBlock;
+import jmri.jmrit.logix.OBlockManager;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 import org.netbeans.jemmy.operators.*;
@@ -65,6 +67,20 @@ public class WhereUsedFrameTest {
         Assert.assertEquals(mgr, "DefaultMemoryManager");
         Memory memory = InstanceManager.getDefault(MemoryManager.class).getMemory("BlockMemory");
         frame.buildWhereUsedListing(WhereUsedFrame.ItemType.MEMORY, memory);
+
+        // Block
+        jcoType.selectItem(7);
+        mgr = frame._itemNameBox.getManager().getClass().getSimpleName();
+        Assert.assertEquals(mgr, "BlockManager");
+        Block block = InstanceManager.getDefault(BlockManager.class).getBlock("B-Main");
+        frame.buildWhereUsedListing(WhereUsedFrame.ItemType.BLOCK, block);
+
+        // OBlock
+        jcoType.selectItem(8);
+        mgr = frame._itemNameBox.getManager().getClass().getSimpleName();
+        Assert.assertEquals(mgr, "OBlockManager");
+        OBlock oblock = InstanceManager.getDefault(OBlockManager.class).getOBlock("OB::Main");
+        frame.buildWhereUsedListing(WhereUsedFrame.ItemType.OBLOCK, oblock);
 
         JUnitUtil.dispose(frame);
     }

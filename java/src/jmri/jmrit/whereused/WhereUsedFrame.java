@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 import jmri.*;
+import jmri.jmrit.logix.OBlock;
+import jmri.jmrit.logix.OBlockManager;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.FileUtil;
 import jmri.util.swing.JComboBoxUtil;
@@ -160,6 +162,12 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
             case MEMORY:
                 _textArea = MemoryWhereUsed.getWhereUsed(bean);
                 break;
+            case BLOCK:
+                _textArea = BlockWhereUsed.getWhereUsed(bean);
+                break;
+            case OBLOCK:
+                _textArea = OBlockWhereUsed.getWhereUsed(bean);
+                break;
             default:
                 _textArea = new JTextArea(Bundle.getMessage("TypePrompt"));
                 break;
@@ -253,6 +261,12 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
             case MEMORY:
                 nameBox = new NamedBeanComboBox<Memory>(InstanceManager.getDefault(MemoryManager.class));
                 break;
+            case BLOCK:
+                nameBox = new NamedBeanComboBox<Block>(InstanceManager.getDefault(BlockManager.class));
+                break;
+            case OBLOCK:
+                nameBox = new NamedBeanComboBox<OBlock>(InstanceManager.getDefault(OBlockManager.class));
+                break;
 //             case LOGIX:       // 7
 //                 nameBox = new NamedBeanComboBox<Logix>(
 //                         InstanceManager.getDefault(LogixManager.class), null, DisplayOptions.DISPLAYNAME);
@@ -260,10 +274,6 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
 //             case WARRANT:     // 8
 //                 nameBox = new NamedBeanComboBox<Warrant>(
 //                         InstanceManager.getDefault(WarrantManager.class), null, DisplayOptions.DISPLAYNAME);
-//                 break;
-//             case OBLOCK:      // 10
-//                 nameBox = new NamedBeanComboBox<OBlock>(
-//                         InstanceManager.getDefault(OBlockManager.class), null, DisplayOptions.DISPLAYNAME);
 //                 break;
 //             case ENTRYEXIT:   // 11
 //                 nameBox = new NamedBeanComboBox<DestinationPoints>(
@@ -293,12 +303,13 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
         LIGHT("ItemTypeLight"),
         SIGNALHEAD("ItemTypeSignalHead"),
         SIGNALMAST("ItemTypeSignalMast"),
-        MEMORY("ItemTypeMemory");
+        MEMORY("ItemTypeMemory"),
+        BLOCK("ItemTypeBlock"),
+        OBLOCK("ItemTypeOBlock");
 //         CONDITIONAL(ITEM_TYPE_CONDITIONAL, IsStateVar.IS_STATE_VAR, "ItemTypeConditional"),  // used only by ConditionalVariable
 //         LOGIX(ITEM_TYPE_LOGIX, IsStateVar.IS_STATE_VAR, "ItemTypeLogix"),                    // used only by ConditionalAction
 //         WARRANT(ITEM_TYPE_WARRANT, IsStateVar.IS_STATE_VAR, "ItemTypeWarrant"),
 //         CLOCK(ITEM_TYPE_CLOCK, IsStateVar.IS_STATE_VAR, "ItemTypeClock"),
-//         OBLOCK(ITEM_TYPE_OBLOCK, IsStateVar.IS_STATE_VAR, "ItemTypeOBlock"),
 //         ENTRYEXIT(ITEM_TYPE_ENTRYEXIT, IsStateVar.IS_STATE_VAR, "ItemTypeEntryExit"),
 //
 //         AUDIO(ITEM_TYPE_AUDIO, IsStateVar.IS_NOT_STATE_VAR, "ItemTypeAudio"),

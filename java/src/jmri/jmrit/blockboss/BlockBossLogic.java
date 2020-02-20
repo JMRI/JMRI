@@ -1441,52 +1441,52 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
         SignalHead head = driveSignal.getBean();
         if (bean != null) {
             if (watchSensor1 != null && bean.equals(getDrivenSignalNamedBean().getBean())) {
-                report.add(new NamedBeanUsageReport("SSLSignal", head));
+                report.add(new NamedBeanUsageReport("SSLSignal", head));  // NOI18N
             }
             if (watchSensor1 != null && bean.equals(watchSensor1.getBean())) {
-                report.add(new NamedBeanUsageReport("SSLSensor1", head));
+                report.add(new NamedBeanUsageReport("SSLSensor1", head));  // NOI18N
             }
             if (watchSensor2 != null && bean.equals(watchSensor2.getBean())) {
-                report.add(new NamedBeanUsageReport("SSLSensor2", head));
+                report.add(new NamedBeanUsageReport("SSLSensor2", head));  // NOI18N
             }
             if (watchSensor3 != null && bean.equals(watchSensor3.getBean())) {
-                report.add(new NamedBeanUsageReport("SSLSensor3", head));
+                report.add(new NamedBeanUsageReport("SSLSensor3", head));  // NOI18N
             }
             if (watchSensor4 != null && bean.equals(watchSensor4.getBean())) {
-                report.add(new NamedBeanUsageReport("SSLSensor4", head));
+                report.add(new NamedBeanUsageReport("SSLSensor4", head));  // NOI18N
             }
             if (watchSensor5 != null && bean.equals(watchSensor5.getBean())) {
-                report.add(new NamedBeanUsageReport("SSLSensor5", head));
+                report.add(new NamedBeanUsageReport("SSLSensor5", head));  // NOI18N
             }
             if (watchTurnout != null && bean.equals(watchTurnout.getBean())) {
-                report.add(new NamedBeanUsageReport("SSLTurnout", head));
+                report.add(new NamedBeanUsageReport("SSLTurnout", head));  // NOI18N
             }
             if (watchedSignal1 != null && bean.equals(watchedSignal1.getBean())) {
-                report.add(new NamedBeanUsageReport("SSLSignal1", head));
+                report.add(new NamedBeanUsageReport("SSLSignal1", head));  // NOI18N
             }
             if (watchedSignal1Alt != null && bean.equals(watchedSignal1Alt.getBean())) {
-                report.add(new NamedBeanUsageReport("SSLSignal1Alt", head));
+                report.add(new NamedBeanUsageReport("SSLSignal1Alt", head));  // NOI18N
             }
             if (watchedSignal2 != null && bean.equals(watchedSignal2.getBean())) {
-                report.add(new NamedBeanUsageReport("SSLSignal2", head));
+                report.add(new NamedBeanUsageReport("SSLSignal2", head));  // NOI18N
             }
             if (watchedSignal2Alt != null && bean.equals(watchedSignal2Alt.getBean())) {
-                report.add(new NamedBeanUsageReport("SSLSignal2Alt", head));
+                report.add(new NamedBeanUsageReport("SSLSignal2Alt", head));  // NOI18N
             }
             if (watchedSensor1 != null && bean.equals(watchedSensor1.getBean())) {
-                report.add(new NamedBeanUsageReport("SSLSensorWatched1", head));
+                report.add(new NamedBeanUsageReport("SSLSensorWatched1", head));  // NOI18N
             }
             if (watchedSensor1Alt != null && bean.equals(watchedSensor1Alt.getBean())) {
-                report.add(new NamedBeanUsageReport("SSLSensorWatched1Alt", head));
+                report.add(new NamedBeanUsageReport("SSLSensorWatched1Alt", head));  // NOI18N
             }
             if (watchedSensor2 != null && bean.equals(watchedSensor2.getBean())) {
-                report.add(new NamedBeanUsageReport("SSLSensorWatched2", head));
+                report.add(new NamedBeanUsageReport("SSLSensorWatched2", head));  // NOI18N
             }
             if (watchedSensor2Alt != null && bean.equals(watchedSensor2Alt.getBean())) {
-                report.add(new NamedBeanUsageReport("SSLSensorWatched2Alt", head));
+                report.add(new NamedBeanUsageReport("SSLSensorWatched2Alt", head));  // NOI18N
             }
             if (approachSensor1 != null && bean.equals(approachSensor1.getBean())) {
-                report.add(new NamedBeanUsageReport("SSLSensorApproach", head));
+                report.add(new NamedBeanUsageReport("SSLSensorApproach", head));  // NOI18N
             }
         }
         return report;

@@ -17,6 +17,10 @@ public class WhereUsedCollectorsTest {
     @Test
     public void testCollectorMethods() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        WhereUsedCollectors ctor = new WhereUsedCollectors();
+        Assert.assertNotNull("exists", ctor);
+
         Sensor sensor = InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IT101");
         String result = WhereUsedCollectors.checkTurnouts(sensor);
         Assert.assertTrue(result.length() == 0);    // Nothing found
@@ -47,6 +51,10 @@ public class WhereUsedCollectorsTest {
 
         sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-SML-Sensor");
         result = WhereUsedCollectors.checkSignalMastLogic(sensor);
+        Assert.assertTrue(result.length() > 0);
+
+        sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Group-Control-1");
+        result = WhereUsedCollectors.checkSignalGroup(sensor);
         Assert.assertTrue(result.length() > 0);
 
         sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-OBlock-Error");

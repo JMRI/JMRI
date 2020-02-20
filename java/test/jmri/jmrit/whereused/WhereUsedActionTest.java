@@ -15,6 +15,7 @@ public class WhereUsedActionTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         WhereUsedAction action = new WhereUsedAction();
         Assert.assertNotNull("exists", action);
+        action.actionPerformed(null);
     }
 
     @Before

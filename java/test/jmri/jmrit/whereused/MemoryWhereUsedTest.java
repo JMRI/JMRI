@@ -9,7 +9,7 @@ import jmri.util.JUnitUtil;
 import org.junit.*;
 
 /**
- * Tests for the SensorWhereUsed Class
+ * Tests for the MemoryWhereUsed Class
  *
  * @author Dave Sand Copyright (C) 2020
  */
@@ -43,5 +43,5 @@ public class MemoryWhereUsedTest {
         JUnitUtil.tearDown();
     }
 
-//     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SensorWhereUsedTest.class);
+//     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MemoryWhereUsedTest.class);
 }

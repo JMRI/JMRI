@@ -757,20 +757,20 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         List<NamedBeanUsageReport> report = new ArrayList<>();
         if (bean != null) {
             if (bean.equals(getSignalMast())) {
-                report.add(new NamedBeanUsageReport("SignalGroupMast"));
+                report.add(new NamedBeanUsageReport("SignalGroupMast"));  // NOI18N
             }
             for (int i = 0; i < getNumHeadItems(); i++) {
                 if (bean.equals(getHeadItemBeanByIndex(i))) {
-                    report.add(new NamedBeanUsageReport("SignalGroupHead"));
+                    report.add(new NamedBeanUsageReport("SignalGroupHead"));  // NOI18N
                 }
                 for (int j = 0; j < getNumHeadSensorsByIndex(i); j++) {
                     if (bean.equals(getSensorByIndex(i, j))) {
-                        report.add(new NamedBeanUsageReport("SignalGroupHeadSensor"));
+                        report.add(new NamedBeanUsageReport("SignalGroupHeadSensor"));  // NOI18N
                     }
                 }
                 for (int k = 0; k < getNumHeadTurnoutsByIndex(i); k++) {
                     if (bean.equals(getTurnoutByIndex(i, k))) {
-                        report.add(new NamedBeanUsageReport("SignalGroupHeadTurnout"));
+                        report.add(new NamedBeanUsageReport("SignalGroupHeadTurnout"));  // NOI18N
                     }
                 }
             }

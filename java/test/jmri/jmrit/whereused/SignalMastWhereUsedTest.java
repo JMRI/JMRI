@@ -43,5 +43,5 @@ public class SignalMastWhereUsedTest {
         JUnitUtil.tearDown();
     }
 
-//     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SensorWhereUsedTest.class);
+//     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SignalMastWhereUsedTest.class);
 }

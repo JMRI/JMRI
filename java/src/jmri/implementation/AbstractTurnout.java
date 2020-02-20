@@ -1038,10 +1038,10 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         List<NamedBeanUsageReport> report = new ArrayList<>();
         if (bean != null) {
             if (bean.equals(getFirstSensor())) {
-                report.add(new NamedBeanUsageReport("TurnoutFeedback1"));
+                report.add(new NamedBeanUsageReport("TurnoutFeedback1"));  // NOI18N
             }
             if (bean.equals(getSecondSensor())) {
-                report.add(new NamedBeanUsageReport("TurnoutFeedback2"));
+                report.add(new NamedBeanUsageReport("TurnoutFeedback2"));  // NOI18N
             }
         }
         return report;

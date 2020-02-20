@@ -1184,27 +1184,27 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
         if (bean != null) {
             for (int i = 0; i < getNumOutputTurnouts(); i++) {
                 if (bean.equals(getOutputTurnout(i))) {
-                    report.add(new NamedBeanUsageReport("RouteTurnoutOutput"));
+                    report.add(new NamedBeanUsageReport("RouteTurnoutOutput"));  // NOI18N
                 }
             }
             for (int i = 0; i < getNumOutputSensors(); i++) {
                 if (bean.equals(getOutputSensor(i))) {
-                    report.add(new NamedBeanUsageReport("RouteSensorOutput"));
+                    report.add(new NamedBeanUsageReport("RouteSensorOutput"));  // NOI18N
                 }
             }
             for (int i = 0; i < _controlSensorList.size(); i++) {
                 if (bean.equals(getRouteSensor(i))) {
-                    report.add(new NamedBeanUsageReport("RouteSensorControl"));
+                    report.add(new NamedBeanUsageReport("RouteSensorControl"));  // NOI18N
                 }
             }
             if (bean.equals(getTurnoutsAlgdSensor())) {
-                report.add(new NamedBeanUsageReport("RouteSensorAligned"));
+                report.add(new NamedBeanUsageReport("RouteSensorAligned"));  // NOI18N
             }
             if (bean.equals(getCtlTurnout())) {
-                report.add(new NamedBeanUsageReport("RouteTurnoutControl"));
+                report.add(new NamedBeanUsageReport("RouteTurnoutControl"));  // NOI18N
             }
             if (bean.equals(getLockCtlTurnout())) {
-                report.add(new NamedBeanUsageReport("RouteTurnoutLock"));
+                report.add(new NamedBeanUsageReport("RouteTurnoutLock"));  // NOI18N
             }
         }
         return report;

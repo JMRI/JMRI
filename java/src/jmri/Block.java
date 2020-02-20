@@ -1038,16 +1038,19 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         List<NamedBeanUsageReport> report = new ArrayList<>();
         if (bean != null) {
             if (bean.equals(getSensor())) {
-                report.add(new NamedBeanUsageReport("BlockSensor"));
+                report.add(new NamedBeanUsageReport("BlockSensor"));  // NOI18N
             }
             if (bean.equals(getReporter())) {
-                report.add(new NamedBeanUsageReport("BlockReporter"));
+                report.add(new NamedBeanUsageReport("BlockReporter"));  // NOI18N
             }
             // Block paths
             getPaths().forEach((path) -> {
+                if (bean.equals(path.getBlock())) {
+                    report.add(new NamedBeanUsageReport("BlockPathNeighbor"));  // NOI18N
+                }
                 path.getSettings().forEach((setting) -> {
                     if (bean.equals(setting.getBean())) {
-                        report.add(new NamedBeanUsageReport("BlockPathTurnout"));
+                        report.add(new NamedBeanUsageReport("BlockPathTurnout"));  // NOI18N
                     }
                 });
             });

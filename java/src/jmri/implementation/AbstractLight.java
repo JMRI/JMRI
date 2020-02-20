@@ -576,16 +576,16 @@ public abstract class AbstractLight extends AbstractNamedBean
             getLightControlList().forEach((control) -> {
                 String descText = control.getDescriptionText("");
                 if (bean.equals(sm.getSensor(control.getControlSensorName()))) {
-                    report.add(new jmri.NamedBeanUsageReport("LightControlSensor1", descText));
+                    report.add(new jmri.NamedBeanUsageReport("LightControlSensor1", descText));  // NOI18N
                 }
                 if (bean.equals(sm.getSensor(control.getControlSensor2Name()))) {
-                    report.add(new jmri.NamedBeanUsageReport("LightControlSensor2", descText));
+                    report.add(new jmri.NamedBeanUsageReport("LightControlSensor2", descText));  // NOI18N
                 }
                 if (bean.equals(sm.getSensor(control.getControlTimedOnSensorName()))) {
-                    report.add(new jmri.NamedBeanUsageReport("LightControlSensorTimed", descText));
+                    report.add(new jmri.NamedBeanUsageReport("LightControlSensorTimed", descText));  // NOI18N
                 }
                 if (bean.equals(tm.getTurnout(control.getControlTurnoutName()))) {
-                    report.add(new jmri.NamedBeanUsageReport("LightControlTurnout", descText));
+                    report.add(new jmri.NamedBeanUsageReport("LightControlTurnout", descText));  // NOI18N
                 }
             });
         }

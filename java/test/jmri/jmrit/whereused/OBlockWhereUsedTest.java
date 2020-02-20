@@ -3,27 +3,26 @@ package jmri.jmrit.whereused;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JTextArea;
 import jmri.InstanceManager;
-import jmri.Turnout;
-import jmri.TurnoutManager;
+import jmri.jmrit.logix.OBlock;
+import jmri.jmrit.logix.OBlockManager;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 
 /**
- * Tests for the TurnoutWhereUsed Class
+ * Tests for the OBlockWhereUsed Class
  *
  * @author Dave Sand Copyright (C) 2020
  */
-public class TurnoutWhereUsedTest {
+public class OBlockWhereUsedTest {
 
     @Test
-    public void testTurnoutWhereUsed() {
+    public void testOBlockWhereUsed() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
-        TurnoutWhereUsed ctor = new TurnoutWhereUsed();
+        OBlockWhereUsed ctor = new OBlockWhereUsed();
         Assert.assertNotNull("exists", ctor);
-
-        Turnout turnout = InstanceManager.getDefault(jmri.TurnoutManager.class).getTurnout("LE Left");
-        JTextArea result = TurnoutWhereUsed.getWhereUsed(turnout);
+        OBlock oblock = InstanceManager.getDefault(OBlockManager.class).getOBlock("OB::Main");
+        JTextArea result = OBlockWhereUsed.getWhereUsed(oblock);
         Assert.assertFalse(result.getText().isEmpty());
     }
 
@@ -43,5 +42,5 @@ public class TurnoutWhereUsedTest {
         JUnitUtil.tearDown();
     }
 
-//     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TurnoutWhereUsedTest.class);
+//     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OBlockWhereUsedTest.class);
 }

@@ -193,7 +193,7 @@
       <systemName>IM:AUTO:0003</systemName>
       <userName>LogixAction</userName>
     </memory>
-    <memory value="6:34 PM">
+    <memory value="7:03 PM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -428,159 +428,153 @@
     </block>
   </blocks>
   <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml">
-    <oblock systemName="OB0002" userName="B-Left-Approach" length="0.0" units="true" curve="0" permissive="false" speedNotch="">
-      <userName>B-Left-Approach</userName>
+    <oblock systemName="OB0002" userName="OB::Left-Approach" length="0.0" units="true" curve="0" permissive="false" speedNotch="">
+      <userName>OB::Left-Approach</userName>
       <sensor systemName="S-Left-Approach" />
-      <path pathName="App to Left TO" blockName="OB0002" toPortal="LeftApp-LeftTO" fromDirection="0" toDirection="0" length="0.0" />
-      <portal portalName="LeftApp-LeftTO">
+      <path pathName="PA::Left-App" blockName="OB0002" toPortal="PO::LeftTO-A" fromDirection="0" toDirection="0" length="0.0" />
+      <portal portalName="PO::LeftTO-A">
         <fromBlock blockName="OB0002">
-          <path pathName="App to Left TO" blockName="OB0002" />
+          <path pathName="PA::Left-App" blockName="OB0002" />
         </fromBlock>
         <toBlock blockName="OB0003">
-          <path pathName="LeftTO to App" blockName="OB0003" />
-          <path pathName="LeftTO-Main" blockName="OB0003" />
-          <path pathName="LeftTO-Side" blockName="OB0003" />
+          <path pathName="PA::LeftTO-AB" blockName="OB0003" />
+          <path pathName="PA::LeftTO-AC" blockName="OB0003" />
         </toBlock>
       </portal>
     </oblock>
-    <oblock systemName="OB0003" userName="B-Left-TO" length="0.0" units="true" curve="0" permissive="false" speedNotch="">
-      <userName>B-Left-TO</userName>
+    <oblock systemName="OB0003" userName="OB::Left-TO" length="0.0" units="true" curve="0" permissive="false" speedNotch="">
+      <userName>OB::Left-TO</userName>
       <sensor systemName="S-Left-TO" />
-      <path pathName="LeftTO to App" blockName="OB0003" toPortal="LeftApp-LeftTO" fromDirection="0" toDirection="0" length="0.0">
+      <path pathName="PA::LeftTO-AB" blockName="OB0003" fromPortal="PO::LeftTO-B" toPortal="PO::LeftTO-A" fromDirection="0" toDirection="0" length="0.0">
         <setting turnout="IT202" set="2" />
       </path>
-      <path pathName="LeftTO-Main" blockName="OB0003" fromPortal="LeftApp-LeftTO" toPortal="LeftTO-Main" fromDirection="0" toDirection="0" length="0.0">
-        <setting turnout="IT202" set="2" />
-      </path>
-      <path pathName="LeftTO-Side" blockName="OB0003" fromPortal="LeftApp-LeftTO" toPortal="LeftTO-Side" fromDirection="0" toDirection="0" length="0.0">
+      <path pathName="PA::LeftTO-AC" blockName="OB0003" fromPortal="PO::LeftTO-C" toPortal="PO::LeftTO-A" fromDirection="0" toDirection="0" length="0.0">
         <setting turnout="IT202" set="4" />
       </path>
-      <portal portalName="LeftApp-LeftTO">
+      <portal portalName="PO::LeftTO-A">
         <fromBlock blockName="OB0002">
-          <path pathName="App to Left TO" blockName="OB0002" />
+          <path pathName="PA::Left-App" blockName="OB0002" />
         </fromBlock>
         <toBlock blockName="OB0003">
-          <path pathName="LeftTO to App" blockName="OB0003" />
-          <path pathName="LeftTO-Main" blockName="OB0003" />
-          <path pathName="LeftTO-Side" blockName="OB0003" />
+          <path pathName="PA::LeftTO-AB" blockName="OB0003" />
+          <path pathName="PA::LeftTO-AC" blockName="OB0003" />
         </toBlock>
       </portal>
-      <portal portalName="LeftTO-Main">
+      <portal portalName="PO::LeftTO-B">
         <fromBlock blockName="OB0003">
-          <path pathName="LeftTO-Main" blockName="OB0003" />
+          <path pathName="PA::LeftTO-AB" blockName="OB0003" />
         </fromBlock>
         <toBlock blockName="OB0004">
-          <path pathName="LeftTO to RightTO" blockName="OB0004" />
+          <path pathName="PA::LeftTO-B::RightTO-B" blockName="OB0004" />
         </toBlock>
       </portal>
-      <portal portalName="LeftTO-Side">
+      <portal portalName="PO::LeftTO-C">
         <fromBlock blockName="OB0003">
-          <path pathName="LeftTO-Side" blockName="OB0003" />
+          <path pathName="PA::LeftTO-AC" blockName="OB0003" />
         </fromBlock>
         <toBlock blockName="OB0005">
-          <path pathName="LeftTO to RightTO" blockName="OB0005" />
+          <path pathName="PA::LeftTO-C::RightTO-C" blockName="OB0005" />
         </toBlock>
       </portal>
     </oblock>
-    <oblock systemName="OB0004" userName="B-Main" length="0.0" units="true" curve="0" permissive="false" speedNotch="">
-      <userName>B-Main</userName>
+    <oblock systemName="OB0004" userName="OB::Main" length="0.0" units="true" curve="0" permissive="false" speedNotch="">
+      <userName>OB::Main</userName>
       <sensor systemName="S-Main" />
-      <path pathName="LeftTO to RightTO" blockName="OB0004" fromPortal="RightTO-Main" toPortal="LeftTO-Main" fromDirection="0" toDirection="0" length="0.0" />
-      <portal portalName="LeftTO-Main">
+      <path pathName="PA::LeftTO-B::RightTO-B" blockName="OB0004" fromPortal="PO::RightTO-B" toPortal="PO::LeftTO-B" fromDirection="0" toDirection="0" length="0.0" />
+      <portal portalName="PO::LeftTO-B">
         <fromBlock blockName="OB0003">
-          <path pathName="LeftTO-Main" blockName="OB0003" />
+          <path pathName="PA::LeftTO-AB" blockName="OB0003" />
         </fromBlock>
         <toBlock blockName="OB0004">
-          <path pathName="LeftTO to RightTO" blockName="OB0004" />
+          <path pathName="PA::LeftTO-B::RightTO-B" blockName="OB0004" />
         </toBlock>
       </portal>
-      <portal portalName="RightTO-Main">
+      <portal portalName="PO::RightTO-B">
         <fromBlock blockName="OB0004">
-          <path pathName="LeftTO to RightTO" blockName="OB0004" />
+          <path pathName="PA::LeftTO-B::RightTO-B" blockName="OB0004" />
         </fromBlock>
+        <fromSignal signalName="IF$vsm:basic:one-searchlight($0005)" signalDelay="0.0" />
         <toBlock blockName="OB0006">
-          <path pathName="RightTO-Main" blockName="OB0006" />
+          <path pathName="PA::RightTO-AB" blockName="OB0006" />
         </toBlock>
       </portal>
     </oblock>
-    <oblock systemName="OB0005" userName="B-Side" length="0.0" units="true" curve="0" permissive="false" speedNotch="">
-      <userName>B-Side</userName>
+    <oblock systemName="OB0005" userName="OB::Side" length="0.0" units="true" curve="0" permissive="false" speedNotch="">
+      <userName>OB::Side</userName>
       <sensor systemName="S-Side" />
       <errorSensor systemName="S-OBlock-Error" />
-      <path pathName="LeftTO to RightTO" blockName="OB0005" fromPortal="RightTO-Side" toPortal="LeftTO-Side" fromDirection="0" toDirection="0" length="0.0" />
-      <portal portalName="LeftTO-Side">
+      <path pathName="PA::LeftTO-C::RightTO-C" blockName="OB0005" fromPortal="PO::RightTO-C" toPortal="PO::LeftTO-C" fromDirection="0" toDirection="0" length="0.0" />
+      <portal portalName="PO::LeftTO-C">
         <fromBlock blockName="OB0003">
-          <path pathName="LeftTO-Side" blockName="OB0003" />
+          <path pathName="PA::LeftTO-AC" blockName="OB0003" />
         </fromBlock>
         <toBlock blockName="OB0005">
-          <path pathName="LeftTO to RightTO" blockName="OB0005" />
+          <path pathName="PA::LeftTO-C::RightTO-C" blockName="OB0005" />
         </toBlock>
       </portal>
-      <portal portalName="RightTO-Side">
+      <portal portalName="PO::RightTO-C">
         <fromBlock blockName="OB0005">
-          <path pathName="LeftTO to RightTO" blockName="OB0005" />
+          <path pathName="PA::LeftTO-C::RightTO-C" blockName="OB0005" />
         </fromBlock>
-        <fromSignal signalName="IH106" signalDelay="0.0" />
+        <fromSignal signalName="IF$vsm:basic:one-searchlight($0006)" signalDelay="0.0" />
         <toBlock blockName="OB0006">
-          <path pathName="RightTO-Side" blockName="OB0006" />
+          <path pathName="PA::RightTO-AC" blockName="OB0006" />
         </toBlock>
         <toSignal signalName="IF$vsm:basic:one-searchlight($0006)" signalDelay="0.0" />
       </portal>
     </oblock>
-    <oblock systemName="OB0006" userName="B-Right-TO" length="0.0" units="true" curve="0" permissive="false" speedNotch="">
-      <userName>B-Right-TO</userName>
+    <oblock systemName="OB0006" userName="OB::Right-TO" length="0.0" units="true" curve="0" permissive="false" speedNotch="">
+      <userName>OB::Right-TO</userName>
       <sensor systemName="S-Right-TO" />
-      <path pathName="RightTO-Side" blockName="OB0006" fromPortal="RightTO-Side" toPortal="RightTO-App" fromDirection="0" toDirection="0" length="0.0">
+      <path pathName="PA::RightTO-AB" blockName="OB0006" fromPortal="PO::RightTO-B" toPortal="PO::RightTO-A" fromDirection="0" toDirection="0" length="0.0">
+        <setting turnout="IT203" set="2" />
+      </path>
+      <path pathName="PA::RightTO-AC" blockName="OB0006" fromPortal="PO::RightTO-C" toPortal="PO::RightTO-A" fromDirection="0" toDirection="0" length="0.0">
         <setting turnout="IT203" set="4" />
       </path>
-      <path pathName="RightTO-Main" blockName="OB0006" fromPortal="RightTO-Main" toPortal="RightTO-App" fromDirection="0" toDirection="0" length="0.0">
-        <setting turnout="IT203" set="2" />
-      </path>
-      <path pathName="RightTO-App" blockName="OB0006" toPortal="RightTO-App" fromDirection="0" toDirection="0" length="0.0">
-        <setting turnout="IT203" set="2" />
-      </path>
-      <portal portalName="RightTO-Main">
+      <portal portalName="PO::RightTO-B">
         <fromBlock blockName="OB0004">
-          <path pathName="LeftTO to RightTO" blockName="OB0004" />
+          <path pathName="PA::LeftTO-B::RightTO-B" blockName="OB0004" />
         </fromBlock>
+        <fromSignal signalName="IF$vsm:basic:one-searchlight($0005)" signalDelay="0.0" />
         <toBlock blockName="OB0006">
-          <path pathName="RightTO-Main" blockName="OB0006" />
+          <path pathName="PA::RightTO-AB" blockName="OB0006" />
         </toBlock>
       </portal>
-      <portal portalName="RightTO-Side">
+      <portal portalName="PO::RightTO-C">
         <fromBlock blockName="OB0005">
-          <path pathName="LeftTO to RightTO" blockName="OB0005" />
+          <path pathName="PA::LeftTO-C::RightTO-C" blockName="OB0005" />
         </fromBlock>
-        <fromSignal signalName="IH106" signalDelay="0.0" />
+        <fromSignal signalName="IF$vsm:basic:one-searchlight($0006)" signalDelay="0.0" />
         <toBlock blockName="OB0006">
-          <path pathName="RightTO-Side" blockName="OB0006" />
+          <path pathName="PA::RightTO-AC" blockName="OB0006" />
         </toBlock>
         <toSignal signalName="IF$vsm:basic:one-searchlight($0006)" signalDelay="0.0" />
       </portal>
-      <portal portalName="RightTO-App">
+      <portal portalName="PO::RightTO-A">
         <fromBlock blockName="OB0006">
-          <path pathName="RightTO-Side" blockName="OB0006" />
-          <path pathName="RightTO-Main" blockName="OB0006" />
-          <path pathName="RightTO-App" blockName="OB0006" />
+          <path pathName="PA::RightTO-AB" blockName="OB0006" />
+          <path pathName="PA::RightTO-AC" blockName="OB0006" />
         </fromBlock>
         <toBlock blockName="OB0007">
-          <path pathName="RightTO to App" blockName="OB0007" />
+          <path pathName="PA::RightApp" blockName="OB0007" />
         </toBlock>
+        <toSignal signalName="IF$vsm:basic:two-searchlight($0008)" signalDelay="0.0" />
       </portal>
     </oblock>
-    <oblock systemName="OB0007" userName="B-Right-Approach" length="0.0" units="true" curve="0" permissive="false" speedNotch="">
-      <userName>B-Right-Approach</userName>
+    <oblock systemName="OB0007" userName="OB::Right-Approach" length="0.0" units="true" curve="0" permissive="false" speedNotch="">
+      <userName>OB::Right-Approach</userName>
       <sensor systemName="S-Right-Approach" />
-      <path pathName="RightTO to App" blockName="OB0007" toPortal="RightTO-App" fromDirection="0" toDirection="0" length="0.0" />
-      <portal portalName="RightTO-App">
+      <path pathName="PA::RightApp" blockName="OB0007" toPortal="PO::RightTO-A" fromDirection="0" toDirection="0" length="0.0" />
+      <portal portalName="PO::RightTO-A">
         <fromBlock blockName="OB0006">
-          <path pathName="RightTO-Side" blockName="OB0006" />
-          <path pathName="RightTO-Main" blockName="OB0006" />
-          <path pathName="RightTO-App" blockName="OB0006" />
+          <path pathName="PA::RightTO-AB" blockName="OB0006" />
+          <path pathName="PA::RightTO-AC" blockName="OB0006" />
         </fromBlock>
         <toBlock blockName="OB0007">
-          <path pathName="RightTO to App" blockName="OB0007" />
+          <path pathName="PA::RightApp" blockName="OB0007" />
         </toBlock>
+        <toSignal signalName="IF$vsm:basic:two-searchlight($0008)" signalDelay="0.0" />
       </portal>
     </oblock>
   </oblocks>
@@ -593,7 +587,7 @@
       <systemName>ILB2</systemName>
       <userName>B-Left-TO</userName>
     </layoutblock>
-    <layoutblock systemName="ILB3" occupancysensor="S-Main" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+    <layoutblock systemName="ILB3" occupancysensor="S-Main" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white" memory="BlockMemory">
       <systemName>ILB3</systemName>
       <userName>B-Main</userName>
     </layoutblock>
@@ -719,20 +713,6 @@
       <routeOutputSensor systemName="S-Group-Right" state="INACTIVE" />
     </route>
   </routes>
-  <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml">
-    <warrant systemName="IWasdf" wtype="normal">
-      <blockOrder pathName="App to Left TO" entryName="" exitName="LeftApp-LeftTO">
-        <block systemName="OB0002" userName="B-Left-Approach" />
-      </blockOrder>
-      <blockOrder pathName="LeftTO-Side" entryName="LeftApp-LeftTO" exitName="LeftTO-Side">
-        <block systemName="OB0003" userName="B-Left-TO" />
-      </blockOrder>
-      <blockOrder pathName="LeftTO to RightTO" entryName="LeftTO-Side" exitName="RightTO-Side">
-        <block systemName="OB0005" userName="B-Side" />
-      </blockOrder>
-      <train trainId="" runBlind="false" shareRoute="false" noRamp="false" trainName="" />
-    </warrant>
-  </warrants>
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
     <signalmastlogic source="Left-B">
@@ -1211,6 +1191,8 @@
         <rotation>0</rotation>
       </inconsistent>
     </multisensoricon>
+    <memoryicon memory="BlockMemory" x="504" y="132" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" borderSize="1" redBorder="255" greenBorder="0" blueBorder="0" fixedWidth="40" fixedHeight="20" justification="left" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif" />
+    <BlockContentsIcon blockcontents="B-Main" x="504" y="166" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" borderSize="1" redBorder="0" greenBorder="255" blueBorder="0" fixedWidth="40" fixedHeight="20" justification="left" selectable="no" class="jmri.jmrit.display.configurexml.BlockContentsIconXml" />
     <layoutturnout ident="TO1" type="2" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="200.0" ycen="100.0" xa="180.0" ya="100.0" xb="220.0" yb="100.0" xc="230.0" yc="70.0" xd="180.0" yd="100.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTurnoutXml" turnoutname="LE Left" blockname="B-Left-TO" connectaname="T1" connectbname="T2" connectcname="T4" signala1name="Left-AU" signala2name="Left-AL" signalb1name="Left-B" signalc1name="Left-C">
       <signalAMast>Left-A</signalAMast>
       <signalBMast>Left-B</signalBMast>
@@ -1501,7 +1483,7 @@
       <iconmaps family="LeftShortHeads" />
     </signalheadicon>
     <indicatorturnouticon x="196" y="129" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTurnoutIconXml">
-      <tooltip>OBlock "B-Left-TO"</tooltip>
+      <tooltip>OBlock "OB::Left-TO"</tooltip>
       <turnout>IT202</turnout>
       <occupancyblock>OB0003</occupancyblock>
       <showTrainName>no</showTrainName>
@@ -1595,10 +1577,12 @@
         <path>LeftTO to App</path>
         <path>LeftTO-Main</path>
         <path>LeftTO-Side</path>
+        <path>PA::LeftTO-AB</path>
+        <path>PA::LeftTO-AC</path>
       </paths>
     </indicatorturnouticon>
     <indicatorturnouticon x="294" y="129" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="180" class="jmri.jmrit.display.configurexml.IndicatorTurnoutIconXml">
-      <tooltip>OBlock "B-Right-TO"</tooltip>
+      <tooltip>OBlock "OB::Right-TO"</tooltip>
       <turnout>IT203</turnout>
       <occupancyblock>OB0006</occupancyblock>
       <showTrainName>no</showTrainName>
@@ -1692,10 +1676,12 @@
         <path>RightTO-Side</path>
         <path>RightTO-Main</path>
         <path>RightTO-App</path>
+        <path>PA::RightTO-AB</path>
+        <path>PA::RightTO-AC</path>
       </paths>
     </indicatorturnouticon>
     <indicatortrackicon x="247" y="152" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
-      <tooltip>OBlock "B-Main"</tooltip>
+      <tooltip>OBlock "OB::Main"</tooltip>
       <occupancyblock>OB0004</occupancyblock>
       <showTrainName>no</showTrainName>
       <iconmap family="USS-BlockSegment">
@@ -1719,11 +1705,11 @@
         </ErrorTrack>
       </iconmap>
       <paths>
-        <path>LeftTO to RightTO</path>
+        <path>PA::LeftTO-B::RightTO-B</path>
       </paths>
     </indicatortrackicon>
     <indicatortrackicon x="247" y="129" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
-      <tooltip>OBlock "B-Side"</tooltip>
+      <tooltip>OBlock "OB::Side"</tooltip>
       <occupancyblock>OB0005</occupancyblock>
       <showTrainName>no</showTrainName>
       <iconmap family="USS-BlockSegment">
@@ -1747,11 +1733,11 @@
         </ErrorTrack>
       </iconmap>
       <paths>
-        <path>LeftTO to RightTO</path>
+        <path>PA::LeftTO-C::RightTO-C</path>
       </paths>
     </indicatortrackicon>
     <indicatortrackicon x="147" y="152" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
-      <tooltip>OBlock "B-Left-Approach"</tooltip>
+      <tooltip>OBlock "OB::Left-Approach"</tooltip>
       <occupancyblock>OB0002</occupancyblock>
       <showTrainName>no</showTrainName>
       <iconmap family="USS-BlockSegment">
@@ -1775,11 +1761,11 @@
         </ErrorTrack>
       </iconmap>
       <paths>
-        <path>App to Left TO</path>
+        <path>PA::Left-App</path>
       </paths>
     </indicatortrackicon>
     <indicatortrackicon x="341" y="152" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
-      <tooltip>OBlock "B-Right-Approach"</tooltip>
+      <tooltip>OBlock "OB::Right-Approach"</tooltip>
       <occupancyblock>OB0007</occupancyblock>
       <showTrainName>no</showTrainName>
       <iconmap family="USS-BlockSegment">
@@ -1803,26 +1789,26 @@
         </ErrorTrack>
       </iconmap>
       <paths>
-        <path>RightTO to App</path>
+        <path>PA::RightApp</path>
       </paths>
     </indicatortrackicon>
-    <PortalIcon x="179" y="149" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" scale="1.0" rotate="0" portalName="LeftApp-LeftTO" toBlockName="B-Left-TO" fromBlockName="B-Left-Approach" arrowSwitch="yes" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
-      <tooltip>Portal "AL-TL" between OBlocks "B-Left-Approach" and "B-Left-TO"</tooltip>
+    <PortalIcon x="179" y="149" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" scale="1.0" rotate="0" portalName="PO::LeftTO-A" toBlockName="OB::Left-TO" fromBlockName="OB::Left-Approach" arrowSwitch="yes" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+      <tooltip>Portal "PO::LeftTO-A" between OBlocks "OB::Left-Approach" and "OB::Left-TO"</tooltip>
     </PortalIcon>
-    <PortalIcon x="225" y="148" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" scale="1.0" rotate="0" portalName="LeftTO-Main" toBlockName="B-Main" fromBlockName="B-Left-TO" arrowSwitch="yes" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
-      <tooltip>Portal "LeftTO-Main" between OBlocks "B-Left-TO" and "B-Main"</tooltip>
+    <PortalIcon x="225" y="148" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" scale="1.0" rotate="0" portalName="PO::LeftTO-B" toBlockName="OB::Main" fromBlockName="OB::Left-TO" arrowSwitch="yes" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+      <tooltip>Portal "PO::LeftTO-B" between OBlocks "OB::Left-TO" and "OB::Main"</tooltip>
     </PortalIcon>
-    <PortalIcon x="280" y="149" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" scale="1.0" rotate="0" portalName="RightTO-Main" toBlockName="B-Right-TO" fromBlockName="B-Main" arrowSwitch="yes" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
-      <tooltip>Portal "RightTO-Main" between OBlocks "B-Main" and "B-Right-TO"</tooltip>
+    <PortalIcon x="280" y="149" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" scale="1.0" rotate="0" portalName="PO::RightTO-B" toBlockName="OB::Right-TO" fromBlockName="OB::Main" arrowSwitch="yes" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+      <tooltip>Portal "PO::RightTO-B" between OBlocks "OB::Main" and "OB::Right-TO"</tooltip>
     </PortalIcon>
-    <PortalIcon x="231" y="125" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" scale="1.0" rotate="0" portalName="LeftTO-Side" toBlockName="B-Side" fromBlockName="B-Left-TO" arrowSwitch="yes" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
-      <tooltip>Portal "LeftTO-Side" between OBlocks "B-Left-TO" and "B-Side"</tooltip>
+    <PortalIcon x="231" y="125" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" scale="1.0" rotate="0" portalName="PO::LeftTO-C" toBlockName="OB::Side" fromBlockName="OB::Left-TO" arrowSwitch="yes" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+      <tooltip>Portal "PO::LeftTO-C" between OBlocks "OB::Left-TO" and "OB::Side"</tooltip>
     </PortalIcon>
-    <PortalIcon x="281" y="125" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" scale="1.0" rotate="0" portalName="RightTO-Side" toBlockName="B-Right-TO" fromBlockName="B-Side" arrowSwitch="yes" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
-      <tooltip>Portal "RightTO-Side" between OBlocks "B-Side" and "B-Right-TO"</tooltip>
+    <PortalIcon x="281" y="125" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" scale="1.0" rotate="0" portalName="PO::RightTO-C" toBlockName="OB::Right-TO" fromBlockName="OB::Side" arrowSwitch="yes" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+      <tooltip>Portal "PO::RightTO-C" between OBlocks "OB::Side" and "OB::Right-TO"</tooltip>
     </PortalIcon>
-    <PortalIcon x="324" y="149" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" scale="1.0" rotate="0" portalName="RightTO-App" toBlockName="B-Right-Approach" fromBlockName="B-Right-TO" arrowSwitch="yes" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
-      <tooltip>Portal "RightTO-App" between OBlocks "B-Right-TO" and "B-Right-Approach"</tooltip>
+    <PortalIcon x="324" y="149" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" scale="1.0" rotate="0" portalName="PO::RightTO-A" toBlockName="OB::Right-Approach" fromBlockName="OB::Right-TO" arrowSwitch="yes" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+      <tooltip>Portal "PO::RightTO-A" between OBlocks "OB::Right-TO" and "OB::Right-Approach"</tooltip>
     </PortalIcon>
     <slipturnouticon turnoutType="doubleSlip" x="243" y="197" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" class="jmri.jmrit.display.configurexml.SlipTurnoutIconXml">
       <turnoutEast>Slip A</turnoutEast>
@@ -1866,7 +1852,6 @@
         </inconsistent>
       </icons>
     </LightIcon>
-    <signalmasticon signalmast="Right-C" x="281" y="125" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="0" litmode="false" degrees="0" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
     <signalheadicon signalhead="Right-AL" x="281" y="125" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
       <icons>
         <held url="program:resources/icons/smallschematics/searchlights/left-held-short.gif" degrees="0" scale="1.0">
@@ -1896,108 +1881,111 @@
       </icons>
       <iconmaps family="LeftShortHeads" />
     </signalheadicon>
+    <signalmasticon signalmast="Right-B" x="261" y="174" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="90" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="Right-C" x="262" y="108" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="90" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="Right-A" x="340" y="128" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
   </paneleditor>
   <filehistory>
     <operation>
       <type>app</type>
-      <date>Mon Feb 17 18:20:54 CST 2020</date>
+      <date>Wed Feb 19 18:41:33 CST 2020</date>
       <filename>JMRI program</filename>
     </operation>
     <operation>
       <type>Load OK</type>
-      <date>Mon Feb 17 18:21:03 CST 2020</date>
+      <date>Wed Feb 19 18:41:45 CST 2020</date>
       <filename>/Users/das/JMRI/_Profiles/WhereUsed.jmri/WhereUsedTesting.xml</filename>
       <filehistory>
         <operation>
           <type>app</type>
-          <date>Sun Feb 16 17:42:24 CST 2020</date>
+          <date>Wed Feb 19 15:13:37 CST 2020</date>
           <filename>JMRI program</filename>
         </operation>
         <operation>
           <type>Load OK</type>
-          <date>Sun Feb 16 17:42:36 CST 2020</date>
+          <date>Wed Feb 19 15:13:49 CST 2020</date>
           <filename>/Users/das/JMRI/_Profiles/WhereUsed.jmri/WhereUsedTesting.xml</filename>
           <filehistory>
             <operation>
               <type>app</type>
-              <date>Sun Feb 16 17:15:35 CST 2020</date>
+              <date>Wed Feb 19 14:25:34 CST 2020</date>
               <filename>JMRI program</filename>
             </operation>
             <operation>
               <type>Load OK</type>
-              <date>Sun Feb 16 17:15:50 CST 2020</date>
+              <date>Wed Feb 19 14:25:44 CST 2020</date>
               <filename>/Users/das/JMRI/_Profiles/WhereUsed.jmri/WhereUsedTesting.xml</filename>
               <filehistory>
                 <operation>
                   <type>app</type>
-                  <date>Sun Feb 16 16:56:58 CST 2020</date>
+                  <date>Wed Feb 19 14:24:50 CST 2020</date>
                   <filename>JMRI program</filename>
                 </operation>
                 <operation>
                   <type>Load OK</type>
-                  <date>Sun Feb 16 16:57:07 CST 2020</date>
+                  <date>Wed Feb 19 14:25:02 CST 2020</date>
                   <filename>/Users/das/JMRI/_Profiles/WhereUsed.jmri/WhereUsedTesting.xml</filename>
                   <filehistory>
                     <operation>
                       <type>app</type>
-                      <date>Sun Feb 16 13:12:40 CST 2020</date>
+                      <date>Wed Feb 19 14:01:34 CST 2020</date>
                       <filename>JMRI program</filename>
                     </operation>
                     <operation>
                       <type>Load OK</type>
-                      <date>Sun Feb 16 13:12:49 CST 2020</date>
+                      <date>Wed Feb 19 14:01:46 CST 2020</date>
                       <filename>/Users/das/JMRI/_Profiles/WhereUsed.jmri/WhereUsedTesting.xml</filename>
                       <filehistory>
                         <operation>
                           <type>app</type>
-                          <date>Sun Feb 16 13:07:32 CST 2020</date>
+                          <date>Mon Feb 17 18:20:54 CST 2020</date>
                           <filename>JMRI program</filename>
                         </operation>
                         <operation>
                           <type>Load OK</type>
-                          <date>Sun Feb 16 13:07:42 CST 2020</date>
+                          <date>Mon Feb 17 18:21:03 CST 2020</date>
                           <filename>/Users/das/JMRI/_Profiles/WhereUsed.jmri/WhereUsedTesting.xml</filename>
                         </operation>
                         <operation>
                           <type>Store</type>
-                          <date>Sun Feb 16 13:09:59 CST 2020</date>
+                          <date>Mon Feb 17 18:34:33 CST 2020</date>
                           <filename />
                         </operation>
                       </filehistory>
                     </operation>
                     <operation>
                       <type>Store</type>
-                      <date>Sun Feb 16 13:15:49 CST 2020</date>
+                      <date>Wed Feb 19 14:24:26 CST 2020</date>
                       <filename />
                     </operation>
                   </filehistory>
                 </operation>
                 <operation>
                   <type>Store</type>
-                  <date>Sun Feb 16 17:15:14 CST 2020</date>
+                  <date>Wed Feb 19 14:25:20 CST 2020</date>
                   <filename />
                 </operation>
               </filehistory>
             </operation>
             <operation>
               <type>Store</type>
-              <date>Sun Feb 16 17:17:08 CST 2020</date>
+              <date>Wed Feb 19 14:29:00 CST 2020</date>
               <filename />
             </operation>
           </filehistory>
         </operation>
         <operation>
           <type>Store</type>
-          <date>Sun Feb 16 17:51:16 CST 2020</date>
+          <date>Wed Feb 19 15:36:38 CST 2020</date>
           <filename />
         </operation>
       </filehistory>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Mon Feb 17 18:34:33 CST 2020</date>
+      <date>Wed Feb 19 19:03:34 CST 2020</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.19.3ish+das+20200218T0020Z+R41461657b6 on Mon Feb 17 18:34:33 CST 2020-->
+  <!--Written by JMRI version 4.19.3ish+das+20200220T0041Z+Rc13a6f6f61 on Wed Feb 19 19:03:34 CST 2020-->
 </layout-config>

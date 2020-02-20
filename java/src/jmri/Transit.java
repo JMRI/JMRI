@@ -615,6 +615,9 @@ public class Transit extends AbstractNamedBean {
         jmri.SignalMastManager mast = jmri.InstanceManager.getDefault(jmri.SignalMastManager.class);
         if (bean != null) {
             getTransitSectionList().forEach((transitSection) -> {
+                if (bean.equals(transitSection.getSection())) {
+                    report.add(new NamedBeanUsageReport("TransitSection"));
+                }
                 if (bean.equals(sm.getSensor(transitSection.getStopAllocatingSensor()))) {
                     report.add(new NamedBeanUsageReport("TransitSensorStopAllocation"));
                 }

@@ -2740,6 +2740,11 @@ public class Section extends AbstractNamedBean {
     public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
         List<NamedBeanUsageReport> report = new ArrayList<>();
         if (bean != null) {
+            getBlockList().forEach((block) -> {
+                if (bean.equals(block)) {
+                    report.add(new NamedBeanUsageReport("SectionBlock"));
+                }
+            });
             if (bean.equals(getForwardBlockingSensor())) {
                 report.add(new NamedBeanUsageReport("SectionSensorForwardBlocking"));
             }

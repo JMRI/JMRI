@@ -122,9 +122,10 @@ public class WhereUsedCollectors {
      * <ul>
      * <li>BlockSensor</li>
      * <li>BlockReporter</li>
+     * <li>BlockPathNeighbor</li>
      * <li>BlockPathTurnout</li>
      * </ul>
-     * @param bean The requesting bean:  Sensor, Reporter, Turnout (paths).
+     * @param bean The requesting bean:  Block (Path neighbor), Sensor, Reporter, Turnout (Path).
      * @return usage string
      */
     static String checkBlocks(NamedBean bean) {
@@ -147,6 +148,7 @@ public class WhereUsedCollectors {
      * <li>LayoutBlockBlock</li>
      * <li>LayoutBlockMemory</li>
      * <li>LayoutBlockSensor</li>
+     * <li>LayoutBlockNeighbor</li>
      * </ul>
      * @param bean The requesting bean:  Block, Memory, Sensor.
      * @return usage string
@@ -157,7 +159,7 @@ public class WhereUsedCollectors {
             layoutBlock.getUsageReport(bean).forEach((report) -> {
                 if (report.usageKey.startsWith("LayoutBlock")) {  // NOI18N
                     String name = layoutBlock.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME);
-                    sb.append(Bundle.getMessage("ReferenceLineName", name));  // NOI18N
+                    sb.append(Bundle.getMessage("ReferenceLineData", name, report.usageData));  // NOI18N
                 }
             });
         });
@@ -218,7 +220,7 @@ public class WhereUsedCollectors {
         StringBuilder sb = new StringBuilder();
         InstanceManager.getDefault(SignalMastLogicManager.class).getNamedBeanSet().forEach((sml) -> {
             sml.getUsageReport(bean).forEach((report) -> {
-                if (report.usageKey.startsWith("SML")) {
+                if (report.usageKey.startsWith("SML")) {  // NOI18N
                     sb.append(Bundle.getMessage("ReferenceLinePair", sml.getSourceMast().getDisplayName(), report.usageBean.getDisplayName()));  // NOI18N
                 }
             });
@@ -257,12 +259,11 @@ public class WhereUsedCollectors {
      * <ul>
      * <li>OBlockSensor</li>
      * <li>OBlockSensorError</li>
-     * <li>OBlockReporter</li>
-     * <li>OBlockPathTurnout</li>
-     * <li>OBlockPortalFromSignal</li>
-     * <li>OBlockPortalToSignal</li>
+     * <li>OBlockPortalNeighborOBlock</li>
+     * <li>OBlockPortalSignal</li>
+     * <li>OBlockPortalPathTurnout</li>
      * </ul>
-     * @param bean The requesting bean:  Sensor, SignalHead, SignalMast, Reporter, Turnout.
+     * @param bean The requesting bean:  OBlock (Neightbor), Sensor, SignalHead, SignalMast, Turnout.
      * @return usage string
      */
     static String checkOBlocks(NamedBean bean) {
@@ -271,7 +272,7 @@ public class WhereUsedCollectors {
             oblock.getUsageReport(bean).forEach((report) -> {
                 if (report.usageKey.startsWith("OBlock")) {  // NOI18N
                     String name = oblock.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME);
-                    sb.append(Bundle.getMessage("ReferenceLineName", name));  // NOI18N
+                    sb.append(Bundle.getMessage("ReferenceLineData", name, report.usageData));  // NOI18N
                 }
             });
         });
@@ -306,12 +307,13 @@ public class WhereUsedCollectors {
      * Create the Section usage string.
      * Usage keys:
      * <ul>
+     * <li>SectionBlock</li>
      * <li>SectionSensorForwardBlocking</li>
      * <li>SectionSensorForwardStopping</li>
      * <li>SectionSensorReverseBlocking</li>
      * <li>SectionSensorReverseStopping</li>
      * </ul>
-     * @param bean The requesting bean:  Many.
+     * @param bean The requesting bean:  Block, Sensor.
      * @return usage string
      */
     static String checkSections(NamedBean bean) {
@@ -331,13 +333,14 @@ public class WhereUsedCollectors {
      * Create the Transit usage string.
      * Usage keys:
      * <ul>
+     * <li>TransitSection</li>
      * <li>TransitSensorStopAllocation</li>
      * <li>TransitActionSensorWhen</li>
      * <li>TransitActionSensorWhat</li>
      * <li>TransitActionSignalHeadWhat</li>
      * <li>TransitActionSignalMastWhat</li>
      * </ul>
-     * @param bean The requesting bean:  Sensor, Signal Head, Signal Mast.
+     * @param bean The requesting bean:  Section, Sensor, Signal Head, Signal Mast.
      * @return usage string
      */
     static String checkTransits(NamedBean bean) {
@@ -345,7 +348,7 @@ public class WhereUsedCollectors {
         InstanceManager.getDefault(TransitManager.class).getNamedBeanSet().forEach((transit) -> {
             transit.getUsageReport(bean).forEach((report) -> {
                 String name = transit.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME);
-                if (report.usageKey.startsWith("TransitSensorStop")) {  // NOI18N
+                if (report.usageKey.startsWith("TransitSensor") || report.usageKey.startsWith("TransitSection")) {  // NOI18N
                     sb.append(Bundle.getMessage("ReferenceLineName", name));  // NOI18N
                 }
                 if (report.usageKey.startsWith("TransitAction")) {  // NOI18N
