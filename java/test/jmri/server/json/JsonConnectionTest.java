@@ -3,6 +3,7 @@ package jmri.server.json;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import jmri.InstanceManager;
 import jmri.jmris.json.JsonServerPreferences;
 import jmri.util.JUnitAppender;
@@ -58,12 +59,12 @@ public class JsonConnectionTest {
         InstanceManager.getDefault(JsonServerPreferences.class).setValidateServerMessages(true);
         // validate valid message
         instance.sendMessage(instance.getObjectMapper().readTree(valid), 0);
-        Assert.assertEquals("Valid message is passed", valid, baos.toString("UTF-8"));
+        Assert.assertEquals("Valid message is passed", valid, baos.toString(StandardCharsets.UTF_8.name()));
         baos.reset();
         // validate invalid message
         instance.sendMessage(instance.getObjectMapper().readTree(invalid), 0);
-        Assert.assertNotEquals("Invalid message is not passed", invalid, baos.toString("UTF-8"));
-        Assert.assertEquals("Invalid message is replaced with error", error, baos.toString("UTF-8"));
+        Assert.assertNotEquals("Invalid message is not passed", invalid, baos.toString(StandardCharsets.UTF_8.name()));
+        Assert.assertEquals("Invalid message is replaced with error", error, baos.toString(StandardCharsets.UTF_8.name()));
         baos.reset();
         // suppress warnings from validating invalid message (there are five)
         JUnitAppender.checkForMessageStartingWith("Errors validating");
@@ -89,11 +90,11 @@ public class JsonConnectionTest {
         InstanceManager.getDefault(JsonServerPreferences.class).setValidateServerMessages(false);
         // pass valid message when not validating
         instance.sendMessage(instance.getObjectMapper().readTree(valid), 0);
-        Assert.assertEquals("Valid message is passed", valid, baos.toString("UTF-8"));
+        Assert.assertEquals("Valid message is passed", valid, baos.toString(StandardCharsets.UTF_8.name()));
         baos.reset();
         // pass invalid message when not validating
         instance.sendMessage(instance.getObjectMapper().readTree(invalid), 0);
-        Assert.assertEquals("Invalid message is passed", invalid, baos.toString("UTF-8"));
+        Assert.assertEquals("Invalid message is passed", invalid, baos.toString(StandardCharsets.UTF_8.name()));
         baos.reset();
     }
 }

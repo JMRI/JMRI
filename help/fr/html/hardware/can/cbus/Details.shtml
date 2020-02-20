@@ -16,7 +16,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -60,7 +60,7 @@ a sugg&#233;r&#233; que JMRI utilise un ID CBUS de 126. Actuellement, c'est une 
 <p>Retour &#224; la page  <a href="index.shtml">Aide Principale CBUS</a>
 <p>Lire aussi la  <a href="../index.shtml">prise en charge g&#233;n&#233;rale de CAN dans JMRI</a>
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
  </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->
 </body>

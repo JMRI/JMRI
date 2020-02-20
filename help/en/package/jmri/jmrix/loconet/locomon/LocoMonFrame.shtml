@@ -24,7 +24,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -207,6 +207,6 @@
       <p>Detailed descriptions of LocoNet message OpCodes are
       beyond the scope of this document.</p>
     </div>
-  </div><!--#include virtual="/Footer" -->
+  </div><!--#include virtual="/Footer.shtml" -->
 </body>
 </html>

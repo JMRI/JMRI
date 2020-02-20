@@ -338,7 +338,7 @@ public class CarsTableFrameTest extends OperationsTestCase {
         c5.setTypeName("Coilcar");
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     @Override

@@ -98,7 +98,7 @@ public class LnReporterTest extends jmri.implementation.AbstractReporterTestBase
                 7, r.getState());
         
         Assert.assertEquals("MessageFromManagerFindReport- check report string after message 1", 
-                "7 enter", r.getCurrentReport().toString() );
+                "7 enter", ((Reportable)r.getCurrentReport()).toReportString() );
 
         Assert.assertEquals("MessageFromManagerFindReport- check last loco after message 1",
                 7, ((LnReporter)r).lastLoco);

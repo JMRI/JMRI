@@ -884,8 +884,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         }
         if (route != null) {
             List<RouteLocation> routeList = route.getLocationsBySequenceList();
-            for (int i = 0; i < routeList.size(); i++) {
-                RouteLocation rl = routeList.get(i);
+            for (RouteLocation rl : routeList) {
                 JCheckBox checkBox = new javax.swing.JCheckBox();
                 locationCheckBoxes.add(checkBox);
                 checkBox.setText(rl.toString());
@@ -902,7 +901,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
                     if ((rl.getTrainDirection() & loc.getTrainDirections()) != 0) {
                         services = true;
                     } // train must service last location or single location
-                    else if (i == routeList.size() - 1) {
+                    else if (_train.isLocalSwitcher() || rl == _train.getTrainTerminatesRouteLocation()) {
                         services = true;
                     }
                     // check can drop and pick up, and moves > 0

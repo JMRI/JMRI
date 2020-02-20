@@ -1,6 +1,7 @@
 package jmri.jmrix.sprog.update;
 
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;
+import jmri.jmrix.sprog.SprogTrafficControlScaffold;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -16,6 +17,7 @@ public class SprogVersionQueryTest {
     @Test
     public void testCTor() {
         SprogSystemConnectionMemo m = new SprogSystemConnectionMemo();
+        m.setSprogTrafficController(new SprogTrafficControlScaffold(m));
         SprogVersionQuery t = new SprogVersionQuery(m);
         Assert.assertNotNull("exists",t);
     }

@@ -23,7 +23,7 @@ public class SchedulesByLoadFrameTest extends OperationsTestCase {
         SchedulesByLoadFrame t = new SchedulesByLoadFrame();
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(t);
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(SchedulesByLoadFrameTest.class);

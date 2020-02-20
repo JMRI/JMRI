@@ -23,7 +23,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -308,7 +308,7 @@
         des Options Dispatcher est facultative. La
         s&Atilde;&copy;lection de cette option de menu est le seul
         moyen de sauver les Options de Dispatcher.</li>
-      </ul><!--#include virtual="/Footer" -->
+      </ul><!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

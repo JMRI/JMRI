@@ -50,7 +50,7 @@ public class EngineAttributeEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("new model after delete", "New Model", f.comboBox.getItemAt(0));
 
         JUnitUtil.dispose(f);
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     @Test

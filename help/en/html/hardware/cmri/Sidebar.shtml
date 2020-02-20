@@ -14,39 +14,20 @@
 				
 		</dd>
 
-	   <!--#include virtual="/help/en/parts/SidebarSupportedHardware.shtml" -->    
+	     <!--#include virtual="../../../parts/SidebarSupportedHardware.shtml" -->    
 
-		<dt><h3 style="padding-left: 1em;">Installation</h3></dt>
-		<dd> 
-		    <ul>
-                        <li><a href="https://jmri.org/install/WindowsNew.shtml">Windows</a>
-                        <li><a href="https://jmri.org/install/MacOSX.shtml">Mac OS X</a>
-                        <li><a href="https://jmri.org/install/Linux.shtml">Linux</a>
-                           <ul>
-	                       <li><a href="https://jmri.org/install/Raspbian.shtml">RasPi</a>
-	                   </ul>
-                         <li><a href="https://jmri.org/install/Debug.shtml">Debugging an installation</a>
-		    </ul>
-		 </dd>
+             <!--#include virtual="../../../parts/SidebarInstall.shtml" -->    
 
-            <!--#include virtual="/help/en/parts/SidebarApplications.shtml" -->
+             <!--#include virtual="../../../parts/SidebarApplications.shtml" -->
 
-            <!--#include virtual="/help/en/parts/SidebarTools.shtml" -->
+             <!--#include virtual="../../../parts/SidebarTools.shtml" -->
 
-            <!--#include virtual="/help/en/parts/SidebarLayoutAutomation.shtml" -->
+             <!--#include virtual="../../../parts/SidebarLayoutAutomation.shtml" -->  		
+           </dl>
 
-		
-    </dl>
+           <!--#include virtual="../../../parts/SidebarTail.shtml" -->    
 
-    <a href="/donations.shtml">
-     <img src="http://sourceforge.net/images/project-support.jpg" width="88" height="32" border="0" ALIGN="CENTER" alt="Donate to JMRI" />
-    </a>
+           </div> <!-- closes #side -->
 
-	</div> <!-- closes #side -->
-
-    <!-- Sidebar-Tail -->
-    <script type="text/javascript" src="/web/js/jquery-2.0.3.min.js"></script>
-    <script type="text/javascript" src="/web/js/here.js"></script>
-    <!-- /Sidebar-Tail -->
-
+   
 <!-- /Sidebar.shtml -->

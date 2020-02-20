@@ -1,6 +1,7 @@
 package jmri.util;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.ResourceBundle; // for access operations keys directly.
 
@@ -655,10 +656,8 @@ public class JUnitOperationsUtil {
     public static BufferedReader getBufferedReader(File file) {
         BufferedReader in = null;
         try {
-            in = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8")); // NOI18N
+            in = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8)); // NOI18N
         } catch (FileNotFoundException e) {
-
-        } catch (UnsupportedEncodingException e) {
 
         }
         Assert.assertNotNull(in);
@@ -680,22 +679,6 @@ public class JUnitOperationsUtil {
         }
         Assert.assertNotNull(operationShutdownTask);
         sm.deregister(operationShutdownTask);
-    }
-    
-    public static void checkIdTagsShutDownTask() {
-        // remove the Id tags shut down tasks
-        Assert.assertTrue(InstanceManager.containsDefault(ShutDownManager.class));
-        ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
-        List<ShutDownTask> list = sm.tasks();
-        Assert.assertTrue("One shut down tasks max", list.size() < 2);
-        ShutDownTask idTagsShutdownTask = null;
-        for (ShutDownTask task : list) {
-            if (task.getName().equals("Writing IdTags")) {
-                idTagsShutdownTask = task;
-            }
-        }
-        Assert.assertNotNull(idTagsShutdownTask);
-        sm.deregister(idTagsShutdownTask);
     }
     
     /**

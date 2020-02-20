@@ -331,7 +331,7 @@ public class FnMapPanel extends JPanel {
             if (a != null) {
                 numOut = Integer.parseInt(a.getValue());
             }
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             log.error("error handling decoder's numOuts value");
         }
         a = model.getAttribute("numFns");
@@ -339,11 +339,11 @@ public class FnMapPanel extends JPanel {
             if (a != null) {
                 numFn = Integer.parseInt(a.getValue());
             }
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             log.error("error handling decoder's numFns value");
         }
         if (log.isDebugEnabled()) {
-            log.debug("numFns, numOuts " + numFn + "," + numOut);
+            log.debug("numFns, numOuts {},{}", numFn, numOut);
         }
         
         // take all "output" children

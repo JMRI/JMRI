@@ -38,7 +38,7 @@ public class TrackRoadEditFrameTest extends OperationsTestCase {
         Assert.assertTrue(t.isVisible());
 
         JUnitUtil.dispose(t);
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     @Test
@@ -78,7 +78,7 @@ public class TrackRoadEditFrameTest extends OperationsTestCase {
         }
 
         JUnitUtil.dispose(tlef);
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TrackRoadEditFrameTest.class);

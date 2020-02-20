@@ -41,7 +41,7 @@ public class WarrantManagerXml extends jmri.configurexml.AbstractXmlAdapter {
     @Override
     public Element store(Object o) {
         Element warrants = new Element("warrants");
-        warrants.setAttribute("class","jmri.jmrit.logix.configurexml.WarrantManagerXml");
+        warrants.setAttribute("class", "jmri.jmrit.logix.configurexml.WarrantManagerXml");
         WarrantManager wm = (WarrantManager) o;
         if (wm != null) {
             SortedSet<Warrant> warrantList = wm.getNamedBeanSet();

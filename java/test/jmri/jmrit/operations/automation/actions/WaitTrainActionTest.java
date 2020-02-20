@@ -92,7 +92,7 @@ public class WaitTrainActionTest extends OperationsTestCase {
         Assert.assertEquals("action item status", Bundle.getMessage("ButtonOK"), automationItem.getStatus());
         
         JUnitOperationsUtil.checkOperationsShutDownTask();
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     @Test
@@ -131,7 +131,7 @@ public class WaitTrainActionTest extends OperationsTestCase {
         Assert.assertFalse(automationItem.isActionRunning());
         Assert.assertTrue(automationItem.isActionSuccessful());
         
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     @Test
@@ -177,7 +177,7 @@ public class WaitTrainActionTest extends OperationsTestCase {
         Assert.assertTrue(automationItem.isActionSuccessful());
         
         JUnitOperationsUtil.checkOperationsShutDownTask();
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
     
     @Test
@@ -206,7 +206,7 @@ public class WaitTrainActionTest extends OperationsTestCase {
         Assert.assertFalse(automationItem.isActionRunning());
         Assert.assertFalse(automationItem.isActionSuccessful());
         
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(WaitTrainActionTest.class);

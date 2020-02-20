@@ -18,7 +18,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -32,7 +32,7 @@
         For more information, see the
         <a href="http://manifestcreator.weebly.com">Manifest Creator web site</a>.
      
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- close #mainContent -->
   </div><!-- close #mBody -->
 </body>

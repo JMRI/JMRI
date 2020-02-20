@@ -59,7 +59,7 @@ public class LocationsByCarTypeFrameTest extends OperationsTestCase {
         Assert.assertTrue("accepts", loc.acceptsTypeName("Flat"));
         
         JUnitUtil.dispose(lctf);
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
     
     @Test
@@ -105,7 +105,7 @@ public class LocationsByCarTypeFrameTest extends OperationsTestCase {
         Assert.assertFalse("accepts", loc.acceptsTypeName("Flat"));
         
         JUnitUtil.dispose(lctf);
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(LocationsByCarTypeFrameTest.class);

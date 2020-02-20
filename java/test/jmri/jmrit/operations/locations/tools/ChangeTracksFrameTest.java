@@ -35,7 +35,7 @@ public class ChangeTracksFrameTest extends OperationsTestCase {
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(t);
         JUnitUtil.dispose(f);
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
     
     @Test
@@ -62,7 +62,7 @@ public class ChangeTracksFrameTest extends OperationsTestCase {
         
         JUnitUtil.dispose(ctf);
         JUnitUtil.dispose(lef);
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ChangeTracksFrameTest.class);

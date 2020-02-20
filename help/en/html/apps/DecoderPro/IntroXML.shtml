@@ -21,7 +21,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -91,7 +91,7 @@
             secondAttribute="bar"<br>
             thirdAttribute="biff"<br>
             fourthAttribute="bing" /&gt;</p>
-        <!--#include virtual="/Footer" -->
+        <!--#include virtual="/Footer.shtml" -->
       </div><!-- close #mainContent -->
     </div><!-- close #mBody -->
   </div>

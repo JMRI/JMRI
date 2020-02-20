@@ -22,7 +22,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -271,7 +271,7 @@
       Returns nothing</p>
 
       <p>0xAD (4 data bytes) Accy/signal and macro commands (1)
-      !,1</p><!--#include virtual="/Footer" -->
+      !,1</p><!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

@@ -165,7 +165,7 @@ public class EnginesTableFrameTest extends OperationsTestCase {
 
         JUnitUtil.dispose(etf);
         JUnitOperationsUtil.checkOperationsShutDownTask();
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     private void loadEngines() {

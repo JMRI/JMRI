@@ -21,7 +21,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -63,7 +63,7 @@
       together to set Sensors. Therefore if a Sensor is ACTIVE
       (Maple "1") in any panel, it is set ACTIVE. If a Sensor is
       INACTIVE (Maple "0") in all configured panels, then it is set
-      INACTIVE.</p><!--#include virtual="/Footer" -->
+      INACTIVE.</p><!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

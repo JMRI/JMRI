@@ -6,8 +6,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
+import jmri.jmrix.can.cbus.CbusConfigurationManager;
 import jmri.jmrix.can.cbus.CbusPreferences;
-import jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel;
 import jmri.util.JmriJFrame;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -25,41 +25,6 @@ import org.netbeans.jemmy.operators.*;
  */
 public class CbusEventTablePaneTest extends jmri.util.swing.JmriPanelTest {
         
-    private CanSystemConnectionMemo memo; 
-    private TrafficControllerScaffold tcis; 
-    private CbusEventTableDataModel m;
-
-    @Override
-    @Before
-    public void setUp() {
-        JUnitUtil.setUp();
-        title = Bundle.getMessage("EventTableTitle");
-        helpTarget = "package.jmri.jmrix.can.cbus.swing.eventtable.EventTablePane";
-        memo = new CanSystemConnectionMemo();
-        tcis = new TrafficControllerScaffold();
-        memo.setTrafficController(tcis);
-        
-        jmri.InstanceManager.setDefault(jmri.jmrix.can.cbus.CbusPreferences.class,new CbusPreferences() );
-        
-        m = new CbusEventTableDataModel(memo, 2,CbusEventTableDataModel.MAX_COLUMN);
-        jmri.InstanceManager.setDefault(CbusEventTableDataModel.class,m );
-        panel = new CbusEventTablePane();
-    }
-    
-    
-
-    @Override
-    @After
-    public void tearDown() {
-        memo = null;
-        tcis = null;
-        m = null;
-        JUnitUtil.resetWindows(false,false);
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
-        super.tearDown();
-    }
-    
-    
     @Test
     public void testInitComp() {
         
@@ -127,4 +92,40 @@ public class CbusEventTablePaneTest extends jmri.util.swing.JmriPanelTest {
         return ( new JButtonOperator(jfo,Bundle.getMessage("ClearFilter")).isEnabled() );
     }
 
+    private CanSystemConnectionMemo memo; 
+    private TrafficControllerScaffold tcis; 
+    private CbusConfigurationManager configM;
+
+    @Override
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
+        title = Bundle.getMessage("EventTableTitle");
+        helpTarget = "package.jmri.jmrix.can.cbus.swing.eventtable.EventTablePane";
+        memo = new CanSystemConnectionMemo();
+        tcis = new TrafficControllerScaffold();
+        memo.setTrafficController(tcis);
+        
+        configM = new CbusConfigurationManager(memo);
+        
+        jmri.InstanceManager.setDefault(CbusPreferences.class,new CbusPreferences() );
+        
+        panel = new CbusEventTablePane();
+    }
+    
+    
+
+    @Override
+    @After
+    public void tearDown() {
+        configM.dispose();
+        tcis.terminateThreads();
+        memo.dispose();
+        memo = null;
+        tcis = null;
+        JUnitUtil.resetWindows(false,false);
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        super.tearDown();
+    }    
+    
 }

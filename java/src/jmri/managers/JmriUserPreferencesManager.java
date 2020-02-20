@@ -609,7 +609,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                 desc = (String) method.invoke(t);
                 classDesFound = true;
             } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NullPointerException | ExceptionInInitializerError | NoSuchMethodException ex) {
-                log.debug("Unable to call declared method \"getClassDescription\" with exception {}", ex);
+                log.debug("Unable to call declared method \"getClassDescription\" with exception", ex);
                 classDesFound = false;
             }
             if (!classDesFound) {
@@ -617,7 +617,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                     method = cl.getMethod("getClassDescription");
                     desc = (String) method.invoke(t);
                 } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NullPointerException | ExceptionInInitializerError | NoSuchMethodException ex) {
-                    log.debug("Unable to call undeclared method \"getClassDescription\" with exception {}", ex);
+                    log.debug("Unable to call undeclared method \"getClassDescription\" with exception", ex);
                     classDesFound = false;
                 }
             }
@@ -636,7 +636,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                 classSetFound = true;
             } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NullPointerException | ExceptionInInitializerError | NoSuchMethodException ex) {
                 // TableAction.setMessagePreferencesDetails() method is routinely not present in multiple classes
-                log.debug("Unable to call declared method \"setMessagePreferencesDetails\" with exception {}", ex);
+                log.debug("Unable to call declared method \"setMessagePreferencesDetails\" with exception", ex);
                 classSetFound = false;
             }
             if (!classSetFound) {
@@ -644,7 +644,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                     method = cl.getMethod("setMessagePreferencesDetails");
                     method.invoke(t);
                 } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NullPointerException | ExceptionInInitializerError | NoSuchMethodException ex) {
-                    log.debug("Unable to call undeclared method \"setMessagePreferencesDetails\" with exception {}", ex);
+                    log.debug("Unable to call undeclared method \"setMessagePreferencesDetails\" with exception", ex);
                 }
             }
 

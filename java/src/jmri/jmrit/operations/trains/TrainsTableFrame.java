@@ -262,6 +262,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         toolMenu.add(new SetupExcelProgramFrameAction(Bundle.getMessage("MenuItemSetupExcelProgram")));
         toolMenu.add(new ExportTrainRosterAction());
         toolMenu.add(new ExportTimetableAction());
+        toolMenu.add(new ExportTrainLineupsAction());
         toolMenu.addSeparator();
         toolMenu.add(new PrintTrainsAction(Bundle.getMessage("MenuItemPrint"), false, this));
         toolMenu.add(new PrintTrainsAction(Bundle.getMessage("MenuItemPreview"), true, this));

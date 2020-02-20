@@ -66,7 +66,13 @@
 
         <h4>MERG CBUS</h4>
             <ul>
-                <li></li>
+                <li>Track Current Meter + Command Station Steal / Share are available unless proved otherwise.</li>
+                <li>Node Manager and Event Table no longer auto-start on JMRI startup.
+                <br>These can be added as Startup Actions in JMRI Preferences to enable
+                <br>Event or Node name translation in CBUS console, and other CBUS Tools.</li>
+                <li>Refactoring of CBUS OPC's, Filters and Node Manger functions for future maintainability.</li>
+                <li>Bootloader client for CBUS node firmware update.</li>
+                <li>Support for SPROG Generation 5 hardware using MERG CBUS and Gridconnect.</li>
             </ul>
 
         <h4>MQTT</h4>
@@ -111,7 +117,7 @@
 
         <h4>SPROG</h4>
             <ul>
-                <li></li>
+                <li>Connection methods for SPROG Generation 5 hardware using MERG CBUS/Gridconnect.</li>
             </ul>
 
         <h4>TAMS</h4>
@@ -244,6 +250,11 @@
                 <li></li>
             </ul>
 
+        <h4>Public Domain and DIY decoders</h4>
+            <ul>
+                <li></li>
+            </ul>
+
         <h4>QSI</h4>
             <ul>
                 <li></li>
@@ -343,6 +354,11 @@
 	        <li></li>
         </ul>
 
+        <h4>NX - Entry/Exit Tool</h4>
+            <ul>
+                <li></li>
+            </ul>
+
     <h3>Logix</h3>
         <a id="Logix" name="Logix"></a>
         <ul>
@@ -393,15 +409,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>The JavaCSV API has been replaced with the Apache Commons CSV API.
-                This may impact some scripts. See
-                <a href="https://github.com/JMRI/JMRI/blob/master/jython/TurnoutStatePersistence.py">TurnoutStatePersistence.py</a>
-                for an example of how to use the new CSV parsing API. If unable to
-                use the new API, the JAR for the old API can be
-                <a href="https://repo1.maven.org/maven2/net/sourceforge/javacsv/javacsv/2.0/javacsv-2.0.jar">downloaded</a>
-                and added to jmri.conf using the
-                <em><a href="https://www.jmri.org/help/en/html/doc/Technical/StartUpScripts.shtml">--cp:a=path/to/javacsv.jar</a></em>
-                parameter.</li>
+            <li></li>
         </ul>
 
     <h3>Signals</h3>
@@ -429,12 +437,12 @@
                 <li></li>
             </ul>
 
-    	<h4>Simple Signal Logic</h4>
+	    <h4>Cab Signals</h4>
             <ul>
-                <li></li>
+                <li>Better set row height in table.</li>
             </ul>
 
-	    <h4>NX Entry/Exit Logic</h4>
+    	<h4>Simple Signal Logic</h4>
             <ul>
                 <li></li>
             </ul>
@@ -471,7 +479,7 @@
    <h3>Web Access</h3>
         <a id="WA" name="WA"></a>
         <ul>
-            <li>Fixed a problem preventing JMRI application web services from working with iOS 9.3.6</li>
+            <li> </li>
         </ul>
 
    <h3>WiThrottle Server</h3>
@@ -483,17 +491,12 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li>Fixed a crashing bug with short sequences.</li>
+            <li>Included the VSDecoderID instead of the file name to make the AudioBuffer system names unique for Diesel3Sound.</li>
         </ul>
 
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Added a feature which lets you set the height of rows
-                in the 
-                <a href="https://www.jmri.org/help/en/package/jmri/jmrit/cabsignals/CabSignalPane.shtml">cab display table</a>, 
-                so that signal icons can be made fully visible.</li>
-            <li>Lots of updates to the organization of the web site so that the sidebars
-                provide better navigation.</li>
+            <li></li>
         </ul>
 

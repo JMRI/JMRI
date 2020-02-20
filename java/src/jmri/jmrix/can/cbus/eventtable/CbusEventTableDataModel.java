@@ -10,7 +10,6 @@ import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.cbus.CbusNameService;
 import jmri.jmrix.can.cbus.CbusOpCodes;
@@ -22,7 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Table data model for display of Cbus events
+ * Table data model for display of CBUS events
  *
  * @author Andrew Crosland (C) 2009
  * @author Steve Young (c) 2018 2019
@@ -31,8 +30,7 @@ import org.slf4j.LoggerFactory;
 public class CbusEventTableDataModel extends javax.swing.table.AbstractTableModel implements CanListener {
 
     protected ArrayList<CbusTableEvent> _mainArray;
-    private final TrafficController tc;
-    public CbusEventTableAction ta;
+    public final CbusEventTableAction ta;
     private final CbusPreferences preferences;
     private final CanSystemConnectionMemo _memo;
     
@@ -79,14 +77,12 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         
         // connect to the CanInterface
         _memo=memo;
-        tc = memo.getTrafficController();
-        addTc(tc);
+        addTc(_memo);
         ta = new CbusEventTableAction(this);
         
-        preferences = jmri.InstanceManager.getNullableDefault(jmri.jmrix.can.cbus.CbusPreferences.class);
+        preferences = jmri.InstanceManager.getDefault(jmri.jmrix.can.cbus.CbusPreferences.class);
         
-        
-        if ( preferences != null && preferences.getSaveRestoreEventTable() ){
+        if ( preferences.getSaveRestoreEventTable() ){
                 ta.restoreEventsFromXmlTablestart();
         }
         
@@ -567,29 +563,37 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
      */
     public void parseMessage( int canid, int node, int event, CbusTableEvent.EvState state, int in, int out) {
         
-        int existingRow = seeIfEventOnTable( node, event);
-        
-        if (existingRow<0) {
-            int on=0;
-            int off=0;
-            if (state==CbusTableEvent.EvState.ON) {
-                on=1;
+        int existingRow = seeIfEventOnTable(node, event);
+
+        if (existingRow < 0) {
+            int on = 0;
+            int off = 0;
+            if (state == CbusTableEvent.EvState.ON) {
+                on = 1;
             }
-            if (state==CbusTableEvent.EvState.OFF) {
-                off=1;
+            if (state == CbusTableEvent.EvState.OFF) {
+                off = 1;
             }
-            addEvent(node,event,canid,state,"","",on,off,in,out); // on off in out
+            addEvent(node, event, canid, state, "", "", on, off, in, out); // on off in out
         } else {
             setValueAt(state, existingRow, STATE_COLUMN);
-             if ( (state==CbusTableEvent.EvState.ON) || (state==CbusTableEvent.EvState.OFF) ) {
+            if ((state == CbusTableEvent.EvState.ON) || (state == CbusTableEvent.EvState.OFF)) {
                 setValueAt(1, existingRow, LATEST_TIMESTAMP_COLUMN);
             }
             setValueAt(canid, existingRow, CANID_COLUMN);
-            if (state==CbusTableEvent.EvState.ON) { setValueAt(1, existingRow, SESSION_ON_COLUMN); }
-            if (state==CbusTableEvent.EvState.OFF) { setValueAt(1, existingRow, SESSION_OFF_COLUMN); }
-            if (in==1) {  setValueAt(1, existingRow, SESSION_IN_COLUMN); }
-            if (out==1) { setValueAt(1, existingRow, SESSION_OUT_COLUMN); }
-            
+            if (state == CbusTableEvent.EvState.ON) {
+                setValueAt(1, existingRow, SESSION_ON_COLUMN);
+            }
+            if (state == CbusTableEvent.EvState.OFF) {
+                setValueAt(1, existingRow, SESSION_OFF_COLUMN);
+            }
+            if (in == 1) {
+                setValueAt(1, existingRow, SESSION_IN_COLUMN);
+            }
+            if (out == 1) {
+                setValueAt(1, existingRow, SESSION_OUT_COLUMN);
+            }
+
         }
     }
     
@@ -728,9 +732,8 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         }
         // eventTable.removeAllElements();
         // eventTable = null;
-        if (tc != null) {
-            tc.removeCanListener(this);
-        }
+
+        removeTc(_memo);
     }
 
     public static class CbusEventTableShutdownTask extends AbstractShutDownTask {

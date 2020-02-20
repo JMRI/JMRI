@@ -29,7 +29,7 @@ public class SetTrainIconRouteFrameTest extends OperationsTestCase {
         SetTrainIconRouteFrame t = new SetTrainIconRouteFrame(null);
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(t);
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     @Test
@@ -41,7 +41,7 @@ public class SetTrainIconRouteFrameTest extends OperationsTestCase {
         SetTrainIconRouteFrame t = new SetTrainIconRouteFrame(route);
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(t);
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
     
     @Test
@@ -86,7 +86,7 @@ public class SetTrainIconRouteFrameTest extends OperationsTestCase {
         Assert.assertEquals("spinner value for ", 345, t.spinTrainIconX.getValue());
         
         JUnitUtil.dispose(t);
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(SetTrainIconRouteFrameTest.class);

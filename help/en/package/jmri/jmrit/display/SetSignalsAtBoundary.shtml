@@ -22,7 +22,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -138,7 +138,7 @@
       dialog can be accessed from the popup menu of the signal
       icon. If your special situation cannot be handled by Simple
       Signal Logic, you should refer to Logix to tailor the signal
-      logic to your needs.</p><!--#include virtual="/Footer" -->
+      logic to your needs.</p><!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

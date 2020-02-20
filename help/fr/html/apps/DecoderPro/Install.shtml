@@ -23,7 +23,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -90,7 +90,7 @@
         d&eacute;marrer le programme et le configurer. Lorsque
         c'est fait, vous devriez avoir une installation
         fonctionnelle DecoderPro.</dd>
-      </dl><!--#include virtual="/Footer" -->
+      </dl><!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

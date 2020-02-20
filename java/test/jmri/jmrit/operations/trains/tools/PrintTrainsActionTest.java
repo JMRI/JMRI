@@ -56,7 +56,7 @@ public class PrintTrainsActionTest extends OperationsTestCase {
         JUnitUtil.dispose(ttf);
         
         JUnitOperationsUtil.checkOperationsShutDownTask();
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(PrintTrainsActionTest.class);

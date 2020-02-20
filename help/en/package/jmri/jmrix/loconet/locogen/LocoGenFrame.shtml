@@ -23,7 +23,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -55,7 +55,7 @@
       "../../../../../html/hardware/loconet/images/Send_LocoNet_Packet_Sequence.png"
       width="267" height="155" alt="Send LocoNet Packet window"
       align="right"></a></p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>
