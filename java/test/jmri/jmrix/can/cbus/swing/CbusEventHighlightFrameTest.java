@@ -57,10 +57,8 @@ public class CbusEventHighlightFrameTest extends jmri.util.JmriJFrameTestBase{
         pane.initComponents(memo);
         CbusEventHighlightFrame cbframe = new CbusEventHighlightFrame(pane,null);
         
-        
-        Assert.assertEquals("console title with console",
-        "CAN CBUS Console Event Highlighter", cbframe.getTitle());
-        
+        Assert.assertTrue("Title set to console",cbframe.getTitle().startsWith("CAN CBUS Console "));
+                
         CanReply r = new CanReply(123);
         r.setNumDataElements(1);
         r.setElement(0, 1);
