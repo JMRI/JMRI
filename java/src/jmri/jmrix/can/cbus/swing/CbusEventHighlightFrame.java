@@ -126,6 +126,15 @@ public class CbusEventHighlightFrame extends JmriJFrame {
         if (_highlight[index].getEvEnable()) {
             sb.append(Bundle.getMessage("CbusEvent")).append(_highlight[index].getEv()).append(" ");
         }
+        
+        appendType(sb,index);
+        appendDirection(sb,index);
+        
+        sb.append("\n");
+        _console.nextLine(sb.toString(), sb.toString(), index);
+    }
+    
+    private void appendType( StringBuilder sb, int index ){
         switch (_highlight[index].getType()) {
             case CbusConstants.EVENT_ON:
                 sb.append(Bundle.getMessage("CbusEventOn"));
@@ -137,6 +146,9 @@ public class CbusEventHighlightFrame extends JmriJFrame {
                 sb.append(Bundle.getMessage("CbusEventOnOrOff"));
                 break;
         }
+    }
+    
+    private void appendDirection( StringBuilder sb, int index ){
         switch (_highlight[index].getDir()) {
             case CbusConstants.EVENT_DIR_IN:
                 sb.append(Bundle.getMessage("InEventsTooltip"));
@@ -148,8 +160,6 @@ public class CbusEventHighlightFrame extends JmriJFrame {
                 sb.append(Bundle.getMessage("InOrOutEventsToolTip"));
                 break;
         }
-        sb.append("\n");
-        _console.nextLine(sb.toString(), sb.toString(), index);
     }
 
     public void disable(int index) {

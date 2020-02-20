@@ -43,9 +43,14 @@ public class CbusConsolePacketPane extends JPanel {
         
         initRxPacketPane();
         initSendPacketPane();
+        initPanel();
+    }
+    
+    private void initPanel(){
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         add(rxPacketPane);
         add(sendPacketPane);
+    
     }
 
     private void initRxPacketPane() {
@@ -207,48 +212,59 @@ public class CbusConsolePacketPane extends JPanel {
     }
     
     private void sendPacketButtonActionPerformed(java.awt.event.ActionEvent e) {
-        int j;
-        int data, data2;
         CanMessage m = new CanMessage(_mainPane.tc.getCanid());
-        data = ValidationNotifications.parseBinDecHexByte(dynPriField.getText(), 2, decimalCheckBox.isSelected(), Bundle.getMessage("DynPriErrorDialog"),_mainPane);
+        int data = ValidationNotifications.parseBinDecHexByte(dynPriField.getText(), 2, decimalCheckBox.isSelected(), Bundle.getMessage("DynPriErrorDialog"),_mainPane);
         if (data == -1) {
             return;
         }
-        data2 = ValidationNotifications.parseBinDecHexByte(minPriField.getText(), 3, decimalCheckBox.isSelected(), Bundle.getMessage("MinPriErrorDialog"),_mainPane);
+        int data2 = ValidationNotifications.parseBinDecHexByte(minPriField.getText(), 3, decimalCheckBox.isSelected(), Bundle.getMessage("MinPriErrorDialog"),_mainPane);
         if (data2 == -1) {
             return;
         }
         m.setHeader(data * 4 + data2);
-        for (j = 0; j < 8; j++) {
-            if (!dataFields[j].getText().isEmpty()) {
-                data = ValidationNotifications.parseBinDecHexByte(dataFields[j].getText(), 255, decimalCheckBox.isSelected(),
-                        Bundle.getMessage("DbxErrorDialog", j),_mainPane);
-                if (data == -1) {
-                    return;
-                }
-                m.setElement(j, data);
-                if (j == 0) {
-                    data2 = data;
-                }  // save OPC(d0) for later
-            } else {
-                break;
-            }
-        }
-        if (j == 0) {
-            JOptionPane.showMessageDialog(_mainPane, Bundle.getMessage("OpcErrorDialog"),
-                    Bundle.getMessage("CbusConsoleTitle"), JOptionPane.ERROR_MESSAGE);
+        
+        int j;
+        if ((j = setPacketData(m))<1){
             return;
         }
+        
         // Does the number of data match the opcode?
         // Subtract one as loop variable will have incremented
-        if ((j - 1) != (data2 >> 5)) {
-            JOptionPane.showMessageDialog(_mainPane, Bundle.getMessage("OpcCountErrorDialog", (data2 >> 5)),
+        if ((j - 1) != (opcToSend >> 5)) {
+            JOptionPane.showMessageDialog(_mainPane, Bundle.getMessage("OpcCountErrorDialog", (opcToSend >> 5)),
                     Bundle.getMessage("CbusConsoleTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
         m.setNumDataElements(j);
         
         _mainPane.tc.sendCanMessage(m, null);
+    }
+    
+    private int opcToSend;
+    
+    private int setPacketData(CanMessage m) {
+    
+        int j;
+        for (j = 0; j < 8; j++) {
+            if (!dataFields[j].getText().isEmpty()) {
+                int data = ValidationNotifications.parseBinDecHexByte(dataFields[j].getText(), 255, decimalCheckBox.isSelected(),
+                        Bundle.getMessage("DbxErrorDialog", j),_mainPane);
+                if (data == -1) {
+                    return -1;
+                }
+                m.setElement(j, data);
+                if (j == 0) {
+                    opcToSend = data; // save OPC(d0) for later
+                }
+            } else {
+                if (j == 0) {
+                    JOptionPane.showMessageDialog(_mainPane, Bundle.getMessage("OpcErrorDialog"),
+                        Bundle.getMessage("CbusConsoleTitle"), JOptionPane.ERROR_MESSAGE);
+                }
+                return j;
+            }
+        }
+        return j;
     }
 
     

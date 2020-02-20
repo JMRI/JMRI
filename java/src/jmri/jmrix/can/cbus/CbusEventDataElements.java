@@ -39,11 +39,12 @@ public class CbusEventDataElements {
     }
     
     /**
+     * Get a ready-to-send CanMessage with event details.
      * 
-     * @param canId
-     * @param nn
-     * @param en
-     * @param state
+     * @param canId CAN ID
+     * @param nn Node Number
+     * @param en Event Number
+     * @param state Event State
      * @return ready to send CanMessage
      */
     public CanMessage getCanMessage(int canId, int nn, int en, @Nonnull EvState state){
@@ -59,10 +60,10 @@ public class CbusEventDataElements {
         switch (state) {
             case ON:
                 setCanMessageData(m);
-                return(finishOnEvent(m,nn>0));
+                return(finishEvent(m,nn>0,state));
             case OFF:
                 setCanMessageData(m);
-                return(finishOffEvent(m,nn>0));
+                return(finishEvent(m,nn>0,state));
             default:
                 return(finishRequest(m,nn>0));
         }
@@ -88,40 +89,47 @@ public class CbusEventDataElements {
         }
     }
     
-    private CanMessage finishOnEvent( CanMessage m, boolean isLong) {
-        int opc;
-        switch (_numElements) {
-            case 1:
-                opc = (isLong ? CbusConstants.CBUS_ACON1 : CbusConstants.CBUS_ASON1);
-                break;
-            case 2:
-                opc = (isLong ? CbusConstants.CBUS_ACON2 : CbusConstants.CBUS_ASON2);
-                break;
-            case 3:
-                opc = (isLong ? CbusConstants.CBUS_ACON3 : CbusConstants.CBUS_ASON3);
-                break;
-            default:
-                opc = (isLong ? CbusConstants.CBUS_ACON : CbusConstants.CBUS_ASON);
-                break;
-        }
-        m.setElement(0, opc);
-        return m;
-    }
+    private final int[] onArray = new int[]{
+        CbusConstants.CBUS_ACON,
+        CbusConstants.CBUS_ASON,
+        CbusConstants.CBUS_ACON1,
+        CbusConstants.CBUS_ASON1,
+        CbusConstants.CBUS_ACON2,
+        CbusConstants.CBUS_ASON2,
+        CbusConstants.CBUS_ACON3,
+        CbusConstants.CBUS_ASON3 };
     
-    private CanMessage finishOffEvent( CanMessage m, boolean isLong) {
+    private final int[] offArray = new int[]{
+        CbusConstants.CBUS_ACOF,
+        CbusConstants.CBUS_ASOF,
+        CbusConstants.CBUS_ACOF1,
+        CbusConstants.CBUS_ASOF1,
+        CbusConstants.CBUS_ACOF2,
+        CbusConstants.CBUS_ASOF2,
+        CbusConstants.CBUS_ACOF3,
+        CbusConstants.CBUS_ASOF3 };
+    
+    private CanMessage finishEvent(CanMessage m, boolean isLong, EvState state) {
+        int[] touse;
         int opc;
+        if (state==EvState.ON){
+            touse = onArray;
+        } else {
+            touse = offArray;
+        }
+
         switch (_numElements) {
             case 1:
-                opc = (isLong ? CbusConstants.CBUS_ACOF1 : CbusConstants.CBUS_ASOF1);
+                opc = (isLong ? touse[2] : touse[3] );
                 break;
             case 2:
-                opc = (isLong ? CbusConstants.CBUS_ACOF2 : CbusConstants.CBUS_ASOF2);
+                opc = (isLong ? touse[4] : touse[5] );
                 break;
             case 3:
-                opc = (isLong ? CbusConstants.CBUS_ACOF3 : CbusConstants.CBUS_ASOF3);
+                opc = (isLong ? touse[6] : touse[7] );
                 break;
             default:
-                opc = (isLong ? CbusConstants.CBUS_ACOF : CbusConstants.CBUS_ASOF);
+                opc = (isLong ? touse[0] : touse[1] );
                 break;
         }
         m.setElement(0, opc);

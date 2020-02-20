@@ -219,30 +219,23 @@ public class CbusConsoleSendPane extends JPanel {
         
         if (requestButton.isSelected() || select0Data.isSelected()){
             _selectedData = 0;
-            data[0].setEnabled(false);
-            data[1].setEnabled(false);
-            data[2].setEnabled(false);
-            return;
         }
-        if (select1Data.isSelected()) {
+        else if (select1Data.isSelected()) {
             _selectedData = 1;
-            data[0].setEnabled(true);
-            data[1].setEnabled(false);
-            data[2].setEnabled(false);
         }
         else if (select2Data.isSelected()) {
             _selectedData = 2;
-            data[0].setEnabled(true);
-            data[1].setEnabled(true);
-            data[2].setEnabled(false);
         }
         else if (select3Data.isSelected()) {
             _selectedData = 3;
-            data[0].setEnabled(true);
-            data[1].setEnabled(true);
-            data[2].setEnabled(true);
         }
+        setWhichDataEnabled(_selectedData);
+    }
     
+    private void setWhichDataEnabled(int numData) {
+        for (int i = 0; i < 3; i++) {
+            data[i].setEnabled(numData>i);
+        }
     }
     
     private void sendEvButtonActionPerformed(java.awt.event.ActionEvent e) {
