@@ -11,7 +11,6 @@ import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-import org.mockito.Mockito;
 import org.netbeans.jemmy.QueueTool;
 
 import javax.swing.*;
