@@ -25,10 +25,7 @@
 
       <h1>Hardware Support: RailDriver Throttle</h1>
 
-      <p>JMRI support for RailDriver is evolving rapidly, so check
-      back here or on the <a href=
-      "https://groups.io/g/jmriusers">JMRI
-      users group</a> for changes.<br>
+      <p>
       <a href="images/RailDriver.gif"><img src="images/RailDriver.gif"
       align="right" width="389" height="236" alt=
       "RailDriver line drawing"></a> </p>
@@ -39,10 +36,7 @@
       <p>JMRI allows you to use a <a href=
       "http://raildriver.com/">RailDriver</a> from <a href=
       "http://www.piengineering.com/">PI Engineering</a> as a
-      Hardware Throttle to run Locomotives with your DCC system.
-      RailDriver support was first available in <a href=
-      "http://jmri.org/releasenotes/jmri2.1.7.shtml">JMRI
-      2.1.7</a>.</p>
+      </p>
 
       <a name="connecting" id="connecting"></a>
       <h2>Connecting</h2>
@@ -60,6 +54,34 @@
       while your JMRI application (PanelPro or DecoderPro) isn't
       running.</p>
 
+      <h3>Configure OS</h3>
+        <h4>Linux</h4>
+        
+        Out of the box Ubuntu classifies HID devices as belonging to root. 
+        You can override this rule by creating your own under /etc/udev/rules.d:
+
+
+<pre style="font-family: monospace;">
+        sudo gedit /etc/udev/rules.d/99-myhid.rules
+</pre>  
+
+        <p>Make the content of this file as below 
+        (using your own discovered hex values for idVendor and idProduct): (note: RailDriver: 0x05F3 / 0x00D2)
+
+<pre style="font-family: monospace;">
+        # My HID device
+        ATTRS{idProduct}=="00D2", ATTRS{idVendor}=="05F3", MODE="0660", GROUP="plugdev"
+</pre>  
+
+        <p>Save and exit from root, then unplug and replug your device. 
+        The rules should take effect immediately. 
+        If they're still not running it may that you're not a member of the plugdev group. 
+        You can fix this as follows (assuming that plugdev is not present on your system):
+
+<pre style="font-family: monospace;">
+        sudo addgroup plugdev
+        sudo addgroup yourusername plugdev
+</pre>            
       <h3>Settings</h3>
 
       <p>Once connected, start the JMRI program and select
