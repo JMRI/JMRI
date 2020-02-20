@@ -10,6 +10,7 @@ import javax.swing.text.DefaultHighlighter;
 import javax.swing.text.Highlighter;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficController;
+import jmri.jmrix.can.cbus.swing.CbusEventHighlightFrame;
 import jmri.util.ThreadingUtil;
 import jmri.util.swing.TextAreaFIFO;
 
@@ -31,8 +32,8 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel {
     
     private JToggleButton freezeButton;
     
-    private TextAreaFIFO monTextPaneCan;
-    private TextAreaFIFO monTextPaneCbus;
+    public TextAreaFIFO monTextPaneCan;
+    public TextAreaFIFO monTextPaneCbus;
     private Highlighter cbusHighlighter;
     private Highlighter canHighlighter;
     
@@ -73,12 +74,10 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel {
     public String getTitle() {
         if (memo != null) {
             StringBuilder title = new StringBuilder(20);
-            title.append(memo.getUserName());
-            title.append(" ");
+            title.append(memo.getUserName()).append(" ");
             title.append(Bundle.getMessage("CbusConsoleTitle"));
             if (getConsoleInstanceNum() > 1) {
-                title.append(" ");
-                title.append( getConsoleInstanceNum() );
+                title.append(" ").append( getConsoleInstanceNum() );
             }
             return title.toString();
         }
@@ -266,7 +265,8 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel {
             
             if (next.getHighlighter() > -1) {
                 try {
-                    CbusHighlightPainter cbusHighlightPainter = new CbusHighlightPainter( displayPane.highlightFrame.getColor(next.getHighlighter()));
+                    CbusHighlightPainter cbusHighlightPainter = new CbusHighlightPainter(
+                        CbusEventHighlightFrame.highlightColors[next.getHighlighter()]);
                     // log.debug("Add highlight start: " + start + " end: " + end);
                     cbusHighlighter.addHighlight(start, monTextPaneCbus.getText().length() - 1, cbusHighlightPainter);
                     canHighlighter.addHighlight(startc, monTextPaneCan.getText().length() - 1, cbusHighlightPainter);

@@ -252,12 +252,8 @@ public class CbusConsoleDecodeOptionsPane extends javax.swing.JPanel implements 
     }
     
     public void dispose(){
-    
-        _mainPane.tc.removeCanListener(this);
-    
+        removeTc(_mainPane.tc);
     }
     
-    
-
     // private final static Logger log = LoggerFactory.getLogger(CbusConsoleDecodeOptionsPane.class);
 }
