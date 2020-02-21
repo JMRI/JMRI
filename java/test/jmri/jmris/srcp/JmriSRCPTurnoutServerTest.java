@@ -1,7 +1,14 @@
 package jmri.jmris.srcp;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+import net.bytebuddy.implementation.bytecode.Throw;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 /**
  * Tests for the jmri.jmris.srcp.JmriSRCPTurnoutServer class
@@ -15,31 +22,29 @@ public class JmriSRCPTurnoutServerTest extends jmri.jmris.AbstractTurnoutServerT
     // test the property change sequence for an THROWN property change.
     @Test
     @Override
-    @Ignore("This isn't triggering the right property change listener")
+    @Disabled("This isn't triggering the right property change listener")
     public void testPropertyChangeThrownStatus() {
-        try {
+        Throwable thrown = catchThrowable( () -> {
             ((JmriSRCPTurnoutServer) ts).initTurnout(1,1,"N");
             jmri.InstanceManager.getDefault(jmri.TurnoutManager.class)
                             .provideTurnout("IT1").setState(jmri.Turnout.THROWN);
-            Assert.assertTrue("Thrown Message Sent", sb.toString().endsWith("101 INFO 1 GA 1 N\n\r"));
-        } catch (java.io.IOException | jmri.JmriException je){
-            Assert.fail("Exception setting Status");
-        }
+            assertThat(sb.toString()).endsWith("101 INFO 1 GA 1 N\n\r").withFailMessage("Thrown Message Sent");
+        });
+        assertThat(thrown).withFailMessage("Exception setting Status").isNull();
     }
 
     // test the property change sequence for an CLOSED property change.
     @Test
     @Override
-    @Ignore("This isn't triggering the right property change listener")
+    @Disabled("This isn't triggering the right property change listener")
     public void testPropertyChangeClosedStatus() {
-        try {
+        Throwable thrown = catchThrowable( () -> {
             ((JmriSRCPTurnoutServer) ts).initTurnout(1,1,"N");
             jmri.InstanceManager.getDefault(jmri.TurnoutManager.class)
                             .provideTurnout("IT1").setState(jmri.Turnout.CLOSED);
-            Assert.assertTrue("Closed Message Sent", sb.toString().endsWith("101 INFO 1 GA 0 N\n\r"));
-        } catch (java.io.IOException | jmri.JmriException je){
-            Assert.fail("Exception setting Status");
-        }
+            assertThat(sb.toString()).endsWith("101 INFO 1 GA 0 N\n\r").withFailMessage("Closed Message Sent");
+        });
+        assertThat(thrown).withFailMessage("Exception setting Status").isNull();
     }
 
     /**
@@ -47,7 +52,7 @@ public class JmriSRCPTurnoutServerTest extends jmri.jmris.AbstractTurnoutServerT
      */
     @Override
     public void checkErrorStatusSent(){
-         Assert.assertTrue("Active Message Sent", sb.toString().endsWith("499 ERROR unspecified error\n\r"));
+        assertThat(sb.toString()).endsWith("499 ERROR unspecified error\n\r").withFailMessage("Active Message Sent");
     }
 
     /**
@@ -55,7 +60,7 @@ public class JmriSRCPTurnoutServerTest extends jmri.jmris.AbstractTurnoutServerT
      */
     @Override
     public void checkTurnoutThrownSent(){
-         Assert.assertTrue("Active Message Sent", sb.toString().endsWith("499 ERROR unspecified error\n\r"));
+        assertThat(sb.toString()).endsWith("499 ERROR unspecified error\n\r").withFailMessage("Active Message Sent");
     }
 
     /**
@@ -63,7 +68,7 @@ public class JmriSRCPTurnoutServerTest extends jmri.jmris.AbstractTurnoutServerT
      */
     @Override
     public void checkTurnoutClosedSent() {
-         Assert.assertTrue("Active Message Sent", sb.toString().endsWith("499 ERROR unspecified error\n\r"));
+        assertThat(sb.toString()).endsWith("499 ERROR unspecified error\n\r").withFailMessage("Active Message Sent");
     }
 
     /**
@@ -71,10 +76,10 @@ public class JmriSRCPTurnoutServerTest extends jmri.jmris.AbstractTurnoutServerT
      */
     @Override
     public void checkTurnoutUnknownSent() {
-         Assert.assertTrue("Active Message Sent", sb.toString().endsWith("499 ERROR unspecified error\n\r"));
+        assertThat(sb.toString()).endsWith("499 ERROR unspecified error\n\r").withFailMessage("Active Message Sent");
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -99,7 +104,8 @@ public class JmriSRCPTurnoutServerTest extends jmri.jmris.AbstractTurnoutServerT
         ts = new JmriSRCPTurnoutServer(input, output);
     }
 
-    @After public void tearDown() throws Exception {
+    @AfterEach
+    public void tearDown() throws Exception {
         ts.dispose();
         ts = null;
         sb = null;
