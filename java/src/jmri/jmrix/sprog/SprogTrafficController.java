@@ -171,12 +171,13 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
 
         final Vector<SprogListener> listeners = this.getCopyOfListeners();
         final SprogReply replyForLater = r;
+        final SprogListener senderForLater = lastSender;
         Runnable rl = () -> {
             for (SprogListener listener : listeners) {
                 try {
                     // don't send message back to the originator!
                     // skip forwarding to the last sender for now, we'll get them later
-                    if (lastSender != listener) {
+                    if (senderForLater != listener) {
                         listener.notifyReply(replyForLater);
                     }
 
@@ -187,8 +188,8 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
             // forward to the last listener who sent a message
             // this is done _second_ so monitoring can have already stored the reply
             // before a response is sent
-            if (lastSender != null) {
-                lastSender.notifyReply(r);
+            if (senderForLater != null) {
+                senderForLater.notifyReply(replyForLater);
             }
         };
         javax.swing.SwingUtilities.invokeLater(rl);
