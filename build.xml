@@ -753,8 +753,8 @@
                     <jvmarg line="${test-single.jvmargs}"/>
                 </fork>
                 <listener classname="jmri.util.junit.PrintingTestListener" />
-                <listener type="legacy-xml" sendSysOut="true" sendSysErr="true" />
-                <listener type="legacy-brief" sendSysOut="true" sendSysErr="true" />
+                <listener type="legacy-xml" sendSysOut="true" sendSysErr="true" outputDir="${testreport}" />
+                <listener type="legacy-brief" sendSysOut="true" sendSysErr="true" outputDir="${testreport}" />
             </test>
         </junitlauncher>
         <fail>
@@ -783,8 +783,8 @@
 		            <jvmarg line="${test-single.jvmargs}"/>
                 </fork>
                 <listener classname="jmri.util.junit.PrintingTestListener" />
-                <listener type="legacy-xml" sendSysOut="true" sendSysErr="true" />
-                <listener type="legacy-brief" sendSysOut="true" sendSysErr="true" />
+                <listener type="legacy-xml" sendSysOut="true" sendSysErr="true" outputDir="${testreport}" />
+                <listener type="legacy-brief" sendSysOut="true" sendSysErr="true" outputDir="${testreport}" />
             </test>
         </junitlauncher>
         <fail>
