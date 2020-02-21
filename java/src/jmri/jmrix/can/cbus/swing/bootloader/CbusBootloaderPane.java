@@ -395,14 +395,14 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                     addToLog(MessageFormat.format(Bundle.getMessage("BootHexFileFoundParameters"), fileParams.toString()));
                     addToLog(MessageFormat.format(Bundle.getMessage("BootHexFileParametersMatch"), hardwareParams.toString()));
                     programButton.setEnabled(true);
-                } else if (fileParams.getLoadAddress() == 0) {
-                    // Special case of rewriting the bootloader
-                    addToLog(MessageFormat.format(Bundle.getMessage("BootHexFileFoundParameters"), fileParams.toString()));
+                } else {
+                    addToLog(Bundle.getMessage("BootHexFileParametersMismatch"));
+                }
+                if (hardwareParams.getLoadAddress() == 0) {
+                    // Special case of rewriting the bootloader for Pi-SPROG One
                     addToLog(Bundle.getMessage("BootBoot"));
                     hexForBootloader = true;
                     programButton.setEnabled(true);
-                } else {
-                    addToLog(Bundle.getMessage("BootHexFileParametersMismatch"));
                 }
             } else {
                 addToLog(Bundle.getMessage("BootHexFileOpenFailed"));
@@ -613,12 +613,14 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
     protected boolean writeNextData() {
         byte [] d;
         
-        if ((bootAddress == 0x7c0) && (hexForBootloader == true)) {
+        if ((bootAddress == 0x7f8) && (hexForBootloader == true)) {
+            log.debug("Pause for bootloader reset");
             // Pause at end of bootloader code to allow time for node to reset
             bootAddress = 0x800;
             checksum = 0;
             bootState = BootState.PROG_PAUSE;
             setPauseTimeout();
+            return true;
         } else if (bootAddress < hexFile.getProgEnd()) {
             d = hexFile.getData(bootAddress, 8);
             sendData(bootAddress, d, getWriteDelay());
@@ -909,9 +911,9 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
     
     
     /**
-     * Start timer for initialisation
+     * Start timer for bootloader reset pause
      * <p>
-     * No reply so timeout is expected. Start sending data.
+     * No reply so timeout is expected. Initialise to new address for application.
      */
     private void setPauseTimeout() {
         clearPauseTimeout(); // resets if timer already running
@@ -919,7 +921,13 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
             @Override
             public void run() {
                 pauseTask = null;
-                bootState = BootState.PROG_DATA;
+                hexForBootloader = false;
+                bootState = BootState.INIT_PROG_SENT;
+                log.debug("Start writing at address {}", Integer.toHexString(bootAddress));
+                addToLog(MessageFormat.format(Bundle.getMessage("BootStartAddress"), Integer.toHexString(bootAddress)));
+                setInitTimeout();
+                CanMessage m = CbusMessage.getBootInitialise(bootAddress, 0);
+                tc.sendCanMessage(m, null);
                 writeNextData();
             }
         };
