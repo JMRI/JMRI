@@ -1,7 +1,5 @@
 package jmri.managers;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import jmri.*;
 
 import java.beans.PropertyVetoException;
@@ -108,8 +106,7 @@ public abstract class AbstractProvidingManagerTestBase<T extends ProvidingManage
             Assert.fail("Expected exception not thrown");
         } catch (NamedBean.DuplicateSystemNameException ex) {
             Assert.assertEquals("exception message is correct", expectedMessage, ex.getMessage());
-//            JUnitAppender.assertErrorMessage(expectedMessage);
-            assertThat(ex).hasMessage(expectedMessage);
+            JUnitAppender.assertErrorMessage(expectedMessage);
         }
 
         l.deregister(e1);

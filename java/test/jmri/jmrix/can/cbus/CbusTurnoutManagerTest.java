@@ -1,8 +1,5 @@
 package jmri.jmrix.can.cbus;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.catchThrowable;
-
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.Manager.NameValidity;
@@ -22,7 +19,6 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017
  * @author Steve Young Copyright (C) 2018
- * @author Andrew Crosland Copyright (C) 2020
  */
 public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
@@ -75,139 +71,172 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     @Test
     public void testBadCbusTurnoutAddresses() {
 
-        Throwable thrown = catchThrowable(() -> {
+        try {
             Turnout t1 = l.provideTurnout("MT+N15E6");
             Assert.assertNotNull(t1);
-        });
-        assertThat(thrown).isNull();
-        
-        thrown = catchThrowable(() -> {
+        } catch (IllegalArgumentException e) {
+            Assert.fail("Should NOT have thrown an exception");
+        }
+
+        try {
             l.provideTurnout("MTX;+N15E6");
-        });
-        assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
-        
-        thrown = catchThrowable(() -> {
+            Assert.fail("X Should have thrown an exception");
+        } catch (IllegalArgumentException e) {
+            JUnitAppender.assertErrorMessage("Invalid system name for Turnout: Wrong number of events in address: X;+N15E6");
+        }
+
+        try {
             l.provideTurnout("MTXA;+N15E6");
-        });
-        assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
-        
-        thrown = catchThrowable(() -> {
+            Assert.fail("A Should have thrown an exception");
+        } catch (IllegalArgumentException e) {
+            JUnitAppender.assertErrorMessage("Invalid system name for Turnout: Wrong number of events in address: XA;+N15E6");
+        }
+
+        try {
             l.provideTurnout("MTXABC;+N15E6");
-        });
-        assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
-        
-        thrown = catchThrowable(() -> {
+            Assert.fail("AC Should have thrown an exception");
+        } catch (IllegalArgumentException e) {
+            JUnitAppender.assertErrorMessage("Invalid system name for Turnout: Wrong number of events in address: XABC;+N15E6");
+        }
+
+        try {
             l.provideTurnout("MTXABCDE;+N15E6");
-        });
-        assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
-        
-        thrown = catchThrowable(() -> {
+            Assert.fail("ABCDE Should have thrown an exception");
+        } catch (IllegalArgumentException e) {
+            JUnitAppender.assertErrorMessage("Invalid system name for Turnout: Wrong number of events in address: XABCDE;+N15E6");
+        }
+
+        try {
             l.provideTurnout("MTXABCDEF0;+N15E6");
-        });
-        assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
-        
-        thrown = catchThrowable(() -> {
+            Assert.fail("ABCDEF0 Should have thrown an exception");
+        } catch (IllegalArgumentException e) {
+            JUnitAppender.assertErrorMessage("Invalid system name for Turnout: Wrong number of events in address: XABCDEF0;+N15E6");
+        }
+
+        try {
             l.provideTurnout("MTXABCDEF");
-        });
-        assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
-        
-        thrown = catchThrowable(() -> {
+            Assert.fail("Single hex Should have thrown an exception");
+        } catch (IllegalArgumentException e) {
+            JUnitAppender.assertErrorMessage("Invalid system name for Turnout: can't make 2nd event from address XABCDEF");
+        }
+
+        try {
             l.provideTurnout("MT;XABCDEF");
-        });
-        assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
-        
-        thrown = catchThrowable(() -> {
+            Assert.fail("Single hex ; Should have thrown an exception");
+        } catch (IllegalArgumentException e) {
+            JUnitAppender.assertErrorMessage("Invalid system name for Turnout: Address Too Short? : ");
+        }
+
+        try {
             l.provideTurnout("MTXABCDEF;");
-        });
-        assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
-        
-        thrown = catchThrowable(() -> {
+            Assert.fail("Single hex ; Should have thrown an exception");
+        } catch (IllegalArgumentException e) {
+            JUnitAppender.assertErrorMessage("Invalid system name for Turnout: Should not end with ; XABCDEF;");
+        }
+
+        try {
             l.provideTurnout("MT;");
-        });
-        assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
-        
-        thrown = catchThrowable(() -> {
+            Assert.fail("; no arg Should have thrown an exception");
+        } catch (IllegalArgumentException e) {
+            JUnitAppender.assertErrorMessage("Invalid system name for Turnout: Should not end with ; ;");
+        }
+
+        try {
             l.provideTurnout("MT;+N15E6");
-        });
-        assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
+            Assert.fail("MS Should have thrown an exception");
+        } catch (IllegalArgumentException e) {
+            JUnitAppender.assertErrorMessage("Invalid system name for Turnout: Address Too Short? : ");
+        }
     }
 
     @Test
     public void testBadCbusTurnoutAddressesPt2() {
 
-        Throwable thrown = catchThrowable(() -> {
+        try {
             l.provideTurnout(";+N15E62");
-        });
-        assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
-        assertThat(thrown).hasMessage("Address Too Short? : ");
-        
-        thrown = catchThrowable(() -> {
+            Assert.fail("; Should have thrown an exception");
+        } catch (IllegalArgumentException ex) {
+            JUnitAppender.assertErrorMessage("Invalid system name for Turnout: Address Too Short? : ");
+            Assert.assertEquals("Address Too Short? : ", ex.getMessage());
+        }
+
+        try {
             l.provideTurnout("T+N156E77;+N123E456");
-        });
-        assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
-        assertThat(thrown).hasMessage("Wrong number of events in address: T+N156E77;+N123E456");
+            Assert.fail("Missing M Should have thrown an exception");
+        } catch (IllegalArgumentException ex) {
+            JUnitAppender.assertErrorMessage("Invalid system name for Turnout: Wrong number of events in address: T+N156E77;+N123E456");
+            Assert.assertEquals("Wrong number of events in address: T+N156E77;+N123E456",
+                    ex.getMessage());
+        }
     }
 
     @Test
     public void testBadCbusTurnoutAddressesPt3() {
-        Throwable thrown = catchThrowable(() -> {
+        try {
             l.provideTurnout("M+N156E77;+N15E60");
-        });
-        assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
-        assertThat(thrown).hasMessage("Wrong number of events in address: M+N156E77;+N15E60");
+            Assert.fail("M Should have thrown an exception");
+        } catch (IllegalArgumentException ex) {
+            JUnitAppender.assertErrorMessage("Invalid system name for Turnout: Wrong number of events in address: M+N156E77;+N15E60");
+            Assert.assertEquals("Wrong number of events in address: M+N156E77;+N15E60",
+                    ex.getMessage());
+        }
     }
 
-    @Test
     public void testBadCbusTurnoutAddressesPt4() {
-        Throwable thrown = catchThrowable(() -> {
+        try {
             l.provideTurnout("MT++N156E78");
-        });
-        assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
-        assertThat(thrown).hasMessage("Wrong number of events in address: ++N156E78");
+            Assert.fail("++ Should have thrown an exception");
+        } catch (IllegalArgumentException e) {
+            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: Did not find usabl");
+        }
     }
 
-    @Test
     public void testBadCbusTurnoutAddressesPt5() {
-        Throwable thrown = catchThrowable(() -> {
+        try {
             l.provideTurnout("MT--N156E78");
-        });
-        assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
-        assertThat(thrown).hasMessage("Wrong number of events in address: --N156E78");
-        
-        thrown = catchThrowable(() -> {
+            Assert.fail("-- Should have thrown an exception");
+        } catch (IllegalArgumentException e) {
+            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: Did not find usabl");
+        }
+
+        try {
             l.provideTurnout("MTN156E+80");
-        });
-        assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
-        assertThat(thrown).hasMessage("Wrong number of events in address: N156E+80");
-        
-        thrown = catchThrowable(() -> {
+            Assert.fail("E+ Should have thrown an exception");
+        } catch (IllegalArgumentException e) {
+            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: Did not find");
+        }
+
+        try {
             l.provideTurnout("MTN156+E77");
-        });
-        assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
-        assertThat(thrown).hasMessage("Wrong number of events in address: N156+E77");
-        
-        thrown = catchThrowable(() -> {
+            Assert.fail("+E Should have thrown an exception");
+        } catch (IllegalArgumentException e) {
+            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: Did not find");
+        }
+
+        try {
             l.provideTurnout("MTXLKJK;XLKJK");
-        });
-        assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
-        assertThat(thrown).hasMessageContaining("Wrong number of events in address: XLKJK;XLKJK");
-        
-        thrown = catchThrowable(() -> {
+            Assert.fail("LKJK Should have thrown an exception");
+        } catch (IllegalArgumentException e) {
+            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: Did not find");
+        }
+
+        try {
             l.provideTurnout("MT+7;-5;+11");
-        });
-        assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
-        assertThat(thrown).hasMessage("Wrong number of events in address: +7;-5;+11");
+            Assert.fail("3 split Should have thrown an exception");
+        } catch (IllegalArgumentException e) {
+            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: Wrong number of events");
+        }
     }
 
     @Test
     public void testLowercaseSystemName() {
         String name = "mt+n1e77;-n1e45";
-        Throwable thrown = catchThrowable(() -> {
+        try {
             l.provideTurnout(name);
-        });
-        assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
-        assertThat(thrown).hasMessage("Wrong number of events in address: mt+n1e77;-n1e45");
-        
+            Assert.fail("Expected exception not thrown");
+        } catch (IllegalArgumentException ex) {
+            JUnitAppender.assertErrorMessage("Invalid system name for Turnout: Wrong number of events in address: mt+n1e77;-n1e45");
+        }
         Turnout t = l.provideTurnout(name.toUpperCase());
         Assert.assertNotNull(t);
         Assert.assertNotEquals(t, l.getBySystemName(name));
@@ -275,6 +304,7 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         Assert.assertNotNull("exists", t);
             
         Assert.assertEquals("+65535", null, l.getNextValidAddress("+65535", "M"));
+        JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
     }
     
     @Test

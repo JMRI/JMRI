@@ -1,7 +1,5 @@
 package jmri.managers;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.beans.PropertyChangeListener;
 import jmri.Turnout;
 import jmri.TurnoutManager;
@@ -58,8 +56,7 @@ public abstract class AbstractTurnoutMgrTestBase extends AbstractProvidingManage
         try {
             l.provideTurnout("");
         } catch (IllegalArgumentException ex) {
-//          jmri.util.JUnitAppender.assertErrorMessage("Invalid system name for Turnout: System name must start with \"" + l.getSystemNamePrefix() + "\".");
-          assertThat(ex).hasMessage("System name must start with \"" + l.getSystemNamePrefix() + "\".");
+          jmri.util.JUnitAppender.assertErrorMessage("Invalid system name for Turnout: System name must start with \"" + l.getSystemNamePrefix() + "\".");
           throw ex;
         }
     }
