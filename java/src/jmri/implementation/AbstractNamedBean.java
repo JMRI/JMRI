@@ -267,14 +267,19 @@ public abstract class AbstractNamedBean implements NamedBean {
          * Implementation note:  This method is final to ensure that the
          * contract for toString is properly implemented.  See the 
          * comment in NamedBean#toString() for more info.
-         * If you ever do decide to allow extension:
-         *  - Consider just making that change here instead of releasing the final condition
-         *  - Add a JUnit or ArchUnit check or @OverridingMethodsMustInvokeSuper (which might not be being checked)
-         * to ensure that new code doesn't inadvertantly violate the contract
+         * If a subclass wants to add extra info at the end of the
+         * toString output, extend {@link #toStringSuffix}.
          */
-        return getSystemName();
+        return getSystemName()+toStringSuffix();
     }
 
+    /**
+     * Overload this in a sub-class to add extra info to the results of toString()
+     */
+    protected String toStringSuffix() {
+        return "";
+    }
+    
     @Override
     final public String getUserName() {
         return mUserName;
