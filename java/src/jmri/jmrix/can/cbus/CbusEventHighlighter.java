@@ -28,19 +28,29 @@ public class CbusEventHighlighter {
      */
     public CbusEventHighlighter() {
     }
-
+    
     /**
-     * highlight an event, based on previous settings.
+     * Highlight a CAN Frame, based on previous settings.
      *
-     * @param m CanMessage to highlight.
+     * @param m CanMessage or CanReply to highlight.
      * @return true if event matches
      */
-    public boolean highlight(CanMessage m) {
-        return !((doNotHighlight(m)) 
-            || ((_dir != CbusConstants.EVENT_DIR_EITHER)
+    public boolean highlight(AbstractMessage m){
+        if (m instanceof CanMessage){
+            return !((doNotHighlight(m)) 
+                || ((_dir != CbusConstants.EVENT_DIR_EITHER)
                 && (_dir != CbusConstants.EVENT_DIR_OUT)));
+        }
+        else if (m instanceof CanReply){
+            return !((doNotHighlight(m)) 
+                || ((_dir != CbusConstants.EVENT_DIR_EITHER)
+                && (_dir != CbusConstants.EVENT_DIR_IN)));
+        }
+        else {
+            return false;
+        }
     }
-    
+
     /**
      * 
      * @param m CanFrame to test against
@@ -53,14 +63,6 @@ public class CbusEventHighlighter {
             || ((_type != CbusConstants.EVENT_EITHER)
                 && (_type != CbusMessage.getEventType(m))));
     }
-
-    public boolean highlight(CanReply r) {
-        return !((doNotHighlight(r)) 
-            || ((_dir != CbusConstants.EVENT_DIR_EITHER)
-                && (_dir != CbusConstants.EVENT_DIR_IN)));
-    }
-
-    // control terms to be included in highlight
     
     /**
      * Set whether NN (Node Number) will be included in highlight.
@@ -68,6 +70,10 @@ public class CbusEventHighlighter {
      */
     public void setNnEnable(boolean b) {
         _nnEnabled = b;
+    }
+    
+    public boolean getNnEnable(){
+        return _nnEnabled;
     }
 
     /**
@@ -77,6 +83,10 @@ public class CbusEventHighlighter {
     public void setEvEnable(boolean b) {
         _evEnabled = b;
     }
+    
+    public boolean getEvEnable() {
+        return _evEnabled;
+    }
 
     /**
      * Set a Node Number to highlight.
@@ -85,6 +95,10 @@ public class CbusEventHighlighter {
     public void setNn(int n) {
         _nn = n;
     }
+    
+    public int getNn() {
+        return _nn;
+    }
 
     /**
      * Set an Event Number to highlight.
@@ -92,6 +106,10 @@ public class CbusEventHighlighter {
      */
     public void setEv(int n) {
         _ev = n;
+    }
+    
+    public int getEv() {
+        return _ev;
     }
 
     /**
@@ -103,6 +121,10 @@ public class CbusEventHighlighter {
     public void setType(int n) {
         _type = n;
     }
+    
+    public int getType() {
+        return _type;
+    }
 
     /**
      * Set value of direction to match.
@@ -110,6 +132,10 @@ public class CbusEventHighlighter {
      */
     public void setDir(int n) {
         _dir = n;
+    }
+    
+    public int getDir() {
+        return _dir;
     }
 
     /**
