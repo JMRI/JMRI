@@ -240,8 +240,8 @@
     <path id="test.class.path">
         <pathelement location="${jartarget}"/>
         <path refid="compile.class.path"/>
-        <pathelement location="${libdir}/mockito-core-2.13.0.jar"/>
-        <pathelement location="${libdir}/byte-buddy-1.7.10.jar"/>
+        <pathelement location="${libdir}/mockito-core-3.3.0.jar"/>
+        <pathelement location="${libdir}/byte-buddy-1.10.5.jar"/>
         <pathelement location="${libdir}/cglib-nodep-2.2.2.jar"/>
         <pathelement location="${libdir}/javassist-3.20.0-GA.jar"/>
         <pathelement location="${libdir}/objenesis-2.2.jar"/>
