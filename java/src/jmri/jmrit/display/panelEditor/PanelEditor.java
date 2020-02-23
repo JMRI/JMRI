@@ -438,7 +438,7 @@ public class PanelEditor extends Editor implements ItemListener {
                     catalog.createNewBranch("IFJAR", "Program Directory", "resources");
                     // log.debug("init run created (var=catalog)"); // where's this used, just a test run?
                 } catch (Exception ex) {
-                    log.error("Error trying to set up preferences {}", ex.toString());
+                    log.error("Error trying to set up preferences {}", ex);
                 }
             }
         };
