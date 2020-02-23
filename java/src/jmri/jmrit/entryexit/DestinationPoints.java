@@ -1268,6 +1268,26 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
 
     }
 
+    @Override
+    public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
+        List<NamedBeanUsageReport> report = new ArrayList<>();
+        if (bean != null) {
+            if (bean.equals(getSource().getPoint().getSensor())) {
+                report.add(new NamedBeanUsageReport("EntryExitSourceSensor"));  // NOI18N
+            }
+            if (bean.equals(getSource().getPoint().getSignal())) {
+                report.add(new NamedBeanUsageReport("EntryExitSourceSignal"));  // NOI18N
+            }
+            if (bean.equals(getDestPoint().getSensor())) {
+                report.add(new NamedBeanUsageReport("EntryExitDestinationSensor"));  // NOI18N
+            }
+            if (bean.equals(getDestPoint().getSignal())) {
+                report.add(new NamedBeanUsageReport("EntryExitDesinationSignal"));  // NOI18N
+            }
+        }
+        return report;
+    }
+
     private final static Logger log = LoggerFactory.getLogger(DestinationPoints.class);
 
 }

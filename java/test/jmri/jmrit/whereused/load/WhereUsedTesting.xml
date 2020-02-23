@@ -98,6 +98,22 @@
       <userName>S-Group-Right</userName>
     </sensor>
     <sensor inverted="false">
+      <systemName>IS501</systemName>
+      <userName>NX-LeftTO-A</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS502</systemName>
+      <userName>NX-RIghtTO-B</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS503</systemName>
+      <userName>NX-RightTO-C</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS504</systemName>
+      <userName>S-Trigger-NX</userName>
+    </sensor>
+    <sensor inverted="false">
       <systemName>ISCLOCKRUNNING</systemName>
     </sensor>
   </sensors>
@@ -197,7 +213,7 @@
       <systemName>IM:AUTO:0003</systemName>
       <userName>LogixAction</userName>
     </memory>
-    <memory value="11:59 AM">
+    <memory value="11:22 AM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -344,6 +360,18 @@
       <systemName>IB:AUTO:0007</systemName>
       <userName>B-Right-Approach</userName>
     </block>
+    <block systemName="IB:AUTO:0008">
+      <systemName>IB:AUTO:0008</systemName>
+      <userName>DoubleSlipBlock</userName>
+    </block>
+    <block systemName="IB:AUTO:0009">
+      <systemName>IB:AUTO:0009</systemName>
+      <userName>B-Xing-AC</userName>
+    </block>
+    <block systemName="IB:AUTO:0010">
+      <systemName>IB:AUTO:0010</systemName>
+      <userName>B-Xing-BD</userName>
+    </block>
     <block systemName="IB:AUTO:0001" length="0.0" curve="0">
       <systemName>IB:AUTO:0001</systemName>
       <userName>B-104</userName>
@@ -429,6 +457,21 @@
       <permissive>no</permissive>
       <occupancysensor>S-Right-Approach</occupancysensor>
       <path todir="128" fromdir="64" block="IB:AUTO:0006" />
+    </block>
+    <block systemName="IB:AUTO:0008" length="0.0" curve="0">
+      <systemName>IB:AUTO:0008</systemName>
+      <userName>DoubleSlipBlock</userName>
+      <permissive>no</permissive>
+    </block>
+    <block systemName="IB:AUTO:0009" length="0.0" curve="0">
+      <systemName>IB:AUTO:0009</systemName>
+      <userName>B-Xing-AC</userName>
+      <permissive>no</permissive>
+    </block>
+    <block systemName="IB:AUTO:0010" length="0.0" curve="0">
+      <systemName>IB:AUTO:0010</systemName>
+      <userName>B-Xing-BD</userName>
+      <permissive>no</permissive>
     </block>
   </blocks>
   <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml">
@@ -613,6 +656,18 @@
       <systemName>ILB6</systemName>
       <userName>B-Right-Approach</userName>
     </layoutblock>
+    <layoutblock systemName="ILB7" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB7</systemName>
+      <userName>DoubleSlipBlock</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB8" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB8</systemName>
+      <userName>B-Xing-AC</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB9" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB9</systemName>
+      <userName>B-Xing-BD</userName>
+    </layoutblock>
   </layoutblocks>
   <sections class="jmri.configurexml.SectionManagerXml">
     <section systemName="IY:AUTO:0001" userName="Left Approach" creationtype="userdefined" fsensorname="S-Fwd">
@@ -722,6 +777,10 @@
       <routeOutputSensor systemName="S-Group-Left" state="ACTIVE" />
       <routeOutputSensor systemName="S-Group-Center" state="INACTIVE" />
       <routeOutputSensor systemName="S-Group-Right" state="INACTIVE" />
+      <routeOutputSensor systemName="NX-LeftTO-A" state="INACTIVE" />
+      <routeOutputSensor systemName="NX-RIghtTO-B" state="INACTIVE" />
+      <routeOutputSensor systemName="NX-RightTO-C" state="INACTIVE" />
+      <routeOutputSensor systemName="S-Trigger-NX" state="INACTIVE" />
     </route>
   </routes>
   <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml">
@@ -866,6 +925,11 @@
       <userName>Test Warrant</userName>
       <logixConditional systemName="IX:AUTO:0004C1" order="0" />
     </logix>
+    <logix userName="NX Test" enabled="yes">
+      <systemName>IX:AUTO:0005</systemName>
+      <userName>NX Test</userName>
+      <logixConditional systemName="IX:AUTO:0005C1" order="0" />
+    </logix>
     <logix enabled="yes">
       <systemName>IX:RTXINITIALIZER</systemName>
       <logixConditional systemName="IX:RTXINITIALIZER1T" order="0" />
@@ -905,6 +969,13 @@
       <conditionalAction option="1" type="31" systemName="IW::TestWarrant" data="-1" delay="0" string="" />
       <conditionalAction option="2" type="32" systemName="IW::TestWarrant" data="-1" delay="0" string="" />
     </conditional>
+    <conditional systemName="IX:AUTO:0005C1" userName="Allocate NX" antecedent="R1" logicType="1" triggerOnChange="yes">
+      <systemName>IX:AUTO:0005C1</systemName>
+      <userName>Allocate NX</userName>
+      <conditionalStateVariable operator="4" negated="no" type="1" systemName="S-Trigger-NX" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" type="53" systemName="IN:3f246a8b-558d-4ac6-a976-2606bae218cd" data="-1" delay="0" string="" />
+      <conditionalAction option="2" type="53" systemName="IN:3f246a8b-558d-4ac6-a976-2606bae218cd" data="-1" delay="0" string="" />
+    </conditional>
     <conditional systemName="IX:RTXINITIALIZER1T" userName="Route 1C" antecedent="R1" logicType="3" triggerOnChange="yes">
       <systemName>IX:RTXINITIALIZER1T</systemName>
       <userName>Route 1C</userName>
@@ -924,7 +995,17 @@
     </conditional>
   </conditionals>
   <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Sun Feb 09 21:41:14 CST 2020" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
-  <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="LE Panel" x="182" y="23" windowheight="258" windowwidth="696" panelheight="285" panelwidth="707" sliders="no" scrollable="none" editable="no" positionable="yes" controlling="yes" animating="yes" showhelpbar="no" drawgrid="yes" snaponadd="no" snaponmove="no" antialiasing="no" turnoutcircles="no" tooltipsnotedit="no" tooltipsinedit="yes" mainlinetrackwidth="4" xscale="1.0" yscale="1.0" sidetrackwidth="2" defaulttrackcolor="darkGray" defaultoccupiedtrackcolor="red" defaultalternativetrackcolor="white" defaulttextcolor="black" turnoutcirclecolor="black" turnoutcirclesize="2" turnoutdrawunselectedleg="yes" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="10.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" autoblkgenerate="no" redBackground="192" greenBackground="192" blueBackground="192" gridSize="10" gridSize2nd="10" openDispatcher="no" useDirectTurnoutControl="no">
+  <entryexitpairs class="jmri.jmrit.signalling.configurexml.EntryExitPairsXml">
+    <cleardown>2</cleardown>
+    <overlap>1</overlap>
+    <layoutPanel name="LE Panel">
+      <source type="sensor" item="NX-LeftTO-A">
+        <destination type="sensor" item="NX-RIghtTO-B" nxType="fullinterlocking" uniqueid="IN:3f246a8b-558d-4ac6-a976-2606bae218cd" />
+        <destination type="sensor" item="NX-RightTO-C" nxType="fullinterlocking" uniqueid="IN:9ee6c855-d967-481f-a1d9-0c552f423322" />
+      </source>
+    </layoutPanel>
+  </entryexitpairs>
+  <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="LE Panel" x="182" y="23" windowheight="258" windowwidth="696" panelheight="280" panelwidth="690" sliders="no" scrollable="none" editable="no" positionable="yes" controlling="yes" animating="yes" showhelpbar="no" drawgrid="yes" snaponadd="no" snaponmove="no" antialiasing="no" turnoutcircles="no" tooltipsnotedit="no" tooltipsinedit="yes" mainlinetrackwidth="4" xscale="1.0" yscale="1.0" sidetrackwidth="2" defaulttrackcolor="darkGray" defaultoccupiedtrackcolor="red" defaultalternativetrackcolor="white" defaulttextcolor="black" turnoutcirclecolor="black" turnoutcirclesize="2" turnoutdrawunselectedleg="yes" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="10.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" autoblkgenerate="no" redBackground="192" greenBackground="192" blueBackground="192" gridSize="10" gridSize2nd="10" openDispatcher="no" useDirectTurnoutControl="no">
     <layoutTrackDrawingOptions name="LE Panel" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTrackDrawingOptionsXml">
       <mainBallastColor>#000000</mainBallastColor>
       <mainBallastWidth>0</mainBallastWidth>
@@ -1232,15 +1313,82 @@
     </multisensoricon>
     <memoryicon memory="BlockMemory" x="504" y="132" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" borderSize="1" redBorder="255" greenBorder="0" blueBorder="0" fixedWidth="40" fixedHeight="20" justification="left" selectable="no" updateBlockValue="yes" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif" />
     <BlockContentsIcon blockcontents="B-Main" x="504" y="166" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" borderSize="1" redBorder="0" greenBorder="255" blueBorder="0" fixedWidth="40" fixedHeight="20" justification="left" selectable="no" class="jmri.jmrit.display.configurexml.BlockContentsIconXml" />
+    <sensoricon sensor="NX-LeftTO-A" x="166" y="85" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" degrees="90" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="90" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="90" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="90" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="90" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="NX-RIghtTO-B" x="310" y="90" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" degrees="90" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="90" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="90" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="90" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="90" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="NX-RightTO-C" x="310" y="60" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" degrees="90" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="90" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="90" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="90" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="90" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="S-Trigger-NX" x="186" y="159" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="no" text="Start NX" size="13" style="0" red="0" green="255" blue="0" hasBackground="yes" redBack="0" greenBack="0" blueBack="0" fixedWidth="80" fixedHeight="20" justification="centre" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+      <activeText text="NX Started" red="255" green="0" blue="0" redBack="0" greenBack="0" blueBack="0" />
+      <inactiveText text="Start NX" red="0" green="255" blue="0" redBack="0" greenBack="0" blueBack="0" />
+      <unknownText text="S-Trigger-NX" red="0" green="0" blue="255" />
+      <inconsistentText text="S-Trigger-NX" red="0" green="0" blue="0" />
+    </sensoricon>
     <layoutturnout ident="TO1" type="2" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="200.0" ycen="100.0" xa="180.0" ya="100.0" xb="220.0" yb="100.0" xc="230.0" yc="70.0" xd="180.0" yd="100.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTurnoutXml" turnoutname="LE Left" blockname="B-Left-TO" connectaname="T1" connectbname="T2" connectcname="T4" signala1name="Left-AU" signala2name="Left-AL" signalb1name="Left-B" signalc1name="Left-C">
       <signalAMast>Left-A</signalAMast>
       <signalBMast>Left-B</signalBMast>
       <signalCMast>Left-C</signalCMast>
+      <sensorA>NX-LeftTO-A</sensorA>
     </layoutturnout>
     <layoutturnout ident="TO2" type="1" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="400.0" ycen="100.0" xa="420.0" ya="100.0" xb="380.0" yb="100.0" xc="370.0" yc="70.0" xd="420.0" yd="100.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTurnoutXml" turnoutname="LE Right" blockname="B-Right-TO" connectaname="T3" connectbname="T2" connectcname="T4" signala1name="Right-AU" signala2name="Right-AL" signalb1name="Right-B" signalc1name="Right-C">
       <signalAMast>Right-A</signalAMast>
       <signalBMast>Right-B</signalBMast>
       <signalCMast>Right-C</signalCMast>
+      <sensorB>NX-RIghtTO-B</sensorB>
+      <sensorC>NX-RightTO-C</sensorC>
     </layoutturnout>
     <tracksegment ident="T1" blockname="B-Left-Approach" connect1name="EB1" type1="1" connect2name="TO1" type2="2" dashed="no" mainline="yes" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
     <tracksegment ident="T2" blockname="B-Main" connect1name="TO1" type1="3" connect2name="TO2" type2="3" dashed="no" mainline="yes" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
@@ -1248,7 +1396,8 @@
     <tracksegment ident="T4" blockname="B-Side" connect1name="TO1" type1="4" connect2name="TO2" type2="4" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
     <positionablepoint ident="EB1" type="2" x="20.0" y="100.0" connect1name="T1" westboundsignalmast="Left-EB" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
     <positionablepoint ident="EB2" type="2" x="600.0" y="100.0" connect1name="T3" eastboundsignalmast="Right-EB" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
-    <layoutSlip ident="SL2" slipType="8" hidden="no" disabled="no" disableWhenOccupied="no" xcen="400.0" ycen="170.0" xa="370.0" ya="170.0" xb="380.0" yb="190.0" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutSlipXml">
+    <levelxing ident="X1" blocknameac="B-Xing-AC" blocknamebd="B-Xing-BD" xcen="50.0" ycen="160.0" xa="20.0" ya="160.0" xb="50.0" yb="190.0" class="jmri.jmrit.display.layoutEditor.configurexml.LevelXingXml" />
+    <layoutSlip ident="SL2" slipType="8" hidden="no" disabled="no" disableWhenOccupied="no" xcen="400.0" ycen="170.0" xa="370.0" ya="170.0" xb="380.0" yb="190.0" blockname="DoubleSlipBlock" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutSlipXml">
       <turnout>Slip A</turnout>
       <turnoutB>Slip B</turnoutB>
       <states>
@@ -1949,104 +2098,104 @@
   <filehistory>
     <operation>
       <type>app</type>
-      <date>Thu Feb 20 11:52:32 CST 2020</date>
+      <date>Sun Feb 23 11:21:34 CST 2020</date>
       <filename>JMRI program</filename>
     </operation>
     <operation>
       <type>Load OK</type>
-      <date>Thu Feb 20 11:52:41 CST 2020</date>
+      <date>Sun Feb 23 11:21:45 CST 2020</date>
       <filename>/Users/das/JMRI/_Profiles/WhereUsed.jmri/WhereUsedTesting.xml</filename>
       <filehistory>
         <operation>
           <type>app</type>
-          <date>Thu Feb 20 11:22:18 CST 2020</date>
+          <date>Sun Feb 23 09:47:40 CST 2020</date>
           <filename>JMRI program</filename>
         </operation>
         <operation>
           <type>Load OK</type>
-          <date>Thu Feb 20 11:22:28 CST 2020</date>
+          <date>Sun Feb 23 09:47:51 CST 2020</date>
           <filename>/Users/das/JMRI/_Profiles/WhereUsed.jmri/WhereUsedTesting.xml</filename>
           <filehistory>
             <operation>
               <type>app</type>
-              <date>Thu Feb 20 11:03:01 CST 2020</date>
+              <date>Thu Feb 20 18:46:06 CST 2020</date>
               <filename>JMRI program</filename>
             </operation>
             <operation>
               <type>Load OK</type>
-              <date>Thu Feb 20 11:03:11 CST 2020</date>
+              <date>Thu Feb 20 18:46:17 CST 2020</date>
               <filename>/Users/das/JMRI/_Profiles/WhereUsed.jmri/WhereUsedTesting.xml</filename>
               <filehistory>
                 <operation>
                   <type>app</type>
-                  <date>Thu Feb 20 10:41:57 CST 2020</date>
+                  <date>Thu Feb 20 11:52:32 CST 2020</date>
                   <filename>JMRI program</filename>
                 </operation>
                 <operation>
                   <type>Load OK</type>
-                  <date>Thu Feb 20 10:42:07 CST 2020</date>
+                  <date>Thu Feb 20 11:52:41 CST 2020</date>
                   <filename>/Users/das/JMRI/_Profiles/WhereUsed.jmri/WhereUsedTesting.xml</filename>
                   <filehistory>
                     <operation>
                       <type>app</type>
-                      <date>Thu Feb 20 10:24:32 CST 2020</date>
+                      <date>Thu Feb 20 11:22:18 CST 2020</date>
                       <filename>JMRI program</filename>
                     </operation>
                     <operation>
                       <type>Load OK</type>
-                      <date>Thu Feb 20 10:24:42 CST 2020</date>
+                      <date>Thu Feb 20 11:22:28 CST 2020</date>
                       <filename>/Users/das/JMRI/_Profiles/WhereUsed.jmri/WhereUsedTesting.xml</filename>
                       <filehistory>
                         <operation>
                           <type>app</type>
-                          <date>Wed Feb 19 18:41:33 CST 2020</date>
+                          <date>Thu Feb 20 11:03:01 CST 2020</date>
                           <filename>JMRI program</filename>
                         </operation>
                         <operation>
                           <type>Load OK</type>
-                          <date>Wed Feb 19 18:41:45 CST 2020</date>
+                          <date>Thu Feb 20 11:03:11 CST 2020</date>
                           <filename>/Users/das/JMRI/_Profiles/WhereUsed.jmri/WhereUsedTesting.xml</filename>
                         </operation>
                         <operation>
                           <type>Store</type>
-                          <date>Wed Feb 19 19:03:34 CST 2020</date>
+                          <date>Thu Feb 20 11:16:39 CST 2020</date>
                           <filename />
                         </operation>
                       </filehistory>
                     </operation>
                     <operation>
                       <type>Store</type>
-                      <date>Thu Feb 20 10:40:11 CST 2020</date>
+                      <date>Thu Feb 20 11:27:36 CST 2020</date>
                       <filename />
                     </operation>
                   </filehistory>
                 </operation>
                 <operation>
                   <type>Store</type>
-                  <date>Thu Feb 20 10:52:59 CST 2020</date>
+                  <date>Thu Feb 20 11:59:50 CST 2020</date>
                   <filename />
                 </operation>
               </filehistory>
             </operation>
             <operation>
               <type>Store</type>
-              <date>Thu Feb 20 11:16:39 CST 2020</date>
+              <date>Fri Feb 21 00:13:25 CST 2020</date>
               <filename />
             </operation>
           </filehistory>
         </operation>
         <operation>
           <type>Store</type>
-          <date>Thu Feb 20 11:27:36 CST 2020</date>
+          <date>Sun Feb 23 09:49:18 CST 2020</date>
           <filename />
         </operation>
       </filehistory>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Thu Feb 20 11:59:50 CST 2020</date>
+      <date>Sun Feb 23 11:22:58 CST 2020</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.19.3ish+das+20200220T1752Z+Rb3a79036b9 on Thu Feb 20 11:59:50 CST 2020-->
+  <!--Written by JMRI version 4.19.3ish+das+20200223T1721Z+R99865610e9 on Sun Feb 23 11:22:58 CST 2020-->
 </layout-config>

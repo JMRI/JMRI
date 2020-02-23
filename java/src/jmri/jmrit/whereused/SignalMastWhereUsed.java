@@ -26,6 +26,7 @@ public class SignalMastWhereUsed {
         textArea.append(WhereUsedCollectors.checkSignalGroup(signalMast));
         textArea.append(WhereUsedCollectors.checkOBlocks(signalMast));
         textArea.append(WhereUsedCollectors.checkWarrants(signalMast));
+        textArea.append(WhereUsedCollectors.checkEntryExit(signalMast));
         textArea.append(WhereUsedCollectors.checkLogixConditionals(signalMast));
         textArea.append(WhereUsedCollectors.checkPanels(signalMast));
         textArea.append(WhereUsedCollectors.checkCTC(signalMast));

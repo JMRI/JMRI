@@ -8,6 +8,7 @@ import javax.swing.JTextArea;
 
 import jmri.*;
 import jmri.jmrit.blockboss.BlockBossLogic;
+import jmri.jmrit.entryexit.EntryExitPairs;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.WarrantManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
@@ -28,6 +29,7 @@ import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
  * <li>checkSignalGroups - Signal mast, signal heads, sensors and turnouts</li>
  * <li>checkOBlocks</li>
  * <li>checkWarrants</li>
+ * <li>checkEntryExit</li>
  * <li>checkLogixConditionals</li>
  * <li>checkSections - Direction and Stopping sensors</li>
  * <li>checkTransits - Stop Allocation and Action sensors</li>
@@ -318,6 +320,31 @@ public class WhereUsedCollectors {
     }
 
     /**
+     * Create the Entry/Exit usage string.
+     * Usage keys:
+     * <ul>
+     * <li>EntryExitSourceSensor</li>
+     * <li>EntryExitSourceSignal</li>
+     * <li>EntryExitDestinationSensor</li>
+     * <li>EntryExitDestinationSignal</li>
+     * </ul>
+     * @param bean The requesting bean:  Sensor SignalHead, SignalMast.
+     * @return usage string
+     */
+    static String checkEntryExit(NamedBean bean) {
+        StringBuilder sb = new StringBuilder();
+        InstanceManager.getDefault(EntryExitPairs.class).getNamedBeanSet().forEach((destPoint) -> {
+            destPoint.getUsageReport(bean).forEach((report) -> {
+                if (report.usageKey.startsWith("EntryExit")) {  // NOI18N
+                    String name = destPoint.getDisplayName();
+                    sb.append(Bundle.getMessage("ReferenceLineName", name));  // NOI18N
+                }
+            });
+        });
+        return addHeader(sb, "ReferenceEntryExit");  // NOI18N
+    }
+
+    /**
      * Create the Logix/Conditional usage string.
      * Usage keys:
      * <ul>
@@ -405,6 +432,16 @@ public class WhereUsedCollectors {
      * <li>PositionalIcon</li>
      * <li>LayoutEditorTurnout</li>
      * <li>LayoutEditorTurnout2</li>
+     * <li>LayoutEditorTurnoutBlock</li>
+     * <li>LayoutEditorTurnoutSensor</li>
+     * <li>LayoutEditorTurnoutSignalHead</li>
+     * <li>LayoutEditorTurnoutSignalMast</li>
+     * <li>LayoutEditorPointSensor</li>
+     * <li>LayoutEditorPointSignalHead</li>
+     * <li>LayoutEditorPointSignalMast</li>
+     * <li>LayoutEditorSegmentBlock</li>
+     * <li>LayoutEditorXingBlock</li>
+     * <li>LayoutEditorXingOther (sensor, head, mast)</li>
      * </ul>
      * Note:  The getUsageReport is invoked at either Editor or LayoutEditor depending on the
      * panel type.  The LayoutEditor version does a super call and then does special turnout

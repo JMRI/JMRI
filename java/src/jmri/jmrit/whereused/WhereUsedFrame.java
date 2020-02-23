@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 import jmri.*;
+import jmri.jmrit.entryexit.DestinationPoints;
+import jmri.jmrit.entryexit.EntryExitPairs;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.Warrant;
@@ -173,6 +175,9 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
             case WARRANT:
                 _textArea = WarrantWhereUsed.getWhereUsed(bean);
                 break;
+            case ENTRYEXIT:
+                _textArea = EntryExitWhereUsed.getWhereUsed(bean);
+                break;
             default:
                 _textArea = new JTextArea(Bundle.getMessage("TypePrompt"));
                 break;
@@ -275,6 +280,9 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
             case WARRANT:
                 nameBox = new NamedBeanComboBox<Warrant>(InstanceManager.getDefault(WarrantManager.class));
                 break;
+            case ENTRYEXIT:
+                nameBox = new NamedBeanComboBox<DestinationPoints>(InstanceManager.getDefault(EntryExitPairs.class));
+                break;
 //             case LOGIX:       // 7
 //                 nameBox = new NamedBeanComboBox<Logix>(
 //                         InstanceManager.getDefault(LogixManager.class), null, DisplayOptions.DISPLAYNAME);
@@ -310,8 +318,8 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
         MEMORY("ItemTypeMemory"),
         BLOCK("ItemTypeBlock"),
         OBLOCK("ItemTypeOBlock"),
-        WARRANT("ItemTypeWarrant");
-//         ENTRYEXIT(ITEM_TYPE_ENTRYEXIT, IsStateVar.IS_STATE_VAR, "ItemTypeEntryExit"),
+        WARRANT("ItemTypeWarrant"),
+        ENTRYEXIT("ItemTypeEntryExit");
 //         CONDITIONAL(ITEM_TYPE_CONDITIONAL, IsStateVar.IS_STATE_VAR, "ItemTypeConditional"),  // used only by ConditionalVariable
 //         LOGIX(ITEM_TYPE_LOGIX, IsStateVar.IS_STATE_VAR, "ItemTypeLogix"),                    // used only by ConditionalAction
 //         CLOCK(ITEM_TYPE_CLOCK, IsStateVar.IS_STATE_VAR, "ItemTypeClock"),
