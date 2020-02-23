@@ -620,7 +620,7 @@ public class CbusMessage {
      * @return True if is a Boot Error
      */
     public static boolean isBootError(CanReply r) {
-        if (r.isExtended() && (r.getHeader() == 0x10000004) && (r.getElement(0) == 0)) {
+        if (r.isExtended() && (r.getHeader() == 0x10000004) && (r.getElement(0) == CbusConstants.CBUS_EXT_BOOT_ERROR)) {
             return (true);
         } 
         return (false);
@@ -633,7 +633,7 @@ public class CbusMessage {
      * @return True if is a Boot OK
      */
     public static boolean isBootOK(CanReply r) {
-        if (r.isExtended() && (r.getHeader() == 0x10000004) && (r.getElement(0) == 1)) {
+        if (r.isExtended() && (r.getHeader() == 0x10000004) && (r.getElement(0) == CbusConstants.CBUS_EXT_BOOT_OK)) {
             return (true);
         }
         return (false);
@@ -646,7 +646,7 @@ public class CbusMessage {
      * @return True if is a Boot Confirm
      */
     public static boolean isBootConfirm(CanReply r) {
-        if (r.isExtended() && (r.getHeader() == 0x10000004) && (r.getElement(0) == 2)) {
+        if (r.isExtended() && (r.getHeader() == 0x10000004) && (r.getElement(0) == CbusConstants.CBUS_EXT_BOOTC)) {
             return (true);
         }
         return (false);
