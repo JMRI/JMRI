@@ -18,7 +18,8 @@
         dependency source) -->
         <cucumber.version>4.3.1</cucumber.version>
         <jetty.version>9.4.26.v20200117</jetty.version>
-        <jemmy.version>22-00c9f753cd0a</jemmy.version> <!-- this is a custom version, see lib/README.md -->
+        <!-- this is a custom version, see lib/README.md -->
+        <jemmy.version>22-00c9f753cd0a</jemmy.version>
         <slf4j.version>1.7.25</slf4j.version>
         <jackson.version>2.10.0</jackson.version>
         <jogamp.version>2.3.2</jogamp.version>
@@ -30,13 +31,14 @@
         <jmri.path.program>${basedir}</jmri.path.program>
         <jmri.prefsdir>${basedir}/temp</jmri.prefsdir>
         <jmri.shutdownmanager>jmri.util.MockShutDownManager</jmri.shutdownmanager>
-        <jinput.useDefaultPlugin>false</jinput.useDefaultPlugin><!-- don't load JInput during CI tests -->
+        <!-- don't load JInput during CI tests -->
+        <jinput.useDefaultPlugin>false</jinput.useDefaultPlugin>
         <ant.version>1.10.7</ant.version>
         <junit5.version>5.6.0</junit5.version>
         <junit.platform.version>1.6.0</junit.platform.version>
         <ant.jvm.args></ant.jvm.args>
         <argLine>-Xmx1536m -Duser.language=en -Duser.region=US</argLine>
-        <!-- define to allow running surefire:test -->
+        <!-- define argLines to allow running surefire:test -->
         <surefire.argLine></surefire.argLine>
         <failsafe.argLine></failsafe.argLine>
         <surefire.version>2.22.0</surefire.version>
@@ -102,12 +104,12 @@
         <profile>
             <id>appveyor</id>
             <build>
-	        <plugins>
-                <plugin>
+                <plugins>
+                    <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-compiler-plugin</artifactId>
                         <configuration>
-                             <skipMain>true</skipMain>
+                            <skipMain>true</skipMain>
                             <skip>true</skip>
                         </configuration>
                     </plugin>
@@ -1259,15 +1261,15 @@
             <groupId>com.pi4j</groupId>
             <artifactId>pi4j-device</artifactId>
             <version>1.2</version>
-            <optional>true</optional> <!-- not used at compile time,
-                                           may be used at runtime. -->
+            <!-- not used at compile time, may be used at runtime. -->
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>com.pi4j</groupId>
             <artifactId>pi4j-gpio-extension</artifactId>
             <version>1.2</version>
-            <optional>true</optional> <!-- not used at compile time,
-                                           may be used at runtime. -->
+            <!-- not used at compile time, may be used at runtime. -->
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>net.sf.bluecove</groupId>
