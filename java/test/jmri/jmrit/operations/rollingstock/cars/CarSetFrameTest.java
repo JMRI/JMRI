@@ -4,6 +4,7 @@ import java.awt.GraphicsEnvironment;
 
 import org.junit.Assert;
 import org.junit.Assume;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import jmri.InstanceManager;
@@ -41,6 +42,7 @@ public class CarSetFrameTest extends OperationsTestCase {
 
     @Test
     public void testCarSetFrameSaveButton() {
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JUnitOperationsUtil.initOperationsData();
 
@@ -60,14 +62,14 @@ public class CarSetFrameTest extends OperationsTestCase {
         toggleCheckBoxThenClickSave(f,f.outOfServiceCheckBox);
         JUnitUtil.waitFor(() -> {
             return c3.isOutOfService();
-            }, "Out of service");
+       I     }, "Out of service");
         Assert.assertFalse("Location unknown", c3.isLocationUnknown());
 
         // change car's status
         toggleCheckBoxThenClickSave(f,f.outOfServiceCheckBox);
         JUnitUtil.waitFor(() -> {
             return !c3.isOutOfService();
-        }, "Out of service");
+        }, "Not Out of service");
         Assert.assertFalse("Location unknown", c3.isLocationUnknown());
 
         // change car's status
@@ -75,7 +77,7 @@ public class CarSetFrameTest extends OperationsTestCase {
         // location unknown checkbox also causes the car to be out of service
         JUnitUtil.waitFor(() -> {
             return c3.isOutOfService();
-        }, "Out of service");
+        }, "Out of service Again");
         Assert.assertTrue("Location unknown", c3.isLocationUnknown());
         
         // change car's status
@@ -83,7 +85,7 @@ public class CarSetFrameTest extends OperationsTestCase {
         // location unknown checkbox also causes the car to be out of service
         JUnitUtil.waitFor(() -> {
             return !c3.isOutOfService();
-        }, "Out of service");
+        }, "Not Out of service Again");
         Assert.assertFalse("Location unknown", c3.isLocationUnknown());
 
         JUnitUtil.dispose(f);
