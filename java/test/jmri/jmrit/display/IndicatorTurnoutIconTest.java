@@ -54,7 +54,7 @@ public class IndicatorTurnoutIconTest extends PositionableIconTest {
     public void setUp() {
         super.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
-            editor = new PanelEditor("Test IndicatorTurnoutIcon Panel");
+            editor = new EditorScaffold();
             IndicatorTurnoutIcon to = new IndicatorTurnoutIcon(editor);
             jmri.Turnout turnout = jmri.InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
             to.setTurnout(new jmri.NamedBeanHandle<>("IT1", turnout));

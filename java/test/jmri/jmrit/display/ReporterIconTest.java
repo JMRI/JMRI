@@ -52,7 +52,7 @@ public class ReporterIconTest extends PositionableTestBase {
         super.setUp();
         JUnitUtil.initReporterManager();
         if (!GraphicsEnvironment.isHeadless()) {
-            editor = new PanelEditor("Test ReporterIcon Panel");
+            editor = new EditorScaffold();
             p = to = new ReporterIcon(editor);
 
             // create objects to test
