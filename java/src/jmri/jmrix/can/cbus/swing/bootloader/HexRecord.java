@@ -47,6 +47,8 @@ public class HexRecord {
     
     /**
      * Read a new record from a file
+     * 
+     * @param f hex file to read from
      */
     public HexRecord(HexFile f) {
         this();
@@ -77,6 +79,7 @@ public class HexRecord {
     /**
      * Get a data element from a hex record
      * 
+     * @param i index of the element to get
      * @return the data
      */
     protected byte getData(int i) {
@@ -98,14 +101,13 @@ public class HexRecord {
     
     
     /**
-     * Read a record from a hex file and verify the checksum.
-     *
+     * Look for the start of a new record
+     * 
+     * @param f Input hex file
      */
-    private void readRecord(HexFile f) {
+    private void startRecord(HexFile f) {
         int c;
-        valid = true;
-    
-        // Make space for the maximum size record to be read
+        
         checksum = 0;
         // Read ":"
         while (((c = f.readChar()) == 0xd)
@@ -116,6 +118,15 @@ public class HexRecord {
             valid = false;
             log.error("No colon at start of line {}", f.getLineNo());
         }
+    }
+    
+    
+    /**
+     * Read hex record header
+     * 
+     * @param f Input hex file
+     */
+    private void readHeader(HexFile f) {
         // length of data
         len = f.rdHexByte();
         checksum += len;
@@ -132,17 +143,49 @@ public class HexRecord {
             // update address, extended address should be handled by caller
             address = addrh * 256 + addrl;
         }
+    }
+    
+    
+    /**
+     * Read the data bytes
+     * 
+     * @param f Input hex file
+     */
+    void readData(HexFile f) {
         if (type != END) {
             for (int i = 0; i < len; i++) {
-                data[i] = f.rdHexByte();
+                data[i] = (byte)(f.rdHexByte() & 0xFF);
                 checksum += data[i];
             }
         }
+    }
+    
+    
+    /**
+     * Verify the record checksum
+     * 
+     * @param f Input hex file
+     */
+    private void checkRecord(HexFile f) {
+        valid = true;
+        
         int fileCheck = f.rdHexByte();
         if (((checksum + fileCheck) & 0xff) != 0) {
-            log.error("Bad checksum at {}", address);
+            log.error("Bad checksum at {}", Integer.toHexString(address));
             valid = false;
         }
+    }
+    
+    
+    /**
+     * Read a record from a hex file and verify the checksum.
+     *
+     */
+    private void readRecord(HexFile f) {
+        startRecord(f);
+        readHeader(f);
+        readData(f);
+        checkRecord(f);
     }
 
     
