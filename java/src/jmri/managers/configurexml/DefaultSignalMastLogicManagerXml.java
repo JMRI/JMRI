@@ -35,10 +35,14 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
         signalMastLogic.addContent(new Element("logicDelay").addContent(Long.toString(smlm.getSignalLogicDelay())));
         List<SignalMastLogic> smll = smlm.getSignalMastLogicList();
         for (SignalMastLogic sml : smll) {
+            List<SignalMast> destinations = sml.getDestinationList();
+            if (destinations.size() == 0) {
+                log.warn("Empty SML for source mast {} skipped", sml.getSourceMast().getDisplayName());
+                continue;
+            }
             Element source = new Element("signalmastlogic");
             source.setAttribute("source", sml.getSourceMast().getDisplayName());// added purely to make human reading of the xml easier
             source.addContent(new Element("sourceSignalMast").addContent(sml.getSourceMast().getDisplayName()));
-            List<SignalMast> destinations = sml.getDestinationList();
             for (SignalMast dest : destinations) {
                 if (sml.getStoreState(dest) != SignalMastLogic.STORENONE) {
                     Element elem = new Element("destinationMast");
