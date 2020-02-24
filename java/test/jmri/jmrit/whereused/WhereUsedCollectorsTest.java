@@ -91,6 +91,10 @@ public class WhereUsedCollectorsTest {
         sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Light-Control");
         result = WhereUsedCollectors.checkPanels(sensor);
         Assert.assertTrue(result.length() > 0);
+
+        sensor = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("S-Feedback-1");  // Test switchboard
+        result = WhereUsedCollectors.checkPanels(sensor);
+        Assert.assertTrue(result.length() > 0);
     }
 
     @Before

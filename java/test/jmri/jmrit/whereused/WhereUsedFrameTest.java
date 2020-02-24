@@ -8,6 +8,7 @@ import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.logix.WarrantManager;
+import jmri.swing.NamedBeanComboBox;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 import org.netbeans.jemmy.operators.*;
@@ -62,7 +63,7 @@ public class WhereUsedFrameTest {
         jcoType.selectItem(5);
         mgr = frame._itemNameBox.getManager().getClass().getSimpleName();
         Assert.assertEquals(mgr, "DefaultSignalMastManager");
-        SignalMast signalMast = InstanceManager.getDefault(SignalMastManager.class).getSignalMast("Left-A");
+        SignalMast signalMast = InstanceManager.getDefault(SignalMastManager.class).getSignalMast("Left-B");
         frame.buildWhereUsedListing(WhereUsedFrame.ItemType.SIGNALMAST, signalMast);
 
         // Reporter
@@ -120,6 +121,13 @@ public class WhereUsedFrameTest {
         Assert.assertEquals(mgr, "EntryExitPairs");
         DestinationPoints dp = InstanceManager.getDefault(EntryExitPairs.class).getNamedBean("NX-LeftTO-A (Left-A) to NX-RIghtTO-B (Right-B)");
         frame.buildWhereUsedListing(WhereUsedFrame.ItemType.ENTRYEXIT, dp);
+
+        // Test setItemNameBox --
+        frame.setItemNameBox(WhereUsedFrame.ItemType.NONE);
+
+        frame.setItemNameBox(WhereUsedFrame.ItemType.TURNOUT);
+        JComboBoxOperator jcoName = new JComboBoxOperator(jfo, 1);
+        jcoName.selectItem(1);
 
         JUnitUtil.dispose(frame);
     }
