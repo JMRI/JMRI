@@ -2,6 +2,8 @@ package jmri.jmrit.whereused;
 
 import java.awt.GraphicsEnvironment;
 import jmri.*;
+import jmri.jmrit.entryexit.DestinationPoints;
+import jmri.jmrit.entryexit.EntryExitPairs;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.Warrant;
@@ -28,19 +30,19 @@ public class WhereUsedFrameTest {
         // For each item type, create the bean combo box and verify it.  Build the report using a direct call.
         JComboBoxOperator jcoType = new JComboBoxOperator(jfo, 0);
 
-        // Sensor
+        // Turnout
         jcoType.selectItem(1);
         String mgr = frame._itemNameBox.getManager().getClass().getSimpleName();
-        Assert.assertEquals(mgr, "ProxySensorManager");
-        Sensor sensor = InstanceManager.getDefault(SensorManager.class).getSensor("S-Main");
-        frame.buildWhereUsedListing(WhereUsedFrame.ItemType.SENSOR, sensor);
-
-        // Turnout
-        jcoType.selectItem(2);
-        mgr = frame._itemNameBox.getManager().getClass().getSimpleName();
         Assert.assertEquals(mgr, "ProxyTurnoutManager");
         Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).getTurnout("LE Left");
         frame.buildWhereUsedListing(WhereUsedFrame.ItemType.TURNOUT, turnout);
+
+        // Sensor
+        jcoType.selectItem(2);
+        mgr = frame._itemNameBox.getManager().getClass().getSimpleName();
+        Assert.assertEquals(mgr, "ProxySensorManager");
+        Sensor sensor = InstanceManager.getDefault(SensorManager.class).getSensor("S-Main");
+        frame.buildWhereUsedListing(WhereUsedFrame.ItemType.SENSOR, sensor);
 
         // Light
         jcoType.selectItem(3);
@@ -63,33 +65,61 @@ public class WhereUsedFrameTest {
         SignalMast signalMast = InstanceManager.getDefault(SignalMastManager.class).getSignalMast("Left-A");
         frame.buildWhereUsedListing(WhereUsedFrame.ItemType.SIGNALMAST, signalMast);
 
-        // Memory
+        // Reporter
         jcoType.selectItem(6);
+        mgr = frame._itemNameBox.getManager().getClass().getSimpleName();
+        Assert.assertEquals(mgr, "ProxyReporterManager");
+        Reporter reporter = InstanceManager.getDefault(ReporterManager.class).getReporter("Test Reporter");
+        frame.buildWhereUsedListing(WhereUsedFrame.ItemType.REPORTER, reporter);
+
+        // Memory
+        jcoType.selectItem(7);
         mgr = frame._itemNameBox.getManager().getClass().getSimpleName();
         Assert.assertEquals(mgr, "DefaultMemoryManager");
         Memory memory = InstanceManager.getDefault(MemoryManager.class).getMemory("BlockMemory");
         frame.buildWhereUsedListing(WhereUsedFrame.ItemType.MEMORY, memory);
 
-        // Block
-        jcoType.selectItem(7);
+        // Route
+        jcoType.selectItem(8);
         mgr = frame._itemNameBox.getManager().getClass().getSimpleName();
-        Assert.assertEquals(mgr, "BlockManager");
-        Block block = InstanceManager.getDefault(BlockManager.class).getBlock("B-Main");
-        frame.buildWhereUsedListing(WhereUsedFrame.ItemType.BLOCK, block);
+        Assert.assertEquals(mgr, "DefaultRouteManager");
+        Route route = InstanceManager.getDefault(RouteManager.class).getRoute("Sensors");
+        frame.buildWhereUsedListing(WhereUsedFrame.ItemType.ROUTE, route);
 
         // OBlock
-        jcoType.selectItem(8);
+        jcoType.selectItem(9);
         mgr = frame._itemNameBox.getManager().getClass().getSimpleName();
         Assert.assertEquals(mgr, "OBlockManager");
         OBlock oblock = InstanceManager.getDefault(OBlockManager.class).getOBlock("OB::Main");
         frame.buildWhereUsedListing(WhereUsedFrame.ItemType.OBLOCK, oblock);
 
+        // Block
+        jcoType.selectItem(10);
+        mgr = frame._itemNameBox.getManager().getClass().getSimpleName();
+        Assert.assertEquals(mgr, "BlockManager");
+        Block block = InstanceManager.getDefault(BlockManager.class).getBlock("B-Main");
+        frame.buildWhereUsedListing(WhereUsedFrame.ItemType.BLOCK, block);
+
+        // Section
+        jcoType.selectItem(11);
+        mgr = frame._itemNameBox.getManager().getClass().getSimpleName();
+        Assert.assertEquals(mgr, "SectionManager");
+        Section section = InstanceManager.getDefault(SectionManager.class).getSection("LeftTO to Main");
+        frame.buildWhereUsedListing(WhereUsedFrame.ItemType.SECTION, section);
+
         // Warrant
-        jcoType.selectItem(9);
+        jcoType.selectItem(12);
         mgr = frame._itemNameBox.getManager().getClass().getSimpleName();
         Assert.assertEquals(mgr, "WarrantManager");
         Warrant warrant = InstanceManager.getDefault(WarrantManager.class).getWarrant("IW::TestWarrant");
         frame.buildWhereUsedListing(WhereUsedFrame.ItemType.WARRANT, warrant);
+
+        // EntryExit
+        jcoType.selectItem(13);
+        mgr = frame._itemNameBox.getManager().getClass().getSimpleName();
+        Assert.assertEquals(mgr, "EntryExitPairs");
+        DestinationPoints dp = InstanceManager.getDefault(EntryExitPairs.class).getNamedBean("NX-LeftTO-A (Left-A) to NX-RIghtTO-B (Right-B)");
+        frame.buildWhereUsedListing(WhereUsedFrame.ItemType.ENTRYEXIT, dp);
 
         JUnitUtil.dispose(frame);
     }

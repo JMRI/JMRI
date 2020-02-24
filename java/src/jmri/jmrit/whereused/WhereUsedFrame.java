@@ -148,11 +148,11 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
      */
     void buildWhereUsedListing(ItemType type, NamedBean bean) {
         switch (type) {
-            case SENSOR:
-                _textArea = SensorWhereUsed.getWhereUsed(bean);
-                break;
             case TURNOUT:
                 _textArea = TurnoutWhereUsed.getWhereUsed(bean);
+                break;
+            case SENSOR:
+                _textArea = SensorWhereUsed.getWhereUsed(bean);
                 break;
             case LIGHT:
                 _textArea = LightWhereUsed.getWhereUsed(bean);
@@ -163,14 +163,23 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
             case SIGNALMAST:
                 _textArea = SignalMastWhereUsed.getWhereUsed(bean);
                 break;
+            case REPORTER:
+                _textArea = ReporterWhereUsed.getWhereUsed(bean);
+                break;
             case MEMORY:
                 _textArea = MemoryWhereUsed.getWhereUsed(bean);
+                break;
+            case ROUTE:
+                _textArea = RouteWhereUsed.getWhereUsed(bean);
+                break;
+            case OBLOCK:
+                _textArea = OBlockWhereUsed.getWhereUsed(bean);
                 break;
             case BLOCK:
                 _textArea = BlockWhereUsed.getWhereUsed(bean);
                 break;
-            case OBLOCK:
-                _textArea = OBlockWhereUsed.getWhereUsed(bean);
+            case SECTION:
+                _textArea = SectionWhereUsed.getWhereUsed(bean);
                 break;
             case WARRANT:
                 _textArea = WarrantWhereUsed.getWhereUsed(bean);
@@ -253,11 +262,11 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
     NamedBeanComboBox<?> createNameBox(ItemType itemType) {
         NamedBeanComboBox<?> nameBox;
         switch (itemType) {
-            case SENSOR:
-                nameBox = new NamedBeanComboBox<Sensor>(InstanceManager.getDefault(SensorManager.class));
-                break;
             case TURNOUT:
                 nameBox = new NamedBeanComboBox<Turnout>(InstanceManager.getDefault(TurnoutManager.class));
+                break;
+            case SENSOR:
+                nameBox = new NamedBeanComboBox<Sensor>(InstanceManager.getDefault(SensorManager.class));
                 break;
             case LIGHT:
                 nameBox = new NamedBeanComboBox<Light>(InstanceManager.getDefault(LightManager.class));
@@ -268,14 +277,23 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
             case SIGNALMAST:
                 nameBox = new NamedBeanComboBox<SignalMast>(InstanceManager.getDefault(SignalMastManager.class));
                 break;
+            case REPORTER:
+                nameBox = new NamedBeanComboBox<Reporter>(InstanceManager.getDefault(ReporterManager.class));
+                break;
             case MEMORY:
                 nameBox = new NamedBeanComboBox<Memory>(InstanceManager.getDefault(MemoryManager.class));
+                break;
+            case ROUTE:
+                nameBox = new NamedBeanComboBox<Route>(InstanceManager.getDefault(RouteManager.class));
+                break;
+            case OBLOCK:
+                nameBox = new NamedBeanComboBox<OBlock>(InstanceManager.getDefault(OBlockManager.class));
                 break;
             case BLOCK:
                 nameBox = new NamedBeanComboBox<Block>(InstanceManager.getDefault(BlockManager.class));
                 break;
-            case OBLOCK:
-                nameBox = new NamedBeanComboBox<OBlock>(InstanceManager.getDefault(OBlockManager.class));
+            case SECTION:
+                nameBox = new NamedBeanComboBox<Section>(InstanceManager.getDefault(SectionManager.class));
                 break;
             case WARRANT:
                 nameBox = new NamedBeanComboBox<Warrant>(InstanceManager.getDefault(WarrantManager.class));
@@ -283,18 +301,6 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
             case ENTRYEXIT:
                 nameBox = new NamedBeanComboBox<DestinationPoints>(InstanceManager.getDefault(EntryExitPairs.class));
                 break;
-//             case LOGIX:       // 7
-//                 nameBox = new NamedBeanComboBox<Logix>(
-//                         InstanceManager.getDefault(LogixManager.class), null, DisplayOptions.DISPLAYNAME);
-//                 break;
-//             case ENTRYEXIT:   // 11
-//                 nameBox = new NamedBeanComboBox<DestinationPoints>(
-//                         InstanceManager.getDefault(EntryExitPairs.class), null, DisplayOptions.DISPLAYNAME);
-//                 break;
-//             case OTHER:   // 14
-//                 nameBox = new NamedBeanComboBox<Route>(
-//                         InstanceManager.getDefault(jmri.RouteManager.class), null, DisplayOptions.DISPLAYNAME);
-//                 break;
             default:
                 return null;             // Skip any other items.
         }
@@ -310,23 +316,19 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
      */
     enum ItemType {
         NONE("ItemTypeNone"),
-        SENSOR("ItemTypeSensor"),
-        TURNOUT("ItemTypeTurnout"),
-        LIGHT("ItemTypeLight"),
-        SIGNALHEAD("ItemTypeSignalHead"),
-        SIGNALMAST("ItemTypeSignalMast"),
-        MEMORY("ItemTypeMemory"),
-        BLOCK("ItemTypeBlock"),
-        OBLOCK("ItemTypeOBlock"),
-        WARRANT("ItemTypeWarrant"),
-        ENTRYEXIT("ItemTypeEntryExit");
-//         CONDITIONAL(ITEM_TYPE_CONDITIONAL, IsStateVar.IS_STATE_VAR, "ItemTypeConditional"),  // used only by ConditionalVariable
-//         LOGIX(ITEM_TYPE_LOGIX, IsStateVar.IS_STATE_VAR, "ItemTypeLogix"),                    // used only by ConditionalAction
-//         CLOCK(ITEM_TYPE_CLOCK, IsStateVar.IS_STATE_VAR, "ItemTypeClock"),
-//
-//         AUDIO(ITEM_TYPE_AUDIO, IsStateVar.IS_NOT_STATE_VAR, "ItemTypeAudio"),
-//         SCRIPT(ITEM_TYPE_SCRIPT, IsStateVar.IS_NOT_STATE_VAR, "ItemTypeScript"),
-//         OTHER(ITEM_TYPE_OTHER, IsStateVar.IS_NOT_STATE_VAR, "ItemTypeOther");
+        TURNOUT("BeanNameTurnout"),
+        SENSOR("BeanNameSensor"),
+        LIGHT("BeanNameLight"),
+        SIGNALHEAD("BeanNameSignalHead"),
+        SIGNALMAST("BeanNameSignalMast"),
+        REPORTER("BeanNameReporter"),
+        MEMORY("BeanNameMemory"),
+        ROUTE("BeanNameRoute"),
+        OBLOCK("BeanNameOBlock"),
+        BLOCK("BeanNameBlock"),
+        SECTION("BeanNameSection"),
+        WARRANT("BeanNameWarrant"),
+        ENTRYEXIT("BeanNameEntryExit");
 
         private final String _bundleKey;
 

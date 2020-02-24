@@ -23,7 +23,7 @@ public class SignalMastWhereUsed {
         textArea.append(Bundle.getMessage("ListenerCount", signalMast.getNumPropertyChangeListeners()));  // NOI18N
 
         textArea.append(WhereUsedCollectors.checkSignalMastLogic(signalMast));
-        textArea.append(WhereUsedCollectors.checkSignalGroup(signalMast));
+        textArea.append(WhereUsedCollectors.checkSignalGroups(signalMast));
         textArea.append(WhereUsedCollectors.checkOBlocks(signalMast));
         textArea.append(WhereUsedCollectors.checkWarrants(signalMast));
         textArea.append(WhereUsedCollectors.checkEntryExit(signalMast));

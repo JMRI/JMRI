@@ -28,7 +28,7 @@ public class SensorWhereUsed {
         textArea.append(WhereUsedCollectors.checkLayoutBlocks(sensor));
         textArea.append(WhereUsedCollectors.checkSignalHeadLogic(sensor));
         textArea.append(WhereUsedCollectors.checkSignalMastLogic(sensor));
-        textArea.append(WhereUsedCollectors.checkSignalGroup(sensor));
+        textArea.append(WhereUsedCollectors.checkSignalGroups(sensor));
         textArea.append(WhereUsedCollectors.checkOBlocks(sensor));
         textArea.append(WhereUsedCollectors.checkEntryExit(sensor));
         textArea.append(WhereUsedCollectors.checkLogixConditionals(sensor));

@@ -3,27 +3,26 @@ package jmri.jmrit.whereused;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JTextArea;
 import jmri.InstanceManager;
-import jmri.jmrit.entryexit.DestinationPoints;
-import jmri.jmrit.entryexit.EntryExitPairs;
+import jmri.Section;
+import jmri.SectionManager;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 
 /**
- * Tests for the EntryExitWhereUsed Class
+ * Tests for the SectionWhereUsed Class
  *
  * @author Dave Sand Copyright (C) 2020
  */
-public class EntryExitWhereUsedTest {
+public class SectionWhereUsedTest {
 
     @Test
-    public void testEntryExitWhereUsed() {
+    public void testSectionWhereUsed() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
-        EntryExitWhereUsed ctor = new EntryExitWhereUsed();
+        SectionWhereUsed ctor = new SectionWhereUsed();
         Assert.assertNotNull("exists", ctor);
-
-        DestinationPoints dp = InstanceManager.getDefault(EntryExitPairs.class).getNamedBean("NX-LeftTO-A (Left-A) to NX-RIghtTO-B (Right-B)");
-        JTextArea result = EntryExitWhereUsed.getWhereUsed(dp);
+        Section section = InstanceManager.getDefault(jmri.SectionManager.class).getSection("LeftTO to Main");
+        JTextArea result = SectionWhereUsed.getWhereUsed(section);
         Assert.assertFalse(result.getText().isEmpty());
     }
 
@@ -43,5 +42,5 @@ public class EntryExitWhereUsedTest {
         JUnitUtil.tearDown();
     }
 
-//     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EntryExitWhereUsedTest.class);
+//     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SectionWhereUsedTest.class);
 }

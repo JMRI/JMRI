@@ -200,6 +200,12 @@
       <lightcontrol controlType="3" controlTurnout="T-Light-Control" turnoutState="2" />
     </light>
   </lights>
+  <reporters class="jmri.jmrix.internal.configurexml.InternalReporterManagerXml">
+    <reporter>
+      <systemName>IR:TestReporter</systemName>
+      <userName>Test Reporter</userName>
+    </reporter>
+  </reporters>
   <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
     <memory>
       <systemName>IM:AUTO:0001</systemName>
@@ -213,7 +219,7 @@
       <systemName>IM:AUTO:0003</systemName>
       <userName>LogixAction</userName>
     </memory>
-    <memory value="11:22 AM">
+    <memory value="11:43 PM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -372,6 +378,10 @@
       <systemName>IB:AUTO:0010</systemName>
       <userName>B-Xing-BD</userName>
     </block>
+    <block systemName="IB:AUTO:0011">
+      <systemName>IB:AUTO:0011</systemName>
+      <userName>B-ReporterBlock</userName>
+    </block>
     <block systemName="IB:AUTO:0001" length="0.0" curve="0">
       <systemName>IB:AUTO:0001</systemName>
       <userName>B-104</userName>
@@ -472,6 +482,12 @@
       <systemName>IB:AUTO:0010</systemName>
       <userName>B-Xing-BD</userName>
       <permissive>no</permissive>
+    </block>
+    <block systemName="IB:AUTO:0011" length="0.0" curve="0">
+      <systemName>IB:AUTO:0011</systemName>
+      <userName>B-ReporterBlock</userName>
+      <permissive>no</permissive>
+      <reporter systemName="IR:TestReporter" useCurrent="no" />
     </block>
   </blocks>
   <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml">
@@ -2095,107 +2111,108 @@
     <signalmasticon signalmast="Left-B" x="219" y="174" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
     <signalmasticon signalmast="Left-C" x="228" y="108" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
   </paneleditor>
+  <switchboardeditor class="jmri.jmrit.display.switchboardEditor.configurexml.SwitchboardEditorXml" name="Sensor SB" x="889" y="24" height="156" width="426" editable="no" showtooltips="yes" controlling="yes" hide="yes" panelmenu="yes" scrollable="none" hideunconnected="yes" autoitemrange="no" rangemin="102" rangemax="103" type="S" connection="I" shape="symbol" columns="3" defaulttextcolor="black" redBackground="255" greenBackground="255" blueBackground="255" />
   <filehistory>
     <operation>
       <type>app</type>
-      <date>Sun Feb 23 11:21:34 CST 2020</date>
+      <date>Sun Feb 23 23:28:54 CST 2020</date>
       <filename>JMRI program</filename>
     </operation>
     <operation>
       <type>Load OK</type>
-      <date>Sun Feb 23 11:21:45 CST 2020</date>
+      <date>Sun Feb 23 23:29:04 CST 2020</date>
       <filename>/Users/das/JMRI/_Profiles/WhereUsed.jmri/WhereUsedTesting.xml</filename>
       <filehistory>
         <operation>
           <type>app</type>
-          <date>Sun Feb 23 09:47:40 CST 2020</date>
+          <date>Sun Feb 23 22:56:02 CST 2020</date>
           <filename>JMRI program</filename>
         </operation>
         <operation>
           <type>Load OK</type>
-          <date>Sun Feb 23 09:47:51 CST 2020</date>
+          <date>Sun Feb 23 22:56:12 CST 2020</date>
           <filename>/Users/das/JMRI/_Profiles/WhereUsed.jmri/WhereUsedTesting.xml</filename>
           <filehistory>
             <operation>
               <type>app</type>
-              <date>Thu Feb 20 18:46:06 CST 2020</date>
+              <date>Sun Feb 23 18:35:16 CST 2020</date>
               <filename>JMRI program</filename>
             </operation>
             <operation>
               <type>Load OK</type>
-              <date>Thu Feb 20 18:46:17 CST 2020</date>
+              <date>Sun Feb 23 18:35:26 CST 2020</date>
               <filename>/Users/das/JMRI/_Profiles/WhereUsed.jmri/WhereUsedTesting.xml</filename>
               <filehistory>
                 <operation>
                   <type>app</type>
-                  <date>Thu Feb 20 11:52:32 CST 2020</date>
+                  <date>Sun Feb 23 18:17:54 CST 2020</date>
                   <filename>JMRI program</filename>
                 </operation>
                 <operation>
                   <type>Load OK</type>
-                  <date>Thu Feb 20 11:52:41 CST 2020</date>
+                  <date>Sun Feb 23 18:18:07 CST 2020</date>
                   <filename>/Users/das/JMRI/_Profiles/WhereUsed.jmri/WhereUsedTesting.xml</filename>
                   <filehistory>
                     <operation>
                       <type>app</type>
-                      <date>Thu Feb 20 11:22:18 CST 2020</date>
+                      <date>Sun Feb 23 11:21:34 CST 2020</date>
                       <filename>JMRI program</filename>
                     </operation>
                     <operation>
                       <type>Load OK</type>
-                      <date>Thu Feb 20 11:22:28 CST 2020</date>
+                      <date>Sun Feb 23 11:21:45 CST 2020</date>
                       <filename>/Users/das/JMRI/_Profiles/WhereUsed.jmri/WhereUsedTesting.xml</filename>
                       <filehistory>
                         <operation>
                           <type>app</type>
-                          <date>Thu Feb 20 11:03:01 CST 2020</date>
+                          <date>Sun Feb 23 09:47:40 CST 2020</date>
                           <filename>JMRI program</filename>
                         </operation>
                         <operation>
                           <type>Load OK</type>
-                          <date>Thu Feb 20 11:03:11 CST 2020</date>
+                          <date>Sun Feb 23 09:47:51 CST 2020</date>
                           <filename>/Users/das/JMRI/_Profiles/WhereUsed.jmri/WhereUsedTesting.xml</filename>
                         </operation>
                         <operation>
                           <type>Store</type>
-                          <date>Thu Feb 20 11:16:39 CST 2020</date>
+                          <date>Sun Feb 23 09:49:18 CST 2020</date>
                           <filename />
                         </operation>
                       </filehistory>
                     </operation>
                     <operation>
                       <type>Store</type>
-                      <date>Thu Feb 20 11:27:36 CST 2020</date>
+                      <date>Sun Feb 23 11:22:58 CST 2020</date>
                       <filename />
                     </operation>
                   </filehistory>
                 </operation>
                 <operation>
                   <type>Store</type>
-                  <date>Thu Feb 20 11:59:50 CST 2020</date>
+                  <date>Sun Feb 23 18:34:01 CST 2020</date>
                   <filename />
                 </operation>
               </filehistory>
             </operation>
             <operation>
               <type>Store</type>
-              <date>Fri Feb 21 00:13:25 CST 2020</date>
+              <date>Sun Feb 23 22:36:58 CST 2020</date>
               <filename />
             </operation>
           </filehistory>
         </operation>
         <operation>
           <type>Store</type>
-          <date>Sun Feb 23 09:49:18 CST 2020</date>
+          <date>Sun Feb 23 23:03:31 CST 2020</date>
           <filename />
         </operation>
       </filehistory>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Sun Feb 23 11:22:58 CST 2020</date>
+      <date>Sun Feb 23 23:43:39 CST 2020</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.19.3ish+das+20200223T1721Z+R99865610e9 on Sun Feb 23 11:22:58 CST 2020-->
+  <!--Written by JMRI version 4.19.3ish+das+20200224T0528Z+R61f24bf9db on Sun Feb 23 23:43:39 CST 2020-->
 </layout-config>

@@ -27,7 +27,7 @@ public class TurnoutWhereUsed {
         textArea.append(WhereUsedCollectors.checkBlocks(turnout));
         textArea.append(WhereUsedCollectors.checkSignalHeadLogic(turnout));
         textArea.append(WhereUsedCollectors.checkSignalMastLogic(turnout));
-        textArea.append(WhereUsedCollectors.checkSignalGroup(turnout));
+        textArea.append(WhereUsedCollectors.checkSignalGroups(turnout));
         textArea.append(WhereUsedCollectors.checkOBlocks(turnout));
         textArea.append(WhereUsedCollectors.checkLogixConditionals(turnout));
         textArea.append(WhereUsedCollectors.checkPanels(turnout));
