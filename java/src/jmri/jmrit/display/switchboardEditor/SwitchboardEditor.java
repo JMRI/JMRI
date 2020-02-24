@@ -1385,6 +1385,7 @@ public class SwitchboardEditor extends Editor {
         return _selectionGroup;
     }
 
+    @Override
     public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
         List<NamedBeanUsageReport> report = new ArrayList<>();
         if (bean != null) {

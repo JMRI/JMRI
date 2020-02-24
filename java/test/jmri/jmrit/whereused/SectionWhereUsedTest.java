@@ -21,20 +21,20 @@ public class SectionWhereUsedTest {
 
         SectionWhereUsed ctor = new SectionWhereUsed();
         Assert.assertNotNull("exists", ctor);
-        Section section = InstanceManager.getDefault(jmri.SectionManager.class).getSection("LeftTO to Main");
-        JTextArea result = SectionWhereUsed.getWhereUsed(section);
-        Assert.assertFalse(result.getText().isEmpty());
+//         Section section = InstanceManager.getDefault(jmri.SectionManager.class).getSection("LeftTO to Main");
+//         JTextArea result = SectionWhereUsed.getWhereUsed(section);
+//         Assert.assertFalse(result.getText().isEmpty());
     }
 
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
-        JUnitUtil.resetProfileManager();
-        JUnitUtil.initRosterConfigManager();
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager();
-        java.io.File f = new java.io.File("java/test/jmri/jmrit/whereused/load/WhereUsedTesting.xml");
-        cm.load(f);
+//         JUnitUtil.resetProfileManager();
+//         JUnitUtil.initRosterConfigManager();
+//         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+//         jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager();
+//         java.io.File f = new java.io.File("java/test/jmri/jmrit/whereused/load/WhereUsedTesting.xml");
+//         cm.load(f);
     }
 
     @After

@@ -21,20 +21,20 @@ public class OBlockWhereUsedTest {
 
         OBlockWhereUsed ctor = new OBlockWhereUsed();
         Assert.assertNotNull("exists", ctor);
-        OBlock oblock = InstanceManager.getDefault(OBlockManager.class).getOBlock("OB::Main");
-        JTextArea result = OBlockWhereUsed.getWhereUsed(oblock);
-        Assert.assertFalse(result.getText().isEmpty());
+//         OBlock oblock = InstanceManager.getDefault(OBlockManager.class).getOBlock("OB::Main");
+//         JTextArea result = OBlockWhereUsed.getWhereUsed(oblock);
+//         Assert.assertFalse(result.getText().isEmpty());
     }
 
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
-        JUnitUtil.resetProfileManager();
-        JUnitUtil.initRosterConfigManager();
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager();
-        java.io.File f = new java.io.File("java/test/jmri/jmrit/whereused/load/WhereUsedTesting.xml");
-        cm.load(f);
+//         JUnitUtil.resetProfileManager();
+//         JUnitUtil.initRosterConfigManager();
+//         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+//         jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager();
+//         java.io.File f = new java.io.File("java/test/jmri/jmrit/whereused/load/WhereUsedTesting.xml");
+//         cm.load(f);
     }
 
     @After
