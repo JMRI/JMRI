@@ -17,7 +17,7 @@ public class SensorWhereUsedTest {
     }
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
     }
 

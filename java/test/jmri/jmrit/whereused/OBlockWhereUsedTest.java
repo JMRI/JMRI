@@ -17,7 +17,7 @@ public class OBlockWhereUsedTest {
     }
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
     }
 

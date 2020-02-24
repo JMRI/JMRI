@@ -17,7 +17,7 @@ public class MemoryWhereUsedTest {
     }
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
     }
 
