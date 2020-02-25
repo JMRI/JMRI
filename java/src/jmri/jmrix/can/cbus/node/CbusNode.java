@@ -17,9 +17,11 @@ public class CbusNode extends CbusBasicNodeWithMgrsCommandStation {
     private String _userComment;
     private boolean _sendsWRACKonNVSET;
     public static int SINGLE_MESSAGE_TIMEOUT_TIME = 1500;
-    public static int BOOT_ENTRY_TIMEOOUT_TIME = 1000;
-    public static int BOOT_SINGLE_MESSAGE_TIMEOUT_TIME = 1000;
-    public static int BOOT_PROG_TIMEOUT_TIME = 10;
+    public static int BOOT_PAUSE_TIMEOUT_TIME = 1000;
+    public static int BOOT_ENTRY_TIMEOOUT_TIME = 500;
+    public static int BOOT_SINGLE_MESSAGE_TIMEOUT_TIME = 500;
+    public static int BOOT_PROG_TIMEOUT_FAST = 10;
+    public static int BOOT_PROG_TIMEOUT_SLOW = 50;
     public static int BOOT_CONFIG_TIMEOUT_TIME = 50;
     private String _nodeNameFromName;
     
