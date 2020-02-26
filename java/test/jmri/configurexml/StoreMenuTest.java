@@ -10,11 +10,11 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class SaveMenuTest {
+public class StoreMenuTest {
 
     @Test
     public void testCTor() {
-        SaveMenu t = new SaveMenu();
+        StoreMenu t = new StoreMenu();
         Assert.assertNotNull("exists",t);
     }
 
@@ -30,6 +30,6 @@ public class SaveMenuTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SaveMenuTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(StoreMenuTest.class);
 
 }

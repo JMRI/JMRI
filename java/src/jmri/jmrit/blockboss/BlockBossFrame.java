@@ -224,7 +224,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
         menuBar.add(fileMenu);
-        fileMenu.add(new jmri.configurexml.SaveMenu());
+        fileMenu.add(new jmri.configurexml.StoreMenu());
         setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.blockboss.BlockBossFrame", true);
 

@@ -866,7 +866,7 @@ public class WarrantFrame extends WarrantRoute {
         setTitle(Bundle.getMessage("TitleWarrant", _warrant.getDisplayName()));
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
-        fileMenu.add(new jmri.configurexml.SaveMenu());
+        fileMenu.add(new jmri.configurexml.StoreMenu());
         menuBar.add(fileMenu);
         setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.logix.CreateEditWarrant", true);
