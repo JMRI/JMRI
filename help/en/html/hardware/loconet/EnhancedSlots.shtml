@@ -33,7 +33,7 @@
 
       <ul>
         <li><a href="#Introduction">Introduction</a></li>
-        <li><a href="#generalideas">Introduction: What is a LocoNet "Slot"?"</a></li>
+        <li><a href="#generalideas">What is a LocoNet "Slot"?"</a></li>
         <li><a href="#WhatsInIt">What's in a slot?</a></li>
         <li><a href="#whyImportant">Why are slots important?</a></li>
         <li><a href="#whyDifferent">Why is there a difference between 
@@ -66,7 +66,7 @@
       to LocoNet "Enhanced" slots.</p>
 
       <h2><a name="generalideas" id=
-      "generalideas">Introduction: What is a LocoNet "Slot"?</a></h2>
+      "generalideas">What is a LocoNet "Slot"?</a></h2>
 
       <p>LocoNet implements the "slot" as the basic mechanism for:
       <ul>
