@@ -33,6 +33,9 @@
 
       <ul>
         <li><a href="#Introduction">Introduction</a></li>
+        <li><a href="#QandA">Enhanced slots described via Questions and 
+              Answers</a>
+        <ul>
         <li><a href="#generalideas">What is a LocoNet "Slot"?"</a></li>
         <li><a href="#WhatsInIt">What's in a slot?</a></li>
         <li><a href="#whyImportant">Why are slots important?</a></li>
@@ -50,6 +53,7 @@
                 slots?</a></li>
         <li><a href="#whatThrotEnh">What throttles can make use of "enhanced" 
                 slots?</a></li>
+        </ul></li>
         <li><a href="#whyNot">JMRI does not directly support "enhanced" slots.  
                 Why not?</a></li>
         <li><a href="#someSupport">There really is some JMRI support for 
@@ -64,8 +68,10 @@
       <p>This help page is presented as a set of "questions and answers".  It is
       hoped that this presentation will answer the basic questions related
       to LocoNet "Enhanced" slots.</p>
+      <h2><a name="QandA" id="QandA">Enhanced slots described via Questions and 
+              Answers</a></h2>
 
-      <h2><a name="generalideas" id=
+      <h3><a name="generalideas" id=
       "generalideas">What is a LocoNet "Slot"?</a></h2>
 
       <p>LocoNet implements the "slot" as the basic mechanism for:
