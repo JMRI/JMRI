@@ -9,9 +9,6 @@
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
     <defaultInitialState>unknown</defaultInitialState>
-    <sensor inverted="false">
-      <systemName>IS0</systemName>
-    </sensor>
     <sensor systemName="ISCLOCKRUNNING" inverted="false">
       <systemName>ISCLOCKRUNNING</systemName>
     </sensor>
