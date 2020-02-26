@@ -1148,7 +1148,10 @@
               </ul>
               <p>As such, many users find that disabling DCS240 "expanded" slot
               capability can improve some aspects of JMRI "throttle" functionality,
-              including WiThrottle Server funcitonality.</p></li>
+              including WiThrottle Server funcitonality.</p>
+              <p>Additional discussion may be found <a href="EnhancedSlots.shtml">
+              here</a>.</p>
+          </li>
 
 
           <li><p>At this time, the Digitrax BXP88 and BXPA1 devices do not support a
