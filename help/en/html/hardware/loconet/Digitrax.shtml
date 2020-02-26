@@ -171,7 +171,7 @@
         "LocoBufferUSB.shtml">LocoBuffer-USB</a></li>
 
         <li><a title="Digitrax PR3 and PR3 Xtra USB interface" href=
-        "PR3.shtml">PR3, PR3 Xtra, and DCS240's "integrated" PR3 USB Interface</a></li>
+        "PR3.shtml">PR3, PR3 Xtra</a></li>
 
         <li><a title="Digitrax PR4 USB interface" href=
         "PR4.shtml">PR4</a></li>
@@ -188,10 +188,13 @@
         <li><a title="BT LocoBridge" href=
         "BTLocoBridge.shtml">Bluetooth LocoBridge</a></li>
       </ul>
-      (Note: The Digitrax DSC240 has a built-in adapter that's
-      similar to the Digitrax PR3; if you have a DCS240, configure
-      JMRI for it by selecting a PR3 connection type and a DCS240
-      command station type)
+      <p>(Note: The Digitrax DSC240 has a built-in adapter that's
+      similar to the Digitrax PR3; if you have a DCS240 and connect
+      the computer via the DCS240's integrated USB interface, see
+      <a href="DCS240.shtml">this DCS240 page</a>.  Similarly, the Digitrax
+      DSC52 has a built-in adapter that's similar to the Digitrax PR3; if you
+      have a DCS52 and connect the computer via the DCS52's integrated USB
+      interface, see <a href="DCS52.shtml">this DCS52 page</a>.</p>
 
       <p>Generally, any of these can be used with any type of
       computer to communicate with any type of command station.
@@ -262,10 +265,12 @@
       on your Vista machine you should get a LocoBuffer-USB, PR3, or PR4
       instead.</p><a name="Setup" id="Setup"></a>
 
-      <h2>Connecting</h2>
+      <h2><a name="ConnectingAdapter" id="ConnectingAdapter">Connecting</a></h2>
 
       <p>To connect your computer to a Digitrax DCC system, you
-      need a <a title="RR-CirKits USB interface" href=
+      need either a USB-equipped Command station (DCS240 or DCS52),
+      or a computer-to-LocoNet
+      adapter device such as a <a title="RR-CirKits USB interface" href=
       "LocoBufferUSB.shtml">LocoBuffer-USB</a>, <a title=
       "Digitrax PR3 USB interface" href="PR3.shtml">PR3</a>, <a title=
       "Digitrax PR4 USB interface" href="PR4.shtml">PR4</a>, <a title=
@@ -273,8 +278,8 @@
       "LocoBufferII.shtml">LocoBuffer-II</a>, <a title=
       "Original Kit Version" href="LocoBuffer.shtml">LocoBuffer</a>
       or <a title="Digitrax Serial interface" href=
-      "MS100.shtml">MS100</a> to act as an adapter. The LocoBuffer-USB is highly
-      recommended. See <a href="#adapters">below</a> for more on
+      "MS100.shtml">MS100</a>. The LocoBuffer-USB is a highly
+      recommended computer-to-LocoNet adapter. See <a href="#adapters">below</a> for more on
       adapters.</p>
 
       <p>Note that except for the PR3 and PR4, these are only LocoNet
@@ -289,14 +294,25 @@
       capability by using a programming track connected to a PR3 or PR4 when
       operating in stand-alone programming mode.</p>
 
+      <h3>Basic steps to connect to LocoNet</h3>
+
+      <p>If connecting to a DCS240 command station via its integrated USB port,
+      see these instructions for configuring JMRI for <a href="DCS240.shtml#ConnectingDCS240">
+      the DCS240</a>.</p>
+
+      <p>If connecting to a DCS52 command station via its integrated USB port,
+      see these instructions for configuring JMRI for <a href="DCS52.shtml#ConnectingDCS52">
+      the DCS52</a>.</p>
+
       <p>The steps below show how to add a connection to JMRI
       (DecoderPro, PanelPro, etc.) for a LocoNet-based system.</p>
 
       <ol>
-        <li>Connect your adapter to the LocoNet, and connect your
+        <li>If using a LocoNet adapter, connect your adapter to the LocoNet, and connect your
         computer to it with the appropriate serial or USB
         cable.</li>
-
+        <li>If using a command station's USB connection, connect your computer to
+            your command station with the appropriate USB cable.</li>
         <li>Mac and Windows users should install the proper USB
         drivers if they are using USB devices.</li>
 
@@ -306,15 +322,19 @@
         <li>Open a JMRI program and go to the "Preferences" panel.
         This normally opens automatically the first time each
         program is run, or you can select it from the "Edit"
-        menu.</li>
+        menu.  Alternately, if you already have two or more connections
+        established and at start-up you get a selection box for the connection
+        profiles, you may choose to establish a new connection profile and the
+        "Connections" window will automatically open (so you may skip the next
+        step).</li>
 
         <li>Select the "Connections" item in the window at the
         left.</li>
 
-        <li>Select "Digitrax" in the "System Manufacturer"
-        box.</li>
+        <li>Select "Digitrax" in the "System Manufacturer" box.</li>
 
-        <li>Select the appropriate adapter type in the "System
+        <li>Select the appropriate adapter type (or command station type, if using
+            a computer-to-command station USB port connection) in the "System
         Connection" box.</li>
 
         <li>You can then configure the proper settings in the
@@ -338,7 +358,8 @@
           not communicate with LocoNet. When set for a specific
           command station type, the PR3/PR4 programming track is not
           used; instead, decoder programming is done through the
-          mechanisms provided by the selected command station.</p>
+          mechanisms provided by the selected command station, and its
+          programming track connections.</p>
 
           <p>When "DB150 (Empire Builder)" is selected, JMRI
           decoder programming is done via the DB150 programming
@@ -945,6 +966,13 @@
 
             <li><a href="MS100.shtml">Digitrax MS100</a> (Strongly
             not recommended)</li>
+
+            <li><a href="DCS52.shtml">Digitrax DCS52 via its
+            integrated USB port</a></li>
+
+            <li><a href="DCS240.shtml">Digitrax DCS240 via its
+            integrated USB port</a></li>
+
           </ul>
         </li>
 

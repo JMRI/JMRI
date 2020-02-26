@@ -27,7 +27,40 @@
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
 
-      <h1>Hardware Support: Connecting to a Digitrax DCS52</h1><br>
+        <h1>Hardware Support: Digitrax DCS52</h1>
+      <div class="toc">
+        <ul>
+          <li><a href="#ConnectingDCS52">Connecting JMRI to a Digitrax DCS52</a>
+
+            <ul>
+                <li><a href="#ChooseAMethod">Choosing the configuration method</a>
+                <ul>
+                    <li><a href="#Dcs52Standalone">DCS52 USB interface as a
+                    stand-alone decoder programmer</a>
+                        <ul>
+                        <li><a href="#Dcs52SetupStandAlone">Setup for
+                        the DCS52 acting as a standalone programmer</a></li>
+                        <li><a href="#Dcs52StandaloneHints">DCS52 USB Interface
+                        in Standalone Programming Mode Usage Hints</a></li>
+                        </ul></li>
+                    <li><a href="#Dcs52GeneralCmdStn">DCS52 USB interface as a
+                    LocoNet Interface</a>
+                        <ul>
+                        <li><a href="#Dcs52SetupUsbInterface">Setup for the DCS52
+                        acting as a LocoNet interface</a></li>
+
+                        </ul>
+                    </li>
+                    <li><a href="#Dcs52ViaAdapter">DCS52 connected via
+                    some other LocoNet Interface</a></li>
+                </ul></li>
+            </ul></li>
+            <li><a href="#Dcs52Drivers">DCS52 Drivers</a></li>
+            <li><a href="#SeeAlso">See Also</a></li>
+        </ul>
+      </div>
+      <h1><a id="ConnectingDCS52" name="ConnectingDCS52">
+      Hardware Support: Connecting to a Digitrax DCS52</a></h1>
 
       <p>JMRI may be connected to the Digitrax DCS52 in any
       of a wide variety of ways.  Since the DCS52 has a built-in USB interface,
@@ -54,11 +87,19 @@
       be configured so that the "command station" type specifies the type of
       command station which is being used.</p>
 
+      <p>If, instead of using the DCS52's integrated USB port, you plan to
+      connect your computer to the DCS52 using a LocoNet adapter device,
+      follow the instructions found <a href="Digitrax.shtml#ConnectingAdapter">
+      here</a>.</p>
+
+
+
     <p>The table below summarizes these possibilities.</p>
       <table border="3">
           <tr><td align="center" rowspan="2"><strong>Connection Type</strong></td>
               <td align="center" rowspan="2"><strong>Usage</strong></td>
               <td colspan="2" align="center"><strong>Settings in JMRI Connection Profile</strong></td>
+              <td align="center" rowspan="2"><strong>Instructions</strong></td>
               <td align="center" rowspan="2"><strong>Available JMRI Capabilities</strong></td></tr>
           <tr><td align="center"><strong>System Connection</strong></td>
               <td align="center"><strong>JMRI Command Station Type</strong></td></tr>
@@ -66,11 +107,13 @@
               <td rowspan="2" align="center">Decoder Programming</td>
               <td rowspan="2" align="center">"<em>DCS52 USB Interface</em>"</td>
               <td rowspan="2" align="center">"<em>DCS52 Standalone Programmer</em>"</td>
+              <td rowspan="2" align="center"><a href="#Dcs52Standalone">Configuration help</a></td>
               <td>Program decoder CVs on the dedicated programming track</td></tr>
         <tr><td>Operate one loco on the dedicated programming track</td>
         <tr><td rowspan="7" align="center">LocoNet Interface, Decoder Programming</td>
             <td rowspan="7" align="center">"<em>DCS52 USB Interface</em>"</td>
             <td rowspan="7" align="center">"<em>DCS52 (Zephyr Express Command Station)</em>"</td>
+            <td rowspan="7" align="center"><a href="#Dcs52GeneralCmdStn">Configuration help</a></td>
             <td>Program decoder CVs on the dedicated programming track and/or the main track</td></tr>
         <tr><td>Control one or more locos on the main track</td></tr>
         <tr><td>Control and monitor LocoNet-connected Switches, Sensors, and Transponding</td></tr>
@@ -82,6 +125,7 @@
             <td rowspan="7" align="center">Computer Connection to something other than the DCS52 USB connector</td>
             <td rowspan="7" align="center">Something other than "DCS52 USB Interface"</td>
             <td rowspan="7" align="center">"<em>DCS52 (Zephyr Express Command Station)</em>"</td>
+            <td rowspan="7" align="center"><a href="#Dcs52ViaAdapter">Configuration help</a></td>
             <td>Program decoder CVs on the dedicated programming track</td></tr>
         <tr><td>Control one or more locos on the main track</td></tr>
         <tr><td>Control and monitor LocoNet-connected Switches, Sensors, and Transponding</td></tr>
@@ -96,7 +140,8 @@
       specified for the JMRI connection should match the device which is actually
       acting as the command station.</p>
 
-      <h2>Choosing the configuration profile "command station" setting</h2>
+      <h2><a name="ChooseAMethod" id="ChooseAMethod">Choosing a configuration
+      method</a></h2>
 
       <p>When setting up a JMRI "connection profile", which "command station" should
       you use when configuring JMRI?  That depends on what you
@@ -128,7 +173,8 @@
       type of work.</li>
       </ul>
 
-      <h2>DCS52 USB interface as a stand-alone decoder programmer</h2>
+      <h3><a name="Dcs52Standalone" id="Dcs52Standalone">DCS52 USB interface as
+              a stand-alone decoder programmer</a></h3>
       <p><img src="images/DCS52StandaloneProgrammerConnections.png"
               alt="Typical connections for DCS52 for use as standalone programmer"
               width="300"></p>
@@ -149,7 +195,8 @@
       <p>In this mode of operations, JMRI will not have access to LocoNet-based
       devices.</p>
 
-      <h3>Setup for the DCS52 acting as a standalone programmer</h3>
+      <h4><a name="Dcs52SetupStandAlone" id="Dcs52SetupStandAlone">Setup for the
+              DCS52 acting as a standalone programmer</a></h4>
 
       <p>To use the DCS52 programming track, connect the DCS52 to its
       power supply and connect a dedicated piece of track which you'll
@@ -198,7 +245,8 @@
       <p>The "connection" preferences should look similar to this image:</p>
       <img src="images/DCS52StandConnProfile.png" alt="Sample configuration profile with DCS52 USB interface as a standalone programmer" width="500">
 
-      <h3>DCS52 USB Interface in Standalone Programming Mode Usage Hints</h3>
+      <h4><a name="Dcs52StandaloneHints" id="Dcs52StandaloneHints">DCS52 USB Interface
+              in Standalone Programming Mode Usage Hints</a></h4>
 
       <ul>
           <li>You can use a JMRI throttle to control the locomotive
@@ -248,7 +296,8 @@
 
       </ul>
 
-      <h2>DCS52 USB interface as a LocoNet Interface</h2>
+      <h3><a name="Dcs52GeneralCmdStn" id="Dcs52GeneralCmdStn">DCS52 USB interface
+              as a LocoNet Interface</a></h3>
       <p><img src="images/DCS52LocoNetInterfaceConnections.png"
               alt="Typical connections for DCS52 acting as a LocoNet interface"
               width="300"></p>
@@ -260,7 +309,8 @@
       supports "programming on the main", JMRI is able to make use
       of that feature.</p>
 
-      <h3>Setup for the DCS52 acting as a LocoNet interface</h3>
+      <h4><a name="Dcs52SetupUsbInterface" id="Dcs52SetupUsbInterface">Setup for
+      the DCS52 acting as a LocoNet interface</a></h4>
       <p>To use the DCS52 USB connection as a LocoNet interface, connect a LocoNet cable to
       a LocoNet connector on the DCS52. Connect an appropriate power
       supply to the DCS52, per the Digitrax instructions for the DCS52.  The
@@ -313,34 +363,36 @@
 
       <img src="images/DCS52LocoNetInterfaceConnProfile.png" alt="Sample configuration profile with DCS52 USB interface as a LocoNet interface" width="500">
 
-      <h2>DCS52 connected via some other LocoNet Interface</h2>
+      <h2><a name="DcsViaAdapter" id="Dcs52ViaAdapter">DCS52 connected via some
+      other LocoNet Interface</a></h2>
       <p>JMRI may connect to the LocoNet via a LocoNet interface other than the
-      DCS52 USB connector.  When connected in this fashion, see the
+      DCS52 USB connector.  When connected in this fashion, <a
+      href="Digitrax.shtml#ConnectingAdapter">these general instructions</a>, or,
+      where available, the
       JMRI documentation associated with the LocoNet interface which is being
       used.</p>
 
-      <h1>Drivers</h1>
+      <h1><a name="Dcs52Drivers" id="Dcs52Drivers">DCS52 Drivers</a></h1>
 
-      The DCS52 needs to have a driver installed when used with any Microsoft
+      The DCS52 USB interface needs to have a driver installed when used with any Microsoft
       Windows Operating System.  See the Digitrax
-      <a href=
-         "http://www.digitrax.com/downloads/">"Downloads"</a> page for drivers.
+      <a href="http://www.digitrax.com/downloads/">"Downloads"</a> page for drivers.
       At the time this help page was written, Digitrax provides Windows drivers
-      for the PR3 device.  Those drivers are suitable for use with the DCS52.
-      Make sure to follow any instructions, particularly any instructions
+      for the PR3 device.  Those drivers are suitable for use with the DCS52 USB
+      interface.  Make sure to follow any instructions, particularly any instructions
       about the order of installing the drivers and plugging in the
       device.
 
       <p>You don't need to install a separate driver when using
       current versions of Mac OS X or Linux.</p>
 
-      <h1>See Also</h1>
+      <h1><a name="SeeAlso" id="SeeAlso">See Also</a></h1>
       <ul>
           <li><a href="Digitrax.shtml">JMRI's general Digitrax support page</a></li>
           <li>The JMRI <a href="../../apps/DecoderPro/Roster.shtml">Rosters</a> page.</li>
           <li>The JMRI <a href="CommandStationConfig.shtml">
-                  Command Station Configuration</a> page describes how to configure 
-                  command station OpSw settings.</li> 
+                  Command Station Configuration</a> page describes how to configure
+                  command station OpSw settings.</li>
 
           <li>For more information on the DCS52 itself, please consult the Digitrax
           web site:
@@ -350,7 +402,7 @@
                                   "http://www.digitrax.com/tsd/product/DCS52/">DCS52 Support</a> page.</li>
               <li>Drivers for Windows-based machines may be found at the Digitrax
                   <a href="http://www.digitrax.com/downloads/">Downloads</a> page.
-                  Note: Use the Digitrax PR3 drivers with the DCS52.</li>
+                  Note: Use the Digitrax PR3 drivers with the DCS52 USB interface.</li>
           </ul>
       </ul>
 
