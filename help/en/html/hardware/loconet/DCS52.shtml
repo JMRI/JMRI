@@ -363,7 +363,7 @@
 
       <img src="images/DCS52LocoNetInterfaceConnProfile.png" alt="Sample configuration profile with DCS52 USB interface as a LocoNet interface" width="500">
 
-      <h3><a name="DcsViaAdapter" id="Dcs52ViaAdapter">DCS52 connected via some
+      <h3><a name="Dcs52ViaAdapter" id="Dcs52ViaAdapter">DCS52 connected via some
       other LocoNet Interface</a></h3>
       <p><img src="images/DCS52LocoNetInterfaceViaAdapter.png"
         alt="Typical connections for DCS52 when connected to computer via a LocoNet Interface Adapter"
