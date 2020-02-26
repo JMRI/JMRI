@@ -73,7 +73,7 @@ public class LoadXmlConfigAction extends LoadStoreBaseAction {
 
     static public java.io.File getFileCustom(JFileChooser fileChooser) {
         fileChooser.rescanCurrentDirectory();
-        int retVal = fileChooser.showDialog(null, null);
+        int retVal = fileChooser.showDialog(null, Bundle.getMessage("MenuItemLoad"));
         if (retVal != JFileChooser.APPROVE_OPTION) {
             return null;  // give up if no file selected
         }
