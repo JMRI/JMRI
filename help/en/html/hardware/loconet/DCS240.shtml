@@ -353,6 +353,9 @@
 
       <h3><a name="Dcs240ViaAdapter" id="Dcs240ViaAdapter">DCS240 connected via
               some other LocoNet Interface</a></h3>
+      <p><img src="images/DCS240LocoNetInterfaceViaAdapter.png"
+        alt="Typical connections for DCS240 when connected to computer via a LocoNet Interface Adapter"
+        width="300"></p>
       <p>JMRI may connect to the LocoNet via a LocoNet interface other than the
       DCS24 USB connector.  When connected in this fashion, <a
       href="Digitrax.shtml#ConnectingAdapter">these general instructions</a>, or,
