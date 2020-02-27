@@ -27,7 +27,7 @@
     <div id="mainContent">
       <!-- Page Body -->
 
-      <h1>JMRI: Getting Started with Scripting</h1>
+      <h1><a name="StartTopOfPage">JMRI: Getting Started with Scripting</a></h1>
 
 	  <p>The easiest way to learn how to use scripts in JMRI is to study the simplest examples first
       and work your way into more complex details. The sections below discuss various aspects of scripting
@@ -48,7 +48,7 @@
 	  to show statements that part of a class or controlled structure where you might have used some bracketing.
 	  Most program editors have a setting to automatically changes tabs to a set number of spaces to make this easier.</h4>
 	  
-      <h2><a id="helloworld">Running "Hello World"</a></h2>
+      <h2><a id="helloworld" name="helloworld">Running "Hello World"</a></h2>
       
       <div class="para">
       
@@ -76,13 +76,13 @@
         commands you issue.</li>
 
         <li>To see this in operation, type
-          <pre>
+          <pre  style="font-family: monospace;">
         print "Hello World"
         
 </pre>in the input window, and click "Execute". You should see the
 output in the Script Output window immediately:
-          <pre>
-        &gt;&gt;&gt; <code>print "Hello World"</code>
+          <pre  style="font-family: monospace;">
+        &gt;&gt;&gt; print "Hello World"
         Hello World
         
 </pre>
@@ -91,12 +91,12 @@ output in the Script Output window immediately:
         <li>Python also evaluates expressions, etc. Remove the
         contents of the input window (select it and hit delete),
         and enter
-          <pre>
-       <code> print 1+2</code>
+          <pre style="font-family: monospace;">
+        print 1+2
         
 </pre>then click execute. The output window should then show
 something like:
-          <pre>
+          <pre style="font-family: monospace;">
         &gt;&gt;&gt; print 1+2
         3
         
@@ -107,7 +107,7 @@ something like:
     <p><a href="#StartTopOfPage">[Go to top of page]</a></p>
     </div>  
   
-      <h2><a id="debugging">Basic debugging tools in JMRI</a></h2>
+      <h2><a id="debugging" name="debugging">Basic debugging tools in JMRI</a></h2>
       <!--Section added by Jerry Grochow 2018-10-18 based on comments found in the JMRI Users online forum from 
       Cliff in BajaSoCal and Bob Jacobson-->
       
@@ -140,7 +140,7 @@ something like:
       <h2><a id="layoutcommands">Sample layout commands</a></h2>
       
       <div class="para">
-     <pre><code>
+     <pre style="font-family: monospace;">
 
 &gt;&gt;&gt; lt1 = turnouts.provideTurnout("1")
 
@@ -156,7 +156,6 @@ something like:
 
 &gt;&gt;&gt; turnouts.provideTurnout("1").getCommandedState()
 1
-</code>
     </pre>
 
       <p>Note that this is running a complete version of the JMRI
@@ -169,14 +168,14 @@ something like:
       and the Python language brings to using JMRI code. The Java
       member function:</p>
       
-    <pre>
+    <pre style="font-family: monospace;">
         turnout.SetCommandedState(jmri.Turnout.CLOSED);
     </pre>
       
       can also be expressed in Jython as:
       
-     <pre>
-        <code>turnout.commandedState = CLOSED</code>
+     <pre style="font-family: monospace;">
+        turnout.commandedState = CLOSED
     </pre>
 
       <p>This results in much easier-to-read code.</p>
@@ -192,16 +191,16 @@ something like:
       <p><a href="#StartTopOfPage">[Go to top of page]</a></p>
       </div>
       
-      <h2><a id="objects">Access to JMRI Objects</a></h2>
+      <h2><a id="objects" name="objects">Access to JMRI Objects</a></h2>
 	  
       <div class="para">
       
       JMRI uses the factory-pattern
       extensively to get access to objects. In Java this results in
       verbose code like
-      <pre>
-   <code>Turnout t2 = InstanceManager.getDefault(TurnoutManager.class).newTurnout("LT2", "turnout 2");
-   t2.SetCommandedState(Turnout.THROWN)</code>
+      <pre style="font-family: monospace;">
+   Turnout t2 = InstanceManager.getDefault(TurnoutManager.class).newTurnout("LT2", "turnout 2");
+   t2.SetCommandedState(Turnout.THROWN)
 </pre>Jython simplifies that by allowing us to provide useful
 variables, and by shortening certain method calls.
 
@@ -246,19 +245,16 @@ variables, and by shortening certain method calls.
         <li>entryExitPairs <span class="since">since 4.19.2</span></li>
         
       </ul>These can then be referenced directly in Jython as
-      <pre>
-   <code>t2 = turnouts.provideTurnout("12");</code>
-   
-   dcc.sendPacket(new byte[]{0x12, 0x32, 0x4E}, 5)
+      <pre style="font-family: monospace;">t2 = turnouts.provideTurnout("12");
 </pre>Note that the variable t2 did not need to be declared.
 
       <p>Jython provides a shortcut for parameters that have been
       defined with Java-Bean-like get and set methods:</p>
-      <pre>
-   <code>t2.SetCommandedState(Turnout.THROWN)</code>
+      <pre style="font-family: monospace;">
+    t2.SetCommandedState(Turnout.THROWN)
 </pre>can be written as
-      <pre>
-   <code>t2.commandedState = THROWN</code>
+      <pre style="font-family: monospace;">
+    t2.commandedState = THROWN
 </pre>
 
 <p>where the assignment is actually invoking the set method.</p>
@@ -271,10 +267,10 @@ variables, and by shortening certain method calls.
     </p>
       <p>A similar mechanism can be used to check the state of
       something:</p>
-      <pre>
-&gt;&gt;&gt; <code>print sensors.provideSensor("3").knownState == ACTIVE</code>
+      <pre style="font-family: monospace;">
+&gt;&gt;&gt; print sensors.provideSensor("3").knownState == ACTIVE
 1
-&gt;&gt;&gt; <code>print sensors.provideSensor("3").knownState == INACTIVE</code>
+&gt;&gt;&gt; print sensors.provideSensor("3").knownState == INACTIVE
 0
 </pre>Note that Jython uses "1" to indicate true, and "0" to
 indicate false, so sensor 3 is currently active in this example.
@@ -282,9 +278,9 @@ You can also use the symbols "True" and "False" respectively.
 
       <p>You can directly invoke more complicated methods, e.g. to
       send a DCC packet to the rails you type:</p>
-      <pre>
+      <pre  style="font-family: monospace;">
    
-   <code>dcc.sendPacket([0x01, 0x03, 0xbb], 4) </code>
+    dcc.sendPacket([0x01, 0x03, 0xbb], 4)
 </pre>This sends that three-byte packet four times, and then
 returns to the command line.
 
@@ -294,7 +290,7 @@ Also see <a href="WhatWhere.shtml#names">JMRI Jython : The difference between Sy
     
      </div>
 
-      <h2><a id="scripts">Script files, listeners, and classes</a></h2>
+      <h2><a id="scripts" name="scripts">Script files, listeners, and classes</a></h2>
 	  
       <div class="para">
       

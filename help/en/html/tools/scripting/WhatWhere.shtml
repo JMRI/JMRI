@@ -27,7 +27,7 @@
     <div id="mainContent">
       <!-- Page Body -->
 
-      <h1>JMRI: "What...Where" of Jython Scripting with JMRI</h1>
+      <h1><a name="WhatWhereTopOfPage">JMRI: "What...Where" of Jython Scripting with JMRI</a></h1>
  	  <!-- Page reorganized by Jerry Grochow 2018-11-29 -->
 
 
@@ -74,7 +74,7 @@
       
   <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->	  
       
-      <h2><a id="classes">Where can I find more information on the JMRI classes?</a></h2>
+      <h2><a id="classes" name="classes">Where can I find more information on the JMRI classes?</a></h2>
 
       <div class="para">
         The <a href="https://jmri.org/JavaDoc/doc/" target="_blank">class
@@ -106,7 +106,7 @@
         </div>
 
   <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->	  	
-     <h2><a id="names">What is the difference between System Names and User Names?</a></h2>
+     <h2><a id="names" name="names">What is the difference between System Names and User Names?</a></h2>
 
       <p>Click for more information on <a href="../../../../../help/en/html/doc/Technical/Names.shtml"> Names and Naming</a>.</p>
 		
@@ -125,12 +125,12 @@
         is valid.  Use this code to create a sensor with a valid name:</p>
         
         <!-- Example adapted from Randall Wood post to jmriusers@groups.io 2019-09-06 -->
-        <pre><code>
+        <pre style="font-family: monospace;">
         try:
            sensors.validateSystemNameFormat(MySensorSystemName)
         except jmri.NamedBean.BadSystemNameException:
            print 'Invalid name: ', MySensorSystemName 
-        </code></pre>    
+        </pre>    
 		
 		<p>User names are set after input and outputs are created. They can be any character string you want. 
 		You can use user name or system name in scripts and Logix. The use of user names is recommended for 
@@ -145,12 +145,12 @@
     
     If you require the ID Tag UserName, eg. For a Block with username "BlockUserName", you could use :
     </p>
-        <pre><code>
+        <pre style="font-family: monospace;">
         mylocostring=blocks.getByUserName("BlockUserName").getValue() #Block value Object could be a String or ID Tag
         if (isinstance(mylocostring,jmri.NamedBean)) : # The object is a NamedBean
             mylocostring = mylocostring .getUserName() # Set to the User Name
         print mylocostring
-        </code></pre>
+        </pre>
                
     <p>It can sometimes be handy to get further information on a Reporter value.
     The toReportString method provides an object specific report, 
@@ -160,18 +160,18 @@
 
     <p>Eg. For a Block with username "BlockUserName", you could use :</p>
     
-        <pre><code>
+        <pre style="font-family: monospace;">
         mylocostring=blocks.getByUserName("BlockUserName").getValue() #Block Object could be a String or ID Tag
         if (isinstance(mylocostring,jmri.Reportable)) : # The object is a Reportable
             mylocostring = mylocostring .toReportString() # Set to the Report String
         print mylocostring
-        </code></pre>
+        </pre>
      
     <p><a href="#WhatWhereTopOfPage">[Go to top of page]</a></p>        
 
 
   <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->	  	    
-	   <h2><a id="import">What do the words "<code>import</code>", "<code>class</code>" mean?</a></h2>
+	   <h2><a id="import" name="import">What do the words "<code>import</code>", "<code>class</code>" mean?</a></h2>
 
       <div class="para">
         They're part of the jython language used for the scripting.
@@ -217,7 +217,7 @@
         </div>
 	  
     <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->	  
-      <h2><a id="threads">Why should I base my scripts on "Siglet" and "AbstractAutomaton" classes?</a></h2>
+      <h2><a id="threads" name="threads">Why should I base my scripts on "Siglet" and "AbstractAutomaton" classes?</a></h2>
  	  <!-- Section created by Jerry Grochow 2019-10-14 based on post to jmriusers@groups.io by Bob Jacobson 2018-11-01 -->
 
       
@@ -238,7 +238,7 @@
   
   
     <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->	  
-	  <h2><a id="siglet-automaton">What's the difference between the "Siglet" and
+	  <h2><a id="siglet-automaton" name="siglet-automaton">What's the difference between the "Siglet" and
       "AbstractAutomaton" classes?</a></h2>
 
       <div class="para">
