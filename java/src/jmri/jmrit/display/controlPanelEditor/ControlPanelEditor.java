@@ -464,6 +464,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             if (_itemPalette != null) {
                 _itemPalette.dispose();
             }
+            _circuitBuilder.closeCBWindow();
         });
 
         _fileMenu.addSeparator();
@@ -1063,6 +1064,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                             }
                             if (((String) select).equals(name)) {
                                 _manualSelection = true;
+                                highlight(pos);
                                 return pos;
                             }
                         }
@@ -1230,8 +1232,10 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 
         if ((event.isPopupTrigger() || event.isMetaDown() || event.isAltDown()) /*&& !_dragging*/) {
             if (selection != null) {
-                _highlightcomponent = null;
-                showPopUp(selection, event);
+                if (!_circuitBuilder.isEditing(selection)) {
+                    _highlightcomponent = null;
+                    showPopUp(selection, event);
+                }
             } else if (_selectRect != null) {
                 makeSelectionGroup(event);
             }
@@ -1307,8 +1311,10 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 
         if (event.isPopupTrigger() || event.isMetaDown() || event.isAltDown()) {
             if (selection != null) {
-                _highlightcomponent = null;
-                showPopUp(selection, event);
+                if (!_circuitBuilder.isEditing(selection)) {
+                    _highlightcomponent = null;
+                    showPopUp(selection, event);
+                }
             }
         } else if (selection != null) {
             if (_circuitBuilder.doMouseClicked(getSelectedItems(event), event)) {

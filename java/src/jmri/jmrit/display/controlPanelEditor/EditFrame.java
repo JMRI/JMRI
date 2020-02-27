@@ -95,7 +95,32 @@ public abstract class EditFrame extends jmri.util.JmriJFrame {
 
         return panel;
     }
-    
+
+    protected void checkCircuitIcons(String editType) {
+        StringBuilder sb = new StringBuilder();
+        String msg = _parent.checkForTrackIcons(_homeBlock, editType);
+        if (msg.length() > 0) {
+            _canEdit = false;
+            sb.append(msg);
+            sb.append("\n");
+        }
+        msg = _parent.checkForPortals(_homeBlock, editType);
+        if (msg.length() > 0) {
+            _canEdit = false;
+            sb.append(msg);
+            sb.append("\n");
+        }
+        msg = _parent.checkForPortalIcons(_homeBlock, editType);
+        if (msg.length() > 0) {
+            _canEdit = false;
+            sb.append(msg);
+        }
+        if (!_canEdit) {
+            JOptionPane.showMessageDialog(this, sb.toString(),
+                    Bundle.getMessage("incompleteCircuit"), JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
     protected void clearListSelection() {
     }
 
@@ -136,5 +161,4 @@ public abstract class EditFrame extends jmri.util.JmriJFrame {
         _loc = location;
         _dim = size;
     }
-//    private final static Logger log = LoggerFactory.getLogger(EditFrame.class);
 }

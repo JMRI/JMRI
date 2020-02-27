@@ -2,6 +2,8 @@ package jmri.jmrit.display.controlPanelEditor;
 
 import java.awt.GraphicsEnvironment;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
@@ -148,23 +150,31 @@ public class CircuitBuilderTest {
 
         OBlock block = InstanceManager.getDefault(OBlockManager.class).getByUserName("WestSiding");
         Portal portal = InstanceManager.getDefault(jmri.jmrit.logix.PortalManager.class).getPortal("Crapolla");
-        cb.editPortalError(block, portal, null);
+        java.util.List<PortalIcon> list = cb.getPortalIconMap(portal);
+        PortalIcon icon = list.get(0);
+        cb.editPortalError(block, portal, icon);
         
         JFrameOperator nfo = new JFrameOperator(cb.getEditFrame());
         JemmyUtil.pressButton(nfo, Bundle.getMessage("ButtonDone"));
     }
 
     @Test
-    @org.junit.Ignore("Cannot get button pushed!")
+    @org.junit.Ignore("Cannot get Button pushed!")
     public void testNoBlock() {
         getCPEandCB();
         cb.editCircuitPaths("editCircuitPathsItem", false);
         
-//        JFrameOperator frame = new JFrameOperator(cb.getEditFrame());
-//        JDialogOperator jdo = new JDialogOperator(frame, Bundle.getMessage("NeedDataTitle"));
-        JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("NeedDataTitle"));
-        JButtonOperator ok = new JButtonOperator(jdo, "OK");
+        JFrameOperator frame = new JFrameOperator(cb.getEditFrame());
+        JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("editCircuitPathsItem"));
+        JButtonOperator cancel = new JButtonOperator(jdo, "ButtonCancel");
+        cancel.push();
+/*        JButtonOperator ok = new JButtonOperator(jdo, "ButtonOpenCircuit");
         ok.push();
+        JDialogOperator jdo1 = new JDialogOperator(jdo, Bundle.getMessage("NeedDataTitle"));
+        JButtonOperator ok1 = new JButtonOperator(jdo1, "OK");
+        ok1.push();
+        JButtonOperator cancel = new JButtonOperator(jdo, "ButtonCancel");
+        cancel.push();*/
     }
 
     void getCPEandCB() {

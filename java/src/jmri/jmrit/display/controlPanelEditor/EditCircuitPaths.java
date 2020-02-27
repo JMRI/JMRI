@@ -51,26 +51,13 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
     private PathListModel _pathListModel;
     private OPath _currentPath;
 
-    private boolean _pathChange = false;
     private LengthPanel _lengthPanel;
     public static final String TEST_PATH = "TEST_PATH";
 
     public EditCircuitPaths(String title, CircuitBuilder parent, OBlock block) {
         super(title, parent, block);
+        checkCircuitIcons("BlockPaths");
         pack();
-        String msg = _parent.checkForTrackIcons(_homeBlock, "BlockPaths");
-        if (msg == null) {
-            msg = _parent.checkForPortals(block, "BlockPaths");
-        }
-        if (msg == null) {
-            msg = _parent.checkForPortalIcons(block, "BlockPaths");
-        } else {
-            _canEdit = false;
-        }
-        if (msg != null) {
-            JOptionPane.showMessageDialog(this, msg,
-                    Bundle.getMessage("incompleteCircuit"), JOptionPane.INFORMATION_MESSAGE);
-        }
     }
 
     @Override
@@ -243,7 +230,17 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
         }
         if (_currentPath != null) {
             if (!_currentPath.equals(path)) {
-                checkForSavePath();
+                String msg = checkForSavePath();
+                if (msg != null && msg.length() > 0) {
+                    StringBuilder  sb = new StringBuilder (msg);
+                    sb.append("\n");
+                    sb.append(Bundle.getMessage("saveChanges"));
+                    int answer = JOptionPane.showConfirmDialog(this, sb.toString(), Bundle.getMessage("makePath"),
+                            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    if (answer == JOptionPane.YES_OPTION) {
+                        addNewPath(false);
+                    }
+                }
             } else {
                 return;
             }
@@ -405,28 +402,32 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
     }
 
     private String findErrors() {
+        StringBuilder  sb = new StringBuilder();
         String name = _pathName.getText();
         if (_currentPath != null && !_currentPath.getName().equals(name)) {
-            return Bundle.getMessage("samePath", _currentPath.getName(), name);
+            sb.append(Bundle.getMessage("samePath", _currentPath.getName(), name));
+            sb.append("\n");
         }
-        String msg = null;
         java.util.List<Path> list = _homeBlock.getPaths();
         if (list.isEmpty()) {
-            msg = Bundle.getMessage("noPaths", _homeBlock.getDisplayName());
+            sb.append(Bundle.getMessage("noPaths", _homeBlock.getDisplayName()));
         } else {
             for (int i = 0; i < list.size(); i++) {
                 OPath path = (OPath) list.get(i);
                 ArrayList<Positionable> pathGp = makePathGroup(path);
                 if (pathGp.isEmpty()) {
-                    msg = Bundle.getMessage("noPathIcons", path.getName());
-                    break;
+                    sb.append(Bundle.getMessage("noPathIcons", path.getName()));
+                    sb.append("\n");
                 } else {
-                    msg =  checkIcons(path.getName(), pathGp);
-                    break;
+                    String msg = checkIcons(path.getName(), pathGp);
+                    if (msg != null) {
+                        sb.append(msg);
+                        sb.append("\n");
+                    }
                 }
             }
         }
-        return msg;
+        return sb.toString();
     }
 
     private boolean pathIconsEqual(ArrayList<Positionable> pathGp1, ArrayList<Positionable> pathGp2) {
@@ -445,34 +446,26 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
     /**
      * Checks if icons of path are different
      */
-    private void checkForSavePath() {
+    private String checkForSavePath() {
+        StringBuilder  sb = new StringBuilder();
         String name = _pathName.getText();
         if (name.trim().length() == 0) {
-            _pathChange = false;
-            return;
+            return null;
         }
         if (_currentPath != null) {
             if (!pathIconsEqual(_pathGroup, _savePathGroup)) {
-                _pathChange = true;
+                sb.append(Bundle.getMessage("pathIconsChanged", name));
+                sb.append("\n");
             }
             if (_lengthPanel.isChanged(_currentPath.getLengthMm())) {
-                _pathChange = true;
+                sb.append(Bundle.getMessage("pathlengthChanged", name));
+                sb.append("\n");
             }
         } else if(_pathGroup.size() > 0){
-            _pathChange = true;
+            sb.append(Bundle.getMessage("pathIconsChanged", name));
+            sb.append("\n");
         }
-        if (_pathChange) {
-            StringBuilder sb = new StringBuilder(Bundle.getMessage("savePath", name));
-            sb.append(" ");
-            sb.append(Bundle.getMessage("saveChanges"));
-            int answer = JOptionPane.showConfirmDialog(this, sb.toString(), Bundle.getMessage("makePath"),
-                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (answer == JOptionPane.YES_OPTION) {
-                addNewPath(false);
-            }
-            _pathChange = false;
-        }
-        return;
+        return sb.toString();
     }
 
     //////////////////////////// end setup ////////////////////////////
@@ -566,8 +559,6 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
         if (msg != null) {
             JOptionPane.showMessageDialog(this, msg,
                     Bundle.getMessage("makePath"), JOptionPane.INFORMATION_MESSAGE);
-        }
-        if (portalIconCount == 0) {
             return null;
         }
 
@@ -595,20 +586,15 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
         OPath newPath = makeOPath(name, _pathGroup);
         if (newPath == null) {
             // proper OPath cannot be made
-            if (_currentPath != null) {
-                newPath = _currentPath;
-            } else {
-                return;
-            }
-        } else {
-            // is this path already defined?
-            Iterator<Path> iter = _homeBlock.getPaths().iterator();
-            while (iter.hasNext()) {
-                OPath p = (OPath) iter.next();
-                if (newPath.equals(p)) {
-                    otherPath = p;
-                    break;
-                }
+            return;
+        }
+        // is this path already defined?
+        Iterator<Path> iter = _homeBlock.getPaths().iterator();
+        while (iter.hasNext()) {
+            OPath p = (OPath) iter.next();
+            if (newPath.equals(p)) {
+                otherPath = p;
+                break;
             }
         }
         if (log.isDebugEnabled()) {
@@ -629,9 +615,6 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
             samePath = true;
             if (!name.equals(otherPath.getName())) {
                 if (_currentPath != null && !pathIconsEqual(_pathGroup, _savePathGroup)) {
-                    // settings have been changed on _currentPath to match those of another path
-                    JOptionPane.showMessageDialog(this, Bundle.getMessage("samePath", otherPath.getName(), name),
-                            Bundle.getMessage("makePath"), JOptionPane.INFORMATION_MESSAGE);
                     OPath p = _homeBlock.getPathByName(name);
                     _currentPath = null;
                     if (p != null && fromButton) {
@@ -639,6 +622,7 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
                     }
                     return;
                 }
+                // settings have been changed on _currentPath to match those of another path
                 int result = JOptionPane.showConfirmDialog(this, Bundle.getMessage("changeName",
                         name, otherPath.getName()),
                         Bundle.getMessage("makePath"), JOptionPane.YES_NO_OPTION,
@@ -760,29 +744,15 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
 
     @Override
     protected void closingEvent(boolean close) {
-        checkForSavePath();
-        StringBuffer sb = new StringBuffer();
-        String msg = _parent.checkForTrackIcons(_homeBlock, "BlockPaths");
-        if(msg != null) {
+        StringBuilder  sb = new StringBuilder ();
+        String msg = checkForSavePath();
+        if(msg != null && msg.length() > 0) {
             sb.append(msg);
             sb.append("\n");
-            close = true;
-        } else {
-            msg = _parent.checkForPortals(_homeBlock, "BlockPaths");
-            if (msg == null) {
-                msg = _parent.checkForPortalIcons(_homeBlock, "BlockPaths");
-            } else {
-                sb.append(msg);
-                sb.append("\n");
-                close = true;
-            }
         }
-        if (_canEdit) {
-            msg = findErrors();
-            if (msg != null) {
-                sb.append(msg);
-                sb.append("\n");
-            }
+        msg = findErrors();
+        if (msg.length() > 0) {
+            sb.append(msg);
         }
         if (closingEvent(close, sb.toString())) {
             _pathName.setText(null);

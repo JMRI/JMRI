@@ -56,26 +56,31 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
         _portalName.setText(name);
         _adjacentBlock = portal.getOpposingBlock(block);
 
-        String msg = null;
+        StringBuilder sb = new StringBuilder();
         if (icon != null) {
             setSelected(icon);
         } else {
-            msg = Bundle.getMessage("portalHasNoIcon", name); 
+            sb.append(Bundle.getMessage("portalHasNoIcon", name)); 
+            sb.append("\n");
         }
         if (_canEdit) {
-            msg = _parent.checkForPortals(block, "BlockPaths");
-            if (msg != null) {
-                StringBuilder sb = new StringBuilder(msg);
+//            checkCircuitIcons("BlockPortals");
+            String msg = _parent.checkForPortals(block, "BlockPaths");
+            if (msg.length() > 0) {
+                sb.append(msg);
                 sb.append("\n");
                 sb.append(Bundle.getMessage("portalIconPosition"));
-                msg = sb.toString();
+                sb.append("\n");
+            }
+            msg = _parent.checkForPortalIcons(block, "DirectionArrow");
+            if (msg.length() > 0) {
+                sb.append(msg);
+                sb.append("\n");
             }
         }
-        if (_canEdit && msg == null) {
-            msg = _parent.checkForPortalIcons(block, "DirectionArrow");
-        }
-        if (msg != null) {
-            JOptionPane.showMessageDialog(this, msg, Bundle.getMessage("incompleteCircuit"), JOptionPane.INFORMATION_MESSAGE);
+        if (sb.toString().length() > 0) {
+            JOptionPane.showMessageDialog(this, sb.toString(), 
+                    Bundle.getMessage("incompleteCircuit"), JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
@@ -83,10 +88,8 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
         super(title, parent, block);
         pack();
         String msg = _parent.checkForTrackIcons(block, "BlockPortals");
-        if (msg != null) {
+        if (msg.length() > 0) {
             _canEdit = false;
-        }
-        if (msg != null) {
             JOptionPane.showMessageDialog(this, msg,
                     Bundle.getMessage("incompleteCircuit"), JOptionPane.INFORMATION_MESSAGE);
         }
@@ -270,15 +273,15 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
 
     @Override
     protected void closingEvent(boolean close) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder  sb = new StringBuilder ();
         String msg = _parent.checkForPortals(_homeBlock, "BlockPaths");
-        if(msg != null) {
+        if(msg.length() > 0) {
             sb.append(msg);
             sb.append("\n");
         }
         if (_canEdit) {
             msg = _parent.checkForPortalIcons(_homeBlock, "BlockPaths");
-            if(msg != null) {
+            if(msg.length() > 0) {
                 sb.append(msg);
                 sb.append("\n");
             }

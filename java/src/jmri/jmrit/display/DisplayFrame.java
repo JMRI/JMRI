@@ -138,7 +138,6 @@ public class DisplayFrame extends JmriJFrame {
             log.debug(" deltaDim= ({}, {}) NewDim= ({}, {}) setPreferredSize to ({}, {})", 
                 deltaDim.width, deltaDim.height, newDim.width, newDim.height, dim.width, dim.height);
         pack();
-        setLocation(jmri.util.PlaceWindow.nextTo(ed, null, this));
         if (log.isDebugEnabled()) {
             dim = container.getSize();
             log.debug(" Resized to ({}, {})", dim.width, dim.height);

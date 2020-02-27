@@ -717,13 +717,13 @@ public class CircuitBuilder {
             _currentBlock = _oblockModel.getBeanAt(row);
             return true;
         }
+        _currentBlock = null;
         selectPrompt();
         return false;
     }
     private void selectPrompt() {
         JOptionPane.showMessageDialog(_editor, Bundle.getMessage("selectOBlock"),
                 Bundle.getMessage("NeedDataTitle"), JOptionPane.INFORMATION_MESSAGE);
-        _currentBlock = null;
     }
 
     /*
@@ -1049,8 +1049,6 @@ public class CircuitBuilder {
         for (Positionable pos : list) {
             if (pos instanceof IndicatorTrack) {
                 ((IndicatorTrack) pos).setOccBlockHandle(null);
-/*            } else if (pos instanceof PortalIcon) {
-                pos.remove();*/
             }
             _darkTrack.add(pos);
         }
@@ -1061,22 +1059,27 @@ public class CircuitBuilder {
     }
 
     protected String checkForPortals(@Nonnull OBlock block, String key) {
+        StringBuilder  sb = new StringBuilder ("");
         List<Portal> portals = block.getPortals();
         if (portals.isEmpty()) {
-            return Bundle.getMessage("needPortal", block.getDisplayName(), Bundle.getMessage(key));
+            sb.append(Bundle.getMessage("needPortal", block.getDisplayName(), Bundle.getMessage(key)));
         } else {
             for (Portal portal : portals) {
                 if (portal.getToBlock() == null || portal.getFromBlock() == null) {
-                    return  Bundle.getMessage("portalNeedsBlock", portal.getName());
+                    sb.append(Bundle.getMessage("portalNeedsBlock", portal.getName()));
+                    sb.append("\n");
+//                    break;
                 }
             }
             for (Portal portal : portals) {
                 if (!block.equals(portal.getToBlock()) && !block.equals(portal.getFromBlock())) {
-                    return Bundle.getMessage("portalNotInCircuit", portal.getName(), block.getDisplayName());
+                    sb.append(Bundle.getMessage("portalNotInCircuit", portal.getName(), block.getDisplayName()));
+                    sb.append("\n");
+//                    break;
                 }
             }
         }
-        return null;
+        return sb.toString();
     }
 
     /**
@@ -1086,18 +1089,25 @@ public class CircuitBuilder {
      * @return true if at least one PortalIcon found
      */
     protected String checkForPortalIcons(@Nonnull OBlock block, String key) {
+        StringBuilder  sb = new StringBuilder ();
         List<Portal> portals = block.getPortals();
         for (Portal portal : portals) {
             List<PortalIcon> iconMap = getPortalIconMap(portal);
             if (iconMap.isEmpty()) {
-                return Bundle.getMessage("noPortalIcon", portal.getName(), Bundle.getMessage(key));
+                sb.append(Bundle.getMessage("noPortalIcon", portal.getName(), Bundle.getMessage(key)));
+                sb.append("\n");
             } else {
                 for (PortalIcon icon : iconMap) {
                     Portal p = icon.getPortal();
                     if (p == null) {
                         deletePortalIcon(icon);
                     } else if (_editFrame instanceof EditPortalFrame) {
-                        return ((EditPortalFrame)_editFrame).checkPortalIconForUpdate(icon, false);
+                        String msg = ((EditPortalFrame)_editFrame).checkPortalIconForUpdate(icon, false);
+                        if (msg != null) {
+                            sb.append(msg);
+                            sb.append("\n");                            
+//                          break;
+                        }
                     } 
                 }
             }
@@ -1113,33 +1123,33 @@ public class CircuitBuilder {
             }
         }
         if (!ok) {
-            return Bundle.getMessage("needPortalIcons", block.getDisplayName(), Bundle.getMessage(key));
+            sb.append(Bundle.getMessage("needPortalIcons", block.getDisplayName(), Bundle.getMessage(key)));
         }
-        return null;
+        return sb.toString();
     }
 
     protected String checkForTrackIcons(@Nonnull OBlock block, String key) {
-        String msg = null;
+        StringBuilder sb = new StringBuilder();
+        boolean ok = true;
         List<Positionable> list = getCircuitIcons(block);
         if (list.isEmpty()) {
-            msg = Bundle.getMessage("needIcons", block.getDisplayName(), Bundle.getMessage(key));
+            ok = false;
         } else {
-            boolean ok = true;
             for (Positionable p : list) {
                 PositionableLabel pos = (PositionableLabel) p;
                 if (CircuitBuilder.isUnconvertedTrack(pos)) {
                     ok = false;
+                    sb.append(Bundle.getMessage("cantSaveIcon", block.getDisplayName()));
+                    sb.append("\n");                            
                     break;
                 }
             }
-            if (!ok) {
-                StringBuilder sb = new StringBuilder(Bundle.getMessage("cantSaveIcon", block.getDisplayName()));
-                sb.append("\n");
-                sb.append(Bundle.getMessage("needIcons", block.getDisplayName(), Bundle.getMessage(key)));
-                msg = sb.toString();
-            }
         }
-        return msg;
+        if (!ok) {
+            sb.append(Bundle.getMessage("needIcons", block.getDisplayName(), Bundle.getMessage(key)));
+            sb.append("\n");
+        }
+        return sb.toString();
     }
 
     protected void deletePortalIcon(PortalIcon icon) {
@@ -1328,6 +1338,16 @@ public class CircuitBuilder {
         return _editFrame != null;
     }
 
+    protected boolean isEditing(Positionable selection) {
+        if (_editFrame != null) {
+            if (!isTrack(selection)) {
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
+
     /**
      * If CircuitBuilder is in progress, restore what editor nulls.
      *
@@ -1435,6 +1455,7 @@ public class CircuitBuilder {
                     while (iter.hasNext()) {
                         Positionable pos = iter.next();
                         if (((String) select).equals(pos.getNameString())) {
+                            _editor.highlight(pos);
                             return pos;
                         }
                     }
