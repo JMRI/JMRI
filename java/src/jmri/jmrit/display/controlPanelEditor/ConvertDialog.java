@@ -90,12 +90,6 @@ class ConvertDialog extends JDialog {
                 };
             }
             _panel.init(updateAction);
-            Dimension dim = _panel.getPreferredSize();
-//            JScrollPane sp = new JScrollPane(_panel);
-            dim = new Dimension(dim.width +25, dim.height + 25);
-//            add(_panel);
-//            sp.setPreferredSize(dim);
-            _panel.setPreferredSize(dim);
             add(_panel);
             setTitle(Bundle.getMessage(title));
             pack();
@@ -109,22 +103,11 @@ class ConvertDialog extends JDialog {
          * need to do for reSizeDisplay and reSize
          */
         private void displayIcons() {
-            Dimension oldDim = _panel.getSize();
-            Dimension totalDim = getSize();
             _panel.invalidate();
             invalidate();
-            Dimension newDim = _panel.getPreferredSize();
-            Dimension deltaDim = new Dimension(totalDim.width - oldDim.width, totalDim.height - oldDim.height);
-            Dimension dim = new Dimension(deltaDim.width + newDim.width + 10, 
-                    deltaDim.height + newDim.height + 10);
-            setPreferredSize(dim);
             pack();
             setLocation(location);
             repaint();
-            if (log.isDebugEnabled()) {
-                log.debug(" panelDim= ({}, {}) totalDim= ({}, {}) setPreferredSize to ({}, {})", 
-                        oldDim.width, oldDim.height, newDim.width, newDim.height, dim.width, dim.height);
-            }
         }
 
         private void convertTO(OBlock block) {
@@ -185,5 +168,5 @@ class ConvertDialog extends JDialog {
             dispose();
         }
 
-        private final static Logger log = LoggerFactory.getLogger(ConvertDialog.class);
+//        private final static Logger log = LoggerFactory.getLogger(ConvertDialog.class);
     }

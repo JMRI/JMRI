@@ -165,16 +165,16 @@ public class CircuitBuilderTest {
         cb.editCircuitPaths("editCircuitPathsItem", false);
         
         JFrameOperator frame = new JFrameOperator(cb.getEditFrame());
-        JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("editCircuitPathsItem"));
+        JDialogOperator jdo = new JDialogOperator(frame, Bundle.getMessage("editCircuitPathsItem"));
+        JButtonOperator select = new JButtonOperator(jdo, "ButtonOpenCircuit");
+        select.push();
+        JDialogOperator jdo1 = new JDialogOperator(jdo, Bundle.getMessage("NeedDataTitle"));
+        JButtonOperator ok = new JButtonOperator(jdo1, "OK");
+        ok.push();
         JButtonOperator cancel = new JButtonOperator(jdo, "ButtonCancel");
         cancel.push();
-/*        JButtonOperator ok = new JButtonOperator(jdo, "ButtonOpenCircuit");
-        ok.push();
-        JDialogOperator jdo1 = new JDialogOperator(jdo, Bundle.getMessage("NeedDataTitle"));
-        JButtonOperator ok1 = new JButtonOperator(jdo1, "OK");
-        ok1.push();
-        JButtonOperator cancel = new JButtonOperator(jdo, "ButtonCancel");
-        cancel.push();*/
+
+        JemmyUtil.pressButton(frame, Bundle.getMessage("ButtonDone"));
     }
 
     void getCPEandCB() {

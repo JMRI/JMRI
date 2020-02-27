@@ -237,7 +237,7 @@ public class EditCircuitFrame extends EditFrame implements PropertyChangeListene
                 sb.append("\n");
             }
         }
-        if (!systemName.startsWith("OB") || systemName.length() < 3) {
+        if (!mgr.isValidSystemNameFormat(systemName) || systemName.length() < 3) {
             sb.append(Bundle.getMessage("sysnameOBlock"));
             sb.append("\n");
         } else {
