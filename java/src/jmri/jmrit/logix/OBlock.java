@@ -9,7 +9,9 @@ import java.util.Map.Entry;
 import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import jmri.InstanceManager;
+import jmri.NamedBean;
 import jmri.NamedBeanHandle;
+import jmri.NamedBeanUsageReport;
 import jmri.Path;
 import jmri.Sensor;
 import jmri.Turnout;
@@ -119,7 +121,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     private boolean _metric = false; // desired display mode
     private NamedBeanHandle<Sensor> _errNamedSensor;
     // pathName keys a list of Blocks whose paths conflict with the path. These Blocks key
-    // a list of their conflicting paths. 
+    // a list of their conflicting paths.
     // A conflicting path has a turnout that is shared with a 'pathName'
     private final HashMap<String, List<HashMap<OBlock, List<OPath>>>> _sharedTO
             = new HashMap<>();
@@ -915,7 +917,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         }
         for (Portal portal : getPortals()) {
             if (log.isDebugEnabled()) {
-                log.debug("this = {}, toBlock = {}, fromblock= {}", getDisplayName(), 
+                log.debug("this = {}, toBlock = {}, fromblock= {}", getDisplayName(),
                         portal.getToBlock().getDisplayName(), portal.getFromBlock().getDisplayName());
             }
             if (this.equals(portal.getToBlock())) {
@@ -936,6 +938,62 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     public String getDescription() {
         return java.text.MessageFormat.format(
                 Bundle.getMessage("BlockDescription"), getDisplayName());
+    }
+
+    @Override
+    public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
+        List<NamedBeanUsageReport> report = new ArrayList<>();
+        List<NamedBean> duplicateCheck = new ArrayList<>();
+        if (bean != null) {
+            log.debug("oblock: {}, sensor = {}", getDisplayName(), getSensor().getDisplayName());  // NOI18N
+            if (bean.equals(getSensor())) {
+                report.add(new NamedBeanUsageReport("OBlockSensor"));  // NOI18N
+            }
+            if (bean.equals(getErrorSensor())) {
+                report.add(new NamedBeanUsageReport("OBlockSensorError"));  // NOI18N
+            }
+            if (bean.equals(getWarrant())) {
+                report.add(new NamedBeanUsageReport("OBlockWarant"));  // NOI18N
+            }
+
+            getPortals().forEach((portal) -> {
+                log.debug("    portal: {}, fb = {}, tb = {}, fs = {}, ts = {}",  // NOI18N
+                        portal.getName(), portal.getFromBlockName(), portal.getToBlockName(),
+                        portal.getFromSignalName(), portal.getToSignalName());
+                if (bean.equals(portal.getFromBlock()) || bean.equals(portal.getToBlock())) {
+                    report.add(new NamedBeanUsageReport("OBlockPortalNeighborOBlock", portal.getName()));  // NOI18N
+                }
+                if (bean.equals(portal.getFromSignal()) || bean.equals(portal.getToSignal())) {
+                    report.add(new NamedBeanUsageReport("OBlockPortalSignal", portal.getName()));  // NOI18N
+                }
+
+                portal.getFromPaths().forEach((path) -> {
+                    log.debug("        from path = {}", path.getName());  // NOI18N
+                    path.getSettings().forEach((setting) -> {
+                        log.debug("            turnout = {}", setting.getBean().getDisplayName());  // NOI18N
+                        if (bean.equals(setting.getBean())) {
+                            if (!duplicateCheck.contains(bean)) {
+                                report.add(new NamedBeanUsageReport("OBlockPortalPathTurnout", portal.getName()));  // NOI18N
+                                duplicateCheck.add(bean);
+                            }
+                        }
+                    });
+                });
+                portal.getToPaths().forEach((path) -> {
+                    log.debug("        to path   = {}", path.getName());  // NOI18N
+                    path.getSettings().forEach((setting) -> {
+                        log.debug("            turnout = {}", setting.getBean().getDisplayName());  // NOI18N
+                        if (bean.equals(setting.getBean())) {
+                            if (!duplicateCheck.contains(bean)) {
+                                report.add(new NamedBeanUsageReport("OBlockPortalPathTurnout", portal.getName()));  // NOI18N
+                                duplicateCheck.add(bean);
+                            }
+                        }
+                    });
+                });
+            });
+        }
+        return report;
     }
 
     @Override

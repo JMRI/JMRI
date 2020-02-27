@@ -4781,6 +4781,28 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     }
 
     @Override
+    public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
+        List<NamedBeanUsageReport> report = new ArrayList<>();
+        if (bean != null) {
+            if (bean.equals(getBlock())) {
+                report.add(new NamedBeanUsageReport("LayoutBlockBlock"));  // NOI18N
+            }
+            if (bean.equals(getMemory())) {
+                report.add(new NamedBeanUsageReport("LayoutBlockMemory"));  // NOI18N
+            }
+            if (bean.equals(getOccupancySensor())) {
+                report.add(new NamedBeanUsageReport("LayoutBlockSensor"));  // NOI18N
+            }
+            for (int i = 0; i < getNumberOfNeighbours(); i++) {
+                if (bean.equals(getNeighbourAtIndex(i))) {
+                    report.add(new NamedBeanUsageReport("LayoutBlockNeighbor", "Neighbor"));  // NOI18N
+                }
+            }
+        }
+        return report;
+    }
+
+    @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNameLayoutBlock");
     }

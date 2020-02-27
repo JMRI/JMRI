@@ -198,15 +198,16 @@ public class CatalogPanel extends JPanel {
      * @param path       the path on the new branch
      */
     public void createNewBranch(String systemName, String userName, String path) {
-
-        CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
-        CatalogTree tree = manager.getBySystemName(systemName);
-        if (tree != null) {
-            jmri.util.ThreadingUtil.runOnGUI(() -> addTree(tree));
-        } else {
-            final CatalogTree t = manager.newCatalogTree(systemName, userName);
-            t.insertNodes(path);
-            jmri.util.ThreadingUtil.runOnGUI(() -> addTree(t));
+        synchronized (_lock) {
+            CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
+            CatalogTree tree = manager.getBySystemName(systemName);
+            if (tree != null) {
+                jmri.util.ThreadingUtil.runOnGUI(() -> addTree(tree));
+            } else {
+                final CatalogTree t = manager.newCatalogTree(systemName, userName);
+                t.insertNodes(path);
+                jmri.util.ThreadingUtil.runOnGUI(() -> addTree(t));
+            }
         }
     }
 
@@ -689,6 +690,7 @@ public class CatalogPanel extends JPanel {
     }
 
     public static CatalogPanel makeDefaultCatalog() {
+        log.trace("call to makeDefaultCatalog()", new Exception("traceback"));
         log.debug("CatalogPanel catalog requested");
         synchronized(_lock) {
             return makeDefaultCatalog(true, false, true); // deactivate dragNdrop? (true, true, false)
@@ -696,6 +698,7 @@ public class CatalogPanel extends JPanel {
     }
 
     public static CatalogPanel makeDefaultCatalog(boolean addButtonPanel, boolean treeDrop, boolean dragIcon) {
+        log.trace("call to makeDefaultCatalog({},{},{})", addButtonPanel, treeDrop, dragIcon, new Exception("traceback"));
         synchronized(_lock) {
             CatalogPanel catalog = new CatalogPanel("catalogs", "selectNode", addButtonPanel);
             catalog.init(treeDrop, dragIcon);
@@ -724,6 +727,7 @@ public class CatalogPanel extends JPanel {
      * @return the created CatalogPanel
      */
     public static CatalogPanel makeCatalog(String label1, String label2, boolean addButtonPanel, boolean treeDnD, boolean dragIcons) {
+        log.trace("call to makeCatalog", new Exception("traceback"));
         synchronized(_lock) {
             CatalogPanel cp = new CatalogPanel(label1, label2, addButtonPanel);
             cp.init(treeDnD, dragIcons);
