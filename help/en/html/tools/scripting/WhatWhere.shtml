@@ -20,14 +20,14 @@
     <!-- /Style -->
 </head>
 
-<body id="WhatWhereTopOfPage">
+<body>
   <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
       <!-- Page Body -->
 
-      <h1><a name="WhatWhereTopOfPage">JMRI: "What...Where" of Jython Scripting with JMRI</a></h1>
+      <h1><a id="WhatWhereTopOfPage" name="WhatWhereTopOfPage">JMRI: "What...Where" of Jython Scripting with JMRI</a></h1>
  	  <!-- Page reorganized by Jerry Grochow 2018-11-29 -->
 
 

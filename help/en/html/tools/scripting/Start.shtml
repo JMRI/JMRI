@@ -20,14 +20,14 @@
   <!-- /Style -->
 </head>
 
-<body id="StartTopOfPage">
+<body>
   <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
       <!-- Page Body -->
 
-      <h1><a name="StartTopOfPage">JMRI: Getting Started with Scripting</a></h1>
+      <h1><a id="StartTopOfPage" name="StartTopOfPage">JMRI: Getting Started with Scripting</a></h1>
 
 	  <p>The easiest way to learn how to use scripts in JMRI is to study the simplest examples first
       and work your way into more complex details. The sections below discuss various aspects of scripting
