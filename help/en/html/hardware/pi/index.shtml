@@ -30,7 +30,7 @@
 
       <h1>Hardware Setup Support: Raspberry Pi via GPIO</h1>
 
-      <p>The <a href="http://www.raspberrypi.org">Raspberry Pi</a>
+      <p>The <a href="http://www.raspberrypi.org" target="_blank">Raspberry Pi</a>
       is a family of inexpensive credit card size single board
       computers that have many applications in embedded
       electronics. This page describes the use of the Raspberry
@@ -43,6 +43,10 @@
       "528" height="300" align="right" title=
       "Pi2 model B (&copy; www.raspberrypi.org)"> <a name=
       "hardware" id="hardware"></a>
+
+      <p class="noted">The Raspberry Pi can also be used to run a full version of JMRI under the
+      Raspian operating system. See <a href="../../../../../install/Raspbian.shtml">here for information </a>
+      on how to install JMRI on a Raspberry Pi.</p>
 
       <h2>Supported Hardware</h2>
 
