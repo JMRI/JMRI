@@ -11,6 +11,7 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
+
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
@@ -24,8 +25,10 @@ public class EditPortalDirectionTest {
     OBlockManager blkMgr;
 
     @Test
-    public void testCTor() {
+    public void testSetup() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+        
         ControlPanelEditor frame = new ControlPanelEditor("EditPortalDirectionTest");
         frame.makeCircuitMenu(true);
         CircuitBuilder cb = frame.getCircuitBuilder();
@@ -45,6 +48,24 @@ public class EditPortalDirectionTest {
         JUnitUtil.dispose(dFrame);
     }
 
+    @Test
+    public void testPart() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        
+        ControlPanelEditor frame = new ControlPanelEditor("EditPortalDirectionTest");
+        frame.makeCircuitMenu(true);
+        CircuitBuilder cb = frame.getCircuitBuilder();
+        OBlock ob1 = blkMgr.createNewOBlock("OB1", "a");
+
+        EditPortalDirection dFrame = new EditPortalDirection("Edit Direction Arrows", cb, ob1){
+            protected void contructorChecks(String title, CircuitBuilder parent, OBlock block) {}
+        };
+        Assert.assertNotNull("exists", dFrame);
+        
+        JUnitUtil.dispose(frame);
+        JUnitUtil.dispose(dFrame);
+    }
+    
     // The minimal setup for log4J
     @Before
     public void setUp() {
