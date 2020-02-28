@@ -92,7 +92,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         setTitle(Bundle.getMessage("TitleOBlocks"));
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
-        fileMenu.add(new jmri.configurexml.SaveMenu());
+        fileMenu.add(new jmri.configurexml.StoreMenu());
 
         JMenuItem printItem = new JMenuItem(Bundle.getMessage("PrintOBlockTable"));
         fileMenu.add(printItem);

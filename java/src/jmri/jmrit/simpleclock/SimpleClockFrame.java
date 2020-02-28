@@ -437,7 +437,7 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
         menuBar.add(fileMenu);
-        fileMenu.add(new jmri.configurexml.SaveMenu());
+        fileMenu.add(new jmri.configurexml.StoreMenu());
 
         setJMenuBar(menuBar);
         // add help menu to window
