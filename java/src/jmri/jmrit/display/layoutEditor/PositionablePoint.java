@@ -748,14 +748,12 @@ public class PositionablePoint extends LayoutTrack {
                 }
             } else {
                 log.error("{}.replaceTrackConnection({}, {}); Attempt to assign more than allowed number of connections",
-                        getName(), (oldTrack == null) ? "null" : oldTrack.getName(),
-                        (newTrack == null) ? "null" : newTrack.getName());
+                        getName(), (oldTrack == null) ? "null" : oldTrack.getName(), newTrack.getName());
                 result = false;
             }
         } else {
             log.warn("{}.replaceTrackConnection({}, {}); Already connected",
-                    getName(), (oldTrack == null) ? "null" : oldTrack.getName(),
-                    (newTrack == null) ? "null" : newTrack.getName());
+                    getName(), (oldTrack == null) ? "null" : oldTrack.getName(), newTrack.getName());
             result = false;
         }
         return result;

@@ -507,8 +507,8 @@ public class LayoutTurntable extends LayoutTrack {
                 setRayConnect((TrackSegment) o, connectionType - TURNTABLE_RAY_OFFSET);
             } else {
                 String errString = MessageFormat.format("{}.setConnection({}, {}, {}); Invalid object type: {}",
-                        getName(), connectionType, (o == null) ? "null" : o.getName(), type,
-                        (o == null) ? "null" : o.getClass().getName()); // NOI18N
+                        getName(), connectionType, (o == null) ? "null" : o.getName(),
+                        type, o.getClass().getName()); // NOI18N
                 log.error(errString); // NOI18N
                 throw new jmri.JmriException(errString);
             }
