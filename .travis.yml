@@ -55,7 +55,7 @@ os:
   - linux
 #  - osx # temporarilly disabled -- its more complex than originally anticipated to do conditional matrixes based on PR/push differentiation
 
-dist: xenial
+dist: bionic
 
 env:
   global:
