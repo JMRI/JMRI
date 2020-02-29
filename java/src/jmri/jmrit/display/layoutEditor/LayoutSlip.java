@@ -117,7 +117,7 @@ public class LayoutSlip extends LayoutTurnout {
             } else if (type == DOUBLE_SLIP) {
                 turnoutStates.put(STATE_BC, new TurnoutState(Turnout.THROWN, Turnout.CLOSED));
             } else {
-                log.error("Invalid slip Type " + slipType); //I18IN
+                log.error("{}.setSlipType({}); invalid slip type", getName(), slipType); //I18IN
             }
         }
     }
@@ -190,8 +190,10 @@ public class LayoutSlip extends LayoutTurnout {
             case SLIP_D:
                 return connectD;
             default:
-                log.error("Invalid Connection Type " + connectionType); //I18IN
-                throw new jmri.JmriException("Invalid Connection Type " + connectionType);
+                String errString = String.format("{}.getConnection({}); Invalid Connection Type",
+                        getName(), connectionType); //I18IN
+                log.error(errString);
+                throw new jmri.JmriException(errString);
         }
     }
 
@@ -201,8 +203,10 @@ public class LayoutSlip extends LayoutTurnout {
     @Override
     public void setConnection(int connectionType, @CheckForNull LayoutTrack o, int type) throws jmri.JmriException {
         if ((type != TRACK) && (type != NONE)) {
-            log.error("unexpected type of connection to layoutslip - " + type);
-            throw new jmri.JmriException("unexpected type of connection to layoutslip - " + type);
+            String errString = String.format("{}.setConnection({}, {}, {}); Invalid type",
+                    getName(), connectionType, (o == null) ? "null" : o.getName(), type); //I18IN
+            log.error(errString);
+            throw new jmri.JmriException(errString);
         }
         switch (connectionType) {
             case SLIP_A:
@@ -218,8 +222,10 @@ public class LayoutSlip extends LayoutTurnout {
                 connectD = o;
                 break;
             default:
-                log.error("Invalid Connection Type " + connectionType); //I18IN
-                throw new jmri.JmriException("Invalid Connection Type " + connectionType);
+                String errString = String.format("{}.setConnection({}, {}, {}); Invalid Connection Type",
+                        getName(), connectionType, (o == null) ? "null" : o.getName(), type); //I18IN
+                log.error(errString);
+                throw new jmri.JmriException(errString);
         }
     }
 
@@ -389,7 +395,7 @@ public class LayoutSlip extends LayoutTurnout {
                 break;
             }
             default: {
-                log.error("invalid slip state: {}", getSlipState());
+                log.error("{}.isOccupied(); invalid slip state: {}", getName(), getSlipState());
                 break;
             }
         }
@@ -492,7 +498,7 @@ public class LayoutSlip extends LayoutTurnout {
                 result = getCoordsRight();
                 break;
             default:
-                log.error("Invalid connection type " + connectionType); //I18IN
+                log.error("{}.getCoordsForConnectionType({}); Invalid connection type", getName(), connectionType); //I18IN
         }
         return result;
     }
@@ -709,7 +715,7 @@ public class LayoutSlip extends LayoutTurnout {
                     break;
                 }
                 default: {
-                    log.error("Unknown slip type: {}", type);
+                    log.error("{}.showPopup(<mouseEvent>); Invalid slip type: {}", getName(), type); //I18IN
                 }
             }
             if (jmi != null) {
@@ -1071,7 +1077,8 @@ public class LayoutSlip extends LayoutTurnout {
 
     public void setTurnoutStates(int state, @Nonnull String turnStateA, @Nonnull String turnStateB) {
         if (!turnoutStates.containsKey(state)) {
-            log.error("Trying to set invalid state for slip " + getDisplayName());
+            log.error("{}.setTurnoutStates({}, {}, {}); invalid state for slip", 
+                    getName(), state, turnStateA, turnStateB);
             return;
         }
         turnoutStates.get(state).setTurnoutAState(parseInt(turnStateA));
@@ -1666,17 +1673,17 @@ public class LayoutSlip extends LayoutTurnout {
                     && (getTurnoutBState() == tso.getTurnoutBState()));
         }
 
-    /**
-     * Hash on the header
-     */
-    @Override
-    public int hashCode() {
-        int result = 7;
-        result = (37 * result) + getTurnoutAState();
-        result = (37 * result) + getTurnoutBState();
+        /**
+         * Hash on the header
+         */
+        @Override
+        public int hashCode() {
+            int result = 7;
+            result = (37 * result) + getTurnoutAState();
+            result = (37 * result) + getTurnoutBState();
 
-        return result;
-    }
+            return result;
+        }
 
     }   // class TurnoutState
 
@@ -1755,7 +1762,7 @@ public class LayoutSlip extends LayoutTurnout {
             result = LayoutSlip.UNKNOWN;
         }
         if (!suppress && (result == LayoutSlip.UNKNOWN)) {
-            log.error("Cannot determine slip setting for " + getName());
+            log.error("{}.getConnectivityStateForLayoutBlocks(...); Cannot determine slip setting", getName());
         }
         return result;
     }   // getConnectivityStateForLayoutBlocks

@@ -534,7 +534,8 @@ public class PositionablePoint extends LayoutTrack {
         if (signalMast != null && !signalMast.isEmpty()) {
             mast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(signalMast);
             if (mast == null) {
-                log.error("Unable to find Signal Mast " + signalMast);
+                log.error("{}.setEastBoundSignalMast({}); Unable to find Signal Mast",
+                        getName(), signalMast);
                 return;
             }
         } else {
@@ -598,7 +599,8 @@ public class PositionablePoint extends LayoutTrack {
         if (signalMast != null && !signalMast.isEmpty()) {
             mast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(signalMast);
             if (mast == null) {
-                log.error("Unable to find Signal Mast " + signalMast);
+                log.error("{}.setWestBoundSignalMast({}); Unable to find Signal Mast",
+                        getName(), signalMast);
                 return;
             }
         } else {
@@ -726,7 +728,8 @@ public class PositionablePoint extends LayoutTrack {
                 result = false; // can't replace null with null
             }
             if (!result) {
-                log.error("Attempt to remove non-existant track connection: {}", oldTrack);
+                log.error("{}.replaceTrackConnection({}, {}); Attempt to remove non-existant track connection",
+                        getName(), (oldTrack == null) ? "null" : oldTrack.getName(), "null");
             }
         } else // already connected to newTrack?
         if ((connect1 != newTrack) && (connect2 != newTrack)) {
@@ -743,11 +746,15 @@ public class PositionablePoint extends LayoutTrack {
                     setEastBoundSensor("");
                 }
             } else {
-                log.error("Attempt to assign more than allowed number of connections");
+                log.error("{}.replaceTrackConnection({}, {}); Attempt to assign more than allowed number of connections",
+                        getName(), (oldTrack == null) ? "null" : oldTrack.getName(),
+                        (newTrack == null) ? "null" : newTrack.getName());
                 result = false;
             }
         } else {
-            log.error("Already connected to {}", newTrack.getName());
+            log.warn("{}.replaceTrackConnection({}, {}); Already connected",
+                    getName(), (oldTrack == null) ? "null" : oldTrack.getName(),
+                    (newTrack == null) ? "null" : newTrack.getName());
             result = false;
         }
         return result;
@@ -1564,7 +1571,7 @@ public class PositionablePoint extends LayoutTrack {
 
     void setLink() {
         if (getConnect1() == null || getConnect1().getLayoutBlock() == null) {
-            log.error("Can not set link until we have a connecting track with a block assigned");
+            log.error("{}.setLink(); Can not set link until we have a connecting track with a block assigned", getName());
             return;
         }
         editLink = new JDialog();
@@ -1736,7 +1743,8 @@ public class PositionablePoint extends LayoutTrack {
     public Point2D getCoordsForConnectionType(int connectionType) {
         Point2D result = getCoordsCenter();
         if (connectionType != LayoutTrack.POS_POINT) {
-            log.error("Invalid connection type " + connectionType); //I18IN
+            log.error("{}.getCoordsForConnectionType({}); Invalid connection type",
+                    getName(), connectionType); //I18IN
         }
         return result;
     }
@@ -1753,8 +1761,10 @@ public class PositionablePoint extends LayoutTrack {
                 result = getConnect2();
             }
         } else {
-            log.error("Invalid connection type " + connectionType); //I18IN
-            throw new jmri.JmriException("Invalid Point");
+            String errString = String.format("{}.getConnection({}); Invalid connection type",
+                    getName(), connectionType); //I18IN
+            log.error(errString); //I18IN
+            throw new jmri.JmriException(errString);
         }
         return result;
     }
@@ -1765,12 +1775,16 @@ public class PositionablePoint extends LayoutTrack {
     @Override
     public void setConnection(int connectionType, LayoutTrack o, int type) throws jmri.JmriException {
         if ((type != LayoutTrack.TRACK) && (type != LayoutTrack.NONE)) {
-            log.error("unexpected type of connection to positionable point - " + type);
-            throw new jmri.JmriException("unexpected type of connection to positionable point - " + type);
+            String errString = String.format("{}.setConnection({}, {}, {}); unexpected type",
+                    getName(), connectionType, (o == null) ? "null" : o.getName(), type); //I18IN
+            log.error(errString); //I18IN
+            throw new jmri.JmriException(errString);
         }
         if (connectionType != LayoutTrack.POS_POINT) {
-            log.error("Invalid Connection Type " + connectionType); //I18IN
-            throw new jmri.JmriException("Invalid Connection Type " + connectionType);
+            String errString = String.format("{}.setConnection({}, {}, {}); Invalid connection type",
+                    getName(), connectionType, (o == null) ? "null" : o.getName(), type); //I18IN
+            log.error(errString); //I18IN
+            throw new jmri.JmriException(errString);
         }
     }
 
@@ -1786,7 +1800,8 @@ public class PositionablePoint extends LayoutTrack {
         if (connectionType == LayoutTrack.POS_POINT) {
             result = ((getConnect1() == null) || (getConnect2() == null));
         } else {
-            log.error("Invalid connection type " + connectionType); //I18IN
+            log.error("{}.isDisconnected({}); Invalid connection type",
+                    getName(), connectionType); //I18IN
         }
         return result;
     }
