@@ -293,7 +293,7 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
         // log.debug("Cbus Console filter button action performed");
         
         if ( _console != null ) {
-            _console.filterButton.doClick();
+            _console.displayPane.filterButton.doClick();
             return;
         }
         
@@ -309,7 +309,7 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
     public void highlightButtonActionPerformed(ActionEvent e) {
         // log.debug("Cbus Console filter button action performed");
         if ( _console != null ) {
-            _console.highlightButton.doClick();
+            _console.displayPane.highlightButton.doClick();
             return;
         }
         if (_highlightFrame == null) {

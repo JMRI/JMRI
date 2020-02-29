@@ -1,5 +1,6 @@
 package jmri.jmrix.dccpp;
 
+import jmri.NmraPacket;
 import jmri.util.JUnitUtil;
 import org.junit.Test;
 import org.junit.After;
@@ -10,13 +11,13 @@ import org.slf4j.LoggerFactory;
 
 /**
  * DCCppCommandStationTest.java
- *
+ * <p>
  * Description: tests for the jmri.jmrix.dccpp.DCCppCommandStation class
  *
  * @author Paul Bender
  * @author Mark Underwood
  *
- *         Based on LenzCommandStationTest
+ * Based on LenzCommandStationTest
  */
 public class DCCppCommandStationTest {
 
@@ -65,6 +66,123 @@ public class DCCppCommandStationTest {
         Assert.assertTrue(c.getCodeBuildDate().equals("03 Jan 1993 23:59:59"));
     }
 
+    @Test
+    public void testSendAccDecoderPktOpsMode1234() {
+        int address = 1234;
+        int cv = 28;
+        int data = 11;
+        byte[] ba = NmraPacket.accDecoderPktOpsMode(address, cv, data);
+        // the following values validated against NCE Power Pro output
+        Assert.assertEquals("length", 6, ba.length);
+        Assert.assertEquals("byte 0", 0xB5, ba[0] & 0xFF);
+        Assert.assertEquals("byte 1", 0xBB, ba[1] & 0xFF);
+        Assert.assertEquals("byte 2", 0xEC, ba[2] & 0xFF);
+        Assert.assertEquals("byte 3", 0x1B, ba[3] & 0xFF);
+        Assert.assertEquals("byte 4", 0x0B, ba[4] & 0xFF);
+        Assert.assertEquals("byte 5", 0xF2, ba[5] & 0xFF);
+
+        String expectedResult = "M 0 B5 BB EC 1B 0B";
+
+        DCCppCommandStation c = new DCCppCommandStation();
+        DCCppTrafficController tc = new DCCppTrafficController(c) {
+            private String expectedString;
+
+            private DCCppTrafficController init(String var) {
+                expectedString = var;
+                return this;
+            }
+
+            @Override
+            public void sendDCCppMessage(DCCppMessage m, DCCppListener reply) {
+                StringBuilder sb = new StringBuilder();
+                sb.append(" expected:<").append(expectedString)
+                        .append("> but was:<").append(m.toString()).append(">");
+
+                Assert.assertTrue(sb.toString(), expectedString.equals(m.toString()));
+            }
+        }.init(expectedResult);
+        c.setTrafficController(tc);
+        c.sendPacket(ba, 1);
+
+    }
+
+    @Test
+    public void testSendAccSignalDecoderPktOpsMode2037() {
+        int address = 2037;
+        int cv = 556;
+        int data = 175;
+        byte[] ba = NmraPacket.accSignalDecoderPktOpsMode(address, cv, data);
+        // the following values validated against NCE Power Pro output
+        Assert.assertEquals("length", 6, ba.length);
+        Assert.assertEquals("byte 0", 0xBE, ba[0] & 0xFF);
+        Assert.assertEquals("byte 1", 0x01, ba[1] & 0xFF);
+        Assert.assertEquals("byte 2", 0xEE, ba[2] & 0xFF);
+        Assert.assertEquals("byte 3", 0x2B, ba[3] & 0xFF);
+        Assert.assertEquals("byte 4", 0xAF, ba[4] & 0xFF);
+        Assert.assertEquals("byte 5", 0xD5, ba[5] & 0xFF);
+
+        String expectedResult = "M 0 BE 01 EE 2B AF";
+
+        DCCppCommandStation c = new DCCppCommandStation();
+        DCCppTrafficController tc = new DCCppTrafficController(c) {
+            private String expectedString;
+
+            private DCCppTrafficController init(String var) {
+                expectedString = var;
+                return this;
+            }
+
+            @Override
+            public void sendDCCppMessage(DCCppMessage m, DCCppListener reply) {
+                StringBuilder sb = new StringBuilder();
+                sb.append(" expected:<").append(expectedString)
+                        .append("> but was:<").append(m.toString()).append(">");
+
+                Assert.assertTrue(sb.toString(), expectedString.equals(m.toString()));
+            }
+        }.init(expectedResult);
+        c.setTrafficController(tc);
+        c.sendPacket(ba, 1);
+
+    }
+
+    @Test
+    public void testSendAccSignalDecoderPkt256Aspect7() {
+        int address = 256;
+        int aspect = 7;
+        byte[] ba = NmraPacket.accSignalDecoderPkt(address, aspect);
+        // the following values validated against NCE Power Pro output
+        Assert.assertEquals("length", 4, ba.length);
+        Assert.assertEquals("byte 0", 0x80, ba[0] & 0xFF);
+        Assert.assertEquals("byte 1", 0x67, ba[1] & 0xFF);
+        Assert.assertEquals("byte 2", 0x07, ba[2] & 0xFF);
+        Assert.assertEquals("byte 3", 0xE0, ba[3] & 0xFF);
+
+        String expectedResult = "M 0 80 67 07";
+
+        DCCppCommandStation c = new DCCppCommandStation();
+        DCCppTrafficController tc = new DCCppTrafficController(c) {
+            private String expectedString;
+
+            private DCCppTrafficController init(String var) {
+                expectedString = var;
+                return this;
+            }
+
+            @Override
+            public void sendDCCppMessage(DCCppMessage m, DCCppListener reply) {
+                StringBuilder sb = new StringBuilder();
+                sb.append(" expected:<").append(expectedString)
+                        .append("> but was:<").append(m.toString()).append(">");
+
+                Assert.assertTrue(sb.toString(), expectedString.equals(m.toString()));
+            }
+        }.init(expectedResult);
+        c.setTrafficController(tc);
+        c.sendPacket(ba, 1);
+
+    }
+
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -72,6 +190,7 @@ public class DCCppCommandStationTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

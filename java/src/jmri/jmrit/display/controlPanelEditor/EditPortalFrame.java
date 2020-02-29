@@ -270,11 +270,20 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
 
     @Override
     protected void closingEvent(boolean close) {
+        StringBuffer sb = new StringBuffer();
         String msg = _parent.checkForPortals(_homeBlock, "BlockPaths");
-        if (_canEdit && msg == null) {
-            msg = _parent.checkForPortalIcons(_homeBlock, "BlockPaths");
+        if(msg != null) {
+            sb.append(msg);
+            sb.append("\n");
         }
-        closingEvent(close, msg);
+        if (_canEdit) {
+            msg = _parent.checkForPortalIcons(_homeBlock, "BlockPaths");
+            if(msg != null) {
+                sb.append(msg);
+                sb.append("\n");
+            }
+        }
+        closingEvent(close, sb.toString());
     }
 
     /**
@@ -545,7 +554,6 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
             _parent._editor.setSelectionGroup(group);
             icon.setLevel(Editor.MARKERS);
             icon.setStatus(PortalIcon.VISIBLE);
-//            setSelected(icon);
             return icon;
         }
     }

@@ -2,13 +2,8 @@ package jmri.implementation;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import jmri.DccLocoAddress;
-import jmri.IdTag;
-import jmri.IdTagListener;
-import jmri.InstanceManager;
-import jmri.LocoAddress;
-import jmri.PhysicalLocationReporter;
-import jmri.ReporterManager;
+
+import jmri.*;
 import jmri.util.PhysicalLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,12 +33,13 @@ public class AbstractIdTagReporter extends AbstractReporter
         log.debug("Notify: {}",mSystemName);
         if (id != null) {
             log.debug("Tag: {}",id);
-            AbstractIdTagReporter r;
-            if ((r = (AbstractIdTagReporter) id.getWhereLastSeen()) != null) {
-                log.debug("Previous reporter: {}",r.mSystemName);
-                if (!(r.equals(this)) && r.getCurrentReport() == id) {
+            Reporter r;
+            if ((r = id.getWhereLastSeen()) != null) {
+                log.debug("Previous reporter: {}",r.getSystemName());
+                if (!(r.equals(this)) && r.getCurrentReport() == id
+                   && (r instanceof IdTagListener)) {
                     log.debug("Notify previous");
-                    r.notify(null);
+                    ((IdTagListener)r).notify(null);
                 } else {
                     log.debug("Current report was: {}",r.getCurrentReport());
                 }

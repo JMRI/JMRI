@@ -180,8 +180,6 @@ public class WarrantTest {
 
         warrant.getSpeedUtil().setDccAddress("999(L)");
         String msg = warrant.allocateRoute(false, orders);
-        SpeedUtil su = warrant.getSpeedUtil();
-        su.setOrders(orders);
 
         warrant.setTrainName("TestTrain");
         PropertyChangeListener listener = new WarrantListener(warrant);

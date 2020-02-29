@@ -30,7 +30,7 @@ import javax.servlet.http.HttpServletResponse;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.Metadata;
-import jmri.jmris.json.JsonServerPreferences;
+import jmri.server.json.JsonServerPreferences;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
