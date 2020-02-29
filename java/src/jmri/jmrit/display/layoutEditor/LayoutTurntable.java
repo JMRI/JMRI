@@ -13,6 +13,7 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.beans.*;
+import java.text.MessageFormat;
 import java.util.*;
 import javax.annotation.Nonnull;
 import javax.swing.*;
@@ -482,7 +483,7 @@ public class LayoutTurntable extends LayoutTrack {
         if (connectionType >= TURNTABLE_RAY_OFFSET) {
             result = getRayConnectIndexed(connectionType - TURNTABLE_RAY_OFFSET);
         } else {
-            String errString = String.format("{}.getCoordsForConnectionType({}); Invalid connection type",
+            String errString = MessageFormat.format("{}.getCoordsForConnectionType({}); Invalid connection type",
                     getName(), connectionType); // NOI18N
             log.error(errString); // NOI18N
             throw new jmri.JmriException(errString);
@@ -496,7 +497,7 @@ public class LayoutTurntable extends LayoutTrack {
     @Override
     public void setConnection(int connectionType, LayoutTrack o, int type) throws jmri.JmriException {
         if ((type != TRACK) && (type != NONE)) {
-            String errString = String.format("{}.setConnection({}, {}, {}); Invalid type",
+            String errString = MessageFormat.format("{}.setConnection({}, {}, {}); Invalid type",
                     getName(), connectionType, (o == null) ? "null" : o.getName(), type); // NOI18N
             log.error(errString); // NOI18N
             throw new jmri.JmriException(errString);
@@ -505,14 +506,14 @@ public class LayoutTurntable extends LayoutTrack {
             if ((o == null) || (o instanceof TrackSegment)) {
                 setRayConnect((TrackSegment) o, connectionType - TURNTABLE_RAY_OFFSET);
             } else {
-                String errString = String.format("{}.setConnection({}, {}, {}); Invalid object type: {}",
+                String errString = MessageFormat.format("{}.setConnection({}, {}, {}); Invalid object type: {}",
                         getName(), connectionType, (o == null) ? "null" : o.getName(), type,
                         (o == null) ? "null" : o.getClass().getName()); // NOI18N
                 log.error(errString); // NOI18N
                 throw new jmri.JmriException(errString);
             }
         } else {
-            String errString = String.format("{}.setConnection({}, {}, {}); Invalid connection type",
+            String errString = MessageFormat.format("{}.setConnection({}, {}, {}); Invalid connection type",
                     getName(), connectionType, (o == null) ? "null" : o.getName(), type); // NOI18N
             log.error(errString); // NOI18N
             throw new jmri.JmriException(errString);

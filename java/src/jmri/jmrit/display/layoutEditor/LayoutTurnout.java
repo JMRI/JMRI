@@ -11,6 +11,7 @@ import java.awt.geom.GeneralPath;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.text.MessageFormat;
 import java.util.*;
 import javax.annotation.*;
 import javax.swing.*;
@@ -1251,7 +1252,7 @@ public class LayoutTurnout extends LayoutTrack {
                 break;
             }
             default: {
-                String errString = String.format("{}.getConnection({}); Invalid connection type",
+                String errString = MessageFormat.format("{}.getConnection({}); Invalid connection type",
                         getName(), connectionType); //I18IN
                 log.error(errString);
                 throw new jmri.JmriException(errString);
@@ -1266,7 +1267,7 @@ public class LayoutTurnout extends LayoutTrack {
     @Override
     public void setConnection(int connectionType, LayoutTrack o, int type) throws jmri.JmriException {
         if ((type != TRACK) && (type != NONE)) {
-            String errString = String.format("{}.setConnection({}, {}, {}); unexpected type",
+            String errString = MessageFormat.format("{}.setConnection({}, {}, {}); unexpected type",
                     getName(), connectionType, (o == null) ? "null" : o.getName(), type); //I18IN
             log.error(errString);
             throw new jmri.JmriException(errString);
@@ -1285,7 +1286,7 @@ public class LayoutTurnout extends LayoutTrack {
                 connectD = o;
                 break;
             default:
-                String errString = String.format("{}.setConnection({}, {}, {}); Invalid connection type",
+                String errString = MessageFormat.format("{}.setConnection({}, {}, {}); Invalid connection type",
                         getName(), connectionType, (o == null) ? "null" : o.getName(), type); //I18IN
                 log.error(errString);
                 throw new jmri.JmriException(errString);

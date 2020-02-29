@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.*;
 import java.awt.geom.*;
+import java.text.MessageFormat;
 import java.util.*;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
@@ -580,7 +581,7 @@ public class LevelXing extends LayoutTrack {
             default:
                 break;
         }
-        String errstring = String.format("{}.getConnection({}) - invalid connection type", getName(), connectionType); //I18IN
+        String errstring = MessageFormat.format("{}.getConnection({}) - invalid connection type", getName(), connectionType); //I18IN
         log.error(errstring);
         throw new jmri.JmriException(errstring);
     }
@@ -591,7 +592,7 @@ public class LevelXing extends LayoutTrack {
     @Override
     public void setConnection(int connectionType, LayoutTrack o, int type) throws jmri.JmriException {
         if ((type != TRACK) && (type != NONE)) {
-            String errString = String.format("{}.setConnection({}, {}, {}); invalid type", 
+            String errString = MessageFormat.format("{}.setConnection({}, {}, {}); invalid type", 
                     getName(), connectionType, (o == null) ? "null" : o.getName(), type);
             log.error(errString);
             throw new jmri.JmriException(errString);
@@ -610,7 +611,7 @@ public class LevelXing extends LayoutTrack {
                 connectD = o;
                 break;
             default:
-            String errString = String.format("{}.setConnection({}, {}, {}); invalid connection type", 
+            String errString = MessageFormat.format("{}.setConnection({}, {}, {}); invalid connection type", 
                     getName(), connectionType, (o == null) ? "null" : o.getName(), type);
                 log.error(errString);
                 throw new jmri.JmriException(errString);

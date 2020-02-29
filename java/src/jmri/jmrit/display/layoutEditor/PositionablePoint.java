@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.text.MessageFormat;
 import java.util.*;
 import java.util.function.Predicate;
 import javax.annotation.*;
@@ -1761,7 +1762,7 @@ public class PositionablePoint extends LayoutTrack {
                 result = getConnect2();
             }
         } else {
-            String errString = String.format("{}.getConnection({}); Invalid connection type",
+            String errString = MessageFormat.format("{}.getConnection({}); Invalid connection type",
                     getName(), connectionType); //I18IN
             log.error(errString); //I18IN
             throw new jmri.JmriException(errString);
@@ -1775,13 +1776,13 @@ public class PositionablePoint extends LayoutTrack {
     @Override
     public void setConnection(int connectionType, LayoutTrack o, int type) throws jmri.JmriException {
         if ((type != LayoutTrack.TRACK) && (type != LayoutTrack.NONE)) {
-            String errString = String.format("{}.setConnection({}, {}, {}); unexpected type",
+            String errString = MessageFormat.format("{}.setConnection({}, {}, {}); unexpected type",
                     getName(), connectionType, (o == null) ? "null" : o.getName(), type); //I18IN
             log.error(errString); //I18IN
             throw new jmri.JmriException(errString);
         }
         if (connectionType != LayoutTrack.POS_POINT) {
-            String errString = String.format("{}.setConnection({}, {}, {}); Invalid connection type",
+            String errString = MessageFormat.format("{}.setConnection({}, {}, {}); Invalid connection type",
                     getName(), connectionType, (o == null) ? "null" : o.getName(), type); //I18IN
             log.error(errString); //I18IN
             throw new jmri.JmriException(errString);

@@ -11,6 +11,7 @@ import java.awt.geom.GeneralPath;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -190,7 +191,7 @@ public class LayoutSlip extends LayoutTurnout {
             case SLIP_D:
                 return connectD;
             default:
-                String errString = String.format("{}.getConnection({}); Invalid Connection Type",
+                String errString = MessageFormat.format("{}.getConnection({}); Invalid Connection Type",
                         getName(), connectionType); //I18IN
                 log.error(errString);
                 throw new jmri.JmriException(errString);
@@ -203,7 +204,7 @@ public class LayoutSlip extends LayoutTurnout {
     @Override
     public void setConnection(int connectionType, @CheckForNull LayoutTrack o, int type) throws jmri.JmriException {
         if ((type != TRACK) && (type != NONE)) {
-            String errString = String.format("{}.setConnection({}, {}, {}); Invalid type",
+            String errString = MessageFormat.format("{}.setConnection({}, {}, {}); Invalid type",
                     getName(), connectionType, (o == null) ? "null" : o.getName(), type); //I18IN
             log.error(errString);
             throw new jmri.JmriException(errString);
@@ -222,7 +223,7 @@ public class LayoutSlip extends LayoutTurnout {
                 connectD = o;
                 break;
             default:
-                String errString = String.format("{}.setConnection({}, {}, {}); Invalid Connection Type",
+                String errString = MessageFormat.format("{}.setConnection({}, {}, {}); Invalid Connection Type",
                         getName(), connectionType, (o == null) ? "null" : o.getName(), type); //I18IN
                 log.error(errString);
                 throw new jmri.JmriException(errString);
