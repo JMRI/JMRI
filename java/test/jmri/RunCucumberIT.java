@@ -2,14 +2,19 @@ package jmri;
 
 import cucumber.api.CucumberOptions;
 import cucumber.api.junit.Cucumber;
+import jmri.util.JUnitUtil;
+import jmri.util.web.BrowserFactory;
+
 import org.junit.runner.RunWith;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 
 /**
  * Trigger file for Cucumber tests.
  * <p>
- * This file provides default options for cucumber.</p>
+ * This file provides default options for cucumber.
+ * </p>
  * <p>
  * To override those using maven add -Dcucumber.options="..." to the maven
  * command line
@@ -18,35 +23,31 @@ import org.junit.BeforeClass;
  * To override those in ant, run:<br/>
  * JAVA_OPTIONS='-Dcucumber.options="..."' ant target
  * </p>
- * @author	Paul Bender Copyright 2017
+ * 
+ * @author Paul Bender Copyright 2017
  */
 
-
 @RunWith(Cucumber.class)
-@CucumberOptions(plugin = {"junit:cucumber-results.xml","progress","json:cucumber-results.json"},
-                 features="java/acceptancetest/features/web",
-                 tags = {"not @webtest", "not @Ignore", "not @ignore"},
-                 glue = {"jmri"} )
+@CucumberOptions(plugin = {"junit:cucumber-results.xml", "progress", "json:cucumber-results.json"},
+        features = "java/acceptancetest/features/web",
+        tags = {"not @webtest", "not @Ignore", "not @ignore"},
+        glue = {"jmri"})
 public class RunCucumberIT {
-   
-   @BeforeClass
-   public static void beforeTests(){
-     jmri.util.JUnitUtil.setUp();
-   }
 
-   @AfterClass
-   public static void afterTests(){
-      jmri.util.web.BrowserFactory.CloseAllDriver();
-      if (InstanceManager.containsDefault(ShutDownManager.class)) {
-          ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
-          java.util.List<ShutDownTask> list = sm.tasks();
-          while (list != null && list.size() > 0) {
-              ShutDownTask task = list.get(0);
-              sm.deregister(task);
-              list = sm.tasks();  // avoid ConcurrentModificationException
-          }
-      }
-      jmri.util.JUnitUtil.tearDown();
-   }
+    @BeforeClass
+    public static void beforeTests() {
+        JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initZeroConfServiceManager();
+    }
+
+    @SuppressWarnings("deprecation")
+    @AfterClass
+    public static void afterTests() {
+        BrowserFactory.CloseAllDriver();
+        JUnitUtil.resetZeroConfServiceManager();
+        JUnitUtil.clearShutDownManager();
+        JUnitUtil.tearDown();
+    }
 
 }

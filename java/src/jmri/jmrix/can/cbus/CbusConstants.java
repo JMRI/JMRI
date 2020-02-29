@@ -185,8 +185,7 @@ public final class CbusConstants {
     /**
      * Extended opcodes, currently only used by the bootloader
      * <p>
-     * ERROR and OK are responses from the bootloader
-     * BOOTC is request to confirm node is in boot mode
+     * These are all responses from the bootloader
      */
     public static final int CBUS_EXT_BOOT_ERROR = 0x00;
     public static final int CBUS_EXT_BOOT_OK = 0x01;
@@ -194,6 +193,8 @@ public final class CbusConstants {
     
     /**
      * Bootloader commands
+     * 
+     * These are used in the data payload of bootloader control frames.
      */
     public static final int CBUS_BOOT_NOP = 0x00;
     public static final int CBUS_BOOT_RESET = 0x01;

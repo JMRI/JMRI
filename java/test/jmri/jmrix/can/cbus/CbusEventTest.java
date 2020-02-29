@@ -36,8 +36,7 @@ public class CbusEventTest {
         t.setEn(4);
         t.setNn(7);
         Assert.assertEquals("get Node Number 7",7,t.getNn());
-        Assert.assertEquals("get Event Number 4",4,t.getEn());        
-        t = null;
+        Assert.assertEquals("get Event Number 4",4,t.getEn());
     }    
     
     @Test
@@ -47,7 +46,6 @@ public class CbusEventTest {
         Assert.assertEquals("no match node",false,t.matches(111,456));
         Assert.assertEquals("no match node",false,t.matches(111,222));
         Assert.assertEquals("match",true,t.matches(123,456));
-        t = null;
     }
     
     @Test
@@ -85,10 +83,8 @@ public class CbusEventTest {
         ta.sendEvent(CbusEvent.EvState.TOGGLE);    
         Assert.assertEquals("toggle on",CbusEvent.EvState.ON,ta.getState());
         
-        t = null;
-        ta = null;
-        tc = null;
-        memo = null;
+        tc.terminateThreads();
+        memo.dispose();
     }    
     
     @Test
@@ -97,7 +93,6 @@ public class CbusEventTest {
         Assert.assertEquals("toString 1","EN:456 ",t.toString());
         t.setName("Jon Smith");
         Assert.assertEquals("toString 2","EN:456 Jon Smith ",t.toString());
-        t = null;
     }
 
     // The minimal setup for log4J
@@ -108,7 +103,6 @@ public class CbusEventTest {
 
     @After
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
 
     }

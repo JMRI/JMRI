@@ -210,22 +210,15 @@ class Diesel3Sound extends EngineSound {
             int j = 0;
             for (Element fe : elist) {
                 fn = fe.getText();
-                //AudioBuffer b = D3Notch.getBuffer(vf, fn, "Engine_n" + i + "_" + j, "Engine_" + i + "_" + j);
-                //log.debug("Buffer created: {}, name: {}", b, b.getSystemName());
-                //sb.addLoopBuffer(b);
-                List<AudioBuffer> l = D3Notch.getBufferList(vf, fn, "n" + i + "_" + j, i + "_" + j);
-                log.debug("Buffers Created: ");
+                List<AudioBuffer> l = D3Notch.getBufferList(vf, fn, name + "_n" + i);
+                log.debug("Buffers Created:");
                 for (AudioBuffer b : l) {
                     log.debug("\tSubBuffer: {}, length: {}", b.getSystemName(), SoundBite.calcLength(b));
                 }
                 sb.addLoopBuffers(l);
                 j++;
             }
-            //log.debug("Notch: {}, file: {}", nn, fn);
 
-            // Gain is broken, for the moment.  Buffers don't have gain. Sources do.
-            //_sound.setGain(setXMLGain(el));
-            //_sound.setGain(default_gain);
             sb.setNextNotch(el.getChildText("next-notch"));
             sb.setPrevNotch(el.getChildText("prev-notch"));
             sb.setAccelLimit(el.getChildText("accel-limit"));
@@ -249,13 +242,11 @@ class Diesel3Sound extends EngineSound {
         el = e.getChild("start-sound");
         if (el != null) {
             fn = el.getChild("file").getValue();
-            //log.debug("Start sound: {}", fn);
             start_buffer = D3Notch.getBuffer(vf, fn, name + "_start", name + "_Start");
         }
         el = e.getChild("shutdown-sound");
         if (el != null) {
             fn = el.getChild("file").getValue();
-            //log.debug("Shutdown sound: {}", fn);
             stop_buffer = D3Notch.getBuffer(vf, fn, name + "_shutdown", name + "_Shutdown");
         }
 
@@ -476,12 +467,11 @@ class Diesel3Sound extends EngineSound {
             }
         }
 
-        static public List<AudioBuffer> getBufferList(VSDFile vf, String filename, String sname, String uname) {
+        static public List<AudioBuffer> getBufferList(VSDFile vf, String filename, String sname) {
             List<AudioBuffer> buflist = null;
             java.io.InputStream ins = vf.getInputStream(filename);
             if (ins != null) {
-                //buflist = AudioUtil.getSplitInputStream(VSDSound.BufSysNamePrefix+filename, ins, 250, 100);
-                buflist = AudioUtil.getAudioBufferList(VSDSound.BufSysNamePrefix + filename, ins, 250, 100);
+                buflist = AudioUtil.getAudioBufferList(VSDSound.BufSysNamePrefix + sname, ins, 250, 100);
             } else {
                 log.debug("Input Stream failed");
                 return null;

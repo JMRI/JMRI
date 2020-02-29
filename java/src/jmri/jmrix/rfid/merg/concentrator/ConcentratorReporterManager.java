@@ -5,12 +5,8 @@ import jmri.IdTag;
 import jmri.IdTagManager;
 import jmri.InstanceManager;
 import jmri.Reporter;
-import jmri.jmrix.rfid.RfidMessage;
-import jmri.jmrix.rfid.RfidReply;
-import jmri.jmrix.rfid.RfidReporterManager;
-import jmri.jmrix.rfid.RfidSystemConnectionMemo;
-import jmri.jmrix.rfid.RfidTrafficController;
-import jmri.jmrix.rfid.TimeoutRfidReporter;
+import jmri.implementation.decorators.TimeoutReporter;
+import jmri.jmrix.rfid.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,8 +40,8 @@ public class ConcentratorReporterManager extends RfidReporterManager {
             log.warn("Invalid Reporter name: {}} - out of supported range {}", systemName, tc.getRange());
             throw new IllegalArgumentException("Invalid Reporter name: " + systemName + " - out of supported range " + tc.getRange());
         }
-        TimeoutRfidReporter r;
-        r = new TimeoutRfidReporter(systemName, userName);
+        Reporter r;
+        r = new TimeoutReporter( new RfidReporter(systemName, userName));
         r.addPropertyChangeListener(this);
         return r;
     }
@@ -76,7 +72,7 @@ public class ConcentratorReporterManager extends RfidReporterManager {
             return;
         }
         IdTag idTag = InstanceManager.getDefault(IdTagManager.class).provideIdTag(tc.getAdapterMemo().getProtocol().getTag(r));
-        TimeoutRfidReporter report = (TimeoutRfidReporter) provideReporter(getSystemNamePrefix() + r.getReaderPort());
+        TimeoutReporter report = (TimeoutReporter) provideReporter(getSystemNamePrefix() + r.getReaderPort());
         report.notify(idTag);
     }
 

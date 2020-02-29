@@ -11,7 +11,8 @@ import org.junit.Test;
  */
 public class BundleTest  {
 
-    @Test public void testGoodKeyMessage() {
+    @Test
+    public void testGoodKeyMessage() {
         Assert.assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout"));
     }
 

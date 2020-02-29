@@ -313,7 +313,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 
     protected void makeWarrantMenu(boolean edit, boolean addMenu) {
         JMenu oldMenu = _warrantMenu;
-        _warrantMenu = jmri.jmrit.logix.WarrantTableAction.makeWarrantMenu(edit);
+        _warrantMenu = jmri.jmrit.logix.WarrantTableAction.getDefault().makeWarrantMenu(edit);
         if (_warrantMenu == null) {
             _warrantMenu = new JMenu(ResourceBundle.getBundle("jmri.jmrit.logix.WarrantBundle").getString("MenuWarrant"));
             JMenuItem aboutItem = new JMenuItem(Bundle.getMessage("AboutWarrant"));
@@ -1319,7 +1319,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 selection.doMouseClicked(event);
             }
             if (selection instanceof IndicatorTrack) {
-                WarrantTableAction.mouseClickedOnBlock(((IndicatorTrack) selection).getOccBlock());
+                WarrantTableAction.getDefault().mouseClickedOnBlock(((IndicatorTrack) selection).getOccBlock());
             }
         }
         if (!isEditable()) {

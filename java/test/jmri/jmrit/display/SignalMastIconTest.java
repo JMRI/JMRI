@@ -81,7 +81,7 @@ public class SignalMastIconTest extends PositionableIconTest {
         super.setUp();
         JUnitUtil.initInternalSignalHeadManager();
         if (!GraphicsEnvironment.isHeadless()) {
-            editor = new PanelEditor("Test SignalMastIcon Panel");
+            editor = new EditorScaffold();
             p = new SignalMastIcon(editor);
             to = new SignalMastIcon(editor);
             to.setShowAutoText(true);
