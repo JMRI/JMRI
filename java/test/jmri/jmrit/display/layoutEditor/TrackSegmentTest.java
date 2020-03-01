@@ -38,7 +38,7 @@ public class TrackSegmentTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         if ((layoutEditor != null) && (trackSegment != null)) {
             Assert.assertFalse("trackSegment.replaceTrackConnection(null, null, NONE) fail", trackSegment.replaceTrackConnection(null, null, LayoutTrack.NONE));
-            jmri.util.JUnitAppender.assertErrorMessage("Can't replace null track connection with null");
+            jmri.util.JUnitAppender.assertErrorMessage("TS1.replaceTrackConnection(null, null, 0); Can't replace null track connection with null");
 
             LayoutTrack c1 = trackSegment.getConnect1();
             int t1 = trackSegment.getType1();

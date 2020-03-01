@@ -249,7 +249,7 @@ public class PositionablePointTest {
         // test failure
         Assert.assertEquals("pp.getCoordsForConnectionType(LayoutTrack.NONE) == {666.6, 999.9}",
                 thePoint, pp.getCoordsForConnectionType(LayoutTrack.NONE));
-        jmri.util.JUnitAppender.assertErrorMessage("Invalid connection type 0");
+        jmri.util.JUnitAppender.assertErrorMessage("test.getCoordsForConnectionType(0); Invalid connection type");
 
         // test success
         Assert.assertEquals("pp.getCoordsForConnectionType(LayoutTrack.POS_POINT) == {666.6, 999.9}",
@@ -271,7 +271,7 @@ public class PositionablePointTest {
             Assert.fail("No exception thrown on pp.getConnection(invalid type)");
         } catch (JmriException ex) {
         }
-        jmri.util.JUnitAppender.assertErrorMessage("Invalid connection type 0");
+        jmri.util.JUnitAppender.assertErrorMessage("test.getConnection(0); Invalid connection type");
 
         try {
             // test valid connection type (null value)
@@ -296,7 +296,7 @@ public class PositionablePointTest {
             Assert.fail("No exception thrown on pp.setConnection(invalid connection type)");
         } catch (JmriException ex) {
         }
-        jmri.util.JUnitAppender.assertErrorMessage("Invalid Connection Type 0");
+        jmri.util.JUnitAppender.assertErrorMessage("test.setConnection(0); Invalid connection type");
 
         try {
             // test invalid object type
@@ -325,7 +325,7 @@ public class PositionablePointTest {
         // test invalid connection type
         Assert.assertFalse("pp.isDisconnected(invalid type) is null",
                 pp.isDisconnected(LayoutTrack.NONE));
-        jmri.util.JUnitAppender.assertErrorMessage("Invalid connection type 0");
+        jmri.util.JUnitAppender.assertErrorMessage("test.isDisconnected(0); Invalid connection type");
 
         // test valid connection type
         Assert.assertTrue("pp.isDisconnected(valid type) is null",
@@ -343,7 +343,7 @@ public class PositionablePointTest {
         // test null track segment
         Assert.assertFalse("pp.setTrackConnection(null) is false",
                 pp.setTrackConnection(null));
-        jmri.util.JUnitAppender.assertErrorMessage("Attempt to remove non-existant track connection: null");
+        jmri.util.JUnitAppender.assertErrorMessage("test.replaceTrackConnection(null, null); Attempt to remove non-existant track connection");
 
         PositionablePoint ppA = new PositionablePoint("A", PositionablePoint.ANCHOR, new Point2D.Double(0.0, 0.0), le);
         PositionablePoint ppB = new PositionablePoint("B", PositionablePoint.ANCHOR, new Point2D.Double(10.0, 10.0), le);

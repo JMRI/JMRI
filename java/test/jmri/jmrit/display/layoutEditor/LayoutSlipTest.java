@@ -74,7 +74,7 @@ public class LayoutSlipTest {
         Assert.assertNotNull("LayoutSlip double not null", ltd);
 
         lts.setSlipType(LayoutTurnout.NONE); // invalid type
-        jmri.util.JUnitAppender.assertErrorMessage("Invalid slip Type 0");
+        jmri.util.JUnitAppender.assertErrorMessage("single.setSlipType(0); invalid slip type");
 
         lts.setSlipType(LayoutTurnout.DOUBLE_SLIP);
         Assert.assertTrue("lts.getSlipType() is DOUBLE_SLIP", lts.getSlipType() == LayoutTurnout.DOUBLE_SLIP);
@@ -90,7 +90,7 @@ public class LayoutSlipTest {
         Assert.assertNotNull("LayoutSlip double not null", ltd);
 
         lts.setTurnoutType(LayoutTurnout.NONE); // invalid type
-        jmri.util.JUnitAppender.assertErrorMessage("Invalid slip Type 0");
+        jmri.util.JUnitAppender.assertErrorMessage("single.setSlipType(0); invalid slip type");
 
         lts.setTurnoutType(LayoutTurnout.DOUBLE_SLIP);
         Assert.assertTrue("lts.getSlipType() is DOUBLE_SLIP", lts.getSlipType() == LayoutTurnout.DOUBLE_SLIP);
@@ -238,7 +238,7 @@ public class LayoutSlipTest {
         Assert.assertEquals("lts.getCoordsForConnectionType(NONE) is equal to...",
                 new Point2D.Double(50.0, 100.0),
                 lts.getCoordsForConnectionType(LayoutTrack.NONE));
-        jmri.util.JUnitAppender.assertErrorMessage("Invalid connection type 0");
+        jmri.util.JUnitAppender.assertErrorMessage("single.getCoordsForConnectionType(0); Invalid connection type");
 
         Assert.assertEquals("lts.getCoordsForConnectionType(SLIP_A) is equal to...",
                 new Point2D.Double(35.85786437626905, 85.85786437626905),
