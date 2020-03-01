@@ -5,15 +5,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.Test;
 
 /**
- * Tests for the Jdk9Application class
+ * Tests for the EawtApplication class
  *
  * @author Paul Bender Copyright (C) 2016
  */
-public class Jdk9ApplicationTest {
+public class ApplicationTest {
 
     @Test
-    public void testCtor() {
-        assertThat(new Jdk9Application()).isNotNull();
+    public void testAccessor() {
+        assertThat(Application.getApplication()).isNotNull();
     }
-
 }
