@@ -290,11 +290,6 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 ##### system-rules-1.16.0.jar
 - Handle rules for testing calls to java.System methods
 
-##### AppleJavaExtensions.jar
-- version 1.5
-- from <http://developer.apple.com/library/mac/samplecode/AppleJavaExtensions/>
-- Used for building only, not at runtime
-
 #### SpotBugs static analysis
 
 ##### jcip-annotations-1.0.jar
