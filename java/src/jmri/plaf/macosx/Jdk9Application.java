@@ -35,13 +35,12 @@ class Jdk9Application extends Application {
     Jdk9Application() {
     }
 
-    private void setHandler(String methodName, String handlerType, Object handler) {
+    private void setNullHandler(String methodName, String handlerType) {
         try {
             Class<?> parameterType = Class.forName(handlerType);
             Class<?>[] parameterTypes = {parameterType};
             Method method = java.awt.Desktop.class.getDeclaredMethod(methodName, parameterTypes);
-            Object[] parameters = {handler};
-            method.invoke(Desktop.getDesktop(), parameters);
+            method.invoke(Desktop.getDesktop(), (Object) null);
         } catch (NoClassDefFoundError | ClassNotFoundException | NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
             log.error("Exception calling {} with {}", methodName, handlerType, ex);
         }
@@ -52,7 +51,7 @@ class Jdk9Application extends Application {
         if (handler != null) {
             setScriptedHandler(handler, "AboutHandlerJdk9.js"); // NOI18N
         } else {
-            this.setHandler("setAboutHandler", "java.awt.desktop.AboutHandler", null); // NOI18N
+            this.setNullHandler("setAboutHandler", "java.awt.desktop.AboutHandler"); // NOI18N
         }
     }
 
@@ -61,7 +60,7 @@ class Jdk9Application extends Application {
         if (handler != null) {
             setScriptedHandler(handler, "PreferencesHandlerJdk9.js"); // NOI18N
         } else {
-            this.setHandler("setPreferencesHandler", "java.awt.desktop.PreferencesHandler", null); // NOI18N
+            this.setNullHandler("setPreferencesHandler", "java.awt.desktop.PreferencesHandler"); // NOI18N
         }
     }
 
@@ -70,7 +69,7 @@ class Jdk9Application extends Application {
         if (handler != null) {
             setScriptedHandler(handler, "QuitHandlerJdk9.js"); // NOI18N
         } else {
-            this.setHandler("setQuitHandler", "java.awt.desktop.QuitHandler", null); // NOI18N
+            this.setNullHandler("setQuitHandler", "java.awt.desktop.QuitHandler"); // NOI18N
         }
     }
 }

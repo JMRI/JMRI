@@ -33,13 +33,12 @@ class EawtApplication extends Application {
     EawtApplication() {
     }
 
-    private void setHandler(String methodName, String handlerType, Object handler) {
+    private void setNullHandler(String methodName, String handlerType) {
         try {
             Class<?> parameterType = Class.forName(handlerType);
             Class<?>[] parameterTypes = {parameterType};
             Method method = com.apple.eawt.Application.class.getDeclaredMethod(methodName, parameterTypes);
-            Object[] parameters = {handler};
-            method.invoke(com.apple.eawt.Application.getApplication(), parameters);
+            method.invoke(com.apple.eawt.Application.getApplication(), (Object) null);
         } catch (NoClassDefFoundError | ClassNotFoundException | NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
             log.error("Exception calling {} with {}", methodName, handlerType, ex);
         }
@@ -50,7 +49,7 @@ class EawtApplication extends Application {
         if (handler != null) {
             setScriptedHandler(handler, "AboutHandlerEawt.js"); // NOI18N
         } else {
-            this.setHandler("setAboutHandler", "com.apple.eawt.AppEvent.AboutEvent", null); // NOI18N
+            this.setNullHandler("setAboutHandler", "com.apple.eawt.AppEvent.AboutEvent"); // NOI18N
         }
     }
 
@@ -59,7 +58,7 @@ class EawtApplication extends Application {
         if (handler != null) {
             setScriptedHandler(handler, "PreferencesHandlerEawt.js"); // NOI18N
         } else {
-            this.setHandler("setPreferenceHandler", "com.apple.eawt.AppEvent.PreferencesEvent", null); // NOI18N
+            this.setNullHandler("setPreferenceHandler", "com.apple.eawt.AppEvent.PreferencesEvent"); // NOI18N
         }
     }
 
@@ -68,7 +67,7 @@ class EawtApplication extends Application {
         if (handler != null) {
             setScriptedHandler(handler, "QuitHandlerEawt.js"); // NOI18N
         } else {
-            this.setHandler("setQuitHandler", "com.apple.eawt.AppEvent.QuitEvent", null); // NOI18N
+            this.setNullHandler("setQuitHandler", "com.apple.eawt.AppEvent.QuitEvent"); // NOI18N
         }
     }
 }
