@@ -1,7 +1,9 @@
 package jmri.plaf.macosx;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assumptions.assumeThat;
 
+import jmri.util.SystemType;
 import org.junit.Test;
 
 /**
@@ -12,7 +14,14 @@ import org.junit.Test;
 public class ApplicationTest {
 
     @Test
-    public void testAccessor() {
+    public void testGetApplicationOnMacOSX() {
+        assumeThat(SystemType.isMacOSX()).isTrue();
         assertThat(Application.getApplication()).isNotNull();
+    }
+
+    @Test
+    public void testGetApplicationNotOnMacOSX() {
+        assumeThat(SystemType.isMacOSX()).isFalse();
+        assertThat(Application.getApplication()).isNull();
     }
 }

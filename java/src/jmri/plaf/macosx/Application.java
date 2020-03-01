@@ -50,8 +50,8 @@ public final class Application {
         return sharedApplication;
     }
 
-    Application() {
-        // do nothing but require that getApplication be only access
+    private Application() {
+        // require that getApplication be only access
     }
 
     public void setAboutHandler(final AboutHandler handler) {
