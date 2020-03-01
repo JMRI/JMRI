@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
  * will result in crashes.
  * <p>
  * This wrapper currently provides incomplete support for the Apple
- * {@link com.apple.eawt.Application} class, as it only provides support for
+ * {@code com.apple.eawt.Application} class, as it only provides support for
  * those integration aspects that were implemented in JMRI 3.1.
  *
  * @author Randall Wood (c) 2011, 2016, 2020
