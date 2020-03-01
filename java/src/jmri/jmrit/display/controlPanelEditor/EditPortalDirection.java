@@ -44,10 +44,10 @@ public class EditPortalDirection extends EditFrame implements ActionListener, Li
 
     protected void contructorChecks(String title, CircuitBuilder parent, OBlock block) {
         String msg = _parent.checkForPortals(block, "DirectionArrow");
-        if (msg == null) {
+        if (msg.length() > 0) {
             msg = _parent.checkForPortalIcons(block, "DirectionArrow");
         }
-        if (msg != null) {
+        if (msg.length() > 0) {
             JOptionPane.showMessageDialog(this, msg,
                     Bundle.getMessage("incompleteCircuit"), JOptionPane.INFORMATION_MESSAGE);
             _canEdit = false;
