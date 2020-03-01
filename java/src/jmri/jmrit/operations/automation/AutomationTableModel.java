@@ -9,17 +9,7 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextArea;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
 
@@ -208,6 +198,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
     @Override
     public boolean isCellEditable(int row, int col) {
         switch (col) {
+            case CURRENT_COLUMN:
             case ACTION_COLUMN:
             case TRAIN_COLUMN:
             case ROUTE_COLUMN:
@@ -324,6 +315,9 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         }
         AutomationItem item = _list.get(row);
         switch (col) {
+            case CURRENT_COLUMN:
+                setCurrent(item);
+                break;
             case ACTION_COLUMN:
                 setAction(value, item);
                 break;
@@ -411,6 +405,11 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
 
     private String getStatus(AutomationItem item) {
         return item.getStatus();
+    }
+    
+    private void setCurrent(AutomationItem item) {
+        _automation.setCurrentAutomationItem(item);
+        _automation.resetAutomationItems(item);
     }
 
     private void setAction(Object value, AutomationItem item) {

@@ -38,8 +38,22 @@ public class EditPortalDirection extends EditFrame implements ActionListener, Li
         super(title, parent, block);
         checkCircuitIcons("DirectionArrow");
         pack();
+
+        contructorChecks(title, parent, block);
     }
 
+    protected void contructorChecks(String title, CircuitBuilder parent, OBlock block) {
+        String msg = _parent.checkForPortals(block, "DirectionArrow");
+        if (msg == null) {
+            msg = _parent.checkForPortalIcons(block, "DirectionArrow");
+        }
+        if (msg != null) {
+            JOptionPane.showMessageDialog(this, msg,
+                    Bundle.getMessage("incompleteCircuit"), JOptionPane.INFORMATION_MESSAGE);
+            _canEdit = false;
+        }
+    }
+    
     private JPanel makeArrowPanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
