@@ -37,6 +37,10 @@ public class EditPortalDirection extends EditFrame implements ActionListener, Li
     public EditPortalDirection(String title, CircuitBuilder parent, OBlock block) {
         super(title, parent, block);
         pack();
+        contructorChecks(title, parent, block);
+    }
+
+    protected void contructorChecks(String title, CircuitBuilder parent, OBlock block) {
         String msg = _parent.checkForPortals(block, "DirectionArrow");
         if (msg == null) {
             msg = _parent.checkForPortalIcons(block, "DirectionArrow");
@@ -47,7 +51,7 @@ public class EditPortalDirection extends EditFrame implements ActionListener, Li
             _canEdit = false;
         }
     }
-
+    
     private JPanel makeArrowPanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
