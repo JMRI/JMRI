@@ -2,7 +2,7 @@
  * Set the Apple Java Extensions aboutHandler to handler (passed in script context)
  */
 
-var aboutHandler = new com.apple.eawt.AboutHandler() {
+var aboutHandler = (handler === null) ? null : new com.apple.eawt.AboutHandler() {
     handleAbout: function(e) {
         handler.handleAbout(e);
     }

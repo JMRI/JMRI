@@ -1,10 +1,5 @@
 package jmri.plaf.macosx;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Wrapper for Apple provided extensions to Java that allow Java apps to feel
  * more "Mac-like" on Mac OS X using JDK 8.
@@ -28,46 +23,21 @@ import org.slf4j.LoggerFactory;
  */
 class EawtApplication extends Application {
 
-    private static final Logger log = LoggerFactory.getLogger(EawtApplication.class);
-
     EawtApplication() {
-    }
-
-    private void setNullHandler(String methodName, String handlerType) {
-        try {
-            Class<?> parameterType = Class.forName(handlerType);
-            Class<?>[] parameterTypes = {parameterType};
-            Method method = com.apple.eawt.Application.class.getDeclaredMethod(methodName, parameterTypes);
-            method.invoke(com.apple.eawt.Application.getApplication(), (Object) null);
-        } catch (NoClassDefFoundError | ClassNotFoundException | NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-            log.error("Exception calling {} with {}", methodName, handlerType, ex);
-        }
     }
 
     @Override
     public void setAboutHandler(final AboutHandler handler) {
-        if (handler != null) {
-            setScriptedHandler(handler, "AboutHandlerEawt.js"); // NOI18N
-        } else {
-            this.setNullHandler("setAboutHandler", "com.apple.eawt.AppEvent.AboutEvent"); // NOI18N
-        }
+        setScriptedHandler(handler, "AboutHandlerEawt.js"); // NOI18N
     }
 
     @Override
     public void setPreferencesHandler(final PreferencesHandler handler) {
-        if (handler != null) {
-            setScriptedHandler(handler, "PreferencesHandlerEawt.js"); // NOI18N
-        } else {
-            this.setNullHandler("setPreferenceHandler", "com.apple.eawt.AppEvent.PreferencesEvent"); // NOI18N
-        }
+        setScriptedHandler(handler, "PreferencesHandlerEawt.js"); // NOI18N
     }
 
     @Override
     public void setQuitHandler(final QuitHandler handler) {
-        if (handler != null) {
-            setScriptedHandler(handler, "QuitHandlerEawt.js"); // NOI18N
-        } else {
-            this.setNullHandler("setQuitHandler", "com.apple.eawt.AppEvent.QuitEvent"); // NOI18N
-        }
+        setScriptedHandler(handler, "QuitHandlerEawt.js"); // NOI18N
     }
 }

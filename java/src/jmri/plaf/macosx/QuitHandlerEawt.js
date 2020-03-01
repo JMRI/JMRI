@@ -2,7 +2,7 @@
  * Set the Apple Java Extensions quitHandler to handler (passed in script context)
  */
 
-var quitHandler = new com.apple.eawt.QuitHandler() {
+var quitHandler = (handler === null) ? null : new com.apple.eawt.QuitHandler() {
     handleQuitRequestWith: function(qe, qr) {
         if (handler.handleQuitRequest(qe)) {
             qr.performQuit();
