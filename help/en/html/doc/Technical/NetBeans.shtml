@@ -415,18 +415,6 @@
               </li>
               </ol>
               </div>
-              <div class="admonitionblock note">
-              <table>
-              <tr>
-              <td class="icon">
-              <div class="title">Note</div>
-              </td>
-              <td class="content">
-              You may also see an error icon if using a JDK version greater than 8 due to changes in how Java interacts with macOS in JDK versions 9 or newer.
-              </td>
-              </tr>
-              </table>
-              </div>
               </div>
               <div class="sect2">
               <h3 id="build">Build</h3>

@@ -1,7 +1,18 @@
 package jmri.plaf.macosx;
 
 import java.awt.Desktop;
+import java.io.InputStreamReader;
+import javax.annotation.Nonnull;
+import javax.script.Bindings;
+import javax.script.ScriptContext;
+import javax.script.ScriptEngine;
+import javax.script.ScriptException;
+import javax.script.SimpleBindings;
+import javax.script.SimpleScriptContext;
+import jmri.script.JmriScriptEngineManager;
 import jmri.util.SystemType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Wrapper for Apple provided extensions to Java that allow Java apps to feel
@@ -29,7 +40,8 @@ import jmri.util.SystemType;
 abstract public class Application {
 
     private static volatile Application sharedApplication = null;
-
+    private static final Logger log = LoggerFactory.getLogger(Application.class);
+    
     public static Application getApplication() {
         if (!SystemType.isMacOSX()) {
             return null;
@@ -58,4 +70,22 @@ abstract public class Application {
     abstract public void setPreferencesHandler(final PreferencesHandler handler);
 
     abstract public void setQuitHandler(final QuitHandler handler);
+
+    protected ScriptContext getContext(@Nonnull Object handler) {
+        Bindings bindings = new SimpleBindings();
+        bindings.put("handler", handler); // NOI18N
+        ScriptContext context = new SimpleScriptContext();
+        context.setBindings(bindings, ScriptContext.ENGINE_SCOPE);
+        return context;
+    }
+    
+    protected void setScriptedHandler(@Nonnull Object handler, @Nonnull String scriptName) {
+        try {
+            InputStreamReader reader = new InputStreamReader(Jdk9Application.class.getResourceAsStream(scriptName));
+            ScriptEngine engine = JmriScriptEngineManager.getDefault().getEngineByMimeType("js"); // NOI18N
+            engine.eval(reader, this.getContext(handler));
+        } catch (ScriptException ex) {
+            log.error("Unable to execute script {}", scriptName, ex);
+        }
+    }
 }

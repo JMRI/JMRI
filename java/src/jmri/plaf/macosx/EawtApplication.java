@@ -1,9 +1,9 @@
 package jmri.plaf.macosx;
 
-import com.apple.eawt.AppEvent.AboutEvent;
-import com.apple.eawt.AppEvent.PreferencesEvent;
-import com.apple.eawt.AppEvent.QuitEvent;
-import com.apple.eawt.QuitResponse;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Wrapper for Apple provided extensions to Java that allow Java apps to feel
@@ -23,66 +23,52 @@ import com.apple.eawt.QuitResponse;
  * {@link com.apple.eawt.Application} class, as it only provides support for
  * those integration aspects that were implemented in JMRI 3.1.
  *
- * @author Randall Wood (c) 2016
+ * @author Randall Wood (c) 2016, 2020
  * @see com.apple.eawt.Application
  */
 class EawtApplication extends Application {
 
-    private com.apple.eawt.Application application = null;
+    private static final Logger log = LoggerFactory.getLogger(EawtApplication.class);
 
     EawtApplication() {
-        application = com.apple.eawt.Application.getApplication();
+    }
+
+    private void setHandler(String methodName, String handlerType, Object handler) {
+        try {
+            Class<?> parameterType = Class.forName(handlerType);
+            Class<?>[] parameterTypes = {parameterType};
+            Method method = com.apple.eawt.Application.class.getDeclaredMethod(methodName, parameterTypes);
+            Object[] parameters = {handler};
+            method.invoke(com.apple.eawt.Application.getApplication(), parameters);
+        } catch (NoClassDefFoundError | ClassNotFoundException | NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+            log.error("Exception calling {} with {}", methodName, handlerType, ex);
+        }
     }
 
     @Override
     public void setAboutHandler(final AboutHandler handler) {
-        try {
-            if (handler != null) {
-                application.setAboutHandler((AboutEvent ae) -> {
-                    handler.handleAbout(ae);
-                });
-            } else {
-                application.setAboutHandler(null);
-            }
-        } catch (java.lang.NoClassDefFoundError ex) {
-            // this simply means that the OS X version is too old to implement this
-            // so we ignore it
+        if (handler != null) {
+            setScriptedHandler(handler, "AboutHandlerEawt.js"); // NOI18N
+        } else {
+            this.setHandler("setAboutHandler", "com.apple.eawt.AppEvent.AboutEvent", null); // NOI18N
         }
     }
 
     @Override
     public void setPreferencesHandler(final PreferencesHandler handler) {
-        try {
-            if (handler != null) {
-                application.setPreferencesHandler((PreferencesEvent pe) -> {
-                    handler.handlePreferences(pe);
-                });
-            } else {
-                application.setPreferencesHandler(null);
-            }
-        } catch (java.lang.NoClassDefFoundError ex) {
-            // this simply means that the OS X version is too old to implement this
-            // so we ignore it
+        if (handler != null) {
+            setScriptedHandler(handler, "PreferencesHandlerEawt.js"); // NOI18N
+        } else {
+            this.setHandler("setPreferenceHandler", "com.apple.eawt.AppEvent.PreferencesEvent", null); // NOI18N
         }
     }
 
     @Override
     public void setQuitHandler(final QuitHandler handler) {
-        try {
-            if (handler != null) {
-                application.setQuitHandler((QuitEvent qe, QuitResponse qr) -> {
-                    if (handler.handleQuitRequest(qe)) {
-                        qr.performQuit();
-                    } else {
-                        qr.cancelQuit();
-                    }
-                });
-            } else {
-                application.setQuitHandler(null);
-            }
-        } catch (java.lang.NoClassDefFoundError ex) {
-            // this simply means that the OS X version is too old to implement this
-            // so we ignore it
+        if (handler != null) {
+            setScriptedHandler(handler, "QuitHandlerEawt.js"); // NOI18N
+        } else {
+            this.setHandler("setQuitHandler", "com.apple.eawt.AppEvent.QuitEvent", null); // NOI18N
         }
     }
 }

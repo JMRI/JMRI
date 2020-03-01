@@ -193,8 +193,6 @@ To resolve this problem:
 . link:images/netbeans-resolve-project-problems.png[image:images/netbeans-resolve-project-problems.png["Resolve Project Problems dialog",331,role="related right"]]Click btn:[Resolve...]
 . Click btn:[Close] once the warning icon changes to an OK icon
 
-NOTE: You may also see an error icon if using a JDK version greater than 8 due to changes in how Java interacts with macOS in JDK versions 9 or newer.
-
 === Build
 
 NOTE: Apache NetBeans compiles each class when it is saved, so if the project has been primed, building is only required if the project has been cleaned.
