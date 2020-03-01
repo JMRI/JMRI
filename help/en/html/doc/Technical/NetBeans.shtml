@@ -29,48 +29,49 @@
             <!--#include virtual="Sidebar.shtml" -->
             <div id="mainContent">
               <!-- this was created by running the command `asciidoctorj -a toc NetBeans.adoc`
-                   and copying the contents of body element in the resultant NetBeans.html file -->
+                   and copying the contents of body element in the resultant NetBeans.html file
+                   and removing leading _s from IDs and HREFs -->
               <div id="header">
               <h1>JMRI Code: Building with Apache NetBeans</h1>
               <div id="toc" class="toc">
               <div id="toctitle">Table of Contents</div>
               <ul class="sectlevel1">
-              <li><a href="#_introduction">Introduction</a></li>
-              <li><a href="#_installation">Installation</a>
+              <li><a href="#introduction">Introduction</a></li>
+              <li><a href="#installation">Installation</a>
               <ul class="sectlevel2">
-              <li><a href="#_linux">Linux</a></li>
-              <li><a href="#_macos">macOS</a></li>
-              <li><a href="#_windows">Windows</a></li>
+              <li><a href="#linux">Linux</a></li>
+              <li><a href="#macos">macOS</a></li>
+              <li><a href="#windows">Windows</a></li>
               </ul>
               </li>
-              <li><a href="#_using_apache_netbeans_with_jmris_git_code_repository">Using Apache NetBeans with JMRI&#8217;s Git Code Repository</a>
+              <li><a href="#using_apache_netbeans_with_jmris_git_code_repository">Using Apache NetBeans with JMRI&#8217;s Git Code Repository</a>
               <ul class="sectlevel2">
-              <li><a href="#_checking_out_code">Checking out code</a></li>
-              <li><a href="#_local_commits">Local Commits</a></li>
-              <li><a href="#_updating_the_code_from_git">Updating the code from Git</a></li>
-              <li><a href="#_creating_a_pull_request">Creating a Pull Request</a></li>
+              <li><a href="#checking_out_code">Checking out code</a></li>
+              <li><a href="#local_commits">Local Commits</a></li>
+              <li><a href="#updating_the_code_from_git">Updating the code from Git</a></li>
+              <li><a href="#creating_a_pull_request">Creating a Pull Request</a></li>
               </ul>
               </li>
-              <li><a href="#_building_and_running_jmri">Building and running JMRI</a>
+              <li><a href="#building_and_running_jmri">Building and running JMRI</a>
               <ul class="sectlevel2">
-              <li><a href="#_prime">Prime</a></li>
-              <li><a href="#_build">Build</a></li>
-              <li><a href="#_run_an_application">Run an Application</a></li>
-              <li><a href="#_debug_an_application">Debug an Application</a></li>
-              <li><a href="#_profile_an_application">Profile an Application</a></li>
+              <li><a href="#prime">Prime</a></li>
+              <li><a href="#build">Build</a></li>
+              <li><a href="#run_an_application">Run an Application</a></li>
+              <li><a href="#debug_an_application">Debug an Application</a></li>
+              <li><a href="#profile_an_application">Profile an Application</a></li>
               </ul>
               </li>
-              <li><a href="#_making_a_jar_file">Making a Jar File</a></li>
-              <li><a href="#_making_a_release_package_for_windows_using_nsis">Making a release package for Windows using NSIS</a></li>
-              <li><a href="#_using_apache_netbeans_xml_tools">Using Apache NetBeans XML tools</a></li>
-              <li><a href="#_running_spotbugs">Running SpotBugs</a></li>
-              <li><a href="#_loading_a_specific_branch_from_github">Loading a Specific Branch from GitHub</a></li>
+              <li><a href="#making_a_jar_file">Making a Jar File</a></li>
+              <li><a href="#making_a_release_package_for_windows_using_nsis">Making a release package for Windows using NSIS</a></li>
+              <li><a href="#using_apache_netbeans_xml_tools">Using Apache NetBeans XML tools</a></li>
+              <li><a href="#running_spotbugs">Running SpotBugs</a></li>
+              <li><a href="#loading_a_specific_branch_from_github">Loading a Specific Branch from GitHub</a></li>
               </ul>
               </div>
               </div>
               <div id="content">
               <div class="sect1">
-              <h2 id="_introduction">Introduction</h2>
+              <h2 id="introduction">Introduction</h2>
               <div class="sectionbody">
               <div class="paragraph">
               <p><a href="https://netbeans.apache.org">Apache NetBeans</a> makes a great platform for working with JMRI. The JMRI code is set up to work with Apache NetBeans with almost no additional setup.</p>
@@ -81,7 +82,7 @@
               </div>
               </div>
               <div class="sect1">
-              <h2 id="_installation">Installation</h2>
+              <h2 id="installation">Installation</h2>
               <div class="sectionbody">
               <div class="olist arabic">
               <ol class="arabic">
@@ -97,13 +98,13 @@
               </ol>
               </div>
               <div class="sect2">
-              <h3 id="_linux">Linux</h3>
+              <h3 id="linux">Linux</h3>
               <div class="paragraph">
               <p>Apache NetBeans can also be installed as a <a href="https://snapcraft.io/netbeans">snap package</a> for Linux.</p>
               </div>
               </div>
               <div class="sect2">
-              <h3 id="_macos">macOS</h3>
+              <h3 id="macos">macOS</h3>
               <div class="paragraph">
               <p>Apache NetBeans and the Java 8 JDK can be installed using <a href="https://brew.io">Homebrew</a> from the terminal:</p>
               </div>
@@ -114,7 +115,7 @@
               </div>
               </div>
               <div class="sect2">
-              <h3 id="_windows">Windows</h3>
+              <h3 id="windows">Windows</h3>
               <div class="admonitionblock note">
               <table>
               <tr>
@@ -161,9 +162,9 @@
               </table>
               </div>
               <div class="sect3">
-              <h4 id="_change_line_endings_on_save_plugin"><em>Change Line Endings on Save</em> Plugin</h4>
+              <h4 id="change_line_endings_on_save_plugin"><em>Change Line Endings on Save</em> Plugin</h4>
               <div class="sect4">
-              <h5 id="_installation_2">Installation</h5>
+              <h5 id="installation_2">Installation</h5>
               <div class="olist arabic">
               <ol class="arabic">
               <li>
@@ -195,7 +196,7 @@
               </div>
               </div>
               <div class="sect3">
-              <h4 id="_configuration">Configuration</h4>
+              <h4 id="configuration">Configuration</h4>
               <div class="paragraph">
               <p><a href="images/NetbeansChangeLineEndingsPluginConfiguration.png"><span class="image related right"><img src="images/NetbeansChangeLineEndingsPluginConfiguration.png" alt="Configuration Window" width="237" height="168"></span></a></p>
               </div>
@@ -232,7 +233,7 @@
               </div>
               </div>
               <div class="sect1">
-              <h2 id="_using_apache_netbeans_with_jmris_git_code_repository">Using Apache NetBeans with JMRI&#8217;s Git Code Repository</h2>
+              <h2 id="using_apache_netbeans_with_jmris_git_code_repository">Using Apache NetBeans with JMRI&#8217;s Git Code Repository</h2>
               <div class="sectionbody">
               <div class="paragraph">
               <p>GitHub provides JMRI&#8217;s code repository using the Git tool. For more
@@ -248,7 +249,7 @@
               <a href="https://netbeans.org/kb/docs/ide/git.html">NetBeans Git help page</a></p>
               </div>
               <div class="sect2">
-              <h3 id="_checking_out_code">Checking out code</h3>
+              <h3 id="checking_out_code">Checking out code</h3>
               <div class="paragraph">
               <p>In Apache NetBeans, under the "Team" menu, select Git, then Clone
               Repository. Enter the <a href="https://github.com/JMRI/JMRI.git" class="bare">https://github.com/JMRI/JMRI.git</a> repository URL
@@ -265,7 +266,7 @@
               </div>
               </div>
               <div class="sect2">
-              <h3 id="_local_commits">Local Commits</h3>
+              <h3 id="local_commits">Local Commits</h3>
               <div class="paragraph">
               <p>When using Git, the "commit" operation is local to your computer. It
               doesn&#8217;t make any changes to the main JMRI repository.</p>
@@ -278,7 +279,7 @@
               </div>
               </div>
               <div class="sect2">
-              <h3 id="_updating_the_code_from_git">Updating the code from Git</h3>
+              <h3 id="updating_the_code_from_git">Updating the code from Git</h3>
               <div class="paragraph">
               <p>From time to time, you should update your local copy of the code to
               match the current "HEAD" of the main JMRI Git repository contents. The
@@ -298,7 +299,7 @@
               </div>
               </div>
               <div class="sect2">
-              <h3 id="_creating_a_pull_request">Creating a Pull Request</h3>
+              <h3 id="creating_a_pull_request">Creating a Pull Request</h3>
               <div class="paragraph">
               <p>A "Pull Request" (PR) is an easy way to gather up all your changes, even
               if they span multiple files, into something that you can then submit for
@@ -374,7 +375,7 @@
               </div>
               </div>
               <div class="sect1">
-              <h2 id="_building_and_running_jmri">Building and running JMRI</h2>
+              <h2 id="building_and_running_jmri">Building and running JMRI</h2>
               <div class="sectionbody">
               <div class="admonitionblock tip">
               <table>
@@ -389,7 +390,7 @@
               </table>
               </div>
               <div class="sect2">
-              <h3 id="_prime">Prime</h3>
+              <h3 id="prime">Prime</h3>
               <div class="paragraph">
               <p><a href="images/netbeans-project-warning.png"><span class="image related right"><img src="images/netbeans-project-warning.png" alt="Project warnings" width="192"></span></a>
               The first time you open the JMRI project in Apache NetBeans, a warning icon will be shown on the project. This warning indicates Apache NetBeans has a problem with the project. Ususally the first time warning indicates that build artifacts are missing.</p>
@@ -428,7 +429,7 @@
               </div>
               </div>
               <div class="sect2">
-              <h3 id="_build">Build</h3>
+              <h3 id="build">Build</h3>
               <div class="admonitionblock note">
               <table>
               <tr>
@@ -458,7 +459,7 @@
               </div>
               </div>
               <div class="sect2">
-              <h3 id="_run_an_application">Run an Application</h3>
+              <h3 id="run_an_application">Run an Application</h3>
               <div class="paragraph">
               <p><a href="images/netbeans-run-project.png"><span class="image related right"><img src="images/netbeans-run-project.png" alt="Select Main Class for Execution dialog" width="246"></span></a>
               To run a JMRI application, choose <span class="menuseq"><b class="menu">Run</b>&#160;<b class="caret">&#8250;</b> <b class="menuitem">Run Project (JMRI)</b></span> or click the Run icon in the tool bar. You will be prompted for the JMRI main class to run the first time you run the project.</p>
@@ -508,13 +509,13 @@
               </div>
               </div>
               <div class="sect2">
-              <h3 id="_debug_an_application">Debug an Application</h3>
+              <h3 id="debug_an_application">Debug an Application</h3>
               <div class="paragraph">
               <p>To debug a JMRI application, choose <span class="menuseq"><b class="menu">Debug</b>&#160;<b class="caret">&#8250;</b> <b class="menuitem">Debug Project (JMRI)</b></span> or click the Debug icon in the tool bar. You will be prompted for the JMRI main class to debug the first time you run the project.</p>
               </div>
               </div>
               <div class="sect2">
-              <h3 id="_profile_an_application">Profile an Application</h3>
+              <h3 id="profile_an_application">Profile an Application</h3>
               <div class="paragraph">
               <p>To profile a JMRI application, choose <span class="menuseq"><b class="menu">Profile</b>&#160;<b class="caret">&#8250;</b> <b class="menuitem">Profile Project (JMRI)</b></span> or click the Profile icon in the tool bar. You will be prompted for the JMRI main class to profile the first time you run the project.</p>
               </div>
@@ -522,7 +523,7 @@
               </div>
               </div>
               <div class="sect1">
-              <h2 id="_making_a_jar_file">Making a Jar File</h2>
+              <h2 id="making_a_jar_file">Making a Jar File</h2>
               <div class="sectionbody">
               <div class="paragraph">
               <p>Most of the code in a normal JMRI installation lives in a file called
@@ -542,7 +543,7 @@
               </div>
               </div>
               <div class="sect1">
-              <h2 id="_making_a_release_package_for_windows_using_nsis">Making a release package for Windows using NSIS</h2>
+              <h2 id="making_a_release_package_for_windows_using_nsis">Making a release package for Windows using NSIS</h2>
               <div class="sectionbody">
               <div class="paragraph">
               <p>It is possible for Apache NetBeans users to create a release package for
@@ -579,7 +580,7 @@
               </div>
               </div>
               <div class="sect1">
-              <h2 id="_using_apache_netbeans_xml_tools">Using Apache NetBeans XML tools</h2>
+              <h2 id="using_apache_netbeans_xml_tools">Using Apache NetBeans XML tools</h2>
               <div class="sectionbody">
               <div class="paragraph">
               <p>Apache NetBeans has nice tools for working with XML files, including
@@ -632,7 +633,7 @@
               </div>
               </div>
               <div class="sect1">
-              <h2 id="_running_spotbugs">Running SpotBugs</h2>
+              <h2 id="running_spotbugs">Running SpotBugs</h2>
               <div class="sectionbody">
               <div class="paragraph">
               <p>The SpotBugs tool is a static code analysis tool which examines JAVA
@@ -649,7 +650,7 @@
               </div>
               </div>
               <div class="sect1">
-              <h2 id="_loading_a_specific_branch_from_github">Loading a Specific Branch from GitHub</h2>
+              <h2 id="loading_a_specific_branch_from_github">Loading a Specific Branch from GitHub</h2>
               <div class="sectionbody">
               <div class="paragraph">
               <p>The process for building from a branch (i.e. the one where someone has
