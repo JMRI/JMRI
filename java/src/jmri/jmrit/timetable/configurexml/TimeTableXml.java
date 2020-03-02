@@ -444,7 +444,7 @@ public class TimeTableXml {
             // Verify that preference:timetable exists
             File chkdir = new File(getFileLocation());
             if (!chkdir.exists()) {
-                if (!chkdir.mkdir()) {
+                if (!chkdir.mkdirs()) {
                     log.error("Create {} failed", chkdir);  // NOI18N
                     return null;
                 }
