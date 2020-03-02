@@ -4,6 +4,7 @@ import java.awt.GraphicsEnvironment;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import jmri.JmriException;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import jmri.util.MathUtil;
 import jmri.util.junit.annotations.*;
@@ -74,7 +75,7 @@ public class LayoutSlipTest {
         Assert.assertNotNull("LayoutSlip double not null", ltd);
 
         lts.setSlipType(LayoutTurnout.NONE); // invalid type
-        jmri.util.JUnitAppender.assertErrorMessage("single.setSlipType(0); invalid slip type");
+        JUnitAppender.assertErrorMessage("single.setSlipType(0); invalid slip type");
 
         lts.setSlipType(LayoutTurnout.DOUBLE_SLIP);
         Assert.assertTrue("lts.getSlipType() is DOUBLE_SLIP", lts.getSlipType() == LayoutTurnout.DOUBLE_SLIP);
@@ -90,7 +91,7 @@ public class LayoutSlipTest {
         Assert.assertNotNull("LayoutSlip double not null", ltd);
 
         lts.setTurnoutType(LayoutTurnout.NONE); // invalid type
-        jmri.util.JUnitAppender.assertErrorMessage("single.setSlipType(0); invalid slip type");
+        JUnitAppender.assertErrorMessage("single.setSlipType(0); invalid slip type");
 
         lts.setTurnoutType(LayoutTurnout.DOUBLE_SLIP);
         Assert.assertTrue("lts.getSlipType() is DOUBLE_SLIP", lts.getSlipType() == LayoutTurnout.DOUBLE_SLIP);
@@ -153,14 +154,14 @@ public class LayoutSlipTest {
             Assert.assertNull("lts.getConnectionType(SLIP_CENTER) is null", lts.getConnection(LayoutTrack.SLIP_CENTER));
             Assert.fail("lts.getConnectionType(SLIP_CENTER): No exception thrown");
         } catch (jmri.JmriException e) {
-            jmri.util.JUnitAppender.assertErrorMessage("Invalid Connection Type 20");
+            JUnitAppender.assertErrorMessage("single.getConnection(20); Invalid Connection Type");
         }
         try {
             // this should throw up (SLIP_CENTER is not a valid connection type)
             Assert.assertNull("ltd.getConnectionType(SLIP_CENTER) is null", ltd.getConnection(LayoutTrack.SLIP_CENTER));
             Assert.fail("ltd.getConnectionType(SLIP_CENTER): No exception thrown");
         } catch (jmri.JmriException e) {
-            jmri.util.JUnitAppender.assertErrorMessage("Invalid Connection Type 20");
+            JUnitAppender.assertErrorMessage("double.getConnection(20); Invalid Connection Type");
         } // OK
     }
 
@@ -238,7 +239,7 @@ public class LayoutSlipTest {
         Assert.assertEquals("lts.getCoordsForConnectionType(NONE) is equal to...",
                 new Point2D.Double(50.0, 100.0),
                 lts.getCoordsForConnectionType(LayoutTrack.NONE));
-        jmri.util.JUnitAppender.assertErrorMessage("single.getCoordsForConnectionType(0); Invalid connection type");
+        JUnitAppender.assertErrorMessage("single.getCoordsForConnectionType(0); Invalid connection type");
 
         Assert.assertEquals("lts.getCoordsForConnectionType(SLIP_A) is equal to...",
                 new Point2D.Double(35.85786437626905, 85.85786437626905),
@@ -271,7 +272,7 @@ public class LayoutSlipTest {
         Assert.assertEquals("ltd.getCoordsForConnectionType(NONE) is equal to...",
                 new Point2D.Double(100.0, 50.0),
                 ltd.getCoordsForConnectionType(LayoutTrack.NONE));
-        jmri.util.JUnitAppender.assertErrorMessage("double.getCoordsForConnectionType(0); Invalid connection type");
+        JUnitAppender.assertErrorMessage("double.getCoordsForConnectionType(0); Invalid connection type");
 
         Assert.assertEquals("ltd.getCoordsForConnectionType(SLIP_A) is equal to...",
                 new Point2D.Double(85.85786437626905, 64.14213562373095),
@@ -564,7 +565,7 @@ public class LayoutSlipTest {
             Assert.fail("No exception thrown on lts.getConnection(invalid type)");
         } catch (JmriException ex) {
         }
-        jmri.util.JUnitAppender.assertErrorMessage("single.getCoordsForConnectionType(0); Invalid connection type");
+        JUnitAppender.assertErrorMessage("single.getConnection(0); Invalid Connection Type");
 
         try {
             // test invalid connection type
@@ -573,7 +574,7 @@ public class LayoutSlipTest {
             Assert.fail("No exception thrown on ltd.getConnection(invalid type)");
         } catch (JmriException ex) {
         }
-        jmri.util.JUnitAppender.assertErrorMessage("double.getConnection(0); Invalid connection type");
+        JUnitAppender.assertErrorMessage("double.getConnection(0); Invalid connection type");
     }
 
     @Test
@@ -626,14 +627,14 @@ public class LayoutSlipTest {
             Assert.fail("No exception thrown on lts.setConnection(invalid connection type)");
         } catch (JmriException ex) {
         }
-        jmri.util.JUnitAppender.assertErrorMessage("single.setConnection(0); Invalid connection type");
+        JUnitAppender.assertErrorMessage("single.setConnection(0, null, 0); Invalid Connection Type");
         try {
             // test invalid connection type
             ltd.setConnection(LayoutTrack.NONE, null, LayoutTrack.NONE);
             Assert.fail("No exception thrown on ltd.setConnection(invalid connection type)");
         } catch (JmriException ex) {
         }
-        jmri.util.JUnitAppender.assertErrorMessage("double.setConnection(0); Invalid connection type");
+        JUnitAppender.assertErrorMessage("double.setConnection(0, null, 0); Invalid Connection Type");
 
         try {
             // test invalid object type
@@ -641,14 +642,14 @@ public class LayoutSlipTest {
             Assert.fail("No exception thrown on lts.setConnection(invalid object type)");
         } catch (JmriException ex) {
         }
-        jmri.util.JUnitAppender.assertErrorMessage("unexpected type of connection to layoutslip - 1");
+        JUnitAppender.assertErrorMessage("unexpected type of connection to layoutslip - 1");
         try {
             // test invalid object type
             ltd.setConnection(LayoutTrack.SLIP_B, null, LayoutTrack.POS_POINT);
             Assert.fail("No exception thrown on ltd.setConnection(invalid object type)");
         } catch (JmriException ex) {
         }
-        jmri.util.JUnitAppender.assertErrorMessage("unexpected type of connection to layoutslip - 1");
+        JUnitAppender.assertErrorMessage("unexpected type of connection to layoutslip - 1");
 
         try {
             // test valid types

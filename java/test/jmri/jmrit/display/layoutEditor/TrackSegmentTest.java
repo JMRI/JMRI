@@ -3,6 +3,7 @@ package jmri.jmrit.display.layoutEditor;
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.Point2D;
 import jmri.JmriException;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 import org.netbeans.jemmy.operators.Operator;
@@ -27,9 +28,9 @@ public class TrackSegmentTest {
             // Invalid parameters in TrackSegment constructor call
             TrackSegment ts = new TrackSegment("TS01", null, LayoutTrack.NONE, null, LayoutTrack.NONE, false, false, layoutEditor);
             Assert.assertNotNull("TrackSegment TS01 not null", ts);
-            jmri.util.JUnitAppender.assertErrorMessage("Invalid object in TrackSegment constructor call - TS01");
-            jmri.util.JUnitAppender.assertErrorMessage("Invalid connect type 1 ('0') in TrackSegment constructor - TS01");
-            jmri.util.JUnitAppender.assertErrorMessage("Invalid connect type 2 ('0') in TrackSegment constructor - TS01");
+            JUnitAppender.assertErrorMessage("Invalid object in TrackSegment constructor call - TS01");
+            JUnitAppender.assertErrorMessage("Invalid connect type 1 ('0') in TrackSegment constructor - TS01");
+            JUnitAppender.assertErrorMessage("Invalid connect type 2 ('0') in TrackSegment constructor - TS01");
         }
     }
 
@@ -38,7 +39,7 @@ public class TrackSegmentTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         if ((layoutEditor != null) && (trackSegment != null)) {
             Assert.assertFalse("trackSegment.replaceTrackConnection(null, null, NONE) fail", trackSegment.replaceTrackConnection(null, null, LayoutTrack.NONE));
-            jmri.util.JUnitAppender.assertWarnMessage("TS1.replaceTrackConnection(null, null, 0); Can't replace null track connection with null");
+            JUnitAppender.assertWarnMessage("TS1.replaceTrackConnection(null, null, 0); Can't replace null track connection with null");
 
             LayoutTrack c1 = trackSegment.getConnect1();
             int t1 = trackSegment.getType1();
@@ -165,7 +166,7 @@ public class TrackSegmentTest {
             } catch (NullPointerException e) {
             }
             Assert.assertNull("trackSegment.getLayoutBlock() == null", trackSegment.getLayoutBlock());
-            jmri.util.JUnitAppender.assertErrorMessage("provideLayoutBlock: The block name does not return a block.");
+            JUnitAppender.assertErrorMessage("provideLayoutBlock: The block name does not return a block.");
 
 //            LayoutBlock layoutBlock = new LayoutBlock("ILB999", "Test Block");
 //            trackSegment.setLayoutBlockByName("ILB999");
