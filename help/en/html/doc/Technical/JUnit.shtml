@@ -1144,7 +1144,7 @@ setenv JMRI_OPTIONS -Djmri.util.JUnitUtil.checkRemnantThreads=true
             proceeding.  We're not sure what the best value is; see
             <a href="https://github.com/JMRI/JMRI/issues/5321">JMRI Issue #5321</a>
             and 
-            <a> href="https://netbeans.org/bugzilla/show_bug.cgi?id=36665">NetBeans bug tracker 36665</a>
+            <a href="https://netbeans.org/bugzilla/show_bug.cgi?id=36665">NetBeans bug tracker 36665</a>
             for some background discussion. Briefly, since things like 
             flashing cursors fire Swing events,
             the queue doesn't stay idle forever once the primary work is done.

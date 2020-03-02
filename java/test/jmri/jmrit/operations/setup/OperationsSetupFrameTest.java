@@ -33,8 +33,10 @@ public class OperationsSetupFrameTest extends OperationsTestCase {
 
     @Test
     public void testDirectionCheckBoxes() {
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         // it may be possible to make this a headless test by only initializing the panel, not the frame
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        
         OperationsSetupFrame f = new OperationsSetupFrame();
         f.setLocation(0, 0); // entire panel must be visible for tests to work properly
         f.initComponents();
