@@ -1,12 +1,9 @@
 package jmri.jmrit.display.layoutEditor;
 
 import java.awt.GraphicsEnvironment;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
+import java.awt.geom.*;
 import jmri.JmriException;
-import jmri.util.JUnitAppender;
-import jmri.util.JUnitUtil;
-import jmri.util.MathUtil;
+import jmri.util.*;
 import jmri.util.junit.annotations.*;
 import org.junit.*;
 
@@ -627,14 +624,14 @@ public class LayoutSlipTest {
             Assert.fail("No exception thrown on lts.setConnection(Invalid Connection Type)");
         } catch (JmriException ex) {
         }
-        JUnitAppender.assertErrorMessage("single.setConnection(0, 0, 0); Invalid Connection Type");
+        JUnitAppender.assertErrorMessage("single.setConnection(0, null, 0); Invalid Connection Type");
         try {
             // test Invalid Connection Type
             ltd.setConnection(LayoutTrack.NONE, null, LayoutTrack.NONE);
             Assert.fail("No exception thrown on ltd.setConnection(Invalid Connection Type)");
         } catch (JmriException ex) {
         }
-        JUnitAppender.assertErrorMessage("double.setConnection(0, 0, 0); Invalid Connection Type");
+        JUnitAppender.assertErrorMessage("double.setConnection(0, null, 0); Invalid Connection Type");
 
         try {
             // test invalid object type
@@ -642,14 +639,14 @@ public class LayoutSlipTest {
             Assert.fail("No exception thrown on lts.setConnection(invalid object type)");
         } catch (JmriException ex) {
         }
-        JUnitAppender.assertErrorMessage("single.setConnection(21, 0, 1); Invalid type");
+        JUnitAppender.assertErrorMessage("single.setConnection(21, null, 1); Invalid type");
         try {
             // test invalid object type
             ltd.setConnection(LayoutTrack.SLIP_B, null, LayoutTrack.POS_POINT);
             Assert.fail("No exception thrown on ltd.setConnection(invalid object type)");
         } catch (JmriException ex) {
         }
-        JUnitAppender.assertErrorMessage("double.setConnection(21, 0, 1); Invalid type");
+        JUnitAppender.assertErrorMessage("double.setConnection(21, null, 1); Invalid type");
 
         try {
             // test valid types

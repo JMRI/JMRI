@@ -1,17 +1,10 @@
 package jmri.jmrit.display.layoutEditor;
 
 import java.awt.GraphicsEnvironment;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
+import java.awt.geom.*;
 import jmri.JmriException;
-import jmri.util.JUnitAppender;
-import jmri.util.JUnitUtil;
-import jmri.util.MathUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import jmri.util.*;
+import org.junit.*;
 
 /**
  * Test simple functioning of PositionablePoint
@@ -297,7 +290,7 @@ public class PositionablePointTest {
             Assert.fail("No exception thrown on pp.setConnection(Invalid Connection Type)");
         } catch (JmriException ex) {
         }
-        JUnitAppender.assertErrorMessage("test.setConnection(0); Invalid Connection Type");
+        JUnitAppender.assertErrorMessage("test.setConnection(0, null, 0); Invalid Connection Type");
 
         try {
             // test invalid object type
@@ -305,7 +298,7 @@ public class PositionablePointTest {
             Assert.fail("No exception thrown on pp.setConnection(invalid object type)");
         } catch (JmriException ex) {
         }
-        JUnitAppender.assertErrorMessage("test.setConnection(0); Unexpected type");
+        JUnitAppender.assertErrorMessage("test.setConnection(1, null, 1); Unexpected type");
 
         try {
             // test valid types
@@ -344,7 +337,7 @@ public class PositionablePointTest {
         // test null track segment
         Assert.assertFalse("pp.setTrackConnection(null) is false",
                 pp.setTrackConnection(null));
-        JUnitAppender.assertErrorMessage("test.replaceTrackConnection(0, 0); Attempt to remove non-existant track connection");
+        JUnitAppender.assertErrorMessage("test.replaceTrackConnection(null, null); Attempt to remove non-existant track connection");
 
         PositionablePoint ppA = new PositionablePoint("A", PositionablePoint.ANCHOR, new Point2D.Double(0.0, 0.0), le);
         PositionablePoint ppB = new PositionablePoint("B", PositionablePoint.ANCHOR, new Point2D.Double(10.0, 10.0), le);

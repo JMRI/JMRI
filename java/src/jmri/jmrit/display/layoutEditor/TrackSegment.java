@@ -190,9 +190,9 @@ public class TrackSegment extends LayoutTrack {
         boolean result = false; //assume failure (pessimist!)
         //trying to replace old track with null?
         if (newTrack == null) {
+            result = true;  //assume success (optimist!)
             //(yes) remove old connection
             if (oldTrack != null) {
-                result = true;  //assume success (optimist!)
                 if (connect1 == oldTrack) {
                     connect1 = null;
                     type1 = NONE;
@@ -200,13 +200,13 @@ public class TrackSegment extends LayoutTrack {
                     connect2 = null;
                     type2 = NONE;
                 } else {
-                    log.error("{}.replaceTrackConnection({}, {}, {}); Attempt to remove invalid track connection",
-                            getName(), oldTrack.getName(), "null", newType);
+                    log.error("{}.replaceTrackConnection({}, null, {}); Attempt to remove invalid track connection",
+                            getName(), oldTrack.getName(), newType);
                     result = false;
                 }
             } else {
-                log.warn("{}.replaceTrackConnection({}, {}, {}); Can't replace null track connection with null",
-                        getName(), "null", "null", newType);
+                log.warn("{}.replaceTrackConnection(null, null, {}); Can't replace null track connection with null",
+                        getName(), newType);
                 result = false;
             }
         } else //already connected to newTrack?
@@ -600,7 +600,7 @@ public class TrackSegment extends LayoutTrack {
                 namedLayoutBlock = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb);
                 lb.incrementUse();
             } else {
-                log.error("{}.setObjects(...); bad blockname '{}' in tracksegment {}", 
+                log.error("{}.setObjects(...); bad blockname '{}' in tracksegment {}",
                         getName(), tLayoutBlockName, getName());
                 namedLayoutBlock = null;
             }
@@ -611,13 +611,13 @@ public class TrackSegment extends LayoutTrack {
         //(read comments for findObjectByName in LayoutEditorFindItems.java)
         connect1 = p.getFinder().findObjectByName(tConnect1Name);
         if (null == connect1) { //findObjectByName failed... try findObjectByTypeAndName
-            log.warn("{}.setObjects(...); Unknown connect1 object prefix: '{}' of type {}.", 
+            log.warn("{}.setObjects(...); Unknown connect1 object prefix: '{}' of type {}.",
                     getName(), tConnect1Name, type1);
             connect1 = p.getFinder().findObjectByTypeAndName(type1, tConnect1Name);
         }
         connect2 = p.getFinder().findObjectByName(tConnect2Name);
         if (null == connect2) { //findObjectByName failed; try findObjectByTypeAndName
-            log.warn("{}.setObjects(...); Unknown connect2 object prefix: '{}' of type {}.", 
+            log.warn("{}.setObjects(...); Unknown connect2 object prefix: '{}' of type {}.",
                     getName(), tConnect2Name, type2);
             connect2 = p.getFinder().findObjectByTypeAndName(type2, tConnect2Name);
         }
