@@ -476,7 +476,7 @@ public class LayoutSlip extends LayoutTurnout {
                 result = getCoordsRight();
                 break;
             default:
-                log.error("{}.getCoordsForConnectionType({}); Invalid connection type", getName(), connectionType); //I18IN
+                log.error("{}.getCoordsForConnectionType({}); Invalid Connection Type", getName(), connectionType); //I18IN
         }
         return result;
     }

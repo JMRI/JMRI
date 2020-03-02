@@ -268,7 +268,7 @@ public class LayoutTurntable extends LayoutTrack {
             }
         }
         if (!found) {
-            log.error("{0}.setRayTurnout({1}, {2}, {3}); Attempt to add Turnout control to a non-existant ray track",
+            log.error("{}.setRayTurnout({}, {}, {}); Attempt to add Turnout control to a non-existant ray track",
                     getName(), index, turnoutName, state);
         }
     }
@@ -438,7 +438,7 @@ public class LayoutTurntable extends LayoutTrack {
             }
         }
         if (!found) {
-            log.error("{0}.setRayCoordsIndexed({1}, {2}, {3}); Attempt to move a non-existant ray track",
+            log.error("{}.setRayCoordsIndexed({}, {}, {}); Attempt to move a non-existant ray track",
                     getName(), x, y, index);
         }
     }
@@ -468,7 +468,7 @@ public class LayoutTurntable extends LayoutTrack {
         } else if (connectionType >= TURNTABLE_RAY_OFFSET) {
             result = getRayCoordsIndexed(connectionType - TURNTABLE_RAY_OFFSET);
         } else {
-            log.error("{0}.getCoordsForConnectionType({1}); Invalid connection type",
+            log.error("{}.getCoordsForConnectionType({}); Invalid connection type",
                     getName(), connectionType); // NOI18N
         }
         return result;
@@ -808,7 +808,7 @@ public class LayoutTurntable extends LayoutTrack {
                 }
             }
             if (!found) {
-                log.error("{0}.setPosition({1}); Attempt to set the position on a non-existant ray track",
+                log.error("{}.setPosition({}); Attempt to set the position on a non-existant ray track",
                         getName(), index);
             }
         }
@@ -831,7 +831,7 @@ public class LayoutTurntable extends LayoutTrack {
     public void deleteRay(RayTrack rayTrack) {
         TrackSegment t = null;
         if (rayTrack == null) {
-            log.error("{0}.deleteRay(null); rayTrack is null", getName());
+            log.error("{}.deleteRay(null); rayTrack is null", getName());
         } else {
             t = rayTrack.getConnect();
             getRayList().remove(rayTrack.getConnectionIndex());
@@ -1354,7 +1354,7 @@ public class LayoutTurntable extends LayoutTrack {
                     }
                 }
             } else {    // (#3)
-                log.debug("*New block (''{0}'') trackNameSets", theBlockName);
+                log.debug("*New block (''{}'') trackNameSets", theBlockName);
                 TrackNameSets = new ArrayList<>();
                 blockNamesToTrackNameSetsMap.put(theBlockName, TrackNameSets);
             }
@@ -1363,7 +1363,7 @@ public class LayoutTurntable extends LayoutTrack {
                 TrackNameSets.add(TrackNameSet);
             }
             if (TrackNameSet.add(getName())) {
-                log.debug("*    Add track ''{0}'' to trackNameSet for block ''{1}''", getName(), theBlockName);
+                log.debug("*    Add track ''{}'' to trackNameSet for block ''{}''", getName(), theBlockName);
             }
             theConnect.collectContiguousTracksNamesInBlockNamed(theBlockName, TrackNameSet);
         }
@@ -1388,7 +1388,7 @@ public class LayoutTurntable extends LayoutTrack {
                     if ((!blk.isEmpty()) && (blk.equals(blockName))) { // (#1)
                         // if we are added to the TrackNameSet
                         if (TrackNameSet.add(getName())) {
-                            log.debug("*    Add track ''{0}'' for block ''{1}''", getName(), blockName);
+                            log.debug("*    Add track ''{}'' for block ''{}''", getName(), blockName);
                         }
                         // it's time to play... flood your neighbours!
                         ts.collectContiguousTracksNamesInBlockNamed(blockName,

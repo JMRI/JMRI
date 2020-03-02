@@ -250,7 +250,7 @@ public class PositionablePointTest {
         // test failure
         Assert.assertEquals("pp.getCoordsForConnectionType(LayoutTrack.NONE) == {666.6, 999.9}",
                 thePoint, pp.getCoordsForConnectionType(LayoutTrack.NONE));
-        JUnitAppender.assertErrorMessage("test.getCoordsForConnectionType(0); Invalid connection type");
+        JUnitAppender.assertErrorMessage("test.getCoordsForConnectionType(0); Invalid Connection Type");
 
         // test success
         Assert.assertEquals("pp.getCoordsForConnectionType(LayoutTrack.POS_POINT) == {666.6, 999.9}",
@@ -266,13 +266,13 @@ public class PositionablePointTest {
         Assert.assertNotNull("exists", pp);
 
         try {
-            // test invalid connection type
+            // test Invalid Connection Type
             Assert.assertNull("pp.getConnection(invalid type) is null",
                     pp.getConnection(LayoutTrack.NONE));
             Assert.fail("No exception thrown on pp.getConnection(invalid type)");
         } catch (JmriException ex) {
         }
-        JUnitAppender.assertErrorMessage("test.getConnection(0); Invalid connection type");
+        JUnitAppender.assertErrorMessage("test.getConnection(0); Invalid Connection Type");
 
         try {
             // test valid connection type (null value)
@@ -292,12 +292,12 @@ public class PositionablePointTest {
         Assert.assertNotNull("exists", pp);
 
         try {
-            // test invalid connection type
+            // test Invalid Connection Type
             pp.setConnection(LayoutTrack.NONE, null, LayoutTrack.NONE);
-            Assert.fail("No exception thrown on pp.setConnection(invalid connection type)");
+            Assert.fail("No exception thrown on pp.setConnection(Invalid Connection Type)");
         } catch (JmriException ex) {
         }
-        JUnitAppender.assertErrorMessage("test.setConnection(0); Invalid connection type");
+        JUnitAppender.assertErrorMessage("test.setConnection(0); Invalid Connection Type");
 
         try {
             // test invalid object type
@@ -323,10 +323,10 @@ public class PositionablePointTest {
         PositionablePoint pp = new PositionablePoint("test", PositionablePoint.ANCHOR, MathUtil.zeroPoint2D, le);
         Assert.assertNotNull("exists", pp);
 
-        // test invalid connection type
+        // test Invalid Connection Type
         Assert.assertFalse("pp.isDisconnected(invalid type) is null",
                 pp.isDisconnected(LayoutTrack.NONE));
-        JUnitAppender.assertErrorMessage("test.isDisconnected(0); Invalid connection type");
+        JUnitAppender.assertErrorMessage("test.isDisconnected(0); Invalid Connection Type");
 
         // test valid connection type
         Assert.assertTrue("pp.isDisconnected(valid type) is null",
@@ -344,7 +344,7 @@ public class PositionablePointTest {
         // test null track segment
         Assert.assertFalse("pp.setTrackConnection(null) is false",
                 pp.setTrackConnection(null));
-        JUnitAppender.assertErrorMessage("test.replaceTrackConnection(null, null); Attempt to remove non-existant track connection");
+        JUnitAppender.assertErrorMessage("test.replaceTrackConnection(0, 0); Attempt to remove non-existant track connection");
 
         PositionablePoint ppA = new PositionablePoint("A", PositionablePoint.ANCHOR, new Point2D.Double(0.0, 0.0), le);
         PositionablePoint ppB = new PositionablePoint("B", PositionablePoint.ANCHOR, new Point2D.Double(10.0, 10.0), le);
