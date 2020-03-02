@@ -220,9 +220,9 @@ public class ThrottleFrameTest {
         to.setAddressValue(new DccLocoAddress(42, false));
 
         to.setSpeedSlider(28);
-        to.slideSpeedSlider(1); // jemmy can't slide the slider to zero for some
+        to.slideSpeedSlider(0); // jemmy can't slide the slider to zero for some
         // reason.
-        Assert.assertEquals("Speed set to Minimum", 1, to.getSpeedSliderValue());
+        Assert.assertEquals("Speed set to Minimum", 0, to.getSpeedSliderValue());
 
         to.pushReleaseButton();
     }
