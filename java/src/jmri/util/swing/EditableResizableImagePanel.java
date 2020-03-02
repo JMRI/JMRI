@@ -156,7 +156,6 @@ public class EditableResizableImagePanel extends ResizableImagePanel implements 
             dest = new File(dropFolder + File.separatorChar + src.getName());          
             if (src.getParent().compareTo(dest.getParent()) != 0) {
                 // else case would be droping from dropFolder, so no copy
-                FileOutputStream fileOutputStream = null;
                 try {                    
                     FileUtil.createDirectory(dest.getParentFile().getPath());
                     BufferedInputStream in = null;
@@ -174,27 +173,20 @@ public class EditableResizableImagePanel extends ResizableImagePanel implements 
                         dest = new File(dropFolder + File.separatorChar + i+"-"+src.getName());                         
                     }
                     // finally create file and copy data
-                    fileOutputStream = new FileOutputStream(dest);                    
+                    FileOutputStream fileOutputStream = new FileOutputStream(dest);                    
                     byte dataBuffer[] = new byte[4096];
                     int bytesRead;
                     while ((bytesRead = in.read(dataBuffer, 0, 4096)) != -1) {
                         fileOutputStream.write(dataBuffer, 0, bytesRead);
                     }
                     fileOutputStream.close();
+                    in.close();
                 } catch (IOException e) {
                     log.error("URIsDropped: error while copying new file, using original file");
                     log.error("URIsDropped: Error : "+ e.getMessage());
                     log.error("URIsDropped: URI : "+uris[0]);
                     dest = src;
-                } finally {
-                    if (fileOutputStream != null) {
-                        try {
-                            fileOutputStream.close();
-                        } catch (IOException ex) {
-                            log.error("URIsDropped: error while closing new file : ", ex.getMessage());
-                        }
-                    }
-                }
+                } 
             }        
         }
         setImagePath(dest.getPath());
