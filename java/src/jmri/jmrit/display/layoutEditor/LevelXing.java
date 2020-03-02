@@ -638,7 +638,7 @@ public class LevelXing extends LayoutTrack {
         connectA = o;
         if ((connectA != null) && (type != TRACK)) {
             log.error("{}.setConnectA(({}, {}); invalid type", 
-                    getName(), (o == null) ? "null" : o.getName(), type);
+                    getName(), o.getName(), type);
         }
     }
 
@@ -646,7 +646,7 @@ public class LevelXing extends LayoutTrack {
         connectB = o;
         if ((connectB != null) && (type != TRACK)) {
             log.error("{}.setConnectB(({}, {}); invalid type", 
-                    getName(), (o == null) ? "null" : o.getName(), type);
+                    getName(), o.getName(), type);
         }
     }
 
@@ -654,7 +654,7 @@ public class LevelXing extends LayoutTrack {
         connectC = o;
         if ((connectC != null) && (type != TRACK)) {
             log.error("{}.setConnectC(({}, {}); invalid type", 
-                    getName(), (o == null) ? "null" : o.getName(), type);
+                    getName(), o.getName(), type);
         }
     }
 
@@ -662,7 +662,7 @@ public class LevelXing extends LayoutTrack {
         connectD = o;
         if ((connectD != null) && (type != TRACK)) {
             log.error("{}.setConnectD(({}, {}); invalid type", 
-                    getName(), (o == null) ? "null" : o.getName(), type);
+                    getName(), o.getName(), type);
         }
     }
 

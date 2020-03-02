@@ -1760,9 +1760,9 @@ public class PositionablePoint extends LayoutTrack {
                 result = getConnect2();
             }
         } else {
-            String errString = MessageFormat.format("{}.getConnection({}); Invalid connection type",
+            String errString = MessageFormat.format("{0}.getConnection({1}); Invalid connection type",
                     getName(), connectionType); //I18IN
-            log.error(errString); //I18IN
+            log.error(errString);
             throw new jmri.JmriException(errString);
         }
         return result;

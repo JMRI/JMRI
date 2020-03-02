@@ -363,7 +363,7 @@ public class PositionablePointTest {
         // test already connected
         Assert.assertFalse("pp.setTrackConnection(tsAB) is false",
                 pp.setTrackConnection(tsAB));
-        jmri.util.JUnitAppender.assertErrorMessage("Already connected to testAB");
+        jmri.util.JUnitAppender.assertWarnMessage("test.replaceTrackConnection(null, testAB); Already connected");
 
         // test 2nd non-null track segment
         Assert.assertTrue("pp.setTrackConnection(tsBC) is true",

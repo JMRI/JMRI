@@ -271,7 +271,7 @@ public class LayoutSlipTest {
         Assert.assertEquals("ltd.getCoordsForConnectionType(NONE) is equal to...",
                 new Point2D.Double(100.0, 50.0),
                 ltd.getCoordsForConnectionType(LayoutTrack.NONE));
-        jmri.util.JUnitAppender.assertErrorMessage("Invalid connection type 0");
+        jmri.util.JUnitAppender.assertErrorMessage("double.getCoordsForConnectionType(0); Invalid connection type");
 
         Assert.assertEquals("ltd.getCoordsForConnectionType(SLIP_A) is equal to...",
                 new Point2D.Double(85.85786437626905, 64.14213562373095),
@@ -564,7 +564,7 @@ public class LayoutSlipTest {
             Assert.fail("No exception thrown on lts.getConnection(invalid type)");
         } catch (JmriException ex) {
         }
-        jmri.util.JUnitAppender.assertErrorMessage("Invalid Connection Type 0");
+        jmri.util.JUnitAppender.assertErrorMessage("single.getCoordsForConnectionType(0); Invalid connection type");
 
         try {
             // test invalid connection type
@@ -573,7 +573,7 @@ public class LayoutSlipTest {
             Assert.fail("No exception thrown on ltd.getConnection(invalid type)");
         } catch (JmriException ex) {
         }
-        jmri.util.JUnitAppender.assertErrorMessage("Invalid Connection Type 0");
+        jmri.util.JUnitAppender.assertErrorMessage("double.getConnection(0); Invalid connection type");
     }
 
     @Test
@@ -626,14 +626,14 @@ public class LayoutSlipTest {
             Assert.fail("No exception thrown on lts.setConnection(invalid connection type)");
         } catch (JmriException ex) {
         }
-        jmri.util.JUnitAppender.assertErrorMessage("Invalid Connection Type 0");
+        jmri.util.JUnitAppender.assertErrorMessage("single.setConnection(0); Invalid connection type");
         try {
             // test invalid connection type
             ltd.setConnection(LayoutTrack.NONE, null, LayoutTrack.NONE);
             Assert.fail("No exception thrown on ltd.setConnection(invalid connection type)");
         } catch (JmriException ex) {
         }
-        jmri.util.JUnitAppender.assertErrorMessage("Invalid Connection Type 0");
+        jmri.util.JUnitAppender.assertErrorMessage("double.setConnection(0); Invalid connection type");
 
         try {
             // test invalid object type
