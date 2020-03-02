@@ -1252,7 +1252,7 @@ public class LayoutTurnout extends LayoutTrack {
                 break;
             }
             default: {
-                String errString = MessageFormat.format("{}.getConnection({}); Invalid connection type",
+                String errString = MessageFormat.format("{0}.getConnection({1}); Invalid connection type",
                         getName(), connectionType); //I18IN
                 log.error(errString);
                 throw new jmri.JmriException(errString);
@@ -1267,7 +1267,7 @@ public class LayoutTurnout extends LayoutTrack {
     @Override
     public void setConnection(int connectionType, LayoutTrack o, int type) throws jmri.JmriException {
         if ((type != TRACK) && (type != NONE)) {
-            String errString = MessageFormat.format("{}.setConnection({}, {}, {}); unexpected type",
+            String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); unexpected type",
                     getName(), connectionType, (o == null) ? "null" : o.getName(), type); //I18IN
             log.error(errString);
             throw new jmri.JmriException(errString);
@@ -1286,7 +1286,7 @@ public class LayoutTurnout extends LayoutTrack {
                 connectD = o;
                 break;
             default:
-                String errString = MessageFormat.format("{}.setConnection({}, {}, {}); Invalid connection type",
+                String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); Invalid connection type",
                         getName(), connectionType, (o == null) ? "null" : o.getName(), type); //I18IN
                 log.error(errString);
                 throw new jmri.JmriException(errString);

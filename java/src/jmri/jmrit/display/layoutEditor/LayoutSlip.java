@@ -1,41 +1,18 @@
 package jmri.jmrit.display.layoutEditor;
 
-import static java.lang.Integer.parseInt;
-import static java.lang.Math.PI;
-
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
-import java.awt.geom.GeneralPath;
-import java.awt.geom.Line2D;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
+import java.awt.event.*;
+import java.awt.geom.*;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.*;
 import java.util.Map.Entry;
-import javax.annotation.CheckForNull;
-import javax.annotation.Nonnull;
-import javax.swing.AbstractAction;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JComboBox;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPopupMenu;
-import javax.swing.JSeparator;
-import jmri.InstanceManager;
-import jmri.NamedBeanHandle;
-import jmri.Path;
-import jmri.SignalMast;
-import jmri.Turnout;
+import javax.annotation.*;
+import javax.swing.*;
+import jmri.*;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
 import jmri.util.MathUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.slf4j.*;
 
 /**
  * A LayoutSlip is a crossing of two straight tracks designed in such a way as
@@ -191,7 +168,7 @@ public class LayoutSlip extends LayoutTurnout {
             case SLIP_D:
                 return connectD;
             default:
-                String errString = MessageFormat.format("{}.getConnection({}); Invalid Connection Type",
+                String errString = MessageFormat.format("{0}.getConnection({1}); Invalid Connection Type",
                         getName(), connectionType); //I18IN
                 log.error(errString);
                 throw new jmri.JmriException(errString);
@@ -204,7 +181,7 @@ public class LayoutSlip extends LayoutTurnout {
     @Override
     public void setConnection(int connectionType, @CheckForNull LayoutTrack o, int type) throws jmri.JmriException {
         if ((type != TRACK) && (type != NONE)) {
-            String errString = MessageFormat.format("{}.setConnection({}, {}, {}); Invalid type",
+            String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); Invalid type",
                     getName(), connectionType, (o == null) ? "null" : o.getName(), type); //I18IN
             log.error(errString);
             throw new jmri.JmriException(errString);
@@ -223,7 +200,7 @@ public class LayoutSlip extends LayoutTurnout {
                 connectD = o;
                 break;
             default:
-                String errString = MessageFormat.format("{}.setConnection({}, {}, {}); Invalid Connection Type",
+                String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); Invalid Connection Type",
                         getName(), connectionType, (o == null) ? "null" : o.getName(), type); //I18IN
                 log.error(errString);
                 throw new jmri.JmriException(errString);
@@ -1082,8 +1059,8 @@ public class LayoutSlip extends LayoutTurnout {
                     getName(), state, turnStateA, turnStateB);
             return;
         }
-        turnoutStates.get(state).setTurnoutAState(parseInt(turnStateA));
-        turnoutStates.get(state).setTurnoutBState(parseInt(turnStateB));
+        turnoutStates.get(state).setTurnoutAState(Integer.parseInt(turnStateA));
+        turnoutStates.get(state).setTurnoutBState(Integer.parseInt(turnStateB));
     }
 
     //Internal call to update the state of the slip depending upon the turnout states.
@@ -1322,7 +1299,7 @@ public class LayoutSlip extends LayoutTurnout {
         double deltaDEG = MathUtil.absDiffAngleDEG(dirAC_DEG, dirBD_DEG);
         double deltaRAD = Math.toRadians(deltaDEG);
 
-        double hypotV = railDisplacement / Math.cos((PI - deltaRAD) / 2.0);
+        double hypotV = railDisplacement / Math.cos((Math.PI - deltaRAD) / 2.0);
         double hypotK = railDisplacement / Math.cos(deltaRAD / 2.0);
 
         log.debug("dir AC: {}, BD: {}, diff: {}", dirAC_DEG, dirBD_DEG, deltaDEG);

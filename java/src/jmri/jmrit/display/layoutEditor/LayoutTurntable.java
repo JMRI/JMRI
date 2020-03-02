@@ -268,7 +268,7 @@ public class LayoutTurntable extends LayoutTrack {
             }
         }
         if (!found) {
-            log.error("{}.setRayTurnout({}, {}, {}); Attempt to add Turnout control to a non-existant ray track",
+            log.error("{0}.setRayTurnout({1}, {2}, {3}); Attempt to add Turnout control to a non-existant ray track",
                     getName(), index, turnoutName, state);
         }
     }
@@ -438,7 +438,7 @@ public class LayoutTurntable extends LayoutTrack {
             }
         }
         if (!found) {
-            log.error("{}.setRayCoordsIndexed({}, {}, {}); Attempt to move a non-existant ray track",
+            log.error("{0}.setRayCoordsIndexed({1}, {2}, {3}); Attempt to move a non-existant ray track",
                     getName(), x, y, index);
         }
     }
@@ -468,7 +468,7 @@ public class LayoutTurntable extends LayoutTrack {
         } else if (connectionType >= TURNTABLE_RAY_OFFSET) {
             result = getRayCoordsIndexed(connectionType - TURNTABLE_RAY_OFFSET);
         } else {
-            log.error("{}.getCoordsForConnectionType({}); Invalid connection type",
+            log.error("{0}.getCoordsForConnectionType({1}); Invalid connection type",
                     getName(), connectionType); // NOI18N
         }
         return result;
@@ -483,7 +483,7 @@ public class LayoutTurntable extends LayoutTrack {
         if (connectionType >= TURNTABLE_RAY_OFFSET) {
             result = getRayConnectIndexed(connectionType - TURNTABLE_RAY_OFFSET);
         } else {
-            String errString = MessageFormat.format("{}.getCoordsForConnectionType({}); Invalid connection type",
+            String errString = MessageFormat.format("{0}.getCoordsForConnectionType({1}); Invalid connection type",
                     getName(), connectionType); // NOI18N
             log.error(errString); // NOI18N
             throw new jmri.JmriException(errString);
@@ -497,7 +497,7 @@ public class LayoutTurntable extends LayoutTrack {
     @Override
     public void setConnection(int connectionType, LayoutTrack o, int type) throws jmri.JmriException {
         if ((type != TRACK) && (type != NONE)) {
-            String errString = MessageFormat.format("{}.setConnection({}, {}, {}); Invalid type",
+            String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); Invalid type",
                     getName(), connectionType, (o == null) ? "null" : o.getName(), type); // NOI18N
             log.error(errString); // NOI18N
             throw new jmri.JmriException(errString);
@@ -506,14 +506,14 @@ public class LayoutTurntable extends LayoutTrack {
             if ((o == null) || (o instanceof TrackSegment)) {
                 setRayConnect((TrackSegment) o, connectionType - TURNTABLE_RAY_OFFSET);
             } else {
-                String errString = MessageFormat.format("{}.setConnection({}, {}, {}); Invalid object type: {}",
+                String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); Invalid object: {4}",
                         getName(), connectionType, o.getName(),
                         type, o.getClass().getName()); // NOI18N
                 log.error(errString); // NOI18N
                 throw new jmri.JmriException(errString);
             }
         } else {
-            String errString = MessageFormat.format("{}.setConnection({}, {}, {}); Invalid connection type",
+            String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); Invalid connection type",
                     getName(), connectionType, (o == null) ? "null" : o.getName(), type); // NOI18N
             log.error(errString); // NOI18N
             throw new jmri.JmriException(errString);
@@ -808,7 +808,7 @@ public class LayoutTurntable extends LayoutTrack {
                 }
             }
             if (!found) {
-                log.error("{}.setPosition({}); Attempt to set the position on a non-existant ray track",
+                log.error("{0}.setPosition({1}); Attempt to set the position on a non-existant ray track",
                         getName(), index);
             }
         }
@@ -831,7 +831,7 @@ public class LayoutTurntable extends LayoutTrack {
     public void deleteRay(RayTrack rayTrack) {
         TrackSegment t = null;
         if (rayTrack == null) {
-            log.error("{}.deleteRay(null); rayTrack is null", getName());
+            log.error("{0}.deleteRay(null); rayTrack is null", getName());
         } else {
             t = rayTrack.getConnect();
             getRayList().remove(rayTrack.getConnectionIndex());
@@ -1354,7 +1354,7 @@ public class LayoutTurntable extends LayoutTrack {
                     }
                 }
             } else {    // (#3)
-                log.debug("*New block ('{}') trackNameSets", theBlockName);
+                log.debug("*New block (''{0}'') trackNameSets", theBlockName);
                 TrackNameSets = new ArrayList<>();
                 blockNamesToTrackNameSetsMap.put(theBlockName, TrackNameSets);
             }
@@ -1363,7 +1363,7 @@ public class LayoutTurntable extends LayoutTrack {
                 TrackNameSets.add(TrackNameSet);
             }
             if (TrackNameSet.add(getName())) {
-                log.debug("*    Add track '{}' to trackNameSet for block '{}'", getName(), theBlockName);
+                log.debug("*    Add track ''{0}'' to trackNameSet for block ''{1}''", getName(), theBlockName);
             }
             theConnect.collectContiguousTracksNamesInBlockNamed(theBlockName, TrackNameSet);
         }
@@ -1388,7 +1388,7 @@ public class LayoutTurntable extends LayoutTrack {
                     if ((!blk.isEmpty()) && (blk.equals(blockName))) { // (#1)
                         // if we are added to the TrackNameSet
                         if (TrackNameSet.add(getName())) {
-                            log.debug("*    Add track '{}' for block '{}'", getName(), blockName);
+                            log.debug("*    Add track ''{0}'' for block ''{1}''", getName(), blockName);
                         }
                         // it's time to play... flood your neighbours!
                         ts.collectContiguousTracksNamesInBlockNamed(blockName,

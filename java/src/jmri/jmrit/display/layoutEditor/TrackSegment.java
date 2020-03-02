@@ -200,12 +200,12 @@ public class TrackSegment extends LayoutTrack {
                     connect2 = null;
                     type2 = NONE;
                 } else {
-                    log.error("{}.replaceTrackConnection({}, {}, {}); Attempt to remove invalid track connection",
+                    log.error("{0}.replaceTrackConnection({1}, {2}, {3}); Attempt to remove invalid track connection",
                             getName(), oldTrack.getName(), "null", newType);
                     result = false;
                 }
             } else {
-                log.warn("{}.replaceTrackConnection({}, {}, {}); Can't replace null track connection with null",
+                log.warn("{0}.replaceTrackConnection({1}, {2}, {3}); Can't replace null track connection with null",
                         getName(), "null", "null", newType);
                 result = false;
             }
@@ -220,7 +220,7 @@ public class TrackSegment extends LayoutTrack {
                 connect2 = newTrack;
                 type2 = newType;
             } else {
-                log.error("{}.replaceTrackConnection({}, {}, {}); Attempt to replace invalid track connection",
+                log.error("{0}.replaceTrackConnection({1}, {2}, {3}); Attempt to replace invalid track connection",
                         getName(), (oldTrack == null) ? "null" : oldTrack.getName(), newTrack.getName(), newType);
                 result = false;
             }
@@ -600,7 +600,7 @@ public class TrackSegment extends LayoutTrack {
                 namedLayoutBlock = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb);
                 lb.incrementUse();
             } else {
-                log.error("{}.setObjects(...); bad blockname '{}' in tracksegment {}", 
+                log.error("{0}.setObjects(...); bad blockname '{1}' in tracksegment {2}", 
                         getName(), tLayoutBlockName, getName());
                 namedLayoutBlock = null;
             }
@@ -611,13 +611,13 @@ public class TrackSegment extends LayoutTrack {
         //(read comments for findObjectByName in LayoutEditorFindItems.java)
         connect1 = p.getFinder().findObjectByName(tConnect1Name);
         if (null == connect1) { //findObjectByName failed... try findObjectByTypeAndName
-            log.warn("{}.setObjects(...); Unknown connect1 object prefix: '{}' of type {}.", 
+            log.warn("{0}.setObjects(...); Unknown connect1 object prefix: '{1}' of type {2}.", 
                     getName(), tConnect1Name, type1);
             connect1 = p.getFinder().findObjectByTypeAndName(type1, tConnect1Name);
         }
         connect2 = p.getFinder().findObjectByName(tConnect2Name);
         if (null == connect2) { //findObjectByName failed; try findObjectByTypeAndName
-            log.warn("{}.setObjects(...); Unknown connect2 object prefix: '{}' of type {}.", 
+            log.warn("{0}.setObjects(...); Unknown connect2 object prefix: '{1}' of type {2}.", 
                     getName(), tConnect2Name, type2);
             connect2 = p.getFinder().findObjectByTypeAndName(type2, tConnect2Name);
         }
@@ -3137,7 +3137,7 @@ public class TrackSegment extends LayoutTrack {
         super.setDecorations(decorations);
         if (decorations != null) {
             for (Map.Entry<String, String> entry : decorations.entrySet()) {
-                log.debug("Key = {}, Value = {}", entry.getKey(), entry.getValue());
+                log.debug("Key = ''{0}'', Value = ''{1}''", entry.getKey(), entry.getValue());
                 String key = entry.getKey();
                 //
                 //arrow decorations
@@ -3185,7 +3185,7 @@ public class TrackSegment extends LayoutTrack {
                             String valueString = value.substring(value.lastIndexOf("=") + 1);
                             gap = Integer.parseInt(valueString);
                         } else {
-                            log.debug("arrow value ignored: {}", value);
+                            log.debug("arrow value ignored: {0}", value);
                         }
                     }
                     hasIn |= !hasOut;   //if hasOut is false make hasIn true
@@ -3217,7 +3217,7 @@ public class TrackSegment extends LayoutTrack {
                     String[] values = bridgeValue.split(";");
                     for (int i = 0; i < values.length; i++) {
                         String value = values[i];
-                        //log.info("value[{}]: \"{}\"", i, value);
+                        //log.info("value[{0}]: ''{1}''", i, value);
                         if (value.equals("left")) {
                             hasRight = false;
                         } else if (value.equals("right")) {
@@ -3242,7 +3242,7 @@ public class TrackSegment extends LayoutTrack {
                             String valueString = value.substring(value.lastIndexOf("=") + 1);
                             deckWidth = Integer.parseInt(valueString);
                         } else {
-                            log.debug("bridge value ignored: {}", value);
+                            log.debug("bridge value ignored: {0}", value);
                         }
                     }
                     //these both can't be false
@@ -3274,7 +3274,7 @@ public class TrackSegment extends LayoutTrack {
                     String[] values = bumperValue.split(";");
                     for (int i = 0; i < values.length; i++) {
                         String value = values[i];
-                        //log.info("value[{}]: \"{}\"", i, value);
+                        //log.info("value[{0}]: ''{1}''", i, value);
                         if (value.equals("start")) {
                             atStop = false;
                         } else if (value.equals("stop")) {
@@ -3317,7 +3317,7 @@ public class TrackSegment extends LayoutTrack {
                     String[] values = tunnelValue.split(";");
                     for (int i = 0; i < values.length; i++) {
                         String value = values[i];
-                        //log.info("value[{}]: \"{}\"", i, value);
+                        //log.info("value[{0}]: ''{1}''", i, value);
                         if (value.equals("left")) {
                             hasRight = false;
                         } else if (value.equals("right")) {
@@ -3873,7 +3873,7 @@ public class TrackSegment extends LayoutTrack {
                     }
                     if ((lb2 != null) && (lb1 != lb2)) {
                         //have a block boundary, create a LayoutConnectivity
-                        log.debug("Block boundary  ('{}'<->'{}') found at {}", lb1, lb2, this);
+                        log.debug("Block boundary  (''{0}''<->''{1}'') found at {2}", lb1, lb2, this);
                         lc = new LayoutConnectivity(lb1, lb2);
                         lc.setConnections(this, lt, type1, null);
                         lc.setDirection(Path.computeDirection(
@@ -3891,7 +3891,7 @@ public class TrackSegment extends LayoutTrack {
                     }
                     if ((lb2 != null) && (lb1 != lb2)) {
                         //have a block boundary, create a LayoutConnectivity
-                        log.debug("Block boundary  ('{}'<->'{}') found at {}", lb1, lb2, this);
+                        log.debug("Block boundary  (''{0}''<->''{1}'') found at {2}", lb1, lb2, this);
                         lc = new LayoutConnectivity(lb1, lb2);
                         lc.setConnections(this, lx, type1, null);
                         lc.setDirection(Path.computeDirection(
@@ -3906,7 +3906,7 @@ public class TrackSegment extends LayoutTrack {
                 lb2 = ls.getLayoutBlock();
                 if ((lb2 != null) && (lb1 != lb2)) {
                     //have a block boundary, create a LayoutConnectivity
-                    log.debug("Block boundary  ('{}'<->'{}') found at {}", lb1, lb2, this);
+                    log.debug("Block boundary  (''{0}''<->''{1}'') found at {2}", lb1, lb2, this);
                     lc = new LayoutConnectivity(lb1, lb2);
                     lc.setConnections(this, ls, type1, null);
                     lc.setDirection(Path.computeDirection(LayoutEditor.getCoords(getConnect2(),
@@ -3935,7 +3935,7 @@ public class TrackSegment extends LayoutTrack {
                     }
                     if ((lb2 != null) && (lb1 != lb2)) {
                         //have a block boundary, create a LayoutConnectivity
-                        log.debug("Block boundary  ('{}'<->'{}') found at {}", lb1, lb2, this);
+                        log.debug("Block boundary  (''{0}''<->''{1}'') found at {2}", lb1, lb2, this);
                         lc = new LayoutConnectivity(lb1, lb2);
                         lc.setConnections(this, lt, type2, null);
                         lc.setDirection(Path.computeDirection(
@@ -3953,7 +3953,7 @@ public class TrackSegment extends LayoutTrack {
                     }
                     if ((lb2 != null) && (lb1 != lb2)) {
                         //have a block boundary, create a LayoutConnectivity
-                        log.debug("Block boundary  ('{}'<->'{}') found at {}", lb1, lb2, this);
+                        log.debug("Block boundary  (''{0}''<->''{1}'') found at {2}", lb1, lb2, this);
                         lc = new LayoutConnectivity(lb1, lb2);
                         lc.setConnections(this, lx, type2, null);
                         lc.setDirection(Path.computeDirection(
@@ -3968,7 +3968,7 @@ public class TrackSegment extends LayoutTrack {
                 lb2 = ls.getLayoutBlock();
                 if ((lb2 != null) && (lb1 != lb2)) {
                     //have a block boundary, create a LayoutConnectivity
-                    log.debug("Block boundary  ('{}'<->'{}') found at {}", lb1, lb2, this);
+                    log.debug("Block boundary  (''{0}''<->''{1}'') found at {2}", lb1, lb2, this);
                     lc = new LayoutConnectivity(lb1, lb2);
                     lc.setConnections(this, ls, type2, null);
                     lc.setDirection(Path.computeDirection(
@@ -4034,7 +4034,7 @@ public class TrackSegment extends LayoutTrack {
                     }
                 }
             } else {    //(#3)
-                log.debug("*New block ('{}') trackNameSets", blockName);
+                log.debug("*New block (''{0}'') trackNameSets", blockName);
                 TrackNameSets = new ArrayList<>();
                 blockNamesToTrackNameSetsMap.put(blockName, TrackNameSets);
             }
@@ -4043,7 +4043,7 @@ public class TrackSegment extends LayoutTrack {
                 TrackNameSets.add(TrackNameSet);
             }
             if (TrackNameSet.add(getName())) {
-                log.debug("*    Add track '{}' to TrackNameSets for block '{}'", getName(), blockName);
+                log.debug("*    Add track ''{0}'' to TrackNameSets for block ''{1}''", getName(), blockName);
             }
             //(#4)
             if (connect1 != null) {
@@ -4066,7 +4066,7 @@ public class TrackSegment extends LayoutTrack {
             if (getBlockName().equals(blockName)) {
                 //if we are added to the TrackNameSet
                 if (TrackNameSet.add(getName())) {
-                    log.debug("*    Add track '{}'for block '{}'", getName(), blockName);
+                    log.debug("*    Add track ''{0}''for block ''{1}''", getName(), blockName);
                 }
                 //these should never be null... but just in case...
                 //it's time to play... flood your neighbours!
