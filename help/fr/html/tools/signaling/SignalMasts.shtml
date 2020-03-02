@@ -26,14 +26,14 @@
 </p>
 
 <a href="../../../package/jmri/jmrit/beantable/SignalMastTable.png">
-   <img src="../../../package/jmri/jmrit/beantable/SignalMastTable.png" 
+   <img src="../../../package/jmri/jmrit/beantable/SignalMastTable.png"
         height="86" width="338" align="right"></a>
-Les objets JMRI "SignalMast"  vous permettent d'afficher des aspects réalistes sur les
+Les objets JMRI "SignalMast"  vous permettent d'afficher des aspects r&#233;alistes sur les
 signaux. Pour plus d'information, consultez la page<a  href="AspectSignaling.shtml"> Aspect Signalisation </a>.
 <p>
 Les  M&#226;ts de Signalisation sont configur&#233;s via le
 <a href="../../../package/jmri/jmrit/beantable/SignalMastTable.shtml">Tableau  M&#226;ts de Signalisation  </a>
-Vous pouvez en ajouter de nouveaux avec le bouton "Ajouter ..." 
+Vous pouvez en ajouter de nouveaux avec le bouton "Ajouter ..."
 sur le tableau, qui vous emm&#232;ne &#224; la
 <a href="../../../package/jmri/jmrit/beantable/SignalMastAddEdit.shtml"> fen&#234;tre "Ajouter  M&#226;ts de Signalisation" </a>.
 </p>
