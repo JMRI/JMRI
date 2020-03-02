@@ -156,9 +156,10 @@ public class EditableResizableImagePanel extends ResizableImagePanel implements 
             dest = new File(dropFolder + File.separatorChar + src.getName());          
             if (src.getParent().compareTo(dest.getParent()) != 0) {
                 // else case would be droping from dropFolder, so no copy
+                BufferedInputStream in = null;
+                FileOutputStream fileOutputStream = null;
                 try {                    
-                    FileUtil.createDirectory(dest.getParentFile().getPath());
-                    BufferedInputStream in = null;
+                    FileUtil.createDirectory(dest.getParentFile().getPath());                    
                     if (uris[0].getScheme() != null && (uris[0].getScheme().equals("content") || uris[0].getScheme().equals("file"))) {
                         in = new BufferedInputStream(uris[0].toURL().openStream());
                     } else { // let's avoir some 403 by passing a user agent
@@ -173,20 +174,29 @@ public class EditableResizableImagePanel extends ResizableImagePanel implements 
                         dest = new File(dropFolder + File.separatorChar + i+"-"+src.getName());                         
                     }
                     // finally create file and copy data
-                    FileOutputStream fileOutputStream = new FileOutputStream(dest);                    
+                    fileOutputStream = new FileOutputStream(dest);                    
                     byte dataBuffer[] = new byte[4096];
                     int bytesRead;
                     while ((bytesRead = in.read(dataBuffer, 0, 4096)) != -1) {
                         fileOutputStream.write(dataBuffer, 0, bytesRead);
                     }
-                    fileOutputStream.close();
-                    in.close();
                 } catch (IOException e) {
                     log.error("URIsDropped: error while copying new file, using original file");
                     log.error("URIsDropped: Error : "+ e.getMessage());
                     log.error("URIsDropped: URI : "+uris[0]);
                     dest = src;
-                } 
+                } finally {
+                    try {
+                        if(fileOutputStream != null) {
+                            fileOutputStream.close();
+                        }
+                        if (in != null) {
+                            in.close(); 
+                        }
+                    } catch (IOException ex) {
+                        log.error("URIsDropped: error while closing file : ", ex.getMessage());
+                    }
+                }
             }        
         }
         setImagePath(dest.getPath());
