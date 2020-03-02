@@ -1,6 +1,8 @@
 package jmri.jmrix.can.cbus.swing.bootloader;
 
 import java.util.Arrays;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * CBUS Node parameters
@@ -124,10 +126,18 @@ public class CbusParameters {
 //                checkVersion(fp, hp);
                 fp.valid = true;
                 if (hp.paramData[NUM_PARAM_IDX] > 7) {
-                    fp.valid = fp.paramData[PROC_TYPE_IDX] == hp.paramData[PROC_TYPE_IDX];
+                    if (fp.paramData[PROC_TYPE_IDX] == hp.paramData[PROC_TYPE_IDX]) {
+                        fp.valid = true;
+                    } else {
+                        log.debug("Processor type mismatch {} {}", fp.paramData[PROC_TYPE_IDX], hp.paramData[PROC_TYPE_IDX]);
+                    }
                 }
                 return fp;
+            } else {
+                log.debug("Module ID mismatch {} {}", fp.paramData[MANU_ID_IDX], hp.paramData[MANU_ID_IDX]);
             }
+        } else {
+            log.debug("Manufacturer ID mismatch {} {}", fp.paramData[MODULE_ID_IDX], hp.paramData[MODULE_ID_IDX]);
         }
         
         fp.valid = false;
@@ -159,10 +169,12 @@ public class CbusParameters {
      * @return the load address
      */
     public int getLoadAddress() {
-        return (paramData[LOAD_ADDR_IDX]
+        int la = (paramData[LOAD_ADDR_IDX]
                 + paramData[LOAD_ADDR_IDX+1]*256
                 + paramData[LOAD_ADDR_IDX+2]*256*256
                 + paramData[LOAD_ADDR_IDX+3]*256*256*256);
+        log.debug("Load address is {}", la);
+        return la;
     }
     
     
@@ -199,5 +211,7 @@ public class CbusParameters {
     public void setValid(boolean s) {
         valid = s;
     }
+    
+    private final static Logger log = LoggerFactory.getLogger(CbusBootloaderPane.class);
     
 }

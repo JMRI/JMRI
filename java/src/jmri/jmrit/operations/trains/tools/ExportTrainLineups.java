@@ -1,10 +1,13 @@
 package jmri.jmrit.operations.trains.tools;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.text.MessageFormat;
 
 import javax.swing.JOptionPane;
 
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,14 +27,8 @@ import jmri.jmrit.operations.trains.TrainManager;
  */
 public class ExportTrainLineups extends XmlFile {
 
-    static final String ESC = "\""; // escape character NOI18N
-    private String del = ","; // delimiter
-
     public ExportTrainLineups() {
-    }
-
-    public void setDeliminter(String delimiter) {
-        del = delimiter;
+        // do nothing
     }
 
     public void writeOperationsTrainsFile() {
@@ -56,6 +53,14 @@ public class ExportTrainLineups extends XmlFile {
         }
     }
 
+    /**
+     * Writes the train lineups for each location a train visits. The lineup
+     * includes: Train Name, Lead Engine, Location, Arrival Time, Departure
+     * Time, Direction, Pulls, Drops, Loads, Empties, Length, Weight, Engineer, Conductor,
+     * Train Description, Train Comment
+     * 
+     * @param name file path name
+     */
     public void writeFile(String name) {
         log.debug("writeFile {}", name);
         // This is taken in large part from "Java and XML" page 368
@@ -64,11 +69,67 @@ public class ExportTrainLineups extends XmlFile {
             file = new File(name);
         }
 
-        PrintWriter fileOut = null;
+        try (CSVPrinter fileOut = new CSVPrinter(
+                new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)),
+                CSVFormat.DEFAULT)) {
 
-        try {
-            fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8")), // NOI18N
-                    true); // NOI18N
+            // create header
+            fileOut.printRecord(Bundle.getMessage("Name"),
+                    Bundle.getMessage("Engine"),
+                    Bundle.getMessage("Location"),
+                    Bundle.getMessage("Direction"),
+                    Bundle.getMessage("Arrives"),
+                    Bundle.getMessage("Departs"),              
+                    Bundle.getMessage("Pulls"),
+                    Bundle.getMessage("Drops"),
+                    Bundle.getMessage("Loads"),
+                    Bundle.getMessage("Empties"),
+                    Bundle.getMessage("Length"),
+                    Bundle.getMessage("Weight"),
+                    Bundle.getMessage("Engineer"),
+                    Bundle.getMessage("Conductor"),
+                    Bundle.getMessage("RouteLocationComment"),
+                    Bundle.getMessage("Description"),
+                    Bundle.getMessage("Comment"));
+
+            int count = 0; // number of trains that were exported
+
+            for (Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByTimeList()) {
+                if (!train.isBuildEnabled() || !train.isBuilt() || train.getRoute() == null) {
+                    continue;
+                }
+                count++;
+                for (RouteLocation rl : train.getRoute().getLocationsBySequenceList()) {
+                    fileOut.printRecord(train.getName(),
+                            train.getLeadEngineRoadAndNumber(),
+                            TrainCommon.splitString(rl.getLocation().getName()),
+                            rl.getTrainDirectionString(),
+                            train.getExpectedArrivalTime(rl),
+                            train.getExpectedDepartureTime(rl),
+                            train.getNumberCarsPickedUp(rl),
+                            train.getNumberCarsSetout(rl),
+                            train.getNumberLoadedCarsInTrain(rl),
+                            train.getNumberEmptyCarsInTrain(rl),
+                            train.getTrainLength(rl),
+                            train.getTrainWeight(rl),
+                            "",
+                            "",
+                            rl.getComment(),
+                            train.getDescription(),
+                            train.getComment());
+                }
+                fileOut.println();
+            }
+
+            fileOut.flush();
+            fileOut.close();
+            log.info("Exported {} trains to file {}", count, defaultOperationsFilename());
+            JOptionPane.showMessageDialog(null,
+                    MessageFormat.format(Bundle.getMessage("ExportedTrainsToFile"), new Object[]{
+                            count, defaultOperationsFilename()}),
+                    Bundle.getMessage("ExportComplete"),
+                    JOptionPane.INFORMATION_MESSAGE);
+
         } catch (IOException e) {
             log.error("Can not open export trains CSV file: " + file.getName());
             JOptionPane.showMessageDialog(null,
@@ -76,134 +137,15 @@ public class ExportTrainLineups extends XmlFile {
                             0, defaultOperationsFilename()}),
                     Bundle.getMessage("ExportFailed"),
                     JOptionPane.ERROR_MESSAGE);
-            return;
         }
-
-        // create header
-        fileOut.println(createHeader());
-
-        int count = 0; // number of trains that were exported
-
-        for (Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByTimeList()) {
-            if (!train.isBuildEnabled() || !train.isBuilt() || train.getRoute() == null) {
-                continue;
-            }
-            count++;
-
-            for (RouteLocation rl : train.getRoute().getLocationsBySequenceList()) {
-
-                String line = ESC +
-                        train.getName() +
-                        ESC +
-                        del +
-                        ESC +
-                        train.getLeadEngineRoadAndNumber() +
-                        ESC +
-                        del +
-                        ESC +
-                        TrainCommon.splitString(rl.getLocation().getName()) +
-                        ESC +
-                        del +
-                        ESC +
-                        train.getExpectedArrivalTime(rl) +
-                        ESC +
-                        del +
-                        ESC +
-                        train.getExpectedDepartureTime(rl) +
-                        ESC +
-                        del +
-                        ESC +
-                        train.getNumberCarsPickedUp(rl) +
-                        ESC +
-                        del +
-                        ESC +
-                        train.getNumberCarsSetout(rl) +
-                        ESC +
-                        del +
-                        ESC +
-                        train.getNumberLoadedCarsInTrain(rl) +
-                        ESC +
-                        del +
-                        ESC +
-                        train.getNumberEmptyCarsInTrain(rl) +
-                        ESC +
-                        del +
-                        ESC +
-                        train.getTrainLength(rl) +
-                        ESC +
-                        del +
-                        ESC +
-                        train.getTrainWeight(rl)+
-                        ESC +
-                        del +
-                        del +
-                        del +
-                        ESC +
-                        train.getDescription() +
-                        ESC +
-                        del +
-                        ESC +
-                        train.getComment() +
-                        ESC;               
-                fileOut.println(line);
-            }
-            fileOut.println();
-        }
-
-        fileOut.flush();
-        fileOut.close();
-        log.info("Exported {} trains to file {}", count, defaultOperationsFilename());
-        JOptionPane.showMessageDialog(null,
-                MessageFormat.format(Bundle.getMessage("ExportedTrainsToFile"), new Object[]{
-                        count, defaultOperationsFilename()}),
-                Bundle.getMessage("ExportComplete"),
-                JOptionPane.INFORMATION_MESSAGE);
-    }
-
-    /*
-     * Train Name, Lead Engine, Location, Arrival Time, Departure Time, Pulls,
-     * Drops, Loads, Empties, Length, Weight, Engineer, Conductor, Train
-     * Description, Train Comment
-     */
-    private String createHeader() {
-        String header = Bundle.getMessage("Name") +
-                del +
-                Bundle.getMessage("Engine") +
-                del +
-                Bundle.getMessage("Location") +
-                del +
-                Bundle.getMessage("Arrives") +
-                del +
-                Bundle.getMessage("Departs") +
-                del +
-                Bundle.getMessage("Pulls") +
-                del +
-                Bundle.getMessage("Drops") +
-                del +
-                Bundle.getMessage("Loads") +
-                del +
-                Bundle.getMessage("Empties") +
-                del +
-                Bundle.getMessage("Length") +
-                del +
-                Bundle.getMessage("Weight") +
-                del +
-                Bundle.getMessage("Engineer") +
-                del +
-                Bundle.getMessage("Conductor") +
-                del +
-                Bundle.getMessage("Description") +
-                del +
-                Bundle.getMessage("Comment");
-        return header;
     }
 
     // Operation files always use the same directory
     public static String defaultOperationsFilename() {
-        return OperationsSetupXml.getFileLocation() +
-                OperationsSetupXml.getOperationsDirectoryName() +
-                File.separator +
-                getOperationsFileName();
+        return OperationsSetupXml.getFileLocation()
+                + OperationsSetupXml.getOperationsDirectoryName()
+                + File.separator
+                + getOperationsFileName();
     }
 
     public static void setOperationsFileName(String name) {

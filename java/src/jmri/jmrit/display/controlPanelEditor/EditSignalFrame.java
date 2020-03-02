@@ -1,5 +1,6 @@
 package jmri.jmrit.display.controlPanelEditor;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,9 +10,7 @@ import javax.annotation.Nonnull;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JComponent;
-import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -36,7 +35,6 @@ import jmri.jmrit.display.SignalMastIcon;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Portal;
 import jmri.jmrit.picker.PickListModel;
-//import jmri.swing.NamedBeanComboBox;
 
 /**
  *
@@ -87,7 +85,9 @@ public class EditSignalFrame extends EditFrame implements ListSelectionListener 
         clearButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent a) {
-                clearListSelection();
+                _portalList.clearSelection();
+                _parent._editor.highlight(null);
+                _mastName.setText(null);
             }
         });
         panel = new JPanel();
@@ -106,13 +106,27 @@ public class EditSignalFrame extends EditFrame implements ListSelectionListener 
         JButton addButton = new JButton(Bundle.getMessage("ButtonAddMast"));
         addButton.addActionListener((ActionEvent a) -> {
             Portal portal = _portalList.getSelectedValue();
+            String msg = null;
             if (portal != null) {
-                addMast(portal, null, null);
+                NamedBean signal = getSignal();
+                if (signal != null) {
+                    if (addMastQuestion(signal, portal)) {
+                        addMast(portal, signal);
+                    }
+                } else {
+                    String name = _mastName.getText().trim();
+                    if ( name.length()==0) {
+                        msg = Bundle.getMessage("selectSignalMast", Bundle.getMessage("mastName"));
+                    } else {
+                        msg = Bundle.getMessage("NotFound", name);
+                    }
+                }
             } else {
-                JOptionPane.showMessageDialog(this, 
-                        Bundle.getMessage("selectPortalProtection", _homeBlock.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME)),
+                msg = Bundle.getMessage("selectPortalProtection", _homeBlock.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME));
+            }
+            if (msg != null) {
+                JOptionPane.showMessageDialog(this, msg,
                         Bundle.getMessage("configureSignal"), JOptionPane.INFORMATION_MESSAGE);
-                return;
             }
         });
         addButton.setToolTipText(Bundle.getMessage("ToolTipAddMast", _homeBlock.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME)));
@@ -120,7 +134,7 @@ public class EditSignalFrame extends EditFrame implements ListSelectionListener 
 
         JButton removeButton = new JButton(Bundle.getMessage("ButtonRemoveMast"));
         removeButton.addActionListener((ActionEvent a) -> {
-            removeMast();
+            removeMast(true, _portalList.getSelectedValue());
         });
         removeButton.setToolTipText(Bundle.getMessage("ToolTipRemoveMast", _homeBlock.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME)));
         panel.add(removeButton);
@@ -166,21 +180,12 @@ public class EditSignalFrame extends EditFrame implements ListSelectionListener 
         return signalPanel;
     }
 
-    @Override
-    protected void clearListSelection() {
-        _portalList.clearSelection();
-        _parent._editor.highlight(null);
-        _mastName.setText(null);
-    }
-
     protected void setSelected(PositionableIcon icon) {
         if (!canEdit()) {
             return;
         }
-        String name = null;
         NamedBean mast = null;
         Portal portal = null;
-        OBlock protectedBlock;
         if (icon instanceof PortalIcon) {
             portal = ((PortalIcon)icon).getPortal();
         } else if (icon instanceof SignalMastIcon) {
@@ -190,11 +195,14 @@ public class EditSignalFrame extends EditFrame implements ListSelectionListener 
         } else {
             return;
         }
+        if (log.isDebugEnabled()) {
+            log.debug("setSelected portal= \"{}\" mast ={}", (portal!=null?portal.getName():"null"),(mast!=null?mast.getDisplayName():"null"));
+        }
         _portalIcon = null;
         if (mast != null) {
             portal =_parent.getSignalPortal(mast);
             if (portal != null) {
-                protectedBlock = portal.getProtectedBlock(mast);
+                OBlock protectedBlock = portal.getProtectedBlock(mast);
                 if (_homeBlock.equals(protectedBlock)) {
                     setPortalSelected(portal);
                     return;
@@ -206,8 +214,6 @@ public class EditSignalFrame extends EditFrame implements ListSelectionListener 
                 if (_homeBlock.getPortals().contains(portal)) {
                     setPortalSelected(portal);
                 }
-            } else {
-                setPortalSelected(portal);
             }
             return;
         }
@@ -215,36 +221,22 @@ public class EditSignalFrame extends EditFrame implements ListSelectionListener 
             List<PortalIcon> piArray = _parent.getPortalIconMap(portal);
             if (!piArray.isEmpty()) {
                 _portalIcon = piArray.get(0);
+                _parent._editor.highlight(_portalIcon);
             }
         }
         if (mast !=null) {
-            name = mast.getDisplayName();
-            List<PositionableIcon> sigArray = _parent.getSignalIconMap(mast);
-            if (sigArray.isEmpty()) {
-                _parent._editor.highlight(_portalIcon);
-            } else {
-                _parent._editor.highlight(sigArray.get(0));
-            }
-            portal =_parent.getSignalPortal(mast);
-            if (portal == null) {
-                StringBuffer sb = new StringBuffer(Bundle.getMessage("unattachedMast", name, _homeBlock.getDisplayName()));
-                sb.append("\n");
-                sb.append(Bundle.getMessage("attachMast",
-                        _homeBlock.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME)));
-                int answer = JOptionPane.showConfirmDialog(this, sb.toString(), 
-                        Bundle.getMessage("configureSignal"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                if (answer == JOptionPane.YES_OPTION) {
-                    addUnattachedMast(mast, icon);
-                } else {
-                    _parent._editor.highlight(null);
-                    return;
-                }
-            } else if (replaceQuestion(mast, portal, null)) {
-                    addUnattachedMast(mast, icon);
-            }
+            setMastNameAndIcon(mast);
         }
-        if (log.isDebugEnabled()) {
-            log.debug("setSelected: signal {}", name);
+    }
+    
+    private void setMastNameAndIcon(NamedBean mast) {
+        _mastName.setText(mast.getDisplayName(DisplayOptions.DISPLAYNAME));
+       List<PositionableIcon> sigArray = _parent.getSignalIconMap(mast);
+        if (sigArray.isEmpty()) {
+            _parent._editor.highlight(null);
+        } else {
+            PositionableIcon icon = sigArray.get(0);
+            _parent._editor.highlight(icon);
         }
     }
 
@@ -258,52 +250,6 @@ public class EditSignalFrame extends EditFrame implements ListSelectionListener 
         }   // selection within currently configured _homeBlock
     }
 
-    private void addUnattachedMast(NamedBean mast, PositionableIcon icon) {
-        JDialog portalDialog = new JDialog(this, true);
-        JPanel contentPane = new JPanel();
-        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-        JLabel l = new JLabel(Bundle.getMessage("PortalTitle", _homeBlock.getDisplayName()));
-        contentPane.add(l);
-        JPanel panel = new JPanel();
-        JComboBox<Portal> box = new JComboBox<Portal>(_homeBlock.getPortals().toArray(new Portal[0]));
-        panel.add(box);
-        contentPane.add(panel);
-        panel = new JPanel();
-        l = new JLabel(Bundle.getMessage("selectPortalProtection", _homeBlock.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME)));
-        l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
-        panel.add(l);
-        contentPane.add(panel);
-        panel = new JPanel();
-        JButton addButton = new JButton(Bundle.getMessage("ButtonAddMast"));
-        addButton.addActionListener(new ActionListener() {
-            NamedBean mast;
-            ActionListener init(NamedBean m) {
-                mast = m;
-                return this;
-            }
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Portal p = (Portal)box.getSelectedItem();
-                if (p != null) {
-                    addMast(p, mast, icon);
-                }
-                portalDialog.dispose();
-            }
-            
-        }.init(mast));
-        panel.add(addButton);
-        JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
-        cancelButton.addActionListener((ActionEvent a) -> {
-            portalDialog.dispose();
-        });
-        panel.add(cancelButton);
-        contentPane.add(panel);
-        portalDialog.setContentPane(contentPane);
-        portalDialog.pack();
-        portalDialog.setLocation(jmri.util.PlaceWindow. nextTo(this, null, portalDialog));
-        portalDialog.setVisible(true);
-        
-    }
     /**
      * *********************** end setup *************************
      */
@@ -312,7 +258,6 @@ public class EditSignalFrame extends EditFrame implements ListSelectionListener 
      * @see javax.swing.event.ListSelectionListener#valueChanged(javax.swing.event.ListSelectionEvent)
      */
     @Override
-//    @SuppressFBWarnings(value="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification="NonNull mast implies portal is also NonNull")
     public void valueChanged(ListSelectionEvent e) {
         Portal portal = _portalList.getSelectedValue();
         if (log.isDebugEnabled()) {
@@ -321,11 +266,26 @@ public class EditSignalFrame extends EditFrame implements ListSelectionListener 
         }
         NamedBean mast = null;
         if (portal != null) {
-            mast = portal.getSignalProtectingBlock(_homeBlock);
-            _lengthPanel.setLength(portal.getEntranceSpaceForBlock(_homeBlock));
-            if (_currentPortal != null) {
-                checkForSaveMast(portal);
+            if (!portal.equals(_currentPortal)) {
+                
+                String msg = checkMastForSave(false);
+                if (msg != null && msg.length() > 0) {
+                    StringBuffer sb = new StringBuffer(msg);
+                    sb.append("\n");
+                    sb.append(Bundle.getMessage("saveChanges"));
+                    int answer = JOptionPane.showConfirmDialog(this, sb.toString(), Bundle.getMessage("configureSignal"),
+                            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    if (answer == JOptionPane.YES_OPTION) {
+                        mast = getSignal();
+                        if (mast != null) {
+                            addMast(_currentPortal, mast);
+                        } else {
+                            removeMast(false, _currentPortal);
+                        }
+                    }
+                }
             }
+            mast = portal.getSignalProtectingBlock(_homeBlock);
         }
         if (_portalIcon == null) {
             _parent._editor.highlight(null);
@@ -338,15 +298,9 @@ public class EditSignalFrame extends EditFrame implements ListSelectionListener 
                _portalIcon = piArray.get(0);
            }
         }
+        
         if (mast != null) {
-            _mastName.setText(mast.getDisplayName(DisplayOptions.DISPLAYNAME));
-           List<PositionableIcon> sigArray = _parent.getSignalIconMap(mast);
-            if (sigArray.isEmpty()) {
-                _parent._editor.highlight(null);
-            } else {
-                PositionableIcon icon = sigArray.get(0);
-                _parent._editor.highlight(icon);
-            }
+            setMastNameAndIcon(mast);
         } else {
             _mastName.setText(null);
             if (portal != null) {
@@ -356,68 +310,66 @@ public class EditSignalFrame extends EditFrame implements ListSelectionListener 
         }
     }
 
-    private boolean replaceQuestion(@Nonnull NamedBean mast, Portal portal, Portal newPortal) {
-        OBlock b = portal.getProtectedBlock(mast);
-        StringBuffer sb = new StringBuffer(Bundle.getMessage("mastProtectsPortal", 
-                mast.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME), 
-                b.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME),
-                portal.getName()));
-        sb.append("\n");
-        if (newPortal != null) {
-            sb.append(Bundle.getMessage("switchProtection",
-                    _homeBlock.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME),
-                    newPortal.getName()));
-        } else {
-            sb.append(Bundle.getMessage("attachMast",
-                    _homeBlock.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME)));
+    // Called from ButtonAddMast
+    private boolean addMastQuestion(@Nonnull NamedBean mast, @Nonnull Portal homePortal) {
+        StringBuffer sb = new StringBuffer();
+        Portal portal = _parent.getSignalPortal(mast);
+        OBlock blk = null;
+        if (portal != null) {
+            blk = portal.getProtectedBlock(mast);
+            if (blk != null && !blk.equals(_homeBlock)) {
+                sb.append(Bundle.getMessage("mastProtectsPortal", 
+                        mast.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME), 
+                        blk.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME),
+                        portal.getName()));
+                sb.append("\n");
+            }
         }
-        int answer = JOptionPane.showConfirmDialog(this,  sb.toString(),
-                Bundle.getMessage("configureSignal"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if (answer != JOptionPane.YES_OPTION) {
-            return false;
+        NamedBean homeMast = homePortal.getSignalProtectingBlock(_homeBlock);
+        if (homeMast != null) {
+            if (homeMast.equals(mast)) {
+                // no changes needed except for length.  So do it now and skip the rest of AddMast()
+                homePortal.setEntranceSpaceForBlock(_homeBlock, _lengthPanel.getLength());
+                return false;
+            } else {
+                sb.append(Bundle.getMessage("replaceSignalMast", homeMast.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME), 
+                                mast.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME), homePortal.getName()));
+                sb.append("\n");
+            }
+        } else if (sb.length() > 0) {
+            sb.append(Bundle.getMessage("attachMast", mast.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME),
+                    _homeBlock.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME), homePortal.getName()));
         }
-        portal.setProtectSignal(null, 0, b);
+        if (sb.length() > 0) {
+            int answer = JOptionPane.showConfirmDialog(this,  sb.toString(),
+                    Bundle.getMessage("configureSignal"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (answer != JOptionPane.YES_OPTION) {
+                return false;   // Skip the rest of AddMast()
+            }
+        }
+        if (homeMast != null) {
+            homePortal.setProtectSignal(null, 0, blk);
+        }
         _parent.putSignalPortal(mast, null);
         return true;
     }
 
-    private void addMast(@Nonnull Portal portal, NamedBean newMast, PositionableIcon icon) {
-        if (newMast == null) {
-            String name = _mastName.getText();
-            newMast = InstanceManager.getDefault(SignalMastManager.class).getSignalMast(name);
-            if (newMast == null) {
-                newMast = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(name);
-                if (newMast == null) {
-                    JOptionPane.showMessageDialog(this, Bundle.getMessage("selectSignalMast"),
-                            Bundle.getMessage("configureSignal"), JOptionPane.INFORMATION_MESSAGE);
-                    return;
-                }
-            }
+    private NamedBean getSignal() {
+        String name = _mastName.getText();
+        if (name.trim().length() == 0) {
+            return null;
         }
+        NamedBean signal = InstanceManager.getDefault(SignalMastManager.class).getSignalMast(name);
+        if (signal == null) {
+            signal = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(name);
+        }
+        return signal;
+    }
+    // Called from: 
+    // ConfigureButton -    addMast(portal, mast); portal from portal list, mast from name field
+    private void addMast(@Nonnull Portal portal, @Nonnull NamedBean newMast) {
         if (log.isDebugEnabled()) {
-            log.debug("addMast \"{}\" icon ={}", newMast.getDisplayName(), (icon==null?"null":icon.getName()));
-        }
-        
-        Portal p = _parent.getSignalPortal(newMast);
-        if (p != null && !p.equals(portal)) {
-            if (!replaceQuestion(newMast, p, portal)) {
-                return;
-            }
-        }
-        NamedBean oldMast = portal.getSignalProtectingBlock(_homeBlock);
-        if (oldMast != null) {
-            if (oldMast.equals(newMast)) {
-                portal.setEntranceSpaceForBlock(_homeBlock, _lengthPanel.getLength());
-            } else {
-                int answer = JOptionPane.showConfirmDialog(this, 
-                        Bundle.getMessage("replaceSignalMast", oldMast.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME), 
-                                newMast.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME), 
-                                portal.getName()), 
-                        Bundle.getMessage("configureSignal"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                if (answer != JOptionPane.YES_OPTION) {
-                    return;
-                }
-            }
+            log.debug("addMast \"{}\" icon ={}", newMast.getDisplayName());
         }
         if (newMast instanceof SignalMast) {
             SignalMast mast = (SignalMast)newMast;
@@ -426,30 +378,32 @@ public class EditSignalFrame extends EditFrame implements ListSelectionListener 
             }
         }
         if (log.isDebugEnabled()) {
-            log.debug("addMast state = {}", newMast.getState());
             if (newMast instanceof SignalHead) {
-                log.debug("appearance = {}", ((SignalHead)newMast).getAppearanceName());
+                log.debug("addMast SignalHead state= {}, appearance= {}", ((SignalHead)newMast).getAppearanceName());
             } else {
-                log.debug("aspect = {}", ((SignalMast)newMast).getAspect());
+                log.debug("addMast SignalMast state= {}, aspect= {}", ((SignalMast)newMast).getAspect());
             }
         }
         portal.setProtectSignal(newMast, _lengthPanel.getLength(), _homeBlock);
         _parent.putSignalPortal(newMast, portal);
+        setMastIcon(newMast, portal);
+    }
 
+    private void setMastIcon(NamedBean newMast,  Portal portal) {
         List<PositionableIcon> mastIcons = _parent.getSignalIconMap(newMast);
-        if (icon == null) {
-            if (!mastIcons.isEmpty()) {
-                icon = mastIcons.get(0);
-            } else if (newMast instanceof SignalMast) {
-                icon = new SignalMastIcon(_parent._editor);
-                ((SignalMastIcon)icon).setSignalMast(newMast.getDisplayName());
-            } else if (newMast instanceof SignalHead) {
-                icon = new SignalHeadIcon(_parent._editor);
-                ((SignalHeadIcon)icon).setSignalHead(newMast.getDisplayName());
-            } else {
-                return;
-            }
+        PositionableIcon icon = null;
+        if (!mastIcons.isEmpty()) {
+            icon = mastIcons.get(0);
+        } else if (newMast instanceof SignalMast) {
+            icon = new SignalMastIcon(_parent._editor);
+            ((SignalMastIcon)icon).setSignalMast(newMast.getDisplayName());
             _parent._editor.putItem(icon);
+        } else if (newMast instanceof SignalHead) {
+            icon = new SignalHeadIcon(_parent._editor);
+            ((SignalHeadIcon)icon).setSignalHead(newMast.getDisplayName());
+            _parent._editor.putItem(icon);
+        } else {
+            return;
         }
         List<PortalIcon> portalIcons = _parent.getPortalIconMap(portal);
         if (!portalIcons.isEmpty()) {
@@ -465,88 +419,127 @@ public class EditSignalFrame extends EditFrame implements ListSelectionListener 
         _parent.getCircuitIcons(_homeBlock).add(icon);
     }
 
-    private void removeMast() {
-        Portal portal = _portalList.getSelectedValue();
+    private void removeMast(boolean confirm,  Portal portal) {
         NamedBean oldMast = null;
         if (portal != null) {
             oldMast = portal.getSignalProtectingBlock(_homeBlock);
         } else {
-            JOptionPane.showMessageDialog(this, 
-                    Bundle.getMessage("selectPortalProtection", _homeBlock.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME)),
-                    Bundle.getMessage("configureSignal"), JOptionPane.INFORMATION_MESSAGE);
+            _mastName.setText(null);
             return;
         }
-        if (oldMast != null) {
-            int answer = JOptionPane.showConfirmDialog(this, 
-                    Bundle.getMessage("removeSignalMast", oldMast.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME), 
-                            portal.getName()), 
-                    Bundle.getMessage("configureSignal"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (answer == JOptionPane.YES_OPTION) {
-                portal.setProtectSignal(null, 0, _homeBlock);
-                _parent.putSignalPortal(oldMast, null);
-                _mastName.setText(null);
+        if (confirm) {
+            if (oldMast != null) {
+                int answer = JOptionPane.showConfirmDialog(this, 
+                        Bundle.getMessage("removeSignalMast", oldMast.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME), 
+                                portal.getName()), 
+                        Bundle.getMessage("configureSignal"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (answer == JOptionPane.YES_OPTION) {
+                    _mastName.setText(null);    // do before portal triggers propertyChange
+                    removeMastAtPortal(oldMast, portal);
+                } else {
+                    _mastName.setText(oldMast.getDisplayName(DisplayOptions.DISPLAYNAME));
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, 
+                        Bundle.getMessage("noPortalProtection", _homeBlock.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME),
+                                portal.getName()),
+                        Bundle.getMessage("configureSignal"), JOptionPane.INFORMATION_MESSAGE);
             }
-        } else {
-            JOptionPane.showMessageDialog(this, 
-                    Bundle.getMessage("noPortalProtection", _homeBlock.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME),
-                            portal.getName()),
-                    Bundle.getMessage("configureSignal"), JOptionPane.INFORMATION_MESSAGE);
+        } else if (oldMast != null) {
+            removeMastAtPortal(oldMast, portal);
         }
     }
+    private void removeMastAtPortal(NamedBean oldMast, Portal portal) {
+        portal.setProtectSignal(null, 0, _homeBlock);
+        _parent.putSignalPortal(oldMast, null);
+        _mastName.setText(null);
+    }
 
-    private void checkForSaveMast(@Nonnull Portal portal) {
-        String name = _mastName.getText();
-        if (name.trim().length() == 0) {
-            return;
-        }
-        NamedBean newMast = InstanceManager.getDefault(SignalMastManager.class).getSignalMast(name);
-        if (newMast == null) {
-            newMast = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(name);
-            if (newMast == null) {
-                return;
-            }
-        }
-        NamedBean currentMast =_currentPortal.getSignalProtectingBlock(_homeBlock);
-        String msg = null;
-        String mastName = null;
-        if (currentMast != null) {
-            mastName = currentMast.getDisplayName(DisplayOptions.DISPLAYNAME);
-        }
-        if (mastName == null) {
-            msg = Bundle.getMessage("noMast", portal.getName(),
-                    newMast.getDisplayName(DisplayOptions.DISPLAYNAME));
+    /**
+     * Check for questions about configuring this signal 
+     * @return message of any concerns.
+     */
+    private String checkMastForSave(boolean atClose) {
+        Portal listPortal;
+        if (atClose) {
+            listPortal = _portalList.getSelectedValue();
         } else {
-            if (!newMast.equals(currentMast)) {
-                msg = Bundle.getMessage("differentSignals", mastName, portal.getName(),
-                        newMast.getDisplayName(DisplayOptions.DISPLAYNAME));
-            } else if (!name.equals(mastName)) {
-                msg = Bundle.getMessage("differentName", mastName, name);
-            } else {
-                if (_lengthPanel.isChanged()) {
-                    msg = Bundle.getMessage("spaceChanged", mastName);
-                }
-            }
+            listPortal = _currentPortal;
         }
-        if (msg != null) {
-            StringBuilder sb = new StringBuilder(msg);
-            sb.append("\n");
-            sb.append(Bundle.getMessage("saveChanges"));
-            int answer = JOptionPane.showConfirmDialog(this, sb.toString(), Bundle.getMessage("configureSignal"),
-                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (answer == JOptionPane.YES_OPTION) {
-                addMast(_currentPortal, newMast, null);
+        if (listPortal == null) {
+            return null;
+        }
+        NamedBean textMast = getSignal();
+        NamedBean listMast = listPortal.getSignalProtectingBlock(_homeBlock);
+        StringBuffer sb = new StringBuffer();
+        if (textMast == null) {
+            if (listMast != null) {
+                sb.append(Bundle.getMessage("removeMastQuery", 
+                        listMast.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME), listPortal.getName()));
             }
-            _lengthPanel.setChanged(false);
+            return sb.toString();
+        }
+        Portal textPortal = _parent.getSignalPortal(textMast);
+        if (log.isDebugEnabled()) {
+            log.debug("textMast= {}, textMastPortal= {}, portalSelection= {}, currentMast= {}", 
+                    textMast.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME),
+                    (textPortal==null?"null":textPortal.getName()), listPortal.getName(),
+                    (listMast==null?"null":listMast.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME)));
+        }
+        if (!listPortal.equals(textPortal)) {
+            listMastMessage(sb, listMast, listPortal, textMast, textPortal);
+            if (listMast != null)  {
+                sb.append(Bundle.getMessage("replaceSignalMast", listMast.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME), 
+                        textMast.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME), listPortal.getName()));
+            }
+        } else if (_lengthPanel.isChanged(listPortal.getEntranceSpaceForBlock(_homeBlock))) {
+            sb.append(Bundle.getMessage("spaceChanged", textMast.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME), listPortal.getName()));
+        }
+        return sb.toString();
+    }
+    private void listMastMessage(StringBuffer sb, 
+            NamedBean listMast, @Nonnull Portal listPortal, 
+            @Nonnull NamedBean textMast, Portal textPortal) {
+        if (listMast != null) {
+            textMastMessage(sb, textMast, textPortal);
+            sb.append(Bundle.getMessage("mastProtectsPortal", listMast.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME),
+                    _homeBlock.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME), listPortal.getName()));
+            sb.append("\n");
+        } else {
+            textMastMessage(sb, textMast, textPortal);
+            sb.append(Bundle.getMessage("noPortalProtection",
+                    _homeBlock.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME), listPortal.getName()));            
+            sb.append("\n");
+            sb.append(Bundle.getMessage("attachMast", textMast.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME),
+                    _homeBlock.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME), listPortal.getName()));
+        }
+    }
+    private void textMastMessage(StringBuffer sb, @Nonnull NamedBean textMast, Portal textPortal) {
+        if (textPortal != null) {
+            OBlock blk = textPortal.getProtectedBlock(textMast);
+            if (blk != null) {
+                sb.append(Bundle.getMessage("mastProtectsPortal", 
+                        textMast.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME), 
+                        blk.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME), textPortal.getName()));
+                sb.append("\n");
+            }                
         }
     }
 
     @Override
     protected void closingEvent(boolean close) {
-        if (_currentPortal != null) {
-            checkForSaveMast(_currentPortal);
-        }
+        StringBuffer sb = new StringBuffer();
         String msg = _parent.checkForPortals(_homeBlock, "ItemTypeSignalMast");
-        closingEvent(close, msg);
+        if (msg != null) {
+            sb.append(msg);
+            sb.append("\n");
+        }
+        msg = checkMastForSave(true);
+        if (msg != null && msg.length() > 0) {
+            sb.append(msg);
+            sb.append("\n");
+        }
+        closingEvent(close, sb.toString());
         if (_pickMast != null) {
             _pickMast.closePickList();
         }

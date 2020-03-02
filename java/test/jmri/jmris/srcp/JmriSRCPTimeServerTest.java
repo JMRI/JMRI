@@ -1,9 +1,10 @@
 package jmri.jmris.srcp;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Tests for the jmri.jmris.srcp.JmriSRCPTimeServer class
@@ -33,16 +34,16 @@ public class JmriSRCPTimeServerTest extends jmri.jmris.AbstractTimeServerTestBas
     @Test
     public void sendRate() throws java.io.IOException {
        a.sendRate();
-       Assert.assertTrue("Rate Sent", sb.toString().endsWith("101 INFO 0 TIME 1 1\n\r"));
+       assertThat(sb.toString()).endsWith("101 INFO 0 TIME 1 1\n\r").withFailMessage("Rate Sent");
     }
 
     @Test
     public void sendTime() throws java.io.IOException {
        a.sendTime();
-       Assert.assertTrue("time sent", java.util.regex.Pattern.matches(".* 100 INFO 0 TIME .* .{1,2} .{1,2} .{1,2}\n\r",sb.toString()));
+       assertThat(sb.toString()).matches(".* 100 INFO 0 TIME .* .{1,2} .{1,2} .{1,2}\n\r").withFailMessage("time sent");
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp(){
         jmri.util.JUnitUtil.setUp();
@@ -58,7 +59,7 @@ public class JmriSRCPTimeServerTest extends jmri.jmris.AbstractTimeServerTestBas
         a = new JmriSRCPTimeServer(output);
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown(){
         a.dispose();

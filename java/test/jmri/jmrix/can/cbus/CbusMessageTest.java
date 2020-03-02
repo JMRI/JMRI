@@ -471,8 +471,8 @@ public class CbusMessageTest {
 
     @Test
     public void testgetBootNop() {
-        CanMessage m = CbusMessage.getBootNop(0x3D,0x12);
-        Assert.assertEquals("getBootNop","[4] 00 00 3D 00 0D 00 00 00",m.toString());
+        CanMessage m = CbusMessage.getBootNop(0x123456,0x12);
+        Assert.assertEquals("getBootNop","[4] 56 34 12 00 0D 00 00 00",m.toString());
     }    
 
     @Test
@@ -483,8 +483,8 @@ public class CbusMessageTest {
 
     @Test
     public void testgetBootInitialise() {
-        CanMessage m = CbusMessage.getBootInitialise(202,0x12);
-        Assert.assertEquals("getBootInitialise","[4] 00 00 CA 00 0D 02 00 00",m.toString());
+        CanMessage m = CbusMessage.getBootInitialise(0x123456,0x12);
+        Assert.assertEquals("getBootInitialise","[4] 56 34 12 00 0D 02 00 00",m.toString());
     }
 
     @Test

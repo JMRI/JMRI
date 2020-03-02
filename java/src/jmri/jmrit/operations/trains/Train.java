@@ -3441,6 +3441,29 @@ public class Train implements java.beans.PropertyChangeListener {
         }
         _leadEngine = engine;
     }
+    
+    /**
+     * Returns the lead engine in a train's route.  There can be up to two changes
+     * in the lead engine for a train.
+     * 
+     * @param routeLocation where in the train's route to find the lead engine.
+     * @return lead engine
+     */
+    public Engine getLeadEngine(RouteLocation routeLocation) {
+        Engine lead = null;
+        for (RouteLocation rl : getRoute().getLocationsBySequenceList()) {
+            for (Engine engine : InstanceManager.getDefault(EngineManager.class).getByTrainList(this)) {
+                if (engine.getRouteLocation() == rl && (engine.getConsist() == null || engine.isLead())) {
+                    lead = engine;
+                    break;
+                }
+            }
+            if (rl == routeLocation) {
+                break;
+            }
+        }
+        return lead;
+    }
 
     protected TrainIcon _trainIcon = null;
 

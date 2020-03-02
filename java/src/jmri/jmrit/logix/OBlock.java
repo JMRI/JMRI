@@ -9,7 +9,9 @@ import java.util.Map.Entry;
 import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import jmri.InstanceManager;
+import jmri.NamedBean;
 import jmri.NamedBeanHandle;
+import jmri.NamedBeanUsageReport;
 import jmri.Path;
 import jmri.Sensor;
 import jmri.Turnout;
@@ -119,7 +121,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     private boolean _metric = false; // desired display mode
     private NamedBeanHandle<Sensor> _errNamedSensor;
     // pathName keys a list of Blocks whose paths conflict with the path. These Blocks key
-    // a list of their conflicting paths. 
+    // a list of their conflicting paths.
     // A conflicting path has a turnout that is shared with a 'pathName'
     private final HashMap<String, List<HashMap<OBlock, List<OPath>>>> _sharedTO
             = new HashMap<>();
@@ -173,33 +175,37 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
      */
     @Override
     public boolean setSensor(String pName) {
-        boolean ret;
-        String oldName = null;
-        Sensor sensor = getSensor();
-        if (sensor != null) {
-            oldName = sensor.getDisplayName();
+        Sensor oldSensor = getSensor();
+        Sensor newSensor = null;
+        if (pName != null && pName.trim().length() > 2) {
+            newSensor = InstanceManager.sensorManagerInstance().getByUserName(pName);
+            if (newSensor == null) {
+                newSensor = InstanceManager.sensorManagerInstance().getBySystemName(pName);
+            }
+            if (newSensor == null) {
+                return false;   // no sensor named 'pName' exists
+            }
         }
+        if (oldSensor != null) {
+            if (oldSensor.equals(newSensor)) {
+                return true;
+            }
+        } else {
+            if (newSensor == null) {
+                return true;
+            }
+        }
+
         // save the non-sensor states
         int saveState = getState() & ~(UNKNOWN | OCCUPIED | UNOCCUPIED | INCONSISTENT | UNDETECTED);
-        if (pName == null || pName.trim().length() == 0) {
-            setNamedSensor(null);
-            ret = true;
+        if (newSensor == null || pName == null) {
+            setNamedSensor(null);                    
         } else {
-            sensor = InstanceManager.sensorManagerInstance().getByUserName(pName);
-            if (sensor == null) {
-                sensor = InstanceManager.sensorManagerInstance().getBySystemName(pName);
-            }
-            if (sensor == null) {
-                log.debug("no sensor named \"{}\" exists.", pName);
-                ret = false;
-            } else {
-                setNamedSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor));
-                ret = true;
-            }
+            setNamedSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, newSensor));
         }
-        setState(getState() | saveState);
-        firePropertyChange("OccupancySensorChange", oldName, pName);
-        return ret;
+        setState(getState() | saveState);   // add them back into new sensor
+        firePropertyChange("OccupancySensorChange", oldSensor, newSensor);
+        return true;
     }
 
     // override to determine if not UNDETECTED
@@ -212,38 +218,47 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     }
 
     /**
+     * @param pName name of error sensor
      * @return true if successful
      */
     public boolean setErrorSensor(String pName) {
-        if (getErrorSensor() != null) {
-            getErrorSensor().removePropertyChangeListener(this);
+        NamedBeanHandle<Sensor> newErrSensorHdl = null;
+        Sensor newErrSensor = null;
+        if (pName != null && pName.trim().length() > 2) {
+            newErrSensor = InstanceManager.sensorManagerInstance().getByUserName(pName);
+            if (newErrSensor == null) {
+                newErrSensor = InstanceManager.sensorManagerInstance().getBySystemName(pName);
+            }
+           if (newErrSensor != null) {
+                newErrSensorHdl = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, newErrSensor);
+           }
+           if (newErrSensor == null) {
+               return false;
+           }
         }
-        if (pName == null || pName.trim().length() == 0) {
-            setState(getState() & ~TRACK_ERROR);
-            _errNamedSensor = null;
-            return true;
-        }
-        Sensor sensor = InstanceManager.sensorManagerInstance().getByUserName(pName);
-        if (sensor == null) {
-            sensor = InstanceManager.sensorManagerInstance().getBySystemName(pName);
-        }
-        if (sensor == null) {
-            setState(getState() & ~TRACK_ERROR);
-            log.debug("no sensor named \"{}\" exists.", pName);
+        if (_errNamedSensor != null) {
+            if (_errNamedSensor.equals(newErrSensorHdl)) {
+                return true;
+            } else {
+                getErrorSensor().removePropertyChangeListener(this);
+            }
+        } else {
+            if (newErrSensorHdl == null) {
+                return true;
+            }
         }
 
-        sensor = jmri.InstanceManager.sensorManagerInstance().getSensor(pName);
-        if (sensor != null) {
-            _errNamedSensor = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor);
-            getErrorSensor().addPropertyChangeListener(this, _errNamedSensor.getName(), "OBlock Error Sensor " + getDisplayName());
-            if (sensor.getState() == Sensor.ACTIVE) {
+        _errNamedSensor = newErrSensorHdl;
+        setState(getState() & ~TRACK_ERROR);
+        if (newErrSensor  != null) {
+            newErrSensor.addPropertyChangeListener(this, _errNamedSensor.getName(), "OBlock Error Sensor " + getDisplayName());
+            if (newErrSensor.getState() == Sensor.ACTIVE) {
                 setState(getState() | TRACK_ERROR);
             } else {
                 setState(getState() & ~TRACK_ERROR);
             }
-            return true;
         }
-        return false;
+        return true;
     }
 
     public Sensor getErrorSensor() {
@@ -902,7 +917,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         }
         for (Portal portal : getPortals()) {
             if (log.isDebugEnabled()) {
-                log.debug("this = {}, toBlock = {}, fromblock= {}", getDisplayName(), 
+                log.debug("this = {}, toBlock = {}, fromblock= {}", getDisplayName(),
                         portal.getToBlock().getDisplayName(), portal.getFromBlock().getDisplayName());
             }
             if (this.equals(portal.getToBlock())) {
@@ -923,6 +938,62 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     public String getDescription() {
         return java.text.MessageFormat.format(
                 Bundle.getMessage("BlockDescription"), getDisplayName());
+    }
+
+    @Override
+    public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
+        List<NamedBeanUsageReport> report = new ArrayList<>();
+        List<NamedBean> duplicateCheck = new ArrayList<>();
+        if (bean != null) {
+            log.debug("oblock: {}, sensor = {}", getDisplayName(), getSensor().getDisplayName());  // NOI18N
+            if (bean.equals(getSensor())) {
+                report.add(new NamedBeanUsageReport("OBlockSensor"));  // NOI18N
+            }
+            if (bean.equals(getErrorSensor())) {
+                report.add(new NamedBeanUsageReport("OBlockSensorError"));  // NOI18N
+            }
+            if (bean.equals(getWarrant())) {
+                report.add(new NamedBeanUsageReport("OBlockWarant"));  // NOI18N
+            }
+
+            getPortals().forEach((portal) -> {
+                log.debug("    portal: {}, fb = {}, tb = {}, fs = {}, ts = {}",  // NOI18N
+                        portal.getName(), portal.getFromBlockName(), portal.getToBlockName(),
+                        portal.getFromSignalName(), portal.getToSignalName());
+                if (bean.equals(portal.getFromBlock()) || bean.equals(portal.getToBlock())) {
+                    report.add(new NamedBeanUsageReport("OBlockPortalNeighborOBlock", portal.getName()));  // NOI18N
+                }
+                if (bean.equals(portal.getFromSignal()) || bean.equals(portal.getToSignal())) {
+                    report.add(new NamedBeanUsageReport("OBlockPortalSignal", portal.getName()));  // NOI18N
+                }
+
+                portal.getFromPaths().forEach((path) -> {
+                    log.debug("        from path = {}", path.getName());  // NOI18N
+                    path.getSettings().forEach((setting) -> {
+                        log.debug("            turnout = {}", setting.getBean().getDisplayName());  // NOI18N
+                        if (bean.equals(setting.getBean())) {
+                            if (!duplicateCheck.contains(bean)) {
+                                report.add(new NamedBeanUsageReport("OBlockPortalPathTurnout", portal.getName()));  // NOI18N
+                                duplicateCheck.add(bean);
+                            }
+                        }
+                    });
+                });
+                portal.getToPaths().forEach((path) -> {
+                    log.debug("        to path   = {}", path.getName());  // NOI18N
+                    path.getSettings().forEach((setting) -> {
+                        log.debug("            turnout = {}", setting.getBean().getDisplayName());  // NOI18N
+                        if (bean.equals(setting.getBean())) {
+                            if (!duplicateCheck.contains(bean)) {
+                                report.add(new NamedBeanUsageReport("OBlockPortalPathTurnout", portal.getName()));  // NOI18N
+                                duplicateCheck.add(bean);
+                            }
+                        }
+                    });
+                });
+            });
+        }
+        return report;
     }
 
     @Override

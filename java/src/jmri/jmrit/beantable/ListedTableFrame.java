@@ -222,7 +222,7 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
             actionList.openNewTableWindow(list.getSelectedIndex());
         });
 
-        fileMenu.add(new jmri.configurexml.SaveMenu());
+        fileMenu.add(new jmri.configurexml.StoreMenu());
 
         JMenuItem printItem = new JMenuItem(Bundle.getMessage("PrintTable"));
         fileMenu.add(printItem);

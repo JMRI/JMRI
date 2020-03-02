@@ -83,6 +83,11 @@ public class SprogTrafficControlScaffold extends SprogTrafficController {
             log.debug("sendTestReply [" + m + "]");
         }
         notifyReply(m);
+        try {
+            Thread.sleep(50);
+        } catch (InterruptedException e) {
+            log.debug("Thread interrupted while sleeping");
+        }
         return;
     }
 

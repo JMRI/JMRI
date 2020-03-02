@@ -1,8 +1,8 @@
 package jmri.implementation;
 
+import jmri.*;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.*;
 
 
 /**
@@ -25,6 +25,19 @@ public class AbstractSensorTest extends AbstractSensorTestBase {
     @Override
     public void checkStatusRequestMsgSent() {}
 
+    @Test
+    public void checkToString() {
+        Sensor nb = new AbstractSensor("Foo", "Bar"){
+            @Override
+            public void requestUpdateFromLayout(){} // for abstract class
+            
+            @Override
+            public String toStringSuffix(){ return " After";} // feature under test
+        };
+
+        Assert.assertEquals(nb.toString(), "Foo After");
+    }
+    
     // load t with actual object; create scaffolds as needed
     @Override
     @Before
