@@ -16,7 +16,7 @@ public class ThrottlesPreferences {
 
     private boolean _useExThrottle = true;
     private boolean _useToolBar = true;
-    private boolean _useFunctionIcon = true;
+    private boolean _useFunctionIcon = false;
     private boolean _resizeWinImg = false;
     private boolean _useRosterImage = true;
     private boolean _enableRosterSearch = true;
