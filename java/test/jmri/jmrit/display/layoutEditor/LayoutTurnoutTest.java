@@ -657,12 +657,12 @@ public class LayoutTurnoutTest {
         JUnitAppender.assertErrorMessage("Right Hand.setConnection(0, null, 0); Invalid Connection Type");
 
         try {
-            // test invalid object type
+            // test unexpected type
             ltRH.setConnection(LayoutTrack.POS_POINT, null, LayoutTrack.POS_POINT);
-            Assert.fail("No exception thrown on ltRH.setConnection(invalid object type)");
+            Assert.fail("No exception thrown on ltRH.setConnection(unexpected type)");
         } catch (JmriException ex) {
         }
-        JUnitAppender.assertErrorMessage("Right Hand.setConnection(0, null, 0); Invalid Connection Type");
+        JUnitAppender.assertErrorMessage("Right Hand.setConnection(0, null, 0); unexpected type");
 
         try {
             // test valid types

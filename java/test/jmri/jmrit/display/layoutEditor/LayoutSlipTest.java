@@ -646,7 +646,7 @@ public class LayoutSlipTest {
             Assert.fail("No exception thrown on ltd.setConnection(invalid object type)");
         } catch (JmriException ex) {
         }
-        JUnitAppender.assertErrorMessage("double.setConnection(21, null, 1); Invalid type");
+        JUnitAppender.assertErrorMessage("double.setConnection(22, null, 1); Invalid type");
 
         try {
             // test valid types
