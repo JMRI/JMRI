@@ -39,7 +39,6 @@ class Diesel3Sound extends EngineSound {
 
     private AudioBuffer start_buffer;
     private AudioBuffer stop_buffer;
-    private AudioBuffer transition_buf;
     private Integer idle_notch;
     int top_speed;
 
@@ -201,7 +200,6 @@ class Diesel3Sound extends EngineSound {
                 log.debug("Notch {} set to Idle.", nn);
             }
             List<Element> elist = el.getChildren("file");
-            int j = 0;
             for (Element fe : elist) {
                 fn = fe.getText();
                 List<AudioBuffer> l = D3Notch.getBufferList(vf, fn, name + "_n" + i);
@@ -210,7 +208,6 @@ class Diesel3Sound extends EngineSound {
                     log.debug("\tSubBuffer: {}, length: {} ms", b.getSystemName(), SoundBite.calcLength(b));
                 }
                 sb.addLoopBuffers(l);
-                j++;
             }
 
             sb.setNextNotch(el.getChildText("next-notch"));
