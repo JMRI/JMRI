@@ -194,7 +194,7 @@
     </li>
     <li>
     When you change the state of more than one CMRI-connected device (say two turnouts) in one 
-    <a href="">Route</a> or <a href="">Logix</a>, 
+    <a href="../../tools/Routes.shtml">Route</a> or <a href="../../tools/Logix.shtml">Logix</a>, 
     you can't be sure whether you will get both bits the first time your arduino program asks for them. After a
     while (typically a fraction of a second), you will, but program your arduino sketch to be sensitive to this issue.    
     </li>
@@ -281,7 +281,7 @@
     <li>Logix triggering: Connect an arduino to a fascia panel switch or pushbutton. Define a JMRI sensor that is used to trigger a Logix to
     do something (perhaps throw some turnouts,set some lights, etc.).  Program the arduino to set the sensor when the switch or
     pushbutton is activated.</li>
-    <li>Light or animation control: Add a motor controller to your arduino, create a JMRI <a href="">light </a>to send a control command,
+    <li>Light or animation control: Add a motor controller to your arduino, create a <a href="../../tools/Lights.shtml">JMRI light object </a>to send a control command,
     create a few sensors in JMRI for feedback, and use this <a href="https://github.com/jerryg2003/MRR-arduino-auxmotorcontrol" target="_blank">
     sketch to control an auxiliary motor,</a> such as would be in a Ferris wheel.</li>
     <li>Car counter: using location detectors placed above the level of trucks and couplers, write an arduino sketch
@@ -301,7 +301,7 @@
   
 <!-- *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= -->
  
-    <h2><a name="example-CMRI" id="example-CMRI">Step-by-Step Example Using Arduino as a CMRI Node</a></h3>
+    <h2><a name="example-CMRI" id="example-CMRI">Step-by-Step Example Using Arduino as a CMRI Node</a></h2>
       
     <p>
     This example will walk through main steps of using an arduino to monitor a block occupancy sensor and 
