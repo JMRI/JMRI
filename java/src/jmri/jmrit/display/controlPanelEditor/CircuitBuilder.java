@@ -61,7 +61,7 @@ import org.slf4j.LoggerFactory;
 /**
  * ControlPanelEditor CircuitBuilder tools.
  *
- * @author Pete Cressman Copyright: Copyright (c) 2011
+ * @author Pete Cressman Copyright: Copyright (c) 2011, 2020
  */
 public class CircuitBuilder {
 
