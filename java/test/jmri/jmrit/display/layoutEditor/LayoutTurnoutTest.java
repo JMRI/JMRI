@@ -662,7 +662,7 @@ public class LayoutTurnoutTest {
             Assert.fail("No exception thrown on ltRH.setConnection(unexpected type)");
         } catch (JmriException ex) {
         }
-        JUnitAppender.assertErrorMessage("Right Hand.setConnection(0, null, 0); unexpected type");
+        JUnitAppender.assertErrorMessage("Right Hand.setConnection(1, null, 1); unexpected type");
 
         try {
             // test valid types
