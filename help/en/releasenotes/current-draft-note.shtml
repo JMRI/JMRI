@@ -506,5 +506,7 @@
         <ul>
             <li>The toString() method is NamedBeans has been standardized to return the system name.
             There's an extension mechanism to add additional information if needed.</li>
+            <li>An internal library used for compilation has been updated from the NetBeans 11.0 version
+                to the NetBeans 11.3 (current) version.</li>
         </ul>
 
