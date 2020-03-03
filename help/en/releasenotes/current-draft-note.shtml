@@ -499,6 +499,8 @@
         <a id="VSD" name="VSD"></a>
         <ul>
             <li>Included the VSDecoderID instead of the file name to make the AudioBuffer system names unique for Diesel3Sound.</li>
+            <li>Made the VSD loop-player more robust. Another change concerns the timing. Depending on the speed of the
+	      computer hardware, the timing of the loop-player (sleep-interval) can now be adjusted.</li>
         </ul>
 
     <h3>Miscellaneous</h3>
