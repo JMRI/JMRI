@@ -95,7 +95,7 @@ table.sortable th {
 <tr>
   <td class="app">All</td>
   <td class="en">Memory (Variable)</td>
-  <td class="descr">Objet logiciel JMRI qui peut contenir tout type de contenu, comme une chaîne de texte ou une image. Logix peut tester - et d&#233;finir  - les contenus d'une Variable M&#233;moire. Les panneaux peuvent les afficher. <a href="../html/tools/Memories.shtml">...</a></td>
+  <td class="descr">Objet logiciel JMRI qui peut contenir tout type de contenu, comme une chaï¿½ne de texte ou une image. Logix peut tester - et d&#233;finir  - les contenus d'une Variable M&#233;moire. Les panneaux peuvent les afficher. <a href="../html/tools/Memories.shtml">...</a></td>
   <td class="de">Speicher</td>
   <td class="it">Variabili in Memoria</td>
   <td class="fr">M&eacute;moire</td>
