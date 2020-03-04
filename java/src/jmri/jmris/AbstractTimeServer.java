@@ -22,7 +22,15 @@ abstract public class AbstractTimeServer {
     protected Timebase timebase = null;
 
     public AbstractTimeServer() {
-        this.timebase = InstanceManager.getDefault(jmri.Timebase.class);
+        this(InstanceManager.getDefault());
+    }
+
+    public AbstractTimeServer(InstanceManager instanceManager){
+        this(instanceManager.getDefault(Timebase.class));
+    }
+
+    public AbstractTimeServer(Timebase timebase){
+        this.timebase = timebase;
     }
 
     /*

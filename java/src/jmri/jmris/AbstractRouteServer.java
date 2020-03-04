@@ -23,7 +23,14 @@ abstract public class AbstractRouteServer {
     private final HashMap<String, RouteListener> routes;
     private final static Logger log = LoggerFactory.getLogger(AbstractRouteServer.class);
 
-    public AbstractRouteServer() {
+    private static InstanceManager instanceManager;
+
+    public AbstractRouteServer(){
+        this(InstanceManager.getDefault());
+    }
+
+    public AbstractRouteServer(InstanceManager instanceManager) {
+        this.instanceManager = instanceManager;
         routes = new HashMap<String, RouteListener>();
     }
 
@@ -38,7 +45,7 @@ abstract public class AbstractRouteServer {
 
     synchronized protected void addRouteToList(String routeName) {
         if (!routes.containsKey(routeName)) {
-            Route r = InstanceManager.getDefault(jmri.RouteManager.class).getRoute(routeName);
+            Route r = instanceManager.getDefault(jmri.RouteManager.class).getRoute(routeName);
             if(r!=null) {
                Sensor tas = r.getTurnoutsAlgdSensor();
                if (tas != null) {  //only add listener if there is a turnout-aligned sensor defined
@@ -52,7 +59,7 @@ abstract public class AbstractRouteServer {
 
     synchronized protected void removeRouteFromList(String routeName) {
         if (routes.containsKey(routeName)) {
-            Route r = InstanceManager.getDefault(jmri.RouteManager.class).getRoute(routeName);
+            Route r = instanceManager.getDefault(jmri.RouteManager.class).getRoute(routeName);
             if(r!=null) {
                Sensor tas = r.getTurnoutsAlgdSensor();
                if (tas != null) {  //only remove listener if there is a turnout-aligned sensor defined
@@ -65,7 +72,7 @@ abstract public class AbstractRouteServer {
 
     public void setRoute(String routeName) throws IOException {
         try {
-            InstanceManager.getDefault(jmri.RouteManager.class).getRoute(routeName).setRoute();
+            instanceManager.getDefault(jmri.RouteManager.class).getRoute(routeName).setRoute();
             addRouteToList(routeName);
         } catch (NullPointerException ex) {
             sendErrorStatus(routeName);
@@ -74,7 +81,7 @@ abstract public class AbstractRouteServer {
 
     public void dispose() {
         for (Map.Entry<String, RouteListener> route : this.routes.entrySet()) {
-            Route r = InstanceManager.getDefault(jmri.RouteManager.class).getRoute(route.getKey());
+            Route r = instanceManager.getDefault(jmri.RouteManager.class).getRoute(route.getKey());
             if (r!=null) {
                Sensor tas = r.getTurnoutsAlgdSensor();
                if (tas != null) {  //only remove listener if there is a turnout-aligned sensor defined
@@ -92,7 +99,7 @@ abstract public class AbstractRouteServer {
 
         RouteListener(String routeName) {
             name = routeName;
-            Route r = InstanceManager.getDefault(jmri.RouteManager.class).getRoute(name);
+            Route r = instanceManager.getDefault(jmri.RouteManager.class).getRoute(name);
             if(r!=null) {
                sensor = r.getTurnoutsAlgdSensor();
             }

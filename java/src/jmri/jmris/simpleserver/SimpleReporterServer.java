@@ -20,15 +20,26 @@ public class SimpleReporterServer extends AbstractReporterServer {
 
     private DataOutputStream output;
     private JmriConnection connection;
+    private InstanceManager instanceManager;
 
-    public SimpleReporterServer(JmriConnection connection) {
+    public SimpleReporterServer(JmriConnection connection){
+        this(connection,InstanceManager.getDefault());
+    }
+
+    public SimpleReporterServer(JmriConnection connection,InstanceManager instanceManager) {
         super();
         this.connection = connection;
+        this.instanceManager = instanceManager;
     }
 
     public SimpleReporterServer(DataInputStream inStream, DataOutputStream outStream) {
+        this(inStream,outStream,InstanceManager.getDefault());
+    }
+
+    public SimpleReporterServer(DataInputStream inStream, DataOutputStream outStream,InstanceManager instanceManager) {
         super();
         output = outStream;
+        this.instanceManager = instanceManager;
     }
 
 
@@ -72,7 +83,7 @@ public class SimpleReporterServer extends AbstractReporterServer {
         } else {
             // send the current status if the report
             try {
-               Reporter reporter = InstanceManager.getDefault(jmri.ReporterManager.class).provideReporter(reporterName);
+               Reporter reporter = instanceManager.getDefault(jmri.ReporterManager.class).provideReporter(reporterName);
                sendReport(reporterName, reporter.getCurrentReport());
             } catch (IllegalArgumentException ex) {
                 log.warn("Failed to provide Reporter \"{}\" in parseStatus", reporterName);

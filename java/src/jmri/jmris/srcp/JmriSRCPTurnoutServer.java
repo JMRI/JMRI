@@ -20,9 +20,14 @@ import org.slf4j.LoggerFactory;
 public class JmriSRCPTurnoutServer extends AbstractTurnoutServer {
 
     private DataOutputStream output;
+    private InstanceManager instanceManager;
 
     public JmriSRCPTurnoutServer(DataInputStream inStream, DataOutputStream outStream) {
+        this(inStream,outStream,InstanceManager.getDefault());
+    }
 
+    public JmriSRCPTurnoutServer(DataInputStream inStream, DataOutputStream outStream,InstanceManager instanceManager) {
+        this.instanceManager = instanceManager;
         output = outStream;
     }
 
@@ -36,7 +41,7 @@ public class JmriSRCPTurnoutServer extends AbstractTurnoutServer {
 
     public void sendStatus(int bus, int address) throws IOException {
         log.debug("send Status called with bus {} and address {}", bus, address);
-        java.util.List<SystemConnectionMemo> list = jmri.InstanceManager.getList(SystemConnectionMemo.class);
+        java.util.List<SystemConnectionMemo> list = instanceManager.getList(SystemConnectionMemo.class);
         SystemConnectionMemo memo = null;
         try {
             memo = list.get(bus - 1);
@@ -48,9 +53,9 @@ public class JmriSRCPTurnoutServer extends AbstractTurnoutServer {
                 + "T" + address;
         try {
             // busy loop, wait for turnout to settle before continuing.
-            while (InstanceManager.turnoutManagerInstance().provideTurnout(turnoutName).getKnownState() != InstanceManager.turnoutManagerInstance().provideTurnout(turnoutName).getCommandedState()) {
+            while (instanceManager.turnoutManagerInstance().provideTurnout(turnoutName).getKnownState() != instanceManager.turnoutManagerInstance().provideTurnout(turnoutName).getCommandedState()) {
             }
-            int Status = InstanceManager.turnoutManagerInstance().provideTurnout(turnoutName).getKnownState();
+            int Status = instanceManager.turnoutManagerInstance().provideTurnout(turnoutName).getKnownState();
             if (Status == Turnout.THROWN) {
                 TimeStampedOutput.writeTimestamp(output, "100 INFO " + bus + " GA " + address + " 1 0\n\r");
             } else if (Status == Turnout.CLOSED) {
@@ -81,7 +86,7 @@ public class JmriSRCPTurnoutServer extends AbstractTurnoutServer {
     public void initTurnout(int bus, int address, String protocol) throws jmri.JmriException, java.io.IOException {
 
         log.debug("init Turnout called with bus {} address {} and protocol {}", bus, address, protocol);
-        java.util.List<SystemConnectionMemo> list = jmri.InstanceManager.getList(SystemConnectionMemo.class);
+        java.util.List<SystemConnectionMemo> list = instanceManager.getList(SystemConnectionMemo.class);
         SystemConnectionMemo memo;
         try {
             memo = list.get(bus - 1);
@@ -103,7 +108,7 @@ public class JmriSRCPTurnoutServer extends AbstractTurnoutServer {
     public void parseStatus(int bus, int address, int value) throws jmri.JmriException, java.io.IOException {
 
         log.debug("parse Status called with bus {} address {} and value {}", bus, address, value);
-        java.util.List<SystemConnectionMemo> list = jmri.InstanceManager.getList(SystemConnectionMemo.class);
+        java.util.List<SystemConnectionMemo> list = instanceManager.getList(SystemConnectionMemo.class);
         SystemConnectionMemo memo;
         try {
             memo = list.get(bus - 1);
@@ -143,7 +148,7 @@ public class JmriSRCPTurnoutServer extends AbstractTurnoutServer {
             if (e.getPropertyName().equals("KnownState")) {
                 try {
                     String Name = ((jmri.Turnout) e.getSource()).getSystemName();
-                    java.util.List<SystemConnectionMemo> List = jmri.InstanceManager.getList(SystemConnectionMemo.class);
+                    java.util.List<SystemConnectionMemo> List = instanceManager.getList(SystemConnectionMemo.class);
                     int i = 0;
                     int address;
                     for (Object memo : List) {

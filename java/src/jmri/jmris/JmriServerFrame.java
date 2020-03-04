@@ -1,5 +1,7 @@
 package jmri.jmris;
 
+import jmri.InstanceManager;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
@@ -13,12 +15,19 @@ import javax.swing.JToggleButton;
  */
 public class JmriServerFrame extends jmri.util.JmriJFrame {
 
+    private InstanceManager instanceManager;
+
     public JmriServerFrame() {
         this("Jmri Server Starter");
     }
 
-    public JmriServerFrame(String FrameName) {
+    public JmriServerFrame(String frameName){
+        this(frameName, InstanceManager.getDefault());
+    }
+
+    public JmriServerFrame(String FrameName,InstanceManager instanceManager) {
         super(FrameName);
+        this.instanceManager = instanceManager;
         getContentPane().setLayout(new BoxLayout(getContentPane(),
                 BoxLayout.Y_AXIS));
 
@@ -78,11 +87,11 @@ public class JmriServerFrame extends jmri.util.JmriJFrame {
     }
 
     public void startServer() {
-        jmri.InstanceManager.getDefault(JmriServer.class).start();
+        instanceManager.getDefault(JmriServer.class).start();
     }
 
     public void stopServer() {
-        jmri.InstanceManager.getDefault(JmriServer.class).stop();
+        instanceManager.getDefault(JmriServer.class).stop();
     }
 
 }
