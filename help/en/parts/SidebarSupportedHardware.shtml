@@ -1,7 +1,7 @@
 <!-- SidebarSupportedHardware.shtml -->
 <!-- This is the common sidebar definition for supported hardware pages -->
 		<dt><h3 style="padding-left: 1em;"><a href="/help/en/html/hardware/">Supported Hardware</a></h3></dt>
-		<dd>Command stations, networks, and protocols:
+		<dd>Devices, command stations, networks, and protocols:
 		    <ul>
 				<li><a href="/help/en/html/hardware/arduino/index.shtml">Arduinos</a>
 				<li><a href="/help/en/html/hardware/XPressNet/index.shtml">Atlas Commander</a>
