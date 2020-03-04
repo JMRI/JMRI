@@ -1,6 +1,6 @@
 <!-- Sidebar.shtml -->
 <!-- Common sidebar for html/apps/[subdirectory] pages, mimics html/apps/Sidebar.shtml -->
-<!-- NOTE: each subdirectory MUST have a SidebarToolLocalPart.shtml -->
+<!-- NOTE: each subdirectory MUST have a SidebarAppLocalPart.shtml -->
 
 <hr class="hide">
     
@@ -9,7 +9,7 @@
         <dl>
 
            <!-- To include specific sidebar info for this subdirectory... -->
-           <!--#include virtual="SidebarToolLocalPart.shtml" --> 
+           <!--#include virtual="SidebarAppLocalPart.shtml" --> 
           
             <!--#include virtual="/help/en/parts/SidebarApplications.shtml" -->
 
@@ -17,9 +17,9 @@
 	    
             <!--#include virtual="/help/en/parts/SidebarLayoutAutomation.shtml" -->
 	
-          <dt><h3><a href="./help/en/html/hardware/index.shtml">Supported hardware</a></h3></dt>
+          <dt><h3><a href="/help/en/html/hardware/index.shtml">Supported hardware</a></h3></dt>
           <dd>JMRI supports a wide range of DCC systems, command stations and protocols.</dd>
-	  <!-- If someday we want to show the whole list, use #include virtual="./help/en/parts/SidebarSupportedHardware.shtml" -->    
+	  <!-- If someday we want to show the whole list, use #include virtual="/help/en/parts/SidebarSupportedHardware.shtml" -->    
 
    	    <!--#include virtual="/help/en/parts/SidebarInstall.shtml" -->
 	
