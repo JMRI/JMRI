@@ -1,0 +1,11 @@
+<!-- SidebarAppLocalPart.shtml -->
+<!-- This is the local part sidebar definition for html/apps/DispatcherPro pages -->
+            
+            <dt><h3>DispatcherPro&trade;</h3></dt>
+            <dd>
+            <ul>
+               <li><a href="../../tools/signaling/index.shtml">Signaling</a></li>
+            </ul>
+            </dd>
+
+<!-- /SidebarAppLocalPart.shtml -->
