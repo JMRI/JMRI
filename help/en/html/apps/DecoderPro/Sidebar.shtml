@@ -1,44 +1,30 @@
 <!-- Sidebar.shtml -->
-<!-- This is the common sidebar definition for apps/DecoderPro pages -->
+<!-- Common sidebar for html/apps/[subdirectory] pages, mimics html/apps/Sidebar.shtml -->
+<!-- NOTE: each subdirectory MUST have a SidebarToolLocalPart.shtml -->
+
 <hr class="hide">
-<div id="side"> <!-- Block of text on left side of page -->
+    
+    <div id="side"> <!-- Block of text on left side of page -->
+        <div style="text-align: center">JMRI&reg; is...</div>
+        <dl>
 
-<dl>
-
-<dt><h3>DecoderPro&reg;</h3></dt>
-<dd>
-	<ul>
-	<li><a href="./Tour.shtml">Quick Tour</a></li>
-	<li><a href="./MoreInfo.shtml">Some Details</a></li>
-	<li><a href="./Files.shtml">Configuration Files</a></li>
-	<li><a href="./Roster.shtml">Working with the Roster</a></li>
-	<li><a href="./FAQ.shtml">FAQ</a></li>
-    <li><a href="../../setup/index.shtml">JMRI Setup</a></li></li>
-	</ul>
-
-<dt><h3>Advanced</h3></dt>
-<dd>
-	<ul>
-	<li><a href="./IntroXML.shtml">Intro to XML files</a></li>
-	<li><a href="./CreateDecoder.shtml">Create your own decoder definition</a></li>
-	<li><a href="./Programmer.shtml">Create a custom programmer definition</a></li>
-	<li><a href="./RosterFile.shtml">Store/update a Roster</a></li>
-	<li><a href="./LocoFile.shtml">Locomotive (Roster) files</a></li>
-	<li><a href="./Debug.shtml">Debugging</a></li>
-	<li><a href="./NetworkFiles.shtml">Sharing Rosters among computers</a></li>
-	<li><a href="./FileUpdate.shtml">Updating decoder definitions</a></li>
-	</ul>
-</dd>
-
-
+           <!-- To include specific sidebar info for this subdirectory... -->
+           <!--#include virtual="SidebarToolLocalPart.shtml" --> 
+          
             <!--#include virtual="/help/en/parts/SidebarApplications.shtml" -->
 
+    	    <!--#include virtual="/help/en/parts/SidebarInstall.shtml" -->
+    
             <!--#include virtual="/help/en/parts/SidebarTools.shtml" -->
-
+	    
             <!--#include virtual="/help/en/parts/SidebarLayoutAutomation.shtml" -->
+	
+          <dt><h3><a href="./help/en/html/hardware/index.shtml">Supported hardware</a></h3></dt>
+          <dd>JMRI supports a wide range of DCC systems, command stations and protocols.</dd>
+	  <!-- If someday we want to show the whole list, use #include virtual="./help/en/parts/SidebarSupportedHardware.shtml" -->    
 
-		
-</dl>
+	
+         </dl>
 
     <!--#include virtual="/help/en/parts/SidebarTail.shtml" -->    
 
