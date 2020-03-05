@@ -11,8 +11,6 @@
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Signal Heads Add Edit">
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css"
@@ -350,7 +348,7 @@
 
           <p>De plus amples informations sur le Pilote de Signal
           peuvent &ecirc;tre trouv&eacute;es &agrave; <a href=
-          "http://www.merg.org.uk/&quot;">MERG</a></p>
+          "http://www.merg.org.uk/">MERG</a></p>
         </dd>
       </dl>La fen&ecirc;tre de Dialogue "Modifier t&ecirc;te de
       signal" fournit pour la visualisation et la modification
@@ -366,7 +364,7 @@
       modifications. La Fermeture de la fen&ecirc;tre Modifier la
       t&ecirc;te de signal est &eacute;quivalent &agrave; cliquer
       "Annuler". Une seule t&ecirc;te de signal peut &ecirc;tre
-      &eacute;dit&eacute;e &agrave; la fois 
+      &eacute;dit&eacute;e &agrave; la fois
       <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
