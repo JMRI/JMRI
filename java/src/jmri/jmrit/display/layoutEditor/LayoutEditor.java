@@ -2191,11 +2191,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         //put a grid size margin around it
         result = MathUtil.inset(result, gridSize1st * gridSize2nd / -2.0);
 
-        //don't let origin go negative
-        //result = result.createIntersection(MathUtil.zeroToInfinityRectangle2D);
-        //force origin to {zero, zero}
-        result = MathUtil.setOrigin(result, MathUtil.zeroPoint2D);
-
         return result;
     }
 
@@ -2208,6 +2203,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     private Rectangle2D resizePanelBounds(boolean forceFlag) {
         Rectangle2D panelBounds = getPanelBounds();
         Rectangle2D layoutBounds = calculateMinimumLayoutBounds();
+
+        // make sure it includes the origin
+        layoutBounds.add(MathUtil.zeroPoint2D);
+
         if (forceFlag) {
             panelBounds = layoutBounds;
         } else {
@@ -2216,9 +2215,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         // don't let origin go negative
         panelBounds = panelBounds.createIntersection(MathUtil.zeroToInfinityRectangle2D);
-
-        // make sure it includes the origin
-        panelBounds.add(MathUtil.zeroPoint2D);
 
         //log.info("resizePanelBounds: {}", MathUtil.rectangle2DToString(panelBounds));
         setPanelBounds(panelBounds);
@@ -2252,7 +2248,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         // don't let origin go negative
         scrollBounds = scrollBounds.createIntersection(MathUtil.zeroToInfinityRectangle2D);
 
-        // and scroll to it
+        //make sure it includes the origin
+        scrollBounds.add(MathUtil.zeroPoint2D);
+
+        //and scroll to it
         scrollPane.scrollRectToVisible(MathUtil.rectangle2DToRectangle(scrollBounds));
 
         return result;

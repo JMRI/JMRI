@@ -49,15 +49,15 @@
         </ul>
 
         <p>Or create your own tools by <a href="#scripting">Scripting JMRI</a>.</p>
-        
+
         <h2><a name="commontools" id="commontools"></a>Common tools</h2>
 
         <p>The following tools in the Tools menu work with most DCC hardware connections:</p>
 
         <dl>
-        
+
           <dd><h3><a href="throttle/ThrottleMain.shtml">Throttles</a></h3></dd>
-          <dd>You can open multiple software Throttles to run your DCC locomotives.</dd>  
+          <dd>You can open multiple software Throttles to run your DCC locomotives.</dd>
 
           <dd><h3><a href="Turnouts.shtml">Turnouts</a></h3></dd>
           <dd>JMRI calls just about any output to the layout a
@@ -86,7 +86,7 @@
           Appearances (Red, Yellow, Green, Flashing Yellow, etc.)
           or Aspects (Stop, Clear, Approach limited etc.) following
           prototype rules.</dd>
- 
+
           <dd><h3><a href="consisttool/ConsistTool.shtml">Consisting</a></h3></dd>
           <dd>JMRI provides tools for managing locomotive consists.</dd>
 
@@ -103,7 +103,7 @@
 
          <h2><a name="blocktools" id="blocktools">Block Tools</a></h2>
         <dl>
-        
+
           <dd><h3><a name="blocks" href="Blocks.shtml" id="blocks">Blocks</a></h3></dd>
           <dd>Blocks are sections of track whose occupancy may be
           individually monitored in JMRI. Dividing your track into
@@ -130,7 +130,7 @@
         </dl>
 
        <h2><a name="routingtools" id="routingtools">Routing and Control Tools</a></h2>
-       
+
         <dl>
           <dd><h3><a href="Routes.shtml">Routes</a></h3></dd>
           <dd>Routes are a tool for driving multiple turnouts when
@@ -151,9 +151,9 @@
           capabilities.</dd>
 
           <dd><h3><a href="EntryExit.shtml">Entry/Exit (NX) Routing</a></h3></dd>
-          <dd><b>NX Routing</b> allows you to build a dynamic valid path 
+          <dd><b>NX Routing</b> allows you to build a dynamic valid path
           between two locations on a Layout Editor panel.</dd>
- 
+
           <dd><h3><a href="Logix.shtml">Logix</a></h3></dd>
           <dd>A <b>Logix</b> is a tool for entering powerful logical
           expressions that can control parts of a layout. Each one
@@ -167,7 +167,7 @@
 
         <h2><a name="othertools" id="othertools">Other Tools</a></h2>
           <dl>
-          
+
           <dd>
             <h3><a href="Audio.shtml">Audio</a></h3>
           </dd>
@@ -203,6 +203,13 @@
 
           <dd>Create a timetable to manage train movements.  Display a
           graph that can help schedule meets.</dd>
+
+           <dd>
+            <h3><a href="../../package/jmri/jmrit/whereused/WhereUsed.shtml">Where Used</a></h3>
+          </dd>
+
+          <dd>Search JMRI for references to a selected item based on its type.
+          For example, see where a sensor is used.</dd>
 
 
 <!-- Are these apps? -->
@@ -281,10 +288,10 @@
         <ul>
           <li><a href="../hardware/cmri/CMRI.shtml#L568">
           CMRI Network Manager (enable/disable individual nodes)</a></li>
-          
+
           <li><a href="../hardware/cmri/CMRI.shtml#L597">
           CMRI Metrics</a></li>
-          
+
           <li><a href="../hardware/cmri/CMRI.shtml#L580">
           CMRI Monitor (displays traffic sent and received to CMRI nodes)</a></li>
 

@@ -732,6 +732,8 @@
  </indexitem>
  <indexitem text="Web Access to JMRI " target="html.web.index"/>
 
+ <indexitem text="Where Used " target="package.jmri.jmrit.whereused.WhereUsed"/>
+
  <indexitem text="Wii Remote, Connecting to " target="html.tools.throttle.AdvancedThrottleControl_wii"/>
 
  <indexitem text="WiThrottle for iPhone/iPod Touch " target="package.jmri.jmrit.withrottle.UserInterface"/>

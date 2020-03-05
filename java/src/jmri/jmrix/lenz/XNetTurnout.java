@@ -588,7 +588,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
             if (internalState != OFFSENT) {
                 jmri.util.ThreadingUtil.runOnLayoutDelayed( () -> {
                    tc.sendHighPriorityXNetMessage(msg, this);
-                }, 30);
+                }, 29);
                 newKnownState(getCommandedState());
                 internalState = OFFSENT;
                 return;

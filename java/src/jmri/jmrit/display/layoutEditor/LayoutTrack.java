@@ -700,6 +700,5 @@ public abstract class LayoutTrack {
      */
     public abstract void setAllLayoutBlocks(LayoutBlock layoutBlock);
 
-    //private final static Logger log
-    // = LoggerFactory.getLogger(LayoutTrack.class);
+    //private final static Logger log = LoggerFactory.getLogger(LayoutTrack.class);
 }

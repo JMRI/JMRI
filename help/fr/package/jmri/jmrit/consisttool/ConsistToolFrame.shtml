@@ -106,7 +106,7 @@ mettre en place un r&#233;gulateur JMRI pour cette adresse.
 </p>
 <p>
 Pour ajouter un nouveau couplage, vous pouvez s&#233;lectionner l'entr&#233;e vide dans le menu d&#233;roulant
-&#224; c&#244;t&#233;  de l'actuel ID du couplage.
+&#224; c&#244;t&#233; de l'actuel ID du couplage.
 </p>
 <img src=images/ConsistTool-NewConsist.jpg alt="Select Nouveau Consist">
 <p>
@@ -116,7 +116,7 @@ de la bo&#238;te d&#233;roulante &#224; c&#244;t&#233; de l'ID du couplage actue
 <img src=images/ConsistTool-SelectConsist.jpg alt="Select une Consist">
 <p>
 Pour plus d'informations sur le couplage et sur l'outil de couplage JMRI  s'il vous pla&#238;t
-voir la 
+voir la
 <a href="../../../../html/tools/consisttool/ConsistTool.shtml#tool"> page couplage</a> principale.
 <p>La page d'aide package\JMRI\jmrit\consisttool</p>
 
@@ -125,4 +125,3 @@ voir la
   </div>
 </body>
 </html>
-

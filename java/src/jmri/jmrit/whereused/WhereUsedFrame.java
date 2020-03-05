@@ -46,6 +46,7 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
         super(true, true);
         setTitle(Bundle.getMessage("TitleWhereUsed"));  // NOI18N
         createFrame();
+        addHelpMenu("package.jmri.jmrit.whereused.WhereUsed", true);  // NOI18N
     }
 
     /**
