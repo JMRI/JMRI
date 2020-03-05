@@ -1,4 +1,3 @@
-package jmri.util.com.dictiography.collections;
 /**
  *  Provides sorted, yet directly accessible, {@link IndexedTreeSet} and {@link IndexedTreeMap} collection classes.
  
@@ -19,3 +18,5 @@ package jmri.util.com.dictiography.collections;
  * <!-- Put @see and @since tags down here. -->
  * @since JMRI 4.11.4
  */
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings({})
+package jmri.util.com.dictiography.collections;
