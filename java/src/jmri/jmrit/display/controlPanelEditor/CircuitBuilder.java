@@ -238,7 +238,6 @@ public class CircuitBuilder {
             }
         }
         _darkTrack.remove(pos);
-        // if (log.isDebugEnabled()) log.debug("addIcon: block "+block.getDisplayName()+" has "+icons.size()+" icons.");
     }
 
     // Rebuild after any edit change
