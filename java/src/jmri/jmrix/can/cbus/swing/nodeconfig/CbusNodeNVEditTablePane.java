@@ -38,14 +38,12 @@ public class CbusNodeNVEditTablePane extends jmri.jmrix.can.swing.CanPanel {
         nodeNVModel = nVModel;
         nodeNvTable = new JTable(nodeNVModel);
         
+        initTable();
+        nodeNvTable.setAutoCreateColumnsFromModel( false );
+        
     }
     
     protected void setNode(CbusNode node ) {
-        
-        if (pane1==null){
-            initTable();
-        }
-        
         CbusNode nodeOfInterest = node;
         nodeNVModel.setNode( nodeOfInterest );
         pane1.setVisible(!(node == null));
@@ -105,7 +103,6 @@ public class CbusNodeNVEditTablePane extends jmri.jmrix.can.swing.CanPanel {
         
         add(pane1);
         pane1.setVisible(true);
-        nodeNvTable.setAutoCreateColumnsFromModel( false );
         
         add(eventVarScroll);
     
