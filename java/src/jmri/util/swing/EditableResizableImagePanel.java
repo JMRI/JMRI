@@ -187,14 +187,18 @@ public class EditableResizableImagePanel extends ResizableImagePanel implements 
                     dest = src;
                 } finally {
                     try {
-                        if(fileOutputStream != null) {
+                        if (fileOutputStream != null) {
                             fileOutputStream.close();
                         }
+                    } catch (IOException ex) {
+                        log.error("URIsDropped: error while closing copy destination file : ", ex.getMessage());
+                    }
+                    try {
                         if (in != null) {
                             in.close(); 
                         }
                     } catch (IOException ex) {
-                        log.error("URIsDropped: error while closing file : ", ex.getMessage());
+                        log.error("URIsDropped: error while closing copy source file : ", ex.getMessage());
                     }
                 }
             }        
