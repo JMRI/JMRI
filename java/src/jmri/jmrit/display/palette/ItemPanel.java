@@ -321,21 +321,35 @@ public abstract class ItemPanel extends JPanel {
         return _paletteFrame;
     }
 
+    // oldDim old panel size,
+    // totalDim old frame size
     protected void reSizeDisplay(boolean isPalette, Dimension oldDim, Dimension totalDim) {
         Dimension newDim = getPreferredSize();
-        Dimension deltaDim = new Dimension(totalDim.width - oldDim.width, totalDim.height - oldDim.height);
-        if (log.isDebugEnabled()) 
-            log.debug("resize by {} Dim= ({}, {}) \"{}\" OldDim= ({}, {}) NewDim= ({}, {})",
-                    (isPalette?"TabPane":"JFrame"), totalDim.width, totalDim.height,
-                    this._itemType, oldDim.width, oldDim.height, newDim.width, newDim.height);
-
+        Dimension frameDiffDim = new Dimension(totalDim.width - oldDim.width, totalDim.height - oldDim.height);
+        if (log.isDebugEnabled()) {
+            // Gather data for additional dimensions needed to display new panel in the total frame
+            log.debug("resize {} for type {}. totalDim= ({}, {}) \"{}\" OldDim= ({}, {}) frameDiffDim= ({}, {})",
+                    (isPalette?"tabPane":"update"), _itemType, totalDim.width, totalDim.height,
+                    this._itemType, oldDim.width, oldDim.height, frameDiffDim.width, frameDiffDim.height);
+        }
+        Dimension deltaDim = shellDimension(this);
         if (isPalette && _initialized) {
-            _paletteFrame.reSize(ItemPalette._tabPane, deltaDim, newDim, _editor);            
+            _paletteFrame.reSize(ItemPalette._tabPane, deltaDim, newDim, _editor);
         } else if (_update || _initialized) {
             _paletteFrame.reSize(_paletteFrame, deltaDim, newDim, _editor);                            
         }
     }
 
+    protected Dimension shellDimension(ItemPanel panel) {
+        if (panel instanceof FamilyItemPanel) {
+            if (panel._itemType.equals("SignalMast") || panel._itemType.equals("Reporter")) {
+                return new Dimension(23, 138);
+            }
+            return new Dimension(23, 122);
+        } else if (panel instanceof IconItemPanel) {
+            return new Dimension(23, 106);
+        }
+        return new Dimension(25, 140);
+    }
     private final static Logger log = LoggerFactory.getLogger(ItemPanel.class);
-
 }

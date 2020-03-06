@@ -99,8 +99,8 @@ class ConvertDialog extends JDialog {
             add(_panel);
             setTitle(Bundle.getMessage(title));
             pack();
-            location = PlaceWindow.inside(cb._editor, pos, this);
-            setLocation(location);
+            location = InstanceManager.getDefault(jmri.util.PlaceWindow.class).inside(cb._editor, pos, this);
+//            setLocation(location);
             setVisible(true);
         }
 

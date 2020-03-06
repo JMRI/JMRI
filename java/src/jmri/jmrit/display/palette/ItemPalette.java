@@ -419,7 +419,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         instance.setTitle(Bundle.getMessage("MenuItemItemPalette") + " - " + name);
         // pack before setLocation
         instance.pack();
-        instance.setLocation(jmri.util.PlaceWindow.nextTo(ed, null, instance));
+        InstanceManager.getDefault(jmri.util.PlaceWindow.class).nextTo(ed, null, instance);
         instance.setVisible(true);
         return instance;
     }
@@ -539,30 +539,26 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         JTabbedPane tp = (JTabbedPane) e.getSource();
         JScrollPane sp = (JScrollPane) tp.getSelectedComponent();
         ItemPanel p = (ItemPanel) sp.getViewport().getView();
+        p.closeDialogs();
+        p.init(); // (re)initialize tab pane
+        p.invalidate();
+        Dimension newTabDim = p.getPreferredSize();
         Dimension oldTabDim = null;
-        log.debug("different tab displayed for {} previewBgSet updated to {}", p._itemType, getPreviewBg());
         if (_currentItemPanel != null) {
             _currentItemPanel.closeDialogs();
             oldTabDim = _currentItemPanel.getSize();
-        }
-        Dimension totalDim = _tabPane.getSize();
-        p.init(); // (re)initialize tab pane
-        p.revalidate();
-        Dimension newTabDim = p.getPreferredSize();
-        if (oldTabDim == null) {
+        } else {
             oldTabDim = newTabDim;
         }
-        Dimension deltaDim = new Dimension(totalDim.width - oldTabDim.width, totalDim.height - oldTabDim.height);
-        if (log.isDebugEnabled()) 
-            log.debug("_tabPane Dim= ({}, {}) Old Dim({})= ({}, {}) NewDim({})= ({}, {})", totalDim.width, totalDim.height, 
-                _currentItemPanel._itemType, oldTabDim.width, oldTabDim.height,  p._itemType, newTabDim.width, newTabDim.height);
-        // tabPane must be larger than the current panel it is displaying
-        if (deltaDim.width < 8) {
-            deltaDim.width = 8;
+        Dimension totalDim = _tabPane.getSize();
+        Dimension deltaDim;
+        if (log.isDebugEnabled()) {
+            deltaDim = new Dimension(totalDim.width - oldTabDim.width, totalDim.height - oldTabDim.height);
+            log.debug(" old _tabPane Dim= ({}, {}) oldType=({})= ({}, {})newType=({})= ({}, {}). diff= ({}, {})",
+                    totalDim.width, totalDim.height, _currentItemPanel._itemType, oldTabDim.width, oldTabDim.height,  
+                    p._itemType, newTabDim.width, newTabDim.height, deltaDim.width, deltaDim.height);
         }
-        if (deltaDim.height < 50) { // at least 2 rows of tabs
-            deltaDim.height = 50;
-        }
+        deltaDim = p.shellDimension(p);
         reSize(_tabPane, deltaDim, newTabDim, p._editor);
         if (p._bgColorBox != null) {
             p._bgColorBox.setSelectedIndex(getPreviewBg());
