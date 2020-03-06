@@ -340,7 +340,7 @@ public abstract class ItemPanel extends JPanel {
         }
     }
 
-    protected Dimension shellDimension(ItemPanel panel) {
+    public Dimension shellDimension(ItemPanel panel) {
         if (panel instanceof FamilyItemPanel) {
             if (panel._itemType.equals("SignalMast") || panel._itemType.equals("Reporter")) {
                 return new Dimension(23, 138);
