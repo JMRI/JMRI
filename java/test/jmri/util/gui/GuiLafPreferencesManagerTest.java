@@ -192,7 +192,7 @@ public class GuiLafPreferencesManagerTest {
         // change to setFont(String) when removing deprecated method
         t.setFontByName(f1.getFontName());
         // without calling setFontSize(int), font size == 0
-        assertEquals("Font is plain", f1.deriveFont(0).getStyle(), t.getFont().getStyle());
+        assertEquals("Font has JMRI default style", t.getDefaultFont().getStyle(), t.getFont().getStyle());
         assertNotEquals("Font is not Font default", Font.decode(null), t.getFont());
         assertNotEquals("Font is not derived font", f1, t.getFont());
         assertTrue("Changes made", t.isDirty());
