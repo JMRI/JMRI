@@ -362,6 +362,7 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
 
         try {
             String val = l.getNextValidAddress(null, "M");
+            Assert.assertNull(val);
         } catch (JmriException ex) {
             Assert.assertEquals("java.lang.IllegalArgumentException: No address Passed ", ex.getMessage());
         }
