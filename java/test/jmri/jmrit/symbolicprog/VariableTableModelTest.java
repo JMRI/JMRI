@@ -1,5 +1,6 @@
 package jmri.jmrit.symbolicprog;
 
+import java.awt.GraphicsEnvironment;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -13,6 +14,7 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -168,6 +170,7 @@ public class VariableTableModelTest {
     // Check creating a speed table, then finding it by name
     @Test
     public void testVarSpeedTable() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         String[] args = {"CV", "Name"};
         VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p));
 

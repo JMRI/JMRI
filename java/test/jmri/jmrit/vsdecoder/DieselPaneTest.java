@@ -1,8 +1,10 @@
 package jmri.jmrit.vsdecoder;
 
+import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,6 +16,7 @@ public class DieselPaneTest {
 
     @Test
     public void testCTor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         DieselPane t = new DieselPane();
         Assert.assertNotNull("exists",t);
     }
