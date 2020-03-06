@@ -1,23 +1,27 @@
 package jmri.jmrit.operations.setup;
 
+import java.awt.GraphicsEnvironment;
 import jmri.jmrit.operations.OperationsTestCase;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class PrintOptionPanelTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         PrintOptionPanel t = new PrintOptionPanel();
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists", t);
     }
 
     @Test
     public void checkPrintOptionPanelDefaults() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         PrintOptionPanel p = new PrintOptionPanel();
 
         // confirm defaults
@@ -40,5 +44,4 @@ public class PrintOptionPanelTest extends OperationsTestCase {
     }
 
     // private final static Logger log = LoggerFactory.getLogger(PrintOptionPanelTest.class);
-
 }
