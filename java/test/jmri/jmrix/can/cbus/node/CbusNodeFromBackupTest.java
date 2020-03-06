@@ -187,6 +187,9 @@ public class CbusNodeFromBackupTest {
         
         Assert.assertTrue("No Traffic Controler",(t.getCanListener() instanceof CbusNodeFromBackup.DoNothingCanListener));
         
+        tcis.terminateThreads();
+        memo.dispose();
+        
     }
     
     // The minimal setup for log4J
@@ -197,7 +200,6 @@ public class CbusNodeFromBackupTest {
 
     @After
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
 
     }

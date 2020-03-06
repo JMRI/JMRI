@@ -14,7 +14,9 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 import org.netbeans.jemmy.operators.*;
 
 /**
@@ -91,6 +93,9 @@ public class CbusEventTablePaneTest extends jmri.util.swing.JmriPanelTest {
     private boolean getClearFilterButtonEnabled( JFrameOperator jfo ){
         return ( new JButtonOperator(jfo,Bundle.getMessage("ClearFilter")).isEnabled() );
     }
+    
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
 
     private CanSystemConnectionMemo memo; 
     private TrafficControllerScaffold tcis; 
@@ -109,12 +114,16 @@ public class CbusEventTablePaneTest extends jmri.util.swing.JmriPanelTest {
         configM = new CbusConfigurationManager(memo);
         
         jmri.InstanceManager.setDefault(CbusPreferences.class,new CbusPreferences() );
+
+        try {
+            JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
+        } catch ( java.io.IOException e) {
+            Assert.assertFalse("Exception creating temp. user folder",true);
+        }
         
         panel = new CbusEventTablePane();
     }
     
-    
-
     @Override
     @After
     public void tearDown() {
