@@ -1,21 +1,10 @@
 package jmri.jmrit.display.layoutEditor;
 
 import java.awt.GraphicsEnvironment;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.Sensor;
-import jmri.Turnout;
-import jmri.util.JUnitUtil;
-import jmri.util.MathUtil;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import java.awt.geom.*;
+import jmri.*;
+import jmri.util.*;
+import org.junit.*;
 
 /**
  * Test simple functioning of LayoutTurnout.
@@ -181,7 +170,7 @@ public class LayoutTurnoutTest {
     public void testGetSignalHead() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.NONE));
-        jmri.util.JUnitAppender.assertWarnMessage("Unhandled point type: 0");
+        JUnitAppender.assertWarnMessage("Right Hand.getSignalHead(0); Unhandled point type");
 
         Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.POINTA1));
         Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.POINTA2));
@@ -351,7 +340,7 @@ public class LayoutTurnoutTest {
         Assert.assertEquals("ltRH.getCoordsForConnectionType(NONE) is equal to...",
                 new Point2D.Double(150.0, 100.0),
                 ltRH.getCoordsForConnectionType(LayoutTrack.NONE));
-        jmri.util.JUnitAppender.assertErrorMessage("Invalid connection type 0");
+        JUnitAppender.assertErrorMessage("Right Hand.getCoordsForConnectionType(0); Invalid Connection Type");
         Assert.assertEquals("ltRH.getCoordsForConnectionType(TURNOUT_A) is equal to...",
                 new Point2D.Double(132.0, 87.0),
                 ltRH.getCoordsForConnectionType(LayoutTrack.TURNOUT_A));
@@ -371,7 +360,7 @@ public class LayoutTurnoutTest {
         Assert.assertEquals("ltLH.getCoordsForConnectionType(NONE) is equal to...",
                 new Point2D.Double(200.0, 175.0),
                 ltLH.getCoordsForConnectionType(LayoutTrack.NONE));
-        jmri.util.JUnitAppender.assertErrorMessage("Invalid connection type 0");
+        JUnitAppender.assertErrorMessage("Left Hand.getCoordsForConnectionType(0); Invalid Connection Type");
         Assert.assertEquals("ltLH.getCoordsForConnectionType(TURNOUT_A) is equal to...",
                 new Point2D.Double(189.0, 149.0),
                 ltLH.getCoordsForConnectionType(LayoutTrack.TURNOUT_A));
@@ -391,7 +380,7 @@ public class LayoutTurnoutTest {
         Assert.assertEquals("ltWY.getCoordsForConnectionType(NONE) is equal to...",
                 new Point2D.Double(250.0, 250.0),
                 ltWY.getCoordsForConnectionType(LayoutTrack.NONE));
-        jmri.util.JUnitAppender.assertErrorMessage("Invalid connection type 0");
+        JUnitAppender.assertErrorMessage("Wye.getCoordsForConnectionType(0); Invalid Connection Type");
         Assert.assertEquals("ltWY.getCoordsForConnectionType(TURNOUT_A) is equal to...",
                 new Point2D.Double(254.5, 218.5),
                 ltWY.getCoordsForConnectionType(LayoutTrack.TURNOUT_A));
@@ -411,7 +400,7 @@ public class LayoutTurnoutTest {
         Assert.assertEquals("ltDX.getCoordsForConnectionType(NONE) is equal to...",
                 new Point2D.Double(300.0, 325.0),
                 ltDX.getCoordsForConnectionType(LayoutTrack.NONE));
-        jmri.util.JUnitAppender.assertErrorMessage("Invalid connection type 0");
+        JUnitAppender.assertErrorMessage("Double XOver.getCoordsForConnectionType(0); Invalid Connection Type");
         Assert.assertEquals("ltDX.getCoordsForConnectionType(TURNOUT_A) is equal to...",
                 new Point2D.Double(347.0, 297.0),
                 ltDX.getCoordsForConnectionType(LayoutTrack.TURNOUT_A));
@@ -431,7 +420,7 @@ public class LayoutTurnoutTest {
         Assert.assertEquals("ltRX.getCoordsForConnectionType(NONE) is equal to...",
                 new Point2D.Double(350.0, 400.0),
                 ltRX.getCoordsForConnectionType(LayoutTrack.NONE));
-        jmri.util.JUnitAppender.assertErrorMessage("Invalid connection type 0");
+        JUnitAppender.assertErrorMessage("Right Hand XOver.getCoordsForConnectionType(0); Invalid Connection Type");
         Assert.assertEquals("ltRX.getCoordsForConnectionType(TURNOUT_A) is equal to...",
                 new Point2D.Double(410.0, 404.0),
                 ltRX.getCoordsForConnectionType(LayoutTrack.TURNOUT_A));
@@ -451,7 +440,7 @@ public class LayoutTurnoutTest {
         Assert.assertEquals("ltLX.getCoordsForConnectionType(NONE) is equal to...",
                 new Point2D.Double(400.0, 475.0),
                 ltLX.getCoordsForConnectionType(LayoutTrack.NONE));
-        jmri.util.JUnitAppender.assertErrorMessage("Invalid connection type 0");
+        JUnitAppender.assertErrorMessage("Left Hand XOver.getCoordsForConnectionType(0); Invalid Connection Type");
         Assert.assertEquals("ltLX.getCoordsForConnectionType(TURNOUT_A) is equal to...",
                 new Point2D.Double(413.0, 503.0),
                 ltLX.getCoordsForConnectionType(LayoutTrack.TURNOUT_A));
@@ -563,7 +552,7 @@ public class LayoutTurnoutTest {
             Assert.fail("No exception thrown on ltRH.getConnection(invalid type)");
         } catch (JmriException ex) {
         }
-        jmri.util.JUnitAppender.assertErrorMessage("Invalid Connection Type 0");
+        JUnitAppender.assertErrorMessage("Right Hand.getConnection(0); Invalid Connection Type");
 
         try {
             Assert.assertNull("ltLH.getConnection(invalid type) is null",
@@ -571,7 +560,7 @@ public class LayoutTurnoutTest {
             Assert.fail("No exception thrown on ltLH.getConnection(invalid type)");
         } catch (JmriException ex) {
         }
-        jmri.util.JUnitAppender.assertErrorMessage("Invalid Connection Type 0");
+        JUnitAppender.assertErrorMessage("Left Hand.getConnection(0); Invalid Connection Type");
 
         try {
             Assert.assertNull("ltWY.getConnection(invalid type) is null",
@@ -579,7 +568,7 @@ public class LayoutTurnoutTest {
             Assert.fail("No exception thrown on ltWY.getConnection(invalid type)");
         } catch (JmriException ex) {
         }
-        jmri.util.JUnitAppender.assertErrorMessage("Invalid Connection Type 0");
+        JUnitAppender.assertErrorMessage("Wye.getConnection(0); Invalid Connection Type");
 
         try {
             Assert.assertNull("ltDX.getConnection(invalid type) is null",
@@ -587,7 +576,7 @@ public class LayoutTurnoutTest {
             Assert.fail("No exception thrown on ltDX.getConnection(invalid type)");
         } catch (JmriException ex) {
         }
-        jmri.util.JUnitAppender.assertErrorMessage("Invalid Connection Type 0");
+        JUnitAppender.assertErrorMessage("Double XOver.getConnection(0); Invalid Connection Type");
 
         try {
             Assert.assertNull("ltRX.getConnection(invalid type) is null",
@@ -595,7 +584,7 @@ public class LayoutTurnoutTest {
             Assert.fail("No exception thrown on ltRX.getConnection(invalid type)");
         } catch (JmriException ex) {
         }
-        jmri.util.JUnitAppender.assertErrorMessage("Invalid Connection Type 0");
+        JUnitAppender.assertErrorMessage("Right Hand XOver.getConnection(0); Invalid Connection Type");
 
         try {
             Assert.assertNull("ltLX.getConnection(invalid type) is null",
@@ -603,7 +592,7 @@ public class LayoutTurnoutTest {
             Assert.fail("No exception thrown on ltLX.getConnection(invalid type)");
         } catch (JmriException ex) {
         }
-        jmri.util.JUnitAppender.assertErrorMessage("Invalid Connection Type 0");
+        JUnitAppender.assertErrorMessage("Left Hand XOver.getConnection(0); Invalid Connection Type");
     }
 
     @Test
@@ -660,20 +649,20 @@ public class LayoutTurnoutTest {
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
 
         try {
-            // test invalid connection type
+            // test Invalid Connection Type
             ltRH.setConnection(LayoutTrack.NONE, null, LayoutTrack.NONE);
-            Assert.fail("No exception thrown on ltRH.setConnection(invalid connection type)");
+            Assert.fail("No exception thrown on ltRH.setConnection(Invalid Connection Type)");
         } catch (JmriException ex) {
         }
-        jmri.util.JUnitAppender.assertErrorMessage("Invalid Connection Type 0");
+        JUnitAppender.assertErrorMessage("Right Hand.setConnection(0, null, 0); Invalid Connection Type");
 
         try {
-            // test invalid object type
+            // test unexpected type
             ltRH.setConnection(LayoutTrack.POS_POINT, null, LayoutTrack.POS_POINT);
-            Assert.fail("No exception thrown on ltRH.setConnection(invalid object type)");
+            Assert.fail("No exception thrown on ltRH.setConnection(unexpected type)");
         } catch (JmriException ex) {
         }
-        jmri.util.JUnitAppender.assertErrorMessage("unexpected type of connection to layoutturnout - 1");
+        JUnitAppender.assertErrorMessage("Right Hand.setConnection(1, null, 1); unexpected type");
 
         try {
             // test valid types
@@ -689,13 +678,40 @@ public class LayoutTurnoutTest {
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
 
         ltRH.setConnectA(null, LayoutTrack.POS_POINT);
-        jmri.util.JUnitAppender.assertErrorMessage("unexpected type of A connection to layoutturnout - 1");
+        JUnitAppender.assertErrorMessage("Right Hand.setConnectA(null, 1); unexpected type");
+        ltRH.setConnectB(null, LayoutTrack.POS_POINT);
+        JUnitAppender.assertErrorMessage("Right Hand.setConnectB(null, 1); unexpected type");
+        ltRH.setConnectC(null, LayoutTrack.POS_POINT);
+        JUnitAppender.assertErrorMessage("Right Hand.setConnectC(null, 1); unexpected type");
+        ltRH.setConnectD(null, LayoutTrack.POS_POINT);
+        JUnitAppender.assertErrorMessage("Right Hand.setConnectD(null, 1); unexpected type");
+
+        ltLH.setConnectA(null, LayoutTrack.POS_POINT);
+        JUnitAppender.assertErrorMessage("Left Hand.setConnectA(null, 1); unexpected type");
         ltLH.setConnectB(null, LayoutTrack.POS_POINT);
-        jmri.util.JUnitAppender.assertErrorMessage("unexpected type of B connection to layoutturnout - 1");
+        JUnitAppender.assertErrorMessage("Left Hand.setConnectB(null, 1); unexpected type");
+        ltLH.setConnectC(null, LayoutTrack.POS_POINT);
+        JUnitAppender.assertErrorMessage("Left Hand.setConnectC(null, 1); unexpected type");
+        ltLH.setConnectD(null, LayoutTrack.POS_POINT);
+        JUnitAppender.assertErrorMessage("Left Hand.setConnectD(null, 1); unexpected type");
+
+        ltWY.setConnectA(null, LayoutTrack.POS_POINT);
+        JUnitAppender.assertErrorMessage("Wye.setConnectA(null, 1); unexpected type");
+        ltWY.setConnectB(null, LayoutTrack.POS_POINT);
+        JUnitAppender.assertErrorMessage("Wye.setConnectB(null, 1); unexpected type");
         ltWY.setConnectC(null, LayoutTrack.POS_POINT);
-        jmri.util.JUnitAppender.assertErrorMessage("unexpected type of C connection to layoutturnout - 1");
+        JUnitAppender.assertErrorMessage("Wye.setConnectC(null, 1); unexpected type");
+        ltWY.setConnectD(null, LayoutTrack.POS_POINT);
+        JUnitAppender.assertErrorMessage("Wye.setConnectD(null, 1); unexpected type");
+
+        ltDX.setConnectA(null, LayoutTrack.POS_POINT);
+        JUnitAppender.assertErrorMessage("Double XOver.setConnectA(null, 1); unexpected type");
+        ltDX.setConnectB(null, LayoutTrack.POS_POINT);
+        JUnitAppender.assertErrorMessage("Double XOver.setConnectB(null, 1); unexpected type");
+        ltDX.setConnectC(null, LayoutTrack.POS_POINT);
+        JUnitAppender.assertErrorMessage("Double XOver.setConnectC(null, 1); unexpected type");
         ltDX.setConnectD(null, LayoutTrack.POS_POINT);
-        jmri.util.JUnitAppender.assertErrorMessage("unexpected type of D connection to layoutturnout - 1");
+        JUnitAppender.assertErrorMessage("Double XOver.setConnectD(null, 1); unexpected type");
     }
 
     @Test
