@@ -40,8 +40,8 @@ public class CbusMultiMeterTest extends jmri.implementation.AbstractMultiMeterTe
         mm = null;
         tcis.terminateThreads();
         tcis=null;
+        memo.dispose();
         memo = null;
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
     
@@ -80,7 +80,7 @@ public class CbusMultiMeterTest extends jmri.implementation.AbstractMultiMeterTe
     @Test
     public void testMultiMCanReply(){
         
-        CbusMultiMeter mm = new CbusMultiMeter(memo);
+        mm = new CbusMultiMeter(memo);
         
         CbusNodeTableDataModel nodeModel = new CbusNodeTableDataModel(memo, 3,CbusNodeTableDataModel.MAX_COLUMN);
         jmri.InstanceManager.setDefault(CbusNodeTableDataModel.class,nodeModel );
@@ -99,22 +99,22 @@ public class CbusMultiMeterTest extends jmri.implementation.AbstractMultiMeterTe
         r.setElement(4, 0x01); // en 1
         r.setElement(5, 0x00); // 8mA
         r.setElement(6, 0x08); // 8mA
-        mm.reply(r);
+        ((CbusMultiMeter)mm).reply(r);
         
         Assert.assertEquals(0,mm.getCurrent(),0.001 ); // wrong opc
         
         r.setElement(0, CbusConstants.CBUS_ACON2);
-        mm.reply(r);
+        ((CbusMultiMeter)mm).reply(r);
         
         Assert.assertEquals(0,mm.getCurrent(),0.001 ); // wrong node
         
         r.setElement(2, 0x31); // nn 54321
-        mm.reply(r);
+        ((CbusMultiMeter)mm).reply(r);
         Assert.assertEquals(8,mm.getCurrent(),0.001 );
         
         r.setElement(5, 0x12); // 4807mA
         r.setElement(6, 0xc7); // 4807mA
-        mm.reply(r);
+        ((CbusMultiMeter)mm).reply(r);
         Assert.assertEquals(4807,mm.getCurrent(),0.001 );
         
         CanMessage m = new CanMessage(tcis.getCanid());
@@ -127,7 +127,7 @@ public class CbusMultiMeterTest extends jmri.implementation.AbstractMultiMeterTe
         m.setElement(5, 0x00); // 0mA
         m.setElement(6, 0x00); // 0mA
         
-        mm.message(m);
+        ((CbusMultiMeter)mm).message(m);
         Assert.assertEquals(4807,mm.getCurrent(),0.001 ); // CanMessage Ignored
         
         r = new CanReply(tcis.getCanid());
@@ -140,7 +140,7 @@ public class CbusMultiMeterTest extends jmri.implementation.AbstractMultiMeterTe
         r.setElement(5, 0x00); // 0mA
         r.setElement(6, 0x00); // 0mA
         
-        mm.reply(r);
+        ((CbusMultiMeter)mm).reply(r);
         Assert.assertEquals(0,mm.getCurrent(),0.001 );
         
         // wrong event num
@@ -154,22 +154,22 @@ public class CbusMultiMeterTest extends jmri.implementation.AbstractMultiMeterTe
         r.setElement(5, 0x12); // 4807mA
         r.setElement(6, 0xc7); // 4807mA
         
-        mm.reply(r);
+        ((CbusMultiMeter)mm).reply(r);
         Assert.assertEquals("Wrong event",0,mm.getCurrent(),0.001 );
         r.setElement(4, 0x01); // en1
         r.setRtr(true);
         
-        mm.reply(r);
+        ((CbusMultiMeter)mm).reply(r);
         Assert.assertEquals(0,mm.getCurrent(),0.001 );
         
         r.setExtended(true);
         r.setRtr(false);
         
-        mm.reply(r);
+        ((CbusMultiMeter)mm).reply(r);
         Assert.assertEquals(0,mm.getCurrent(),0.001 );
         
         r.setExtended(false);
-        mm.reply(r);
+        ((CbusMultiMeter)mm).reply(r);
         Assert.assertEquals(4807,mm.getCurrent(),0.001 );
         
         mm.disable();
@@ -188,9 +188,9 @@ public class CbusMultiMeterTest extends jmri.implementation.AbstractMultiMeterTe
     @Test
     public void testSmallFuncs(){
         
-        CbusMultiMeter mm = new CbusMultiMeter(memo);
+        mm = new CbusMultiMeter(memo);
         
-        mm.requestUpdateFromLayout();
+        ((CbusMultiMeter)mm).requestUpdateFromLayout();
         mm.initializeHardwareMeter();
         Assert.assertEquals("name", "CBUS", mm.getHardwareMeterName() );
         Assert.assertEquals("ma units", jmri.MultiMeter.CurrentUnits.CURRENT_UNITS_MILLIAMPS, mm.getCurrentUnits() );

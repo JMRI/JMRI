@@ -361,7 +361,7 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         Assert.assertEquals("+N45E23", "+N45E23", l.getNextValidAddress("+N45E22", "M"));
 
         try {
-            l.getNextValidAddress(null, "M");
+            String val = l.getNextValidAddress(null, "M");
         } catch (JmriException ex) {
             Assert.assertEquals("java.lang.IllegalArgumentException: No address Passed ", ex.getMessage());
         }
@@ -436,7 +436,7 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     public void tearDown() {
         l.dispose();
         memo.dispose();
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        tcis.terminateThreads();
         JUnitUtil.tearDown();
 
     }

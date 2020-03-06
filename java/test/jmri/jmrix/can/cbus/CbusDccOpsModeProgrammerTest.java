@@ -11,20 +11,24 @@ import org.junit.Before;
  */
 public class CbusDccOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgrammerTestBase {
 
+    private TrafficControllerScaffold tcis;
+    
     // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        CbusDccOpsModeProgrammer t = new CbusDccOpsModeProgrammer(100,true,new TrafficControllerScaffold());
+        tcis = new TrafficControllerScaffold();
+        CbusDccOpsModeProgrammer t = new CbusDccOpsModeProgrammer(100,true,tcis);
         programmer = t;
     }
-
+    
     @After
     @Override
     public void tearDown() {
         programmer = null;
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        tcis.terminateThreads();
+        tcis = null;
         JUnitUtil.tearDown();
 
     }
