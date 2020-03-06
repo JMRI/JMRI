@@ -1,5 +1,6 @@
 package jmri.jmrit.roster;
 
+import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -14,6 +15,7 @@ import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -253,6 +255,7 @@ public class RosterTest {
 
     @Test
     public void testReadWrite() throws Exception {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // create a test roster & store in file
         Roster r = jmri.util.RosterTestUtil.createTestRoster(new File(Roster.getDefault().getRosterLocation()),"rosterTest.xml");
         Assert.assertNotNull("exists", r);
@@ -270,6 +273,7 @@ public class RosterTest {
 
     @Test
     public void testAttributeAccess() throws Exception {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // create a test roster & store in file
         Roster r = jmri.util.RosterTestUtil.createTestRoster(new File(Roster.getDefault().getRosterLocation()),"rosterTest.xml");
         Assert.assertNotNull("exists", r);
@@ -285,6 +289,7 @@ public class RosterTest {
 
     @Test
     public void testAttributeValueAccess() throws Exception {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // create a test roster & store in file
         Roster r = jmri.util.RosterTestUtil.createTestRoster(new File(Roster.getDefault().getRosterLocation()),"rosterTest.xml");
         Assert.assertNotNull("exists", r);
@@ -302,6 +307,7 @@ public class RosterTest {
 
     @Test
     public void testAttributeList() throws Exception {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // create a test roster & store in file
         Roster r = jmri.util.RosterTestUtil.createTestRoster(new File(Roster.getDefault().getRosterLocation()),"rosterTest.xml");
         Assert.assertNotNull("exists", r);
