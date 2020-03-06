@@ -106,41 +106,41 @@ public class Z21XNetTurnout extends XNetTurnout {
           }
           // if this is for this turnout, check the turnout state.
           if(mNumber==address) {
-
-             // this is very basic right now.  We need to handle
-             // at least monitoring mode feedback properly.
-
-             switch(l.getElement(3)){
-                case 0x03: newKnownState(INCONSISTENT);
-                           break;
-                case 0x02: newKnownState(_inverted?CLOSED:THROWN);
-                           break;
-                case 0x01: newKnownState(_inverted?THROWN:CLOSED);
-                           break;
-                case 0x00:
-                default:
-                           newKnownState(UNKNOWN);
-             }
-             if(internalState == COMMANDSENT) {
-                sendOffMessage();  // turn off the repition on the track.
-             } else if(internalState == OFFSENT ) {
+              if(getFeedbackMode() == MONITORING ) {
+                  switch (l.getElement(3)) {
+                      case 0x03:
+                          newKnownState(INCONSISTENT);
+                          break;
+                      case 0x02:
+                          newKnownState(_inverted ? CLOSED : THROWN);
+                          break;
+                      case 0x01:
+                          newKnownState(_inverted ? THROWN : CLOSED);
+                          break;
+                      case 0x00:
+                      default:
+                          newKnownState(UNKNOWN);
+                  }
+              } else if(getFeedbackMode()==DIRECT) {
+                  newKnownState(getCommandedState());
+              }
+              if(internalState == COMMANDSENT) {
                 /* the command was successfully received */
-                newKnownState(getCommandedState());
                 internalState = IDLE;
+                sendOffMessage();  // turn off the repition on the track.
              }
           }
-          
         } else {
-          super.message(l); // the XpressNetTurnoutManager code
-                            // handle any other replies.
+          super.message(l); // the XpressNetTurnout code
+                            // handles any other replies.
         }
     }
 
     @Override
     synchronized protected XNetMessage getOffMessage() {
-        return( Z21XNetMessage.getZ21SetTurnoutRequestMessage(mNumber,
+        return Z21XNetMessage.getZ21SetTurnoutRequestMessage(mNumber,
                 (getCommandedState() ==  _mThrown),
-                false, false ) );// for now always not active and not queued.
+                false, false );// for now always not active and not queued.
     }
 
     private final static Logger log = LoggerFactory.getLogger(Z21XNetTurnout.class);

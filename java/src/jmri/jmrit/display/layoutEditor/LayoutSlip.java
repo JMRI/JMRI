@@ -1,16 +1,10 @@
 package jmri.jmrit.display.layoutEditor;
 
-import static java.lang.Integer.parseInt;
-import static java.lang.Math.PI;
-
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
-import java.awt.geom.GeneralPath;
-import java.awt.geom.Line2D;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
+import java.awt.event.*;
+import java.awt.geom.*;
+import java.text.MessageFormat;
 import java.util.*;
 import java.util.Map.Entry;
 import javax.annotation.*;
@@ -101,7 +95,7 @@ public class LayoutSlip extends LayoutTurnout {
             } else if (type == DOUBLE_SLIP) {
                 turnoutStates.put(STATE_BC, new TurnoutState(Turnout.THROWN, Turnout.CLOSED));
             } else {
-                log.error("Invalid slip Type " + slipType); //I18IN
+                log.error("{}.setSlipType({}); invalid slip type", getName(), slipType); //I18IN
             }
         }
     }
@@ -174,8 +168,10 @@ public class LayoutSlip extends LayoutTurnout {
             case SLIP_D:
                 return connectD;
             default:
-                log.error("Invalid Connection Type " + connectionType); //I18IN
-                throw new jmri.JmriException("Invalid Connection Type " + connectionType);
+                String errString = MessageFormat.format("{0}.getConnection({1}); Invalid Connection Type",
+                        getName(), connectionType); //I18IN
+                log.error(errString);
+                throw new jmri.JmriException(errString);
         }
     }
 
@@ -185,8 +181,10 @@ public class LayoutSlip extends LayoutTurnout {
     @Override
     public void setConnection(int connectionType, @CheckForNull LayoutTrack o, int type) throws jmri.JmriException {
         if ((type != TRACK) && (type != NONE)) {
-            log.error("unexpected type of connection to layoutslip - " + type);
-            throw new jmri.JmriException("unexpected type of connection to layoutslip - " + type);
+            String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); Invalid type",
+                    getName(), connectionType, (o == null) ? "null" : o.getName(), type); //I18IN
+            log.error(errString);
+            throw new jmri.JmriException(errString);
         }
         switch (connectionType) {
             case SLIP_A:
@@ -202,8 +200,10 @@ public class LayoutSlip extends LayoutTurnout {
                 connectD = o;
                 break;
             default:
-                log.error("Invalid Connection Type " + connectionType); //I18IN
-                throw new jmri.JmriException("Invalid Connection Type " + connectionType);
+                String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); Invalid Connection Type",
+                        getName(), connectionType, (o == null) ? "null" : o.getName(), type); //I18IN
+                log.error(errString);
+                throw new jmri.JmriException(errString);
         }
     }
 
@@ -373,7 +373,7 @@ public class LayoutSlip extends LayoutTurnout {
                 break;
             }
             default: {
-                log.error("invalid slip state: {}", getSlipState());
+                log.error("{}.isOccupied(); invalid slip state: {}", getName(), getSlipState());
                 break;
             }
         }
@@ -476,7 +476,7 @@ public class LayoutSlip extends LayoutTurnout {
                 result = getCoordsRight();
                 break;
             default:
-                log.error("Invalid connection type " + connectionType); //I18IN
+                log.error("{}.getCoordsForConnectionType({}); Invalid Connection Type", getName(), connectionType); //I18IN
         }
         return result;
     }
@@ -693,7 +693,7 @@ public class LayoutSlip extends LayoutTurnout {
                     break;
                 }
                 default: {
-                    log.error("Unknown slip type: {}", type);
+                    log.error("{}.showPopup(<mouseEvent>); Invalid slip type: {}", getName(), type); //I18IN
                 }
             }
             if (jmi != null) {
@@ -1055,11 +1055,12 @@ public class LayoutSlip extends LayoutTurnout {
 
     public void setTurnoutStates(int state, @Nonnull String turnStateA, @Nonnull String turnStateB) {
         if (!turnoutStates.containsKey(state)) {
-            log.error("Trying to set invalid state for slip " + getDisplayName());
+            log.error("{}.setTurnoutStates({}, {}, {}); invalid state for slip", 
+                    getName(), state, turnStateA, turnStateB);
             return;
         }
-        turnoutStates.get(state).setTurnoutAState(parseInt(turnStateA));
-        turnoutStates.get(state).setTurnoutBState(parseInt(turnStateB));
+        turnoutStates.get(state).setTurnoutAState(Integer.parseInt(turnStateA));
+        turnoutStates.get(state).setTurnoutBState(Integer.parseInt(turnStateB));
     }
 
     //Internal call to update the state of the slip depending upon the turnout states.
@@ -1298,7 +1299,7 @@ public class LayoutSlip extends LayoutTurnout {
         double deltaDEG = MathUtil.absDiffAngleDEG(dirAC_DEG, dirBD_DEG);
         double deltaRAD = Math.toRadians(deltaDEG);
 
-        double hypotV = railDisplacement / Math.cos((PI - deltaRAD) / 2.0);
+        double hypotV = railDisplacement / Math.cos((Math.PI - deltaRAD) / 2.0);
         double hypotK = railDisplacement / Math.cos(deltaRAD / 2.0);
 
         log.debug("dir AC: {}, BD: {}, diff: {}", dirAC_DEG, dirBD_DEG, deltaDEG);
@@ -1738,7 +1739,7 @@ public class LayoutSlip extends LayoutTurnout {
             result = LayoutSlip.UNKNOWN;
         }
         if (!suppress && (result == LayoutSlip.UNKNOWN)) {
-            log.error("Cannot determine slip setting for " + getName());
+            log.error("{}.getConnectivityStateForLayoutBlocks(...); Cannot determine slip setting", getName());
         }
         return result;
     }   // getConnectivityStateForLayoutBlocks

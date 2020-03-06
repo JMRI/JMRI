@@ -10,6 +10,12 @@
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
     <defaultInitialState>unknown</defaultInitialState>
     <sensor inverted="false">
+      <systemName>IS1</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS2</systemName>
+    </sensor>
+    <sensor inverted="false">
       <systemName>ISCLOCKRUNNING</systemName>
     </sensor>
   </sensors>

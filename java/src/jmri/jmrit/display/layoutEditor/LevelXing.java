@@ -7,6 +7,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.*;
 import java.awt.geom.*;
+import java.text.MessageFormat;
 import java.util.*;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
@@ -135,7 +136,7 @@ public class LevelXing extends LayoutTrack {
                 namedBean = signalDHeadNamed;
                 break;
             default:
-                log.warn("Unhandled loc: {}", loc);
+                log.warn("{}.getSignalHead({})", getName(), loc);
                 break;
         }
         if (namedBean != null) {
@@ -160,7 +161,7 @@ public class LevelXing extends LayoutTrack {
                 namedBean = signalDMastNamed;
                 break;
             default:
-                log.warn("Unhandled loc: {}", loc);
+                log.warn("{}.getSignalMast({})", getName(), loc);
                 break;
         }
         if (namedBean != null) {
@@ -185,7 +186,7 @@ public class LevelXing extends LayoutTrack {
                 namedBean = sensorDNamed;
                 break;
             default:
-                log.warn("Unhandled loc: {}", loc);
+                log.warn("{}.getSensor({})", getName(), loc);
                 break;
         }
         if (namedBean != null) {
@@ -577,11 +578,11 @@ public class LevelXing extends LayoutTrack {
             case LEVEL_XING_D:
                 return connectD;
             default:
-                log.warn("Unhandled loc: {}", connectionType);
                 break;
         }
-        log.error("Invalid Point Type " + connectionType); //I18IN
-        throw new jmri.JmriException("Invalid Point");
+        String errstring = MessageFormat.format("{0}.getConnection({1}); invalid connection type", getName(), connectionType); //I18IN
+        log.error(errstring);
+        throw new jmri.JmriException(errstring);
     }
 
     /**
@@ -590,7 +591,8 @@ public class LevelXing extends LayoutTrack {
     @Override
     public void setConnection(int connectionType, LayoutTrack o, int type) throws jmri.JmriException {
         if ((type != TRACK) && (type != NONE)) {
-            String errString = String.format("unexpected type of connection (%d) to LevelXing %s", connectionType, getName());
+            String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); invalid type", 
+                    getName(), connectionType, (o == null) ? "null" : o.getName(), type);
             log.error(errString);
             throw new jmri.JmriException(errString);
         }
@@ -608,7 +610,8 @@ public class LevelXing extends LayoutTrack {
                 connectD = o;
                 break;
             default:
-                String errString = String.format("Invalid connectionType (%s) to LevelXing %s.", connectionType, getName());
+            String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); invalid connection type", 
+                    getName(), connectionType, (o == null) ? "null" : o.getName(), type);
                 log.error(errString);
                 throw new jmri.JmriException(errString);
         }
@@ -632,33 +635,33 @@ public class LevelXing extends LayoutTrack {
 
     public void setConnectA(LayoutTrack o, int type) {
         connectA = o;
-        if (((connectA == null) && (type != NONE))
-                || ((connectA != null) && (o instanceof TrackSegment) && (type != TRACK))) {
-            log.error("unexpected type of A connection to levelXing - " + type);
+        if ((connectA != null) && (type != TRACK)) {
+            log.error("{}.setConnectA(({}, {}); invalid type", 
+                    getName(), o.getName(), type);
         }
     }
 
     public void setConnectB(LayoutTrack o, int type) {
         connectB = o;
-        if (((connectB == null) && (type != NONE))
-                || ((connectB != null) && (o instanceof TrackSegment) && (type != TRACK))) {
-            log.error("unexpected type of B connection to levelXing - " + type);
+        if ((connectB != null) && (type != TRACK)) {
+            log.error("{}.setConnectB(({}, {}); invalid type", 
+                    getName(), o.getName(), type);
         }
     }
 
     public void setConnectC(LayoutTrack o, int type) {
         connectC = o;
-        if (((connectC == null) && (type != NONE))
-                || ((connectC != null) && (o instanceof TrackSegment) && (type != TRACK))) {
-            log.error("unexpected type of C connection to levelXing - " + type);
+        if ((connectC != null) && (type != TRACK)) {
+            log.error("{}.setConnectC(({}, {}); invalid type", 
+                    getName(), o.getName(), type);
         }
     }
 
     public void setConnectD(LayoutTrack o, int type) {
         connectD = o;
-        if (((connectD == null) && (type != NONE))
-                || ((connectD != null) && (o instanceof TrackSegment) && (type != TRACK))) {
-            log.error("unexpected type of D connection to levelXing - " + type);
+        if ((connectD != null) && (type != TRACK)) {
+            log.error("{}.setConnectD(({}, {}); invalid type", 
+                    getName(), o.getName(), type);
         }
     }
 
@@ -711,7 +714,8 @@ public class LevelXing extends LayoutTrack {
                 result = getCoordsD();
                 break;
             default:
-                log.error("getCoordsForConnectionType(): Invalid connection type " + connectionType); //I18IN
+                log.error("{}.getCoordsForConnectionType({}); Invalid connection type ",
+                        getName(), connectionType); //I18IN
         }
         return result;
     }
@@ -1024,7 +1028,7 @@ public class LevelXing extends LayoutTrack {
                     lb.incrementUse();
                 }
             } else {
-                log.error("bad blocknamebd '{}' in levelxing {}", tLayoutBlockNameAC, getName());
+                log.error("{}.setObjects(); bad blockname AC ''{}''", tLayoutBlockNameAC);
                 namedLayoutBlockAC = null;
             }
             tLayoutBlockNameAC = null; //release this memory
@@ -1039,7 +1043,7 @@ public class LevelXing extends LayoutTrack {
                     lb.incrementUse();
                 }
             } else {
-                log.error("bad blocknamebd '{}' in levelxing {}", tLayoutBlockNameBD, getName());
+                log.error("{}.setObjects(); bad blockname BD ''{}''", tLayoutBlockNameBD);
                 namedLayoutBlockBD = null;
             }
             tLayoutBlockNameBD = null; //release this memory
@@ -1773,7 +1777,7 @@ public class LevelXing extends LayoutTrack {
                 TrackNameSets.add(TrackNameSet);
             }
             if (TrackNameSet.add(getName())) {
-                log.debug("*    Add track '{}' to trackNameSet for block '{}'", getName(), theBlockName);
+                log.debug("*    Add track ''{}'' to trackNameSet for block ''{}''", getName(), theBlockName);
             }
             theConnect.collectContiguousTracksNamesInBlockNamed(theBlockName, TrackNameSet);
         }
@@ -1793,7 +1797,7 @@ public class LevelXing extends LayoutTrack {
             if (getBlockNameAC().equals(blockName)) {
                 //if we are added to the TrackNameSet
                 if (TrackNameSet.add(getName())) {
-                    log.debug("*    Add track '{}'for block '{}'", getName(), blockName);
+                    log.debug("*    Add track ''{}'for block ''{}''", getName(), blockName);
                 }
                 //it's time to play... flood your neighbours!
                 if (connectA != null) {
@@ -1807,7 +1811,7 @@ public class LevelXing extends LayoutTrack {
             if (getBlockNameBD().equals(blockName)) {
                 //if we are added to the TrackNameSet
                 if (TrackNameSet.add(getName())) {
-                    log.debug("*    Add track '{}'for block '{}'", getName(), blockName);
+                    log.debug("*    Add track ''{}''for block ''{}''", getName(), blockName);
                 }
                 //it's time to play... flood your neighbours!
                 if (connectB != null) {
