@@ -199,4 +199,13 @@ public class JsonLayoutBlockHttpService extends JsonNonProvidedNamedBeanHttpServ
                 throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(request.locale, JsonException.ERROR_UNKNOWN_TYPE, type), request.id);
         }
     }
+
+    @Override
+    public LayoutBlock getNamedBean(String name, String type, JsonRequest request) throws JsonException {
+        try {
+            return InstanceManager.getDefault(LayoutBlockManager.class).getBySystemName(name);
+        } catch (IllegalArgumentException ex) {
+            throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(request.locale, "ErrorInvalidSystemName", name, type), request.id);
+        }
+    }
 }

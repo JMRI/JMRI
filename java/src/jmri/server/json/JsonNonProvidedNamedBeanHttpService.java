@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Locale;
+
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.Manager;
 import jmri.NamedBean;
@@ -131,6 +133,18 @@ public abstract class JsonNonProvidedNamedBeanHttpService<T extends NamedBean> e
     }
 
     /**
+     * Get the NamedBean matching name and type.
+     * 
+     * @param name the name of the requested object
+     * @param type the type of the requested object
+     * @param request the JSON request
+     * @return the matching NamedBean or null if there is no match
+     * @throws JsonException if the name is invalid for the type
+     */
+    @CheckForNull
+    protected abstract T getNamedBean(@Nonnull String name, @Nonnull String type, @Nonnull JsonRequest request) throws JsonException;
+
+    /**
      * Create the JsonNode for a {@link jmri.NamedBean} object.
      *
      * @param bean    the bean to create the node for
@@ -141,7 +155,7 @@ public abstract class JsonNonProvidedNamedBeanHttpService<T extends NamedBean> e
      * @throws JsonException if the bean is null
      */
     @Nonnull
-    protected ObjectNode getNamedBean(T bean, @Nonnull String name, @Nonnull String type, @Nonnull JsonRequest request)
+    public ObjectNode getNamedBean(T bean, @Nonnull String name, @Nonnull String type, @Nonnull JsonRequest request)
             throws JsonException {
         if (bean == null) {
             throw new JsonException(404, Bundle.getMessage(request.locale, JsonException.ERROR_NOT_FOUND, type, name),

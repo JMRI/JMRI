@@ -132,6 +132,19 @@ public abstract class JsonNamedBeanHttpService<T extends NamedBean> extends Json
             throws JsonException;
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    @CheckForNull
+    public T getNamedBean(@Nonnull String name, @Nonnull String type, @Nonnull JsonRequest request) throws JsonException {
+        try {
+            return getManager().getBySystemName(name);
+        } catch (IllegalArgumentException ex) {
+            throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(request.locale, "ErrorInvalidSystemName", name, type), request.id);
+        }
+    }
+
+    /**
      * Respond to an HTTP POST request for the requested name.
      *
      * @param bean   the requested object
