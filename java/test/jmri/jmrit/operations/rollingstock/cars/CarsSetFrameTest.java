@@ -64,7 +64,7 @@ public class CarsSetFrameTest extends OperationsTestCase {
         f.setTitle("Test Cars Set Frame");
 
         // Save button is labeled "Apply"
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterPushAndLeave(f.saveButton);
 
         // no cars selected dialog should appear
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("carNoneSelected"), Bundle.getMessage("ButtonOK"));
@@ -106,7 +106,7 @@ public class CarsSetFrameTest extends OperationsTestCase {
         // change the 3 car's status
         JemmyUtil.enterClickAndLeave(f.outOfServiceCheckBox);
         // Save button is labeled "Apply"
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterPushAndLeave(f.saveButton);
         
         // confirm
         Assert.assertTrue("Out of service", c99.isOutOfService());

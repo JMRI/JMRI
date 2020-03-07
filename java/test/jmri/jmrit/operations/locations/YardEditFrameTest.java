@@ -32,7 +32,7 @@ public class YardEditFrameTest extends OperationsTestCase {
         // create a yard track with length 43.
         f.trackNameTextField.setText("new yard track");
         f.trackLengthTextField.setText("43");
-        JemmyUtil.enterClickAndLeave(f.addTrackButton);
+        JemmyUtil.enterPushAndLeave(f.addTrackButton);
 
         Track t = l.getTrackByName("new yard track", null);
         Assert.assertNotNull("new yard track", t);
@@ -44,7 +44,7 @@ public class YardEditFrameTest extends OperationsTestCase {
         // add a second track with length 6543.
         f.trackNameTextField.setText("2nd yard track");
         f.trackLengthTextField.setText("6543");
-        JemmyUtil.enterClickAndLeave(f.addTrackButton);
+        JemmyUtil.enterPushAndLeave(f.addTrackButton);
 
         t = l.getTrackByName("2nd yard track", null);
         Assert.assertNotNull("2nd yard track", t);
@@ -56,7 +56,7 @@ public class YardEditFrameTest extends OperationsTestCase {
         // add A third track with length 1.
         f.trackNameTextField.setText("3rd yard track");
         f.trackLengthTextField.setText("1");
-        JemmyUtil.enterClickAndLeave(f.addTrackButton);
+        JemmyUtil.enterPushAndLeave(f.addTrackButton);
 
         t = l.getTrackByName("3rd yard track", null);
         Assert.assertNotNull("3rd yard track", t);
@@ -79,7 +79,7 @@ public class YardEditFrameTest extends OperationsTestCase {
 
         f.trackNameTextField.setText("4th yard track");
         f.trackLengthTextField.setText("21");
-        JemmyUtil.enterClickAndLeave(f.addTrackButton);
+        JemmyUtil.enterPushAndLeave(f.addTrackButton);
 
         Track t = l.getTrackByName("4th yard track", null);
         Assert.assertNotNull("4th yard track", t);
@@ -91,7 +91,7 @@ public class YardEditFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(f.westCheckBox);
         JemmyUtil.enterClickAndLeave(f.southCheckBox);
 
-        JemmyUtil.enterClickAndLeave(f.saveTrackButton);
+        JemmyUtil.enterPushAndLeave(f.saveTrackButton);
 
         Assert.assertEquals("only north", Track.NORTH, t.getTrainDirections());
 
@@ -111,26 +111,26 @@ public class YardEditFrameTest extends OperationsTestCase {
         // create four yard tracks
         f.trackNameTextField.setText("new yard track");
         f.trackLengthTextField.setText("43");
-        JemmyUtil.enterClickAndLeave(f.addTrackButton);
+        JemmyUtil.enterPushAndLeave(f.addTrackButton);
 
         f.trackNameTextField.setText("2nd yard track");
         f.trackLengthTextField.setText("6543");
-        JemmyUtil.enterClickAndLeave(f.addTrackButton);
+        JemmyUtil.enterPushAndLeave(f.addTrackButton);
 
         f.trackNameTextField.setText("3rd yard track");
         f.trackLengthTextField.setText("1");
-        JemmyUtil.enterClickAndLeave(f.addTrackButton);
+        JemmyUtil.enterPushAndLeave(f.addTrackButton);
 
         f.trackNameTextField.setText("4th yard track");
         f.trackLengthTextField.setText("21");
-        JemmyUtil.enterClickAndLeave(f.addTrackButton);
+        JemmyUtil.enterPushAndLeave(f.addTrackButton);
 
         // deselect east, west and south check boxes
         JemmyUtil.enterClickAndLeave(f.eastCheckBox);
         JemmyUtil.enterClickAndLeave(f.westCheckBox);
         JemmyUtil.enterClickAndLeave(f.southCheckBox);
 
-        JemmyUtil.enterClickAndLeave(f.saveTrackButton);
+        JemmyUtil.enterPushAndLeave(f.saveTrackButton);
 
         // clean up the frame
         f.setVisible(false);

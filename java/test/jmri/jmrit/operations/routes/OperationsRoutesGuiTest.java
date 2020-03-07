@@ -63,7 +63,7 @@ public class OperationsRoutesGuiTest extends OperationsTestCase {
 
         f.routeNameTextField.setText("New Test Route");
         f.commentTextField.setText("New Text Route Comment");
-        JemmyUtil.enterClickAndLeave(f.addRouteButton);
+        JemmyUtil.enterPushAndLeave(f.addRouteButton);
 
         JUnitOperationsUtil.loadFiveRoutes();
 
@@ -78,23 +78,23 @@ public class OperationsRoutesGuiTest extends OperationsTestCase {
         LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
         f.locationBox.setSelectedItem(lManager.getLocationByName("Test Loc B"));
         //f.addLocationButton.doClick();
-        JemmyUtil.enterClickAndLeave(f.addLocationButton);
+        JemmyUtil.enterPushAndLeave(f.addLocationButton);
         f.locationBox.setSelectedItem(lManager.getLocationByName("Test Loc D"));
         //f.addLocationButton.doClick();
-        JemmyUtil.enterClickAndLeave(f.addLocationButton);
+        JemmyUtil.enterPushAndLeave(f.addLocationButton);
         f.locationBox.setSelectedItem(lManager.getLocationByName("Test Loc A"));
         //f.addLocationButton.doClick();
-        JemmyUtil.enterClickAndLeave(f.addLocationButton);
+        JemmyUtil.enterPushAndLeave(f.addLocationButton);
 
         // put the next two locations at the start of the route
         //f.addLocAtTop.doClick();
         JemmyUtil.enterClickAndLeave(f.addLocAtTop);
         f.locationBox.setSelectedItem(lManager.getLocationByName("Test Loc C"));
         //f.addLocationButton.doClick();
-        JemmyUtil.enterClickAndLeave(f.addLocationButton);
+        JemmyUtil.enterPushAndLeave(f.addLocationButton);
         f.locationBox.setSelectedItem(lManager.getLocationByName("Test Loc E"));
         //f.addLocationButton.doClick();
-        JemmyUtil.enterClickAndLeave(f.addLocationButton);
+        JemmyUtil.enterPushAndLeave(f.addLocationButton);
 
         // confirm that the route sequence is correct
         List<RouteLocation> routeLocations = newRoute.getLocationsBySequenceList();
@@ -106,13 +106,13 @@ public class OperationsRoutesGuiTest extends OperationsTestCase {
 
         f.routeNameTextField.setText("Newer Test Route");
         //f.saveRouteButton.doClick();
-        JemmyUtil.enterClickAndLeave(f.saveRouteButton);
+        JemmyUtil.enterPushAndLeave(f.saveRouteButton);
 
         Assert.assertEquals("changed route name", "Newer Test Route", newRoute.getName());
 
         // test delete button
         //f.deleteRouteButton.doClick();
-        JemmyUtil.enterClickAndLeave(f.deleteRouteButton);
+        JemmyUtil.enterPushAndLeave(f.deleteRouteButton);
         // click "Yes" in the confirm popup
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("DeleteRoute?"), Bundle.getMessage("ButtonYes"));
 

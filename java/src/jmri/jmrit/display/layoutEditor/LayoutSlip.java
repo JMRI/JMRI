@@ -1662,7 +1662,6 @@ public class LayoutSlip extends LayoutTurnout {
 
             return result;
         }
-
     }   // class TurnoutState
 
     /*

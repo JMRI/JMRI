@@ -38,14 +38,14 @@ public class TrainsByCarTypeFrameTest extends OperationsTestCase{
         f.initComponents("Boxcar");
 
         // remove Boxcar from trains
-        JemmyUtil.enterClickAndLeave(f.clearButton);
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterPushAndLeave(f.clearButton);
+        JemmyUtil.enterPushAndLeave(f.saveButton);
 
         Assert.assertFalse("accepts Boxcar 2", t.acceptsTypeName("Boxcar"));
 
         // now add Boxcar to trains
-        JemmyUtil.enterClickAndLeave(f.setButton);
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterPushAndLeave(f.setButton);
+        JemmyUtil.enterPushAndLeave(f.saveButton);
 
         Assert.assertTrue("accepts Boxcar 3", t.acceptsTypeName("Boxcar"));
 
