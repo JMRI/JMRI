@@ -9,8 +9,8 @@ import org.slf4j.LoggerFactory;
  * Polls NCE Command Station for turnout discrepancies
  * <p>
  * This implementation reads the NCE Command Station (CS) memory that stores the
- * state of all accessories thrown by cabs or though the comm port using the new
- * binary switch command. The accessory states are storied in 256 byte array
+ * state of all accessories thrown by cabs or through the com port using the new
+ * binary switch command. The accessory states are stored in 256 byte array
  * starting at address 0xEC00.
  * <p>
  * byte 0, bit 0 = ACCY 1, bit 1 = ACCY 2 byte 1, bit 0 = ACCY 9, bit 1 = ACCY

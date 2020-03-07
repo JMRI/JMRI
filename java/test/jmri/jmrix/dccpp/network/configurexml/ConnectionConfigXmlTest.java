@@ -15,6 +15,7 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractNet
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         xmlAdapter = new ConnectionConfigXml();
@@ -22,9 +23,11 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractNet
     }
 
     @After
+    @Override
     public void tearDown() {
-        JUnitUtil.tearDown();
         xmlAdapter = null;
         cc = null;
+        JUnitUtil.resetWindows(false,false); // shouldn't be necessary, can't see where windows are created
+        JUnitUtil.tearDown();
     }
 }

@@ -9,7 +9,8 @@
   <title>JMRI: SDF Sound File Editor</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
-  "JMRI help Digitrax SDF Sound File Editor"><!-- Style -->
+  "JMRI help Digitrax SDF Sound File Editor">
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -17,14 +18,15 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>SDF Sound File Editor</h1>
       <p>Digitrax sound decoders are
       loaded with "sound projects", stored in "Sound Project"
@@ -40,7 +42,7 @@
       editor</a> because the SDF information is stored in a
       Digitrax SPJ sound project file. After you edit the SDF
       information, you can save it to a file from the <a href=
-      "../soundloader/EditorFrame.shtml">SPJ editor</a>, and the
+      "../soundloader/EditorFrame.shtml">SPJ editor</a>, and then
       download it to a Digitrax sound decoder with a Digitrax PR2
       or PR3 and the <a href=
       "../soundloader/LoaderFrame.shtml">JMRI sound downloader
@@ -206,7 +208,7 @@
       <p>The editor is meant to be a beginner's tool, and we need a
       lot of explanatory text on each window so people know what
       the options do.</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

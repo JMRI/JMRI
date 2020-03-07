@@ -1,4 +1,3 @@
-
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="fr">
 <head>
@@ -9,23 +8,22 @@
 
   <title>JMRI: PanelPro, Fabriquer de Panneaux de Commande</title>
   <!-- Style -->
-  <meta http-equiv="content-type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <meta http-equiv="content-type" content=  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
-
-<H1>JMRI: PanelPro, Une Application pour Fabriquer des Panneaux de Commande</H1>
+<h1>JMRI: PanelPro, Une Application pour Fabriquer des Panneaux de Commande</h1>
 
 Les biblioth&#232;ques JMRI contiennent l'application PanelPro pour la cr&#233;ation de tableaux de commande.
 Cette page d&#233;crit cette application, et comment l'utiliser.
@@ -37,7 +35,8 @@ PanelPro propose deux m&#233;thodes distinctes pour cr&#233;er des panneaux de c
 	vous permet de dessiner graphiquement un panneau exactement 
 	comme vous le voulez, puis animer les pi&#232;ces pour montrer l'&#233;tat de 
 	votre r&#233;seau et vous laissez cliquez dessus pour la commande.</li>
- 	<li><a href="#cpe">l'&#201;diteur de Panneau de Commande </a>travaille comme l'&#201;diteur de Panneau mais fournit une interface 
+ 	<li><a href="#cpe">l'&#201;diteur de Panneau de Commande</a> travaille comme l'&#201;diteur de Panneau mais
+	fournit une interface
 	alternative.</li>
 	<li><a href="#le">L'&#201;diteur de R&#233;seau</a>
 	fournit des outils pour dessiner votre r&#233;seau 
@@ -99,13 +98,15 @@ pour des exemples pour voir comment des mod&#233;listes ont utilis&#233; ceci su
 Voir aussi un exemple d'utilisation de PanelPro pour
 <a href="http://jmri.org/community/examples/Modules.shtml"> des r&#233;seaux modulaires</a>.
 
-L'application <a href="http://cats4ctc.org/"> CATS </a>
+L'application <a href="http://cats4ctc.org/">CATS</a>
 de Rodney Black est un autre outil pour cr&#233;er des Panneaux de contr&#244;le de style moderne.
 
-<a name="pe"><h2>L'&#201;diteur de Panneau</h2>
-<img src="../../../images/PiecedPanel.gif" ALT="Screen shot of panel" width="292" height="107" hspace="0" vspace="0">
-<a href="../../../images/CornwallPanelLit.gif"><img src="../../../images/CornwallPanelLit.gif" ALT="screen shot of Cornwall panel" 
-width="333" height="200" hspace="0" vspace="0"></A>
+<a name="pe"></a><h2>L'&#201;diteur de Panneau</h2>
+
+<img src="../../../images/PiecedPanel.gif" alt="Screen shot of panel" width="292" height="107" hspace="0" vspace="0">
+
+<a href="../../../images/CornwallPanelLit.gif"><img src="../../../images/CornwallPanelLit.gif"
+alt="screen shot of Cornwall panel" width="333" height="200" hspace="0" vspace="0"></a>
 
 <br>
 Avec l'&#201;diteur Panneau JMRI,
@@ -154,7 +155,7 @@ une ic&#244;ne d'aiguillage  couvrant un aiguillage sur un sch&#233;ma. Lorsque 
 cliquez dessus, l'aiguillage sur le r&#233;seau va recevoir l'ordre de changer, et
 le diagramme de la voie montre de quel c&#244;t&#233; le train est dirig&#233;.
 Ou vous pourriez utiliser des ic&#244;nes qui montrent un levier vers la droite ou vers la gauche, et de cr&#233;er
-un groupe qui ressemble &#224; un classique panneau  des US&S .
+un groupe qui ressemble &#224; un classique panneau des US&amp;S .
 <p>
 Les "Capteurs" peuvent &#234;tre utilis&#233;s pour repr&#233;senter les indicateurs d'occupation ou d'autres entr&#233;es. 
 L'ic&#244;ne par d&#233;faut est un petit cercle, avec la couleur utilis&#233;e pour repr&#233;senter l'&#233;tat du capteur.
@@ -177,9 +178,8 @@ Vous d&#233;marrez l'&#233;diteur en s&#233;lectionnant "Nouveau Panneau ..." pu
 sur la fen&#234;tre principale. Vous aurez un panneau de commande vide, ainsi que les
 fen&#234;tre de l'&#233;diteur: <br>
 <a href="../../../images/paneleditor.gif">
-<img src  ="../../../images/paneleditor.gif "alt =" Capture d'&#233;cran de l'&#233;diteur de palettes "
-width = "208" height = "364" hspace = "0"vspace = "0" align = "right"></a>
-<p>
+<img src="../../../images/paneleditor.gif " alt="Capture d'&#233;cran de l'&#233;diteur de palettes"
+width="208" height="364" hspace="0" vspace="0" align="right"></a>
 
 <p>
 Depuis le haut, il contient:
@@ -269,23 +269,23 @@ donneraient des leviers "m&#233;caniques" que vous pourriez basculer avec un cli
 Cela peut &#234;tre un prototype, ou peut &#234;tre simplifi&#233; pour faciliter le fonctionnement et le rendre plus rapide,
 comme vous pr&#233;f&#233;rez.
 
-<p> Il est &#233;galement possible de cr&#233;er un panneau o&#249; les lignes "voie" 
-changent de couleur pour indiquer si la voie est occup&#233;e. La
-proc&#233;dure &#224; suivre est d&#233;crite sur une
-<a href="ColorTrack.shtml"> page s&#233;par&#233;e </a>.
+<p> Il est aussi possible de cr&#233;er un panneau o&#249; les lignes "voie"
+changent de couleur pour indiquer si la voie est occup&#233;e avec le
+<a href="ControlPanelEditor.shtml">L'&eacute;diteur Panneau de Commande</a>.
 
-<a name="cpe"><h2>&#201;diteur de Panneau de Commande</h2></a>
-<p<<b>L'&#201;diteur de Panneau de Commande</b> est simplement une vue alternative et commande avec les m&#234;me donn&#233;es que le <b>&#201;diteur 
+<a name="cpe"></a><h2>&#201;diteur de Panneau de Commande</h2>
+<p><b>L'&#201;diteur de Panneau de Commande</b> est simplement une vue alternative et commande avec les m&#234;me
+donn&#233;es que le <b>&#201;diteur
 de Panneau</b>. L'&#201;diteur de Panneau de Commande vous permet de modifierun Panneau en utilisant des menus au lieu de d'une fen&#234;tre 
 d'&#233;dition s&#233;par&#233;e.</p>
 Pour plus d'information voir la 
 <a href="../../../package/jmri/jmrit/display/ControlPanelEditor.shtml">page d'aide &#201;diteur de Panneau de Commande</a>.
 
-<a name="le"><h2>L'&#201;diteur de R&#233;seau</h2></a>
+<a name="le"></a><h2>L'&#201;diteur de R&#233;seau</h2>
 
 <a href="../../../package/jmri/jmrit/display/images/EnhancedPanel.gif">
 <img src="../../../package/jmri/jmrit/display/images/EnhancedPanel.gif" align="right" alt="screen shot of layout editor panel" 
-width="296" height="86" hspace="0" vspace="0"></A>
+width="296" height="86" hspace="0" vspace="0"></a>
 
 L' 
 <a href="../../../package/jmri/jmrit/display/LayoutEditor.shtml">&#201;diteur de R&#233;seau</a>
@@ -297,11 +297,11 @@ part, il fournitt une capacit&#233; limit&#233;e de personnaliser la mani&#232;r
 
 <a href="../../../package/jmri/jmrit/display/images/OvalLayoutEditMode.gif">
 <img src="../../../package/jmri/jmrit/display/images/OvalLayoutEditMode.gif" align="right" alt="screen shot of layout editor panel" 
-width="271" height="85" hspace="0" vspace="0"></A>
+width="271" height="85" hspace="0" vspace="0"></a>
 
 <a href="../../../package/jmri/jmrit/display/images/OvalLayoutEditMode.gif">
-<img ="../../../ src / jmri / jmrit / affichage / images / OvalLayoutEditMode.gif "align ="right"alt =" capture d'&#233;cran du panneau 
-l'&#233;diteur mise en page "width =" 271 "height = "85" hspace = "0"vspace = "0"></A>
+<img src="../../../src/jmri/jmrit/affichage/images/OvalLayoutEditMode.gif "align ="right" alt
+="capture d'&#233;cran du panneau l'&#233;diteur mise en page" width="271" height="85" hspace="0" vspace="0"></a>
 
 Vous modifier en "Mode Modification", ce qui rend les connexions entre les &#233;l&#233;ments et
 le sch&#233;ma visible (voir figure &#224; droite). Par exemple, vous pouvez cliquer sur
@@ -312,9 +312,7 @@ d'autres d&#233;tails de la pr&#233;sentation.
 
 <p>
 Pour plus d'informations, s'il vous pla&#238;t voir <a href="../../../package/jmri/jmrit/display/LayoutEditor.shtml">la page d'aide 
-&#233;diteur R&#233;seau </a>.
-
-
+&#233;diteur R&#233;seau </a>.</p>
 
 <h2>Communication avec les Syst&#232;mes Multiples</h2>
 
@@ -333,9 +331,7 @@ acc&#233;der au 2&#232;me syst&#232;me, vous devrez utiliser les
 sur un syst&#232;me LocoNet, vous vous r&#233;f&#233;rez &#224; un aiguillage LocoNet tel que LT13, un capteur LocoNet tel que LS21, 
 etc. Voir la page sur les <a href="../../doc/Technical/Names.shtml"> Noms </a> pour plus d'informations.
 
-
-    
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
   </div><!-- closes #mainContent-->
  </div> <!-- closes #mBody-->
  </body>

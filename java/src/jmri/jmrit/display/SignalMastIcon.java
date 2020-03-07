@@ -12,6 +12,7 @@ import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.SignalMast;
 import jmri.Transit;
+import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.palette.SignalMastItemPanel;
 import jmri.jmrit.picker.PickListModel;
@@ -184,10 +185,8 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
         String name;
         if (getSignalMast() == null) {
             name = Bundle.getMessage("NotConnected");
-        } else if (getSignalMast().getUserName() == null) {
-            name = getSignalMast().getSystemName();
         } else {
-            name = getSignalMast().getUserName() + " (" + getSignalMast().getSystemName() + ")";
+            name = getSignalMast().getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
         }
         return name;
     }

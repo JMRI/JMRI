@@ -17,16 +17,18 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>JMRI: Main Window</h1>The JMRI main window is where you
-      get access to all the JMRI capabilities.
+
+      <h1>JMRI: Main Window</h1>
+      <p>The JMRI main window is where you
+      get access to all the JMRI capabilities.</p>
 
       <p>Help for specific main windows:</p>
 
@@ -90,7 +92,7 @@
       </ul>
 
       <p>This is the apps.Apps.shtml help page</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

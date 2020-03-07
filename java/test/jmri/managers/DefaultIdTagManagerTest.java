@@ -2,6 +2,8 @@ package jmri.managers;
 
 import jmri.IdTag;
 import jmri.IdTagManager;
+import jmri.InstanceManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import org.junit.*;
 
 /**
@@ -133,7 +135,7 @@ public class DefaultIdTagManagerTest extends AbstractProvidingManagerTestBase<Id
     // Override init method so as not to load file
     // nor register shutdown task during tests.
     protected DefaultIdTagManager getManager() {
-        return new DefaultIdTagManager() {
+        return new DefaultIdTagManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class)) {
             @Override
             public void init() {
             }

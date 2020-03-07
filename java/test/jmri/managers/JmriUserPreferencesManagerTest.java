@@ -46,26 +46,11 @@ public class JmriUserPreferencesManagerTest {
     private final String strClass = JmriUserPreferencesManagerTest.class.getName();
 
     @Test
-    public void testGetInstance() {
-        Assert.assertFalse(InstanceManager.containsDefault(UserPreferencesManager.class));
-        Assert.assertNotNull(JmriUserPreferencesManager.getInstance());
-        Assert.assertEquals(InstanceManager.getDefault(UserPreferencesManager.class), JmriUserPreferencesManager.getInstance());
-        Assert.assertEquals(JmriUserPreferencesManager.getDefault(), JmriUserPreferencesManager.getInstance());
-    }
-
-    @Test
-    public void testGetDefault() {
-        Assert.assertFalse(InstanceManager.containsDefault(UserPreferencesManager.class));
-        Assert.assertNotNull(JmriUserPreferencesManager.getDefault());
-        Assert.assertEquals(InstanceManager.getDefault(UserPreferencesManager.class), JmriUserPreferencesManager.getDefault());
-    }
-
-    @Test
     public void testAllowSave() {
         UserPreferencesManager m = new JmriUserPreferencesManager();
         m.setSaveAllowed(false);
         Assert.assertFalse(m.isSaveAllowed());
-        m.allowSave();
+        m.setSaveAllowed(true);
         Assert.assertTrue(m.isSaveAllowed());
     }
 
@@ -73,7 +58,7 @@ public class JmriUserPreferencesManagerTest {
     public void testDisallowSave() {
         UserPreferencesManager m = new JmriUserPreferencesManager();
         Assert.assertTrue(m.isSaveAllowed());
-        m.disallowSave();
+        m.setSaveAllowed(false);
         Assert.assertFalse(m.isSaveAllowed());
         m.setSaveAllowed(true);
         Assert.assertTrue(m.isSaveAllowed());
@@ -424,11 +409,11 @@ public class JmriUserPreferencesManagerTest {
         TestJmriUserPreferencesManager m = new TestJmriUserPreferencesManager();
         m.setSaveAllowed(false);
         Assert.assertEquals(0, m.getComboBoxLastSelection().size());
-        m.addComboBoxLastSelection("test1", "value1");
+        m.setComboBoxLastSelection("test1", "value1");
         Assert.assertEquals(1, m.getComboBoxLastSelection().size());
-        m.addComboBoxLastSelection("test1", "value2");
+        m.setComboBoxLastSelection("test1", "value2");
         Assert.assertEquals(1, m.getComboBoxLastSelection().size());
-        m.addComboBoxLastSelection("test2", "value1");
+        m.setComboBoxLastSelection("test2", "value1");
         Assert.assertEquals(2, m.getComboBoxLastSelection().size());
     }
 
@@ -934,7 +919,9 @@ public class JmriUserPreferencesManagerTest {
         m1.setSimplePreferenceState(strClass, true);
         m1.setComboBoxLastSelection(strClass, "selection1");
         m1.setSaveAllowed(true);
-        File target = new File(new File(new File(ProfileManager.getDefault().getActiveProfile().getPath(), "profile"), NodeIdentity.storageIdentity()), "user-interface.xml");
+        Profile profile = ProfileManager.getDefault().getActiveProfile();
+        Assert.assertNotNull(profile); // test with profile
+        File target = new File(new File(new File(profile.getPath(), "profile"), NodeIdentity.storageIdentity()), "user-interface.xml");
         Assert.assertTrue(target.exists());
         Assert.assertTrue(target.isFile());
         if (log.isDebugEnabled()) {
@@ -974,7 +961,9 @@ public class JmriUserPreferencesManagerTest {
         m1.setSimplePreferenceState(strClass, true);
         m1.setComboBoxLastSelection(strClass, "selection1");
         m1.setSaveAllowed(true);
-        File target = new File(new File(new File(ProfileManager.getDefault().getActiveProfile().getPath(), "profile"), NodeIdentity.storageIdentity()), "user-interface.xml");
+        Profile profile = ProfileManager.getDefault().getActiveProfile();
+        Assert.assertNotNull(profile); // test with profile
+        File target = new File(new File(new File(profile.getPath(), "profile"), NodeIdentity.storageIdentity()), "user-interface.xml");
         Assert.assertTrue(target.exists());
         Assert.assertTrue(target.isFile());
         if (log.isDebugEnabled()) {

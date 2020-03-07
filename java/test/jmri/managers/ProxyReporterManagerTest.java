@@ -3,6 +3,7 @@ package jmri.managers;
 import jmri.InstanceManager;
 import jmri.Reporter;
 import jmri.ReporterManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -70,14 +71,6 @@ public class ProxyReporterManagerTest extends AbstractReporterMgrTestBase {
     }
 
     @Test
-    public void testNormalizeName() {
-        // create
-        String name = l.provideReporter("" + getNameToTest1()).getSystemName();
-        // check
-        Assert.assertEquals(name, l.normalizeSystemName(name));
-    }
-
-    @Test
     public void testInstanceManagerIntegration() {
         jmri.util.JUnitUtil.resetInstanceManager();
         Assert.assertNotNull(InstanceManager.getDefault(ReporterManager.class));
@@ -89,13 +82,7 @@ public class ProxyReporterManagerTest extends AbstractReporterMgrTestBase {
         Assert.assertNotNull(InstanceManager.getDefault(ReporterManager.class));
         Assert.assertNotNull(InstanceManager.getDefault(ReporterManager.class).provideReporter("IR1"));
 
-        ReporterManager m = new jmri.jmrix.internal.InternalReporterManager() {
-
-            @Override
-            public String getSystemPrefix() {
-                return "J";
-            }
-        };
+        ReporterManager m = new jmri.jmrix.internal.InternalReporterManager(new InternalSystemConnectionMemo("J", "Juliet"));
         InstanceManager.setReporterManager(m);
 
         Assert.assertNotNull(InstanceManager.getDefault(ReporterManager.class).provideReporter("JR1"));

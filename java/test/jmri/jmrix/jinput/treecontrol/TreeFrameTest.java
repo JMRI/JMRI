@@ -24,6 +24,7 @@ public class TreeFrameTest extends jmri.util.JmriJFrameTestBase {
     @After
     @Override
     public void tearDown() {        
-       super.tearDown();    
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        super.tearDown();    
     }
 }

@@ -16,13 +16,14 @@ public class CodeLine {
     /**
      * Create and configure 
      *
-     * @param startTO  Name for turnout that starts operation on the layout
+     * @param startIndicateTO  Name for turnout that starts indication operations on the layout
+     * @param startSendTO  Name for turnout that starts send operations on the layout
      * @param output1TO  Turnout name for 1st channel of code information
      * @param output2TO  Turnout name for 2nd channel of code information
      * @param output3TO  Turnout name for 3rd channel of code information
      * @param output4TO  Turnout name for 4th channel of code information
      */
-    public CodeLine(String startTO, String output1TO, String output2TO, String output3TO, String output4TO) {
+    public CodeLine(String startIndicateTO, String startSendTO, String output1TO, String output2TO, String output3TO, String output4TO) {
         NamedBeanHandleManager hm = InstanceManager.getDefault(NamedBeanHandleManager.class);
         TurnoutManager tm = InstanceManager.getDefault(TurnoutManager.class);
 
@@ -30,7 +31,8 @@ public class CodeLine {
                         Constants.commonNamePrefix+"CODELINE"+Constants.commonNameSuffix+"LOG");  // NOI18N
         log.debug("log memory name is {}", logMemory.getSystemName());  // NOI18N
         
-        hStartTO = hm.getNamedBeanHandle(startTO, tm.provideTurnout(startTO));
+        hStartIndicateTO = hm.getNamedBeanHandle(startIndicateTO, tm.provideTurnout(startIndicateTO));
+        hStartSendTO = hm.getNamedBeanHandle(startSendTO, tm.provideTurnout(startSendTO));
 
         hOutput1TO = hm.getNamedBeanHandle(output1TO, tm.provideTurnout(output1TO));
         hOutput2TO = hm.getNamedBeanHandle(output2TO, tm.provideTurnout(output2TO));
@@ -40,7 +42,8 @@ public class CodeLine {
 
     final Memory logMemory;
 
-    final NamedBeanHandle<Turnout> hStartTO;
+    final NamedBeanHandle<Turnout> hStartIndicateTO;
+    final NamedBeanHandle<Turnout> hStartSendTO;
 
     final NamedBeanHandle<Turnout> hOutput1TO;
     final NamedBeanHandle<Turnout> hOutput2TO;
@@ -70,7 +73,7 @@ public class CodeLine {
         // indications have priority over code sends
         final Station indicatorStation = indicationQueue.pollFirst();
         if (indicatorStation != null) {
-            // go inactive for just a bit between indication cycles
+            // go inactive for just a bit before starting indication cycles
             jmri.util.ThreadingUtil.runOnGUIDelayed( ()->{
                     startSendIndication(indicatorStation);
                 }, INTER_INDICATION_DELAY);
@@ -104,7 +107,7 @@ public class CodeLine {
         final Station s = station;
         log.debug("CodeLine startSendCode - Tell hardware to start sending code");  // NOI18N
         logMemory.setValue("Sending Code: Station "+station.getName());  // NOI18N
-        startExternalCodeLine();
+        startSendExternalCodeLine();
         
         // Wait time for sequence complete, then proceed to end of code send
         // ToDo: Allow an input to end this too
@@ -116,12 +119,12 @@ public class CodeLine {
                 }, CODE_SEND_DELAY);
     }
     
-    void startExternalCodeLine() {
-        hStartTO.getBean().setCommandedState(Turnout.THROWN);
+    void startSendExternalCodeLine() {
+        hStartSendTO.getBean().setCommandedState(Turnout.THROWN);
         jmri.util.TimerUtil.schedule(new TimerTask() {
             @Override
             public void run() {
-                hStartTO.getBean().setCommandedState(Turnout.CLOSED);
+                hStartSendTO.getBean().setCommandedState(Turnout.CLOSED);
             }
         }, START_PULSE_LENGTH);
     }
@@ -149,7 +152,7 @@ public class CodeLine {
     
         log.debug("Tell hardware to start sending indication");
         logMemory.setValue("Receiving Indication: Station "+station.getName());  // NOI18N
-        startExternalCodeLine();
+        startIndicationExternalCodeLine();
         
         // Wait time for sequence complete, then proceed to end of indication send
         // ToDo: Allow an input to end this too
@@ -161,6 +164,17 @@ public class CodeLine {
                     endAndCheckNext();
                 }, CODE_SEND_DELAY);
     }
+
+    void startIndicationExternalCodeLine() {
+        hStartIndicateTO.getBean().setCommandedState(Turnout.THROWN);
+        jmri.util.TimerUtil.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                hStartIndicateTO.getBean().setCommandedState(Turnout.CLOSED);
+            }
+        }, START_PULSE_LENGTH);
+    }
+    
     
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CodeLine.class);
 }

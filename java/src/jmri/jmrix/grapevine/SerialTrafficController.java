@@ -6,7 +6,6 @@ import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRNodeTrafficController;
 import jmri.jmrix.AbstractMRReply;
-import jmri.jmrix.grapevine.SerialNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -221,19 +220,6 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         }
         log.debug("Grapevine SerialTrafficController sendMessage() {}", m.toString());
         sendMessage(m, reply);
-    }
-
-    /**
-     * Static function returning the SerialTrafficController instance to use.
-     *
-     * @return The registered SerialTrafficController instance for general use,
-     *         if need be creating one.
-     * @deprecated JMRI Since 4.11.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public SerialTrafficController instance() {
-        log.warn("deprecated instance() call for Grapevine SerialTrafficController");
-        return null;
     }
 
     /**

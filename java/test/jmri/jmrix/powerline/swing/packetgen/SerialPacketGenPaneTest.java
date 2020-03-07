@@ -1,6 +1,5 @@
 package jmri.jmrix.powerline.swing.packetgen;
 
-import jmri.jmrix.powerline.SerialTrafficControlScaffold;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Before;
@@ -21,7 +20,7 @@ public class SerialPacketGenPaneTest extends jmri.util.swing.JmriPanelTest {
         // tc = new SerialTrafficControlScaffold();
         panel = new SerialPacketGenPane();
         title = "Powerline_: Command Generator";
-        helpTarget="package.jmri.jmrix.powerline.swing.packetgen.PowerlinePacketGenPane";
+        helpTarget="package.jmri.jmrix.powerline.packetgen.PowerlinePacketGenPane";
     }
 
     @Override

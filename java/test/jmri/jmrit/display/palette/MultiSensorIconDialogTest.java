@@ -28,6 +28,7 @@ public class MultiSensorIconDialogTest {
         MultiSensorItemPanel mip = new MultiSensorItemPanel(df,"IS01","",tableModel,editor);
         MultiSensorIconDialog t = new MultiSensorIconDialog("MultiSensor","MultiSensor",mip,null); // NOI18N
         Assert.assertNotNull("exists",t); // NOI18N
+        JUnitUtil.dispose(t);
         JUnitUtil.dispose(df);
     }
 

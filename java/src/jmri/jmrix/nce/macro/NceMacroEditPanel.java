@@ -18,7 +18,6 @@ import jmri.jmrix.nce.NceMessage;
 import jmri.jmrix.nce.NceReply;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
 import jmri.jmrix.nce.NceTrafficController;
-import jmri.jmrix.nce.swing.NcePanelInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -71,7 +70,7 @@ import org.slf4j.LoggerFactory;
  * @author Dan Boudreau Copyright (C) 2007
  * @author Ken Cameron Copyright (C) 2013
  */
-public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements NcePanelInterface, jmri.jmrix.nce.NceListener {
+public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements jmri.jmrix.nce.NceListener {
     
     private NceTrafficController tc = null;
     private int maxNumMacros = CabMemorySerial.CS_MAX_MACRO;

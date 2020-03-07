@@ -263,7 +263,7 @@ public final class LnConstants {
 
     /** Fast CLock valid **/
     public final static int FC_VALID = 0X40;
- 
+
      /** This slot communicates with the programming track   */
     public final static int PRG_SLOT = 0x7c;
 
@@ -337,22 +337,12 @@ public final class LnConstants {
 
     public final static int CVH_D7 = 0x02;      /* MSbit for data value      */
 
-// The following two are commented out pending some decisions as to (a) whether
-// they belong here or in the parser and (b) understanding what they say about
-// a data format; note use of a pointer dereference
-
-    /* build data byte from programmer message */
-//public final static int PROG_DATA(ptr)      (((ptr->cvh & CVH_D7) << 6) | (ptr->data7 & 0x7f))
-
-    /* build CV # from programmer message */
-//public final static int PROG_CV_NUM(ptr)    (((((ptr->cvh & CVH_CV8_CV9) >> 3) | (ptr->cvh & CVH_CV7)) * 128)   \
-//                            + (ptr->cvl & 0x7f))
-
     /* LocoNet opcodes */
     public final static int OPC_GPBUSY = 0x81;
     public final static int OPC_GPOFF = 0x82;
     public final static int OPC_GPON = 0x83;
     public final static int OPC_IDLE = 0x85;
+    public final static int OPC_RE_LOCORESET_BUTTON = 0x8A; // Undocumented name
     public final static int OPC_LOCO_SPD = 0xa0;
     public final static int OPC_LOCO_DIRF = 0xa1;
     public final static int OPC_LOCO_SND = 0xa2;
@@ -378,10 +368,8 @@ public final class LnConstants {
     public final static int OPC_ALM_READ = 0xe6; // Undocumented name
     public final static int OPC_SL_RD_DATA = 0xe7;
     public final static int OPC_IMM_PACKET = 0xed;
-    //TODO Conflicts with OPC_EXP_WR_SL_DATA - or maybe length?
     public final static int OPC_IMM_PACKET_2 = 0xee;
     public final static int OPC_WR_SL_DATA = 0xef;
-    //TODO Conflicts with OPC_EXP_WR_SL_DATA - or maybe length?
     public final static int OPC_ALM_WRITE = 0xee; // Undocumented name
     public final static int OPC_MASK = 0x7f;  /* mask for acknowledge opcodes */
 
@@ -421,6 +409,7 @@ public final class LnConstants {
             case OPC_GPOFF      : return "OPC_GPOFF"; // NOI18N
             case OPC_GPON       : return "OPC_GPON"; // NOI18N
             case OPC_IDLE       : return "OPC_IDLE"; // NOI18N
+            case OPC_RE_LOCORESET_BUTTON:   return "OPC_RE_LOCORESET_BUTTON"; // NOI18N
             case OPC_LOCO_SPD   : return "OPC_LOCO_SPD"; // NOI18N
             case OPC_LOCO_DIRF  : return "OPC_LOCO_DIRF"; // NOI18N
             case OPC_LOCO_SND   : return "OPC_LOCO_SND"; // NOI18N

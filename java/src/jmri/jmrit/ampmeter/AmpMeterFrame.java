@@ -1,6 +1,5 @@
 package jmri.jmrit.ampmeter;
 
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
@@ -33,6 +32,8 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
     ArrayList<JLabel> digitIcons;
     JLabel percent;
     JLabel decimal;
+    JLabel milliAmp;
+    JLabel amp;
 
     double aspect;
     double iconAspect;
@@ -45,6 +46,8 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
     NamedIcon digits[] = new NamedIcon[10];
     NamedIcon percentIcon;
     NamedIcon decimalIcon;
+    NamedIcon milliAmpIcon;
+    NamedIcon ampIcon;
 
     public AmpMeterFrame() {
         super(Bundle.getMessage("TrackCurrentMeterTitle"));
@@ -60,6 +63,8 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
         }
         percentIcon = new NamedIcon("resources/icons/misc/LCD/percentb.gif", "resources/icons/misc/LCD/percentb.gif");
         decimalIcon = new NamedIcon("resources/icons/misc/LCD/decimalb.gif", "resources/icons/misc/LCD/decimalb.gif");
+        milliAmpIcon = new NamedIcon("resources/icons/misc/LCD/milliampb.gif", "resources/icons/misc/LCD/milliampb.gif");
+        ampIcon = new NamedIcon("resources/icons/misc/LCD/ampb.gif", "resources/icons/misc/LCD/ampb.gif");
 
         // determine aspect ratio of a single digit graphic
         iconAspect = 24. / 32.;
@@ -79,6 +84,8 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
         }
         percent = new JLabel(percentIcon);
         decimal = new JLabel(decimalIcon);
+        milliAmp = new JLabel(milliAmpIcon);
+        amp = new JLabel(ampIcon);
 
         buildContents();
 
@@ -125,6 +132,8 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
         }
         percentIcon.scale(scale,this);
         decimalIcon.scale(scale,this);
+        ampIcon.scale(scale, this);
+        milliAmpIcon.scale(scale,this);
     }
 
     private void buildContents(){
@@ -137,9 +146,22 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
         for(int i=0;i<digitIcons.size()-1;i++){
             getContentPane().add(digitIcons.get(i));
         }
-        getContentPane().add(decimal);
-        getContentPane().add(digitIcons.get(digitIcons.size()-1));
-        getContentPane().add(percent);
+        switch (meter.getCurrentUnits()) {
+            case CURRENT_UNITS_MILLIAMPS:
+                getContentPane().add(milliAmp);
+                break;
+            case CURRENT_UNITS_AMPS:
+                getContentPane().add(decimal);
+                getContentPane().add(digitIcons.get(digitIcons.size()-1));
+                getContentPane().add(amp);
+                break;
+            case CURRENT_UNITS_PERCENTAGE:
+            default:
+                getContentPane().add(decimal);
+                getContentPane().add(digitIcons.get(digitIcons.size()-1));
+                getContentPane().add(percent);
+                break;
+        }
 
         getContentPane().add(b = new JButton(Bundle.getMessage("ButtonStop")));
         b.addActionListener(new ButtonListener());

@@ -3,8 +3,6 @@ package jmri.jmrit.symbolicprog;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -48,7 +46,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2005, 2013
  */
-public class CompositeVariableValue extends EnumVariableValue implements ActionListener, PropertyChangeListener {
+public class CompositeVariableValue extends EnumVariableValue {
 
     public CompositeVariableValue(String name, String comment, String cvName,
             boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,

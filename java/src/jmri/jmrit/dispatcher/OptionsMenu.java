@@ -262,7 +262,7 @@ public class OptionsMenu extends JMenu {
             p15.add(new JLabel(Bundle.getMessage("minThrottleInterval") + ":"));
             minThrottleIntervalSpinner.setToolTipText(Bundle.getMessage("minThrottleIntervalHint"));
             p15.add(minThrottleIntervalSpinner);
-            p15.add(new JLabel(Bundle.getMessage("ms")));
+            p15.add(new JLabel(Bundle.getMessage("LabelMilliseconds")));
             optionsPane.add(p15);
 
             JPanel p17 = new JPanel();
@@ -270,7 +270,7 @@ public class OptionsMenu extends JMenu {
             p17.add(new JLabel(Bundle.getMessage("fullRampTime") + " :"));
             fullRampTimeSpinner.setToolTipText(Bundle.getMessage("fullRampTimeHint", Bundle.getMessage("RAMP_FAST")));
             p17.add(fullRampTimeSpinner);
-            p17.add(new JLabel(Bundle.getMessage("ms")));
+            p17.add(new JLabel(Bundle.getMessage("LabelMilliseconds")));
             optionsPane.add(p17);
 
             JPanel p18 = new JPanel();
@@ -445,4 +445,5 @@ public class OptionsMenu extends JMenu {
     }
 
     private final static Logger log = LoggerFactory.getLogger(OptionsMenu.class);
+
 }

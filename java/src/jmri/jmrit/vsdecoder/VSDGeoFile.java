@@ -1,12 +1,11 @@
 package jmri.jmrit.vsdecoder;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Iterator;
 import jmri.jmrit.XmlFile;
-import jmri.PhysicalLocationReporter;
+import jmri.Scale;
 import jmri.Reporter;
 import jmri.util.FileUtil;
 import jmri.util.PhysicalLocation;
@@ -42,6 +41,7 @@ public class VSDGeoFile extends XmlFile {
     private int num_issues;
     boolean geofile_ok;
     int num_setups;
+    Scale _layout_scale;
     float layout_scale;
     int check_time; // Time interval in ms for track following updates
 
@@ -88,12 +88,17 @@ public class VSDGeoFile extends XmlFile {
         // Get some layout parameters and route geometric data
         n = root.getChildText("layout-scale");
         if (n != null) {
-            layout_scale = Float.parseFloat(n);
+            _layout_scale = jmri.ScaleManager.getScale(n);
+            if (_layout_scale == null) {
+                _layout_scale = jmri.ScaleManager.getScale("N"); // default
+                log.info("{}: Element layout-scale '{}' unknown, defaulting to N", VSDGeoDataFileName, n); // NOI18N
+            }
         } else {
-            layout_scale = 160.0f; // default
-            log.info("{}: Element layout-scale missing. Default value {} used", VSDGeoDataFileName, layout_scale);
+            _layout_scale = jmri.ScaleManager.getScale("N"); // default
+            log.info("{}: Element layout-scale missing, defaulting to N", VSDGeoDataFileName); // NOI18N
         }
-        log.debug("layout-scale: {}", layout_scale);
+        layout_scale = (float) _layout_scale.getScaleRatio(); // Take this for further calculations
+        log.debug("layout-scale: {}, used for further calculations: {}", _layout_scale.toString(), layout_scale);
 
         n = root.getChildText("check-time");
         if (n != null) {
@@ -101,12 +106,13 @@ public class VSDGeoFile extends XmlFile {
             // Process some limitations; values in milliseconds
             if (check_time < 500 || check_time > 5000) {
                 check_time = 2000; // default
+                log.info("{}: Element check-time not in range, defaulting to {} ms", VSDGeoDataFileName, check_time); // NOI18N
             }
         } else {
             check_time = 2000; // default
-            log.info("{}: Element check-time missing. Default value {} used", VSDGeoDataFileName, check_time);
+            log.info("{}: Element check-time missing, defaulting to {} ms", VSDGeoDataFileName, check_time); // NOI18N
         }
-        log.debug("check-time: {}", check_time);
+        log.debug("check-time: {} ms", check_time);
 
         // Detect number of "setup" tags and maximal number of "geodataset" tags
         num_setups = 0; // # setup

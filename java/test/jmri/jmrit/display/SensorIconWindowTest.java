@@ -138,11 +138,11 @@ public class SensorIconWindowTest {
         jmri.util.JUnitUtil.resetProfileManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalSensorManager();
-        JUnitUtil.initShutDownManager();
     }
 
     @After
     public void tearDown() throws Exception {
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
 }

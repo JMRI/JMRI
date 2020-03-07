@@ -2,9 +2,7 @@ package jmri.jmrix.roco.z21.simulator;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for Z21SimulatorZ21SimulatorConnectionConfig class.
@@ -15,6 +13,7 @@ import org.junit.Test;
 public class Z21SimulatorConnectionConfigTest extends jmri.jmrix.AbstractSimulatorConnectionConfigTestBase {
 
    @Before
+   @Override
    public void setUp() {
         JUnitUtil.setUp();
 
@@ -23,8 +22,9 @@ public class Z21SimulatorConnectionConfigTest extends jmri.jmrix.AbstractSimulat
    }
 
    @After
+   @Override
    public void tearDown(){
-        cc=null;
+        cc = null;
         JUnitUtil.tearDown();
    }
 

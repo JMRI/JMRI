@@ -9,6 +9,10 @@ package jmri.jmrit.operations.rollingstock;
  */
 public class Xml {
 
+    private Xml(){
+        //class of constants
+    }
+
     // Common to operation xml files
     static final String ID = "id"; // NOI18N
     static final String NAME = "name"; // NOI18N
@@ -16,7 +20,7 @@ public class Xml {
     static final String DIR = "dir"; // NOI18N
     static final String COMMENT = "comment"; // NOI18N
     static final String TRACK = "track"; // NOI18N
-    static final String TYPE = "type"; // NOI18N
+    public static final String TYPE = "type"; // NOI18N
     static final String LENGTH = "length"; // NOI18N
 
     static final String TRUE = "true"; // NOI18N

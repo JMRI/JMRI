@@ -10,12 +10,14 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <!--#include virtual="/Style" -->
 </head>
+
 <body>
-
-<!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
-
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
     <div id="mainContent">
+        <!-- Page Body -->
+
 <h1>JMRI: Documentation Sections</h1>
 
 <h2>Qu'est-ce qu'une Section?</h2>
@@ -47,7 +49,7 @@ arbitrairement quand la section est cr&#233;&#233;e. Un train peut circuler &#22
 la direction <b>avant</b> ( du premier canton au dernier canton ) ou la direction <b>inverse</b>
 ( depuis le dernier canton au premier canton ). Si une Section a seulement un Canton, la
 <b>direction</b> de cette Section est choisi lors du param&#233;trage de ses <b>Points d'Entr&#233;e</b>
- (voir ci-dessous ).</p>
+(voir ci-dessous ).</p>
 
 <p>Par cons&#233;quent, lorsque la mise en place des sections multi-cantons, vous devez choisir les cantons dans le m&#234;me
 ordre &#224; travers le r&#233;seau pour les sections connect&#233;es s&#233;quentiellement. De cette mani&#232;re les directions avant et 
@@ -56,14 +58,15 @@ inverse auront une signification coh&#233;rente pour les Sections sur une base r
 <p>Une Section a un ou plus <b>Points d'Entr&#233;e</b>. Un Point d'Entr&#233;e d&#233;finit une
 connexion depuis un Canton &#224; l'int&#233;rieur de la Section &#224; un Canton &#224; l'ext&#233;rieur de la Section. les Points 
 d'Entr&#233;e sont d&#233;finis par l'utilisation des Chemins de Cantons dans la Section--les Chemins repr&#233;sentent les connexions
-aux Cantons non contenus dans la Section. Les Points d'Entr&#233;e sont classifi&#233;s selon une des deux m&#233;thodes suivantes:
-		<ol>
+aux Cantons non contenus dans la Section. Les Points d'Entr&#233;e sont classifi&#233;s selon une des deux
+m&#233;thodes suivantes:</p>
+	<ol>
 		<li> soit Entrer dans la section &#224; ce point d'entr&#233;e se traduira par un train circulant dans la 
-			 direction "avant". </li>
+			 direction "avant".</li>
 		<li> soit Entrer &#224; ce point d'entr&#233;e se traduira par un train circulant dans la 
-			 direction "inverse". </li>
-		</ol>
-</p>
+			 direction "inverse".</li>
+	</ol>
+
 <p>Les Sections sont destin&#233;es &#224; &#234;tre affect&#233;es &#224; un train &#224; un moment. Si une portion
 de voie connect&#233;e est assez longue pour pouvoir supporter simultan&#233;ment plusieurs trains circulant dans 
 le m&#234;me sens, l'un suivant l'autre, cette voie connect&#233;e peut &#234;tre divis&#233;e en 
@@ -225,11 +228,8 @@ panneaux dans le m&#234;me fichier ( recommand&#233; ), s&#233;lectionnez <b>Fic
 Panneau dans le Fichier...</b> ou s&#233;lectionnez <b>Panneaux-->Sauvegarder le Panneau...</b> dans la fen&#234;tre 
 principale de JMRI.</p>
 
-<!--#include virtual="/Footer" -->
-
+<!--#include virtual="/Footer.shtml" -->
       </div><!-- closes #mainContent-->
     </div> <!-- closes #mBody-->
 </body>
 </html>
-
-

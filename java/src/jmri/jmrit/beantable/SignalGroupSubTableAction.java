@@ -10,7 +10,6 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ResourceBundle;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -276,9 +275,10 @@ public class SignalGroupSubTableAction {
         curSignalGroup = g;
         curHeadName = headName;
         curSignalHead = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(curHeadName);
-
-        _OnAppearance = new JComboBox<String>(curSignalHead.getValidStateNames()); // shows i18n strings from signal head definition
-        _OffAppearance = new JComboBox<String>(curSignalHead.getValidStateNames());
+        if (curSignalHead != null) {
+            _OnAppearance = new JComboBox<String>(curSignalHead.getValidStateNames()); // shows i18n strings from signal head definition
+            _OffAppearance = new JComboBox<String>(curSignalHead.getValidStateNames());
+        }
         _systemName = new JLabel(headName);
         _systemName.setVisible(true);
 
@@ -288,8 +288,11 @@ public class SignalGroupSubTableAction {
         Iterator<String> iter = systemNameList.iterator();
         while (iter.hasNext()) {
             String systemName = iter.next();
-            String userName = tm.getBySystemName(systemName).getUserName();
-            _turnoutList.add(new SignalGroupTurnout(systemName, userName));
+            Turnout turn = tm.getBySystemName(systemName);
+            if (turn != null) {
+                String userName = turn.getUserName();
+                _turnoutList.add(new SignalGroupTurnout(systemName, userName));
+            }
         }
 
         jmri.SensorManager sm = InstanceManager.sensorManagerInstance();
@@ -414,7 +417,7 @@ public class SignalGroupSubTableAction {
             SignalGroupTurnoutTable.setRowSelectionAllowed(false);
             SignalGroupTurnoutTable.setPreferredScrollableViewportSize(new java.awt.Dimension(480, 80));
 
-            ROW_HEIGHT = SignalGroupTurnoutTable.getRowHeight();
+            SignalGroupSubTableAction.setRowHeight(SignalGroupTurnoutTable.getRowHeight());
             JComboBox<String> stateTCombo = new JComboBox<String>();
             stateTCombo.addItem(SET_TO_CLOSED);
             stateTCombo.addItem(SET_TO_THROWN);
@@ -595,7 +598,7 @@ public class SignalGroupSubTableAction {
     }
 
     /**
-     * Configure colum widths for the Turnout and Sensor Conditional tables.
+     * Configure column widths for the Turnout and Sensor Conditional tables.
      *
      * @param table JTable to put button in
      * @param column index of column in table
@@ -941,6 +944,10 @@ public class SignalGroupSubTableAction {
     private ArrayList<SignalGroupSensor> _sensorList;        // array of all Sensors
     private ArrayList<SignalGroupSensor> _includedSensorList;
 
+    private synchronized static void setRowHeight(int newVal) {
+        ROW_HEIGHT = newVal;
+    }
+
     private abstract class SignalGroupElement {
 
         String _sysName;
@@ -1038,6 +1045,7 @@ public class SignalGroupSubTableAction {
 
         /**
          * Get the Sensor object.
+         *
          * @return The Sensor Bean acting as Control Sensor for this Head and Group
          */
         Sensor getSensor() {
@@ -1052,7 +1060,8 @@ public class SignalGroupSubTableAction {
     private class SignalGroupTurnout extends SignalGroupElement {
 
         /**
-         * Create a Turnout item for this Signal Head by the name of the Control Turnout
+         * Create a Turnout item for this Signal Head by the name of the Control Turnout.
+         *
          * @param sysName system name for new signal group turnout
          * @param userName user name for new signal group turnout
          */
@@ -1061,7 +1070,8 @@ public class SignalGroupSubTableAction {
         }
 
         /**
-         * Get the configured On state for the Control Turnout Conditional to be True
+         * Get the configured On state for the Control Turnout Conditional to be True.
+         *
          * @return A string describing the On state for use in the GUI
          */
         @Override
@@ -1080,7 +1090,8 @@ public class SignalGroupSubTableAction {
 
         /**
          * Store a uniform value for the On state of the Control Sensor Conditional.
-         * Pairs should correspond with values in getSetToState()
+         * Pairs should correspond with values in getSetToState().
+         *
          * @param state Choice from the comboBox, localizable i.e. Thrown.
          */
         @Override

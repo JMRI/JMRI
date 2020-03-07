@@ -1,6 +1,7 @@
 package jmri.jmrix.can.cbus;
 
 import jmri.DccLocoAddress;
+import jmri.SpeedStepMode;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
@@ -29,6 +30,17 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         float expResult = 1.0F/126.0F;
         float result = instance.getSpeedIncrement();
         Assert.assertEquals(expResult, result, 0.0);
+    }
+
+    /**
+     * Test of getSpeedStepMode method, of class AbstractThrottle.
+     */
+    @Override
+    @Test
+    public void testGetSpeedStepMode() {
+        SpeedStepMode expResult = SpeedStepMode.NMRA_DCC_128;
+        SpeedStepMode result = instance.getSpeedStepMode();
+        Assert.assertEquals(expResult, result);
     }
 
     /**
@@ -360,6 +372,7 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      * Test of sendFunctionGroup4 method, of class AbstractThrottle.
      */
     @Test
+    @Override
     public void testSendFunctionGroup4() {
     }
 
@@ -367,16 +380,40 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      * Test of sendFunctionGroup5 method, of class AbstractThrottle.
      */
     @Test
+    @Override
     public void testSendFunctionGroup5() {
     }
+    
+    @Test
+    public void testSendsDirectionChangeWhileMoving() {
+        
+        int startSize = tc.outbound.size();
+        
+        instance.setIsForward(false);
+        Assert.assertEquals(startSize+1, tc.outbound.size());
+        instance.setSpeedSetting(0.5f);
+        Assert.assertEquals(startSize+2, tc.outbound.size());
+        instance.setIsForward(true);
+        Assert.assertEquals(startSize+3, tc.outbound.size());
+        instance.setIsForward(false);
+        Assert.assertEquals(startSize+4, tc.outbound.size());
+        
+        Assert.assertNotEquals("Different message sent",
+            tc.outbound.elementAt(tc.outbound.size() - 2).toString(),
+            tc.outbound.elementAt(tc.outbound.size() - 1).toString());
+        
+    }
 
+    private TrafficControllerScaffold tc;
+    private CanSystemConnectionMemo memo;
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
-        TrafficControllerScaffold tc = new TrafficControllerScaffold();
-        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
+        tc = new TrafficControllerScaffold();
+        memo = new CanSystemConnectionMemo();
         memo.setTrafficController(tc);
         memo.setProtocol(jmri.jmrix.can.ConfigurationManager.MERGCBUS);
         memo.configureManagers();
@@ -384,8 +421,11 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     @After
+    @Override
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusThrottleTest.class);

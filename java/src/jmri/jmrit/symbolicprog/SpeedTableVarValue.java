@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -74,7 +73,7 @@ import org.slf4j.LoggerFactory;
  * @author Dave Heap - generate cvList array to incorporate Vstart {@literal &} Vhigh
  *
  */
-public class SpeedTableVarValue extends VariableValue implements PropertyChangeListener, ChangeListener {
+public class SpeedTableVarValue extends VariableValue implements ChangeListener {
 
     int nValues;
     int numCvs;

@@ -2,8 +2,10 @@ package jmri.util.managers;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
+import jmri.InstanceManager;
 import jmri.Light;
 import jmri.jmrix.internal.InternalLightManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 
 /**
  * This manager always throws an IllegalArgumentException from provide and get methods.
@@ -15,12 +17,12 @@ import jmri.jmrix.internal.InternalLightManager;
 public class InternalLightManagerThrowExceptionScaffold extends InternalLightManager {
 
     public InternalLightManagerThrowExceptionScaffold() {
-        super();
+        super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
     }
     
     /** {@inheritDoc} */
     @Override
-    protected Light createNewLight(String systemName, String userName) {
+    protected Light createNewLight(@Nonnull String systemName, String userName) {
         throw new IllegalArgumentException("Illegal argument");
     }
     
@@ -48,12 +50,13 @@ public class InternalLightManagerThrowExceptionScaffold extends InternalLightMan
     /** {@inheritDoc} */
     @Override
     @CheckForNull
-    public Light getByUserName(String key) {
+    public Light getByUserName(@Nonnull String key) {
         throw new IllegalArgumentException("Illegal argument");
     }
     
     /** {@inheritDoc} */
     @Override
+    @Nonnull
     public Light newLight(@Nonnull String systemName, @CheckForNull String userName) {
         throw new IllegalArgumentException("Illegal argument");
     }

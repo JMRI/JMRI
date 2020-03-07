@@ -190,13 +190,14 @@ appropriately for the back to train route for this feature to activate."
         if (allowTurnoutChange()) {
             int requestedState = getSwitchDirectionLeverRequestedState();
             notifyTurnoutLockObjectOfNewAlignment(requestedState);          // Tell lock object this is new alignment
-            _mSwitchDirectionIndicators.codeButtonPressed(requestedState);  // Also sends commmands to move the points
+            if (_mSwitchDirectionIndicators != null) { // Safety:
+                _mSwitchDirectionIndicators.codeButtonPressed(requestedState);  // Also sends commmands to move the points
+            }
         }
     }
 
     private boolean allowTurnoutChange() {
 // Safety checks:
-        if (_mSwitchDirectionIndicators == null) return false;
 // Rules:
         if (!_mSignalDirectionIndicators.signalsNormal()) return false;
         if (routeClearedAcross()) return false;               // Something was cleared thru, NO CHANGE

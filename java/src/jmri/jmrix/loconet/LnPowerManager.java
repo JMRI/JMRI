@@ -1,7 +1,6 @@
 package jmri.jmrix.loconet;
 
 import jmri.JmriException;
-import jmri.PowerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,7 +18,7 @@ import org.slf4j.LoggerFactory;
  */
 public class LnPowerManager
         extends jmri.managers.AbstractPowerManager
-        implements PowerManager, LocoNetListener {
+        implements LocoNetListener {
 
     public LnPowerManager(LocoNetSystemConnectionMemo memo) {
         super(memo);

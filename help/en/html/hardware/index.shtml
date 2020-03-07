@@ -21,10 +21,11 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
+
       <h1>JMRI: Hardware Support</h1>
 
       <p>JMRI supports a wide range of DCC "command station"-style
@@ -51,7 +52,7 @@
           <dd>&nbsp;</dd>
 
           <dt class="im"><a href=
-          "http://www.atlasrr.com/dccsupport.htm"><img src=
+          "https://shop.atlasrr.com/t-atlascommander.aspx"><img src=
           "images/atlas_logo.gif" width="44" height="34" alt=
           "Atlas"></a></dt>
           <dt><a href="XPressNet/index.shtml">Atlas
@@ -69,7 +70,7 @@
           </dd>
 
           <dt class="im"><a href=
-          "http://www.bachrus.com/speedometer.php"><img src=
+          "https://web.archive.org/web/20170720024241/http://www.bachrus.com:80/index.php"><img src=
           "images/Bachrus_Logo.gif" width="100" height="25" alt=
           "Bachrus"></a></dt>
           <dt><a href="bachrus/index.shtml">Bachrus</a></dt>
@@ -87,8 +88,8 @@
             <p class="dl">Configure: <a href=
             "cmri/CMRI.shtml">Bruce Chubb's C/MRI control
             system</a> for a connection via direct serial, <a href=
-            "cmri/CMRI.shtml#usb">USB-serial adapter</a>, or
-            <a href="cmri/CMRI.shtml#net">network
+            "cmri/CMRI.shtml#L632">USB-serial adapter</a>, or
+            <a href="cmri/CMRI.shtml#L215">network
             connection</a>.</p>
             <p>&nbsp;</p>
           </dd>
@@ -135,8 +136,8 @@
           </dd>
 
           <dt class="im"><a href=
-          "http://www.dccspecialties.com"><img src=
-          "http://www.dccspecialties.com/common/top-logo.gif"
+          "https://www.dccspecialties.com"><img src=
+          "https://www.dccspecialties.com/common/top-logo.gif"
           width="60" height="26" alt="DCC Specialties"></a></dt>
           <dt><a href="misc/DccSpecialties.shtml">DCC
           Specialties</a></dt>
@@ -148,8 +149,8 @@
           </dd>
 
           <dt class="im"><a href=
-          "http://www.digi.com/xbee"><img src=
-          "http://www.digi.com/images/news/digi_2c_sm.gif" width=
+          "https://www.digi.com/xbee"><img src=
+          "https://www.digi.com/images/news/digi_2c_sm.gif" width=
           "50" height="50" alt="Digi XBee"></a></dt>
           <dt><a href="XBee/index.shtml">Digi</a></dt>
           <dd>
@@ -161,7 +162,7 @@
           </dd>
 
           <dt class="im"><a href=
-          "http://www.digikeijs.nl/"><img src=
+          "https://www.digikeijs.com"><img src=
           "images/digikeijs-logo.png" width="50" height="14" alt=
           "Digikeijs"></a></dt>
           <dt><a href="digirails/index.shtml">Digikeijs (Digirails)</a></dt>
@@ -225,7 +226,7 @@
             <a href="loconet/Uhlenbrock.shtml">Intellibox</a>.</p>
 
             <p class="dl">Configure: Connecting to a <a href=
-            "StandaloneLocoNet.shtml">Standalone LocoNet</a>.</p>
+            "loconet/StandaloneLocoNet.shtml">Standalone LocoNet</a>.</p>
             <p>&nbsp;</p>
           </dd>
 
@@ -306,9 +307,9 @@
           </dd>
 
           <dt class="im"><a href=
-          "http://www.maplesystems.com"><img src=
-          "http://www.maplesystems.com/images/homepage-new/MapleLogo.gif"
-          width="63" height="60" alt="Maple Logo"></a></dt>
+          "https://www.maplesystems.com"><img src=
+          "https://www.maplesystems.com/images/maple-logo-white.jpg"
+          width="67" height="60" alt="Maple Logo"></a></dt>
           <dt><a href="maple/index.shtml">Maple Systems</a></dt>
           <dd>
             <p>Maple Systems touch panel</p>
@@ -332,7 +333,7 @@
           </dd>
 
           <dt class="im"><a href=
-          "http://www.merg.org.uk/"><img src="http://www.merg.org.uk/merg_images/merg_logo.png"
+          "https://www.merg.org.uk/"><img src="https://www.merg.org.uk/merg_images/merg_logo.png"
           alt="MERG logo" height="45" width="100"></a></dt>
           <dt><a href="can/cbus/index.shtml">MERG CBUS</a></dt>
           <dd>
@@ -501,8 +502,8 @@
           </dd>
 
           <dt class="im"><a href=
-          "http://www.sprog-dcc.co.uk/"><img src=
-          "http://www.sprog-dcc.co.uk/images/SprogDCC300.jpg" alt=
+          "https://www.sprog-dcc.co.uk/"><img src=
+          "https://www.sprog-dcc.co.uk/images/SprogDCC300.jpg" alt=
           "SPROG" height="41" width="150"></a></dt>
           <dt><a href="sprog/SPROG.shtml">SPROG</a></dt>
           <dd>
@@ -691,7 +692,7 @@
         <dd>A way to use a PDA to access JMRI.</dd>
       </dl>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

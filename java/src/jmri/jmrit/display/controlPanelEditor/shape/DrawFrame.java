@@ -23,10 +23,12 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import jmri.InstanceManager;
+import jmri.Sensor;
 import jmri.SensorManager;
+import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
-import jmri.util.swing.JmriBeanComboBox;
+import jmri.swing.NamedBeanComboBox;
 import jmri.util.swing.JmriColorChooser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,8 +53,8 @@ abstract public class DrawFrame extends jmri.util.JmriJFrame {
     JRadioButton _fillColorButon;
     JSlider _lineSlider;
     JSlider _alphaSlider;
-    private transient JmriBeanComboBox _sensorBox = new JmriBeanComboBox(
-        InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private transient NamedBeanComboBox<Sensor> _sensorBox = new NamedBeanComboBox<>(
+        InstanceManager.getDefault(SensorManager.class), null, DisplayOptions.DISPLAYNAME);
     JRadioButton _hideShape;
     JRadioButton _changeLevel;
     JComboBox<String> _levelComboBox;
@@ -186,14 +188,14 @@ abstract public class DrawFrame extends jmri.util.JmriJFrame {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(new JLabel(Bundle.getMessage("SensorMsg")));
         panel.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("VisibleSensor"))));
-        _sensorBox.setFirstItemBlank(true); // already filled with names of all existing sensors
+        _sensorBox.setAllowNull(true); // already filled with names of all existing sensors
         _sensorBox.addActionListener((ActionEvent e) -> {
-            String msg = _shape.setControlSensor(_sensorBox.getDisplayName());
-            log.debug("Setting sensor to {} after action", _sensorBox.getDisplayName());
+            String msg = _shape.setControlSensor(_sensorBox.getSelectedItemDisplayName());
+            log.debug("Setting sensor to {} after action", _sensorBox.getSelectedItemDisplayName());
             if (msg != null) {
                 JOptionPane.showMessageDialog(null, msg, Bundle.getMessage("ErrorSensor"),
                         JOptionPane.INFORMATION_MESSAGE); // NOI18N
-                _sensorBox.setText("");
+                _sensorBox.setSelectedItem(null);
             }
             updateShape();
         });
@@ -305,7 +307,7 @@ abstract public class DrawFrame extends jmri.util.JmriJFrame {
 
         tPanel.addTab(Bundle.getMessage("advancedTab"), null,
                 makeSensorPanel(), Bundle.getMessage("drawInstructions3a"));
-        _sensorBox.setText(_shape.getSensorName());
+        _sensorBox.setSelectedItem(_shape.getControlSensor());
         _levelComboBox.setSelectedIndex(_shape.getChangeLevel());
         if (_shape.isHideOnSensor()) {
             _hideShape.setSelected(true);

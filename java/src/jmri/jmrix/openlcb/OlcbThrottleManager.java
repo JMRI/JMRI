@@ -21,18 +21,6 @@ public class OlcbThrottleManager extends AbstractThrottleManager {
     /**
      * Constructor.
      * @param memo system connection memo
-     * @param mgr config manager
-     * @deprecated since 4.13.4
-     */
-    @Deprecated
-    public OlcbThrottleManager(jmri.jmrix.SystemConnectionMemo memo, OlcbConfigurationManager mgr) {
-        this(memo);
-        jmri.util.Log4JUtil.deprecationWarning(log, "OlcbThrottleManager(..)");        
-    }
-
-    /**
-     * Constructor.
-     * @param memo system connection memo
      */
     public OlcbThrottleManager(jmri.jmrix.SystemConnectionMemo memo) {
         super(memo);
@@ -100,11 +88,13 @@ public class OlcbThrottleManager extends AbstractThrottleManager {
 
     @Override
     public boolean disposeThrottle(DccThrottle t, jmri.ThrottleListener l) {
-        log.debug("disposeThrottle called for " + t);
+        log.debug("disposeThrottle called for {}", t);
         if (super.disposeThrottle(t, l)) {
-            OlcbThrottle lnt = (OlcbThrottle) t;
-            lnt.throttleDispose();
-            return true;
+            if (t instanceof OlcbThrottle) {
+                OlcbThrottle lnt = (OlcbThrottle) t;
+                lnt.throttleDispose();
+                return true;
+            }
         }
         return false;
     }

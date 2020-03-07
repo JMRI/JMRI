@@ -1,15 +1,21 @@
 package jmri.web.servlet.operations;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.StdDateFormat;
-
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map.Entry;
+
+import org.apache.commons.text.StringEscapeUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.util.StdDateFormat;
+
 import jmri.InstanceManager;
+import jmri.jmrit.operations.rollingstock.Xml;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.JsonManifest;
@@ -17,9 +23,6 @@ import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import jmri.server.json.JSON;
 import jmri.server.json.operations.JsonOperations;
-import org.apache.commons.text.StringEscapeUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -305,8 +308,10 @@ public class HtmlManifest extends HtmlTrainCommon {
                                             ShowLocation.location))).append(" "); // NOI18N
                 } else if (attribute.equals(JsonOperations.DESTINATION_TRACK)) {
                     builder.append(
-                            this.getFormattedAttribute(attribute, this.getDropLocation(car.path(JsonOperations.LOCATION),
+                            this.getFormattedAttribute(attribute, this.getDropLocation(car.path(JsonOperations.DESTINATION),
                                             ShowLocation.both))).append(" "); // NOI18N
+                } else if (attribute.equals(Xml.TYPE)) {
+                    builder.append(this.getTextAttribute(JsonOperations.CAR_TYPE, car)).append(" "); // NOI18N
                 } else {
                     builder.append(this.getTextAttribute(attribute, car)).append(" "); // NOI18N
                 }
@@ -336,6 +341,8 @@ public class HtmlManifest extends HtmlTrainCommon {
                     builder.append(
                             this.getFormattedAttribute(attribute, this.getPickupLocation(car.path(attribute),
                                             ShowLocation.location))).append(" "); // NOI18N
+                } else if (attribute.equals(Xml.TYPE)) {
+                    builder.append(this.getTextAttribute(JsonOperations.CAR_TYPE, car)).append(" "); // NOI18N
                 } else {
                     builder.append(this.getTextAttribute(attribute, car)).append(" "); // NOI18N
                 }
@@ -421,18 +428,15 @@ public class HtmlManifest extends HtmlTrainCommon {
         } else if (attribute.equals(Setup.PICKUP_COMMENT.toLowerCase())) { // NOI18N
             return this.getFormattedAttribute(JSON.ADD_COMMENT, rollingStock.path(JSON.ADD_COMMENT).textValue());
         } else if (attribute.equals(Setup.DROP_COMMENT.toLowerCase())) { // NOI18N
-            return this.getFormattedAttribute(JSON.ADD_COMMENT, rollingStock.path(JSON.ADD_COMMENT).textValue());
+            return this.getFormattedAttribute(JSON.REMOVE_COMMENT, rollingStock.path(JSON.REMOVE_COMMENT).textValue());
         } else if (attribute.equals(Setup.RWE.toLowerCase())) {
-            return this.getFormattedAttribute(JSON.RETURN_WHEN_EMPTY, this.getFormattedLocation(rollingStock
-                    .path(JSON.RETURN_WHEN_EMPTY), ShowLocation.both, "RWE")); // NOI18N
+            return this.getFormattedLocation(rollingStock.path(JSON.RETURN_WHEN_EMPTY), ShowLocation.both, "RWE"); // NOI18N
         } else if (attribute.equals(Setup.FINAL_DEST.toLowerCase())) {
-            return this.getFormattedAttribute(JSON.FINAL_DESTINATION, this.getFormattedLocation(rollingStock
-                    .path(JSON.FINAL_DESTINATION), ShowLocation.location, "FinalDestination")); // NOI18N
+            return this.getFormattedLocation(rollingStock.path(JSON.FINAL_DESTINATION), ShowLocation.location, "FinalDestination"); // NOI18N
         } else if (attribute.equals(Setup.FINAL_DEST_TRACK.toLowerCase())) {
-            return this.getFormattedAttribute(JSON.FINAL_DESTINATION, this.getFormattedLocation(rollingStock
-                    .path(JSON.FINAL_DESTINATION), ShowLocation.track, "FinalDestination")); // NOI18N
+            return this.getFormattedLocation(rollingStock.path(JSON.FINAL_DESTINATION), ShowLocation.track, "FinalDestination"); // NOI18N
         }
-        return this.getFormattedAttribute(attribute, rollingStock.path(attribute).textValue());
+        return this.getFormattedAttribute(attribute, rollingStock.path(attribute).asText());
     }
 
     protected String getFormattedAttribute(String attribute, String value) {
@@ -440,15 +444,23 @@ public class HtmlManifest extends HtmlTrainCommon {
     }
 
     protected String getFormattedLocation(JsonNode location, ShowLocation show, String prefix) {
+        if (location.isNull() || location.isEmpty()) {
+            // return an empty string if location is an empty or null
+            return "";
+        }
         // TODO handle tracks without names
         switch (show) {
             case location:
-                return String.format(locale, strings.getProperty(prefix + "Location"), location.path(JSON.USERNAME).asText());
+                return String.format(locale, strings.getProperty(prefix + "Location"),
+                        splitString(location.path(JSON.USERNAME).asText()));
             case track:
-                return String.format(locale, strings.getProperty(prefix + "Track"), location.path(JsonOperations.TRACK).path(JSON.USERNAME).asText());
+                return String.format(locale, strings.getProperty(prefix + "Track"),
+                        splitString(location.path(JsonOperations.TRACK).path(JSON.USERNAME).asText()));
             case both:
             default: // default here ensures the method always returns
-                return String.format(locale, strings.getProperty(prefix + "LocationAndTrack"), location.path(JSON.USERNAME).asText(), location.path(JsonOperations.TRACK).path(JSON.USERNAME).asText());
+                return String.format(locale, strings.getProperty(prefix + "LocationAndTrack"),
+                        splitString(location.path(JSON.USERNAME).asText()),
+                        splitString(location.path(JsonOperations.TRACK).path(JSON.USERNAME).asText()));
         }
     }
 

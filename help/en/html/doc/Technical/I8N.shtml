@@ -236,9 +236,9 @@ are automatically produced.
 For internationalization to work, you have to do a few things in the code 
 you write. Some web references on how to do this:
 <ul>
-<li><a href="http://docs.oracle.com/javase/6/docs/technotes/guides/intl/">Java Internationalization main page</a>
+<li><a href="http://docs.oracle.com/javase/6/docs/technotes/guides/intl/">Java Internationalization main page</a></li>
 <li><a href="http://docs.oracle.com/javase/tutorial/i18n/index.html">Sun internationalization tutorial</a> (highly
-recommended)
+recommended)</li>
 </ul>
 <strong>Note: Those are Java 6 links.  There are useful advanced features in 
 <a href="http://docs.oracle.com/javase/7/docs/technotes/guides/intl/enhancements.7.html">Java 7</a> and

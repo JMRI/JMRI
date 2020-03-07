@@ -9,7 +9,8 @@
   <title>JMRI: Edit Track Segment Help</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
-  "JMRI help Layout Editor Track Segment"><!-- Style -->
+  "JMRI help Layout Editor Track Segment">
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -17,14 +18,15 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Edit Track Segment</h1>
 
       <h2>Track Segments and Connecting Points</h2>A <b>Track
@@ -86,7 +88,7 @@
       be requested, so information for the track segment's block
       may be entered or changed. Blocks are discussed more fully in
       the help page of the Create/Edit Block dialog. 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

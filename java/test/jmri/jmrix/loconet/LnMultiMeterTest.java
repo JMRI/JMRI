@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet;
 
+import jmri.MultiMeter;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -17,6 +18,7 @@ public class LnMultiMeterTest {
         Assert.assertNotNull("exists",lm);
         Assert.assertTrue(lm.hasCurrent());
         Assert.assertTrue(lm.hasVoltage());
+        Assert.assertEquals("Reports in Amps", lm.getCurrentUnits(),MultiMeter.CurrentUnits.CURRENT_UNITS_AMPS);
         lm.requestUpdateFromLayout();
         // expect one messages
         Assert.assertEquals("sent", 1, lnis.outbound.size());
@@ -26,7 +28,7 @@ public class LnMultiMeterTest {
                 0x33, 0x00, 0x00, 0x00, 0x1C, 0x7F, 0x68, 0x03, 0x38 };
         LocoNetMessage msg = new LocoNetMessage(ia);
         lm.message(msg);
-        Assert.assertEquals(0.1f,lm.getCurrent(),0);
+        Assert.assertEquals(0.5f,lm.getCurrent(),0); // 0.5AMps
     }
 
     @Before
@@ -41,7 +43,6 @@ public class LnMultiMeterTest {
     @After
     public void tearDown() {
         memo.dispose();
-        slotmanager.dispose();
         lnis.dispose();
         JUnitUtil.tearDown();
     }

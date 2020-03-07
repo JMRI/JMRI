@@ -38,6 +38,7 @@ public class PathTest {
 
         Block b = new Block("IB1");
         p.setBlock(b);
+        Assert.assertEquals("block added",b,p.getBlock());
     }
 
     @Test

@@ -17,12 +17,11 @@ package jmri.jmrit.vsdecoder;
  * @author   Mark Underwood Copyright (C) 2011
  */
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-class NotchTrigger extends Trigger implements PropertyChangeListener {
+class NotchTrigger extends Trigger {
 
     int current_notch, prev_notch;
 

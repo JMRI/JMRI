@@ -1,9 +1,10 @@
 package jmri.jmris;
 
-import jmri.util.JUnitUtil;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 /**
  * Tests for the jmri.jmris.AbstractSensorServer class
@@ -15,7 +16,7 @@ abstract public class AbstractSensorServerTestBase {
     protected AbstractSensorServer ss = null;
 
     @Test public void testCtor() {
-        Assert.assertNotNull(ss);
+        assertThat(ss).isNotNull();
     }
 
     // test sending an error message.
@@ -29,7 +30,7 @@ abstract public class AbstractSensorServerTestBase {
     @Test 
     public void checkInitSensor() {
         ss.initSensor("IS1");
-        Assert.assertNotNull((jmri.InstanceManager.getDefault(jmri.SensorManager.class)).getSensor("IS1"));
+        assertThat((jmri.InstanceManager.getDefault(jmri.SensorManager.class)).getSensor("IS1")).isNotNull();
     }
 
     // test sending an ACTIVE status message.
@@ -59,33 +60,30 @@ abstract public class AbstractSensorServerTestBase {
     // test the property change sequence for an ACTIVE property change.
     @Test
     public void testPropertyChangeOnStatus() {
-        try {
+        Throwable thrown = catchThrowable( () -> {
             ss.initSensor("IS1");
-            jmri.InstanceManager.getDefault(jmri.SensorManager.class)
-                            .provideSensor("IS1").setState(jmri.Sensor.ACTIVE);
-            checkSensorActiveSent();
-        } catch (jmri.JmriException je){
-            Assert.fail("Exception setting Status");
-        }
+            jmri.InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS1").setState(jmri.Sensor.ACTIVE);
+        });
+        assertThat(thrown).withFailMessage("Exception setting Status").isNull();
+        checkSensorActiveSent();
     }
 
     // test the property change sequence for an INACTIVE property change.
     @Test
     public void testPropertyChangeOffStatus() {
-        try {
+        Throwable thrown = catchThrowable( () -> {
             ss.initSensor("IS1");
             jmri.InstanceManager.getDefault(jmri.SensorManager.class)
                             .provideSensor("IS1").setState(jmri.Sensor.INACTIVE);
-            checkSensorInActiveSent();
-        } catch (jmri.JmriException je){
-            Assert.fail("Exception setting Status");
-        }
+        });
+        assertThat(thrown).withFailMessage("Exception setting Status").isNull();
+        checkSensorInActiveSent();
     }
 
     /**
      * pre test setup.  Must setup SensorServer ss.
      */
-    @Before 
+    @BeforeEach
     abstract public void setUp(); 
 
     /**

@@ -1,13 +1,17 @@
 package jmri.jmrit.operations.rollingstock;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
 import javax.swing.JComboBox;
-import jmri.jmrit.operations.setup.Control;
+
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.jmrit.operations.setup.Control;
 
 /**
  * Represents an attribute a rolling stock can have. Some attributes are length,
@@ -18,7 +22,7 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class RollingStockAttribute {
 
-    protected static final int MIN_NAME_LENGTH = 4;
+    protected static final int MIN_NAME_LENGTH = 1;
 
     public RollingStockAttribute() {
     }
@@ -36,10 +40,8 @@ public abstract class RollingStockAttribute {
     protected List<String> list = new ArrayList<>();
 
     public String[] getNames() {
-        if (list.size() == 0) {
-            for (String name : getDefaultNames().split(",")) {
-                list.add(name);
-            }
+        if (list.isEmpty()) {
+            list.addAll(Arrays.asList(getDefaultNames().split(",")));
         }
         String[] names = new String[list.size()];
         for (int i = 0; i < list.size(); i++) {
@@ -103,11 +105,13 @@ public abstract class RollingStockAttribute {
         // insert at start of list, sort on restart
         list.add(0, name);
         maxNameLength = 0; // reset maximum name length
+        maxNameSubStringLength = 0;
     }
 
     public void deleteName(String name) {
         list.remove(name);
         maxNameLength = 0; // reset maximum name length
+        maxNameSubStringLength = 0;
     }
 
     public boolean containsName(String name) {
@@ -127,18 +131,42 @@ public abstract class RollingStockAttribute {
         }
     }
 
+    protected String maxName = "";
     protected int maxNameLength = 0;
-
+    
     public int getMaxNameLength() {
         if (maxNameLength == 0) {
-            maxNameLength = MIN_NAME_LENGTH;
+            maxName = "";
+            maxNameLength = getMinNameLength();
             for (String name : getNames()) {
                 if (name.length() > maxNameLength) {
+                    maxName = name;
                     maxNameLength = name.length();
                 }
             }
         }
         return maxNameLength;
+    }
+    
+    protected int maxNameSubStringLength = 0;
+    
+    public int getMaxNameSubStringLength() {
+        if (maxNameSubStringLength == 0) {
+            maxName = "";
+            maxNameSubStringLength = getMinNameLength();
+            for (String name : getNames()) {
+                String[] subString = name.split("-");
+                if (subString[0].length() > maxNameSubStringLength) {
+                    maxName = name;
+                    maxNameSubStringLength = subString[0].length();
+                }
+            }
+        }
+        return maxNameSubStringLength;
+    }
+    
+    protected int getMinNameLength() {
+        return MIN_NAME_LENGTH;
     }
 
     /**

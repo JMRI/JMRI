@@ -415,7 +415,7 @@ public abstract class AbstractVariableLight extends AbstractLight {
     }
 
     @Override
-    public void setCommandedAnalogValue(float value) throws JmriException {
+    public void setCommandedAnalogValue(double value) throws JmriException {
         int origState = mState;
         double origCurrent = mCurrentIntensity;
         
@@ -455,8 +455,8 @@ public abstract class AbstractVariableLight extends AbstractLight {
     }
 
     @Override
-    public float getResolution() {
-        return (float) 1.0 / getNumberOfSteps();
+    public double getResolution() {
+        return 1.0 / getNumberOfSteps();
     }
 
 }

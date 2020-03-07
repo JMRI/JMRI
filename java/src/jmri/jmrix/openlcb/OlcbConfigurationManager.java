@@ -1,18 +1,16 @@
 package jmri.jmrix.openlcb;
 
-import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.time.Clock;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import jmri.ClockControl;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
-import jmri.LightManager;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
@@ -428,13 +426,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             if (value == null || value.isEmpty()) {
                 contents.add((byte)0);
             } else {
-                byte[] bb;
-
-                try {
-                    bb = value.getBytes("UTF-8");
-                } catch (UnsupportedEncodingException e) {
-                    bb = new byte[] {'?'};
-                }
+                byte[] bb = value.getBytes(StandardCharsets.UTF_8);
                 for (byte b : bb) {
                     contents.add(b);
                 }
@@ -448,8 +440,9 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             l.add((byte)4); // version byte
             addStringPart("JMRI", l);
             addStringPart("PanelPro", l);
-            if (ProfileManager.getDefault().hasActiveProfile()) {
-                addStringPart("Profile " + ProfileManager.getDefault().getActiveProfileName(), l); // hardware version
+            String name = ProfileManager.getDefault().getActiveProfileName();
+            if (name != null) {
+                addStringPart("Profile " + name, l); // hardware version
             } else {
                 addStringPart("", l); // hardware version
             }

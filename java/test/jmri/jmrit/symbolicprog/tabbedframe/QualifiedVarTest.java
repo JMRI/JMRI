@@ -1,6 +1,8 @@
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 import java.awt.GraphicsEnvironment;
+import java.awt.event.WindowEvent;
+import java.io.IOException;
 import javax.swing.JPanel;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.roster.RosterEntry;
@@ -8,6 +10,7 @@ import jmri.util.JUnitUtil;
 import org.jdom2.DocType;
 import org.jdom2.Document;
 import org.jdom2.Element;
+import org.jdom2.JDOMException;
 import org.junit.After;
 import org.junit.Assume;
 import org.junit.Before;
@@ -35,12 +38,17 @@ public class QualifiedVarTest {
                 PaneProgFrame p = new PaneProgFrame(null, new RosterEntry(),
                         "test qualified var", "programmers/Basic.xml",
                         new jmri.progdebugger.ProgDebugger(), false) {
-                            // dummy implementations
+                    // dummy implementations
                     @Override
-                            protected JPanel getModePane() {
-                                return null;
-                            }
-                        };
+                    protected JPanel getModePane() {
+                        return null;
+                    }
+                    // prevent this test from prompting to save file
+                    @Override
+                    protected boolean checkDirtyFile() {
+                        return false;
+                    }
+                };
 
                 // get the sample info
                 try {
@@ -50,7 +58,7 @@ public class QualifiedVarTest {
 
                     DecoderFile df = new DecoderFile();  // used as a temporary
                     df.loadVariableModel(el.getChild("decoder"), p.variableModel);
-                } catch (Exception e) {
+                } catch (IOException | JDOMException e) {
                     log.error("Exception during setup", e);
                 }
                 p.readConfig(root, new RosterEntry());
@@ -58,8 +66,8 @@ public class QualifiedVarTest {
                 p.setVisible(true);
 
                 // close the window for cleanliness
-                JUnitUtil.dispose(p);
-            }
+                p.dispatchEvent(new WindowEvent(p, WindowEvent.WINDOW_CLOSING));
+        }
         });
     }
 
@@ -172,8 +180,6 @@ public class QualifiedVarTest {
                         )
                 )
         ); // end of adding contents
-
-        return;
     }
 
     private final static Logger log = LoggerFactory.getLogger(QualifiedVarTest.class);
@@ -182,6 +188,7 @@ public class QualifiedVarTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
     }
 
     @After

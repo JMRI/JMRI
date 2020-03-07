@@ -1,6 +1,9 @@
 package jmri.util.managers;
 
+import javax.annotation.Nonnull;
+import jmri.InstanceManager;
 import jmri.SignalHead;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractSignalHeadManager;
 
 /**
@@ -13,24 +16,24 @@ import jmri.managers.AbstractSignalHeadManager;
 public class SignalHeadManagerThrowExceptionScaffold extends AbstractSignalHeadManager {
 
     public SignalHeadManagerThrowExceptionScaffold() {
-        super();
+        super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
     }
     
     /** {@inheritDoc} */
     @Override
-    public SignalHead getSignalHead(String name) {
+    public SignalHead getSignalHead(@Nonnull String name) {
         throw new IllegalArgumentException("Illegal argument");
     }
     
     /** {@inheritDoc} */
     @Override
-    public SignalHead getBySystemName(String name) {
+    public SignalHead getBySystemName(@Nonnull String name) {
         throw new IllegalArgumentException("Illegal argument");
     }
     
     /** {@inheritDoc} */
     @Override
-    public SignalHead getByUserName(String key) {
+    public SignalHead getByUserName(@Nonnull String key) {
         throw new IllegalArgumentException("Illegal argument");
     }
     

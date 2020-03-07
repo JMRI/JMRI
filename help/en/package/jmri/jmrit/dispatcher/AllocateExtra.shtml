@@ -22,10 +22,10 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>JMRI Dispatcher: Allocate Extra</h1>
 
       <h2>Introduction</h2>
@@ -110,7 +110,7 @@
 
       <p>Back to <a href="Dispatcher.shtml">Dispatcher</a> help.</p>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

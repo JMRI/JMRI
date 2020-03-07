@@ -6,7 +6,6 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
-  <!-- $Id$ -->
 
   <title>JMRI: Maple Input and Output Assignments</title>
   <!-- Style -->
@@ -17,14 +16,15 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h2>JMRI: Maple Input and Output Assignments</h2>
 
       <p>This tool lets you display Sensor, Turnout and Light
@@ -63,7 +63,7 @@
       together to set Sensors. Therefore if a Sensor is ACTIVE
       (Maple "1") in any panel, it is set ACTIVE. If a Sensor is
       INACTIVE (Maple "0") in all configured panels, then it is set
-      INACTIVE.</p><!--#include virtual="/Footer" -->
+      INACTIVE.</p><!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

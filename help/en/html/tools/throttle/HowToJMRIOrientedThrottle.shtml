@@ -16,7 +16,8 @@
   <meta name="Language" content="EN" />
   <meta name="Robots" content="Index, Follow" />
   <meta name="Revisit-After" content="7 Days" />
-  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments --><!-- are an arbitrary design pattern used by the update.pl script to --><!-- easily replace the common header/footer code for all the web pages --><!-- delete the following 2 Defines if you want to use the default JMRI logo --><!-- or change them to reflect your alternative logo --><!-- Style -->
+  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments --><!-- are an arbitrary design pattern used by the update.pl script to --><!-- easily replace the common header/footer code for all the web pages --><!-- delete the following 2 Defines if you want to use the default JMRI logo --><!-- or change them to reflect your alternative logo -->
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii" />
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -24,16 +25,16 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print" />
   <link rel="icon" href="/images/jmri.ico" type="image/png" />
-  <link rel="home" title="Home" href="/" /><!-- /Style -->
+  <link rel="home" title="Home" href="/" />
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
+
       <h1>How to build a throttle oriented JMRI interface</h1>For
       this how to we assume you're an already experienced user of
       JMRI.<br />
@@ -117,7 +118,7 @@
       loading the default throttle layout button</a>.<br />
       <span style="font-style: italic;">Note: It is not possible to
       save customizations of steps 5) and 6) at the moment.</span> 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

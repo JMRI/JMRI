@@ -3,8 +3,8 @@ package jmri.implementation;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.annotation.Nonnull;
 import jmri.Conditional;
 import jmri.ConditionalAction;
 import jmri.ConditionalVariable;
@@ -14,6 +14,7 @@ import jmri.Logix;
 import jmri.Memory;
 import jmri.NamedBean;
 import jmri.NamedBeanHandle;
+import jmri.NamedBeanUsageReport;
 import jmri.SignalHead;
 import jmri.Timebase;
 import jmri.jmrit.beantable.LRouteTableAction;
@@ -38,6 +39,7 @@ public class DefaultLogix extends AbstractNamedBean
     }
 
     @Override
+    @Nonnull
     public String getBeanType() {
         return Bundle.getMessage("BeanNameLogix");  // NOI18N
     }
@@ -168,7 +170,7 @@ public class DefaultLogix extends AbstractNamedBean
             for (int i = _listeners.size() - 1; i >= 0; i--) {
                 _listeners.get(i).setEnabled(state);
             }
-            firePropertyChange("Enabled", Boolean.valueOf(old), Boolean.valueOf(state));  // NOI18N
+            firePropertyChange("Enabled", old, state);  // NOI18N
         }
     }
 
@@ -186,12 +188,14 @@ public class DefaultLogix extends AbstractNamedBean
      * Note: Since each Logix must have at least one Conditional to do anything,
      * the user is warned in Logix Table Action when the last Conditional is
      * deleted.
-     * <p>
-     * Returns true if Conditional was successfully deleted, otherwise returns
-     * false.
      *
      * @param systemName The Conditional system name
+     * @return null if Conditional was successfully deleted or not present, otherwise
+     * returns a string array list of current usage that prevent deletion, used to present
+     * a warning dialog to the user
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
+    justification = "null returned is documented in each method to mean completed without problems")
     @Override
     public String[] deleteConditional(String systemName) {
         if (_conditionalSystemNames.size() <= 0) {
@@ -206,24 +210,23 @@ public class DefaultLogix extends AbstractNamedBean
             Logix x = InstanceManager.getDefault(jmri.ConditionalManager.class)
                 .getParentLogix(refName);
             Conditional cRef = x.getConditional(refName);
-            String[] result = new String[]{c.getUserName(), c.getSystemName(), cRef.getUserName(),
+            return new String[]{c.getUserName(), c.getSystemName(), cRef.getUserName(),
                 cRef.getSystemName(), x.getUserName(), x.getSystemName()};
-            return result;
         }
 
         // Remove Conditional from this logix
         if (!_conditionalSystemNames.remove(systemName)) {
-            log.error("attempt to delete Conditional not in Logix: " + systemName);  // NOI18N
+            log.error("attempt to delete Conditional not in Logix: {}", systemName);  // NOI18N
             return null;
         }
         // delete the Conditional object
         Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).getBySystemName(systemName);
         if (c == null) {
-            log.error("attempt to delete non-existant Conditional - " + systemName);  // NOI18N
+            log.error("attempt to delete non-existing Conditional - {}", systemName);  // NOI18N
             return null;
         }
         _conditionalMap.remove(systemName);
-        return (null);
+        return null;
     }
 
     /**
@@ -695,7 +698,7 @@ public class DefaultLogix extends AbstractNamedBean
         return -1;
     }
 
-    /**
+    /* /**
      * Assembles and returns a list of state variables that are used by
      * conditionals of this Logix including the number of occurances of each
      * variable that trigger a calculation, and the number of occurances where
@@ -781,6 +784,7 @@ public class DefaultLogix extends AbstractNamedBean
      * }
      * } // getStateVariableList
      */
+
     /**
      * Deactivate the Logix. This method disconnects the Logix from all input
      * objects and stops it from being triggered to calculate.
@@ -932,7 +936,7 @@ public class DefaultLogix extends AbstractNamedBean
                 + "\" when removing");  // NOI18N
     }
 
-    /**
+    /* /**
      * Assembles a list of state variables that both trigger the Logix, and are
      * changed by it. Returns true if any such variables were found. Returns
      * false otherwise. Can be called when Logix is enabled.
@@ -1039,6 +1043,7 @@ public class DefaultLogix extends AbstractNamedBean
      * public ArrayList
      * <String[]> getLoopGremlins() {return(loopGremlins);}
      */
+
     /**
      * Not needed for Logixs - included to complete implementation of the
      * NamedBean interface.
@@ -1056,7 +1061,6 @@ public class DefaultLogix extends AbstractNamedBean
     @Override
     public void setState(int state) {
         log.warn("Unexpected call to setState in DefaultLogix.");  // NOI18N
-        return;
     }
 
     @Override
@@ -1093,5 +1097,31 @@ public class DefaultLogix extends AbstractNamedBean
         }
     }
 
+    @Override
+    public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
+        List<NamedBeanUsageReport> report = new ArrayList<>();
+        if (bean != null) {
+            for (int i = 0; i < getNumConditionals(); i++) {
+                DefaultConditional cdl = (DefaultConditional) getConditional(getConditionalByNumberOrder(i));
+                cdl.getStateVariableList().forEach((variable) -> {
+                    if (bean.equals(variable.getBean())) {
+                        report.add(new NamedBeanUsageReport("ConditionalVariable", cdl, variable.toString()));
+                    }
+                    if (bean.equals(variable.getNamedBeanData())) {
+                        report.add(new NamedBeanUsageReport("ConditionalVariableData", cdl, variable.toString()));
+                    }
+                });
+                cdl.getActionList().forEach((action) -> {
+                    if (bean.equals(action.getBean())) {
+                        boolean triggerType = cdl.getTriggerOnChange();
+                        report.add(new NamedBeanUsageReport("ConditionalAction", cdl, action.description(triggerType)));
+                    }
+                });
+            }
+        }
+        return report;
+    }
+
     private final static Logger log = LoggerFactory.getLogger(DefaultLogix.class);
+
 }

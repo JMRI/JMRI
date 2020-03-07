@@ -20,9 +20,8 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-
-<div class="nomenu" id="mBody">
+<!--#include virtual="/Header.shtml" -->
+  <div class="nomenu" id="mBody">
   <div id="mainContent">
 
       <h1>JMRI: Signal Logic Source Frame</h1>
@@ -34,7 +33,7 @@
       automatically discover all the Signal Mast Logics based upon
       the Layout Editor Panel.</p>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

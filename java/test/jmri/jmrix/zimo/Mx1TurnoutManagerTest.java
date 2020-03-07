@@ -16,23 +16,25 @@ public class Mx1TurnoutManagerTest {
 
     @Test
     public void testCTor() {
-        Mx1TurnoutManager t = new Mx1TurnoutManager(tc,"Z");
-        Assert.assertNotNull("exists",t);
+        Mx1TurnoutManager t = new Mx1TurnoutManager(tc.getAdapterMemo());
+        Assert.assertNotNull("exists", t);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        Mx1SystemConnectionMemo memo = new Mx1SystemConnectionMemo();
         tc = new Mx1TrafficController(){
            @Override
            public boolean status(){
               return true;
            }
            @Override
-           public void sendMx1Message(Mx1Message m,Mx1Listener reply) {
+           public void sendMx1Message(Mx1Message m, Mx1Listener reply) {
            }
         };
+        tc.setAdapterMemo(memo);
     }
 
     @After

@@ -2,6 +2,7 @@ package jmri.jmrix.sprog.pi.pisprognano;
 
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
 
+
 /**
  * Implements SerialPortAdapter for the Sprog system.
  * <p>
@@ -26,11 +27,20 @@ public class PiSprogNanoSerialDriverAdapter
     }
 
     /**
-     * Get an array of valid baud rates. This is currently only 115,200 bps
+     * {@inheritDoc}
+     * Currently only 115,200 bps
      */
     @Override
     public String[] validBaudRates() {
         return new String[]{"115,200 bps"};
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return new int[]{115200};
     }
 
     /**

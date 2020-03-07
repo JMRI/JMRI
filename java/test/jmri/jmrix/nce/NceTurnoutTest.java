@@ -43,6 +43,7 @@ public class NceTurnoutTest extends AbstractTurnoutTestBase {
     public void testCanLockModes() {
         // prepare an interface
         tcis = new NceTrafficControlScaffold() {
+            @Override
             public int getUsbSystem() { return NceTrafficController.USB_SYSTEM_NONE; }
         };
 

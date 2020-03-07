@@ -15,10 +15,10 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>The Turnout Table</h1>
 
       <p>This table contains a list of all Turnouts that exist for
@@ -265,7 +265,8 @@
         menu.</dd>
       </dl>
 
-      <h2><a name="Turnout_Feedback"></a>Turnout Feedback</h2>
+      <a name="Turnout_Feedback" id="Turnout_Feedback"></a>
+      <h2>Turnout Feedback</h2>
 
       <p>Model railroaders want different things when it comes to
       knowing the status of the turnouts on their layout. Some are
@@ -489,7 +490,7 @@
       being monitored by the JMRI program and are included in the
       Route will be locked. See the <a href=
       "RouteTable.shtml">Routes help page</a> for more information.
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

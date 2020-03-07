@@ -2,9 +2,7 @@ package jmri.jmrix.mqtt;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for MqttConnectionConfig class.
@@ -15,6 +13,7 @@ import org.junit.Test;
 public class MqttConnectionConfigTest extends jmri.jmrix.AbstractNetworkConnectionConfigTestBase {
 
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initDefaultUserMessagePreferences();
@@ -22,8 +21,9 @@ public class MqttConnectionConfigTest extends jmri.jmrix.AbstractNetworkConnecti
     }
 
     @After
+    @Override
     public void tearDown() {
-        cc=null;
+        cc = null;
         JUnitUtil.tearDown();
     }
 }

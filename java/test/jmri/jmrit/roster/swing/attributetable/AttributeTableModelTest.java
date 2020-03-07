@@ -1,6 +1,5 @@
 package jmri.jmrit.roster.swing.attributetable;
 
-import jmri.InstanceManager;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.JUnitUtil;
@@ -65,10 +64,7 @@ public class AttributeTableModelTest {
         jmri.util.JUnitUtil.setUp();
 
         jmri.util.JUnitUtil.resetProfileManager();
-
-        // Create empty test instance
-        InstanceManager.reset(Roster.class);
-        InstanceManager.setDefault(Roster.class, new Roster());
+        JUnitUtil.initRosterConfigManager();
 
         // first entry
         Element e;

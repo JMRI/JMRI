@@ -20,10 +20,11 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="../SidebarUp.shtml" -->
     <div id="mainContent">
+
       <h1>Hardware Support: Lionel TMCC</h1><a name="hardware" id=
       "hardware"></a>
 
@@ -192,6 +193,20 @@
         <dd>Brake</dd>
       </dl>
 
+      <a name="tools" id="tools"></a>
+      <h2>JMRI TMCC Tools</h2>
+
+      <ul>
+        <li>TMCC network traffic can be viewed with <a href=
+        "../../../package/jmri/jmrix/tmcc/serialmon/SerialMonFrame.shtml">
+        Acela Monitor</a></li>
+
+        <li>Messages can be sent to TMCC devices with <a href=
+        "../../../package/jmri/jmrix/tmcc/packetgen/SerialPacketGenFrame.shtml">
+        Send Acela Packets</a></li>
+
+      </ul>
+
       <a name="documentation" id="documentation"></a>
       <h3>TMCC New Entry Format Summary</h3>
       <p>Here's a summary on how to enter the address for a new item (eg. Turnouts):</p>
@@ -215,7 +230,7 @@
           <td> </td>
           <td> </td>
           <td>1</td>
-          <td>511</td>
+          <td>99</td>
         </tr>
       </table>
       <!-- this table is an excerpt from the table in the help/en/html/doc/Technical/Names.shtml
@@ -229,7 +244,7 @@
       <p>The <a href=
       "http://legacy.lionel.com/GettingStarted/LionelTechnology/legacy/legacyHome.cfm">
       Lionel Legacy</a> website.</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

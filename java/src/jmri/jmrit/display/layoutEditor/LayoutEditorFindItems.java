@@ -3,7 +3,7 @@ package jmri.jmrit.display.layoutEditor;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.CheckReturnValue;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.SignalHead;
@@ -196,7 +196,7 @@ public class LayoutEditorFindItems {
     }
 
     @CheckReturnValue
-    public LayoutTurnout findLayoutTurnoutByBean(@Nullable NamedBean bean) {
+    public LayoutTurnout findLayoutTurnoutByBean(@CheckForNull NamedBean bean) {
         List<LayoutTurnout> layoutTurnouts = layoutEditor.getLayoutTurnouts();
         if (bean instanceof SignalMast) {
             for (LayoutTurnout t : layoutTurnouts) {

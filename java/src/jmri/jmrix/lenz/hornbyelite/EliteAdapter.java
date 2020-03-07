@@ -25,15 +25,12 @@ import purejavacomm.UnsupportedCommOperationException;
  * @author Bob Jacobsen Copyright (C) 2002
  * @author Paul Bender, Copyright (C) 2003,2008-2010
  */
-public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix.SerialPortAdapter {
+public class EliteAdapter extends XNetSerialPortController {
 
     public EliteAdapter() {
         super(new EliteXNetSystemConnectionMemo());
         option1Name = "FlowControl"; // NOI18N
         options.put(option1Name, new Option(Bundle.getMessage("HornbyEliteConnectionLabel"), validOption1));
-        option2Name = Bundle.getMessage("BufferTitle");
-        options.put(option2Name, new Option(Bundle.getMessage("HornbyEliteCheckLabel"), validOption2));
-        setCheckBuffer(true); // default to true for elite
         this.manufacturerName = EliteConnectionTypeList.HORNBY;
     }
 
@@ -157,12 +154,7 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
      */
     protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
-        int baud = validSpeedValues[0];  // default, but also defaulted in the initial value of selectedSpeed
-        for (int i = 0; i < validSpeeds.length; i++) {
-            if (validSpeeds[i].equals(mBaudRate)) {
-                baud = validSpeedValues[i];
-            }
-        }
+        int baud = currentBaudNumber(mBaudRate);
         SerialUtil.setSerialPortParams(activeSerialPort, baud,
                 SerialPort.DATABITS_8,
                 SerialPort.STOPBITS_1,
@@ -181,9 +173,20 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
          CheckBuffer = false;*/
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] validBaudRates() {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 
     /**
@@ -196,12 +199,16 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
             Bundle.getMessage("Baud57600"), Bundle.getMessage("Baud115200")};
     protected int[] validSpeedValues = new int[]{9600, 19200, 38400, 57600, 115200};
 
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
+    }
+
     // meanings are assigned to these above, so make sure the order is consistent
     protected String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionNo"), Bundle.getMessage("FlowOptionHw")};
 
     private boolean opened = false;
     InputStream serialStream = null;
-
 
     /**
      * @deprecated JMRI Since 4.4 instance() shouldn't be used. Convert to JMRI multi-system support structure.

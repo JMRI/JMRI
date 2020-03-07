@@ -10,12 +10,14 @@ public class RfidStreamConnectionConfigTest extends jmri.jmrix.AbstractConnectio
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         cc = new RfidStreamConnectionConfig();
     }
 
     @After
+    @Override
     public void tearDown() {
 	cc = null;
         jmri.util.JUnitUtil.tearDown();

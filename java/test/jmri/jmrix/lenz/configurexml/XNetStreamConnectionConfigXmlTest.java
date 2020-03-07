@@ -14,6 +14,7 @@ public class XNetStreamConnectionConfigXmlTest extends jmri.jmrix.configurexml.A
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         xmlAdapter = new XNetStreamConnectionConfigXml();
@@ -21,6 +22,7 @@ public class XNetStreamConnectionConfigXmlTest extends jmri.jmrix.configurexml.A
     }
 
     @After
+    @Override
     public void tearDown() {
         // if we've started a traffic controller, dispose of it
         if (cc.getAdapter() != null) {

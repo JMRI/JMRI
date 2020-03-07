@@ -71,6 +71,9 @@
 -err:+includeAssertNull
 -err:+inheritNullAnnot
 -err:+intfAnnotation
+  # redundant super-interfaces
+-err:+intfRedundant
+
 -err:+intfNonInherited
 -err:+maskedCatchBlocks
 -err:+noEffectAssign
@@ -95,7 +98,6 @@
 
 # Checks we choose not to enforce as our common style
 -warn:-boxing
--warn:-intfRedundant
 -warn:-nls
 -warn:-paramAssign
 -warn:-serial
@@ -116,6 +118,7 @@
 
     # 14 outstanding items
 -warn:-deadCode
+-warn:-allDeadCode
 
     # 22 outstanding items
 -warn:-syncOverride
@@ -131,8 +134,6 @@
 
 -warn:-all-static-method
 -warn:-emptyBlock
-
--warn:-allDeadCode
 
   # flags methods that can be made static because they don't access data member
   # but that just seems distracting somehow

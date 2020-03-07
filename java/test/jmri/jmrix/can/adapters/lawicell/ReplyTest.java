@@ -73,6 +73,7 @@ public class ReplyTest extends jmri.jmrix.AbstractMessageTest {
     }
 
     @After
+    @Override
     public void tearDown() {
 	m = null;
         JUnitUtil.tearDown();

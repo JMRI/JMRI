@@ -16,6 +16,7 @@ public class Z21SimulatorConnectionConfigXmlTest extends jmri.jmrix.configurexml
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         xmlAdapter = new Z21SimulatorConnectionConfigXml();
@@ -23,6 +24,7 @@ public class Z21SimulatorConnectionConfigXmlTest extends jmri.jmrix.configurexml
     }
 
     @After
+    @Override
     public void tearDown() {
         xmlAdapter = null;
         if(cc.getAdapter()!=null) {

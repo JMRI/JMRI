@@ -191,7 +191,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
 
     /*
      * Set the server's host name and port
-     * using mdns autoconfiguration.
+     * using MDNS autoconfiguration.
      * Default implementation does nothing.
      */
     @Override
@@ -295,7 +295,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
     }
 
     /**
-     * Attempts to reconnect to a failed Server
+     * Attempts to reconnect to a failed Server.
      */
     public void reconnect() {
 
@@ -383,7 +383,8 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
      * Set the connection timeout to the specified value.
      * If the socket is not null, set the SO_TIMEOUT option on the
      * socket as well.
-     * @param t timeout value in milliseconds.
+     *
+     * @param t timeout value in milliseconds
      */
     protected void setConnectionTimeout(int t) {
         connTimeout = t;
@@ -398,7 +399,8 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
 
     /*
      * Get the connection timeout value.
-     * @return timeout value in milliseconds.
+     *
+     * @return timeout value in milliseconds
      */
     protected int getConnectionTimeout() {
         return connTimeout;

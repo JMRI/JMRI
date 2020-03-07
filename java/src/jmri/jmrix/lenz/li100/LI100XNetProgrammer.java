@@ -2,13 +2,10 @@ package jmri.jmrix.lenz.li100;
 
 import jmri.ProgrammingMode;
 import jmri.jmrix.lenz.XNetConstants;
-import jmri.jmrix.lenz.XNetListener;
 import jmri.jmrix.lenz.XNetMessage;
 import jmri.jmrix.lenz.XNetProgrammer;
 import jmri.jmrix.lenz.XNetReply;
 import jmri.jmrix.lenz.XNetTrafficController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Programmer support for Lenz XpressNet.
@@ -27,7 +24,7 @@ import org.slf4j.LoggerFactory;
  * @author Paul Bender Copyright (c) 2003, 2004, 2005, 2009
  * @author Giorgio Terdina Copyright (c) 2007
  */
-public class LI100XNetProgrammer extends XNetProgrammer implements XNetListener {
+public class LI100XNetProgrammer extends XNetProgrammer {
 
     static private final int RETURNSENT = 3;
 

@@ -81,6 +81,7 @@ public class RpsPositionIconTest extends PositionableTestBase {
     }
 
     @Before
+    @Override
     public void setUp() {
         super.setUp();
         JUnitUtil.initDefaultUserMessagePreferences();

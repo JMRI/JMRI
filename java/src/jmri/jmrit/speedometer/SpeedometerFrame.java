@@ -45,17 +45,17 @@ import org.slf4j.LoggerFactory;
 public class SpeedometerFrame extends jmri.util.JmriJFrame {
 
     final String blank = "       ";
-    JTextField startSensor = new JTextField(5); // N11N
+    JTextField startSensor = new JTextField(5);
     javax.swing.ButtonGroup startGroup = new javax.swing.ButtonGroup();
     javax.swing.JRadioButton startOnEntry = new javax.swing.JRadioButton(Bundle.getMessage("RadioButtonEntry"));
     javax.swing.JRadioButton startOnExit = new javax.swing.JRadioButton(Bundle.getMessage("RadioButtonExit"));
 
-    JTextField stopSensor1 = new JTextField(5);  // N11N
+    JTextField stopSensor1 = new JTextField(5);
     javax.swing.ButtonGroup stopGroup1 = new javax.swing.ButtonGroup();
     javax.swing.JRadioButton stopOnEntry1 = new javax.swing.JRadioButton(Bundle.getMessage("RadioButtonEntry"));
     javax.swing.JRadioButton stopOnExit1 = new javax.swing.JRadioButton(Bundle.getMessage("RadioButtonExit"));
 
-    public JTextField stopSensor2 = new JTextField(5);  // N11N
+    public JTextField stopSensor2 = new JTextField(5);
     javax.swing.ButtonGroup stopGroup2 = new javax.swing.ButtonGroup();
     javax.swing.JRadioButton stopOnEntry2 = new javax.swing.JRadioButton(Bundle.getMessage("RadioButtonEntry"));
     javax.swing.JRadioButton stopOnExit2 = new javax.swing.JRadioButton(Bundle.getMessage("RadioButtonExit"));
@@ -397,7 +397,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
                             speed = (feet / 100000.f) * (3600.f / secs);
                         }
                         if (log.isDebugEnabled()) {
-                            log.debug("calc from " + secs + "," + feet + ":" + speed);
+                            log.debug("calc from {},{}:{}", secs, feet, speed);
                         }
                         result1.setText(String.valueOf(speed).substring(0, 4));
                         String time = String.valueOf(secs);
@@ -451,7 +451,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
                             speed = (feet / 100000.f) * (3600.f / secs);
                         }
                         if (log.isDebugEnabled()) {
-                            log.debug("calc from " + secs + "," + feet + ":" + speed);
+                            log.debug("calc from {},{}:{}", secs, feet, speed);
                         }
                         result2.setText(String.valueOf(speed).substring(0, 4));
                         String time = String.valueOf(secs);

@@ -36,11 +36,6 @@ public class Z21XNetPacketizer extends XNetPacketizer {
        }
     }
 
-    @Override
-    protected void terminate(){
-        // do nothing on terminate.
-    }
-
-    private final static Logger log = LoggerFactory.getLogger(Z21XNetPacketizer.class);
+    private static final Logger log = LoggerFactory.getLogger(Z21XNetPacketizer.class);
 
 }

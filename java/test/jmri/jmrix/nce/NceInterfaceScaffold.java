@@ -12,6 +12,9 @@ import org.slf4j.LoggerFactory;
 public class NceInterfaceScaffold extends NceTrafficController {
 
     public NceInterfaceScaffold() {
+        NceSystemConnectionMemo memo = new NceSystemConnectionMemo();
+        super.setAdapterMemo(memo);
+        memo.setNceTrafficController(this);
     }
 
     // override some NceInterfaceController methods for test purposes

@@ -3,7 +3,7 @@ package jmri.jmrix.loconet.lnsvf2;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;
 import javax.annotation.CheckReturnValue;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  */
 public class Bundle extends jmri.jmrix.loconet.Bundle {
 
-    @Nullable
+    @CheckForNull
     private final static String name = "jmri.jmrix.loconet.lnsvf2.LnSvF2Bundle"; // NOI18N
 
     //
@@ -65,7 +65,7 @@ public class Bundle extends jmri.jmrix.loconet.Bundle {
     private final static Bundle b = new Bundle();
 
     @Override
-    @Nullable
+    @CheckForNull
     protected String bundleName() {
         return name;
     }

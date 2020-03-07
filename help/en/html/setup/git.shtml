@@ -8,7 +8,8 @@
 
   <title>JMRI Setup - Sharing Files with GitHub</title>
   <meta name="keywords" content=
-  "java model railroad JMRI install Dropbox"><!-- Style -->
+  "java model railroad JMRI install Dropbox">
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -16,15 +17,14 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
       <!-- Page Body -->
 
@@ -49,14 +49,6 @@
       when changes are stored, have multiple versions on branches, 
       and in general manage your JMRI configurations very closely;
       but if you just want share files, Dropbox may be easier.
-      
-      
-      
-      
-      
-      
-      
-      
       
       <p>Using <a href="https://www.dropbox.com" target=
       "_blank">Dropbox</a> rather than a shared folder or network
@@ -189,7 +181,7 @@
         <li>Preferences &#8209;&gt; Locations &#8209;&gt; User
         Files Location and set it to the JMRI folder you created in
         Dropbox.</li>
-      </ul><!--#include virtual="/Footer" -->
+      </ul><!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

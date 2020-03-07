@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2004, 2007 All rights reserved -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -13,9 +12,11 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <version author="Nigel Cliffe" version="1.0" lastUpdated="2019/5/15"/>
+  <version author="Nigel Cliffe" version="1.1" lastUpdated="2019/5/27"/>
   <!--   N Gauge Society Hunslet shunter, which has integral DCC circuit board -->
   <!--   using a slightly customised CT decoder.  Nigel Cliffe, May 2019.    -->
+  <!--   Version 1.1, 27 May 2019. Added CV49 to control flashing cab light operation in analogue and DCC.  -->
+  <!--   First version 1.0, 5 May 2019 --> 
   <!--   File derived from CT Electronik DCX series decoders,  Version 1.11 -->
   
   
@@ -636,6 +637,19 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F12 controls output 14</label>
       </variable>
+	  
+	  <variable CV="49" default="0" item="Analog (AC) Mode">  <!--  forcing item onto analogue pane as well as output and dimming pane -->
+	    <enumVal>
+			<enumChoice choice="On" value="0">
+				<choice>On</choice>	
+			</enumChoice>
+			<enumChoice choice="Off" value="32">
+				<choice>Off</choice>					
+			</enumChoice>
+		</enumVal>
+		<label>Hunslet Cab Roof Light</label>
+	  </variable>
+		
       <variable CV="50" default="255" item="EMF Feedback Cutout">
         <decVal min="0" max="255"/>
         <label>BEMF Influence</label>
@@ -1562,6 +1576,22 @@
     <name>Output Dimming and Light Effects</name>
     <name xml:lang="de">Dimmoptionen/Lichteffekte</name>
     <column>
+	  <label>
+		<text>Cab Roof Light</text>
+	  </label>
+	  <label>
+		<text>CV49</text>
+	  </label>
+      <separator/>
+      <label>
+        <text>  </text>
+      </label>
+      <display item="Analog (AC) Mode" label="Hunslet Cab Roof Light"/>
+	  <label>
+        <text>  </text>
+      </label><label>
+        <text>  </text>
+      </label>
       <label>
         <text>Output Dimming</text>
         <text xml:lang="de">Dimmen der Funktionsausgänge</text>

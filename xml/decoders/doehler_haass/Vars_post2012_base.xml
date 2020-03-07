@@ -23,8 +23,20 @@
         <surname>Billon</surname>
       </personname>
     </author>
+    <author>
+      <personname>
+        <firstname>Alain</firstname>
+        <surname>Le Marchand</surname>
+      </personname>
+    </author>
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>3</revnumber>
+      <date>2019-07-28</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>Add tooltip for CV134</revremark>
+    </revision>
     <revision>
       <revnumber>2</revnumber>
       <date>2015-03-05</date>
@@ -143,5 +155,7 @@
     <label xml:lang="fr">Limite de signal asymétrique</label>
     <label xml:lang="de">Entscheidungsschwelle für Asymmetrie</label>
     <label xml:lang="ca">Llindar de senyal assimètric</label>
+    <tooltip>&lt;html&gt;Default value 6 corresponds approximately to 0.7 volt asymmetry&lt;br&gt;and thus to the forward voltage of a silicon diode.&lt;br&gt;Values smaller 3 are not useful, values greater 6 on demand.&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;Der Standardwert 6 entspricht in etwa 0,7 Volt Asymmetrie&lt;br&gt; und damit der Vorwärtsspannung einer Siliciumdiode.&lt;br&gt; Werte kleiner als 3 sind nicht sinnvoll, Werte größer als 6 bei Bedarf.&lt;/html&gt;</tooltip>
   </variable>
 </variables>

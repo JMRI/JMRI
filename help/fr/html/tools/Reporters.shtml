@@ -8,55 +8,47 @@
 
   <title>JMRI: Reporter Documentation</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content=
-  "sensor model railroad JMRI decoderpro panelpro"><!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <meta name="keywords" content="sensor model railroad JMRI decoderpro panelpro">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <div id="container">
-    <!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
-    <div id="mBody">
-      <!--#include virtual="Sidebar" -->
-
-      <div id="mainContent">
-      <!-- Page Body -->
-        <H1>s
-	JMRI: Documentation Rapports
-        </H1>
-
-
+<h1>JMRI: Documentation Rapports</h1>
 
 <h2>Qu'est ce qu'un Rapport</h2>
 
 <p>
 Un rapport est le moyen pour JMRI de repr&#233;senter l'information retourn&#233;e par le r&#233;seau.
-<P>
+<p>
 Un journal peut contenir des informations arbitraires, contrairement &#224; un capteur qui n'est qu'ACTIFf 
 ou INACTIF. Chaque rapport est associ&#233; &#224; une source d'information sp&#233;cifique
 sur le r&#233;seau, et fait que les informations p&#233;riph&#233;riques sont disponibles pour le reste de JMRI.
-<P>
+<p>
 La mise en oeuvre initiale est pour le transpondage LocoNet (Digitrax) ,
 o&#249; le rappost donne acc&#232;s &#224; l'information
 &#224; partir de cartes Digitrax
 <a href="http://www.digitrax.com/prd_statdec_bdl168.php"> BDL168 </a>  avec
-RX4 href="http://www.digitrax.com/prd_statdec_rx4.php"><a transpondage capteurs </a>.
+RX4 <a href="http://www.digitrax.com/prd_statdec_rx4.php">transpondage capteurs</a>.
 Lorsque le BDL168 rapporte qu'un d&#233;codeur a &#233;t&#233; vu
 dans un canton transpondeur ou n'est pas plus visible
 dans le canton, le rapport correspondant affichera des messages
 comme "1234 entrer" et "1234 sortie". Il y a aussi un rapport LocoNet
 mis en oeuvre pour l'affichage des messages des
-<a href="http://www.rjftrains.com/intellibox/uhlenbrock.htm"> d&#233;tecteurs Lissy </a>.
+<a href="http://www.rjftrains.com/intellibox/uhlenbrock.htm">d&#233;tecteurs Lissy</a>.</p>
 
-<h2>Comment Configurer les Rapports</H2>
+<h2>Comment Configurer les Rapports</h2>
 
 <h3>Le Tableau Rapport </h3>
 Le
@@ -73,36 +65,34 @@ Objets Reporter pour les appareils sur le r&#233;seau.
 La valeur d'un rapport peut &#234;tre affich&#233;e sur un panneau via une ic&#244;ne.
 Pour ce faire:
 <ul>
-<li> Sur la fen&#234;tre &#233;diteur Panneau de votre panneau, trouver le bouton "Ajouter Rapport"
-.
-<li> Dans la bo&#238;te de texte &#224; c&#244;t&#233; de ce bouton, tapez le nom utilisateur ou syst&#232;me du
-Rapportr d&#233;sir&#233;.
-<li> Cliquez sur le bouton. L'ic&#244;ne Rapport sera plac&#233;e sur le panneau.
-Si elle n'est pas visible, ce pourrait &#234;tre parce que la valeur est actuellement vide;
-utiliser le tableau Rapport pour changer la valeur &#224; quelque chose qui sera visible.
-<li> Vous pouvez faire glisser l'ic&#244;ne &#224; l'endroit o&#249; vous voulez dans la mani&#232;re habituelle.
-<li> Le menu pop-up sur l'ic&#244;ne vous permettra de modifier le formatage.
-</Ul>
+    <li> Sur la fen&#234;tre &#233;diteur Panneau de votre panneau, trouver le bouton "Ajouter Rapport"
+    .
+    <li> Dans la bo&#238;te de texte &#224; c&#244;t&#233; de ce bouton, tapez le nom utilisateur ou syst&#232;me du
+    Rapportr d&#233;sir&#233;.
+    <li> Cliquez sur le bouton. L'ic&#244;ne Rapport sera plac&#233;e sur le panneau.
+    Si elle n'est pas visible, ce pourrait &#234;tre parce que la valeur est actuellement vide;
+    utiliser le tableau Rapport pour changer la valeur &#224; quelque chose qui sera visible.
+    <li> Vous pouvez faire glisser l'ic&#244;ne &#224; l'endroit o&#249; vous voulez dans la mani&#232;re habituelle.
+    <li> Le menu pop-up sur l'ic&#244;ne vous permettra de modifier le formatage.
+</ul>
+
 <h2>Affichage des Valeurs Rapport sur les Panneaux </h2>
 La valeur d'un rapport peut &#234;tre affich&#233;e sur un panneau via une ic&#244;ne.
 Pour ce faire:
-	<ul>
+<ul>
 	<li> Sur la fen&#234;tre &#233;diteur Panneau de votre panneau, trouver le bouton "Ajouter Rapport"
-	bouton.
+        bouton.</li>
 	<li> Dans la bo&#238;te de texte &#224; c&#244;t&#233; de ce bouton, tapez le nom utilisateur ou syst&#232;me du
-	Rapportr d&#233;sir&#233;.
+        Rapportr d&#233;sir&#233;.</li>
 	<li> Cliquez sur le bouton. L'ic&#244;ne Rapport sera plac&#233;e sur le panneau.
 	Si elle n'est pas visible, ce pourrait &#234;tre parce que la valeur est actuellement vide;
-	utiliser le tableau Rapport pour changer la valeur &#224; quelque chose qui sera visible.
-	<li> Vous pouvez faire glisser l'ic&#244;ne &#224; l'endroit o&#249; vous voulez dans la mani&#232;re habituelle.
-	<li> Le menu pop-up sur l'ic&#244;ne vous permettra de modifier le formatage.
-	</Ul>	
+        utiliser le tableau Rapport pour changer la valeur &#224; quelque chose qui sera visible.</li>
+    <li> Vous pouvez faire glisser l'ic&#244;ne &#224; l'endroit o&#249; vous voulez dans la mani&#232;re habituelle.</li>
+    <li> Le menu pop-up sur l'ic&#244;ne vous permettra de modifier le formatage.</li>
+</ul>
 
-
-<!--#include virtual="/Footer" -->
-
+<!--#include virtual="/Footer.shtml" -->
       </div><!-- closes #mainContent-->
     </div><!-- closes #mBody-->
-  </div><!-- closes #container -->
 </body>
 </html>

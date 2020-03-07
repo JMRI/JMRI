@@ -5,8 +5,7 @@ import org.junit.After;
 import org.junit.Before;
 
 /**
- * JUnit tests for the DCCppNetworkPortController class
- * <p>
+ * JUnit tests for the DCCppNetworkPortController class.
  *
  * @author      Paul Bender Copyright (C) 2016
  */
@@ -37,6 +36,8 @@ public class DCCppNetworkPortControllerTest extends jmri.jmrix.AbstractNetworkPo
     @Override
     @After
     public void tearDown(){
-       JUnitUtil.tearDown();
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.tearDown();
     }
+
 }

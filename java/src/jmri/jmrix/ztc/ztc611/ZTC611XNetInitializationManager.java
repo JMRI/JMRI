@@ -42,11 +42,11 @@ public class ZTC611XNetInitializationManager extends AbstractXNetInitializationM
         systemMemo.setCommandStation(systemMemo.getXNetTrafficController().getCommandStation());
         jmri.InstanceManager.store(systemMemo.getCommandStation(), jmri.CommandStation.class);
         systemMemo.setConsistManager(new jmri.jmrix.lenz.XNetConsistManager(systemMemo));
-        systemMemo.setTurnoutManager(new ZTC611XNetTurnoutManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
+        systemMemo.setTurnoutManager(new ZTC611XNetTurnoutManager(systemMemo));
         jmri.InstanceManager.setTurnoutManager(systemMemo.getTurnoutManager());
-        systemMemo.setLightManager(new jmri.jmrix.lenz.XNetLightManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
+        systemMemo.setLightManager(new jmri.jmrix.lenz.XNetLightManager(systemMemo));
         jmri.InstanceManager.setLightManager(systemMemo.getLightManager());
-        systemMemo.setSensorManager(new jmri.jmrix.lenz.XNetSensorManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
+        systemMemo.setSensorManager(new jmri.jmrix.lenz.XNetSensorManager(systemMemo));
         jmri.InstanceManager.setSensorManager(systemMemo.getSensorManager());
 
         log.debug("XpressNet Initialization Complete");

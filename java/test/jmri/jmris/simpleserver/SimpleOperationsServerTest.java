@@ -4,10 +4,12 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 /**
  * Tests for the jmri.jmris.simpleserver.SimpleOperationsServer class
@@ -23,14 +25,14 @@ public class SimpleOperationsServerTest {
     @Test
     public void testCtor() {
         SimpleOperationsServer a = new SimpleOperationsServer(input, output);
-        Assert.assertNotNull(a);
+        assertThat(a).isNotNull();
     }
 
     @Test
     public void testConnectionCtor() {
         jmri.jmris.JmriConnectionScaffold jcs = new jmri.jmris.JmriConnectionScaffold(output);
         SimpleOperationsServer a = new SimpleOperationsServer(jcs);
-        Assert.assertNotNull(a);
+        assertThat(a).isNotNull();
     }
 
     // test sending a message.
@@ -38,24 +40,13 @@ public class SimpleOperationsServerTest {
     public void testSendMessage() {
         SimpleOperationsServer a = new SimpleOperationsServer(input, output);
         // NOTE: this test uses reflection to test a private method.
-        java.lang.reflect.Method sendMessageMethod = null;
-        try {
-            sendMessageMethod = a.getClass().getDeclaredMethod("sendMessage", String.class);
-        } catch (java.lang.NoSuchMethodException nsm) {
-            Assert.fail("Could not find method sendMessage in SimpleOperationsServer class. ");
-        }
-
-        Assert.assertNotNull(sendMessageMethod);
-        sendMessageMethod.setAccessible(true);
-        try {
-            sendMessageMethod.invoke(a, "Hello World");
-            Assert.assertEquals("SendMessage Check", "Hello World", sb.toString());
-        } catch (java.lang.IllegalAccessException iae) {
-            Assert.fail("Could not access method sendMessage in SimpleOperationsServer class");
-        } catch (java.lang.reflect.InvocationTargetException ite) {
-            Throwable cause = ite.getCause();
-            Assert.fail("sendMessage executon failed reason: " + cause.getMessage());
-        }
+        Throwable thrown = catchThrowable( () -> {
+                java.lang.reflect.Method sendMessageMethod = a.getClass().getDeclaredMethod("sendMessage", String.class);
+                sendMessageMethod.setAccessible(true);
+                sendMessageMethod.invoke(a, "Hello World");
+        });
+        assertThat(thrown).withFailMessage("Could not execute sendMessage via reflection {}",thrown);
+        assertThat(sb.toString()).isEqualTo("Hello World").withFailMessage("SendMessage Check");
     }
 
     // test sending a message.
@@ -64,25 +55,14 @@ public class SimpleOperationsServerTest {
         jmri.jmris.JmriConnectionScaffold jcs = new jmri.jmris.JmriConnectionScaffold(output);
         SimpleOperationsServer a = new SimpleOperationsServer(jcs);
         // NOTE: this test uses reflection to test a private method.
-        java.lang.reflect.Method sendMessageMethod = null;
-        try {
-            sendMessageMethod = a.getClass().getDeclaredMethod("sendMessage", String.class);
-        } catch (java.lang.NoSuchMethodException nsm) {
-            Assert.fail("Could not find method sendMessage in SimpleOperationsServer class. ");
-        }
-
-        // override the default permissions.
-        Assert.assertNotNull(sendMessageMethod);
-        sendMessageMethod.setAccessible(true);
-        try {
+        Throwable thrown = catchThrowable( () -> {
+            java.lang.reflect.Method sendMessageMethod = a.getClass().getDeclaredMethod("sendMessage", String.class);
+            // override the default permissions.
+            sendMessageMethod.setAccessible(true);
             sendMessageMethod.invoke(a, "Hello World");
-            Assert.assertEquals("SendMessage Check", "Hello World", jcs.getOutput());
-        } catch (java.lang.IllegalAccessException iae) {
-            Assert.fail("Could not access method sendMessage in SimpleOperationsServer class");
-        } catch (java.lang.reflect.InvocationTargetException ite) {
-            Throwable cause = ite.getCause();
-            Assert.fail("sendMessage executon failed reason: " + cause.getMessage());
-        }
+        });
+        assertThat(thrown).withFailMessage("Could not execute sendMessage via reflection {}",thrown);
+        assertThat(jcs.getOutput()).isEqualTo("Hello World").withFailMessage("SendMessage Check");
     }
 
     // test sending the train list.
@@ -90,7 +70,7 @@ public class SimpleOperationsServerTest {
     public void testSendTrainList() {
         SimpleOperationsServer a = new SimpleOperationsServer(input, output);
         a.sendTrainList();
-        Assert.assertEquals("SendTrainList Check", "OPERATIONS , TRAINS=SFF\nOPERATIONS , TRAINS=STF\n", sb.toString());
+        assertThat(sb.toString()).isEqualTo("OPERATIONS , TRAINS=SFF\nOPERATIONS , TRAINS=STF\n").withFailMessage("SendTrainList Check");
     }
 
     // test sending the locations list.
@@ -98,7 +78,7 @@ public class SimpleOperationsServerTest {
     public void testSendLocationList() {
         SimpleOperationsServer a = new SimpleOperationsServer(input, output);
         a.sendLocationList();
-        Assert.assertEquals("SendLocationList Check", "OPERATIONS , LOCATIONS=North End Staging\nOPERATIONS , LOCATIONS=North Industries\nOPERATIONS , LOCATIONS=South End Staging\n", sb.toString());
+        assertThat(sb.toString()).isEqualTo("OPERATIONS , LOCATIONS=North End Staging\nOPERATIONS , LOCATIONS=North Industries\nOPERATIONS , LOCATIONS=South End Staging\n").withFailMessage("SendLocationList Check");
     }
 
     // test sending the full status of a train.
@@ -107,7 +87,7 @@ public class SimpleOperationsServerTest {
         new jmri.jmrit.operations.trains.TrainBuilder().build(InstanceManager.getDefault(TrainManager.class).getTrainById("1"));
         SimpleOperationsServer a = new SimpleOperationsServer(input, output);
         a.sendFullStatus(InstanceManager.getDefault(TrainManager.class).getTrainByName("STF"));
-        Assert.assertEquals("SendFullStatus Check", "OPERATIONS , TRAIN=STF , TRAINLOCATION=North End Staging , TRAINLENGTH=160 , TRAINWEIGHT=56 , TRAINCARS=4 , TRAINLEADLOCO , TRAINCABOOSE=CP C10099\n", sb.toString());
+        assertThat(sb.toString()).isEqualTo("OPERATIONS , TRAIN=STF , TRAINLOCATION=North End Staging , TRAINLENGTH=160 , TRAINWEIGHT=56 , TRAINCARS=4 , TRAINLEADLOCO , TRAINCABOOSE=CP C10099\n").withFailMessage("SendFullStatus Check");
     }
 
     // test sending the full status of a train.
@@ -117,7 +97,7 @@ public class SimpleOperationsServerTest {
         // Building a train causes the property change listener to send
         // full status of the train.
         new jmri.jmrit.operations.trains.TrainBuilder().build(InstanceManager.getDefault(TrainManager.class).getTrainById("1"));
-        Assert.assertEquals("SendFullStatus Check", "OPERATIONS , TRAIN=STF , TRAINLOCATION=North End Staging , TRAINLENGTH=160 , TRAINWEIGHT=56 , TRAINCARS=4 , TRAINLEADLOCO , TRAINCABOOSE=CP C10099\n", sb.toString());
+        assertThat(sb.toString()).isEqualTo("OPERATIONS , TRAIN=STF , TRAINLOCATION=North End Staging , TRAINLENGTH=160 , TRAINWEIGHT=56 , TRAINCARS=4 , TRAINLEADLOCO , TRAINCABOOSE=CP C10099\n").withFailMessage("SendFullStatus Check");
     }
 
     //test parsing an message from the client.
@@ -129,7 +109,7 @@ public class SimpleOperationsServerTest {
         SimpleOperationsServer a = new SimpleOperationsServer(input, output);
         a.parseStatus(inputString);
         // parsing the input causes a status report to be generated.
-        Assert.assertEquals("Train Command Response Check", "OPERATIONS , TRAIN=STF , TRAINLENGTH=160 , TRAINWEIGHT=56 , TRAINCARS=4 , TRAINCABOOSE=CP C10099 , TRAINLOCATION=North End Staging\n", sb.toString());
+        assertThat(sb.toString()).isEqualTo("OPERATIONS , TRAIN=STF , TRAINLENGTH=160 , TRAINWEIGHT=56 , TRAINCARS=4 , TRAINCABOOSE=CP C10099 , TRAINLOCATION=North End Staging\n").withFailMessage("Train Command Response Check");
     }
 
     @Test
@@ -144,7 +124,9 @@ public class SimpleOperationsServerTest {
         // instead of an assertEquals because the report ends in a date, which
         // changes with each run of the test.  We could generate the date, but
         // that is more work than required to verify the parsing was correct.
-        Assert.assertTrue("Terminate Command Response Check " + sb.toString(), sb.toString().startsWith("OPERATIONS , TRAIN=STF , TRAINLOCATION= , TRAINLENGTH=0 , TRAINWEIGHT=0 , TRAINCARS=0 , TRAINLEADLOCO , TRAINCABOOSE=\nOPERATIONS , TRAIN=STF , TERMINATE=Terminated"));
+        assertThat(sb.toString())
+                .startsWith("OPERATIONS , TRAIN=STF , TRAINLOCATION= , TRAINLENGTH=0 , TRAINWEIGHT=0 , TRAINCARS=0 , TRAINLEADLOCO , TRAINCABOOSE=\nOPERATIONS , TRAIN=STF , TERMINATE=Terminated")
+                .withFailMessage("Terminate Command Response Check {}",sb);
     }
 
     @Test
@@ -155,7 +137,7 @@ public class SimpleOperationsServerTest {
         SimpleOperationsServer a = new SimpleOperationsServer(input, output);
         a.parseStatus(inputString);
         // parsing the input causes a status report to be generated.
-        Assert.assertEquals("Trains Command Response Check", "OPERATIONS , TRAINS=SFF\nOPERATIONS , TRAINS=STF\n", sb.toString());
+        assertThat(sb.toString()).isEqualTo("OPERATIONS , TRAINS=SFF\nOPERATIONS , TRAINS=STF\n").withFailMessage("Trains Command Response Check");
     }
 
     @Test
@@ -166,11 +148,11 @@ public class SimpleOperationsServerTest {
         SimpleOperationsServer a = new SimpleOperationsServer(input, output);
         a.parseStatus(inputString);
         // parsing the input causes a status report to be generated.
-        Assert.assertEquals("Locations Command Response Check", "OPERATIONS , LOCATIONS=North End Staging\nOPERATIONS , LOCATIONS=North Industries\nOPERATIONS , LOCATIONS=South End Staging\n", sb.toString());
+        assertThat(sb.toString()).isEqualTo("OPERATIONS , LOCATIONS=North End Staging\nOPERATIONS , LOCATIONS=North Industries\nOPERATIONS , LOCATIONS=South End Staging\n").withFailMessage("Locations Command Response Check");
     }
 
     // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -193,8 +175,9 @@ public class SimpleOperationsServerTest {
         input = new java.io.DataInputStream(System.in);
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 

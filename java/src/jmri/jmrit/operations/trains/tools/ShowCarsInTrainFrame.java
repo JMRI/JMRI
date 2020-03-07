@@ -3,6 +3,7 @@ package jmri.jmrit.operations.trains.tools;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
@@ -12,6 +13,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.rollingstock.cars.Car;
@@ -21,9 +26,8 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainCommon;
+import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainManifestText;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Show Cars In Train Frame. This frame lists all cars assigned to a train in
@@ -36,6 +40,7 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
 
     Train _train = null;
     CarManager carManager = InstanceManager.getDefault(CarManager.class);
+    TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
 
     // labels
     JLabel textTrainName = new JLabel();
@@ -132,62 +137,61 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
     private void update() {
         log.debug("queue update");
         // use invokeLater to prevent deadlock
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                log.debug("update");
-                if (_train == null || _train.getRoute() == null) {
-                    return;
-                }
-                textTrainName.setText(_train.getIconName());
-                pCars.removeAll();
-                RouteLocation rl = _train.getCurrentLocation();
-                if (rl != null) {
-                    textLocationName.setText(rl.getLocation().getName());
-                    textNextLocationName.setText(_train.getNextLocationName());
-                    // add header
-                    int i = 0;
-                    addItemLeft(pCars, textPickUp, 0, 0);
-                    addItemLeft(pCars, textInTrain, 1, 0);
-                    addItemLeft(pCars, textSetOut, 2, i++);
-                    // block cars by destination
-                    // except for passenger cars, use car blocking
-                    boolean isOnlyPassenger = _train.isOnlyPassengerCars();
-                    for (RouteLocation rld : _train.getRoute().getLocationsBySequenceList()) {
-                        for (Car car : carManager.getByTrainDestinationList(_train)) {
-                            if ((car.getTrack() == null || car.getRouteLocation() == rl) &&
-                                    (car.getRouteDestination() == rld || (car.isPassenger() && isOnlyPassenger))) {
+        SwingUtilities.invokeLater(() -> {
+            log.debug("update");
+            if (_train == null || _train.getRoute() == null) {
+                return;
+            }
+            textTrainName.setText(_train.getIconName());
+            pCars.removeAll();
+            RouteLocation rl = _train.getCurrentLocation();
+            if (rl != null) {
+                textLocationName.setText(trainManager.isShowLocationHyphenNameEnabled()
+                        ? rl.getLocation().getName() : TrainCommon.splitString(rl.getLocation().getName()));
+                textNextLocationName.setText(trainManager.isShowLocationHyphenNameEnabled()
+                        ? _train.getNextLocationName() : TrainCommon.splitString(_train.getNextLocationName()));
+                // add header
+                int i = 0;
+                addItemLeft(pCars, textPickUp, 0, 0);
+                addItemLeft(pCars, textInTrain, 1, 0);
+                addItemLeft(pCars, textSetOut, 2, i++);
+                // block cars by destination
+                // except for passenger cars, use car blocking
+                boolean isOnlyPassenger = _train.isOnlyPassengerCars();
+                for (RouteLocation rld : _train.getRoute().getLocationsBySequenceList()) {
+                    for (Car car : carManager.getByTrainDestinationList(_train)) {
+                        if ((car.getTrack() == null || car.getRouteLocation() == rl) &&
+                                (car.getRouteDestination() == rld || (car.isPassenger() && isOnlyPassenger))) {
 
-                                log.debug("car ({}) routelocation ({}) track ({}) route destination ({})",
-                                        car.toString(), car
-                                                .getRouteLocation().getName(),
-                                        car.getTrackName(), car.getRouteDestination().getName());
-                                JCheckBox checkBox = new JCheckBox(TrainCommon.splitString(car.getRoadName()) +
-                                        " " +
-                                        TrainCommon.splitString(car.getNumber()));
-                                if (car.getRouteDestination() == rl) {
-                                    addItemLeft(pCars, checkBox, 2, i++); // set out
-                                } else if (car.getRouteLocation() == rl && car.getTrack() != null) {
-                                    addItemLeft(pCars, checkBox, 0, i++); // pick up
-                                } else {
-                                    addItemLeft(pCars, checkBox, 1, i++); // in train
-                                }
+                            log.debug("car ({}) routelocation ({}) track ({}) route destination ({})",
+                                    car.toString(), car
+                                            .getRouteLocation().getName(),
+                                    car.getTrackName(), car.getRouteDestination().getName());
+                            JCheckBox checkBox = new JCheckBox(TrainCommon.splitString(car.getRoadName()) +
+                                    " " +
+                                    TrainCommon.splitString(car.getNumber()));
+                            if (car.getRouteDestination() == rl) {
+                                addItemLeft(pCars, checkBox, 2, i++); // set out
+                            } else if (car.getRouteLocation() == rl && car.getTrack() != null) {
+                                addItemLeft(pCars, checkBox, 0, i++); // pick up
+                            } else {
+                                addItemLeft(pCars, checkBox, 1, i++); // in train
                             }
                         }
-                        if (isOnlyPassenger) {
-                            break;
-                        }
                     }
-
-                    if (rl != _train.getTrainTerminatesRouteLocation()) {
-                        textStatus.setText(getStatus(rl));
-                    } else {
-                        textStatus.setText(MessageFormat.format(TrainManifestText.getStringTrainTerminates(),
-                                new Object[]{_train.getTrainTerminatesName()}));
+                    if (isOnlyPassenger) {
+                        break;
                     }
                 }
-                pCars.repaint();
+
+                if (rl != _train.getTrainTerminatesRouteLocation()) {
+                    textStatus.setText(getStatus(rl));
+                } else {
+                    textStatus.setText(MessageFormat.format(TrainManifestText.getStringTrainTerminates(),
+                            new Object[]{_train.getTrainTerminatesName()}));
+                }
             }
+            pCars.repaint();
         });
     }
 

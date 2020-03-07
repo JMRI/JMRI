@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2008
  * @author Kevin Dickerson Copyright (C) 2012
  */
-public class NetworkDriverAdapter extends MarklinPortController implements jmri.jmrix.NetworkPortAdapter {
+public class NetworkDriverAdapter extends MarklinPortController {
 
     protected DatagramSocket datagramSocketConn = null;
 

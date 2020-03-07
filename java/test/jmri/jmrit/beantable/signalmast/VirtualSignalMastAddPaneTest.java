@@ -17,6 +17,7 @@ import org.netbeans.jemmy.operators.*;
 public class VirtualSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase {
 
     /** {@inheritDoc} */
+    @Override
     protected SignalMastAddPane getOTT() { return new VirtualSignalMastAddPane(); }    
     
     @Test
@@ -31,10 +32,10 @@ public class VirtualSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestB
         
         vp.setMast(null);
         
-        vp.setAspectNames(s1.getAppearanceMap(), null);
+        vp.setAspectNames(s1.getAppearanceMap(), InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem("basic"));
         vp.setMast(s1);
         
-        vp.setAspectNames(m1.getAppearanceMap(), null);
+        vp.setAspectNames(m1.getAppearanceMap(), InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem("basic"));
         vp.setMast(m1);
         JUnitAppender.assertErrorMessage("mast was wrong type: IF$xsm:basic:one-low($0001)-3t jmri.implementation.MatrixSignalMast");
 
@@ -44,7 +45,7 @@ public class VirtualSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestB
     public void testCreateMast() {
         VirtualSignalMastAddPane vp = new VirtualSignalMastAddPane();
         new VirtualSignalMast("IF$vsm:basic:one-searchlight($1)", "no user name"){
-            { lastRef = 4; } // reset references - this leads to $0005 below, just in case anybody else has created one
+            { setLastRef(4); } // reset references - this leads to $0005 below, just in case anybody else has created one
         };
         
         vp.createMast("AAR-1946", "appearance-PL-2-high.xml", "user name");
@@ -64,13 +65,14 @@ public class VirtualSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestB
 
         vp.setAspectNames(
             new jmri.implementation.DefaultSignalAppearanceMap("IM123") {
+                @Override
                 public Enumeration<String> getAspects() {
                     return java.util.Collections.enumeration(
                         java.util.Arrays.asList(
                             new String[]{"Clear","Approach Medium","Advance Approach"}));
                     }
             }
-                , null);
+                , InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem("basic"));
         
         JFrame frame = new JFrame("Add/Edit Signal Mast");
         frame.add(vp);
@@ -93,7 +95,7 @@ public class VirtualSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestB
 
         // check aspect disabled
         Assert.assertTrue(InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName("user name 1").isAspectDisabled("Approach Medium"));
-        Assert.assertTrue(! InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName("user name 1").isAspectDisabled("Clear"));
+        Assert.assertFalse(InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName("user name 1").isAspectDisabled("Clear"));
 
         jmri.util.ThreadingUtil.runOnGUI(() -> {
             frame.dispose();
@@ -105,20 +107,21 @@ public class VirtualSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestB
         Assume.assumeFalse(java.awt.GraphicsEnvironment.isHeadless());
         Assert.assertEquals(0, InstanceManager.getDefault(jmri.SignalMastManager.class).getObjectCount());
         VirtualSignalMast mast = new VirtualSignalMast("IF$vsm:basic:one-searchlight($1)", "user name 2"){
-            { lastRef = 7; } // reset references - this leads to $0007 below, just in case anybody else has created one
+            { setLastRef(7); } // reset references - this leads to $0007 below, just in case anybody else has created one
         };
         InstanceManager.getDefault(jmri.SignalMastManager.class).register(mast);
         Assert.assertEquals(1, InstanceManager.getDefault(jmri.SignalMastManager.class).getObjectCount());
         mast.setAspectDisabled("Stop");
-        mast.setAspectDisabled("Unlit"); // we will renable this below
+        mast.setAspectDisabled("Unlit"); // we will reenable this below
         
         VirtualSignalMastAddPane vp = new VirtualSignalMastAddPane();
         
         vp.setAspectNames(
             new jmri.implementation.DefaultSignalAppearanceMap("IM123") {
+                @Override
                 public Enumeration<String> getAspects() { return mast.getAllKnownAspects().elements(); }
             }
-                , null);
+                , InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem("basic"));
         vp.setMast(mast);
               
         JFrame frame = new JFrame("Add/Edit Signal Mast");
@@ -143,10 +146,10 @@ public class VirtualSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestB
         // system name not checked, depends on history of how many VirtualSignalMast objects have been created
 
         // check correct aspect disabled
-        Assert.assertTrue(! InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName("user name 2").isAspectDisabled("Clear"));
+        Assert.assertFalse(InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName("user name 2").isAspectDisabled("Clear"));
         Assert.assertTrue(InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName("user name 2").isAspectDisabled("Approach"));
         Assert.assertTrue(InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName("user name 2").isAspectDisabled("Stop"));
-        Assert.assertTrue(! InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName("user name 2").isAspectDisabled("Unlit"));
+        Assert.assertFalse(InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName("user name 2").isAspectDisabled("Unlit"));
 
         jmri.util.ThreadingUtil.runOnGUI(() -> {
             frame.dispose();
@@ -154,12 +157,14 @@ public class VirtualSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestB
     }
 
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initDefaultUserMessagePreferences();
     }
 
     @After
+    @Override
     public void tearDown() {
         JUnitUtil.tearDown();
     }

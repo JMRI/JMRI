@@ -23,11 +23,10 @@
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-
     <div id="mainContent">
+
       <h1>JMRI Code: Structure of External System Connections</h1>
 
       <p>This page is about how JMRI connects to external systems, e.g.
@@ -323,7 +322,8 @@
     InstanceManager once.  If they're registered more times than that, they
     appear as duplicates in various auto-constructed lists, menus and tab sets.
 
-    <a href="images/JmrixLocoNetClassDiagram.png"><img src="images/JmrixLocoNetClassDiagram.png" align="right" alt="Class Diagram with diamond shape" height="25%" width="25%"></a>
+    <a href="images/JmrixLocoNetClassDiagram.png"><img src="images/JmrixLocoNetClassDiagram.png" align="right"
+    alt="Class Diagram with diamond shape" height="25%" width="25%"></a></li>
     <li>Much work is done in the PortAdapter subclasses.  From a common
     <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/PortAdapter.html"><code>jmrix.PortAdapter</code></a>
     interface, JMRI has two different
@@ -356,13 +356,13 @@
         <pre>
             Abstract*PortAdapter <- Sys*PortController <- Sys*PortAdapter
         </pre>
-        as you work down the abstraction.  This should eventually be fixed.
+        as you work down the abstraction.  This should eventually be fixed.</li>
       <li>
         How does jmrix.AbstractStreamPortController fit into the <code>PortAdapter</code>
         class hierarchy? (there is no *StreamPortController as defined in its header;
-                it extends AbstractPortController)
+                it extends AbstractPortController)</li>
     </ul>
-
+    </li>
     </ul>
 
     <h3>More Complex Initialization: C/MRI</h3>

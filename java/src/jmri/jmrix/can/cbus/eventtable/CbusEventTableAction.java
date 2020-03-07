@@ -5,7 +5,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,6 +24,8 @@ import jmri.jmrix.can.cbus.CbusSensor;
 import jmri.jmrix.can.cbus.CbusTurnout;
 import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.util.FileUtil;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -51,6 +54,7 @@ public class CbusEventTableAction {
     public File _saveFile = null;
     private String _saveFileName = null;
     protected boolean sessionConfirmDeleteRow=true; // display confirm popup
+    protected SimpleDateFormat xmlDateStyle = new SimpleDateFormat ("yyyy-MM-dd HH:mm:ss");
     
     private void updatejmricell(int row, Boolean ison, String name){
         String bb;
@@ -69,7 +73,7 @@ public class CbusEventTableAction {
         int node = CbusMessage.getNodeNumber(m);
         int opc = CbusMessage.getOpcode(m);
         int row = _model.seeIfEventOnTable( node, event);
-        if (row<0) {
+        if (row<0 && event>-1) {
             _model.addEvent(node,event,0,CbusTableEvent.EvState.UNKNOWN,name,"",0,0,0,0);
             row = _model.seeIfEventOnTable( node, event );
         }
@@ -185,68 +189,31 @@ public class CbusEventTableAction {
     }
 
     private void saveToCSV() {
-        FileOutputStream out = null;
-        PrintWriter p = null;
         if (_saveFileName == null) {
             log.error("saveToCSV: No file name available. Aborted");
             return;
         }
-        try {
-            // Create a print writer based on the file, so we can print to it.
-            out = new FileOutputStream(_saveFileName);
-            p = new PrintWriter(out, true);
-        } catch (IOException e) {
-                log.error("Problem creating output stream");
-        }
-
-        if (out == null) {
-            log.error("Null File Output Stream");
-        }
-        if (p == null) { // certainly null if out == null
-            log.error("Null Print Writer");
-            return;
-        }
-
-        // Save table per row. We've checked for an empty table
-        // print header labels
-        
-        
-        for (int i = 0; i < CbusEventTableDataModel.saveColumns.length; i++) {
-            // log.debug("save column array column {}", Savecolumns[i]);
-            p.print(_model.getColumnName(CbusEventTableDataModel.saveColumns[i]));
-            
-            // last column, without comma
-            if (i!=CbusEventTableDataModel.saveColumns.length-1) {
-                p.print(",");
+        try (CSVPrinter p = new CSVPrinter(new OutputStreamWriter(new FileOutputStream(_saveFileName), StandardCharsets.UTF_8), CSVFormat.DEFAULT)) {
+            // Save table per row. We've checked for an empty table
+            // print header labels
+            ArrayList<String> headers = new ArrayList<>();
+            for (int i = 0; i < CbusEventTableDataModel.saveColumns.length; i++) {
+                headers.add(_model.getColumnName(CbusEventTableDataModel.saveColumns[i]));
             }
-        }
-        
-        p.println("");
+            p.printRecord(headers);
 
-        // print rows
-        for (int i = 0; i < _model.getRowCount(); i++) {
-            p.print(_model._mainArray.get(i).getEn());
-            p.print(",");
-            p.print(_model._mainArray.get(i).getNn());
-            p.print(",");
-            p.print('"' + _model._mainArray.get(i).getName() + '"');          
-            p.print(",");
-            p.print('"' + _model._mainArray.get(i).getNodeName() + '"');
-            p.print(",");
-            if ( _model._mainArray.get(i).getDate() != null ) {
-               p.print(_model._mainArray.get(i).getDate()); // Date format
+            // print rows
+            for (int i = 0; i < _model.getRowCount(); i++) {
+                p.printRecord(_model._mainArray.get(i).getEn(),
+                        _model._mainArray.get(i).getNn(),
+                        _model._mainArray.get(i).getName(),
+                        _model._mainArray.get(i).getNodeName(),
+                        _model._mainArray.get(i).getDate(),
+                        _model._mainArray.get(i).getComment());
             }
-            p.print(",");
-            p.print('"'+ _model._mainArray.get(i).getComment() + '"');
-            p.println("");
-        }
 
-        try {
             p.flush();
             p.close();
-            if (out != null) {
-                out.close();
-            }
         } catch (IOException e) {
             log.error("879 IO Exception");
         }
@@ -261,6 +228,8 @@ public class CbusEventTableAction {
      * Printed with headings and vertical lines between each column. Data is
      * word wrapped within a column. Can handle data as strings, integers,
      * comboboxes or booleans.
+     * 
+     * @param w the writer to print to
      */
     public void printTable(HardcopyWriter w) {
         // [AC] variable column sizes
@@ -310,7 +279,7 @@ public class CbusEventTableAction {
         // now print each row of data
         // create a base string the width of the column
         for (int i = 0; i < _model.getRowCount(); i++) {
-            StringBuffer buf = new StringBuffer();
+            StringBuilder buf = new StringBuilder();
             // log.debug (" 1070 row i  {} ", i);
             
             for (int k = 0; k < CbusEventTableDataModel.whichPrintColumns.length; k++) {
@@ -354,7 +323,7 @@ public class CbusEventTableAction {
             complete = true;
             for (int i = 0; i < columnStrings.length; i++) {
                 // create a base string the width of the column
-                StringBuffer buf = new StringBuffer();
+                StringBuilder buf = new StringBuilder();
                 for (int j = 0; j < columnWidth[i]; j++) {
                     buf.append(" ");
                 }
@@ -427,42 +396,48 @@ public class CbusEventTableAction {
         Element root;
         try {
             root = x.rootFromFile(file);
-            if (root == null) {
-                log.error("File could not be read");  // NOI18N
-                return;
-            }
-            
-            for (Element xmlEvent : root.getChildren("Event")) {  // NOI18N
-            
-                if (xmlEvent.getAttribute("NodeNum") == null || xmlEvent.getAttribute("EventNum") == null ) {
-                    log.warn("unexpected null in item {} {}", xmlEvent, xmlEvent.getAttributes() );
-                    break;
-                }
+            root.getChildren("Event").forEach((xmlEvent) -> {
+                // NOI18N
                 
-                int nn = Integer.parseInt( xmlEvent.getAttribute("NodeNum").getValue() );
-                int en = Integer.parseInt( xmlEvent.getAttribute("EventNum").getValue() );
-                // log.info("event found nn {} en {}",nn,en);
-                CbusTableEvent tabEv = _model.provideEvent(nn,en);
+                if (xmlEvent.getAttribute("NodeNum") == null || xmlEvent.getAttribute("EventNum") == null ) { // NOI18N
+                    log.error("Node or event number missing in event {}", xmlEvent.getAttributes() );
+                } else try {
                 
-                if (xmlEvent.getChild("Name") != null ) {
-                    tabEv.setName( xmlEvent.getChild("Name").getValue() );
+                    int nn = Integer.parseInt( xmlEvent.getAttribute("NodeNum").getValue() ); // NOI18N
+                    int en = Integer.parseInt( xmlEvent.getAttribute("EventNum").getValue() ); // NOI18N
+                    // log.info("event found nn {} en {}",nn,en);
+                    CbusTableEvent tabEv = _model.provideEvent(nn,en);
+                    
+                    if (xmlEvent.getChild("Name") != null ) { // NOI18N
+                        tabEv.setName( xmlEvent.getChild("Name").getValue() ); // NOI18N
+                    }
+                    if (xmlEvent.getChild("Comment") != null ) { // NOI18N
+                        tabEv.setComment( xmlEvent.getChild("Comment").getValue() ); // NOI18N
+                    }
+                    if (xmlEvent.getChild("LastHeard") != null ) { // NOI18N
+                        try {
+                            Date newDate = xmlDateStyle.parse(xmlEvent.getChild("LastHeard").getValue()); // NOI18N
+                            tabEv.setDate( newDate );
+                        } catch (java.text.ParseException e) { 
+                            log.error("Unable to parse date {}", xmlEvent.getAttributes()); // NOI18N
+                        }
+                    }
+                    if (xmlEvent.getChild("On") != null ) { // NOI18N
+                        tabEv.setTotalOn( Integer.parseInt( xmlEvent.getChild("On").getValue() ) ); // NOI18N
+                    }
+                    if (xmlEvent.getChild("Off") != null ) { // NOI18N
+                        tabEv.setTotalOff( Integer.parseInt( xmlEvent.getChild("Off").getValue() ) ); // NOI18N
+                    }
+                    if (xmlEvent.getChild("In") != null ) { // NOI18N
+                        tabEv.setTotalIn( Integer.parseInt( xmlEvent.getChild("In").getValue() ) ); // NOI18N
+                    }
+                    if (xmlEvent.getChild("Out") != null ) { // NOI18N
+                        tabEv.setTotalOut( Integer.parseInt( xmlEvent.getChild("Out").getValue() ) ); // NOI18N
+                    }
+                } catch (java.lang.NumberFormatException ex) {
+                    log.error("Incorrect off / on / in / out value in event {}", xmlEvent.getAttributes());
                 }
-                if (xmlEvent.getChild("Comment") != null ) {
-                    tabEv.setComment( xmlEvent.getChild("Comment").getValue() );
-                }
-                if (xmlEvent.getChild("On") != null ) {
-                    tabEv.setTotalOn( Integer.parseInt( xmlEvent.getChild("On").getValue() ) );
-                }
-                if (xmlEvent.getChild("Off") != null ) {
-                    tabEv.setTotalOff( Integer.parseInt( xmlEvent.getChild("Off").getValue() ) );
-                }
-                if (xmlEvent.getChild("In") != null ) {
-                    tabEv.setTotalIn( Integer.parseInt( xmlEvent.getChild("In").getValue() ) );
-                }
-                if (xmlEvent.getChild("Out") != null ) {
-                    tabEv.setTotalOut( Integer.parseInt( xmlEvent.getChild("Out").getValue() ) );
-                }
-            }
+            });
             _model.fireTableDataChanged();
             log.debug("Completed event xml file load");
             
@@ -481,7 +456,14 @@ public class CbusEventTableAction {
         
     }
     
+    /**
+     * Saves table event data to the EventTableData.xml file
+     */
     protected void storeEventsToXml() {
+        jmri.util.ThreadingUtil.runOnLayout(()->{  layoutEventsToXml(); });
+    }
+    
+    private void layoutEventsToXml() {
         
         log.info("Saving event xml file");
         CbusEventTableXmlFile x = new CbusEventTableXmlFile();
@@ -494,16 +476,13 @@ public class CbusEventTableAction {
             "http://www.w3.org/2001/XMLSchema-instance"));  // NOI18N
         Document doc = new Document(root);
         
-        SimpleDateFormat xmlDateStyle = new SimpleDateFormat ("yyyy-MM-dd HH:mm:ss");
-        
-        for (CbusTableEvent event : _model.getEvents() ) {
+        _model.getEvents().forEach((event) -> {
             Element values;
-            
             root.addContent(values = new Element("Event"));  // NOI18N
             values.setAttribute("NodeNum",  // NOI18N
-                "" + event.getNn() );
+                    "" + event.getNn() );
             values.setAttribute("EventNum",  // NOI18N
-                "" + event.getEn() );
+                    "" + event.getEn() );
             if ( !event.getName().isEmpty() ){
                 values.addContent(new Element("Name").addContent("" + event.getName() ));  // NOI18N
             }
@@ -512,7 +491,7 @@ public class CbusEventTableAction {
             }
             if ( event.getDate() != null ){
                 values.addContent(new Element("LastHeard").addContent(
-                    "" + xmlDateStyle.format(  event.getDate() ) ));  // NOI18N
+                        "" + xmlDateStyle.format(  event.getDate() ) ));  // NOI18N
             }
             if ( event.getTotalOn() > 0 ){
                 values.addContent(new Element("On").addContent("" + event.getTotalOn() ));  // NOI18N
@@ -523,10 +502,10 @@ public class CbusEventTableAction {
             if ( event.getTotalIn() > 0 ){
                 values.addContent(new Element("In").addContent("" + event.getTotalIn() ));  // NOI18N
             }
-            if ( event.getTotalOut() > 0 ){
+            if (event.getTotalOut() > 0) {
                 values.addContent(new Element("Out").addContent("" + event.getTotalOut() ));  // NOI18N
             }
-        }
+        });
         
         try {
             x.writeXML(file, doc);
@@ -540,9 +519,10 @@ public class CbusEventTableAction {
     
     }
     
+    /**
+     * Class to provide access to the EventTableData.xml file
+     */
     public static class CbusEventTableXmlFile extends XmlFile {
-        private static String fileLocation = FileUtil.getUserFilesPath() + "cbus/";  // NOI18N
-        private static String baseFileName = "EventTableData.xml";  // NOI18N
 
         public static String getDefaultFileName() {
             return getFileLocation() + getFileName();
@@ -550,13 +530,7 @@ public class CbusEventTableAction {
 
         public File getFile(boolean store) {
             // Verify that directory:cbus exists
-            File chkdir = new File(getFileLocation());
-            if (!chkdir.exists()) {
-                if (!chkdir.mkdir()) {
-                    log.error("Create directory:cbus failed");  // NOI18N
-                    return null;
-                }
-            }
+            FileUtil.createDirectory(getFileLocation());
 
             File file = findFile(getDefaultFileName());
             if (file == null && store) {
@@ -567,10 +541,7 @@ public class CbusEventTableAction {
         }
 
         public static String getFileName() {
-            if(baseFileName == null) {
-               baseFileName = "EventTableData.xml";  // NOI18N
-            }
-            return baseFileName;
+            return "EventTableData.xml";  // NOI18N
         }
 
         /**
@@ -579,13 +550,9 @@ public class CbusEventTableAction {
          * @return path to location
          */
         public static String getFileLocation() {
-            if(fileLocation==null){
-               fileLocation = FileUtil.getUserFilesPath() + "cbus/";  // NOI18N
-            }
-            return fileLocation;
+            return FileUtil.getUserFilesPath() + "cbus" + File.separator;  // NOI18N
         }
     }
-
 
     private final static Logger log = LoggerFactory.getLogger(CbusEventTableAction.class);
 }

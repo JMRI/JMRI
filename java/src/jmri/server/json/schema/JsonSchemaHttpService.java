@@ -5,13 +5,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.HashSet;
-import java.util.Locale;
 import java.util.Set;
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpService;
+import jmri.server.json.JsonRequest;
 
 /**
  * Service to support getting core JSON Schemas for the JSON Server.
@@ -25,10 +25,11 @@ public class JsonSchemaHttpService extends JsonHttpService {
     }
 
     @Override
-    public JsonNode doGet(String type, String name, JsonNode data, Locale locale, int id) throws JsonException {
+    public JsonNode doGet(String type, String name, JsonNode data, JsonRequest request) throws JsonException {
         // note use of Boolean for tristate null, true, false
         // if server == null, returns both schemas in an array
-        // if server != null, returns single schema for client or server as appropriate
+        // if server != null, returns single schema for client or server as
+        // appropriate
         Boolean server = null;
         if (data.path(JSON.SERVER).isBoolean()) {
             server = data.path(JSON.SERVER).asBoolean();
@@ -36,101 +37,86 @@ public class JsonSchemaHttpService extends JsonHttpService {
         if (data.path(JSON.CLIENT).isBoolean()) {
             if (server == null) {
                 server = !data.path(JSON.CLIENT).asBoolean();
-            } else if (server == true) {
+            } else if (Boolean.TRUE.equals(server)) {
                 server = null; // server and client are true
             }
         }
         switch (type) {
             case JSON.SCHEMA:
-                switch (name) {
-                    case JSON.JSON:
-                        if (server != null) {
-                            return this.doSchema(JSON.JSON, server, locale, id);
-                        }
-                        return message(mapper.createArrayNode()
-                                .add(this.doSchema(JSON.JSON, true, locale, id))
-                                .add(this.doSchema(JSON.JSON, false, locale, id)),
-                                id);
-                    default:
-                        try {
-                            ArrayNode schemas = this.mapper.createArrayNode();
-                            Set<JsonNode> dedup = new HashSet<>();
-                            for (JsonHttpService service : InstanceManager.getDefault(JsonSchemaServiceCache.class).getServices(name)) {
-                                // separate try/catch blocks to ensure one failure does not
-                                // block following from being accepted
-                                if (server == null || server) {
-                                    try {
-                                        JsonNode schema = service.doSchema(name, true, locale, id);
-                                        if (!dedup.contains(schema)) {
-                                            schemas.add(schema);
-                                            dedup.add(schema);
-                                        }
-                                    } catch (JsonException ex) {
-                                        if (ex.getCode() != HttpServletResponse.SC_BAD_REQUEST) {
-                                            throw ex;
-                                        }
-                                    }
-                                }
-                                if (server == null || !server) {
-                                    try {
-                                        JsonNode schema = service.doSchema(name, false, locale, id);
-                                        if (!dedup.contains(schema)) {
-                                            schemas.add(schema);
-                                            dedup.add(schema);
-                                        }
-                                    } catch (JsonException ex) {
-                                        if (ex.getCode() != HttpServletResponse.SC_BAD_REQUEST) {
-                                            throw ex;
-                                        }
-                                    }
-                                }
+                if (JSON.JSON.equals(name)) {
+                    if (server != null) {
+                        return this.doSchema(JSON.JSON, server, request);
+                    }
+                    return message(mapper.createArrayNode()
+                            .add(this.doSchema(JSON.JSON, true, request))
+                            .add(this.doSchema(JSON.JSON, false, request)),
+                            request.id);
+                } else {
+                    try {
+                        ArrayNode schemas = this.mapper.createArrayNode();
+                        Set<JsonNode> dedup = new HashSet<>();
+                        for (JsonHttpService service : InstanceManager.getDefault(JsonSchemaServiceCache.class)
+                                .getServices(name, request.version)) {
+                            if (server == null || server) {
+                                this.doSchema(schemas, dedup, service, name, true, request);
                             }
-                            // return single object if only one, otherwise return complete array
-                            if (schemas.size() == 1) {
-                                return schemas.get(0);
+                            if (server == null || !server) {
+                                this.doSchema(schemas, dedup, service, name, false, request);
                             }
-                            return message(schemas, id);
-                        } catch (NullPointerException ex) {
-                            throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "ErrorUnknownType", name), ex, id);
                         }
+                        // return single object if only one, otherwise return
+                        // complete array
+                        if (schemas.size() == 1) {
+                            return schemas.get(0);
+                        }
+                        return message(schemas, request.id);
+                    } catch (NullPointerException ex) {
+                        throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
+                                Bundle.getMessage(request.locale, JsonException.ERROR_UNKNOWN_TYPE, name), ex, request.id);
+                    }
                 }
             case JSON.TYPE:
-                if (InstanceManager.getDefault(JsonSchemaServiceCache.class).getTypes().contains(name)) {
+                if (InstanceManager.getDefault(JsonSchemaServiceCache.class).getTypes(request.version).contains(name)) {
                     ObjectNode payload = this.mapper.createObjectNode();
                     payload.put(JSON.NAME, name);
-                    payload.put(JSON.SERVER, InstanceManager.getDefault(JsonSchemaServiceCache.class).getServerTypes().contains(name));
-                    payload.put(JSON.CLIENT, InstanceManager.getDefault(JsonSchemaServiceCache.class).getClientTypes().contains(name));
-                    return message(JSON.TYPE, payload, id);
+                    payload.put(JSON.SERVER,
+                            InstanceManager.getDefault(JsonSchemaServiceCache.class).getServerTypes(request.version).contains(name));
+                    payload.put(JSON.CLIENT,
+                            InstanceManager.getDefault(JsonSchemaServiceCache.class).getClientTypes(request.version).contains(name));
+                    return message(JSON.TYPE, payload, request.id);
                 } else {
-                    throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(locale, "ErrorNotFound", type, name), id);
+                    throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
+                            Bundle.getMessage(request.locale, JsonException.ERROR_NOT_FOUND, type, name), request.id);
                 }
             default:
-                throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "ErrorUnknownType", type), id);
+                throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
+                        Bundle.getMessage(request.locale, JsonException.ERROR_UNKNOWN_TYPE, type), request.id);
         }
     }
 
     @Override
-    public JsonNode doPost(String type, String name, JsonNode data, Locale locale, int id) throws JsonException {
-        return this.doGet(type, name, data, locale, id);
+    public JsonNode doPost(String type, String name, JsonNode data, JsonRequest request) throws JsonException {
+        throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED,
+                Bundle.getMessage(request.locale, "PostNotAllowed", type), request.id);
     }
 
     @Override
-    public JsonNode doGetList(String type, JsonNode parameters, Locale locale, int id) throws JsonException {
-        switch (type) {
-            case JSON.TYPE:
-                ArrayNode array = this.mapper.createArrayNode();
-                JsonNode data = this.mapper.createObjectNode();
-                for (String name : InstanceManager.getDefault(JsonSchemaServiceCache.class).getTypes()) {
-                    array.add(this.doGet(type, name, data, locale, id));
-                }
-                return message(array, id);
-            default:
-                throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "UnlistableService", type), id);
+    public JsonNode doGetList(String type, JsonNode parameters, JsonRequest request) throws JsonException {
+        if (JSON.TYPE.equals(type)) {
+            ArrayNode array = this.mapper.createArrayNode();
+            JsonNode data = this.mapper.createObjectNode();
+            for (String name : InstanceManager.getDefault(JsonSchemaServiceCache.class).getTypes(request.version)) {
+                array.add(this.doGet(type, name, data, request));
+            }
+            return message(array, request.id);
+        } else {
+            throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
+                    Bundle.getMessage(request.locale, "UnlistableService", type), request.id);
         }
     }
 
     @Override
-    public JsonNode doSchema(String type, boolean server, Locale locale, int id) throws JsonException {
+    public JsonNode doSchema(String type, boolean server, JsonRequest request) throws JsonException {
         switch (type) {
             case JSON.JSON:
             case JSON.SCHEMA:
@@ -139,9 +125,24 @@ public class JsonSchemaHttpService extends JsonHttpService {
                         server,
                         "jmri/server/json/schema/" + type + "-server.json",
                         "jmri/server/json/schema/" + type + "-client.json",
-                        id);
+                        request.id);
             default:
-                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type), id);
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+                        Bundle.getMessage(request.locale, JsonException.ERROR_UNKNOWN_TYPE, type), request.id);
+        }
+    }
+    
+    private void doSchema(ArrayNode schemas, Set<JsonNode> dedup, JsonHttpService service, String name, boolean server, JsonRequest request) throws JsonException {
+        try {
+            JsonNode schema = service.doSchema(name, server, request);
+            if (!dedup.contains(schema)) {
+                schemas.add(schema);
+                dedup.add(schema);
+            }
+        } catch (JsonException ex) {
+            if (ex.getCode() != HttpServletResponse.SC_BAD_REQUEST) {
+                throw ex;
+            }
         }
     }
 }

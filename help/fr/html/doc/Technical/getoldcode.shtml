@@ -13,22 +13,21 @@
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+    <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div id="mBody">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
-      <h1>JMRI: Obtenir le Code Ancien</h1>
+        <!-- Page Body -->
+
+<h1>JMRI: Obtenir le Code Ancien</h1>
 
       <h2>Cette page est conserv&eacute;e dans un but historique
       seulement!</h2>
@@ -157,7 +156,7 @@ cvs -d:pserver:anonymous@jmri.cvs.sourceforge.net:/cvsroot/jmri -q update -dA
       mettre &agrave; jour les s&eacute;lectionnera tous, puis
       faites un Clic-Droit et s&eacute;lectionner "CVS Update".
       Vous pouvez aussi mettre &agrave; jour un seul dossier en le
-      s&eacute;lectionnant.</p><!--#include virtual="/Footer" -->
+      s&eacute;lectionnant.</p><!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

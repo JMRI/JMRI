@@ -1,8 +1,7 @@
 package jmri;
 
-import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 
 /**
  * Represent a Turnout on the layout.
@@ -244,17 +243,22 @@ public interface Turnout extends DigitalIO {
      * @param toper TurnoutOperation subclass instance
      */
     @InvokeOnLayoutThread
-    public void setTurnoutOperation(@Nullable TurnoutOperation toper);
+    public void setTurnoutOperation(@CheckForNull TurnoutOperation toper);
 
     /**
-     * return the inverted state of the specified state
+     * Return the inverted state of the specified state
+     * Does NOT invert INCONSISTENT
      * @param inState the specified state
      * @return the inverted state
      */
     public static int invertTurnoutState(int inState) {
-        int result = CLOSED;
-        if (result == inState) {
+        int result = UNKNOWN;
+        if (inState == CLOSED) {
             result = THROWN;
+        } else if (inState == THROWN){
+            result = CLOSED;
+        } else if (inState == INCONSISTENT){
+            result = INCONSISTENT;
         }
         return result;
     }
@@ -273,9 +277,9 @@ public interface Turnout extends DigitalIO {
      * @param pName the user or system name of the sensor
      * @throws jmri.JmriException if unable to assign the feedback sensor
      */
-    public void provideFirstFeedbackSensor(@Nullable String pName) throws JmriException;
+    public void provideFirstFeedbackSensor(@CheckForNull String pName) throws JmriException;
 
-    public void provideSecondFeedbackSensor(@Nullable String pName) throws JmriException;
+    public void provideSecondFeedbackSensor(@CheckForNull String pName) throws JmriException;
 
     /**
      * Get the first feedback sensor.
@@ -471,7 +475,7 @@ public interface Turnout extends DigitalIO {
      *
      * @param decoderName the name of the decoder type
      */
-    public void setDecoderName(@Nullable String decoderName);
+    public void setDecoderName(@CheckForNull String decoderName);
 
     /**
      * Use a binary output for sending commands. This appears to expose a

@@ -4,13 +4,12 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.LinkedList;
-import java.util.Vector;
+import java.util.*;
 import javax.swing.SwingUtilities;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import jmri.InstanceManager;
+import jmri.ShutDownManager;
+import jmri.ShutDownTask;
 
 /**
  * Abstract base for TrafficControllers in a Message/Reply protocol.
@@ -19,8 +18,8 @@ import org.slf4j.LoggerFactory;
  * handles pushing characters to the port, and also changing the mode. The
  * "Receive" thread converts characters from the input stream into replies.
  * <p>
- * A third thread is registered by the constructor as a shutdown hook. It
- * triggers the necessary cleanup code
+ * The constructor registers a shutdown task to
+ * trigger the necessary cleanup code
  * <p>
  * The internal state machine handles changes of mode, automatic retry of 
  * certain messages, time outs, and sending poll messages when otherwise idle.
@@ -92,11 +91,9 @@ Note left of OKSENDMSGSTATE : Transient internal state\nwill transition when goi
 @enduml
  */
 
-
 abstract public class AbstractMRTrafficController {
 
-    private Thread shutdownHook = null; // retain shutdown hook for 
-                                        // possible removal.
+    private ShutDownTask shutDownTask = null; // retain for possible removal.
 
     /**
      * Create a new unnamed MRTrafficController.
@@ -107,14 +104,14 @@ abstract public class AbstractMRTrafficController {
         mCurrentState = IDLESTATE;
         allowUnexpectedReply = false;
 
-        // We use a shutdown hook here to make sure the connection is left
+
+        // We use a shutdown task here to make sure the connection is left
         // in a clean state prior to exiting.  This is required on systems
         // which have a service mode to ensure we don't leave the system 
-        // in an unusable state (This code predates the ShutdownTask 
-        // mechanisim).  Once the shutdown hook executes, the connection
-        // must be considered closed.
-        shutdownHook = new Thread(new CleanupHook(this));
-        Runtime.getRuntime().addShutdownHook(shutdownHook);
+        // in an unusable state. Once the shutdown task executes, the connection
+        // must be considered permanently closed.
+        
+        InstanceManager.getDefault(ShutDownManager.class).register(shutDownTask = new CleanupTask(this));
     }
 
     private boolean synchronizeRx = true;
@@ -1176,6 +1173,7 @@ abstract public class AbstractMRTrafficController {
     // to request termination, which might have happened
     // before in any case
     @Override
+    @SuppressWarnings("deprecation") // finalize deprecated in Java 9, but not yet removed
     protected final void finalize() throws Throwable {
         terminate();
         super.finalize();
@@ -1285,8 +1283,8 @@ abstract public class AbstractMRTrafficController {
             }
         }    
 
-        // we also need to remove the shutdown hook. 
-        Runtime.getRuntime().removeShutdownHook(shutdownHook);
+        // we also need to remove the shutdown task. 
+        InstanceManager.getDefault(ShutDownManager.class).deregister(shutDownTask);
     }
     
     /**
@@ -1299,20 +1297,38 @@ abstract public class AbstractMRTrafficController {
      * this thread is to make sure the DCC system has exited service mode when
      * the program exits.
      */
-    static class CleanupHook implements Runnable {
+    static class CleanupTask implements jmri.ShutDownTask {
 
         AbstractMRTrafficController mTc;
 
-        CleanupHook(AbstractMRTrafficController pTc) {
+        CleanupTask(AbstractMRTrafficController pTc) {
             mTc = pTc;
         }
 
+        /** {@inheritDoc} */
         @Override
-        public void run() {
+        public boolean isShutdownAllowed() {return true;}
+
+        /** {@inheritDoc} */
+        @Override
+        public boolean execute() {
             mTc.terminate();
+            return true;
         }
+
+        /** {@inheritDoc} */
+        @Override
+        public String getName() {return "ShutDownTask for "+mTc.getClass().getName();}
+
+        /** {@inheritDoc} */
+        @Override
+        public boolean isParallel() {return false;}
+
+        /** {@inheritDoc} */
+        @Override
+        public boolean isComplete() {return !this.isParallel();}
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractMRTrafficController.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractMRTrafficController.class);
 
 }

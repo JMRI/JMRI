@@ -1,13 +1,8 @@
 package jmri.jmrix.roco.z21;
 
-import java.util.ArrayList;
-import java.util.List;
-import jmri.AddressedProgrammer;
 import jmri.ProgListener;
 import jmri.ProgrammerException;
-import jmri.ProgrammingMode;
 import jmri.jmrix.lenz.XNetConstants;
-import jmri.jmrix.lenz.XNetListener;
 import jmri.jmrix.lenz.XNetMessage;
 import jmri.jmrix.lenz.XNetReply;
 import jmri.jmrix.lenz.XNetTrafficController;
@@ -23,7 +18,7 @@ import jmri.jmrix.loconet.LnTrafficController;
  * @see jmri.Programmer
  * @author Paul Bender Copyright (C) 2018
  */
-public class Z21XNetOpsModeProgrammer extends jmri.jmrix.lenz.XNetOpsModeProgrammer implements XNetListener, AddressedProgrammer, LocoNetListener {
+public class Z21XNetOpsModeProgrammer extends jmri.jmrix.lenz.XNetOpsModeProgrammer implements LocoNetListener {
 
     private int _cv;
     private LnTrafficController lnTC;

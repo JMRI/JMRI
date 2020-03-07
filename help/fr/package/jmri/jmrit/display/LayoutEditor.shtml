@@ -18,14 +18,15 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+  <!--#include virtual="/Header.shtml" -->
+<div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>L'&Eacute;diteur de R&eacute;seau</h1><a name="contents"
       id="contents"></a>
 
@@ -320,7 +321,7 @@
       ressembler &agrave; ceci:</p>
 
       <p><a href="./images/OvalLayoutEditMode.gif"><img src=
-      "./images/OvalLayoutEditMode.gif" align="center" width="563"
+      "./images/OvalLayoutEditMode.gif" width="563"
       height="169" hspace="0" vspace="0"></a></p>
 
       <p>10. S&eacute;lectionnez <b>Mode &Eacute;diter</b> dans le
@@ -1516,12 +1517,12 @@
       disponible pour les outils. Le reste des outils
       <b>D&eacute;finir Signaux...</b>speut &ecirc;tre accessible
       via le menu Outils. Ces outils sont bri&egrave;vement
-      d&eacute;crit ci-dessous <a ref="#toolsmenu">Utilisation du
+      d&eacute;crit ci-dessous <a href="#toolsmenu">Utilisation du
       menu Outils de l'&Eacute;diteur de R&eacute;seau</a> , et
       sont discut&eacute;s en d&eacute;tail sur la page d'aide de
-      la fen&ecirc;tre de dialogue de l'outil. <a name="turnouts"
-      id="turnouts"></a>
+      la fen&ecirc;tre de dialogue de l'outil.
 
+      <a name="turnouts" id="turnouts"></a>
       <h2>Aiguillages</h2>
 
       <p>L'&Eacute;diteur de R&eacute;seau prend en charge six
@@ -2253,7 +2254,7 @@
       R&eacute;seau.</p>
 
       <p><a href="./images/OvalLayoutEditMode.gif"><img src=
-      "./images/EnhancedPanel.gif" align="center" width="592"
+      "./images/EnhancedPanel.gif" width="592"
       height="171" hspace="0" vspace="0"></a></p>
 
       <ul>
@@ -2380,7 +2381,9 @@
       panneau avec des cantons d&eacute;finis et signaux
       plac&eacute;s peuvent aider &agrave; d&eacute;cider o&ugrave;
       placer les cantons et les signaux avant de les installer sur
-      votre r&eacute;seau.</p><!--#include virtual="/Footer" -->
+      votre r&eacute;seau.</p>
+
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

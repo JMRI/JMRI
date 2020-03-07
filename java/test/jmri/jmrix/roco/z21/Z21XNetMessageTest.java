@@ -29,6 +29,7 @@ public class Z21XNetMessageTest extends jmri.jmrix.lenz.XNetMessageTest {
     }
 
     @Test
+    @Override
     public void testStringCtorEmptyString() {
         msg= new Z21XNetMessage("");
         Assert.assertEquals("length", 0, msg.getNumDataElements());
@@ -36,6 +37,7 @@ public class Z21XNetMessageTest extends jmri.jmrix.lenz.XNetMessageTest {
     }
 
     @Test
+    @Override
     public void testCtorXNetReply(){
         Z21XNetReply x = new Z21XNetReply("12 34 AB 03 19 06 0B B1");
         msg = new Z21XNetMessage(x);
@@ -50,14 +52,30 @@ public class Z21XNetMessageTest extends jmri.jmrix.lenz.XNetMessageTest {
         Assert.assertEquals("7th byte", x.getElement(7)& 0xFF, msg.getElement(7)& 0xFF);
     }
 
+    @Test
+    public void testToMonitorStringZ21_LAN_X_GET_TURNOUT_INFO(){
+        Z21XNetMessage m = Z21XNetMessage.getZ21TurnoutInfoRequestMessage(1);
+        Assert.assertEquals("Monitor String",Bundle.getMessage("Z21LAN_X_GET_TURNOUT_INFO",1),m.toMonitorString());
+    }
+
+    @Test
+    public void testToMonitorStringZ21_LAN_X_SET_TURNOUT() {
+        Z21XNetMessage m = Z21XNetMessage.getZ21SetTurnoutRequestMessage(1, true, false, false);
+        Assert.assertEquals("Set Turnout Thrown Monitor String", Bundle.getMessage("Z21LAN_X_SET_TURNOUT", 1, "deactivate", 1, false), m.toMonitorString());
+        m = Z21XNetMessage.getZ21SetTurnoutRequestMessage(1, false, true, true);
+        Assert.assertEquals("Set Turnout Closed Monitor String", Bundle.getMessage("Z21LAN_X_SET_TURNOUT", 1, "activate", 0, true), m.toMonitorString());
+    }
+
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         m = msg = new Z21XNetMessage(3);
     }
 
     @After
+    @Override
     public void tearDown() {
         m = msg = null;
         JUnitUtil.tearDown();

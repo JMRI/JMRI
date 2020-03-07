@@ -3,7 +3,6 @@ package jmri.jmrix.lenz;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -78,7 +77,7 @@ public class XNetSensorTest extends jmri.implementation.AbstractSensorTestBase {
     @Test
     public void testXNetSensorStatusRequest2() {
         XNetInterfaceScaffold xnis2 = new XNetInterfaceScaffold(new LenzCommandStation());
-        XNetSensor s = new XNetSensor("XS513", xnis2);
+        XNetSensor s = new XNetSensor("XS513", xnis2, "X");
 
         s.requestUpdateFromLayout();
         // check that the correct message was sent
@@ -102,14 +101,15 @@ public class XNetSensorTest extends jmri.implementation.AbstractSensorTestBase {
     public void setUp() {
         JUnitUtil.setUp();
         xnis = new XNetInterfaceScaffold(new LenzCommandStation());
-        t = new XNetSensor("XS042", xnis);
+        t = new XNetSensor("XS042", xnis, "X");
     }
 
     @Override
     @After
     public void tearDown() {
         t.dispose();
-	xnis=null;
+	    xnis=null;
+	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

@@ -20,15 +20,6 @@ public class QsiProgrammer extends AbstractProgrammer implements QsiListener {
         _memo = memo;
     }
 
-    /*
-     * method to find the existing QsiProgrammer object, if need be creating one
-     * @deprecated since 4.5.1, use constructor instead.
-     */
-    @Deprecated
-    static public final QsiProgrammer instance() {
-           return null;
-    }
-
     /** 
      * {@inheritDoc}
      */

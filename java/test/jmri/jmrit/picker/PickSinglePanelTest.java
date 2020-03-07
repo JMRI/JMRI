@@ -17,7 +17,7 @@ public class PickSinglePanelTest {
     @Test
     public void testSinglePanel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        PickListModel<Sensor> sensorModel = PickListModel.sensorPickModelInstance(); // N11N
+        PickListModel<Sensor> sensorModel = PickListModel.sensorPickModelInstance();
         PickSinglePanel<Sensor> sensorPanel = new PickSinglePanel<Sensor>(sensorModel);
         Assert.assertNotNull("exists", sensorPanel);
 
@@ -50,7 +50,7 @@ public class PickSinglePanelTest {
 
         // Switch to the signal head table
         f.remove(sensorPanel);
-        PickListModel<SignalHead> signalHeadModel = PickListModel.signalHeadPickModelInstance(); // N11N
+        PickListModel<SignalHead> signalHeadModel = PickListModel.signalHeadPickModelInstance();
         PickSinglePanel<SignalHead> signalHeadPanel = new PickSinglePanel<SignalHead>(signalHeadModel);
         f.setContentPane(signalHeadPanel);
         f.pack();

@@ -5,21 +5,12 @@ import java.io.File;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.ResourceBundle;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.RowSorter;
-import javax.swing.SortOrder;
+
+import javax.swing.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
@@ -28,29 +19,14 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
-import jmri.jmrit.operations.setup.AutoSave;
-import jmri.jmrit.operations.setup.BuildReportOptionAction;
-import jmri.jmrit.operations.setup.Control;
-import jmri.jmrit.operations.setup.OptionAction;
-import jmri.jmrit.operations.setup.PrintOptionAction;
-import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.setup.*;
 import jmri.jmrit.operations.trains.excel.SetupExcelProgramFrameAction;
 import jmri.jmrit.operations.trains.excel.TrainCustomManifest;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import jmri.jmrit.operations.trains.schedules.TrainsScheduleAction;
-import jmri.jmrit.operations.trains.tools.ChangeDepartureTimesAction;
-import jmri.jmrit.operations.trains.tools.ExportTrainRosterAction;
-import jmri.jmrit.operations.trains.tools.PrintSavedTrainManifestAction;
-import jmri.jmrit.operations.trains.tools.PrintTrainsAction;
-import jmri.jmrit.operations.trains.tools.TrainByCarTypeAction;
-import jmri.jmrit.operations.trains.tools.TrainCopyAction;
-import jmri.jmrit.operations.trains.tools.TrainsByCarTypeAction;
-import jmri.jmrit.operations.trains.tools.TrainsScriptAction;
-import jmri.jmrit.operations.trains.tools.TrainsTableSetColorAction;
+import jmri.jmrit.operations.trains.tools.*;
 import jmri.swing.JTablePersistenceManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for adding and editing the train roster for operations.
@@ -285,6 +261,8 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         toolMenu.add(new PrintSavedTrainManifestAction(Bundle.getMessage("MenuItemPreviewSavedManifest"), true, null));
         toolMenu.add(new SetupExcelProgramFrameAction(Bundle.getMessage("MenuItemSetupExcelProgram")));
         toolMenu.add(new ExportTrainRosterAction());
+        toolMenu.add(new ExportTimetableAction());
+        toolMenu.add(new ExportTrainLineupsAction());
         toolMenu.addSeparator();
         toolMenu.add(new PrintTrainsAction(Bundle.getMessage("MenuItemPrint"), false, this));
         toolMenu.add(new PrintTrainsAction(Bundle.getMessage("MenuItemPreview"), true, this));

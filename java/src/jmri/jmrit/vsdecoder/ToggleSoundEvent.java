@@ -16,14 +16,13 @@ package jmri.jmrit.vsdecoder;
  *
  * @author   Mark Underwood Copyright (C) 2011
  */
-import java.beans.PropertyChangeListener;
 import javax.swing.JComponent;
 import javax.swing.JToggleButton;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ToggleSoundEvent extends SoundEvent implements PropertyChangeListener {
+public class ToggleSoundEvent extends SoundEvent {
 
     JToggleButton button;
 

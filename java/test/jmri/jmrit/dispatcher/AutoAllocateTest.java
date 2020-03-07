@@ -3,6 +3,7 @@ package jmri.jmrit.dispatcher;
 import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
+import jmri.util.JUnitAppender;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -17,6 +18,7 @@ public class AutoAllocateTest {
 
     @Test
     public void testCTor() {
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         OptionsFile.setDefaultFileName("java/test/jmri/jmrit/dispatcher/dispatcheroptions.xml");  // exist?
 
@@ -27,11 +29,20 @@ public class AutoAllocateTest {
         JUnitUtil.dispose(d);
     }
 
+    @Test
+    public void testErrorCase() {
+        // present so there's some class test coverage when skipping intermittent
+        new AutoAllocate(null);
+        JUnitAppender.assertErrorMessage("null DispatcherFrame when constructing AutoAllocate");
+        
+    }
+    
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initDebugThrottleManager();
     }
 
     @After

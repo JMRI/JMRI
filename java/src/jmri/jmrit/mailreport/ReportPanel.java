@@ -8,6 +8,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -156,9 +157,8 @@ public class ReportPanel extends JPanel {
             email.validate();
 
             log.debug("start send");
-            String charSet = "UTF-8";  //NO18N
 
-            MultipartMessage msg = new MultipartMessage(requestURL, charSet);
+            MultipartMessage msg = new MultipartMessage(requestURL, StandardCharsets.UTF_8.name());
 
             // add reporter email address
             log.debug("start creating message");
@@ -205,23 +205,25 @@ public class ReportPanel extends JPanel {
                 log.debug("prepare profile attachment");
                 // Check that a profile has been loaded
                 Profile profile = ProfileManager.getDefault().getActiveProfile();
-                File file = profile.getPath();
-                if (file != null) {
-                    log.debug("add profile: {}", file.getPath());
-                    // Now zip-up contents of profile
-                    // Create temp file that will be deleted when Java quits
-                    File temp = File.createTempFile("profile", ".zip");
-                    temp.deleteOnExit();
+                if (profile != null) {
+                    File file = profile.getPath();
+                    if (file != null) {
+                        log.debug("add profile: {}", file.getPath());
+                        // Now zip-up contents of profile
+                        // Create temp file that will be deleted when Java quits
+                        File temp = File.createTempFile("profile", ".zip");
+                        temp.deleteOnExit();
 
-                    FileOutputStream out = new FileOutputStream(temp);
-                    ZipOutputStream zip = new ZipOutputStream(out);
+                        FileOutputStream out = new FileOutputStream(temp);
+                        ZipOutputStream zip = new ZipOutputStream(out);
 
-                    addDirectory(zip, file);
+                        addDirectory(zip, file);
 
-                    zip.close();
-                    out.close();
+                        zip.close();
+                        out.close();
 
-                    msg.addFilePart("logfileupload[]", temp);
+                        msg.addFilePart("logfileupload[]", temp);
+                    }
                 } else {
                     // No profile loaded
                     log.warn("No profile loaded - not sending");

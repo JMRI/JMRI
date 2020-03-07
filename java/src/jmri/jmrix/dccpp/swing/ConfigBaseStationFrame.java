@@ -59,13 +59,13 @@ import org.slf4j.LoggerFactory;
 public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener {
 
     // Map of Mnemonic KeyEvent values to GUI Components
-    private static final Map<String, Integer> Mnemonics = new HashMap<String, Integer>();
+    private static final Map<String, Integer> Mnemonics = new HashMap<>();
 
     static {
         Mnemonics.put("SensorTab", KeyEvent.VK_E); // NOI18N
         Mnemonics.put("TurnoutTab", KeyEvent.VK_T); // NOI18N
         Mnemonics.put("OutputTab", KeyEvent.VK_O); // NOI18N
-        Mnemonics.put("AddButton", KeyEvent.VK_A); // NOI18N
+        Mnemonics.put("ButtonAdd", KeyEvent.VK_A); // NOI18N
         Mnemonics.put("CloseButton", KeyEvent.VK_O); // NOI18N
         Mnemonics.put("SaveButton", KeyEvent.VK_S); // NOI18N
     }
@@ -120,7 +120,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
 
         JButton addButton = new JButton(Bundle.getMessage("ButtonAddX", Bundle.getMessage("BeanNameSensor")));
         addButton.setToolTipText(Bundle.getMessage("ToolTipButtonMSFAdd"));
-        addButton.setMnemonic(Mnemonics.get("AddButton")); // NOI18N
+        addButton.setMnemonic(Mnemonics.get("ButtonAdd")); // NOI18N
         addButton.addActionListener((ActionEvent e) -> {
             addButtonPressed(e);
         });
@@ -158,7 +158,6 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
         sensorSorter = new TableRowSorter<>(sensorTable.getModel());
         sensorTable.setRowSorter(sensorSorter);
         List<RowSorter.SortKey> sensorSortKeys = new ArrayList<>();
-        //int columnIndexToSort = 1;
         sensorSortKeys.add(new RowSorter.SortKey(sensorTable.getColumn(Bundle.getMessage("FieldTableIndexColumn")).getModelIndex(), SortOrder.ASCENDING));
         sensorSorter.setSortKeys(sensorSortKeys);
         sensorSorter.sort();
@@ -184,7 +183,6 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
         turnoutSorter = new TableRowSorter<>(turnoutTable.getModel());
         turnoutTable.setRowSorter(turnoutSorter);
         List<RowSorter.SortKey> turnoutSortKeys = new ArrayList<>();
-        //int columnIndexToSort = 1;
         turnoutSortKeys.add(new RowSorter.SortKey(sensorTable.getColumn(Bundle.getMessage("FieldTableIndexColumn")).getModelIndex(), SortOrder.ASCENDING));
         turnoutSorter.setSortKeys(turnoutSortKeys);
         turnoutSorter.setSortable(sensorTable.getColumn(Bundle.getMessage("ColumnDelete")).getModelIndex(), false);
@@ -210,7 +208,6 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
         outputSorter = new TableRowSorter<>(outputTable.getModel());
         outputTable.setRowSorter(outputSorter);
         List<RowSorter.SortKey> outputSortKeys = new ArrayList<>();
-        //int columnIndexToSort = 1;
         outputSortKeys.add(new RowSorter.SortKey(sensorTable.getColumn(Bundle.getMessage("FieldTableIndexColumn")).getModelIndex(), SortOrder.ASCENDING));
         outputSorter.setSortKeys(outputSortKeys);
         outputSorter.setSortable(sensorTable.getColumn(Bundle.getMessage("ColumnDelete")).getModelIndex(), false);
@@ -272,14 +269,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
     private void buildMenu() {
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
 
-        //fileMenu.add(new LoadVSDFileAction(Bundle.getMessage("MenuItemLoadVSDFile")));
-        //fileMenu.add(new StoreXmlVSDecoderAction(Bundle.getMessage("MenuItemSaveProfile")));
-        //fileMenu.add(new LoadXmlVSDecoderAction(Bundle.getMessage("MenuItemLoadProfile")));
         JMenu editMenu = new JMenu(Bundle.getMessage("MenuEdit"));
-        //editMenu.add(new VSDPreferencesAction(Bundle.getMessage("MenuItemEditPreferences")));
-
-        //fileMenu.getItem(1).setEnabled(false); // disable XML store
-        //fileMenu.getItem(2).setEnabled(false); // disable XML load
         menuList = new ArrayList<>(3);
 
         menuList.add(fileMenu);
@@ -301,7 +291,6 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
             v.add(r.getSensorDefNumInt());
             v.add(r.getSensorDefPinInt());
             v.add(r.getSensorDefPullupBool());
-            //v.add("Delete");
             sensorModel.insertData(v, false);
             sensorSorter.sort();
         } else if (r.isTurnoutDefReply()) {
@@ -318,7 +307,6 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
             v.add((r.getOutputListIFlagInt() & 0x01) == 1); // (bool) Invert
             v.add((r.getOutputListIFlagInt() & 0x02) == 2); // (bool) Restore State
             v.add((r.getOutputListIFlagInt() & 0x04) == 4); // (bool) Force High
-            //v.add(r.getOutputListStateInt());
             outputModel.insertData(v, false);
             outputSorter.sort();
         }
@@ -446,12 +434,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
         }
         if (value == JOptionPane.YES_OPTION) {
             saveTableValues();
-            //OperationsXml.save();
         }
-        // TODO: Disabled? Why? Can this go away?
-        /*if (Setup.isCloseWindowOnSaveEnabled()) {
-            dispose();
-        }*/
     }
 
     /**
@@ -468,27 +451,21 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
                         boolean isdirty = (boolean) r.get(5);
                         boolean isdelete = (boolean) r.get(6);
                         int row = sensorModel.getRowData().indexOf(r);
-                        //if (sensorModel.isNewRow(row)) {
                         if (isnew) {
                             tc.sendDCCppMessage(DCCppMessage.makeSensorAddMsg((int) r.get(0),
                                     (int) r.get(1),
                                     ((boolean) r.get(2) ? 1 : 0)), this);
                             sensorModel.setNewRow(row, false);
-                            //} else if (sensorModel.isMarkedForDelete(row)) {
                         } else if (isdelete) {
                             tc.sendDCCppMessage(DCCppMessage.makeSensorDeleteMsg((int) r.get(0)), this);
-                            //log.debug("Sending: " + m);
                             sensorModel.getRowData().remove(r);
-                            //} else if (sensorModel.isDirtyRow(row)) {
                         } else if (isdirty) {
                             // Send a Delete, then an Add (for now).
                             tc.sendDCCppMessage(DCCppMessage.makeSensorDeleteMsg((int) r.get(0)), this);
-                            //log.debug("Sending: " + m);
                             // WARNING: Conversions here are brittle. Be careful.
                             tc.sendDCCppMessage(DCCppMessage.makeSensorAddMsg((int) r.get(0),
                                     (int) r.get(1),
                                     ((boolean) r.get(2) ? 1 : 0)), this);
-                            //log.debug("Sending: " + m);
                             sensorModel.setNewRow(row, false);
                             sensorModel.setDirtyRow(row, false);
                         }
@@ -502,19 +479,16 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
                         boolean isdirty = (boolean) r.get(5);
                         boolean isdelete = (boolean) r.get(6);
                         int row = turnoutModel.getRowData().indexOf(r);
-                        //if (sensorModel.isNewRow(row)) {
                         if (isnew) {
                             // WARNING: Conversions here are brittle. Be careful.
                             tc.sendDCCppMessage(DCCppMessage.makeTurnoutAddMsg((int) r.get(0),
                                     (int) r.get(1), (int) r.get(2)), this);
                             turnoutModel.setNewRow(row, false);
-                            //} else if (sensorModel.isMarkedForDelete(row)) {
                         } else if (isdelete) {
                             String m = "T " + Integer.toString((int) r.get(0));
                             tc.sendDCCppMessage(DCCppMessage.parseDCCppMessage(m), this);
                             log.debug("Sending: {}", m);
                             turnoutModel.getRowData().remove(r);
-                            //} else if (sensorModel.isDirtyRow(row)) {
                         } else if (isdirty) {
                             tc.sendDCCppMessage(DCCppMessage.makeTurnoutDeleteMsg((int) r.get(0)), this);
                             // Send a Delete, then an Add (for now).
@@ -534,7 +508,6 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
                         boolean isdirty = (boolean) r.get(7);
                         boolean isdelete = (boolean) r.get(8);
                         int row = outputModel.getRowData().indexOf(r);
-                        //if (sensorModel.isNewRow(row)) {
                         if (isnew) {
                             // WARNING: Conversions here are brittle. Be careful.
                             int f = ((boolean) r.get(2) ? 1 : 0); // Invert
@@ -543,11 +516,9 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
                             tc.sendDCCppMessage(DCCppMessage.makeOutputAddMsg((int) r.get(0),
                                     (int) r.get(1), f), this);
                             outputModel.setNewRow(row, false);
-                            //} else if (sensorModel.isMarkedForDelete(row)) {
                         } else if (isdelete) {
                             tc.sendDCCppMessage(DCCppMessage.makeOutputDeleteMsg((int) r.get(0)), this);
                             outputModel.getRowData().remove(r);
-                            //} else if (sensorModel.isDirtyRow(row)) {
                         } else if (isdirty) {
                             // Send a Delete, then an Add (for now).
                             tc.sendDCCppMessage(DCCppMessage.makeOutputDeleteMsg((int) r.get(0)), this);

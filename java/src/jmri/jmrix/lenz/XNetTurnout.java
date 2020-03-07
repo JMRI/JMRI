@@ -226,9 +226,9 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                 true);
         if (getFeedbackMode() == SIGNAL) {
             msg.setTimeout(0); // Set the timeout to 0, so the off message can
-            // be sent imediately.
+            // be sent immediately.
             // leave the next line commented out for now.
-            // it may be enabled later to allow SIGNAL mode to ignore
+            // It may be enabled later to allow SIGNAL mode to ignore
             // directed replies, which lets the traffic controller move on
             // to the next message without waiting.
             //msg.setBroadcastReply();
@@ -588,7 +588,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
             if (internalState != OFFSENT) {
                 jmri.util.ThreadingUtil.runOnLayoutDelayed( () -> {
                    tc.sendHighPriorityXNetMessage(msg, this);
-                }, 30);
+                }, 29);
                 newKnownState(getCommandedState());
                 internalState = OFFSENT;
                 return;

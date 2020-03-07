@@ -1,8 +1,9 @@
 package jmri.jmrix.sprog;
 
+import java.util.EnumSet;
 import jmri.DccLocoAddress;
-import jmri.DccThrottle;
 import jmri.LocoAddress;
+import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottleManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +40,13 @@ public class SprogThrottleManager extends AbstractThrottleManager {
 
     @Override
     public void requestThrottleSetup(LocoAddress a, boolean control) {
+        
+        if (!(a instanceof DccLocoAddress)) {
+            log.error("{} is not a DccLocoAddress",a);
+            failedThrottleRequest(a, "LocoAddress " +a+ " is not a DccLocoAddress");
+            return;
+        }
+        
         // The SPROG protocol doesn't require an interaction with the command
         // station for this, so set the address and immediately trigger the callback
         // if a throttle is not in use.
@@ -58,7 +66,7 @@ public class SprogThrottleManager extends AbstractThrottleManager {
             notifyThrottleKnown(new SprogThrottle((SprogSystemConnectionMemo) adapterMemo, address), address);
         } else {
             failedThrottleRequest(address, "Only one Throttle can be in use at anyone time with the Sprog.");
-            //javax.swing.JOptionPane.showMessageDialog(null,"Only one Throttle can be in use at anyone time with the Sprog.","Sprog Throttle",javax.swing.JOptionPane.WARNING_MESSAGE);
+            //javax.swing.JOptionPane.showMessageDialog(null, "Only one Throttle can be in use at anyone time with the Sprog.", "Sprog Throttle", javax.swing.JOptionPane.WARNING_MESSAGE);
             log.warn("Single SPROG Throttle already in use");
         }
     }
@@ -68,8 +76,8 @@ public class SprogThrottleManager extends AbstractThrottleManager {
      * possible modes specified by the DccThrottle interface.
      */
     @Override
-    public int supportedSpeedModes() {
-        return (DccThrottle.SpeedStepMode128 | DccThrottle.SpeedStepMode28);
+    public EnumSet<SpeedStepMode> supportedSpeedModes() {
+        return EnumSet.of(SpeedStepMode.NMRA_DCC_128, SpeedStepMode.NMRA_DCC_28);
     }
 
     /**

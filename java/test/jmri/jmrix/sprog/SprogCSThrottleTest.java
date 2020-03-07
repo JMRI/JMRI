@@ -350,6 +350,7 @@ public class SprogCSThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      * Test of sendFunctionGroup4 method, of class AbstractThrottle.
      */
     @Test
+    @Override
     public void testSendFunctionGroup4() {
     }
 
@@ -357,6 +358,7 @@ public class SprogCSThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      * Test of sendFunctionGroup5 method, of class AbstractThrottle.
      */
     @Test
+    @Override
     public void testSendFunctionGroup5() {
     }
 
@@ -365,9 +367,7 @@ public class SprogCSThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Before
     @Override
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
-        // prepare an interface
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
 
         m = new SprogSystemConnectionMemo(jmri.jmrix.sprog.SprogConstants.SprogMode.OPS);
         stcs = new SprogTrafficControlScaffold(m);
@@ -381,9 +381,12 @@ public class SprogCSThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @After
     @Override
     public void tearDown() {
-        m.getSlotThread().interrupt();
-        stcs.dispose();
-        JUnitUtil.tearDown();
+        try {
+            m.getSlotThread().interrupt();
+            stcs.dispose();
+        } finally {
+            JUnitUtil.tearDown();
+        }
     }
 
 }

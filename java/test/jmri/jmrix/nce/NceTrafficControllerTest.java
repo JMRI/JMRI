@@ -241,7 +241,13 @@ public class NceTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContro
 
         @Override
         public String[] validBaudRates() {
-            return null;
+            return new String[] {};
+        }
+
+        //@Override
+        @Override
+        public int[] validBaudNumbers() {
+            return new int[] {};
         }
 
         protected NcePortControllerScaffold() throws Exception {
@@ -291,6 +297,7 @@ public class NceTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContro
     @After
     public void tearDown() {
         tc = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

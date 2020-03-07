@@ -2527,7 +2527,7 @@ public class PaneProgPane extends javax.swing.JPanel
             int interval = spaces.length() - heading1.length();
             w.setFontStyle(Font.BOLD);
             // write the section name and dividing line
-            s = mName.toUpperCase();
+            s = mName;
             w.write(s, 0, s.length());
             w.writeBorders();
             //Draw horizontal dividing line for each Pane section

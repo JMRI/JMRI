@@ -47,7 +47,7 @@ public class MrcProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         MrcInterfaceScaffold tc = new MrcInterfaceScaffold();
         memo.setMrcTrafficController(tc);
         jmri.InstanceManager.store(memo, MrcSystemConnectionMemo.class);
-        programmer = new MrcProgrammer(tc);
+        programmer = new MrcProgrammer(memo);
     }
 
     @Override

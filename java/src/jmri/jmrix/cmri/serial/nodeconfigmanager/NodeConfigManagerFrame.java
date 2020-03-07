@@ -52,8 +52,8 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
     protected JTable nodeTable = null;
 
     // button pane items
-    JButton addButton = new JButton(Bundle.getMessage("AddButtonText"));
-    JButton doneButton = new JButton(Bundle.getMessage("DoneButtonText"));
+    JButton addButton = new JButton(Bundle.getMessage("ButtonAdd"));
+    JButton doneButton = new JButton(Bundle.getMessage("ButtonDone"));
     JButton printButton = new JButton(Bundle.getMessage("PrintButtonText"));
 
     NodeConfigManagerFrame curFrame;
@@ -159,7 +159,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
             searchlightBits[i] = false;
             firstSearchlight[i] = false;
         }
-        addHelpMenu("package.jmri.jmrix.cmri.serial.nodeconfig.NodeConfigManagerFrame", true); // NOI18N
+        // addHelpMenu("package.jmri.jmrix.cmri.serial.nodeconfigmanager.NodeConfigManagerFrame", true); // NOI18N duplicate, see initComponents
     }
 
     /**
@@ -505,10 +505,12 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
             }
         }
 
+        @Override
         public int getColumnCount() {
             return NUM_COLUMNS;
         }
 
+        @Override
         public int getRowCount() {
             return cmriNode.size();
         }
@@ -546,6 +548,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
             fireTableDataChanged();
         }
 
+        @Override
         public Object getValueAt(int r, int c) {
             switch (c) {
                 case NODENUM_COLUMN:
@@ -603,7 +606,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         public static final int NODEDESC_COLUMN = 8;
         public static final int NUM_COLUMNS = NODEDESC_COLUMN + 1;
 
-//        private String[] pollStatus = {"ERROR","IDLE","POLLING","TIMEOUT","SLOW POLL"};
+//        private String[] pollStatus = {"ERROR", "IDLE", "POLLING", "TIMEOUT", "SLOW POLL"};
         /**
          * Method to print or print preview the assignment table. Printed in
          * proportionately sized columns across the page with headings and
@@ -822,6 +825,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
          * Here add code for other types of nodes
          */
         nodeTypeBox.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent event) {
                 String s = (String) nodeTypeBox.getSelectedItem();
 
@@ -915,6 +919,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
          */
 
         cardSizeBox.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent event) {
                 String s = (String) cardSizeBox.getSelectedItem();
                 if (s.equals(Bundle.getMessage("CardSize24"))) {
@@ -2397,7 +2402,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         public static final int CARDNUM_COLUMN = 1;
         public static final int CARDTYPE_COLUMN = 2;
     }
-    private final String[] cpnodeConfigColumnNames = {"Card","IOX Addr Port", "Port Type"};
+    private final String[] cpnodeConfigColumnNames = {"Card", "IOX Addr Port", "Port Type"};
 
     /**
      * Set up table for selecting card type by address for CPNODE/CPMEGA nodes

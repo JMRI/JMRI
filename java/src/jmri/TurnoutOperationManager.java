@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * class to look after the collection of TurnoutOperation subclasses Unlike the
  * other xxxManager, this does not inherit from AbstractManager since the
  * resources it deals with are not DCC system resources but rather purely
- * internal state
+ * internal state.
  *
  * @author John Harper Copyright 2005
  *
@@ -67,32 +67,24 @@ public class TurnoutOperationManager implements InstanceManagerAutoDefault {
     protected void addOperation(@Nonnull TurnoutOperation op) {
         Objects.requireNonNull(op, "TurnoutOperations cannot be null");
         TurnoutOperation previous;
-        if (op.getName() == null) {
-            log.warn("null operation name in addOperation");
-        } else {
-            synchronized (this) {
-                initialize();
-                previous = turnoutOperations.put(op.getName(), op);
-                if (op.isDefinitive()) {
-                    updateTypes(op);
-                }
+        synchronized (this) {
+            initialize();
+            previous = turnoutOperations.put(op.getName(), op);
+            if (op.isDefinitive()) {
+                updateTypes(op);
             }
-            if (previous != null) {
-                log.debug("replaced existing operation called " + previous.getName());
-            }
+        }
+        if (previous != null) {
+            log.debug("replaced existing operation called " + previous.getName());
         }
         firePropertyChange("Content", null, null);
     }
 
     protected void removeOperation(@Nonnull TurnoutOperation op) {
         Objects.requireNonNull(op, "TurnoutOperations cannot be null");
-        if (op.getName() == null) {
-            log.warn("null operation name in removeOperation");
-        } else {
-            synchronized (this) {
-                initialize();
-                turnoutOperations.remove(op.getName());
-            }
+        synchronized (this) {
+            initialize();
+            turnoutOperations.remove(op.getName());
         }
         firePropertyChange("Content", null, null);
     }
@@ -137,18 +129,6 @@ public class TurnoutOperationManager implements InstanceManagerAutoDefault {
             log.debug("adding definitive instance of " + op.getClass());
         }
         operationTypes = newTypes;
-    }
-
-    /**
-     * Get the default instance.
-     *
-     * @return the default instance, created if necessary
-     * @deprecated since 4.11.4; get from the InstanceManager instead
-     */
-    @Deprecated // since 4.11.4
-    public synchronized static @Nonnull
-    TurnoutOperationManager getDefault() {
-        return InstanceManager.getDefault(TurnoutOperationManager.class);
     }
 
     /**

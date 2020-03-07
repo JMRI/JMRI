@@ -17,7 +17,7 @@ public class DCCppMultiMeterTest extends jmri.implementation.AbstractMultiMeterT
     @Test
     public void testCurrentReply(){
         ((DCCppMultiMeter)mm).message(DCCppReply.parseDCCppReply("a10")); // a syntactically valid current reply
-	Assert.assertEquals("current level",10.0/DCCppConstants.MAX_CURRENT,mm.getCurrent(),0.05);
+	Assert.assertEquals("current level percentage 100.0 - 0.0", (10.0/DCCppConstants.MAX_CURRENT) * 100 ,mm.getCurrent(),0.05);
     }
 
     @Override
@@ -31,6 +31,12 @@ public class DCCppMultiMeterTest extends jmri.implementation.AbstractMultiMeterT
         mm = new DCCppMultiMeter(memo);
     }
 
+    @Override
+    @After
+    public void tearDown() {
+        JUnitUtil.resetWindows(false,false);
+        super.tearDown();
+    }
 
     // private final static Logger log = LoggerFactory.getLogger(DCCppMultiMeterTest.class);
 

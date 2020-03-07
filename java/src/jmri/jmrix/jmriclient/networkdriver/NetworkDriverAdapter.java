@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Implements NetworkPortAdapter for the jmriclient system network connection.
  * <p>
- * This connects a JMRI server (daemon) via a telnet connection.
+ * This connects a JMRI Simple Server (daemon) via a telnet connection.
  *
  * @author Paul Bender Copyright (C) 2010
  */
@@ -24,7 +24,7 @@ public class NetworkDriverAdapter extends JMRIClientPortController {
     }
 
     /**
-     * set up all of the other objects to operate with an JMRI server connected
+     * set up all of the other objects to operate with an JMRI Simple server connected
      * to this port
      */
     @Override

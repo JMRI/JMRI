@@ -1,7 +1,6 @@
 package jmri.jmrix.powerline.swing.packetgen;
 
 import java.awt.Dimension;
-import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import jmri.jmrix.powerline.SerialListener;
 import jmri.jmrix.powerline.SerialMessage;
@@ -53,7 +52,7 @@ public class SerialPacketGenPane extends jmri.jmrix.powerline.swing.PowerlinePan
      */
     @Override
     public String getHelpTarget() {
-        return "package.jmri.jmrix.powerline.swing.packetgen.PowerlinePacketGenPane";
+        return "package.jmri.jmrix.powerline.packetgen.PowerlinePacketGenPane";
     }
 
     /**

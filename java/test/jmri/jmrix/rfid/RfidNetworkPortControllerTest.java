@@ -5,8 +5,7 @@ import org.junit.After;
 import org.junit.Before;
 
 /**
- * JUnit tests for the RfidNetworkPortController class
- * <p>
+ * JUnit tests for the RfidNetworkPortController class.
  *
  * @author      Paul Bender Copyright (C) 2016
  */

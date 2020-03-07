@@ -2,7 +2,6 @@ package jmri.jmrix.anyma.configurexml;
 
 import jmri.util.JUnitUtil;
 import org.junit.*;
-import jmri.jmrix.anyma.AnymaDMX_ConnectionConfig;
 
 /**
  * AnymaDMX_ConnectionConfigXmlTest.java
@@ -16,6 +15,7 @@ public class AnymaDMX_ConnectionConfigXmlTest extends jmri.jmrix.configurexml.Ab
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         xmlAdapter = new AnymaDMX_ConnectionConfigXml();
@@ -27,6 +27,7 @@ public class AnymaDMX_ConnectionConfigXmlTest extends jmri.jmrix.configurexml.Ab
     }
 
     @After
+    @Override
     public void tearDown() {
         xmlAdapter = null;
         cc = null;

@@ -33,6 +33,7 @@ public class AbstractAutomatonTest {
         // more of a test of infrastructure
         done = false;
         AbstractAutomaton a = new AbstractAutomaton(){
+            @Override
             public boolean handle() {
                 done = true;
                 return false; // done
@@ -49,6 +50,7 @@ public class AbstractAutomatonTest {
         done = false;
         sensor1 = InstanceManager.getDefault(SensorManager.class).provideSensor("IS1");
         AbstractAutomaton a = new AbstractAutomaton(){
+            @Override
             public boolean handle() {
                 if (sensor1.getKnownState() == Sensor.ACTIVE) {
                     done = true;
@@ -71,6 +73,7 @@ public class AbstractAutomatonTest {
 
         done = false;
         AbstractAutomaton a = new AbstractAutomaton(){
+            @Override
             public boolean handle() {
                 waitMsec(100000);
                 done = true;
@@ -100,6 +103,7 @@ public class AbstractAutomatonTest {
         Sensor sensor7 = InstanceManager.getDefault(SensorManager.class).provideSensor("IS7");
         Sensor sensor8 = InstanceManager.getDefault(SensorManager.class).provideSensor("IS8");
         AbstractAutomaton a = new AbstractAutomaton(){
+            @Override
             public boolean handle() {
                 waitSensorChange(new Sensor[]{sensor1, sensor2, sensor3, sensor4,
                                               sensor5, sensor6, sensor7, sensor8});
@@ -130,6 +134,7 @@ public class AbstractAutomatonTest {
         sensor3 = InstanceManager.getDefault(SensorManager.class).provideSensor("IS3");
         sensor4 = InstanceManager.getDefault(SensorManager.class).provideSensor("IS4");
         AbstractAutomaton a = new AbstractAutomaton(){
+            @Override
             public boolean handle() {
                 waitChange(new NamedBean[]{sensor1, sensor2, sensor3, sensor4});
                 done = true;
@@ -158,6 +163,7 @@ public class AbstractAutomatonTest {
         sensor3 = InstanceManager.getDefault(SensorManager.class).provideSensor("IS3");
         sensor4 = InstanceManager.getDefault(SensorManager.class).provideSensor("IS4");
         AbstractAutomaton a = new AbstractAutomaton(){
+            @Override
             public boolean handle() {
                 waitChange(new NamedBean[]{sensor1, sensor2, sensor3, sensor4});
                 done = true;
@@ -186,6 +192,7 @@ public class AbstractAutomatonTest {
         sensor3 = InstanceManager.getDefault(SensorManager.class).provideSensor("IS3");
         sensor4 = InstanceManager.getDefault(SensorManager.class).provideSensor("IS4");
         AbstractAutomaton a = new AbstractAutomaton(){
+            @Override
             public boolean handle() {
                 waitChange(new NamedBean[]{sensor1, sensor2, sensor3, sensor4});
                 done = true;
@@ -217,6 +224,7 @@ public class AbstractAutomatonTest {
         sensor4 = InstanceManager.getDefault(SensorManager.class).provideSensor("IS4");
         
         AbstractAutomaton a = new AbstractAutomaton(){
+            @Override
             public boolean handle() {
                 running = true;
                 waitChange(new NamedBean[]{sensor2, sensor1, sensor3, sensor4}); // not same as precheck

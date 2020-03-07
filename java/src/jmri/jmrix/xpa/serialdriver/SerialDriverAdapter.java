@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
 import jmri.jmrix.xpa.XpaPortController;
 import jmri.jmrix.xpa.XpaSystemConnectionMemo;
 import jmri.jmrix.xpa.XpaTrafficController;
@@ -26,7 +27,7 @@ import purejavacomm.UnsupportedCommOperationException;
  *
  * @author	Paul Bender Copyright (C) 2004
  */
-public class SerialDriverAdapter extends XpaPortController implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends XpaPortController {
 
     public SerialDriverAdapter() {
 
@@ -53,7 +54,7 @@ public class SerialDriverAdapter extends XpaPortController implements jmri.jmrix
                 return handlePortBusy(p, portName, log);
             }
 
-            // try to set it for comunication via SerialDriver
+            // try to set it for communication via SerialDriver
             try {
                 activeSerialPort.setSerialPortParams(9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
             } catch (UnsupportedCommOperationException e) {
@@ -154,11 +155,25 @@ public class SerialDriverAdapter extends XpaPortController implements jmri.jmrix
     }
 
     /**
-     * Get an array of valid baud rates. This is currently only 19,200 bps
+     * {@inheritDoc}
+     * Currently only 9,600 bps
      */
     @Override
     public String[] validBaudRates() {
         return new String[]{"9,600 bps"};
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return new int[]{9600};
+    }
+
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
     }
 
     private boolean opened = false;

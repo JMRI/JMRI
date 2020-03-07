@@ -206,7 +206,6 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
                   String className = connect.getAttributeValue("class");
 
                   try {
-                        @SuppressWarnings("unchecked") // Class.forName cast is unchecked at this point
                         XmlAdapter adapter = (XmlAdapter) Class.forName(className).getDeclaredConstructor().newInstance();
                         adapter.load(connect,connectedConfig);
                     } catch (ClassNotFoundException | 

@@ -3,11 +3,14 @@ package jmri.jmrit.beantable;
 import apps.gui.GuiLafPreferencesManager;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
-import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 import jmri.InstanceManager;
 import jmri.Turnout;
+import jmri.TurnoutManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
+import jmri.jmrix.internal.InternalTurnoutManager;
+import jmri.swing.ManagerComboBox;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 import org.netbeans.jemmy.operators.*;
@@ -23,7 +26,7 @@ import org.netbeans.jemmy.util.NameComponentChooser;
  *
  * @author Paul Bender Copyright (C) 2017
  */
-public class TurnoutTableActionTest extends AbstractTableActionBase {
+public class TurnoutTableActionTest extends AbstractTableActionBase<Turnout> {
 
     @Test
     public void testCTor() {
@@ -109,18 +112,28 @@ public class TurnoutTableActionTest extends AbstractTableActionBase {
 	
 	//This is a modal JOptionPane, so create a thread to dismiss it.
 	Thread t = new Thread(() -> {
-            jmri.util.swing.JemmyUtil.confirmJOptionPane(main,Bundle.getMessage("TurnoutGlobalSpeedMessageTitle"), "", "OK");
+            try {
+               jmri.util.swing.JemmyUtil.confirmJOptionPane(main,Bundle.getMessage("TurnoutGlobalSpeedMessageTitle"), "", "OK");
+            } catch( org.netbeans.jemmy.TimeoutExpiredException tee) {
+               // we're waiting for this thread to finish in the main method,
+               // so any exception here means we failed.
+               log.error("caught timeout exception while waiting for modal dialog",tee);
+            }
         });
         t.setName("Default Speeds Dialog Close Thread");
         t.start();
         // pushMenuNoBlock is used, because dialog is modal
         JMenuBarOperator mainbar = new JMenuBarOperator(main);
-        mainbar.pushMenuNoBlock("Speeds"); // stops at top level
-        JMenuOperator jmo = new JMenuOperator(mainbar, "Speeds");
+        mainbar.pushMenu(Bundle.getMessage("SpeedsMenu")); // stops at top level
+        JMenuOperator jmo = new JMenuOperator(mainbar, Bundle.getMessage("SpeedsMenu"));
         JPopupMenu jpm = jmo.getPopupMenu();
-        JMenuItem firstMenuItem = (JMenuItem)jpm.getComponent(0); // first item is [Defaults...]
-        JMenuItemOperator jmio = new JMenuItemOperator(firstMenuItem);
+        JMenuItemOperator jmio = new JMenuItemOperator(new JPopupMenuOperator(jpm),Bundle.getMessage("SpeedsMenuItemDefaults"));
         jmio.pushNoBlock();
+
+        // wait for the dismiss thread to finish
+        JUnitUtil.waitFor(()-> { return !t.isAlive(); 
+                  }, "Dismiss Default Speeds Thread finished");
+
         // clean up
         JUnitUtil.dispose(af);
         //as.dispose(); // uncomment when test is Speeds menu activated
@@ -171,7 +184,7 @@ public class TurnoutTableActionTest extends AbstractTableActionBase {
         new JTextFieldOperator(hwAddressField).typeText("1");
 
         //and press create 
-	jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f1),Bundle.getMessage("ButtonCreate"));
+        jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f1),Bundle.getMessage("ButtonCreate"));
         new org.netbeans.jemmy.QueueTool().waitEmpty();
 
         JTableOperator tbl = new JTableOperator(jfo, 0);
@@ -182,6 +195,17 @@ public class TurnoutTableActionTest extends AbstractTableActionBase {
         JUnitUtil.dispose(f2);
         JUnitUtil.dispose(f1);
         JUnitUtil.dispose(f);
+    }
+
+    @Test
+    public void testConfigureManagerComboBox() {
+        TurnoutManager j = new InternalTurnoutManager(new InternalSystemConnectionMemo("J", "Juliet"));
+        InstanceManager.setTurnoutManager(j);
+        ManagerComboBox<Turnout> box = new ManagerComboBox<Turnout>();
+        Assert.assertEquals("empty box", 0, box.getItemCount());
+        a.configureManagerComboBox(box, j, TurnoutManager.class);
+        Assert.assertEquals("full box", 2, box.getItemCount());
+        Assert.assertEquals("selection", j, box.getSelectedItem());
     }
 
     @Override

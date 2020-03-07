@@ -2,6 +2,7 @@ package jmri.jmrix.openlcb;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
 import jmri.BooleanPropertyDescriptor;
 import jmri.JmriException;
 import jmri.NamedBean;
@@ -25,19 +26,22 @@ import org.slf4j.LoggerFactory;
  */
 public class OlcbSensorManager extends jmri.managers.AbstractSensorManager implements CanListener {
 
-    String prefix = "M";
-
     // Whether we accumulate partially loaded objects in pendingSensors.
     private boolean isLoading = false;
     // Turnouts that are being loaded from XML.
     private final ArrayList<OlcbSensor> pendingSensors = new ArrayList<>();
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    @Nonnull
+    public CanSystemConnectionMemo getMemo() {
+        return (CanSystemConnectionMemo) memo;
     }
 
     @Override
+    @Nonnull
     public List<NamedBeanPropertyDescriptor<?>> getKnownBeanProperties() {
         List<NamedBeanPropertyDescriptor<?>> l = new ArrayList<>();
         l.add(new BooleanPropertyDescriptor(OlcbUtils.PROPERTY_IS_AUTHORITATIVE, OlcbTurnout
@@ -70,30 +74,32 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
     // to free resources when no longer used
     @Override
     public void dispose() {
-        memo.getTrafficController().removeCanListener(this);
+        getMemo().getTrafficController().removeCanListener(this);
         super.dispose();
     }
 
     // Implemented ready for new system connection memo
     public OlcbSensorManager(CanSystemConnectionMemo memo) {
-        this.memo = memo;
-        prefix = memo.getSystemPrefix();
+        super(memo);
         memo.getTrafficController().addCanListener(this);
     }
 
-    CanSystemConnectionMemo memo;
-
+    /**
+     * {@inheritDoc}
+     *
+     * @throws IllegalArgumentException when SystemName can't be converted
+     */
     @Override
-    public Sensor createNewSensor(String systemName, String userName) {
+    @Nonnull
+    public Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         String addr = systemName.substring(getSystemPrefix().length() + 1);
         // first, check validity
         try {
-            validateSystemNameFormat(addr);
+            validateAddressFormat(addr);
         } catch (IllegalArgumentException e) {
             log.error(e.toString());
             throw e;
         }
-
         // OK, make
         OlcbSensor s = new OlcbSensor(getSystemPrefix(), addr, memo.get(OlcbInterface.class));
         s.setUserName(userName);
@@ -128,23 +134,24 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
     public void finishLoad() {
         log.debug("Sensor manager : finish load");
         synchronized (pendingSensors) {
-            for (OlcbSensor s : pendingSensors) {
+            pendingSensors.forEach((s) -> {
                 s.finishLoad();
-            }
+            });
             pendingSensors.clear();
             isLoading = false;
         }
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return false;
     }
 
     @Override
-    public String createSystemName(String curAddress, String prefix) throws JmriException {
+    @Nonnull
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         try {
-            validateSystemNameFormat(curAddress);
+            validateAddressFormat(curAddress);
         } catch (IllegalArgumentException e) {
             throw new JmriException(e.toString());
         }
@@ -153,12 +160,12 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
     }
 
     @Override
-    public String getNextValidAddress(String curAddress, String prefix) {
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) {
         // always return this (the current) name without change
         return curAddress;
     }
 
-    void validateSystemNameFormat(String address) throws IllegalArgumentException {
+    void validateAddressFormat(String address) throws IllegalArgumentException {
         OlcbAddress a = new OlcbAddress(address);
         OlcbAddress[] v = a.split();
         if (v == null) {
@@ -172,6 +179,14 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
             default:
                 throw new IllegalArgumentException("Wrong number of events in address: " + address);
         }
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getEntryToolTip() {
+        return Bundle.getMessage("AddSensorEntryToolTip");
     }
 
     // listen for sensors, creating them as needed

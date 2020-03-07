@@ -6,33 +6,34 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
-  <!-- UpDated  by Blorec Herv&#233; 2013-09-17-->
+  <!-- Updated by Blorec Herv&#233; 2013-09-17-->
 
   <title>JMRI: Programming DCC Specialties Products</title>
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+    <!--#include virtual="../SidebarUp" -->
     <div id="mainContent">
-      <h2>JMRI: Programmation Poduits DCC Specialties</h2><a href=
+        <!-- Page Body -->
+
+<h2>JMRI: Programmation Poduits DCC Specialties</h2><a href=
       "http://www.dccspecialties.com/products/hare-ng.htm"><img src="http://www.dccspecialties.com/products/img/hareng_2420-600.jpg"
       height="126" width="150" align="right"></a> <a href=
       "http://www.dccspecialties.com/products/wabbit_review.htm"><img src="http://www.dccspecialties.com/products/img/wabbit_1077_600.jpg"
       height="165" width="150" align="right"></a> <a href=
       "http://www.dccspecialties.com/products/wabbit_review.htm"><img src="http://www.dccspecialties.com/products/img/wabbit_rev_3.gif"
       height="85" width="150" align="right"></a> <a href=
-      "http://www.dccspecialties.com/">DCC Specialities</a> fait
+      "http://www.dccspecialties.com/">DCC Specialties</a> fait
       plusieurs contr&ocirc;leurs puissants pour les chemins de fer
       mod&egrave;le. Leurs deux contr&ocirc;leurs de moteur switch
       sont appel&eacute;s les <a href=
@@ -69,7 +70,7 @@
       r&eacute;pertoires de scripts</a> dans le <a href=
       "http://jmri.org/download">T&eacute;l&eacute;chargements
       JMRI</a> .</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

@@ -468,6 +468,7 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
      }
 
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
 
@@ -479,6 +480,7 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
     }
 
     @After
+    @Override
     public void tearDown() {
         memo.dispose();
         lnis = null;

@@ -12,13 +12,11 @@ import java.awt.image.BufferedImage;
 import java.awt.image.RescaleOp;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import javax.annotation.Nonnull;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -32,9 +30,7 @@ import jmri.NamedBeanHandle;
 import jmri.Sensor;
 import jmri.Turnout;
 import jmri.jmrit.beantable.AddNewDevicePanel;
-import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
-import jmri.jmrit.display.switchboardEditor.SwitchboardEditor;
 import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -662,8 +658,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
     }
 
     /**
-     * Edit user name on a switch using N11N. Copied from
-     * BeanTableDataModel.
+     * Edit user name on a switch.
      */
     public void renameBean() {
         NamedBean nb;
@@ -676,7 +671,6 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
             log.debug("NewName dialog returned Null, cancelled");
             return;
         }
-        newUserName = newUserName.trim(); // N11N
         log.debug("New name: {}", newUserName);
         if (newUserName.length() == 0) {
             log.debug("new user name is empty");
@@ -883,8 +877,8 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
     protected void okAddPressed(ActionEvent e) {
         NamedBean nb;
         String manuPrefix = _editor.getSwitchManu();
-        String user = userName.getText().trim();
-        if (user.equals("")) {
+        String user = userName.getText();
+        if (user.trim().equals("")) {
             user = null;
         }
         String sName = sysName.getText(); // can't be changed, but pick it up from panel

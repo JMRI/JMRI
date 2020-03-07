@@ -66,5 +66,4 @@ public class IEEE802154MonPane extends jmri.jmrix.AbstractMonPane implements IEE
         }
     }
 
-
 }

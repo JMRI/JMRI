@@ -12,6 +12,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Bob Jacobsen" version="3" lastUpdated="20190727"/> <!-- xinclude for CV19 -->
   <version author="Marc Fournier forfoum@videotron.ca" version="2" lastUpdated="20090618"/>
   <version author="Marc Fournier forfoum@videotron.ca" version="1" lastUpdated="20090618"/>
   <!-- version 1 based on the MRC_soundbrilliance1645 file by Bill Chown -->
@@ -85,15 +86,9 @@
         <label xml:lang="fr">ID constructeur: </label>
         <label xml:lang="de">Hersteller ID: </label>
       </variable>
-      <variable CV="19" mask="XVVVVVVV" item="Consist Address" tooltip="Stores consist address. Range 0-127">
-        <decVal/>
-        <label>Advanced consist address</label>
-        <label xml:lang="it">Indirizzo Consist</label>
-       <label xml:lang="fr">Addresse UM</label>
-       <label xml:lang="de">Verbundadresse</label>
-       <tooltip>Stores consist address. Range 0-127</tooltip>
-       <tooltip xml:lang="it">Indirizzo Consist. Valori 0-127</tooltip>
-      </variable>
+
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddr.xml"/>
+
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv21_lsb_MRC.xml"/>
       <!-- CV=29 -->
      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>

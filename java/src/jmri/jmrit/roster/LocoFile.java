@@ -348,7 +348,7 @@ public class LocoFile extends XmlFile {
     }
 
     static public String getFileLocation() {
-        return Roster.getDefault().getRosterLocation() + "roster" + File.separator;
+        return Roster.getDefault().getRosterFilesLocation();
     }
 
     // initialize logging

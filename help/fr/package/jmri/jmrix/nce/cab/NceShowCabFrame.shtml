@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Translated  by Blorec Hervé le 2011-10-28-->
+<!-- Translated  by Blorec Herv&#233; le 2011-10-28-->
 
 <html lang="fr">
 <head>
@@ -18,14 +18,15 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Montrer Cabines NCE</h1>
 
       <p>Cet outil fournit une liste des Cabs* NCE
@@ -58,6 +59,8 @@
       n'auront pas &Atilde;  temporiser en attendant une
       r&Atilde;&copy;ponse de l'adresse de la Cab
       purg&Atilde;&copy;e. *commande manuelle</p>
+
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

@@ -1,6 +1,5 @@
 package jmri.jmrix.srcp;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Vector;
 import jmri.jmrix.AbstractMRListener;
@@ -37,13 +36,7 @@ public class SRCPTrafficController extends AbstractMRTrafficController
      */
     public SRCPTrafficController() {
         super();
-        if (jmri.InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
-            jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(this);
-        } else {
-            if (log.isDebugEnabled()) {
-                log.debug("attempted to register shutdown task, but shutdown manager is null");
-            }
-        }
+        jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(this);
     }
 
     // The methods to implement the SRCPInterface

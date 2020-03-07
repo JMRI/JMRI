@@ -2,9 +2,7 @@ package jmri.jmrix.sprog;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for SprogOpsModeProgrammer.
@@ -18,6 +16,7 @@ public class SprogOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgra
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         // prepare an interface
@@ -32,6 +31,7 @@ public class SprogOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgra
     }
 
     @After
+    @Override
     public void tearDown() {
         m.getSlotThread().interrupt();
         stcs.dispose();

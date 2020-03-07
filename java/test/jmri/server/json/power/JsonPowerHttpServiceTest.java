@@ -10,6 +10,7 @@ import jmri.PowerManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpServiceTestBase;
+import jmri.server.json.JsonRequest;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -27,18 +28,18 @@ public class JsonPowerHttpServiceTest extends JsonHttpServiceTestBase<JsonPowerH
     public void testDoGet() throws JmriException, JsonException {
         PowerManager power = InstanceManager.getDefault(PowerManager.class);
         power.setPower(PowerManager.UNKNOWN);
-        JsonNode result = service.doGet(JsonPowerServiceFactory.POWER, "", NullNode.getInstance(), locale, 42);
+        JsonNode result = service.doGet(JsonPowerServiceFactory.POWER, "", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 42));
         this.validate(result);
         Assert.assertNotNull(result);
         Assert.assertEquals(JsonPowerServiceFactory.POWER, result.path(JSON.TYPE).asText());
         Assert.assertEquals(JSON.UNKNOWN, result.path(JSON.DATA).path(JSON.STATE).asInt());
         power.setPower(PowerManager.ON);
-        result = service.doGet(JsonPowerServiceFactory.POWER, "", NullNode.getInstance(), locale, 42);
+        result = service.doGet(JsonPowerServiceFactory.POWER, "", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 42));
         this.validate(result);
         Assert.assertNotNull(result);
         Assert.assertEquals(JSON.ON, result.path(JSON.DATA).path(JSON.STATE).asInt());
         power.setPower(PowerManager.OFF);
-        result = service.doGet(JsonPowerServiceFactory.POWER, "", NullNode.getInstance(), locale, 42);
+        result = service.doGet(JsonPowerServiceFactory.POWER, "", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 42));
         this.validate(result);
         Assert.assertNotNull(result);
         Assert.assertEquals(JSON.OFF, result.path(JSON.DATA).path(JSON.STATE).asInt());
@@ -51,26 +52,26 @@ public class JsonPowerHttpServiceTest extends JsonHttpServiceTestBase<JsonPowerH
         JsonNode message;
         power.setPower(PowerManager.UNKNOWN);
         message = mapper.createObjectNode().put(JSON.STATE, JSON.ON);
-        result = service.doPost(JsonPowerServiceFactory.POWER, "", message, locale, 42);
+        result = service.doPost(JsonPowerServiceFactory.POWER, "", message, new JsonRequest(locale, JSON.V5, 42));
         this.validate(result);
         Assert.assertEquals(PowerManager.ON, power.getPower());
         Assert.assertNotNull(result);
         Assert.assertEquals(JSON.ON, result.path(JSON.DATA).path(JSON.STATE).asInt());
         message = mapper.createObjectNode().put(JSON.STATE, JSON.OFF);
-        result = service.doPost(JsonPowerServiceFactory.POWER, "", message, locale, 42);
+        result = service.doPost(JsonPowerServiceFactory.POWER, "", message, new JsonRequest(locale, JSON.V5, 42));
         this.validate(result);
         Assert.assertEquals(PowerManager.OFF, power.getPower());
         Assert.assertNotNull(result);
         Assert.assertEquals(JSON.OFF, result.path(JSON.DATA).path(JSON.STATE).asInt());
         message = mapper.createObjectNode().put(JSON.STATE, JSON.UNKNOWN);
-        result = service.doPost(JsonPowerServiceFactory.POWER, "", message, locale, 42);
+        result = service.doPost(JsonPowerServiceFactory.POWER, "", message, new JsonRequest(locale, JSON.V5, 42));
         this.validate(result);
         Assert.assertEquals(PowerManager.OFF, power.getPower());
         Assert.assertEquals(JSON.OFF, result.path(JSON.DATA).path(JSON.STATE).asInt());
         message = mapper.createObjectNode().put(JSON.STATE, 42); // Invalid value
         JsonException exception = null;
         try {
-            service.doPost(JsonPowerServiceFactory.POWER, "", message, locale, 42);
+            service.doPost(JsonPowerServiceFactory.POWER, "", message, new JsonRequest(locale, JSON.V5, 42));
         } catch (JsonException ex) {
             exception = ex;
         }
@@ -82,7 +83,7 @@ public class JsonPowerHttpServiceTest extends JsonHttpServiceTestBase<JsonPowerH
     @Test
     public void testDoPut() {
         try {
-            service.doPut(JsonPowerServiceFactory.POWER, "", NullNode.getInstance(), locale, 42);
+            service.doPut(JsonPowerServiceFactory.POWER, "", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 42));
             Assert.fail("Expected exception not thrown");
         } catch (JsonException ex) {
             Assert.assertEquals(HttpServletResponse.SC_METHOD_NOT_ALLOWED, ex.getCode());
@@ -91,16 +92,17 @@ public class JsonPowerHttpServiceTest extends JsonHttpServiceTestBase<JsonPowerH
 
     @Test
     public void testDoGetList() throws JsonException {
-        JsonNode result = service.doGetList(JsonPowerServiceFactory.POWER, NullNode.getInstance(), locale, 0);
+        JsonNode result = service.doGetList(JsonPowerServiceFactory.POWER, NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 0));
         this.validate(result);
         Assert.assertTrue(result.isArray());
         Assert.assertEquals(1, result.size());
     }
 
     @Test
+    @Override
     public void testDoDelete() {
         try {
-            service.doDelete(JsonPowerServiceFactory.POWER, "", NullNode.getInstance(), locale, 42);
+            service.doDelete(JsonPowerServiceFactory.POWER, "", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 42));
             Assert.fail("Expected exception not thrown");
         } catch (JsonException ex) {
             Assert.assertEquals(HttpServletResponse.SC_METHOD_NOT_ALLOWED, ex.getCode());

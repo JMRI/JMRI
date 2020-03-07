@@ -1,7 +1,6 @@
 package jmri.managers;
 
 import jmri.IdTag;
-import jmri.IdTagManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -104,6 +103,7 @@ public class DefaultRailComManagerTest extends DefaultIdTagManagerTest {
     }
 
     @Test
+    @Override
     public void testIdTagProviderGet() {
         DefaultIdTagManager m = (DefaultIdTagManager)l;
         IdTag t1 = m.newIdTag("RD0413276BC1", "Test Tag 1");
@@ -123,6 +123,7 @@ public class DefaultRailComManagerTest extends DefaultIdTagManagerTest {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -134,6 +135,7 @@ public class DefaultRailComManagerTest extends DefaultIdTagManagerTest {
     }
 
     @After
+    @Override
     public void tearDown() {
         l = null;
         JUnitUtil.tearDown();
@@ -141,6 +143,7 @@ public class DefaultRailComManagerTest extends DefaultIdTagManagerTest {
 
     // Override init method so as not to load file
     // nor register shutdown task during tests.
+    @Override
     protected DefaultIdTagManager getManager() {
         return new DefaultRailComManager() {
             @Override

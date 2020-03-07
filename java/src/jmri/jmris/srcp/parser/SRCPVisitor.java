@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
  * parser for the SRCP protocol and the JMRI back end.
  * @author Paul Bender Copyright (C) 2010
  */
-public class SRCPVisitor extends SRCPParserDefaultVisitor implements SRCPParserVisitor {
+public class SRCPVisitor extends SRCPParserDefaultVisitor {
 
     private String outputString = null;
 

@@ -4,6 +4,7 @@ import jmri.InstanceManager;
 import jmri.jmrix.rfid.RfidReporterManager;
 import jmri.jmrix.rfid.RfidSensorManager;
 import jmri.jmrix.rfid.RfidSystemConnectionMemo;
+import jmri.jmrix.rfid.RfidTrafficController;
 
 /**
  * Lightweight class to denote that a system is active, and provide general
@@ -32,15 +33,19 @@ public class StandaloneSystemConnectionMemo extends RfidSystemConnectionMemo {
         super();
     }
 
+    public StandaloneSystemConnectionMemo(RfidTrafficController rt) {
+        super(rt);
+    }
+    
     /**
      * Configure the common managers for Rfid connections. This puts the common
      * manager config in one place.
      */
     @Override
     public void configureManagers(RfidSensorManager sensorManager, RfidReporterManager reporterManager) {
-        this.sensorManager = new StandaloneSensorManager(getTrafficController(), getSystemPrefix());
+        this.sensorManager = new StandaloneSensorManager(this);
         InstanceManager.setSensorManager(sensorManager);
-        this.reporterManager = new StandaloneReporterManager(getTrafficController(), getSystemPrefix());
+        this.reporterManager = new StandaloneReporterManager(this);
         InstanceManager.setReporterManager(reporterManager);
     }
 

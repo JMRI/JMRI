@@ -6,27 +6,27 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
-  <!-- UpDated by Blorec Herv&#233; 2013-09-02-->
+  <!-- Updated by Blorec Herv&#233; 2013-09-02-->
 
   <title>JMRI: Affichage des fichiers de Panneau</title>
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+  <!--#include virtual="Sidebar" -->
 
-  <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+  <div id="mainContent">
+    <!-- Page Body -->
 
-    <div id="mainContent">
       <h1>JMRI: Affichage des fichiers de Panneau</h1>Les panneaux
       JMRI et les informations de configuration sont stock&eacute;s
       dans des fichiers XML. Ces sont des fichiers texte que les
@@ -74,9 +74,9 @@
         serveur web JMRI.<br>
           Pour ce faire, changer la deuxi&egrave;me ligne du
           fichier en:
-          <pre style="font-family: monospace;">
+          <code>
   &lt;xml-stylesheet href = "http://jmri.org/xml/XSLT/panelfile.xsl"type = "text/xsl"&gt;
-</pre>
+          </code>
         </li>
 
         <li>Placez le fichier feuille de style dans le m&ecirc;me
@@ -102,10 +102,9 @@
 Dites au navigateur de la prendre &#224; partir d'un serveur web JMRI.
 <p>
 Pour ce faire, changer la deuxi&#232;me ligne du fichier en:
-<code> <pre>
+<code>
  &lt;?xml-stylesheet href = "http://jmri.org/xml/XSLT/panelfile.xsl"type = "text/xsl"?&gt;
-
-</pre> </code>
+</code>
 <li>
 Placez le fichier feuille de style dans le m&#234;me endroit que votre fichier de panneau, et
 dire au navigateur de l'utiliser.
@@ -114,16 +113,17 @@ Pour ce faire, d'abord trouver le fichier "xml/XSLT/panelfile.xsl" dans votre r&
 <a href=  "http://jmri.org/xml/XSLT/panelfile.xsl"> ce lien </a>.
 Placez une copie de ce fichier dans le m&#234;me r&#233;pertoire que le fichier de panneau que vous souhaitez afficher.
 Puis changez la deuxi&#232;me ligne de votre fichier de panneau en:
-<code> <pre>
+<code>
 &lt;?xml-stylesheet href = "panelfile.xsl" type = "text/xsl"?&gt;
-</pre> </code>
+</code>
 </ul>
-<p>
-Ne pas modifier la premi&#232;re ligne!
-<p>
-Pour plus d'informations techniques &#224; ce sujet, voir la
-<a href="../../doc/Technical/XmlUsage.shtml#xslt">  page JMRI XML </a>.
-   
-<!--#include virtual="/Footer" -->
+
+<p>Ne pas modifier la premi&#232;re ligne du fichier!</p>
+<p>Pour plus d'informations techniques &#224; ce sujet, voir la
+<a href="../../doc/Technical/XmlUsage.shtml#xslt">page JMRI XML</a>.</p>
+
+<!--#include virtual="/Footer.shtml" -->
+    </div>
+  </div>
 </body>
 </html>

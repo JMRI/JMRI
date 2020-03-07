@@ -2,9 +2,7 @@ package jmri.jmrix;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
@@ -14,6 +12,7 @@ public class AbstractMessageTest extends AbstractMessageTestBase {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         m = new AbstractMessage(5){

@@ -32,6 +32,7 @@ public class SpeedoConsoleActionTest {
         // then close the frame.
         JFrameOperator fo = new JFrameOperator(f);
         fo.requestClose();
+        JUnitUtil.dispose(f);
     }
 
 
@@ -40,6 +41,7 @@ public class SpeedoConsoleActionTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initRosterConfigManager();
         JUnitUtil.initDefaultUserMessagePreferences();
         JUnitUtil.initDebugThrottleManager();
     }

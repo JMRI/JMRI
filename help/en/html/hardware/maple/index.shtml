@@ -14,10 +14,11 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="../SidebarUp.shtml" -->
     <div id="mainContent">
+
       <h1>Hardware Support: Maple Systems</h1><a href=
       "http://www.maplesystems.com/images/silverseries/SilverSeries_7-16-07.jpg"><img src="http://www.maplesystems.com/images/silverseries/SilverSeries_7-16-07.jpg"
       align="right" height="93" width="173"></a><br>
@@ -137,7 +138,19 @@
 
       <a name="tools" id="tools"></a>
       <h2>JMRI Maple Systems Tools</h2>
-      N/A
+      <ul>
+        <li>Maple network traffic can be viewed with <a href=
+          "../../../package/jmri/jmrix/maple/serialmon/SerialMonFrame.shtml">
+          Maple Monitor</a></li>
+
+        <li>The <a href=
+          "../../../package/jmri/jmrix/maple/assignment/ListFrame.shtml">
+          Maple List Tool</a> lets you assign Maple Inputs and Outputs</li>
+
+        <li>Nodes can be configured with the <a href=
+          "../../../package/jmri/jmrix/maple/nodeconfig/NodeConfigFrame.shtml">
+          Configure Nodes</a> tool</li>
+      </ul>
 
       <a name="documentation" id="documentation"></a>
       <h2>Documentation</h2>
@@ -146,7 +159,7 @@
 
       <p><a href="http://www.maplesystems.com">Maple Systems
       website</a></p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

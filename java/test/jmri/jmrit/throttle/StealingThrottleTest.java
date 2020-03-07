@@ -1,17 +1,14 @@
 package jmri.jmrit.throttle;
 
 import java.awt.GraphicsEnvironment;
-import java.io.File;
 import jmri.InstanceManager;
 import jmri.DccLocoAddress;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.rules.RetryRule;
-import jmri.util.swing.JemmyUtil;
 import org.junit.*;
-import org.junit.rules.TemporaryFolder;
 
 /**
- * Test stealing functinoality of ThrottleFrame
+ * Test stealing functionality of ThrottleFrame
  *
  * @author	Paul Bender Copyright (C) 2018
  */
@@ -88,6 +85,7 @@ public class StealingThrottleTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
         // these tests use the StealingThrottleManager.
         jmri.ThrottleManager m = new jmri.managers.StealingThrottleManager();
         jmri.InstanceManager.setThrottleManager(m);

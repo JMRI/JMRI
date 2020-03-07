@@ -1,8 +1,8 @@
 package jmri.jmrix.can.cbus;
 
+import javax.annotation.Nonnull;
 import jmri.Reporter;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.TrafficController;
 import jmri.managers.AbstractReporterManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Implement ReporterManager for CAN CBUS systems.
  * <p>
- * System names are "MRnnnnn", where M is the user-configurable system prefix,
+ * System names are "MRnnnnn", where M is the user-configurable system getSystemPrefix(),
  * nnnnn is the reporter number without padding.
  * <p>
  * CBUS Reporters are NOT automatically created.
@@ -20,31 +20,27 @@ import org.slf4j.LoggerFactory;
  */
 public class CbusReporterManager extends AbstractReporterManager {
 
-    @SuppressWarnings("LeakingThisInConstructor")
     public CbusReporterManager(CanSystemConnectionMemo memo) {
-        this.tc = memo.getTrafficController();
-        this.prefix = memo.getSystemPrefix();
+        super(memo);
     }
     
-    private TrafficController tc;
-    private String prefix;
-
     /**
      * {@inheritDoc}
      */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    @Nonnull
+    public CanSystemConnectionMemo getMemo() {
+        return (CanSystemConnectionMemo) memo;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Reporter createNewReporter(String systemName, String userName) {
+    public Reporter createNewReporter(@Nonnull String systemName, String userName) {
         log.debug("ReporterManager create new CbusReporter: {}", systemName);
-        int addr = Integer.parseInt(systemName.substring(prefix.length() + 1));
-        Reporter t = new CbusReporter(addr, tc, prefix);
+        int addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
+        Reporter t = new CbusReporter(addr, getMemo().getTrafficController(), getSystemPrefix());
         t.setUserName(userName);
         t.addPropertyChangeListener(this);
         return t;
@@ -55,7 +51,7 @@ public class CbusReporterManager extends AbstractReporterManager {
      * Checks for reporter number between 0 and 65535
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         // name must be in the MSnnnnn format (M is user configurable); no + or ; or - for Reporter address
         log.debug("Checking system name: {}", systemName);
         if ( systemName == null ) {
@@ -90,7 +86,7 @@ public class CbusReporterManager extends AbstractReporterManager {
      * {@inheritDoc}
      */
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 
@@ -99,8 +95,7 @@ public class CbusReporterManager extends AbstractReporterManager {
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddReporterEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddReporterEntryToolTip");
     }
 
     private static final Logger log = LoggerFactory.getLogger(CbusReporterManager.class);

@@ -2,16 +2,16 @@ package jmri.jmrit.consisttool;
 
 import java.awt.Component;
 import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
 import jmri.DccLocoAddress;
 import jmri.jmrit.DccLocoAddressSelector;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JLabelOperator;
-import org.netbeans.jemmy.operators.JTextFieldOperator;
 import org.netbeans.jemmy.operators.JRadioButtonOperator;
+import org.netbeans.jemmy.operators.JMenuBarOperator;
+import org.netbeans.jemmy.operators.JMenuOperator;
+import org.netbeans.jemmy.operators.JMenuItemOperator;
 import org.netbeans.jemmy.ComponentChooser;
 
 /*
@@ -43,11 +43,11 @@ public class ConsistToolScaffold extends JFrameOperator {
 
    // push loco specific buttons at the top.
    public void pushAddButton(){
-        new JButtonOperator(this,Bundle.getMessage("AddButtonText")).push();
+        new JButtonOperator(this, Bundle.getMessage("ButtonAddText")).push();
    }
 
    public void pushResetButton(){
-        new JButtonOperator(this,Bundle.getMessage("ButtonReset")).push();
+        new JButtonOperator(this, Bundle.getMessage("ButtonReset")).push();
    }
 
    // fill out the loco address field
@@ -62,6 +62,7 @@ public class ConsistToolScaffold extends JFrameOperator {
    // push the buttons at the bottom.
    public void pushDeleteButton(){
         JButtonOperator jbo = new JButtonOperator(this, new ComponentChooser() {
+            @Override
             public boolean checkComponent(Component comp) {
                 String tooltip = ((JButton)comp).getToolTipText();
                 if(tooltip!=null) {
@@ -70,6 +71,7 @@ public class ConsistToolScaffold extends JFrameOperator {
                     return false;
                 }
             }
+            @Override
             public String getDescription() {
                 return "tooltip for delete button";
             }
@@ -96,6 +98,14 @@ public class ConsistToolScaffold extends JFrameOperator {
    
    public void pushRestoreButton(){
         new JButtonOperator(this,Bundle.getMessage("RestoreButtonText")).push();
+   }
+
+   public void startRosterScan(){
+        JMenuBarOperator jmbo = new JMenuBarOperator(this); // there's only one menubar
+        JMenuOperator jmo = new JMenuOperator(jmbo, Bundle.getMessage("MenuFile"));  // NOI18N
+        jmo.push();
+        JMenuItemOperator jmio = new JMenuItemOperator(this,Bundle.getMessage("ScanConsists"));
+        jmio.push();
    }
 
 }

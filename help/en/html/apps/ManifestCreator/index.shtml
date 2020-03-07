@@ -1,44 +1,17 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
-<head>
-
-  <title>JMRI: Manifest Creator</title><!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+<head><title>JMRI: Redirected Page</title>
+<META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
+<!-- CHANGE FOLLOWING LINE TO POINT TO NEW LOCATION -->
+<META HTTP-EQUIV="Refresh" CONTENT="5; URL=/community/connections/ManifestCreator/index.shtml ">
 </head>
-
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
-    <div id="mainContent">
-      <!-- Page Body -->
-
-      <h1>JMRI: Manifest Creator</h1>
-
-     Manifest Creator is an Excel-based
-     add-on to JMRI that can provide
-     train manifests and switch lists
-     in a number of formats.
-     
-     <p>
-     For more information, see the 
-     <a href="http://manifestcreator.weebly.com">Manifest Creator web site</a>.
-     
-     
-     
-      <!--#include virtual="/Footer" -->
-    </div><!-- close #mainContent -->
-  </div><!-- close #mBody -->
+This page has been moved to another location
+to be listed in community applications that connect with JMRI 
+(<a href="/community/connections/ManifestCreator/index.shtml">/community/connections/ManifestCreator/index.shtml</a>)
+as part of updating our web site.
+<br>Please update your bookmarks.  
+<br>If you got to this page from another JMRI page, please let us know so we can fix it.
+<br>You should be redirected to the new page within 5 seconds.  
 </body>
 </html>

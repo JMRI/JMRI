@@ -1,13 +1,14 @@
 package jmri.jmrit.operations.automation.actions;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.automation.AutomationItem;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.JUnitOperationsUtil;
-import org.junit.Assert;
-import org.junit.Test;
 
 /**
  *
@@ -71,6 +72,9 @@ public class ResetTrainActionTest extends OperationsTestCase {
         Assert.assertTrue(train1.isBuilt());
         Assert.assertTrue(train1.isTrainEnRoute());
         Assert.assertFalse(automationItem.isActionSuccessful());
+        
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ResetTrainActionTest.class);

@@ -10,12 +10,14 @@ public class LnStreamConnectionConfigTest extends jmri.jmrix.AbstractConnectionC
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         cc = new LnStreamConnectionConfig();
     }
 
     @After
+    @Override
     public void tearDown() {
 	cc = null;
         jmri.util.JUnitUtil.tearDown();

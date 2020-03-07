@@ -10,7 +10,6 @@ import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
 import java.io.File;
 import java.util.Arrays;
-import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
@@ -278,8 +277,7 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
 
     @Override
     public String getPreferencesItemText() {
-        // TODO: migrate to local resource bundle
-        return ResourceBundle.getBundle("apps.AppsConfigBundle").getString("MenuWiThrottle"); // NOI18N
+        return Bundle.getMessage("MenuMenu"); // NOI18N
     }
 
     @Override

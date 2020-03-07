@@ -1,21 +1,28 @@
 language: java
 
+jdk:
+  - openjdk8
+
 addons:
   apt:
+    update: true
     packages:
     - graphviz
     - libalut0
-    - dbus-x11
+    - pulseaudio
     - tidy
   firefox: latest
-  chrome: stable
+  chrome: beta
+
+services:
+  - xvfb
 
 before_install:
+  # uncomment next line dump Travis CI environment variables into log
+  # - set | grep '^[A-Z].*='
   # ensure no unwanted defaults are set
   # see https://github.com/travis-ci/travis-ci/issues/4613#issuecomment-181845546
   - export MAVEN_SKIP_RC="true"
-  # set Linux to use JDK 8, accept defaults on macOS
-  - if [ "$TRAVIS_OS_NAME" == "linux" ] ; then jdk_switcher use "oraclejdk8" ; fi
   # install graphviz on macOS
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update ; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install graphviz ; fi
@@ -24,10 +31,15 @@ install:
   - mvn verify -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 
 before_script:
-  # setup a display on linux ( the sleep gives xvfb some time to start )
-  - if [[ "$TRAVIS_OS_NAME" == "linux" && "$HEADLESS" == "false" ]] ; then export DISPLAY=:99.0 ; sh -e /etc/init.d/xvfb start ; sleep 3 ; fi
+  # start audio services
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then start-pulseaudio-x11 ; fi
   # silence errors from firefox about dbus.
-  - if [[ "$TRAVIS_OS_NAME" == "linux" && "$HEADLESS" == "false" ]]; then dbus-launch ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then dbus-launch ; fi
+  # install Code Climate test coverage reporter
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-darwin-amd64 > ./cc-test-reporter ; fi
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
 
 script:
   - if [[ "$PRINT_SUMMARY" == "false" ]] ; then travis_wait 50 ./scripts/travis.sh ; else ./scripts/travis.sh ; fi
@@ -40,26 +52,34 @@ os:
   - linux
 #  - osx # temporarilly disabled -- its more complex than originally anticipated to do conditional matrixes based on PR/push differentiation
 
-sudo: required
+dist: bionic
 
 env:
   global:
   # false to silence most maven output; true to catch tests that do not complete
-  - PRINT_SUMMARY=true
+  - PRINT_SUMMARY=false
   - MAVEN_OPTS=-Xmx1536m
   # see http://maven.apache.org/surefire/maven-surefire-plugin/test-mojo.html#runOrder for valid values
   - RUN_ORDER=filesystem
-  matrix:
-  - HEADLESS=true STATIC=true
-  - HEADLESS=true STATIC=false
-  - HEADLESS=false STATIC=false
+  - CC_TEST_REPORTER_ID=1d1326c4dfaeede878b46588cda440432d1dd6ec605d2c99af7b240ac7db0477
+  - SKIPINTERMITTENT=true
 
-matrix:
-  exclude:
-  - os: osx
-    env: HEADLESS=true STATIC=true
-  - os: osx
+jobs:
+  include:
+  - name: GUI Tests
+    os: linux
+    env: HEADLESS=false STATIC=false
+  - name: Headless Tests
+    os: linux
     env: HEADLESS=true STATIC=false
+  - name: Static Analysis
+    os: linux
+    env: HEADLESS=true STATIC=true
+  - name: Intermittently Failing GUI Tests
+    os: linux
+    env: HEADLESS=false SKIPINTERMITTENT=false STATIC=true
 
 after_success:
   - if [[ "$TRAVIS_OS_NAME" == "linux" && "$HEADLESS" == "false" ]] ; then mvn jacoco:report coveralls:report -U -P travis-coverage ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" && "$HEADLESS" == "false" ]] ; then JACOCO_SOURCE_PATH=java/src ./cc-test-reporter format-coverage target/site/jacoco/jacoco.xml --input-type jacoco ; ./cc-test-reporter upload-coverage ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" && "$HEADLESS" == "false" ]] ; then bash <(curl -s https://codecov.io/bash) ; fi

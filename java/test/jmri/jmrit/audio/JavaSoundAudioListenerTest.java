@@ -21,7 +21,7 @@ public class JavaSoundAudioListenerTest {
 
     @Test
     public void testC2Stringtor() {
-        JavaSoundAudioListener l = new JavaSoundAudioListener("testsysname","testusername");
+        JavaSoundAudioListener l = new JavaSoundAudioListener("testsysname", "testusername");
         Assert.assertNotNull("exists", l);
     }
 
@@ -31,5 +31,8 @@ public class JavaSoundAudioListenerTest {
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
+
 }

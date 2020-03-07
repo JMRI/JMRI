@@ -196,6 +196,3 @@ public abstract class MrcTrafficController implements MrcInterface {
     private final static Logger log = LoggerFactory.getLogger(MrcTrafficController.class);
 
 }
-
-
-

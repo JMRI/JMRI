@@ -7,7 +7,8 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
 
-  <title>JMRI: Startup Scripts</title><!-- Style -->
+  <title>JMRI: Startup Scripts</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -15,16 +16,16 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-
     <div id="mainContent">
+
       <h1>JMRI: Startup Scripts</h1>
 
       <p>Although JMRI itself is constructed to "run anywhere",
@@ -560,7 +561,7 @@
 
         <dt>Comment</dt>
 
-        <dd>Start Decoder Pro</dd>
+        <dd>Start DecoderPro</dd>
 
         <dt>Icon</dt>
 
@@ -615,7 +616,7 @@
 
         <dt>Comment</dt>
 
-        <dd>Start Decoder Pro</dd>
+        <dd>Start DecoderPro</dd>
 
         <dt>Icon</dt>
 

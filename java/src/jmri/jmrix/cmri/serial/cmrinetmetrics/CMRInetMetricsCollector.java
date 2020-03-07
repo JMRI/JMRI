@@ -1,21 +1,19 @@
 package jmri.jmrix.cmri.serial.cmrinetmetrics;
 
-import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.SerialListener;
 import jmri.jmrix.cmri.serial.SerialMessage;
 import jmri.jmrix.cmri.serial.SerialReply;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
- * Listener class for collecting CMRInet network traffic and error messages
+ * Listener class for collecting CMRInet network traffic and error messages.
+ *
  * @author Chuck Catania  Copyright (C) 2016, 2017, 2018
  */
 
 public class CMRInetMetricsCollector implements SerialListener {
     
     /**
-     * Collected data instance
+     * Collected data instance.
      */
     private CMRInetMetricsData _data = new CMRInetMetricsData();
     
@@ -31,20 +29,21 @@ public class CMRInetMetricsCollector implements SerialListener {
     }
 
     protected void init() {
-        System.out.println("CMRInetMetricsCollector - init");
+        log.info("CMRInetMetricsCollector - init");
     }
     
     /**
-     * Expose collected data
+     * Expose collected data.
      * @return collected data
      */
     public  CMRInetMetricsData getMetricData() { return _data; }
     
 
     /**
-     * Transmit packets
-     * Monitor any transmit packets to collect metrics      
+     * Transmit packets.
+     * Monitor any transmit packets to collect metrics.
      */
+    @Override
     public synchronized void message(SerialMessage l) 
     { 
        int aPacketTypeID = 0;
@@ -83,14 +82,14 @@ public class CMRInetMetricsCollector implements SerialListener {
                
            default: 
             _data.incMetricErrValue(CMRInetMetricsData.CMRInetMetricUnrecCommand);
-           return;
        }
     }
     
     /**
-     * Receive packets
-     * Monitor any read (reply) packets to collect metrics     
+     * Receive packets.
+     * Monitor any read (reply) packets to collect metrics.
      */
+    @Override
     public synchronized void reply(SerialReply l) 
     { 
        int aPacketTypeID = 0;
@@ -110,6 +109,7 @@ public class CMRInetMetricsCollector implements SerialListener {
            break;
                
            case 0x45:        // (E) EOT
+           case 0x52:        // (R) Read
             _data.computePollInterval();
            break;
                
@@ -118,20 +118,16 @@ public class CMRInetMetricsCollector implements SerialListener {
            case 0x50:        // (P) Poll
            case 0x51:        // (Q) Query
            break;
-               
-           case 0x52:        // (R) Read
-            _data.computePollInterval();
-           break;
-               
+
            case 0x54:        // (T) Transmit
            case 0x57:        // (W) Datagram Write
            break;
                
            default: 
             _data.incMetricErrValue(CMRInetMetricsData.CMRInetMetricUnrecCommand);
-           return;
        }
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CMRInetMetricsCollector.class.getName());
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CMRInetMetricsCollector.class.getName());
+
 }

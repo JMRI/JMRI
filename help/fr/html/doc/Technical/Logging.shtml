@@ -9,38 +9,33 @@
   <meta name="Author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI log4j logging log">
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
-<!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
+<body>
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
-	<div id="mainContent">
-
-	    <!-- ------------- -->
-	    <!-- Page Contents --> <!-- Required -->
-	    <!-- ------------- -->
-
-	    <H1>JMRI: Comment faire pour utiliser le Rapport</H1>
-
+<h1>JMRI: Comment faire pour utiliser le Rapport</h1>
 
 Cette page fournit un peu d'information sur la fa&#231;on dont
 JMRI enregistre les erreur, l'&#233;tat et les informations de d&#233;bogage.
 
-<P>
+<p>
 Pour d'autres d&#233;tails internes sur JMRI , s'il vous pla&#238;t voir les
-<A HREF="../Technical/index.shtml" NAME="technical pages"> pages techniques  </A>.
+<a href="../Technical/index.shtml">pages techniques</a>.
 
-<P>
+<p>
 JMRI utilise le paquet Jakarta
-<A HREF="https://logging.apache.org/log4j/1.2/index.html">Log4J</a>
+<a href="https://logging.apache.org/log4j/1.2/index.html">Log4J</a>
 pour g&#233;rer les enregistrements depuis les classes individuelles. sp&#233;cifiquement, 
 depuis l'&#233;t&#233; 2015, nous utilisons la version 1.2.15; ce n'est pas la plus r&#233;cente!
 nous l'utilisons via le syst&#232;me:
@@ -61,7 +56,7 @@ Cette combinaisons fournit plusieurs niveaux d'enegistrement
 <tr><td>INFO</td><td>log.info(..)</td><td>Routines messages que vous voulez voir en fonctionnement normal. Gardez les &#224; un minimum 
 														s'il vous pla&#238;t, il ne devrait pas y en avoir apr&#232;s que le programme a d&#233;marr&#233;.</td></tr>
 <tr><td>DEBOGAGE</td><td>log.debug(..)</td><td>Messages d&#233;taill&#233;s, Utilis&#233;s seulement pout le d&#233;bogage. Il y en a beaucoup , et les activer
-															  tous peut ralentir le programme de mani&#232;re significative.</Td></tr>
+															  tous peut ralentir le programme de mani&#232;re significative.</td></tr>
 <tr><td>TRACE</td><td>log.debug(..)</td><td>Messages tr&#232;s d&#233;taill&#233;s, plus encore que DEBUG, utilis&#233; 
 															pour le d&#233;bogage volumineux (exemple: tous les caract&#232;res dans une transmissions) qui 
 															devrait normalement &#234;tre d&#233;sactiv&#233;, m&#234;me lors du d&#233;bogage. 
@@ -103,24 +98,25 @@ qui est point&#233; par d&#233;faut vers le sous r&#233;pertoire log dans le r&#
 
 <p>
 Le fichier "default.lcf" d&#233;termine aussi le format de la sortie par le r&#233;glage des param&#232;tres du "circuit".
-<pre><CODE>
-log4j.appender.R.layout=org.apache.log4j.PatternLayout<br/>
+<pre><code>
+log4j.appender.R.layout=org.apache.log4j.PatternLayout<br>
 log4j.appender.R.layout.ConversionPattern=%d{ISO8601} %-37.37c{2} %-5p - %m [%t]%n
-</CODE></pre>
+</code></pre>
 
 <p>
 Un exemple de ce format par d&#233;faut:
-<pre><CODE>
+<pre><code>
 2015-10-28 20:31:52,307 jmri.jmrit.powerpanel.PowerPane  WARN - No power manager instance found, panel not active [AWT-EventQueue-0]
-</CODE></pre>
+</code></pre>
 Les colonnes sont: 
 <ul>
-<li><CODE>2015-10-28 20:31:52,307</CODE> - Heure locale &#224; laquelle le message a &#233;t&#233; enregistr&#233;
-<li><CODE>jmri.jmrit.powerpanel.PowerPane</CODE> - l'emplacement dans le code ( nom de la classe ) qui a &#233;mit le message.
-<li><CODE>WARN</CODE> - s&#233;v&#233;rit&#233; du message
-<li><CODE>No power manager instance found, panel not active</CODE> - le message lui-m&#234;me.
-<li><CODE>[AWT-EventQueue-0]</CODE> - nom de la t&#226;che qui a &#233;mit le message.
-</UL
+    <li><code>2015-10-28 20:31:52,307</code> - Heure locale &#224; laquelle le message a &#233;t&#233; enregistr&#233;</li>
+    <li><code>jmri.jmrit.powerpanel.PowerPane</code> - l'emplacement dans le code ( nom de la classe ) qui a
+    &#233;mit le message.</li>
+    <li><code>WARN</code> - s&#233;v&#233;rit&#233; du message</li>
+    <li><code>No power manager instance found, panel not active</code> - le message lui-m&#234;me.</li>
+    <li><code>[AWT-EventQueue-0]</code> - nom de la t&#226;che qui a &#233;mit le message.</li>
+</ul>
 
 <a name="code" id="code"></a><h3>Codage</h3>
 Pour enregistrer des messages 
@@ -128,11 +124,12 @@ Pour enregistrer des messages
 <pre><code>
 	private static final Logger log = LoggerFactory.getLogger(MyClass.class);
 </code></pre>
+
 <p>et ajoutez des importations pour org.slf4j.Logger et org.slf4j.LoggerFactory dans votre section importation:</p>
-</code></pre>
-        import org.slf4j.Logger;<br/>
+<code>
+        import org.slf4j.Logger;<br>
         import org.slf4j.LoggerFactory;
-</code></pre>
+</code>
 Il est &#233;galement OK de combiner ceux-ci suivant cette forme :
 <pre><code>
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MyClass.class);
@@ -153,7 +150,7 @@ Les op&#233;rations de cha&#238;ne pour construire le message r&#233;el d'erreur
 numberEntries) ne sont fait que si le message va &#234;tre stock&#233; dans les journaux, ce qui permet d'&#233;conomiser beaucoup 
 de temps lors de l'ex&#233;cution normale (non-debug ) .
 
-<P>Si c'est informatiquement co&#251;teux de passer un param&#232;tre dans le journal, utilisez le formulaire ci-dessous 
+<p>Si c'est informatiquement co&#251;teux de passer un param&#232;tre dans le journal, utilisez le formulaire ci-dessous
 pour que le programme ne perde pas de temps en calcul de param&#232;tres (dans ce cas, 
 appeler numberEntries () pour obtenir une valeur pour passer &#224; l'appel de fonction): </p>
 <pre><code>
@@ -161,11 +158,15 @@ appeler numberEntries () pour obtenir une valeur pour passer &#224; l'appel de f
             log.debug("Found {}", numberEntries());
         }
 </code></pre>
-<p>Les exceptions devraient &#234;tre enregistr&#233;es comme: </p>
+<p>Les exceptions devraient &#234;tre enregistr&#233;es comme:</p>
 <pre><code>
         log.error("my local text"+exception.getLocalizedMessage(), exception);
 </code></pre>
-pour inclure la description lisible de l'utilisateur depuis l'exception elle-m&#234;me, ainsi que toutes ses informations de retra&#231;age.
+pour inclure la description lisible de l'utilisateur depuis l'exception elle-m&#234;me, ainsi que toutes ses
+        informations de retra&#231;age.
+    <table border="1">
+        <tr>
+          <td>DEBUG</td>
 
           <td>log.debug(..)</td>
 
@@ -183,7 +184,7 @@ pour inclure la description lisible de l'utilisateur depuis l'exception elle-m&#
         </tr>
 
         <tr>
-          <td>Warn</td>
+          <td>WARN</td>
 
           <td>log.warn(..)</td>
 
@@ -200,7 +201,9 @@ pour inclure la description lisible de l'utilisateur depuis l'exception elle-m&#
           <td>Indique que l'op&eacute;ration souhait&eacute;e ne va
           pas se produire, et explique pourquoi</td>
         </tr>
-      </table><!--#include virtual="/Footer" -->
+    </table>
+
+        <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

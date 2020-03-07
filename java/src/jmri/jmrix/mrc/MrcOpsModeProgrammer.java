@@ -26,8 +26,8 @@ public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.Addresse
     int mAddress;
     boolean mLongAddr;
 
-    public MrcOpsModeProgrammer(MrcTrafficController tc, int pAddress, boolean pLongAddr) {
-        super(tc);
+    public MrcOpsModeProgrammer(MrcSystemConnectionMemo memo, int pAddress, boolean pLongAddr) {
+        super(memo);
         log.debug("MRC ops mode programmer " + pAddress + " " + pLongAddr); //IN18N
         if (pLongAddr) {
             addressLo = pAddress;
@@ -61,7 +61,7 @@ public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.Addresse
         // start the error timer
         startShortTimer();
 
-        tc.sendMrcMessage(msg);
+        memo.getMrcTrafficController().sendMrcMessage(msg);
     }
 
     /** 

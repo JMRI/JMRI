@@ -11,24 +11,20 @@
   <meta name="keywords" content=
   "layout java model railroad JMRI panelpro tools LRoute">
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
   <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
+
       <h1>JMRI: LRoute Documentation</h1>
 
       <h2>What are LRoutes?</h2>
@@ -69,11 +65,14 @@
 
       <h2>How to set up for adding or editing LRoutes</h2>
 
-      <p>First make sure the Tables for Sensors, Turnouts, Lights
-      and/or SignalHeads contain all the entities involved in the
-      LRoutes to be defined. Next select
+      <p>
+      First make sure the Tables for Sensors, Turnouts, Lights and/or SignalHeads contain all
+      the entities involved in the LRoutes to be defined. Next select
       <b><a href="../../package/jmri/jmrit/beantable/LRouteTable.shtml">LRoute Table</a></b>
-      from the <b>Tools</b> menu.</p>
+      from the <b>Tools</b> menu.  If you add or change any entities with the LRoutes
+      table window open, you will have to close and reopen it for the list of entities seen by
+      LRoutes to be refreshed.
+      </p>
 
       <a name="addroute" id="addroute"></a>
       <h3>To add a new LRoute:</h3>
@@ -221,6 +220,12 @@
       button.</p>
 
       <h3>To edit an existing LRoute:</h3>
+      
+      <p><b>NOTE:</b> If you have edited the Logix created for a particular existing LRoute,
+      or have edited any of the entities used by an LRoute without closing and reopening
+      the LRoute table window, you will get an error message when you go to edit that
+      LRoute.  This can be avoided by closing and reopening the LRoute table window before
+      attempting any edits.</p>
 
       <ol>
         <li>Edit of an existing LRoute may be started in either of
@@ -275,18 +280,20 @@
 
       <h3>To save LRoutes to disk:</h3>
 
-      <p>LRoutes are saved in your layout configuration file, along
-      with turnouts, sensors, signal heads, lights, etc. To store
+      <p>LRoutes are kept in your <i>layout configuration</i>, along
+      with turnouts, sensors, signal heads, lights, control
+      panel setup etc. To store
       this information on disk, use <b>Store Configuration...</b>
       in the <b>File</b> menu at the top of the LRoute Table (or
       other tables from the Tools menu), or select <b>Store
       Panel...</b> in the <b>Panel</b> menu. Note that the
       enabled/disabled state of each LRoute is not saved in the
       configuration file. When LRoutes are loaded from a
-      configuration file, they are all enabled. <a name=
-      "sensorlogic" id="sensorlogic"></a></p>
+      configuration file, they are all enabled.</p>
 
+      <a name="sensorlogic" id="sensorlogic"></a>
       <h3>Controlling LRoutes from Control/Trigger Entities</h3>
+
       The
       operation of an LRoute can be controlled by many means:
       sensors connected to occupancy detectors or switches on the
@@ -506,7 +513,7 @@
       actions when all the 'veto's are removed, press the
       <b>New</b> button.</p>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

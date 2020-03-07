@@ -27,6 +27,7 @@ public class Log4JErrorIsErrorTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.resetWindows( false,false); //this shouldn't be necessary.
         JUnitUtil.tearDown();
     }
 

@@ -141,8 +141,7 @@ public class AudioTablePanel extends JPanel {
     }
 
     public JMenuItem getPrintItem() {
-        ResourceBundle rbapps = ResourceBundle.getBundle("apps.AppsBundle");
-        JMenuItem printItem = new JMenuItem(rbapps.getString("PrintTable"));
+        JMenuItem printItem = new JMenuItem(Bundle.getMessage("PrintTable"));
 
         printItem.addActionListener(new ActionListener() {
             @Override

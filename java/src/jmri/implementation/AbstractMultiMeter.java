@@ -1,6 +1,5 @@
 package jmri.implementation;
 
-import java.beans.PropertyChangeListener;
 import java.util.TimerTask;
 import jmri.MultiMeter;
 import jmri.beans.Bean;
@@ -16,6 +15,7 @@ abstract public class AbstractMultiMeter extends Bean implements MultiMeter {
 
     protected float current_float = 0.0f;
     protected float voltage_float = 0.0f;
+    protected CurrentUnits currentUnits = CurrentUnits.CURRENT_UNITS_PERCENTAGE;
 
     //private boolean is_enabled = false;
     private UpdateTask intervalTask = null;
@@ -92,14 +92,13 @@ abstract public class AbstractMultiMeter extends Bean implements MultiMeter {
     }
 
     @Override
-    @Deprecated  // will be removed when superclass method is removed due to @Override
-    public void updateCurrent(float c) {
-        setCurrent(c);
+    public float getCurrent() {
+        return current_float;
     }
 
     @Override
-    public float getCurrent() {
-        return current_float;
+    public CurrentUnits getCurrentUnits() {
+        return currentUnits;
     }
 
     @Override
@@ -110,43 +109,8 @@ abstract public class AbstractMultiMeter extends Bean implements MultiMeter {
     }
 
     @Override
-    @Deprecated  // will be removed when superclass method is removed due to @Override
-    public void updateVoltage(float v) {
-        setVoltage(v);
-    }
-
-    @Override
     public float getVoltage() {
         return voltage_float;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    @Deprecated  // will be removed when superclass method is removed due to @Override
-    public synchronized void addDataUpdateListener(PropertyChangeListener l) {
-        this.addPropertyChangeListener(CURRENT, l);
-        this.addPropertyChangeListener(VOLTAGE, l);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    @Deprecated  // will be removed when superclass method is removed due to @Override
-    public synchronized void removeDataUpdateListener(PropertyChangeListener l) {
-        this.removePropertyChangeListener(CURRENT, l);
-        this.removePropertyChangeListener(VOLTAGE, l);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    @Deprecated  // will be removed when superclass method is removed due to @Override
-    public PropertyChangeListener[] getDataUpdateListeners() {
-        return this.getPropertyChangeListeners(CURRENT);
     }
 
     /**

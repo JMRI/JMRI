@@ -5,6 +5,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ResourceBundle;
 import jmri.jmris.JmriServer;
 import jmri.jmris.srcp.parser.ParseException;
@@ -24,21 +25,7 @@ import org.slf4j.LoggerFactory;
  */
 public class JmriSRCPServer extends JmriServer {
 
-    private static JmriServer _instance = null;
-
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmris.srcp.JmriSRCPServerBundle");
-
-    /*
-     * @deprecated since 4.7.1 use @link{jmri.InstanceManager.getDefault()} instead.
-     */
-    @Deprecated  // will be removed when class is refactored
-    synchronized public static JmriServer instance() {
-        if (_instance == null) {
-            int port = java.lang.Integer.parseInt(rb.getString("JMRISRCPServerPort"));
-            _instance = new JmriSRCPServer(port);
-        }
-        return _instance;
-    }
 
     // Create a new server using the default port
     public JmriSRCPServer() {
@@ -155,7 +142,7 @@ public class JmriSRCPServer extends JmriServer {
                 }
             } else if (!sh.isCommandMode()) {
                 BufferedReader d = new BufferedReader(new InputStreamReader(inStream,
-                        java.nio.charset.Charset.forName("UTF-8")));
+                        StandardCharsets.UTF_8));
                 try {
                     String cmd = d.readLine();
                     if (cmd != null) {

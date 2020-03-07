@@ -125,56 +125,15 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
         _dataChars[1] = i;
     }
 
-    /**
-     * @deprecated 4.11.4 as bootloading old sprogs is no longer supported in JMRI
-     */
-    @Deprecated
-    private void setV4Length(int i) {
-        _dataChars[0] = hexDigit((i & 0xf0) >> 4);
-        _dataChars[1] = hexDigit(i & 0xf);
-    }
-
     private void setAddress(int i) {
         _dataChars[2] = i & 0xff;
         _dataChars[3] = (i >> 8) & 0xff;
         _dataChars[4] = i >> 16;
     }
 
-    /**
-     * @deprecated 4.11.4 as bootloading old sprogs is no longer supported in JMRI
-     */
-    @Deprecated
-    private void setV4Address(int i) {
-        _dataChars[2] = hexDigit((i & 0xf000) >> 12);
-        _dataChars[3] = hexDigit((i & 0xf00) >> 8);
-        _dataChars[4] = hexDigit((i & 0xf0) >> 4);
-        _dataChars[5] = hexDigit(i & 0xf);
-    }
-
-    /**
-     * @deprecated 4.11.4 as bootloading old sprogs is no longer supported in JMRI
-     */
-    @Deprecated
-    private void setV4RecType(int i) {
-        _dataChars[6] = hexDigit((i & 0xf0) >> 4);
-        _dataChars[7] = hexDigit(i & 0xf);
-    }
-
     private void setData(int[] d) {
         for (int i = 0; i < d.length; i++) {
             _dataChars[5 + i] = d[i];
-        }
-    }
-
-    /**
-     * @deprecated 4.11.4 as bootloading old sprogs is no longer supported in JMRI
-     */
-    @Deprecated
-    private void setV4Data(int[] d) {
-        int j = 8;
-        for (int i = 0; i < d.length; i++) {
-            _dataChars[j++] = hexDigit((d[i] & 0xf0) >> 4);
-            _dataChars[j++] = hexDigit(d[i] & 0xf);
         }
     }
 
@@ -188,31 +147,6 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
             checksum = 256 - checksum;
         }
         _dataChars[_nDataChars - 1] = checksum;
-    }
-
-    /**
-     * @deprecated 4.11.4 as bootloading old sprogs is no longer supported in JMRI
-     */
-    @Deprecated
-    private void setV4Checksum(int length, int addr, int type, int[] data) {
-        int checksum = length + ((addr & 0xff00) >> 8) + (addr & 0xff) + type;
-        for (int i = 0; i < data.length; i++) {
-            checksum += data[i];
-        }
-        checksum = checksum & 0xff;
-        if (checksum > 0) {
-            checksum = 256 - checksum;
-        }
-        _dataChars[_nDataChars - 2] = hexDigit((checksum & 0xf0) >> 4);
-        _dataChars[_nDataChars - 1] = hexDigit(checksum & 0x0f);
-    }
-
-    private int hexDigit(int b) {
-        if (b > 9) {
-            return (b - 9 + 0x40);
-        } else {
-            return (b + 0x30);
-        }
     }
 
     private SprogMessage frame() {
@@ -232,26 +166,6 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
         }
         f.setElement(j++, ETX);
         f._nDataChars = j;
-        // return new message
-        return f;
-    }
-
-    /**
-     * @deprecated 4.11.4 as bootloading old sprogs is no longer supported in JMRI
-     */
-    @Deprecated
-    private SprogMessage v4frame() {
-        int i = 0;
-        // Create new message to hold the framed one
-        SprogMessage f = new SprogMessage(MAXSIZE);
-        f.setElement(0, ':');
-        // copy existing message adding CRLF
-        for (i = 1; i <= _nDataChars; i++) {
-            f.setElement(i, _dataChars[i - 1]);
-        }
-        f.setElement(i++, CR);
-        f.setElement(i++, LF);
-        f._nDataChars = i;
         // return new message
         return f;
     }
@@ -331,26 +245,6 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
     static public SprogMessage getKillMain() {
         SprogMessage m = new SprogMessage(1);
         m.setOpCode('-');
-        return m;
-    }
-
-    /**
-     * @deprecated 4.11.2 as bootloading old sprogs is no longer supported in JMRI
-     */
-    @Deprecated
-    static public SprogMessage getProgMode() {
-        SprogMessage m = new SprogMessage(1);
-        m.setOpCode('P');
-        return m;
-    }
-
-    /**
-     * @deprecated 4.11.2 as bootloading old sprogs is no longer supported in JMRI
-     */
-    @Deprecated
-    static public SprogMessage getExitProgMode() {
-        SprogMessage m = new SprogMessage(1);
-        m.setOpCode(' ');
         return m;
     }
 
@@ -467,55 +361,6 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
         m.setData(padded);
         m.setChecksum();
         return m.frame();
-    }
-
-    /**
-     * @deprecated 4.11.4 as bootloading old sprogs is no longer supported in JMRI
-     */
-    @Deprecated
-    static public SprogMessage getV4WriteFlash(int addr, int[] data, int type) {
-        // Create a v4 bootloader message which is same format as a record
-        // in the hex file
-        int l = (data.length + 5) * 2;
-        SprogMessage m = new SprogMessage(l);
-        m.setV4Length(data.length);
-        m.setV4Address(addr);
-        m.setV4RecType(type);
-        m.setV4Data(data);
-        m.setV4Checksum(data.length, addr, type, data);
-        return m.v4frame();
-    }
-
-    /**
-     * @deprecated 4.11.4 as bootloading old sprogs is no longer supported in JMRI
-     */
-    @Deprecated
-    static public SprogMessage getV4EndOfFile() {
-        // Create a v4 bootloader end of file message
-        int l = 10;
-        SprogMessage m = new SprogMessage(l);
-        m.setV4Length(0);
-        m.setV4Address(0);
-        m.setV4RecType(1);
-        m.setV4Checksum(0, 0, 1, new int[0]);
-        return m.v4frame();
-    }
-
-    /**
-     * @deprecated 4.11.4 as bootloading old sprogs is no longer supported in JMRI
-     */
-    @Deprecated
-    static public SprogMessage getv4ExtAddr() {
-        // Create a v4 bootloader extended address message
-        int l = 14;
-        int[] data = {0, 0};
-        SprogMessage m = new SprogMessage(l);
-        m.setV4Length(2);
-        m.setV4Address(0);
-        m.setV4RecType(4);
-        m.setV4Data(data);
-        m.setV4Checksum(0, 0, 4, data);
-        return m.v4frame();
     }
 
     static public SprogMessage getEraseFlash(int addr, int rows) {

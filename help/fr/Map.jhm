@@ -458,8 +458,6 @@
 
 <mapID target="html.apps.DecoderPro.Ident" url="html/apps/DecoderPro/Ident.shtml"/>
 
-<mapID target="html.apps.PanelPro.ColorTrack" url="html/apps/PanelPro/ColorTrack.shtml"/>
-
 <mapID target="html.hardware.powerline.Names" url="html/hardware/powerline/Names.shtml"/>
 
 <mapID target="html.tools.signaling.index_start" url="html/tools/signaling/index.shtml#start"/>

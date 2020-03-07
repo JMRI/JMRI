@@ -1,8 +1,9 @@
 package jmri.jmrix.easydcc;
 
+import java.util.EnumSet;
 import jmri.DccLocoAddress;
-import jmri.DccThrottle;
 import jmri.LocoAddress;
+import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottleManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,8 +37,14 @@ public class EasyDccThrottleManager extends AbstractThrottleManager {
          This was tested on v418 - also appears as an issue with the
          radio throttles. 
          */
-        log.debug("new EasyDccThrottle for {}", address);
-        notifyThrottleKnown(new EasyDccThrottle(_memo, (DccLocoAddress) address), address);
+        if (address instanceof DccLocoAddress ) {
+            log.debug("new EasyDccThrottle for {}", address);
+            notifyThrottleKnown(new EasyDccThrottle(_memo, (DccLocoAddress) address), address);
+        }
+        else {
+            log.error("LocoAddress {} is not a DccLocoAddress",address);
+            failedThrottleRequest(address, "LocoAddress " +address+ " is not a DccLocoAddress");
+        }
     }
 
     // EasyDcc does not have a 'dispatch' function.
@@ -78,8 +85,8 @@ public class EasyDccThrottleManager extends AbstractThrottleManager {
     }
 
     @Override
-    public int supportedSpeedModes() {
-        return (DccThrottle.SpeedStepMode128 | DccThrottle.SpeedStepMode28);
+    public EnumSet<SpeedStepMode> supportedSpeedModes() {
+        return EnumSet.of(SpeedStepMode.NMRA_DCC_128, SpeedStepMode.NMRA_DCC_28);
     }
 
     @Override
@@ -113,9 +120,14 @@ public class EasyDccThrottleManager extends AbstractThrottleManager {
             }
 
             _memo.getTrafficController().sendEasyDccMessage(m, null);
-            EasyDccThrottle lnt = (EasyDccThrottle) t;
-            lnt.throttleDispose();
-            return true;
+            if (t instanceof EasyDccThrottle) {
+                EasyDccThrottle lnt = (EasyDccThrottle) t;
+                lnt.throttleDispose();
+                return true;
+            }
+            else {
+                log.error("DccThrottle {} is not an EasyDccThrottle",t);
+            }
         }
         return false;
     }

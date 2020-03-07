@@ -48,7 +48,9 @@ public class Z21HeartBeat implements Z21Listener {
     }
 
     public void dispose(){
-       keepAliveTimer.stop();
+       if (keepAliveTimer != null) {
+           keepAliveTimer.stop();
+       }
        keepAliveTimer = null;
     }
 

@@ -25,6 +25,7 @@ public class UsbLightManagerTest extends AbstractLightMgrTestBase {
         Assert.assertNotNull("ConnectionConfig constructor", l);
     }
 
+    @Override
     public String getSystemName(int i) {
         return "DL" + i;
     }
@@ -53,6 +54,7 @@ public class UsbLightManagerTest extends AbstractLightMgrTestBase {
     }
 
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();

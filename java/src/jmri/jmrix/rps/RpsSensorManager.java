@@ -1,5 +1,7 @@
 package jmri.jmrix.rps;
 
+import java.util.Locale;
+import javax.annotation.Nonnull;
 import jmri.JmriException;
 import jmri.Sensor;
 import org.slf4j.Logger;
@@ -14,21 +16,17 @@ import org.slf4j.LoggerFactory;
  */
 public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
 
-    //private RpsSystemConnectionMemo memo = null;
-    protected String prefix = "R";
-
     public RpsSensorManager(RpsSystemConnectionMemo memo) {
-        super();
-        //this.memo = memo;
-        prefix = memo.getSystemPrefix();
+        super(memo);
     }
 
     /**
-     * Get the configured system prefix for this connection.
+     * {@inheritDoc}
      */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    @Nonnull
+    public RpsSystemConnectionMemo getMemo() {
+        return (RpsSystemConnectionMemo) memo;
     }
 
     // to free resources when no longer used
@@ -38,17 +36,23 @@ public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
     }
 
     /**
-     * Create a new sensor if all checks are passed.
-     * System name is normalized to ensure uniqueness.
+     * {@inheritDoc}
+     * <p>
+     * System Name is normalized.
+     * Assumes calling method has checked that a Sensor with this system
+     * name does not already exist.
+     *
+     * @throws IllegalArgumentException if the system name is not in a valid format
      */
     @Override
-    public Sensor createNewSensor(String systemName, String userName) {
+    @Nonnull
+    public Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         try {
-           RpsSensor r = new RpsSensor(systemName, userName, prefix);
+           RpsSensor r = new RpsSensor(systemName, userName, getSystemPrefix());
            Distributor.instance().addMeasurementListener(r);
            return r;
        } catch(java.lang.StringIndexOutOfBoundsException sioe){
-         throw new IllegalArgumentException("Invalid System Name: " + systemName);
+            throw new IllegalArgumentException("Invalid System Name: " + systemName);
        }
     }
 
@@ -56,10 +60,11 @@ public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
      * {@inheritDoc}
      */
     @Override
-    public String createSystemName(String curAddress, String prefix) throws JmriException {
+    @Nonnull
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         if (!prefix.equals(getSystemPrefix())) {
             log.warn("prefix does not match memo.prefix");
-            return null;
+            throw new JmriException("Unable to convert " + curAddress + ", Prefix does not match");
         }
         String sys = getSystemPrefix() + typeLetter() + curAddress;
         // first, check validity
@@ -70,17 +75,22 @@ public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
         }
         return sys;
     }
-
+    
     /**
-     * Public method to validate system name format returns 'true' if system
-     * name has a valid format, else returns 'false'.
-     *
-     * @param systemName the address to check
-     * @throws IllegalArgumentException when delimiter is not found
+     * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
-        return (RpsAddress.validSystemNameFormat(systemName, 'S', prefix));
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
+        return getMemo().validateSystemNameFormat(name, this, locale);
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
+        return getMemo().validSystemNameFormat(systemName, typeLetter());
     }
 
     /**
@@ -88,19 +98,7 @@ public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddInputEntryToolTip");
-        return entryToolTip;
-    }
-
-    /**
-     * Static function returning the RpsSensorManager instance to use.
-     *
-     * @return The registered RpsSensorManager instance for general use
-     * @deprecated since 4.9.7
-     */
-    @Deprecated
-    static public RpsSensorManager instance() {
-        return null;
+        return Bundle.getMessage("AddInputEntryToolTip");
     }
 
     private final static Logger log = LoggerFactory.getLogger(RpsSensorManager.class);

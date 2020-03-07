@@ -6,6 +6,10 @@
     "properties": {
         "name": {
             "type": "string",
+            "description": "mDNS type of service"
+        },
+        "userName": {
+            "type": "string",
             "description": "mDNS name of service"
         },
         "port": {
@@ -24,11 +28,15 @@
             "type": "string",
             "description": "JMRI simple version"
         },
+        "json": {
+            "type": "string",
+            "description": "Default JSON service version supported by service if present"
+        },
         "node": {
             "type": "string",
             "description": "Name of JMRI node"
         }
     },
     "additionalProperties": true,
-    "required": ["name", "port", "type", "version", "jmri", "node"]
+    "required": ["name", "userName", "port", "type", "version", "jmri", "node"]
 }

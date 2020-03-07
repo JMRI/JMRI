@@ -33,6 +33,7 @@ public class DeviceServerTest {
     
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 }

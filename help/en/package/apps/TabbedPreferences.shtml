@@ -17,14 +17,15 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>JMRI: Preferences Pane</h1>
       The Preferences pane is where
       you configure the basic operation of your JMRI application.
@@ -33,10 +34,6 @@
       side is a list of the Preference groups that can be set.
       Clicking on each item will then populate the right hand side
       with the various options that can be configured for that Tab.
-      <a href=
-      "../../html/setup/images/PrefsConnections_en.png"><img src=
-      "../../html/setup/images/PrefsConnections_en.png" height=
-      "195" width="425" align="right"></a></p>
 
       <p><a href="#Connection">Connections</a><br>
       <a href="#Defaults">Defaults</a><br>
@@ -48,7 +45,7 @@
       <a href="#Throttle">Throttle</a><br>
       <a href="images/JMRIPrefsChanges.png"><img src=
       "images/JMRIPrefsChanges.png" height="112" width="250" align=
-      "right" alt="Save? dialog"></a> <a href=
+      "right" alt="Save? dialog"></a><a href=
       "#WiThrottle">WiThrottle</a><br>
       <a href="#Profiles">Config Profiles</a><br>
       <a href="#RailroadName">Railroad Name</a><br>
@@ -62,7 +59,7 @@
       this section: The <strong>Save</strong> button!</p>
 
       <p><img src="images/PrefsRestart.png" height="112" width=
-      "390" align="right"> Be sure to click "Save" when leaving
+      "390" align="right">Be sure to click "Save" when leaving
       this window. Your changes to the Preferences don't take
       effect until the program is stopped and restarted, so the
       program will prompt you to do that after saving the
@@ -73,7 +70,7 @@
 
       <p><a href="../../html/setup/images/PrefsConnections_en.png"><img src=
       "../../html/setup/images/PrefsConnections_en.png" height="195" width="425"
-      align="right" alt="JMRI v4 Connection Prefs tab"></a>
+      align="right" alt="JMRI v2.14 Connection Prefs tab"></a>
       Each
       connection has its own unique tab. To get started, first
       select your DCC System Manufacturer, followed by the type of
@@ -102,15 +99,20 @@
       <a name="Defaults" id="Defaults"></a>
       <h2 style="float:clear">Defaults</h2>
       <a href="images/JMRI_PrefsDefaults.png">
-          <img src="images/JMRI_PrefsDefaults.png" height="222" width="419"
-               align="right" alt="JMRI v2.14 Defaults Prefs tab">
+          <img src="images/JMRI_PrefsDefaults.png" height="236" width="468"
+               align="right" alt="JMRI v4.15 Defaults Prefs tab">
       </a>
       <p>If you are using multiple connections, e.g. a LocoNet Connection and a
           MERG Connection, the Defaults pane lets you select which connection
-          you want to use for a particular purpose.</p>
-      <p>The Internal connection is the default connection, however, since this
-          is almost always undesirable, JMRI applications will notify you if the
-          Internal connection is the default for every purpose. To silence this
+          you want to use for a particular purpose. For example, you 
+          can select one connection (LocoNet in the figure) for train throttles
+          and consists, 
+          while using a different one (SPROG in the figure) for the 
+          service mode programming track.</p>
+      <p>The Internal connection can be selected as a default. 
+          To avoid a common mis-configuration, JMRI applications will notify you if the
+          Internal connection is selected across all the columns. 
+          If you choose to use an all-Internal set of defaults and want to silence this
           notification, edit the profile properties, setting the property
           <code>jmri-managers.allInternalDefaults</code> to <em>true</em>.</p>
 
@@ -136,14 +138,19 @@
 
       <p>There's a <a href=
       "../../html/setup/Dropbox.shtml">separate Help page</a> with
-      information on sharing files between computers using Dropbox.
-      <a name="Startup" id="Startup"></a></p>
+      information on sharing files between computers using Dropbox.</p>
 
+      <a name="Startup" id="Startup"></a>
       <h2>Start Up</h2>
 
       <p><em>Start Up</em> preferences allow windows and files to
       be opened, scripts to be run, and additional buttons to be
-      placed on the main window when the application starts.</p>
+      placed on the main window when the application starts.<br>
+      A very common use is an Open File action (see below) to
+      automatically load your last stored <a href=
+      "../jmri/jmrit/display/PanelMenuHelp.shtml">layout
+      configuration file</a> at startup, so all your turnouts,
+      sensors, panels etc. are available again.</p>
 
       <p>Click the <strong>Add &#9662;</strong> button and select
       the type of start up action to add. The new action will be
@@ -153,7 +160,9 @@
       should be the last items in the start up order. Start up
       order can be changed by selecting a start up item and moving
       it <em>up</em> or <em>down</em> in the list.</p>
-
+      <a href="images/PrefsStartup4_15.png"><img src=
+      "images/PrefsStartup4_15.png" height="232" width="466" align=
+      "right" alt="JMRI v4.2 Roster Prefs tab"></a>
       <p>There are five types of start up actions:</p>
 
       <dl>
@@ -172,9 +181,10 @@
 
         <dt>Open file</dt>
 
-        <dd>Automatically load panel files when the program starts
-        up. You can load as many panel files as you'd like; each
-        will be completely loaded before the next is started.</dd>
+        <dd>Automatically load a Panel file or Configuration file
+        when the program starts up. You can load as many files
+        as you'd like; each will be completely loaded before
+        the next is started.</dd>
 
         <dt>Run script</dt>
 
@@ -190,12 +200,17 @@
         many routes as you like; each will be set in order. Note
         that any files the route depends upon need to be opened
         before setting the route.</dd>
-      </dl><a name="Display" id="Display"></a>
+      </dl>
 
+      <a name="Display" id="Display"></a>
       <h2>Display</h2>
 
+      <a href="images/PrefsGui4_15.png"><img src=
+      "images/PrefsGui4_15.png" height="194" width="478" align=
+      "right" alt="JMRI v4.15 GUI Prefs tab"></a>
+
       <dl>
-        <dt>GUI</dt>
+        <dt>GUI<a name="Gui" id="Gui"></a></dt>
 
         <dd>
           A row of radio boxes allow you to select how the program
@@ -234,7 +249,7 @@
           </ul>
         </dd>
 
-        <dt>Locale</dt>
+        <dt>Locale<a name="locale" id="locale"></a></dt>
 
         <dd><a href="../../Acknowledgements.shtml">Many people</a>
         have contributed "internationalizations" of JMRI. This
@@ -258,11 +273,12 @@
         size and style. Also, you can choose to save both the size
         and location of the System Console window so that it always
         appears in the same place and at the same size.</dd>
-      </dl><a href="images/PrefsMsgPane421.png"><img src=
-      "images/PrefsMsgPane421.png" height="214" width="375" align=
-      "right" alt="JMRI v4.2 Roster Prefs tab"></a> <a name=
-      "Messages" id="Messages"></a>
+        </dl>
+        <a href="images/PrefsMessages.png"><img src=
+        "images/PrefsMessages.png" height="194" width="479" align=
+        "right" alt="JMRI v4.17 Messages Prefs tab"></a>
 
+      <a name="Messages" id="Messages"></a>
       <h2>Messages</h2>This allows you to change the way that
       information and warning messages are displayed in JMRI.<br>
       It will also allow you to configure a default responses and
@@ -272,12 +288,12 @@
       <h2>Roster</h2>
 
       <a href="images/PrefsRoster47.png"><img src=
-      "images/PrefsRoster47.png" height="184" width="416" align=
-      "right" alt="JMRI v4.7 Roster Prefs tab"></a>
+      "images/PrefsRoster47.png" height="184" width="416"
+      alt="JMRI v4.7 Roster Prefs tab"></a>
 
       <a id="programmer" name="programmer"></a>
       <dl>
-        <dt>Programmer</dt>
+        <dt>Programmer tab</dt>
 
         <dd>
           The DecoderPro programmer allows you to select how much
@@ -355,7 +371,7 @@
           will pick up new values of the options, without having to close and restart the program.
         </dd>
 
-        <dt>Roster</dt>
+        <dt>Roster tab</dt>
 
         <dd>
           Normally, the Roster is stored in a standard location as
@@ -629,7 +645,7 @@
         Session Speed Profiles into the Roster Speed Profiles.</li>
       </ul>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

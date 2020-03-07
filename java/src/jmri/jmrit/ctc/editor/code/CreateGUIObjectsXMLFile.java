@@ -215,7 +215,7 @@ public class CreateGUIObjectsXMLFile {
                             }
                             x += 11;
                         }
-//  SpotBugs whines about "uesless control flow", so I commented this out (not the comment on the next line):
+//  SpotBugs whines about "useless control flow", so I commented this out (not the comment on the next line):
                     } /*else if (otherData._mGUIDesign_SignalsOnPanel == OtherData.SIGNALS_ON_PANEL.GREEN_OFF) {  // Future someday, as of 10/30/18 user CANNOT select this!
                     }*/
                 }

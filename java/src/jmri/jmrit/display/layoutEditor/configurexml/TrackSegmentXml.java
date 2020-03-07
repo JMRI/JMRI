@@ -74,8 +74,8 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
                 elementControlpoint.setAttribute("index", "" + i);
 
                 Point2D pt = p.getBezierControlPoint(i);
-                elementControlpoint.setAttribute("x", "" + pt.getX());
-                elementControlpoint.setAttribute("y", "" + pt.getY());
+                elementControlpoint.setAttribute("x", String.format("%.1f", pt.getX()));
+                elementControlpoint.setAttribute("y", String.format("%.1f", pt.getY()));
 
                 elementControlpoints.addContent(elementControlpoint);
             }
@@ -84,7 +84,7 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
 
         // store decorations
         Map<String, String> decorations = p.getDecorations();
-        if ((decorations != null) && (decorations.size() > 0)) {
+        if (decorations.size() > 0) {
             Element decorationsElement = new Element("decorations");
             for (Map.Entry<String, String> entry : decorations.entrySet()) {
                 String name = entry.getKey();

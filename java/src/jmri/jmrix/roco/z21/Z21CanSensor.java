@@ -1,7 +1,5 @@
 package jmri.jmrix.roco.z21;
 
-import jmri.DccLocoAddress;
-import jmri.InstanceManager;
 import jmri.Sensor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,21 +33,24 @@ public class Z21CanSensor extends jmri.implementation.AbstractSensor implements 
         // register for messages
         _memo.getTrafficController().addz21Listener(this);
         //Address format passed is in the form of moduleAddress:pin 
-        int seperator = systemName.indexOf(":");
-        int start = _memo.getSystemPrefix().length() + 1;
-           try {
-              try{
-                 moduleAddress = (Integer.parseInt(systemName.substring(start,seperator)));
-              } catch (NumberFormatException ex) {
-                 // didn't parse as a decimal, check to see if network ID 
-                 // was used instead.
-                 networkID = (Integer.parseInt(systemName.substring(start,seperator),16));
-              }
-              port = (Integer.parseInt(systemName.substring(seperator + 1)));
-           } catch (NumberFormatException ex) {
-              log.debug("Unable to convert " + systemName + " into the cab and input format of nn:xx");
-              throw new IllegalArgumentException("requires mm:pp format address.");
-           }
+        try {
+            setIdentifiersFromSystemName(systemName);
+        } catch (NumberFormatException ex) {
+           log.debug("Unable to convert {} into the cab and input format of nn:xx",systemName);
+           throw new IllegalArgumentException("requires mm:pp format address.");
+        }
+    }
+
+    private void setIdentifiersFromSystemName(String systemName) {
+        String moduleAddressText = Z21CanBusAddress.getEncoderAddressString(systemName, _memo.getSystemPrefix());
+        try {
+            moduleAddress = Integer.parseInt(moduleAddressText);
+        } catch (NumberFormatException ex) {
+            // didn't parse as a decimal, check to see if network ID
+            // was used instead.
+            networkID = Integer.parseInt(moduleAddressText, 16);
+        }
+        port = Z21CanBusAddress.getBitFromSystemName(systemName, _memo.getSystemPrefix());
     }
 
     /**
@@ -76,55 +77,47 @@ public class Z21CanSensor extends jmri.implementation.AbstractSensor implements 
     public void reply(Z21Reply msg){
          // for incoming messages all the reporter cares about is
          // LAN_CAN_DETECTOR messages.
-         if(msg.isCanDetectorMessage()){
+         if(msg.isCanSensorMessage()){
             int netID = ( msg.getElement(4)&0xFF) + ((msg.getElement(5)&0xFF) << 8);
             int address = ( msg.getElement(6)&0xFF) + ((msg.getElement(7)&0xFF) << 8);
-            if((address != moduleAddress) && (netID != networkID)) {
-                return; // not our messge.
-            }
             int msgPort = ( msg.getElement(8) & 0xFF);
-            if( msgPort != port ) {
-                return; // not our messge.
+            if(!messageForSensor(address,netID,msgPort)){
+                return;
             }
-            int type = ( msg.getElement(9) & 0xFF);
-            log.debug("sensor message type {}",type);
-            if( type == 0x01 ) {
-                // status message, use to set state.
-                int value1 = (msg.getElement(10)&0xFF) + ((msg.getElement(11)&0xFF) << 8);
-                log.debug("value {}",value1);
-                if(value1 == 0x0000) {
-                   log.debug("Free without voltage");
-                   setOwnState(Sensor.INACTIVE);
-                } else if(value1 == 0x0100) {
-                   log.debug("Free with voltage");
-                   setOwnState(Sensor.INACTIVE);
-                } else if(value1 == 0x1000) {
-                   log.debug("Busy without voltage");
-                   setOwnState(Sensor.ACTIVE);
-                } else if(value1 == 0x1100) {
-                   log.debug("Busy with voltage");
-                   setOwnState(Sensor.ACTIVE);
-                } else if(value1 == 0x1201) {
-                   log.debug("Busy Overload 1");
-                   setOwnState(Sensor.ACTIVE);
-                } else if(value1 == 0x1202) {
-                   log.debug("Busy Overload 2");
-                   setOwnState(Sensor.ACTIVE);
-                } else if(value1 == 0x1203) {
-                   log.debug("Busy Overload 3");
-                   setOwnState(Sensor.ACTIVE);
-                }
-             }
+            // status message, use to set state.
+            int value1 = (msg.getElement(10)&0xFF) + ((msg.getElement(11)&0xFF) << 8);
+            log.debug("value {}",value1);
+            if(value1 == 0x0000) {
+                log.debug("Free without voltage");
+                setOwnState(Sensor.INACTIVE);
+            } else if(value1 == 0x0100) {
+                log.debug("Free with voltage");
+                setOwnState(Sensor.INACTIVE);
+            } else if(value1 == 0x1000) {
+                log.debug("Busy without voltage");
+                setOwnState(Sensor.ACTIVE);
+            } else if(value1 == 0x1100) {
+                log.debug("Busy with voltage");
+                setOwnState(Sensor.ACTIVE);
+            } else if(value1 == 0x1201) {
+                log.debug("Busy Overload 1");
+                setOwnState(Sensor.ACTIVE);
+            } else if(value1 == 0x1202) {
+                log.debug("Busy Overload 2");
+                setOwnState(Sensor.ACTIVE);
+            } else if(value1 == 0x1203) {
+                log.debug("Busy Overload 3");
+                setOwnState(Sensor.ACTIVE);
+            }
          }
     }
 
+    private boolean messageForSensor(int address,int netId,int msgPort){
+        return (address == moduleAddress || netId == networkID) &&  msgPort == port;
+    }
+
     /**
-     * Member function that will be invoked by a z21Interface implementation to
-     * forward a z21 message sent to the layout. Normally, this function will do
-     * nothing.
-     *
-     * @param msg The received z21 message. Note that this same object may be
-     * presented to multiple users. It should not be modified here.
+     * {@inheritDoc}
      */
     @Override
     public void message(Z21Message msg){

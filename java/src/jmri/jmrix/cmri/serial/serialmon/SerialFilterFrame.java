@@ -12,11 +12,10 @@ import javax.swing.table.*;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.SerialNode;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for a message filter for CMRInet network packets.
+ *
  * @author	 Chuck Catania   Copyright (C) 2016
  */
 public class SerialFilterFrame extends jmri.util.JmriJFrame {
@@ -319,9 +318,10 @@ public class SerialFilterFrame extends jmri.util.JmriJFrame {
 	    }
     }
 
-    /**setMonitorNodePackets
-    *
-    */
+    /**
+     * Set MonitorNodePackets.
+     *
+     */
     public void nodeMonitorAllButtonActionPerformed() {
         for(int i=0; i<monitorNode.size(); i++) {
             monitorNode.get(i).setMonitorNodePackets(false);
@@ -370,6 +370,7 @@ public class SerialFilterFrame extends jmri.util.JmriJFrame {
     // cpNode options checkbox handler
     // -------------------------------
     private class HandlerClass implements ItemListener{
+        @Override
         public void itemStateChanged(ItemEvent e){
             JCheckBox pktTypeChkBox = (JCheckBox) e.getSource();
             int pktTypeIndex = 0;
@@ -411,8 +412,11 @@ public class SerialFilterFrame extends jmri.util.JmriJFrame {
            if (c!=NODEADDR_COLUMN) return true;
            else return false;
         }
+        @Override
         public int getColumnCount () {return NUMCOLUMNS;}
+        @Override
         public int getRowCount () {return monitorNode.size();}
+        @Override
         public Object getValueAt (int r,int c)
         {
 
@@ -444,7 +448,7 @@ public class SerialFilterFrame extends jmri.util.JmriJFrame {
         public static final int NUMCOLUMNS = ENABLED_COLUMN+1;
     }
 
-    private String[] nodeEnableColumnsNames = {"Node","Monitor"};
+    private String[] nodeEnableColumnsNames = {"Node", "Monitor"};
 
     // private final static Logger log = LoggerFactory.getLogger(SerialFilterFrame.class);
 

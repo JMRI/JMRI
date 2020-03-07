@@ -40,13 +40,14 @@ public class XNetLightTest extends jmri.implementation.AbstractLightTestBase {
         JUnitUtil.setUp();
         // prepare an interface
         xnis = new XNetInterfaceScaffold(new LenzCommandStation());
-        XNetLightManager xlm = new XNetLightManager(xnis, "X");
+        XNetLightManager xlm = new XNetLightManager(xnis.getSystemConnectionMemo());
 
         t = new XNetLight(xnis, xlm, "XL21");
     }
 
     @After
     public void tearDown() {
+	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

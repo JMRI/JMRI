@@ -15,6 +15,7 @@ public class Z21XNetReplyTest extends jmri.jmrix.lenz.XNetReplyTest {
         
     // Test the string constructor.
     @Test
+    @Override
     public void testStringCtor() {
         msg = new Z21XNetReply("12 34 AB 03 19 06 0B B1");
         Assert.assertEquals("length", 8, msg.getNumDataElements());
@@ -30,6 +31,7 @@ public class Z21XNetReplyTest extends jmri.jmrix.lenz.XNetReplyTest {
 
     // Test the string constructor with an empty string paramter.
     @Test
+    @Override
     public void testStringCtorEmptyString() {
         msg = new Z21XNetReply("");
         Assert.assertEquals("length", 0, msg.getNumDataElements());
@@ -38,6 +40,7 @@ public class Z21XNetReplyTest extends jmri.jmrix.lenz.XNetReplyTest {
 
     // Test the copy constructor.
     @Test
+    @Override
     public void testCopyCtor() {
         Z21XNetReply x = new Z21XNetReply("12 34 AB 03 19 06 0B B1");
         msg = new Z21XNetReply(x);
@@ -54,6 +57,7 @@ public class Z21XNetReplyTest extends jmri.jmrix.lenz.XNetReplyTest {
 
     // Test the XNetMessage constructor.
     @Test
+    @Override
     public void testXNetMessageCtor() {
         Z21XNetMessage x = new Z21XNetMessage("12 34 AB 03 19 06 0B B1");
         msg = new Z21XNetReply(x);
@@ -72,6 +76,7 @@ public class Z21XNetReplyTest extends jmri.jmrix.lenz.XNetReplyTest {
 
     // check is service mode response
     @Test
+    @Override
     public void testIsServiceModeResponse() {
         // CV 1 in direct mode.
         Z21XNetReply r = new Z21XNetReply("64 14 00 14 05 61");
@@ -79,19 +84,28 @@ public class Z21XNetReplyTest extends jmri.jmrix.lenz.XNetReplyTest {
     }
  
    @Test
+    @Override
     public void testToMonitorStringServiceModeDirectResponse(){
         Z21XNetReply r = new Z21XNetReply("64 14 00 14 05 61");
         Assert.assertEquals("Monitor String",Bundle.getMessage("Z21LAN_X_CV_RESULT",21,5),r.toMonitorString());
     }
 
+    @Test
+    public void testToMonitorStringZ21_LAN_X_TURNOUT_INFO(){
+        Z21XNetReply r = new Z21XNetReply("43 00 01 01 43");
+        Assert.assertEquals("Monitor String",Bundle.getMessage("Z21LAN_X_TURNOUT_INFO",2,"Closed"),r.toMonitorString());
+    }
+
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         m = msg = new Z21XNetReply();
     }
 
     @After
+    @Override
     public void tearDown() {
 	m = msg = null;
         JUnitUtil.tearDown();

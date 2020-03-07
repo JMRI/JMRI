@@ -18,14 +18,15 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Le tableau Logix</h1>
 
       <p>Logix est un petit groupe de Conditions concentr&eacute;es
@@ -109,7 +110,9 @@
 
       <p>Pour plus d'informations, consulter la <a href=
       "../../../../html/tools/Logix.shtml">documentation principale
-      Logix</a>.</p><!--#include virtual="/Footer" -->
+      Logix</a>.</p>
+
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

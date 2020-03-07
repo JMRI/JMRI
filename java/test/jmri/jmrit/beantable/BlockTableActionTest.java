@@ -3,8 +3,6 @@ package jmri.jmrit.beantable;
 import apps.gui.GuiLafPreferencesManager;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 import jmri.Block;
@@ -12,17 +10,18 @@ import jmri.InstanceManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.util.JUnitUtil;
-import jmri.util.junit.annotations.*;
 import jmri.util.swing.JemmyUtil;
 import org.junit.*;
 import org.netbeans.jemmy.operators.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrit.beantable.BlockTableAction class
  *
  * @author	Bob Jacobsen Copyright 2004, 2007, 2008
  */
-public class BlockTableActionTest extends AbstractTableActionBase {
+public class BlockTableActionTest extends AbstractTableActionBase<Block> {
 
     @Test
     public void testCreate() {
@@ -90,9 +89,11 @@ public class BlockTableActionTest extends AbstractTableActionBase {
         _b1Table.cancelPressed(null);
 
         // clean up
+        (new JFrameOperator(af)).requestClose();
         JUnitUtil.dispose(af);
         _bTable.dispose();
         _b1Table.dispose();
+        (new JFrameOperator(f)).requestClose();
         JUnitUtil.dispose(f);
     }
 
@@ -116,6 +117,7 @@ public class BlockTableActionTest extends AbstractTableActionBase {
         Assert.assertNotNull("Verify IB105 Added", chk105);  // NOI18N
         Assert.assertEquals("Verify system name prefix", "IB105", chk105.getSystemName());  // NOI18N
 
+        (new JFrameOperator(f)).requestClose();
         JUnitUtil.dispose(f);
     }
 
@@ -172,6 +174,7 @@ public class BlockTableActionTest extends AbstractTableActionBase {
         Assert.assertEquals("New Block Name", layoutBlock.getUserName());
 
         jmri.util.JUnitAppender.assertWarnMessage("Cannot remove user name for block Block Name");  // NOI18N
+        jfo.requestClose();
     }
 
     @Override
@@ -180,6 +183,7 @@ public class BlockTableActionTest extends AbstractTableActionBase {
     }
 
     @Test
+    @Override
     public void testAddThroughDialog() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assume.assumeTrue(a.includeAddButton());
@@ -198,6 +202,7 @@ public class BlockTableActionTest extends AbstractTableActionBase {
 	    jmri.util.swing.JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonCreate"));
         jf.requestClose();
         JUnitUtil.dispose(f1);
+        (new JFrameOperator(f)).requestClose();
         JUnitUtil.dispose(f);
     }
 
@@ -222,23 +227,34 @@ public class BlockTableActionTest extends AbstractTableActionBase {
         // Open Speed pane to test Speed menu, which displays a JOptionPane
         JFrameOperator main = new JFrameOperator(getTableFrameName()); 
         // Use GUI menu to open Speeds pane:
-	
-	//This is a modal JOptionPane, so create a thread to dismiss it.
-	Thread t = new Thread(() -> {
-            jmri.util.swing.JemmyUtil.confirmJOptionPane(main,Bundle.getMessage("SpeedsMenuItemDefaults"),"","OK");
+	    //This is a modal JOptionPane, so create a thread to dismiss it.
+	    Thread t = new Thread(() -> {
+            try {
+               jmri.util.swing.JemmyUtil.confirmJOptionPane(main,Bundle.getMessage("BlockSpeedLabel"), "", "OK");
+            } catch( org.netbeans.jemmy.TimeoutExpiredException tee) {
+               // we're waiting for this thread to finish in the main method,
+               // so any exception here means we failed.
+               log.error("caught timeout exception while waiting for modal dialog",tee);
+            }
         });
         t.setName("Default Speeds Dialog Close Thread");
         t.start();
         // pushMenuNoBlock is used, because dialog is modal
         JMenuBarOperator mainbar = new JMenuBarOperator(main);
-        mainbar.pushMenuNoBlock("Speeds"); // stops at top level
-        JMenuOperator jmo = new JMenuOperator(mainbar, "Speeds");
+        mainbar.pushMenu(Bundle.getMessage("SpeedsMenu")); // stops at top level
+        JMenuOperator jmo = new JMenuOperator(mainbar, Bundle.getMessage("SpeedsMenu"));
         JPopupMenu jpm = jmo.getPopupMenu();
-        JMenuItem firstMenuItem = (JMenuItem)jpm.getComponent(0); // first item is [Defaults...]
-        JMenuItemOperator jmio = new JMenuItemOperator(firstMenuItem);
+        JMenuItemOperator jmio = new JMenuItemOperator(new JPopupMenuOperator(jpm),Bundle.getMessage("SpeedsMenuItemDefaults"));
         jmio.pushNoBlock();
+
+        // wait for the dismiss thread to finish
+        JUnitUtil.waitFor(()-> { return !t.isAlive(); 
+                  }, "Dismiss Default Speeds Thread finished");
+
+
         // clean up
         JUnitUtil.dispose(f1);
+        (new JFrameOperator(f)).requestClose();
         JUnitUtil.dispose(f);
     }
 
@@ -270,6 +286,7 @@ public class BlockTableActionTest extends AbstractTableActionBase {
 	jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f2),Bundle.getMessage("ButtonCancel"));
         JUnitUtil.dispose(f2);
 	JUnitUtil.dispose(f1);
+        (new JFrameOperator(f)).requestClose();
         JUnitUtil.dispose(f);
     }
 
@@ -299,8 +316,9 @@ public class BlockTableActionTest extends AbstractTableActionBase {
     @Override
     public void tearDown() {
         a = null;
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(BlockTableActionTest.class);
+    private final static Logger log = LoggerFactory.getLogger(BlockTableActionTest.class);
 }

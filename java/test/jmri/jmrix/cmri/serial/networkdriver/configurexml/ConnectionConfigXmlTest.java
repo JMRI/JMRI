@@ -16,6 +16,7 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractNet
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         xmlAdapter = new ConnectionConfigXml();
@@ -31,13 +32,16 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractNet
     }    
 
     @After
+    @Override
     public void tearDown() {
-        JUnitUtil.tearDown();
         xmlAdapter = null;
         cc = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.tearDown();
     }
 
     @Test
+    @Override
     public void getInstanceTest() {
         super.getInstanceTest();
         JUnitAppender.assertErrorMessage("getInputStream called before load(), stream not available");

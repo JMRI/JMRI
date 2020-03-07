@@ -450,7 +450,7 @@ public class DataSource extends jmri.util.JmriJFrame {
                     break;
                 }
                 // Strip off the CR and LF
-                if (char1 != 10 && char1 != 13) {
+                if (char1 != 13) {
                     msg.append(char1);
                 }
             }

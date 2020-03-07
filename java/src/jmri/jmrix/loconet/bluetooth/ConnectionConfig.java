@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Definition of objects to handle configuring an LocoNet Bluetooth layout
+ * Definition of objects to handle configuring a LocoNet Bluetooth layout
  * connection via a LocoNetBluetoothAdapter object.
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {

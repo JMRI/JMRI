@@ -41,8 +41,8 @@ public class TabbedPreferencesFrame extends JmriJFrame {
 
     @Override
     public void windowClosing(WindowEvent e) {
-        ShutDownManager sdm = InstanceManager.getNullableDefault(ShutDownManager.class);
-        if (!getTabbedPreferences().isPreferencesValid() && (sdm == null || !sdm.isShuttingDown())) {
+        ShutDownManager sdm = InstanceManager.getDefault(ShutDownManager.class);
+        if (!getTabbedPreferences().isPreferencesValid() && !sdm.isShuttingDown()) {
             for (PreferencesPanel panel : getTabbedPreferences().getPreferencesPanels().values()) {
                 if (!panel.isPreferencesValid()) {
                     switch (JOptionPane.showConfirmDialog(this,

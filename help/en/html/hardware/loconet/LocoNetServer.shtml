@@ -19,19 +19,21 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
+
       <h1>Hardware Support: Connecting Multiple Computers to
-      LocoNet&reg; via JMRI LocoNet Server</h1>This page describes
-      how to use the inbuilt LocoNet&reg; Client/Server capability
-      of JMRI to connect multiple computers to a single
-      LocoNet-equipped layout.
+      LocoNet&reg; via JMRI LocoNet Server</h1>
+      <p>This page describes how to use the inbuilt LocoNet&reg;
+      Client/Server capability of JMRI to connect multiple
+      computers to a single LocoNet-equipped layout.</p>
 
       <p>Briefly, one computer is physically connected to the
       LocoNet, and acts as a "Server" for others. One or more
@@ -46,9 +48,10 @@
       <ul>
         <li>Configure the LocoNet connection just like for any
         other use. Select the protocol that corresponds to your
-        hardware (e.g. LocoBuffer-II, etc), the communication port,
-        and other options. It's best to make sure this is working
-        well before proceeding.</li>
+        hardware (e.g. <a href="LocoBufferII">LocoBuffer-II</a>,
+        etc), the communication port, and other options. It's
+        best to make sure this is working well before
+        proceeding.</li>
 
         <li>You can then manually start the server by selecting
         "Start LocoNet Server" from the LocoNet menu. This will
@@ -59,19 +62,19 @@
         <li>You can also have the server start automatically every
         time you start the program by
 
-          <ul>
-            <li>Open the Preferences from the Edit menu (on Windows
-            or Linux) or from the Application menu (OS X)</li>
+        <ul>
+          <li>Open the Preferences from the Edit menu (on Windows
+          or Linux) or from the Application menu (OS X)</li>
 
-            <li>Under "Start Up", click "Add &#9662;"</li>
+          <li>Under "Start Up", click "Add &#9662;"</li>
 
-            <li>Select "Perform action..."</li>
+          <li>Select "Perform action..."</li>
 
-            <li>Find and select "Start LocoNet Server" and click
-            "OK"</li>
+          <li>Find and select "Start LocoNet Server" and click
+          "OK"</li>
 
-            <li>Save the preferences.</li>
-          </ul>
+          <li>Save the preferences.</li>
+        </ul>
         </li>
       </ul>
 
@@ -120,7 +123,8 @@
 
       <p>LocoNet&reg; is a registered trademark of <a href=
       "http://www.digitrax.com">Digitrax, Inc.</a></p>
-      <!--#include virtual="/Footer" -->
+
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

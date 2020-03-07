@@ -1,6 +1,5 @@
 package jmri.jmrix.zimo;
 
-import java.io.Serializable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * Adapted by Sip Bosch for use with zimo MX-1
  *
  */
-public class Mx1Message extends jmri.jmrix.NetMessage implements Serializable {
+public class Mx1Message extends jmri.jmrix.NetMessage {
 
     public Mx1Message(int len) {
         this(len, Mx1Packetizer.ASCII);
@@ -145,7 +144,7 @@ public class Mx1Message extends jmri.jmrix.NetMessage implements Serializable {
         return CS;
     }
 
-    long timeStamp = 0l;
+    long timeStamp = 0L;
 
     protected long getTimeStamp() {
         return timeStamp;

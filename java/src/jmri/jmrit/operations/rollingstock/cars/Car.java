@@ -6,6 +6,8 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
+import jmri.jmrit.operations.routes.RouteLocation;
+import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import org.slf4j.Logger;
@@ -510,6 +512,48 @@ public class Car extends RollingStock {
 
     public boolean isUtility() {
         return _utility;
+    }
+    
+    public boolean isLocalMove() {
+        if (getRouteLocation() == null || getRouteDestination() == null) {
+            return false;
+        }
+        if (getRouteLocation().equals(getRouteDestination()) && getTrack() != null) {
+            return true;
+        }
+        if (getTrain() == null) {
+            return false;
+        }
+        if (getTrain().isLocalSwitcher() &&
+                TrainCommon.splitString(getRouteLocation().getName())
+                        .equals(TrainCommon.splitString(getRouteDestination().getName())) &&
+                getTrack() != null) {
+            return true;
+        }
+        // look for sequential locations with the "same" name
+        if (TrainCommon.splitString(getRouteLocation().getName()).equals(TrainCommon.splitString(getRouteDestination().getName())) &&
+                getTrain().getRoute() != null) {
+            boolean foundRl = false;
+            for (RouteLocation rl : getTrain().getRoute().getLocationsBySequenceList()) {
+                if (foundRl) {
+                    if (TrainCommon.splitString(getRouteDestination().getName()).equals(TrainCommon.splitString(rl.getName()))) {
+                        // user can specify the "same" location two more more
+                        // times in a row
+                        if (getRouteDestination() != rl) {
+                            continue;
+                        } else {
+                            return true;
+                        }
+                    } else {
+                        return false;
+                    }
+                }
+                if (getRouteLocation().equals(rl)) {
+                    foundRl = true;
+                }
+            }
+        }
+        return false;
     }
 
     /**

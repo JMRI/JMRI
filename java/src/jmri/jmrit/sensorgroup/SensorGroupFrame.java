@@ -47,11 +47,17 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
 
     private final static String namePrefix = "SENSOR GROUP:";  // should be upper case
     private final static String nameDivider = ":";
-    public final static String logixSysName = "SYS";
+    public final static String logixSysName;
     public final static String logixUserName = "System Logix";
-    public final static String ConditionalSystemPrefix = logixSysName + "_SGC_";
+    public final static String ConditionalSystemPrefix;
     private final static String ConditionalUserPrefix = "Sensor Group ";
     private int rowHeight;
+
+    static {
+        String logixPrefix = InstanceManager.getDefault(jmri.LogixManager.class).getSystemNamePrefix();
+        logixSysName = logixPrefix + ":SYS";
+        ConditionalSystemPrefix = logixSysName + "_SGC_";
+    }
 
     SensorTableModel _sensorModel;
     JScrollPane _sensorScrollPane;
@@ -205,7 +211,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
         }
         Logix logix = getSystemLogix();
         logix.deActivateLogix();
-        String cSystemName = ConditionalSystemPrefix + group.toUpperCase();
+        String cSystemName = ConditionalSystemPrefix + group;
         String cUserName = ConditionalUserPrefix + group;
         // add new Conditional
         ArrayList<ConditionalVariable> variableList = new ArrayList<>();
@@ -250,12 +256,12 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
         // look for name in List panel
         String group = _sensorGroupList.getSelectedValue();
         if (group == null) { // not there, look in text field
-            group = _nameField.getText().toUpperCase().trim();
+            group = _nameField.getText();
         }
         _nameField.setText(group);
         // Look for Sensor group in Route table
         RouteManager rm = InstanceManager.getDefault(jmri.RouteManager.class);
-        String prefix = (namePrefix + group + nameDivider).toUpperCase();
+        String prefix = (namePrefix + group + nameDivider);
         boolean isRoute = false;
         int setRow = 0;
         for (Route r : rm.getNamedBeanSet()) {
@@ -276,11 +282,11 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
         // look for  Sensor group in SYSTEM Logix
         if (!isRoute) {
             Logix logix = getSystemLogix();
-            String cSystemName = (ConditionalSystemPrefix + group).toUpperCase();
+            String cSystemName = (ConditionalSystemPrefix + group);
             String cUserName = ConditionalUserPrefix + group;
             for (int i = 0; i < logix.getNumConditionals(); i++) {
                 String name = logix.getConditionalByNumberOrder(i);
-                if (cSystemName.equals(name) || cUserName.equals(name)) {
+                if (cSystemName.equalsIgnoreCase(name) || cUserName.equals(name)) {     // Ignore case for compatibility
                     Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).getBySystemName(name);
                     if (c == null) {
                         log.error("Conditional \"" + name + "\" expected but NOT found in Logix " + logix.getSystemName());
@@ -343,7 +349,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
             }
             return;
         }
-        String prefix = (namePrefix + group + nameDivider).toUpperCase();
+        String prefix = (namePrefix + group + nameDivider);
 
         // remove the old routes
         RouteManager rm = InstanceManager.getDefault(jmri.RouteManager.class);
@@ -355,7 +361,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
                 rm.deleteRoute(r);
             }
         }
-        String cSystemName = (ConditionalSystemPrefix + group).toUpperCase();
+        String cSystemName = (ConditionalSystemPrefix + group);
         String cUserName = ConditionalUserPrefix + group;
         Logix logix = getSystemLogix();
         for (int i = 0; i < logix.getNumConditionals(); i++) {
@@ -382,7 +388,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
             String[] msgs = logix.deleteConditional(sysName);
             if (msgs != null) {
                 if (showMsg) {
-                    javax.swing.JOptionPane.showMessageDialog(this, 
+                    javax.swing.JOptionPane.showMessageDialog(this,
                             Bundle.getMessage("MessageError41") + " " + msgs[0] + " (" + msgs[1] + ") "
                             + Bundle.getMessage("MessageError42") + " " + msgs[2] + " (" + msgs[3] + "), "
                             + Bundle.getMessage("MessageError43") + " " + msgs[4] + " (" + msgs[5] + "). "

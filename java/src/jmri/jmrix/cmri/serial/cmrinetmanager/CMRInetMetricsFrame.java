@@ -243,7 +243,7 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
         mainButtons.setVisible(true);
         add(mainButtons);
         
-        addHelpMenu("package.jmri.jmrix.cmri.serial.serialmon.CMRInetMetricsFrame", true);
+        addHelpMenu("package.jmri.jmrix.cmri.serial.cmrinetmanager.CMRInetMetricsFrame", true);
 
         // pack for display
         //-----------------
@@ -350,8 +350,11 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
         
         @Override
 	    public boolean isCellEditable(int r,int c) { return false;}
+        @Override
         public int getColumnCount () {return NUMCOLUMNS;}
+        @Override
         public int getRowCount () {return CMRInetMetricsData.CMRInetMetricErrName.length;}
+        @Override
         public Object getValueAt (final int r,int c) {           
             switch (c) {
                 case ERRORNAME_COLUMN :
@@ -458,10 +461,13 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
         @Override
         public boolean isCellEditable(int r,int c) { return false;}
         
+        @Override
         public int getColumnCount () {return DATANUMCOLUMNS;}
         
+        @Override
         public int getRowCount () {return CMRInetMetricsData.CMRInetMetricDataName.length;}
         
+        @Override
         public Object getValueAt (final int r,int c) {           
             switch (c) {
                 case DATANAME_COLUMN :
@@ -471,6 +477,7 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
                 case DATARESET_COLUMN :
                     final JButton button = new JButton(CMRInetMetricsDataColumnsNames[c]);
                     button.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent arg0) 
                         {
                           metricsData.zeroMetricDataValue( r );
@@ -540,8 +547,8 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
 		}
 	}
       
-    private String[] CMRInetMetricsErrColumnsNames  = {"Error","Count"," ","Reset"};
-    private String[] CMRInetMetricsDataColumnsNames = {"Metric","Count"," ","Reset"};
+    private String[] CMRInetMetricsErrColumnsNames = {"Error", "Count", " ", "Reset"};
+    private String[] CMRInetMetricsDataColumnsNames = {"Metric", "Count", " ", "Reset"};
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CMRInetMetricsFrame.class.getName());
 	

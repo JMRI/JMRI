@@ -160,7 +160,7 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
                 input3 = loadTurnout(l.get(2));
                 break;
             default:
-                log.error("incorrect number of aspects " + aspects + " when loading Signal " + sys);
+                log.error("incorrect number of aspects {} when loading Signal {}", aspects, sys);
         }
         if (uname == null) {
             h = new MergSD2SignalHead(sys, aspects, input1, input2, input3, feather, home);
@@ -170,9 +170,8 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
 
         loadCommon(h, shared);
 
-        SignalHead existingBean =
-                InstanceManager.getDefault(jmri.SignalHeadManager.class)
-                        .getBeanBySystemName(sys);
+        SignalHead existingBean = InstanceManager.getDefault(jmri.SignalHeadManager.class)
+                        .getBySystemName(sys);
 
         if ((existingBean != null) && (existingBean != h)) {
             log.error("systemName is already registered: {}", sys);
@@ -196,7 +195,12 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
             } else {
                 t = InstanceManager.turnoutManagerInstance().getBySystemName(name);
             }
-            return jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, t);
+            if (t != null) {
+                return jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, t);
+            } else {
+                log.warn("Failed to find turnout {}. Check connection and configuration", name);
+                return null;
+            }
         } else {
             String name = e.getText();
             try {
@@ -215,4 +219,5 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
     }
 
     private final static Logger log = LoggerFactory.getLogger(MergSD2SignalHeadXml.class);
+
 }

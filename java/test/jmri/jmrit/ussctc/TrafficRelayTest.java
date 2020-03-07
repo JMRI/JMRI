@@ -13,6 +13,7 @@ public class TrafficRelayTest {
     @Test
     public void testLocked() {
         SignalHeadSection s = new SignalHeadSection() {
+            @Override
             public String getName() {
                 return "";
             }
@@ -27,6 +28,7 @@ public class TrafficRelayTest {
     @Test
     public void testUnlocked() {
         SignalHeadSection s = new SignalHeadSection() {
+            @Override
             public String getName() {
                 return "";
             }

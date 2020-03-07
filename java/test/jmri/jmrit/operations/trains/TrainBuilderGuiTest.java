@@ -2,6 +2,12 @@ package jmri.jmrit.operations.trains;
 
 import java.awt.GraphicsEnvironment;
 import java.text.MessageFormat;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
@@ -17,10 +23,6 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for the Operations Trains GUI class
@@ -45,7 +47,7 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
     public void testStagingPromptFrom() {
 
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-
+        JUnitOperationsUtil.initOperationsData();
         Setup.setPromptFromStagingEnabled(true);
 
         // two sets of cars in staging
@@ -99,6 +101,8 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
 
         Assert.assertFalse("Train status", train2.isBuilt());
 
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+
     }
 
     /**
@@ -108,7 +112,7 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
     public void testStagingPromptTo() {
 
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-
+        JUnitOperationsUtil.initOperationsData();
         Setup.setPromptToStagingEnabled(true);
         
         Train train2 = tmanager.getTrainById("2");
@@ -158,13 +162,16 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         }, "wait for build to complete");
 
         Assert.assertFalse("Train status", train2.isBuilt());
+        
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+
     }
     
     @Test
     public void testBuildFailedMessage() {
 
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+        JUnitOperationsUtil.initOperationsData();
         // enable build failure messages
         tmanager.setBuildMessagesEnabled(true);
         
@@ -194,6 +201,8 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         }, "wait for build to complete");
         
         Assert.assertFalse("Train status", train2.isBuilt());
+        
+
     }
     
     /**
@@ -203,7 +212,7 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
     public void testBuildFailedMessageStagingA() {
 
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+        JUnitOperationsUtil.initOperationsData();
         tmanager.setBuildMessagesEnabled(true);
         
         Engine e1 = emanager.getByRoadAndNumber("PC", "5016");
@@ -286,6 +295,8 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         
         Assert.assertEquals("Track assignment", northendStaging1, c3.getTrack());
         Assert.assertEquals("Track assignment", northendStaging1, c4.getTrack());
+        
+
     }
     
     /**
@@ -296,7 +307,7 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
     public void testBuildFailedMessageStagingB() {
 
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+        JUnitOperationsUtil.initOperationsData();
         tmanager.setBuildMessagesEnabled(true);
         
         Engine e1 = emanager.getByRoadAndNumber("PC", "5016");
@@ -383,6 +394,8 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         
         Assert.assertEquals("Track assignment", northendStaging1, c3.getTrack());
         Assert.assertEquals("Track assignment", northendStaging1, c4.getTrack());
+        
+
     }
     
     /**
@@ -393,7 +406,7 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
     public void testBuildFailedMessageStagingC() {
 
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+        JUnitOperationsUtil.initOperationsData();
         tmanager.setBuildMessagesEnabled(true);
 
         Location northend = lmanager.getLocationById("1");
@@ -472,6 +485,8 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         Assert.assertEquals("Track assignment", null, c3.getTrack());
         Assert.assertEquals("Track assignment", null, c4.getTrack());
         Assert.assertEquals("Track assignment", null, c11.getTrack());
+        
+
     }
     
     /**
@@ -482,7 +497,7 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
     public void testBuildFailedMessageStagingD() {
 
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+        JUnitOperationsUtil.initOperationsData();
         tmanager.setBuildMessagesEnabled(true);
         
         Engine e1 = emanager.getByRoadAndNumber("PC", "5016");
@@ -564,6 +579,8 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         Assert.assertEquals("Train assignment", null, e2.getTrain());
         Assert.assertEquals("Train assignment", null, e3.getTrain());
         Assert.assertEquals("Train assignment", null, e4.getTrain());
+        
+
     }
     
     /**
@@ -574,7 +591,7 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
     public void testBuildFailedMessageStagingE() {
 
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+        JUnitOperationsUtil.initOperationsData();
         tmanager.setBuildMessagesEnabled(true);
         
         Engine e1 = emanager.getByRoadAndNumber("PC", "5016");
@@ -657,6 +674,8 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         Assert.assertEquals("Train assignment", null, e2.getTrain());
         Assert.assertEquals("Train assignment", train2, e3.getTrain());
         Assert.assertEquals("Train assignment", train2, e4.getTrain());
+        
+
     }
 
     // Ensure minimal setup for log4J
@@ -673,6 +692,5 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
 
         // disable build messages
         tmanager.setBuildMessagesEnabled(false);
-        JUnitOperationsUtil.initOperationsData();
     }
 }

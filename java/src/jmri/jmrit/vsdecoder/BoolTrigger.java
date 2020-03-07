@@ -17,12 +17,11 @@ package jmri.jmrit.vsdecoder;
  * @author   Mark Underwood Copyright (C) 2011
  */
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-class BoolTrigger extends Trigger implements PropertyChangeListener {
+class BoolTrigger extends Trigger {
 
     boolean match_value;
 

@@ -2,6 +2,12 @@
 package jmri.jmrit.operations.router;
 
 import java.util.List;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
@@ -10,11 +16,7 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.locations.schedules.Schedule;
 import jmri.jmrit.operations.locations.schedules.ScheduleItem;
 import jmri.jmrit.operations.locations.schedules.ScheduleManager;
-import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.rollingstock.cars.CarLoads;
-import jmri.jmrit.operations.rollingstock.cars.CarManager;
-import jmri.jmrit.operations.rollingstock.cars.CarTypes;
-import jmri.jmrit.operations.rollingstock.cars.Kernel;
+import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
@@ -22,10 +24,6 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.JUnitOperationsUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for the Operations Router class
@@ -2045,6 +2043,8 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         Assert.assertEquals("Check car's destination track", bostonInterchange1, c3.getDestinationTrack());
         Assert.assertEquals("Check car's destination", null, c4.getDestination());
         Assert.assertEquals("Check car's destination track", null, c4.getDestinationTrack());
+        
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
     
     /**
@@ -2516,6 +2516,8 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         Assert.assertEquals("car's final destination", chelmsford, c3.getFinalDestination());
         Assert.assertEquals("car's destination", stagingT2, c4.getDestinationTrack()); // sent to staging rather than build failure
         Assert.assertEquals("car's final destination", chelmsford, c4.getFinalDestination());
+        
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     // Use trains to move cars
@@ -2724,6 +2726,8 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         Assert.assertEquals("car's location Foxboro", "Foxboro Spur 1", c4.getTrackName());
         Assert.assertEquals("car's destination", "", c4.getDestinationName());
         Assert.assertEquals("car's destination track", "", c4.getDestinationTrackName());
+        
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
     
     /**
@@ -2948,6 +2952,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         Assert.assertEquals("car's destination track", actonInterchange, c5.getDestinationTrack());
         Assert.assertEquals("car's destination track", bostonInterchange1, c6.getDestinationTrack());
              
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     /*
@@ -3302,6 +3307,8 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         // check next loads
         Assert.assertEquals("Car BA 3 load", "", c3.getNextLoadName());
         Assert.assertEquals("Car BB 4 load", "", c4.getNextLoadName());
+        
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     /*
@@ -3507,6 +3514,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         Assert.assertEquals("Car BD 6 schedule id", "", c6.getScheduleItemId());
 
         bostonToChelmsfordTrain.terminate();
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     /*
@@ -3640,6 +3648,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         Assert.assertEquals("Car BC 9 schedule id", schAItem5.getId(), c9.getScheduleItemId());
 
         actonTrain.reset();
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     /*
@@ -3930,6 +3939,8 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         Assert.assertEquals("Car BC 9 destination track", "", c9.getDestinationTrackName());
         Assert.assertEquals("Car BC 9 final destination", "", c9.getFinalDestinationName());
         Assert.assertEquals("Car BC 9 final destination track", "", c9.getFinalDestinationTrackName());
+        
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     /* This test confirms that schedules can be linked together.
@@ -4173,6 +4184,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         Assert.assertEquals("Car BC 9 next load", "", c9.getNextLoadName());
 
         tBostonToActon.terminate();
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
     
     /**
@@ -4384,6 +4396,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
 
     // Ensure minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         super.setUp();
         

@@ -6,7 +6,8 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI Manual: Index</title><!-- Style -->
+  <title>JMRI Manual: Index</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -14,15 +15,14 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
@@ -56,7 +56,7 @@
             <td></td>
 
             <td style="font-weight: bold;"><a href=
-            "../html/apps/PanelPro/PanelPro.shtml">PanelPro&trade;
+            "../html/apps/PanelPro/index.shtml">PanelPro&trade;
             v4.x</a></td>
 
             <td></td>
@@ -168,16 +168,16 @@
 
         <li>Drawing computer based panels for depicting a model
         railroad layout (<a href=
-        "../html/apps/PanelPro/PanelPro.shtml">PanelPro&trade;</a>
+        "../html/apps/PanelPro/index.shtml">PanelPro&trade;</a>
         and <a href=
-        "../html/apps/PanelPro/PanelPro.shtml#layouteditor">Layout
+        "../html/apps/PanelPro/index.shtml#le">Layout
         Editor</a>)</li>
 
         <li>Controlling the layout (All modules)</li>
 
         <li>Creating train manifests for duplicating railroad
         operations (<a href=
-        "../html/package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a>)</li>
+        "../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a>)</li>
 
         <li>Controlling the signals on the layout (All
         modules)</li>
@@ -202,7 +202,7 @@
       connected to your Command Station first.<br>
       When train(s) run and a turnout responds to your
       hand held throttle, it's time to open the <a href=
-      "../en/html/hardware/">Hardware Help</a>
+      "../html/hardware/index.shtml">Hardware Help</a>
       (use the Hardware tab at the top of the page).<br>
       Next is trying to do basic things with PanelPro,
       for example using a JMRI Throttle to run a loco.<br>
@@ -224,7 +224,7 @@
       </p>
 
       <p>If this is your first visit to our manual, we suggest that
-      you take the Decoder Pro&reg; tour at <a href=
+      you take the DecoderPro&reg; tour at <a href=
       "http://jmri.org/help/en/html/apps/DecoderPro/Tour.shtml">http://jmri.org/help/en/html/apps/DecoderPro/Tour.shtml</a><br>
       to get an overview of what we're about to cover.</p>
 
@@ -242,16 +242,16 @@
       Version 2.14.1 requires Java 1.5 (or 1.6 if you wish for drag
       &amp; drop)<br>
       Version 3.10.1 requires Java 1.7 or later.<br>
-      Version 4.2 requires Java 1.8.</p>
+      Version 4.2 and up requires Java 1.8.</p>
 
       <p>More on <a href=
       "https://www.java.com/en/download/help/sysreq.xml">Java
       versions and hardware requirements</a>.<br>
       Get the latest Java as a free download at: <a href=
-      "http://java.com/download/" target=
+      "https://www.java.com/download/" target=
       "_blank">java.com/download</a>.</p>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

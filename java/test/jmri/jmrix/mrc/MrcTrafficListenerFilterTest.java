@@ -20,10 +20,13 @@ public class MrcTrafficListenerFilterTest {
         memo.setMrcTrafficController(tc);
         jmri.InstanceManager.store(memo, MrcSystemConnectionMemo.class);
         MrcTrafficListener tl = new MrcTrafficListener(){
+           @Override
            public void notifyXmit(Date timestamp, MrcMessage m){
            }
+           @Override
            public void notifyRcv(Date timestamp, MrcMessage m){
            }
+           @Override
            public void notifyFailedXmit(Date timestamp, MrcMessage m){
            }
         };

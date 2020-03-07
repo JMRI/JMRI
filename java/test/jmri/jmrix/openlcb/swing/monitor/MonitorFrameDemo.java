@@ -151,6 +151,8 @@ public class MonitorFrameDemo {
     @After
     public void tearDown() throws Exception {
         jmri.util.JUnitUtil.resetWindows(false, false);
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 }

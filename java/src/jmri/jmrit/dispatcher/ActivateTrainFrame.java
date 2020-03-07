@@ -1,11 +1,11 @@
 package jmri.jmrit.dispatcher;
 
-import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -16,21 +16,26 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.Block;
 import jmri.InstanceManager;
+import jmri.Sensor;
 import jmri.Transit;
 import jmri.TransitManager;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.swing.NamedBeanComboBox;
 import jmri.util.JmriJFrame;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Displays the Activate New Train dialog and processes information entered
@@ -63,7 +68,7 @@ public class ActivateTrainFrame {
     private TrainInfoFile _tiFile = null;
     private boolean _TrainsFromUser = false;
     private boolean _TrainsFromRoster = true;
-    private boolean _TrainsFromTrains = false;
+    private boolean _TrainsFromOperations = false;
     private List<ActiveTrain> _ActiveTrainsList = null;
     private final TransitManager _TransitManager = InstanceManager.getDefault(jmri.TransitManager.class);
     private String _trainInfoName = "";
@@ -72,7 +77,7 @@ public class ActivateTrainFrame {
     private Transit selectedTransit = null;
     //private String selectedTrain = "";
     private JmriJFrame initiateFrame = null;
-    private Container initiatePane = null;
+    private JPanel initiatePane = null;
     private final JComboBox<String> transitSelectBox = new JComboBox<>();
     private final List<Transit> transitBoxList = new ArrayList<>();
     private final JLabel trainBoxLabel = new JLabel("     " + Bundle.getMessage("TrainBoxLabel") + ":");
@@ -112,8 +117,8 @@ public class ActivateTrainFrame {
     private final JLabel delayReStartSensorLabel = new JLabel(Bundle.getMessage("RestartSensor"));
     private final JCheckBox resetRestartSensorBox = new JCheckBox(Bundle.getMessage("ResetRestartSensor"));
     private final JComboBox<String> delayedReStartBox = new JComboBox<>(delayedStartString);
-    private final jmri.util.swing.JmriBeanComboBox delaySensor = new jmri.util.swing.JmriBeanComboBox(jmri.InstanceManager.sensorManagerInstance());
-    private final jmri.util.swing.JmriBeanComboBox delayReStartSensor = new jmri.util.swing.JmriBeanComboBox(jmri.InstanceManager.sensorManagerInstance());
+    private final NamedBeanComboBox<Sensor> delaySensor = new NamedBeanComboBox<>(jmri.InstanceManager.sensorManagerInstance());
+    private final NamedBeanComboBox<Sensor> delayReStartSensor = new NamedBeanComboBox<>(jmri.InstanceManager.sensorManagerInstance());
 
     private final JSpinner departureHrSpinner = new JSpinner(new SpinnerNumberModel(8, 0, 23, 1));
     private final JSpinner departureMinSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 59, 1));
@@ -181,15 +186,17 @@ public class ActivateTrainFrame {
     protected void initiateTrain(ActionEvent e) {
         // set Dispatcher defaults
         _TrainsFromRoster = _dispatcher.getTrainsFromRoster();
-        _TrainsFromTrains = _dispatcher.getTrainsFromTrains();
+        _TrainsFromOperations = _dispatcher.getTrainsFromTrains();
         _TrainsFromUser = _dispatcher.getTrainsFromUser();
         _ActiveTrainsList = _dispatcher.getActiveTrainsList();
         // create window if needed
         if (initiateFrame == null) {
             initiateFrame = new JmriJFrame(Bundle.getMessage("AddTrainTitle"), false, true);
             initiateFrame.addHelpMenu("package.jmri.jmrit.dispatcher.NewTrain", true);
-            initiatePane = initiateFrame.getContentPane();
-            initiatePane.setLayout(new BoxLayout(initiateFrame.getContentPane(), BoxLayout.Y_AXIS));
+            
+            initiatePane = new JPanel();
+            initiatePane.setLayout(new BoxLayout(initiatePane, BoxLayout.Y_AXIS));
+            
             // add buttons to load and save train information
             JPanel p0 = new JPanel();
             p0.setLayout(new FlowLayout());
@@ -217,8 +224,7 @@ public class ActivateTrainFrame {
                 }
             });
             deleteButton.setToolTipText(Bundle.getMessage("DeleteButtonHint"));
-            initiatePane.add(p0);
-            initiatePane.add(new JSeparator());
+
             // add items relating to both manually run and automatic trains.
             JPanel p1 = new JPanel();
             p1.setLayout(new FlowLayout());
@@ -342,7 +348,7 @@ public class ActivateTrainFrame {
             delayMinSpinner.setToolTipText(Bundle.getMessage("RestartTimedHint"));
             p6b.add(delayReStartSensorLabel);
             p6b.add(delayReStartSensor);
-            delayReStartSensor.setFirstItemBlank(true);
+            delayReStartSensor.setAllowNull(true);
             handleResetWhenDoneClick(null);
             initiatePane.add(p6b);
 
@@ -396,7 +402,7 @@ public class ActivateTrainFrame {
             departureMinSpinner.setValue(0);
             departureMinSpinner.setToolTipText(Bundle.getMessage("DepartureTimeMinHint"));
             p9.add(delaySensor);
-            delaySensor.setFirstItemBlank(true);
+            delaySensor.setAllowNull(true);
             p9.add(resetStartSensorBox);
             resetStartSensorBox.setToolTipText(Bundle.getMessage("ResetStartSensorHint"));
             resetStartSensorBox.setSelected(true);
@@ -425,7 +431,7 @@ public class ActivateTrainFrame {
             initiatePane.add(p5);
 
             initializeAutoRunItems();
-            initiatePane.add(new JSeparator());
+
             JPanel p7 = new JPanel();
             p7.setLayout(new FlowLayout());
             JButton cancelButton = null;
@@ -445,9 +451,17 @@ public class ActivateTrainFrame {
                 }
             });
             addNewTrainButton.setToolTipText(Bundle.getMessage("AddNewTrainButtonHint"));
-            initiatePane.add(p7);
+            
+            JPanel mainPane = new JPanel();
+            mainPane.setLayout(new BoxLayout(mainPane, BoxLayout.Y_AXIS));
+            JScrollPane scrPane = new JScrollPane(initiatePane);
+            mainPane.add(p0);
+            mainPane.add(scrPane);
+            mainPane.add(p7);
+            initiateFrame.setContentPane(mainPane);
+            
         }
-        if (_TrainsFromRoster || _TrainsFromTrains) {
+        if (_TrainsFromRoster || _TrainsFromOperations) {
             trainBoxLabel.setVisible(true);
             trainSelectBox.setVisible(true);
             trainFieldLabel.setVisible(false);
@@ -695,7 +709,7 @@ public class ActivateTrainFrame {
                 r.updateFile();
                 Roster.getDefault().writeRoster();
             }
-        } else if (_TrainsFromTrains) {
+        } else if (_TrainsFromOperations) {
             tSource = ActiveTrain.OPERATIONS;
             index = trainSelectBox.getSelectedIndex();
             if (index < 0) {
@@ -706,6 +720,11 @@ public class ActivateTrainFrame {
                 return;
             }
             trainName = (String) trainSelectBox.getSelectedItem();
+            // get lead engine for this train
+            Train train = jmri.InstanceManager.getDefault(TrainManager.class).getTrainByName(trainName);
+            if (train != null) {
+                dccAddress = train.getLeadEngineDccAddress();
+            }
         } else if (_TrainsFromUser) {
             trainName = trainNameField.getText();
             if ((trainName == null) || trainName.equals("")) {
@@ -758,13 +777,13 @@ public class ActivateTrainFrame {
         at.setDepartureTimeHr(departureTimeHours);
         at.setDepartureTimeMin(departureTimeMinutes);
         at.setRestartDelay(delayRestartMinutes);
-        at.setDelaySensor((jmri.Sensor) delaySensor.getSelectedBean());
+        at.setDelaySensor(delaySensor.getSelectedItem());
         at.setResetStartSensor(resetStartSensorBox.isSelected());
         if ((_dispatcher.isFastClockTimeGE(departureTimeHours, departureTimeMinutes) && delayedStart != ActiveTrain.SENSORDELAY)
                 || delayedStart == ActiveTrain.NODELAY) {
             at.setStarted();
         }
-        at.setRestartSensor((jmri.Sensor) delayReStartSensor.getSelectedBean());
+        at.setRestartSensor(delayReStartSensor.getSelectedItem());
         at.setResetRestartSensor(resetRestartSensorBox.isSelected());
         at.setTrainType(trainType);
         at.setTerminateWhenDone(terminateWhenDoneBox.isSelected());
@@ -868,7 +887,7 @@ public class ActivateTrainFrame {
                 };
             }
             trainSelectBox.addActionListener(trainSelectBoxListener);
-        } else if (_TrainsFromTrains) {
+        } else if (_TrainsFromOperations) {
             // initialize free trains from operations
             List<Train> trains = jmri.InstanceManager.getDefault(TrainManager.class).getTrainsByNameList();
             if (trains.size() > 0) {
@@ -1095,9 +1114,9 @@ public class ActivateTrainFrame {
                     null, JOptionPane.WARNING_MESSAGE);
         }
         _TrainsFromRoster = info.getTrainFromRoster();
-        _TrainsFromTrains = info.getTrainFromTrains();
+        _TrainsFromOperations = info.getTrainFromTrains();
         _TrainsFromUser = info.getTrainFromUser();
-        if (_TrainsFromRoster || _TrainsFromTrains) {
+        if (_TrainsFromRoster || _TrainsFromOperations) {
             initializeFreeTrainsCombo();
             if (!setComboBox(trainSelectBox, info.getTrainName())) {
                 log.warn("Train " + info.getTrainName() + " from file not in Train menu");
@@ -1121,11 +1140,11 @@ public class ActivateTrainFrame {
         //delayedStartBox.setSelected(info.getDelayedStart());
         departureHrSpinner.setValue(info.getDepartureTimeHr());
         departureMinSpinner.setValue(info.getDepartureTimeMin());
-        delaySensor.setSelectedBeanByName(info.getDelaySensorName());
+        delaySensor.setSelectedItem(info.getDelaySensor());
         resetStartSensorBox.setSelected(info.getResetStartSensor());
         setDelayModeBox(info.getDelayedRestart(), delayedReStartBox);
         delayMinSpinner.setValue(info.getRestartDelayMin());
-        delayReStartSensor.setSelectedBeanByName(info.getRestartSensorName());
+        delayReStartSensor.setSelectedItem(info.getRestartSensor());
         resetRestartSensorBox.setSelected(info.getResetRestartSensor());
         terminateWhenDoneBox.setSelected(info.getTerminateWhenDone());
         setComboBox(trainTypeBox, info.getTrainType());
@@ -1139,7 +1158,7 @@ public class ActivateTrainFrame {
         TrainInfo info = new TrainInfo();
         info.setTransitName((String) transitSelectBox.getSelectedItem());
         info.setTransitId(selectedTransit.getSystemName());
-        if (_TrainsFromRoster || _TrainsFromTrains) {
+        if (_TrainsFromRoster || _TrainsFromOperations) {
             info.setTrainName((String) trainSelectBox.getSelectedItem());
             info.setDccAddress(" ");
         } else if (_TrainsFromUser) {
@@ -1164,13 +1183,13 @@ public class ActivateTrainFrame {
             info.setDestinationBlockSeq(destinationBlockSeqList.get(index).intValue());
         }
         info.setTrainFromRoster(_TrainsFromRoster);
-        info.setTrainFromTrains(_TrainsFromTrains);
+        info.setTrainFromTrains(_TrainsFromOperations);
         info.setTrainFromUser(_TrainsFromUser);
         info.setPriority((Integer) prioritySpinner.getValue());
         info.setResetWhenDone(resetWhenDoneBox.isSelected());
         info.setReverseAtEnd(reverseAtEndBox.isSelected());
         info.setDelayedStart(delayModeFromBox(delayedStartBox));
-        info.setDelaySensorName(delaySensor.getSelectedDisplayName());
+        info.setDelaySensorName(delaySensor.getSelectedItemDisplayName());
         info.setResetStartSensor(resetStartSensorBox.isSelected());
         info.setDepartureTimeHr((Integer) departureHrSpinner.getValue());
         info.setDepartureTimeMin((Integer) departureMinSpinner.getValue());
@@ -1186,7 +1205,7 @@ public class ActivateTrainFrame {
             info.setAllocationMethod((Integer) allocateCustomSpinner.getValue());
         }
         info.setDelayedRestart(delayModeFromBox(delayedReStartBox));
-        info.setRestartSensorName(delayReStartSensor.getSelectedDisplayName());
+        info.setRestartSensorName(delayReStartSensor.getSelectedItemDisplayName());
         info.setResetRestartSensor(resetRestartSensorBox.isSelected());
         info.setRestartDelayMin((Integer) delayMinSpinner.getValue());
         info.setTerminateWhenDone(terminateWhenDoneBox.isSelected());
@@ -1318,13 +1337,13 @@ public class ActivateTrainFrame {
         initializeRampCombo();
         pa1.setLayout(new FlowLayout());
         pa1.add(speedFactorLabel);
-        speedFactorSpinner.setModel(new SpinnerNumberModel(Float.valueOf(1.0f), Float.valueOf(0.1f), Float.valueOf(1.5f), Float.valueOf(0.01f)));
+        speedFactorSpinner.setModel(new SpinnerNumberModel(Float.valueOf(1.0f), Float.valueOf(0.1f), Float.valueOf(2.0f), Float.valueOf(0.01f)));
         speedFactorSpinner.setEditor(new JSpinner.NumberEditor(speedFactorSpinner, "# %"));
         pa1.add(speedFactorSpinner);
         speedFactorSpinner.setToolTipText(Bundle.getMessage("SpeedFactorHint"));
         pa1.add(new JLabel("   "));
         pa1.add(maxSpeedLabel);
-        maxSpeedSpinner.setModel(new SpinnerNumberModel(Float.valueOf(1.0f), Float.valueOf(0.1f), Float.valueOf(1.5f), Float.valueOf(0.01f)));
+        maxSpeedSpinner.setModel(new SpinnerNumberModel(Float.valueOf(1.0f), Float.valueOf(0.1f), Float.valueOf(2.0f), Float.valueOf(0.01f)));
         maxSpeedSpinner.setEditor(new JSpinner.NumberEditor(maxSpeedSpinner, "# %"));
         pa1.add(maxSpeedSpinner);
         maxSpeedSpinner.setToolTipText(Bundle.getMessage("MaxSpeedHint"));

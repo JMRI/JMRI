@@ -2,9 +2,7 @@ package jmri.jmrix.jmriclient;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * JMRIClientSensorTest.java
@@ -44,8 +42,10 @@ public class JMRIClientSensorTest extends jmri.implementation.AbstractSensorTest
     }
 
     @After
+    @Override
     public void tearDown() {
-	t.dispose();
+	    t.dispose();
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

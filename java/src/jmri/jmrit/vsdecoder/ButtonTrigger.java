@@ -21,13 +21,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import javax.swing.AbstractButton;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ButtonTrigger extends Trigger implements PropertyChangeListener, ActionListener, MouseListener {
+public class ButtonTrigger extends Trigger implements ActionListener, MouseListener {
 
     enum ButtonAction {
     }

@@ -12,8 +12,6 @@
         <Or>
            <Bug pattern="IS2_INCONSISTENT_SYNC" />
            <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
-           <Bug pattern="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD" />
-           <Bug pattern="WMI_WRONG_MAP_ITERATOR" />
         </Or>
      </Match>
 
@@ -23,16 +21,11 @@
         <Or>
            <Bug pattern="BC_UNCONFIRMED_CAST" />
            <Bug pattern="BC_UNCONFIRMED_CAST_OF_RETURN_VALUE" />
-           <Bug pattern="DB_DUPLICATE_SWITCH_CLAUSES" />
            <Bug pattern="IS2_INCONSISTENT_SYNC" />
            <Bug pattern="LI_LAZY_INIT_STATIC" />
            <Bug pattern="NO_NOTIFY_NOT_NOTIFYALL" />
-           <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
-           <Bug pattern="PZLA_PREFER_ZERO_LENGTH_ARRAYS" />
            <Bug pattern="RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE" />
            <Bug pattern="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD" />
-           <Bug pattern="UCF_USELESS_CONTROL_FLOW" />
-           <Bug pattern="UC_USELESS_CONDITION" />
            <Bug pattern="UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR" />
            <Bug pattern="UW_UNCOND_WAIT" />
            <Bug pattern="WA_NOT_IN_LOOP" />

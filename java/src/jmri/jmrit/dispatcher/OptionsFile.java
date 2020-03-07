@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
-import jmri.Scale;
 import jmri.ScaleManager;
 import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
@@ -45,6 +44,8 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
     // operational variables
     protected DispatcherFrame dispatcher = null;
     private static String defaultFileName = FileUtil.getUserFilesPath() + "dispatcheroptions.xml";
+    public static final int SIGNALHEAD = 0x00;
+    public static final int SIGNALMAST = 0x01;
 
     public static void setDefaultFileName(String testLocation) {
         defaultFileName = testLocation;
@@ -92,9 +93,9 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
                         }
                     }
                     if (options.getAttribute("usesignaltype") != null) {
-                        dispatcher.setSignalType(0x00);
+                        dispatcher.setSignalType(SIGNALHEAD);
                         if (options.getAttribute("usesignaltype").getValue().equals("signalmast")) {
-                            dispatcher.setSignalType(0x01);
+                            dispatcher.setSignalType(SIGNALMAST);
                         }
                     }
                     if (options.getAttribute("useconnectivity") != null) {
@@ -202,6 +203,11 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
                     if (options.getAttribute("stoppingspeedname") != null) {
                         dispatcher.setStoppingSpeedName((options.getAttribute("stoppingspeedname")).getValue());
                     }
+                    log.debug("  Options: {}, Detection={}, AutoAllocate={}, AutoTurnouts={}", 
+                            (dispatcher.getSignalType()==SIGNALHEAD?"SignalHeads/SSL":"SignalMasts"),
+                            (dispatcher.getHasOccupancyDetection()?"yes":"no"),
+                            (dispatcher.getAutoAllocate()?"yes":"no"),
+                            (dispatcher.getAutoTurnouts()?"yes":"no"));
                 }
             }
         } else {
@@ -252,7 +258,7 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
         options.setAttribute("usescalemeters", "" + (dispatcher.getUseScaleMeters() ? "yes" : "no"));
         options.setAttribute("userosterentryinblock", "" + (dispatcher.getRosterEntryInBlock() ? "yes" : "no"));
         options.setAttribute("stoppingspeedname", dispatcher.getStoppingSpeedName());
-        if (dispatcher.getSignalType() == 0x00) {
+        if (dispatcher.getSignalType() == SIGNALHEAD) {
             options.setAttribute("usesignaltype", "signalhead");
         } else {
             options.setAttribute("usesignaltype", "signalmast");
@@ -275,17 +281,6 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
             log.error("IO Exception {}", ioe.getMessage());
             throw (ioe);
         }
-    }
-
-    /**
-     *
-     * @return the managed instance
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static OptionsFile instance() {
-        return InstanceManager.getDefault(OptionsFile.class);
     }
 
     private final static Logger log = LoggerFactory.getLogger(OptionsFile.class);

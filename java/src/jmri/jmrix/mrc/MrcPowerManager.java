@@ -2,7 +2,6 @@ package jmri.jmrix.mrc;
 
 import java.util.Date;
 import jmri.JmriException;
-import jmri.PowerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,7 +19,7 @@ import org.slf4j.LoggerFactory;
  */
 public class MrcPowerManager
         extends jmri.managers.AbstractPowerManager
-        implements PowerManager, MrcTrafficListener {
+        implements MrcTrafficListener {
 
     public MrcPowerManager(MrcSystemConnectionMemo memo) {
         super(memo);

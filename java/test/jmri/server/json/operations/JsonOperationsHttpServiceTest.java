@@ -2,6 +2,7 @@ package jmri.server.json.operations;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -28,6 +29,7 @@ import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpServiceTestBase;
+import jmri.server.json.JsonRequest;
 import jmri.server.json.consist.JsonConsist;
 import jmri.server.json.reporter.JsonReporter;
 import jmri.util.JUnitAppender;
@@ -40,7 +42,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
     public void testCar() throws JsonException {
         // try a non-existent car
         try {
-            service.doGet(JsonOperations.CAR, "", NullNode.getInstance(), locale, 0);
+            service.doGet(JsonOperations.CAR, "", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 0));
             fail("Expected exception not thrown");
         } catch (JsonException ex) {
             assertEquals(404, ex.getCode());
@@ -48,19 +50,20 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         // get a known car
         CarManager manager = InstanceManager.getDefault(CarManager.class);
         Car car = manager.getByRoadAndNumber("CP", "C10099");
-        JsonNode result = service.doGet(JsonOperations.CAR, car.getId(), NullNode.getInstance(), locale, 42);
+        JsonNode result = service.doGet(JsonOperations.CAR, car.getId(), NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 42));
         validate(result);
         assertEquals(JsonOperations.CAR, result.path(JSON.TYPE).asText());
         assertTrue(result.path(JSON.METHOD).isMissingNode());
         assertEquals(42, result.path(JSON.ID).asInt());
         JsonNode data = result.path(JSON.DATA);
-        assertEquals("Number of properties in Car", 27, data.size());
+        assertEquals("Number of properties in Car", 28, data.size());
         assertEquals(car.getId(), data.path(JSON.NAME).asText());
         assertEquals(car.getRoadName(), data.path(JSON.ROAD).asText());
         assertEquals(car.getNumber(), data.path(JSON.NUMBER).asText());
         assertTrue(data.path(JSON.RFID).isValueNode());
         assertEquals(car.getRfid(), data.path(JSON.RFID).asText());
         assertEquals(car.getTypeName(), data.path(JsonOperations.CAR_TYPE).asText());
+        assertTrue(data.path(JsonOperations.CAR_SUB_TYPE).isNull());
         assertEquals(car.getLengthInteger(), data.path(JSON.LENGTH).asInt());
         assertEquals(Double.parseDouble(car.getWeight()), data.path(JsonOperations.WEIGHT).asDouble(), 0.0);
         assertEquals(Double.parseDouble(car.getWeightTons()), data.path(JsonOperations.WEIGHT_TONS).asDouble(), 0.0);
@@ -99,7 +102,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         // add (PUT) a car
         data = mapper.createObjectNode().put(JSON.ROAD, "MEC").put(JSON.NUMBER, "31995");
         validateData(JsonOperations.CAR, data, false);
-        result = service.doPut(JsonOperations.CAR, "", data, locale, 42);
+        result = service.doPut(JsonOperations.CAR, "", data, new JsonRequest(locale, JSON.V5, 42));
         car = manager.getByRoadAndNumber("MEC", "31995");
         assertNotNull(car);
         validate(result);
@@ -107,13 +110,14 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertTrue(result.path(JSON.METHOD).isMissingNode());
         assertEquals(42, result.path(JSON.ID).asInt());
         data = result.path(JSON.DATA);
-        assertEquals("Number of properties in Car", 27, data.size());
+        assertEquals("Number of properties in Car", 28, data.size());
         assertEquals(car.getId(), data.path(JSON.NAME).asText());
         assertEquals(car.getRoadName(), data.path(JSON.ROAD).asText());
         assertEquals(car.getNumber(), data.path(JSON.NUMBER).asText());
         assertTrue(data.path(JSON.RFID).isValueNode());
         assertEquals(car.getRfid(), data.path(JSON.RFID).asText());
         assertEquals(car.getTypeName(), data.path(JsonOperations.CAR_TYPE).asText());
+        assertTrue(data.path(JsonOperations.CAR_SUB_TYPE).isNull());
         assertEquals(car.getLengthInteger(), data.path(JSON.LENGTH).asInt());
         assertEquals(Double.parseDouble(car.getWeight()), data.path(JsonOperations.WEIGHT).asDouble(), 0.0);
         assertEquals(Double.parseDouble(car.getWeightTons()), data.path(JsonOperations.WEIGHT_TONS).asDouble(), 0.0);
@@ -153,19 +157,19 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         // delete a car
         data = mapper.createObjectNode().put(JSON.NAME, car.getId());
         validateData(JsonOperations.CAR, data, false);
-        service.doDelete(JsonOperations.CAR, car.getId(), data, locale, 0);
+        service.doDelete(JsonOperations.CAR, car.getId(), data, new JsonRequest(locale, JSON.V5, 0));
         assertNull(manager.getById(car.getId()));
         // (re)create a car
         // add (PUT) a car
         data = mapper.createObjectNode().put(JSON.ROAD, "MEC").put(JSON.NUMBER, "31995");
         validateData(JsonOperations.CAR, data, false);
-        result = service.doPut(JsonOperations.CAR, car.getId(), data, locale, 42);
+        result = service.doPut(JsonOperations.CAR, car.getId(), data, new JsonRequest(locale, JSON.V5, 42));
         car = manager.getByRoadAndNumber("MEC", "31995");
         assertNotNull(car);
         validate(result);
         // add (PUT) the same car again
         try {
-            service.doPut(JsonOperations.CAR, car.getId(), data, locale, 42);
+            service.doPut(JsonOperations.CAR, car.getId(), data, new JsonRequest(locale, JSON.V5, 42));
             fail("Expected exception not thrown");
         } catch (JsonException ex) {
             assertEquals(409, ex.getCode());
@@ -187,9 +191,10 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
                 .put(JsonOperations.OUT_OF_SERVICE, true)
                 .put(JsonOperations.BUILT, "13-1234")
                 .put(JsonOperations.WEIGHT, 1.5)
-                .put(JsonOperations.WEIGHT_TONS, 160);
+                .put(JsonOperations.WEIGHT_TONS, 160)
+                .put(JsonOperations.CAR_TYPE, "Combine-MOW");
         validateData(JsonOperations.CAR, data, false);
-        result = service.doPost(JsonOperations.CAR, id, data, locale, 42);
+        result = service.doPost(JsonOperations.CAR, id, data, new JsonRequest(locale, JSON.V5, 42));
         car = manager.getById(id); // id invalidated by changing name and number
         assertNull(car);
         car = manager.getByRoadAndNumber("BM", "216"); // get by name and number
@@ -199,14 +204,16 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertTrue(result.path(JSON.METHOD).isMissingNode());
         assertEquals(42, result.path(JSON.ID).asInt());
         data = result.path(JSON.DATA);
-        assertEquals("Number of properties in Car", 28, data.size()); // rename not always present
+        assertEquals("Number of properties in Car", 29, data.size()); // rename not always present
         // TODO: verify against car and known values
         assertEquals(car.getId(), data.path(JSON.NAME).asText());
         assertEquals(car.getRoadName(), data.path(JSON.ROAD).asText());
         assertEquals(car.getNumber(), data.path(JSON.NUMBER).asText());
         assertTrue(data.path(JSON.RFID).isValueNode());
         assertEquals(car.getRfid(), data.path(JSON.RFID).asText());
-        assertEquals(car.getTypeName(), data.path(JsonOperations.CAR_TYPE).asText());
+        assertNotEquals(car.getTypeName(), data.path(JsonOperations.CAR_TYPE).asText());
+        assertEquals("Combine", data.path(JsonOperations.CAR_TYPE).asText());
+        assertEquals("MOW", data.path(JsonOperations.CAR_SUB_TYPE).asText());
         assertEquals(car.getLengthInteger(), data.path(JSON.LENGTH).asInt());
         assertEquals(Double.parseDouble(car.getWeight()), data.path(JsonOperations.WEIGHT).asDouble(), 0.0);
         assertEquals(Double.parseDouble(car.getWeightTons()), data.path(JsonOperations.WEIGHT_TONS).asDouble(), 0.0);
@@ -248,7 +255,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
     public void testEngine() throws JsonException {
         // try a non-existent engine
         try {
-            service.doGet(JsonOperations.ENGINE, "", NullNode.getInstance(), locale, 0);
+            service.doGet(JsonOperations.ENGINE, "", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 0));
             fail("Expected exception not thrown");
         } catch (JsonException ex) {
             assertEquals(404, ex.getCode());
@@ -256,19 +263,20 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         // get a known engine
         EngineManager manager = InstanceManager.getDefault(EngineManager.class);
         Engine engine = manager.getByRoadAndNumber("PC", "5524");
-        JsonNode result = service.doGet(JsonOperations.ENGINE, engine.getId(), NullNode.getInstance(), locale, 42);
+        JsonNode result = service.doGet(JsonOperations.ENGINE, engine.getId(), NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 42));
         validate(result);
         assertEquals(JsonOperations.ENGINE, result.path(JSON.TYPE).asText());
         assertTrue(result.path(JSON.METHOD).isMissingNode());
         assertEquals(42, result.path(JSON.ID).asInt());
         JsonNode data = result.path(JSON.DATA);
-        assertEquals("Number of properties in Engine", 17, data.size());
+        assertEquals("Number of properties in Engine", 18, data.size());
         assertEquals(engine.getId(), data.path(JSON.NAME).asText());
         assertEquals(engine.getRoadName(), data.path(JSON.ROAD).asText());
         assertEquals(engine.getNumber(), data.path(JSON.NUMBER).asText());
         assertTrue(data.path(JSON.RFID).isValueNode());
         assertEquals(engine.getRfid(), data.path(JSON.RFID).asText());
         assertEquals(engine.getTypeName(), data.path(JsonOperations.CAR_TYPE).asText());
+        assertTrue(data.path(JsonOperations.CAR_SUB_TYPE).isNull());
         assertEquals(engine.getLengthInteger(), data.path(JSON.LENGTH).asInt());
         assertEquals(Double.parseDouble(engine.getWeight()), data.path(JsonOperations.WEIGHT).asDouble(), 0.0);
         assertEquals(Double.parseDouble(engine.getWeightTons()), data.path(JsonOperations.WEIGHT_TONS).asDouble(), 0.0);
@@ -288,7 +296,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         // add (PUT) an engine
         data = mapper.createObjectNode().put(JSON.ROAD, "MEC").put(JSON.NUMBER, "3402");
         validateData(JsonOperations.ENGINE, data, false);
-        result = service.doPut(JsonOperations.ENGINE, "", data, locale, 42);
+        result = service.doPut(JsonOperations.ENGINE, "", data, new JsonRequest(locale, JSON.V5, 42));
         engine = manager.getByRoadAndNumber("MEC", "3402");
         assertNotNull(engine);
         validate(result);
@@ -296,13 +304,14 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertTrue(result.path(JSON.METHOD).isMissingNode());
         assertEquals(42, result.path(JSON.ID).asInt());
         data = result.path(JSON.DATA);
-        assertEquals("Number of properties in Engine", 17, data.size());
+        assertEquals("Number of properties in Engine", 18, data.size());
         assertEquals(engine.getId(), data.path(JSON.NAME).asText());
         assertEquals(engine.getRoadName(), data.path(JSON.ROAD).asText());
         assertEquals(engine.getNumber(), data.path(JSON.NUMBER).asText());
         assertTrue(data.path(JSON.RFID).isValueNode());
         assertEquals(engine.getRfid(), data.path(JSON.RFID).asText());
         assertEquals(engine.getTypeName(), data.path(JsonOperations.CAR_TYPE).asText());
+        assertTrue(data.path(JsonOperations.CAR_SUB_TYPE).isNull());
         assertEquals(engine.getLengthInteger(), data.path(JSON.LENGTH).asInt());
         assertEquals(Double.parseDouble(engine.getWeight()), data.path(JsonOperations.WEIGHT).asDouble(), 0.0);
         try {
@@ -326,19 +335,19 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         // delete an engine
         data = mapper.createObjectNode().put(JSON.NAME, engine.getId());
         validateData(JsonOperations.ENGINE, data, false);
-        service.doDelete(JsonOperations.ENGINE, engine.getId(), data, locale, 0);
+        service.doDelete(JsonOperations.ENGINE, engine.getId(), data, new JsonRequest(locale, JSON.V5, 0));
         assertNull(manager.getById(engine.getId()));
         // (re)create an engine
         // add (PUT) an engine
         data = mapper.createObjectNode().put(JSON.ROAD, "MEC").put(JSON.NUMBER, "3402");
         validateData(JsonOperations.ENGINE, data, false);
-        result = service.doPut(JsonOperations.ENGINE, engine.getId(), data, locale, 42);
+        result = service.doPut(JsonOperations.ENGINE, engine.getId(), data, new JsonRequest(locale, JSON.V5, 42));
         engine = manager.getByRoadAndNumber("MEC", "3402");
         assertNotNull(engine);
         validate(result);
         // add (PUT) the same engine again
         try {
-            service.doPut(JsonOperations.ENGINE, engine.getId(), data, locale, 42);
+            service.doPut(JsonOperations.ENGINE, engine.getId(), data, new JsonRequest(locale, JSON.V5, 42));
             fail("Expected exception not thrown");
         } catch (JsonException ex) {
             assertEquals(409, ex.getCode());
@@ -356,9 +365,10 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
                 .put(JsonOperations.OUT_OF_SERVICE, true)
                 .put(JsonOperations.BUILT, "10-1978")
                 .put(JsonOperations.WEIGHT, 5.6)
-                .put(JsonOperations.WEIGHT_TONS, 242);
+                .put(JsonOperations.WEIGHT_TONS, 242)
+                .put(JsonOperations.CAR_TYPE, "Diesel-Rebuild");
         validateData(JsonOperations.ENGINE, data, false);
-        result = service.doPost(JsonOperations.ENGINE, id, data, locale, 42);
+        result = service.doPost(JsonOperations.ENGINE, id, data, new JsonRequest(locale, JSON.V5, 42));
         engine = manager.getById(id); // id invalidated by changing name and number
         assertNull(engine);
         engine = manager.getByRoadAndNumber("BM", "216"); // get by name and number
@@ -368,13 +378,15 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertTrue(result.path(JSON.METHOD).isMissingNode());
         assertEquals(42, result.path(JSON.ID).asInt());
         data = result.path(JSON.DATA);
-        assertEquals("Number of properties in Engine", 18, data.size()); // rename not always present
+        assertEquals("Number of properties in Engine", 19, data.size()); // rename not always present
         assertEquals("BM216", data.path(JSON.NAME).asText());
         assertEquals("BM", data.path(JSON.ROAD).asText());
         assertEquals("216", data.path(JSON.NUMBER).asText());
         assertTrue(data.path(JSON.RFID).isValueNode());
         assertEquals("1234567890AB", data.path(JSON.RFID).asText());
-        assertEquals(engine.getTypeName(), data.path(JsonOperations.CAR_TYPE).asText());
+        assertNotEquals(engine.getTypeName(), data.path(JsonOperations.CAR_TYPE).asText());
+        assertEquals("Diesel", data.path(JsonOperations.CAR_TYPE).asText());
+        assertEquals("Rebuild", data.path(JsonOperations.CAR_SUB_TYPE).asText());
         assertEquals(0, data.path(JSON.LENGTH).asInt());
         assertEquals(Double.parseDouble(engine.getWeight()), data.path(JsonOperations.WEIGHT).asDouble(), 0.0);
         assertEquals(Double.parseDouble(engine.getWeightTons()), data.path(JsonOperations.WEIGHT_TONS).asDouble(), 0.0);
@@ -397,7 +409,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
     public void testLocation() throws JsonException {
         // try a non-existent location
         try {
-            service.doGet(JsonOperations.LOCATION, "", NullNode.getInstance(), locale, 0);
+            service.doGet(JsonOperations.LOCATION, "", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 0));
             fail("Expected exception not thrown");
         } catch (JsonException ex) {
             assertEquals(404, ex.getCode());
@@ -406,7 +418,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         // get a known location
         LocationManager manager = InstanceManager.getDefault(LocationManager.class);
         Location location = manager.getLocationById("20");
-        JsonNode result = service.doGet(JsonOperations.LOCATION, location.getId(), NullNode.getInstance(), locale, 42);
+        JsonNode result = service.doGet(JsonOperations.LOCATION, location.getId(), NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 42));
         validate(result);
         assertEquals(JsonOperations.LOCATION, result.path(JSON.TYPE).asText());
         assertTrue(result.path(JSON.METHOD).isMissingNode());
@@ -434,7 +446,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         // add (PUT) a location
         data = mapper.createObjectNode().put(JSON.USERNAME, "Test Site");
         validateData(JsonOperations.LOCATION, data, false);
-        result = service.doPut(JsonOperations.LOCATION, "42", data, locale, 42);
+        result = service.doPut(JsonOperations.LOCATION, "42", data, new JsonRequest(locale, JSON.V5, 42));
         location = manager.getLocationById("42");
         assertNull(location);
         location = manager.getLocationByName("Test Site");
@@ -450,19 +462,19 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         // delete a location
         data = mapper.createObjectNode().put(JSON.NAME, location.getId());
         validateData(JsonOperations.LOCATION, data, false);
-        service.doDelete(JsonOperations.LOCATION, location.getId(), data, locale, 0);
+        service.doDelete(JsonOperations.LOCATION, location.getId(), data, new JsonRequest(locale, JSON.V5, 0));
         assertNull(manager.getLocationById(location.getId()));
         // (re)create a location
         // add (PUT) a location
         data = mapper.createObjectNode().put(JSON.USERNAME, "Test Site");
         validateData(JsonOperations.LOCATION, data, false);
-        result = service.doPut(JsonOperations.LOCATION, "42", data, locale, 42);
+        result = service.doPut(JsonOperations.LOCATION, "42", data, new JsonRequest(locale, JSON.V5, 42));
         location = manager.getLocationByName("Test Site");
         assertNotNull(location);
         validate(result);
         // add (PUT) the same location again with same name (id)
         try {
-            service.doPut(JsonOperations.LOCATION, location.getId(), data, locale, 42);
+            service.doPut(JsonOperations.LOCATION, location.getId(), data, new JsonRequest(locale, JSON.V5, 42));
             fail("Expected exception not thrown");
         } catch (JsonException ex) {
             assertEquals(409, ex.getCode());
@@ -471,7 +483,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         }
         // add (PUT) the same location again with same user name, different name (id)
         try {
-            service.doPut(JsonOperations.LOCATION, "42", data, locale, 42);
+            service.doPut(JsonOperations.LOCATION, "42", data, new JsonRequest(locale, JSON.V5, 42));
             fail("Expected exception not thrown");
         } catch (JsonException ex) {
             assertEquals(409, ex.getCode());
@@ -487,7 +499,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
                 .put(JsonReporter.REPORTER, InstanceManager.getDefault(ReporterManager.class).provide("IR1").getSystemName());
         // TODO: put change to types?
         validateData(JsonOperations.LOCATION, data, false);
-        result = service.doPost(JsonOperations.LOCATION, id, data, locale, 42);
+        result = service.doPost(JsonOperations.LOCATION, id, data, new JsonRequest(locale, JSON.V5, 42));
         location = manager.getLocationById(id);
         assertNotNull(location);
         validate(result);
@@ -510,7 +522,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
     public void testTrack() throws JsonException {
         // try not including a location property
         try {
-            service.doGet(JsonOperations.TRACK, "", NullNode.getInstance(), locale, 0);
+            service.doGet(JsonOperations.TRACK, "", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 0));
             fail("Expected exception not thrown");
         } catch (JsonException ex) {
             assertEquals(400, ex.getCode());
@@ -519,7 +531,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         // try a non-existent track in existing location
         ObjectNode message = mapper.createObjectNode().put(JsonOperations.LOCATION, "20");
         try {
-            service.doGet(JsonOperations.TRACK, "", message, locale, 0);
+            service.doGet(JsonOperations.TRACK, "", message, new JsonRequest(locale, JSON.V5, 0));
             fail("Expected exception not thrown");
         } catch (JsonException ex) {
             assertEquals(404, ex.getCode());
@@ -528,7 +540,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         // try a non-existent track in non-existent location
         message = mapper.createObjectNode().put(JsonOperations.LOCATION, "");
         try {
-            service.doGet(JsonOperations.TRACK, "", message, locale, 0);
+            service.doGet(JsonOperations.TRACK, "", message, new JsonRequest(locale, JSON.V5, 0));
             fail("Expected exception not thrown");
         } catch (JsonException ex) {
             assertEquals(404, ex.getCode());
@@ -541,7 +553,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         Track track = location.getTrackById("20s1");
         assertNotNull(track);
         message = mapper.createObjectNode().put(JsonOperations.LOCATION, "20");
-        JsonNode result = service.doGet(JsonOperations.TRACK, track.getId(), message, locale, 42);
+        JsonNode result = service.doGet(JsonOperations.TRACK, track.getId(), message, new JsonRequest(locale, JSON.V5, 42));
         validate(result);
         assertEquals(JsonOperations.TRACK, result.path(JSON.TYPE).asText());
         assertTrue(result.path(JSON.METHOD).isMissingNode());
@@ -569,7 +581,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
                 .put(JSON.TYPE, "Siding")
                 .put(JsonOperations.LOCATION, "20");
         validateData(JsonOperations.TRACK, data, false);
-        result = service.doPut(JsonOperations.TRACK, "42", data, locale, 42);
+        result = service.doPut(JsonOperations.TRACK, "42", data, new JsonRequest(locale, JSON.V5, 42));
         track = location.getTrackById("42");
         assertNull(track);
         track = location.getTrackByName("Test Site", "Siding");
@@ -587,7 +599,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
                 .put(JSON.NAME, track.getId())
                 .put(JsonOperations.LOCATION, location.getId());
         validateData(JsonOperations.TRACK, data, false);
-        service.doDelete(JsonOperations.TRACK, track.getId(), data, locale, 0);
+        service.doDelete(JsonOperations.TRACK, track.getId(), data, new JsonRequest(locale, JSON.V5, 0));
         assertNull(location.getTrackById(track.getId()));
         // (re)create a location
         // add (PUT) a location
@@ -596,13 +608,13 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
                 .put(JsonOperations.LOCATION, "20")
                 .put(JSON.TYPE, "Siding");
         validateData(JsonOperations.TRACK, data, false);
-        result = service.doPut(JsonOperations.TRACK, "42", data, locale, 42);
+        result = service.doPut(JsonOperations.TRACK, "42", data, new JsonRequest(locale, JSON.V5, 42));
         track = location.getTrackByName("Test Site", "Siding");
         assertNotNull(track);
         validate(result);
         // add (PUT) the same track again with same name (id)
         try {
-            service.doPut(JsonOperations.TRACK, track.getId(), data, locale, 42);
+            service.doPut(JsonOperations.TRACK, track.getId(), data, new JsonRequest(locale, JSON.V5, 42));
             fail("Expected exception not thrown");
         } catch (JsonException ex) {
             assertEquals(409, ex.getCode());
@@ -611,7 +623,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         }
         // add (PUT) the same track again with same user name, different name (id)
         try {
-            service.doPut(JsonOperations.TRACK, "42", data, locale, 42);
+            service.doPut(JsonOperations.TRACK, "42", data, new JsonRequest(locale, JSON.V5, 42));
             fail("Expected exception not thrown");
         } catch (JsonException ex) {
             assertEquals(409, ex.getCode());
@@ -629,7 +641,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
                 .put(JsonReporter.REPORTER, InstanceManager.getDefault(ReporterManager.class).provide("IR1").getSystemName());
         // TODO: put change to types?
         validateData(JsonOperations.TRACK, data, false);
-        result = service.doPost(JsonOperations.TRACK, id, data, locale, 42);
+        result = service.doPost(JsonOperations.TRACK, id, data, new JsonRequest(locale, JSON.V5, 42));
         track = location.getTrackById(id);
         assertNotNull(location);
         validate(result);
@@ -649,32 +661,32 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
 
     @Test
     public void testDoGetListCarEngineRollingStock() throws JsonException {
-        JsonNode result = service.doGetList(JsonOperations.CAR, NullNode.getInstance(), locale, 0);
+        JsonNode result = service.doGetList(JsonOperations.CAR, NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 0));
         validate(result);
         assertEquals("9 cars", 9, result.size());
-        result = service.doGetList(JsonOperations.ENGINE, NullNode.getInstance(), locale, 0);
+        result = service.doGetList(JsonOperations.ENGINE, NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 0));
         validate(result);
         assertEquals("4 engines", 4, result.size());
-        result = service.doGetList(JsonOperations.ROLLING_STOCK, NullNode.getInstance(), locale, 0);
+        result = service.doGetList(JsonOperations.ROLLING_STOCK, NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 0));
         validate(result);
         assertEquals("13 rolling stock", 13, result.size());
     }
 
     @Test
     public void testCarType() throws JsonException {
-        JsonNode result = service.doGetList(JsonOperations.CAR_TYPE, NullNode.getInstance(), locale, 0);
+        JsonNode result = service.doGetList(JsonOperations.CAR_TYPE, NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 0));
         validate(result);
         assertTrue(result.isArray());
         assertEquals(3, result.size());
-        result = service.doPut(JsonOperations.CAR_TYPE, "test1", NullNode.getInstance(), locale, 42);
+        result = service.doPut(JsonOperations.CAR_TYPE, "test1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 42));
         validate(result);
         assertEquals(JsonOperations.CAR_TYPE, result.path(JSON.TYPE).asText());
         assertEquals("test1", result.path(JSON.DATA).path(JSON.NAME).asText());
         assertTrue(result.path(JSON.DATA).path(JsonOperations.CARS).isArray());
         assertTrue(result.path(JSON.DATA).path(JsonOperations.LOCATIONS).isArray());
-        JsonNode result2 = service.doGet(JsonOperations.CAR_TYPE, "test1", NullNode.getInstance(), locale, 42);
+        JsonNode result2 = service.doGet(JsonOperations.CAR_TYPE, "test1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 42));
         assertEquals(result, result2);
-        result = service.doGetList(JsonOperations.CAR_TYPE, NullNode.getInstance(), locale, 0);
+        result = service.doGetList(JsonOperations.CAR_TYPE, NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 0));
         validate(result);
         assertTrue(result.isArray());
         assertEquals(4, result.size());
@@ -682,8 +694,8 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertEquals("test1", result.path(0).path(JSON.DATA).path(JSON.NAME).asText());
         assertTrue(result.path(0).path(JSON.DATA).path(JsonOperations.CARS).isArray());
         assertTrue(result.path(0).path(JSON.DATA).path(JsonOperations.LOCATIONS).isArray());
-        service.doDelete(JsonOperations.CAR_TYPE, "test1", NullNode.getInstance(), locale, 42);
-        result = service.doGetList(JsonOperations.CAR_TYPE, NullNode.getInstance(), locale, 0);
+        service.doDelete(JsonOperations.CAR_TYPE, "test1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 42));
+        result = service.doGetList(JsonOperations.CAR_TYPE, NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 0));
         validate(result);
         assertTrue(result.isArray());
         assertEquals(3, result.size());
@@ -691,20 +703,20 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
 
     @Test
     public void testKernel() throws JsonException {
-        JsonNode result = service.doGetList(JsonOperations.KERNEL, NullNode.getInstance(), locale, 0);
+        JsonNode result = service.doGetList(JsonOperations.KERNEL, NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 0));
         validate(result);
         assertTrue(result.isArray());
         assertEquals(0, result.size());
-        result = service.doPut(JsonOperations.KERNEL, "test1", NullNode.getInstance(), locale, 42);
+        result = service.doPut(JsonOperations.KERNEL, "test1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 42));
         validate(result);
         assertEquals(JsonOperations.KERNEL, result.path(JSON.TYPE).asText());
         assertEquals("test1", result.path(JSON.DATA).path(JSON.NAME).asText());
         assertEquals(0, result.path(JSON.DATA).path(JSON.LENGTH).asInt());
         assertEquals(0, result.path(JSON.DATA).path(JsonOperations.WEIGHT).asInt());
         assertTrue(result.path(JSON.DATA).path(JsonOperations.CARS).isArray());
-        JsonNode result2 = service.doGet(JsonOperations.KERNEL, "test1", NullNode.getInstance(), locale, 42);
+        JsonNode result2 = service.doGet(JsonOperations.KERNEL, "test1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 42));
         assertEquals(result, result2);
-        result = service.doGetList(JsonOperations.KERNEL, NullNode.getInstance(), locale, 0);
+        result = service.doGetList(JsonOperations.KERNEL, NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 0));
         validate(result);
         assertTrue(result.isArray());
         assertEquals(1, result.size());
@@ -713,8 +725,8 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertEquals(0, result.path(0).path(JSON.DATA).path(JSON.LENGTH).asInt());
         assertEquals(0, result.path(0).path(JSON.DATA).path(JsonOperations.WEIGHT).asInt());
         assertTrue(result.path(0).path(JSON.DATA).path(JsonOperations.CARS).isArray());
-        service.doDelete(JsonOperations.KERNEL, "test1", NullNode.getInstance(), locale, 42);
-        result = service.doGetList(JsonOperations.KERNEL, NullNode.getInstance(), locale, 0);
+        service.doDelete(JsonOperations.KERNEL, "test1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 42));
+        result = service.doGetList(JsonOperations.KERNEL, NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 0));
         validate(result);
         assertTrue(result.isArray());
         assertEquals(0, result.size());
@@ -732,7 +744,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         c1.setKernel(k1);
         String deleteToken = null;
         try {
-            service.doDelete(JsonOperations.KERNEL, "test1", NullNode.getInstance(), locale, 42);
+            service.doDelete(JsonOperations.KERNEL, "test1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 42));
             fail("Expected exception not thrown");
         } catch (JsonException ex) {
             assertEquals(409, ex.getCode());
@@ -744,11 +756,12 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         }
         assertNotNull(deleteToken);
         ObjectNode data = service.getObjectMapper().createObjectNode().put(JSON.FORCE_DELETE, deleteToken);
-        service.doDelete(JsonOperations.KERNEL, "test1", data, locale, 42);
+        service.doDelete(JsonOperations.KERNEL, "test1", data, new JsonRequest(locale, JSON.V5, 42));
         assertNull(c1.getKernel());
     }
 
     @Before
+    @Override
     public void setUp() throws Exception {
         super.setUp();
         JUnitUtil.initIdTagManager();

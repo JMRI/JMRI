@@ -21,7 +21,7 @@ public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
 
     @Override
     public String getSystemName(int i) {
-        return "MSX010203040506070" + i;
+        return "MSx010203040506070" + i;
     }
 
     @Test
@@ -30,12 +30,13 @@ public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     }
 
     @Test
+    @Override
     public void testProvideName() {
         // create
         Sensor t = l.provide(getSystemName(getNumToTest1()));
         // check
-        Assert.assertTrue("real object returned ", t != null);
-        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+        Assert.assertNotNull("real object returned ", t);
+        Assert.assertEquals("system name correct ", t, l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
     @Override
@@ -45,8 +46,8 @@ public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         // olcb addresses are hex values requirng 16 digits.
         Sensor t = l.provideSensor(getSystemName(getNumToTest1()));
         // check
-        Assert.assertTrue("real object returned ", t != null);
-        Assert.assertTrue("system name correct " + t.getSystemName(), t == l.getBySystemName(getSystemName(getNumToTest1())));
+        Assert.assertNotNull("real object returned ", t);
+        Assert.assertEquals("system name correct " + t.getSystemName(), t, l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
     @Override
@@ -107,6 +108,7 @@ public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         memo = new OlcbSystemConnectionMemo(); // this self-registers as 'M'
         memo.setProtocol(jmri.jmrix.can.ConfigurationManager.OPENLCB);
         memo.setInterface(new OlcbInterface(nodeID, connection) {
+            @Override
             public Connection getOutputConnection() {
                 return connection;
             }
@@ -125,7 +127,9 @@ public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         memo = null;
         connection = null;
         nodeID = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
 }

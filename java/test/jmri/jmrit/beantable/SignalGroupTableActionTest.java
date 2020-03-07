@@ -2,12 +2,10 @@ package jmri.jmrit.beantable;
 
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JTextField;
 import jmri.InstanceManager;
 import jmri.SignalGroup;
 import jmri.SignalHead;
-import jmri.SignalMast;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.*;
@@ -19,7 +17,7 @@ import org.netbeans.jemmy.operators.*;
  *
  * @author	Egbert Broerse Copyright 2017
  */
-public class SignalGroupTableActionTest extends AbstractTableActionBase {
+public class SignalGroupTableActionTest extends AbstractTableActionBase<SignalGroup> {
 
     @Test
     public void testCreate() {
@@ -73,7 +71,7 @@ public class SignalGroupTableActionTest extends AbstractTableActionBase {
         Assert.assertEquals("user name", "TestGroup", _sGroupTable._userName.getText());
         _sGroupTable._systemName.setText("IF1");
         Assert.assertEquals("system name", "IF1", _sGroupTable._systemName.getText());
-        _sGroupTable.mainSignalComboBox.setSelectedBeanByName("VM1");
+        _sGroupTable.mainSignalComboBox.setSelectedItemByName("VM1");
         SignalGroup g = _sGroupTable.checkNamesOK();
         _sGroupTable.setValidSignalMastAspects();
         // add the head to the group:
@@ -88,6 +86,7 @@ public class SignalGroupTableActionTest extends AbstractTableActionBase {
         _sGroupTable.cancelPressed(null); // calling updatePressed() complains about duplicate group name
 
         // clean up
+        (new JFrameOperator(af)).requestClose();
         JUnitUtil.dispose(af);
         g.dispose();
         _sGroupTable.dispose();
@@ -101,6 +100,7 @@ public class SignalGroupTableActionTest extends AbstractTableActionBase {
     }
 
     @Test
+    @Override
     public void testAddThroughDialog() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assume.assumeTrue(a.includeAddButton());
@@ -124,6 +124,7 @@ public class SignalGroupTableActionTest extends AbstractTableActionBase {
     @Test
     @Ignore("needs further setup")
     @ToDo("To Edit, the signal group needs a mast added to it")
+    @Override
     public void testEditButton() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assume.assumeTrue(a.includeAddButton());
@@ -147,7 +148,7 @@ public class SignalGroupTableActionTest extends AbstractTableActionBase {
         JFrame f2 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
 	jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f2),Bundle.getMessage("ButtonCancel"));
         JUnitUtil.dispose(f2);
-	JUnitUtil.dispose(f1);
+	    JUnitUtil.dispose(f1);
         JUnitUtil.dispose(f);
     }
 
@@ -158,7 +159,8 @@ public class SignalGroupTableActionTest extends AbstractTableActionBase {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initInternalSignalHeadManager();
         helpTarget = "package.jmri.jmrit.beantable.SignalGroupTable"; 
         a = new SignalGroupTableAction();
     }
@@ -167,6 +169,7 @@ public class SignalGroupTableActionTest extends AbstractTableActionBase {
     @Override
     public void tearDown() {
         a = null;
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
 }

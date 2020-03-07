@@ -73,7 +73,11 @@
       <xs:element name="outputs" minOccurs="0" maxOccurs="1">
         <xs:complexType>
           <xs:sequence>
-            <xs:element name="output" minOccurs="1" maxOccurs="6">
+            <xs:element name="output" minOccurs="1" maxOccurs="unbounded">
+              <xs:annotation>
+                <xs:documentation>Repetition here is unbounded, but there's a limit
+                                    on what can be edited (not displayed) in the program</xs:documentation>
+              </xs:annotation>
               <xs:complexType>
                 <xs:simpleContent>
                   <xs:extension base="xs:string">
@@ -274,6 +278,7 @@
           </xs:attribute>
         </xs:complexType>
       </xs:element>
+      <xs:element name="packetsendcount" type="xs:int" minOccurs="0" maxOccurs="1"/>
       <xs:element name="aspect" minOccurs="0" maxOccurs="unbounded">
         <xs:complexType>
           <xs:sequence>
@@ -404,10 +409,23 @@
           </xs:attribute>
         </xs:complexType>
       </xs:element>
+        <xs:element name="delay" minOccurs="0" maxOccurs="1">
+            <xs:complexType>
+                <xs:attribute name="duration" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Specifies mast-specific delay before each separate output command</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:complexType>
+        </xs:element>
       <xs:element name="outputs" minOccurs="1" maxOccurs="1" >
         <xs:complexType>
           <xs:sequence>
-            <xs:element name="output" minOccurs="1" maxOccurs="6" >
+            <xs:element name="output" minOccurs="1" maxOccurs="unbounded" >
+              <xs:annotation>
+                <xs:documentation>Repetition here is unbounded, but there's a limit
+                                    on what can be edited (not displayed) in the program</xs:documentation>
+              </xs:annotation>
               <xs:complexType>
                 <xs:simpleContent>
                   <xs:extension base="xs:string">
@@ -448,6 +466,13 @@
             <xs:element name="disabledAspect" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
           </xs:sequence>
         </xs:complexType>
+      </xs:element>
+      <xs:element name="resetPreviousStates" type="xs:string" minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            "yes" means that the dark turnout command should be sent before each new aspects turnout command
+          </xs:documentation>
+        </xs:annotation>
       </xs:element>
     </xs:sequence>
     <xs:attribute name="userName" type="userNameType">

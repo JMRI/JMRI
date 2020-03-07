@@ -6,8 +6,6 @@ import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.AbstractMRTrafficController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Converts Stream-based I/O to/from ECOS messages. The "EcosInterface" side
@@ -41,17 +39,19 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
 
     EcosSystemConnectionMemo adaptermemo;
 
-    // The methods to implement the EcosInterface
+    /** {@inheritDoc} */
     @Override
     public synchronized void addEcosListener(EcosListener l) {
         this.addListener(l);
     }
 
+    /** {@inheritDoc} */
     @Override
     public synchronized void removeEcosListener(EcosListener l) {
         this.removeListener(l);
     }
 
+    /** {@inheritDoc} */
     @Override
     protected int enterProgModeDelayTime() {
         // we should to wait at least a second after enabling the programming track
@@ -59,6 +59,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
     }
 
     /**
+     * {@inheritDoc}
      * Forward an EcosMessage to all registered EcosInterface listeners.
      */
     @Override
@@ -67,6 +68,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
     }
 
     /**
+     * {@inheritDoc}
      * Forward a EcosReply to all registered EcosInterface listeners.
      */
     @Override
@@ -74,24 +76,25 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
         ((EcosListener) client).reply((EcosReply) r);
     }
 
+    /** {@inheritDoc} */
     @Override
     protected AbstractMRMessage pollMessage() {
         return null;
     }
 
+    /** {@inheritDoc} */
     @Override
     protected AbstractMRListener pollReplyHandler() {
         return null;
     }
 
-    /**
-     * Forward a pre-formatted message to the actual interface.
-     */
+    /** {@inheritDoc} */
     @Override
     public void sendEcosMessage(EcosMessage m, EcosListener reply) {
         sendMessage(m, reply);
     }
 
+    /** {@inheritDoc} */
     @Override
     protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
         super.forwardToPort(m, reply);
@@ -107,22 +110,12 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
         return EcosMessage.getProgMode();
     }
 
-    //Ecos doesn't support this function!
+    /**
+     *  ECoS doesn't support this function.
+     */
     @Override
     protected AbstractMRMessage enterNormalMode() {
         return EcosMessage.getExitProgMode();
-    }
-
-    /**
-     * Static function returning the EcosTrafficController instance to use.
-     *
-     * @return The registered EcosTrafficController instance for general use, if
-     *         need be creating one.
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public EcosTrafficController instance() {
-        return self;
     }
 
     @SuppressFBWarnings(value = "MS_PKGPROTECT")
@@ -130,6 +123,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
     // migration is complete
     final static protected EcosTrafficController self = null;
 
+    /** {@inheritDoc} */
     @Override
     protected AbstractMRReply newReply() {
         EcosReply reply = new EcosReply();
@@ -137,6 +131,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
     }
 
     /**
+     * {@inheritDoc}
      * @return for now, receive always OK
      */
     @Override
@@ -144,6 +139,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
         return true;
     }
 
+    /** {@inheritDoc} */
     @Override
     protected boolean endOfMessage(AbstractMRReply msg) {
         // detect that the reply buffer ends with "COMMAND: " (note ending
@@ -166,7 +162,6 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
         return false;
     }
 
-    // Override the finalize method for this class
     public boolean sendWaitMessage(EcosMessage m, AbstractMRListener reply) {
         if (log.isDebugEnabled()) {
             log.debug("Send a message and wait for the response");
@@ -194,6 +189,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
         return true;
     }
 
+    /** {@inheritDoc} */
     @Override
     protected void terminate() {
         if (log.isDebugEnabled()) {
@@ -294,6 +290,6 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EcosTrafficController.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EcosTrafficController.class);
 
 }

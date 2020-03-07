@@ -1,6 +1,5 @@
 package jmri.util.usb;
 
-import static java.lang.Float.NaN;
 
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
@@ -112,21 +111,17 @@ public class RailDriverMenuItem extends JMenuItem
             //
             if (!invokeOnMenuOnly) {
                 // start the HID services
-                InstanceManager.getOptionalDefault(ShutDownManager.class).ifPresent(sdMgr -> {
-                    // if we're going to start, we have to also stop
-                    sdMgr.register(new AbstractShutDownTask("RailDriverMenuItem shutdown HID") {
-                        public boolean execute() {
-                            System.err.println("stop start");
-                            hidServices.stop();
-                            System.err.println("stop stop");
-                            return true;
-                        }
-                    });
-                    log.debug("Starting HID services.");
-                    System.err.println("start start");
-                    hidServices.start();
-                    System.err.println("start stop");
-                });
+                InstanceManager.getDefault(ShutDownManager.class)
+                        .register(new AbstractShutDownTask("RailDriverMenuItem shutdown HID") {
+                            // if we're going to start, we have to also stop
+                            @Override
+                            public boolean execute() {
+                                hidServices.stop();
+                                return true;
+                            }
+                        });
+                log.debug("Starting HID services.");
+                hidServices.start();
 
                 // Open the device device by Vendor ID, Product ID and serial number
                 HidDevice hidDevice = hidServices.getHidDevice(VENDOR_ID, PRODUCT_ID, SERIAL_NUMBER);

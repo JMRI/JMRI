@@ -810,7 +810,7 @@ public abstract class RollingStock implements java.beans.PropertyChangeListener 
         if (id != null && !id.equals(old)) {
             log.debug("Changing IdTag for {} to {}", this, id);
             try {
-                IdTag tag = InstanceManager.getDefault(IdTagManager.class).getIdTag(id.toUpperCase());
+                IdTag tag = InstanceManager.getDefault(IdTagManager.class).getIdTag(id);
                 if (tag != null) {
                     log.debug("Tag {} Found", tag);
                 } else {

@@ -25,6 +25,7 @@ public class CMRInetMetricsAction extends AbstractAction {
         this(Bundle.getMessage("MetricsWindowTitle"), memo);
     }
 
+        @Override
     public void actionPerformed(ActionEvent e) {
 		// create a CMRInetMetricsAction
 		CMRInetMetricsFrame f = new CMRInetMetricsFrame(_memo);

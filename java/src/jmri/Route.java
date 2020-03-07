@@ -362,14 +362,14 @@ public interface Route extends NamedBean {
     public int getLockControlTurnoutState();
 
     /**
-     * Set the delay between issuing Turnout commands.
+     * Set the delay between issuing Turnout commands on this route.
      *
      * @param delay the delay in milliseconds
      */
     public void setRouteCommandDelay(int delay);
 
     /**
-     * Get the delay between issuing Turnout commands.
+     * Get the delay between issuing Turnout commands on this route.
      *
      * @return the delay in milliseconds
      */

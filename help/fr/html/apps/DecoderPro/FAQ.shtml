@@ -1,5 +1,5 @@
-!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+		"http://www.w3.org/TR/html4/strict.dtd">
 
 <html lang="fr">
 <head>
@@ -8,38 +8,37 @@
   <!-- Copyright Bob Jacobsen 2008 -->
   <!--Translated by Herv&#233; Blorec le 2017-10-10 -->
 
-  <title>JMRI: DecoderPro Questions Fr&eacute;quemment
-  Pos&eacute;es</title><!-- Style -->
+  <title>JMRI: DecoderPro Questions Fr&eacute;quemment Pos&eacute;es</title>
+	<!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+	<!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+  <!--#include virtual="Sidebar" -->
+	<div id="mainContent">
+	<!-- Page Body -->
 
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+<h1>JMRI: Guide utilisateur DecoderPro</h1>
 
-
-<H1>JMRI: Guide utilisateur DecoderPro</H1>
-
-<H2>Questions Fr&#233;quemment Pos&#233;es</H2>
+<h2>Questions Fr&#233;quemment Pos&#233;es</h2>
 
 <p>Cette page est la FAQ de DecoderPro de JMRI. 
 Les questions list&#233;es ici ont souvent &#233;t&#233; 
-pos&#233;es, elles sont &#233;galement disponibles ailleurs..
+pos&#233;es, elles sont &#233;galement disponibles ailleurs.
 </p>
 
 <dl>
 
-	<dt class=left><a name="newdecoder"/>Comment puis je obtenir un nouveau type de d&#233;codeur d&#233;fini?</dt></a>
-	<dd class=first>
+	<dt class="left"><a name="newdecoder"></a>Comment puis je obtenir un nouveau type de d&#233;codeur d&#233;fini?</dt>
+	<dd class="first">
 	<p>
 	Un nouveau d&#233;codeur complet n&#233;cessite un nouveau fichier de 
 	configuration ou une mise &#224; jour. Vous 	pouvez 
@@ -48,7 +47,7 @@ pos&#233;es, elles sont &#233;galement disponibles ailleurs..
 	ou demander sur la mailing list JmriUsers
 	<a href="https://groups.io/g/jmriusers">  </a>
 	Pour demander &#224; quelqu'un d'en cr&#233;er un pour vous.
-	</P>
+	</p>
 	<p>
 	Dans beaucoup de cas, vous pouvez utiliser un d&#233;codeur existant qui 
 	est "suffisamment proche". Par exemple, un &#233;codeur du m&#234;me 
@@ -57,40 +56,39 @@ pos&#233;es, elles sont &#233;galement disponibles ailleurs..
 	va tr&#232;s bien fonctionner. 
 	</dd>
 
-	<dt class=left><a name="newfile"/>Que dois-je faire avec ce nouveau fichier d&#233;codeur?</dt></a>
-	<dd class=first>
+	<dt class="left"><a name="newfile"></a>Que dois-je faire avec ce nouveau fichier d&#233;codeur?</dt>
+	<dd class="first">
 	<p>
 	Pour que DecoderPro utilise la d&#233;finition d'un type de d&#233;codeur 
 	dans un nouveau fichier d&#233;codeur, le nouveau fichier doit &#234;tre inclut 
 	dans l'index DecoderPro des types de d&#233;codeur. Pour faire ceci:</p>
-		<UL>
-		<LI>Dans votre R&#233;pertoire d'installation, vous devez trouver un 
+		<ul>
+		<li>Dans votre R&#233;pertoire d'installation, vous devez trouver un
 		r&#233;pertoire nomm&#233; "xml". Sous ce r&#233;pertoire, il doit y 
 		en avoir un nomm&#233; "decoders". Vous devez mettre votre nouveau 
 		fichier ici.</li>
 	
-		<LI>Maintenant d&#233;marrer DecoderPro, et ouvrez le menu "D&#233;bogage".
+		<li>Maintenant d&#233;marrer DecoderPro, et ouvrez le menu "D&#233;bogage".
 		 S&#233;lectionnez l'option "Reconstruire Index D&#233;codeur" .</li>
 
-		<LI>L'ordinateur va fonctionner une minute ou deux avec la s&#233;lection en surbrillance.  
+		<li>L'ordinateur va fonctionner une minute ou deux avec la s&#233;lection en surbrillance.
 		Aussit&#244;t qu'elle disparait, la nouvelle d&#233;finition est disponible pour vous.</li>
+		</ul>
 
-		</UL>
-
-	<P>
+	<p>
 	SVP Soyez s&#251;r que le nouveau fichier de configuration a bien contribu&#233; au projet ainsi il sera inclut dans 
 	les versions futures et vous n'aurez pas &#224; refaire l'index &#224; chaque fois que vous ferez une mise &#224; 
 	jour.
 	</dd>
-	<dt class=left><a name="update"/>Comment Puis je obtenir les derni&#232;res d&#233;finitions du 		
-	D&#233;codeur?	</dt></a>	
+	<dt class="left"><a name="update"></a>Comment Puis je obtenir les derni&#232;res d&#233;finitions du
+	D&#233;codeur?</dt>
 
-	<dd class=first>
+	<dd class="first">
 	<p>
 	La fa&#231;on la plus ais&#233;e pour mettre &#224; jour est de t&#233;l&#233;charger une nouvelle 
 	version du programme. Il est peu probable que ceci provoque des probl&#232;mes et 
 	installe automatiquement les derni&#232;res versions des contributions &#224; d&#233;coderPro.</p>
-<P>
+<p>
 	Les mises &#224; jour se produisent en permanence entre les versions 
 	du programme. Comme les fichiers sont des contributions, nous les rendons disponibles 
 	sur notre page web<a href="http://jmri.org/xml/decoders">D&#233;finitions de d&#233;codeur collect&#233;es</a>
@@ -103,11 +101,11 @@ leurs d&#233;finitions dans la z&#244;ne  "Fichiers" du
 Vous pouvez 
 <a href="https://groups.io/g/jmriusers/files/Decoder%20files">Les t&#233;l&#233;charger depuis l&#224;</a>.
 Notez que comme mesure anti-spam vous devrez probablement 
-<a HREF="https://groups.io/g/jmriusers/join">joindre le groupe </a>
+<a href="https://groups.io/g/jmriusers/join">joindre le groupe </a>
 pour pouvoir t&#233;l&#233;charger les fichiers; cela n&#233;cessite que vous ayez un compte Groups.io (gratuit).</p>
 </dd>
-<dt class=left><a name="lb-xp"/>Pourquoi mon LocoBuffer-II ne travaille pas avec Windows XP?</dt></a>
-<dd class=first>Avec Windows XP, les param&#232;tres de votre port s&#233;rie peuvent ne 
+<dt class="left"><a name="lb-xp"></a>Pourquoi mon LocoBuffer-II ne travaille pas avec Windows XP?</dt>
+<dd class="first">Avec Windows XP, les param&#232;tres de votre port s&#233;rie peuvent ne
 pas &#234;tre r&#233;gl&#233;s pour un contr&#244;le mat&#233;riel du flux. Pour corriger ceci, 
 Clic-droit sur My computer et s&#233;lectionnez les Propri&#233;t&#233;s. A
 lez &#224; l'onglet Mat&#233;riel et cliquer sur Device Manager.Ouvrez la section 
@@ -115,13 +113,13 @@ qui dit Ports (COM &amp; LPT). Clic-droit sur
 le port s&#233;rie attribu&#233; &#224; LocoBuffer et 
 s&#233;lectionnez Propri&#233;t&#233;s. Allez &#224; l'onglet R&#233;glage du Port et param&#233;trer les options 
 &#224; 19200, 8, None,1, Hardware. Cliquer sur OK. Fermer tout. 
-Red&#233;marrer JMRI et v&#233;rifiez vos param&#232;tres de connection. 
-
+Red&#233;marrer JMRI et v&#233;rifiez vos param&#232;tres de connection.
 </dd>
 
 </dl>
     
-<!--#include virtual="/Footer" -->
-</div>
+		<!--#include virtual="/Footer.shtml" -->
+		</div>
+	</div>
 </body>
 </html>

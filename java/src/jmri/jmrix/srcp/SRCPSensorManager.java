@@ -1,9 +1,10 @@
 package jmri.jmrix.srcp;
 
+import javax.annotation.Nonnull;
 import jmri.Sensor;
 
 /**
- * Implement Sensor manager for SRCP systems.
+ * Implement SensorMmanager for SRCP systems.
  * <p>
  * System names are "DSnnn", where D is the user configurable system prefix,
  * nnn is the sensor number without padding.
@@ -12,35 +13,52 @@ import jmri.Sensor;
  */
 public class SRCPSensorManager extends jmri.managers.AbstractSensorManager {
 
-    SRCPBusConnectionMemo _memo = null;
-    int _bus;
-
-    public SRCPSensorManager(SRCPBusConnectionMemo memo, int bus) {
-        _memo = memo;
-        _bus = bus;
-    }
-
-    @Override
-    public String getSystemPrefix() {
-        return _memo.getSystemPrefix();
-    }
-
-    @Override
-    public Sensor createNewSensor(String systemName, String userName) {
-        Sensor t;
-        int addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
-        t = new SRCPSensor(addr, _memo);
-        t.setUserName(userName);
-
-        return t;
+    public SRCPSensorManager(SRCPBusConnectionMemo memo) {
+        super(memo);
     }
 
     /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     *
+     * @param memo the associated SystemConnectionMemo
+     * @param bus the bus ID configured for this connection
+     * @deprecated since 4.18 use {@link SRCPBusConnectionMemo#getBus()}
      */
     @Deprecated
-    static public SRCPSensorManager instance() {
-        return null;
+    public SRCPSensorManager(SRCPBusConnectionMemo memo, int bus) {
+        this(memo);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Nonnull
+    public SRCPBusConnectionMemo getMemo() {
+        return (SRCPBusConnectionMemo) memo;
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * System name is normalized to ensure uniqueness.
+     * @throws IllegalArgumentException when SystemName can't be converted
+     */
+    @Override
+    @Nonnull
+    public Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
+        Sensor t;
+        int addr;
+        try {
+            addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Unable to convert " +  // NOI18N
+                    systemName.substring(getSystemPrefix().length() + 1) +
+                    " to SRCP sensor address"); // NOI18N
+        }
+        t = new SRCPSensor(addr, getMemo());
+        t.setUserName(userName);
+
+        return t;
     }
 
 }

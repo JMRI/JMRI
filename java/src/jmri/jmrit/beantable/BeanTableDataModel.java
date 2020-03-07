@@ -20,7 +20,7 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Objects;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -51,6 +51,7 @@ import jmri.NamedBean;
 import jmri.NamedBeanHandleManager;
 import jmri.NamedBeanPropertyDescriptor;
 import jmri.UserPreferencesManager;
+import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.swing.JTablePersistenceManager;
@@ -625,7 +626,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
      * @return the table
      * @throws NullPointerException if name or model is null
      */
-    public JTable makeJTable(@Nonnull String name, @Nonnull TableModel model, @Nullable RowSorter<? extends TableModel> sorter) {
+    public JTable makeJTable(@Nonnull String name, @Nonnull TableModel model, @CheckForNull RowSorter<? extends TableModel> sorter) {
         Objects.requireNonNull(name, "the table name must be nonnull");
         Objects.requireNonNull(model, "the table model must be nonnull");
         return this.configureJTable(name, new JTable(model), sorter);
@@ -641,7 +642,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
      * @return the table
      * @throws NullPointerException if table or the table name is null
      */
-    protected JTable configureJTable(@Nonnull String name, @Nonnull JTable table, @Nullable RowSorter<? extends TableModel> sorter) {
+    protected JTable configureJTable(@Nonnull String name, @Nonnull JTable table, @CheckForNull RowSorter<? extends TableModel> sorter) {
         Objects.requireNonNull(table, "the table must be nonnull");
         Objects.requireNonNull(name, "the table name must be nonnull");
         table.setRowSorter(sorter);
@@ -735,7 +736,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         if (retval != 1) {
             return;
         }
-        String value = _newName.getText().trim(); // N11N
+        String value = _newName.getText();
 
         if (value.equals(oldName)) {
             //name not changed.
@@ -871,7 +872,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         String entry = (String) box.getSelectedItem();
         T newNameBean = getBySystemName(entry);
         if (oldNameBean != newNameBean) {
-            oldNameBean.setUserName("");
+            oldNameBean.setUserName(null);
             newNameBean.setUserName(currentName);
             InstanceManager.getDefault(NamedBeanHandleManager.class).moveBean(oldNameBean, newNameBean, currentName);
             if (nbMan.inUse(newNameBean.getSystemName(), newNameBean)) {
@@ -1014,7 +1015,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             } catch (PropertyVetoException e) {
                 if (e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")) { //NOI18N
                     log.warn(e.getMessage());
-                    message.append(Bundle.getMessage("VetoDeleteBean", t.getBeanType(), t.getFullyFormattedDisplayName(), e.getMessage()));
+                    message.append(Bundle.getMessage("VetoDeleteBean", t.getBeanType(), t.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME), e.getMessage()));
                     JOptionPane.showMessageDialog(null, message.toString(),
                             Bundle.getMessage("WarningTitle"),
                             JOptionPane.ERROR_MESSAGE);
@@ -1035,7 +1036,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
                 if (count > 0) { // warn of listeners attached before delete
 
-                    JLabel question = new JLabel(Bundle.getMessage("DeletePrompt", t.getFullyFormattedDisplayName()));
+                    JLabel question = new JLabel(Bundle.getMessage("DeletePrompt", t.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME)));
                     question.setAlignmentX(Component.CENTER_ALIGNMENT);
                     container.add(question);
 

@@ -3,15 +3,9 @@ package jmri.jmrit.beantable;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.List;
 import javax.annotation.Nonnull;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
@@ -22,7 +16,8 @@ import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.Reporter;
 import jmri.ReporterManager;
-import jmri.util.ConnectionNameFromSystemName;
+import jmri.swing.ManagerComboBox;
+import jmri.swing.SystemNameValidator;
 import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,19 +41,21 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
         super(actionName);
 
         // disable ourself if there is no primary Reporter manager available
-        if (reportManager == null) {
+        if (reporterManager == null) {
             setEnabled(false);
         }
     }
 
-    protected ReporterManager reportManager = InstanceManager.getDefault(jmri.ReporterManager.class);
+    protected ReporterManager reporterManager = InstanceManager.getDefault(jmri.ReporterManager.class);
 
     /**
      * {@inheritDoc}
      */
     @Override
     public void setManager(@Nonnull Manager<Reporter> man) {
-        reportManager = (ReporterManager) man;
+        if (man instanceof ReporterManager) {
+            reporterManager = (ReporterManager) man;
+        }
     }
 
     public ReporterTableAction() {
@@ -80,17 +77,17 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
             @Override
             public String getValue(String name) {
                 Object value;
-                Reporter r = reportManager.getBySystemName(name);
+                Reporter r = reporterManager.getBySystemName(name);
                 if (r == null) {
                     return "";
                 }
                 value = r.getCurrentReport();
-                if(value == null) {
-                   return null;
-                } else if(value instanceof jmri.Reportable) {
-                   return ((jmri.Reportable)value).toReportString();
+                if (value == null) {
+                    return null;
+                } else if (value instanceof jmri.Reportable) {
+                    return ((jmri.Reportable) value).toReportString();
                 } else {
-                   return value.toString();
+                    return value.toString();
                 }
             }
 
@@ -99,7 +96,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
              */
             @Override
             public ReporterManager getManager() {
-                return reportManager;
+                return reporterManager;
             }
 
             /**
@@ -107,7 +104,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
              */
             @Override
             public Reporter getBySystemName(String name) {
-                return reportManager.getBySystemName(name);
+                return reporterManager.getBySystemName(name);
             }
 
             /**
@@ -115,7 +112,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
              */
             @Override
             public Reporter getByUserName(String name) {
-                return reportManager.getByUserName(name);
+                return reporterManager.getByUserName(name);
             }
 
             /**
@@ -207,12 +204,12 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
                 if (col == LASTREPORTCOL) {
                     Reporter t = getBySystemName(sysNameList.get(row));
                     Object value = t.getLastReport();
-                    if(value == null) {
-                       return null;
-                    } else if(value instanceof jmri.Reportable) {
-                       return ((jmri.Reportable)value).toReportString();
+                    if (value == null) {
+                        return null;
+                    } else if (value instanceof jmri.Reportable) {
+                        return ((jmri.Reportable) value).toReportString();
                     } else {
-                       return value.toString();
+                        return value.toString();
                     }
                 }
                 return super.getValueAt(row, col);
@@ -282,19 +279,19 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
     }
 
     JmriJFrame addFrame = null;
-    CheckedTextField hardwareAddressTextField = new CheckedTextField(20);
+    JTextField hardwareAddressTextField = new JTextField(20);
     JTextField userNameTextField = new JTextField(20);
-    JComboBox<String> prefixBox = new JComboBox<String>();
+    ManagerComboBox<Reporter> prefixBox = new ManagerComboBox<>();
     SpinnerNumberModel rangeSpinner = new SpinnerNumberModel(1, 1, 100, 1); // maximum 100 items
     JSpinner numberToAddSpinner = new JSpinner(rangeSpinner);
     JCheckBox rangeCheckBox = new JCheckBox(Bundle.getMessage("AddRangeBox"));
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
     JButton addButton;
-    PropertyChangeListener colorChangeListener;
     JLabel statusBarLabel = new JLabel(Bundle.getMessage("HardwareAddStatusEnter"), JLabel.LEADING);
     String userNameError = this.getClass().getName() + ".DuplicateUserName"; // only used in this package
-    String connectionChoice = "";
+    Manager<Reporter> connectionChoice = null;
     jmri.UserPreferencesManager pref;
+    SystemNameValidator hardwareAddressValidator;
 
     /**
      * {@inheritDoc}
@@ -305,75 +302,23 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
         if (addFrame == null) {
             addFrame = new JmriJFrame(Bundle.getMessage("TitleAddReporter"), false, true);
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.ReporterAddEdit", true);
-            ActionListener createListener = new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    createPressed(e);
-                }
-            };
-            ActionListener cancelListener = new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    cancelPressed(e);
-                }
-            };
-            ActionListener rangeListener = new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    canAddRange(e);
-                }
-            };
-            if (InstanceManager.getDefault(ReporterManager.class).getClass().getName().contains("ProxyReporterManager")) {            
-            jmri.managers.ProxyReporterManager proxy = (jmri.managers.ProxyReporterManager) InstanceManager.getDefault(ReporterManager.class);          
-                List<Manager<Reporter>> managerList = proxy.getDisplayOrderManagerList();
-                for (Manager<Reporter> reporter : managerList) {
-                    String manuName = ConnectionNameFromSystemName.getConnectionName(reporter.getSystemPrefix());
-                    Boolean addToPrefix = true;
-                    // Simple test not to add a system with a duplicate System prefix
-                    for (int i = 0; i < prefixBox.getItemCount(); i++) {
-                        if ((prefixBox.getItemAt(i)).equals(manuName)) {
-                            addToPrefix = false;
-                        }
-                    }
-                    if (addToPrefix) {
-                        prefixBox.addItem(manuName);
-                    }
-                }
-                if (pref.getComboBoxLastSelection(systemSelectionCombo) != null) {
-                    prefixBox.setSelectedItem(pref.getComboBoxLastSelection(systemSelectionCombo));
-                }
-            } else {
-                prefixBox.addItem(ConnectionNameFromSystemName.getConnectionName(reportManager.getSystemPrefix()));
-            }
+            ActionListener createListener = this::createPressed;
+            ActionListener cancelListener = this::cancelPressed;
+            ActionListener rangeListener = this::canAddRange;
+            configureManagerComboBox(prefixBox, reporterManager, ReporterManager.class);
             userNameTextField.setName("userName"); // NOI18N
             prefixBox.setName("prefixBox"); // NOI18N
             addButton = new JButton(Bundle.getMessage("ButtonCreate"));
             addButton.addActionListener(createListener);
-            // Define PropertyChangeListener
-            colorChangeListener = new PropertyChangeListener() {
-                @Override
-                public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
-                    String property = propertyChangeEvent.getPropertyName();
-                    if ("background".equals(property)) {
-                        if ((Color) propertyChangeEvent.getNewValue() == Color.white) { // valid entry
-                            addButton.setEnabled(true);
-                        } else { // invalid
-                            addButton.setEnabled(false);
-                        }
-                    }
-                }
-            };
-            hardwareAddressTextField.addPropertyChangeListener(colorChangeListener);
+            hardwareAddressValidator = new SystemNameValidator(hardwareAddressTextField, prefixBox.getSelectedItem(), true);
             // create panel
-            addFrame.add(new AddNewHardwareDevicePanel(hardwareAddressTextField, userNameTextField, prefixBox,
+            addFrame.add(new AddNewHardwareDevicePanel(hardwareAddressTextField, hardwareAddressValidator, userNameTextField, prefixBox,
                     numberToAddSpinner, rangeCheckBox, addButton, cancelListener, rangeListener, statusBarLabel));
             // tooltip for hardwareAddressTextField will be assigned next by canAddRange()
             canAddRange(null);
         }
         hardwareAddressTextField.setName("sysName"); // for GUI test NOI18N
         hardwareAddressTextField.setName("hwAddressTextField"); // for GUI test NOI18N
-        hardwareAddressTextField.setBackground(Color.yellow);
-        addButton.setEnabled(false); // start as disabled (false) until a valid entry is typed in
         addButton.setName("createButton"); // for GUI test NOI18N
         // reset statusBarLabel text
         statusBarLabel.setText(Bundle.getMessage("HardwareAddStatusEnter"));
@@ -384,10 +329,10 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
     }
 
     void cancelPressed(ActionEvent e) {
+        removePrefixBoxListener(prefixBox);
         addFrame.setVisible(false);
         addFrame.dispose();
         addFrame = null;
-        addButton.removePropertyChangeListener(colorChangeListener);
     }
 
     /**
@@ -410,9 +355,9 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
                 return;
             }
         }
-        String rName = null;
-        String reporterPrefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem()); // Add "R" later
-        String curAddress = hardwareAddressTextField.getText().trim();
+        String rName;
+        String reporterPrefix = prefixBox.getSelectedItem().getSystemPrefix(); // Add "R" later
+        String curAddress = hardwareAddressTextField.getText();
         // initial check for empty entry
         if (curAddress.isEmpty()) {
             statusBarLabel.setText(Bundle.getMessage("WarningEmptyHardwareAddress"));
@@ -426,9 +371,17 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
         // Add some entry pattern checking, before assembling sName and handing it to the ReporterManager
         String statusMessage = Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameReporter"));
         String errorMessage = null;
-        String uName = userNameTextField.getText().trim();
+        String uName = userNameTextField.getText();
         for (int x = 0; x < numberOfReporters; x++) {
-            curAddress = reportManager.getNextValidAddress(curAddress, reporterPrefix);
+            try {
+                curAddress = reporterManager.getNextValidAddress(curAddress, reporterPrefix);
+            } catch (jmri.JmriException ex) {
+                displayHwError(curAddress, ex);
+                // directly add to statusBarLabel (but never called?)
+                statusBarLabel.setText(Bundle.getMessage("ErrorConvertHW", curAddress));
+                statusBarLabel.setForeground(Color.red);
+                return;
+            }
             if (curAddress == null) {
                 log.debug("Error converting HW or getNextValidAddress");
                 errorMessage = (Bundle.getMessage("WarningInvalidEntry"));
@@ -438,11 +391,11 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
             }
 
             // Compose the proposed system name from parts:
-            rName = reporterPrefix + reportManager.typeLetter() + curAddress;
+            rName = reporterPrefix + reporterManager.typeLetter() + curAddress;
             // rName = prefix + InstanceManager.reportManagerInstance().typeLetter() + curAddress;
-            Reporter r = null;
+            Reporter r;
             try {
-                r = reportManager.provideReporter(rName);
+                r = reporterManager.provideReporter(rName);
             } catch (IllegalArgumentException ex) {
                 // user input no good
                 handleCreateException(rName); // displays message dialog to the user
@@ -454,7 +407,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
             }
 
             if (!uName.isEmpty()) {
-                if ((reportManager.getByUserName(uName) == null)) {
+                if ((reporterManager.getByUserName(uName) == null)) {
                     r.setUserName(uName);
                 } else {
                     pref.showErrorMessage(Bundle.getMessage("ErrorTitle"),
@@ -487,55 +440,38 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
             // statusBarLabel.setForeground(Color.red); // handled when errorMassage is set to differentiate urgency
         }
 
-        pref.setComboBoxLastSelection(systemSelectionCombo, (String) prefixBox.getSelectedItem());
+        pref.setComboBoxLastSelection(systemSelectionCombo, prefixBox.getSelectedItem().getMemo().getUserName());
+        removePrefixBoxListener(prefixBox);
         addFrame.setVisible(false);
         addFrame.dispose();
         addFrame = null;
-        addButton.removePropertyChangeListener(colorChangeListener);
     }
 
     private String addEntryToolTip;
 
     /**
      * Activate Add a rangeCheckBox option if manager accepts adding more than 1
-     * Reporter and set a manager specific tooltip on the AddNewHardwareDevice pane.
+     * Reporter and set a manager specific tooltip on the AddNewHardwareDevice
+     * pane.
      */
     private void canAddRange(ActionEvent e) {
         rangeCheckBox.setEnabled(false);
         rangeCheckBox.setSelected(false);
-        connectionChoice = (String) prefixBox.getSelectedItem(); // store in Field for CheckedTextField
-        if (connectionChoice == null) {
-            // Tab All or first time opening, default tooltip
-            connectionChoice = "TBD";
+        if (prefixBox.getSelectedIndex() == -1) {
+            prefixBox.setSelectedIndex(0);
         }
-        if (InstanceManager.getDefault(ReporterManager.class).getClass().getName().contains("ProxyReporterManager")) {            
-            jmri.managers.ProxyReporterManager proxy = (jmri.managers.ProxyReporterManager) InstanceManager.getDefault(ReporterManager.class);    
-            List<Manager<Reporter>> managerList = proxy.getDisplayOrderManagerList();
-            String systemPrefix = ConnectionNameFromSystemName.getPrefixFromName(connectionChoice);
-            for (Manager<Reporter> mgr : managerList) {
-                if (mgr.getSystemPrefix().equals(systemPrefix)) {
-                    rangeCheckBox.setEnabled(((ReporterManager) mgr).allowMultipleAdditions(systemPrefix));
-                    // get tooltip from ProxyReporterManager
-                    addEntryToolTip = mgr.getEntryToolTip();
-                    log.debug("R add box set");
-                    break;
-                }
-            }
-        } else if (reportManager.allowMultipleAdditions(ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem()))) {
-            rangeCheckBox.setEnabled(true);
-            log.debug("R add box enabled2");
-            // get tooltip from reporter manager
-            addEntryToolTip = reportManager.getEntryToolTip();
-        }
-        else {
-            log.warn("Unable to set reporter tooltip or rangecheckbox");
-        }
+        connectionChoice = prefixBox.getSelectedItem(); // store in Field for CheckedTextField
+        String systemPrefix = connectionChoice.getSystemPrefix();
+        rangeCheckBox.setEnabled(((ReporterManager) connectionChoice).allowMultipleAdditions(systemPrefix));
+        addEntryToolTip = connectionChoice.getEntryToolTip();
         // show hwAddressTextField field tooltip in the Add Reporter pane that matches system connection selected from combobox
-        hardwareAddressTextField.setToolTipText("<html>"
-                + Bundle.getMessage("AddEntryToolTipLine1", connectionChoice, Bundle.getMessage("Reporters"))
-                + "<br>" + addEntryToolTip + "</html>");
-        hardwareAddressTextField.setBackground(Color.yellow); // reset
-        addButton.setEnabled(true); // ambiguous, so start enabled
+        hardwareAddressTextField.setToolTipText(
+                Bundle.getMessage("AddEntryToolTipLine1",
+                        connectionChoice.getMemo().getUserName(),
+                        Bundle.getMessage("Reporters"),
+                        addEntryToolTip));
+        hardwareAddressValidator.setToolTipText(hardwareAddressTextField.getToolTipText());
+        hardwareAddressValidator.verify(hardwareAddressTextField);
     }
 
     void handleCreateException(String sysName) {
@@ -543,138 +479,6 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
                 Bundle.getMessage("ErrorReporterAddFailed", sysName) + "\n" + Bundle.getMessage("ErrorAddFailedCheck"),
                 Bundle.getMessage("ErrorTitle"),
                 JOptionPane.ERROR_MESSAGE);
-    }
-
-    /**
-     * Extends JTextField to provide a data validation function.
-     *
-     * @author Egbert Broerse 2017, based on
-     * jmri.jmrit.util.swing.ValidatedTextField by B. Milhaupt
-     */
-    public class CheckedTextField extends JTextField {
-
-        CheckedTextField fld;
-        boolean allow0Length = false; // for Add new bean item, a value that is zero-length is considered invalid.
-        private MyVerifier verifier; // internal mechanism used for verifying field data before focus is lost
-
-        /**
-         * Text entry field with an active key event checker.
-         *
-         * @param len field length
-         */
-        public CheckedTextField(int len) {
-            super("", len);
-            fld = this;
-
-            // configure InputVerifier
-            verifier = new MyVerifier();
-            fld = this;
-            fld.setInputVerifier(verifier);
-
-            fld.addFocusListener(new FocusListener() {
-                @Override
-                public void focusGained(FocusEvent e) {
-                    setEditable(true);
-                }
-
-                @Override
-                public void focusLost(FocusEvent e) {
-                    setEditable(true);
-                }
-            });
-        }
-
-        /**
-         * Validate the field information. Does not make any GUI changes.
-         * <p>
-         * During validation, logging is capped at the Error level to keep the
-         * Console clean from repeated validation. This is reset to default
-         * level afterwards.
-         *
-         * @return 'true' if current field entry is valid according to the
-         *         system manager; otherwise 'false'
-         */
-        @Override
-        public boolean isValid() {
-            String value;
-            String prefix = ConnectionNameFromSystemName.getPrefixFromName(connectionChoice); // connectionChoice is set by canAddRange()
-
-            if (fld == null) {
-                return false;
-            }
-            value = getText().trim();
-            if (value.isEmpty()) {
-                return allow0Length;
-            } else {
-                boolean validFormat = false;
-                // try {
-                validFormat = (InstanceManager.getDefault(ReporterManager.class).validSystemNameFormat(prefix + "R" + value) == Manager.NameValidity.VALID);
-                // } catch (jmri.JmriException e) {
-                // use it for the status bar?
-                // }
-                if (validFormat) {
-                    addButton.setEnabled(true); // directly update Create button
-                    return true;
-                } else {
-                    addButton.setEnabled(false); // directly update Create button
-                    return false;
-                }
-            }
-        }
-
-        /**
-         * Private class used in conjunction with CheckedTextField to provide
-         * the mechanisms required to validate the text field data upon loss of
-         * focus, and colorize the text field in case of validation failure.
-         */
-        private class MyVerifier extends javax.swing.InputVerifier implements java.awt.event.ActionListener {
-
-            // set default background color for invalid field data
-            Color mark = Color.orange;
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public boolean shouldYieldFocus(javax.swing.JComponent input) {
-                if (input.getClass() == CheckedTextField.class) {
-
-                    boolean inputOK = verify(input);
-                    if (inputOK) {
-                        input.setBackground(Color.white);
-                        return true;
-                    } else {
-                        input.setBackground(mark);
-                        ((javax.swing.text.JTextComponent) input).selectAll();
-                        return false;
-                    }
-                } else {
-                    return false;
-                }
-            }
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public boolean verify(javax.swing.JComponent input) {
-                if (input.getClass() == CheckedTextField.class) {
-                    return ((CheckedTextField) input).isValid();
-                } else {
-                    return false;
-                }
-            }
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                JTextField source = (JTextField) e.getSource();
-                shouldYieldFocus(source); //ignore return value
-                source.selectAll();
-            }
-        }
     }
 
     /**

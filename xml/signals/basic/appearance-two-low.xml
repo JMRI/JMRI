@@ -73,6 +73,7 @@
     <appearance>
       <aspectname>Unlit</aspectname>
       <show>dark</show>
+      <show>dark</show>
       <imagelink>../../../resources/icons/smallschematics/searchlights/two-low-dark.gif</imagelink>
     </appearance>
   </appearances>

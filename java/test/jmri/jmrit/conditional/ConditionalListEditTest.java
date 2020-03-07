@@ -13,7 +13,8 @@ import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JTextFieldOperator;
 
 /*
-* Tests for the ConditionalListEdit Class
+* Tests for the ConditionalListEdit Class.
+*
 * @author Dave Sand Copyright (C) 2017
 */
 public class ConditionalListEditTest {

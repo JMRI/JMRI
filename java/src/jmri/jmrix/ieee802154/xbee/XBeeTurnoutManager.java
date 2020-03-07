@@ -1,7 +1,9 @@
 package jmri.jmrix.ieee802154.xbee;
 
-import javax.annotation.*;
+import java.util.Locale;
+import javax.annotation.Nonnull;
 import jmri.JmriException;
+import jmri.NamedBean;
 import jmri.Turnout;
 import jmri.managers.AbstractTurnoutManager;
 import org.slf4j.Logger;
@@ -14,29 +16,31 @@ import org.slf4j.LoggerFactory;
  */
 public class XBeeTurnoutManager extends AbstractTurnoutManager {
 
-    protected String prefix = null;
-
     protected XBeeTrafficController tc = null;
 
-    public XBeeTurnoutManager(XBeeTrafficController controller, String prefix) {
-        tc = controller;
-        this.prefix = prefix;
+    public XBeeTurnoutManager(XBeeConnectionMemo memo) {
+        super(memo);
+        tc = (XBeeTrafficController) memo.getTrafficController();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    @Nonnull
+    public XBeeConnectionMemo getMemo() {
+        return (XBeeConnectionMemo) memo;
     }
 
     // for now, set this to false. Multiple additions currently works
     // partially, but not for all possible cases.
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return false;
     }
 
     @Override
-    public Turnout createNewTurnout(String systemName, String userName) {
+    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
         XBeeNode curNode = null;
         String name = addressFromSystemName(systemName);
         if ((curNode = (XBeeNode) tc.getNodeFromName(name)) == null) {
@@ -47,7 +51,7 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
                     // if there was a number format exception, we couldn't
                     // find the node.
                     curNode = null;
-                    log.debug("failed to create turnout " + systemName);
+                    log.debug("failed to create turnout {}", systemName);
                     return null;
                 }
             }
@@ -56,31 +60,50 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
         int pin2 = pin2FromSystemName(systemName);
         if (!curNode.getPinAssigned(pin)
                 && (pin2 == -1 || !curNode.getPinAssigned(pin2))) {
-            log.debug("Adding turnout to pin " + pin);
+            log.debug("Adding turnout to pin {}", pin);
             curNode.setPinBean(pin, new XBeeTurnout(systemName, userName, tc));
             if (pin2 != -1) {
                 curNode.setPinBean(pin2, curNode.getPinBean(pin));
             }
             return (XBeeTurnout) curNode.getPinBean(pin);
         } else {
-            log.debug("failed to create turnout " + systemName);
+            log.debug("failed to create turnout {}", systemName);
             return null;
         }
     }
 
     @Override
-    public String createSystemName(String curAddress, String prefix) throws JmriException {
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         return prefix + typeLetter() + curAddress;
     }
 
     /**
-     * Public method to validate system name format.
-     *
-     * @param systemName Xbee id format with pins to be checked
-     * @return 'true' if system name has a valid format, else returns 'false'
+     * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
+        super.validateSystemNameFormat(name, locale);
+        int pin = pinFromSystemName(name);
+        int pin2 = pin2FromSystemName(name);
+        if (pin < 0 || pin > 7) {
+            throw new NamedBean.BadSystemNameException(
+                    Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidPin", name),
+                    Bundle.getMessage(locale, "SystemNameInvalidPin", name));
+        }
+        if (pin2 != -1 && (pin2 < 0 || pin2 > 7)) {
+            throw new NamedBean.BadSystemNameException(
+                    Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidPin", name),
+                    Bundle.getMessage(locale, "SystemNameInvalidPin", name));
+        }
+        return name;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         if (tc.getNodeFromName(addressFromSystemName(systemName)) == null
                 && tc.getNodeFromAddress(addressFromSystemName(systemName)) == null) {
             try {
@@ -96,7 +119,7 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
             } catch (java.lang.NumberFormatException nfe) {
                 // if there was a number format exception, we couldn't
                 // find the node.
-                log.error("Unable to convert " + systemName + " into the Xbee node and pin format of nn:xx");
+                log.error("Unable to convert {} into the Xbee node and pin format of nn:xx", systemName);
                 return NameValidity.INVALID;
             }
 
@@ -109,7 +132,7 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
         }
     }
 
-    private String addressFromSystemName(String systemName) {
+    private String addressFromSystemName(@Nonnull String systemName) {
         String encoderAddress;
 
         if (systemName.contains(":")) {
@@ -119,13 +142,11 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
         } else {
             encoderAddress = systemName.substring(getSystemPrefix().length() + 1, systemName.length() - 1);
         }
-        if (log.isDebugEnabled()) {
-            log.debug("Converted " + systemName + " to hardware address " + encoderAddress);
-        }
+        log.debug("Converted {} to hardware address {}", systemName, encoderAddress);
         return encoderAddress;
     }
 
-    private int pinFromSystemName(String systemName) {
+    private int pinFromSystemName(@Nonnull String systemName) {
         int input = 0;
         int iName = 0;
 
@@ -149,17 +170,15 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
                 iName = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
                 input = iName % 10;
             } catch (NumberFormatException ex) {
-                log.debug("Unable to convert " + systemName + " system name to a number");
+                log.debug("Unable to convert {} system name to a number", systemName);
                 return -1;
             }
         }
-        if (log.isDebugEnabled()) {
-            log.debug("Converted " + systemName + " to pin number" + input);
-        }
+        log.debug("Converted {} to pin number {}", systemName, input);
         return input;
     }
 
-    private int pin2FromSystemName(String systemName) {
+    private int pin2FromSystemName(@Nonnull String systemName) {
         int input = 0;
 
         if (systemName.contains(":")) {
@@ -169,24 +188,22 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
             try {
                 input = Integer.parseInt(systemName.substring(seperator2 + 1));
             } catch (NumberFormatException ex) {
-                log.debug("Unable to convert " + systemName + " into the cab and input format of nn:xx");
+                log.debug("Unable to convert {} into the cab and input format of nn:xx", systemName);
                 return -1;
             }
         } else {
             // no ":" means only one pin.
             input = -1;
         }
-        if (log.isDebugEnabled()) {
-            log.debug("Converted " + systemName + " to pin number" + input);
-        }
+        log.debug("Converted {} to pin number {}", systemName, input);
         return input;
     }
 
     @Override
-    public void deregister(jmri.Turnout s) {
-        super.deregister(s);
+    public void deregister(@Nonnull jmri.Turnout t) {
+        super.deregister(t);
         // remove the specified turnout from the associated XBee pin.
-        String systemName = s.getSystemName();
+        String systemName = t.getSystemName();
         String name = addressFromSystemName(systemName);
         int pin = pinFromSystemName(systemName);
         XBeeNode curNode;
@@ -201,13 +218,12 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
             }
         }
         if (curNode != null) {
-            if (curNode.removePinBean(pin, s)) {
-                log.debug("Removing turnout from pin " + pin);
+            if (curNode.removePinBean(pin, t)) {
+                log.debug("Removing turnout from pin {}", pin);
             } else {
-                log.debug("Failed to removing turnout from pin " + pin);
+                log.debug("Failed to removing turnout from pin {}", pin);
             }
         }
-
     }
 
     /**
@@ -215,19 +231,7 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
-        return entryToolTip;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @CheckReturnValue
-    @Override
-    public @Nonnull
-    String normalizeSystemName(@Nonnull String inputName) {
-        return inputName; // toUpperCase and trim don't behave well with 
-                          // the XBee Node Identifier based addresses.
+        return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
     private final static Logger log = LoggerFactory.getLogger(XBeeTurnoutManager.class);

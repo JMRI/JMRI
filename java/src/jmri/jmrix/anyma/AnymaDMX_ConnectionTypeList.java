@@ -17,6 +17,7 @@ public class AnymaDMX_ConnectionTypeList implements ConnectionTypeList {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String[] getAvailableProtocolClasses() {
         return new String[]{
             "jmri.jmrix.anyma.AnymaDMX_ConnectionConfig"

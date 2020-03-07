@@ -14,6 +14,7 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSim
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         xmlAdapter = new ConnectionConfigXml();
@@ -21,6 +22,7 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSim
     }
 
     @After
+    @Override
     public void tearDown() {
         // if we've started a traffic controller, dispose of it
         if (cc.getAdapter() != null) {

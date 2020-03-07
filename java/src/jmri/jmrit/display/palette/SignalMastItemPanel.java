@@ -19,7 +19,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.SignalAppearanceMap;
@@ -40,7 +39,7 @@ import org.slf4j.LoggerFactory;
  * @author Pete Cressman Copyright (c) 2010, 2011
  * @author Egbert Broerse 2017
  */
-public class SignalMastItemPanel extends TableItemPanel<SignalMast> implements ListSelectionListener {
+public class SignalMastItemPanel extends TableItemPanel<SignalMast> {
 
     SignalMast _mast;
     private HashMap<String, NamedIcon> _iconMastMap;

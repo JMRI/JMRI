@@ -1,5 +1,8 @@
 package jmri.jmrit.entryexit;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,7 +12,7 @@ import jmri.SignalMast;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 
-public class Source {
+public class Source implements PropertyChangeListener {
 
     JMenuItem clear = null;
     JMenuItem cancel = null;
@@ -57,6 +60,36 @@ public class Source {
         pd = point;
     }
 
+    /**
+     * Property change support for table in AddEntryExitPairPanel.
+     * Catch when paths go active.
+     * @since 4.17.4 
+     */
+    private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+
+    /**
+     * @since 4.17.4
+     */
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(listener);
+    }
+    
+    /**
+     * @since 4.17.4
+     */
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        pcs.removePropertyChangeListener(listener);
+    }
+    
+    /**
+     * @since 4.17.4
+     */
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        pcs.firePropertyChange("active", evt.getOldValue(), evt.getNewValue());
+    }
+    
+
     void cancelClearInterlockFromSource(int cancelClear) {
         for (DestinationPoints dp : pointToDest.values()) {
             if (dp.isActive()) {
@@ -86,7 +119,11 @@ public class Source {
         }
     }
 
-    PointDetails getPoint() {
+    /**
+     * @since 4.17.4
+     * Making the source object available for scripting in Jython.
+     */
+    public PointDetails getPoint() {
         return pd;
     }
 
@@ -105,6 +142,10 @@ public class Source {
         return sourceSignal;
     }
 
+    /**
+     * @since 4.17.4
+     * Add Property Change Listener.
+     */
     public void addDestination(PointDetails dest, String id) {
         if (pointToDest.containsKey(dest)) {
             return;
@@ -113,11 +154,17 @@ public class Source {
         DestinationPoints dstPoint = new DestinationPoints(dest, id, this);
         dest.setDestination(dstPoint, this);
         pointToDest.put(dest, dstPoint);
+        dstPoint.addPropertyChangeListener(this);
     }
 
+    /**
+     * @since 4.17.4
+     * Remov Property Change Listener.
+     */
     public void removeDestination(PointDetails dest) {
         pointToDest.get(dest).dispose();
         pointToDest.remove(dest);
+        dest.removePropertyChangeListener(this);
         if (pointToDest.size() == 0) {
             getPoint().removeSource(this);
         }
@@ -256,5 +303,4 @@ public class Source {
         return null;
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(Source.class);
 }

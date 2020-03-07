@@ -20,11 +20,13 @@ public class ResumeAutomationAction extends RunAutomationAction {
     public void doAction() {
         if (getAutomationItem() != null) {
             Automation automation = getAutomationItem().getAutomationToRun();
-            if (automation != null) {
+            if (automation != null && !automation.isRunning()) {
                 setRunning(true);
                 automation.resume();
+                finishAction(true);
+            } else {
+                finishAction(false);
             }
-            finishAction(automation != null);
         }
     }
 }

@@ -1,10 +1,5 @@
 package jmri.jmrit.display.layoutEditor;
 
-import static java.lang.Float.POSITIVE_INFINITY;
-import static jmri.jmrit.display.layoutEditor.LayoutTrack.NONE;
-import static jmri.jmrit.display.layoutEditor.LayoutTrack.POS_POINT;
-import static jmri.jmrit.display.layoutEditor.LayoutTrack.TRACK;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -13,46 +8,17 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.text.MessageFormat;
+import java.util.*;
 import java.util.function.Predicate;
-import javax.annotation.CheckForNull;
-import javax.annotation.CheckReturnValue;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.swing.AbstractAction;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JRootPane;
-import javax.swing.JSeparator;
-import javax.swing.SwingUtilities;
-import jmri.InstanceManager;
-import jmri.NamedBeanHandle;
-import jmri.Path;
-import jmri.Sensor;
-import jmri.SignalHead;
-import jmri.SignalMast;
+import javax.annotation.*;
+import javax.swing.*;
+import jmri.*;
 import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.signalling.SignallingGuiTools;
-import jmri.util.ColorUtil;
-import jmri.util.FileUtil;
-import jmri.util.MathUtil;
-import jmri.util.QuickPromptUtil;
-import jmri.util.swing.JCBHandle;
-import jmri.util.swing.JmriColorChooser;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.*;
+import jmri.util.swing.*;
+import org.slf4j.*;
 
 /**
  * PositionablePoint is a Point defining a node in the Track that can be dragged
@@ -143,6 +109,80 @@ public class PositionablePoint extends LayoutTrack {
         return type;
     }
 
+    public void setType(int newType) {
+        if (type != newType) {
+            switch (newType) {
+                default:
+                case ANCHOR: {
+                    setTypeAnchor();
+                    break;
+                }
+                case END_BUMPER: {
+                    setTypeEndBumper();
+                    break;
+                }
+                case EDGE_CONNECTOR: {
+                    setTypeEdgeConnector();
+                    break;
+                }
+            }
+            layoutEditor.repaint();
+        }
+    }
+
+    private void setTypeAnchor() {
+        ident = layoutEditor.getFinder().uniqueName("A", 1);
+        type = ANCHOR;
+        if (connect1 != null) {
+            if (connect1.getConnect1() == PositionablePoint.this) {
+                connect1.setArrowEndStart(false);
+                connect1.setBumperEndStart(false);
+            }
+            if (connect1.getConnect2() == PositionablePoint.this) {
+                connect1.setArrowEndStop(false);
+                connect1.setBumperEndStop(false);
+            }
+        }
+        if (connect2 != null) {
+            if (connect2.getConnect1() == PositionablePoint.this) {
+                connect2.setArrowEndStart(false);
+                connect2.setBumperEndStart(false);
+            }
+            if (connect2.getConnect2() == PositionablePoint.this) {
+                connect2.setArrowEndStop(false);
+                connect2.setBumperEndStop(false);
+            }
+        }
+    }
+
+    private void setTypeEndBumper() {
+        ident = layoutEditor.getFinder().uniqueName("EB", 1);
+        type = END_BUMPER;
+        if (connect1 != null) {
+            if (connect1.getConnect1() == PositionablePoint.this) {
+                connect1.setArrowEndStart(false);
+                connect1.setBumperEndStart(true);
+            }
+            if (connect1.getConnect2() == PositionablePoint.this) {
+                connect1.setArrowEndStop(false);
+                connect1.setBumperEndStop(true);
+            }
+        }
+    }
+
+    private void setTypeEdgeConnector() {
+        ident = layoutEditor.getFinder().uniqueName("EC", 1);
+        type = EDGE_CONNECTOR;
+        if (connect1 != null) {
+            if (connect1.getConnect1() == PositionablePoint.this) {
+                connect1.setBumperEndStart(false);
+            }
+            if (connect1.getConnect2() == PositionablePoint.this) {
+                connect1.setBumperEndStop(false);
+            }
+        }
+    }
+
     public TrackSegment getConnect1() {
         return connect1;
     }
@@ -155,27 +195,30 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     /**
-     * scale this LayoutTrack's coordinates by the x and y factors
-     *
-     * @param xFactor the amount to scale X coordinates
-     * @param yFactor the amount to scale Y coordinates
+     * {@inheritDoc}
      */
     @Override
-    public void scaleCoords(float xFactor, float yFactor) {
+    public void scaleCoords(double xFactor, double yFactor) {
         Point2D factor = new Point2D.Double(xFactor, yFactor);
         center = MathUtil.granulize(MathUtil.multiply(center, factor), 1.0);
     }
 
     /**
-     * translate this LayoutTrack's coordinates by the x and y factors
-     *
-     * @param xFactor the amount to translate X coordinates
-     * @param yFactor the amount to translate Y coordinates
+     * {@inheritDoc}
      */
     @Override
-    public void translateCoords(float xFactor, float yFactor) {
+    public void translateCoords(double xFactor, double yFactor) {
         Point2D factor = new Point2D.Double(xFactor, yFactor);
         center = MathUtil.add(center, factor);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void rotateCoords(double angleDEG) {
+        //can't really rotate a point... so...
+        //nothing to see here... move along...
     }
 
     /**
@@ -190,15 +233,6 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     private PositionablePoint linkedPoint;
-
-    /**
-     * @return the name of the linked editor
-     * @deprecated since 4.9.4 use @link{getLinkedEditorName()} instead.
-     */
-    @Deprecated
-    public String getLinkEditorName() {
-        return getLinkedEditorName();
-    }
 
     public String getLinkedEditorName() {
         if (getLinkedEditor() != null) {
@@ -222,7 +256,7 @@ public class PositionablePoint extends LayoutTrack {
         if (p == linkedPoint) {
             return;
         }
-        if (linkedPoint != null && linkedPoint != p) {
+        if (linkedPoint != null) {
             PositionablePoint oldLinkedPoint = linkedPoint;
             linkedPoint = null;
             if (oldLinkedPoint.getLinkedPoint() != null) {
@@ -501,7 +535,8 @@ public class PositionablePoint extends LayoutTrack {
         if (signalMast != null && !signalMast.isEmpty()) {
             mast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(signalMast);
             if (mast == null) {
-                log.error("Unable to find Signal Mast " + signalMast);
+                log.error("{}.setEastBoundSignalMast({}); Unable to find Signal Mast",
+                        getName(), signalMast);
                 return;
             }
         } else {
@@ -565,7 +600,8 @@ public class PositionablePoint extends LayoutTrack {
         if (signalMast != null && !signalMast.isEmpty()) {
             mast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(signalMast);
             if (mast == null) {
-                log.error("Unable to find Signal Mast " + signalMast);
+                log.error("{}.setWestBoundSignalMast({}); Unable to find Signal Mast",
+                        getName(), signalMast);
                 return;
             }
         } else {
@@ -670,7 +706,7 @@ public class PositionablePoint extends LayoutTrack {
      * @param newTrack the new track connection
      * @return true if successful
      */
-    public boolean replaceTrackConnection(@Nullable TrackSegment oldTrack, @Nullable TrackSegment newTrack) {
+    public boolean replaceTrackConnection(@CheckForNull TrackSegment oldTrack, @CheckForNull TrackSegment newTrack) {
         boolean result = false; // assume failure (pessimist!)
         // trying to replace old track with null?
         if (newTrack == null) {
@@ -693,7 +729,8 @@ public class PositionablePoint extends LayoutTrack {
                 result = false; // can't replace null with null
             }
             if (!result) {
-                log.error("Attempt to remove non-existant track connection: {}", oldTrack);
+                log.error("{}.replaceTrackConnection({}, {}); Attempt to remove non-existant track connection",
+                        getName(), (oldTrack == null) ? "null" : oldTrack.getName(), "null");
             }
         } else // already connected to newTrack?
         if ((connect1 != newTrack) && (connect2 != newTrack)) {
@@ -710,11 +747,13 @@ public class PositionablePoint extends LayoutTrack {
                     setEastBoundSensor("");
                 }
             } else {
-                log.error("Attempt to assign more than allowed number of connections");
+                log.error("{}.replaceTrackConnection({}, {}); Attempt to assign more than allowed number of connections",
+                        getName(), (oldTrack == null) ? "null" : oldTrack.getName(), newTrack.getName());
                 result = false;
             }
         } else {
-            log.error("Already connected to {}", newTrack.getName());
+            log.warn("{}.replaceTrackConnection({}, {}); Already connected",
+                    getName(), (oldTrack == null) ? "null" : oldTrack.getName(), newTrack.getName());
             result = false;
         }
         return result;
@@ -892,7 +931,7 @@ public class PositionablePoint extends LayoutTrack {
             popup.add(connectionsMenu);
         }
 
-        if ((type == EDGE_CONNECTOR) || (type == END_BUMPER)) {
+        if (connect1 != null && (type == EDGE_CONNECTOR || type == END_BUMPER)) {
             //
             // decorations menu
             //
@@ -1134,7 +1173,7 @@ public class PositionablePoint extends LayoutTrack {
                 jmi.setToolTipText(Bundle.getMessage("DecorationLineWidthMenuItemToolTip"));
                 jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
                     //prompt for width
-                    int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                    int newValue = QuickPromptUtil.promptForInteger(layoutEditor,
                             Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
                             Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
                             connect1.getBumperLineWidth(), new Predicate<Integer>() {
@@ -1155,7 +1194,7 @@ public class PositionablePoint extends LayoutTrack {
                 jmi.setToolTipText(Bundle.getMessage("DecorationLengthMenuItemToolTip"));
                 jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
                     //prompt for length
-                    int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                    int newValue = QuickPromptUtil.promptForInteger(layoutEditor,
                             Bundle.getMessage("DecorationLengthMenuItemTitle"),
                             Bundle.getMessage("DecorationLengthMenuItemTitle"),
                             connect1.getBumperLength(), new Predicate<Integer>() {
@@ -1188,7 +1227,7 @@ public class PositionablePoint extends LayoutTrack {
                         if ((connect1 != null) && (connect2 != null)) {
                             // who is my connect2 connected to (that's not me)?
                             LayoutTrack newConnect2 = null;
-                            int newType2 = TRACK;
+                            int newType2 = LayoutTrack.TRACK;
                             if (connect2.connect1 == pp_this) {
                                 newConnect2 = connect2.connect2;
                                 newType2 = connect2.type2;
@@ -1209,7 +1248,7 @@ public class PositionablePoint extends LayoutTrack {
                                     PositionablePoint pp = (PositionablePoint) newConnect2;
                                     pp.replaceTrackConnection(connect2, connect1);
                                 } else {
-                                    layoutEditor.setLink(newConnect2, newType2, connect1, TRACK);
+                                    layoutEditor.setLink(newConnect2, newType2, connect1, LayoutTrack.TRACK);
                                 }
                                 // connect the track at my connect1 to the newConnect2
                                 if (connect1.getConnect1() == pp_this) {
@@ -1293,17 +1332,7 @@ public class PositionablePoint extends LayoutTrack {
         jmi = lineType.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("Anchor")) {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ident = layoutEditor.getFinder().uniqueName("A", 1);
-                type = ANCHOR;
-                if (connect1.getConnect1() == PositionablePoint.this) {
-                    connect1.setArrowEndStart(false);
-                    connect1.setBumperEndStart(false);
-                }
-                if (connect1.getConnect2() == PositionablePoint.this) {
-                    connect1.setArrowEndStop(false);
-                    connect1.setBumperEndStop(false);
-                }
-                layoutEditor.repaint();
+                setTypeAnchor();
             }
         }));
 
@@ -1318,17 +1347,7 @@ public class PositionablePoint extends LayoutTrack {
         jmi = lineType.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("EndBumper")) {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ident = layoutEditor.getFinder().uniqueName("EB", 1);
-                type = END_BUMPER;
-                if (connect1.getConnect1() == PositionablePoint.this) {
-                    connect1.setArrowEndStart(false);
-                    connect1.setBumperEndStart(true);
-                }
-                if (connect1.getConnect2() == PositionablePoint.this) {
-                    connect1.setArrowEndStop(false);
-                    connect1.setBumperEndStop(true);
-                }
-                layoutEditor.repaint();
+                setTypeEndBumper();
             }
         }));
 
@@ -1337,15 +1356,7 @@ public class PositionablePoint extends LayoutTrack {
         jmi = lineType.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("EdgeConnector")) {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ident = layoutEditor.getFinder().uniqueName("EC", 1);
-                type = EDGE_CONNECTOR;
-                if (connect1.getConnect1() == PositionablePoint.this) {
-                    connect1.setBumperEndStart(false);
-                }
-                if (connect1.getConnect2() == PositionablePoint.this) {
-                    connect1.setBumperEndStop(false);
-                }
-                layoutEditor.repaint();
+                setTypeEdgeConnector();
             }
         }));
 
@@ -1377,7 +1388,8 @@ public class PositionablePoint extends LayoutTrack {
                     public void actionPerformed(ActionEvent e) {
                         // bring up signals at edge connector tool dialog
                         layoutEditor.getLETools().setSignalsAtBlockBoundaryFromMenu(PositionablePoint.this,
-                                layoutEditor.signalIconEditor, layoutEditor.signalFrame);
+                                getLayoutEditorToolBarPanel().signalIconEditor,
+                                getLayoutEditorToolBarPanel().signalFrame);
                     }
                 });
             } else {
@@ -1386,7 +1398,8 @@ public class PositionablePoint extends LayoutTrack {
                     public void actionPerformed(ActionEvent e) {
                         // bring up signals at level crossing tool dialog
                         layoutEditor.getLETools().setSignalsAtBlockBoundaryFromMenu(PositionablePoint.this,
-                                layoutEditor.signalIconEditor, layoutEditor.signalFrame);
+                                getLayoutEditorToolBarPanel().signalIconEditor,
+                                getLayoutEditorToolBarPanel().signalFrame);
                     }
                 };
 
@@ -1413,7 +1426,8 @@ public class PositionablePoint extends LayoutTrack {
                 public void actionPerformed(ActionEvent event) {
                     // bring up signals at block boundary tool dialog
                     layoutEditor.getLETools().setSensorsAtBlockBoundaryFromMenu(PositionablePoint.this,
-                            layoutEditor.sensorIconEditor, layoutEditor.sensorFrame);
+                            getLayoutEditorToolBarPanel().sensorIconEditor,
+                            getLayoutEditorToolBarPanel().sensorFrame);
                 }
             });
         }
@@ -1470,7 +1484,9 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     /**
-     * Build a list of sensors, signal heads, and signal masts attached to a connection point.
+     * Build a list of sensors, signal heads, and signal masts attached to a
+     * connection point.
+     *
      * @param ts The track segment to be checked.
      * @return a list of bean reference names.
      */
@@ -1554,7 +1570,7 @@ public class PositionablePoint extends LayoutTrack {
 
     void setLink() {
         if (getConnect1() == null || getConnect1().getLayoutBlock() == null) {
-            log.error("Can not set link until we have a connecting track with a block assigned");
+            log.error("{}.setLink(); Can not set link until we have a connecting track with a block assigned", getName());
             return;
         }
         editLink = new JDialog();
@@ -1568,18 +1584,15 @@ public class PositionablePoint extends LayoutTrack {
             updateLink();
         });
 
-        // make this button the default button (return or enter activates)
-        // Note: We have to invoke this later because we don't currently have a root pane
-        SwingUtilities.invokeLater(() -> {
-            JRootPane rootPane = SwingUtilities.getRootPane(done);
-            rootPane.setDefaultButton(done);
-        });
-
         container.add(getLinkPanel(), BorderLayout.NORTH);
         container.add(done, BorderLayout.SOUTH);
         container.revalidate();
 
         editLink.add(container);
+
+        // make this button the default button (return or enter activates)
+        JRootPane rootPane = SwingUtilities.getRootPane(done);
+        rootPane.setDefaultButton(done);
 
         editLink.pack();
         editLink.setModal(false);
@@ -1691,15 +1704,15 @@ public class PositionablePoint extends LayoutTrack {
      */
     @Override
     protected int findHitPointType(Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
-        int result = NONE;  // assume point not on connection
+        int result = LayoutTrack.NONE;  // assume point not on connection
         //note: optimization here: instead of creating rectangles for all the
         // points to check below, we create a rectangle for the test point
         // and test if the points below are in that rectangle instead.
-        Rectangle2D r = layoutEditor.trackControlCircleRectAt(hitPoint);
+        Rectangle2D r = layoutEditor.layoutEditorControlCircleRectAt(hitPoint);
         Point2D p, minPoint = MathUtil.zeroPoint2D;
 
         double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
-        double distance, minDistance = POSITIVE_INFINITY;
+        double distance, minDistance = Float.POSITIVE_INFINITY;
 
         if (!requireUnconnected || (getConnect1() == null)
                 || ((getType() == ANCHOR) && (getConnect2() == null))) {
@@ -1709,12 +1722,12 @@ public class PositionablePoint extends LayoutTrack {
             if (distance < minDistance) {
                 minDistance = distance;
                 minPoint = p;
-                result = POS_POINT;
+                result = LayoutTrack.POS_POINT;
             }
         }
         if ((useRectangles && !r.contains(minPoint))
                 || (!useRectangles && (minDistance > circleRadius))) {
-            result = NONE;
+            result = LayoutTrack.NONE;
         }
         return result;
     }   // findHitPointType
@@ -1728,8 +1741,9 @@ public class PositionablePoint extends LayoutTrack {
     @Override
     public Point2D getCoordsForConnectionType(int connectionType) {
         Point2D result = getCoordsCenter();
-        if (connectionType != POS_POINT) {
-            log.error("Invalid connection type " + connectionType); //I18IN
+        if (connectionType != LayoutTrack.POS_POINT) {
+            log.error("{}.getCoordsForConnectionType({}); Invalid Connection Type",
+                    getName(), connectionType); //I18IN
         }
         return result;
     }
@@ -1740,14 +1754,16 @@ public class PositionablePoint extends LayoutTrack {
     @Override
     public LayoutTrack getConnection(int connectionType) throws jmri.JmriException {
         LayoutTrack result = null;
-        if (connectionType == POS_POINT) {
+        if (connectionType == LayoutTrack.POS_POINT) {
             result = getConnect1();
             if (null == result) {
                 result = getConnect2();
             }
         } else {
-            log.error("Invalid connection type " + connectionType); //I18IN
-            throw new jmri.JmriException("Invalid Point");
+            String errString = MessageFormat.format("{0}.getConnection({1}); Invalid Connection Type",
+                    getName(), connectionType); //I18IN
+            log.error(errString);
+            throw new jmri.JmriException(errString);
         }
         return result;
     }
@@ -1757,29 +1773,34 @@ public class PositionablePoint extends LayoutTrack {
      */
     @Override
     public void setConnection(int connectionType, LayoutTrack o, int type) throws jmri.JmriException {
-        if ((type != TRACK) && (type != NONE)) {
-            log.error("unexpected type of connection to positionable point - " + type);
-            throw new jmri.JmriException("unexpected type of connection to positionable point - " + type);
+        if ((type != LayoutTrack.TRACK) && (type != LayoutTrack.NONE)) {
+            String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); unexpected type",
+                    getName(), connectionType, (o == null) ? "null" : o.getName(), type); //I18IN
+            log.error(errString); //I18IN
+            throw new jmri.JmriException(errString);
         }
-        if (connectionType != POS_POINT) {
-            log.error("Invalid Connection Type " + connectionType); //I18IN
-            throw new jmri.JmriException("Invalid Connection Type " + connectionType);
+        if (connectionType != LayoutTrack.POS_POINT) {
+            String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); Invalid Connection Type",
+                    getName(), connectionType, (o == null) ? "null" : o.getName(), type); //I18IN
+            log.error(errString); //I18IN
+            throw new jmri.JmriException(errString);
         }
     }
 
     /**
      * return true if this connection type is disconnected
      *
-     * @param connectionType  the connection type to test
+     * @param connectionType the connection type to test
      * @return true if the connection for this connection type is free
      */
     @Override
     public boolean isDisconnected(int connectionType) {
         boolean result = false;
-        if (connectionType == POS_POINT) {
+        if (connectionType == LayoutTrack.POS_POINT) {
             result = ((getConnect1() == null) || (getConnect2() == null));
         } else {
-            log.error("Invalid connection type " + connectionType); //I18IN
+            log.error("{}.isDisconnected({}); Invalid Connection Type",
+                    getName(), connectionType); //I18IN
         }
         return result;
     }
@@ -1819,10 +1840,10 @@ public class PositionablePoint extends LayoutTrack {
      */
     @Override
     protected void highlightUnconnected(Graphics2D g2, int specificType) {
-        if ((specificType == NONE) || (specificType == POS_POINT)) {
+        if ((specificType == LayoutTrack.NONE) || (specificType == LayoutTrack.POS_POINT)) {
             if ((getConnect1() == null)
                     || ((getType() == ANCHOR) && (getConnect2() == null))) {
-                g2.fill(layoutEditor.trackControlCircleAt(getCoordsCenter()));
+                g2.fill(trackControlCircleAt(getCoordsCenter()));
             }
         }
     }
@@ -1850,7 +1871,7 @@ public class PositionablePoint extends LayoutTrack {
                 g2.setColor(Color.green);
             }
         }
-        g2.draw(layoutEditor.trackEditControlRectAt(getCoordsCenter()));
+        g2.draw(layoutEditor.layoutEditorControlRectAt(getCoordsCenter()));
     }   // drawEditControls
 
     /**
@@ -1922,7 +1943,7 @@ public class PositionablePoint extends LayoutTrack {
                 blk2 = ts2.getLayoutBlock();
                 if ((blk1 != null) && (blk2 != null) && (blk1 != blk2)) {
                     // this is a block boundary, create a LayoutConnectivity
-                    log.debug("Block boundary ('{}'<->'{}') found at {}", blk1, blk2, this);
+                    log.debug("Block boundary (''{}''<->''{}'') found at {}", blk1, blk2, this);
                     lc = new LayoutConnectivity(blk1, blk2);
                     // determine direction from block 1 to block 2
                     if (ts1.getConnect1() == this) {
@@ -1937,7 +1958,7 @@ public class PositionablePoint extends LayoutTrack {
                     }
                     lc.setDirection(Path.computeDirection(p1, p2));
                     // save Connections
-                    lc.setConnections(ts1, ts2, TRACK, this);
+                    lc.setConnections(ts1, ts2, LayoutTrack.TRACK, this);
                     results.add(lc);
                 }
             }
@@ -1951,7 +1972,7 @@ public class PositionablePoint extends LayoutTrack {
                 blk2 = ts2.getLayoutBlock();
                 if ((blk1 != null) && (blk2 != null) && (blk1 != blk2)) {
                     // this is a block boundary, create a LayoutConnectivity
-                    log.debug("Block boundary ('{}'<->'{}') found at {}", blk1, blk2, this);
+                    log.debug("Block boundary (''{}''<->''{}'') found at {}", blk1, blk2, this);
                     lc = new LayoutConnectivity(blk1, blk2);
 
                     // determine direction from block 1 to block 2
@@ -1965,7 +1986,7 @@ public class PositionablePoint extends LayoutTrack {
                     //In this instance work out the direction of the first track relative to the positionable poin.
                     lc.setDirection(Path.computeDirection(p1, getCoordsCenter()));
                     // save Connections
-                    lc.setConnections(ts1, ts2, TRACK, this);
+                    lc.setConnections(ts1, ts2, LayoutTrack.TRACK, this);
                     results.add(lc);
                 }
             }
@@ -1982,7 +2003,7 @@ public class PositionablePoint extends LayoutTrack {
 
         if ((getConnect1() == null)
                 || ((getType() == ANCHOR) && (getConnect2() == null))) {
-            result.add(Integer.valueOf(POS_POINT));
+            result.add(Integer.valueOf(LayoutTrack.POS_POINT));
         }
         return result;
     }
@@ -2014,7 +2035,7 @@ public class PositionablePoint extends LayoutTrack {
         * <p>
         *     Basically, we're maintaining contiguous track sets for each block found
         *     (in blockNamesToTrackNameSetMap)
-        */
+         */
         //check the 1st connection points block
         TrackSegment ts1 = getConnect1();
         String blk1 = null;
@@ -2024,7 +2045,7 @@ public class PositionablePoint extends LayoutTrack {
         // this should never be null... but just in case...
         if (ts1 != null) {
             blk1 = ts1.getBlockName();
-            if (blk1 != null) {
+            if (!blk1.isEmpty()) {
                 TrackNameSets = blockNamesToTrackNameSetsMap.get(blk1);
                 if (TrackNameSets != null) { // (#1)
                     for (Set<String> checkTrackNameSet : TrackNameSets) {
@@ -2034,13 +2055,13 @@ public class PositionablePoint extends LayoutTrack {
                         }
                     }
                 } else {    // (#3)
-                    log.debug("*New block ('{}') trackNameSets", blk1);
+                    log.debug("*New block (''{}'') trackNameSets", blk1);
                     TrackNameSets = new ArrayList<>();
                     blockNamesToTrackNameSetsMap.put(blk1, TrackNameSets);
                 }
                 if (TrackNameSet == null) {
                     TrackNameSet = new LinkedHashSet<>();
-                    log.debug("*    Add track '{}' to trackNameSet for block '{}'", getName(), blk1);
+                    log.debug("*    Add track ''{}'' to trackNameSet for block ''{}''", getName(), blk1);
                     TrackNameSet.add(getName());
                     TrackNameSets.add(TrackNameSet);
                 }
@@ -2056,7 +2077,7 @@ public class PositionablePoint extends LayoutTrack {
             // this should never be null... but just in case...
             if (ts2 != null) {
                 String blk2 = ts2.getBlockName();
-                if (blk2 != null) {
+                if (!blk2.isEmpty()) {
                     TrackNameSet = null;    // assume not found (pessimist!)
                     TrackNameSets = blockNamesToTrackNameSetsMap.get(blk2);
                     if (TrackNameSets != null) { // (#1)
@@ -2067,13 +2088,13 @@ public class PositionablePoint extends LayoutTrack {
                             }
                         }
                     } else {    // (#3)
-                        log.debug("*New block ('{}') trackNameSets", blk2);
+                        log.debug("*New block (''{}'') trackNameSets", blk2);
                         TrackNameSets = new ArrayList<>();
                         blockNamesToTrackNameSetsMap.put(blk2, TrackNameSets);
                     }
                     if (TrackNameSet == null) {
                         TrackNameSet = new LinkedHashSet<>();
-                        log.debug("*    Add track '{}' to TrackNameSet for block '{}'", getName(), blk2);
+                        log.debug("*    Add track ''{}'' to TrackNameSet for block ''{}''", getName(), blk2);
                         TrackNameSets.add(TrackNameSet);
                         TrackNameSet.add(getName());
                     }
@@ -2100,7 +2121,7 @@ public class PositionablePoint extends LayoutTrack {
                 if (blk1.equals(blockName)) {
                     // if we are added to the TrackNameSet
                     if (TrackNameSet.add(getName())) {
-                        log.debug("*    Add track '{}'for block '{}'", getName(), blockName);
+                        log.debug("*    Add track ''{}''for block ''{}''", getName(), blockName);
                     }
                     // this should never be null... but just in case...
                     if (connect1 != null) {
@@ -2117,7 +2138,7 @@ public class PositionablePoint extends LayoutTrack {
                     if (blk2.equals(blockName)) {
                         // if we are added to the TrackNameSet
                         if (TrackNameSet.add(getName())) {
-                            log.debug("*    Add track '{}'for block '{}'", getName(), blockName);
+                            log.debug("*    Add track ''{}''for block ''{}''", getName(), blockName);
                         }
                         // this should never be null... but just in case...
                         if (connect2 != null) {
@@ -2139,6 +2160,6 @@ public class PositionablePoint extends LayoutTrack {
         // nothing to see here, move along...
     }
 
-    private final static Logger log
-            = LoggerFactory.getLogger(PositionablePoint.class);
+    private final static Logger log = LoggerFactory.getLogger(PositionablePoint.class);
+
 }

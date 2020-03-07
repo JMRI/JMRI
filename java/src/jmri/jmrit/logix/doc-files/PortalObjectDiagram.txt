@@ -1,0 +1,41 @@
+@startuml
+
+package "jmri" #EEEEEE {
+interface NamedBean
+class Path
+class Block
+NamedBean <|- Block
+
+Block o-- "0..many" Path : [] pListOfPossibleEntrancePaths
+Path o-- "1" Block : _block
+}
+
+class OPath
+note right: An OPath is a route that traverses a Block\nfrom one boundary to another.
+
+class OBlock
+note right: OBlock extends jmri.Block to be used in\nLogix Conditionals and Warrants. It is\nthe smallest piece of track that can have\noccupancy detection. A better name would\nbe Detection Circuit. However, an OBlock\ncan be defined without an occupancy\nsensor and used to calculate routes.
+
+class Portal
+note right: A Portal is a boundary between two Blocks
+
+class Warrant
+
+class WarrantRoute
+
+Block      <|-- OBlock
+OBlock     o-- "many" Portal : List _portals
+
+Portal     o-- "1..many" OPath : List _fromPaths
+Portal     o-- "1" OBlock : _fromBlock
+Portal     o-- "1" OBlock : _toBlock
+
+Path       <|-- OPath
+OPath      o-- "1" Portal : _fromPortal
+OPath      o-- "1" Portal : _toPortal
+
+
+
+@enduml
+
+

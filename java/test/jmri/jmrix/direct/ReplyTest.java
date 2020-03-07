@@ -11,6 +11,7 @@ import org.junit.Before;
 public class ReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         m = new Reply();

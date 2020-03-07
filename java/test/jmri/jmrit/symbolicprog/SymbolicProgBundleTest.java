@@ -17,14 +17,14 @@ public class SymbolicProgBundleTest {
         Assert.assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout"));
     }
 
-    @Test
+    @Test(expected = java.util.MissingResourceException.class)
     public void testBadKey() {
-        try {
             Bundle.getMessage("FFFFFTTTTTTT");
-        } catch (java.util.MissingResourceException e) {
-            return;
-        } // OK
-        Assert.fail("No exception thrown");
+    }
+
+    @Test(expected = java.util.MissingResourceException.class)
+    public void testBadKeyMessageArg() {
+            Bundle.getMessage("FFFFFTTTTTTT", new Object[]{});  // NOI18N
     }
 
 }

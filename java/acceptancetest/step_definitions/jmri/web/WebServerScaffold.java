@@ -1,10 +1,16 @@
 package jmri.web;
 
 import cucumber.api.java8.En;
+import jmri.util.JUnitAppender;
+import jmri.util.JUnitOperationsUtil;
+import jmri.util.JUnitUtil;
 import jmri.web.server.WebServer;
-import org.junit.Assert;
+import jmri.web.server.WebServerPreferences;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * Cucumber helper to handle starting and stopping the web server during web
@@ -22,44 +28,42 @@ public class WebServerScaffold implements En {
     public WebServerScaffold(jmri.InstanceManager instance) {
 
         Before(tags, () -> {
-            jmri.util.JUnitUtil.resetProfileManager();
-            jmri.util.JUnitUtil.initConfigureManager();
-            jmri.util.JUnitUtil.initInternalTurnoutManager();
-            jmri.util.JUnitUtil.initInternalLightManager();
-            jmri.util.JUnitUtil.initInternalSensorManager();
-            jmri.util.JUnitUtil.initMemoryManager();
-            jmri.util.JUnitUtil.initShutDownManager();
-            jmri.util.JUnitUtil.initConnectionConfigManager();
-            jmri.util.JUnitUtil.initDebugPowerManager();
+            JUnitUtil.resetProfileManager();
+            instance.setDefault(WebServerPreferences.class, new WebServerPreferences());
+            JUnitUtil.initConfigureManager();
+            JUnitUtil.initInternalTurnoutManager();
+            JUnitUtil.initInternalLightManager();
+            JUnitUtil.initInternalSensorManager();
+            JUnitUtil.initMemoryManager();
+            JUnitUtil.initConnectionConfigManager();
+            JUnitUtil.initDebugPowerManager();
             server = new WebServer(); // a webserver using default preferences.
             server.start();
-            jmri.util.JUnitUtil.waitFor(() -> {
+            JUnitUtil.waitFor(() -> {
                 return server.isStarted();
             }, "Server Failed to Start in time");
-            jmri.util.JUnitOperationsUtil.setupOperationsTests();
+            JUnitOperationsUtil.setupOperationsTests();
         });
 
         After(tags, () -> {
             try {
                 try {
                     server.stop();
-                    jmri.util.JUnitUtil.waitFor(() -> {
+                    JUnitUtil.waitFor(() -> {
                         return server.isStopped();
                     }, "Server failed to Stop in time");
-                } catch (java.lang.NullPointerException npe) {
+                } catch (NullPointerException npe) {
                     log.debug("NPE shutting down web server", npe);
-                    //Assert.fail("Null Pointer Exception while stopping web server:" + npe);
                 } catch (Exception ex) {
                     // Exception is thrown by the stop call above.
                     // if an Exception occurs here, we may want to raise a flag,
                     log.error("Excecption shutting down web server", ex);
-                    Assert.fail("Exception occured during web server shutdown:" + ex);
+                    fail("Exception occured during web server shutdown", ex);
                 }
-            } catch (java.lang.NullPointerException npe2) {
+            } catch (NullPointerException npe2) {
                 log.debug("NPE shutting down web server", npe2);
-                //Assert.fail("Null Pointer Exception occured during teardown:" + npe2);
             }
-            jmri.util.JUnitAppender.suppressErrorMessage("Error on WebSocket message:\nConnection has been closed locally");
+            JUnitAppender.suppressErrorMessage("Error on WebSocket message:\nConnection has been closed locally");
 
         });
     }

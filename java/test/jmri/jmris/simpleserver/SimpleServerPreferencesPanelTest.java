@@ -1,10 +1,11 @@
 package jmri.jmris.simpleserver;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 /**
@@ -16,15 +17,15 @@ public class SimpleServerPreferencesPanelTest {
 
     @Test public void testCtor() {
         SimpleServerPreferencesPanel a = new SimpleServerPreferencesPanel();
-        Assert.assertNotNull(a);
+        assertThat(a).isNotNull();
     }
 
-    @Before public void setUp() {
+    @BeforeEach public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
     }
 
-    @After public void tearDown() throws Exception {
+    @AfterEach public void tearDown() throws Exception {
         JUnitUtil.tearDown();
     }
 

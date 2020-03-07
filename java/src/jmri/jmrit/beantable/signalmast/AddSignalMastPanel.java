@@ -5,22 +5,19 @@ import java.awt.event.*;
 import java.io.File;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.text.DecimalFormat;
 import java.util.*;
 import java.util.List;
 
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
 
 import jmri.*;
 import jmri.implementation.*;
 import jmri.util.*;
-import jmri.util.swing.*;
 
 import org.jdom2.Element;
 
 /**
- * JPanel to create a new Signal Mast
+ * JPanel to create a new Signal Mast.
  * 
  * "Driver" refers to a particular class of SignalMast implementation that's to be configured.
  *
@@ -30,7 +27,7 @@ import org.jdom2.Element;
 public class AddSignalMastPanel extends JPanel {
     
     // head matter
-    JTextField userName = new JTextField(20); // N11N
+    JTextField userName = new JTextField(20);
     JComboBox<String> sigSysBox = new JComboBox<>();  // the basic signal system
     JComboBox<String> mastBox = new JComboBox<>(new String[]{Bundle.getMessage("MastEmpty")}); // the mast within the system NOI18N
     boolean mastBoxPassive = false; // if true, mastBox doesn't process updates
@@ -117,6 +114,7 @@ public class AddSignalMastPanel extends JPanel {
         }
         add(centerPanel);
         signalMastDriver.addItemListener(new ItemListener(){
+            @Override
             public void itemStateChanged(ItemEvent evt) {
                     log.trace("about to call selection() from signalMastDriver itemStateChanged");
                     selection((String)evt.getItem());
@@ -184,12 +182,10 @@ public class AddSignalMastPanel extends JPanel {
                 updateSelectedDriver();
             }
         });
-
-
     }    
 
     /**
-     * Select a particular signal implementation to display
+     * Select a particular signal implementation to display.
      */
     void selection(String view) {
         log.trace(" selection({}) start", view);
@@ -200,7 +196,7 @@ public class AddSignalMastPanel extends JPanel {
             }
         }
         
-        // update that selected pane before display
+        // update that selected pane before display.
         updateSelectedDriver();
         
         // and show
@@ -276,8 +272,10 @@ public class AddSignalMastPanel extends JPanel {
     ArrayList<File> mastFiles = new ArrayList<>(); // signal system definition files
     LinkedHashMap<String, Integer> mapNameToShowSize = new LinkedHashMap<>();
     LinkedHashMap<String, String> mapTypeToName = new LinkedHashMap<>();
- 
-    // load the mast definitions from the selected signal system
+
+    /**
+     * Load the mast definitions from the selected signal system.
+     */
     void loadMastDefinitions() {
         log.trace(" loadMastDefinitions() start");
         // need to remove itemListener before addItem() or item event will occur
@@ -410,10 +408,12 @@ public class AddSignalMastPanel extends JPanel {
         currentPane.setMast(null);
 
         currentPane.revalidate();
-        if (getTopLevelAncestor() != null && getTopLevelAncestor() instanceof Window) {
-            ((JFrame)getTopLevelAncestor()).pack();
+
+        java.awt.Container ancestor = getTopLevelAncestor();
+        if ((ancestor instanceof JmriJFrame)) {
+            ((JmriJFrame) ancestor).pack();
         } else {
-            log.debug("Can't call pack() on {}", getTopLevelAncestor());
+            log.debug("Can't call pack() on {}", ancestor);
         }
         log.trace(" updateSelectedDriver() end");
     }
@@ -421,6 +421,7 @@ public class AddSignalMastPanel extends JPanel {
     /**
      * Check of user name done when creating new SignalMast.
      * In case of error, it looks a message and (if not headless) shows a dialog.
+     *
      * @return true if OK to proceed
      */
     boolean checkUserName(String nam) {
@@ -467,7 +468,7 @@ public class AddSignalMastPanel extends JPanel {
      * <p>
      * Invoked from Apply/Create button.
      */
-    void okPressed() {
+    private void okPressed() {
         log.trace(" okPressed() start");
         boolean success = false;
         
@@ -489,10 +490,10 @@ public class AddSignalMastPanel extends JPanel {
         
         // ask top-most pane to make a signal
         try {
-            success = currentPane.createMast(sigsysname,mastname,user);
+            success = currentPane.createMast(sigsysname, mastname, user);
         } catch (RuntimeException ex) {
             issueDialogFailMessage(ex);
-            return; // without clearing panel, so user can try again
+            return; // without clearing the panel, so user can try again
         }
         if (!success) {
             // should have already provided user feedback via dialog
@@ -539,7 +540,7 @@ public class AddSignalMastPanel extends JPanel {
     /**
      * Respond to the Cancel button.
      */
-    void cancelPressed() {
+    private void cancelPressed() {
         log.trace(" cancelPressed() start");
         clearPanel();
         log.trace(" cancelPressed() end");
@@ -550,12 +551,13 @@ public class AddSignalMastPanel extends JPanel {
      * <p>
      * Called at end of okPressed() and from Cancel
      */
-    void clearPanel() {
+    private void clearPanel() {
         log.trace(" clearPanel() start");
-        if (getTopLevelAncestor() instanceof jmri.util.JmriJFrame) {
-            ((jmri.util.JmriJFrame) getTopLevelAncestor()).dispose();
+        java.awt.Container ancestor = getTopLevelAncestor();
+        if ((ancestor instanceof JmriJFrame)) {
+            ((JmriJFrame) ancestor).dispose();
         } else {
-            log.warn("Unexpected top level ancestor: {}", getTopLevelAncestor()); // NOI18N
+            log.warn("Unexpected top level ancestor: {}", ancestor); // NOI18N
         }
         userName.setText(""); // clear user name
         log.trace(" clearPanel() end");
@@ -563,4 +565,5 @@ public class AddSignalMastPanel extends JPanel {
 
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AddSignalMastPanel.class);
+
 }

@@ -25,12 +25,12 @@ import org.slf4j.LoggerFactory;
 public class NullAudioSource extends AbstractAudioSource {
 
     /**
-     * True if we've been initialised
+     * True if we've been initialised.
      */
     private boolean initialised = false;
 
     /**
-     * Constructor for new NullAudioSource with system name
+     * Constructor for new NullAudioSource with system name.
      *
      * @param systemName AudioSource object system name (e.g. IAS1)
      */
@@ -39,7 +39,7 @@ public class NullAudioSource extends AbstractAudioSource {
     }
 
     /**
-     * Constructor for new NullAudioSource with system name and user name
+     * Constructor for new NullAudioSource with system name and user name.
      *
      * @param systemName AudioSource object system name (e.g. IAS1)
      * @param userName   AudioSource object user name
@@ -58,7 +58,7 @@ public class NullAudioSource extends AbstractAudioSource {
     }
 
     /**
-     * Initialise this AudioSource
+     * Initialise this AudioSource.
      *
      * @return True if initialised
      */

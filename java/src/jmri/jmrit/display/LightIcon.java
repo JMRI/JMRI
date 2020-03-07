@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import jmri.InstanceManager;
 import jmri.Light;
+import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.catalog.NamedIcon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -176,10 +177,8 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
         String name;
         if (light == null) {
             name = Bundle.getMessage("NotConnected");
-        } else if (light.getUserName() != null) {
-            name = light.getUserName() + " (" + light.getSystemName() + ")";
         } else {
-            name = light.getSystemName();
+            name = light.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
         }
         return name;
     }

@@ -23,10 +23,10 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Set Signals at A Single/Double Slip</h1>
 
       <h2>Introduction</h2>
@@ -198,7 +198,7 @@
       <p><b>Please remember to save your panel after using this
       tool.</b></p>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

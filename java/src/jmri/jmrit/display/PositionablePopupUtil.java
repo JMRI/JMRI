@@ -235,18 +235,14 @@ public class PositionablePopupUtil {
 
     public void setFixedHeight(int h) {
         fixedHeight = h;
-        if (log.isDebugEnabled()) {
-            log.debug("setFixedHeight()=" + getFixedHeight());
-        }
+        log.debug("setFixedHeight()={}", getFixedHeight());
         _parent.updateSize();
     }
 
     public void setFixedSize(int w, int h) {
         fixedWidth = w;
         fixedHeight = h;
-        if (log.isDebugEnabled()) {
-            log.debug("setFixedSize()=" + "(" + getFixedWidth() + "," + getFixedHeight() + ")");
-        }
+        log.debug("setFixedSize()=({},{})", getFixedWidth(), getFixedHeight());
         _parent.updateSize();
     }
 
@@ -446,7 +442,6 @@ public class PositionablePopupUtil {
     }
 
     public void setFontSize(float newSize) {
-        //_textComponent.setFont(jmri.util.FontUtil.deriveFont(getFont(), newSize));
         _textComponent.setFont(_textComponent.getFont().deriveFont(newSize));
         _parent.updateSize();
         ///_parent.getEditor().setAttributes(_self, _parent);

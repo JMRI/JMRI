@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: bobm $) 2019 -->
+<title>JMRI: Danish Simplified signal definition</title>
+
+<!-- Style -->
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" >
+<link rel="stylesheet" type="text/css" href="/css/default.css"
+	MEDIA="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css"
+	MEDIA="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1>JMRI: Danish Simplified signal definition</h1>
+
+
+<p>
+B and I signals from Togdillen or Banestyrelsen - not exactly prototypical.
+<br>
+</p>
+<p>
+See the 
+<a href="aspects.xml">aspect page</a>.
+</p>
+
+<p>
+Signal Mast definitions:
+</p>
+<ul>
+    <li><a href="appearance-B.xml">B</a>
+    <li><a href="appearance-B2.xml">B2</a>
+    <li><a href="appearance-I.xml">I</a>
+    <li><a href="appearance-buffer-stop.xml">Buffer stop</a>
+    <li><a href="appearance-feather.xml">Feather</a>
+</ul>
+    </div>
+</div>
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

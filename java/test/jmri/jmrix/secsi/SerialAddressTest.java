@@ -20,7 +20,7 @@ public class SerialAddressTest {
     private SecsiSystemConnectionMemo memo = null;
 
     @Test
-    public void testValidateSystemNameFormat() {
+    public void testValidSystemNameFormat() {
         Assert.assertTrue("valid format - VL2", NameValidity.VALID == SerialAddress.validSystemNameFormat("VL2", 'L', "V"));
         Assert.assertTrue("valid format - VL0B2", NameValidity.VALID == SerialAddress.validSystemNameFormat("VL0B2", 'L', "V"));
         Assert.assertTrue("invalid format - VL", NameValidity.VALID != SerialAddress.validSystemNameFormat("VL", 'L', "V"));
@@ -212,6 +212,7 @@ public class SerialAddressTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

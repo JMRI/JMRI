@@ -44,6 +44,9 @@ public class DccSignalMastXml
             unlit.setAttribute("allowed", "no");
         }
         e.addContent(unlit);
+
+        e.addContent(new Element("packetsendcount").addContent(Integer.toString(p.getDccSignalMastPacketSendCount())));
+
         SignalAppearanceMap appMap = p.getAppearanceMap();
         if (appMap != null) {
             java.util.Enumeration<String> aspects = appMap.getAspects();
@@ -84,6 +87,10 @@ public class DccSignalMastXml
 
         if (getUserName(shared) != null) {
             m.setUserName(getUserName(shared));
+        }
+
+        if (shared.getChild("packetsendcount") != null) {
+            m.setDccSignalMastPacketSendCount(Integer.parseInt(shared.getChild("packetsendcount").getValue()));
         }
 
         return loadCommonDCCMast(m, shared);

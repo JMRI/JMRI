@@ -15,13 +15,14 @@
   <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
   <!-- or change them to reflect your alternative logo -->
   <!--#include virtual="/Style.shtml" -->
-</head><!--#include virtual="/Header.shtml" -->
+</head>
 
 <body>
-  <div id="mBody">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-
     <div id="mainContent">
+
       <h1>JMRI Code: Developing with JMRI</h1>
 
       <h2>Background</h2>
@@ -154,6 +155,10 @@
     repository and included in a release, this will be how other JMRI users find out 
     about them.  You can also cut&amp;paste what you write here into 
     your pull request (see below) to help explain your change to the people reviewing it.
+    If your work requires that the users be warned about something, i.e. to do a
+    migration, please also add that to the 
+    <a href="../../../releasenotes/current-draft-warnings.shtml">help/en/releasenotes/current-draft-warnings.shtml</a> 
+    file which works similarly.
     
 <h3>Commit Changes to Your Local Repository</h3>
       You should
@@ -373,6 +378,33 @@ To push the current branch and set the remote as upstream, use
      <p>just like you did at the start of this process, and continue
      to develop.</p>
 
+    <a name="release" id="release"></a>
+    <h3>After Your Pull Request Is Merged</h3>
+    
+    Once the changes in your PR has been merged onto the 
+    master branch, it will be included in the 
+    <a href="http://builds.jmri.org/jenkins/job/Development/job/Packages/">next development release</a>
+    built by 
+    <a href="ContinuousIntegration.shtml">our CI system</a>.
+    These packages can be downloaded and run to check that 
+    everything is working. You can also refer users to 
+    <a href="http://builds.jmri.org/jenkins/job/Development/job/Packages/">the built installers</a>
+    so they can test your changes.
+    
+    <p>
+    Approximately once a month, the contents of the master branch are 
+    taken and used to build a test release.  These are announced to
+    the user community to simultaneously make new features and fixes
+    available, and to put the most recent code into wider use to flush out problems.
+    The build process is
+    <a href=https://jmri.org/scripts/HOWTO-distribution.md>documented separately</a>.
+    People are encouraged to download and use these, then report 
+    any problems via GitHub or the jmriusers group.
+    
+    <p>
+    Approximately twice a year, a similar process is used to 
+    build production releases.
+    
     <h3>Who are these people?</h3>
     
     JMRI is the work of 

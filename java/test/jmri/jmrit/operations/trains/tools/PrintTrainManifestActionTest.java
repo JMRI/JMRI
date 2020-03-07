@@ -4,6 +4,12 @@ import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Rule;
+import org.junit.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.trains.Train;
@@ -12,15 +18,18 @@ import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JemmyUtil;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
 public class PrintTrainManifestActionTest extends OperationsTestCase {
+
+    @Rule
+    public jmri.util.junit.rules.RetryRule retryRule = new jmri.util.junit.rules.RetryRule(3);  // allow 3 retries
+
+    @Rule // This test class was periodically stalling and causing the CI run to time out. Limit its duration.
+	public org.junit.rules.Timeout globalTimeout = org.junit.rules.Timeout.seconds(20);
 
     @Test
     public void testCTor() {
@@ -78,6 +87,9 @@ public class PrintTrainManifestActionTest extends OperationsTestCase {
         Assert.assertNotNull("exists", printPreviewFrame);
 
         JUnitUtil.dispose(printPreviewFrame);
+        
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(PrintTrainManifestActionTest.class);

@@ -234,7 +234,7 @@ public class FontComboUtil {
      * <p>
      * Typical usage:
      * <pre>
-     * JComboBox fontFamily = FontUtil.getFontCombo(FontUtil.MONOSPACED);
+     * JComboBox fontFamily = FontComboUtil.getFontCombo(FontComboUtil.MONOSPACED);
      * fontFamily.addActionListener(new ActionListener() {
      *      public void actionPerformed(ActionEvent e) {
      *          myObject.setFontFamily((String) ((JComboBox)e.getSource()).getSelectedItem());

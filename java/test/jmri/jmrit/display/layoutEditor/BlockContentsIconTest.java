@@ -1,16 +1,18 @@
 package jmri.jmrit.display.layoutEditor;
 
 import java.awt.GraphicsEnvironment;
-import jmri.util.JUnitUtil;
-import jmri.util.JUnitAppender;
-import jmri.util.JmriJFrame;
 import javax.swing.JFrame;
+import jmri.BlockManager;
+import jmri.util.JUnitAppender;
+import jmri.util.JUnitUtil;
+import jmri.util.JmriJFrame;
+import org.apache.log4j.Level;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import org.apache.log4j.Level;
+import org.netbeans.jemmy.QueueTool;
 
 /**
  * Test simple functioning of BlockContentsIcon
@@ -38,14 +40,14 @@ public class BlockContentsIconTest {
 
         jf.getContentPane().add(new javax.swing.JLabel("| Expect roster entry: "));
 
-        jmri.jmrit.roster.RosterEntry re = jmri.jmrit.roster.RosterEntry.fromFile(new java.io.File("java/test/jmri/jmrit/roster/ACL1012.xml"));
+        jmri.jmrit.roster.RosterEntry re = jmri.jmrit.roster.RosterEntry.fromFile(new java.io.File("java/test/jmri/jmrit/roster/ACL1012-Schema.xml"));
 
-	    jmri.InstanceManager.memoryManagerInstance().provideMemory("IM1").setValue(re);
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        jmri.InstanceManager.getDefault(BlockManager.class).getBlock("IB1").setValue(re);
+        new QueueTool().waitEmpty(100);
 
         jf.pack();
         jf.setVisible(true);
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty(100);
         Assert.assertFalse("No Warn Level or higher Messages",JUnitAppender.unexpectedMessageSeen(Level.WARN));
 
         jf.setVisible(false);
@@ -65,13 +67,14 @@ public class BlockContentsIconTest {
 
         jmri.IdTag tag = new jmri.implementation.DefaultIdTag("1234");
 
-	    jmri.InstanceManager.memoryManagerInstance().provideMemory("IM1").setValue(tag);
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        jmri.InstanceManager.getDefault(BlockManager.class).getBlock("IB1").setValue(tag);
+        new QueueTool().waitEmpty(100);
 
         jf.pack();
         jf.setVisible(true);
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty(100);
         Assert.assertFalse("No Warn Level or higher Messages",JUnitAppender.unexpectedMessageSeen(Level.WARN));
+        Assert.assertNotNull("Label with correct text value",jmri.util.swing.JemmyUtil.getLabelWithText(jf.getTitle(),tag.getDisplayName()));
 
         jf.setVisible(false);
         JUnitUtil.dispose(jf);
@@ -82,17 +85,20 @@ public class BlockContentsIconTest {
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
-	if(!GraphicsEnvironment.isHeadless()){
-           to = new BlockContentsIcon("test", new LayoutEditor());
-	}
+	    if(!GraphicsEnvironment.isHeadless()){
+            jmri.Block block = jmri.InstanceManager.getDefault(BlockManager.class).provideBlock("IB1");
+            to = new BlockContentsIcon("test", new LayoutEditor());
+            to.setBlock(new jmri.NamedBeanHandle<>("IB1", block));
+	    }
     }
 
     @After
     public void tearDown() throws Exception {
-	if(to!=null) {
-           JUnitUtil.dispose(to.getEditor());
-	}
-	to = null;
-        JUnitUtil.tearDown();
+        if(to!=null) {
+            JUnitUtil.dispose(to.getEditor());
+     }
+     to = null;
+     JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
+     JUnitUtil.tearDown();
     }
 }

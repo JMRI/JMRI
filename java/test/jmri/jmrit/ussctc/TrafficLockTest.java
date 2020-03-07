@@ -14,6 +14,7 @@ public class TrafficLockTest {
     @Test
     public void testLocked() {
         SignalHeadSection s = new SignalHeadSection() {
+            @Override
             public String getName() { return "";}
         };
         s.lastIndication = SignalHeadSection.CODE_LEFT;
@@ -26,6 +27,7 @@ public class TrafficLockTest {
     @Test
     public void testUnlocked() {
         SignalHeadSection s = new SignalHeadSection() {
+            @Override
             public String getName() { return "";}
         };
         s.lastIndication = SignalHeadSection.CODE_RIGHT;

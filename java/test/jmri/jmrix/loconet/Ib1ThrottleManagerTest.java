@@ -20,6 +20,7 @@ public class Ib1ThrottleManagerTest extends jmri.managers.AbstractThrottleManage
     }
 
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         memo = new LocoNetSystemConnectionMemo();

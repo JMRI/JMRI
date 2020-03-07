@@ -150,10 +150,14 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
             }
             // send remove loco from consist to NCE command station
             removeLocoFromConsist(locoAddress.getNumber(), locoAddress.isLongAddress());
+            //reset the value in the roster entry for CV19
+            resetRosterEntryCVValue(locoAddress);
+
             // remove from lists
+            consistRoster.remove(locoAddress);
+            consistPosition.remove(locoAddress);
             consistDir.remove(locoAddress);
             consistList.remove(locoAddress);
-            consistPosition.remove(locoAddress);
             notifyConsistListeners(locoAddress, ConsistListener.OPERATION_SUCCESS);
         } else {
             log.error("Loco " + locoAddress + " is not part of this consist " + getConsistAddress());

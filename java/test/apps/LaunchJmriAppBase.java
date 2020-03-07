@@ -1,38 +1,36 @@
 package apps;
 
 import java.awt.GraphicsEnvironment;
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 
-import org.apache.commons.io.*;
+import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
 import org.junit.Rule;
-import org.junit.rules.Timeout;
 import org.junit.rules.TemporaryFolder;
+import org.junit.rules.Timeout;
+
 import jmri.InstanceManager;
-import jmri.profile.ProfileManager;
-import jmri.managers.DefaultShutDownManager;
+import jmri.ShutDownManager;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
-import jmri.util.JUnitAppender;
+import jmri.util.MockShutDownManager;
 import jmri.util.junit.rules.RetryRule;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Base implementation for a test that launches and tests complete JMRI apps
- * from prebuilt profile directories
+ * from prebuilt profile directories.
  *
  * @author Bob Jacobsen 2018
  */
 abstract public class LaunchJmriAppBase {
 
     static final int RELEASETIME = 3000; // mSec
-    static final int TESTMAXTIME = 20; // seconds - not too long, so job doesn't hang
+    static final int TESTMAXTIME = 40; // seconds - not too long, so job doesn't hang
+    // in particular the #testLaunchInitLoop() test needs this time for setup
 
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
@@ -44,18 +42,17 @@ abstract public class LaunchJmriAppBase {
     public RetryRule retryRule = new RetryRule(1); // allow 1 retry
 
     /**
-     * Run one application
+     * Run one application.
      * 
-     * @param profileName Name of the Profile to copy from files in
-     *                  java/test/apps/PanelPro/profiles/
-     * @param frameName Application (frame) title
-     * @param startMessageStart Start of the "we're up!" message
+     * @param profileName       Name of the Profile folder to copy from
+     *                          java/test/apps/PanelPro/profiles/
+     * @param frameName         Application (frame) title
+     * @param startMessageStart Start of the "we're up!" message as seen in System Console
      */
     protected void runOne(String profileName, String frameName, String startMessageStart) throws IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         try {
-
             // create a custom profile
             folder.create();
             File tempFolder = folder.newFolder();
@@ -70,11 +67,11 @@ abstract public class LaunchJmriAppBase {
 
             JUnitUtil.waitFor(() -> {
                 return JmriJFrame.getFrame(frameName) != null;
-            }, "window up");
+            }, "the application window is up");
 
             JUnitUtil.waitFor(() -> {
                 return JUnitAppender.checkForMessageStartingWith(startMessageStart) != null;
-            }, "first Info line seen");
+            }, "first Info line seen in Console after startup");
 
             extraChecks();
 
@@ -84,7 +81,11 @@ abstract public class LaunchJmriAppBase {
             cleanup();
 
             // gracefully shutdown, but don't exit
-            ((DefaultShutDownManager) InstanceManager.getDefault(jmri.ShutDownManager.class)).shutdown(0, false);
+            ShutDownManager sdm = InstanceManager.getDefault(ShutDownManager.class);
+            if (sdm instanceof MockShutDownManager) {
+                // ShutDownManagers other than MockShutDownManager really shutdown
+                sdm.shutdown();
+            }
 
         } finally {
             // wait for threads, etc
@@ -104,11 +105,13 @@ abstract public class LaunchJmriAppBase {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.resetApplication();
     }
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 

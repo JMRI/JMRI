@@ -18,8 +18,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
-import javax.swing.SwingUtilities;
-import javax.swing.text.BadLocationException;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.TextAreaFIFO;
@@ -398,6 +396,7 @@ public abstract class AbstractMonFrame extends JmriJFrame {
 
     StringBuffer linesBuffer = new StringBuffer();
     static private int MAX_LINES = 500;
+
     private static final Logger log = LoggerFactory.getLogger(AbstractMonFrame.class);
 
 }

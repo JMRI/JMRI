@@ -1,7 +1,9 @@
 package jmri.jmrix.secsi;
 
+import java.util.Locale;
+import javax.annotation.Nonnull;
 import jmri.Manager.NameValidity;
-
+import jmri.NamedBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -143,13 +145,88 @@ public class SerialAddress {
     }
 
     /**
+     * Validate system name format. Does not check whether that node is defined
+     * on current system.
+     *
+     * @param systemName the system name
+     * @param prefix     the system connection prefix
+     * @param locale     the Locale for user messages
+     * @return systemName unmodified
+     * @throws IllegalArgumentException if unable to validate systemName
+     */
+    public static String validateSystemNameFormat(String systemName, String prefix, Locale locale) throws IllegalArgumentException {
+        if (!systemName.startsWith(prefix)) {
+            throw new NamedBean.BadSystemNameException(
+                    Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameInvalidPrefix", systemName),
+                    Bundle.getMessage(locale, "InvalidSystemNameInvalidPrefix", systemName));
+        }
+        String address = systemName.substring(prefix.length());
+        int node = 0;
+        int bit = 0;
+        if (!address.contains("B")) {
+            // This is a CLnnnxxx pattern address
+            int num;
+            try {
+                num = Integer.parseInt(address);
+                node = num / 1000;
+                bit = num - ((num / 1000) * 1000);
+            } catch (NumberFormatException ex) {
+                throw new NamedBean.BadSystemNameException(
+                        Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameNotInteger", systemName, prefix),
+                        Bundle.getMessage(locale, "InvalidSystemNameNotInteger", systemName, prefix));
+            }
+        } else {
+            // This is a CLnBxxx pattern address
+            String[] parts = address.split("B");
+            if (parts.length != 2) {
+                if (address.indexOf("B") == 0) {
+                    // no node
+                    throw new NamedBean.BadSystemNameException(
+                            Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameNodeInvalid", systemName, ""),
+                            Bundle.getMessage(locale, "InvalidSystemNameNodeInvalid", systemName, ""));
+                } else {
+                    // no bit
+                    throw new NamedBean.BadSystemNameException(
+                            Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameBitInvalid", systemName, ""),
+                            Bundle.getMessage(locale, "InvalidSystemNameBitInvalid", systemName, ""));
+                }
+            }
+            try {
+                node = Integer.parseInt(parts[0]);
+            } catch (NumberFormatException ex) {
+                throw new NamedBean.BadSystemNameException(
+                        Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameNodeInvalid", systemName, parts[0]),
+                        Bundle.getMessage(locale, "InvalidSystemNameNodeInvalid", systemName, parts[0]));
+            }
+            try {
+                bit = Integer.parseInt(parts[1]);
+            } catch (NumberFormatException ex) {
+                throw new NamedBean.BadSystemNameException(
+                        Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameBitInvalid", systemName, parts[1]),
+                        Bundle.getMessage(locale, "InvalidSystemNameBitInvalid", systemName, parts[1]));
+            }
+        }
+        if (node < 0 || node >= 128) {
+            throw new NamedBean.BadSystemNameException(
+                    Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameNodeInvalid", systemName, node),
+                    Bundle.getMessage(locale, "InvalidSystemNameNodeInvalid", systemName, node));
+        }
+        if (bit < 1 || bit > 32) {
+            throw new NamedBean.BadSystemNameException(
+                    Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameBitInvalid", systemName, bit),
+                    Bundle.getMessage(locale, "InvalidSystemNameBitInvalid", systemName, bit));
+        }
+        return systemName;
+    }
+
+    /**
      * Public static method to validate system name format.
      * Logging of handled cases no higher than WARN.
      *
      * @param type Letter indicating device type expected
      * @return 'true' if system name has a valid format, else returns 'false'
      */
-    public static NameValidity validSystemNameFormat(String systemName, char type, String prefix) {
+    public static NameValidity validSystemNameFormat(@Nonnull String systemName, char type, String prefix) {
         // validate the system Name leader characters
         if (!(systemName.startsWith(prefix)) || (systemName.charAt(prefix.length()) != type )) {
             // here if an illegal format 

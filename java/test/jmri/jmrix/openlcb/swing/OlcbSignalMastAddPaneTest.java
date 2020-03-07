@@ -11,7 +11,6 @@ import javax.swing.*;
 
 import org.junit.*;
 
-import org.netbeans.jemmy.operators.*;
 
 import org.openlcb.*;
 
@@ -21,6 +20,7 @@ import org.openlcb.*;
 public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase {
 
     /** {@inheritDoc} */
+    @Override
     protected SignalMastAddPane getOTT() { return new OlcbSignalMastAddPane(); }    
     
     @Test
@@ -35,10 +35,10 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
         
         vp.setMast(null);
         
-        vp.setAspectNames(s1.getAppearanceMap(), null);
+        vp.setAspectNames(s1.getAppearanceMap(), InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem("basic"));
         vp.setMast(s1);
         
-        vp.setAspectNames(m1.getAppearanceMap(), null);
+        vp.setAspectNames(m1.getAppearanceMap(), InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem("basic"));
         vp.setMast(m1);
         JUnitAppender.assertErrorMessage("mast was wrong type: IF$xsm:basic:one-low($0001)-3t jmri.implementation.MatrixSignalMast");
 
@@ -48,7 +48,7 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
     public void testCanHandleMast() {
         OlcbSignalMastAddPane vp = new OlcbSignalMastAddPane();
         SignalMast mast = new OlcbSignalMast("MF$olm:basic:one-searchlight($1)", "no user name"){
-            { lastRef = 4; } // reset references 
+            { setLastRef(4); } // reset references
         };
         Assert.assertTrue(vp.canHandleMast(mast));
         
@@ -60,7 +60,7 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
     public void testCreateMast() {
         OlcbSignalMastAddPane vp = new OlcbSignalMastAddPane();
         new OlcbSignalMast("MF$olm:basic:one-searchlight($1)", "no user name"){
-            { lastRef = 4; } // reset references - this leads to ($0005) below, just in case anybody else has created one
+            { setLastRef(4); } // reset references - this leads to ($0005) below, just in case anybody else has created one
         };
         
         vp.createMast("AAR-1946", "appearance-PL-2-high.xml", "user name");
@@ -82,6 +82,7 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
 
         vp.setAspectNames(
             new jmri.implementation.DefaultSignalAppearanceMap("IM123") {
+                @Override
                 public Enumeration<String> getAspects() {
                     return java.util.Collections.enumeration(
                         java.util.Arrays.asList(
@@ -90,7 +91,7 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
                                     "Permissive", "Restricting", "Stop and Proceed", "Stop"}));
                     }
             }
-                , null );
+                , InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem("basic") );
         
         JFrame frame = new JFrame("Add/Edit Signal Mast");
         frame.add(vp);
@@ -161,9 +162,10 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
         
         vp.setAspectNames(
             new jmri.implementation.DefaultSignalAppearanceMap("IM123") {
+                @Override
                 public Enumeration<String> getAspects() { return mast.getAllKnownAspects().elements(); }
             }
-                , null);
+                , InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem("basic"));
         vp.setMast(mast);
               
         JFrame frame = new JFrame("Add/Edit Signal Mast");
@@ -227,6 +229,7 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
     // This only initialized JUnit and Log4J once per class so that it
     // can only initialize the OpenLCB structure once per class
     @Before
+    @Override
     public void setUp() {
         messages = new java.util.ArrayList<>();
     }
@@ -249,6 +252,7 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
         memo = new OlcbSystemConnectionMemo(); // this self-registers as 'M'
         memo.setProtocol(jmri.jmrix.can.ConfigurationManager.OPENLCB);
         memo.setInterface(new OlcbInterface(nodeID, connection) {
+            @Override
             public Connection getOutputConnection() {
                 return connection;
             }
@@ -258,6 +262,7 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
     }
 
     @After
+    @Override
     public void tearDown() {
         messages = null;
     }

@@ -3,6 +3,7 @@ package jmri.jmrix;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Vector;
@@ -11,6 +12,7 @@ import jmri.BasicRosterEntry;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.LocoAddress;
+import jmri.SpeedStepMode;
 import jmri.Throttle;
 import jmri.ThrottleListener;
 import jmri.ThrottleManager;
@@ -73,7 +75,10 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      */
     @Override
     public LocoAddress.Protocol[] getAddressProtocolTypes() {
-        return new LocoAddress.Protocol[]{LocoAddress.Protocol.DCC, LocoAddress.Protocol.DCC_SHORT, LocoAddress.Protocol.DCC_LONG};
+        return new LocoAddress.Protocol[]{
+            LocoAddress.Protocol.DCC,
+            LocoAddress.Protocol.DCC_SHORT,
+            LocoAddress.Protocol.DCC_LONG};
     }
 
     /**
@@ -699,8 +704,8 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      * possible modes specifed by the DccThrottle interface
      */
     @Override
-    public int supportedSpeedModes() {
-        return (DccThrottle.SpeedStepMode128);
+    public EnumSet<SpeedStepMode> supportedSpeedModes() {
+        return EnumSet.of(SpeedStepMode.NMRA_DCC_128);
     }
     
     /**
@@ -961,14 +966,14 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         } else {
             return null;
         }
-        if (item.equals("IsForward")) {
+        if (item.equals(Throttle.ISFORWARD)) {
             return t.getIsForward();
         } else if (item.startsWith("Speed")) {
-            if (item.equals("SpeedSetting")) {
+            if (item.equals(Throttle.SPEEDSETTING)) {
                 return t.getSpeedSetting();
-            } else if (item.equals("SpeedIncrement")) {
+            } else if (item.equals(Throttle.SPEEDINCREMENT)) {
                 return t.getSpeedIncrement();
-            } else if (item.equals("SpeedStepMode")) {
+            } else if (item.equals(Throttle.SPEEDSTEPMODE)) {
                 return t.getSpeedStepMode();
             }
         } else if (item.equals(Throttle.F0)) {

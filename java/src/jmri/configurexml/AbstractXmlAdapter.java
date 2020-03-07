@@ -86,4 +86,5 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
     public ErrorHandler getExceptionHandler() {
         return this.errorHandler;
     }
+
 }

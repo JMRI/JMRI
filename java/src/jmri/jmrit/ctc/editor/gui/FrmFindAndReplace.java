@@ -53,6 +53,7 @@ public class FrmFindAndReplace extends javax.swing.JFrame {
         CommonSubs.setButtonSelected(_mHowReplace, 1);
 
         _mResults.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+           @Override
            public void valueChanged(ListSelectionEvent event)  {
                if (!event.getValueIsAdjusting()) {
                    updateSelectionCount();

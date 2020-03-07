@@ -11,20 +11,21 @@
   <!-- Style -->
   <meta http-equiv="content-type" content=
   "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+	<!-- /Style -->
 </head>
 
-<!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
+<body>
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
-	<div id="mainContent">
-
-	    <H1>JMRI: Caract&#233;ristiques Java sp&#233;cifique &#224; la version</H1>
+<h1>JMRI: Caract&#233;ristiques Java sp&#233;cifique &#224; la version</h1>
 
 Cette page contient des informations sur 
 la compatibilit&#233; et les fonctionnalit&#233;s des diff&#233;rentes 
@@ -35,95 +36,95 @@ pour les versions futures de JMRI.
 
  <h2>Capacit&#233;s </h2>
 
-Cette section r&#233;pertorie les nouvelles fonctions de Java, et quelles Version de Java 
+<p>Cette section r&#233;pertorie les nouvelles fonctions de Java, et quelles Version de Java
 firent leurs premi&#232;res apparitions. La colonne "JDK" indique le premier 
 Java Development Kit qui pourrait rassembler les fonctionnalit&#233;s, la colonne "JRE"
 indique l'environnement d'ex&#233;cution d'abord que pourrait ex&#233;cuter la fonctionnalit&#233;, 
-y compris la JVM et les biblioth&#232;que de soutien.
-<P>
+y compris la JVM et les biblioth&#232;que de soutien.</p>
+
 <table border="1">
-<tr><th>Entit&#233;</th>        <th>JDK</th>    <th>JRE</th></tr>
-<tr><td>Collections</td>    <td>1.3</td>    <td>1.3</td></tr>
-<tr><td>Java2D</td>         <td>1.3</td>    <td>1.3</td></tr>
-<tr><td>Mise &#224; Jour Impression</td><td>1.3</td>    <td>1.3</td></tr>
-<tr><td>JUnit 3.8</td>      <td>1.3</td>    <td>1.3</td></tr>
+	<tr><th>Entit&#233;</th>        <th>JDK</th>    <th>JRE</th></tr>
+	<tr><td>Collections</td>    <td>1.3</td>    <td>1.3</td></tr>
+	<tr><td>Java2D</td>         <td>1.3</td>    <td>1.3</td></tr>
+	<tr><td>Mise &#224; Jour Impression</td><td>1.3</td>    <td>1.3</td></tr>
+	<tr><td>JUnit 3.8</td>      <td>1.3</td>    <td>1.3</td></tr>
 
-<tr><td>JDOM 1.0</td>       <td>1.4</td>    <td>1.3</td></tr>
-<tr><td>Java regexp</td>    <td>1.4</td>    <td>1.4</td></tr>
-<tr><td>Java3D</td>         <td>1.4</td>    <td>1.4</td></tr>
-<tr><td>Mise &#224; Jour JavaHelp</td><td>1.4</td>    <td>1.4</td></tr>
-<tr><td>Drag and Drop</td>  <td>1.4 (additionel <br>am&#233;lioration en 1.6)</td><td>1.4, 1.6</td></tr>
-<tr><td>Logging API</td>  <td>1.4 (additionel <br>am&#233;lioration en 1.6)</td><td>1.4, 1.6</td></tr>
-<tr><td>XML catalog resolver</td><td>1.3?</td><td>1.4?</td></tr>
+	<tr><td>JDOM 1.0</td>       <td>1.4</td>    <td>1.3</td></tr>
+	<tr><td>Java regexp</td>    <td>1.4</td>    <td>1.4</td></tr>
+	<tr><td>Java3D</td>         <td>1.4</td>    <td>1.4</td></tr>
+	<tr><td>Mise &#224; Jour JavaHelp</td><td>1.4</td>    <td>1.4</td></tr>
+	<tr><td>Drag and Drop</td>  <td>1.4 (additionel <br>am&#233;lioration en 1.6)</td><td>1.4, 1.6</td></tr>
+	<tr><td>Logging API</td>  <td>1.4 (additionel <br>am&#233;lioration en 1.6)</td><td>1.4, 1.6</td></tr>
+	<tr><td>XML catalog resolver</td><td>1.3?</td><td>1.4?</td></tr>
 
-<tr><td>Annotations</td>    <td>1.5</td>    <td>1.3</td></tr>
-<tr><td>JavaMail</td>       <td>1.5</td>    <td>1.3</td></tr>
-<tr><td>JUnit 4.0</td>      <td>1.5</td>    <td>1.3</td></tr>
-<tr><td>SwingWorker</td>    <td>1.5</td>    <td>1.5 (*1.4)</td></tr>
-<tr><td>JSpinner</td>       <td>1.5</td>    <td>1.5</td></tr>
-<tr><td>Enums</td>          <td>1.5</td>    <td>1.5</td></tr>
-<tr><td>printf, Formatter</td><td>1.5</td>  <td>1.5</td></tr>
-<tr><td>generics</td>       <td>1.5</td>    <td>1.5</td></tr>
-<tr><td>Desktop class</td>  <td>1.6</td>    <td>1.6</td></tr>
-<tr><td>Browser integration</td><td>1.6</td><td>1.6</td></tr>
-<tr><td>JDOM2 (generics)</td><td>1.6</td><td>1.6</td></tr>
-<tr><td>Toolbars</td>       <td>1.6</td><td>1.6</td></tr>
-<tr><td>JTable Sorting</td> <td>1.6</td><td>1.6</td></tr>
-<tr><td>Webstart compatibility</td> <td>1.6</td><td>1.6</td></tr>
-<tr><td>Generics for Swing classes</td> <td>1.7</td><td>1.7</td></tr>
-<tr><td>NIO improves .zip file access</td> <td>1.7</td><td>1.7</td></tr>
-<tr><td>I18N I/O improvements</td> <td>1.7</td><td>1.7</td></tr>
-<tr><td>Memory use and <br/>GC improvements<br/>(better performance)</td> <td>1.7</td><td>1.7</td></tr>
-<tr><td>Jetty Version 9</td> <td>1.7</td><td>1.7</td></tr>
-<tr><td>JUnit 4 and the <br/><code>assert</code> keyword</td> <td>1.7</td><td>1.7</td></tr>
+	<tr><td>Annotations</td>    <td>1.5</td>    <td>1.3</td></tr>
+	<tr><td>JavaMail</td>       <td>1.5</td>    <td>1.3</td></tr>
+	<tr><td>JUnit 4.0</td>      <td>1.5</td>    <td>1.3</td></tr>
+	<tr><td>SwingWorker</td>    <td>1.5</td>    <td>1.5 (*1.4)</td></tr>
+	<tr><td>JSpinner</td>       <td>1.5</td>    <td>1.5</td></tr>
+	<tr><td>Enums</td>          <td>1.5</td>    <td>1.5</td></tr>
+	<tr><td>printf, Formatter</td><td>1.5</td>  <td>1.5</td></tr>
+	<tr><td>generics</td>       <td>1.5</td>    <td>1.5</td></tr>
+	<tr><td>Desktop class</td>  <td>1.6</td>    <td>1.6</td></tr>
+	<tr><td>Browser integration</td><td>1.6</td><td>1.6</td></tr>
+	<tr><td>JDOM2 (generics)</td><td>1.6</td><td>1.6</td></tr>
+	<tr><td>Toolbars</td>       <td>1.6</td><td>1.6</td></tr>
+	<tr><td>JTable Sorting</td> <td>1.6</td><td>1.6</td></tr>
+	<tr><td>Webstart compatibility</td> <td>1.6</td><td>1.6</td></tr>
+	<tr><td>Generics for Swing classes</td> <td>1.7</td><td>1.7</td></tr>
+	<tr><td>NIO improves .zip file access</td> <td>1.7</td><td>1.7</td></tr>
+	<tr><td>I18N I/O improvements</td> <td>1.7</td><td>1.7</td></tr>
+	<tr><td>Memory use and <br>GC improvements<br>(better performance)</td> <td>1.7</td><td>1.7</td></tr>
+	<tr><td>Jetty Version 9</td> <td>1.7</td><td>1.7</td></tr>
+	<tr><td>JUnit 4 and the <br><code>assert</code> keyword</td> <td>1.7</td><td>1.7</td></tr>
 </table>
+
 (* Indique qu'une librairie compatible est utilis&#233;e pour la premi&#232;re version)
 
 <h2>Disponibilit&#233; JRE</h2>
 
-Cette section &#233;num&#232;re les version disponible les plus r&#233;centes de Java Runtime 
+<p>Cette section &#233;num&#232;re les version disponible les plus r&#233;centes de Java Runtime
 pour  diff&#233;rentes versions du syst&#232;me d'exploitation. S'il vous pla&#238;t noter que 
 tous les  utilisateurs de ce syst&#232;me d'exploitation n'auront pas fait les mise &#224; jour vers cette version de Java;
-beaucoup utilisent une version plus ancienne.
+beaucoup utilisent une version plus ancienne.</p>
 
-<P>
 <table border="1">
-<tr><th>OS et plateforme</th><th>Dernier JRE</th></tr>
-<tr><td>Linux</td><td>(1.6?)</td></tr>
-<tr><td>Win 8 (32-bit)                      </td><td>1.8</td></tr>
-<tr><td>Win 7 (32-bit)                      </td><td>1.8</td></tr>
-<tr><td>Win Vista (32-bit)                  </td><td>1.8</td></tr>
-<tr><td>Win Server 2008 (32-bit)            </td><td>1.8</td></tr>
-<tr><td>Win Web Server 2008 (32-bit)        </td><td>1.6</td></tr>
-<tr><td>Win 2000 (32-bit)                   </td><td>1.6</td></tr>
-<tr><td>Win Server 2003 (32-bit)            </td><td>1.6</td></tr>
-<tr><td>Win 8 (64-bit)                      </td><td>1.8</td></tr>
-<tr><td>Win Server 2012 (64-bit)            </td><td>1.8</td></tr>
-<tr><td>Win Server 2012 R2 (64-bit)         </td><td>1.8</td></tr>
-<tr><td>Win 7 (64-bit)                      </td><td>1.8</td></tr>
-<tr><td>Win Server 2008 R2 (64-bit)         </td><td>1.8</td></tr>
-<tr><td>Win Server 2008 (64-bit)            </td><td>1.7</td></tr>
-<tr><td>Win Web Server 2008 R2 (64-bit)     </td><td>1.6</td></tr>
-<tr><td>Win Vista (64-bit)                  </td><td>1.8</td></tr>
-<tr><td>Win 2003 (64-bit)                   </td><td>1.6</td></tr>
-<tr><td>Windows XP                          </td><td>1.8<br><a href="https://www.java.com/en/download/faq/winxp.xml">Unofficial<br>Support</a></td></tr>
-<tr><td>Windows 98 (2nd Ed)                 </td><td>1.5-11</td></tr>
-<tr><td>Windows 98                          </td><td>1.4.2_14</td></tr>
-<tr><td>Windows 95                          </td><td>1.3.1_20</td></tr>
+	<tr><th>OS et plateforme</th><th>Dernier JRE</th></tr>
+	<tr><td>Linux</td><td>(1.6?)</td></tr>
+	<tr><td>Win 8 (32-bit)                      </td><td>1.8</td></tr>
+	<tr><td>Win 7 (32-bit)                      </td><td>1.8</td></tr>
+	<tr><td>Win Vista (32-bit)                  </td><td>1.8</td></tr>
+	<tr><td>Win Server 2008 (32-bit)            </td><td>1.8</td></tr>
+	<tr><td>Win Web Server 2008 (32-bit)        </td><td>1.6</td></tr>
+	<tr><td>Win 2000 (32-bit)                   </td><td>1.6</td></tr>
+	<tr><td>Win Server 2003 (32-bit)            </td><td>1.6</td></tr>
+	<tr><td>Win 8 (64-bit)                      </td><td>1.8</td></tr>
+	<tr><td>Win Server 2012 (64-bit)            </td><td>1.8</td></tr>
+	<tr><td>Win Server 2012 R2 (64-bit)         </td><td>1.8</td></tr>
+	<tr><td>Win 7 (64-bit)                      </td><td>1.8</td></tr>
+	<tr><td>Win Server 2008 R2 (64-bit)         </td><td>1.8</td></tr>
+	<tr><td>Win Server 2008 (64-bit)            </td><td>1.7</td></tr>
+	<tr><td>Win Web Server 2008 R2 (64-bit)     </td><td>1.6</td></tr>
+	<tr><td>Win Vista (64-bit)                  </td><td>1.8</td></tr>
+	<tr><td>Win 2003 (64-bit)                   </td><td>1.6</td></tr>
+	<tr><td>Windows XP                          </td><td>1.8<br><a href="https://www.java.com/en/download/faq/winxp.xml">Unofficial<br>Support</a></td></tr>
+	<tr><td>Windows 98 (2nd Ed)                 </td><td>1.5-11</td></tr>
+	<tr><td>Windows 98                          </td><td>1.4.2_14</td></tr>
+	<tr><td>Windows 95                          </td><td>1.3.1_20</td></tr>
 
-<tr><td>Mac OS X 10.8.3 and later on Intel</td><td>1.8</td></tr>
-<tr><td>Mac OS X 10.7.3 and later on Intel</td><td>1.7</td></tr>
-<tr><td>Mac OS X 10.5.8 and later on Intel</td><td>1.6 (Apple JVM)</td></tr>
-<tr><td>Mac OS X 10.5.7 and earlier on Intel</td><td>1.5 (Apple JVM)</td></tr>
-<tr><td>Mac OS X 10.3 and later on PowerPC</td><td>1.5 (Apple JVM)</td></tr>
-<tr><td>MacOS "Classic"</td><td>1.1.8</td></tr>
-<tr><td>OS/2</td><td>1.3</td></tr>
+	<tr><td>Mac OS X 10.8.3 and later on Intel</td><td>1.8</td></tr>
+	<tr><td>Mac OS X 10.7.3 and later on Intel</td><td>1.7</td></tr>
+	<tr><td>Mac OS X 10.5.8 and later on Intel</td><td>1.6 (Apple JVM)</td></tr>
+	<tr><td>Mac OS X 10.5.7 and earlier on Intel</td><td>1.5 (Apple JVM)</td></tr>
+	<tr><td>Mac OS X 10.3 and later on PowerPC</td><td>1.5 (Apple JVM)</td></tr>
+	<tr><td>MacOS "Classic"</td><td>1.1.8</td></tr>
+	<tr><td>OS/2</td><td>1.3</td></tr>
 </table>
-<P>
-Voir la page de t&#233;l&#233;chargement 
+
+<p>Voir la page de t&#233;l&#233;chargement
 <a href="http://java.com/en/download/manual.jsp">Java.com pour tous les syst&#232;mes d'exploitation </a> et<br>
 information sur les <a href="https://www.java.com/en/download/help/sysreq.xml">Versions Java les Configurations mat&#233;rielles</a>.</p>
-<p> Les combinaison suivantes des versions JMRI- Java- Syst&#232;mes d'Exploitation &#233;taientt bas&#233;es sur des D&#233;veloppeurs sources Oracles et Syst&#232;mes d'Exploitation. C'est traduit des instruction d'installation des Syst&#232;mes d'Exploitation (suivre les hyperliens dans les en-t&#234;tes OS)
+<p>Les combinaison suivantes des versions JMRI- Java- Syst&#232;mes d'Exploitation &#233;taientt bas&#233;es sur des D&#233;veloppeurs sources Oracles et Syst&#232;mes d'Exploitation. C'est traduit des instruction d'installation des Syst&#232;mes d'Exploitation (suivre les hyperliens dans les en-t&#234;tes OS)
 
 	<table border="1">
 	<tbody>
@@ -202,7 +203,7 @@ information sur les <a href="https://www.java.com/en/download/help/sysreq.xml">V
 	</tbody>
 	</table> 
 
-<h2 id="JDK8">&#201;volution vers Java 1.8 depuis 1.6</h2>
+<h2><a id="JDK8">&#201;volution vers Java 1.8 depuis 1.6</a></h2>
 Cette section aborde, &#224; peu pr&#232;s en ordre d&#233;croissant d'importance,
 le processus de migration de Java 1.6 vers Java 1.8.
 
@@ -239,8 +240,7 @@ de contr&#244;le avec:
 </code></pre>
 pour laisser tomber les tests pour les balises JavaDoc manquantes et certaines erreurs HTML b&#233;nignes. ( Pour l'instant ).
 
-<!--#include virtual="/Footer" -->
-
+<!--#include virtual="/Footer.shtml" -->
 	  </div><!-- closes #mainContent-->
 	</div> <!-- closes #mBody-->
 </body>

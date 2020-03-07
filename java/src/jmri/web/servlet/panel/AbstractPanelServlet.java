@@ -155,7 +155,7 @@ public abstract class AbstractPanelServlet extends HttpServlet {
             response.setContentType(UTF8_APPLICATION_JSON);
             InstanceManager.getDefault(ServletUtil.class).setNonCachingHeaders(response);
             JsonUtilHttpService service = new JsonUtilHttpService(new ObjectMapper());
-            response.getWriter().print(service.getPanels(request.getLocale(), JSON.XML, 0));
+            response.getWriter().print(service.getPanels(JSON.XML, 0));
         } else {
             response.setContentType(UTF8_TEXT_HTML);
             response.getWriter().print(String.format(request.getLocale(),
@@ -222,7 +222,7 @@ public abstract class AbstractPanelServlet extends HttpServlet {
             element.getAttributes().forEach((attr) -> {
                 String value = attr.getValue();
                 if (FileUtil.isPortableFilename(value)) {
-                    String url = WebServer.URIforPortablePath(value);
+                    String url = WebServer.portablePathToURI(value);
                     if (url != null) {
                         // if portable path conversion fails, don't change the value
                         attr.setValue(url);
@@ -334,13 +334,15 @@ public abstract class AbstractPanelServlet extends HttpServlet {
                 default:
                     // nothing to do
             }
-            try {
-                e.setAttribute(JSON.ID, sub.getNamedBean().getSystemName());
-            } catch (NullPointerException ex) {
-                if (sub.getNamedBean() == null) {
-                    log.debug("{} {} does not have an associated NamedBean", e.getName(), e.getAttribute(JSON.NAME));
-                } else {
-                    log.debug("{} {} does not have a SystemName", e.getName(), e.getAttribute(JSON.NAME));
+            if (sub.getNamedBean() != null) {
+                try {
+                    e.setAttribute(JSON.ID, sub.getNamedBean().getSystemName());
+                } catch (NullPointerException ex) {
+                    if (sub.getNamedBean() == null) {
+                        log.debug("{} {} does not have an associated NamedBean", e.getName(), e.getAttribute(JSON.NAME));
+                    } else {
+                        log.debug("{} {} does not have a SystemName", e.getName(), e.getAttribute(JSON.NAME));
+                    }
                 }
             }
             parsePortableURIs(e);

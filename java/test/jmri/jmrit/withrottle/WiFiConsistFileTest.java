@@ -25,6 +25,7 @@ public class WiFiConsistFileTest {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.initDebugCommandStation();
+        JUnitUtil.initRosterConfigManager();
         InstanceManager.setDefault(ConsistManager.class, new TestConsistManager());
     }
     

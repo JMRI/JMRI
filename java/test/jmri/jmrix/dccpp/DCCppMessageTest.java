@@ -710,6 +710,7 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         m = msg = new DCCppMessage("T 42 1");
@@ -718,6 +719,7 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     @After
     public void tearDown() {
 	m = msg = null;
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
 

@@ -27,35 +27,38 @@ public class UserInterfaceTest {
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
-
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initDefaultUserMessagePreferences();
-        InstanceManager.setDefault(DeviceManager.class,new FacelessServer(){
-           @Override
-           public void listen(){
-           }
+        InstanceManager.setDefault(DeviceManager.class, new FacelessServer() {
+            @Override
+            public void listen() {
+            }
         });
-        if(!GraphicsEnvironment.isHeadless()){
-           panel = new UserInterface();
+        if (!GraphicsEnvironment.isHeadless()) {
+            panel = new UserInterface();
         }
     }
 
     @After
     public void tearDown() throws Exception {
-        if(!GraphicsEnvironment.isHeadless()){
-          try {
-             panel.disableServer();
-             JUnitUtil.waitFor( () -> { return panel.isListen; });
-             JUnitUtil.dispose(panel);
-          } catch(java.lang.NullPointerException npe) {
-             // not all tests fully configure the server, so an
-             // NPE here is ok.
-          }
+        if (!GraphicsEnvironment.isHeadless()) {
+            try {
+                panel.disableServer();
+                JUnitUtil.waitFor(() -> {
+                    return panel.isListen;
+                });
+                JUnitUtil.dispose(panel);
+            } catch (java.lang.NullPointerException npe) {
+                // not all tests fully configure the server, so an
+                // NPE here is ok.
+            }
         }
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 }

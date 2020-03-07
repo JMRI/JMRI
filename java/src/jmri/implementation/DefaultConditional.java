@@ -667,15 +667,18 @@ public class DefaultConditional extends AbstractNamedBean
                             if (sname == null) {
                                 errorList.add("Conditional system name null during cancel turnout timers for "  // NOI18N
                                         + action.getDeviceName());
+                                continue; // no more processing of this one
                             }
+                            
                             Conditional c = cmg.getBySystemName(sname);
                             if (c == null) {
                                 errorList.add("Conditional null during cancel turnout timers for "  // NOI18N
                                         + action.getDeviceName());
-                            } else {
-                                c.cancelTurnoutTimer(devName);
-                                actionCount++;
+                                continue; // no more processing of this one
                             }
+                            
+                            c.cancelTurnoutTimer(devName);
+                            actionCount++;
                         }
                         break;
                     case LOCK_TURNOUT:
@@ -809,15 +812,17 @@ public class DefaultConditional extends AbstractNamedBean
                             if (sname == null) {
                                 errorList.add("Conditional system name null during cancel sensor timers for "  // NOI18N
                                         + action.getDeviceName());
+                                continue; // no more processing of this one
                             }
                             Conditional c = cm.getBySystemName(sname);
                             if (c == null) {
                                 errorList.add("Conditional null during cancel sensor timers for "  // NOI18N
                                         + action.getDeviceName());
-                            } else {
-                                c.cancelSensorTimer(devName);
-                                actionCount++;
+                                continue; // no more processing of this one
                             }
+                            
+                            c.cancelSensorTimer(devName);
+                            actionCount++;
                         }
                         break;
                     case SET_LIGHT:
@@ -1283,7 +1288,7 @@ public class DefaultConditional extends AbstractNamedBean
             contentPanel.add(panel);
 
             panel = new JPanel();
-            panel.add(new JLabel(getUserName() + " (" + getSystemName() + ")"));
+            panel.add(new JLabel(getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME)));
             contentPanel.add(panel);
 
             panel = new JPanel();
@@ -1349,12 +1354,7 @@ public class DefaultConditional extends AbstractNamedBean
      * case
      */
     static private Memory getMemory(String name) {
-        Memory m = InstanceManager.memoryManagerInstance().getMemory(name);
-        if (m == null) {
-            String sName = name.toUpperCase().trim();  // N11N
-            m = InstanceManager.memoryManagerInstance().getMemory(sName);
-        }
-        return m;
+        return InstanceManager.memoryManagerInstance().getMemory(name);
     }
 
     /**

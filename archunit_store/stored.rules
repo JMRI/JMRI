@@ -1,0 +1,8 @@
+#
+#Thu Sep 26 00:52:41 PDT 2019
+classes\ that\ reside\ in\ a\ package\ 'jmri.jmrit..'\ should\ only\ be\ accessed\ by\ any\ package\ ['jmri.jmrit..',\ 'apps..']=972dd7cb-f44a-4f8e-9452-7789d2a846e8
+no\ classes\ that\ reside\ in\ a\ package\ 'jmri.util..'\ should\ depend\ on\ classes\ that\ reside\ outside\ of\ packages\ ['jmri',\ 'jmri.util..',\ 'java..',\ 'javax..',\ 'org..']=69ae4e96-2c0d-4eb0-ad3f-133916937532
+classes\ that\ reside\ in\ a\ package\ 'jmri.jmrix..'\ should\ only\ be\ accessed\ by\ any\ package\ ['jmri.jmrix..',\ 'apps..']=82324736-8ad6-4afb-9d2d-da95965d9307
+no\ classes\ that\ reside\ in\ a\ package\ 'jmri.jmris'\ should\ depend\ on\ classes\ that\ reside\ in\ a\ package\ 'jmri.jmrit..'=e0fe7761-0daa-4cc4-9efc-7e3806ef69bd
+no\ classes\ that\ reside\ in\ a\ package\ 'jmri'\ should\ depend\ on\ classes\ that\ reside\ in\ a\ package\ 'jmri.jmrit..'=77c222f8-f9a4-4ef4-b4d0-9d9d48d2e9e0
+classes\ that\ reside\ in\ a\ package\ 'apps..'\ should\ only\ be\ accessed\ by\ any\ package\ ['apps..']=bfca0fcb-1b60-4356-8e62-24df836af29c

@@ -27,7 +27,6 @@ import javax.swing.border.Border;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
 import jmri.InstanceManager;
@@ -352,7 +351,7 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
         }
     }
 
-    public class RosterCellEditor extends DefaultCellEditor implements TableCellEditor {
+    public class RosterCellEditor extends DefaultCellEditor {
 
         public RosterCellEditor() {
             super(new JTextField() {

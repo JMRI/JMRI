@@ -1,9 +1,10 @@
 package jmri.util;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
+
+import javax.swing.*;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
@@ -13,8 +14,14 @@ public class HelpUtilTest {
 
     @Test
     public void testCTor() {
-        HelpUtil t = new HelpUtil();
-        Assert.assertNotNull("exists",t);
+        Assume.assumeFalse(java.awt.GraphicsEnvironment.isHeadless());
+        
+        JMenuBar menuBar = new JMenuBar();
+        int initialMenuCount = menuBar.getMenuCount();
+        HelpUtil.helpMenu(menuBar,"test",true);
+        menuBar.getMenu(0);
+        assertThat(menuBar.getMenuCount()).withFailMessage("Help Menu not created")
+                .isGreaterThan(initialMenuCount);
     }
 
     // The minimal setup for log4J

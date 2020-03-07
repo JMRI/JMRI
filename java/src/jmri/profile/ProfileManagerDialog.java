@@ -31,7 +31,6 @@ import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.LayoutStyle;
 import javax.swing.ListSelectionModel;
@@ -282,8 +281,13 @@ public class ProfileManagerDialog extends JDialog {
                 countDownLbl.setText(Integer.toString(countDown));
             } else {
                 setVisible(false);
-                ProfileManager.getDefault().setActiveProfile(profiles.getSelectedValue());
-                log.info("Automatically starting with profile " + ProfileManager.getDefault().getActiveProfile().getId() + " after timeout.");
+                Profile profile = profiles.getSelectedValue();
+                ProfileManager.getDefault().setActiveProfile(profile);
+                if (profile != null) {
+                    log.info("Automatically starting with profile " + profile.getId() + " after timeout.");
+                } else {
+                    log.info("Automatically starting without a profile");
+                }
                 timer.stop();
                 countDown = -1;
                 dispose();
@@ -325,16 +329,8 @@ public class ProfileManagerDialog extends JDialog {
     }
 
     private void profileNameChanged(Profile p) {
-        try {
-            p.save();
-            log.info("Saving profile {}", p.getId());
-        } catch (IOException ex) {
-            log.error("Unable to save renamed profile: {}", ex.getMessage());
-            JOptionPane.showMessageDialog(this,
-                    Bundle.getMessage("ProfileManagerDialog.errorRenamingProfile"),
-                    Bundle.getMessage("ProfileManagerDialog.errorRenamingProfileTitle"),
-                    JOptionPane.ERROR_MESSAGE);
-        }
+        p.save();
+        log.info("Saving profile {}", p.getId());
     }
 
     private void profilesValueChanged(ListSelectionEvent evt) {//GEN-FIRST:event_profilesValueChanged

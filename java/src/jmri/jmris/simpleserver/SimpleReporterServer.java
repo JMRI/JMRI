@@ -60,7 +60,7 @@ public class SimpleReporterServer extends AbstractReporterServer {
         index = statusString.indexOf(" ") + 1;
         index2 = statusString.indexOf(" ", index + 1);
         int newlinepos = statusString.indexOf("\n");
-        String reporterName = statusString.substring(index, index2>0?index2:newlinepos).toUpperCase();
+        String reporterName = statusString.substring(index, index2>0?index2:newlinepos);
         initReporter(reporterName);
         // the string should be "REPORTER xxxxxx REPORTSTRING\n\r"
         // where xxxxxx is the reporter identifier and REPORTSTRING is

@@ -15,10 +15,12 @@ public class AnymaDMX_ConnectionConfigTest extends jmri.jmrix.AbstractUsbConnect
     @Test
     @Ignore("superclass method fails because Manufacturer not set in Connection Config class")
     @ToDo("Change AnymaDMX_ConnectionConfig so that  getManufacturer and setManufacturer methods are implemented.")
+    @Override
     public void testGetAndSetManufacturer(){
     }
 
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initDefaultUserMessagePreferences();
@@ -26,8 +28,9 @@ public class AnymaDMX_ConnectionConfigTest extends jmri.jmrix.AbstractUsbConnect
     }
 
     @After
+    @Override
     public void tearDown() {
-        cc=null;
+        cc = null;
         JUnitUtil.tearDown();
     }
 }

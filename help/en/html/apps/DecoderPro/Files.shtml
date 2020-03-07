@@ -16,15 +16,14 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
       <h1>JMRI: DecoderPro User Guide</h1>
 
@@ -67,7 +66,7 @@
                 <li>On a Linux machine, look for a .jmri directory
                 in your home directory.</li>
 
-                <li>On Mac OS X, Preferences are stored in a "JMRI"
+                <li>On macOS, Preferences are stored in a "JMRI"
                 folder in the /Users/me/Library/Preferences/
                 folder.</li>
 
@@ -119,7 +118,7 @@
             <strong>programmers</strong> subdirectory when you've
             used at least one Programmer; these define the formats
             for the various programming sheets that are available
-            in Decoder Pro.</li>
+            in DecoderPro.</li>
 
             <li>The DecoderPro folder, containing your
             profiles.</li>
@@ -150,7 +149,7 @@
         </dd>
       </dl>More information about the <a href=
       "../../setup/Files.shtml">JMRI Configuration Files</a> 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

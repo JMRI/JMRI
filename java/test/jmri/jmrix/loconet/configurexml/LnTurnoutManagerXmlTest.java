@@ -1,6 +1,5 @@
 package jmri.jmrix.loconet.configurexml;
 
-import jmri.Turnout;
 import jmri.jmrix.loconet.LnTurnout;
 import jmri.jmrix.loconet.LnTurnoutManager;
 import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
@@ -71,7 +70,7 @@ public class LnTurnoutManagerXmlTest {
         memo = new LocoNetSystemConnectionMemo("L", "LocoNet");
         lnis = new LocoNetInterfaceScaffold(memo);
         // create and register the manager object
-        lmtm = new LnTurnoutManager(lnis, lnis, memo.getSystemPrefix(), false);
+        lmtm = new LnTurnoutManager(memo, lnis, false);
         jmri.InstanceManager.setTurnoutManager(lmtm);
     }
 

@@ -55,25 +55,29 @@ public class SimpleSensorServer extends AbstractSensorServer {
     @Override
     public void parseStatus(String statusString) throws jmri.JmriException, java.io.IOException {
         int index;
-        index = statusString.indexOf(" ") + 1;
+        index = statusString.indexOf(' ') + 1;
         if (statusString.contains("INACTIVE")) {
             if (log.isDebugEnabled()) {
                 log.debug("Setting Sensor INACTIVE");
             }
-            initSensor(statusString.substring(index, statusString.indexOf(" ", index + 1)).toUpperCase());
-            setSensorInactive(statusString.substring(index, statusString.indexOf(" ", index + 1)).toUpperCase());
+            initSensor(statusString.substring(index, statusString.indexOf(' ' , index + 1)));
+            setSensorInactive(statusString.substring(index, statusString.indexOf(' ', index + 1)));
         } else if (statusString.contains("ACTIVE")) {
             if (log.isDebugEnabled()) {
                 log.debug("Setting Sensor ACTIVE");
             }
-            initSensor(statusString.substring(index, statusString.indexOf(" ", index + 1)).toUpperCase());
-            setSensorActive(statusString.substring(index, statusString.indexOf(" ", index + 1)).toUpperCase());
+            initSensor(statusString.substring(index, statusString.indexOf(' ', index + 1)));
+            setSensorActive(statusString.substring(index, statusString.indexOf(' ', index + 1)));
         } else {
             // default case, return status for this sensor/
-            String sensorName = statusString.substring(index,statusString.length()-1).toUpperCase(); // remove the \n
+            String sensorName = statusString.substring(index);
+            if(sensorName.contains("\n")){
+                // remove anything following the newline
+                sensorName = sensorName.substring(0,sensorName.indexOf('\n'));
+            }
             if( sensorName.contains(" ") ){
                 // remove anything following the space.
-                sensorName = sensorName.substring(0,sensorName.indexOf(" "));
+                sensorName = sensorName.substring(0,sensorName.indexOf(' '));
             }
             try {
                 Sensor sensor = jmri.InstanceManager.sensorManagerInstance().provideSensor(sensorName);
@@ -91,5 +95,5 @@ public class SimpleSensorServer extends AbstractSensorServer {
             this.connection.sendMessage(message);
         }
     }
-    private final static Logger log = LoggerFactory.getLogger(SimpleSensorServer.class);
+    private static final Logger log = LoggerFactory.getLogger(SimpleSensorServer.class);
 }

@@ -2,22 +2,11 @@ package jmri.jmrit;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringReader;
-import java.io.StringWriter;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import jmri.util.swing.JmriPanel;
 import jmri.util.swing.WindowInterface;
-import org.jdom2.Document;
-import org.jdom2.JDOMException;
-import org.jdom2.input.SAXBuilder;
-import org.jdom2.output.Format;
-import org.jdom2.output.XMLOutputter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,11 +37,11 @@ public class XmlFileValidateAction extends jmri.util.swing.JmriAbstractAction {
         super(Bundle.getMessage("XmlFileValidateAction")); // NOI18N
     }
 
-    JFileChooser fci;
+    private JFileChooser fci;
 
-    Component _who;
+    private Component _who;
 
-    XmlFile xmlfile = new XmlFile() {};   // odd syntax is due to XmlFile being abstract
+    private XmlFile xmlfile = new XmlFile() {};   // odd syntax is due to XmlFile being abstract
     
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -71,29 +60,28 @@ public class XmlFileValidateAction extends jmri.util.swing.JmriAbstractAction {
     }
 
     protected void processFile(File file) {
-        if (log.isDebugEnabled()) {
-            log.debug("located file " + file + " for XML processing");
-        }
-        // handle the file (later should be outside this thread?)
+        log.debug("located file \"{}\" for XML processing", file);
+        // handle the file (TODO should be outside this thread?)
         try {
             xmlfile.setValidate(XmlFile.Validate.CheckDtdThenSchema);
             readFile(file);
         } catch (Exception ex) {
-            showFailResults(_who, ex.getMessage());
+            showFailResults(_who, file.getName(), ex.getMessage());
             return;
         }
-        showOkResults(_who, "OK");
-        if (log.isDebugEnabled()) {
-            log.debug("parsing complete");
-        }
+        showOkResults(_who, Bundle.getMessage("ValidatedOk", file.getName()));
+        log.debug("parsing xml complete");
     }
 
     protected void showOkResults(Component who, String text) {
         JOptionPane.showMessageDialog(who, text);
     }
 
-    protected void showFailResults(Component who, String text) {
-        JOptionPane.showMessageDialog(who, text);
+    protected void showFailResults(Component who, String fileName, String text) {
+        final String html = "<html><body style='width: %1spx'>%1s<br><br>%1s</body></html>"; // reflow in dialog
+        final int dialogWidth = 300;
+        JOptionPane.showMessageDialog(who, String.format(html, dialogWidth,
+                Bundle.getMessage("ValidationErrorInFile", fileName), text)); // html markup
     }
 
     /**
@@ -123,8 +111,8 @@ public class XmlFileValidateAction extends jmri.util.swing.JmriAbstractAction {
             jmri.util.Log4JUtil.initLogging("default.lcf");
             new XmlFileValidateAction("", (Component) null) {
                 @Override
-                protected void showFailResults(Component who, String text) {
-                    System.out.println(text);
+                protected void showFailResults(Component who, String fileName, String text) {
+                    log.error("{}: {}", Bundle.getMessage("ValidationErrorInFile", fileName), text);
                 }
 
                 @Override
@@ -137,4 +125,5 @@ public class XmlFileValidateAction extends jmri.util.swing.JmriAbstractAction {
 
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(XmlFileValidateAction.class);
+
 }

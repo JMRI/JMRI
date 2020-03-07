@@ -24,6 +24,7 @@ public class CombinedLockTest {
     public void testOnePass() {
         ArrayList<Lock> list = new ArrayList<>();
         list.add(new Lock() {
+            @Override
             public boolean isLockClear() { return true; }
         });
 
@@ -36,6 +37,7 @@ public class CombinedLockTest {
     public void testOneFail() {
         ArrayList<Lock> list = new ArrayList<>();
         list.add(new Lock() {
+            @Override
             public boolean isLockClear() { return false; }
         });
 
@@ -48,9 +50,11 @@ public class CombinedLockTest {
     public void testSecondFail() {
         ArrayList<Lock> list = new ArrayList<>();
         list.add(new Lock() {
+            @Override
             public boolean isLockClear() { return true; }
         });
         list.add(new Lock() {
+            @Override
             public boolean isLockClear() { return false; }
         });
  

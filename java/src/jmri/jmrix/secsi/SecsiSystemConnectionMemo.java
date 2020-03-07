@@ -1,9 +1,12 @@
 package jmri.jmrix.secsi;
 
+import java.util.Comparator;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import jmri.jmrix.SystemConnectionMemo;
+import jmri.util.NamedBeanComparator;
 import jmri.LightManager;
+import jmri.NamedBean;
 import jmri.TurnoutManager;
 import jmri.SensorManager;
 import jmri.InstanceManager;
@@ -59,6 +62,11 @@ public class SecsiSystemConnectionMemo extends SystemConnectionMemo {
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return null;
+    }
+
+    @Override
+    public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
+        return new NamedBeanComparator<>();
     }
 
     public void configureManagers() {

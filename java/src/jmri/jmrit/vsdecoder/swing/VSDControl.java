@@ -1,27 +1,5 @@
 package jmri.jmrit.vsdecoder.swing;
 
-/**
- * class VSDControl
- * <p>
- * New GUI pane for a Virtual Sound Decoder (VSDecoder).
- */
-
-/*
- * <hr>
- * This file is part of JMRI.
- * <p>
- * JMRI is free software; you can redistribute it and/or modify it under
- * the terms of version 2 of the GNU General Public License as published
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
- * <p>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- * for more details.
- *
- * @author   Mark Underwood Copyright (C) 2011
- */
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -52,11 +30,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Virtual Sound Decoder for playing sounds off of LocoNet messages. Based on
- * the LocoMon tool by Bob Jacobsen
+ * New GUI pane for a Virtual Sound Decoder (VSDecoder).
+ * <hr>
+ * This file is part of JMRI.
+ * <p>
+ * JMRI is free software; you can redistribute it and/or modify it under 
+ * the terms of version 2 of the GNU General Public License as published 
+ * by the Free Software Foundation. See the "COPYING" file for a copy
+ * of this license.
+ * <p>
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT 
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * for more details.
  *
  * @author Mark Underwood Copyright (C) 2011
- *
  */
 public class VSDControl extends JPanel {
 
@@ -126,16 +114,16 @@ public class VSDControl extends JPanel {
         jp.setPreferredSize(temp.getPreferredSize());
         jp.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createRaisedBevelBorder(),
                 BorderFactory.createLoweredBevelBorder()));
-        return (jp);
+        return jp;
     }
 
     private GridBagConstraints setConstraints(int x, int y) {
-        return (setConstraints(x, y, GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 2), GridBagConstraints.LINE_START));
+        return setConstraints(x, y, GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 2), GridBagConstraints.LINE_START);
     }
 
     /*
      private GridBagConstraints setConstraints(int x, int y, int fill) {
-     return(setConstraints(x, y, fill, new Insets(2,2,2,2), GridBagConstraints.LINE_START));
+         return setConstraints(x, y, fill, new Insets(2,2,2,2), GridBagConstraints.LINE_START);
      }
      */
 
@@ -150,7 +138,7 @@ public class VSDControl extends JPanel {
         gbc1.anchor = anchor;
         gbc1.fill = fill;
 
-        return (gbc1);
+        return gbc1;
     }
 
     /**
@@ -200,14 +188,12 @@ public class VSDControl extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 optionButtonPressed(e);
             }
-
         });
         deleteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 deleteButtonPressed(e);
             }
-
         });
 
         this.setVisible(true);
@@ -220,7 +206,7 @@ public class VSDControl extends JPanel {
         soundsPanel.removeAll();
         for (SoundEvent e : elist) {
             if (e.getButton() != null) {
-                log.debug("adding button " + e.getButton());
+                log.debug("adding button {}", e.getButton());
                 JComponent jc = e.getButton();
                 GridBagConstraints gbc = new GridBagConstraints();
                 // Force the EngineSoundEvent to the second row.
@@ -242,12 +228,12 @@ public class VSDControl extends JPanel {
      * Handle "Option" button presses
      */
     protected void optionButtonPressed(ActionEvent e) {
-        log.debug("(" + address + ") Option Button Pressed");
+        log.debug("({}) Option Button Pressed", address);
         VSDOptionsDialog d = new VSDOptionsDialog(this, Bundle.getMessage("OptionsDialogTitlePrefix") + " " + this.address);
         d.addPropertyChangeListener(new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent event) {
-                log.debug("property change name " + event.getPropertyName() + " old " + event.getOldValue() + " new " + event.getNewValue());
+                log.debug("property change name: {}, old: {}, new: {}", event.getPropertyName(), event.getOldValue(), event.getNewValue());
                 optionsDialogPropertyChange(event);
             }
         });
@@ -257,7 +243,7 @@ public class VSDControl extends JPanel {
      * Handle "Delete" button presses
      */
     protected void deleteButtonPressed(ActionEvent e) {
-        log.debug("(" + address + ") Delete Button Pressed");
+        log.debug("({}) Delete Button Pressed", address);
         firePropertyChange(PropertyChangeId.DELETE, address, address);
     }
 
@@ -314,4 +300,5 @@ public class VSDControl extends JPanel {
     }
 
     private static final Logger log = LoggerFactory.getLogger(VSDControl.class);
+
 }

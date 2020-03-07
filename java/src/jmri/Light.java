@@ -168,12 +168,12 @@ public interface Light extends DigitalIO, AnalogIO {
     public int getState();
 
     // control types - types defined
+    public static final int NO_CONTROL = 0x00;
     public static final int SENSOR_CONTROL = 0x01;
     public static final int FAST_CLOCK_CONTROL = 0x02;
     public static final int TURNOUT_STATUS_CONTROL = 0x03;
     public static final int TIMED_ON_CONTROL = 0x04;
     public static final int TWO_SENSOR_CONTROL = 0x05;
-    public static final int NO_CONTROL = 0x00;
 
     /**
      * Check if this object can handle variable intensity.

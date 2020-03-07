@@ -28,28 +28,6 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
 
     protected XNetTrafficController tc = null;
 
-    /**
-     * Create XNet sensor using fixed connection prefix
-     * @deprecated JMRI Since 4.9.5
-     */
-    @Deprecated // 4.9.5
-    public XNetSensor(String systemName, String userName, XNetTrafficController controller) {
-        super(systemName, userName);
-        tc = controller;
-        init(systemName, "X"); // Should not give Null
-    }
-
-    /**
-     * Create XNet sensor using fixed connection prefix
-     * @deprecated JMRI Since 4.9.5
-     */
-    @Deprecated // 4.9.5
-    public XNetSensor(String systemName, XNetTrafficController controller) {
-        super(systemName);
-        tc = controller;
-        init(systemName, "X");
-    }
-
     public XNetSensor(String systemName, String userName, XNetTrafficController controller, String prefix) {
         super(systemName, userName);
         tc = controller;

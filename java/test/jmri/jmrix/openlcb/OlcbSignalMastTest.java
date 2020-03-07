@@ -1,21 +1,16 @@
 package jmri.jmrix.openlcb;
 
-import jmri.CommandStation;
-import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 
 import org.openlcb.*;
 import org.openlcb.Connection;
 import org.openlcb.EventID;
-import org.openlcb.EventState;
 import org.openlcb.Message;
 import org.openlcb.NodeID;
 import org.openlcb.OlcbInterface;
 import org.openlcb.ProducerConsumerEventReportMessage;
 import org.openlcb.IdentifyConsumersMessage;
-import org.openlcb.ConsumerIdentifiedMessage;
 import org.openlcb.IdentifyProducersMessage;
-import org.openlcb.ProducerIdentifiedMessage;
 import org.openlcb.IdentifyEventsMessage;
 
 import org.junit.After;
@@ -376,6 +371,7 @@ public class OlcbSignalMastTest {
         memo = new OlcbSystemConnectionMemo(); // this self-registers as 'M'
         memo.setProtocol(jmri.jmrix.can.ConfigurationManager.OPENLCB);
         memo.setInterface(new OlcbInterface(nodeID, connection) {
+            @Override
             public Connection getOutputConnection() {
                 return connection;
             }

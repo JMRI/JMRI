@@ -27,13 +27,6 @@ public class Z21XNetInitializationManager extends XNetInitializationManager {
         if (log.isDebugEnabled()) {
             log.debug("Init called");
         }
-        /*        float CSSoftwareVersion = systemMemo.getXNetTrafficController()
-                .getCommandStation()
-                .getCommandStationSoftwareVersion();*
-        int CSType = systemMemo.getXNetTrafficController()
-                .getCommandStation()
-                .getCommandStationType();*/
-
         InstanceManager.store(systemMemo.getPowerManager(), jmri.PowerManager.class);
         InstanceManager.setThrottleManager(systemMemo.getThrottleManager());
         systemMemo.setProgrammerManager(new Z21XNetProgrammerManager(new Z21XNetProgrammer(systemMemo.getXNetTrafficController()), systemMemo));
@@ -43,11 +36,11 @@ public class Z21XNetInitializationManager extends XNetInitializationManager {
         if (systemMemo.getProgrammerManager().isGlobalProgrammerAvailable()) {
             jmri.InstanceManager.store(systemMemo.getProgrammerManager(), GlobalProgrammerManager.class);
         }
-        systemMemo.setTurnoutManager(new Z21XNetTurnoutManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
+        systemMemo.setTurnoutManager(new Z21XNetTurnoutManager(systemMemo));
         InstanceManager.setTurnoutManager(systemMemo.getTurnoutManager());
-        systemMemo.setLightManager(new XNetLightManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
+        systemMemo.setLightManager(new XNetLightManager(systemMemo));
         InstanceManager.setLightManager(systemMemo.getLightManager());
-        systemMemo.setSensorManager(new XNetSensorManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
+        systemMemo.setSensorManager(new XNetSensorManager(systemMemo));
         InstanceManager.setSensorManager(systemMemo.getSensorManager());
 
         if (log.isDebugEnabled()) {
@@ -55,6 +48,6 @@ public class Z21XNetInitializationManager extends XNetInitializationManager {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Z21XNetInitializationManager.class);
+    private static final Logger log = LoggerFactory.getLogger(Z21XNetInitializationManager.class);
 
 }

@@ -39,7 +39,7 @@ public class XNetSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMem
         // so we need to do this ourselves.
         t.setXNetTrafficController(tc);
         Assert.assertNotNull(t.getXNetTrafficController());
-        // and while we're doing that, we should also set the SystemMemo 
+        // and while we're doing that, we should also set the SystemConnectionMemo
         // parameter in the traffic controller.
         Assert.assertNotNull(t.getXNetTrafficController().getSystemConnectionMemo());
     }
@@ -90,15 +90,16 @@ public class XNetSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMem
         });
 
         XNetSystemConnectionMemo memo = new XNetSystemConnectionMemo(tc);
-        memo.setSensorManager(new XNetSensorManager(tc,memo.getSystemPrefix()));
-        memo.setLightManager(new XNetLightManager(tc,memo.getSystemPrefix()));
-        memo.setTurnoutManager(new XNetTurnoutManager(tc,memo.getSystemPrefix()));
+        memo.setSensorManager(new XNetSensorManager(memo));
+        memo.setLightManager(new XNetLightManager(memo));
+        memo.setTurnoutManager(new XNetTurnoutManager(memo));
         scm = memo;
     }
 
     @After
     @Override
     public void tearDown() {
+	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

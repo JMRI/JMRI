@@ -1,8 +1,9 @@
 package jmri.jmrix.zimo;
 
+import java.util.EnumSet;
 import jmri.DccLocoAddress;
-import jmri.DccThrottle;
 import jmri.LocoAddress;
+import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottleManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,10 +32,16 @@ public class Mx1ThrottleManager extends AbstractThrottleManager {
 
     @Override
     public void requestThrottleSetup(LocoAddress a, boolean control) {
-        //We do interact
-        DccLocoAddress address = (DccLocoAddress) a;
-        log.debug("new Mx1Throttle for " + address); //IN18N
-        notifyThrottleKnown(new Mx1Throttle((Mx1SystemConnectionMemo) adapterMemo, address), address);
+        if (a instanceof DccLocoAddress ) {
+            //We do interact
+            DccLocoAddress address = (DccLocoAddress) a;
+            log.debug("new Mx1Throttle for " + address); //IN18N
+            notifyThrottleKnown(new Mx1Throttle((Mx1SystemConnectionMemo) adapterMemo, address), address);
+        }
+        else {
+            log.error("{} is not a DccLocoAddress",a);
+            failedThrottleRequest(a, "LocoAddress " +a+ " is not a DccLocoAddress");
+        }
     }
 
     /**
@@ -64,16 +71,18 @@ public class Mx1ThrottleManager extends AbstractThrottleManager {
     }
 
     @Override
-    public int supportedSpeedModes() {
-        return (DccThrottle.SpeedStepMode128 | DccThrottle.SpeedStepMode28);
+    public EnumSet<SpeedStepMode> supportedSpeedModes() {
+        return EnumSet.of(SpeedStepMode.NMRA_DCC_128, SpeedStepMode.NMRA_DCC_28);
     }
 
     @Override
     public boolean disposeThrottle(jmri.DccThrottle t, jmri.ThrottleListener l) {
         if (super.disposeThrottle(t, l)) {
-            Mx1Throttle nct = (Mx1Throttle) t;
-            nct.throttleDispose();
-            return true;
+            if (t instanceof Mx1Throttle) {
+                Mx1Throttle nct = (Mx1Throttle) t;
+                nct.throttleDispose();
+                return true;
+            }
         }
         return false;
     }

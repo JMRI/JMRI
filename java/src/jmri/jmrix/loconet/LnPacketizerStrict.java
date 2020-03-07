@@ -169,7 +169,7 @@ public class LnPacketizerStrict extends LnPacketizer {
                                 }
                             } else if (msg.getOpCode() == LnConstants.OPC_SL_RD_DATA) {
                                 waitingOnLack = false;
-                            } else if ( msg.getOpCode() == 0xe6 ) { // Extended slot status
+                            } else if ( msg.getOpCode() == LnConstants.OPC_ALM_READ ) { // Extended slot status
                                 waitingOnLack = false;
                             }
                             // check for CS busy
@@ -369,7 +369,7 @@ public class LnPacketizerStrict extends LnPacketizer {
         if (xmtHandler == null) {
             xmtHandler = new XmtHandlerStrict();
         }
-        Thread xmtThread = new Thread(xmtHandler, "LocoNet transmit handler"); // NOI18N
+        xmtThread = new Thread(xmtHandler, "LocoNet transmit handler"); // NOI18N
         log.debug("Xmt thread starts at priority {}", xmtpriority); // NOI18N
         xmtThread.setDaemon(true);
         xmtThread.setPriority(Thread.MAX_PRIORITY - 1);
@@ -379,7 +379,7 @@ public class LnPacketizerStrict extends LnPacketizer {
         if (rcvHandler == null) {
             rcvHandler = new RcvHandlerStrict(this);
         }
-        Thread rcvThread = new Thread(rcvHandler, "LocoNet receive handler"); // NOI18N
+        rcvThread = new Thread(rcvHandler, "LocoNet receive handler"); // NOI18N
         rcvThread.setDaemon(true);
         rcvThread.setPriority(Thread.MAX_PRIORITY);
         rcvThread.start();

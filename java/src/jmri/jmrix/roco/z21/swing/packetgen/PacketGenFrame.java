@@ -36,8 +36,7 @@ public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
         if (s.equals("")) {
             return null; // message cannot be empty
         }
-        Z21Message m = new Z21Message(s);
-        return m;
+        return new Z21Message(s);
     }
 
     // connect to the TrafficController

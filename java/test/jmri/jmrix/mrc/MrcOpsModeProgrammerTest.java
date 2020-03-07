@@ -27,7 +27,7 @@ public class MrcOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgramm
         MrcInterfaceScaffold tc = new MrcInterfaceScaffold();
         memo.setMrcTrafficController(tc);
         jmri.InstanceManager.store(memo, MrcSystemConnectionMemo.class);
-        MrcOpsModeProgrammer t = new MrcOpsModeProgrammer(tc,5,false);
+        MrcOpsModeProgrammer t = new MrcOpsModeProgrammer(memo,5,false);
         programmer = t;
     }
 

@@ -14,6 +14,7 @@ import org.junit.Test;
 public class PositionablePolygonTest extends PositionableShapeTest {
 
     @Test
+    @Override
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("exists", p);

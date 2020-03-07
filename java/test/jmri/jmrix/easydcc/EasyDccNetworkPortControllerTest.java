@@ -5,7 +5,7 @@ import org.junit.After;
 import org.junit.Before;
 
 /**
- * JUnit tests for the EasyDccNetworkPortController class
+ * JUnit tests for the EasyDccNetworkPortController class.
  *
  * @author Paul Bender Copyright (C) 2016
  */

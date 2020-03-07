@@ -32,6 +32,7 @@ public class SpeedoDialTest {
         dial.reset();
         jmri.util.JUnitUtil.waitFor(() -> { return dial.isVisible(); },"dial visible");
         new JFrameOperator("SpeedoDial test frame").requestClose();
+        JUnitUtil.dispose(frame);
     }
 
     // The minimal setup for log4J

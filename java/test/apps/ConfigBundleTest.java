@@ -16,14 +16,9 @@ public class ConfigBundleTest {
         Assert.assertEquals("Turnout", ConfigBundle.getMessage("BeanNameTurnout"));
     }
 
-    @Test
+    @Test(expected = java.util.MissingResourceException.class)
     public void testBadKeyMessage() {
-        try {
             ConfigBundle.getMessage("FFFFFTTTTTTT");
-        } catch (java.util.MissingResourceException e) {
-            return;
-        } // OK
-        Assert.fail("No exception thrown");
     }
 
     @Test
@@ -32,13 +27,8 @@ public class ConfigBundleTest {
         Assert.assertEquals("Turnout", ConfigBundle.getMessage("BeanNameTurnout", new Object[]{}));
     }
 
-    @Test
+    @Test(expected = java.util.MissingResourceException.class)
     public void testBadKeyMessageArg() {
-        try {
             ConfigBundle.getMessage("FFFFFTTTTTTT", new Object[]{});
-        } catch (java.util.MissingResourceException e) {
-            return;
-        } // OK
-        Assert.fail("No exception thrown");
     }
 }

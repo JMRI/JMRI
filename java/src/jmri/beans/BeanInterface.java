@@ -2,7 +2,7 @@ package jmri.beans;
 
 import java.util.Set;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 
 /**
  * Simple interface for basic methods that implement JMRI Bean handling methods.
@@ -36,7 +36,7 @@ public interface BeanInterface {
      * @param index index of the property element to change
      * @param value the value to set the property to
      */
-    public void setIndexedProperty(@Nonnull String key, int index, @Nullable Object value);
+    public void setIndexedProperty(@Nonnull String key, int index, @CheckForNull Object value);
 
     /**
      * Get the value of an element in an indexed property.
@@ -50,7 +50,7 @@ public interface BeanInterface {
      * @param index index of the property element to change
      * @return value of the property or null
      */
-    @Nullable
+    @CheckForNull
     public Object getIndexedProperty(@Nonnull String key, int index);
 
     /**
@@ -64,7 +64,7 @@ public interface BeanInterface {
      * @param key   name of the property
      * @param value the value to set the property to
      */
-    public void setProperty(@Nonnull String key, @Nullable Object value);
+    public void setProperty(@Nonnull String key, @CheckForNull Object value);
 
     /**
      * Get the value of a property.
@@ -77,7 +77,7 @@ public interface BeanInterface {
      * @param key name of the property
      * @return The value of the property or null
      */
-    @Nullable
+    @CheckForNull
     public Object getProperty(@Nonnull String key);
 
     /**

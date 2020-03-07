@@ -1,10 +1,8 @@
 package jmri.jmrix.tams.swing.statusframe;
 
-import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import jmri.JmriException;
 import jmri.jmrix.tams.TamsListener;
 import jmri.jmrix.tams.TamsMessage;
 import jmri.jmrix.tams.TamsReply;

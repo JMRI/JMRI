@@ -1,8 +1,6 @@
 package jmri.jmrix.zimo;
 
 import javax.annotation.Nonnull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Defines standard operations for Dcc command stations.
@@ -37,10 +35,13 @@ public class Mx1CommandStation implements jmri.CommandStation {
      * This implementation always returns false, as sending
      * a packet isn't implemented for the Zimo command stations
      */
+    @Override
     public boolean sendPacket(@Nonnull byte[] packet, int repeats) { return false; }
 
+    @Override
     public String getUserName() {return userName;}
 
+    @Override
     public String getSystemPrefix() {return systemName;}
 
     public Mx1Message resetModeMsg() {

@@ -2,23 +2,14 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.event.MenuEvent;
-import javax.swing.event.MenuListener;
+import java.util.*;
+import javax.annotation.*;
+import javax.swing.*;
+import javax.swing.event.*;
 import jmri.util.MathUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.slf4j.*;
 
 /**
  * A collection of tools to check various things on the layout editor panel.
@@ -43,6 +34,12 @@ public class LayoutEditorChecks {
 
     // Check for Unnecessary Anchors
     private JMenu checkUnnecessaryAnchorsMenu = new JMenu(Bundle.getMessage("CheckUnnecessaryAnchorsMenuTitle"));
+
+    // Check for Linear Bezier Track Segments
+    private JMenu checkLinearBezierTrackSegmentsMenu = new JMenu(Bundle.getMessage("CheckLinearBezierTrackSegmentsMenuTitle"));
+
+    // Check for Fixed Radius Bezier Track Segments
+    private JMenu checkFixedRadiusBezierTrackSegmentsMenu = new JMenu(Bundle.getMessage("CheckFixedRadiusBezierTrackSegmentsMenuTitle"));
 
     /**
      * The constructor for this class
@@ -69,6 +66,8 @@ public class LayoutEditorChecks {
                 checkUnBlockedTracksMenu.setEnabled(enabled);
                 checkNonContiguousBlocksMenu.setEnabled(enabled);
                 checkUnnecessaryAnchorsMenu.setEnabled(enabled);
+                checkLinearBezierTrackSegmentsMenu.setEnabled(enabled);
+                checkFixedRadiusBezierTrackSegmentsMenu.setEnabled(enabled);
             }
 
             @Override
@@ -201,6 +200,59 @@ public class LayoutEditorChecks {
             }
         });
 
+        //
+        // Check for linear bezier track segments
+        //
+        checkLinearBezierTrackSegmentsMenu.setToolTipText(Bundle.getMessage("CheckLinearBezierTrackSegmentsMenuToolTip"));
+        checkLinearBezierTrackSegmentsMenu.add(checkInProgressMenuItem);
+        checkMenu.add(checkLinearBezierTrackSegmentsMenu);
+
+        checkLinearBezierTrackSegmentsMenu.addMenuListener(new MenuListener() {
+            @Override
+            public void menuSelected(@Nonnull MenuEvent menuEvent) {
+                log.debug("menuSelected");
+                setupCheckLinearBezierTrackSegmentsMenu();
+            }
+
+            @Override
+            public void menuDeselected(@Nonnull MenuEvent menuEvent) {
+                log.debug("menuDeselected");
+                //nothing to see here... move along...
+            }
+
+            @Override
+            public void menuCanceled(@Nonnull MenuEvent menuEvent) {
+                log.debug("menuCanceled");
+                //nothing to see here... move along...
+            }
+        });
+
+        //
+        // Check for fixed radius bezier track segments (circle arcs)
+        //
+        checkFixedRadiusBezierTrackSegmentsMenu.setToolTipText(Bundle.getMessage("CheckFixedRadiusBezierTrackSegmentsMenuToolTip"));
+        checkFixedRadiusBezierTrackSegmentsMenu.add(checkInProgressMenuItem);
+        checkMenu.add(checkFixedRadiusBezierTrackSegmentsMenu);
+
+        checkFixedRadiusBezierTrackSegmentsMenu.addMenuListener(new MenuListener() {
+            @Override
+            public void menuSelected(@Nonnull MenuEvent menuEvent) {
+                log.debug("menuSelected");
+                setupCheckFixedRadiusBezierTrackSegmentsMenu();
+            }
+
+            @Override
+            public void menuDeselected(@Nonnull MenuEvent menuEvent) {
+                log.debug("menuDeselected");
+                //nothing to see here... move along...
+            }
+
+            @Override
+            public void menuCanceled(@Nonnull MenuEvent menuEvent) {
+                log.debug("menuCanceled");
+                //nothing to see here... move along...
+            }
+        });
     }
 
     //
@@ -382,7 +434,7 @@ public class LayoutEditorChecks {
     //
     private void doCheckNonContiguousBlocksMenuItem(
             @Nonnull String blockName,
-            @Nullable Set<String> trackNameSet) {
+            @CheckForNull Set<String> trackNameSet) {
         log.debug("doCheckNonContiguousBlocksMenuItem({})", blockName);
 
         if (trackNameSet != null) {
@@ -520,6 +572,223 @@ public class LayoutEditorChecks {
             layoutEditor.clearSelectionGroups();
         }
     }   // doCheckUnnecessaryAnchorsMenuItem
+
+    //
+    // run the linear bezier track segments check and
+    // populate the checkLinearBezierTrackSegmentsMenu
+    //
+    private void setupCheckLinearBezierTrackSegmentsMenu() {
+        log.debug("setupCheckLinearBezierTrackSegmentsMenu");
+
+        // collect the names of all menu items with checkmarks
+        Set<String> checkMarkedMenuItemNamesSet = getCheckMarkedMenuItemNames(checkLinearBezierTrackSegmentsMenu);
+        // mark our menu as "in progress..."
+        checkLinearBezierTrackSegmentsMenu.removeAll();
+        checkLinearBezierTrackSegmentsMenu.add(checkInProgressMenuItem);
+
+        // check all TrackSegments
+        List<TrackSegment> linearBezierTrackSegments = new ArrayList<>();
+        for (TrackSegment ts : layoutEditor.getTrackSegments()) {
+            // has to be a bezier
+            if (ts.isBezier()) {
+//                if (ts.getName().equals("T104")) {
+//                    log.debug("T104");
+//                }
+                // adjacent connections must be defined...
+                LayoutTrack c1 = ts.getConnect1();
+                LayoutTrack c2 = ts.getConnect2();
+                if ((c1 != null) && (c2 != null)) {
+                    // if length is zero...
+                    Point2D end1 = LayoutEditor.getCoords(ts.getConnect1(), ts.getType1());
+                    Point2D end2 = LayoutEditor.getCoords(ts.getConnect2(), ts.getType2());
+                    if (MathUtil.distance(end1, end2) <= 4.0) {
+                        linearBezierTrackSegments.add(ts);
+                        continue;   // so we don't get added again
+                    }
+                    // if control points are collinear...
+                    boolean good = true; //assume success (optimist!)
+                    for (Point2D cp : ts.getBezierControlPoints()) {
+                        if (Math.abs(MathUtil.distance(end1, end2, cp)) > 1.0) {
+                            good = false;
+                            break;
+                        }
+                    }
+                    if (good) {
+                        linearBezierTrackSegments.add(ts);
+//                        ts.setBezier(false);
+                    }
+                }   // c1 & c2 aren't null
+            }   // is bezier
+        }   // for ts
+
+        // clear the "in progress..." menu item
+        checkLinearBezierTrackSegmentsMenu.removeAll();
+        // if we didn't find any...
+        if (linearBezierTrackSegments.size() == 0) {
+            checkLinearBezierTrackSegmentsMenu.add(checkNoResultsMenuItem);
+        } else {
+            // for each linear bezier track segment we found
+            for (TrackSegment ts : linearBezierTrackSegments) {
+                String name = ts.getName();
+                JMenuItem jmi = new JMenuItem(name);
+                checkLinearBezierTrackSegmentsMenu.add(jmi);
+                jmi.addActionListener((ActionEvent event) -> {
+                    doCheckLinearBezierTrackSegmentsMenuItem(name);
+                });
+
+                // if it's in the check marked set then (re-)checkmark it
+                if (checkMarkedMenuItemNamesSet.contains(name)) {
+                    jmi.setSelected(true);
+                }
+                //ts.setBezier(false);
+            }
+        }   //count == 0
+    }   // setupCheckLinearBezierTrackSegmentsMenu
+
+    //
+    // action to be performed when checkLinearBezierTrackSegmentsMenu item is clicked
+    //
+    private void doCheckLinearBezierTrackSegmentsMenuItem(
+            @Nonnull String trackSegmentName) {
+        log.debug("doCheckLinearBezierTrackSegmentsMenuItem({})", trackSegmentName);
+
+        LayoutTrack layoutTrack = layoutEditor.getFinder().findObjectByName(trackSegmentName);
+        if (layoutTrack != null) {
+            layoutEditor.setSelectionRect(layoutTrack.getBounds());
+            // setSelectionRect calls createSelectionGroups...
+            // so we have to clear it before amending to it
+            layoutEditor.clearSelectionGroups();
+            layoutEditor.amendSelectionGroup(layoutTrack);
+            // show its popup menu
+            layoutTrack.showPopup();
+        } else {
+            layoutEditor.clearSelectionGroups();
+        }
+    }   // doCheckLinearBezierTrackSegmentsMenuItem
+
+    //
+    // run the linear bezier track segments check and
+    // populate the checkFixedRadiusBezierTrackSegmentsMenu
+    //
+    private void setupCheckFixedRadiusBezierTrackSegmentsMenu() {
+        log.debug("setupCheckFixedRadiusBezierTrackSegmentsMenu");
+
+        // collect the names of all menu items with checkmarks
+        Set<String> checkMarkedMenuItemNamesSet = getCheckMarkedMenuItemNames(checkFixedRadiusBezierTrackSegmentsMenu);
+        // mark our menu as "in progress..."
+        checkFixedRadiusBezierTrackSegmentsMenu.removeAll();
+        checkFixedRadiusBezierTrackSegmentsMenu.add(checkInProgressMenuItem);
+
+        // check all TrackSegments
+        List<TrackSegment> linearBezierTrackSegments = new ArrayList<>();
+        for (TrackSegment ts : layoutEditor.getTrackSegments()) {
+            // has to be a bezier
+            if (ts.isBezier()) {
+                // adjacent connections must be defined...
+                LayoutTrack c1 = ts.getConnect1();
+                LayoutTrack c2 = ts.getConnect2();
+                if ((c1 != null) && (c2 != null)) {
+                    Point2D end1 = LayoutEditor.getCoords(c1, ts.getType1());
+                    Point2D end2 = LayoutEditor.getCoords(c2, ts.getType2());
+                    double chordLength = MathUtil.distance(end1, end2);
+                    if (chordLength <= 4.0) {
+                        continue;   //skip short segments
+                    }
+
+                    //get first and last control points
+                    int cnt = ts.getNumberOfBezierControlPoints();
+                    if (cnt > 0) {
+                        Point2D cp0 = ts.getBezierControlPoint(0);
+                        Point2D cpN = ts.getBezierControlPoint(cnt - 1);
+                        //calculate orthoginal points
+                        Point2D op1 = MathUtil.add(end1, MathUtil.orthogonal(MathUtil.subtract(cp0, end1)));
+                        Point2D op2 = MathUtil.subtract(end2, MathUtil.orthogonal(MathUtil.subtract(cpN, end2)));
+                        //use them to find center point
+                        Point2D ip = MathUtil.intersect(end1, op1, end2, op2);
+                        if (ip != null) {   //single intersection point found
+                            double r1 = MathUtil.distance(ip, end1);
+                            double r2 = MathUtil.distance(ip, end2);
+                            if (Math.abs(r1 - r2) <= 1.0) {
+                                // the sign of the distance tells what side of the line the center point is on
+                                double ipSide = Math.signum(MathUtil.distance(end1, end2, ip));
+
+                                // if all control midpoints are equal distance from intersection point
+                                boolean good = true; //assume success (optimist!)
+
+                                for (int idx = 0; idx < cnt - 1; idx++) {
+                                    Point2D cp1 = ts.getBezierControlPoint(idx);
+                                    Point2D cp2 = ts.getBezierControlPoint(idx + 1);
+                                    Point2D mp = MathUtil.midPoint(cp1, cp2);
+                                    double rM = MathUtil.distance(ip, mp);
+                                    if (Math.abs(r1 - rM) > 1.0) {
+                                        good = false;
+                                        break;
+                                    }
+                                    // the sign of the distance tells what side of line the midpoint is on
+                                    double cpSide = Math.signum(MathUtil.distance(end1, end2, mp));
+                                    if (MathUtil.equals(ipSide, cpSide)) {
+                                        //can't be on same side as center point (if so then not circular)
+                                        good = false;
+                                        break;
+                                    }
+                                }
+                                if (good) {
+                                    linearBezierTrackSegments.add(ts);
+                                    ts.setCircle(true);
+                                }
+                            } else {
+                                log.error("checkFixedRadiusBezierTrackSegments(): unequal radius");
+                            }
+                        }
+                    }
+                }   // c1 & c2 aren't null
+            }   // is bezier
+        }   // for ts
+
+        // clear the "in progress..." menu item
+        checkFixedRadiusBezierTrackSegmentsMenu.removeAll();
+        // if we didn't find any...
+        if (checkFixedRadiusBezierTrackSegmentsMenu.getMenuComponentCount() == 0) {
+            checkFixedRadiusBezierTrackSegmentsMenu.add(checkNoResultsMenuItem);
+        } else {
+            // for each linear bezier track segment we found
+            for (TrackSegment ts : linearBezierTrackSegments) {
+                String name = ts.getName();
+                JMenuItem jmi = new JMenuItem(name);
+                checkFixedRadiusBezierTrackSegmentsMenu.add(jmi);
+                jmi.addActionListener((ActionEvent event) -> {
+                    doCheckFixedRadiusBezierTrackSegmentsMenuItem(name);
+                });
+
+                // if it's in the check marked set then (re-)checkmark it
+                if (checkMarkedMenuItemNamesSet.contains(name)) {
+                    jmi.setSelected(true);
+                }
+                ///ts.setBezier(false);
+            }
+        }   //count == 0
+    }   // setupCheckFixedRadiusBezierTrackSegmentsMenu
+
+    //
+    // action to be performed when checkFixedRadiusBezierTrackSegmentsMenu item is clicked
+    //
+    private void doCheckFixedRadiusBezierTrackSegmentsMenuItem(
+            @Nonnull String trackSegmentName) {
+        log.debug("doCheckFixedRadiusBezierTrackSegmentsMenuItem({})", trackSegmentName);
+
+        LayoutTrack layoutTrack = layoutEditor.getFinder().findObjectByName(trackSegmentName);
+        if (layoutTrack != null) {
+            layoutEditor.setSelectionRect(layoutTrack.getBounds());
+            // setSelectionRect calls createSelectionGroups...
+            // so we have to clear it before amending to it
+            layoutEditor.clearSelectionGroups();
+            layoutEditor.amendSelectionGroup(layoutTrack);
+            // show its popup menu
+            layoutTrack.showPopup();
+        } else {
+            layoutEditor.clearSelectionGroups();
+        }
+    }   // doCheckFixedRadiusBezierTrackSegmentsMenuItem
 
     //
     // collect the names of all checkbox menu items with checkmarks

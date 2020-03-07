@@ -12,25 +12,14 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.beans.*;
+import java.text.MessageFormat;
+import java.util.*;
 import javax.annotation.Nonnull;
-import javax.swing.AbstractAction;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
-import javax.swing.JSeparator;
-import jmri.NamedBeanHandle;
-import jmri.Turnout;
+import javax.swing.*;
+import jmri.*;
 import jmri.util.MathUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.slf4j.*;
 
 /**
  * A LayoutTurntable is a representation used by LayoutEditor to display a
@@ -74,7 +63,7 @@ public class LayoutTurntable extends LayoutTrack {
     private int lastKnownIndex = -1;
 
     /**
-     * constructor method
+     * Constructor method
      */
     public LayoutTurntable(@Nonnull String id, @Nonnull Point2D c, @Nonnull LayoutEditor layoutEditor) {
         super(id, c, layoutEditor);
@@ -83,8 +72,8 @@ public class LayoutTurntable extends LayoutTrack {
 
     //
     /**
-     * get a string that represents this object (this should only be used for
-     * debugging...)
+     * Get a string that represents this object (this should only be used for
+     * debugging)
      *
      * @return the string
      */
@@ -97,7 +86,7 @@ public class LayoutTurntable extends LayoutTrack {
     // Accessor methods
     //
     /**
-     * get the radius for this turntable
+     * Get the radius for this turntable.
      *
      * @return the radius for this turntable
      */
@@ -106,7 +95,7 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * set the radius for this turntable
+     * Set the radius for this turntable.
      *
      * @param r the radius for this turntable
      */
@@ -129,12 +118,12 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * add a ray at the specified angle
+     * Add a ray at the specified angle.
      *
      * @param angle the angle
      * @return the RayTrack
      */
-    protected RayTrack addRay(double angle) {
+    public RayTrack addRay(double angle) {
         RayTrack rt = new RayTrack(angle, getNewIndex());
         rayList.add(rt);
         return rt;
@@ -169,7 +158,7 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * get the connection for the ray with this index
+     * Get the connection for the ray with this index.
      *
      * @param index the index
      * @return the connection for the ray with this index
@@ -186,7 +175,7 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * get the connection for the ray at the index in the rayList
+     * Get the connection for the ray at the index in the rayList.
      *
      * @param i the index in the rayList
      * @return the connection for the ray at that index in the rayList
@@ -204,7 +193,7 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * set the connection for the ray at the index in the rayList
+     * Set the connection for the ray at the index in the rayList.
      *
      * @param ts    the connection
      * @param index the index in the rayList
@@ -219,12 +208,12 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     // should only be used by xml save code
-    protected ArrayList<RayTrack> getRayList() {
+    public ArrayList<RayTrack> getRayList() {
         return rayList;
     }
 
     /**
-     * get the number of rays
+     * Get the number of rays on turntable.
      *
      * @return the number of rays
      */
@@ -233,7 +222,7 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * get the index for the ray at this position in the rayList
+     * Get the index for the ray at this position in the rayList.
      *
      * @param i the position in the rayList
      * @return the index
@@ -248,7 +237,7 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * get the angle for the ray at this position in the rayList
+     * Get the angle for the ray at this position in the rayList.
      *
      * @param i the position in the rayList
      * @return the angle
@@ -263,7 +252,7 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * set the turnout and state for the ray with this index
+     * Set the turnout and state for the ray with this index.
      *
      * @param index       the index
      * @param turnoutName the turnout name
@@ -279,12 +268,13 @@ public class LayoutTurntable extends LayoutTrack {
             }
         }
         if (!found) {
-            log.error("Attempt to add Turnout control to a non-existant ray track");
+            log.error("{}.setRayTurnout({}, {}, {}); Attempt to add Turnout control to a non-existant ray track",
+                    getName(), index, turnoutName, state);
         }
     }
 
     /**
-     * get the name of the turnout for the ray at this index
+     * Get the name of the turnout for the ray at this index.
      *
      * @param i the index
      * @return name of the turnout for the ray at this index
@@ -299,7 +289,7 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * get the turnout for the ray at this index
+     * Get the turnout for the ray at this index.
      *
      * @param i the index
      * @return the turnout for the ray at this index
@@ -314,7 +304,7 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * get the state of the turnout for the ray at this index
+     * Get the state of the turnout for the ray at this index.
      *
      * @param i the index
      * @return state of the turnout for the ray at this index
@@ -329,7 +319,7 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * get if the ray at this index is disabled
+     * Get if the ray at this index is disabled.
      *
      * @param i the index
      * @return true if disabled
@@ -344,7 +334,7 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * set the disabled state of the ray at this index
+     * Set the disabled state of the ray at this index.
      *
      * @param i   the index
      * @param boo the state
@@ -357,7 +347,7 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * get the disabled when occupied state of the ray at this index
+     * Get the disabled when occupied state of the ray at this index.
      *
      * @param i the index
      * @return the state
@@ -372,7 +362,7 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * set the disabled when occupied state of the ray at this index
+     * Set the disabled when occupied state of the ray at this index.
      *
      * @param i   the index
      * @param boo the state
@@ -385,7 +375,7 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * get the coordinates for the ray with this index
+     * Get the coordinates for the ray with this index.
      *
      * @param index the index
      * @return the coordinates
@@ -407,7 +397,7 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * get the coordinates for the ray at this index
+     * Get the coordinates for the ray at this index.
      *
      * @param i the index; zero point returned if this is out of range
      * @return the coordinates
@@ -429,7 +419,7 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * set the coordinates for the ray at this index
+     * Set the coordinates for the ray at this index.
      *
      * @param x     the x coordinates
      * @param y     the y coordinates
@@ -448,26 +438,38 @@ public class LayoutTurntable extends LayoutTrack {
             }
         }
         if (!found) {
-            log.error("Attempt to move a non-existant ray track");
+            log.error("{}.setRayCoordsIndexed({}, {}, {}); Attempt to move a non-existant ray track",
+                    getName(), x, y, index);
         }
+    }
+
+    /**
+     * Set the coordinates for the ray at this index.
+     *
+     * @param point the new coordinates
+     * @param index the index
+     */
+    public void setRayCoordsIndexed(Point2D point, int index) {
+        setRayCoordsIndexed(point.getX(), point.getY(), index);
     }
 
     /**
      * Get the coordinates for a specified connection type.
      *
-     * @param locationType the connection type
+     * @param connectionType the connection type
      * @return the coordinates
      */
     @Override
-    public Point2D getCoordsForConnectionType(int locationType) {
+    public Point2D getCoordsForConnectionType(int connectionType) {
         Point2D result = getCoordsCenter();
-        if (TURNTABLE_CENTER == locationType) {
+        if (TURNTABLE_CENTER == connectionType) {
             // nothing to see here, move along...
             // (results are already correct)
-        } else if (locationType >= TURNTABLE_RAY_OFFSET) {
-            result = getRayCoordsIndexed(locationType - TURNTABLE_RAY_OFFSET);
+        } else if (connectionType >= TURNTABLE_RAY_OFFSET) {
+            result = getRayCoordsIndexed(connectionType - TURNTABLE_RAY_OFFSET);
         } else {
-            log.error("Invalid connection type " + locationType); // NOI18N
+            log.error("{}.getCoordsForConnectionType({}); Invalid connection type",
+                    getName(), connectionType); // NOI18N
         }
         return result;
     }
@@ -481,8 +483,10 @@ public class LayoutTurntable extends LayoutTrack {
         if (connectionType >= TURNTABLE_RAY_OFFSET) {
             result = getRayConnectIndexed(connectionType - TURNTABLE_RAY_OFFSET);
         } else {
-            log.error("Invalid Turntable connection type " + connectionType); // NOI18N
-            throw new jmri.JmriException("Invalid Point");
+            String errString = MessageFormat.format("{0}.getCoordsForConnectionType({1}); Invalid connection type",
+                    getName(), connectionType); // NOI18N
+            log.error(errString); // NOI18N
+            throw new jmri.JmriException(errString);
         }
         return result;
     }
@@ -493,21 +497,26 @@ public class LayoutTurntable extends LayoutTrack {
     @Override
     public void setConnection(int connectionType, LayoutTrack o, int type) throws jmri.JmriException {
         if ((type != TRACK) && (type != NONE)) {
-            log.error("unexpected type of connection to LevelXing - " + type);
-            throw new jmri.JmriException("unexpected type of connection to LevelXing - " + type);
+            String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); Invalid type",
+                    getName(), connectionType, (o == null) ? "null" : o.getName(), type); // NOI18N
+            log.error(errString); // NOI18N
+            throw new jmri.JmriException(errString);
         }
         if (connectionType >= TURNTABLE_RAY_OFFSET) {
             if ((o == null) || (o instanceof TrackSegment)) {
                 setRayConnect((TrackSegment) o, connectionType - TURNTABLE_RAY_OFFSET);
             } else {
-                String msg = "Invalid object type " + o.getClass().getName(); // NOI18N
-                log.error(msg);
-                throw new jmri.JmriException(msg);
+                String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); Invalid object: {4}",
+                        getName(), connectionType, o.getName(),
+                        type, o.getClass().getName()); // NOI18N
+                log.error(errString); // NOI18N
+                throw new jmri.JmriException(errString);
             }
         } else {
-            String msg = "Invalid Connection Type " + connectionType; // NOI18N
-            log.error(msg);
-            throw new jmri.JmriException(msg);
+            String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); Invalid connection type",
+                    getName(), connectionType, (o == null) ? "null" : o.getName(), type); // NOI18N
+            log.error(errString); // NOI18N
+            throw new jmri.JmriException(errString);
         }
     }
 
@@ -515,7 +524,7 @@ public class LayoutTurntable extends LayoutTrack {
      * Test if ray with this index is a mainline track or not.
      * <p>
      * Defaults to false (not mainline) if connecting track segment is missing.
-     * <p>
+     *
      * @param index the index
      * @return true if connecting track segment is mainline
      */
@@ -538,7 +547,7 @@ public class LayoutTurntable extends LayoutTrack {
      * Test if ray at this index is a mainline track or not.
      * <p>
      * Defaults to false (not mainline) if connecting track segment is missing.
-     * <p>
+     *
      * @param i the index
      * @return true if connecting track segment is mainline
      */
@@ -561,31 +570,44 @@ public class LayoutTurntable extends LayoutTrack {
         return false;
     }
 
+    //
+    // Modify coordinates methods
+    //
     /**
-     * Modify coordinates methods
-     */
-    /**
-     * scale this LayoutTrack's coordinates by the x and y factors
+     * Scale this LayoutTrack's coordinates by the x and y factors.
      *
      * @param xFactor the amount to scale X coordinates
      * @param yFactor the amount to scale Y coordinates
      */
     @Override
-    public void scaleCoords(float xFactor, float yFactor) {
+    public void scaleCoords(double xFactor, double yFactor) {
         Point2D factor = new Point2D.Double(xFactor, yFactor);
         center = MathUtil.granulize(MathUtil.multiply(center, factor), 1.0);
+        radius *= Math.hypot(xFactor, yFactor);
     }
 
     /**
-     * translate this LayoutTrack's coordinates by the x and y factors
+     * Translate (2D move) this LayoutTrack's coordinates by the x and y
+     * factors.
      *
      * @param xFactor the amount to translate X coordinates
      * @param yFactor the amount to translate Y coordinates
      */
     @Override
-    public void translateCoords(float xFactor, float yFactor) {
+    public void translateCoords(double xFactor, double yFactor) {
         Point2D factor = new Point2D.Double(xFactor, yFactor);
         center = MathUtil.add(center, factor);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void rotateCoords(double angleDEG) {
+        // rotate all rayTracks
+        for (RayTrack rayTrack : rayList) {
+            rayTrack.setAngle(rayTrack.getAngle() + angleDEG);
+        }
     }
 
     /**
@@ -597,7 +619,7 @@ public class LayoutTurntable extends LayoutTrack {
         //note: optimization here: instead of creating rectangles for all the
         // points to check below, we create a rectangle for the test point
         // and test if the points below are in that rectangle instead.
-        Rectangle2D r = layoutEditor.trackControlCircleRectAt(hitPoint);
+        Rectangle2D r = layoutEditor.layoutEditorControlCircleRectAt(hitPoint);
         Point2D p, minPoint = MathUtil.zeroPoint2D;
 
         double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
@@ -629,7 +651,7 @@ public class LayoutTurntable extends LayoutTrack {
             result = NONE;
         }
         return result;
-    }   // findHitPointType
+    }
 
     /**
      * Initialization method The name of each track segment connected to a ray
@@ -647,7 +669,7 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * is this turntable turnout controlled?
+     * Is this turntable turnout controlled?
      *
      * @return true if so
      */
@@ -656,7 +678,7 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * set if this turntable is turnout controlled
+     * Set if this turntable is turnout controlled.
      *
      * @param boo set true if so
      */
@@ -702,7 +724,7 @@ public class LayoutTurntable extends LayoutTrack {
         layoutEditor.setShowAlignmentMenu(popup);
         popup.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
         return popup;
-    }   // showPopup
+    }
 
     private JPopupMenu rayPopup = null;
 
@@ -768,7 +790,7 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * set turntable position to the ray with this index
+     * Set turntable position to the ray with this index.
      *
      * @param index the index
      */
@@ -786,13 +808,14 @@ public class LayoutTurntable extends LayoutTrack {
                 }
             }
             if (!found) {
-                log.error("Attempt to set the position on a non-existant ray track");
+                log.error("{}.setPosition({}); Attempt to set the position on a non-existant ray track",
+                        getName(), index);
             }
         }
     }
 
     /**
-     * get the turntable position
+     * Get the turntable position.
      *
      * @return the turntable position
      */
@@ -801,14 +824,14 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * delete this ray track
+     * Delete this ray track.
      *
      * @param rayTrack the ray track
      */
-    protected void deleteRay(RayTrack rayTrack) {
+    public void deleteRay(RayTrack rayTrack) {
         TrackSegment t = null;
         if (rayTrack == null) {
-            log.error("rayTrack is null!");
+            log.error("{}.deleteRay(null); rayTrack is null", getName());
         } else {
             t = rayTrack.getConnect();
             getRayList().remove(rayTrack.getConnectionIndex());
@@ -825,9 +848,9 @@ public class LayoutTurntable extends LayoutTrack {
 
     /**
      * Clean up when this object is no longer needed. Should not be called while
-     * the object is still displayed; see remove()
+     * the object is still displayed; see remove().
      */
-    void dispose() {
+    public void dispose() {
         if (popup != null) {
             popup.removeAll();
         }
@@ -838,9 +861,9 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * Removes this object from display and persistance
+     * Remove this object from display and persistance.
      */
-    void remove() {
+    public void remove() {
         // remove from persistance by flagging inactive
         active = false;
     }
@@ -854,10 +877,10 @@ public class LayoutTurntable extends LayoutTrack {
         return active;
     }
 
-    protected class RayTrack {
+    public class RayTrack {
 
         /**
-         * the constructor for RayTracks
+         * constructor for RayTracks
          *
          * @param angle its angle
          * @param index its index
@@ -880,10 +903,10 @@ public class LayoutTurntable extends LayoutTrack {
         private boolean disableWhenOccupied = false;
 
         //
-        // accessor routines
+        // Accessor routines
         //
         /**
-         * set ray track disabled
+         * Set ray track disabled.
          *
          * @param boo set true to disable
          */
@@ -897,7 +920,7 @@ public class LayoutTurntable extends LayoutTrack {
         }
 
         /**
-         * is ray track disabled
+         * Is this ray track disabled?
          *
          * @return true if so
          */
@@ -906,7 +929,7 @@ public class LayoutTurntable extends LayoutTrack {
         }
 
         /**
-         * set ray track disabled if occupied
+         * Set ray track disabled if occupied.
          *
          * @param boo set true to disable if occupied
          */
@@ -920,7 +943,7 @@ public class LayoutTurntable extends LayoutTrack {
         }
 
         /**
-         * is ray track disabled if occupied
+         * Is ray track disabled if occupied?
          *
          * @return true if so
          */
@@ -999,7 +1022,7 @@ public class LayoutTurntable extends LayoutTrack {
         private PropertyChangeListener mTurnoutListener;
 
         /**
-         * set the turnout and state for this ray track
+         * Set the turnout and state for this ray track.
          *
          * @param turnoutName the turnout name
          * @param state       its state
@@ -1036,7 +1059,7 @@ public class LayoutTurntable extends LayoutTrack {
         }
 
         /**
-         * set the position for this ray track
+         * Set the position for this ray track.
          */
         public void setPosition() {
             if (namedTurnout != null) {
@@ -1049,7 +1072,7 @@ public class LayoutTurntable extends LayoutTrack {
         }
 
         /**
-         * get the turnout for this ray track
+         * Get the turnout for this ray track.
          *
          * @return the turnout
          */
@@ -1061,7 +1084,7 @@ public class LayoutTurntable extends LayoutTrack {
         }
 
         /**
-         * get the turnout name for the ray track
+         * Get the turnout name for the ray track.
          *
          * @return the turnout name
          */
@@ -1073,7 +1096,7 @@ public class LayoutTurntable extends LayoutTrack {
         }
 
         /**
-         * get the state for the turnout for this ray track
+         * Get the state for the turnout for this ray track.
          *
          * @return the state
          */
@@ -1082,7 +1105,7 @@ public class LayoutTurntable extends LayoutTrack {
         }
 
         /**
-         * dispose of this ray track
+         * Dispose of this ray track.
          */
         void dispose() {
             if (getTurnout() != null) {
@@ -1101,15 +1124,18 @@ public class LayoutTurntable extends LayoutTrack {
     protected void draw1(Graphics2D g2, boolean isMain, boolean isBlock) {
         float trackWidth = 2.F;
         float halfTrackWidth = trackWidth / 2.f;
-        double radius = getRadius(), diameter = radius + radius;
+        double radius = getRadius(), diameter = 2.f * radius;
 
         if (isBlock && isMain) {
+            double radius2 = Math.max(radius / 4.f, trackWidth * 2);
+            double diameter2 = radius2 * 2.f;
             Stroke stroke = g2.getStroke();
             Color color = g2.getColor();
             // draw turntable circle - default track color, side track width
             g2.setStroke(new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
             g2.setColor(layoutEditor.getDefaultTrackColorColor());
             g2.draw(new Ellipse2D.Double(center.getX() - radius, center.getY() - radius, diameter, diameter));
+            g2.draw(new Ellipse2D.Double(center.getX() - radius2, center.getY() - radius2, diameter2, diameter2));
             g2.setStroke(stroke);
             g2.setColor(color);
         }
@@ -1140,7 +1166,7 @@ public class LayoutTurntable extends LayoutTrack {
                 }
             }
         }
-    }   // draw1
+    }
 
     /**
      * {@inheritDoc}
@@ -1178,7 +1204,7 @@ public class LayoutTurntable extends LayoutTrack {
                 }
             }
         }
-    }   // draw2
+    }
 
     /**
      * {@inheritDoc}
@@ -1189,14 +1215,14 @@ public class LayoutTurntable extends LayoutTrack {
             if ((specificType == NONE) || (specificType == (TURNTABLE_RAY_OFFSET + j))) {
                 if (getRayConnectOrdered(j) == null) {
                     Point2D pt = getRayCoordsOrdered(j);
-                    g2.fill(layoutEditor.trackControlCircleAt(pt));
+                    g2.fill(trackControlCircleAt(pt));
                 }
             }
         }
     }
 
     /**
-     * draw this turntable's controls
+     * Draw this turntable's controls.
      *
      * @param g2 the graphics port to draw to
      */
@@ -1209,7 +1235,7 @@ public class LayoutTurntable extends LayoutTrack {
                     RayTrack rt = rayList.get(j);
                     if (!rt.isDisabled() && !(rt.isDisabledWhenOccupied() && rt.isOccupied())) {
                         Point2D pt = getRayCoordsOrdered(j);
-                        g2.draw(layoutEditor.trackControlCircleAt(pt));
+                        g2.draw(trackControlCircleAt(pt));
                     }
                 }
             }
@@ -1217,7 +1243,7 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * draw this turntable's edit controls
+     * Draw this turntable's edit controls.
      *
      * @param g2 the graphics port to draw to
      */
@@ -1225,7 +1251,7 @@ public class LayoutTurntable extends LayoutTrack {
     protected void drawEditControls(Graphics2D g2) {
         Point2D pt = getCoordsCenter();
         g2.setColor(layoutEditor.getDefaultTrackColorColor());
-        g2.draw(layoutEditor.trackControlCircleAt(pt));
+        g2.draw(trackControlCircleAt(pt));
 
         for (int j = 0; j < getNumberRays(); j++) {
             pt = getRayCoordsOrdered(j);
@@ -1235,7 +1261,7 @@ public class LayoutTurntable extends LayoutTrack {
             } else {
                 g2.setColor(Color.green);
             }
-            g2.draw(layoutEditor.trackEditControlRectAt(pt));
+            g2.draw(layoutEditor.layoutEditorControlRectAt(pt));
         }
     }
 
@@ -1328,7 +1354,7 @@ public class LayoutTurntable extends LayoutTrack {
                     }
                 }
             } else {    // (#3)
-                log.debug("*New block ('{}') trackNameSets", theBlockName);
+                log.debug("*New block (''{}'') trackNameSets", theBlockName);
                 TrackNameSets = new ArrayList<>();
                 blockNamesToTrackNameSetsMap.put(theBlockName, TrackNameSets);
             }
@@ -1337,11 +1363,11 @@ public class LayoutTurntable extends LayoutTrack {
                 TrackNameSets.add(TrackNameSet);
             }
             if (TrackNameSet.add(getName())) {
-                log.debug("*    Add track '{}' to trackNameSet for block '{}'", getName(), theBlockName);
+                log.debug("*    Add track ''{}'' to trackNameSet for block ''{}''", getName(), theBlockName);
             }
             theConnect.collectContiguousTracksNamesInBlockNamed(theBlockName, TrackNameSet);
         }
-    } // collectContiguousTracksNamesInBlockNamed
+    }
 
     /**
      * {@inheritDoc}
@@ -1359,10 +1385,10 @@ public class LayoutTurntable extends LayoutTrack {
                 TrackSegment ts = getRayConnectOrdered(k);
                 if (ts != null) {
                     String blk = ts.getBlockName();
-                    if ((blk != null) && (blk.equals(blockName))) { // (#1)
+                    if ((!blk.isEmpty()) && (blk.equals(blockName))) { // (#1)
                         // if we are added to the TrackNameSet
                         if (TrackNameSet.add(getName())) {
-                            log.debug("*    Add track '{}'for block '{}'", getName(), blockName);
+                            log.debug("*    Add track ''{}'' for block ''{}''", getName(), blockName);
                         }
                         // it's time to play... flood your neighbours!
                         ts.collectContiguousTracksNamesInBlockNamed(blockName,
@@ -1390,6 +1416,6 @@ public class LayoutTurntable extends LayoutTrack {
         return true;
     }
 
-    private final static Logger log
-            = LoggerFactory.getLogger(LayoutTurntable.class);
+    private final static Logger log = LoggerFactory.getLogger(LayoutTurntable.class);
+
 }

@@ -22,7 +22,7 @@ public class MemoryItemPanelTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        PickListModel<jmri.Memory> tableModel = PickListModel.memoryPickModelInstance(); // N11N
+        PickListModel<jmri.Memory> tableModel = PickListModel.memoryPickModelInstance();
         Editor editor = new ControlPanelEditor("ED");
         jmri.util.ThreadingUtil.runOnGUI(() -> {
             ip = ItemPalette.getDefault("test palette", editor);
@@ -31,6 +31,7 @@ public class MemoryItemPanelTest {
         MemoryItemPanel t = new MemoryItemPanel(ip, "IM01", "", tableModel, editor);
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(ip);
+        JUnitUtil.dispose(editor);
     }
 
     // The minimal setup for log4J

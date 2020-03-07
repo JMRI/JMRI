@@ -24,17 +24,17 @@ public class JsonTurnoutServiceFactory implements JsonServiceFactory<JsonTurnout
     public static final String TURNOUTS = JsonTurnout.TURNOUTS; // NOI18N
 
     @Override
-    public String[] getTypes() {
+    public String[] getTypes(String version) {
         return new String[]{JsonTurnout.TURNOUT, JsonTurnout.TURNOUTS};
     }
 
     @Override
-    public JsonTurnoutSocketService getSocketService(JsonConnection connection) {
+    public JsonTurnoutSocketService getSocketService(JsonConnection connection, String version) {
         return new JsonTurnoutSocketService(connection);
     }
 
     @Override
-    public JsonTurnoutHttpService getHttpService(ObjectMapper mapper) {
+    public JsonTurnoutHttpService getHttpService(ObjectMapper mapper, String version) {
         return new JsonTurnoutHttpService(mapper);
     }
 

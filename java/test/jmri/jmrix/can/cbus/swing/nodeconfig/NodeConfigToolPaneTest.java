@@ -27,28 +27,26 @@ public class NodeConfigToolPaneTest extends jmri.util.swing.JmriPanelTest {
         
         CbusNodeTableDataModel nodeModel = new CbusNodeTableDataModel(memo, 3,CbusNodeTableDataModel.MAX_COLUMN);
         jmri.InstanceManager.setDefault(CbusNodeTableDataModel.class,nodeModel );
-        
         jmri.InstanceManager.setDefault(jmri.jmrix.can.cbus.CbusPreferences.class,new CbusPreferences() );
         
-        NodeConfigToolPane panel = new NodeConfigToolPane();
-        panel.initComponents(memo);
+        NodeConfigToolPane nodeConfigpanel = new NodeConfigToolPane();
+        nodeConfigpanel.initComponents(memo);
         
-        Assert.assertNotNull("exists", panel);
+        Assert.assertNotNull("exists", nodeConfigpanel);
         Assert.assertNotNull("core node model exists", nodeModel);
         
-        
         nodeModel.dispose();
-        nodeModel = null;
 
     }
-    
     
     private CanSystemConnectionMemo memo;
     private TrafficControllerScaffold tcis;
 
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
         memo = new CanSystemConnectionMemo();
         tcis = new TrafficControllerScaffold();
         memo.setTrafficController(tcis);
@@ -59,10 +57,17 @@ public class NodeConfigToolPaneTest extends jmri.util.swing.JmriPanelTest {
     }
 
     @After
+    @Override
     public void tearDown() {
+        
+        tcis.terminateThreads();
+        memo.dispose();
         tcis = null;
         memo = null;
+        JUnitUtil.resetWindows(false,false);
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
 }

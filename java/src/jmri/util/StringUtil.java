@@ -1,9 +1,5 @@
 package jmri.util;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
@@ -25,6 +21,7 @@ public class StringUtil {
 
     public static final String HTML_CLOSE_TAG = "</html>";
     public static final String HTML_OPEN_TAG = "<html>";
+    public static final String LINEBREAK = "\n";
 
     /**
      * Starting with two arrays, one of names and one of corresponding numeric
@@ -36,7 +33,7 @@ public class StringUtil {
      * @return the state or -1 if none found
      */
     @CheckReturnValue
-    static public int getStateFromName(String name, int[] states, String[] names) {
+    public static int getStateFromName(String name, int[] states, String[] names) {
         for (int i = 0; i < states.length; i++) {
             if (name.equals(names[i])) {
                 return states[i];
@@ -57,7 +54,7 @@ public class StringUtil {
      * @return names matching the given state or an empty array
      */
     @CheckReturnValue
-    static public String[] getNamesFromStateMasked(int state, int[] states, int[] masks, String[] names) {
+    public static String[] getNamesFromStateMasked(int state, int[] states, int[] masks, String[] names) {
         // first pass to count, get refs
         int count = 0;
         String[] temp = new String[states.length];
@@ -85,7 +82,7 @@ public class StringUtil {
      */
     @CheckReturnValue
     @CheckForNull
-    static public String getNameFromState(int state, @Nonnull int[] states, @Nonnull String[] names) {
+    public static String getNameFromState(int state, @Nonnull int[] states, @Nonnull String[] names) {
         for (int i = 0; i < states.length; i++) {
             if (state == states[i]) {
                 return names[i];
@@ -104,7 +101,7 @@ public class StringUtil {
      */
     @CheckReturnValue
     @Nonnull
-    static public String twoHexFromInt(int val) {
+    public static String twoHexFromInt(int val) {
         StringBuilder sb = new StringBuilder();
         sb.append(HEX_CHARS[(val & 0xF0) >> 4]);
         sb.append(HEX_CHARS[val & 0x0F]);
@@ -121,7 +118,7 @@ public class StringUtil {
      */
     @CheckReturnValue
     @Nonnull
-    static public String appendTwoHexFromInt(int val, @Nonnull String inString) {
+    public static String appendTwoHexFromInt(int val, @Nonnull String inString) {
         StringBuilder sb = new StringBuilder(inString);
         sb.append(StringUtil.twoHexFromInt(val));
         return sb.toString();
@@ -136,7 +133,7 @@ public class StringUtil {
      */
     @CheckReturnValue
     @Nonnull
-    static public String to8Bits(int val, boolean msbLeft) {
+    public static String to8Bits(int val, boolean msbLeft) {
         String result = "";
         for (int i = 0; i < 8; i++) {
             if (msbLeft) {
@@ -152,19 +149,47 @@ public class StringUtil {
     /**
      * Create a String containing hexadecimal values from a byte[].
      *
+     * eg. byte[]{1,2,3,10} will return String "01 02 03 0A "
+     * eg. byte[]{-1} will return "FF "
+     * eg. byte[]{(byte)256} will return "00 "
+     * eg. byte[]{(byte)257} will return "01 "
+     *
      * @param bytes byte array. Can be zero length, but must not be null.
      * @return String of hex values, ala "01 02 0A B1 21 ".
      */
     @CheckReturnValue
     @Nonnull
-    static public String hexStringFromBytes(@Nonnull byte[] bytes) {
+    public static String hexStringFromBytes(@Nonnull byte[] bytes) {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < bytes.length; i++) {
-            sb.append(HEX_CHARS[(bytes[i] & 0xF0) >> 4]);
-            sb.append(HEX_CHARS[bytes[i] & 0x0F]);
+        for (byte aByte : bytes) {
+            sb.append(HEX_CHARS[(aByte & 0xF0) >> 4]);
+            sb.append(HEX_CHARS[aByte & 0x0F]);
             sb.append(' ');
         }
         return sb.toString();
+    }
+    
+    /**
+     * Convert an array of integers into a single spaced hex. string.
+     * Each int value will receive 2 hex characters.
+     * <p>
+     * eg. int[]{1,2,3,10} will return "01 02 03 0A "
+     * eg. int[]{-1} will return "FF "
+     * eg. int[]{256} will return "00 "
+     * eg. int[]{257} will return "01 "
+     *
+     * @param v the array of integers. Can be zero length, but must not be null.
+     * @return the formatted String or an empty String
+     */
+    @CheckReturnValue
+    @Nonnull
+    public static String hexStringFromInts(@Nonnull int[] v) {
+        StringBuilder retval = new StringBuilder();
+        for (int e : v) {
+            retval.append(twoHexFromInt(e));
+            retval.append(" ");
+        }
+        return retval.toString();
     }
 
     /**
@@ -176,7 +201,7 @@ public class StringUtil {
      */
     @CheckReturnValue
     @Nonnull
-    static public byte[] bytesFromHexString(@Nonnull String s) {
+    public static byte[] bytesFromHexString(@Nonnull String s) {
         String ts = s + "  "; // ensure blanks on end to make scan easier
         int len = 0;
         // scan for length
@@ -231,7 +256,7 @@ public class StringUtil {
      *
      */
     @Nonnull
-    static public int[] intBytesWithTotalFromNonSpacedHexString(@Nonnull String s, boolean headerTotal) {
+    public static int[] intBytesWithTotalFromNonSpacedHexString(@Nonnull String s, boolean headerTotal) {
         if (s.length() % 2 == 0) {
             int numBytes = ( s.length() / 2 );
             if ( headerTotal ) {
@@ -264,7 +289,7 @@ public class StringUtil {
      * @param byteString String of hex values, eg "01020AB121".
      * @return hex value of single digit
      */
-    static public int getHexDigit(int index, @Nonnull String byteString) {
+    public static int getHexDigit(int index, @Nonnull String byteString) {
         int b = 0;
         b = byteString.charAt(index);
         if ((b >= '0') && (b <= '9')) {
@@ -288,7 +313,7 @@ public class StringUtil {
      * @param byteString the whole string, eg "01AB2CD9"
      * @return The value, else 0
      */
-    static public int getByte(int b, @Nonnull String byteString) {
+    public static int getByte(int b, @Nonnull String byteString) {
         if ((b >= 0)) {
             int index = b * 2;
             int hi = getHexDigit(index++, byteString);
@@ -312,7 +337,7 @@ public class StringUtil {
      */
     @CheckReturnValue
     @Nonnull
-    static public byte[] fullTextToHexArray(@Nonnull String s, int numBytes) {
+    public static byte[] fullTextToHexArray(@Nonnull String s, int numBytes) {
         byte[] b = new byte[numBytes];
         java.util.Arrays.fill(b, (byte) 0x20);
         s = s.substring(0, Math.min(s.length(), numBytes));
@@ -332,7 +357,7 @@ public class StringUtil {
      *
      * @param values the Objects to sort
      */
-    static public void sortUpperCase(@Nonnull Object[] values) {
+    public static void sortUpperCase(@Nonnull Object[] values) {
         Arrays.sort(values, (Object o1, Object o2) -> o1.toString().compareToIgnoreCase(o2.toString()));
     }
 
@@ -342,7 +367,7 @@ public class StringUtil {
      * @param values the Strings to sort
      * @throws NumberFormatException if string[] doesn't only contain numbers
      */
-    static public void numberSort(@Nonnull String[] values) throws NumberFormatException {
+    public static void numberSort(@Nonnull String[] values) throws NumberFormatException {
         for (int i = 0; i <= values.length - 2; i++) { // stop sort early to save time!
             for (int j = values.length - 2; j >= i; j--) {
                 // check that the jth value is larger than j+1th,
@@ -368,7 +393,7 @@ public class StringUtil {
      */
     @CheckReturnValue
     @CheckForNull
-    static public String parenQuote(@CheckForNull String in) {
+    public static String parenQuote(@CheckForNull String in) {
         if (in == null || in.equals("")) {
             return in;
         }
@@ -428,7 +453,7 @@ public class StringUtil {
 
     @CheckReturnValue
     @Nonnull
-    static public java.util.List<String> splitParens(@CheckForNull String in) {
+    public static java.util.List<String> splitParens(@CheckForNull String in) {
         java.util.ArrayList<String> result = new java.util.ArrayList<>();
         if (in == null || in.equals("")) {
             return result;
@@ -462,45 +487,6 @@ public class StringUtil {
     }
 
     /**
-     * Replace various special characters with their "escaped" counterpart in
-     * UTF-8 character encoding, to facilitate use with web servers.
-     *
-     * @param s String to escape
-     * @return String with escaped values
-     * @throws java.io.UnsupportedEncodingException if unable to escape in UTF-8
-     * @deprecated since 4.9.1; use
-     * {@link java.net.URLEncoder#encode(java.lang.String, java.lang.String)}
-     * directly
-     */
-    @CheckReturnValue
-    @Nonnull
-    @Deprecated // since 4.9.1
-    static public String escapeString(@Nonnull String s) throws UnsupportedEncodingException {
-        jmri.util.Log4JUtil.deprecationWarning(log, "escapeString");        
-        return URLEncoder.encode(s, StandardCharsets.UTF_8.toString());
-    }
-
-    /**
-     * Replace various escaped character in UTF-8 character encoding with their
-     * "regular" counterpart, to facilitate use with web servers.
-     *
-     * @param s String to unescape
-     * @return String with escaped values replaced with regular values
-     * @throws java.io.UnsupportedEncodingException if unable to unescape from
-     *                                              UTF-8
-     * @deprecated since 4.9.1; use
-     * {@link java.net.URLDecoder#decode(java.lang.String, java.lang.String)}
-     * directly
-     */
-    @CheckReturnValue
-    @Nonnull
-    @Deprecated // since 4.9.1
-    static public String unescapeString(@Nonnull String s) throws UnsupportedEncodingException {
-        jmri.util.Log4JUtil.deprecationWarning(log, "unescapeString");        
-        return URLDecoder.decode(s, StandardCharsets.UTF_8.toString());
-    }
-
-    /**
      * Convert an array of objects into a single string. Each object's toString
      * value is displayed within square brackets and separated by commas.
      *
@@ -510,7 +496,7 @@ public class StringUtil {
      */
     @CheckReturnValue
     @Nonnull
-    static public <E> String arrayToString(@Nonnull E[] v) {
+    public static <E> String arrayToString(@Nonnull E[] v) {
         StringBuilder retval = new StringBuilder();
         boolean first = true;
         for (E e : v) {
@@ -534,7 +520,7 @@ public class StringUtil {
      */
     @CheckReturnValue
     @Nonnull
-    static public String arrayToString(@Nonnull byte[] v) {
+    public static String arrayToString(@Nonnull byte[] v) {
         StringBuilder retval = new StringBuilder();
         boolean first = true;
         for (byte e : v) {
@@ -558,7 +544,7 @@ public class StringUtil {
      */
     @CheckReturnValue
     @Nonnull
-    static public String arrayToString(@Nonnull int[] v) {
+    public static String arrayToString(@Nonnull int[] v) {
         StringBuilder retval = new StringBuilder();
         boolean first = true;
         for (int e : v) {
@@ -582,7 +568,7 @@ public class StringUtil {
      * @return trimmed string, left aligned by padding to the right
      */
     @CheckReturnValue
-    static public String padString (String value, int length) {
+    public static String padString (String value, int length) {
         if (length > 1) {
             return String.format("%-" + length + "s", value.substring(0, Math.min(value.length(), length - 1)));
         } else {
@@ -599,7 +585,7 @@ public class StringUtil {
      * @return first value in int form , -1 if not found
      */
     @CheckReturnValue
-    static public int getFirstIntFromString(@Nonnull String str){
+    public static int getFirstIntFromString(@Nonnull String str){
         StringBuilder sb = new StringBuilder();
         for (int i =0; i<str.length(); i ++) {
             char c = str.charAt(i);
@@ -632,7 +618,7 @@ public class StringUtil {
      * @return last value in int form , -1 if not found
      */
     @CheckReturnValue
-    static public int getLastIntFromString(@Nonnull String str){
+    public static int getLastIntFromString(@Nonnull String str){
         StringBuilder sb = new StringBuilder();
         for (int i = str.length() - 1; i >= 0; i --) {
             char c = str.charAt(i);
@@ -667,7 +653,7 @@ public class StringUtil {
      */
     @CheckReturnValue
     @Nonnull
-    static public String replaceLast(@Nonnull String string, @Nonnull String from, @Nonnull String to) {
+    public static String replaceLast(@Nonnull String string, @Nonnull String from, @Nonnull String to) {
         int lastIndex = string.lastIndexOf(from);
         if (lastIndex < 0) {
             return string;
@@ -714,4 +700,5 @@ public class StringUtil {
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StringUtil.class);
+
 }

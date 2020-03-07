@@ -7,7 +7,7 @@ package jmri.jmrix.roco;
  * @author	Bob Jacobsen Copyright (C) 2001 
  * @author  Paul Bender Copyright (C) 2016
  */
-public class RocoCommandStation extends jmri.jmrix.lenz.LenzCommandStation implements jmri.CommandStation {
+public class RocoCommandStation extends jmri.jmrix.lenz.LenzCommandStation {
 
     /*
      * We need to register for logging

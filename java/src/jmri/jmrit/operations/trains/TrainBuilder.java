@@ -1,18 +1,9 @@
 package jmri.jmrit.operations.trains;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import javax.swing.JOptionPane;
 
@@ -26,11 +17,7 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.locations.schedules.ScheduleItem;
 import jmri.jmrit.operations.rollingstock.RollingStock;
-import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.rollingstock.cars.CarLoad;
-import jmri.jmrit.operations.rollingstock.cars.CarLoads;
-import jmri.jmrit.operations.rollingstock.cars.CarManager;
-import jmri.jmrit.operations.rollingstock.cars.CarRoads;
+import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.router.Router;
@@ -138,47 +125,13 @@ public class TrainBuilder extends TrainCommon {
         File file = InstanceManager.getDefault(TrainManagerXml.class).createTrainBuildReportFile(_train.getName());
         try {
             _buildReport = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file),
-                    "UTF-8")), true); // NOI18N
+                    StandardCharsets.UTF_8)), true);
         } catch (IOException e) {
             log.error("Can not open build report file: " + file.getName());
             return;
         }
-
-        addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("BuildReportMsg"), new Object[]{
-                _train.getName(), _startTime}));
-        addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("BuildReportVersion"), new Object[]{Version
-                .name()}));
-        if (!trainScheduleManager.getTrainScheduleActiveId().equals(TrainScheduleManager.NONE)) {
-            if (trainScheduleManager.getTrainScheduleActiveId().equals(TrainSchedule.ANY)) {
-                addLine(_buildReport, ONE,
-                        MessageFormat.format(Bundle.getMessage("buildActiveSchedule"),
-                                new Object[]{Bundle.getMessage("Any")}));
-            } else {
-                TrainSchedule sch = trainScheduleManager.getActiveSchedule();
-                if (sch != null) {
-                    addLine(_buildReport, ONE,
-                            MessageFormat.format(Bundle.getMessage("buildActiveSchedule"),
-                                    new Object[]{sch.getName()}));
-                }
-            }
-        }
-        // show the various build detail levels
-        addLine(_buildReport, THREE, Bundle.getMessage("buildReportLevelThree"));
-        addLine(_buildReport, FIVE, Bundle.getMessage("buildReportLevelFive"));
-        addLine(_buildReport, SEVEN, Bundle.getMessage("buildReportLevelSeven"));
-
-        if (Setup.getRouterBuildReportLevel().equals(Setup.BUILD_REPORT_DETAILED)) {
-            addLine(_buildReport, SEVEN, Bundle.getMessage("buildRouterReportLevelDetailed"));
-        } else if (Setup.getRouterBuildReportLevel().equals(Setup.BUILD_REPORT_VERY_DETAILED)) {
-            addLine(_buildReport, SEVEN, Bundle.getMessage("buildRouterReportLevelVeryDetailed"));
-        }
-
-        if (!Setup.getComment().trim().isEmpty()) {
-            addLine(_buildReport, ONE, BLANK_LINE);
-            addLine(_buildReport, ONE, Setup.getComment());
-        }
-
-        addLine(_buildReport, ONE, BLANK_LINE);
+        
+        addBuildReportInfo();
 
         if (_train.getRoute() == null) {
             throw new BuildFailedException(MessageFormat.format(Bundle.getMessage("buildErrorRoute"),
@@ -209,7 +162,7 @@ public class TrainBuilder extends TrainCommon {
 
         // is this train a switcher?
         if (_train.isLocalSwitcher()) {
-            addLine(_buildReport, THREE, BLANK_LINE); // add line when in detailed report mode
+            addLine(_buildReport, THREE, BLANK_LINE);
             addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildTrainIsSwitcher"), new Object[]{
                     _train.getName(), TrainCommon.splitString(_train.getTrainDepartsName())}));
         }
@@ -224,40 +177,16 @@ public class TrainBuilder extends TrainCommon {
         }
 
         showTrainRequirements();
+        
+        // show which roads, owners, built dates, engine types that the train will service
+        showTrainServices();
 
-        // show road names that this train will service
-        if (!_train.getRoadOption().equals(Train.ALL_ROADS)) {
-            addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildTrainRoads"), new Object[]{
-                    _train.getName(), _train.getRoadOption(), formatStringToCommaSeparated(_train.getRoadNames())}));
-        }
-        // show owner names that this train will service
-        if (!_train.getOwnerOption().equals(Train.ALL_OWNERS)) {
-            addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildTrainOwners"), new Object[]{
-                    _train.getName(), _train.getOwnerOption(), formatStringToCommaSeparated(_train.getOwnerNames())}));
-        }
-        // show built dates serviced
-        if (!_train.getBuiltStartYear().equals(Train.NONE)) {
-            addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildTrainBuiltAfter"), new Object[]{
-                    _train.getName(), _train.getBuiltStartYear()}));
-        }
-        if (!_train.getBuiltEndYear().equals(Train.NONE)) {
-            addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildTrainBuiltBefore"), new Object[]{
-                    _train.getName(), _train.getBuiltEndYear()}));
-        }
-
-        // show engine types that this train will service
-        if (_reqNumEngines > 0) {
-            addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildTrainServicesEngineTypes"),
-                    new Object[]{_train.getName()}));
-            addLine(_buildReport, FIVE, formatStringToCommaSeparated(_train.getLocoTypeNames()));
-        }
-
-        determineIfTrainTerminatesIntoStaging(); // determine if train is terminating into staging
+        determineIfTrainTerminatesIntoStaging(); // and find a track in staging for this train
 
         determineIfTrainDepartsStagingAndLoadEngines(); // find departure track if staging, load engines and cabooses
 
-        // show car types and loads that this train will service
-        addLine(_buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
+        // show car types that this train will service
+        addLine(_buildReport, FIVE, BLANK_LINE);
         addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildTrainServicesCarTypes"),
                 new Object[]{_train.getName()}));
         addLine(_buildReport, FIVE, formatStringToCommaSeparated(_train.getCarTypeNames()));
@@ -289,7 +218,7 @@ public class TrainBuilder extends TrainCommon {
         blockCarsFromStaging(); // block cars from staging
 
         // now find destinations for cars
-        addLine(_buildReport, THREE, BLANK_LINE); // add line when in normal report mode
+        addLine(_buildReport, THREE, BLANK_LINE);
         addLine(_buildReport, THREE,
                 MessageFormat.format(Bundle.getMessage("buildTrain"), new Object[]{_train.getNumberCarsRequested(),
                         _train.getName(), _carList.size()}));
@@ -303,7 +232,7 @@ public class TrainBuilder extends TrainCommon {
                 firstPass = false;
             }
         } else {
-            placeCars(100, false);
+            placeCars(100, false); // normal build one pass
         }
 
         // done assigning cars to train
@@ -367,9 +296,49 @@ public class TrainBuilder extends TrainCommon {
         _train.moveTrainIcon(_train.getTrainDepartsRouteLocation());
         log.debug("Done building train ({})", _train.getName());
     }
+    
+    /**
+     * Creates the build report header information lines.
+     */
+    private void addBuildReportInfo() {
+        addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("BuildReportMsg"), new Object[]{
+                _train.getName(), _startTime}));
+        addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("BuildReportVersion"), new Object[]{Version
+                .name()}));
+        if (!trainScheduleManager.getTrainScheduleActiveId().equals(TrainScheduleManager.NONE)) {
+            if (trainScheduleManager.getTrainScheduleActiveId().equals(TrainSchedule.ANY)) {
+                addLine(_buildReport, ONE,
+                        MessageFormat.format(Bundle.getMessage("buildActiveSchedule"),
+                                new Object[]{Bundle.getMessage("Any")}));
+            } else {
+                TrainSchedule sch = trainScheduleManager.getActiveSchedule();
+                if (sch != null) {
+                    addLine(_buildReport, ONE,
+                            MessageFormat.format(Bundle.getMessage("buildActiveSchedule"),
+                                    new Object[]{sch.getName()}));
+                }
+            }
+        }
+        // show the various build detail levels
+        addLine(_buildReport, THREE, Bundle.getMessage("buildReportLevelThree"));
+        addLine(_buildReport, FIVE, Bundle.getMessage("buildReportLevelFive"));
+        addLine(_buildReport, SEVEN, Bundle.getMessage("buildReportLevelSeven"));
+
+        if (Setup.getRouterBuildReportLevel().equals(Setup.BUILD_REPORT_DETAILED)) {
+            addLine(_buildReport, SEVEN, Bundle.getMessage("buildRouterReportLevelDetailed"));
+        } else if (Setup.getRouterBuildReportLevel().equals(Setup.BUILD_REPORT_VERY_DETAILED)) {
+            addLine(_buildReport, SEVEN, Bundle.getMessage("buildRouterReportLevelVeryDetailed"));
+        }
+
+        if (!Setup.getComment().trim().isEmpty()) {
+            addLine(_buildReport, ONE, BLANK_LINE);
+            addLine(_buildReport, ONE, Setup.getComment());
+        }
+        addLine(_buildReport, ONE, BLANK_LINE);
+    }
 
     /**
-     * show train build options in detailed mode
+     * show train build options when in detailed mode
      */
     private void showTrainBuildOptions() {
         ResourceBundle rb = ResourceBundle
@@ -484,7 +453,7 @@ public class TrainBuilder extends TrainCommon {
         if (_train.isAllowLocalMovesEnabled()) {
             addLine(_buildReport, FIVE, Bundle.getMessage("AllowLocalMoves"));
         }
-        if (_train.isAllowThroughCarsEnabled()) {
+        if (_train.isAllowThroughCarsEnabled() && _departLocation != _terminateLocation) {
             addLine(_buildReport, FIVE, Bundle.getMessage("AllowThroughCars"));
         }
         if (_train.isServiceAllCarsWithFinalDestinationsEnabled()) {
@@ -498,7 +467,40 @@ public class TrainBuilder extends TrainCommon {
             addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("BuildConsistHPT"), new Object[]{
                     Setup.getHorsePowerPerTon()}));
         }
-        addLine(_buildReport, ONE, BLANK_LINE); // add line
+        addLine(_buildReport, ONE, BLANK_LINE);
+    }
+    
+    /**
+     * Lists what the train will service. Road and owner names, built dates, and
+     * engine types.
+     */
+    private void showTrainServices() {
+        // show road names that this train will service
+        if (!_train.getRoadOption().equals(Train.ALL_ROADS)) {
+            addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildTrainRoads"), new Object[]{
+                    _train.getName(), _train.getRoadOption(), formatStringToCommaSeparated(_train.getRoadNames())}));
+        }
+        // show owner names that this train will service
+        if (!_train.getOwnerOption().equals(Train.ALL_OWNERS)) {
+            addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildTrainOwners"), new Object[]{
+                    _train.getName(), _train.getOwnerOption(), formatStringToCommaSeparated(_train.getOwnerNames())}));
+        }
+        // show built dates serviced
+        if (!_train.getBuiltStartYear().equals(Train.NONE)) {
+            addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildTrainBuiltAfter"), new Object[]{
+                    _train.getName(), _train.getBuiltStartYear()}));
+        }
+        if (!_train.getBuiltEndYear().equals(Train.NONE)) {
+            addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildTrainBuiltBefore"), new Object[]{
+                    _train.getName(), _train.getBuiltEndYear()}));
+        }
+
+        // show engine types that this train will service
+        if (_reqNumEngines > 0) {
+            addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildTrainServicesEngineTypes"),
+                    new Object[]{_train.getName()}));
+            addLine(_buildReport, FIVE, formatStringToCommaSeparated(_train.getLocoTypeNames()));
+        }
     }
 
     /**
@@ -631,7 +633,7 @@ public class TrainBuilder extends TrainCommon {
      * changes in the route.
      */
     private void showTrainRequirements() {
-        addLine(_buildReport, ONE, BLANK_LINE); // add line
+        addLine(_buildReport, ONE, BLANK_LINE);
         addLine(_buildReport, ONE, Bundle.getMessage("TrainRequirements"));
         if (_train.getNumberEngines().equals("0")) {
             addLine(_buildReport, ONE, Bundle.getMessage("buildTrainReq0Engine"));
@@ -686,7 +688,7 @@ public class TrainBuilder extends TrainCommon {
             addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildTrainRequiresFRED"), new Object[]{
                     _train.getTrainDepartsName(), _train.getCabooseRoad()}));
         }
-        addLine(_buildReport, ONE, BLANK_LINE); // add line
+        addLine(_buildReport, ONE, BLANK_LINE);
     }
 
     /**
@@ -702,7 +704,7 @@ public class TrainBuilder extends TrainCommon {
         _terminateStageTrack = null;
         List<Track> stagingTracksTerminate = _terminateLocation.getTrackByMovesList(Track.STAGING);
         if (stagingTracksTerminate.size() > 0) {
-            addLine(_buildReport, THREE, BLANK_LINE); // add line when in normal report mode
+            addLine(_buildReport, THREE, BLANK_LINE);
             addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildTerminateStaging"), new Object[]{
                     _terminateLocation.getName(), Integer.toString(stagingTracksTerminate.size())}));
             if (stagingTracksTerminate.size() > 1 && Setup.isPromptToStagingEnabled()) {
@@ -777,7 +779,7 @@ public class TrainBuilder extends TrainCommon {
         _departStageTrack = null;
         List<Track> stagingTracks = _departLocation.getTrackByMovesList(Track.STAGING);
         if (stagingTracks.size() > 0) {
-            addLine(_buildReport, THREE, BLANK_LINE); // add line when in normal report mode
+            addLine(_buildReport, THREE, BLANK_LINE);
             addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildDepartStaging"), new Object[]{
                     _departLocation.getName(), Integer.toString(stagingTracks.size())}));
             if (stagingTracks.size() > 1 && Setup.isPromptFromStagingEnabled()) {
@@ -832,7 +834,7 @@ public class TrainBuilder extends TrainCommon {
         } else {
             // no staging tracks at this location, load engines for this train
             if (_reqNumEngines > 0) {
-                addLine(_buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
+                addLine(_buildReport, FIVE, BLANK_LINE);
             }
             if (!getEngines(_reqNumEngines, _train.getEngineModel(), _train.getEngineRoad(), _train
                     .getTrainDepartsRouteLocation(), engineTerminatesFirstLeg)) {
@@ -936,7 +938,7 @@ public class TrainBuilder extends TrainCommon {
      * @return The departure track the user selected.
      */
     private Track promptFromStagingDialog() {
-        List<Track> tracksIn = _departLocation.getTrackList();
+        List<Track> tracksIn = _departLocation.getTrackByNameList(null);
         List<Track> validTracks = new ArrayList<>();
         // only show valid tracks
         for (Track track : tracksIn) {
@@ -1502,11 +1504,8 @@ public class TrainBuilder extends TrainCommon {
             addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildTrainReqCaboose"), new Object[]{
                     _train.getName(), roadCaboose, rl.getName(), rld.getName()}));
         }
-        // Does the route have enough moves?
-        // if (requiresCaboose && rl.getMaxCarMoves() - rl.getCarMoves() <= 0) {
-        // throw new BuildFailedException(MessageFormat.format(Bundle.getMessage("buildErrorNoMoves"), new Object[] {
-        // rl.getName(), rl.getId(), Bundle.getMessage("Caboose") }));
-        // }
+        // Ignore route moves for caboose
+ 
         // Now go through the car list looking for cabooses
         boolean cabooseTip = true; // add a user tip to the build report about cabooses if none found
         boolean cabooseAtDeparture = false; // set to true if caboose at departure location is found
@@ -1635,7 +1634,7 @@ public class TrainBuilder extends TrainCommon {
      * @throws BuildFailedException
      */
     private void removeCaboosesAndCarsWithFred() throws BuildFailedException {
-        addLine(_buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
+        addLine(_buildReport, SEVEN, BLANK_LINE);
         addLine(_buildReport, SEVEN, Bundle.getMessage("buildRemoveCarsNotNeeded"));
         for (int i = 0; i < _carList.size(); i++) {
             Car car = _carList.get(i);
@@ -1672,7 +1671,7 @@ public class TrainBuilder extends TrainCommon {
      * @throws BuildFailedException
      */
     private void removeAndListCars() throws BuildFailedException {
-        addLine(_buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
+        addLine(_buildReport, SEVEN, BLANK_LINE);
         addLine(_buildReport, SEVEN, Bundle.getMessage("buildRemoveCars"));
         boolean showCar = true;
         int carListSize = _carList.size();
@@ -1847,7 +1846,7 @@ public class TrainBuilder extends TrainCommon {
                     if (_train.services(car)) {
                         addLine(_buildReport, SEVEN,
                                 MessageFormat.format(Bundle.getMessage("buildTrainCanServiceWait"),
-                                        new Object[]{_train.getName(), car.toString()}));
+                                        new Object[]{_train.getName(), car.toString(), car.getWait() - 1}));
                         car.setWait(car.getWait() - 1); // decrement wait count
                         // a car's load changes when the wait count reaches 0
                         String oldLoad = car.getLoadName();
@@ -1889,7 +1888,7 @@ public class TrainBuilder extends TrainCommon {
         if (_departStageTrack != null) {
             int numCarsFromStaging = 0;
             _numOfBlocks = new Hashtable<>();
-            addLine(_buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
+            addLine(_buildReport, SEVEN, BLANK_LINE);
             addLine(_buildReport, SEVEN, Bundle.getMessage("buildRemoveCarsStaging"));
             for (int i = 0; i < _carList.size(); i++) {
                 Car car = _carList.get(i);
@@ -1919,7 +1918,7 @@ public class TrainBuilder extends TrainCommon {
                 }
             }
             // show how many cars are departing from staging
-            addLine(_buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
+            addLine(_buildReport, FIVE, BLANK_LINE);
             addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildDepartingStagingCars"),
                     new Object[]{_departStageTrack.getLocation().getName(), _departStageTrack.getName(),
                             numCarsFromStaging}));
@@ -1941,7 +1940,7 @@ public class TrainBuilder extends TrainCommon {
         }
 
         // show how many cars were found
-        addLine(_buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
+        addLine(_buildReport, FIVE, BLANK_LINE);
         addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildFoundCars"), new Object[]{
                 Integer.toString(_carList.size()), _train.getName()}));
 
@@ -2036,7 +2035,7 @@ public class TrainBuilder extends TrainCommon {
                     }
                 }
             }
-            addLine(_buildReport, SEVEN, BLANK_LINE); // add line when in detailed report mode
+            addLine(_buildReport, SEVEN, BLANK_LINE);
         }
         return;
     }
@@ -2133,7 +2132,7 @@ public class TrainBuilder extends TrainCommon {
         RouteLocation rl = _train.getTrainDepartsRouteLocation();
         while (true) {
             String blockId = getLargestBlock(); // get the id of the largest block of cars
-            if (blockId.equals("") || _numOfBlocks.get(blockId) == 1) {
+            if (blockId.isEmpty() || _numOfBlocks.get(blockId) == 1) {
                 break; // done
             }
             // get the remaining location with the greatest number of moves
@@ -2263,7 +2262,7 @@ public class TrainBuilder extends TrainCommon {
      * @throws BuildFailedException
      */
     private void placeCars(int percent, boolean firstPass) throws BuildFailedException {
-        addLine(_buildReport, THREE, BLANK_LINE); // add line when in normal report mode
+        addLine(_buildReport, THREE, BLANK_LINE);
         if (percent < 100) {
             addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildMultiplePass"),
                     new Object[]{percent}));
@@ -2354,7 +2353,7 @@ public class TrainBuilder extends TrainCommon {
             addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildLocReqMoves"), new Object[]{
                     rl.getName(), rl.getId(), _reqNumOfMoves, rl.getMaxCarMoves() - rl.getCarMoves(),
                     rl.getMaxCarMoves()}));
-            addLine(_buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
+            addLine(_buildReport, FIVE, BLANK_LINE);
 
             // show the car load generation options for staging
             if (routeIndex == 0 &&
@@ -2375,7 +2374,7 @@ public class TrainBuilder extends TrainCommon {
                 if (_departStageTrack.isAddCustomLoadsAnyStagingTrackEnabled()) {
                     addLine(_buildReport, FIVE, Bundle.getMessage("buildLoadsStaging"));
                 }
-                addLine(_buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
+                addLine(_buildReport, FIVE, BLANK_LINE);
             }
 
             _carIndex = 0; // see reportCarsNotMoved(rl, percent) below
@@ -2394,7 +2393,7 @@ public class TrainBuilder extends TrainCommon {
 
                 // we might have freed up space at a spur that has an alternate track
                 if (redirectCarsFromAlternateTrack()) {
-                    addLine(_buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
+                    addLine(_buildReport, SEVEN, BLANK_LINE);
                 }
             }
 
@@ -2449,11 +2448,11 @@ public class TrainBuilder extends TrainCommon {
                 messageFlag = false;
                 addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildExtraPassForLocation"),
                         new Object[]{rl.getName()}));
-                addLine(_buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
+                addLine(_buildReport, SEVEN, BLANK_LINE);
             }
             // can this car be picked up?
             if (!checkPickUpTrainDirection(car, rl)) {
-                addLine(_buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
+                addLine(_buildReport, FIVE, BLANK_LINE);
                 continue; // no
             }
 
@@ -2468,7 +2467,7 @@ public class TrainBuilder extends TrainCommon {
                     // report build failure car departing staging with a restricted load
                     addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildErrorCarStageLoad"),
                             new Object[]{car.toString(), car.getLoadName(), _departStageTrack.getName()}));
-                    addLine(_buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
+                    addLine(_buildReport, FIVE, BLANK_LINE);
                     continue; // keep going and see if there are other cars with issues outs of staging
                 }
             }
@@ -2506,13 +2505,13 @@ public class TrainBuilder extends TrainCommon {
                                     car.getFinalDestinationTrackName()}));
                     car.reset();
                 }
-                addLine(_buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
+                addLine(_buildReport, SEVEN, BLANK_LINE);
             }
         }
         if (!foundCar && !isSecondPass) {
             addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildNoCarsAtLocation"),
                     new Object[]{rl.getName()}));
-            addLine(_buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
+            addLine(_buildReport, FIVE, BLANK_LINE);
         }
     }
 
@@ -2644,7 +2643,7 @@ public class TrainBuilder extends TrainCommon {
             addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildWarnCarDepartStaging"),
                     new Object[]{car.toString(), car.getLoadName()}));
         }
-        addLine(_buildReport, THREE, BLANK_LINE); // add line when in normal report mode
+        addLine(_buildReport, THREE, BLANK_LINE);
         _numberCars++; // bump number of cars moved by this train
         _completedMoves++; // bump number of car pick up moves for the location
         _reqNumOfMoves--; // decrement number of moves left for the location
@@ -3860,7 +3859,7 @@ public class TrainBuilder extends TrainCommon {
         }
         addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildNoDestForCar"),
                 new Object[]{car.toString()}));
-        addLine(_buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
+        addLine(_buildReport, FIVE, BLANK_LINE);
     }
 
     /**
@@ -3886,7 +3885,7 @@ public class TrainBuilder extends TrainCommon {
                 car.getTrack() != _departStageTrack) {
             addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildCarHasFinalDestNoMove"),
                     new Object[]{car.toString(), car.getFinalDestinationName()}));
-            addLine(_buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
+            addLine(_buildReport, FIVE, BLANK_LINE);
             // don't remove car from list if departing staging
             if (car.getTrack() == _departStageTrack) {
                 addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildErrorCarStageDest"),
@@ -3909,7 +3908,7 @@ public class TrainBuilder extends TrainCommon {
                 !splitString(car.getLocationName()).equals(splitString(car.getFinalDestinationName()))) {
             addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildThroughTrafficNotAllow"),
                     new Object[]{_departLocation.getName(), _terminateLocation.getName()}));
-            addLine(_buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
+            addLine(_buildReport, FIVE, BLANK_LINE);
             // don't remove car from list if departing staging
             if (car.getTrack() == _departStageTrack) {
                 addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildErrorCarStageDest"),
@@ -3970,13 +3969,13 @@ public class TrainBuilder extends TrainCommon {
                 if (!_notRoutable.contains(car)) {
                     _notRoutable.add(car);
                 }
-                addLine(_buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
+                addLine(_buildReport, FIVE, BLANK_LINE);
                 addLine(_buildReport, FIVE, MessageFormat.format(
                         Bundle.getMessage("buildWarningCarNotRoutable"),
                         new Object[]{car.toString(), car.getLocationName(),
                                 car.getTrackName(), car.getFinalDestinationName(),
                                 car.getFinalDestinationTrackName()}));
-                addLine(_buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
+                addLine(_buildReport, FIVE, BLANK_LINE);
                 return false; // move this car, routing failed!
             }
         } else {
@@ -4071,7 +4070,7 @@ public class TrainBuilder extends TrainCommon {
                         new Object[]{car.toString(), _departLocation.getName(), _terminateLocation.getName()}));
                 addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildThroughTrafficNotAllow"),
                         new Object[]{_departLocation.getName(), _terminateLocation.getName()}));
-                addLine(_buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
+                addLine(_buildReport, FIVE, BLANK_LINE);
                 return true; // done
             }
             locCount++; // show when this car would be dropped at location
@@ -4359,9 +4358,6 @@ public class TrainBuilder extends TrainCommon {
                 throw new BuildFailedException(MessageFormat.format(Bundle.getMessage("buildErrorRouteLoc"),
                         new Object[]{_train.getRoute().getName(), rld.getName()}));
             }
-            Track trackTemp = null;
-            Track finalDestinationTrackTemp = null;
-
             // don't move car to same location unless the train is a switcher (local moves) or is passenger,
             // caboose or car with FRED
             if (splitString(rl.getName()).equals(splitString(rld.getName())) &&
@@ -4414,38 +4410,17 @@ public class TrainBuilder extends TrainCommon {
                         new Object[]{_departLocation.getName(), _terminateLocation.getName()}));
                 continue;
             }
+            
+            Track trackTemp = null;
+            Track finalDestinationTrackTemp = null;
+            
             // is there a track assigned for staging cars?
             if (rld == _train.getTrainTerminatesRouteLocation() && _terminateStageTrack != null) {
-                // no need to check train and track direction into staging, already done
-                String status = car.testDestination(testDestination, _terminateStageTrack);
-                if (status.equals(Track.OKAY)) {
-                    trackTemp = _terminateStageTrack;
-                    // only generate a new load if there aren't any other tracks available for this car
-                } else if (status.startsWith(Track.LOAD) &&
-                        car.getTrack() == _departStageTrack &&
-                        car.getLoadName().equals(carLoads.getDefaultEmptyName()) &&
-                        rldSave == null &&
-                        (_departStageTrack.isAddCustomLoadsAnyStagingTrackEnabled() ||
-                                _departStageTrack.isAddCustomLoadsEnabled() ||
-                                _departStageTrack.isAddCustomLoadsAnySpurEnabled())) {
-                    // try and generate a load for this car into staging
-                    if (generateLoadCarDepartingAndTerminatingIntoStaging(car, _terminateStageTrack)) {
-                        trackTemp = _terminateStageTrack;
-                    } else {
-                        addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
-                                .getMessage("buildCanNotDropCarBecause"),
-                                new Object[]{car.toString(),
-                                        _terminateStageTrack.getName(), status,
-                                        _terminateStageTrack.getTrackTypeName()}));
-                        continue; // failed to create load
-                    }
-                } else {
-                    addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCanNotDropCarBecause"),
-                            new Object[]{car.toString(), _terminateStageTrack.getName(), status,
-                                    _terminateStageTrack.getTrackTypeName()}));
+                trackTemp = tryStaging(car, rldSave);
+                if (trackTemp == null) {
                     continue;
                 }
-                // no staging track assigned, start track search
+            // no staging track assigned, start track search
             } else {
                 // first report if there are any alternate tracks
                 for (Track track : testDestination.getTrackByNameList(null)) {
@@ -4454,9 +4429,8 @@ public class TrainBuilder extends TrainCommon {
                                 new Object[]{car.toString(), track.getTrackTypeName(), track.getName()}));
                     }
                 }
+                // now find a track for this car
                 for (Track testTrack : testDestination.getTrackByMovesList(null)) {
-                    // log.debug("track (" +testTrack.getName()+ ") has "+ testTrack.getMoves() + " moves");
-                    // dropping to the same track isn't allowed
                     if (testTrack == car.getTrack() && !car.isPassenger() && !car.isCaboose() && !car.hasFred()) {
                         addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
                                 .getMessage("buildCanNotDropCarSameTrack"),
@@ -4516,10 +4490,8 @@ public class TrainBuilder extends TrainCommon {
                             testTrack.isSpur() &&
                             !testTrack.getScheduleId().equals(Track.NONE) &&
                             (car.getTrack().isAddCustomLoadsEnabled() ||
-                                    car.getTrack()
-                                            .isAddCustomLoadsAnySpurEnabled()) &&
+                                    car.getTrack().isAddCustomLoadsAnySpurEnabled()) &&
                             car.getLoadName().equals(carLoads.getDefaultEmptyName())) {
-                        // can we use this staging track?
                         if (!testTrack.isSpaceAvailable(car)) {
                             addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
                                     .getMessage("buildNoDestTrackSpace"),
@@ -4666,8 +4638,7 @@ public class TrainBuilder extends TrainCommon {
                                 trackSave.getName(), trackSave.getScheduleName(), Double.toString(saveRatio));
                     }
                     log.debug("Saved {} = {}, {} = {}", rldSave.getName(), Double.toString(saveRatio), rld.getName(),
-                            Double
-                                    .toString(nextRatio));
+                            Double.toString(nextRatio));
                     if (saveRatio < nextRatio) {
                         rld = rldSave; // the saved is better than the last found
                         trackTemp = trackSave;
@@ -4699,6 +4670,48 @@ public class TrainBuilder extends TrainCommon {
         }
         adjustCarOrder(car);
         return false; // no build errors, but car not given destination
+    }
+    
+    private Track tryStaging(Car car, RouteLocation rldSave) {
+        // local switcher working staging?
+        if (_train.isLocalSwitcher() &&
+                !car.isPassenger() &&
+                !car.isCaboose() &&
+                !car.hasFred() &&
+                car.getTrack() == _terminateStageTrack) {
+            addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCanNotDropCarSameTrack"),
+                    new Object[]{car.toString(), car.getTrack().getName()}));
+            return null;
+        }                       
+        // no need to check train and track direction into staging, already done
+        String status = car.testDestination(_terminateStageTrack.getLocation(), _terminateStageTrack);
+        if (status.equals(Track.OKAY)) {
+            return _terminateStageTrack;
+            // only generate a new load if there aren't any other tracks available for this car
+        } else if (status.startsWith(Track.LOAD) &&
+                car.getTrack() == _departStageTrack &&
+                car.getLoadName().equals(carLoads.getDefaultEmptyName()) &&
+                rldSave == null &&
+                (_departStageTrack.isAddCustomLoadsAnyStagingTrackEnabled() ||
+                        _departStageTrack.isAddCustomLoadsEnabled() ||
+                        _departStageTrack.isAddCustomLoadsAnySpurEnabled())) {
+            // try and generate a load for this car into staging
+            if (generateLoadCarDepartingAndTerminatingIntoStaging(car, _terminateStageTrack)) {
+                return _terminateStageTrack;
+            } else {
+                addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
+                        .getMessage("buildCanNotDropCarBecause"),
+                        new Object[]{car.toString(),
+                                _terminateStageTrack.getName(), status,
+                                _terminateStageTrack.getTrackTypeName()}));
+                return null; // failed to create load
+            }
+        } else {
+            addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCanNotDropCarBecause"),
+                    new Object[]{car.toString(), _terminateStageTrack.getName(), status,
+                            _terminateStageTrack.getTrackTypeName()}));
+            return null;
+        }
     }
 
     /**
@@ -4899,7 +4912,7 @@ public class TrainBuilder extends TrainCommon {
                                     car.getFinalDestinationName(), car.getFinalDestinationTrackName(),
                                     car.toString(),
                                     car.getDestinationTrackName()}));
-                    car.setDestination(car.getFinalDestination(), car.getFinalDestinationTrack());
+                    car.setDestination(car.getFinalDestination(), car.getFinalDestinationTrack(), true);
                     redirected = true;
                 }
             }

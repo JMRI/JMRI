@@ -2,7 +2,6 @@ package jmri.jmrit.dispatcher;
 
 import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
-import jmri.Scale;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -23,6 +22,7 @@ public class DispatcherFrameTest {
     @Test
     public void testShowAndClose() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
 
         DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
 
@@ -41,6 +41,7 @@ public class DispatcherFrameTest {
         // options file by creating a DispatcherFrame object.  A future
         // enhancement shold probably break this coupling.
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
 
         DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
 
@@ -92,6 +93,7 @@ public class DispatcherFrameTest {
     @Test
     public void testAddTrainButton() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
 
         DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
 
@@ -117,6 +119,7 @@ public class DispatcherFrameTest {
     @Test
     public void testAllocateExtraSectionButton() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
 
         DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
 
@@ -142,6 +145,7 @@ public class DispatcherFrameTest {
     @Test
     public void testCancelRestartButton() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
 
         DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
 
@@ -168,6 +172,8 @@ public class DispatcherFrameTest {
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
+        JUnitUtil.initDebugThrottleManager();
     }
 
     @After

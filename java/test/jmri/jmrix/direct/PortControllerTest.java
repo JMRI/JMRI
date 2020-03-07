@@ -40,6 +40,7 @@ public class PortControllerTest extends jmri.jmrix.AbstractSerialPortControllerT
                String[] retval = {"9600"};
                return retval;
             }
+
             /**
              * Open a specified port. The appName argument is to be provided to the
              * underlying OS during startup so that it can show on status displays, etc.

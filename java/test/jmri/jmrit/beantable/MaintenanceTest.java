@@ -9,9 +9,7 @@ import java.awt.GraphicsEnvironment;
 import org.junit.*;
 import org.junit.rules.Timeout;
 
-import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  *
@@ -20,7 +18,7 @@ import org.netbeans.jemmy.operators.JFrameOperator;
 public class MaintenanceTest {
 
     @Rule
-    public Timeout globalTimeout = Timeout.seconds(1000);
+    public Timeout globalTimeout = Timeout.seconds(10);
 
     @Rule
     public RetryRule retryRule = new RetryRule(1); // allow 1 retry
@@ -75,9 +73,11 @@ public class MaintenanceTest {
         String[] result;
         
         // hit on sensor via to-capital system name
-        InstanceManager.getDefault(SensorManager.class).provideSensor("IS1");
-        result = Maintenance.getTypeAndNames("is1");
-        checkReturnString(result, "Sensor", null, "IS1", "1");  //num listeners is empirical
+        InstanceManager.getDefault(SensorManager.class).provideSensor("is1");
+        result = Maintenance.getTypeAndNames("IS1");
+        checkReturnString(result, "", "IS1", "IS1", "0"); // Sensor "IS1" not found
+        result = Maintenance.getTypeAndNames("ISis1"); // because "is" is invalid prefix, system name is "ISis1"
+        checkReturnString(result, "Sensor", null, "ISis1", "1"); // num listeners is empirical
     }
 
     void checkReturnString(String[] result, String compare, String username, String systemname, String listeners) {
@@ -98,10 +98,12 @@ public class MaintenanceTest {
 	    });
         t.setName("Cross Reference Dialog Close Thread");
         t.start();
+        JmriJFrame parent = new jmri.util.JmriJFrame("DeviceReportParent");
         ThreadingUtil.runOnGUI(() -> {
-            Maintenance.deviceReportPressed("IS1",new jmri.util.JmriJFrame("DeviceReportParent"));
+            Maintenance.deviceReportPressed("IS1",parent);
         });
         t.join(); // only proceed when all done
+        JUnitUtil.dispose(parent);
     }
 
     @Test
@@ -114,10 +116,12 @@ public class MaintenanceTest {
 	    });
         t.setName("Find Orphan Dialog Close Thread");
         t.start();
+        JmriJFrame parent = new jmri.util.JmriJFrame("FindOrphansParent");
         ThreadingUtil.runOnGUI(() -> {
-            Maintenance.findOrphansPressed(new jmri.util.JmriJFrame("FindOrphansParent"));
+            Maintenance.findOrphansPressed(parent);
         });
         t.join(); // only proceed when all done
+        JUnitUtil.dispose(parent);
     }
 
     //@Test
@@ -130,10 +134,12 @@ public class MaintenanceTest {
 	    });
         t.setName("Find Empty Dialog Close Thread");
         t.start();
+        JmriJFrame parent = new jmri.util.JmriJFrame("FindEmptyParent");
         ThreadingUtil.runOnGUI(() -> {
-            Maintenance.findEmptyPressed(new jmri.util.JmriJFrame("FindEmptyParent"));
+            Maintenance.findEmptyPressed(parent);
         });
         t.join(); // only proceed when all done
+        JUnitUtil.dispose(parent);
     }
 
 
@@ -149,6 +155,7 @@ public class MaintenanceTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
 

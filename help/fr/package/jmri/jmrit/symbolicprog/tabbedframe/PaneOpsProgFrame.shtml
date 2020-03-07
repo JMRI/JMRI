@@ -7,8 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2009 -->
   <!-- Copyright Walt Thompson 2010 -->
-  <!-- $Id$ -->
-  <!-- UpDated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-12-->
+  <!-- Updated by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-12-->
 
   <title>JMRI: DecoderPro Operations Mode Programmer</title>
   <!-- Style -->
@@ -19,14 +18,15 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>JMRI: Op&eacute;rations DecoderPro en mode
       programmateur</h1><a name="contents" id="contents"></a>
 
@@ -52,7 +52,7 @@
       <h3>onglet Liste</h3>
 
       <p>Une liste est une base de donn&eacute;es de toutes les
-      locomotives que votre installation de Decoder Pro a
+      locomotives que votre installation de DecoderPro a
       programm&eacute;es. Elle inclut les informations vu dans
       l'&eacute;cran ci-dessous:</p>
 
@@ -132,15 +132,16 @@
       d&eacute;finies dans le d&eacute;codeur par le fabricant.
       JMRI utilise ceux-ci pour identifier le d&eacute;codeur.</p>
 
-      <p><a name="Other Tabs"></a></p>
+      <a name="OtherTabs" id="OtherTabs"></a>
 
-      <h3>Autres Onglets</h3>Les autres onglets d&eacute;pendent de
+      <h3>Autres Onglets</h3>
+      <p>Les autres onglets d&eacute;pendent de
       ce que le fabricant a install&eacute; dans le
       d&eacute;codeur, si les options n'ont pas &eacute;t&eacute;
       install&eacute;es les volets sont soit gris&eacute;s ou pas
-      activ&eacute;s.
+      activ&eacute;s.</p>
 
-      <p><a name="SpeedTable" id="SpeedTable"></a></p>
+      <a name="SpeedTable" id="SpeedTable"></a>
 
       <h3>Onglet Table de Vitesse</h3>
 
@@ -156,10 +157,12 @@
       dernier curseur vers le bas . Notez que les valeurs ne
       changent pas dessous celle que vous avez coch&eacute;e. Ils
       ne changent pas pour les crans au-dessus, si un cran
-      inf&eacute;rieur est modifi&eacute;.</p>Ceci est la page
-      d'aide
+      inf&eacute;rieur est modifi&eacute;.</p>
+
+      Ceci est la page d'aide
       help/en/package/jmri/jmrit/symbolicprog/tabbedframe/PaneOpsProgFrame.shtml
-      <!--#include virtual="/Footer" -->
+
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

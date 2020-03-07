@@ -6,6 +6,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.Reportable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -94,6 +95,22 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
                     return;
                 } else if (val instanceof Number) {
                     setText(val.toString());
+                    setIcon(null);
+                    _text = true;
+                    _icon = false;
+                    updateSize();
+                    return;
+                } else if (val instanceof jmri.IdTag){
+                    // most IdTags are Reportable objects, so 
+                    // this needs to be before Reportable
+                    setText(((jmri.IdTag)val).getDisplayName());
+                    setIcon(null);
+                    _text = true;
+                    _icon = false;
+                    updateSize();
+                    return;
+                } else if (val instanceof Reportable) {
+                    setText(((Reportable)val).toReportString());
                     setIcon(null);
                     _text = true;
                     _icon = false;

@@ -26,6 +26,8 @@ import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,7 +46,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson Copyright (C) 2011
  */
-public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.InstanceManagerAutoDefault {
+public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.InstanceManagerAutoDefault,
+        PropertyChangeListener {
 
     public int routingMethod = LayoutBlockConnectivityTools.METRIC;
 
@@ -54,6 +57,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     public final static int NXBUTTONSELECTED = 0x08;
     public final static int NXBUTTONACTIVE = Sensor.ACTIVE;
     public final static int NXBUTTONINACTIVE = Sensor.INACTIVE;
+    private final SystemConnectionMemo memo;
 
     private int settingTimer = 2000;
 
@@ -105,7 +109,13 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     public final static int AUTOCANCEL = 0x02;
     public final static int AUTOSTACK = 0x03;
 
+    public final static int OVERLAP_CANCEL = 0x01;
+    public final static int OVERLAP_STACK = 0x02;
+
     int routeClearOption = PROMPTUSER;
+    int routeOverlapOption = PROMPTUSER;
+    String memoryOption = "";     // Optional memory variable to receive allocation messages
+    int memoryClearDelay = 0;     // Delay before clearing memory, 0 for clearing disabled
 
     static JPanel glassPane = new JPanel();
 
@@ -118,6 +128,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
      * Constructor for creating an EntryExitPairs object and create a transparent JPanel for it.
      */
     public EntryExitPairs() {
+        memo = InstanceManager.getDefault(InternalSystemConnectionMemo.class);
         if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerUser(this);
         }
@@ -206,6 +217,8 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
         return ENTRYEXIT;
     }
 
+    /** {@inheritDoc} */
+    @Override
     public DestinationPoints getBySystemName(String systemName) {
         for (Source e : nxpair.values()) {
             DestinationPoints pd = e.getByUniqueId(systemName);
@@ -218,13 +231,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
 
     /** {@inheritDoc} */
     @Override
-    public DestinationPoints getBeanBySystemName(String systemName) {
-        return getBySystemName(systemName);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public DestinationPoints getBeanByUserName(String userName) {
+    public DestinationPoints getByUserName(@Nonnull String userName) {
         for (Source e : nxpair.values()) {
             DestinationPoints pd = e.getByUserName(userName);
             if (pd != null) {
@@ -236,18 +243,26 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
 
     /** {@inheritDoc} */
     @Override
-    public DestinationPoints getNamedBean(String name) {
-        DestinationPoints b = getBeanByUserName(name);
+    public DestinationPoints getNamedBean(@Nonnull String name) {
+        DestinationPoints b = getByUserName(name);
         if (b != null) {
             return b;
         }
-        return getBeanBySystemName(name);
+        return getBySystemName(name);
+    }
+
+    /** {@inheritDoc} */
+    @Nonnull
+    @Override
+    public SystemConnectionMemo getMemo() {
+        return memo;
     }
 
     /** {@inheritDoc} */
     @Override
+    @Nonnull
     public String getSystemPrefix() {
-        throw new UnsupportedOperationException("Not supported yet.");  // NOI18N
+        return memo.getSystemPrefix();
     }
 
     /** {@inheritDoc} */
@@ -258,62 +273,21 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
 
     /** {@inheritDoc} */
     @Override
-    public String makeSystemName(String s) {
+    @Nonnull
+    public String makeSystemName(@Nonnull String s) {
         throw new UnsupportedOperationException("Not supported yet.");  // NOI18N
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @return always 'VALID'
-     */
-    @Override
-    public NameValidity validSystemNameFormat(String systemName) {
-        return NameValidity.VALID;
-    }
-
-    /**
-     * Enforces, and as a user convenience converts to, the standard form for a system name
-     * for the NamedBeans handled by this manager.
-     *
-     * @param inputName System name to be normalized
-     * @throws NamedBean.BadSystemNameException If the inputName can't be converted to normalized form
-     * @return A system name in standard normalized form
-     */
-    @Override
-    @CheckReturnValue
-    public @Nonnull String normalizeSystemName(@Nonnull String inputName) throws NamedBean.BadSystemNameException {
-        return inputName;
-    }
-
     /** {@inheritDoc} */
     @Override
     @CheckReturnValue
-    public int getObjectCount() { 
+    public int getObjectCount() {
         return getNamedBeanList().size(); // not efficient
     }
 
-    /**
-     * Implemented to support the Conditional combo box name list
-     * @since 4.9.3
-     * @return a sorted array of NX names
-     */
-    @Override
-    @Deprecated  // will be removed when superclass method is removed due to @Override
-    public String[] getSystemNameArray() {
-        List<String> nxList = getEntryExitList();
-        String[] arr = new String[nxList.size()];
-        int i = 0;
-        for (String nxRow : nxList) {
-            arr[i] = nxRow;
-            i++;
-        }
-        java.util.Arrays.sort(arr);
-        return arr;
-    }
-
     /** {@inheritDoc} */
     @Override
+    @Nonnull
     @Deprecated  // will be removed when superclass method is removed due to @Override
     public List<String> getSystemNameList() {
         return getEntryExitList();
@@ -325,6 +299,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
      * @return a list of Destination Point beans
      */
     @Override
+    @Nonnull
     @Deprecated  // will be removed when superclass method is removed due to @Override
     public List<DestinationPoints> getNamedBeanList() {
         List<DestinationPoints> beanList = new ArrayList<>();
@@ -343,8 +318,9 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
      * @return a list of Destination Point beans
      */
     @Override
+    @Nonnull
     public SortedSet<DestinationPoints> getNamedBeanSet() {
-        TreeSet<DestinationPoints> beanList = new TreeSet<>(new jmri.util.NamedBeanComparator());
+        TreeSet<DestinationPoints> beanList = new TreeSet<>(new jmri.util.NamedBeanComparator<>());
         for (Source e : nxpair.values()) {
             List<String> uidList = e.getDestinationUniqueId();
             for (String uid : uidList) {
@@ -356,13 +332,13 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
 
     /** {@inheritDoc} */
     @Override
-    public void register(DestinationPoints n) {
+    public void register(@Nonnull DestinationPoints n) {
         throw new UnsupportedOperationException("Not supported yet.");  // NOI18N
     }
 
     /** {@inheritDoc} */
     @Override
-    public void deregister(DestinationPoints n) {
+    public void deregister(@Nonnull DestinationPoints n) {
         throw new UnsupportedOperationException("Not supported yet.");  // NOI18N
     }
 
@@ -372,6 +348,30 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
 
     public int getClearDownOption() {
         return routeClearOption;
+    }
+
+    public void setOverlapOption(int i) {
+        routeOverlapOption = i;
+    }
+
+    public int getOverlapOption() {
+        return routeOverlapOption;
+    }
+
+    public void setMemoryOption(String memoryName) {
+        memoryOption = memoryName;
+    }
+
+    public String getMemoryOption() {
+        return memoryOption;
+    }
+
+    public void setMemoryClearDelay(int secs) {
+        memoryClearDelay = secs;
+    }
+
+    public int getMemoryClearDelay() {
+        return memoryClearDelay;
     }
 
     /** {@inheritDoc} */
@@ -673,10 +673,23 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
         return sourcePoint;
     }
 
+    /**
+     * @since 4.17.4
+     */
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        firePropertyChange("active", evt.getOldValue(), evt.getNewValue());
+    }
+
+
     public void addNXDestination(NamedBean source, NamedBean destination, LayoutEditor panel) {
         addNXDestination(source, destination, panel, null);
     }
 
+    /**
+     * @since 4.17.4
+     * Register in Property Change Listener.
+     */
     public void addNXDestination(NamedBean source, NamedBean destination, LayoutEditor panel, String id) {
         if (source == null) {
             log.error("no source Object provided");  // NOI18N
@@ -700,7 +713,10 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
             destPoint.setRefObject(destination);
             destPoint.getSignal();
             if (!nxpair.containsKey(sourcePoint)) {
-                nxpair.put(sourcePoint, new Source(sourcePoint));
+                Source sp = new Source(sourcePoint) ;
+                nxpair.put(sourcePoint, sp);
+                sp.removePropertyChangeListener(this);
+                sp.addPropertyChangeListener(this);
             }
             nxpair.get(sourcePoint).addDestination(destPoint, id);
         }
@@ -796,7 +812,10 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
                 for (int i = 0; i < lgx.getNumConditionals(); i++) {
                     String cdlName = lgx.getConditionalByNumberOrder(i);
                     jmri.implementation.DefaultConditional cdl = (jmri.implementation.DefaultConditional) lgx.getConditional(cdlName);
-                    String cdlUserName = (cdl.getUserName() == null) ? "" : cdl.getUserName();
+                    String cdlUserName = cdl.getUserName();
+                    if (cdlUserName == null) {
+                        cdlUserName = "";
+                    }
                     for (jmri.ConditionalVariable var : cdl.getStateVariableList()) {
                         if (var.getBean() == dPair.dp) {
                             String refName = (cdlUserName.equals("")) ? cdlName : cdlName + "  ( " + cdlUserName + " )";
@@ -862,6 +881,8 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     /**
      * Delete the pairs in the delete pair list.
      * @since 4.11.2
+     * @since 4.17.4
+     * Remove from Change Listener.
      */
     private void deleteNxPairs() {
         for (DeletePair dp : deletePairList) {
@@ -870,6 +891,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
             nxpair.get(sourcePoint).removeDestination(destPoint);
             firePropertyChange("length", null, null);  // NOI18N
             if (nxpair.get(sourcePoint).getDestinationPoints().isEmpty()) {
+                nxpair.get(sourcePoint).removePropertyChangeListener(this);
                 nxpair.remove(sourcePoint);
             }
         }
@@ -942,7 +964,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     /**
      * Create a list of sensors that have the layout block as either
      * facing or protecting.
-     * Called by {@link jmri.jmrit.display.layoutEditor.LayoutTrackEditors#hasNxSensorPairs}.
+     * Called by {@link jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutTrackEditors#hasNxSensorPairs}.
      * @since 4.11.2
      * @param layoutBlock The layout block to be checked.
      * @return the a list of sensors affected by the layout block or an empty list.
@@ -1413,27 +1435,39 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     }
 
     @Override
-    public void deleteBean(DestinationPoints bean, String property) throws PropertyVetoException {
+    public void deleteBean(@Nonnull DestinationPoints bean, @Nonnull String property) throws PropertyVetoException {
 
     }
 
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameTransit");  // NOI18N
+    @Nonnull
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameTransits" : "BeanNameTransit");  // NOI18N
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<DestinationPoints> getNamedBeanClass() {
+        return DestinationPoints.class;
     }
 
     /** {@inheritDoc} */
-    public void addDataListener(ManagerDataListener e) {
+    @Override
+    public void addDataListener(ManagerDataListener<DestinationPoints> e) {
         if (e != null) listeners.add(e);
     }
 
     /** {@inheritDoc} */
-    public void removeDataListener(ManagerDataListener e) {
+    @Override
+    public void removeDataListener(ManagerDataListener<DestinationPoints> e) {
         if (e != null) listeners.remove(e);
     }
 
-    final List<ManagerDataListener> listeners = new ArrayList<>();
-    
+    final List<ManagerDataListener<DestinationPoints>> listeners = new ArrayList<>();
+
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(EntryExitPairs.class);
+
 }

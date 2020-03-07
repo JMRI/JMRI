@@ -18,7 +18,7 @@ public class MrcProgrammerManagerTest {
         MrcInterfaceScaffold tc = new MrcInterfaceScaffold();
         memo.setMrcTrafficController(tc);
         jmri.InstanceManager.store(memo, MrcSystemConnectionMemo.class);
-        MrcProgrammerManager t = new MrcProgrammerManager(new MrcProgrammer(tc),memo);
+        MrcProgrammerManager t = new MrcProgrammerManager(new MrcProgrammer(memo),memo);
         Assert.assertNotNull("exists",t);
     }
 

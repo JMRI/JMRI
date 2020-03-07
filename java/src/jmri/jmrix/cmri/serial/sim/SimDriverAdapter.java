@@ -3,7 +3,6 @@ package jmri.jmrix.cmri.serial.sim;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.util.Arrays;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
 import purejavacomm.UnsupportedCommOperationException;
@@ -98,17 +97,5 @@ public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.Serial
 
     // private control members
     private boolean opened = false;
-
-    /**
-     * @deprecated JMRI Since 4.5.1 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated  // will be removed when class converted to multi-system
-    static public jmri.jmrix.cmri.serial.serialdriver.SerialDriverAdapter instance() {
-        if (mInstance == null) {
-            mInstance = new SimDriverAdapter();
-        }
-        return mInstance;
-    }
-    static SimDriverAdapter mInstance;
 
 }

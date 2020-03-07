@@ -265,7 +265,7 @@ public class NceConsistRosterEntry {
 
     /**
      * Construct this Entry from XML. This member has to remain synchronized
-     * with the detailed DTD in consist-roster-config.xml
+     * with the detailed DTD in xml/DTD/consist-roster-config.dtd.
      *
      * @param e Consist XML element
      */
@@ -384,7 +384,7 @@ public class NceConsistRosterEntry {
 
     /**
      * Create an XML element to represent this Entry. This member has to remain
-     * synchronized with the detailed DTD in consist-roster-config.xml.
+     * synchronized with the detailed DTD in xml/DTD/consist-roster-config.dtd.
      *
      * @return Contents in a JDOM Element
      */

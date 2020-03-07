@@ -16,9 +16,10 @@ public class SpeedProfileFrameTest extends jmri.util.JmriJFrameTestBase {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
-        if(!GraphicsEnvironment.isHeadless()){
-           frame = new SpeedProfileFrame();
-	}
+        JUnitUtil.initRosterConfigManager();
+        if (!GraphicsEnvironment.isHeadless()) {
+            frame = new SpeedProfileFrame();
+        }
     }
 
     @After

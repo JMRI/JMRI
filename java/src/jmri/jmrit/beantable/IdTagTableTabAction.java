@@ -7,7 +7,6 @@ import javax.swing.event.ChangeListener;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import jmri.*;
-import jmri.util.ConnectionNameFromSystemName;
 
 public class IdTagTableTabAction extends AbstractTableTabAction<IdTag> {
 
@@ -56,16 +55,16 @@ public class IdTagTableTabAction extends AbstractTableTabAction<IdTag> {
 
             List<jmri.Manager<IdTag>> managerList = proxy.getDisplayOrderManagerList();
             for (Manager<IdTag> manager : managerList) {
-                String manuName = ConnectionNameFromSystemName.getConnectionName(manager.getSystemPrefix());
-                if(manuName == null && (manager instanceof jmri.managers.DefaultRailComManager )) {
-                   manuName = "RailCom"; // NOI18N (proper name).
+                String manuName = manager.getMemo().getUserName();
+                if (manuName == null && (manager instanceof jmri.managers.DefaultRailComManager)) {
+                    manuName = "RailCom"; // NOI18N (proper name).
                 }
                 TabbedTableItem<IdTag> itemModel = new TabbedTableItem<IdTag>(manuName, true, manager, getNewTableAction(manuName)); // connection name to display in Tab
                 tabbedTableArray.add(itemModel);
             }
             
         } else {
-            String manuName = ConnectionNameFromSystemName.getConnectionName(getManager().getSystemPrefix());
+            String manuName = getManager().getMemo().getUserName();
             tabbedTableArray.add(new TabbedTableItem<IdTag>(manuName, true, getManager(), getNewTableAction(manuName)));
         }
         for (int x = 0; x < tabbedTableArray.size(); x++) {

@@ -3,6 +3,12 @@ package jmri.jmrit.operations.locations;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jdom2.Attribute;
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.Reporter;
 import jmri.jmrit.operations.OperationsXml;
@@ -10,12 +16,7 @@ import jmri.jmrit.operations.locations.schedules.Schedule;
 import jmri.jmrit.operations.locations.schedules.ScheduleItem;
 import jmri.jmrit.operations.locations.schedules.ScheduleManager;
 import jmri.jmrit.operations.rollingstock.RollingStock;
-import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.rollingstock.cars.CarLoad;
-import jmri.jmrit.operations.rollingstock.cars.CarLoads;
-import jmri.jmrit.operations.rollingstock.cars.CarManager;
-import jmri.jmrit.operations.rollingstock.cars.CarRoads;
-import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.routes.Route;
@@ -26,10 +27,6 @@ import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
-import org.jdom2.Attribute;
-import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Represents a location (track) on the layout Can be a spur, yard, staging, or
@@ -63,6 +60,9 @@ public class Track {
     protected int _blockingOrder = 0; // defines the order tracks are serviced by trains
     protected String _comment = NONE;
 
+    // Manifest and switch list comments
+    protected boolean _printCommentManifest = true;
+    protected boolean _printCommentSwitchList = false;
     protected String _commentPickup = NONE;
     protected String _commentSetout = NONE;
     protected String _commentBoth = NONE;
@@ -754,6 +754,26 @@ public class Track {
     public String getCommentBoth() {
         return _commentBoth;
     }
+    
+    public boolean isPrintManifestCommentEnabled() {
+        return _printCommentManifest;
+    }
+    
+    public void setPrintManifestCommentEnabled(boolean enable) {
+        boolean old = isPrintManifestCommentEnabled();
+        _printCommentManifest = enable;
+        setDirtyAndFirePropertyChange("trackPrintManifestComment", old, enable);
+    }
+    
+    public boolean isPrintSwitchListCommentEnabled() {
+        return _printCommentSwitchList;
+    }
+    
+    public void setPrintSwitchListCommentEnabled(boolean enable) {
+        boolean old = isPrintSwitchListCommentEnabled();
+        _printCommentSwitchList = enable;
+        setDirtyAndFirePropertyChange("trackPrintSwitchListComment", old, enable);
+    }
 
     List<String> _typeList = new ArrayList<>();
 
@@ -1298,17 +1318,17 @@ public class Track {
      * @return true if the train can set out cars to this track.
      */
     public boolean acceptsDropTrain(Train train) {
-        if (_dropOption.equals(ANY)) {
+        if (getDropOption().equals(ANY)) {
             return true;
         }
         // yard tracks accept all trains
         if (isYard()) {
             return true;
         }
-        if (_dropOption.equals(TRAINS)) {
+        if (getDropOption().equals(TRAINS)) {
             return containsDropId(train.getId());
         }
-        if (_dropOption.equals(EXCLUDE_TRAINS)) {
+        if (getDropOption().equals(EXCLUDE_TRAINS)) {
             return !containsDropId(train.getId());
         } else if (train.getRoute() == null) {
             return false;
@@ -1317,14 +1337,14 @@ public class Track {
     }
 
     public boolean acceptsDropRoute(Route route) {
-        if (_dropOption.equals(ANY) || _dropOption.equals(TRAINS) || _dropOption.equals(EXCLUDE_TRAINS)) {
+        if (getDropOption().equals(ANY) || getDropOption().equals(TRAINS) || getDropOption().equals(EXCLUDE_TRAINS)) {
             return true;
         }
         // yard tracks accept all routes
         if (isYard()) {
             return true;
         }
-        if (_dropOption.equals(EXCLUDE_ROUTES)) {
+        if (getDropOption().equals(EXCLUDE_ROUTES)) {
             return !containsDropId(route.getId());
         }
         return containsDropId(route.getId());
@@ -1543,6 +1563,11 @@ public class Track {
             int available = getLength() -
                     (getUsedLength() * (100 - getIgnoreUsedLengthPercentage()) / 100 +
                             getReserved());
+            // could be less
+            int available3 = getLength() + (getLength() * getIgnoreUsedLengthPercentage() / 100) - getUsedLength() - getReserved();
+            if (available3 < available) {
+                available = available3;
+            }
             // could be less based on track length
             int available2 = getLength() - getReservedLengthDrops();
             if (available2 < available) {
@@ -2190,7 +2215,7 @@ public class Track {
     }
 
     public boolean isLoadSwapEnabled() {
-        return (0 < (_loadOptions & SWAP_GENERIC_LOADS));
+        return (0 != (_loadOptions & SWAP_GENERIC_LOADS));
     }
 
     /**
@@ -2208,7 +2233,7 @@ public class Track {
     }
 
     public boolean isLoadEmptyEnabled() {
-        return (0 < (_loadOptions & EMPTY_GENERIC_LOADS));
+        return (0 != (_loadOptions & EMPTY_GENERIC_LOADS));
     }
 
     /**
@@ -2225,7 +2250,7 @@ public class Track {
     }
 
     public boolean isRemoveCustomLoadsEnabled() {
-        return (0 < (_loadOptions & EMPTY_CUSTOM_LOADS));
+        return (0 != (_loadOptions & EMPTY_CUSTOM_LOADS));
     }
 
     /**
@@ -2244,7 +2269,7 @@ public class Track {
     }
 
     public boolean isAddCustomLoadsEnabled() {
-        return (0 < (_loadOptions & GENERATE_CUSTOM_LOADS));
+        return (0 != (_loadOptions & GENERATE_CUSTOM_LOADS));
     }
 
     /**
@@ -2264,7 +2289,7 @@ public class Track {
     }
 
     public boolean isAddCustomLoadsAnySpurEnabled() {
-        return (0 < (_loadOptions & GENERATE_CUSTOM_LOADS_ANY_SPUR));
+        return (0 != (_loadOptions & GENERATE_CUSTOM_LOADS_ANY_SPUR));
     }
 
     /**
@@ -2284,7 +2309,7 @@ public class Track {
     }
 
     public boolean isAddCustomLoadsAnyStagingTrackEnabled() {
-        return (0 < (_loadOptions & GENERATE_CUSTOM_LOADS_ANY_STAGING_TRACK));
+        return (0 != (_loadOptions & GENERATE_CUSTOM_LOADS_ANY_STAGING_TRACK));
     }
 
     public void setBlockCarsEnabled(boolean enable) {
@@ -2301,7 +2326,7 @@ public class Track {
      * @return true if blocking is enabled.
      */
     public boolean isBlockCarsEnabled() {
-        return (0 < (_blockOptions & BLOCK_CARS));
+        return (0 != (_blockOptions & BLOCK_CARS));
     }
 
     public void setPool(Pool pool) {
@@ -2753,6 +2778,14 @@ public class Track {
                     (a = e.getChild(Xml.COMMENTS).getChild(Xml.SETOUT).getAttribute(Xml.COMMENT)) != null) {
                 _commentSetout = a.getValue();
             }
+            if (e.getChild(Xml.COMMENTS).getChild(Xml.PRINT_MANIFEST) != null &&
+                    (a = e.getChild(Xml.COMMENTS).getChild(Xml.PRINT_MANIFEST).getAttribute(Xml.COMMENT)) != null) {
+                _printCommentManifest = a.getValue().equals(Xml.TRUE);
+            }
+            if (e.getChild(Xml.COMMENTS).getChild(Xml.PRINT_SWITCH_LISTS) != null &&
+                    (a = e.getChild(Xml.COMMENTS).getChild(Xml.PRINT_SWITCH_LISTS).getAttribute(Xml.COMMENT)) != null) {
+                _printCommentSwitchList = a.getValue().equals(Xml.TRUE);
+            }
         }
 
         if ((a = e.getAttribute(Xml.READER)) != null) {
@@ -2977,14 +3010,23 @@ public class Track {
             Element both = new Element(Xml.BOTH);
             Element pickup = new Element(Xml.PICKUP);
             Element setout = new Element(Xml.SETOUT);
+            Element printManifest = new Element(Xml.PRINT_MANIFEST);
+            Element printSwitchList = new Element(Xml.PRINT_SWITCH_LISTS);
+            
             comments.addContent(track);
             comments.addContent(both);
             comments.addContent(pickup);
             comments.addContent(setout);
+            comments.addContent(printManifest);
+            comments.addContent(printSwitchList);
+            
             track.setAttribute(Xml.COMMENT, getComment());
             both.setAttribute(Xml.COMMENT, getCommentBoth());
             pickup.setAttribute(Xml.COMMENT, getCommentPickup());
             setout.setAttribute(Xml.COMMENT, getCommentSetout());
+            printManifest.setAttribute(Xml.COMMENT, isPrintManifestCommentEnabled()? Xml.TRUE : Xml.FALSE);
+            printSwitchList.setAttribute(Xml.COMMENT, isPrintSwitchListCommentEnabled()? Xml.TRUE : Xml.FALSE);
+            
             e.addContent(comments);
         }
         if (_reader != null) {

@@ -40,8 +40,6 @@ import org.slf4j.LoggerFactory;
  * direction of travel is the direction of decreasing Section numbers. Whether a
  * Transit is in the "reversed" direction is kept in the ActiveTrain using the
  * Transit.
- * <p>
- * Transit system names are always upper case.
  *
  * @author Dave Duchamp Copyright (C) 2008-2011
  */
@@ -66,11 +64,11 @@ public class Transit extends AbstractNamedBean {
     private final ArrayList<Integer> destBlocksSeqList = new ArrayList<>();
 
     public Transit(String systemName, String userName) {
-        super(systemName.toUpperCase(), userName);
+        super(systemName, userName);
     }
 
     public Transit(String systemName) {
-        super(systemName.toUpperCase());
+        super(systemName);
     }
 
     /**
@@ -608,6 +606,50 @@ public class Transit extends AbstractNamedBean {
         }
         // we ignore the property setConfigureManager
     }
+
+    @Override
+    public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
+        List<NamedBeanUsageReport> report = new ArrayList<>();
+        jmri.SensorManager sm = jmri.InstanceManager.getDefault(jmri.SensorManager.class);
+        jmri.SignalHeadManager head = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class);
+        jmri.SignalMastManager mast = jmri.InstanceManager.getDefault(jmri.SignalMastManager.class);
+        if (bean != null) {
+            getTransitSectionList().forEach((transitSection) -> {
+                if (bean.equals(transitSection.getSection())) {
+                    report.add(new NamedBeanUsageReport("TransitSection"));
+                }
+                if (bean.equals(sm.getSensor(transitSection.getStopAllocatingSensor()))) {
+                    report.add(new NamedBeanUsageReport("TransitSensorStopAllocation"));
+                }
+                // Process actions
+                transitSection.getTransitSectionActionList().forEach((action) -> {
+                    int whenCode = action.getWhenCode();
+                    int whatCode = action.getWhatCode();
+                    if (whenCode == TransitSectionAction.SENSORACTIVE || whenCode == TransitSectionAction.SENSORINACTIVE) {
+                        if (bean.equals(sm.getSensor(action.getStringWhen()))) {
+                            report.add(new NamedBeanUsageReport("TransitActionSensorWhen", transitSection.getSection()));
+                        }
+                    }
+                    if (whatCode == TransitSectionAction.SETSENSORACTIVE || whatCode == TransitSectionAction.SETSENSORINACTIVE) {
+                        if (bean.equals(sm.getSensor(action.getStringWhat()))) {
+                            report.add(new NamedBeanUsageReport("TransitActionSensorWhat", transitSection.getSection()));
+                        }
+                    }
+                    if (whatCode == TransitSectionAction.HOLDSIGNAL || whatCode == TransitSectionAction.RELEASESIGNAL) {
+                        // Could be a signal head or a signal mast.
+                        if (bean.equals(head.getSignalHead(action.getStringWhat()))) {
+                            report.add(new NamedBeanUsageReport("TransitActionSignalHeadWhat", transitSection.getSection()));
+                        }
+                        if (bean.equals(mast.getSignalMast(action.getStringWhat()))) {
+                            report.add(new NamedBeanUsageReport("TransitActionSignalMastWhat", transitSection.getSection()));
+                        }
+                    }
+                });
+            });
+        }
+        return report;
+    }
+
 
     private final static Logger log = LoggerFactory.getLogger(Transit.class);
 

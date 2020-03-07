@@ -8,7 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -650,9 +649,6 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
                 wrapTest= true;
                 break;
             case testType_SendCommand:
-                outTest = false;
-                wrapTest= false;
-                break;
             case testType_WriteBytes:
                 outTest = false;
                 wrapTest= false;

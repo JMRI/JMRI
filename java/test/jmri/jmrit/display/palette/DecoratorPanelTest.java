@@ -18,8 +18,10 @@ public class DecoratorPanelTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        DecoratorPanel t = new DecoratorPanel(new ControlPanelEditor("ED"), null);
+        ControlPanelEditor editor = new ControlPanelEditor("ED");
+        DecoratorPanel t = new DecoratorPanel(editor, null);
         Assert.assertNotNull("exists",t);
+        JUnitUtil.dispose(editor);
     }
 
     // The minimal setup for log4J

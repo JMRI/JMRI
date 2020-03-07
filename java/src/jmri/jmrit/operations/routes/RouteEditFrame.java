@@ -3,31 +3,24 @@ package jmri.jmrit.operations.routes;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.ScrollPaneConstants;
+
+import javax.swing.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
+import jmri.jmrit.operations.routes.tools.PrintRouteAction;
+import jmri.jmrit.operations.routes.tools.RouteCopyAction;
+import jmri.jmrit.operations.routes.tools.SetTrainIconRouteAction;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.swing.JTablePersistenceManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for user edit of route
@@ -65,6 +58,8 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 
     // combo boxes
     JComboBox<Location> locationBox = InstanceManager.getDefault(LocationManager.class).getComboBox();
+    
+    JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
 
     public static final String NAME = Bundle.getMessage("Name");
     public static final String DISPOSE = "dispose"; // NOI18N
@@ -81,7 +76,6 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
     public void initComponents(Route route) {
 
         _route = route;
-        String routeName = null;
 
         // load managers
         routeManager = InstanceManager.getDefault(RouteManager.class);
@@ -95,8 +89,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 
         if (_route != null) {
             _route.addPropertyChangeListener(this);
-            routeName = _route.getName();
-            routeNameTextField.setText(routeName);
+            routeNameTextField.setText(_route.getName());
             commentTextField.setText(_route.getComment());
             enableButtons(!route.getStatus().equals(Route.TRAIN_BUILT)); // do not allow user to modify a built train
             addRouteButton.setEnabled(false); // override and disable
@@ -203,13 +196,8 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 
         // build menu
         JMenuBar menuBar = new JMenuBar();
-        JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
-        toolMenu.add(new RouteCopyAction(Bundle.getMessage("MenuItemCopy"), routeName));
-        toolMenu.add(new SetTrainIconRouteAction(Bundle.getMessage("MenuSetTrainIconRoute"), routeName));
-        toolMenu.addSeparator();
-        toolMenu.add(new PrintRouteAction(Bundle.getMessage("MenuItemPrint"), false, _route));
-        toolMenu.add(new PrintRouteAction(Bundle.getMessage("MenuItemPreview"), true, _route));
         menuBar.add(toolMenu);
+        loadToolMenu();
         setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.operations.Operations_EditRoute", true); // NOI18N
 
@@ -218,6 +206,15 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 
         // set frame size and route for display
         initMinimumSize(new Dimension(Control.panelWidth700, Control.panelHeight400));
+    }
+    
+    private void loadToolMenu() {
+        toolMenu.removeAll();
+        toolMenu.add(new RouteCopyAction(Bundle.getMessage("MenuItemCopy"), _route));
+        toolMenu.add(new SetTrainIconRouteAction(Bundle.getMessage("MenuSetTrainIconRoute"), _route));
+        toolMenu.addSeparator();
+        toolMenu.add(new PrintRouteAction(Bundle.getMessage("MenuItemPrint"), false, _route));
+        toolMenu.add(new PrintRouteAction(Bundle.getMessage("MenuItemPreview"), true, _route));
     }
 
     // Save, Delete, Add
@@ -332,6 +329,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
             _route.addPropertyChangeListener(this);
         }
         saveRoute();
+        loadToolMenu();
     }
 
     private void saveRoute() {
@@ -355,7 +353,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
      * @return true if name is length is okay
      */
     private boolean checkName(String s) {
-        if (routeNameTextField.getText().trim().equals("")) {
+        if (routeNameTextField.getText().trim().isEmpty()) {
             log.debug("Must enter a name for the route");
             JOptionPane.showMessageDialog(this, Bundle.getMessage("MustEnterName"), MessageFormat.format(Bundle
                     .getMessage("CanNotRoute"), new Object[]{s}), JOptionPane.ERROR_MESSAGE);
@@ -377,6 +375,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
     }
 
     private void enableButtons(boolean enabled) {
+        toolMenu.setEnabled(enabled);
         locationBox.setEnabled(enabled);
         addLocationButton.setEnabled(enabled);
         addLocAtTop.setEnabled(enabled);

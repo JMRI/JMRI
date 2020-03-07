@@ -2,7 +2,6 @@ package apps;
 
 import apps.gui3.tabbedpreferences.TabbedPreferences;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -12,12 +11,10 @@ import jmri.Application;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
-import jmri.ShutDownManager;
 import jmri.implementation.AbstractShutDownTask;
 import jmri.implementation.JmriConfigurationManager;
 import jmri.jmrit.display.layoutEditor.BlockValueFile;
 import jmri.jmrit.revhistory.FileHistory;
-import jmri.managers.DefaultShutDownManager;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.script.JmriScriptEngineManager;
@@ -96,8 +93,6 @@ public abstract class AppsBase {
 
         installConfigurationManager();
 
-        installShutDownManager();
-
         addDefaultShutDownTasks();
 
         installManagers();
@@ -168,7 +163,11 @@ public abstract class AppsBase {
                 // Apps.setConfigFilename() does not reset the system property
                 System.setProperty("org.jmri.Apps.configFilename", Profile.CONFIG_FILENAME);
                 Profile profile = ProfileManager.getDefault().getActiveProfile();
-                log.info("Starting with profile {}", profile.getId());
+                if (profile != null) {
+                    log.info("Starting with profile {}", profile.getId());
+                } else {
+                    log.info("Starting without a profile");
+                }
             } else {
                 log.error("Specify profile to use as command line argument.");
                 log.error("If starting with saved profile configuration, ensure the autoStart property is set to \"true\"");
@@ -314,8 +313,12 @@ public abstract class AppsBase {
         return result;
     }
 
+    /**
+     * @deprecated for removal since 4.17.2 without replacement
+     */
+    @Deprecated
     protected void installShutDownManager() {
-        InstanceManager.setDefault(ShutDownManager.class, new DefaultShutDownManager());
+        // nothing to do
     }
 
     protected void addDefaultShutDownTasks() {
@@ -392,7 +395,6 @@ public abstract class AppsBase {
     }
 
     // We will use the value stored in the system property
-    // TODO: change to return profile-name/profile.xml
     static public String getConfigFileName() {
         if (System.getProperty("org.jmri.Apps.configFilename") != null) {
             return System.getProperty("org.jmri.Apps.configFilename");

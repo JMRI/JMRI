@@ -2,10 +2,13 @@ package jmri.jmrix;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.util.Comparator;
 import java.util.ResourceBundle;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import jmri.NamedBean;
 
 /**
  * @author Bob Jacobsen Copyright (C) 2015
@@ -37,6 +40,11 @@ public abstract class AbstractPortControllerTestBase {
 
                 @Override
                 protected ResourceBundle getActionModelResourceBundle() {
+                    return null;
+                }
+
+                @Override
+                public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
                     return null;
                 }
             });
@@ -74,4 +82,5 @@ public abstract class AbstractPortControllerTestBase {
         public void configure() {
         }
     }
+
 }

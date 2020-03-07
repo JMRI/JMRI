@@ -3,6 +3,7 @@ package jmri.jmrix.easydcc;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
+import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottle;
 
 /**
@@ -25,7 +26,7 @@ public class EasyDccThrottle extends AbstractThrottle {
      */
     public EasyDccThrottle(EasyDccSystemConnectionMemo memo, DccLocoAddress address) {
         super(memo);
-        super.speedStepMode = SpeedStepMode128;
+        super.speedStepMode = SpeedStepMode.NMRA_DCC_128;
         tc = memo.getTrafficController();
 
         // cache settings. It would be better to read the
@@ -143,7 +144,7 @@ public class EasyDccThrottle extends AbstractThrottle {
 
         byte[] result;
 
-        if (super.speedStepMode == SpeedStepMode128) {
+        if (super.speedStepMode == SpeedStepMode.NMRA_DCC_128) {
             int value = (int) ((127 - 1) * speed);     // -1 for rescale to avoid estop
             if (value > 0) {
                 value = value + 1;  // skip estop
@@ -207,7 +208,7 @@ public class EasyDccThrottle extends AbstractThrottle {
         tc.sendEasyDccMessage(m, null);
 
         if (oldSpeed != this.speedSetting) {
-            notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting);
+            notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
         }
         record(speed);
     }
@@ -218,7 +219,7 @@ public class EasyDccThrottle extends AbstractThrottle {
         isForward = forward;
         setSpeedSetting(speedSetting);  // send the command
         if (old != isForward) {
-            notifyPropertyChangeListener("IsForward", old, isForward);
+            notifyPropertyChangeListener(ISFORWARD, old, isForward);
         }
     }
 

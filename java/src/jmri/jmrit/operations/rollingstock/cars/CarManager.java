@@ -4,7 +4,14 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
+
 import javax.swing.JComboBox;
+
+import org.jdom2.Attribute;
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.InstanceManagerAutoInitialize;
@@ -14,10 +21,6 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.trains.Train;
-import org.jdom2.Attribute;
-import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Manages the cars.
@@ -580,7 +583,7 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
         } // old format
         else if (root.getChild(Xml.KERNELS) != null) {
             String names = root.getChildText(Xml.KERNELS);
-            if (!names.equals("")) {
+            if (!names.isEmpty()) {
                 String[] kernelNames = names.split("%%"); // NOI18N
                 log.debug("kernels: {}", names);
                 for (String name : kernelNames) {

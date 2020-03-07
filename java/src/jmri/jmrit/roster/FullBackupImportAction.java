@@ -2,12 +2,18 @@ package jmri.jmrit.roster;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
+
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
+
 import javax.swing.Icon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -43,12 +49,15 @@ public class FullBackupImportAction extends ImportRosterItemAction {
     public FullBackupImportAction(String title, Component parent) {
         super(title, parent);
     }
-
+    
+    boolean acceptAll;
+    boolean acceptAllDup;
+    
     @Override
     public void actionPerformed(ActionEvent e) {
 
         // ensure preferences will be found for read
-        FileUtil.createDirectory(LocoFile.getFileLocation());
+        FileUtil.createDirectory(Roster.getDefault().getRosterFilesLocation());
 
         // make sure instance loaded
         Roster.getDefault();
@@ -85,100 +94,32 @@ public class FullBackupImportAction extends ImportRosterItemAction {
             // entry call will return a ZipEntry for each file in the
             // stream
             ZipEntry entry;
-            boolean acceptAll = false; // skip prompting for each entry and accept all
-            boolean acceptAllDup = false;  // skip prompting for dups and accept all
+            acceptAll = false; // skip prompting for each entry and accept all
+            acceptAllDup = false;  // skip prompting for dups and accept all
             
             while ((entry = zipper.getNextEntry()) != null) {
-                log.debug(String.format("Entry: %s len %d added %TD",
-                        entry.getName(), entry.getSize(),
-                        new Date(entry.getTime())));
+                log.debug(String.format("Entry: %s len %d (%d) added %TD content: %s",
+                                        entry.getName(), 
+                                        entry.getSize(), 
+                                        entry.getCompressedSize(), 
+                                        new Date(entry.getTime()),
+                                        entry.getComment()
+                        ));
 
                 // Once we get the entry from the stream, the stream is
                 // positioned read to read the raw data, and we keep
                 // reading until read returns 0 or less.
-                try {
-                    LocoFile xfile = new LocoFile();   // need a dummy object to do this operation in next line
-                    Element lroot = xfile.rootFromInputStream(zipper).clone();
-                    if (lroot.getChild("locomotive") == null) {
-                        continue;  // that's the roster file
-                    }
-                    mToID = lroot.getChild("locomotive").getAttributeValue("id");
-
-                    // see if user wants to do it
-                    int retval = 2; // accept if acceptall
-                    if (!acceptAll) {
-                        retval = JOptionPane.showOptionDialog(mParent,
-                            Bundle.getMessage("ConfirmImportID", mToID),
-                            Bundle.getMessage("ConfirmImport"),
-                            0,
-                            JOptionPane.INFORMATION_MESSAGE,
-                            null,
-                            new Object[]{Bundle.getMessage("CancelImports"),
-                                Bundle.getMessage("Skip"),
-                                Bundle.getMessage("ButtonOK"),
-                                Bundle.getMessage("ButtonAcceptAll")},
-                            null);
-                    }
-                    if (retval == 0) {
-                        // cancel case
-                        break;
-                    }
-                    if (retval == 1) {
-                        // skip case
-                        continue;
-                    }
-                    if (retval == 3) {
-                        // accept all case
-                        acceptAll = true;
-                    }
-
-                    // see if duplicate
-                    RosterEntry currentEntry = Roster.getDefault().getEntryForId(mToID);
-
-                    if (currentEntry != null) {
-                        if (!acceptAllDup) {
-                            retval = JOptionPane.showOptionDialog(mParent,
-                                Bundle.getMessage("ConfirmImportDup", mToID),
-                                Bundle.getMessage("ConfirmImport"),
-                                0,
-                                JOptionPane.INFORMATION_MESSAGE,
-                                null,
-                                new Object[]{Bundle.getMessage("CancelImports"),
-                                    Bundle.getMessage("Skip"),
-                                    Bundle.getMessage("ButtonOK"),
-                                    Bundle.getMessage("ButtonAcceptAll")},
-                                null);
-                        }
-                        if (retval == 0) {
-                            // cancel case
-                            break;
-                        }
-                        if (retval == 1) {
-                            // skip case
-                            continue;
-                        }
-                        if (retval == 3) {
-                            // accept all case
-                            acceptAllDup = true;
-                        }
-
-                        // turn file into backup
-                        LocoFile df = new LocoFile();   // need a dummy object to do this operation in next line
-                        df.makeBackupFile(LocoFile.getFileLocation() + currentEntry.getFileName());
-
-                        // delete entry
-                        Roster.getDefault().removeEntry(currentEntry);
-
-                    }
-
-                    loadEntryFromElement(lroot);
-                    addToEntryToRoster();
-
-                    // use the new roster
-                    Roster.getDefault().reloadRosterFile();
-                } catch (org.jdom2.JDOMException ex) {
-                    log.error("Unable to parse entry", ex);
+                
+                // find type and process
+                // Unfortunately, the comment field doesn't carry through (see debug above)
+                // so we check the filename
+                if (entry.getName().endsWith(".xml") || entry.getName().endsWith(".XML")) {
+                    boolean retval = processRosterFile(zipper);
+                    if (!retval) break;
+                } else {
+                    processImageFile(zipper, entry, entry.getName());
                 }
+                
             }
 
         } catch (FileNotFoundException ex) {
@@ -197,5 +138,113 @@ public class FullBackupImportAction extends ImportRosterItemAction {
 
     }
 
+    void processImageFile(ZipInputStream zipper, ZipEntry entry, String path) throws IOException {
+        if (! path.startsWith("roster/")) {
+            log.error("Can't cope with image files outside the roster/ directory: {}", path);
+            return;
+        }
+        String fullPath = Roster.getDefault().getRosterFilesLocation()+path.substring(7);
+        log.debug("fullpath: {}", fullPath);
+        if (new File(fullPath).exists()) {
+            log.info("skipping existing file: {}", path);
+            return;
+        }
+        // and finally copy into place
+        Files.copy(zipper, Paths.get(fullPath));
+    }
+
+    /**
+     * @return true if OK to continue to next entry
+     */
+
+    protected boolean processRosterFile(ZipInputStream zipper) throws IOException {
+
+        try {
+            LocoFile xfile = new LocoFile();   // need a dummy object to do this operation in next line
+            Element lroot = xfile.rootFromInputStream(zipper).clone();
+            if (lroot.getChild("locomotive") == null) {
+                return true;  // that's the roster file
+            }
+            mToID = lroot.getChild("locomotive").getAttributeValue("id");
+
+            // see if user wants to do it
+            int retval = 2; // accept if acceptall
+            if (!acceptAll) {
+                retval = JOptionPane.showOptionDialog(mParent,
+                    Bundle.getMessage("ConfirmImportID", mToID),
+                    Bundle.getMessage("ConfirmImport"),
+                    0,
+                    JOptionPane.INFORMATION_MESSAGE,
+                    null,
+                    new Object[]{Bundle.getMessage("CancelImports"),
+                        Bundle.getMessage("Skip"),
+                        Bundle.getMessage("ButtonOK"),
+                        Bundle.getMessage("ButtonAcceptAll")},
+                    null);
+            }
+            if (retval == 0) {
+                // cancel case
+                return false;
+            }
+            if (retval == 1) {
+                // skip case
+                return true;
+            }
+            if (retval == 3) {
+                // accept all case
+                acceptAll = true;
+            }
+
+            // see if duplicate
+            RosterEntry currentEntry = Roster.getDefault().getEntryForId(mToID);
+
+            if (currentEntry != null) {
+                if (!acceptAllDup) {
+                    retval = JOptionPane.showOptionDialog(mParent,
+                        Bundle.getMessage("ConfirmImportDup", mToID),
+                        Bundle.getMessage("ConfirmImport"),
+                        0,
+                        JOptionPane.INFORMATION_MESSAGE,
+                        null,
+                        new Object[]{Bundle.getMessage("CancelImports"),
+                            Bundle.getMessage("Skip"),
+                            Bundle.getMessage("ButtonOK"),
+                            Bundle.getMessage("ButtonAcceptAll")},
+                        null);
+                }
+                if (retval == 0) {
+                    // cancel case
+                    return false;
+                }
+                if (retval == 1) {
+                    // skip case
+                    return true;
+                }
+                if (retval == 3) {
+                    // accept all case
+                    acceptAllDup = true;
+                }
+
+                // turn file into backup
+                LocoFile df = new LocoFile();   // need a dummy object to do this operation in next line
+                df.makeBackupFile(Roster.getDefault().getRosterFilesLocation() + currentEntry.getFileName());
+
+                // delete entry
+                Roster.getDefault().removeEntry(currentEntry);
+
+            }
+
+            loadEntryFromElement(lroot);
+            addToEntryToRoster();
+
+            // use the new roster
+            Roster.getDefault().reloadRosterFile();
+        } catch (org.jdom2.JDOMException ex) {
+            log.error("Unable to parse entry", ex);
+        }
+
+        return true;
+    }
+    
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FullBackupImportAction.class);
 }

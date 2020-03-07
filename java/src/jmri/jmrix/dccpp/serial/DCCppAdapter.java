@@ -21,14 +21,14 @@ import purejavacomm.SerialPort;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Provide access to DCC++ via a FTDI Virtual Comm Port. Normally controlled by
+ * Provide access to DCC++ via a FTDI Virtual Com Port. Normally controlled by
  * the lenz.liusb.LIUSBFrame class.
  *
  * @author Mark Underwood Copyright (C) 2015
  *
  * Based on jmri.jmirx.lenz.liusb.LIUSBAdapter by Paul Bender
  */
-public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmrix.SerialPortAdapter {
+public class DCCppAdapter extends DCCppSerialPortController {
 
     public DCCppAdapter() {
         super();
@@ -170,12 +170,7 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
      */
     protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
-        int baud = validSpeedValues[0];  // default, but also defaulted in the initial value of selectedSpeed
-        for (int i = 0; i < validSpeeds.length; i++) {
-            if (validSpeeds[i].equals(mBaudRate)) {
-                baud = validSpeedValues[i];
-            }
-        }
+        int baud = currentBaudNumber(mBaudRate);
         SerialUtil.setSerialPortParams(activeSerialPort, baud,
                                        SerialPort.DATABITS_8,
                                        SerialPort.STOPBITS_1,
@@ -188,13 +183,29 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
         // checkBuffer = true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] validBaudRates() {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
+    }
+
     protected String[] validSpeeds = new String[]{Bundle.getMessage("Baud115200")};
     protected int[] validSpeedValues = new int[]{115200};
+
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
+    }
 
     // meanings are assigned to these above, so make sure the order is consistent
     // protected String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionHw"), Bundle.getMessage("FlowOptionNo")};

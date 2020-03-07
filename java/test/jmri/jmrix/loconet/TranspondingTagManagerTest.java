@@ -1,7 +1,5 @@
 package jmri.jmrix.loconet;
 
-import jmri.IdTag;
-import jmri.IdTagManager;
 import jmri.util.JUnitUtil;
 import jmri.managers.ProxyIdTagManager;
 import org.junit.*;
@@ -122,6 +120,7 @@ public class TranspondingTagManagerTest extends jmri.managers.DefaultIdTagManage
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -133,6 +132,7 @@ public class TranspondingTagManagerTest extends jmri.managers.DefaultIdTagManage
     }
 
     @After
+    @Override
     public void tearDown() throws Exception {
         l = null;
         jmri.util.JUnitUtil.tearDown();
@@ -140,6 +140,7 @@ public class TranspondingTagManagerTest extends jmri.managers.DefaultIdTagManage
 
     // Override init method so as not to load file
     // nor register shutdown task during tests.
+    @Override
     protected TranspondingTagManager getManager() {
         return new TranspondingTagManager() {
             @Override

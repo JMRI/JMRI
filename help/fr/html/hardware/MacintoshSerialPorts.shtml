@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- UpDated by Herv&#233; Blorec 2017-01-11-->
+<!-- Updated by Herv&#233; Blorec 2017-01-11-->
 <html lang="fr">
 <head>
  <title>JMRI Hardware Setup Support - MacOS Serial Port connections</title>
@@ -19,15 +19,16 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
-<div id="mainContent">
-      <H1>Prise en charge de la configuration mat&#233;rielle: connexions du port s&#233;rie MacOS</H1>
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
+<h1>Prise en charge de la configuration mat&#233;rielle: connexions du port s&#233;rie MacOS</h1>
 
 <a name="limitations"></a><h2>Limitations</h2>
-<P> Les nouveaux MacOS et OS X viennent sans port s&#233;rie RS232, mais fournissent des ports USB.
-Connectez un adaptateur DCC s&#233;rie &#224; l'aide d'une <a href="USBtoSerial.shtml"> adaptateur USB-vers-Serie </a>. </P>
+<p> Les nouveaux MacOS et OS X viennent sans port s&#233;rie RS232, mais fournissent des ports USB.
+Connectez un adaptateur DCC s&#233;rie &#224; l'aide d'une <a href="USBtoSerial.shtml"> adaptateur USB-vers-Serie </a>. </p>
 
 <a name="connecting"></a><h2>Connexion</h2>
 <h3>C&#226;blage</h3>
@@ -54,19 +55,20 @@ Connectez un adaptateur DCC s&#233;rie &#224; l'aide d'une <a href="USBtoSerial.
  <p> Une bonne &#233;tude de connexions Macintosh s&#233;rie, y compris les bonnes
 techniques de d&#233;bogage, est disponible &#224;
 <ul>
-  <li><a href="http://www.applefool.com/se30/#serialdata">http://www.applefool.com/se30/#serialdata</a>
+  <li><a href="http://www.applefool.com/se30/#serialdata">http://www.applefool.com/se30/#serialdata</a></li>
   <li><a href="http://maxembedded.com/2013/09/serial-communication-rs232-basics/#SerialTerm">http://maxembedded.com/2013/09/serial-
-communication-rs232-basics/#SerialTerm</a>
-  <li><a href="https://en.wikipedia.org/wiki/Serial_port">https://en.wikipedia.org/wiki/Serial_port</a> provides general information
-  <li><a href="http://permalink.gmane.org/gmane.os.netbsd.ports.macppc/7467">http://permalink.gmane.org/gmane.os.netbsd.ports.macppc/7467</
-a> provides a simple pin out
+communication-rs232-basics/#SerialTerm</a></li>
+  <li><a href="https://en.wikipedia.org/wiki/Serial_port">https://en.wikipedia.org/wiki/Serial_port</a> provides general information</li>
+  <li><a href="http://permalink.gmane.org/gmane.os.netbsd.ports.macppc/7467">http://permalink.gmane.org/gmane.os.netbsd.ports.macppc/7467</a>
+  provides a simple pin out</li>
 </ul>
 
 <h2>Credits</h2>
-<p> Les informations sur cette page ont &#233;t&#233; fournies par Dick Bronson et Walter Thompson.</P>
+<p> Les informations sur cette page ont &#233;t&#233; fournies par Dick Bronson et Walter Thompson.</p>
 
    <hr class="hide">
-<!--#include virtual="/Footer" -->
+
+<!--#include virtual="/Footer.shtml" -->
   </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->
 </body>

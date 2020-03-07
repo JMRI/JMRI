@@ -59,14 +59,14 @@ public class SimpleLightServer extends AbstractLightServer {
             if (log.isDebugEnabled()) {
                 log.debug("Setting Light ON");
             }
-            initLight(statusString.substring(index, statusString.indexOf(" ", index + 1)).toUpperCase());
-            lightOn(statusString.substring(index, statusString.indexOf(" ", index + 1)).toUpperCase());
+            initLight(statusString.substring(index, statusString.indexOf(" ", index + 1)));
+            lightOn(statusString.substring(index, statusString.indexOf(" ", index + 1)));
         } else if (statusString.contains("OFF")) {
             if (log.isDebugEnabled()) {
                 log.debug("Setting Light OFF");
             }
-            initLight(statusString.substring(index, statusString.indexOf(" ", index + 1)).toUpperCase());
-            lightOff(statusString.substring(index, statusString.indexOf(" ", index + 1)).toUpperCase());
+            initLight(statusString.substring(index, statusString.indexOf(" ", index + 1)));
+            lightOff(statusString.substring(index, statusString.indexOf(" ", index + 1)));
         }
     }
 

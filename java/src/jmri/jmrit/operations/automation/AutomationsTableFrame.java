@@ -79,8 +79,9 @@ public class AutomationsTableFrame extends OperationsFrame {
         JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         menuBar.add(toolMenu);
         toolMenu.add(new AutomationCopyAction());
+        toolMenu.add(new AutomationResumeAction());
         setJMenuBar(menuBar);
-        addHelpMenu("package.jmri.jmrit.operations.Operations_Automations", true); // NOI18N
+        addHelpMenu("package.jmri.jmrit.operations.Operations_Automation", true); // NOI18N
 
         initMinimumSize();
         // make panel a bit wider than minimum if the very first time opened

@@ -1,10 +1,11 @@
 package jmri.jmrix.pi;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
@@ -15,16 +16,18 @@ public class RaspberryPiConnectionTypeListTest {
     @Test
     public void testCTor() {
         RaspberryPiConnectionTypeList t = new RaspberryPiConnectionTypeList();
-        Assert.assertNotNull("exists",t);
+        assertThat(t).isNotNull();
+        assertThat(t.getManufacturers()).contains("Raspberry Pi Foundation");
+        assertThat(t.getAvailableProtocolClasses()).contains("jmri.jmrix.pi.RaspberryPiConnectionConfig");
     }
 
     // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

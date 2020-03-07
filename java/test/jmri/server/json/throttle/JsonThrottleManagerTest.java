@@ -8,7 +8,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import jmri.DccLocoAddress;
-import jmri.InstanceManager;
 import jmri.server.json.JsonMockConnection;
 
 /**
@@ -17,12 +16,6 @@ import jmri.server.json.JsonMockConnection;
  * @author Randall Wood Copyright (C) 2019
  */
 public class JsonThrottleManagerTest {
-
-    @Test
-    public void testGetDefault() {
-        Assert.assertEquals("Default instance", InstanceManager.getDefault(JsonThrottleManager.class),
-                JsonThrottleManager.getDefault());
-    }
 
     /**
      * Testing

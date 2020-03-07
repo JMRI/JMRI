@@ -1096,6 +1096,9 @@ public class ActiveTrain {
             int minutes = getRestartDelay() % 60;
             restartHr = nowHours + hours + ((nowMinutes + minutes) / 60);
             restartMin = ((nowMinutes + minutes) % 60);
+            if (restartHr>23){
+                restartHr=restartHr-24;
+            }
         }
         InstanceManager.getDefault(DispatcherFrame.class).addDelayedTrain(this);
     }
@@ -1117,6 +1120,7 @@ public class ActiveTrain {
     }
 
     protected void restart() {
+        log.debug("{}: restarting", getTrainName());        
         restartPoint = false;
         holdAllocation = false;
         setStatus(WAITING);

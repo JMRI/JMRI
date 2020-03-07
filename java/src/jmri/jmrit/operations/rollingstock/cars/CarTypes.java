@@ -1,12 +1,13 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
 import jmri.jmrit.operations.setup.Setup;
-import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Represents the types of cars a railroad can have.
@@ -125,19 +126,11 @@ public class CarTypes extends RollingStockAttribute implements InstanceManagerAu
      */
     @Override
     public int getMaxNameLength() {
-        if (maxNameLength == 0) {
-            String maxName = "";
-            maxNameLength = MIN_NAME_LENGTH;
-            for (String name : getNames()) {
-                String[] subString = name.split("-");
-                if (subString[0].length() > maxNameLength) {
-                    maxName = name;
-                    maxNameLength = subString[0].length();
-                }
-            }
-            log.info("Max car type name ({}) length {}", maxName, maxNameLength);
+        if (maxNameSubStringLength == 0) {
+            super.getMaxNameSubStringLength();
+            log.info("Max car type name ({}) length {}", maxName, maxNameSubStringLength);
         }
-        return maxNameLength;
+        return maxNameSubStringLength;
     }
 
     /**

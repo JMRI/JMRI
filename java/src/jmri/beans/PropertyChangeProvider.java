@@ -2,7 +2,7 @@ package jmri.beans;
 
 import java.beans.PropertyChangeListener;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 
 /**
  * A set of methods that would need to be implemented to ensure the implementing
@@ -29,7 +29,7 @@ public interface PropertyChangeProvider {
      *
      * @param listener The PropertyChangeListener to be added
      */
-    public void addPropertyChangeListener(@Nullable PropertyChangeListener listener);
+    public void addPropertyChangeListener(@CheckForNull PropertyChangeListener listener);
 
     /**
      * Add a {@link java.beans.PropertyChangeListener} for a specific property.
@@ -37,7 +37,7 @@ public interface PropertyChangeProvider {
      * @param propertyName The name of the property to listen on.
      * @param listener     The PropertyChangeListener to be added
      */
-    public void addPropertyChangeListener(@Nullable String propertyName, @Nullable PropertyChangeListener listener);
+    public void addPropertyChangeListener(@CheckForNull String propertyName, @CheckForNull PropertyChangeListener listener);
 
     /**
      * Get all {@link java.beans.PropertyChangeListener}s currently attached to
@@ -56,14 +56,14 @@ public interface PropertyChangeProvider {
      * @return An array of PropertyChangeListeners.
      */
     @Nonnull
-    public PropertyChangeListener[] getPropertyChangeListeners(@Nullable String propertyName);
+    public PropertyChangeListener[] getPropertyChangeListeners(@CheckForNull String propertyName);
 
     /**
      * Remove the specified listener from this object.
      *
      * @param listener The {@link java.beans.PropertyChangeListener} to remove.
      */
-    public void removePropertyChangeListener(@Nullable PropertyChangeListener listener);
+    public void removePropertyChangeListener(@CheckForNull PropertyChangeListener listener);
 
     /**
      * Remove the specified listener of the specified property from this object.
@@ -72,6 +72,6 @@ public interface PropertyChangeProvider {
      * @param listener     The {@link java.beans.PropertyChangeListener} to
      *                     remove.
      */
-    public void removePropertyChangeListener(@Nullable String propertyName, @Nullable PropertyChangeListener listener);
+    public void removePropertyChangeListener(@CheckForNull String propertyName, @CheckForNull PropertyChangeListener listener);
 
 }

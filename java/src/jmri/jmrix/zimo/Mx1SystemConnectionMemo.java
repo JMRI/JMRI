@@ -1,9 +1,12 @@
 package jmri.jmrix.zimo;
 
+import java.util.Comparator;
 import java.util.ResourceBundle;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
+import jmri.NamedBean;
 import jmri.managers.DefaultProgrammerManager;
+import jmri.util.NamedBeanComparator;
 
 /**
  * Lightweight class to denote that a system is active, and provide general
@@ -152,7 +155,7 @@ public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         throttleManager = new jmri.jmrix.zimo.Mx1ThrottleManager(this);
         InstanceManager.setThrottleManager(throttleManager);
         if (getProtocol() == Mx1Packetizer.BINARY) {
-            turnoutManager = new Mx1TurnoutManager(getMx1TrafficController(), getSystemPrefix());
+            turnoutManager = new Mx1TurnoutManager(this);
             InstanceManager.setTurnoutManager(turnoutManager);
         }
     }
@@ -204,6 +207,11 @@ public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.zimo.ZimoActionListBundle");
+    }
+
+    @Override
+    public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
+        return new NamedBeanComparator<>();
     }
 
     @Override

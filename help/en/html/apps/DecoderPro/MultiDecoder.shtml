@@ -16,15 +16,14 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
       <!-- Page Body -->
 
@@ -121,21 +120,23 @@
         operations to configure the Digitrax lock feature so you
         can use it. (Normally you'd take the locomotive apart so as
         to be able to load the Digitrax CV16 value).</li>
-      </ul>Finally, the bottom part of the page allows you to
-      control the programming mode in use.
+      </ul>
+      <p>Finally, the bottom part of the page allows you to
+      control the programming mode in use.</p>
 
       <p>Although it's possible to use this tool in "Ops mode"
       (programming on the main), in that case it's not able to
       confirm operations, so one can't be 100% sure that the right
-      decoder is selected. <a name="digitraxproposal" id=
-      "digitraxproposal"></a></p>
+      decoder is selected.</p>
 
-      <h2>Digitrax's Original Proposal</h2>DCC users sometimes want
+      <a name="digitraxproposal" id="digitraxproposal"></a>
+      <h2>Digitrax's Original Proposal</h2>
+      <p>DCC users sometimes want
       to install more than one decoder in a single locomotive. One
       common case is using separate decoders for motor control and
       sound. Because these decoders often need to have their CVs
       configured separately, a mechanism is needed to communicate
-      with only one at a time.
+      with only one at a time.</p>
 
       <p>This mechanism must be able to:</p>
 
@@ -234,7 +235,7 @@ only CV15 can be written.
       faster in the future by having command stations attempt to
       read just the expected value, instead of 0 to 255, in the
       absense of an acknowledge.</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- close #mainContent -->
   </div><!-- close #mBody -->
 </body>

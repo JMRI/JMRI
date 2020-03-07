@@ -14,6 +14,7 @@ public class DCCppStreamConnectionConfigXmlTest extends jmri.jmrix.configurexml.
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         xmlAdapter = new DCCppStreamConnectionConfigXml();
@@ -21,6 +22,7 @@ public class DCCppStreamConnectionConfigXmlTest extends jmri.jmrix.configurexml.
     }
 
     @After
+    @Override
     public void tearDown() {
         // if we've started a traffic controller, dispose of it
         if (cc.getAdapter() != null) {

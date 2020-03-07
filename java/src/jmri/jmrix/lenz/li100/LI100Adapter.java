@@ -18,13 +18,13 @@ import purejavacomm.SerialPort;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Provide access to XpressNet via a LI100 on an attached serial comm port.
+ * Provide access to XpressNet via a LI100 on an attached serial com port.
  * Normally controlled by the lenz.li100.LI100Frame class.
  *
  * @author Bob Jacobsen Copyright (C) 2002
  * @author Paul Bender, Copyright (C) 2003-2010
  */
-public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix.SerialPortAdapter {
+public class LI100Adapter extends XNetSerialPortController {
 
     public LI100Adapter() {
         super();
@@ -162,12 +162,7 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
      */
     protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
-        int baud = validSpeedValues[0];  // default, but also defaulted in the initial value of selectedSpeed
-        for (int i = 0; i < validSpeeds.length; i++) {
-            if (validSpeeds[i].equals(mBaudRate)) {
-                baud = validSpeedValues[i];
-            }
-        }
+        int baud = currentBaudNumber(mBaudRate);
         SerialUtil.setSerialPortParams(activeSerialPort, baud,
                 SerialPort.DATABITS_8,
                 SerialPort.STOPBITS_1,
@@ -179,9 +174,6 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
             flow = 0;
         }
         configureLeadsAndFlowControl(activeSerialPort, flow);
-
-        /*if (getOptionState(option2Name).equals(validOption2[0]))
-         checkBuffer = true;*/
     }
 
     /**
@@ -192,8 +184,21 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
+    }
+
     protected String[] validSpeeds = new String[]{Bundle.getMessage("Baud9600")};
     protected int[] validSpeedValues = new int[]{9600};
+
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
+    }
 
     // meanings are assigned to these above, so make sure the order is consistent
     protected String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionHwRecomm"), Bundle.getMessage("FlowOptionNo")};

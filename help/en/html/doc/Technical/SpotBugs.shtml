@@ -22,15 +22,17 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
-</head><!--#include virtual="/Header.shtml" -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
+</head>
 
 <body>
-  <div id="mBody">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-
     <div id="mainContent">
-        <h1>JMRI Code: Static Analysis with SpotBugs</h1>
+
+    <h1>JMRI Code: Static Analysis with SpotBugs</h1>
         SpotBugs is a
         tool that can examine code to find possible problems. It does
       a "static analysis", looking through the code to find certain
@@ -216,14 +218,15 @@ scanning through the code.
       <p>We do not use these annotations:</p>
 
       <ul>
-        <li><a href=
+        <li><a name="nullable" id="nullable"></a>
+            <a href=
                "http://findbugs.sourceforge.net/manual/annotations.html"><code>
                     javax.annotation.Nullable</code></a> - This doesn't really
-        mean what people think it does, as SpotBugs doesn't really
-        check anything when this is used. From the SpotBugs documentation:
-        <blockquote>
-              SpotBugs will treat the annotated items as though they had
-              no annotation. In practice this annotation is useful only
+                mean what people think it does, as SpotBugs doesn't really
+                check anything when this is used. From the SpotBugs documentation:
+          <blockquote>
+            SpotBugs will treat the annotated items as though they had
+            no annotation. In practice this annotation is useful only
             for overriding an overarching NonNull annotation. Use
             javax.annotation.ParametersAreNullableByDefault to set it
             for an entire class. Prefer the use of
@@ -351,21 +354,22 @@ scanning through the code.
       </dl>
 
      <h4>Status and Counts</h4>
-      <p>Running this on JMRI 2.5.4 produced the following:</p>
+      <p>We've been making slow but continuous progress on removing these:</p>
 
       <table border="1">
-        <tr><th>Category</th><th>JMRI 2.5.4</th><th>JMRI 4.13.3</th></tr>
-        <tr><td>Bad practice Warnings</td><td>164</td><td>13</td></tr>
-        <tr><td>Correctness Warnings</td><td>77</td><td></td></tr>
-        <tr><td>Experimental Warnings</td><td>7</td><td></td></tr>
-        <tr><td>Malicious code vulnerability Warnings</td><td>221</td><td>(disabled)</td></tr>
-        <tr><td>Multithreaded correctness Warnings</td><td>90</td><td>175</td></tr>
-        <tr><td>Performance Warnings</td><td>459</td><td>15</td></tr>
-        <tr><td>Style / Dodgy Code Warnings</td><td>304</td><td>406</td></tr>
+        <tr><th>Category</th><th>JMRI 2.5.4</th><th>JMRI 4.13.3</th><th>JMRI 4.17.3</th></tr>
+        <tr><td>Bad practice Warnings</td><td>164</td><td>13</td><td></td></tr>
+        <tr><td>Correctness Warnings</td><td>77</td><td></td><td></td></tr>
+        <tr><td>Experimental Warnings</td><td>7</td><td></td><td></td></tr>
+        <tr><td>Malicious code vulnerability Warnings</td><td>221</td><td>(disabled)</td><td></td></tr>
+        <tr><td>Multithreaded correctness Warnings</td><td>90</td><td>175</td><td>165</td></tr>
+        <tr><td>Performance Warnings</td><td>459</td><td>15</td><td>1</td></tr>
+        <tr><td>Style / Dodgy Code Warnings</td><td>304</td><td>406</td><td>127</td></tr>
 
-        <tr><th>Total</th><th>1322</th><th>636</th></tr>
-        <tr><th>Medium Priority</th><th></th><th>199</th></tr>
-        <tr><th>Low Priority</th><th></th><th>437</th></tr>
+        <tr><th>Total</th><th>1322</th><th>636</th><th>293</th></tr>
+        <tr><th>Medium Priority</th><th></th><th>199</th><th>79</th></tr>
+        <tr><th>Low Priority</th><th></th><th>437</th><th>214</th></tr>
+        <tr><th>@SuppressFBWarnings<br>Lines</th><th></th><th></th><th>868</th></tr>
       </table>
 
       <p>A lot of work has gone into JMRI

@@ -728,7 +728,7 @@ public final class FnMapPanelESU extends JPanel {
                         } else if (itemName[item][value].equals("")) {
                             if (value == 1) {
                                 retString.append(",").append(itemName[item][0]);
-                            } else if (value == 2) {
+                            } else {
                                 retString.append(",not ").append(itemName[item][0]);
                             }
                         } else {

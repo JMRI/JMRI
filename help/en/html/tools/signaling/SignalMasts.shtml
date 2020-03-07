@@ -8,8 +8,9 @@
   <!-- Copyright Bob Jacobsen 2008 -->
 
   <title>JMRI: Signal Masts documentation</title>
-  <meta name="Author" content="Bob Jacobsen, Egbert Broerse">
-  <meta name="Date.Modified" content="20160323"><!-- Style -->
+  <meta name="Author" content="Bob Jacobsen, Egbert Broerse, B. Milhaupt">
+  <meta name="Date.Modified" content="20200106">
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -17,16 +18,16 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
+
       <h1>JMRI: Signal Masts</h1>
 
       <p class="subtitle">Using Signal Masts</p>
@@ -67,23 +68,46 @@
         <h3>Signal Mast Repeaters</h3><img src=
         "images/SignalMastRepeaterPane.png" width="291" height="98"
         align="right">
+        
+        <p>A Signal Mast Repeater enables one physical (or virtual) signal mast to 
+            mimic another signal mast's aspect.</p>
+        <p>This can be useful in a number of ways:</p>
+        <ul>
+            <li>When one physical signal mast must provide an aspect which is exactly 
+                identical to another physical signal mast.  This could be used to 
+                "repeat" the aspect of a "hard-to-see" signal mast on some other 
+                easy-to-see signal mast, such as one modeled in the fascia of the 
+                layout.</li>
+            <li>When there are multiple different routes between two physical signal masts, 
+                JMRI Signal Mast Logic discovery will only identify logic for one
+                of the routes.  By providing multiple signal masts at the "destination"
+                end of the route, it is possible to manually create and configure
+                Signal Mast Logic for each of the alternate routes, such that the
+                "source" signal mast displays the correct indication to protect the 
+                "destination" signal mast, regardless of which route is selected.</li>            
+        </ul>
+        <p>See the <a href="../../../package/jmri/jmrit/beantable/SignalMastRepeater.shtml">
+            Signal Mast Repeater</a> documentation for more details.</p>
 
-        <p>From the Signal Mast Table's <b>Tools</b> menu you may
-        configure Signal Mast Repeaters. These mirror another mast,
-        and van be set as Slave, merely following the other Mast,
-        or as a two way coupling so clicking he Repeater on your
-        Panel also sets the Master.</p>
+        <h2>Saving and Reloading Configuration</h2>
 
-        <h2>Saving and Reloading Configuration</h2>The Signal Mast
-        information is saved as part of the JMRI configuration in
-        an XML file, along with control panel setup and similar
-        stuff. For more information on creating and displaying
+        <p>The Signal Mast information is kept in your <i>layout
+        configuration</i>, along with Turnouts, Lights, Sensors,
+        control panel setup etc.<br>
+        To save this information on disk, allowing to <a href=
+        "../../../../package/jmri/jmrit/display/PanelMenuHelp.shtml">reload
+        it</a> next time you run JMRI, use <b>Store Configuration...</b>
+        in the <b>File</b> menu at the top of the Signal Mast Table (or
+        other tables from the Tools menu), or select <b>Store
+        Panel...</b> in the <b>Panel</b> menu.</p>
+        <p>For more information on creating and displaying
         panels, including how to show signals on your panels,
         please see the <a href=
-        "../../apps/PanelPro/Panels.shtml">Panels pages</a>.
+        "../../apps/PanelPro/Panels.shtml">Panels pages</a>.</p>
 
         <p>Back to the <a href="index.shtml#tools">Signaling main
-        help page</a>.</p><!--#include virtual="/Footer" -->
+        help page</a>.</p>
+        <!--#include virtual="/Footer.shtml" -->
       </div><!-- closes #mainContent-->
     </div><!-- closes #mBody-->
   </div>

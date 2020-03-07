@@ -3,7 +3,6 @@ package jmri.implementation;
 import java.beans.PropertyChangeListener;
 import jmri.JmriException;
 import jmri.Sensor;
-import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -17,7 +16,7 @@ import org.junit.Test;
  * the base for test classes, including providing some common tests.
  *
  * @author	Bob Jacobsen 2016 from AbstractLightTestBase (which was called AbstractLightTest at the time)
- * @author      Paul Bender Copyright (C) 2018
+ * @author  Paul Bender Copyright (C) 2018
 */
 public abstract class AbstractSensorTestBase {
 
@@ -32,11 +31,11 @@ public abstract class AbstractSensorTestBase {
 
     abstract public void checkStatusRequestMsgSent();
 
-    // load t with actual object; create scaffolds as needed
+    // implementing classes must provide this abstract member:
     @Before
-    abstract public void setUp();
+    abstract public void setUp(); // load t with actual object; create scaffolds as needed
 
-    protected AbstractSensor t = null;	// holds objects under test
+    protected AbstractSensor t = null;	// holds object under test; set by setUp()
 
     static protected boolean listenerResult = false;
 
@@ -75,8 +74,8 @@ public abstract class AbstractSensorTestBase {
         t.removePropertyChangeListener(ln);
         listenerResult = false;
         t.setUserName("user id");
-        Assert.assertTrue("listener should not have heard message after removeListener",
-                !listenerResult);
+        Assert.assertFalse("listener should not have heard message after removeListener", 
+                listenerResult);
     }
 
     @Test
@@ -116,7 +115,7 @@ public abstract class AbstractSensorTestBase {
     public void testInvertAfterActive() throws JmriException {
         Assume.assumeTrue(t.canInvert());
         t.setState(Sensor.ACTIVE);
-	t.setInverted(true);
+        t.setInverted(true);
         // check
         Assert.assertEquals("state 1", Sensor.INACTIVE, t.getState());
         Assert.assertEquals("state 2", "Inactive", t.describeState(t.getState()));
@@ -133,7 +132,6 @@ public abstract class AbstractSensorTestBase {
         Assert.assertEquals("initial default", false, t.getUseDefaultTimerSettings());
         t.setUseDefaultTimerSettings(true);
         Assert.assertEquals("initial default", true, t.getUseDefaultTimerSettings());
-
     }
 
     @Test
@@ -150,7 +148,7 @@ public abstract class AbstractSensorTestBase {
         jmri.util.JUnitUtil.waitFor(()->{return t.getState() == t.getRawState();}, "raw state = state");
         Assert.assertEquals("2nd state", Sensor.ACTIVE, t.getState());
 
-	t.setOwnState(Sensor.INACTIVE); // next is considered to run immediately, before debounce
+        t.setOwnState(Sensor.INACTIVE); // next is considered to run immediately, before debounce
         Assert.assertEquals("post-set state", Sensor.ACTIVE, t.getState());
         jmri.util.JUnitUtil.waitFor(()->{return t.getState() == t.getRawState();}, "raw state = state");
         Assert.assertEquals("Final state", Sensor.INACTIVE, t.getState());
@@ -158,13 +156,13 @@ public abstract class AbstractSensorTestBase {
 
     @Test
     public void testGetPullResistance(){
-       // default is off, override this test if this is supported.
-       Assert.assertEquals("Pull Direction", jmri.Sensor.PullResistance.PULL_OFF, t.getPullResistance());
+        // default is off, override this test if this is supported.
+        Assert.assertEquals("Pull Direction", jmri.Sensor.PullResistance.PULL_OFF, t.getPullResistance());
     }
 
     @Test
     public void testGetBeanType(){
-         Assert.assertEquals("bean type", t.getBeanType(), Bundle.getMessage("BeanNameSensor"));
+        Assert.assertEquals("bean type", t.getBeanType(), Bundle.getMessage("BeanNameSensor"));
     }
 
     // Test outgoing status request
@@ -197,7 +195,6 @@ public abstract class AbstractSensorTestBase {
         jmri.util.JUnitUtil.waitFor(()->{return t.getCommandedState() == Sensor.OFF;}, "commanded state = OFF");
         Assert.assertTrue("Sensor is ON", t.getCommandedState() == Sensor.OFF);
     }
-
 
     //dispose of t.
     @After

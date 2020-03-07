@@ -1,11 +1,5 @@
 package jmri.implementation;
 
-import apps.AppsBase;
-import apps.gui3.tabbedpreferences.EditConnectionPreferencesDialog;
-import apps.gui3.tabbedpreferences.TabbedPreferencesAction;
-import com.alexandriasoftware.swing.JSplitButton;
-import com.alexandriasoftware.swing.action.ButtonClickedActionListener;
-import com.alexandriasoftware.swing.action.SplitButtonClickedActionListener;
 import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
@@ -14,7 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
-import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -22,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ServiceLoader;
 import java.util.concurrent.atomic.AtomicBoolean;
+
 import javax.swing.Action;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
@@ -32,6 +26,13 @@ import javax.swing.JPopupMenu;
 import javax.swing.KeyStroke;
 import javax.swing.TransferHandler;
 import javax.swing.event.ListSelectionEvent;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import apps.AppsBase;
+import apps.gui3.tabbedpreferences.EditConnectionPreferencesDialog;
+import apps.gui3.tabbedpreferences.TabbedPreferencesAction;
 import jmri.Application;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
@@ -41,15 +42,12 @@ import jmri.configurexml.swing.DialogErrorHandler;
 import jmri.jmrit.XmlFile;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
-import jmri.profile.ProfileManagerDialog;
 import jmri.spi.PreferencesManager;
-import jmri.util.com.sun.TransferActionListener;
 import jmri.util.FileUtil;
 import jmri.util.SystemType;
+import jmri.util.com.sun.TransferActionListener;
 import jmri.util.prefs.HasConnectionButUnableToConnectException;
 import jmri.util.prefs.InitializationException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -199,7 +197,7 @@ public class JmriConfigurationManager implements ConfigureManager {
         log.debug("loading {} ...", url);
         try {
             if (url == null
-                    || (new File(url.toURI())).getName().equals("ProfileConfig.xml") //NOI18N
+                    || (new File(url.toURI())).getName().equals(Profile.CONFIG_FILENAME)
                     || (new File(url.toURI())).getName().equals(Profile.CONFIG)) {
                 Profile profile = ProfileManager.getDefault().getActiveProfile();
                 List<PreferencesManager> providers = new ArrayList<>(InstanceManager.getList(PreferencesManager.class));
@@ -249,7 +247,7 @@ public class JmriConfigurationManager implements ConfigureManager {
                         }
                     }
                 }
-                if (url != null && (new File(url.toURI())).getName().equals("ProfileConfig.xml")) { // NOI18N
+                if (url != null && (new File(url.toURI())).getName().equals(Profile.CONFIG_FILENAME)) {
                     log.debug("Loading legacy configuration...");
                     return this.legacy.load(url, registerDeferred);
                 }

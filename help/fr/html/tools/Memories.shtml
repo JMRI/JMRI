@@ -1,8 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!--UIpdated by Blorec Herv&#233; le 2013-09-24-->
+<!--Updated by Blorec Herv&#233; le 2013-09-24-->
 <html lang="fr">
 <head>
-<!-- Copyright Me 2008 -->
 
 <title>JMRI: Memories</title>
 
@@ -16,11 +15,13 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
-<h1> JMRI: Documentation Variables M&#233;moires</H1>
+<h1> JMRI: Documentation Variables M&#233;moires</h1>
 
 
 Une variable m&#233;moire JMRI peut contenir n'importe quel type d'objet. C'est vraiment le
@@ -63,12 +64,12 @@ Fondamentalement, le navigateur de fichiers XML a un &#233;l&#233;ment "memoryic
 pour savoir o&#249; placer l'ic&#244;ne, si elle peut &#234;tre choisie, etc
 Dans cet &#233;l&#233;ment, vous pouvez d&#233;finir des &#233;l&#233;ments "memorystate" qui
 d&#233;finit ce que l'ic&#244;ne a &#224; afficher lorsque la m&#233;moire a une valeur sp&#233;cifique:
-<code><pre>
+<code>
     &lt;memoryicon memory="IM20" defaulticon="resources/icons/misc/Question-black.gif"&gt;
       &lt;memorystate value="9" icon="resource:resources/icons/misc/Nixie/M9B.gif" /&gt;
       &lt;memorystate value="8" icon="resource:resources/icons/misc/Nixie/M8B.gif" /&gt;
     &lt;/memoryicon&gt;
-</pre></code>
+</code>
 (Cet exemple a &#233;t&#233; simplifi&#233; en omettant quelques trucs de l'&#233;l&#233;ment memoryicon)
 Dans l'exemple, les deux &#233;l&#233;ments memorystate assurent que si la
 m&#233;moire contient "9" ou "8", certaines images seront affich&#233;es, sinon 
@@ -78,7 +79,7 @@ Malheureusement, JMRI n'a pas un bon outil graphique pour la d&#233;finition des
 ic&#244;nes affich&#233;es lors de l'utilisation d'une ic&#244;ne de la m&#233;moire de cette fa&#231;on. Vous devez &#233;diter le fichier XML
 &#224; la main, en suivant l'un des exemples.
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
  </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->
 </body>

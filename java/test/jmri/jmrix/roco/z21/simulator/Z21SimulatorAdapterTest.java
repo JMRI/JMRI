@@ -85,7 +85,6 @@ public class Z21SimulatorAdapterTest {
         } catch(java.net.SocketException se) {
             Assert.fail("Failure Creating Socket");
         }
-        a.getSystemConnectionMemo().getTrafficController().terminateThreads();
     }
 
     @Test
@@ -152,7 +151,6 @@ public class Z21SimulatorAdapterTest {
         // and configure/start the simulator.
         a.configure();
         Assert.assertTrue(a.getSystemConnectionMemo().provides(jmri.AddressedProgrammerManager.class));
-        a.getSystemConnectionMemo().getTrafficController().terminateThreads();
     }
 
     // verify there is a Reporter manager
@@ -179,6 +177,12 @@ public class Z21SimulatorAdapterTest {
 
     @After
     public void tearDown() {
+	if(a.getSystemConnectionMemo() != null ) {
+		if( a.getSystemConnectionMemo().getTrafficController() != null ) {
+			a.getSystemConnectionMemo().getTrafficController().terminateThreads();
+		}
+		a.getSystemConnectionMemo().dispose();
+	}
         a.terminateThread();
         // suppress two timeout messages that occur
 	JUnitAppender.suppressMessageStartsWith(org.apache.log4j.Level.WARN,"Timeout on reply to message:");

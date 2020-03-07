@@ -1,14 +1,19 @@
 package jmri.jmrix.sprog;
 
+import java.util.Comparator;
 import java.util.ResourceBundle;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
+import jmri.NamedBean;
 import jmri.ThrottleManager;
 import jmri.TurnoutManager;
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
 import jmri.jmrix.sprog.update.SprogType;
 import jmri.jmrix.sprog.update.SprogVersion;
 import jmri.jmrix.sprog.update.SprogVersionQuery;
+import jmri.jmrix.swing.ComponentFactory;
+import jmri.util.NamedBeanComparator;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,32 +34,25 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             log.debug("SprogSystemConnectionMemo, prefix='{}'", st.getController().getSystemConnectionMemo().getSystemPrefix());
         }
         this.st = st;
-        sprogMode = sm;  // static
-        sprogVersion = new SprogVersion(new SprogType(SprogType.UNKNOWN));
-        register();
-        InstanceManager.store(this, SprogSystemConnectionMemo.class); // also register as specific type
-        InstanceManager.store(cf = new jmri.jmrix.sprog.swing.SprogComponentFactory(this),
-                jmri.jmrix.swing.ComponentFactory.class);
+        init(sm, new SprogType(SprogType.UNKNOWN));
     }
 
     public SprogSystemConnectionMemo(SprogMode sm) {
-        super("S", SprogConnectionTypeList.SPROG); // default to S
-        sprogMode = sm;  // static
-        sprogVersion = new SprogVersion(new SprogType(SprogType.UNKNOWN));
-        register();
-        InstanceManager.store(this, SprogSystemConnectionMemo.class); // also register as specific type
-        InstanceManager.store(cf = new jmri.jmrix.sprog.swing.SprogComponentFactory(this),
-                jmri.jmrix.swing.ComponentFactory.class);
+        this(sm, new SprogType(SprogType.UNKNOWN));
     }
 
     public SprogSystemConnectionMemo(SprogMode sm, SprogType type) {
         super("S", SprogConnectionTypeList.SPROG); // default to S
+        init(sm, type);
+    }
+    
+    private void init(SprogMode sm, SprogType type) {
         sprogMode = sm;  // static
         sprogVersion = new SprogVersion(type);
+        cf = new jmri.jmrix.sprog.swing.SprogComponentFactory(this);
         register();
         InstanceManager.store(this, SprogSystemConnectionMemo.class); // also register as specific type
-        InstanceManager.store(cf = new jmri.jmrix.sprog.swing.SprogComponentFactory(this),
-                jmri.jmrix.swing.ComponentFactory.class);
+        InstanceManager.store(cf, ComponentFactory.class);
     }
 
     public SprogSystemConnectionMemo() {
@@ -78,7 +76,7 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     public SprogMode getSprogMode() {
         return sprogMode;
     }
-    private SprogMode sprogMode;// = SprogMode.SERVICE;
+    private SprogMode sprogMode;
 
     /**
      * Return the SPROG version object for this connection.
@@ -109,7 +107,7 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         return sprogVersion.sprogType;
     }
 
-    jmri.jmrix.swing.ComponentFactory cf = null;
+    ComponentFactory cf = null;
 
     /**
      * Provide access to the TrafficController for this particular connection.
@@ -158,6 +156,8 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     /**
      * Get the command station object associated with this connection.
+     * 
+     * @return the command station
      */
     public SprogCommandStation getCommandStation() {
         return commandStation;
@@ -203,29 +203,29 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T> T get(Class<?> T) {
+    public <T> T get(Class<?> type) {
         if (getDisabled()) {
             return null;
         }
-        if (T.equals(jmri.GlobalProgrammerManager.class)) {
+        if (type.equals(jmri.GlobalProgrammerManager.class)) {
             return (T) getProgrammerManager();
         }
-        if (T.equals(jmri.AddressedProgrammerManager.class)) {
+        if (type.equals(jmri.AddressedProgrammerManager.class)) {
             return (T) getProgrammerManager();
         }
-        if (T.equals(jmri.PowerManager.class)) {
+        if (type.equals(jmri.PowerManager.class)) {
             return (T) getPowerManager();
         }
-        if (T.equals(jmri.ThrottleManager.class)) {
+        if (type.equals(jmri.ThrottleManager.class)) {
             return (T) getThrottleManager();
         }
-        if (T.equals(jmri.TurnoutManager.class)) {
+        if (type.equals(jmri.TurnoutManager.class)) {
             return (T) getTurnoutManager();
         }
-        if (T.equals(jmri.CommandStation.class)) {
+        if (type.equals(jmri.CommandStation.class)) {
             return (T) getCommandStation();
         }
-        return super.get(T);
+        return super.get(type);
     }
 
     /**
@@ -314,6 +314,11 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     @Override
+    public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
+        return new NamedBeanComparator<>();
+    }
+
+    @Override
     public void dispose() {
         st = null;
         InstanceManager.deregister(this, SprogSystemConnectionMemo.class);
@@ -326,7 +331,7 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     private SprogVersionQuery svq = null;
 
     /**
-     * Return an SprogVersionQuery object for this connection.
+     * @return a SprogVersionQuery object for this connection
      */
     public SprogVersionQuery getSprogVersionQuery() {
         if (svq == null) {
@@ -335,6 +340,6 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         return svq;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SprogSystemConnectionMemo.class);
+    private static final Logger log = LoggerFactory.getLogger(SprogSystemConnectionMemo.class);
 
 }

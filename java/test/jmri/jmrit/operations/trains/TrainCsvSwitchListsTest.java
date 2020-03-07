@@ -1,12 +1,15 @@
 package jmri.jmrit.operations.trains;
 
 import java.io.File;
+
+import org.junit.Assert;
+import org.junit.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
-import org.junit.Assert;
-import org.junit.Test;
+import jmri.util.JUnitOperationsUtil;
 
 /**
  *
@@ -37,6 +40,8 @@ public class TrainCsvSwitchListsTest extends OperationsTestCase {
         File file = tcs.buildSwitchList(location);
         Assert.assertTrue(file.exists());
         
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TrainCsvSwitchListsTest.class);

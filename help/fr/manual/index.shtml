@@ -13,11 +13,12 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <!--#include virtual="Sidebar" -->
 
-<div id="mainContent"><a name="Top"></a>
-
+<div id="mainContent">
+	<div>
+		<a name="Top"></a>
 <h1>Manuels JMRI&#174;</h1>
 
 <table border="0">
@@ -200,7 +201,7 @@ Il contient <a href="../html/apps/index.shtml">des applications modulaires</a> f
 	<li>Commande des signaux sur le r&#233;seau (tous les modules)</li>
 	<li>Commande &#233;clairage et son dans la pi&#232;ce, et ainsi de suite (<a href="../html/tools/Audio.shtml">SoundPro&trade;</a>)</li>
 	</ul>
-<p>Si ceci est votre premi&#232;re visite de notre manuel, nous sugg&#233;rons que vous alliez visiter Decoder Pro&reg; &#224; <a href="http://jmri.org/help/en/html/apps/DecoderPro/Tour.shtml">http://jmri.org/help/en/html/apps/DecoderPro/Tour.shtml</a><br>
+<p>Si ceci est votre premi&#232;re visite de notre manuel, nous sugg&#233;rons que vous alliez visiter DecoderPro&reg; &#224; <a href="http://jmri.org/help/en/html/apps/DecoderPro/Tour.shtml">http://jmri.org/help/en/html/apps/DecoderPro/Tour.shtml</a><br>
 pour avoir une vue d'ensemble du domaine que nous couvrons.
 </p>
 <p>Toute cette capacit&#233; est contenue dans une seule <a href="http://jmri.org/download/index.shtml">installation</a>.</p>
@@ -214,9 +215,9 @@ La Version 3.10.1 demande Java 1.7 ou plus tard.<br>
 La Version 4.2 demande Java 1.8.</p>
 <p>Plus de renseignements sur<a href="https://www.java.com/en/download/help/sysreq.xml">les versions Java et les Exigences mat&#233;rielles</a>.<br>
 Obtenir la derni&#232;re version de Java en t&#233;l&#233;chargement libre l'adresse: 
-<a href="http://java.com/download/" target="_blank">java.com/download</a>.
+	<a href="http://java.com/download/" target="_blank">java.com/download</a>.</p>
 
-<!--#include virtual="/Footer" -->
+	<!--#include virtual="/Footer.shtml" -->
   </div><!-- closes #mainContent-->
  </div> <!-- closes #mBody-->
 </body>

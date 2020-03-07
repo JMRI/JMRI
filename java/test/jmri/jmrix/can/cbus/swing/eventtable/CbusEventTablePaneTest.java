@@ -6,8 +6,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
+import jmri.jmrix.can.cbus.CbusConfigurationManager;
 import jmri.jmrix.can.cbus.CbusPreferences;
-import jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel;
 import jmri.util.JmriJFrame;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -24,41 +24,13 @@ import org.netbeans.jemmy.operators.*;
  * @author Steve Young Copyright (C) 2019
  */
 public class CbusEventTablePaneTest extends jmri.util.swing.JmriPanelTest {
-
-    @Override
-    @Before
-    public void setUp() {
-        JUnitUtil.setUp();
-        panel = new CbusEventTablePane();
-        title = Bundle.getMessage("MenuItemEventTable");
-        helpTarget = "package.jmri.jmrix.can.cbus.swing.eventtable.EventTablePane";
-    }
-    
-    
-
-    @Override
-    @After
-    public void tearDown() {
-        JUnitUtil.tearDown();
-    }
-    
-    
+        
     @Test
     public void testInitComp() {
         
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
-        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
-        TrafficControllerScaffold tcis = new TrafficControllerScaffold();
-        memo.setTrafficController(tcis);
-        
-        jmri.InstanceManager.setDefault(jmri.jmrix.can.cbus.CbusPreferences.class,new CbusPreferences() );
-        
-        CbusEventTableDataModel m = new CbusEventTableDataModel(memo, 2,CbusEventTableDataModel.MAX_COLUMN);
-        jmri.InstanceManager.setDefault(CbusEventTableDataModel.class,m );
-        
-        CbusEventTablePane panel = new CbusEventTablePane();
-        panel.initComponents(memo);
+         
+        ((CbusEventTablePane)panel).initComponents(memo);
         
         Assert.assertNotNull("exists", panel);
         Assert.assertEquals("name with memo","CAN " + Bundle.getMessage("EventTableTitle"),panel.getTitle());
@@ -81,9 +53,13 @@ public class CbusEventTablePaneTest extends jmri.util.swing.JmriPanelTest {
         
         f.pack();
         f.setVisible(true);
-        
+       
+
+ 
         // Find new window by name
         JFrameOperator jfo = new JFrameOperator( panel.getTitle() );
+
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         
         Assert.assertTrue(getNewEventButtonEnabled(jfo));
         
@@ -93,20 +69,19 @@ public class CbusEventTablePaneTest extends jmri.util.swing.JmriPanelTest {
         
         new JTextFieldOperator(jfo,1).typeText("1");
         Assert.assertTrue(getNewEventButtonEnabled(jfo));
+
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         
         Assert.assertFalse(getClearFilterButtonEnabled(jfo));
         new JTextFieldOperator(jfo,0).typeText("1");
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         Assert.assertTrue(getClearFilterButtonEnabled(jfo));
         
         new JButtonOperator(jfo, Bundle.getMessage("ClearFilter")).doClick();  // NOI18N
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         Assert.assertFalse(getClearFilterButtonEnabled(jfo));
         
-        panel.dispose();
-        
-        panel = new CbusEventTablePane();
-        tcis = null;
-        memo = null;
-        
+        jfo.requestClose();
     }
     
     private boolean getNewEventButtonEnabled( JFrameOperator jfo ){
@@ -117,4 +92,40 @@ public class CbusEventTablePaneTest extends jmri.util.swing.JmriPanelTest {
         return ( new JButtonOperator(jfo,Bundle.getMessage("ClearFilter")).isEnabled() );
     }
 
+    private CanSystemConnectionMemo memo; 
+    private TrafficControllerScaffold tcis; 
+    private CbusConfigurationManager configM;
+
+    @Override
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
+        title = Bundle.getMessage("EventTableTitle");
+        helpTarget = "package.jmri.jmrix.can.cbus.swing.eventtable.EventTablePane";
+        memo = new CanSystemConnectionMemo();
+        tcis = new TrafficControllerScaffold();
+        memo.setTrafficController(tcis);
+        
+        configM = new CbusConfigurationManager(memo);
+        
+        jmri.InstanceManager.setDefault(CbusPreferences.class,new CbusPreferences() );
+        
+        panel = new CbusEventTablePane();
+    }
+    
+    
+
+    @Override
+    @After
+    public void tearDown() {
+        configM.dispose();
+        tcis.terminateThreads();
+        memo.dispose();
+        memo = null;
+        tcis = null;
+        JUnitUtil.resetWindows(false,false);
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        super.tearDown();
+    }    
+    
 }

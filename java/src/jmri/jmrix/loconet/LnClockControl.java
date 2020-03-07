@@ -58,18 +58,6 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
     /**
      * Create a ClockControl object for a LocoNet clock.
      *
-     * @deprecated 4.11.5
-     * @param sm the Slot Manager associated with this object
-     * @param tc the Traffic Controller associated with this object
-     */
-    @Deprecated // 4.11.5
-    public LnClockControl(SlotManager sm, LnTrafficController tc) {
-        this(sm, tc, null);
-    }
-
-    /**
-     * Create a ClockControl object for a LocoNet clock.
-     *
      * @param sm the Slot Manager associated with this object
      * @param tc the Traffic Controller associated with this object
      * @param pm the PowerManager associated with this object
@@ -268,7 +256,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
                 curFractionalMinutes = (int) CORRECTION - (int) (CORRECTION * frac_min);
                 setClock();
             }
-        } else if (setInternal && !correctFastClock && !synchronizeWithInternalClock) {
+        } else if (setInternal) {
             inSyncWithInternalFastClock = false;
             initiateRead();
         }

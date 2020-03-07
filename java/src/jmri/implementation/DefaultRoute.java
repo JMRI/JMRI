@@ -4,12 +4,13 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.CheckForNull;
-import javax.annotation.Nullable;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.NamedBeanHandle;
+import jmri.NamedBeanUsageReport;
 import jmri.Route;
 import jmri.Sensor;
 import jmri.Turnout;
@@ -31,22 +32,22 @@ import org.slf4j.LoggerFactory;
 public class DefaultRoute extends AbstractNamedBean implements Route, java.beans.VetoableChangeListener {
 
     /**
-     * Constructor for Route instance.
+     * Constructor for a Route instance with a given userName.
      *
      * @param systemName suggested system name
      * @param userName   provided user name
      */
     public DefaultRoute(String systemName, String userName) {
-        super(systemName.toUpperCase(), userName);
+        super(systemName, userName);
     }
 
     /**
-     * Constructor for SignalGroup instance.
+     * Constructor for a Route instance.
      *
      * @param systemName suggested system name
      */
     public DefaultRoute(String systemName) {
-        super(systemName.toUpperCase());
+        super(systemName);
         log.debug("default Route {} created", systemName);
     }
 
@@ -338,7 +339,6 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
         if (index != -1) {
             _outputTurnoutList.remove(index);
         }
-
     }
 
     /** {@inheritDoc} */
@@ -669,7 +669,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
 
     /** {@inheritDoc} */
     @Override
-    public void setLockControlTurnout(@Nullable String turnoutName) throws IllegalArgumentException {
+    public void setLockControlTurnout(@CheckForNull String turnoutName) throws IllegalArgumentException {
         mLockControlTurnout = turnoutName;
         if (mLockControlTurnout == null || mLockControlTurnout.isEmpty()) {
             mLockControlNamedTurnout = null;
@@ -992,7 +992,6 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
 
         checkTurnoutAlignment();
         // register for updates to the Output Turnouts
-
     }
 
     /**
@@ -1041,7 +1040,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
         }
 
         activatedRoute = false;
-        // remove control turnout if there's one 
+        // remove control turnout if there's one
         for (int k = 0; k < _controlSensorList.size(); k++) {
             _controlSensorList.get(k).removeListener();
         }
@@ -1052,7 +1051,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
             }
             mTurnoutListener = null;
         }
-        // remove lock control turnout if there's one 
+        // remove lock control turnout if there's one
         if (mLockTurnoutListener != null) {
             Turnout lockCtl = getCtlTurnout();
             if (lockCtl != null) {
@@ -1179,6 +1178,38 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
         }
     }
 
+    @Override
+    public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
+        List<NamedBeanUsageReport> report = new ArrayList<>();
+        if (bean != null) {
+            for (int i = 0; i < getNumOutputTurnouts(); i++) {
+                if (bean.equals(getOutputTurnout(i))) {
+                    report.add(new NamedBeanUsageReport("RouteTurnoutOutput"));  // NOI18N
+                }
+            }
+            for (int i = 0; i < getNumOutputSensors(); i++) {
+                if (bean.equals(getOutputSensor(i))) {
+                    report.add(new NamedBeanUsageReport("RouteSensorOutput"));  // NOI18N
+                }
+            }
+            for (int i = 0; i < _controlSensorList.size(); i++) {
+                if (bean.equals(getRouteSensor(i))) {
+                    report.add(new NamedBeanUsageReport("RouteSensorControl"));  // NOI18N
+                }
+            }
+            if (bean.equals(getTurnoutsAlgdSensor())) {
+                report.add(new NamedBeanUsageReport("RouteSensorAligned"));  // NOI18N
+            }
+            if (bean.equals(getCtlTurnout())) {
+                report.add(new NamedBeanUsageReport("RouteTurnoutControl"));  // NOI18N
+            }
+            if (bean.equals(getLockCtlTurnout())) {
+                report.add(new NamedBeanUsageReport("RouteTurnoutLock"));  // NOI18N
+            }
+        }
+        return report;
+    }
+
     private final static Logger log = LoggerFactory.getLogger(DefaultRoute.class);
 
     /**
@@ -1221,7 +1252,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
                 }
             }
 
-            // set sensors 
+            // set sensors
             for (int k = 0; k < r.getNumOutputSensors(); k++) {
                 Sensor t = r.getOutputSensor(k);
                 int state = r.getOutputSensorState(k);
@@ -1267,7 +1298,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
                 final Turnout setTurnout = t;
                 ThreadingUtil.runOnLayoutEventually(() -> {   // eventually, even though we have timing here, should be soon
                     setTurnout.setCommandedState(toState);
-                });         
+                });
                 try {
                     Thread.sleep(250 + delay);
                 } catch (InterruptedException e) {
@@ -1282,4 +1313,5 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
 
         private final static Logger log = LoggerFactory.getLogger(SetRouteThread.class);
     }
+
 }

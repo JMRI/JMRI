@@ -16,22 +16,27 @@
 import jmri
 
 #script to disable a sensor
-panelMenu = jmri.jmrit.display.PanelMenu.instance()
+panelMenu = jmri.InstanceManager.getDefault(jmri.jmrit.display.PanelMenu)
 layoutPanels = panelMenu.getLayoutEditorPanelList()
-layoutEditor = layoutPanels[0]
-for p in layoutEditor.sensorImage :
-    if p.getSensor().getUserName() == "Sensor1" :
-        p.setControlling(False)
-    if p.getSensor().getUserName() == "Sensor2" :
-        p.setControlling(False)
-
+if (len(layoutPanels) > 0) :
+    layoutEditor = layoutPanels[0]
+    for p in layoutEditor.sensorImage :
+        if p.getSensor().getUserName() == "Sensor1" :
+            p.setControlling(False)
+        if p.getSensor().getUserName() == "Sensor2" :
+            p.setControlling(False)
+else :
+    print ("No Layout Editor panel found")
 
 #script to enable a sensor
-panelMenu = jmri.jmrit.display.PanelMenu.instance()
+panelMenu = jmri.InstanceManager.getDefault(jmri.jmrit.display.PanelMenu)
 layoutPanels = panelMenu.getLayoutEditorPanelList()
-layoutEditor = layoutPanels[0]
-for p in layoutEditor.sensorImage :
-    if p.getSensor().getUserName() == "Sensor1" :
-        p.setControlling(True)
-    if p.getSensor().getUserName() == "Sensor2" :
-        p.setControlling(True)
+if (len(layoutPanels) > 0) :
+    layoutEditor = layoutPanels[0]
+    for p in layoutEditor.sensorImage :
+        if p.getSensor().getUserName() == "Sensor1" :
+            p.setControlling(True)
+        if p.getSensor().getUserName() == "Sensor2" :
+            p.setControlling(True)
+else :
+    print ("No Layout Editor panel found")

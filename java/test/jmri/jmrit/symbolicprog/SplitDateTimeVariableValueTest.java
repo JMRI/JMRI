@@ -79,7 +79,7 @@ public class SplitDateTimeVariableValueTest extends AbstractVariableValueTestBas
 
     @Override
     void setReadOnlyValue(VariableValue var, String val) {
-        ((SplitVariableValue) var).setValue(Integer.parseInt(val));
+        ((SplitVariableValue) var).setLongValue(Integer.parseInt(val));
     }
 
     @Override
@@ -331,11 +331,13 @@ public class SplitDateTimeVariableValueTest extends AbstractVariableValueTestBas
 
     // from here down is testing infrastructure
     @Before
+    @Override
     public void setUp() {
         super.setUp();
     }
 
     @After
+    @Override
     public void tearDown() {
         super.tearDown();
     }

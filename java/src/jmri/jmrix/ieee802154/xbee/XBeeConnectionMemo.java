@@ -91,11 +91,11 @@ public class XBeeConnectionMemo extends jmri.jmrix.ieee802154.IEEE802154SystemCo
         // the start the managers.
         _NodeManager = new XBeeNodeManager(cont);
 
-        setSensorManager(new XBeeSensorManager(cont, getSystemPrefix()));
+        setSensorManager(new XBeeSensorManager(this));
         jmri.InstanceManager.setSensorManager(getSensorManager());
-        setLightManager(new XBeeLightManager(cont, getSystemPrefix()));
+        setLightManager(new XBeeLightManager(this));
         jmri.InstanceManager.setLightManager(getLightManager());
-        setTurnoutManager(new XBeeTurnoutManager(cont, getSystemPrefix()));
+        setTurnoutManager(new XBeeTurnoutManager(this));
         jmri.InstanceManager.setTurnoutManager(getTurnoutManager());
     }
 

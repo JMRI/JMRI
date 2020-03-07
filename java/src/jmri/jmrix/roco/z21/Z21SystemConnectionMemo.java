@@ -1,9 +1,13 @@
 package jmri.jmrix.roco.z21;
 
+import java.util.Comparator;
 import java.util.ResourceBundle;
 import jmri.CommandStation;
 import jmri.InstanceManager;
+import jmri.NamedBean;
 import jmri.jmrix.lenz.XNetProgrammerManager;
+import jmri.util.NamedBeanComparator;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -181,7 +185,6 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         z21CommandStation.setLocoNetMessagesFlag(true);
         z21CommandStation.setLocoNetLocomotiveMessagesFlag(true);
         z21CommandStation.setLocoNetTurnoutMessagesFlag(true);
-        z21CommandStation.setLocoNetOccupancyMessagesFlag(true);
 
         // and forward the flags to the command station
         _tc.sendz21Message(Z21Message.getLanSetBroadcastFlagsRequestMessage(
@@ -214,6 +217,11 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.roco.z21.z21ActionListBundle");
+    }
+
+    @Override
+    public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
+        return new NamedBeanComparator<>();
     }
 
     /**

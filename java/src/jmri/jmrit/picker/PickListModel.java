@@ -1,6 +1,5 @@
 package jmri.jmrit.picker;
 
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -44,9 +43,10 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
+ * @param <E> the supported type of NamedBean
  * @author Pete Cressman Copyright (C) 2009, 2010
  */
-public abstract class PickListModel<E extends NamedBean> extends BeanTableDataModel<E> implements PropertyChangeListener {
+public abstract class PickListModel<E extends NamedBean> extends BeanTableDataModel<E> {
 
     protected ArrayList<E> _pickList;
     protected String _name;
@@ -130,7 +130,7 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
             }
         }
         List<String> systemNameList = getManager().getSystemNameList();
-        TreeSet<E> ts = new TreeSet<>(new NamedBeanComparator());
+        TreeSet<E> ts = new TreeSet<>(new NamedBeanComparator<>());
 
         Iterator<String> iter = systemNameList.iterator();
         while (iter.hasNext()) {
@@ -156,14 +156,14 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
     @Override
     @CheckForNull
     public E getBySystemName(@Nonnull String name) {
-        return getManager().getBeanBySystemName(name);
+        return getManager().getBySystemName(name);
     }
 
     /** {@inheritDoc} */
     @Override
     @CheckForNull
     protected E getByUserName(@Nonnull String name) {
-        return getManager().getBeanByUserName(name);
+        return getManager().getByUserName(name);
     }
 
     /** {@inheritDoc} */
@@ -199,7 +199,7 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
 
     /** {@inheritDoc} */
     @Override
-    public void clickOn(@Nonnull E t) {
+    public void clickOn(E t) {
     }
 
     /** {@inheritDoc} */

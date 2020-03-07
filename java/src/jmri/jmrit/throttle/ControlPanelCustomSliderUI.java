@@ -33,9 +33,11 @@ public class ControlPanelCustomSliderUI extends BasicSliderUI {
     
     @Override
     public void paint(Graphics g, JComponent c) {
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        super.paint(g, c);
+        if (g instanceof Graphics2D) {
+            Graphics2D g2d = (Graphics2D) g;
+            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            super.paint(g, c);
+        }
     }
 
     @Override
@@ -49,6 +51,9 @@ public class ControlPanelCustomSliderUI extends BasicSliderUI {
 
     @Override
     public void paintTrack(Graphics g) {
+        if (!(g instanceof Graphics2D)) {
+            return;
+        }
         Graphics2D g2d = (Graphics2D) g;
         Paint oldPaint = g2d.getPaint();
         // Track back rectangle
@@ -113,6 +118,9 @@ public class ControlPanelCustomSliderUI extends BasicSliderUI {
 
     @Override
     public void paintThumb(Graphics g) {
+        if (!(g instanceof Graphics2D)) {
+            return;
+        }
         Graphics2D g2d = (Graphics2D) g;
         int x1 = thumbRect.x + 2;
         int x2 = thumbRect.x + thumbRect.width - 2;

@@ -48,7 +48,6 @@ public class CbusLightTest extends jmri.implementation.AbstractLightTestBase {
             t = new CbusLight("ML",null,tcis);
             Assert.fail("Should have thrown an exception");
         } catch (NullPointerException e) {
-            Assert.assertTrue(true);
         }
     }
 
@@ -156,14 +155,13 @@ public class CbusLightTest extends jmri.implementation.AbstractLightTestBase {
     @Test
     public void threePartFail() {
         t = new CbusLight("ML","+7;-5;+11",tcis);
-        JUnitAppender.assertErrorMessageStartsWith("Can't parse CbusSensor system name");
+        JUnitAppender.assertErrorMessageStartsWith("Can't parse CbusLight system name");
     }
 
     @Test
     public void badSysNameErrorLog() {
-        
         t = new CbusLight("ML","+7;-5;+11",tcis);
-        JUnitAppender.assertErrorMessageStartsWith("Can't parse CbusSensor system name");
+        JUnitAppender.assertErrorMessageStartsWith("Can't parse CbusLight system name");
     }
 
     @Test
@@ -539,6 +537,7 @@ public class CbusLightTest extends jmri.implementation.AbstractLightTestBase {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         tcis = new TrafficControllerScaffold();
@@ -549,7 +548,9 @@ public class CbusLightTest extends jmri.implementation.AbstractLightTestBase {
     public void tearDown() {
         t.dispose();
         tcis=null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
         
     }
 

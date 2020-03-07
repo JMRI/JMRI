@@ -1,5 +1,7 @@
 package jmri.jmrix.lenz;
 
+import java.util.Locale;
+import javax.annotation.Nonnull;
 import jmri.Turnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,22 +19,21 @@ import org.slf4j.LoggerFactory;
 public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager implements XNetListener {
 
     // ctor has to register for XNet events
-    public XNetTurnoutManager(XNetTrafficController controller, String prefix) {
-        super();
-        tc = controller;
-        this.prefix = prefix;
+    public XNetTurnoutManager(XNetSystemConnectionMemo memo) {
+        super(memo);
+        tc = memo.getXNetTrafficController();
         tc.addXNetListener(XNetInterface.FEEDBACK, this);
     }
 
     protected XNetTrafficController tc = null;
-    protected String prefix = null;
 
     /**
-     * Return the system prefix for XpressNet.
+     * {@inheritDoc}
      */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    @Nonnull
+    public XNetSystemConnectionMemo getMemo() {
+        return (XNetSystemConnectionMemo) memo;
     }
 
     // XNet-specific methods
@@ -45,14 +46,14 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
      * @return null if the system name is not in a valid format
      */
     @Override
-    public Turnout createNewTurnout(String systemName, String userName) {
+    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
         // check if the output bit is available
-        int bitNum = XNetAddress.getBitFromSystemName(systemName, prefix);
+        int bitNum = XNetAddress.getBitFromSystemName(systemName, getSystemPrefix());
         if (bitNum == -1) {
             return (null);
         }
         // create the new Turnout object
-        Turnout t = new XNetTurnout(prefix, bitNum, tc);
+        Turnout t = new XNetTurnout(getSystemPrefix(), bitNum, tc);
         t.setUserName(userName);
         return t;
     }
@@ -80,7 +81,7 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
                         }
                         // reach here for switch command; make sure we know 
                         // about this one
-                        String s = prefix + typeLetter() + addr;
+                        String s = getSystemNamePrefix() + addr;
                         forwardMessageToTurnout(s,l);
                     }
                     if (addr % 2 != 0) {
@@ -90,7 +91,7 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
                         if ((a2 & 0x0c) != 0) {
                             // reach here for switch command; make sure we know 
                             // about this one
-                            String s = prefix + typeLetter() + (addr + 1);
+                            String s = getSystemNamePrefix() + (addr + 1);
                             forwardMessageToTurnout(s,l);
                         }
                     }
@@ -118,6 +119,7 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
      * represent the Turnout.CLOSED state.
      */
     @Override
+    @Nonnull
     public String getClosedText() {
         return Bundle.getMessage("TurnoutStateClosed");
     }
@@ -128,6 +130,7 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
      * represent the Turnout.THROWN state.
      */
     @Override
+    @Nonnull
     public String getThrownText() {
         return Bundle.getMessage("TurnoutStateThrown");
     }
@@ -146,18 +149,27 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
     }
 
     /**
-     * Validate Turnout system name format.
-     * Logging of handled cases no higher than WARN.
-     *
-     * @return VALID if system name has a valid format, else return INVALID
+     * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
+        return validateIntegerSystemNameFormat(name,
+                XNetAddress.MINSENSORADDRESS,
+                XNetAddress.MAXSENSORADDRESS,
+                locale);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return (XNetAddress.validSystemNameFormat(systemName, 'T', getSystemPrefix()));
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 
@@ -166,8 +178,7 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
     @Deprecated

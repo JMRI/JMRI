@@ -2,13 +2,8 @@ package jmri.implementation;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import jmri.DccLocoAddress;
-import jmri.IdTag;
-import jmri.IdTagListener;
-import jmri.InstanceManager;
-import jmri.LocoAddress;
-import jmri.PhysicalLocationReporter;
-import jmri.ReporterManager;
+
+import jmri.*;
 import jmri.util.PhysicalLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,21 +30,22 @@ public class AbstractIdTagReporter extends AbstractReporter
 
     @Override
     public void notify(IdTag id) {
-        log.debug("Notify: " + this.mSystemName);
+        log.debug("Notify: {}",mSystemName);
         if (id != null) {
-            log.debug("Tag: " + id);
-            AbstractIdTagReporter r;
-            if ((r = (AbstractIdTagReporter) id.getWhereLastSeen()) != null) {
-                log.debug("Previous reporter: " + r.mSystemName);
-                if (!(r.equals(this)) && r.getCurrentReport() == id) {
+            log.debug("Tag: {}",id);
+            Reporter r;
+            if ((r = id.getWhereLastSeen()) != null) {
+                log.debug("Previous reporter: {}",r.getSystemName());
+                if (!(r.equals(this)) && r.getCurrentReport() == id
+                   && (r instanceof IdTagListener)) {
                     log.debug("Notify previous");
-                    r.notify(null);
+                    ((IdTagListener)r).notify(null);
                 } else {
-                    log.debug("Current report was: " + r.getCurrentReport());
+                    log.debug("Current report was: {}",r.getCurrentReport());
                 }
             }
             id.setWhereLastSeen(this);
-            log.debug("Seen here: " + this.mSystemName);
+            log.debug("Seen here: {}",this.mSystemName);
         }
         setReport(id);
         setState(id != null ? IdTag.SEEN : IdTag.UNSEEN);
@@ -86,7 +82,9 @@ public class AbstractIdTagReporter extends AbstractReporter
         Pattern p = Pattern.compile("" + rm.getSystemPrefix() + rm.typeLetter() + "(\\d+)");
         Matcher m = p.matcher(cr.getTagID());
         if (m.find()) {
-            log.debug("Parsed address: " + m.group(1));
+            if(log.isDebugEnabled()) {
+                log.debug("Parsed address: {}", m.group(1));
+            }
             // I have no idea what kind of loco address an Ecos reporter uses,
             // so we'll default to DCC for now.
             return (new DccLocoAddress(Integer.parseInt(m.group(1)), LocoAddress.Protocol.DCC));

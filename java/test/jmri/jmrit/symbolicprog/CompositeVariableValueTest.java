@@ -353,11 +353,13 @@ public class CompositeVariableValueTest extends AbstractVariableValueTestBase {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         super.setUp();
     }
 
     @After
+    @Override
     public void tearDown() {
         super.tearDown();
     }

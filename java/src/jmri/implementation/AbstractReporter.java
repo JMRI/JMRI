@@ -19,11 +19,11 @@ import jmri.Reporter;
 public abstract class AbstractReporter extends AbstractNamedBean implements Reporter {
 
     public AbstractReporter(String systemName) {
-        super(systemName.toUpperCase());
+        super(systemName);
     }
 
     public AbstractReporter(String systemName, String userName) {
-        super(systemName.toUpperCase(), userName);
+        super(systemName, userName);
     }
 
     @Override

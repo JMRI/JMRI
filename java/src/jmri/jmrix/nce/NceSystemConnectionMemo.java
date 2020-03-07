@@ -1,8 +1,11 @@
 package jmri.jmrix.nce;
 
+import java.util.Comparator;
 import java.util.ResourceBundle;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
+import jmri.NamedBean;
+import jmri.util.NamedBeanComparator;
 
 /**
  * Lightweight class to denote that a system is active, and provide general
@@ -195,13 +198,13 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         powerManager = new jmri.jmrix.nce.NcePowerManager(this);
         InstanceManager.store(powerManager, jmri.PowerManager.class);
 
-        turnoutManager = new jmri.jmrix.nce.NceTurnoutManager(getNceTrafficController(), getSystemPrefix());
+        turnoutManager = new jmri.jmrix.nce.NceTurnoutManager(this);
         InstanceManager.setTurnoutManager(turnoutManager);
 
-        lightManager = new jmri.jmrix.nce.NceLightManager(getNceTrafficController(), getSystemPrefix());
+        lightManager = new jmri.jmrix.nce.NceLightManager(this);
         InstanceManager.setLightManager(lightManager);
 
-        sensorManager = new jmri.jmrix.nce.NceSensorManager(getNceTrafficController(), getSystemPrefix());
+        sensorManager = new jmri.jmrix.nce.NceSensorManager(this);
         InstanceManager.setSensorManager(sensorManager);
 
         throttleManager = new jmri.jmrix.nce.NceThrottleManager(this);
@@ -257,6 +260,11 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.nce.NceActionListBundle");
+    }
+
+    @Override
+    public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
+        return new NamedBeanComparator<>();
     }
 
     /**

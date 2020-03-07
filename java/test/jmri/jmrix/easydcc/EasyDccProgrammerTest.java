@@ -12,8 +12,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class EasyDccProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         
@@ -164,6 +162,7 @@ public class EasyDccProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         memo = new EasyDccSystemConnectionMemo("E", "EasyDCC Test");
@@ -174,6 +173,7 @@ public class EasyDccProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     }
 
     @After
+    @Override
     public void tearDown() {
         t.terminateThreads();
         programmer = p = null;

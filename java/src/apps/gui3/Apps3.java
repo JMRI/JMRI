@@ -17,7 +17,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.EventObject;
-import java.util.ResourceBundle;
 import javax.help.SwingHelpUtilities;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -337,7 +336,11 @@ public abstract class Apps3 extends AppsBase {
             // Apps.setConfigFilename() does not reset the system property
             System.setProperty("org.jmri.Apps.configFilename", Profile.CONFIG_FILENAME);
             Profile profile = ProfileManager.getDefault().getActiveProfile();
-            log.info("Starting with profile {}", profile.getId());
+            if (profile != null) {
+                log.info("Starting with profile {}", profile.getId());
+            } else {
+                log.info("Starting without a profile");
+            }
 
             // rapid language set; must follow up later with full setting as part of preferences
             apps.gui.GuiLafPreferencesManager.setLocaleMinimally(profile);
@@ -360,10 +363,10 @@ public abstract class Apps3 extends AppsBase {
         super.setAndLoadPreferenceFile();
         if (sharedConfig == null && configOK == true && configDeferredLoadOK == true) {
             // this was logged in the super method
-            Profile profile = ProfileManager.getDefault().getActiveProfile();
+            String name = ProfileManager.getDefault().getActiveProfileName();
             if (!GraphicsEnvironment.isHeadless()) {
                 JOptionPane.showMessageDialog(sp,
-                        Bundle.getMessage("SingleConfigMigratedToSharedConfig", profile.getName()),
+                        Bundle.getMessage("SingleConfigMigratedToSharedConfig", name),
                         jmri.Application.getApplicationName(),
                         JOptionPane.INFORMATION_MESSAGE);
             }

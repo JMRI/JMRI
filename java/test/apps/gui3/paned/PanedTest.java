@@ -51,15 +51,11 @@ public class PanedTest {
                 JUnitUtil.initDebugThrottleManager();
             }
 
-            @Override
-            protected void installShutDownManager() {
-                JUnitUtil.initShutDownManager();
-            }
         };
         Assert.assertNotNull(a);
         // shutdown the application
         AppsBase.handleQuit();
-        JUnitUtil.disposeFrame("Decoder Pro Wizard", true, true);
+        JUnitUtil.disposeFrame("DecoderPro Wizard", true, true);
     }
 
     // The minimal setup for log4J
@@ -73,6 +69,7 @@ public class PanedTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager();  // eventually want to test ShutDownTasks?
         JUnitUtil.resetApplication();
         JUnitUtil.tearDown();
     }

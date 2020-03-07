@@ -6,14 +6,13 @@ import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.util.Vector;
 import org.junit.Test;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Description:	JUnit tests for the QsiTrafficController class
+ * JUnit tests for the QsiTrafficController class.
  *
  * @author	Bob Jacobsen
  */
@@ -189,7 +188,12 @@ public class QsiTrafficControllerTest {
 
         @Override
         public String[] validBaudRates() {
-            return null;
+            return new String[] {};
+        }
+
+        @Override
+        public int[] validBaudNumbers() {
+            return new int[] {};
         }
 
         protected QsiPortControllerScaffold() throws Exception {

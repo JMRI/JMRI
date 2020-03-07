@@ -6,23 +6,23 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI: Applications</title><!-- Style -->
+  <title>JMRI: Applications</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  <link rel="stylesheet" type="text/css" href="/css/default.css" 
   media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="../../../../Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
       <!-- Page Body -->
 
@@ -46,7 +46,7 @@
         installation folder.</dd>
 
         <dt>
-          <a href="./PanelPro/PanelPro.shtml">PanelPro&trade;</a>
+          <a href="./PanelPro/index.shtml">PanelPro&trade;</a>
         </dt>
 
         <dd>Operating CRT based CTC control panels that reflect the
@@ -80,54 +80,31 @@
         installation folder.</dd>
       </dl>
 
-      <h2>Add-on Applications</h2>
-       Hobbyists have created applications that work with JMRI
-       to provide extra capabilities.
+      <h2>Additional Applications with JMRI Connections...</h2>
+       <p>Hobbyists have created applications that work with JMRI
+       to provide extra capabilities. In addition, some commercial vendors have
+       created applications that work with, add data to, or take data from JMRI</p>
+       <p>See the <a href="../../../../community/connections/CommunityConnectionsIndex.shtml">
+       community/connections directory</a> for a list and links.  
+       New applications can be added at any time!</p>
        
-       <dl>
-        <dt>
-          <a href=
-          "./ManifestCreator/index.shtml">Mainfest Creator</a>
-        </dt>
-
-        <dd>Manifest Creator is an Excel-based
-            add-on to JMRI that can provide
-            train manifests and switch lists
-            in a number of formats.</dd>
-            
-        <dt>
-          <a href=
-          "./TrainCrew/index.shtml">TrainCrew</a>
-        </dt>
-
-        <dd>TrainCrew allows engineers and conductors
-            using wireless throttles to add 
-            realism to their operations.</dd>
-            
-        <dt>
-          <a href=
-          "http://cats4ctc.wikidot.com">CATS</a>
-        </dt>
-
-        <dd>CATS provides a modern dispatching screen for 
-            your model railroad.</dd>
-            
-      </dl>
-
      
-      <h2>JMRI Tools</h2>
+      <h2>JMRI Features and Tools</h2>
 
       <ul>
-        <li>Common <a href="../tools/index.shtml">Tools and
-        features</a> to set up and operate your layout shared by
-        most JMRI applications.</li>
+        <li>JMRI provides many <a href="../tools/index.shtml">features and tools</a> 
+        to set up and operate your layout that are shared across most JMRI applications.  You can
+        find additional information about each by clicking through the links in the sidebar or the 
+        <a href="../tools/index.shtml">tools index page.</a></li>
 
-        <li><a href=
-        "../tools/index.shtml#systemSpecificTools">System-specific
-        Tools</a> are available in most of the JMRI applications
-        from their own menu when you have JMRI configured for that
-        System Connection.</li>
-      </ul><!--#include virtual="/Footer" -->
+        <li>In addition to the common tools, there are many <a href=
+        "../tools/index.shtml#systemSpecificTools">system-specific
+        tools</a> that are available within most of the JMRI applications.  You can find additional information
+        about each by clicking through the links in the <a href="../tools/index.shtml#systemSpecificTools"> system-specific
+        tools index page</a>.  The tools themselves are invoked from their own menu pulldowns within 
+        the JMRI applications when  you have JMRI configured for each specific System Connection.</li>
+        
+      </ul><!--#include virtual="../../../../Footer.shtml" -->
     </div><!-- close #mainContent -->
   </div><!-- close #mBody -->
 </body>

@@ -13,8 +13,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @author Paul Bender Copyright (C) 2015
  */
-public class RaspberryPiAdapter extends jmri.jmrix.AbstractPortController
-        implements jmri.jmrix.PortAdapter {
+public class RaspberryPiAdapter extends jmri.jmrix.AbstractPortController {
 
     // in theory gpio can be static, because there will only ever
     // be one, but the library handles the details that make it a

@@ -1,7 +1,5 @@
 package jmri;
 
-import java.util.Iterator;
-import java.util.List;
 import javax.annotation.Nonnull;
 import jmri.implementation.AbstractTurnout;
 
@@ -123,6 +121,7 @@ public abstract class TurnoutOperation implements Comparable<Object> {
      *
      * @return name
      */
+    @Nonnull
     public String getName() {
         return name;
     }

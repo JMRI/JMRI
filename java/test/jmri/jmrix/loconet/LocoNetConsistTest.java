@@ -1,6 +1,8 @@
 package jmri.jmrix.loconet;
 
 import jmri.DccLocoAddress;
+import jmri.InstanceManager;
+import jmri.jmrit.consisttool.ConsistPreferencesManager;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 
@@ -108,6 +110,9 @@ public class LocoNetConsistTest extends jmri.implementation.AbstractConsistTestB
     @Override
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
+        InstanceManager.setDefault(ConsistPreferencesManager.class,new ConsistPreferencesManager());
         // prepare an interface
         lnis = new LocoNetInterfaceScaffold();
         slotmanager = new SlotManager(lnis);

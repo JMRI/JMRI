@@ -87,7 +87,7 @@ public class ColorDialogTest {
         _cpe.putItem(_pos);
     }
 
-    class BlockedThread extends Thread implements Runnable {
+    class BlockedThread extends Thread {
         ColorDialog _cd;
         ControlPanelEditor _cpe;
         JComponent _target;

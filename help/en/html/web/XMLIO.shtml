@@ -16,19 +16,18 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
+
       <h1>JMRI: XML I/O Servlet - no longer
-      supported</h1><strong>The XML I/O protocol is deprecated and
-      support was removed from JMRI in the 3.11 development
+      supported</h1><strong>The XML I/O protocol was removed from JMRI in the 3.11 development
       cycle.</strong><br>
       Affected applications should be ported to using the <a href=
       "JsonServlet.shtml">JSON protocol</a>.<br>
@@ -280,7 +279,7 @@ value element with the proper value at that point.
         September/October 1995 (<a href=
         "http://rr.informatik.tu-freiberg.de/index.php?con=home&amp;sel=&amp;lang=eng&amp;js=1&amp;">project
         web site no longer online</a>).</li>
-      </ul><!--#include virtual="/Footer" -->
+      </ul><!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

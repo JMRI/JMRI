@@ -1,9 +1,10 @@
 package jmri.jmris.srcp;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Tests for the jmri.jmris.srcp.JmriSRCPSensorServer class
@@ -17,33 +18,38 @@ public class JmriSRCPSensorServerTest extends jmri.jmris.AbstractSensorServerTes
     /**
      * {@inhertDoc} 
      */
+    @Override
     public void checkErrorStatusSent(){
-         Assert.assertTrue("Active Message Sent", sb.toString().endsWith("499 ERROR unspecified error\n\r"));
+         assertThat(sb.toString()).endsWith("499 ERROR unspecified error\n\r").withFailMessage("Active Message Sent");
     }
 
     /**
      * {@inhertDoc} 
      */
+    @Override
     public void checkSensorActiveSent(){
-         Assert.assertTrue("Active Message Sent", sb.toString().endsWith("100 INFO 0 FB 1 1\n\r"));
+        assertThat(sb.toString()).endsWith("100 INFO 0 FB 1 1\n\r").withFailMessage("Active Message Sent");
     }
 
     /**
      * {@inhertDoc} 
      */
+    @Override
     public void checkSensorInActiveSent(){
-         Assert.assertTrue("Active Message Sent", sb.toString().endsWith("100 INFO 0 FB 1 0\n\r"));
+        assertThat(sb.toString()).endsWith("100 INFO 0 FB 1 0\n\r").withFailMessage("Active Message Sent");
     }
 
     /**
      * {@inhertDoc} 
      */
+    @Override
     public void checkSensorUnknownSent(){
-         Assert.assertTrue("Active Message Sent", sb.toString().endsWith("411 ERROR unknown value\n\r"));
+        assertThat(sb.toString()).endsWith("411 ERROR unknown value\n\r").withFailMessage("Active Message Sent");
+
     }
 
     // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -64,7 +70,7 @@ public class JmriSRCPSensorServerTest extends jmri.jmris.AbstractSensorServerTes
         ss = new JmriSRCPSensorServer(input, output);
     }
 
-    @After public void tearDown() throws Exception {
+    @AfterEach public void tearDown() throws Exception {
         ss.dispose();
         ss = null;
         sb = null;

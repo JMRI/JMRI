@@ -2,8 +2,6 @@ package jmri.jmrit.symbolicprog;
 
 import java.util.HashMap;
 import javax.swing.JLabel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Like {@link SplitVariableValue}, except that the string representation is in
@@ -11,8 +9,8 @@ import org.slf4j.LoggerFactory;
  * <br><br>
  * All the attributes of {@link SplitVariableValue} are inherited.
  * <br><br>
- * An optional {@code case} attribute can be used to force the hex characters
- * to display in {@code "upper"} or {@code "lower"} case.
+ * An optional {@code case} attribute can be used to force the hex characters to
+ * display in {@code "upper"} or {@code "lower"} case.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2004, 2013, 2014
  * @author Dave Heap Copyright (C) 2016
@@ -36,6 +34,12 @@ public class SplitHexVariableValue extends SplitVariableValue {
             HashMap<String, CvValue> v, JLabel status, String stdname,
             String pSecondCV, int pFactor, int pOffset, String uppermask, String extra1, String extra2, String extra3, String extra4) {
         _case = extra1;
+        if (extra3 != null) {
+            _minVal = getValueFromText(extra3);
+        }
+        if (extra4 != null) {
+            _maxVal = getValueFromText(extra4);
+        }
     }
 
     @Override
@@ -56,5 +60,4 @@ public class SplitHexVariableValue extends SplitVariableValue {
 
     // initialize logging
 //    private final static Logger log = LoggerFactory.getLogger(SplitHexVariableValue.class);
-
 }

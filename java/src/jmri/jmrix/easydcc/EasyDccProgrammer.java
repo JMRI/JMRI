@@ -229,14 +229,6 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
         notifyProgListenerEnd(temp,value,status);
     }
 
-    /**
-     * @deprecated since 4.9.5
-     */
-    @Deprecated
-    protected EasyDccTrafficController controller() {
-        return tc;
-    }
-
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EasyDccProgrammer.class);
 
 }

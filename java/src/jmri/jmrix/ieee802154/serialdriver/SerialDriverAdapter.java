@@ -16,7 +16,7 @@ import purejavacomm.SerialPort;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Provide access to IEEE802.15.4 devices via a serial comm port.
+ * Provide access to IEEE802.15.4 devices via a serial com port.
  * Derived from the Oaktree code.
  *
  * @author Bob Jacobsen Copyright (C) 2006, 2007, 2008
@@ -25,7 +25,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * @author kcameron Copyright (C) 2011
  * @author Paul Bender Copyright (C) 2013
  */
-public class SerialDriverAdapter extends IEEE802154PortController implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends IEEE802154PortController {
 
     protected SerialPort activeSerialPort = null;
 
@@ -155,7 +155,7 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
      */
     protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
-        int baud = 9600;  // default, but also defaulted in the initial value of selectedSpeed
+        int baud = currentBaudNumber(mBaudRate);
 
         activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
                 SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
@@ -165,19 +165,20 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
         configureLeadsAndFlowControl(activeSerialPort, flow);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] validBaudRates() {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
     /**
-     * Set the baud rate.
+     * {@inheritDoc}
      */
     @Override
-    public void configureBaudRate(String rate) {
-        log.debug("configureBaudRate: {}", rate);
-        selectedSpeed = rate;
-        super.configureBaudRate(rate);
+    public int[] validBaudNumbers() {
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 
     String[] stdOption1Values = new String[]{"CM11", "CP290", "Insteon 2412S"}; // NOI18N
@@ -187,23 +188,26 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
     }
 
     /**
-     * Option 1 not used, so return a null string.
+     * Get a String that says what Option 1 represents.
      *
      * @return fixed string 'Adapter'
      */
     public String option1Name() {
-        return "Adapter";
+        return "Adapter"; // NOI18N
     }
 
     private String[] validSpeeds = new String[]{Bundle.getMessage("BaudAutomatic")};
-    @SuppressWarnings("unused")
     private int[] validSpeedValues = new int[]{9600};
-    @SuppressWarnings("unused")
-    private String selectedSpeed = validSpeeds[0];
+
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
+    }
 
     /**
      * Get an array of valid values for "option 2"; used to display valid
-     * options. May not be null, but may have zero entries
+     * options. May not be null, but may have zero entries.
+     *
      * @return empty string array
      */
     public String[] validOption2() {
@@ -211,7 +215,7 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
     }
 
     /**
-     * Get a String that says what Option 2 represents May be an empty string,
+     * Get a String that says what Option 2 represents. May be an empty string,
      * but will not be null.
      *
      * @return empty string

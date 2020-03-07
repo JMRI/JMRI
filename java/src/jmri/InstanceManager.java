@@ -560,71 +560,6 @@ public final class InstanceManager {
     }
 
     /* ****************************************************************************
-     *                   Primary Accessors - Deprecated for removal
-     *
-     *                      Please don't create any more of these
-     * ****************************************************************************/
-    /**
-     * Deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default block manager. May not be the only instance. 
-     * @deprecated 4.5.1 to be removed in 4.17.1
-     */
-    @Deprecated
-    static public BlockManager blockManagerInstance() {
-        jmri.util.Log4JUtil.deprecationWarning(log, "blockManagerInstance");        
-        return getDefault(BlockManager.class);
-    }
-
-    /**
-     * Deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default power manager. May not be the only instance.
-     * @deprecated 4.5.1 to be removed in 4.17.1
-     */
-    @Deprecated
-    static public PowerManager powerManagerInstance() {
-        jmri.util.Log4JUtil.deprecationWarning(log, "powerManagerInstance");        
-        return getDefault(PowerManager.class);
-    }
-
-    /**
-     * Deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default reporter manager. May not be the only instance.
-     * @deprecated 4.5.1 to be removed in 4.17.1
-     */
-    @Deprecated
-    static public ReporterManager reporterManagerInstance() {
-        jmri.util.Log4JUtil.deprecationWarning(log, "reporterManagerInstance");        
-        return getDefault(ReporterManager.class);
-    }
-
-    /**
-     * Deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default route manager. May not be the only instance.
-     * @deprecated 4.5.1 to be removed in 4.17.1
-     */
-    @Deprecated
-    static public RouteManager routeManagerInstance() {
-        jmri.util.Log4JUtil.deprecationWarning(log, "routeManagerInstance");        
-        return getDefault(RouteManager.class);
-    }
-
-    /**
-     * Deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default section manager. May not be the only instance.
-     * @deprecated 4.5.1 to be removed in 4.17.1
-     */
-    @Deprecated
-    static public SectionManager sectionManagerInstance() {
-        jmri.util.Log4JUtil.deprecationWarning(log, "sectionManagerInstance");        
-        return getDefault(SectionManager.class);
-    }
-
-    /* ****************************************************************************
      *                   Old Style Setters - To be migrated
      *
      *                   Migrate away the JMRI uses of these.
@@ -638,8 +573,8 @@ public final class InstanceManager {
     static public void setTurnoutManager(TurnoutManager p) {
         log.debug(" setTurnoutManager");
         TurnoutManager apm = getDefault(TurnoutManager.class);
-        if (apm instanceof jmri.managers.AbstractProxyManager<?>) { // <?> due to type erasure
-            ((jmri.managers.AbstractProxyManager<Turnout>) apm).addManager(p);
+        if (apm instanceof ProxyManager<?>) { // <?> due to type erasure
+            ((ProxyManager<Turnout>) apm).addManager(p);
         } else {
             log.error("Incorrect setup: TurnoutManager default isn't an AbstractProxyManager<Turnout>");
         }
@@ -647,16 +582,6 @@ public final class InstanceManager {
 
     static public void setThrottleManager(ThrottleManager p) {
         store(p, ThrottleManager.class);
-    }
-
-    /**
-     * @param p CommandStation to make default
-     * @deprecated Since 4.9.5, use
-     * {@link #store(java.lang.Object,java.lang.Class)} directly.
-     */
-    @Deprecated
-    static public void setCommandStation(CommandStation p) {
-        store(p, CommandStation.class);
     }
 
     /**
@@ -678,22 +603,11 @@ public final class InstanceManager {
     static public void setLightManager(LightManager p) {
         log.debug(" setLightManager");
         LightManager apm = getDefault(LightManager.class);
-        if (apm instanceof jmri.managers.AbstractProxyManager<?>) { // <?> due to type erasure
-            ((jmri.managers.AbstractProxyManager<Light>) apm).addManager(p);
+        if (apm instanceof ProxyManager<?>) { // <?> due to type erasure
+            ((ProxyManager<Light>) apm).addManager(p);
         } else {
             log.error("Incorrect setup: LightManager default isn't an AbstractProxyManager<Light>");
         }
-    }
-
-    /**
-     * @param p CommandStation to make default
-     * @deprecated Since 4.9.5, use
-     * {@link #store(java.lang.Object,java.lang.Class)} directly.
-     */
-    @Deprecated
-    static public void setAddressedProgrammerManager(AddressedProgrammerManager p) {
-        jmri.util.Log4JUtil.deprecationWarning(log, "setAddressedProgrammerManager");        
-        store(p, AddressedProgrammerManager.class);
     }
 
     // Needs to have proxy manager converted to work
@@ -704,8 +618,8 @@ public final class InstanceManager {
     static public void setReporterManager(ReporterManager p) {
         log.debug(" setReporterManager");
         ReporterManager apm = getDefault(ReporterManager.class);
-        if (apm instanceof jmri.managers.AbstractProxyManager<?>) { // <?> due to type erasure
-            ((jmri.managers.AbstractProxyManager<Reporter>) apm).addManager(p);
+        if (apm instanceof ProxyManager<?>) { // <?> due to type erasure
+            ((ProxyManager<Reporter>) apm).addManager(p);
         } else {
             log.error("Incorrect setup: ReporterManager default isn't an AbstractProxyManager<Reporter>");
         }
@@ -719,8 +633,8 @@ public final class InstanceManager {
     static public void setSensorManager(SensorManager p) {
         log.debug(" setSensorManager");
         SensorManager apm = getDefault(SensorManager.class);
-        if (apm instanceof jmri.managers.AbstractProxyManager<?>) { // <?> due to type erasure
-            ((jmri.managers.AbstractProxyManager<Sensor>) apm).addManager(p);
+        if (apm instanceof ProxyManager<?>) { // <?> due to type erasure
+            ((ProxyManager<Sensor>) apm).addManager(p);
         } else {
             log.error("Incorrect setup: SensorManager default isn't an AbstractProxyManager<Sensor>");
         }
@@ -734,8 +648,8 @@ public final class InstanceManager {
     static public void setIdTagManager(IdTagManager p) {
         log.debug(" setIdTagManager");
         IdTagManager apm = getDefault(IdTagManager.class);
-        if (apm instanceof jmri.managers.AbstractProxyManager<?>) { // <?> due to type erasure
-            ((jmri.managers.AbstractProxyManager<IdTag>) apm).addManager(p);
+        if (apm instanceof ProxyManager<?>) { // <?> due to type erasure
+            ((ProxyManager<IdTag>) apm).addManager(p);
         } else {
             log.error("Incorrect setup: IdTagManager default isn't an AbstractProxyManager<IdTag>");
         }
@@ -809,8 +723,8 @@ public final class InstanceManager {
         log.debug("Clearing InstanceManager");
         if (traceFileActive) traceFileWriter.println("clearAll");
         
-        // replace the instance manager, so future calls will invoke the new one
-        LazyInstanceManager.instanceManager = new InstanceManager();
+        // reset the instance manager, so future calls will invoke the new one
+        LazyInstanceManager.resetInstanceManager();
         
         // continue to clean up this one
         new HashSet<>(managerLists.keySet()).forEach((type) -> {
@@ -851,11 +765,31 @@ public final class InstanceManager {
 
     /**
      * A class for lazy initialization of the singleton class InstanceManager.
-     * https://www.ibm.com/developerworks/library/j-jtp03304/
+     *
+     * See https://www.ibm.com/developerworks/library/j-jtp03304/
      */
     private static class LazyInstanceManager {
 
-        public static InstanceManager instanceManager = new InstanceManager();
+        private static InstanceManager instanceManager = new InstanceManager();
+
+        /**
+         * Get the InstanceManager.
+         */
+        public static InstanceManager getInstanceManager() {
+            return instanceManager;
+        }
+
+        /**
+         * Replace the (static) InstanceManager.
+         */
+        public synchronized static void resetInstanceManager() {
+            try {
+                instanceManager = new InstanceManager();
+            } catch (Exception e) {
+                log.error("can't create new InstanceManager");
+            }
+        }
+
     }
 
     /**
@@ -867,7 +801,7 @@ public final class InstanceManager {
      */
     @Nonnull
     public static InstanceManager getDefault() {
-        return LazyInstanceManager.instanceManager;
+        return LazyInstanceManager.getInstanceManager();
     }
 
     // support checking for overlapping intialization

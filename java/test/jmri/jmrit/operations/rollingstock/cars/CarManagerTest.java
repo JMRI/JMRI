@@ -1,6 +1,10 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.util.List;
+
+import org.junit.Assert;
+import org.junit.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
@@ -8,8 +12,7 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.trains.Train;
-import org.junit.Assert;
-import org.junit.Test;
+import jmri.util.JUnitOperationsUtil;
 
 /**
  * Tests for the Operations RollingStock Cars CarManager class Last manually
@@ -72,6 +75,8 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("4th car in list by id", c3, carList.get(3));
         Assert.assertEquals("5th car in list by id", c4, carList.get(4));
         Assert.assertEquals("6th car in list by id", c5, carList.get(5));
+        
+
     }
 
     @Test
@@ -97,6 +102,8 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("4th car in list by built", c4, carList.get(3));
         Assert.assertEquals("5th car in list by built", c6, carList.get(4));
         Assert.assertEquals("6th car in list by built", c1, carList.get(5));
+        
+
     }
 
     @Test
@@ -122,6 +129,8 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("4th car in list by move", c2, carList.get(3));
         Assert.assertEquals("5th car in list by move", c6, carList.get(4));
         Assert.assertEquals("6th car in list by move", c3, carList.get(5));
+        
+
     }
 
     @Test
@@ -139,6 +148,8 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("4th car in list by owner", c4, carList.get(3));
         Assert.assertEquals("5th car in list by owner", c2, carList.get(4));
         Assert.assertEquals("6th car in list by owner", c1, carList.get(5));
+        
+
     }
 
     @Test
@@ -163,6 +174,8 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("4th car in list by color", c5, carList.get(3));
         Assert.assertEquals("5th car in list by color", c6, carList.get(4));
         Assert.assertEquals("6th car in list by color", c3, carList.get(5));
+        
+
     }
 
     @Test
@@ -180,6 +193,8 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("4th car in list by road name", c3, carList.get(3));
         Assert.assertEquals("5th car in list by road name", c4, carList.get(4));
         Assert.assertEquals("6th car in list by road name", c5, carList.get(5));
+        
+
     }
 
     @Test
@@ -197,6 +212,8 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("4th car in list by load", c1, carList.get(3));
         Assert.assertEquals("5th car in list by load", c2, carList.get(4));
         Assert.assertEquals("6th car in list by load", c3, carList.get(5));
+        
+
     }
 
     @Test
@@ -229,6 +246,8 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("4th car in list by kernel", c2, carList.get(3));
         Assert.assertEquals("5th car in list by kernel", c6, carList.get(4));
         Assert.assertEquals("6th car in list by kernel", c1, carList.get(5));
+        
+
     }
 
     @Test
@@ -245,6 +264,8 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("4th car in list by location", c2, carList.get(3));
         Assert.assertEquals("5th car in list by location", c4, carList.get(4));
         Assert.assertEquals("6th car in list by location", c3, carList.get(5));
+        
+
     }
 
     @Test
@@ -262,6 +283,8 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("4th car in list by destination", c6, carList.get(3));
         Assert.assertEquals("5th car in list by destination", c3, carList.get(4));
         Assert.assertEquals("6th car in list by destination", c4, carList.get(5));
+        
+
     }
 
     @Test
@@ -299,6 +322,8 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("4th car in list by train", c2, carList.get(3));
         Assert.assertEquals("5th car in list by train", c3, carList.get(4));
         Assert.assertEquals("6th car in list by train", c1, carList.get(5));
+        
+
     }
 
     @Test
@@ -335,6 +360,8 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("1st car in list by t3", c5, carList.get(0));
         Assert.assertEquals("2nd car in list by t3", c2, carList.get(1));
         Assert.assertEquals("3rd car in list by t3", c3, carList.get(2));
+        
+
     }
 
     @Test
@@ -370,6 +397,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("1st car in list by t3 by dest", c2, carList.get(0));
         Assert.assertEquals("2nd car in list by t3 by dest", c3, carList.get(1));
         Assert.assertEquals("3rd car in list by t3 by dest", c5, carList.get(2));
+
 
     }
 
@@ -435,6 +463,8 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("1st car in list available for t3", c4, carList.get(0));
         Assert.assertEquals("2nd car in list available for t3", c2, carList.get(1));
         Assert.assertEquals("3rd car in list available for t3", c3, carList.get(2));
+        
+
     }
 
     @Test
@@ -452,6 +482,8 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("4th car in list by number", c2, carList.get(3));
         Assert.assertEquals("5th car in list by number", c3, carList.get(4));
         Assert.assertEquals("6th car in list by number", c4, carList.get(5));
+        
+
     }
 
     @Test
@@ -467,6 +499,8 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("find c4 by road and number", c4, manager.getByRoadAndNumber("CP", "3-1"));
         Assert.assertEquals("find c5 by road and number", c5, manager.getByRoadAndNumber("PC", "2"));
         Assert.assertEquals("find c6 by road and number", c6, manager.getByRoadAndNumber("AA", "1"));
+        
+
     }
 
     @Test
@@ -484,6 +518,8 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("4th car in list by rfid", c3, carList.get(3));
         Assert.assertEquals("5th car in list by rfid", c6, carList.get(4));
         Assert.assertEquals("6th car in list by rfid", c1, carList.get(5));
+        
+
     }
 
     @Test
@@ -499,6 +535,8 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("find c4 by rfid", c4, manager.getByRfid("asd"));
         Assert.assertEquals("find c5 by rfid", c5, manager.getByRfid("93F"));
         Assert.assertEquals("find c6 by rfid", c6, manager.getByRfid("B12"));
+        
+
     }
 
     @Test
@@ -524,6 +562,8 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("4th car in list by type", c2, carList.get(3));
         Assert.assertEquals("5th car in list by type", c6, carList.get(4));
         Assert.assertEquals("6th car in list by type", c1, carList.get(5));
+        
+
     }
 
     @Test
@@ -574,6 +614,8 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("4th car in list by move date", c1, carList.get(3));
         Assert.assertEquals("5th car in list by move date", c3, carList.get(4));
         Assert.assertEquals("6th car in list by move date", c5, carList.get(5));
+        
+
     }
 
     @Test
@@ -624,6 +666,8 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("4th car in list by move date", c1, carList.get(3));
         Assert.assertEquals("5th car in list by move date", c3, carList.get(4));
         Assert.assertEquals("6th car in list by move date", c5, carList.get(5));
+        
+
     }
 
     @Test
@@ -637,6 +681,8 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("Number of cabooses", 2, cabooseRoads.size());
         Assert.assertEquals("1st road", "AA", cabooseRoads.get(0));
         Assert.assertEquals("2nd road", "CP", cabooseRoads.get(1));
+        
+
     }
 
     @Test
@@ -649,6 +695,8 @@ public class CarManagerTest extends OperationsTestCase {
         List<String> fredRoads = manager.getFredRoadNames();
         Assert.assertEquals("Number of FRED", 1, fredRoads.size());
         Assert.assertEquals("1st road", "PC", fredRoads.get(0));
+        
+
     }
 
     @Test
@@ -661,6 +709,8 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertTrue("c1 in car list at location", carList.contains(c1));
         Assert.assertTrue("c2 in car list at location", carList.contains(c2));
         Assert.assertFalse("c3 not in car list at location", carList.contains(c3));
+        
+
     }
 
     @Test
@@ -674,6 +724,8 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertTrue("c1 in car list on track", carList.contains(c1));
         Assert.assertFalse("c2 not in car list on track", carList.contains(c2));
         Assert.assertFalse("c3 not in car list on track", carList.contains(c3));
+        
+
     }
 
     private void resetCarManager() {
@@ -793,6 +845,5 @@ public class CarManagerTest extends OperationsTestCase {
 
         // car with FRED
         c5.setFred(true);
-
     }
 }

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import jmri.BeanSetting;
-import jmri.InstanceManager;
 import jmri.Path;
 import jmri.Turnout;
 import org.slf4j.Logger;
@@ -662,7 +661,7 @@ public class LayoutEditorAuxTools {
                             curConnection = lt.getConnectA();
                             typeCurConnection = LayoutTrack.TRACK;
                         }
-                    } else if (typeCurConnection == LayoutTrack.TURNOUT_D) {
+                    } else { // typeCurConnection == LayoutTrack.TURNOUT_D
                         // entry is at continuing track of turnout
                         if (lt.getLayoutBlockD() != layoutBlock) {
                             // cross-over block different, end of current block

@@ -1,6 +1,5 @@
 package jmri.jmrix.powerline.swing.serialmon;
 
-import java.util.ResourceBundle;
 import jmri.jmrix.powerline.SerialListener;
 import jmri.jmrix.powerline.SerialMessage;
 import jmri.jmrix.powerline.SerialReply;
@@ -22,7 +21,7 @@ public class SerialMonPane extends jmri.jmrix.AbstractMonPane implements SerialL
 
     @Override
     public String getHelpTarget() {
-        return null;
+        return "package.jmri.jmrix.powerline.serialmon.SerialMonFrame";
     }
 
     @Override

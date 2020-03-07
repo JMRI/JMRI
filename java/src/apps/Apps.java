@@ -1,7 +1,6 @@
 package apps;
 
 import apps.gui3.tabbedpreferences.TabbedPreferences;
-import apps.gui3.tabbedpreferences.TabbedPreferencesFrame;
 import apps.gui3.tabbedpreferences.TabbedPreferencesAction;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -11,7 +10,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GraphicsEnvironment;
-import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.AWTEventListener;
 import java.awt.event.ActionEvent;
@@ -55,7 +53,6 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.JmriPlugin;
 import jmri.ShutDownManager;
-import jmri.UserPreferencesManager;
 import jmri.implementation.AbstractShutDownTask;
 import jmri.implementation.JmriConfigurationManager;
 import jmri.jmrit.DebugMenu;
@@ -77,7 +74,6 @@ import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.JmrixConfigPane;
-import jmri.managers.DefaultShutDownManager;
 import jmri.plaf.macosx.Application;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
@@ -192,17 +188,17 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             configFilename = FileUtil.getProfilePath() + Profile.CONFIG_FILENAME;
             System.setProperty("org.jmri.Apps.configFilename", Profile.CONFIG_FILENAME);
             Profile profile = ProfileManager.getDefault().getActiveProfile();
-            log.info("Starting with profile {}", profile.getId());
+            if (profile != null) {
+                log.info("Starting with profile {}", profile.getId());
+            } else {
+                log.info("Starting without a profile");
+            }
             
             // rapid language set; must follow up later with full setting as part of preferences
             apps.gui.GuiLafPreferencesManager.setLocaleMinimally(profile);
         } catch (IOException ex) {
             log.info("Profiles not configurable. Using fallback per-application configuration. Error: {}", ex.getMessage());
         }
-
-        // install shutdown manager
-        log.trace("about to install ShutDownManager");
-        InstanceManager.setDefault(ShutDownManager.class, new DefaultShutDownManager());
 
         // add the default shutdown task to save blocks
         // as a special case, register a ShutDownTask to write out blocks
@@ -530,7 +526,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             operationsMenu(menuBar, wi);
         }
         systemsMenu(menuBar, wi);
-        scriptMenu(menuBar, wi);
         debugMenu(menuBar, wi);
         menuBar.add(new WindowMenu(wi));
         helpMenu(menuBar, wi);
@@ -681,13 +676,20 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
     }
 
+    /**
+     * Add a script menu to a window menu bar.
+     * 
+     * @param menuBar the menu bar to add the script menu to
+     * @param wi the window interface containing menuBar
+     * @deprecated since 4.17.5 without direct replacement; appears
+     * to have been empty method since 1.2.3
+     */
+    @Deprecated
     protected void scriptMenu(JMenuBar menuBar, WindowInterface wi) {
         // temporarily remove Scripts menu; note that "Run Script"
         // has been added to the Panels menu
         // JMenu menu = new JMenu("Scripts");
         // menuBar.add(menu);
-        // menu.add(new jmri.jmrit.automat.JythonAutomatonAction("Jython script", this));
-        // menu.add(new jmri.jmrit.automat.JythonSigletAction("Jython siglet", this));
     }
 
     protected void developmentMenu(JMenuBar menuBar, WindowInterface wi) {
@@ -797,7 +799,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         } else {
             cs.setForeground(Color.red);
             String cf = Bundle.getMessage("ConnectionFailed", name, conn.name(), conn.getInfo());
-            cf = cf.toUpperCase();
             cs.setText(cf);
         }
 
@@ -838,8 +839,8 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         pane2.add(new JLabel(line2()));
         pane2.add(new JLabel(line3()));
 
-        Profile profile = ProfileManager.getDefault().getActiveProfile();
-        pane2.add(new JLabel(Bundle.getMessage("ActiveProfile", profile.getName())));
+        String name = ProfileManager.getDefault().getActiveProfileName();
+        pane2.add(new JLabel(Bundle.getMessage("ActiveProfile", name)));
 
         // add listener for Com port updates
         ConnectionStatus.instance().addPropertyChangeListener(this);

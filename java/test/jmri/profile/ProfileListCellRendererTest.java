@@ -34,6 +34,7 @@ public class ProfileListCellRendererTest {
         list.setToolTipText(null);
         ProfileListCellRenderer instance = new ProfileListCellRenderer();
         Profile activeProfile = ProfileManager.getDefault().getActiveProfile();
+        Assert.assertNotNull(activeProfile); // this tests a non-null active profile
         String noProfileMessage = Bundle.getMessage("ProfileManagerDialog.profiles.toolTipText");
         String activeProfileMessage = Bundle.getMessage("ProfileTableModel.toolTip", activeProfile.getName(), activeProfile.getPath(), activeProfile.getId(), "");
         // null profile, selected index

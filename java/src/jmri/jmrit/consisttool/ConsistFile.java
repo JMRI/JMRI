@@ -1,12 +1,11 @@
 package jmri.jmrit.consisttool;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.NoSuchElementException;
+import java.util.*;
+
 import jmri.Consist;
 import jmri.ConsistManager;
 import jmri.LocoAddress;
@@ -14,6 +13,7 @@ import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.roster.Roster;
+import jmri.jmrit.roster.RosterConfigManager;
 import jmri.util.FileUtil;
 import org.jdom2.Attribute;
 import org.jdom2.Document;
@@ -30,15 +30,25 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2008
  */
-public class ConsistFile extends XmlFile {
+public class ConsistFile extends XmlFile implements PropertyChangeListener {
+
+    private static final String CONSIST = "consist"; //NOI18N
+    private static final String CONSISTID = "id"; //NOI18N
+    private static final String CONSISTNUMBER = "consistNumber"; //NOI18N
+    private static final String DCCLOCOADDRESS = "dccLocoAddress"; //NOI18N
+    private static final String LONGADDRESS = "longAddress"; //NOI18N
+    private static final String LOCODIR = "locoDir"; // NOI18N
+    private static final String LOCONAME = "locoName"; //NOI18N
+    private static final String LOCOROSTERID = "locoRosterId"; // NOI18N
+    private static final String NORMAL = "normal"; //NOI18N
+    private static final String REVERSE = "reverse"; // NOI18N
 
     protected ConsistManager consistMan = null;
 
     public ConsistFile() {
         super();
         consistMan = InstanceManager.getDefault(jmri.ConsistManager.class);
-        // set the location to a subdirectory of the defined roster
-        // directory
+        Roster.getDefault().addPropertyChangeListener(this);
     }
 
     /**
@@ -47,13 +57,14 @@ public class ConsistFile extends XmlFile {
      * @param consist a JDOM element containing a consist
      */
     private void consistFromXml(Element consist) {
-        Attribute type, cnumber, isCLong, cID;
+        Attribute cnumber;
+        Attribute isCLong;
         Consist newConsist;
 
         // Read the consist address from the file and create the
         // consisit in memory if it doesn't exist already.
-        cnumber = consist.getAttribute("consistNumber");
-        isCLong = consist.getAttribute("longAddress");
+        cnumber = consist.getAttribute(CONSISTNUMBER);
+        isCLong = consist.getAttribute(LONGADDRESS);
         DccLocoAddress consistAddress;
         if (isCLong != null) {
             log.debug("adding consist {} with longAddress set to {}.", cnumber, isCLong.getValue());
@@ -67,33 +78,21 @@ public class ConsistFile extends XmlFile {
 
         } else {
             log.debug("adding consist {} with default long address setting.", cnumber);
-            consistAddress = new DccLocoAddress(
-                    Integer.parseInt(cnumber.getValue()),
-                    false);
+            consistAddress = new DccLocoAddress(Integer.parseInt(cnumber.getValue()), false);
         }
         newConsist = consistMan.getConsist(consistAddress);
         if (!(newConsist.getConsistList().isEmpty())) {
-            log.debug("Consist {} is not empty.  Using version in memory.", consistAddress.toString());
+            log.debug("Consist {} is not empty.  Using version in memory.", consistAddress);
             return;
         }
 
-        // read and set the consist type
-        type = consist.getAttribute("type");
-        if (type != null) {
-            // use the value read from the file
-            newConsist.setConsistType((type.getValue().equals("CSAC")) ? Consist.CS_CONSIST : Consist.ADVANCED_CONSIST);
-        } else {
-            // use the default (DAC)
-            newConsist.setConsistType(Consist.ADVANCED_CONSIST);
-        }
+        readConsistType(consist, newConsist);
+        readConsistId(consist, newConsist);
+        readConsistLocoList(consist,newConsist);
 
-        // Read the consist ID from the file;
-        cID = consist.getAttribute("id");
-        if (cID != null) {
-            // use the value read from the file
-            newConsist.setConsistID(cID.getValue());
-        }
+    }
 
+    public void readConsistLocoList(Element consist, Consist newConsist) {
         // read each child of locomotive in the consist from the file
         // and restore it's information to memory.
         Iterator<Element> childIterator = consist.getDescendants(new ElementFilter("loco"));
@@ -101,61 +100,25 @@ public class ConsistFile extends XmlFile {
             Element e;
             do {
                 e = childIterator.next();
-                Attribute number, isLong, direction, position, rosterId;
-                number = e.getAttribute("dccLocoAddress");
-                isLong = e.getAttribute("longAddress");
-                direction = e.getAttribute("locoDir");
-                position = e.getAttribute("locoName");
-                rosterId = e.getAttribute("locoRosterId");
+                Attribute number = e.getAttribute(DCCLOCOADDRESS);
                 log.debug("adding Loco {}", number);
-                // Use restore so we DO NOT cause send any commands
-                // to the command station as we recreate the consist.
-                DccLocoAddress address;
-                if (isLong != null && direction != null) {
+                DccLocoAddress address = readLocoAddress(e);
+
+                Attribute direction = e.getAttribute(LOCODIR);
+                boolean directionNormal = false;
+                if (direction != null) {
                     // use the values from the file
                     log.debug("using direction from file {}", direction.getValue());
-                    address = new DccLocoAddress(
-                            Integer.parseInt(number.getValue()),
-                            isLong.getValue().equals("yes"));
-                    newConsist.restore(address,
-                            direction.getValue().equals("normal"));
-                } else if (isLong == null && direction != null) {
-                    // use the direction from the file
-                    // but set as long address
-                    log.debug("using direction from file {}", direction.getValue());
-                    address = new DccLocoAddress(
-                            Integer.parseInt(number.getValue()),
-                            true);
-                    newConsist.restore(address,
-                            direction.getValue().equals("normal"));
-                } else if (isLong != null && direction == null) {
-                    // use the default direction
-                    // but the long/short value from the file
-                    address = new DccLocoAddress(
-                            Integer.parseInt(number.getValue()),
-                            isLong.getValue().equals("yes"));
-                    newConsist.restore(address, true);
+                    directionNormal = direction.getValue().equals(NORMAL);
                 } else {
-                    // use the default values long address
-                    // and normal direction
-                    address = new DccLocoAddress(
-                            Integer.parseInt(number.getValue()),
-                            true);
-                    newConsist.restore(address, true);
+                    // use default, normal direction
+                    directionNormal = true;
                 }
-                if (position != null && !position.getValue().equals("mid")) {
-                    if (position.getValue().equals("lead")) {
-                        newConsist.setPosition(address, Consist.POSITION_LEAD);
-                    } else if (position.getValue().equals("rear")) {
-                        newConsist.setPosition(address, Consist.POSITION_TRAIL);
-                    }
-                } else {
-                    Attribute midNumber = e.getAttribute("locoMidNumber");
-                    if (midNumber != null) {
-                        int pos = Integer.parseInt(midNumber.getValue());
-                        newConsist.setPosition(address, pos);
-                    }
-                }
+                // Use restore so we DO NOT cause send any commands
+                // to the command station as we recreate the consist.
+                newConsist.restore(address,directionNormal);
+                readLocoPosition(e,address,newConsist);
+                Attribute rosterId = e.getAttribute(LOCOROSTERID);
                 if (rosterId != null) {
                     newConsist.setRosterId(address, rosterId.getValue());
                 }
@@ -165,6 +128,63 @@ public class ConsistFile extends XmlFile {
         }
     }
 
+    private void readConsistType(Element consist, Consist newConsist){
+        // read and set the consist type
+        Attribute type = consist.getAttribute("type");
+        if (type != null) {
+            // use the value read from the file
+            newConsist.setConsistType((type.getValue().equals("CSAC")) ? Consist.CS_CONSIST : Consist.ADVANCED_CONSIST);
+        } else {
+            // use the default (DAC)
+            newConsist.setConsistType(Consist.ADVANCED_CONSIST);
+        }
+    }
+
+    private void readConsistId(Element consist,Consist newConsist){
+        // Read the consist ID from the file
+        Attribute cID = consist.getAttribute(CONSISTID);
+        if (cID != null) {
+            // use the value read from the file
+            newConsist.setConsistID(cID.getValue());
+        }
+    }
+
+    private void readLocoPosition(Element loco,DccLocoAddress address, Consist newConsist){
+        Attribute position = loco.getAttribute(LOCONAME);
+        if (position != null && !position.getValue().equals("mid")) {
+            if (position.getValue().equals("lead")) {
+                newConsist.setPosition(address, Consist.POSITION_LEAD);
+            } else if (position.getValue().equals("rear")) {
+                newConsist.setPosition(address, Consist.POSITION_TRAIL);
+            }
+        } else {
+            Attribute midNumber = loco.getAttribute("locoMidNumber");
+            if (midNumber != null) {
+                int pos = Integer.parseInt(midNumber.getValue());
+                newConsist.setPosition(address, pos);
+            }
+        }
+    }
+
+    private DccLocoAddress readLocoAddress(Element loco){
+        DccLocoAddress address;
+        Attribute number = loco.getAttribute(DCCLOCOADDRESS);
+        Attribute isLong = loco.getAttribute(LONGADDRESS);
+        if (isLong != null ) {
+            // use the values from the file
+            address = new DccLocoAddress(
+                    Integer.parseInt(number.getValue()),
+                    isLong.getValue().equals("yes"));
+        } else {
+            // set as long address
+            address = new DccLocoAddress(
+                    Integer.parseInt(number.getValue()),
+                    true);
+        }
+
+        return address;
+    }
+
     /**
      * convert a Consist to XML.
      *
@@ -172,11 +192,11 @@ public class ConsistFile extends XmlFile {
      * @return an Element representing the consist.
      */
     private Element consistToXml(Consist consist) {
-        Element e = new Element("consist");
-        e.setAttribute("id", consist.getConsistID());
-        e.setAttribute("consistNumber", "" + consist.getConsistAddress()
+        Element e = new Element(CONSIST);
+        e.setAttribute(CONSISTID, consist.getConsistID());
+        e.setAttribute(CONSISTNUMBER, "" + consist.getConsistAddress()
                 .getNumber());
-        e.setAttribute("longAddress", consist.getConsistAddress()
+        e.setAttribute(LONGADDRESS, consist.getConsistAddress()
                 .isLongAddress() ? "yes" : "no");
         e.setAttribute("type", consist.getConsistType() == Consist.ADVANCED_CONSIST ? "DAC" : "CSAC");
         ArrayList<DccLocoAddress> addressList = consist.getConsistList();
@@ -184,25 +204,25 @@ public class ConsistFile extends XmlFile {
         for (int i = 0; i < addressList.size(); i++) {
             DccLocoAddress locoaddress = addressList.get(i);
             Element eng = new Element("loco");
-            eng.setAttribute("dccLocoAddress", "" + locoaddress.getNumber());
-            eng.setAttribute("longAddress", locoaddress.isLongAddress() ? "yes" : "no");
-            eng.setAttribute("locoDir", consist.getLocoDirection(locoaddress) ? "normal" : "reverse");
+            eng.setAttribute(DCCLOCOADDRESS, "" + locoaddress.getNumber());
+            eng.setAttribute(LONGADDRESS, locoaddress.isLongAddress() ? "yes" : "no");
+            eng.setAttribute(LOCODIR, consist.getLocoDirection(locoaddress) ? NORMAL : REVERSE);
             int position = consist.getPosition(locoaddress);
             switch (position) {
                 case Consist.POSITION_LEAD:
-                    eng.setAttribute("locoName", "lead");
+                    eng.setAttribute(LOCONAME, "lead");
                     break;
                 case Consist.POSITION_TRAIL:
-                    eng.setAttribute("locoName", "rear");
+                    eng.setAttribute(LOCONAME, "rear");
                     break;
                 default:
-                    eng.setAttribute("locoName", "mid");
+                    eng.setAttribute(LOCONAME, "mid");
                     eng.setAttribute("locoMidNumber", "" + position);
                     break;
             }
             String rosterId = consist.getRosterId(locoaddress);
             if (rosterId != null) {
-                eng.setAttribute("locoRosterId", rosterId);
+                eng.setAttribute(LOCOROSTERID, rosterId);
             }
             e.addContent(eng);
         }
@@ -239,7 +259,7 @@ public class ConsistFile extends XmlFile {
                 log.debug("consist file does not contain a roster entry");
                 return;
             }
-            Iterator<Element> consistIterator = root.getDescendants(new ElementFilter("consist"));
+            Iterator<Element> consistIterator = root.getDescendants(new ElementFilter(CONSIST));
             try {
                 Element consist;
                 do {
@@ -261,7 +281,7 @@ public class ConsistFile extends XmlFile {
      * @param consistList list of consist addresses
      * @throws java.io.IOException if unable to write file
      */
-    public void writeFile(ArrayList<LocoAddress> consistList) throws IOException {
+    public void writeFile(List<LocoAddress> consistList) throws IOException {
         writeFile(consistList, defaultConsistFilename());
     }
 
@@ -272,7 +292,7 @@ public class ConsistFile extends XmlFile {
      * @param fileName    path to file
      * @throws java.io.IOException if unable to write file
      */
-    public void writeFile(ArrayList<LocoAddress> consistList, String fileName) throws IOException {
+    public void writeFile(List<LocoAddress> consistList, String fileName) throws IOException {
         // create root element
         Element root = new Element("consist-roster-config");
         Document doc = newDocument(root, dtdLocation + "consist-roster-config.dtd");
@@ -291,42 +311,33 @@ public class ConsistFile extends XmlFile {
             roster.addContent(consistToXml(newConsist));
         }
         root.addContent(roster);
-        try {
-            if (!checkFile(fileName)) {
-                //The file does not exist, create it before writing
-                File file = new File(fileName);
-                // verify the directory exists.
-                File parentDir = file.getParentFile();
-                FileUtil.createDirectory(parentDir);
-                if (!file.createNewFile()) {
-                    throw (new IOException());
-                }
+        if (!checkFile(fileName)) {
+            //The file does not exist, create it before writing
+            File file = new File(fileName);
+            // verify the directory exists.
+            File parentDir = file.getParentFile();
+            FileUtil.createDirectory(parentDir);
+            if (!file.createNewFile()) {
+                throw (new IOException());
             }
-            writeXML(findFile(fileName), doc);
-        } catch (IOException ioe) {
-            log.error("IO Exception " + ioe);
-            throw (ioe);
         }
+        writeXML(findFile(fileName), doc);
     }
 
     /**
-     * Defines the preferences subdirectory in which LocoFiles are kept by
-     * default.
+     * Returns the preferences subdirectory in which Consist Files are kept 
+     * this is relative to the roster files location. 
      */
-    static private String fileLocation = null;
-
-    static public String getFileLocation() {
-        if( fileLocation == null) {
-           fileLocation = Roster.getDefault().getRosterLocation() + "roster" + File.separator + "consist" + File.separator;
-        }
-        return fileLocation;
+    public static String getFileLocation() {
+        return Roster.getDefault().getRosterFilesLocation() + CONSIST + File.separator;
     }
 
-    static public void setFileLocation(String loc) {
-        fileLocation = loc;
-        if (!fileLocation.endsWith(File.separator)) {
-            fileLocation = fileLocation + File.separator;
-        }
+    /**
+     * @deprecated since 4.17.3 file location is determined by roster location.
+     */
+    @Deprecated
+    public static void setFileLocation(String loc) {
+        // this method has been deprecated
     }
 
     /**
@@ -337,6 +348,22 @@ public class ConsistFile extends XmlFile {
     public static String defaultConsistFilename() {
         return getFileLocation() + "consist.xml";
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if (evt.getSource() instanceof Roster &&
+            evt.getPropertyName().equals(RosterConfigManager.DIRECTORY)) {
+            try {
+                this.writeFile(consistMan.getConsistList());
+            } catch (IOException ioe) {
+                log.error("Unable to write consist information to new consist folder");
+            }
+        }
+    }
+
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(ConsistFile.class);
+    private static final Logger log = LoggerFactory.getLogger(ConsistFile.class);
 }

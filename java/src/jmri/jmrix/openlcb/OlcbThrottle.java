@@ -22,19 +22,6 @@ public class OlcbThrottle extends AbstractThrottle {
      * Constructor
      * @param address Dcc loco address
      * @param memo system connection memo
-     * @param mgr config manager
-     * @deprecated since 4.13.4
-     */
-    @Deprecated
-    public OlcbThrottle(DccLocoAddress address, SystemConnectionMemo memo, OlcbConfigurationManager mgr) {
-           this(address,memo);
-        jmri.util.Log4JUtil.deprecationWarning(log, "OlcbThrottle(..)");        
-    }
-
-    /**
-     * Constructor
-     * @param address Dcc loco address
-     * @param memo system connection memo
      */
     public OlcbThrottle(DccLocoAddress address, SystemConnectionMemo memo) {
         super(memo);
@@ -123,7 +110,7 @@ public class OlcbThrottle extends AbstractThrottle {
 
         // notify 
         if (oldSpeed != this.speedSetting) {
-            notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting);
+            notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
         }
         record(speed);
     }
@@ -134,7 +121,7 @@ public class OlcbThrottle extends AbstractThrottle {
         isForward = forward;
         setSpeedSetting(speedSetting);  // send the command
         if (old != isForward) {
-            notifyPropertyChangeListener("IsForward", old, isForward);
+            notifyPropertyChangeListener(ISFORWARD, old, isForward);
         }
     }
 

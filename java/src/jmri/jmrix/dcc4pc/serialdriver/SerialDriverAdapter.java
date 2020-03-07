@@ -26,7 +26,7 @@ import purejavacomm.UnsupportedCommOperationException;
  *
  * @author Kevin Dickerson Copyright (C) 2012
  */
-public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends Dcc4PcPortController {
 
     public SerialDriverAdapter() {
         super(new Dcc4PcSystemConnectionMemo());
@@ -167,11 +167,26 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
     }
 
     /**
-     * Get an array of valid baud rates. This is currently only 19,200 bps
+     * {@inheritDoc}
+     *
+     * Currently only 115,200 bps
      */
     @Override
     public String[] validBaudRates() {
         return new String[]{"115,200 bps"};
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return new int[]{115200};
+    }
+
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
     }
 
     InputStream serialStream = null;

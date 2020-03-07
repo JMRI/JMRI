@@ -8,11 +8,7 @@
 
   <title>JMRI Hardware Support - LocoNet&reg; Addressing</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content=
-  "JMRI LocoNet Address Addressing Sensors Turnout">
-  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-  <!-- are an arbitrary design pattern used by the update.pl script to -->
-  <!-- easily replace the common header/footer code for all the web pages -->
+  <meta name="keywords" content="JMRI LocoNet Address Addressing Sensors Turnout">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -21,14 +17,16 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+      <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
+
       <h1>Support: LocoNet&reg; addressing</h1>
 
       <ul class="snav">
@@ -65,7 +63,7 @@
           "Logix Conditionals".  JMRI developers <strong>suggest</strong> that users make
           use of object "User Names" wherever possible.  Additional general
           information on JMRI "System Names" and "User Names" may be found <a
-              href="../../doc/technical/Names.shtml"> here.</a></p>
+              href="../../doc/Technical/Names.shtml"> here.</a></p>
 
       <h2>System Names and LocoNet</h2>
       <p>JMRI communicates with the individual physical turnouts, sensors, reporters and other
@@ -215,7 +213,7 @@
       exist.  When JMRI automatically adds a Turnout Table entry in this
       way, it does so with a blank "User Name".  Users may update the "User Names"
       in the Turnout Table.  As noted <a href="#SaveYourWork">above</a>, it is
-      helpful to save your Turnouts Table changes so that you may re-load those
+      helpful to save your Turnout Table changes so that you may re-load those
       updates into JMRI at a future time.</p>
 
       <p>The Turnout Table provides a useful snapshot of the
@@ -223,7 +221,8 @@
       change the state of those Turnouts.</p>
 
       <p>Additional information on Turnouts and the Turnout Table
-          may be found at the main JMRI <a href="../../tools/Turnouts.shtml">Turnouts</a> page.</p>
+      may be found at the main JMRI <a href="../../tools/Turnouts.shtml">Turnouts</a> page.</p>
+
       <h3>JMRI "Lights"</h3>
       <p>JMRI provides an object-type called "Lights".  For some DCC systems, "Light"
           objects are defined and addressed separately from "Turnout" objects.  LocoNet
@@ -232,6 +231,8 @@
       <p>This means that changing the state of a JMRI "Light" object with System
           Name "LL123" will actually modify the LocoNet turnout which corresponds
           to the JMRI turnout with System Name "LT123".</p>
+      <p>Additional information on Lights and the Light Table
+      may be found at the main JMRI <a href="../../tools/Lights.shtml">Lights</a> page.</p>
 
       <a name="sensor" id="sensor"></a>
       <h2>Addressing LocoNet Sensors</h2>
@@ -294,9 +295,9 @@
 
       <p>Additional information on Sensors and the Sensor Table may
       be found at the main JMRI <a href="../../tools/Sensors.shtml">
-      Sensors</a> page.</p><a name="transponding" id=
-      "transponding"></a>
+      Sensors</a> page.</p>
 
+      <a name="transponding" id="transponding"></a>
       <h2>Addressing LocoNet Transponding Zones</h2>
 
       <p>Digitrax Transponding is handled via the Reporter
@@ -965,7 +966,7 @@
 
       <p>LocoNet&reg; is a registered trademark of <a href=
       "http://www.digitrax.com">Digitrax, Inc.</a></p>
-    </div><!--#include virtual="/Footer" -->
+    </div><!--#include virtual="/Footer.shtml" -->
   </div><!-- closes #mainContent-->
   <!-- closes #mBody-->
 </body>

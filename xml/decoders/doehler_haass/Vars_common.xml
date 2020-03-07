@@ -23,8 +23,20 @@
         <surname>Billon</surname>
       </personname>
     </author>
+    <author>
+      <personname>
+        <firstname>Alain</firstname>
+        <surname>Le Marchand</surname>
+      </personname>
+    </author>
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>2</revnumber>
+      <date>2019-07-28</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>CV53: changed label from Alternative to Dimmed + Add minOut + CV9 update</revremark>
+    </revision>
     <revision>
       <revnumber>1</revnumber>
       <date>2014-02-20</date>
@@ -869,11 +881,11 @@
     <label xml:lang="de">Bremsverzögerung</label>
     <label xml:lang="ca">Desacceleració</label>
   </variable>
-  <variable CV="9" default="0" item="Motor PWM Frequency" comment="0:32KHz, 1:16KHz, 2:low">
+  <variable CV="9" default="0" item="Motor PWM Frequency" mask="XXXXXXVV" comment="0:32KHz, 1:16KHz, 2:low">
     <enumVal>
         <enumChoice choice="32KHz"/>
         <enumChoice choice="16KHz"/>
-        <enumChoice choice="low">
+        <enumChoice choice="low" exclude="PD05A,PD12A">
             <choice>Low frequency</choice>
             <choice xml:lang="de">Niederfrequent</choice>
             <choice xml:lang="fr">Basse fréquence</choice>
@@ -973,7 +985,7 @@
     <label xml:lang="ca">Retard d'inici per al pas 1</label>
   </variable>
   <!-- Advanced others -->
-  <variable CV="51" mask="XXXXXXXV" item="Advanced Group 1 Option 1">
+  <variable CV="51" mask="XXXXXXXV" item="Advanced Group 2 Option 11">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
     <label>Invert motor pins</label>
     <label xml:lang="it">inversione connessione motore</label>
@@ -981,7 +993,7 @@
     <label xml:lang="de">Motoranschlüsse vertauschen</label>
     <label xml:lang="ca">Invertir pins del motor</label>
   </variable>
-  <variable CV="51" mask="XXXXXXVX" item="Advanced Group 1 Option 2">
+  <variable CV="51" mask="XXXXXXVX" item="Advanced Group 2 Option 12">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
     <label>Invert light pins</label>
     <label xml:lang="it">inversione connessione luci</label>
@@ -989,7 +1001,7 @@
     <label xml:lang="de">Lichtanschlüsse vertauschen</label>
     <label xml:lang="ca">Invertir pins dels llums</label>
   </variable>
-  <variable CV="51" mask="XXXXXVXX" item="Advanced Group 1 Option 3">
+  <variable CV="51" mask="XXXXXVXX" item="Advanced Group 2 Option 13">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
     <label>Invert track pins</label>
     <label xml:lang="it">inversione connessione rotaie</label>
@@ -1131,13 +1143,13 @@
   </variable>
   <variable item="Lights dimming (alternative)" CV="53" default="15" tooltip="CV53">
     <decVal min="0" max="31"/>
-    <label>Lights dimming (alternative)</label>
-    <label xml:lang="it">Smorzamento luci(alternativo)</label>
-    <label xml:lang="fr">Intensité des feux (alternative)</label>
-    <label xml:lang="de">Dimmung Licht (alternativ)</label>
-    <label xml:lang="ca">Intensitat de llums (alternatiu)</label>
+    <label>Lights dimming (dimmed)</label>
+    <label xml:lang="it">Smorzamento luci(oscurato)</label>
+    <label xml:lang="fr">Intensité des feux (atténué)</label>
+    <label xml:lang="de">Dimmung Licht (abblendlicht)</label>
+    <label xml:lang="ca">Intensitat de llums (atenuat)</label>
   </variable>
-  <variable item="AUX 1 dimming" CV="54" default="31" tooltip="CV54">
+  <variable item="AUX 1 dimming" CV="54" default="31" minOut="3" tooltip="CV54">
     <decVal min="0" max="31"/>
     <label>AUX 1 dimming</label>
     <label xml:lang="it">Smorzamento luci AUX1</label>
@@ -1145,7 +1157,7 @@
     <label xml:lang="de">AUX 1 Dimmung</label>
     <label xml:lang="ca">Intensitat de AUX1</label>
   </variable>
-  <variable item="AUX 2 dimming" CV="55" default="31" tooltip="CV55" minOut="4">
+  <variable item="AUX 2 dimming" CV="55" default="31" minOut="4" tooltip="CV55">
     <decVal min="0" max="31"/>
     <label>AUX 2 dimming</label>
     <label xml:lang="it">Smorzamento luci AUX2</label>
@@ -1154,7 +1166,7 @@
     <label xml:lang="ca">Intensitat de AUX2</label>
   </variable>
   <!-- Timers -->
-  <variable item="AUX 1 Auto-off timer" CV="117" default="0" tooltip="CV117 (0-250, 1=100ms)">
+  <variable item="AUX 1 Auto-off timer" CV="117" default="0" minOut="3" tooltip="CV117 (0-250, 1=100ms)">
     <decVal min="0" max="250"/>
     <label>AUX 1 Auto-off timer</label>
     <label xml:lang="it">AUX1 tempo auto-spegnimento</label>
@@ -1162,15 +1174,15 @@
     <label xml:lang="de">AUX 1 Timer für Ausschlaten</label>
     <label xml:lang="ca">Temps d'apagada automàtica de AUX1</label>
   </variable>
-  <variable item="AUX 2 Auto-off timer" CV="118" default="0" tooltip="CV118 (0-250, 1=100ms)" minOut="4">
+  <variable item="AUX 2 Auto-off timer" CV="118" default="0" minOut="4" tooltip="CV118 (0-250, 1=100ms)">
     <decVal min="0" max="250"/>
     <label>AUX 2 Auto-off timer</label>
     <label xml:lang="it">AUX2 tempo auto-spegnimento</label>
     <label xml:lang="fr">AUX 2 minuteur (off)</label>
     <label xml:lang="de">AUX 2 Timer für Ausschlaten</label>
-    <label xml:lang="ca">Temps d'apagada automàtica de AUX1</label>
+    <label xml:lang="ca">Temps d'apagada automàtica de AUX2</label>
   </variable>
-  <variable item="AUX 3 Auto-off timer" CV="119" default="0" tooltip="CV119 (0-250, 1=100ms)" minOut="5">
+  <variable item="AUX 3 Auto-off timer" CV="119" default="0" minOut="5" tooltip="CV119 (0-250, 1=100ms)">
     <decVal min="0" max="250"/>
     <label>AUX 3 Auto-off timer</label>
     <label xml:lang="it">AUX3 tempo auto-spegnimento</label>
@@ -1178,7 +1190,7 @@
     <label xml:lang="de">AUX 3 Timer für Ausschlaten</label>
     <label xml:lang="ca">Temps d'apagada automàtica de AUX3</label>
   </variable>
-  <variable item="AUX 4 Auto-off timer" CV="120" default="0" tooltip="CV120 (0-250, 1=100ms)" minOut="6">
+  <variable item="AUX 4 Auto-off timer" CV="120" default="0" minOut="6" tooltip="CV120 (0-250, 1=100ms)">
     <decVal min="0" max="250"/>
     <label>AUX 4 Auto-off timer</label>
     <label xml:lang="it">AUX4 tempo auto-spegnimento</label>
@@ -1315,7 +1327,7 @@
     <label xml:lang="de">F8 schaltet Licht hinten aus</label>
     <label xml:lang="ca">F8 apaga llums del darrere</label>
   </variable>
-  <variable item="F1 precludes AUX 1" CV="115" mask="XXXXXXXV" tooltip="CV115 Bit 0">
+  <variable item="F1 precludes AUX 1" CV="115" mask="XXXXXXXV" minOut="3" tooltip="CV115 Bit 0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F1 precludes AUX 1</label>
     <label xml:lang="it">F1 blocca AUX1</label>
@@ -1323,7 +1335,7 @@
     <label xml:lang="de">F1 schaltet AUX 1 aus</label>
     <label xml:lang="ca">F1 apaga AUX1</label>
   </variable>
-  <variable item="F2 precludes AUX 1" CV="115" mask="XXXXXXVX" tooltip="CV115 Bit 1">
+  <variable item="F2 precludes AUX 1" CV="115" mask="XXXXXXVX" minOut="3" tooltip="CV115 Bit 1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F2 precludes AUX 1</label>
     <label xml:lang="it">F2 blocca AUX1</label>
@@ -1331,14 +1343,14 @@
     <label xml:lang="de">F2 schaltet AUX 1 aus</label>
     <label xml:lang="ca">F2 apaga AUX1</label>
   </variable>
-  <variable item="F3 precludes AUX 1" CV="115" mask="XXXXXVXX" tooltip="CV115 Bit 2">
+  <variable item="F3 precludes AUX 1" CV="115" mask="XXXXXVXX" minOut="3" tooltip="CV115 Bit 2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F3 precludes AUX 1</label>
     <label xml:lang="it">F3 blocca AUX1</label>
     <label xml:lang="fr">F3 empêche AUX 1</label>
     <label xml:lang="de">F3 schaltet AUX 1 aus</label>
   </variable>
-  <variable item="F4 precludes AUX 1" CV="115" mask="XXXXVXXX" tooltip="CV115 Bit 3">
+  <variable item="F4 precludes AUX 1" CV="115" mask="XXXXVXXX" minOut="3" tooltip="CV115 Bit 3">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F4 precludes AUX 1</label>
     <label xml:lang="it">F4 blocca AUX1</label>
@@ -1346,7 +1358,7 @@
     <label xml:lang="de">F4 schaltet AUX 1 aus</label>
     <label xml:lang="ca">F4 apaga AUX1</label>
   </variable>
-  <variable item="F5 precludes AUX 1" CV="115" mask="XXXVXXXX" tooltip="CV115 Bit 4">
+  <variable item="F5 precludes AUX 1" CV="115" mask="XXXVXXXX" minOut="3" tooltip="CV115 Bit 4">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F5 precludes AUX 1</label>
     <label xml:lang="it">F5 blocca AUX1</label>
@@ -1354,7 +1366,7 @@
     <label xml:lang="de">F5 schaltet AUX 1 aus</label>
     <label xml:lang="ca">F5 apaga AUX1</label>
   </variable>
-  <variable item="F6 precludes AUX 1" CV="115" mask="XXVXXXXX" tooltip="CV115 Bit 5">
+  <variable item="F6 precludes AUX 1" CV="115" mask="XXVXXXXX" minOut="3" tooltip="CV115 Bit 5">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F6 precludes AUX 1</label>
     <label xml:lang="it">F6 blocca AUX1</label>
@@ -1362,7 +1374,7 @@
     <label xml:lang="de">F6 schaltet AUX 1 aus</label>
     <label xml:lang="ca">F6 apaga AUX1</label>
   </variable>
-  <variable item="F7 precludes AUX 1" CV="115" mask="XVXXXXXX" tooltip="CV115 Bit 6">
+  <variable item="F7 precludes AUX 1" CV="115" mask="XVXXXXXX" minOut="3" tooltip="CV115 Bit 6">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F7 precludes AUX 1</label>
     <label xml:lang="it">F7 blocca AUX1</label>
@@ -1370,7 +1382,7 @@
     <label xml:lang="de">F7 schaltet AUX 1 aus</label>
     <label xml:lang="ca">F7 apaga AUX1</label>
   </variable>
-  <variable item="F8 precludes AUX 1" CV="115" mask="VXXXXXXX" tooltip="CV115 Bit 7">
+  <variable item="F8 precludes AUX 1" CV="115" mask="VXXXXXXX" minOut="3" tooltip="CV115 Bit 7">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F8 precludes AUX 1</label>
     <label xml:lang="it">F8 blocca AUX1</label>
@@ -1378,7 +1390,7 @@
     <label xml:lang="de">F8 schaltet AUX 1 aus</label>
     <label xml:lang="ca">F8 apaga AUX1</label>
   </variable>
-  <variable item="F1 precludes AUX 2" CV="116" mask="XXXXXXXV" tooltip="CV116 Bit 0" minOut="4">
+  <variable item="F1 precludes AUX 2" CV="116" mask="XXXXXXXV" minOut="4" tooltip="CV116 Bit 0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F1 precludes AUX 2</label>
     <label xml:lang="it">F1 blocca AUX2</label>
@@ -1386,7 +1398,7 @@
     <label xml:lang="de">F1 schaltet AUX 2 aus</label>
     <label xml:lang="ca">F1 apaga AUX2</label>
   </variable>
-  <variable item="F2 precludes AUX 2" CV="116" mask="XXXXXXVX" tooltip="CV116 Bit 1" minOut="4">
+  <variable item="F2 precludes AUX 2" CV="116" mask="XXXXXXVX" minOut="4" tooltip="CV116 Bit 1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F2 precludes AUX 2</label>
     <label xml:lang="it">F2 blocca AUX2</label>
@@ -1394,7 +1406,7 @@
     <label xml:lang="de">F2 schaltet AUX 2 aus</label>
     <label xml:lang="ca">F2 apaga AUX2</label>
   </variable>
-  <variable item="F3 precludes AUX 2" CV="116" mask="XXXXXVXX" tooltip="CV116 Bit 2" minOut="4">
+  <variable item="F3 precludes AUX 2" CV="116" mask="XXXXXVXX" minOut="4" tooltip="CV116 Bit 2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F3 precludes AUX 2</label>
     <label xml:lang="it">F3 blocca AUX2</label>
@@ -1402,7 +1414,7 @@
     <label xml:lang="de">F3 schaltet AUX 2 aus</label>
     <label xml:lang="ca">F3 apaga AUX2</label>
   </variable>
-  <variable item="F4 precludes AUX 2" CV="116" mask="XXXXVXXX" tooltip="CV116 Bit 3" minOut="4">
+  <variable item="F4 precludes AUX 2" CV="116" mask="XXXXVXXX" minOut="4" tooltip="CV116 Bit 3">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F4 precludes AUX 2</label>
     <label xml:lang="it">F4 blocca AUX2</label>
@@ -1410,7 +1422,7 @@
     <label xml:lang="de">F4 schaltet AUX 2 aus</label>
     <label xml:lang="ca">F4 apaga AUX2</label>
   </variable>
-  <variable item="F5 precludes AUX 2" CV="116" mask="XXXVXXXX" tooltip="CV116 Bit 4" minOut="4">
+  <variable item="F5 precludes AUX 2" CV="116" mask="XXXVXXXX" minOut="4" tooltip="CV116 Bit 4">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F5 precludes AUX 2</label>
     <label xml:lang="it">F5 blocca AUX2</label>
@@ -1418,14 +1430,14 @@
     <label xml:lang="de">F5 schaltet AUX 2 aus</label>
     <label xml:lang="ca">F5 apaga AUX2</label>
   </variable>
-  <variable item="F6 precludes AUX 2" CV="116" mask="XXVXXXXX" tooltip="CV116 Bit 5" minOut="4">
+  <variable item="F6 precludes AUX 2" CV="116" mask="XXVXXXXX" minOut="4" tooltip="CV116 Bit 5">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F6 precludes AUX 2</label>
     <label xml:lang="it">F6 blocca AUX2</label>
     <label xml:lang="fr">F6 empêche AUX 2</label>
     <label xml:lang="de">F6 schaltet AUX 2 aus</label>
   </variable>
-  <variable item="F7 precludes AUX 2" CV="116" mask="XVXXXXXX" tooltip="CV116 Bit 6" minOut="4">
+  <variable item="F7 precludes AUX 2" CV="116" mask="XVXXXXXX" minOut="4" tooltip="CV116 Bit 6">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F7 precludes AUX 2</label>
     <label xml:lang="it">F7 blocca AUX2</label>
@@ -1433,7 +1445,7 @@
     <label xml:lang="de">F7 schaltet AUX 2 aus</label>
     <label xml:lang="ca">F7 apaga AUX2</label>
   </variable>
-  <variable item="F8 precludes AUX 2" CV="116" mask="VXXXXXXX" tooltip="CV116 Bit 7" minOut="4">
+  <variable item="F8 precludes AUX 2" CV="116" mask="VXXXXXXX" minOut="4" tooltip="CV116 Bit 7">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F8 precludes AUX 2</label>
     <label xml:lang="it">F8 blocca AUX2</label>

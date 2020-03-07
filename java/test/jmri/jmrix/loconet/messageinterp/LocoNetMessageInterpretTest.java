@@ -1,7 +1,6 @@
 package jmri.jmrix.loconet.messageinterp;
 
 import jmri.util.JUnitUtil;
-import jmri.util.StringUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -9,7 +8,6 @@ import org.junit.Test;
 
 import jmri.jmrix.loconet.LnReporter;
 import jmri.jmrix.loconet.LnReporterManager;
-import jmri.jmrix.loconet.LnSensorManager;
 import jmri.jmrix.loconet.LnTurnout;
 import jmri.jmrix.loconet.LnTurnoutManager;
 import jmri.jmrix.loconet.LocoNetMessage;
@@ -26,7 +24,7 @@ public class LocoNetMessageInterpretTest {
         LocoNetMessage l;
         LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo("L", "LocoNet");
         jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold(memo);
-        LnReporterManager lnrm = new LnReporterManager(lnis, memo.getSystemPrefix());
+        LnReporterManager lnrm = new LnReporterManager(lnis.getSystemConnectionMemo());
 
         jmri.InstanceManager.setReporterManager(lnrm);
 
@@ -3357,7 +3355,7 @@ public class LocoNetMessageInterpretTest {
         LocoNetMessage l;
         LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo("L", "LocoNet");
         jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold(memo);
-        LnTurnoutManager lntm = new LnTurnoutManager(lnis, lnis, memo.getSystemPrefix(), false);
+        LnTurnoutManager lntm = new LnTurnoutManager(memo, lnis, false);
 
         jmri.InstanceManager.setTurnoutManager(lntm);
 
@@ -5756,7 +5754,7 @@ public class LocoNetMessageInterpretTest {
         LocoNetMessage l;
         LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo("L", "LocoNet");
         jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold(memo);
-        LnTurnoutManager lntm = new LnTurnoutManager(lnis, lnis, memo.getSystemPrefix(), false);
+        LnTurnoutManager lntm = new LnTurnoutManager(memo, lnis, false);
 
         jmri.InstanceManager.setTurnoutManager(lntm);
 
@@ -6663,6 +6661,12 @@ public class LocoNetMessageInterpretTest {
 "	OpSw105=Thrown, OpSw106=Thrown, OpSw107=Thrown, OpSw108=Thrown, OpSw109=Thrown, OpSw110=Thrown, OpSw111=Thrown, OpSw112=Thrown,\n" +
 "	OpSw113=Thrown, OpSw114=Thrown, OpSw115=Closed, OpSw116=Thrown, OpSw117=Thrown, OpSw118=Thrown, OpSw119=Closed, OpSw120=Thrown,\n" +
 "	OpSw121=Thrown, OpSw122=Thrown, OpSw123=Thrown, OpSw124=Thrown, OpSw125=Thrown, OpSw126=Thrown, OpSw127=Thrown, OpSw128=Thrown.\n", LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+    }
+
+    @Test
+    public void testLocoReset() {
+        LocoNetMessage l = new LocoNetMessage(new int[] {0x8a, 0x75});
+        Assert.assertEquals("check LocoReset", "Loco Reset mechanism triggered.\n", LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
     }
 
     @Before

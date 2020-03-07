@@ -25,7 +25,7 @@ import purejavacomm.UnsupportedCommOperationException;
  *
  * @author	Kevin Dickerson Copyright (C) 2012
  */
-public class SerialDriverAdapter extends TamsPortController implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends TamsPortController {
 
     SerialPort activeSerialPort = null;
 
@@ -49,12 +49,7 @@ public class SerialDriverAdapter extends TamsPortController implements jmri.jmri
             // try to set it for communication via SerialDriver
             try {
                 // find the baud rate value, configure comm options
-                int baud = validSpeedValues[0];  // default, but also defaulted in the initial value of selectedSpeed
-                for (int i = 0; i < validSpeeds.length; i++) {
-                    if (validSpeeds[i].equals(mBaudRate)) {
-                        baud = validSpeedValues[i];
-                    }
-                }
+                int baud = currentBaudNumber(mBaudRate);
                 activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
             } catch (UnsupportedCommOperationException e) {
                 log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
@@ -152,15 +147,31 @@ public class SerialDriverAdapter extends TamsPortController implements jmri.jmri
         return opened;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] validBaudRates() {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 
     private final String[] validSpeeds = new String[]{Bundle.getMessage("Baud57600"),
             Bundle.getMessage("Baud2400"), Bundle.getMessage("Baud9600"),
             Bundle.getMessage("Baud19200")};
     private final int[] validSpeedValues = new int[]{57600, 2400, 9600, 19200};
+
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
+    }
 
     // private control members
     private boolean opened = false;
