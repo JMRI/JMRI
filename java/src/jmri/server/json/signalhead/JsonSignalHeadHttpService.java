@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.SignalHead;
 import jmri.SignalHeadManager;
+import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonNonProvidedNamedBeanHttpService;
 import jmri.server.json.JsonRequest;
@@ -110,8 +111,15 @@ public class JsonSignalHeadHttpService extends JsonNonProvidedNamedBeanHttpServi
     }
 
     @Override
-    public SignalHead getNamedBean(String name, String type, JsonRequest request) throws JsonException {
+    public SignalHead getNamedBean(String type, String name, JsonNode data, JsonRequest request) throws JsonException {
         try {
+            if (!data.isEmpty() && !data.isNull()) {
+                if (JSON.PUT.equals(request.method)) {
+                    doPut(type, name, data, request);
+                } else if (JSON.POST.equals(request.method)) {
+                    doPost(type, name, data, request);
+                }
+            }
             return InstanceManager.getDefault(SignalHeadManager.class).getBySystemName(name);
         } catch (IllegalArgumentException ex) {
             throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(request.locale, "ErrorInvalidSystemName", name, type), request.id);

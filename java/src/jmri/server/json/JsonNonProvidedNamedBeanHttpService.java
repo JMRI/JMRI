@@ -78,7 +78,7 @@ public abstract class JsonNonProvidedNamedBeanHttpService<T extends NamedBean> e
     @Nonnull
     protected final JsonNode doGetList(Manager<T> manager, String type, JsonNode data, Locale locale, int id)
             throws JsonException {
-        return doGetList(manager, type, data, new JsonRequest(locale, JSON.V5, id));
+        return doGetList(manager, type, data, new JsonRequest(locale, JSON.V5, JSON.GET, id));
     }
 
     /**
@@ -129,20 +129,26 @@ public abstract class JsonNonProvidedNamedBeanHttpService<T extends NamedBean> e
     protected ObjectNode doGet(T bean, @Nonnull String name, @Nonnull String type, @Nonnull Locale locale,
             int id)
             throws JsonException {
-        return doGet(bean, name, type, new JsonRequest(locale, JSON.V5, id));
+        return doGet(bean, name, type, new JsonRequest(locale, JSON.V5, JSON.GET, id));
     }
 
     /**
-     * Get the NamedBean matching name and type.
+     * Get the NamedBean matching name and type. If the request has a method
+     * other than GET, this may modify or create the NamedBean requested. Note
+     * that name or data may be null, but it is an error to have both be null.
      * 
-     * @param name the name of the requested object
-     * @param type the type of the requested object
+     * @param name    the name of the requested object
+     * @param type    the type of the requested object
+     * @param data    the JsonNode containing the JSON representation of the
+     *                bean to get
      * @param request the JSON request
      * @return the matching NamedBean or null if there is no match
-     * @throws JsonException if the name is invalid for the type
+     * @throws JsonException            if the name is invalid for the type
+     * @throws IllegalArgumentException if both name is null and data is empty
      */
     @CheckForNull
-    protected abstract T getNamedBean(@Nonnull String name, @Nonnull String type, @Nonnull JsonRequest request) throws JsonException;
+    protected abstract T getNamedBean(@Nonnull String type, @Nonnull String name, @Nonnull JsonNode data,
+            @Nonnull JsonRequest request) throws JsonException;
 
     /**
      * Create the JsonNode for a {@link jmri.NamedBean} object.
@@ -196,7 +202,7 @@ public abstract class JsonNonProvidedNamedBeanHttpService<T extends NamedBean> e
     protected ObjectNode getNamedBean(T bean, @Nonnull String name, @Nonnull String type, @Nonnull Locale locale,
             int id)
             throws JsonException {
-        return getNamedBean(bean, name, type, new JsonRequest(locale, JSON.V5, id));
+        return getNamedBean(bean, name, type, new JsonRequest(locale, JSON.V5, JSON.GET, id));
     }
 
     /**
@@ -254,6 +260,6 @@ public abstract class JsonNonProvidedNamedBeanHttpService<T extends NamedBean> e
     @Nonnull
     protected T postNamedBean(T bean, @Nonnull JsonNode data, @Nonnull String name, @Nonnull String type,
             @Nonnull Locale locale, int id) throws JsonException {
-        return postNamedBean(bean, data, name, type, new JsonRequest(locale, JSON.V5, id));
+        return postNamedBean(bean, data, name, type, new JsonRequest(locale, JSON.V5, JSON.POST, id));
     }
 }

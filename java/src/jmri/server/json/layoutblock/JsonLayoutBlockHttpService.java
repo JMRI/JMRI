@@ -201,8 +201,15 @@ public class JsonLayoutBlockHttpService extends JsonNonProvidedNamedBeanHttpServ
     }
 
     @Override
-    public LayoutBlock getNamedBean(String name, String type, JsonRequest request) throws JsonException {
+    public LayoutBlock getNamedBean(String type, String name, JsonNode data, JsonRequest request) throws JsonException {
         try {
+            if (!data.isEmpty() && !data.isNull()) {
+                if (JSON.PUT.equals(request.method)) {
+                    doPut(type, name, data, request);
+                } else if (JSON.POST.equals(request.method)) {
+                    doPost(type, name, data, request);
+                }
+            }
             return InstanceManager.getDefault(LayoutBlockManager.class).getBySystemName(name);
         } catch (IllegalArgumentException ex) {
             throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(request.locale, "ErrorInvalidSystemName", name, type), request.id);

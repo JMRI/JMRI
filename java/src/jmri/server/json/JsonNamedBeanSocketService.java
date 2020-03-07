@@ -122,7 +122,7 @@ public class JsonNamedBeanSocketService<T extends NamedBean, H extends JsonNamed
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
             try {
-                connection.sendMessage(service.doGet(this.bean, this.bean.getSystemName(), service.getType(), new JsonRequest(getLocale(), getVersion(), 0)), 0);
+                connection.sendMessage(service.doGet(this.bean, this.bean.getSystemName(), service.getType(), new JsonRequest(getLocale(), getVersion(), JSON.GET, 0)), 0);
             } catch (
                     IOException |
                     JsonException ex) {
@@ -150,7 +150,7 @@ public class JsonNamedBeanSocketService<T extends NamedBean, H extends JsonNamed
             try {
                 // send the new list
                 connection.sendMessage(service.doGetList(service.getType(),
-                        service.getObjectMapper().createObjectNode(), new JsonRequest(getLocale(), getVersion(), 0)), 0);
+                        service.getObjectMapper().createObjectNode(), new JsonRequest(getLocale(), getVersion(), JSON.GET, 0)), 0);
                 //child added or removed, reset listeners
                 if (evt.getPropertyName().equals("length")) { // NOI18N
                     removeListenersFromRemovedBeans();

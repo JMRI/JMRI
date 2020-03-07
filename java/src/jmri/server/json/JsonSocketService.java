@@ -73,7 +73,7 @@ public abstract class JsonSocketService<H extends JsonHttpService> {
     @Deprecated
     public void onMessage(@Nonnull String type, @Nonnull JsonNode data, @Nonnull String method,
             @Nonnull Locale locale, int id) throws IOException, JmriException, JsonException {
-        onMessage(type, data, method, new JsonRequest(locale, JSON.V5, id));
+        onMessage(type, data, method, new JsonRequest(locale, JSON.V5, method, id));
     }
 
     /**
@@ -136,7 +136,7 @@ public abstract class JsonSocketService<H extends JsonHttpService> {
     @Deprecated
     public void onList(@Nonnull String type, @Nonnull JsonNode data, @Nonnull Locale locale, int id)
             throws IOException, JmriException, JsonException {
-        onList(type, data, new JsonRequest(locale, JSON.V5, id));
+        onList(type, data, new JsonRequest(locale, JSON.V5, JSON.GET, id));
     }
 
     /**

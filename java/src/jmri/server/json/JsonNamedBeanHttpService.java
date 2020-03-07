@@ -136,8 +136,15 @@ public abstract class JsonNamedBeanHttpService<T extends NamedBean> extends Json
      */
     @Override
     @CheckForNull
-    public T getNamedBean(@Nonnull String name, @Nonnull String type, @Nonnull JsonRequest request) throws JsonException {
+    public T getNamedBean(@Nonnull String type, @Nonnull String name, @Nonnull JsonNode data, @Nonnull JsonRequest request) throws JsonException {
         try {
+            if (!data.isEmpty() && !data.isNull()) {
+                if (JSON.PUT.equals(request.method)) {
+                    doPut(type, name, data, request);
+                } else if (JSON.POST.equals(request.method)) {
+                    doPost(type, name, data, request);
+                }
+            }
             return getManager().getBySystemName(name);
         } catch (IllegalArgumentException ex) {
             throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(request.locale, "ErrorInvalidSystemName", name, type), request.id);
@@ -194,7 +201,7 @@ public abstract class JsonNamedBeanHttpService<T extends NamedBean> extends Json
     @Nonnull
     protected ObjectNode doPost(T bean, @Nonnull String name, @Nonnull String type, @Nonnull JsonNode data, @Nonnull Locale locale, int id)
             throws JsonException {
-        return doPost(bean, name, type, data, new JsonRequest(locale, JSON.V5, id));
+        return doPost(bean, name, type, data, new JsonRequest(locale, JSON.V5, JSON.POST, id));
     }
 
     /**
@@ -215,7 +222,7 @@ public abstract class JsonNamedBeanHttpService<T extends NamedBean> extends Json
      */
     @Deprecated
     protected void doDelete(@CheckForNull T bean, @Nonnull String name, @Nonnull String type, @Nonnull JsonNode data, @Nonnull Locale locale, int id) throws JsonException {
-        doDelete(type, name, data, new JsonRequest(locale, JSON.V5, id));
+        doDelete(type, name, data, new JsonRequest(locale, JSON.V5, JSON.DELETE, id));
     }
 
     /**
@@ -263,7 +270,7 @@ public abstract class JsonNamedBeanHttpService<T extends NamedBean> extends Json
      */
     @Deprecated
     protected final void deleteBean(@CheckForNull T bean, @Nonnull String name, @Nonnull String type, @Nonnull JsonNode data, @Nonnull Locale locale, int id) throws JsonException {
-        deleteBean(bean, name, type, data, new JsonRequest(locale, JSON.V5, id));
+        deleteBean(bean, name, type, data, new JsonRequest(locale, JSON.V5, JSON.DELETE, id));
     }
 
     /**

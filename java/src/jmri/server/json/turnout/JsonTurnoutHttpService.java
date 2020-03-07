@@ -113,17 +113,22 @@ public class JsonTurnoutHttpService extends JsonNamedBeanHttpService<Turnout> {
         return this.doGet(turnout, name, type, request);
     }
 
-    private void addSensorToTurnout(@Nonnull Turnout turnout, @Nonnull JsonNode node, int number, @Nonnull JsonRequest request) throws JsonException {
+    private void addSensorToTurnout(@Nonnull Turnout turnout, @Nonnull JsonNode data, int number, @Nonnull JsonRequest request) throws JsonException {
         try {
-            if (node.isNull()) {
+            if (data.isNull()) {
                 turnout.provideFeedbackSensor(null, number);
-            } else if (node.isTextual()) {
-                Sensor sensor = sensorService.getNamedBean(node.asText(), SENSOR, request);
+            } else {
+                Sensor sensor = null;
+                if (data.isTextual()) {
+                    sensor = sensorService.getNamedBean(SENSOR, data.asText(), mapper.nullNode(), request);
+                } else if (data.isObject()) {
+                    sensor = sensorService.getNamedBean(SENSOR, data.path(JSON.NAME).asText(), data, request);
+                }
                 if (sensor != null) {
                     turnout.provideFeedbackSensor(sensor.getSystemName(), number);
                 } else {
                     throw new JsonException(404,
-                            Bundle.getMessage(request.locale, "ErrorNotFound", SENSOR, node.asText()), request.id);
+                            Bundle.getMessage(request.locale, "ErrorNotFound", SENSOR, data.asText()), request.id);
                 }
             }
         } catch (JmriException ex) {
