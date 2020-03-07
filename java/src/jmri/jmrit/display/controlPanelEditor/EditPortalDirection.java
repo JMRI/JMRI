@@ -37,6 +37,10 @@ public class EditPortalDirection extends EditFrame implements ActionListener, Li
     public EditPortalDirection(String title, CircuitBuilder parent, OBlock block) {
         super(title, parent, block);
         pack();
+        contructorChecks(title, parent, block);
+    }
+
+    protected void contructorChecks(String title, CircuitBuilder parent, OBlock block) {
         String msg = _parent.checkForPortals(block, "DirectionArrow");
         if (msg == null) {
             msg = _parent.checkForPortalIcons(block, "DirectionArrow");
@@ -47,7 +51,7 @@ public class EditPortalDirection extends EditFrame implements ActionListener, Li
             _canEdit = false;
         }
     }
-
+    
     private JPanel makeArrowPanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -169,8 +173,6 @@ public class EditPortalDirection extends EditFrame implements ActionListener, Li
             _icon.setArrowOrientatuon(false);
             _icon.setHideArrows(false);
         } else if (PortalIcon.HIDDEN.equals(e.getActionCommand())) {
-//         _icon.setIcon(PortalIcon.TO_ARROW, _parent._editor.getPortalIcon(PortalIcon.HIDDEN));      
-//         _icon.setArrowOrientatuon(true);
             _icon.setHideArrows(true);
             _icon.setStatus(PortalIcon.HIDDEN);
             return;
@@ -208,14 +210,20 @@ public class EditPortalDirection extends EditFrame implements ActionListener, Li
 
     @Override
     protected void closingEvent(boolean close) {
+        StringBuffer sb = new StringBuffer();
         String msg = _parent.checkForPortals(_homeBlock, "BlockPaths");
-        if (msg == null) {
-            msg = _parent.checkForPortalIcons(_homeBlock, "DirectionArrow");
-        }
         if (msg != null) {
+            sb.append(msg);
+            sb.append("\n");
             close = true;
         }
-        closingEvent(close, msg);
+        msg = _parent.checkForPortalIcons(_homeBlock, "DirectionArrow");
+        if (msg != null) {
+            sb.append(msg);
+            sb.append("\n");
+            close = true;
+        }
+        closingEvent(close, sb.toString());
     }
 
 }

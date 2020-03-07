@@ -225,6 +225,7 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
             fireContentsChanged(this, 0, 0);
         }
 
+        @Override
         public void propertyChange(PropertyChangeEvent e) {
             if (e.getPropertyName().equals("deleted")) {
                 _parent.closingEvent(true);
@@ -453,9 +454,9 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
         if (_currentPath != null) {
             if (!pathIconsEqual(_pathGroup, _savePathGroup)) {
                 _pathChange = true;
-                if (_lengthPanel.isChanged()) {
-                    _pathChange = true;
-                }
+            }
+            if (_lengthPanel.isChanged(_currentPath.getLengthMm())) {
+                _pathChange = true;
             }
         } else if(_pathGroup.size() > 0){
             _pathChange = true;
@@ -470,7 +471,6 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
                 addNewPath(false);
             }
             _pathChange = false;
-            _lengthPanel.setChanged(false);
         }
         return;
     }
@@ -583,7 +583,6 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
      */
     private void addNewPath(boolean fromButton) {
         String name = _pathName.getText();
-        _lengthPanel.setChanged(false);
         if (log.isDebugEnabled()) {
             log.debug("addPath({}) for path \"{}\"", fromButton, name);
         }
@@ -762,21 +761,30 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
     @Override
     protected void closingEvent(boolean close) {
         checkForSavePath();
+        StringBuffer sb = new StringBuffer();
         String msg = _parent.checkForTrackIcons(_homeBlock, "BlockPaths");
         if(msg != null) {
+            sb.append(msg);
+            sb.append("\n");
             close = true;
         } else {
             msg = _parent.checkForPortals(_homeBlock, "BlockPaths");
             if (msg == null) {
                 msg = _parent.checkForPortalIcons(_homeBlock, "BlockPaths");
             } else {
+                sb.append(msg);
+                sb.append("\n");
                 close = true;
             }
         }
-        if (_canEdit && msg == null) {
+        if (_canEdit) {
             msg = findErrors();
+            if (msg != null) {
+                sb.append(msg);
+                sb.append("\n");
+            }
         }
-        if (closingEvent(close, msg)) {
+        if (closingEvent(close, sb.toString())) {
             _pathName.setText(null);
             clearPath(true);
             int oldState = _homeBlock.getState();

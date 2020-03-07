@@ -35,7 +35,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
-import jmri.jmris.json.JsonServerPreferences;
+import jmri.server.json.JsonServerPreferences;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpService;
 import jmri.server.json.JsonRequest;

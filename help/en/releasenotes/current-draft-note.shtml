@@ -8,12 +8,12 @@
             <ul>
                 <li></li>
             </ul>
-		
+
 	    <h4>Bachrus Speedo</h4>
             <ul>
                 <li></li>
             </ul>
-		
+
         <h4>C/MRI</h4>
             <ul>
                 <li></li>
@@ -284,7 +284,7 @@
             <ul>
                 <li></li>
             </ul>
-	    
+
 	    <h4>Team Digital</h4>
             <ul>
                 <li></li>
@@ -431,7 +431,7 @@
             <ul>
                 <li></li>
             </ul>
-            
+
     	<h4>Signal Groups</h4>
             <ul>
                 <li></li>
@@ -482,21 +482,31 @@
             <li> </li>
         </ul>
 
+    <h3>Where Used</h3>
+        <a id="WhereUsed" name="WhereUsed"></a>
+        <ul>
+            <li>The new <strong>Where Used</strong> tool is used to search JMRI for references to a
+    selected item.</li>
+        </ul>
+
    <h3>WiThrottle Server</h3>
         <a id="WS" name="WS"></a>
         <ul>
             <li></li>
         </ul>
-        
+
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li></li>
+            <li>Included the VSDecoderID instead of the file name to make the AudioBuffer system names unique for Diesel3Sound.</li>
+            <li>Made the VSD loop-player more robust. Another change concerns the timing. Depending on the speed of the
+	      computer hardware, the timing of the loop-player (sleep-interval) can now be adjusted.</li>
         </ul>
 
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>The toString() method is NamedBeans has been standardized to return the system name.
+            There's an extension mechanism to add additional information if needed.</li>
         </ul>
 

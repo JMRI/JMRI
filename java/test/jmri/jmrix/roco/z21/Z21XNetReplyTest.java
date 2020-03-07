@@ -90,6 +90,12 @@ public class Z21XNetReplyTest extends jmri.jmrix.lenz.XNetReplyTest {
         Assert.assertEquals("Monitor String",Bundle.getMessage("Z21LAN_X_CV_RESULT",21,5),r.toMonitorString());
     }
 
+    @Test
+    public void testToMonitorStringZ21_LAN_X_TURNOUT_INFO(){
+        Z21XNetReply r = new Z21XNetReply("43 00 01 01 43");
+        Assert.assertEquals("Monitor String",Bundle.getMessage("Z21LAN_X_TURNOUT_INFO",2,"Closed"),r.toMonitorString());
+    }
+
     // The minimal setup for log4J
     @Before
     @Override

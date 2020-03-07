@@ -18,7 +18,7 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.PowerManager;
 import jmri.SensorManager;
-import jmri.jmris.json.JsonServerPreferences;
+import jmri.server.json.JsonServerPreferences;
 import jmri.managers.DefaultPowerManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
@@ -418,6 +418,7 @@ public class JsonServletTest {
     
     private static class MockJsonServlet extends JsonServlet {
         
+        @Override
         void superInit() {
             // do nothing
         }

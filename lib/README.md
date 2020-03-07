@@ -92,10 +92,6 @@ After that, add and commit the additional files that were created within lib/
 - from http://www.sparetimelabs.com/maven2/com/sparetimelabs/purejavacomm/1.0.1/
 - javadoc at https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE
 
-##### jna-4.2.2.jar
-- version 4.2.2
-- from https://maven.java.net/content/repositories/releases/net/java/dev/jna/jna/4.2.2/
-
 ##### security.policy
 - (JMRI file)
 

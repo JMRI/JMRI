@@ -662,7 +662,7 @@
                         <id>prepare-agent-integration</id>
                         <goals>
                             <goal>prepare-agent</goal>
-                        </goals>      
+                        </goals>
                         <configuration>
                             <append>true</append>
                             <destFile>${jacoco.reportDir}/jacoco-it.exec</destFile>
@@ -685,12 +685,12 @@
                                 </fileSet>
                             </fileSets>
                         </configuration>
-                    </execution> 
+                    </execution>
                     <execution>
                         <id>report</id>
                         <goals>
                             <goal>report</goal>
-                        </goals>      
+                        </goals>
                     </execution>
                     <execution>
                         <id>default-check</id>
@@ -1371,16 +1371,15 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>2.13.0</version>
+            <version>3.3.0</version>
             <scope>test</scope>
         </dependency>
-        <!--
         <dependency>
-            <groupId>cglib</groupId>
-            <artifactId>cglib-nodep</artifactId>
-            <version>2.2.2</version>
+            <groupId>net.bytebuddy</groupId>
+            <artifactId>byte-buddy</artifactId>
+            <version>1.10.5</version>
+            <scope>test</scope>
         </dependency>
-        -->
         <dependency>
             <groupId>org.netbeans.external</groupId>
             <artifactId>jemmy</artifactId>

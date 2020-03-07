@@ -497,6 +497,8 @@
   </tocitem>
   <tocitem text="Timetable " target="html.tools.TimeTable"/>
 
+  <tocitem text="Where Used " target="package.jmri.jmrit.whereused.WhereUsed"/>
+
   <tocitem text="Tracker (Blocks) " target="html.tools.tracker.index"/>
 
   <tocitem text="Transits ">

@@ -20,7 +20,9 @@ import javax.annotation.ParametersAreNonnullByDefault;
  *
  * @author Bob Jacobsen Copyright (C) 2012
  * @since 3.3.1
+ * @deprecated for immediate removal when no other classes in package depend on it
  */
+@Deprecated
 public class Bundle extends jmri.jmris.Bundle {
 
     @CheckForNull

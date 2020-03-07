@@ -2,11 +2,12 @@ package jmri.jmris.simpleserver;
 
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 /**
@@ -19,20 +20,20 @@ public class SimpleServerMenuTest {
     @Test public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SimpleServerMenu a = new SimpleServerMenu();
-        Assert.assertNotNull(a);
+        assertThat(a).isNotNull();
     }
 
     @Test public void testStringCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SimpleServerMenu a = new SimpleServerMenu("Hello World");
-        Assert.assertNotNull(a);
+        assertThat(a).isNotNull();
     }
 
-    @Before public void setUp() {
+    @BeforeEach public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After public void tearDown() throws Exception {
+    @AfterEach public void tearDown() throws Exception {
         JUnitUtil.tearDown();
     }
 

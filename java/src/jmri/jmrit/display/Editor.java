@@ -73,6 +73,7 @@ import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.Light;
 import jmri.NamedBean;
+import jmri.NamedBeanUsageReport;
 import jmri.Reporter;
 import jmri.ShutDownManager;
 import jmri.SignalHeadManager;
@@ -667,7 +668,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 log.error("paint failed in thread "+
                     Thread.currentThread().getName()+" "+Thread.currentThread().getId()+": ", e);
             }
-            
+
             Stroke stroke = new BasicStroke();
             if (g2d != null) {
                 stroke = g2d.getStroke();
@@ -3385,6 +3386,63 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      */
     public static Editor getEditor(String name) {
         return InstanceManager.getDefault(EditorManager.class).getEditor(name);
+    }
+
+    public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
+        List<NamedBeanUsageReport> report = new ArrayList<>();
+        if (bean != null) {
+            getContents().forEach((pos) -> {
+                String data = getUsageData(pos);
+                if (pos instanceof MultiSensorIcon) {
+                    MultiSensorIcon multi = (MultiSensorIcon) pos;
+                    multi.getSensors().forEach((sensor) -> {
+                        if (bean.equals(sensor)) {
+                            report.add(new NamedBeanUsageReport("PositionalIcon", data));
+                        }
+                    });
+
+                } else if (pos instanceof SlipTurnoutIcon) {
+                    SlipTurnoutIcon slip3Scissor = (SlipTurnoutIcon) pos;
+                    if (bean.equals(slip3Scissor.getTurnout(SlipTurnoutIcon.EAST))) {
+                        report.add(new NamedBeanUsageReport("PositionalIcon", data));
+                    }
+                    if (bean.equals(slip3Scissor.getTurnout(SlipTurnoutIcon.WEST))) {
+                        report.add(new NamedBeanUsageReport("PositionalIcon", data));
+                    }
+                    if (slip3Scissor.getNamedTurnout(SlipTurnoutIcon.LOWEREAST) != null) {
+                        if (bean.equals(slip3Scissor.getTurnout(SlipTurnoutIcon.LOWEREAST))) {
+                            report.add(new NamedBeanUsageReport("PositionalIcon", data));
+                        }
+                    }
+                    if (slip3Scissor.getNamedTurnout(SlipTurnoutIcon.LOWERWEST) != null) {
+                        if (bean.equals(slip3Scissor.getTurnout(SlipTurnoutIcon.LOWERWEST))) {
+                            report.add(new NamedBeanUsageReport("PositionalIcon", data));
+                        }
+                    }
+
+                } else if (pos instanceof LightIcon) {
+                    LightIcon icon = (LightIcon) pos;
+                    if (bean.equals(icon.getLight())) {
+                        report.add(new NamedBeanUsageReport("PositionalIcon", data));
+                    }
+
+                } else {
+                    if (bean.equals(pos.getNamedBean())) {
+                        report.add(new NamedBeanUsageReport("PositionalIcon", data));
+                    }
+               }
+            });
+        }
+        return report;
+    }
+
+    String getUsageData(Positionable pos) {
+        Point point = pos.getLocation();
+        String data = String.format("%s :: x=%d, y=%d",
+                pos.getClass().getSimpleName(),
+                Math.round(point.getX()),
+                Math.round(point.getY()));
+        return data;
     }
 
     // initialize logging
