@@ -283,9 +283,23 @@ public interface Turnout extends DigitalIO {
      * Sensor-based feedback will not function until these sensors have been
      * provided.
      *
-     * @param pName the user or system name of the sensor
+     * @param name the user or system name of the sensor
+     * @param number the feedback number of the sensor, indexed from 0
      * @throws jmri.JmriException if unable to assign the feedback sensor
      */
+    public default void provideFeedbackSensor(@CheckForNull String name, int number) throws JmriException {
+        switch (number) {
+            case 0:
+                provideFirstFeedbackSensor(name);
+                break;
+            case 1:
+                provideSecondFeedbackSensor(name);
+                break;
+            default:
+                throw new IllegalArgumentException("Turnouts have no more than two sensors");
+        }
+    }
+    
     public void provideFirstFeedbackSensor(@CheckForNull String pName) throws JmriException;
 
     public void provideSecondFeedbackSensor(@CheckForNull String pName) throws JmriException;

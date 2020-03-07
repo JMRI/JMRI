@@ -16,15 +16,14 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import javax.annotation.Nonnull;
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.ProvidingManager;
 import jmri.Sensor;
-import jmri.SensorManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.server.json.JSON;
@@ -85,37 +84,12 @@ public class JsonTurnoutHttpService extends JsonNamedBeanHttpService<Turnout> {
     @Override
     public ObjectNode doPost(Turnout turnout, String name, String type, JsonNode data, JsonRequest request) throws JsonException {
         if (data.path(SENSOR).isArray()) {
-            try {
-                JsonNode node = data.path(SENSOR).get(0);
+            int number = 0;
+            for (JsonNode node : data.path(SENSOR)) {
                 if (node != null) {
-                    if (node.isNull()) {
-                        turnout.provideFirstFeedbackSensor(null);
-                    } else if (node.isTextual()) {
-                        Sensor sensor = InstanceManager.getDefault(SensorManager.class).getBySystemName(node.asText());
-                        if (sensor != null) {
-                            turnout.provideFirstFeedbackSensor(sensor.getSystemName());
-                        } else {
-                            throw new JsonException(404,
-                                    Bundle.getMessage(request.locale, "ErrorNotFound", SENSOR, node.asText()), request.id);
-                        }
-                    }
+                    this.addSensorToTurnout(turnout, node, number, request);
                 }
-                node = data.path(SENSOR).get(1);
-                if (node != null) {
-                    if (node.isNull()) {
-                        turnout.provideFirstFeedbackSensor(null);
-                    } else if (node.isTextual()) {
-                        Sensor sensor = InstanceManager.getDefault(SensorManager.class).getBySystemName(node.asText());
-                        if (sensor != null) {
-                            turnout.provideFirstFeedbackSensor(sensor.getSystemName());
-                        } else {
-                            throw new JsonException(404,
-                                    Bundle.getMessage(request.locale, "ErrorNotFound", SENSOR, node.asText()), request.id);
-                        }
-                    }
-                }
-            } catch (JmriException ex) {
-                throw new JsonException(500, Bundle.getMessage(request.locale, "ErrorInternal", type), request.id);
+                number++;
             }
         }
         if (data.path(INVERTED).isBoolean()) {
@@ -137,6 +111,24 @@ public class JsonTurnoutHttpService extends JsonNamedBeanHttpService<Turnout> {
                 throw new JsonException(400, Bundle.getMessage(request.locale, "ErrorUnknownState", TURNOUT, state), request.id);
         }
         return this.doGet(turnout, name, type, request);
+    }
+
+    private void addSensorToTurnout(@Nonnull Turnout turnout, @Nonnull JsonNode node, int number, @Nonnull JsonRequest request) throws JsonException {
+        try {
+            if (node.isNull()) {
+                turnout.provideFeedbackSensor(null, number);
+            } else if (node.isTextual()) {
+                Sensor sensor = sensorService.getNamedBean(node.asText(), SENSOR, request);
+                if (sensor != null) {
+                    turnout.provideFeedbackSensor(sensor.getSystemName(), number);
+                } else {
+                    throw new JsonException(404,
+                            Bundle.getMessage(request.locale, "ErrorNotFound", SENSOR, node.asText()), request.id);
+                }
+            }
+        } catch (JmriException ex) {
+            throw new JsonException(500, Bundle.getMessage(request.locale, "ErrorInternal", TURNOUT), request.id);
+        }
     }
 
     @Override
