@@ -30,7 +30,6 @@ public abstract class JsonSocketService<H extends JsonHttpService> {
      *                correctly
      * @param data    JSON data; the contents of this will depend on the
      *                implementing service
-     * @param method  The HTTP method to handle in this message
      * @param request The JSON request
      * @throws java.io.IOException Thrown if the service cannot send a response;
      *                             this will cause the JSON Server to close its
@@ -42,7 +41,7 @@ public abstract class JsonSocketService<H extends JsonHttpService> {
      * @throws JsonException       Thrown if the service needs to pass an error
      *                             message back to the client
      */
-    public abstract void onMessage(@Nonnull String type, @Nonnull JsonNode data, @Nonnull String method,
+    public abstract void onMessage(@Nonnull String type, @Nonnull JsonNode data,
             @Nonnull JsonRequest request) throws IOException, JmriException, JsonException;
 
     /**
@@ -67,13 +66,13 @@ public abstract class JsonSocketService<H extends JsonHttpService> {
      * @throws JsonException       Thrown if the service needs to pass an error
      *                             message back to the client.
      * @deprecated since 4.19.2; use
-     *             {@link #onMessage(String, JsonNode, String, JsonRequest)}
+     *             {@link #onMessage(String, JsonNode, JsonRequest)}
      *             instead
      */
     @Deprecated
     public void onMessage(@Nonnull String type, @Nonnull JsonNode data, @Nonnull String method,
             @Nonnull Locale locale, int id) throws IOException, JmriException, JsonException {
-        onMessage(type, data, method, new JsonRequest(locale, JSON.V5, method, id));
+        onMessage(type, data, new JsonRequest(locale, JSON.V5, method, id));
     }
 
     /**

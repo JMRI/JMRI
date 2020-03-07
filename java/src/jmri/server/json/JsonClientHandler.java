@@ -163,7 +163,7 @@ public class JsonClientHandler {
                 }
                 if (services.get(type) != null) {
                     for (JsonSocketService<?> service : services.get(type)) {
-                        service.onMessage(type, data, method, request);
+                        service.onMessage(type, data, request);
                     }
                 } else {
                     log.warn("Requested type '{}' unknown.", type);

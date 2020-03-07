@@ -16,17 +16,6 @@ public class JsonRequest {
     public final String version;
 
     /**
-     * Create a JSON request container with the method {@value JSON#GET}.
-     *
-     * @param locale  the request locale
-     * @param version the JSON version to use
-     * @param id      the ID of the request
-     */
-    public JsonRequest(@Nonnull Locale locale, @Nonnull String version, int id) {
-        this(locale, version, JSON.GET, id);
-    }
-
-    /**
      * Create a JSON request container.
      *
      * @param locale  the request locale
