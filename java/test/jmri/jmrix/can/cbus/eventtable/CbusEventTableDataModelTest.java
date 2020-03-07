@@ -31,6 +31,8 @@ public class CbusEventTableDataModelTest {
     public void testCTor() {
         CbusEventTableDataModel t = new CbusEventTableDataModel(memo,4,CbusEventTableDataModel.MAX_COLUMN);
         Assert.assertNotNull("exists",t);
+        t.skipSaveOnDispose();
+        t.dispose();
     }
 
     @Test
@@ -84,6 +86,8 @@ public class CbusEventTableDataModelTest {
         
         Assert.assertEquals("can id reply", tcis.getCanid(),(int) t.getValueAt(0,CbusEventTableDataModel.CANID_COLUMN));
         
+        t.skipSaveOnDispose();
+        t.dispose();
     }
 
     @Test
@@ -153,6 +157,7 @@ public class CbusEventTableDataModelTest {
         
         
         Assert.assertEquals("listener",1,tcis.numListeners());
+        t.skipSaveOnDispose();
         t.dispose();
         Assert.assertEquals("listener",0,tcis.numListeners());
     }
@@ -186,6 +191,7 @@ public class CbusEventTableDataModelTest {
         Assert.assertTrue(t.getColumnName(CbusEventTableDataModel.STLR_OFF_COLUMN).contains("Off"));
         Assert.assertTrue(t.getColumnName(999).contains("unknown"));
 
+        t.skipSaveOnDispose();
         t.dispose();
 
     }
@@ -219,6 +225,7 @@ public class CbusEventTableDataModelTest {
             t.getColumnClass(CbusEventTableDataModel.STATE_COLUMN) ==  Enum.class );
         Assert.assertTrue("column class null", t.getColumnClass(999) ==  null );
         
+        t.skipSaveOnDispose();
         t.dispose();
         
     }
@@ -372,6 +379,7 @@ public class CbusEventTableDataModelTest {
         Assert.assertEquals("row 0 Doctor Event Comment", "Doctor Event Comment" ,
             t.getValueAt(0,CbusEventTableDataModel.COMMENT_COLUMN));
 
+        t.skipSaveOnDispose();
         t.dispose();
         
         tcisl.terminateThreads();
@@ -393,6 +401,7 @@ public class CbusEventTableDataModelTest {
         Assert.assertTrue("equals",event1.equals(event2));
         Assert.assertFalse("not equal",event1.equals(event3));
         
+        t.skipSaveOnDispose();
         t.dispose();
     
     }
@@ -422,10 +431,7 @@ public class CbusEventTableDataModelTest {
         tcis.terminateThreads();
         memo = null;
         tcis = null;
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
-
-        
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusEventTableDataModelTest.class);

@@ -1,9 +1,9 @@
 <!-- SidebarSupportedHardware.shtml -->
 <!-- This is the common sidebar definition for supported hardware pages -->
 		<dt><h3 style="padding-left: 1em;"><a href="/help/en/html/hardware/">Supported Hardware</a></h3></dt>
-		<dd>
+		<dd>Devices, command stations, networks, and protocols:
 		    <ul>
-				<!-- copy this list from /root sidebar, compare with /help/en/html/index.shtml, checked 11/2019 -->
+				<li><a href="/help/en/html/hardware/arduino/index.shtml">Arduinos</a>
 				<li><a href="/help/en/html/hardware/XPressNet/index.shtml">Atlas Commander</a>
 				<li><a href="/help/en/html/hardware/bachrus/index.shtml">Bachrus</a>
 				<li><a href="/help/en/html/hardware/can/index.shtml">CAN Bus Networks</a>				
@@ -25,7 +25,7 @@
 				<li><a href="/help/en/html/hardware/marklin/index.shtml">M&auml;rklin CS2</a>
 				<li><a href="/help/en/html/hardware/can/cbus/index.shtml">MERG CBUS</a>
 				<li><a href="/help/en/html/hardware/modbus/index.shtml">Modbus</a>
-                <li><a href="/help/en/html/hardware/mqtt/index.shtml">MQTT</a>
+                                <li><a href="/help/en/html/hardware/mqtt/index.shtml">MQTT</a>
 				<li><a href="/help/en/html/hardware/mrc/index.shtml">MRC</a>
 				<li><a href="/help/en/html/hardware/rps/index.shtml">NAC Services RPS</a>
 				<li><a href="/help/en/html/hardware/nce/NCE.shtml">NCE</a>
@@ -43,7 +43,7 @@
 				<li><a href="/help/en/html/hardware/XPressNet/index.shtml">Viessmann Commander</a>
 				<li><a href="/help/en/html/hardware/nce/Wangrow.shtml">Wangrow System One</a>
 			        <li><a href="/help/en/package/jmri/jmrit/withrottle/UserInterface.shtml">WiFi Throttles</a>
-                             <!-- Prior line will need to be changted when referenced page is reorganized @jerryg2003 01-14-2020 -->
+                             <!-- Prior line will need to be changed when referenced page is reorganized @jerryg2003 01-14-2020 -->
 				<li><a href="/help/en/html/hardware/powerline/index.shtml">X10</a>
 				<li><a href="/help/en/html/hardware/zimo/Zimo.shtml">Zimo MX-1</a>
 				<li><a href="/help/en/html/hardware/XPressNet/index.shtml">ZTC</a>

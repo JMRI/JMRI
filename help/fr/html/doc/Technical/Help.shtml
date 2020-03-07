@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updatedted by Blorec Herv&#233;  2016-07-20-->  
+<!-- Updatedted by Blorec Herv&#233;  2016-07-20-->
 <html lang="fr">
 <head>
     <title>
@@ -33,13 +33,13 @@ en utilisant
 
 <h2>Organisation des fichiers aide</h2>
 
-Les fichiers d'aide sont situ&#233;s dans le r&#233;pertoire "help" 
+Les fichiers d'aide sont situ&#233;s dans le r&#233;pertoire "help"
 dans le r&#233;pertoire de distribution JMRI.
 
 <p>
-La copie maître de ceux-ci est stock&#233;e dans notre r&#233;pertoire comme le r&#233;pertoire "help" 
+La copie ma&#238;tre de ceux-ci est stock&#233;e dans notre r&#233;pertoire comme le r&#233;pertoire "help" 
 dans le r&#233;f&#233;rentiel de code JMRI.
-Cela signifie que pour obtenir votre propre copie locale, il suffit de suivres les &#233;tapes 
+Cela signifie que pour obtenir votre propre copie locale, il suffit de suivres les &#233;tapes
 sur la page <a href="getgitcode.shtml">obtention du code</a>
 
 <p>
@@ -50,26 +50,26 @@ d'internationaliser les pages d'aide.
 Dans ce cadre, il y a plusieurs arbres de  fichiers:
 <ul>
 <li> Package  - organis&#233; comme l'arbre paquet source,
-il contient les fichiers d'aide sp&#233;cifiques au code pour  par exemple une 
+il contient les fichiers d'aide sp&#233;cifiques au code pour  par exemple une
 fen&#234;tre particuli&#232;re ou d'un composant. Par exemple, une fen&#234;tre qui a cr&#233;&#233;
 par la classe <code>jmri.jmrit.speedometer.SpeedometerFrame</code>
 (depuis le fichier <code>src/jmri/jmrit/speed/SpeedometerFrame.java </code>)
 devrait disposer de sa fen&#234;tre d'aide sp&#233;cifique dans un fichier de
 <code>package/jmri/jmrit/speed/SpeedometerFrame.shtml</code>.
-<li> html - une description g&#233;n&#233;rale, des tutoriels, etc. 
+<li> html - une description g&#233;n&#233;rale, des tutoriels, etc.
 Ceux-ci organis&#233;s &#224; leur tour dans des r&#233;pertoires qui repr&#233;sentent des domaines g&#233;n&#233;raux.
 <li> Manuel - une version du manuel DecoderPro reformat&#233;e pour une
 utilisation dans le syst&#232;me d'aide.( Les plus anciens sont stock&#233;s dans le <a href="WebSite.shtml">site internet principal</a>)
 
 </ul>
 
-A long terme, nous voulons seulement deux branches dans cette structure: la partie "package" 
+A long terme, nous voulons seulement deux branches dans cette structure: la partie "package"
 de l'arbre pour aider &#224; l'information qui est sp&#233;cifique &#224;
 un morceau de code particulier,
 et une autre partie de l'arbre pour plus d'informations g&#233;n&#233;rales.
 (C'est une question de religion si cette 2&#232;me partie devrait &#234;tre appel&#233;
 "html" ou "manuel "; l'essentiel est qu'on se retrouve avec un seul).
-Le web est cens&#233; &#234;tre un  <em>web </em>, avec de nombreux chemins &#224; suivre pour 
+Le web est cens&#233; &#234;tre un  <em>web </em>, avec de nombreux chemins &#224; suivre pour
 atteindre le contenu. La deuxi&#232;me partie de l'arbre devrait &#233;galement &#234;tre organis&#233;
 comme "une page, un th&#232;me", avec des liens pour les connecter au besoin
 
@@ -197,18 +197,18 @@ personnes n'aient pas &#224; recr&#233;er les fichiers de contr&#244;le eux-m&#2
 <a name="tocAndIndex" id="tocAndIndex"></a><h3>Table des Mati&#232;res (TOC) et Index</h3>
 
 Aide Java inclut une
-<a href="http://jmri.org/help/en/webtoc.shtml">table des mati&#232;res (toc)</a> et un 
-<a href="http://jmri.org/help/en/webindex.shtml">index</a>. Ils sont les eux disponibles 
+<a href="http://jmri.org/help/en/webtoc.shtml">table des mati&#232;res (toc)</a> et un
+<a href="http://jmri.org/help/en/webindex.shtml">index</a>. Ils sont les eux disponibles
 comme un lien hyperliens sur le web, et fournis via une agr&#233;able interface utilisateur lors de
 l'utilisation dans le programme.
 <p>
-L'information sous-jacente doit &#234;rte maintenue manuellement dans ls fichiers respectifs 
+L'information sous-jacente doit &#234;rte maintenue manuellement dans ls fichiers respectifs
 help/fr/JmriHelp_enTOC.xml and help/fr/JmriHelp_enIndex.xml. JHelpDev fait alors les fichiers dont Java Help a besoin,
 et une &#233;tape "ant" dans le r&#233;pertoire fait les fichiers webtoc.shtml et webindex.shtml qui sont affich&#233;s sur le web.
 <p>
-vous pouvez aussi utiliser l'outil JHelpDev pour ajouter des articles &#225; la table des mati&#232;res 
+vous pouvez aussi utiliser l'outil JHelpDev pour ajouter des articles &#225; la table des mati&#232;res
 et &#225; l'index si vous voulez.
-Il y a plus d'infos sur comment le faire sur le 
+Il y a plus d'infos sur comment le faire sur le
 <a href="http://jhelpdev.sourceforge.net/">site web JHelpDev</a>. Rappelez-vous d'ex&#233;cuter "ant" apr&#232;s
 chaque ajout pour actualiser les versions web.
 

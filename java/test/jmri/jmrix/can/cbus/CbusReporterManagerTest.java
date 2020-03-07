@@ -79,11 +79,11 @@ public class CbusReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
     @After
     public void tearDown() {
         l = null;
+        tcis.terminateThreads();
         tcis = null;
+        memo.dispose();
         memo = null;
-        jmri.util.JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
-
 
 }

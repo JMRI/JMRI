@@ -11,7 +11,7 @@
               <li><a href="/help/en/html/tools/Lights.shtml">Lights</a>
               <li><a href="/help/en/html/tools/Sensors.shtml">Sensors</a>
               <li><a href="/help/en/html/tools/signaling/index.shtml">Signaling</a>
-              <li><a href="/help/en/html/tools/consisttool/ConsistTool.shtml">Consisting</a>           
+              <li><a href="/help/en/html/tools/consisttool/ConsistTool.shtml">Consisting</a>
               <li><a href="/help/en/html/tools/Reporters.shtml">Reporters</a>
               <li><a href="/help/en/html/tools/Memories.shtml">Memory Variables</a>
             </ul>
@@ -37,6 +37,7 @@
               <li><a href="/help/en/html/tools/IdTags.shtml">ID Tags</a>
               <li><a href="/help/en/html/tools/speedometer/index.shtml">Speedometer</a>
               <li><a href="/help/en/html/tools/TimeTable.shtml">Timetable</a>
+              <li><a href="/help/en/package/jmri/jmrit/whereused/WhereUsed.shtml">Where Used</a>
             </ul>
 
             <li><i><a href="/help/en/html/tools/index.shtml#systemSpecificTools">System-specific...</a></i>

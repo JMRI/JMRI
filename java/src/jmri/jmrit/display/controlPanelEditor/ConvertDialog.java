@@ -24,7 +24,6 @@ import jmri.jmrit.display.palette.FamilyItemPanel;
 import jmri.jmrit.display.palette.IndicatorItemPanel;
 import jmri.jmrit.display.palette.IndicatorTOItemPanel;
 import jmri.jmrit.logix.OBlock;
-import jmri.util.PlaceWindow;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +34,6 @@ class ConvertDialog extends JDialog {
         private PositionableLabel _pos;
         FamilyItemPanel _panel;
         DisplayFrame _filler;
-        java.awt.Point location;
 
         ConvertDialog(CircuitBuilder cb, PositionableLabel pos, OBlock block) {
             super(cb._editor, true);
@@ -91,17 +89,15 @@ class ConvertDialog extends JDialog {
             }
             _panel.init(updateAction);
             Dimension dim = _panel.getPreferredSize();
-//            JScrollPane sp = new JScrollPane(_panel);
+            javax.swing.JScrollPane sp = new javax.swing.JScrollPane(_panel);
             dim = new Dimension(dim.width +25, dim.height + 25);
-//            add(_panel);
-//            sp.setPreferredSize(dim);
-            _panel.setPreferredSize(dim);
-            add(_panel);
+            sp.setPreferredSize(dim);
+            sp.setPreferredSize(dim);
+            add(sp);
             setTitle(Bundle.getMessage(title));
             pack();
-            location = PlaceWindow.inside(cb._editor, pos, this);
-            setLocation(location);
-            setVisible(true);
+            jmri.InstanceManager.getDefault(jmri.util.PlaceWindow.class).nextTo(cb._editor, pos, this);
+             setVisible(true);
         }
 
         /*
@@ -109,22 +105,12 @@ class ConvertDialog extends JDialog {
          * need to do for reSizeDisplay and reSize
          */
         private void displayIcons() {
-            Dimension oldDim = _panel.getSize();
-            Dimension totalDim = getSize();
-            _panel.invalidate();
-            invalidate();
             Dimension newDim = _panel.getPreferredSize();
-            Dimension deltaDim = new Dimension(totalDim.width - oldDim.width, totalDim.height - oldDim.height);
-            Dimension dim = new Dimension(deltaDim.width + newDim.width + 10, 
-                    deltaDim.height + newDim.height + 10);
+            Dimension deltaDim = _panel.shellDimension(_panel);
+            Dimension dim = new Dimension(deltaDim.width + newDim.width, deltaDim.height + newDim.height);
             setPreferredSize(dim);
+            invalidate();
             pack();
-            setLocation(location);
-            repaint();
-            if (log.isDebugEnabled()) {
-                log.debug(" panelDim= ({}, {}) totalDim= ({}, {}) setPreferredSize to ({}, {})", 
-                        oldDim.width, oldDim.height, newDim.width, newDim.height, dim.width, dim.height);
-            }
         }
 
         private void convertTO(OBlock block) {
@@ -183,7 +169,8 @@ class ConvertDialog extends JDialog {
             pos.updateSize();
             _parent._editor.highlight(null);
             dispose();
+            _filler.dispose();
         }
 
-        private final static Logger log = LoggerFactory.getLogger(ConvertDialog.class);
+    //    private final static Logger log = LoggerFactory.getLogger(ConvertDialog.class);
     }

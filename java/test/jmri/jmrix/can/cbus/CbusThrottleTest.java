@@ -423,7 +423,9 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @After
     @Override
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        memo.dispose();
+        memo = null;
+        tc.terminateThreads();
         JUnitUtil.tearDown();
 
     }
