@@ -136,7 +136,7 @@ public class LevelXing extends LayoutTrack {
                 namedBean = signalDHeadNamed;
                 break;
             default:
-                log.warn("{}.getSignalHead({})", getName(), loc);
+                log.warn("{}.getSignalHead({}); Unhandled loc", getName(), loc);
                 break;
         }
         if (namedBean != null) {
@@ -161,7 +161,7 @@ public class LevelXing extends LayoutTrack {
                 namedBean = signalDMastNamed;
                 break;
             default:
-                log.warn("{}.getSignalMast({})", getName(), loc);
+                log.warn("{}.getSignalMast({}); Unhandled loc", getName(), loc);
                 break;
         }
         if (namedBean != null) {
@@ -186,7 +186,7 @@ public class LevelXing extends LayoutTrack {
                 namedBean = sensorDNamed;
                 break;
             default:
-                log.warn("{}.getSensor({})", getName(), loc);
+                log.warn("{}.getSensor({}); Unhandled loc", getName(), loc);
                 break;
         }
         if (namedBean != null) {

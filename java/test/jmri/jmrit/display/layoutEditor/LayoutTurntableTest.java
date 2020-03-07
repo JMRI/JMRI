@@ -193,7 +193,7 @@ public class LayoutTurntableTest {
 
         //invalid index
         layoutTurntable.setRayTurnout(5, null, Turnout.THROWN);
-        JUnitAppender.assertErrorMessage("Attempt to add Turnout control to a non-existant ray track");
+        JUnitAppender.assertErrorMessage("TUR1.setRayTurnout(5, null, 4); Attempt to add Turnout control to a non-existant ray track");
 
         for (int idx = 0; idx < 4; idx++) {
             layoutTurntable.setRayTurnout(idx, null, Turnout.THROWN);
@@ -299,7 +299,7 @@ public class LayoutTurntableTest {
         Point2D center = layoutTurntable.getCoordsCenter();
         //invalid index
         layoutTurntable.setRayCoordsIndexed(0, 0, 5);
-        JUnitAppender.assertErrorMessage("Attempt to move a non-existant ray track");
+        JUnitAppender.assertErrorMessage("TUR1.setRayCoordsIndexed(0, 0, 5); Attempt to move a non-existant ray track");
 
         for (int idx = 0; idx < 4; idx++) {
             double angleRad = Math.toRadians(idx * 33);
@@ -319,7 +319,7 @@ public class LayoutTurntableTest {
 
         //invalid connection type
         Point2D testPoint = layoutTurntable.getCoordsForConnectionType(LayoutTrack.NONE);
-        JUnitAppender.assertErrorMessage("Invalid connection type 0");
+        JUnitAppender.assertErrorMessage("TUR1.getCoordsForConnectionType(0); Invalid connection type");
         Assert.assertEquals("layoutTurntable.getCoordsForConnectionType(NONE)",
                 layoutTurntablePoint, testPoint);
 
@@ -349,7 +349,7 @@ public class LayoutTurntableTest {
             layoutTurntable.getConnection(LayoutTrack.NONE);
             Assert.fail("layoutTurntable.getConnection didn't throw exception");
         } catch (JmriException ex) {
-            JUnitAppender.assertWarnMessage("Invalid Turntable connection type 0");
+            JUnitAppender.assertWarnMessage("TUR1.getCoordsForConnectionType(0); Invalid connection type");
         }
 
         setupTracks();
@@ -382,7 +382,7 @@ public class LayoutTurntableTest {
             layoutTurntable.setConnection(LayoutTrack.POS_POINT, null, LayoutTrack.POS_POINT);
             Assert.fail("layoutTurntable.setConnection(...) didn't throw exception");
         } catch (JmriException ex) {
-            JUnitAppender.assertWarnMessage("unexpected type of connection to layoutTurntable - 1");
+            JUnitAppender.assertWarnMessage("TUR1.setConnection(1); Invalid connection type");
         }
 
         try {
@@ -390,7 +390,7 @@ public class LayoutTurntableTest {
             layoutTurntable.setConnection(LayoutTrack.POS_POINT, null, LayoutTrack.TRACK);
             Assert.fail("layoutTurntable.setConnection(...) didn't throw exception");
         } catch (JmriException ex) {
-            JUnitAppender.assertWarnMessage("Invalid Connection Type 1");
+            JUnitAppender.assertWarnMessage("TUR1.setConnection(1, null, 10); Invalid connection type");
         }
 
         try {
@@ -404,7 +404,7 @@ public class LayoutTurntableTest {
             Assert.assertEquals("layoutTurntable.getConnection(TURNTABLE_RAY_OFFSET + 3)",
                     ts4, layoutTurntable.getConnection(LayoutTrack.TURNTABLE_RAY_OFFSET + 3));
         } catch (JmriException ex) {
-            Assert.fail("layoutTurntable.getConnection threw exception: " + ex);
+            Assert.fail("TUR1.getConnection threw exception: " + ex);
         }
     }
 
@@ -514,7 +514,7 @@ public class LayoutTurntableTest {
 
         //invalid position
         layoutTurntable.setPosition(5);
-        JUnitAppender.assertErrorMessage("Attempt to set the position on a non-existant ray track");
+        JUnitAppender.assertErrorMessage("TUR1..setPosition(5); Attempt to set the position on a non-existant ray track");
 
         //this is still at the default position (-1 == not set)
         Assert.assertEquals("layoutTurntable.getPosition()", -1, layoutTurntable.getPosition());

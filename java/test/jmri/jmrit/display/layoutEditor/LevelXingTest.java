@@ -113,7 +113,7 @@ public class LevelXingTest {
 
         //this should output a warning
         levelXing.getSignalHead(LayoutTrack.NONE);
-        JUnitAppender.assertWarnMessage("Unhandled loc: 0");
+        JUnitAppender.assertWarnMessage("MyLevelXing.getSignalHead(0); Unhandled loc");
     }
 
     @Test
@@ -134,7 +134,7 @@ public class LevelXingTest {
 
         //this should output a warning
         levelXing.getSignalMast(LayoutTrack.NONE);
-        JUnitAppender.assertWarnMessage("Unhandled loc: 0");
+        JUnitAppender.assertWarnMessage("MyLevelXing.getSignalMast(0); Unhandled loc");
     }
 
     @Test
@@ -155,7 +155,7 @@ public class LevelXingTest {
 
         //this should output a warning
         levelXing.getSensor(LayoutTrack.NONE);
-        JUnitAppender.assertWarnMessage("Unhandled loc: 0");
+        JUnitAppender.assertWarnMessage("MyLevelXing.getSensor(0); Unhandled loc");
     }
 
     @Test
@@ -250,7 +250,7 @@ public class LevelXingTest {
             levelXing.getConnection(LayoutTrack.NONE);
             Assert.fail("levelXing.getConnection didn't throw an exception");
         } catch (JmriException ex) {
-            JUnitAppender.assertWarnMessage("Invalid Point Type 0");
+            JUnitAppender.assertWarnMessage("MyLevelXing.getConnection(0); invalid connection type");
         }
     }
 
@@ -264,14 +264,14 @@ public class LevelXingTest {
             levelXing.setConnection(LayoutTrack.NONE, null, LayoutTrack.NONE);
             Assert.fail("levelXing.setConnection(NONE, null, NONE) didn't throw exception");
         } catch (JmriException ex) {
-            JUnitAppender.assertWarnMessage("Invalid connectionType (0) to LevelXing MyLevelXing.");
+            JUnitAppender.assertWarnMessage("MyLevelXing.setConnection(0, null, 0); invalid connection type");
         }
 
         try {   //unexpected type of connection to LevelXing
             levelXing.setConnection(LevelXing.LEVEL_XING_A, null, LevelXing.POS_POINT);
             Assert.fail("levelXing.setConnection(LEVEL_XING_A, null, POS_POINT) didn't throw exception");
         } catch (JmriException ex) {
-            JUnitAppender.assertWarnMessage("unexpected type of connection (6) to LevelXing MyLevelXing");
+            JUnitAppender.assertWarnMessage("MyLevelXing.setConnection(6, null, 1); unexpected type");
         }
 
         try {   //these should all be good
@@ -280,7 +280,7 @@ public class LevelXingTest {
             levelXing.setConnection(LevelXing.LEVEL_XING_C, null, LayoutTrack.NONE);
             levelXing.setConnection(LevelXing.LEVEL_XING_D, null, LayoutTrack.NONE);
         } catch (JmriException ex) {
-            Assert.fail("levelXing.setConnection(LEVEL_XING_[ABCD], null, POS_POINT) didn't throw exception");
+            Assert.fail("levelXing.setConnection(LEVEL_XING_[ABCD], null, NONE) threw exception");
         }
     }
 
@@ -292,25 +292,25 @@ public class LevelXingTest {
 
         //unexpected type of connection
         levelXing.setConnectA(null, LayoutTrack.TRACK);
-        JUnitAppender.assertErrorMessage("unexpected type of A connection to levelXing - 10");
+        JUnitAppender.assertErrorMessage("levelXing.setConnectA((null, 10); invalid type");
         levelXing.setConnectB(null, LayoutTrack.TRACK);
-        JUnitAppender.assertErrorMessage("unexpected type of B connection to levelXing - 10");
+        JUnitAppender.assertErrorMessage("levelXing.setConnectB((null, 10); invalid type");
         levelXing.setConnectC(null, LayoutTrack.TRACK);
-        JUnitAppender.assertErrorMessage("unexpected type of C connection to levelXing - 10");
+        JUnitAppender.assertErrorMessage("levelXing.setConnectC((null, 10); invalid type");
         levelXing.setConnectD(null, LayoutTrack.TRACK);
-        JUnitAppender.assertErrorMessage("unexpected type of D connection to levelXing - 10");
+        JUnitAppender.assertErrorMessage("levelXing.setConnectD((null, 10); invalid type");
 
         TrackSegment ts = new TrackSegment("TS1", null, LayoutTrack.NONE, null, LayoutTrack.NONE, false, false, false, layoutEditor);
 
         //unexpected type of connection
         levelXing.setConnectA(ts, LayoutTrack.NONE);
-        JUnitAppender.assertErrorMessage("unexpected type of A connection to levelXing - 0");
+        JUnitAppender.assertErrorMessage("levelXing.setConnectA((ts, 0); invalid type");
         levelXing.setConnectB(ts, LayoutTrack.NONE);
-        JUnitAppender.assertErrorMessage("unexpected type of B connection to levelXing - 0");
+        JUnitAppender.assertErrorMessage("levelXing.setConnectB((ts, 0); invalid type");
         levelXing.setConnectC(ts, LayoutTrack.NONE);
-        JUnitAppender.assertErrorMessage("unexpected type of C connection to levelXing - 0");
+        JUnitAppender.assertErrorMessage("levelXing.setConnectC((ts, 0); invalid type");
         levelXing.setConnectD(ts, LayoutTrack.NONE);
-        JUnitAppender.assertErrorMessage("unexpected type of D connection to levelXing - 0");
+        JUnitAppender.assertErrorMessage("levelXing.setConnectD((ts, 0); invalid type");
 
         //everything should be good here (no error output)
         levelXing.setConnectA(ts, LayoutTrack.TRACK);
@@ -331,7 +331,7 @@ public class LevelXingTest {
 
         //invalid connection type
         levelXing.getCoordsForConnectionType(LayoutTrack.NONE);
-        JUnitAppender.assertErrorMessage("getCoordsForConnectionType(): Invalid connection type 0");
+        JUnitAppender.assertErrorMessage("levelXing.getCoordsForConnectionType(0); Invalid connection type");
 
         //valid connection types (no error output)
         Assert.assertEquals("levelXing.getCoordsForConnectionType(LayoutTrack.LEVEL_XING_CENTER)",
