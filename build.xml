@@ -635,9 +635,6 @@
                 javac.source="${javaccgen};${jjtreegen}"
                 javac.deprecation="off"
         />
-        <copy todir="${target}/jmri" overwrite="true">
-            <fileset dir="${genjavasrcdir}/jmri" includes="*.properties"/>
-        </copy>
     </target>
 
 
