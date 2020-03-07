@@ -15,8 +15,8 @@ import org.junit.Test;
  */
 public class CbusBootloaderPaneTest extends jmri.util.swing.JmriPanelTest {
 
-    jmri.jmrix.can.CanSystemConnectionMemo memo = null;
-    jmri.jmrix.can.TrafficController tcis = null;
+    private jmri.jmrix.can.CanSystemConnectionMemo memo;
+    private jmri.jmrix.can.TrafficController tcis;
 
     @Override 
     @Test
@@ -62,7 +62,6 @@ public class CbusBootloaderPaneTest extends jmri.util.swing.JmriPanelTest {
         tcis = null;
         memo = null;
         JUnitUtil.resetWindows(false,false);
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 
