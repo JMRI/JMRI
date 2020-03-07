@@ -40,24 +40,24 @@ public class JsonTurnoutHttpServiceTest extends JsonNamedBeanHttpServiceTestBase
         Turnout turnout1 = manager.provideTurnout("IT1");
         JsonNode result;
         turnout1.setState(Turnout.UNKNOWN);
-        result = service.doGet(JsonTurnoutServiceFactory.TURNOUT, "IT1",
+        result = service.doGet(JsonTurnout.TURNOUT, "IT1",
                 NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 42));
         validate(result);
         assertEquals(JsonTurnout.TURNOUT, result.path(JSON.TYPE).asText());
         assertEquals("IT1", result.path(JSON.DATA).path(JSON.NAME).asText());
         assertEquals(JSON.UNKNOWN, result.path(JSON.DATA).path(JSON.STATE).asInt());
         turnout1.setState(Turnout.CLOSED);
-        result = service.doGet(JsonTurnoutServiceFactory.TURNOUT, "IT1",
+        result = service.doGet(JsonTurnout.TURNOUT, "IT1",
                 NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 42));
         validate(result);
         assertEquals(JSON.CLOSED, result.path(JSON.DATA).path(JSON.STATE).asInt());
         turnout1.setState(Turnout.THROWN);
-        result = service.doGet(JsonTurnoutServiceFactory.TURNOUT, "IT1",
+        result = service.doGet(JsonTurnout.TURNOUT, "IT1",
                 NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 42));
         validate(result);
         assertEquals(JSON.THROWN, result.path(JSON.DATA).path(JSON.STATE).asInt());
         turnout1.setState(Turnout.INCONSISTENT);
-        result = service.doGet(JsonTurnoutServiceFactory.TURNOUT, "IT1",
+        result = service.doGet(JsonTurnout.TURNOUT, "IT1",
                 NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 42));
         validate(result);
         assertEquals(JSON.INCONSISTENT, result.path(JSON.DATA).path(JSON.STATE).asInt());
@@ -125,15 +125,15 @@ public class JsonTurnoutHttpServiceTest extends JsonNamedBeanHttpServiceTestBase
     public void testDoGetList() throws JsonException {
         TurnoutManager manager = InstanceManager.getDefault(TurnoutManager.class);
         JsonNode result;
-        result = service.doGetList(JsonTurnoutServiceFactory.TURNOUT, mapper.createObjectNode(), new JsonRequest(locale, JSON.V5, 0));
+        result = service.doGetList(JsonTurnout.TURNOUT, mapper.createObjectNode(), new JsonRequest(locale, JSON.V5, 0));
         validate(result);
         assertEquals(0, result.size());
         manager.provideTurnout("IT1");
-        result = service.doGetList(JsonTurnoutServiceFactory.TURNOUT, mapper.createObjectNode(), new JsonRequest(locale, JSON.V5, 0));
+        result = service.doGetList(JsonTurnout.TURNOUT, mapper.createObjectNode(), new JsonRequest(locale, JSON.V5, 0));
         validate(result);
         assertEquals(1, result.size());
         manager.provideTurnout("IT2");
-        result = service.doGetList(JsonTurnoutServiceFactory.TURNOUT, mapper.createObjectNode(), new JsonRequest(locale, JSON.V5, 0));
+        result = service.doGetList(JsonTurnout.TURNOUT, mapper.createObjectNode(), new JsonRequest(locale, JSON.V5, 0));
         validate(result);
         assertEquals(2, result.size());
     }
@@ -146,7 +146,7 @@ public class JsonTurnoutHttpServiceTest extends JsonNamedBeanHttpServiceTestBase
         assumeNotNull(service); // protect against JUnit tests in Eclipse that test this class directly
         // delete non-existant bean
         try {
-            service.doDelete(service.getType(), "non-existant", message, locale, 42);
+            service.doDelete(service.getType(), "non-existant", message, new JsonRequest(locale, JSON.V5, 42));
             fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             assertEquals("Code is HTTP NOT FOUND", 404, ex.getCode());
@@ -155,9 +155,9 @@ public class JsonTurnoutHttpServiceTest extends JsonNamedBeanHttpServiceTestBase
         }
         manager.newTurnout("IT1", null);
         // delete existing bean (no named listener)
-        assertNotNull(manager.getBeanBySystemName("IT1"));
-        service.doDelete(service.getType(), "IT1", message, locale, 42);
-        assertNull(manager.getBeanBySystemName("IT1"));
+        assertNotNull(manager.getBySystemName("IT1"));
+        service.doDelete(service.getType(), "IT1", message, new JsonRequest(locale, JSON.V5, 42));
+        assertNull(manager.getBySystemName("IT1"));
         Turnout turnout = manager.newTurnout("IT1", null);
         assertNotNull(turnout);
         turnout.addPropertyChangeListener(evt -> {
@@ -165,7 +165,7 @@ public class JsonTurnoutHttpServiceTest extends JsonNamedBeanHttpServiceTestBase
         }, "IT1", "Test Listener");
         // delete existing bean (with named listener)
         try {
-            service.doDelete(service.getType(), "IT1", message, locale, 42);
+            service.doDelete(service.getType(), "IT1", message, new JsonRequest(locale, JSON.V5, 42));
             fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             assertEquals(409, ex.getCode());
@@ -173,13 +173,13 @@ public class JsonTurnoutHttpServiceTest extends JsonNamedBeanHttpServiceTestBase
             assertEquals("Test Listener", ex.getAdditionalData().path(JSON.CONFLICT).path(0).asText());
             message = message.put(JSON.FORCE_DELETE, ex.getAdditionalData().path(JSON.FORCE_DELETE).asText());
         }
-        assertNotNull(manager.getBeanBySystemName("IT1"));
+        assertNotNull(manager.getBySystemName("IT1"));
         // will throw if prior catch failed
-        service.doDelete(service.getType(), "IT1", message, locale, 0);
-        assertNull(manager.getBeanBySystemName("IT1"));
+        service.doDelete(service.getType(), "IT1", message, new JsonRequest(locale, JSON.V5, 0));
+        assertNull(manager.getBySystemName("IT1"));
         try {
             // deleting again should throw an exception
-            service.doDelete(service.getType(), "IT1", NullNode.getInstance(), locale, 0);
+            service.doDelete(service.getType(), "IT1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 0));
             fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             assertEquals(404, ex.getCode());

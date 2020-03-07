@@ -8,14 +8,19 @@ import static jmri.server.json.JSON.THROWN;
 import static jmri.server.json.JSON.UNKNOWN;
 import static jmri.server.json.sensor.JsonSensor.SENSOR;
 import static jmri.server.json.turnout.JsonTurnout.FEEDBACK_MODE;
+import static jmri.server.json.turnout.JsonTurnout.FEEDBACK_MODES;
 import static jmri.server.json.turnout.JsonTurnout.TURNOUT;
 import static jmri.server.json.turnout.JsonTurnout.TURNOUTS;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.ProvidingManager;
 import jmri.Sensor;
@@ -26,6 +31,8 @@ import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonNamedBeanHttpService;
 import jmri.server.json.JsonRequest;
+import jmri.server.json.sensor.JsonSensor;
+import jmri.server.json.sensor.JsonSensorHttpService;
 
 /**
  *
@@ -33,8 +40,11 @@ import jmri.server.json.JsonRequest;
  */
 public class JsonTurnoutHttpService extends JsonNamedBeanHttpService<Turnout> {
 
+    private final JsonSensorHttpService sensorService;
+
     public JsonTurnoutHttpService(ObjectMapper mapper) {
         super(mapper);
+        sensorService = new JsonSensorHttpService(mapper);
     }
 
     @Override
@@ -59,52 +69,55 @@ public class JsonTurnoutHttpService extends JsonNamedBeanHttpService<Turnout> {
                     break;
             }
             data.put(FEEDBACK_MODE, turnout.getFeedbackMode());
+            ArrayNode modes = data.arrayNode();
+            turnout.getValidFeedbackModes().forEach(modes::add);
+            data.set(FEEDBACK_MODES, modes);
+            ArrayNode sensors = data.arrayNode();
             Sensor sensor = turnout.getFirstSensor();
-            data.put(SENSOR + 1, sensor != null ? sensor.getSystemName() : null);
+            sensors.add(sensor == null ? null : sensorService.doGet(sensor, sensor.getSystemName(), JsonSensor.SENSOR, request));
             sensor = turnout.getSecondSensor();
-            data.put(SENSOR + 2, sensor != null ? sensor.getSystemName() : null);
+            sensors.add(sensor == null ? null : sensorService.doGet(sensor, sensor.getSystemName(), JsonSensor.SENSOR, request));
+            data.set(SENSOR, sensors);
         }
         return root;
     }
 
     @Override
-    public ObjectNode doPost(Turnout turnout, String name, String type, JsonNode data, Locale locale, int id) throws JsonException {
-        if (!data.path(SENSOR + 1).isMissingNode()) {
-            JsonNode node = data.path(SENSOR + 1);
+    public ObjectNode doPost(Turnout turnout, String name, String type, JsonNode data, JsonRequest request) throws JsonException {
+        if (data.path(SENSOR).isArray()) {
             try {
-                if (node.isNull()) {
-                    turnout.provideFirstFeedbackSensor(null);
-                } else {
-                    Sensor sensor = InstanceManager.getDefault(SensorManager.class).getBySystemName(node.asText());
-                    if (sensor != null) {
-                        turnout.provideFirstFeedbackSensor(sensor.getSystemName());
-                    } else {
-                        throw new JsonException(404,
-                                Bundle.getMessage(locale, "ErrorNotFound", SENSOR, node.asText()), id);
+                JsonNode node = data.path(SENSOR).get(0);
+                if (node != null) {
+                    if (node.isNull()) {
+                        turnout.provideFirstFeedbackSensor(null);
+                    } else if (node.isTextual()) {
+                        Sensor sensor = InstanceManager.getDefault(SensorManager.class).getBySystemName(node.asText());
+                        if (sensor != null) {
+                            turnout.provideFirstFeedbackSensor(sensor.getSystemName());
+                        } else {
+                            throw new JsonException(404,
+                                    Bundle.getMessage(request.locale, "ErrorNotFound", SENSOR, node.asText()), request.id);
+                        }
+                    }
+                }
+                node = data.path(SENSOR).get(1);
+                if (node != null) {
+                    if (node.isNull()) {
+                        turnout.provideFirstFeedbackSensor(null);
+                    } else if (node.isTextual()) {
+                        Sensor sensor = InstanceManager.getDefault(SensorManager.class).getBySystemName(node.asText());
+                        if (sensor != null) {
+                            turnout.provideFirstFeedbackSensor(sensor.getSystemName());
+                        } else {
+                            throw new JsonException(404,
+                                    Bundle.getMessage(request.locale, "ErrorNotFound", SENSOR, node.asText()), request.id);
+                        }
                     }
                 }
             } catch (JmriException ex) {
-                throw new JsonException(500, Bundle.getMessage(locale, "ErrorInternal", type), id);
+                throw new JsonException(500, Bundle.getMessage(request.locale, "ErrorInternal", type), request.id);
             }
         }
-        if (!data.path(SENSOR + 2).isMissingNode()) {
-            JsonNode node = data.path(SENSOR + 2);
-            try {
-                if (node.isNull()) {
-                    turnout.provideSecondFeedbackSensor(null);
-                } else {
-                    Sensor sensor = InstanceManager.getDefault(SensorManager.class).getBySystemName(node.asText());
-                    if (sensor != null) {
-                        turnout.provideSecondFeedbackSensor(sensor.getSystemName());
-                    } else {
-                        throw new JsonException(404,
-                                Bundle.getMessage(locale, "ErrorNotFound", SENSOR, node.asText()), id);
-                    }
-                }
-            } catch (JmriException ex) {
-                throw new JsonException(500, Bundle.getMessage(locale, "ErrorInternal", type), id);
-            }
-    public ObjectNode doPost(Turnout turnout, String name, String type, JsonNode data, JsonRequest request) throws JsonException {
         if (data.path(INVERTED).isBoolean()) {
             turnout.setInverted(data.path(INVERTED).asBoolean());
         }
@@ -127,9 +140,9 @@ public class JsonTurnoutHttpService extends JsonNamedBeanHttpService<Turnout> {
     }
 
     @Override
-    protected void doDelete(Turnout bean, String name, String type, JsonNode data, Locale locale, int id)
+    protected void doDelete(Turnout bean, String name, String type, JsonNode data, JsonRequest request)
             throws JsonException {
-        deleteBean(bean, name, type, data, locale, id);
+        deleteBean(bean, name, type, data, request);
     }
 
     @Override

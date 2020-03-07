@@ -3,7 +3,8 @@ package jmri.server.json.turnout;
 /**
  * Tokens used by the JMRI JSON Sensor service.
  *
- * @author Randall Wood (C) 2016
+ * @author Randall Wood (C) 2020
+ * @since 4.19.4
  */
 public class JsonTurnout {
 

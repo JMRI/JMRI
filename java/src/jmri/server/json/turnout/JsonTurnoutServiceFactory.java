@@ -13,12 +13,12 @@ import org.openide.util.lookup.ServiceProvider;
 public class JsonTurnoutServiceFactory implements JsonServiceFactory<JsonTurnoutHttpService, JsonTurnoutSocketService> {
 
     /**
-     * @deprecated since 4.17.1; use {@link JsonTurnout#TURNOUT} instead
+     * @deprecated since 4.19.4; use {@link JsonTurnout#TURNOUT} instead
      */
     @Deprecated
     public static final String TURNOUT = JsonTurnout.TURNOUT; // NOI18N
     /**
-     * @deprecated since 4.17.1; use {@link JsonTurnout#TURNOUTS} instead
+     * @deprecated since 4.19.4; use {@link JsonTurnout#TURNOUTS} instead
      */
     @Deprecated
     public static final String TURNOUTS = JsonTurnout.TURNOUTS; // NOI18N

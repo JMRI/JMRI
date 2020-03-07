@@ -152,11 +152,11 @@ public class JsonTurnoutSocketServiceTest {
         Turnout t1 = manager.provide("IT1");
         t1.setUserName(userName);
         // request with user name should log a warning
-        service.onMessage(JsonTurnoutServiceFactory.TURNOUT, message, JSON.GET, new JsonRequest(locale, JSON.V5, 42));
+        service.onMessage(JsonTurnout.TURNOUT, message, JSON.GET, new JsonRequest(locale, JSON.V5, 42));
         JUnitAppender.assertWarnMessage("get request for turnout made with user name \"" + userName + "\"; should use system name");
         // request with system name should not log a warning
         message.put(JSON.NAME, "IT1");
-        service.onMessage(JsonTurnoutServiceFactory.TURNOUT, message, JSON.GET, new JsonRequest(locale, JSON.V5, 42));
+        service.onMessage(JsonTurnout.TURNOUT, message, JSON.GET, new JsonRequest(locale, JSON.V5, 42));
         assertTrue(JUnitAppender.verifyNoBacklog());
         // request with name of non-existant bean should not log a warning (but should throw exception)
         try {

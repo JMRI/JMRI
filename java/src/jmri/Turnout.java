@@ -1,5 +1,6 @@
 package jmri;
 
+import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.CheckForNull;
 
@@ -159,6 +160,14 @@ public interface Turnout extends DigitalIO {
      * Constant representing a locked turnout
      */
     public static final int LOCKED = 1;
+
+    /**
+     * Get a list of valid feedback types. The valid types depend on the
+     * implemented system.
+     *
+     * @return array of feedback types
+     */
+    public Set<Integer> getValidFeedbackModes();
 
     /**
      * Get a representation of the feedback type. This is the OR of possible
