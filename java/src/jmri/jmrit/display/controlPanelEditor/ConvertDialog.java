@@ -172,5 +172,5 @@ class ConvertDialog extends JDialog {
             _filler.dispose();
         }
 
-        private final static Logger log = LoggerFactory.getLogger(ConvertDialog.class);
+    //    private final static Logger log = LoggerFactory.getLogger(ConvertDialog.class);
     }
