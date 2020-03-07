@@ -6,6 +6,7 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ComponentEvent;
@@ -38,8 +39,8 @@ import jmri.jmrit.jython.Jynstrument;
 import jmri.jmrit.jython.JynstrumentFactory;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.FileUtil;
-import jmri.util.iharder.dnd.FileDrop;
-import jmri.util.iharder.dnd.FileDrop.Listener;
+import jmri.util.iharder.dnd.URIDrop;
+import jmri.util.iharder.dnd.URIDrop.Listener;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -386,11 +387,11 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
                 Math.max(addressPanel.getHeight() + functionPanel.getHeight(), controlPanel.getHeight())));
 
         // #JYNSTRUMENT# Bellow prepare drag'n drop receptacle:
-        new FileDrop(this, new Listener() {
+        new URIDrop(this, new Listener() {
             @Override
-            public void filesDropped(File[] files) {
+            public void URIsDropped(java.net.URI[] files) {
                 if (isEditMode) {
-                    for (File file : files) {
+                    for (java.net.URI file : files) {
                         ynstrument(file.getPath());
                     }
                 }

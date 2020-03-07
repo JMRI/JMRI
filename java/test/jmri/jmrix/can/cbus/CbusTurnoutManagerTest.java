@@ -22,12 +22,8 @@ import org.junit.Test;
  */
 public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
-    CanSystemConnectionMemo memo = null;
-
     @Test
     public void testCTor() {
-        TrafficControllerScaffold tc = new TrafficControllerScaffold();
-        memo.setTrafficController(tc);
         CbusTurnoutManager t = new CbusTurnoutManager(memo);
         Assert.assertNotNull("exists", t);
     }
@@ -359,6 +355,7 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     }
     
     private TrafficControllerScaffold tcis;
+    private CanSystemConnectionMemo memo;
     
     // The minimal setup for log4J
     @Before
@@ -373,10 +370,10 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
 
     @After
     public void tearDown() {
+        tcis.terminateThreads();
         tcis = null;
         l.dispose();
         memo.dispose();
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
 
     }
