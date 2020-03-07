@@ -19,8 +19,6 @@ import org.junit.Test;
  */
 public class CbusEventRequestDataModelTest {
 
-    
-
     @Test
     public void testCtor() {
         
@@ -29,7 +27,6 @@ public class CbusEventRequestDataModelTest {
         Assert.assertNotNull("exists", t);
         
         t.dispose();
-        t = null;
         
     }
     
@@ -43,8 +40,6 @@ public class CbusEventRequestDataModelTest {
         
         t.dispose();
         Assert.assertTrue("no listener to finish with",0 == tcis.numListeners());
-        
-        t = null;
         
     }
     
@@ -77,7 +72,6 @@ public class CbusEventRequestDataModelTest {
             t.getColumnClass(999) ==  null );
         
         t.dispose();
-        t = null;
         
     }
     
@@ -105,8 +99,8 @@ public class CbusEventRequestDataModelTest {
         Assert.assertTrue("Editable",t.isCellEditable(0,CbusEventRequestDataModel.STATUS_REQUEST_BUTTON_COLUMN) );
         Assert.assertFalse("Not Editable",t.isCellEditable(0,999) );
         
-        Assert.assertEquals("Event number 7", 7 ,t.getValueAt(0,CbusEventRequestDataModel.EVENT_COLUMN));
-        Assert.assertEquals("Node number 1234", 1234 ,t.getValueAt(0,CbusEventRequestDataModel.NODE_COLUMN));
+        Assert.assertEquals("Event number 7", 7 , (int) t.getValueAt(0,CbusEventRequestDataModel.EVENT_COLUMN));
+        Assert.assertEquals("Node number 1234", 1234 , (int) t.getValueAt(0,CbusEventRequestDataModel.NODE_COLUMN));
         Assert.assertEquals("No name set", "" ,t.getValueAt(0,CbusEventRequestDataModel.NAME_COLUMN));
         Assert.assertEquals("Status button", "Status" ,
             t.getValueAt(0,CbusEventRequestDataModel.STATUS_REQUEST_BUTTON_COLUMN));
@@ -116,15 +110,15 @@ public class CbusEventRequestDataModelTest {
             t.getValueAt(0,CbusEventRequestDataModel.LATEST_TIMESTAMP_COLUMN) );
         Assert.assertEquals("last feedback col request", CbusEventRequestMonitorEvent.FbState.LfbFinding ,
             t.getValueAt(0,CbusEventRequestDataModel.LASTFEEDBACK_COLUMN));
-        Assert.assertEquals("feedback tot reqd col", 1 ,
+        Assert.assertEquals("feedback tot reqd col", 1 , (int)
             t.getValueAt(0,CbusEventRequestDataModel.FEEDBACKREQUIRED_COLUMN));
-        Assert.assertEquals("feedback still reqd col", 1 ,
+        Assert.assertEquals("feedback still reqd col", 1 , (int)
             t.getValueAt(0,CbusEventRequestDataModel.FEEDBACKOUTSTANDING_COLUMN));
-        Assert.assertEquals("feedback event 0", 0 ,
+        Assert.assertEquals("feedback event 0", 0 , (int)
             t.getValueAt(0,CbusEventRequestDataModel.FEEDBACKEVENT_COLUMN));
-        Assert.assertEquals("feedback node 0", 0 ,
+        Assert.assertEquals("feedback node 0", 0 , (int)
             t.getValueAt(0,CbusEventRequestDataModel.FEEDBACKNODE_COLUMN));
-        Assert.assertEquals("feedback timeout ms col", 4000 ,
+        Assert.assertEquals("feedback timeout ms col", 4000 , (int)
             t.getValueAt(0,CbusEventRequestDataModel.FEEDBACKTIMEOUT_COLUMN));
         Assert.assertNull("no column", t.getValueAt(0,999));
         
@@ -140,14 +134,14 @@ public class CbusEventRequestDataModelTest {
         t.message(m);
         
         Assert.assertTrue("1 row",1 == t.getRowCount() );
-        Assert.assertEquals("feedback lower", 0 ,
+        Assert.assertEquals("feedback lower", 0 , (int)
             t.getValueAt(0,CbusEventRequestDataModel.FEEDBACKOUTSTANDING_COLUMN));
         Assert.assertNotNull("LATEST_TIMESTAMP_COLUMN populated",
             t.getValueAt(0,CbusEventRequestDataModel.LATEST_TIMESTAMP_COLUMN) );
         Assert.assertEquals("last feedback good", CbusEventRequestMonitorEvent.FbState.LfbGood ,
             t.getValueAt(0,CbusEventRequestDataModel.LASTFEEDBACK_COLUMN));
         
-        Assert.assertTrue("nothing sent by model",0 == tcis.outbound.size() );
+        Assert.assertTrue("nothing sent by model", tcis.outbound.isEmpty());
         
         t.setValueAt("do button Click",0,CbusEventRequestDataModel.STATUS_REQUEST_BUTTON_COLUMN);
         
@@ -157,7 +151,6 @@ public class CbusEventRequestDataModelTest {
             tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
         
         t.dispose();
-        t = null;
         
     }
     
@@ -205,7 +198,6 @@ public class CbusEventRequestDataModelTest {
         Assert.assertTrue("no rows as rtr",0 == t.getRowCount() );
         
         t.dispose();
-        t = null;
         
     }
     
@@ -224,10 +216,10 @@ public class CbusEventRequestDataModelTest {
 
     @After
     public void tearDown() {        
-        
+        tcis.terminateThreads();
+        memo.dispose();
         tcis = null;
         memo = null;
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
 
     }

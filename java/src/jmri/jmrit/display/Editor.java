@@ -2972,7 +2972,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             dim = new Dimension(dim.width +10, dim.height + 10);
             sp.setPreferredSize(dim);
             setContentPane(sp);
-            setLocation(jmri.util.PlaceWindow.nextTo(_pos.getEditor(), (Component)_pos, this));
+            InstanceManager.getDefault(jmri.util.PlaceWindow.class).nextTo(_pos.getEditor(), (Component)_pos, this);
             pack();
         }
 
