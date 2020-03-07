@@ -632,7 +632,7 @@
             depends="javacc, update-template-code"><!-- compile all generated Java source; internal target -->
         <!-- Compile the java code from ${genjavasrcdir} into ${target} -->
         <java-compile
-                javac.source="${javaccgen}"
+                javac.source="${javaccgen};${jjtreegen}"
                 javac.deprecation="off"
         />
         <copy todir="${target}/jmri" overwrite="true">
