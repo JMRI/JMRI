@@ -75,18 +75,18 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
     
     /**
      * Makes a workaround for standard {@link PipedOutputStream} wait.
-     * The {@link PipedInputStream#read()}, in case the receive buffer is
+     * <p>The {@link PipedInputStream#read()}, in case the receive buffer is
      * empty at the time of the call, waits for up to 1000ms. 
      * {@link PipedOutputStream#write(int)} does call <code>sink.receive</code>,
      * but does not <code>notify()</code> the sink object so that read's
      * wait() terminates.
-     * <p/>
+     * </p><p>
      * As a result, the read side of the pipe waits full 1000ms even though data
      * become available during the wait.
-     * <p/>
+     * </p><p>
      * The workaround is to simply {@link PipedOutputStream#flush} after write, 
      * which returns from wait()s immediately.
-     * 
+     * </p>
      */
     final static class ImmediatePipeOutputStream extends PipedOutputStream {
         @Override
