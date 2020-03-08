@@ -10,7 +10,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import jmri.server.json.JSON;
 import jmri.util.JUnitUtil;
 
 public class JsonTurnoutTest {
@@ -26,8 +25,8 @@ public class JsonTurnoutTest {
     @Test
     public void testConstructor() throws Exception {
         try {
-            Constructor<JSON> constructor;
-            constructor = JSON.class.getDeclaredConstructor();
+            Constructor<JsonTurnout> constructor;
+            constructor = JsonTurnout.class.getDeclaredConstructor();
             constructor.setAccessible(true);
             constructor.newInstance();
             fail("Instance of JsonTurnout created");
