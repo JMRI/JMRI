@@ -146,9 +146,8 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - from <https://jinput.dev.java.net/> jinput_dist_20090401
 - (most recent as of 2010-Jan-02)
 
-##### JavaMail 1.4.1
+##### JavaMail 1.4.1 (used to validate email address formats)
 - mailapi.jar
-- smtp.jar
 
 ##### Joal 2.3.1
 - from <http://jogamp.org/deployment/archive/rc/v2.3.1/jar/>
