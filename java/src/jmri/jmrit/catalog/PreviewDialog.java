@@ -29,6 +29,7 @@ import javax.swing.JTextField;
 import jmri.InstanceManager;
 import jmri.util.swing.DrawSquares;
 import jmri.util.swing.ImagePanel;
+import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -288,7 +289,7 @@ public class PreviewDialog extends JDialog {
             long memoryAvailable = availableMemory();
             long memoryUsed = 0;        // estimate
             for (int i = 0; i < files.length; i++) {
-                String ext = jmri.util.FileChooserFilter.getFileExtension(files[i]);
+                String ext = FilenameUtils.getExtension(files[i].getName());
                 for (int k = 0; k < _filter.length; k++) {
                     if (ext != null && ext.equalsIgnoreCase(_filter[k])) {
                         // files[i] filtered to be an image file
