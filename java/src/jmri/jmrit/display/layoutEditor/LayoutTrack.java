@@ -6,7 +6,7 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.*;
 import java.util.*;
 import javax.annotation.*;
-import javax.swing.JPopupMenu;
+import javax.swing.*;
 import jmri.*;
 import jmri.util.*;
 
@@ -65,6 +65,10 @@ public abstract class LayoutTrack {
 
     /**
      * constructor method
+     *
+     * @param ident        the identifier for this track
+     * @param c            the position for this track
+     * @param layoutEditor the layout editor this track is associated with
      */
     public LayoutTrack(@Nonnull String ident, @Nonnull Point2D c, @Nonnull LayoutEditor layoutEditor) {
         this.ident = ident;
@@ -74,11 +78,15 @@ public abstract class LayoutTrack {
 
     /**
      * accessor methods
+     *
+     * @return identifier
      */
+    @Nonnull
     public String getId() {
         return ident;
     }
 
+    @Nonnull
     public String getName() {
         return ident;
     }
@@ -88,6 +96,7 @@ public abstract class LayoutTrack {
      *
      * @return the center coordinates
      */
+    @Nonnull
     public Point2D getCoordsCenter() {
         return center;
     }
@@ -113,6 +122,7 @@ public abstract class LayoutTrack {
      *
      * @return the decorations
      */
+    @CheckForNull
     public Map<String, String> getDecorations() {
         return decorations;
     }
@@ -122,13 +132,14 @@ public abstract class LayoutTrack {
      *
      * @param decorations to set
      */
-    public void setDecorations(Map<String, String> decorations) {
+    public void setDecorations(@Nullable Map<String, String> decorations) {
         this.decorations = decorations;
     }
     protected Map<String, String> decorations = null;
 
     /**
      * convenience method for accessing...
+     *
      * @return the layout editor's toolbar panel
      */
     @Nonnull
@@ -139,24 +150,28 @@ public abstract class LayoutTrack {
     //these are convenience methods to return circles & rectangle used to draw onscreen
     //
     //compute the control point rect at inPoint; use the turnout circle size
+    @Nonnull
     public Ellipse2D trackEditControlCircleAt(@Nonnull Point2D inPoint) {
         return trackControlCircleAt(inPoint);
     }
 
     //compute the turnout circle at inPoint (used for drawing)
+    @Nonnull
     public Ellipse2D trackControlCircleAt(@Nonnull Point2D inPoint) {
         return new Ellipse2D.Double(inPoint.getX() - layoutEditor.circleRadius,
-                inPoint.getY() - layoutEditor.circleRadius, 
+                inPoint.getY() - layoutEditor.circleRadius,
                 layoutEditor.circleDiameter, layoutEditor.circleDiameter);
     }
 
     //compute the turnout circle control rect at inPoint
+    @Nonnull
     public Rectangle2D trackControlCircleRectAt(@Nonnull Point2D inPoint) {
         return new Rectangle2D.Double(inPoint.getX() - layoutEditor.circleRadius,
-                inPoint.getY() - layoutEditor.circleRadius, 
+                inPoint.getY() - layoutEditor.circleRadius,
                 layoutEditor.circleDiameter, layoutEditor.circleDiameter);
     }
 
+    @Nonnull
     protected Color getColorForTrackBlock(
             @CheckForNull LayoutBlock layoutBlock, boolean forceBlockTrackColor) {
         Color result = ColorUtil.CLEAR;  // transparent
@@ -171,11 +186,13 @@ public abstract class LayoutTrack {
     }
 
     // optional parameter forceTrack = false
+    @Nonnull
     protected Color getColorForTrackBlock(@CheckForNull LayoutBlock lb) {
         return getColorForTrackBlock(lb, false);
     }
 
-    protected Color setColorForTrackBlock(Graphics2D g2,
+    @Nonnull
+    protected Color setColorForTrackBlock(@Nonnull Graphics2D g2,
             @CheckForNull LayoutBlock layoutBlock, boolean forceBlockTrackColor) {
         Color result = getColorForTrackBlock(layoutBlock, forceBlockTrackColor);
         g2.setColor(result);
@@ -183,7 +200,8 @@ public abstract class LayoutTrack {
     }
 
     // optional parameter forceTrack = false
-    protected Color setColorForTrackBlock(Graphics2D g2, @CheckForNull LayoutBlock lb) {
+    @Nonnull
+    protected Color setColorForTrackBlock(@Nonnull Graphics2D g2, @CheckForNull LayoutBlock lb) {
         return setColorForTrackBlock(g2, lb, false);
     }
 
@@ -196,7 +214,7 @@ public abstract class LayoutTrack {
      * @param isMain  true if drawing mainlines
      * @param isBlock true if drawing block lines
      */
-    protected abstract void draw1(Graphics2D g2, boolean isMain, boolean isBlock);
+    protected abstract void draw1(@Nonnull Graphics2D g2, boolean isMain, boolean isBlock);
 
     /**
      * draw two lines (rails)
@@ -205,17 +223,17 @@ public abstract class LayoutTrack {
      * @param isMain           true if drawing mainlines
      * @param railDisplacement the offset from center to draw the lines
      */
-    protected abstract void draw2(Graphics2D g2, boolean isMain, float railDisplacement);
+    protected abstract void draw2(@Nonnull Graphics2D g2, boolean isMain, float railDisplacement);
 
     /**
      * draw hidden track
      *
      * @param g2 the graphics context
      */
-    //protected abstract void drawHidden(Graphics2D g2);
+    //protected abstract void drawHidden(@Nonnull Graphics2D g2);
     //note: placeholder until I get this implemented in all sub-classes
     //TODO: replace with abstract declaration (above)
-    protected void drawHidden(Graphics2D g2) {
+    protected void drawHidden(@Nonnull Graphics2D g2) {
         //nothing to do here... move along...
     }
 
@@ -225,10 +243,10 @@ public abstract class LayoutTrack {
      * @param g2           the graphics context
      * @param specificType the specific connection to draw (or NONE for all)
      */
-    protected abstract void highlightUnconnected(Graphics2D g2, int specificType);
+    protected abstract void highlightUnconnected(@Nonnull Graphics2D g2, int specificType);
 
     // optional parameter specificType = NONE
-    protected void highlightUnconnected(Graphics2D g2) {
+    protected void highlightUnconnected(@Nonnull Graphics2D g2) {
         highlightUnconnected(g2, NONE);
     }
 
@@ -237,24 +255,24 @@ public abstract class LayoutTrack {
      *
      * @param g2 the graphics context
      */
-    protected abstract void drawEditControls(Graphics2D g2);
+    protected abstract void drawEditControls(@Nonnull Graphics2D g2);
 
     /**
      * draw the turnout controls
      *
      * @param g2 the graphics context
      */
-    protected abstract void drawTurnoutControls(Graphics2D g2);
+    protected abstract void drawTurnoutControls(@Nonnull Graphics2D g2);
 
     /**
      * draw track decorations
      *
      * @param g2 the graphics context
      */
-    //protected abstract void drawDecorations(Graphics2D g2);
+    //protected abstract void drawDecorations(@Nonnull Graphics2D g2);
     //note: placeholder until I get this implemented in all sub-classes
     //TODO: replace with abstract declaration (above)
-    protected void drawDecorations(Graphics2D g2) {
+    protected void drawDecorations(@Nonnull Graphics2D g2) {
         //nothing to do here... move along...
     }
 
@@ -285,14 +303,19 @@ public abstract class LayoutTrack {
      * @param turnoutState of the turnout
      * @return the turnout state string
      */
+    @Nonnull
     public String getTurnoutStateString(int turnoutState) {
-        String result = "";
-        if (turnoutState == Turnout.CLOSED) {
-            result = Bundle.getMessage("TurnoutStateClosed");
-        } else if (turnoutState == Turnout.THROWN) {
-            result = Bundle.getMessage("TurnoutStateThrown");
-        } else {
-            result = Bundle.getMessage("BeanStateUnknown");
+        String result;
+        switch (turnoutState) {
+            case Turnout.CLOSED:
+                result = Bundle.getMessage("TurnoutStateClosed");
+                break;
+            case Turnout.THROWN:
+                result = Bundle.getMessage("TurnoutStateThrown");
+                break;
+            default:
+                result = Bundle.getMessage("BeanStateUnknown");
+                break;
         }
         return result;
     }
@@ -300,28 +323,31 @@ public abstract class LayoutTrack {
     /**
      * Check for active block boundaries.
      * <p>
-     * If any connection point of a layout track object has attached objects, such as
-     * signal masts, signal heads or NX sensors, the layout track object cannot be deleted.
+     * If any connection point of a layout track object has attached objects,
+     * such as signal masts, signal heads or NX sensors, the layout track object
+     * cannot be deleted.
+     *
      * @return true if the layout track object can be deleted.
      */
     public abstract boolean canRemove();
 
     /**
      * Display the attached items that prevent removing the layout track item.
+     *
      * @param itemList A list of the attached heads, masts and/or sensors.
-     * @param typeKey The object type such as Turnout, Level Crossing, etc.
+     * @param typeKey  The object type such as Turnout, Level Crossing, etc.
      */
-    public void displayRemoveWarningDialog(List<String> itemList, String typeKey) {
+    public void displayRemoveWarningDialog(@Nonnull List<String> itemList, @Nonnull String typeKey) {
         itemList.sort(null);
-        StringBuilder msg = new StringBuilder(Bundle.getMessage("MakeLabel",  // NOI18N
+        StringBuilder msg = new StringBuilder(Bundle.getMessage("MakeLabel", // NOI18N
                 Bundle.getMessage("DeleteTrackItem", Bundle.getMessage(typeKey))));  // NOI18N
         for (String item : itemList) {
-            msg.append("\n    " + item);  // NOI18N
+            msg.append("\n    ").append(item);  // NOI18N
         }
-        javax.swing.JOptionPane.showMessageDialog(layoutEditor,
+        JOptionPane.showMessageDialog(layoutEditor,
                 msg.toString(),
-                Bundle.getMessage("WarningTitle"),  // NOI18N
-                javax.swing.JOptionPane.WARNING_MESSAGE);
+                Bundle.getMessage("WarningTitle"), // NOI18N
+                JOptionPane.WARNING_MESSAGE);
     }
 
     /**
@@ -356,6 +382,7 @@ public abstract class LayoutTrack {
      */
     public abstract void rotateCoords(double angleDEG);
 
+    @Nonnull
     protected Point2D rotatePoint(@Nonnull Point2D p, double sineRot, double cosineRot) {
         double cX = center.getX();
         double cY = center.getY();
@@ -369,10 +396,10 @@ public abstract class LayoutTrack {
     /**
      * find the hit (location) type for a point
      *
-     * @param hitPoint            the point
-     * @param useRectangles       whether to use (larger) rectangles or
-     *                           (smaller) circles for hit testing
-     * @param requireUnconnected  whether to only return hit types for free
+     * @param hitPoint           the point
+     * @param useRectangles      whether to use (larger) rectangles or (smaller)
+     *                           circles for hit testing
+     * @param requireUnconnected whether to only return hit types for free
      *                           connections
      * @return the location type for the point (or NONE)
      * @since 7.4.3
@@ -394,7 +421,7 @@ public abstract class LayoutTrack {
      * @return true if this int is for a connection to a LayoutTrack
      */
     protected static boolean isConnectionHitType(int hitType) {
-        boolean result = false; // assume failure (pessimist!)
+        boolean result;
         switch (hitType) {
             case POS_POINT:
             case TURNOUT_A:
@@ -430,7 +457,7 @@ public abstract class LayoutTrack {
         }
         if (isBezierHitType(hitType)) {
             result = false; // these are not
-        } else if (hitType >= TURNTABLE_RAY_OFFSET) {
+        } else if (isTurntableRayHitType(hitType)) {
             result = true;  // these are all connection types
         }
         return result;
@@ -441,7 +468,7 @@ public abstract class LayoutTrack {
      * @return true if this hit type is for a layout control
      */
     protected static boolean isControlHitType(int hitType) {
-        boolean result = false; // assume failure (pessimist!)
+        boolean result;
         switch (hitType) {
             case TURNOUT_CENTER:
             case SLIP_CENTER:
@@ -477,7 +504,7 @@ public abstract class LayoutTrack {
         }
         if (isBezierHitType(hitType)) {
             result = false; // these are not control types
-        } else if (hitType >= TURNTABLE_RAY_OFFSET) {
+        } else if (isTurntableRayHitType(hitType)) {
             result = true;  // these are all control types
         }
         return result;
@@ -488,12 +515,16 @@ public abstract class LayoutTrack {
                 && (hitType <= BEZIER_CONTROL_POINT_OFFSET_MAX);
     }
 
+    protected static boolean isTurntableRayHitType(int hitType) {
+        return (hitType >= LayoutTrack.TURNTABLE_RAY_OFFSET);
+    }
+
     /**
      * @param hitType the hit point type
      * @return true if this int is for a popup menu
      */
     protected static boolean isPopupHitType(int hitType) {
-        boolean result = false; // assume failure (pessimist!)
+        boolean result;
         switch (hitType) {
             case LEVEL_XING_CENTER:
             case POS_POINT:
@@ -529,7 +560,7 @@ public abstract class LayoutTrack {
         }
         if (isBezierHitType(hitType)) {
             result = true; // these are all popup hit types
-        } else if (hitType >= TURNTABLE_RAY_OFFSET) {
+        } else if (isTurntableRayHitType(hitType)) {
             result = true;  // these are all popup hit types
         }
         return result;
@@ -542,11 +573,13 @@ public abstract class LayoutTrack {
      * @param connectionType the connection type
      * @return the coordinates for the specified connection type
      */
+    @Nonnull
     public abstract Point2D getCoordsForConnectionType(int connectionType);
 
     /**
      * @return the bounds of this track
      */
+    @Nonnull
     public abstract Rectangle2D getBounds();
 
     /**
@@ -565,7 +598,7 @@ public abstract class LayoutTrack {
      * @return the popup menu for this layout track
      */
     @Nonnull
-    protected JPopupMenu showPopup(Point2D where) {
+    protected JPopupMenu showPopup(@Nonnull Point2D where) {
         return this.showPopup(new MouseEvent(
                 layoutEditor.getTargetPanel(), // source
                 MouseEvent.MOUSE_CLICKED, // id
@@ -596,6 +629,7 @@ public abstract class LayoutTrack {
      * @return the LayoutTrack connected at the specified connection type
      * @throws JmriException - if the connectionType is invalid
      */
+    @CheckForNull
     public abstract LayoutTrack getConnection(int connectionType) throws JmriException;
 
     /**
@@ -606,7 +640,7 @@ public abstract class LayoutTrack {
      * @param type           where on the LayoutTrack we are connected
      * @throws JmriException - if connectionType or type are invalid
      */
-    public abstract void setConnection(int connectionType, LayoutTrack o, int type) throws JmriException;
+    public abstract void setConnection(int connectionType, @Nullable LayoutTrack o, int type) throws JmriException;
 
     /**
      * abstract method... subclasses should implement _IF_ they need to recheck
@@ -619,12 +653,13 @@ public abstract class LayoutTrack {
      *
      * @return the list of Layout Connectivity objects
      */
+    @CheckReturnValue
     protected abstract List<LayoutConnectivity> getLayoutConnectivity();
 
     /**
      * return true if this connection type is disconnected
      *
-     * @param connectionType  the connection type to test
+     * @param connectionType the connection type to test
      * @return true if the connection for this connection type is free
      */
     public boolean isDisconnected(int connectionType) {

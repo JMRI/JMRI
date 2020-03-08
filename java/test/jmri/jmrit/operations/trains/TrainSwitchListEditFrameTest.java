@@ -50,17 +50,17 @@ public class TrainSwitchListEditFrameTest extends OperationsTestCase {
             Assert.assertTrue("print switchlist 1", l.isSwitchListEnabled());
         }
         // now clear all locations
-        JemmyUtil.enterClickAndLeave(f.clearButton);
+        JemmyUtil.enterPushAndLeave(f.clearButton);
 
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterPushAndLeave(f.saveButton);
 
         for (int i = 0; i < locations.size(); i++) {
             Location l = locations.get(i);
             Assert.assertFalse("print switchlist 2", l.isSwitchListEnabled());
         }
         // now set all locations
-        JemmyUtil.enterClickAndLeave(f.setButton);
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterPushAndLeave(f.setButton);
+        JemmyUtil.enterPushAndLeave(f.saveButton);
 
         for (int i = 0; i < locations.size(); i++) {
             Location l = locations.get(i);
@@ -69,14 +69,14 @@ public class TrainSwitchListEditFrameTest extends OperationsTestCase {
 
         // test the two check box options
         JemmyUtil.enterClickAndLeave(f.switchListRealTimeCheckBox);
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterPushAndLeave(f.saveButton);
 
         Assert.assertTrue("All Trains", Setup.isSwitchListAllTrainsEnabled());
         Assert.assertTrue("Page per Train", Setup.getSwitchListPageFormat().equals(Setup.PAGE_NORMAL));
         Assert.assertFalse("Real Time", Setup.isSwitchListRealTime());
 
         JemmyUtil.enterClickAndLeave(f.switchListAllTrainsCheckBox);
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterPushAndLeave(f.saveButton);
 
         Assert.assertFalse("All Trains", Setup.isSwitchListAllTrainsEnabled());
         Assert.assertTrue("Page per Train", Setup.getSwitchListPageFormat().equals(Setup.PAGE_NORMAL));

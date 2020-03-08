@@ -38,7 +38,7 @@ public class ScheduleEditFrameGuiTest extends OperationsTestCase {
         f.setTitle("Test Schedule Frame");
         f.scheduleNameTextField.setText("Test Schedule A");
         f.commentTextField.setText("Test Comment");
-        JemmyUtil.enterClickAndLeave(f.addScheduleButton);
+        JemmyUtil.enterPushAndLeave(f.addScheduleButton);
 
         // was the schedule created?
         ScheduleManager m = InstanceManager.getDefault(ScheduleManager.class);
@@ -48,16 +48,16 @@ public class ScheduleEditFrameGuiTest extends OperationsTestCase {
         // now add some car types to the schedule
         String carTypes[]=Bundle.getMessage("carTypeNames").split(",");
         f.typeBox.setSelectedItem(carTypes[1]);
-        JemmyUtil.enterClickAndLeave(f.addTypeButton);
+        JemmyUtil.enterPushAndLeave(f.addTypeButton);
         f.typeBox.setSelectedItem(carTypes[2]);
-        JemmyUtil.enterClickAndLeave(f.addTypeButton);
+        JemmyUtil.enterPushAndLeave(f.addTypeButton);
         f.typeBox.setSelectedItem(carTypes[3]);
-        JemmyUtil.enterClickAndLeave(f.addTypeButton);
+        JemmyUtil.enterPushAndLeave(f.addTypeButton);
         // put Tank Food at start of list
         f.typeBox.setSelectedItem(carTypes[4]);
         JemmyUtil.enterClickAndLeave(f.addLocAtTop);
-        JemmyUtil.enterClickAndLeave(f.addTypeButton);
-        JemmyUtil.enterClickAndLeave(f.saveScheduleButton);
+        JemmyUtil.enterPushAndLeave(f.addTypeButton);
+        JemmyUtil.enterPushAndLeave(f.saveScheduleButton);
 
         List<ScheduleItem> list = s.getItemsBySequenceList();
         Assert.assertEquals("number of items", 4, list.size());
@@ -75,7 +75,7 @@ public class ScheduleEditFrameGuiTest extends OperationsTestCase {
            Assert.assertTrue("type " + si.getTypeName() + " in list",flag);
         }
 
-        JemmyUtil.enterClickAndLeave(f.deleteScheduleButton);
+        JemmyUtil.enterPushAndLeave(f.deleteScheduleButton);
         // Yes to pop up
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("DeleteSchedule?"), Bundle.getMessage("ButtonYes"));
         s = m.getScheduleByName("Test Schedule A");
