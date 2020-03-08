@@ -72,6 +72,9 @@
         <a href="https://docs.oracle.com/javase/8/docs/api/java/util/TreeSet.html">TreeSet</a>
         for data that's best kept in some sorted order; there's are very few good reasons for
         sorting data during normal running in JMRI.
+        If none of these are adequate, consider incorporating a specialized collection type from
+        <a href="http://commons.apache.org/proper/commons-collections/">Apache Commons Collections</a>
+        instead of rolling your own.
         </li>
 
         <li>JMRI uses <a href=
