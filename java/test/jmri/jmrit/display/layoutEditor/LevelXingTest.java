@@ -292,25 +292,25 @@ public class LevelXingTest {
 
         //unexpected type of connection
         levelXing.setConnectA(null, LayoutTrack.TRACK);
-        JUnitAppender.assertErrorMessage("levelXing.setConnectA(null, 10); unexpected type");
+        JUnitAppender.assertErrorMessage("MyLevelXing.setConnectA(null, 10); unexpected type");
         levelXing.setConnectB(null, LayoutTrack.TRACK);
-        JUnitAppender.assertErrorMessage("levelXing.setConnectB(null, 10); unexpected type");
+        JUnitAppender.assertErrorMessage("MyLevelXing.setConnectB(null, 10); unexpected type");
         levelXing.setConnectC(null, LayoutTrack.TRACK);
-        JUnitAppender.assertErrorMessage("levelXing.setConnectC(null, 10); unexpected type");
+        JUnitAppender.assertErrorMessage("MyLevelXing.setConnectC(null, 10); unexpected type");
         levelXing.setConnectD(null, LayoutTrack.TRACK);
-        JUnitAppender.assertErrorMessage("levelXing.setConnectD(null, 10); unexpected type");
+        JUnitAppender.assertErrorMessage("MyLevelXing.setConnectD(null, 10); unexpected type");
 
         TrackSegment ts = new TrackSegment("TS1", null, LayoutTrack.NONE, null, LayoutTrack.NONE, false, false, false, layoutEditor);
 
         //unexpected type of connection
         levelXing.setConnectA(ts, LayoutTrack.NONE);
-        JUnitAppender.assertErrorMessage("levelXing.setConnectA(ts, 0); unexpected type");
+        JUnitAppender.assertErrorMessage("MyLevelXing.setConnectA(ts, 0); unexpected type");
         levelXing.setConnectB(ts, LayoutTrack.NONE);
-        JUnitAppender.assertErrorMessage("levelXing.setConnectB(ts, 0); unexpected type");
+        JUnitAppender.assertErrorMessage("MyLevelXing.setConnectB(ts, 0); unexpected type");
         levelXing.setConnectC(ts, LayoutTrack.NONE);
-        JUnitAppender.assertErrorMessage("levelXing.setConnectC(ts, 0); unexpected type");
+        JUnitAppender.assertErrorMessage("MyLevelXing.setConnectC(ts, 0); unexpected type");
         levelXing.setConnectD(ts, LayoutTrack.NONE);
-        JUnitAppender.assertErrorMessage("levelXing.setConnectD(ts, 0); unexpected type");
+        JUnitAppender.assertErrorMessage("MyLevelXing.setConnectD(ts, 0); unexpected type");
 
         //everything should be good here (no error output)
         levelXing.setConnectA(ts, LayoutTrack.TRACK);
