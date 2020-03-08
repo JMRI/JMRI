@@ -315,7 +315,24 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
         }
         return null;
     }
-    
+
+    /**
+     * Get the manager for the given system name or the default manager if there
+     * is no matching manager.
+     *
+     * @param systemName the given name
+     * @return the requested manager or the default manager if there is no
+     *         matching manager
+     */
+    @Nonnull
+    protected Manager<E> getManagerOrDefault(@Nonnull String systemName) {
+        Manager<E> manager = getManager(systemName);
+        if (manager == null) {
+            manager = getDefaultManager();
+        }
+        return manager;
+    }
+
     /**
      * Shared method to create a systemName based on the address base, the prefix and manager class.
      *

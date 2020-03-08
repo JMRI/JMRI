@@ -91,11 +91,7 @@ public class ProxySensorManager extends AbstractProxyManager<Sensor>
 
     @Override
     public boolean allowMultipleAdditions(@Nonnull String systemName) {
-        Manager<Sensor> m = getManager(systemName);
-        if (m == null) {
-            m = getDefaultManager();
-        }
-        return ((SensorManager) m).allowMultipleAdditions(systemName);
+        return ((SensorManager) getManagerOrDefault(systemName)).allowMultipleAdditions(systemName);
     }
 
     @Override

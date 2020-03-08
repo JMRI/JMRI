@@ -137,11 +137,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
      */
     @Override
     public int askNumControlBits(@Nonnull String systemName) {
-        Manager<Turnout> m = getManager(systemName);
-        if (m == null) {
-            m = getDefaultManager();
-        }
-        return ((TurnoutManager) m).askNumControlBits(systemName);
+        return ((TurnoutManager) getManagerOrDefault(systemName)).askNumControlBits(systemName);
     }
 
     /**
@@ -156,29 +152,17 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
      */
     @Override
     public int askControlType(@Nonnull String systemName) {
-        Manager<Turnout> m = getManager(systemName);
-        if (m == null) {
-            m = getDefaultManager();
-        }
-        return ((TurnoutManager) m).askControlType(systemName);
+        return ((TurnoutManager) getManagerOrDefault(systemName)).askControlType(systemName);
     }
 
     @Override
     public boolean isControlTypeSupported(@Nonnull String systemName) {
-        Manager<Turnout> m = getManager(systemName);
-        if (m == null) {
-            m = getDefaultManager();
-        }
-        return ((TurnoutManager) m).isControlTypeSupported(systemName);
+        return ((TurnoutManager) getManagerOrDefault(systemName)).isControlTypeSupported(systemName);
     }
 
     @Override
     public boolean isNumControlBitsSupported(@Nonnull String systemName) {
-        Manager<Turnout> m = getManager(systemName);
-        if (m == null) {
-            m = getDefaultManager();
-        }
-        return ((TurnoutManager) m).isNumControlBitsSupported(systemName);
+        return ((TurnoutManager) getManagerOrDefault(systemName)).isNumControlBitsSupported(systemName);
     }
 
     /** {@inheritDoc} */
@@ -192,11 +176,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
 
     @Override
     public boolean allowMultipleAdditions(@Nonnull String systemName) {
-        Manager<Turnout> m = getManager(systemName);
-        if (m == null) {
-            m = getDefaultManager();
-        }
-        return ((TurnoutManager) m).allowMultipleAdditions(systemName);
+        return ((TurnoutManager) getManagerOrDefault(systemName)).allowMultipleAdditions(systemName);
     }
 
     @Override

@@ -101,11 +101,7 @@ public class ProxyReporterManager extends AbstractProxyManager<Reporter> impleme
 
     @Override
     public boolean allowMultipleAdditions(@Nonnull String systemName) {
-        Manager<Reporter> m = getManager(systemName);
-        if (m == null) {
-            m = getDefaultManager();
-        }
-        return ((ReporterManager) m).allowMultipleAdditions(systemName);
+        return ((ReporterManager) getManagerOrDefault(systemName)).allowMultipleAdditions(systemName);
     }
 
     @Override
