@@ -1,6 +1,7 @@
 package jmri.managers;
 
 import javax.annotation.Nonnull;
+import jmri.Manager;
 import jmri.Reporter;
 import jmri.ReporterManager;
 
@@ -37,8 +38,8 @@ public class ProxyReporterManager extends AbstractProxyManager<Reporter> impleme
     }
 
     @Override
-    protected Reporter makeBean(int i, String systemName, String userName) {
-        return ((ReporterManager) getMgr(i)).newReporter(systemName, userName);
+    protected Reporter makeBean(Manager<Reporter> manager, String systemName, String userName) {
+        return ((ReporterManager) manager).newReporter(systemName, userName);
     }
 
     @Override
@@ -100,11 +101,11 @@ public class ProxyReporterManager extends AbstractProxyManager<Reporter> impleme
 
     @Override
     public boolean allowMultipleAdditions(@Nonnull String systemName) {
-        int i = matchTentative(systemName);
-        if (i >= 0) {
-            return ((ReporterManager) getMgr(i)).allowMultipleAdditions(systemName);
+        Manager<Reporter> m = getManager(systemName);
+        if (m == null) {
+            m = getDefaultManager();
         }
-        return ((ReporterManager) getMgr(0)).allowMultipleAdditions(systemName);
+        return ((ReporterManager) m).allowMultipleAdditions(systemName);
     }
 
     @Override
