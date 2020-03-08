@@ -284,7 +284,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
     @Override
     public Set<Integer> getValidFeedbackModes() {
-        Set modes = new HashSet<Integer>();
+        Set<Integer> modes = new HashSet<>();
         Arrays.stream(_validFeedbackModes).forEach(modes::add);
         return modes;
     }
