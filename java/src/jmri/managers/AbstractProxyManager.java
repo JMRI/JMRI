@@ -370,7 +370,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
     /** {@inheritDoc} */
     @Override
     public void deleteBean(@Nonnull E s, @Nonnull String property) throws PropertyVetoException {
-        Manager m = getManager(s.getSystemName());
+        Manager<E> m = getManager(s.getSystemName());
         if (m != null) {
             m.deleteBean(s, property);
         }
@@ -383,7 +383,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
      */
     @Override
     public void register(@Nonnull E s) {
-        Manager m = getManager(s.getSystemName());
+        Manager<E> m = getManager(s.getSystemName());
         if (m != null) {
             m.register(s);
         }
@@ -398,7 +398,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
      */
     @Override
     public void deregister(@Nonnull E s) {
-        Manager m = getManager(s.getSystemName());
+        Manager<E> m = getManager(s.getSystemName());
         if (m != null) {
             m.deregister(s);
         }
