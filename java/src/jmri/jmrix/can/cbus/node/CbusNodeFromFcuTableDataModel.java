@@ -228,8 +228,8 @@ public class CbusNodeFromFcuTableDataModel extends CbusNodeTableDataModel {
      */
     @Override
     public CbusNodeFromBackup provideNodeByNodeNum( int nodenum ) {
-        if ( nodenum < 1 ) {
-            return null;
+        if ( nodenum < 1 || nodenum > 65535 ) {
+            throw new IllegalArgumentException("Node number should be between 1 and 65535");
         }
         for (int i = 0; i < getRowCount(); i++) {
             if ( _mainArray.get(i).getNodeNumber() == nodenum ) {
