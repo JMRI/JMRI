@@ -150,7 +150,7 @@ public class EliteAdapter extends XNetSerialPortController {
     protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
         int baud = currentBaudNumber(mBaudRate);
-        SerialUtil.setSerialPortParams(activeSerialPort, baud,
+        activeSerialPort.setSerialPortParams(baud,
                 SerialPort.DATABITS_8,
                 SerialPort.STOPBITS_1,
                 SerialPort.PARITY_NONE);
