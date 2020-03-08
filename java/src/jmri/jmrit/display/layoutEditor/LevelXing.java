@@ -591,7 +591,7 @@ public class LevelXing extends LayoutTrack {
     @Override
     public void setConnection(int connectionType, LayoutTrack o, int type) throws jmri.JmriException {
         if ((type != TRACK) && (type != NONE)) {
-            String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); invalid type", 
+            String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); unexpected type", 
                     getName(), connectionType, (o == null) ? "null" : o.getName(), type);
             log.error(errString);
             throw new jmri.JmriException(errString);
@@ -636,7 +636,7 @@ public class LevelXing extends LayoutTrack {
     public void setConnectA(LayoutTrack o, int type) {
         connectA = o;
         if ((connectA != null) && (type != TRACK)) {
-            log.error("{}.setConnectA(({}, {}); invalid type", 
+            log.error("{}.setConnectA({}, {}); unexpected type", 
                     getName(), o.getName(), type);
         }
     }
@@ -644,7 +644,7 @@ public class LevelXing extends LayoutTrack {
     public void setConnectB(LayoutTrack o, int type) {
         connectB = o;
         if ((connectB != null) && (type != TRACK)) {
-            log.error("{}.setConnectB(({}, {}); invalid type", 
+            log.error("{}.setConnectB({}, {}); unexpected type", 
                     getName(), o.getName(), type);
         }
     }
@@ -652,7 +652,7 @@ public class LevelXing extends LayoutTrack {
     public void setConnectC(LayoutTrack o, int type) {
         connectC = o;
         if ((connectC != null) && (type != TRACK)) {
-            log.error("{}.setConnectC(({}, {}); invalid type", 
+            log.error("{}.setConnectC({}, {}); unexpected type", 
                     getName(), o.getName(), type);
         }
     }
@@ -660,7 +660,7 @@ public class LevelXing extends LayoutTrack {
     public void setConnectD(LayoutTrack o, int type) {
         connectD = o;
         if ((connectD != null) && (type != TRACK)) {
-            log.error("{}.setConnectD(({}, {}); invalid type", 
+            log.error("{}.setConnectD({}, {}); unexpected type", 
                     getName(), o.getName(), type);
         }
     }
@@ -714,7 +714,7 @@ public class LevelXing extends LayoutTrack {
                 result = getCoordsD();
                 break;
             default:
-                log.error("{}.getCoordsForConnectionType({}); Invalid connection type ",
+                log.error("{}.getCoordsForConnectionType({}); Invalid connection type",
                         getName(), connectionType); //I18IN
         }
         return result;

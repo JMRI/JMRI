@@ -299,7 +299,7 @@ public class LayoutTurntableTest {
         Point2D center = layoutTurntable.getCoordsCenter();
         //invalid index
         layoutTurntable.setRayCoordsIndexed(0, 0, 5);
-        JUnitAppender.assertErrorMessage("TUR1.setRayCoordsIndexed(0, 0, 5); Attempt to move a non-existant ray track");
+        JUnitAppender.assertErrorMessage("TUR1.setRayCoordsIndexed(0.0, 0.0, 5); Attempt to move a non-existant ray track");
 
         for (int idx = 0; idx < 4; idx++) {
             double angleRad = Math.toRadians(idx * 33);
@@ -382,7 +382,7 @@ public class LayoutTurntableTest {
             layoutTurntable.setConnection(LayoutTrack.POS_POINT, null, LayoutTrack.POS_POINT);
             Assert.fail("layoutTurntable.setConnection(...) didn't throw exception");
         } catch (JmriException ex) {
-            JUnitAppender.assertWarnMessage("TUR1.setConnection(1); Invalid connection type");
+            JUnitAppender.assertWarnMessage("TUR1.setConnection(1, null, 1); Invalid type");
         }
 
         try {
@@ -514,7 +514,7 @@ public class LayoutTurntableTest {
 
         //invalid position
         layoutTurntable.setPosition(5);
-        JUnitAppender.assertErrorMessage("TUR1..setPosition(5); Attempt to set the position on a non-existant ray track");
+        JUnitAppender.assertErrorMessage("TUR1.setPosition(5); Attempt to set the position on a non-existant ray track");
 
         //this is still at the default position (-1 == not set)
         Assert.assertEquals("layoutTurntable.getPosition()", -1, layoutTurntable.getPosition());
