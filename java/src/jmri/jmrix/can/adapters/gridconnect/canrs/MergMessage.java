@@ -102,13 +102,22 @@ public class MergMessage extends GridConnectMessage {
      * Data bytes are encoded as two ASCII hex digits starting at byte 7 of the
      * message.
      *
-     * @param val the value to set
+     * @param val the value to set, must be in range 0 - 255
      * @param n   the index of the byte to be set
      */
     @Override
     public void setByte(int val, int n) {
         if ((n >= 0) && (n <= 7)) {
             int index = n * 2 + (isExtended() ? 11 : 7);  // differs here from superclass
+            try {
+                if ((val < 0) || (val > 255)) {
+                    val = 0;
+                    throw new IllegalArgumentException();
+                }
+            }
+            catch(IllegalArgumentException e) {
+                log.error("Value out of range for MergMessage data payload {}", e);
+            }
             setHexDigit((val / 16) & 0xF, index++);
             setHexDigit(val & 0xF, index);
         }
