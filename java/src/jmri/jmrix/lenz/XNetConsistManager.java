@@ -315,5 +315,5 @@ public class XNetConsistManager extends AbstractConsistManager {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XNetConsistManager.class);
+    private static final Logger log = LoggerFactory.getLogger(XNetConsistManager.class);
 }

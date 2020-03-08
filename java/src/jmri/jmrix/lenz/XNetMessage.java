@@ -2134,6 +2134,6 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
    }
 
     // initialize logging    
-    private final static Logger log = LoggerFactory.getLogger(XNetMessage.class);
+    private static final Logger log = LoggerFactory.getLogger(XNetMessage.class);
 
 }
