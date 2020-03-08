@@ -5,9 +5,6 @@ import javax.annotation.Nonnull;
 import jmri.Sensor;
 import jmri.SensorManager;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Implementation of a SensorManager that can serve as a proxy for multiple
  * system-specific implementations.
@@ -175,7 +172,6 @@ public class ProxySensorManager extends AbstractProxyManager<Sensor>
        return false;
     }
 
-    // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(ProxySensorManager.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ProxySensorManager.class);
 
 }
