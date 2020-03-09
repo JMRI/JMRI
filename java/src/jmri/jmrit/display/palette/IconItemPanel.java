@@ -81,6 +81,8 @@ public class IconItemPanel extends ItemPanel {
             add(_catalog);
             super.init();
         }
+        _catalog.invalidate();
+        _iconPanel.invalidate();
     }
 
     /**

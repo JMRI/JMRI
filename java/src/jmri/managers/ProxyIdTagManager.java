@@ -86,9 +86,9 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
     }
 
     @Override
-    protected IdTag makeBean(int i, String systemName, String userName) {
+    protected IdTag makeBean(Manager<IdTag> manager, String systemName, String userName) {
         init();
-        return ((IdTagManager) getMgr(i)).newIdTag(systemName, userName);
+        return ((IdTagManager) manager).newIdTag(systemName, userName);
     }
 
     /**

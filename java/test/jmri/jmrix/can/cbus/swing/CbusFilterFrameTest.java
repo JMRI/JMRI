@@ -19,7 +19,7 @@ import org.netbeans.jemmy.operators.*;
  */
 public class CbusFilterFrameTest extends jmri.util.JmriJFrameTestBase {
 
-    public class FtTestConsole extends jmri.jmrix.can.cbus.swing.console.CbusConsolePane {
+    private class FtTestConsole extends jmri.jmrix.can.cbus.swing.console.CbusConsolePane {
         
         public FtTestConsole() {
             super();
@@ -147,8 +147,7 @@ public class CbusFilterFrameTest extends jmri.util.JmriJFrameTestBase {
     @After
     @Override
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
-        if(!GraphicsEnvironment.isHeadless()){
+        if(!GraphicsEnvironment.isHeadless() &&_testConsole !=null){
             _testConsole.dispose();
         }
         super.tearDown();

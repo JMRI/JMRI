@@ -709,10 +709,10 @@ public class CbusNodeConstants {
      */
     private static Map<Integer, String> createLink44Map() {
         Map<Integer, String> result = new HashMap<>();
-        result.put(1, "https://www.sprog-dcc.co.uk/downloads"); // NOI18N
-        result.put(2, "https://www.sprog-dcc.co.uk/downloads"); // NOI18N
-        result.put(3, "https://www.sprog-dcc.co.uk/downloads"); // NOI18N
-        result.put(4, "https://www.sprog-dcc.co.uk/downloads"); // NOI18N
+        result.put(1, "https://www.sprog-dcc.co.uk/download-page"); // NOI18N
+        result.put(2, "https://www.sprog-dcc.co.uk/download-page"); // NOI18N
+        result.put(3, "https://www.sprog-dcc.co.uk/download-page"); // NOI18N
+        result.put(4, "https://www.sprog-dcc.co.uk/download-page"); // NOI18N
         return Collections.unmodifiableMap(result);
     }
     

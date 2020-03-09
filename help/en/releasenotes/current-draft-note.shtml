@@ -66,13 +66,7 @@
 
         <h4>MERG CBUS</h4>
             <ul>
-                <li>Track Current Meter + Command Station Steal / Share are available unless proved otherwise.</li>
-                <li>Node Manager and Event Table no longer auto-start on JMRI startup.
-                <br>These can be added as Startup Actions in JMRI Preferences to enable
-                <br>Event or Node name translation in CBUS console, and other CBUS Tools.</li>
-                <li>Refactoring of CBUS OPC's, Filters and Node Manger functions for future maintainability.</li>
-                <li>Bootloader client for CBUS node firmware update.</li>
-                <li>Support for SPROG Generation 5 hardware using MERG CBUS and Gridconnect.</li>
+                <li></li>
             </ul>
 
         <h4>MQTT</h4>
@@ -117,7 +111,7 @@
 
         <h4>SPROG</h4>
             <ul>
-                <li>Connection methods for SPROG Generation 5 hardware using MERG CBUS/Gridconnect.</li>
+                <li></li>
             </ul>
 
         <h4>TAMS</h4>
@@ -486,7 +480,13 @@
    <h3>Web Access</h3>
         <a id="WA" name="WA"></a>
         <ul>
-            <li> </li>
+            <li></li>
+        </ul>
+
+    <h3>Where Used</h3>
+        <a id="WhereUsed" name="WhereUsed"></a>
+        <ul>
+            <li></li>
         </ul>
 
    <h3>WiThrottle Server</h3>
@@ -498,7 +498,7 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li>Included the VSDecoderID instead of the file name to make the AudioBuffer system names unique for Diesel3Sound.</li>
+            <li></li>
         </ul>
 
     <h3>Miscellaneous</h3>

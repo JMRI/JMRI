@@ -2190,11 +2190,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         //put a grid size margin around it
         result = MathUtil.inset(result, gridSize1st * gridSize2nd / -2.0);
 
-        //don't let origin go negative
-        //result = result.createIntersection(MathUtil.zeroToInfinityRectangle2D);
-        //force origin to {zero, zero}
-        result = MathUtil.setOrigin(result, MathUtil.zeroPoint2D);
-
         return result;
     }
 
@@ -2207,6 +2202,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     private Rectangle2D resizePanelBounds(boolean forceFlag) {
         Rectangle2D panelBounds = getPanelBounds();
         Rectangle2D layoutBounds = calculateMinimumLayoutBounds();
+
+        // make sure it includes the origin
+        layoutBounds.add(MathUtil.zeroPoint2D);
+
         if (forceFlag) {
             panelBounds = layoutBounds;
         } else {
@@ -2215,9 +2214,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         // don't let origin go negative
         panelBounds = panelBounds.createIntersection(MathUtil.zeroToInfinityRectangle2D);
-
-        // make sure it includes the origin
-        panelBounds.add(MathUtil.zeroPoint2D);
 
         //log.info("resizePanelBounds: {}", MathUtil.rectangle2DToString(panelBounds));
         setPanelBounds(panelBounds);
@@ -2251,7 +2247,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         // don't let origin go negative
         scrollBounds = scrollBounds.createIntersection(MathUtil.zeroToInfinityRectangle2D);
 
-        // and scroll to it
+        //make sure it includes the origin
+        scrollBounds.add(MathUtil.zeroPoint2D);
+
+        //and scroll to it
         scrollPane.scrollRectToVisible(MathUtil.rectangle2DToRectangle(scrollBounds));
 
         return result;
@@ -6516,15 +6515,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 // operating system. This may not be desirable because it will
                 // allow images that may not be supported by operating systems
                 // other than the current one.
-                FileFilter filt = new FileNameExtensionFilter("Image files", ImageIO.getReaderFileSuffixes());
-                inputFileChooser.setFileFilter(filt);
+                inputFileChooser.setFileFilter(new FileNameExtensionFilter("Image files", ImageIO.getReaderFileSuffixes()));
             } else {
-                FileChooserFilter filt = new FileChooserFilter("Graphics Files");
-                filt.addExtension("gif");
-                filt.addExtension("jpg");
                 //TODO: discuss with jmri-developers - support png image files?
-                filt.addExtension("png");
-                inputFileChooser.setFileFilter(filt);
+                inputFileChooser.setFileFilter(new FileNameExtensionFilter("Graphics Files", "gif", "jpg", "png"));
             }
         }
         inputFileChooser.rescanCurrentDirectory();
@@ -8039,6 +8033,205 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      */
     public TurnoutComboBoxPopupMenuListener newTurnoutComboBoxPopupMenuListener(NamedBeanComboBox<Turnout> comboBox, List<Turnout> currentTurnouts) {
         return new TurnoutComboBoxPopupMenuListener(comboBox, currentTurnouts);
+    }
+
+    List<NamedBeanUsageReport> usageReport;
+    @Override
+    public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
+        usageReport = new ArrayList<>();
+        if (bean != null) {
+            usageReport = super.getUsageReport(bean);
+
+            // LE Specific checks
+            // Turnouts
+            findTurnoutUsage(bean);
+
+            // Check A, EB, EC for sensors, masts, heads
+            findPositionalUsage(bean);
+
+            // Level Crossings
+            findXingWhereUsed(bean);
+
+            // Track segments
+            findSegmentWhereUsed(bean);
+        }
+        return usageReport;
+    }
+
+    void findTurnoutUsage(NamedBean bean) {
+        for (LayoutTurnout turnout : getLayoutTurnoutsAndSlips()) {
+            String data = getUsageData(turnout);
+
+            if (bean.equals(turnout.getTurnout())) {
+                usageReport.add(new NamedBeanUsageReport("LayoutEditorTurnout", data));
+            }
+            if (bean.equals(turnout.getSecondTurnout())) {
+                usageReport.add(new NamedBeanUsageReport("LayoutEditorTurnout2", data));
+            }
+
+            if (isLBLockUsed(bean, turnout.getLayoutBlock())) {
+                usageReport.add(new NamedBeanUsageReport("LayoutEditorTurnoutBlock", data));
+            }
+            if (turnout.getTurnoutType() > LayoutTurnout.WYE_TURNOUT) {
+                if (isLBLockUsed(bean, turnout.getLayoutBlockB())) {
+                    usageReport.add(new NamedBeanUsageReport("LayoutEditorTurnoutBlock", data));
+                }
+                if (isLBLockUsed(bean, turnout.getLayoutBlockC())) {
+                    usageReport.add(new NamedBeanUsageReport("LayoutEditorTurnoutBlock", data));
+                }
+                if (isLBLockUsed(bean, turnout.getLayoutBlockD())) {
+                    usageReport.add(new NamedBeanUsageReport("LayoutEditorTurnoutBlock", data));
+                }
+            }
+
+            if (bean.equals(turnout.getSensorA())) {
+                usageReport.add(new NamedBeanUsageReport("LayoutEditorTurnoutSensor", data));
+            }
+            if (bean.equals(turnout.getSensorB())) {
+                usageReport.add(new NamedBeanUsageReport("LayoutEditorTurnoutSensor", data));
+            }
+            if (bean.equals(turnout.getSensorC())) {
+                usageReport.add(new NamedBeanUsageReport("LayoutEditorTurnoutSensor", data));
+            }
+            if (bean.equals(turnout.getSensorD())) {
+                usageReport.add(new NamedBeanUsageReport("LayoutEditorTurnoutSensor", data));
+            }
+
+            if (bean.equals(turnout.getSignalAMast())) {
+                usageReport.add(new NamedBeanUsageReport("LayoutEditorTurnoutSignalMast", data));
+            }
+            if (bean.equals(turnout.getSignalBMast())) {
+                usageReport.add(new NamedBeanUsageReport("LayoutEditorTurnoutSignalMast", data));
+            }
+            if (bean.equals(turnout.getSignalCMast())) {
+                usageReport.add(new NamedBeanUsageReport("LayoutEditorTurnoutSignalMast", data));
+            }
+            if (bean.equals(turnout.getSignalDMast())) {
+                usageReport.add(new NamedBeanUsageReport("LayoutEditorTurnoutSignalMast", data));
+            }
+
+            if (bean.equals(turnout.getSignalA1())) {
+                usageReport.add(new NamedBeanUsageReport("LayoutEditorTurnoutSignalHead", data));
+            }
+            if (bean.equals(turnout.getSignalA2())) {
+                usageReport.add(new NamedBeanUsageReport("LayoutEditorTurnoutSignalHead", data));
+            }
+            if (bean.equals(turnout.getSignalA3())) {
+                usageReport.add(new NamedBeanUsageReport("LayoutEditorTurnoutSignalHead", data));
+            }
+            if (bean.equals(turnout.getSignalB1())) {
+                usageReport.add(new NamedBeanUsageReport("LayoutEditorTurnoutSignalHead", data));
+            }
+            if (bean.equals(turnout.getSignalB2())) {
+                usageReport.add(new NamedBeanUsageReport("LayoutEditorTurnoutSignalHead", data));
+            }
+            if (bean.equals(turnout.getSignalC1())) {
+                usageReport.add(new NamedBeanUsageReport("LayoutEditorTurnoutSignalHead", data));
+            }
+            if (bean.equals(turnout.getSignalC2())) {
+                usageReport.add(new NamedBeanUsageReport("LayoutEditorTurnoutSignalHead", data));
+            }
+            if (bean.equals(turnout.getSignalD1())) {
+                usageReport.add(new NamedBeanUsageReport("LayoutEditorTurnoutSignalHead", data));
+            }
+            if (bean.equals(turnout.getSignalD2())) {
+                usageReport.add(new NamedBeanUsageReport("LayoutEditorTurnoutSignalHead", data));
+            }
+        }
+    }
+
+    void findPositionalUsage(NamedBean bean) {
+        for (PositionablePoint point : getPositionablePoints()) {
+            String data = getUsageData(point);
+            if (bean.equals(point.getEastBoundSensor())) {
+                usageReport.add(new NamedBeanUsageReport("LayoutEditorPointSensor", data));
+            }
+            if (bean.equals(point.getWestBoundSensor())) {
+                usageReport.add(new NamedBeanUsageReport("LayoutEditorPointSensor", data));
+            }
+            if (bean.equals(point.getEastBoundSignalHead())) {
+                usageReport.add(new NamedBeanUsageReport("LayoutEditorPointSignalHead", data));
+            }
+            if (bean.equals(point.getWestBoundSignalHead())) {
+                usageReport.add(new NamedBeanUsageReport("LayoutEditorPointSignalHead", data));
+            }
+            if (bean.equals(point.getEastBoundSignalMast())) {
+                usageReport.add(new NamedBeanUsageReport("LayoutEditorPointSignalMast", data));
+            }
+            if (bean.equals(point.getWestBoundSignalMast())) {
+                usageReport.add(new NamedBeanUsageReport("LayoutEditorPointSignalMast", data));
+            }
+        }
+    }
+
+    void findSegmentWhereUsed(NamedBean bean) {
+        for (TrackSegment segment : getTrackSegments()) {
+            if (isLBLockUsed(bean, segment.getLayoutBlock())) {
+                String data = getUsageData(segment);
+                usageReport.add(new NamedBeanUsageReport("LayoutEditorSegmentBlock", data));
+            }
+        }
+    }
+
+    void findXingWhereUsed(NamedBean bean) {
+        for (LevelXing xing : getLevelXings()) {
+            String data = getUsageData(xing);
+            if (isLBLockUsed(bean, xing.getLayoutBlockAC())) {
+                usageReport.add(new NamedBeanUsageReport("LayoutEditorXingBlock", data));
+            }
+            if (isLBLockUsed(bean, xing.getLayoutBlockBD())) {
+                usageReport.add(new NamedBeanUsageReport("LayoutEditorXingBlock", data));
+            }
+            if (isUsedInXing(bean, xing, LevelXing.POINTA)) {
+                usageReport.add(new NamedBeanUsageReport("LayoutEditorXingOther", data));
+            }
+            if (isUsedInXing(bean, xing, LevelXing.POINTB)) {
+                usageReport.add(new NamedBeanUsageReport("LayoutEditorXingOther", data));
+            }
+            if (isUsedInXing(bean, xing, LevelXing.POINTC)) {
+                usageReport.add(new NamedBeanUsageReport("LayoutEditorXingOther", data));
+            }
+            if (isUsedInXing(bean, xing, LevelXing.POINTD)) {
+                usageReport.add(new NamedBeanUsageReport("LayoutEditorXingOther", data));
+            }
+        }
+    }
+
+    String getUsageData(LayoutTrack track) {
+        Point2D point = track.getCoordsCenter();
+        if (track instanceof TrackSegment) {
+            TrackSegment segment = (TrackSegment) track;
+            point = new Point2D.Double(segment.getCentreSegX(), segment.getCentreSegY());
+        }
+        String data = String.format("%s :: x=%d, y=%d",
+                track.getClass().getSimpleName(),
+                Math.round(point.getX()),
+                Math.round(point.getY()));
+        return data;
+    }
+
+    boolean isLBLockUsed(NamedBean bean, LayoutBlock lblock) {
+        boolean result = false;
+        if (lblock != null) {
+            if (bean.equals(lblock.getBlock())) {
+                result = true;
+            }
+        }
+        return result;
+    }
+
+    boolean isUsedInXing(NamedBean bean, LevelXing xing, int point) {
+        boolean result = false;
+        if (bean.equals(xing.getSensor(point))) {
+            result = true;
+        }
+        if (bean.equals(xing.getSignalHead(point))) {
+            result = true;
+        }
+        if (bean.equals(xing.getSignalMast(point))) {
+            result = true;
+        }
+        return result;
     }
 
     //initialize logging

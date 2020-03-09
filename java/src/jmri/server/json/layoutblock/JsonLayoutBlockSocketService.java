@@ -39,13 +39,13 @@ public class JsonLayoutBlockSocketService extends JsonSocketService<JsonLayoutBl
     }
 
     @Override
-    public void onMessage(String type, JsonNode data, String method, JsonRequest request) throws IOException, JmriException, JsonException {
+    public void onMessage(String type, JsonNode data, JsonRequest request) throws IOException, JmriException, JsonException {
         String name = data.path(NAME).asText();
         LayoutBlock layoutBlock = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(name);
-        if (!method.equals(PUT) && layoutBlock != null && !layoutBlock.getSystemName().equals(name)) {
+        if (!request.method.equals(PUT) && layoutBlock != null && !layoutBlock.getSystemName().equals(name)) {
             name = layoutBlock.getSystemName();
         }
-        switch (method) {
+        switch (request.method) {
             case JSON.DELETE:
                 service.doDelete(type, name, data, request);
                 break;
@@ -97,7 +97,7 @@ public class JsonLayoutBlockSocketService extends JsonSocketService<JsonLayoutBl
                         e.getPropertyName(), e.getOldValue(), e.getNewValue());
                 try {
                     try {
-                        connection.sendMessage(service.doGet(LAYOUTBLOCK, layoutBlock.getSystemName(), connection.getObjectMapper().createObjectNode(), new JsonRequest(getLocale(), getVersion(), 0)), 0);
+                        connection.sendMessage(service.doGet(LAYOUTBLOCK, layoutBlock.getSystemName(), connection.getObjectMapper().createObjectNode(), new JsonRequest(getLocale(), getVersion(), JSON.GET, 0)), 0);
                     } catch (JsonException ex) {
                         connection.sendMessage(ex.getJsonMessage(), 0);
                     }
@@ -118,7 +118,7 @@ public class JsonLayoutBlockSocketService extends JsonSocketService<JsonLayoutBl
             try {
                 try {
                     // send the new list
-                    connection.sendMessage(service.doGetList(LAYOUTBLOCKS, service.getObjectMapper().createObjectNode(), new JsonRequest(getLocale(), getVersion(), 0)), 0);
+                    connection.sendMessage(service.doGetList(LAYOUTBLOCKS, service.getObjectMapper().createObjectNode(), new JsonRequest(getLocale(), getVersion(), JSON.GET, 0)), 0);
                     //child added or removed, reset listeners
                     if (evt.getPropertyName().equals("length")) { // NOI18N
                         removeListenersFromRemovedBeans();

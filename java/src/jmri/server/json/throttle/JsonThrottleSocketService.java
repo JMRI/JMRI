@@ -32,7 +32,7 @@ public class JsonThrottleSocketService extends JsonSocketService<JsonThrottleHtt
     }
 
     @Override
-    public void onMessage(String type, JsonNode data, String method, JsonRequest request) throws IOException, JmriException, JsonException {
+    public void onMessage(String type, JsonNode data, JsonRequest request) throws IOException, JmriException, JsonException {
         log.debug("Processing {}", data);
         String name = data.path(NAME).asText();
         if (name.isEmpty()) {

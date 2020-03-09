@@ -88,7 +88,7 @@ public class JsonConnection extends JmriConnection {
      * @throws IOException if unable to send the message
      */
     public void sendMessage(@Nonnull JsonNode message, int id) throws IOException {
-        sendMessage(message, new JsonRequest(getLocale(), getVersion(), id));
+        sendMessage(message, new JsonRequest(getLocale(), getVersion(), JSON.GET, id));
     }
 
     public String getVersion() {

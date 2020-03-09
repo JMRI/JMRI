@@ -110,7 +110,7 @@ public class CbusNodeTableDataModelTest {
         
         Assert.assertTrue("provides cs 0 CanReply",t.getCsByNum(0) != null );
         Assert.assertTrue("provides cs node 1234 CanReply",t.getNodeByNodeNum(1234) != null );
-        Assert.assertTrue("provides cs row",t.getRowCount()== 1 );
+        Assert.assertEquals("provides cs row",1,t.getRowCount() );
         Assert.assertTrue("default getListOfNodeNumberNames 1 length list",t.getListOfNodeNumberNames().size() == 1 );
         
         Assert.assertTrue("getValueAt cs node", (Integer)t.getValueAt(0,CbusNodeTableDataModel.NODE_NUMBER_COLUMN)== 1234 );
@@ -161,11 +161,6 @@ public class CbusNodeTableDataModelTest {
             memo, 3,CbusNodeTableDataModel.MAX_COLUMN);
         
         Assert.assertEquals("tcis empty to start", 0 ,tcis.outbound.size() );
-        t.sendSystemReset();
-        
-        Assert.assertEquals("has sent 0", 1 ,tcis.outbound.size() );
-        Assert.assertEquals("Message sent is reset", "[5f8] 07",
-            tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
         
         for (int i = 0; i <t.getColumnCount(); i++) {
             Assert.assertFalse("column has name", t.getColumnName(i).isEmpty() );
@@ -390,7 +385,6 @@ public class CbusNodeTableDataModelTest {
         memo.dispose();
         memo = null;
         tcis = null;
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
 
     }

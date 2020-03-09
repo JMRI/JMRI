@@ -19,11 +19,11 @@ public class JsonTestSocketService extends JsonSocketService<JsonTestHttpService
     }
 
     @Override
-    public void onMessage(String type, JsonNode data, String method, JsonRequest request) throws IOException, JmriException, JsonException {
+    public void onMessage(String type, JsonNode data, JsonRequest request) throws IOException, JmriException, JsonException {
         if (data.path("throws").asText("").equals("JmriException")) {
             throw new JmriException(); // thrown for testing purposes
         }
-        switch (method) {
+        switch (request.method) {
             case JSON.GET:
                 connection.sendMessage(service.doGet(type, data.path(JSON.NAME).asText(), data, request), request.id);
                 break;

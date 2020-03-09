@@ -5,22 +5,20 @@ import java.nio.charset.StandardCharsets;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
-import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.TrainManager;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVPrinter;
 
 /**
  * Exports the train roster into a comma delimited file (CSV). Only trains that
@@ -165,6 +163,11 @@ public class ExportTrains extends XmlFile {
                     line.addAll(Arrays.asList(new Object[]{train.getName(), Bundle.getMessage("csvTrainLength")}));
                     train.getRoute().getLocationsBySequenceList().forEach(rl -> line.add(train.getTrainLength(rl)));
                     fileOut.printRecord(line);
+                    
+                    line.clear();
+                    line.addAll(Arrays.asList(new Object[]{train.getName(), Bundle.getMessage("Engine")}));
+                    train.getRoute().getLocationsBySequenceList().forEach(rl -> line.add(train.getLeadEngine(rl)));
+                    fileOut.printRecord(line);
 
                     line.clear();
                     line.addAll(Arrays.asList(new Object[]{train.getName(), Bundle.getMessage("Cars")}));
@@ -175,6 +178,12 @@ public class ExportTrains extends XmlFile {
                     line.addAll(Arrays.asList(new Object[]{train.getName(), Bundle.getMessage("csvEmpties")}));
                     train.getRoute().getLocationsBySequenceList().forEach(rl -> line.add(train.getNumberEmptyCarsInTrain(rl)));
                     fileOut.printRecord(line);
+                    
+                    line.clear();
+                    line.addAll(Arrays.asList(new Object[]{train.getName(), Bundle.getMessage("Loads")}));
+                    train.getRoute().getLocationsBySequenceList().forEach(rl -> line.add(train.getNumberLoadedCarsInTrain(rl)));
+                    fileOut.printRecord(line);
+                    
                     fileOut.println();
                 }
             }

@@ -3,6 +3,7 @@ package jmri.jmrit.throttle;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Component;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -31,8 +32,8 @@ import jmri.jmrit.jython.Jynstrument;
 import jmri.jmrit.jython.JynstrumentFactory;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
-import jmri.util.iharder.dnd.FileDrop;
-import jmri.util.iharder.dnd.FileDrop.Listener;
+import jmri.util.iharder.dnd.URIDrop;
+import jmri.util.iharder.dnd.URIDrop.Listener;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -287,9 +288,9 @@ public class ThrottleWindow extends JmriJFrame {
         throttleToolBar.add(jbThrottleList);
 
         // Receptacle for Jynstruments
-        new FileDrop(throttleToolBar, new Listener() {
+        new URIDrop(throttleToolBar, new Listener() {
             @Override
-            public void filesDropped(File[] files) {
+            public void URIsDropped(java.net.URI[] files) {
                 for (int i = 0; i < files.length; i++) {
                     ynstrument(files[i].getPath());
                 }

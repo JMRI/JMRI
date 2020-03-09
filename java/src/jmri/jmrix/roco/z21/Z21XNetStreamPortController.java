@@ -1,5 +1,7 @@
 package jmri.jmrix.roco.z21;
 
+import jmri.jmrix.AbstractMRReply;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
@@ -17,7 +19,12 @@ public class Z21XNetStreamPortController extends jmri.jmrix.lenz.XNetStreamPortC
     @Override
     public void configure() {
         // connect to a packetizing traffic controller
-        jmri.jmrix.lenz.XNetTrafficController packets = new Z21XNetPacketizer(new jmri.jmrix.lenz.LenzCommandStation());
+        jmri.jmrix.lenz.XNetTrafficController packets = new Z21XNetPacketizer(new jmri.jmrix.lenz.LenzCommandStation()){
+            @Override
+            protected AbstractMRReply newReply() {
+               return new Z21XNetReply();
+            }
+        };
         packets.connectPort(this);
 
         this.getSystemConnectionMemo().setXNetTrafficController(packets);

@@ -1,5 +1,6 @@
 package jmri.jmrix.can.cbus.node;
 
+import javax.annotation.Nonnull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,6 +27,7 @@ public class CbusNodeStats {
      * @return If Node Parameters 1 and 3 are set eg. "CANPAN", else potentially a NAME OPC return, else empty string.
      *
      */
+    @Nonnull
     public String getNodeTypeName() {
         if (!CbusNodeConstants.getModuleType(_node.getNodeParamManager().getParameter(1),_node.getNodeParamManager().getParameter(3)).isEmpty() ){
             return CbusNodeConstants.getModuleType(_node.getNodeParamManager().getParameter(1),_node.getNodeParamManager().getParameter(3));
@@ -42,6 +44,7 @@ public class CbusNodeStats {
      * Get Node Number and name
      * @return string eg "1234 UserName", no trailing space.
      */
+    @Nonnull
     public String getNodeNumberName() {
         if ( !_node.getUserName().isEmpty() ){
             return "" + _node.getNodeNumber() + " " + _node.getUserName();

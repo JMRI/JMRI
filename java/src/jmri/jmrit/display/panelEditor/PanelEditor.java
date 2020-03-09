@@ -95,6 +95,21 @@ import org.slf4j.LoggerFactory;
  */
 public class PanelEditor extends Editor implements ItemListener {
 
+    private static final String SENSOR = "Sensor";
+    private static final String SIGNAL_HEAD = "SignalHead";
+    private static final String SIGNAL_MAST = "SignalMast";
+    private static final String MEMORY = "Memory";
+    private static final String RIGHT_TURNOUT = "RightTurnout";
+    private static final String LEFT_TURNOUT = "LeftTurnout";
+    private static final String SLIP_TO_EDITOR = "SlipTOEditor";
+    private static final String BLOCK_LABEL = "BlockLabel";
+    private static final String REPORTER = "Reporter";
+    private static final String LIGHT = "Light";
+    private static final String BACKGROUND = "Background";
+    private static final String MULTI_SENSOR = "MultiSensor";
+    private static final String RPSREPORTER = "RPSreporter";
+    private static final String FAST_CLOCK = "FastClock";
+    private static final String ICON = "Icon";
     private final JTextField nextX = new JTextField("0", 4);
     private final JTextField nextY = new JTextField("0", 4);
 
@@ -123,22 +138,7 @@ public class PanelEditor extends Editor implements ItemListener {
 
     @Override
     protected void init(String name) {
-        Runnable r = new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    // Build resource catalog and load CatalogTree.xml now
-                    CatalogPanel catalog = CatalogPanel.makeDefaultCatalog();
-                    catalog.createNewBranch("IFJAR", "Program Directory", "resources");
-                    // log.debug("init run created (var=catalog)"); // where's this used, just a test run?
-                } catch (Exception ex) {
-                    log.error("Error trying to set up preferences {}", ex.toString());
-                }
-            }
-        };
-        Thread thr = new Thread(r);
-        thr.setName("PanelEditor init");
-        thr.start();
+        initCatalogTree();
         java.awt.Container contentPane = this.getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
         // common items
@@ -285,21 +285,21 @@ public class PanelEditor extends Editor implements ItemListener {
         _addIconBox = new JComboBox<>();
         _addIconBox.setMinimumSize(new Dimension(75, 75));
         _addIconBox.setMaximumSize(new Dimension(200, 200));
-        _addIconBox.addItem(new ComboBoxItem("RightTurnout"));
-        _addIconBox.addItem(new ComboBoxItem("LeftTurnout"));
-        _addIconBox.addItem(new ComboBoxItem("SlipTOEditor"));
-        _addIconBox.addItem(new ComboBoxItem("Sensor")); // NOI18N
-        _addIconBox.addItem(new ComboBoxItem("SignalHead"));
-        _addIconBox.addItem(new ComboBoxItem("SignalMast"));
-        _addIconBox.addItem(new ComboBoxItem("Memory"));
-        _addIconBox.addItem(new ComboBoxItem("BlockLabel"));
-        _addIconBox.addItem(new ComboBoxItem("Reporter"));
-        _addIconBox.addItem(new ComboBoxItem("Light"));
-        _addIconBox.addItem(new ComboBoxItem("Background"));
-        _addIconBox.addItem(new ComboBoxItem("MultiSensor"));
-        _addIconBox.addItem(new ComboBoxItem("RPSreporter"));
-        _addIconBox.addItem(new ComboBoxItem("FastClock"));
-        _addIconBox.addItem(new ComboBoxItem("Icon"));
+        _addIconBox.addItem(new ComboBoxItem(RIGHT_TURNOUT));
+        _addIconBox.addItem(new ComboBoxItem(LEFT_TURNOUT));
+        _addIconBox.addItem(new ComboBoxItem(SLIP_TO_EDITOR));
+        _addIconBox.addItem(new ComboBoxItem(SENSOR)); // NOI18N
+        _addIconBox.addItem(new ComboBoxItem(SIGNAL_HEAD));
+        _addIconBox.addItem(new ComboBoxItem(SIGNAL_MAST));
+        _addIconBox.addItem(new ComboBoxItem(MEMORY));
+        _addIconBox.addItem(new ComboBoxItem(BLOCK_LABEL));
+        _addIconBox.addItem(new ComboBoxItem(REPORTER));
+        _addIconBox.addItem(new ComboBoxItem(LIGHT));
+        _addIconBox.addItem(new ComboBoxItem(BACKGROUND));
+        _addIconBox.addItem(new ComboBoxItem(MULTI_SENSOR));
+        _addIconBox.addItem(new ComboBoxItem(RPSREPORTER));
+        _addIconBox.addItem(new ComboBoxItem(FAST_CLOCK));
+        _addIconBox.addItem(new ComboBoxItem(ICON));
         _addIconBox.setSelectedIndex(-1);
         _addIconBox.addItemListener(this);  // must be AFTER no selection is set
         JPanel p1 = new JPanel();
@@ -428,6 +428,25 @@ public class PanelEditor extends Editor implements ItemListener {
         log.debug("PanelEditor ctor done.");
     }  // end ctor
 
+    protected void initCatalogTree() {
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    // Build resource catalog and load CatalogTree.xml now
+                    CatalogPanel catalog = CatalogPanel.makeDefaultCatalog();
+                    catalog.createNewBranch("IFJAR", "Program Directory", "resources");
+                    // log.debug("init run created (var=catalog)"); // where's this used, just a test run?
+                } catch (Exception ex) {
+                    log.error("Error trying to set up preferences {}", ex);
+                }
+            }
+        };
+        Thread thr = new Thread(r);
+        thr.setName("PanelEditor init");
+        thr.start();
+    }
+
     /**
      * Initializes the hiddencheckbox and its listener. This has been taken out
      * of the init, as checkbox is enable/disabled by the editableBox.
@@ -481,17 +500,17 @@ public class PanelEditor extends Editor implements ItemListener {
         public String toString() {
             // I18N split Bundle name
             // use NamedBeanBundle property for basic beans like "Turnout" I18N
-            if ("Sensor".equals(name)) {
+            if (SENSOR.equals(name)) {
                 bundleName = "BeanNameSensor";
-            } else if ("SignalHead".equals(name)) {
+            } else if (SIGNAL_HEAD.equals(name)) {
                 bundleName = "BeanNameSignalHead";
-            } else if ("SignalMast".equals(name)) {
+            } else if (SIGNAL_MAST.equals(name)) {
                 bundleName = "BeanNameSignalMast";
-            } else if ("Memory".equals(name)) {
+            } else if (MEMORY.equals(name)) {
                 bundleName = "BeanNameMemory";
-            } else if ("Reporter".equals(name)) {
+            } else if (REPORTER.equals(name)) {
                 bundleName = "BeanNameReporter";
-            } else if ("Light".equals(name)) {
+            } else if (LIGHT.equals(name)) {
                 bundleName = "BeanNameLight";
             } else {
                 bundleName = name;
@@ -513,9 +532,9 @@ public class PanelEditor extends Editor implements ItemListener {
                 frame.getEditor().reset();
                 frame.setVisible(true);
             } else {
-                if (name.equals("FastClock")) {
+                if (name.equals(FAST_CLOCK)) {
                     addClock();
-                } else if (name.equals("RPSreporter")) {
+                } else if (name.equals(RPSREPORTER)) {
                     addRpsReporter();
                 } else {
                     log.error("Unable to open Icon Editor \"{}\"", item.getName());
@@ -1065,21 +1084,21 @@ public class PanelEditor extends Editor implements ItemListener {
         }
         JMenu _add = new JMenu(Bundle.getMessage("MenuItemAddItem"));
         // for items in the following list, I18N is picked up later on
-        addItemPopUp(new ComboBoxItem("RightTurnout"), _add);
-        addItemPopUp(new ComboBoxItem("LeftTurnout"), _add);
-        addItemPopUp(new ComboBoxItem("SlipTOEditor"), _add);
-        addItemPopUp(new ComboBoxItem("Sensor"), _add);
-        addItemPopUp(new ComboBoxItem("SignalHead"), _add);
-        addItemPopUp(new ComboBoxItem("SignalMast"), _add);
-        addItemPopUp(new ComboBoxItem("Memory"), _add);
-        addItemPopUp(new ComboBoxItem("BlockLabel"), _add);
-        addItemPopUp(new ComboBoxItem("Reporter"), _add);
-        addItemPopUp(new ComboBoxItem("Light"), _add);
-        addItemPopUp(new ComboBoxItem("Background"), _add);
-        addItemPopUp(new ComboBoxItem("MultiSensor"), _add);
-        addItemPopUp(new ComboBoxItem("RPSreporter"), _add);
-        addItemPopUp(new ComboBoxItem("FastClock"), _add);
-        addItemPopUp(new ComboBoxItem("Icon"), _add);
+        addItemPopUp(new ComboBoxItem(RIGHT_TURNOUT), _add);
+        addItemPopUp(new ComboBoxItem(LEFT_TURNOUT), _add);
+        addItemPopUp(new ComboBoxItem(SLIP_TO_EDITOR), _add);
+        addItemPopUp(new ComboBoxItem(SENSOR), _add);
+        addItemPopUp(new ComboBoxItem(SIGNAL_HEAD), _add);
+        addItemPopUp(new ComboBoxItem(SIGNAL_MAST), _add);
+        addItemPopUp(new ComboBoxItem(MEMORY), _add);
+        addItemPopUp(new ComboBoxItem(BLOCK_LABEL), _add);
+        addItemPopUp(new ComboBoxItem(REPORTER), _add);
+        addItemPopUp(new ComboBoxItem(LIGHT), _add);
+        addItemPopUp(new ComboBoxItem(BACKGROUND), _add);
+        addItemPopUp(new ComboBoxItem(MULTI_SENSOR), _add);
+        addItemPopUp(new ComboBoxItem(RPSREPORTER), _add);
+        addItemPopUp(new ComboBoxItem(FAST_CLOCK), _add);
+        addItemPopUp(new ComboBoxItem(ICON), _add);
         addItemPopUp(new ComboBoxItem("Text"), _add);
         popup.add(_add);
     }
