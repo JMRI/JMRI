@@ -92,6 +92,13 @@ public class JsonTurnoutHttpService extends JsonNamedBeanHttpService<Turnout> {
                 number++;
             }
         }
+        if (data.path(FEEDBACK_MODE).isInt()) {
+            try {
+                turnout.setFeedbackMode(data.path(FEEDBACK_MODE).asInt());
+            } catch (IllegalArgumentException ex) {
+                throw new JsonException(400, Bundle.getMessage(request.locale, "ErrorInvalidProperty", FEEDBACK_MODE, type, name), request.id);
+            }
+        }
         if (data.path(INVERTED).isBoolean()) {
             turnout.setInverted(data.path(INVERTED).asBoolean());
         }
