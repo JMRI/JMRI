@@ -69,7 +69,7 @@ If you're attempting to perform this on MS Windows, refer to the MS Windows note
 
 - Update this note by executing the following line in your JMRI repository directory while you _don't_ have this file open in an editor. There are more details in the update-HOWTO.sh comments; arguments when you run it should be last release, this release you're making, the next release; you may need to update what's below:
 ```
-  ./scripts/update-HOWTO.sh 4.19.4 4.19.5 4.19.5
+  ./scripts/update-HOWTO.sh 4.19.4 4.19.5 4.19.6
 ```
 then manually update the end of that line above in this document to be this version being made today, next version to be made later, one after that; i.e. when starting to do *.4, the arguments _after_ you edit it here are *.4 *.5 *.6
 
@@ -195,7 +195,7 @@ git push github
         cp jmri4.19.4.shtml jmri4.19.5.shtml
         (edit the new release note accordingly)
             change numbers throughout
-            move new warnings to old
+            move new warnings to old (see below)
             remove old-version change notes
         git add jmri4.19.5.shtml
         git commit -m"start new 4.19.5 release note" jmri4.19.5.shtml
@@ -279,7 +279,7 @@ The release-4.19.4 branch has been created.
 
 Maintainers, please set the 4.19.5 milestone on pulls from now on, as that will be the next test release from the HEAD of the master branch.
 
-Jenkins will be creating files shortly at the [CI server](http://builds.jmri.org/jenkins/job/TestReleases/job/4.19.4/)
+Jenkins will be creating files shortly at the [CI server](https://builds.jmri.org/jenkins/job/testreleases/job/4.19.4/)
 ```
 
 FOR THE LAST TEST RELEASE FROM MASTER BEFORE A PRODUCTION RELEASE:
