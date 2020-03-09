@@ -47,8 +47,8 @@ public class JsonTimeSocketServiceTest {
         Assert.assertEquals("No change listeners", 0, manager.getPropertyChangeListeners().length);
         manager.setRun(false); // stop for testing
         // GET method
-        service.onMessage(JSON.TIME, connection.getObjectMapper().createObjectNode(), JSON.GET,
-                new JsonRequest(locale, JSON.V5, 42));
+        service.onMessage(JSON.TIME, connection.getObjectMapper().createObjectNode(),
+                new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         JsonNode message = connection.getMessage();
         Date current = manager.getTime();
         Assert.assertNotNull("Message is not null", message);
@@ -64,7 +64,7 @@ public class JsonTimeSocketServiceTest {
         ObjectNode data = connection.getObjectMapper().createObjectNode();
         data.put(JSON.RATE, rate); // integer
         data.put(JSON.STATE, JSON.ON); // start the fast clock -- to test that listeners set in onMessage work
-        service.onMessage(JSON.TIME, data, JSON.POST, new JsonRequest(locale, JSON.V5, 42));
+        service.onMessage(JSON.TIME, data, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
         message = connection.getMessage();
         current = manager.getTime(); // time before fast clock starts
         Assert.assertNotNull("Message is not null", message);
@@ -83,7 +83,7 @@ public class JsonTimeSocketServiceTest {
         Assert.assertEquals("Rate is fast", rate, message.path(JSON.DATA).path(JSON.RATE).asDouble(), 0.0);
         Assert.assertEquals("Timebase is on", JSON.ON, message.path(JSON.DATA).path(JSON.STATE).asInt());
         data.put(JSON.STATE, JSON.OFF); // stop the fast clock
-        service.onMessage(JSON.TIME, data, JSON.POST, new JsonRequest(Locale.ENGLISH, JSON.V5, 42));
+        service.onMessage(JSON.TIME, data, new JsonRequest(Locale.ENGLISH, JSON.V5, JSON.POST, 42));
         current = manager.getTime();
         message = connection.getMessage();
         Assert.assertNotNull("Message is not null", message);
@@ -96,7 +96,7 @@ public class JsonTimeSocketServiceTest {
         // POST unreasonable rate
         data.put(JSON.RATE, 123456.789); // double so that both integers and doubles are tested
         try {
-            service.onMessage(JSON.TIME, data, JSON.POST, new JsonRequest(locale, JSON.V5, 42));
+            service.onMessage(JSON.TIME, data, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
             Assert.fail("Expected exception not thrown");
         } catch (JsonException ex) {
             Assert.assertEquals("HTTP Invalid Request", 400, ex.getCode());
@@ -107,7 +107,7 @@ public class JsonTimeSocketServiceTest {
         data.put(JSON.RATE, 100); // set rate to max valid rate
         data.put(JSON.TIME, "this is not a time");
         try {
-            service.onMessage(JSON.TIME, data, JSON.POST, new JsonRequest(locale, JSON.V5, 42));
+            service.onMessage(JSON.TIME, data, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
             Assert.fail("Expected exception not thrown");
         } catch (JsonException ex) {
             Assert.assertEquals("HTTP Invalid Request", 400, ex.getCode());
@@ -115,7 +115,7 @@ public class JsonTimeSocketServiceTest {
         }
         // POST good time
         data.put(JSON.TIME, formatter.format(waitFor));
-        service.onMessage(JSON.TIME, data, JSON.POST, new JsonRequest(locale, JSON.V5, 42));
+        service.onMessage(JSON.TIME, data, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
         message = connection.getMessage();
         current = manager.getTime();
         Assert.assertNotNull("Message is not null", message);
@@ -133,7 +133,7 @@ public class JsonTimeSocketServiceTest {
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         JsonTimeSocketService service = new JsonTimeSocketService(connection);
         try {
-            service.onList(JSON.TIME, connection.getObjectMapper().createObjectNode(), new JsonRequest(locale, JSON.V5, 42));
+            service.onList(JSON.TIME, connection.getObjectMapper().createObjectNode(), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
             Assert.fail("Expected exception not thrown");
         } catch (JsonException ex) {
             Assert.assertEquals("Code is HTTP BAD REQUEST", 400, ex.getCode());
@@ -156,8 +156,8 @@ public class JsonTimeSocketServiceTest {
         Timebase manager = InstanceManager.getDefault(Timebase.class);
         manager.setRun(false); // stop for testing
         // GET method
-        service.onMessage(JSON.TIME, connection.getObjectMapper().createObjectNode(), JSON.GET,
-                new JsonRequest(locale, JSON.V5, 42));
+        service.onMessage(JSON.TIME, connection.getObjectMapper().createObjectNode(),
+                new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         // We should be listening so make a change
         manager.setRate(60); // one minute per second
         // Thrown IOException on next message

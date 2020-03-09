@@ -42,7 +42,7 @@ public class JsonSchemaHttpServiceTest extends JsonHttpServiceTestBase<JsonSchem
     @Test
     public void testDoGet() throws JsonException {
         JsonNode result =
-                service.doGet(JSON.SCHEMA, JSON.JSON, NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 0));
+                service.doGet(JSON.SCHEMA, JSON.JSON, NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         assertTrue("Is an array", result.isArray());
         assertEquals("Array has two elements", 2, result.size());
         assertTrue("1st element is JsonObject", result.get(0).isObject());
@@ -50,7 +50,7 @@ public class JsonSchemaHttpServiceTest extends JsonHttpServiceTestBase<JsonSchem
         this.testIsSchema(result.get(0));
         this.testIsSchema(result.get(1));
         try {
-            service.doGet(JSON.JSON, JSON.JSON, NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 42));
+            service.doGet(JSON.JSON, JSON.JSON, NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
             fail("Should have thrown exception");
         } catch (JsonException ex) {
             assertEquals("Exception code is 400", 400, ex.getCode());
@@ -64,7 +64,7 @@ public class JsonSchemaHttpServiceTest extends JsonHttpServiceTestBase<JsonSchem
     @Test
     public void testDoPost() {
         try {
-            service.doPost(JSON.SCHEMA, JSON.JSON, NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 0));
+            service.doPost(JSON.SCHEMA, JSON.JSON, NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
             fail("Expected exception not thrown");
         } catch (JsonException ex) {
             JsonNode result = ex.getJsonMessage();

@@ -255,7 +255,7 @@ public class JsonConsistHttpService extends JsonHttpService {
      */
     @Deprecated
     public JsonNode getConsist(Locale locale, LocoAddress address, int id) throws JsonException {
-        return getConsist(address, new JsonRequest(locale, JSON.V5, id));
+        return getConsist(address, new JsonRequest(locale, JSON.V5, JSON.GET, id));
     }
 
     @Override
