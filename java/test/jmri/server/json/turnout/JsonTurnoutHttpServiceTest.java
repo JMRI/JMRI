@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.NullNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -15,12 +16,15 @@ import static org.junit.Assume.assumeNotNull;
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.Sensor;
+import jmri.SensorManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonNamedBeanHttpServiceTestBase;
 import jmri.server.json.JsonRequest;
+import jmri.server.json.sensor.JsonSensor;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Before;
@@ -46,6 +50,7 @@ public class JsonTurnoutHttpServiceTest extends JsonNamedBeanHttpServiceTestBase
         assertEquals(JsonTurnout.TURNOUT, result.path(JSON.TYPE).asText());
         assertEquals("IT1", result.path(JSON.DATA).path(JSON.NAME).asText());
         assertEquals(JSON.UNKNOWN, result.path(JSON.DATA).path(JSON.STATE).asInt());
+        assertThat(result.path(JSON.DATA).path(JsonTurnout.FEEDBACK_MODE).asInt()).isEqualTo(Turnout.DIRECT);
         turnout1.setState(Turnout.CLOSED);
         result = service.doGet(JsonTurnout.TURNOUT, "IT1",
                 NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
@@ -108,6 +113,39 @@ public class JsonTurnoutHttpServiceTest extends JsonNamedBeanHttpServiceTestBase
             assertEquals(HttpServletResponse.SC_BAD_REQUEST, ex.getCode());
         }
         assertEquals(Turnout.THROWN, turnout1.getState());
+        // set feedback mode (valid)
+        assertThat(turnout1.getFeedbackMode()).isEqualTo(Turnout.DIRECT);
+        message = mapper.createObjectNode().put(JSON.NAME, "IT1").put(JsonTurnout.FEEDBACK_MODE, Turnout.DELAYED);
+        result = service.doPost(JsonTurnout.TURNOUT, "IT1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
+        assertThat(turnout1.getFeedbackMode()).isEqualTo(Turnout.DELAYED);
+        assertThat(result.path(JSON.DATA).path(JsonTurnout.FEEDBACK_MODE).asInt()).isEqualTo(Turnout.DELAYED);
+        // set feedback mode (invalid)
+        message = mapper.createObjectNode().put(JSON.NAME, "IT1").put(JsonTurnout.FEEDBACK_MODE, -1);
+        try {
+            service.doPost(JsonTurnout.TURNOUT, "IT1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
+            fail("Expected exception not thrown");
+        } catch (JsonException ex) {
+            assertThat(ex.getCode()).isEqualTo(HttpServletResponse.SC_BAD_REQUEST);
+            assertThat(ex.getMessage()).isEqualTo("Property feedbackMode is invalid for turnout IT1.");
+            assertThat(ex.getId()).isEqualTo(42);
+        }
+        assertThat(turnout1.getFeedbackMode()).isEqualTo(Turnout.DELAYED);
+        // set feedback mode with sensor (sensor must exist first)
+        Sensor sensor1 = InstanceManager.getDefault(SensorManager.class).provide("IS1");
+        assertThat(turnout1.getFirstNamedSensor()).isNull();
+        assertThat(turnout1.getSecondNamedSensor()).isNull();
+        message = mapper.createObjectNode().put(JSON.NAME, "IT1")
+                .put(JsonTurnout.FEEDBACK_MODE, Turnout.TWOSENSOR)
+                .set(JsonSensor.SENSOR, mapper.createArrayNode().add(NullNode.getInstance()).add(sensor1.getSystemName()));
+        result = service.doPost(JsonTurnout.TURNOUT, "IT1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
+        assertThat(turnout1.getFirstNamedSensor()).isNull();
+        assertThat(turnout1.getSecondNamedSensor()).isNotNull();
+        assertThat(turnout1.getSecondNamedSensor().getBean()).isEqualTo(sensor1);
+        assertThat(turnout1.getFeedbackMode()).isEqualTo(Turnout.TWOSENSOR);
+        assertThat(result.path(JSON.DATA).path(JsonTurnout.FEEDBACK_MODE).asInt()).isEqualTo(Turnout.TWOSENSOR);
+        assertThat(result.path(JSON.DATA).path(JsonSensor.SENSOR).get(0).isNull()).isTrue();
+        assertThat(result.path(JSON.DATA).path(JsonSensor.SENSOR).get(1).path(JSON.TYPE).asText()).isEqualTo(JsonSensor.SENSOR);
+        assertThat(result.path(JSON.DATA).path(JsonSensor.SENSOR).get(1).path(JSON.DATA).path(JSON.NAME).asText()).isEqualTo(sensor1.getSystemName());
     }
 
     @Test
@@ -144,7 +182,7 @@ public class JsonTurnoutHttpServiceTest extends JsonNamedBeanHttpServiceTestBase
         TurnoutManager manager = InstanceManager.getDefault(TurnoutManager.class);
         ObjectNode message = mapper.createObjectNode();
         assumeNotNull(service); // protect against JUnit tests in Eclipse that test this class directly
-        // delete non-existant bean
+        // delete non-existent bean
         try {
             service.doDelete(service.getType(), "non-existant", message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
             fail("Expected exception not thrown.");
