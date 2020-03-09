@@ -24,7 +24,7 @@ import javax.swing.event.ChangeEvent;
 
 /**
  *
- * @author rhwood
+ * @author Randall Wood
  */
 public class EditableList<E> extends JList<E> implements CellEditorListener {
 

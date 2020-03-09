@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * Since this class extends {@link java.beans.Beans}, classes using methods from
  * both classes need only import this class.
  *
- * @author rhwood
+ * @author Randall Wood
  */
 @SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Intentional pattern")
 public class Beans extends java.beans.Beans {

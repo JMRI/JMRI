@@ -28,7 +28,7 @@ import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 
 /**
  *
- * @author rhwood
+ * @author Randall Wood
  */
 public class HtmlTrainCommon extends TrainCommon {
 

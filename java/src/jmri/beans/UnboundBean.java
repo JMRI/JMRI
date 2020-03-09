@@ -10,7 +10,7 @@ import java.util.Set;
  * {@link java.beans.PropertyChangeSupport}. Subclass {@link jmri.beans.Bean} if
  * you need to support property change listeners.
  *
- * @author rhwood
+ * @author Randall Wood
  */
 public abstract class UnboundBean implements BeanInterface {
 

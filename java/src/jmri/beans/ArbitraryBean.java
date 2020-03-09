@@ -10,7 +10,7 @@ import java.util.Set;
  * See the PropertyChangeSupport documentation for complete documentation of
  * those methods.
  *
- * @author rhwood
+ * @author Randall Wood
  * @see java.beans.PropertyChangeSupport
  */
 public abstract class ArbitraryBean extends Bean {

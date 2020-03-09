@@ -18,7 +18,7 @@ import javax.annotation.CheckForNull;
  * allow the manipulation of properties defined at runtime if your class can
  * extend or extends a subclass of Bean.
  *
- * @author rhwood
+ * @author Randall Wood
  * @see Beans
  * @see Bean
  */
