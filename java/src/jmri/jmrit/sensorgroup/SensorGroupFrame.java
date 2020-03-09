@@ -16,8 +16,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.SortOrder;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableRowSorter;
 import jmri.Conditional;
 import jmri.ConditionalAction;
 import jmri.ConditionalVariable;
@@ -28,6 +30,8 @@ import jmri.RouteManager;
 import jmri.Sensor;
 import jmri.implementation.DefaultConditionalAction;
 import jmri.implementation.SensorGroupConditional;
+import jmri.swing.RowSorterUtil;
+import jmri.util.AlphanumComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -84,6 +88,12 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
         p2xs.add(p21s);
         _sensorModel = new SensorTableModel();
         JTable sensorTable = new JTable(_sensorModel);
+
+        TableRowSorter<SensorTableModel> sorter = new TableRowSorter<>(_sensorModel);
+        sorter.setComparator(SensorTableModel.SNAME_COLUMN, new jmri.util.AlphanumComparator());
+        sorter.setComparator(SensorTableModel.UNAME_COLUMN, new jmri.util.AlphanumComparator());
+        RowSorterUtil.setSortOrder(sorter, SensorTableModel.SNAME_COLUMN, SortOrder.ASCENDING);
+        sensorTable.setRowSorter(sorter);
 
         sensorTable.setRowSelectionAllowed(false);
         sensorTable.setPreferredScrollableViewportSize(new java.awt.Dimension(450, 200));
