@@ -102,7 +102,7 @@ public class CbusNodeEditEventFrameTest {
         nodeModel = null;
         memo = null;
         tcis = null;
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusNodeEditEventFrameTest.class);

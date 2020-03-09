@@ -57,9 +57,9 @@ public class JsonRosterSocketService extends JsonSocketService<JsonRosterHttpSer
     }
 
     @Override
-    public void onMessage(String type, JsonNode data, String method, JsonRequest request)
+    public void onMessage(String type, JsonNode data, JsonRequest request)
             throws IOException, JmriException, JsonException {
-        switch (method) {
+        switch (request.method) {
             case DELETE:
                 throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED,
                         Bundle.getMessage(request.locale, "DeleteNotAllowed", type), request.id);
@@ -69,12 +69,12 @@ public class JsonRosterSocketService extends JsonSocketService<JsonRosterHttpSer
                             .sendMessage(service.postRosterEntry(request.locale, data.path(NAME).asText(), data, request.id), request.id);
                 } else {
                     throw new JsonException(HttpServletResponse.SC_NOT_IMPLEMENTED,
-                            Bundle.getMessage(request.locale, "MethodNotImplemented", method, type), request.id);
+                            Bundle.getMessage(request.locale, "MethodNotImplemented", request.method, type), request.id);
                 }
                 break;
             case PUT:
                 throw new JsonException(HttpServletResponse.SC_NOT_IMPLEMENTED,
-                        Bundle.getMessage(request.locale, "MethodNotImplemented", method, type), request.id);
+                        Bundle.getMessage(request.locale, "MethodNotImplemented", request.method, type), request.id);
             case GET:
                 switch (type) {
                     case JsonRoster.ROSTER:
@@ -98,7 +98,7 @@ public class JsonRosterSocketService extends JsonSocketService<JsonRosterHttpSer
                 break;
             default:
                 throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED,
-                        Bundle.getMessage(request.locale, "UnknownMethod", method), request.id);
+                        Bundle.getMessage(request.locale, "UnknownMethod", request.method), request.id);
         }
         listen();
     }
@@ -233,7 +233,7 @@ public class JsonRosterSocketService extends JsonSocketService<JsonRosterHttpSer
 
         private void sendGroupsUpdate() throws IOException {
             try {
-                connection.sendMessage(service.getRosterGroups(new JsonRequest(getLocale(), getVersion(), 0)), 0);
+                connection.sendMessage(service.getRosterGroups(new JsonRequest(getLocale(), getVersion(), GET, 0)), 0);
             } catch (JsonException ex) {
                 connection.sendMessage(ex.getJsonMessage(), 0);
             }

@@ -1,5 +1,6 @@
 package jmri.server.json.signalhead;
 
+import static jmri.server.json.JSON.GET;
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.PUT;
 import static jmri.server.json.signalhead.JsonSignalHead.SIGNAL_HEAD;
@@ -41,10 +42,10 @@ public class JsonSignalHeadSocketService extends JsonSocketService<JsonSignalHea
     }
 
     @Override
-    public void onMessage(String type, JsonNode data, String method, JsonRequest request)
+    public void onMessage(String type, JsonNode data, JsonRequest request)
             throws IOException, JmriException, JsonException {
         String name = data.path(NAME).asText();
-        if (method.equals(PUT)) {
+        if (request.method.equals(PUT)) {
             connection.sendMessage(service.doPut(type, name, data, request), request.id);
         } else {
             connection.sendMessage(service.doPost(type, name, data, request), request.id);
@@ -92,7 +93,7 @@ public class JsonSignalHeadSocketService extends JsonSocketService<JsonSignalHea
             try {
                 try {
                     connection.sendMessage(service.doGet(SIGNAL_HEAD, signalHead.getSystemName(),
-                            connection.getObjectMapper().createObjectNode(), new JsonRequest(getLocale(), getVersion(), 0)), 0);
+                            connection.getObjectMapper().createObjectNode(), new JsonRequest(getLocale(), getVersion(), GET, 0)), 0);
                 } catch (JsonException ex) {
                     connection.sendMessage(ex.getJsonMessage(), 0);
                 }
@@ -114,7 +115,7 @@ public class JsonSignalHeadSocketService extends JsonSocketService<JsonSignalHea
                 try {
                     // send the new list
                     connection.sendMessage(service.doGetList(SIGNAL_HEADS, service.getObjectMapper().createObjectNode(),
-                            new JsonRequest(getLocale(), getVersion(), 0)), 0);
+                            new JsonRequest(getLocale(), getVersion(), GET, 0)), 0);
                     // child added or removed, reset listeners
                     if (evt.getPropertyName().equals("length")) { // NOI18N
                         removeListenersFromRemovedBeans();

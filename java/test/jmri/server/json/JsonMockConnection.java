@@ -85,7 +85,7 @@ public class JsonMockConnection extends JsonConnection {
      */
     @Override
     public void sendMessage(@CheckForNull JsonNode message, int id) throws IOException {
-        sendMessage(message, new JsonRequest(getLocale(), getVersion(), id));
+        sendMessage(message, new JsonRequest(getLocale(), getVersion(), JSON.GET, id));
     }
 
     @CheckForNull

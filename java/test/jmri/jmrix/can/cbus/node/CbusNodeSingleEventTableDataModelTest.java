@@ -85,11 +85,11 @@ public class CbusNodeSingleEventTableDataModelTest {
         Assert.assertTrue("getValueAt EV_CURRENT_VAL_COLUMN 2", (Integer)t.getValueAt(
             2,CbusNodeSingleEventTableDataModel.EV_CURRENT_VAL_COLUMN)== 255 );
         
-        Assert.assertEquals("hex val 0","0", t.getValueAt(
+        Assert.assertEquals("hex val 0","00", t.getValueAt(
             0,CbusNodeSingleEventTableDataModel.EV_CURRENT_HEX_COLUMN));
-        Assert.assertEquals("hex val 1","2", t.getValueAt(
+        Assert.assertEquals("hex val 1","02", t.getValueAt(
             1,CbusNodeSingleEventTableDataModel.EV_CURRENT_HEX_COLUMN));
-        Assert.assertEquals("hex val 2","ff", t.getValueAt(
+        Assert.assertEquals("hex val 2","FF", t.getValueAt(
             2,CbusNodeSingleEventTableDataModel.EV_CURRENT_HEX_COLUMN));
         
         Assert.assertEquals("EV_CURRENT_BIT_COLUMN 0","0000 0000", t.getValueAt(
@@ -128,7 +128,7 @@ public class CbusNodeSingleEventTableDataModelTest {
         
         Assert.assertTrue("getValueAt EV_SELECT_COLUMN edit 1", (Integer)t.getValueAt(
             1,CbusNodeSingleEventTableDataModel.EV_SELECT_COLUMN)== 211 );
-        Assert.assertEquals("EV_SELECT_HEX_COLUMN edit 1","d3", t.getValueAt(
+        Assert.assertEquals("EV_SELECT_HEX_COLUMN edit 1","D3", t.getValueAt(
             1,CbusNodeSingleEventTableDataModel.EV_SELECT_HEX_COLUMN));
         Assert.assertEquals("EV_SELECT_BIT_COLUMN edit 1","1101 0011", t.getValueAt(
             1,CbusNodeSingleEventTableDataModel.EV_SELECT_BIT_COLUMN));
