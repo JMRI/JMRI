@@ -224,7 +224,7 @@ git push github
 
     cp help/en/releasenotes/jmri4.19-master.shtml help/en/releasenotes/current-draft-note.shtml
     cp help/en/releasenotes/warnings-master.shtml help/en/releasenotes/current-draft-warnings.shtml
-    git commit -m"start for 4.19.5 release note" help/en/releasenotes/current-draft-*.shtml
+    git commit -m"start for 4.19.5 release note" help/en/releasenotes/*.shtml
 
 - Commit release note, push and pull back
 
