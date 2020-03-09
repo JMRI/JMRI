@@ -32,7 +32,7 @@ public class JsonTimeSocketService extends JsonSocketService<JsonTimeHttpService
     }
 
     @Override
-    public void onMessage(String type, JsonNode data, String method, JsonRequest request) throws IOException, JmriException, JsonException {
+    public void onMessage(String type, JsonNode data, JsonRequest request) throws IOException, JmriException, JsonException {
         if (!listening) {
             Timebase manager = InstanceManager.getDefault(Timebase.class);
             manager.addPropertyChangeListener(this);

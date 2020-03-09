@@ -22,7 +22,7 @@ public class JsonTimeHttpServiceTest extends JsonHttpServiceTestBase<JsonTimeHtt
     @Test
     public void doGetList() throws JsonException {
         Timebase manager = InstanceManager.getDefault(Timebase.class);
-        JsonNode array = service.doGetList(JSON.TIME, NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 0));
+        JsonNode array = service.doGetList(JSON.TIME, NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         validate(array);
         assertEquals("One element in array", 1, array.size());
         assertTrue("First element is a JSON object", array.get(0).isObject());

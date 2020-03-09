@@ -23,7 +23,7 @@
         <jackson.version>2.10.0</jackson.version>
         <jogamp.version>2.3.2</jogamp.version>
         <openlcb.version>0.7.26</openlcb.version>
-        <netbeans.version>RELEASE110</netbeans.version>
+        <netbeans.version>RELEASE113</netbeans.version>
         <jacoco.version>0.8.5</jacoco.version>
         <jacoco.reportDir>${basedir}/target/</jacoco.reportDir>
         <!-- test environment -->
@@ -87,7 +87,6 @@
                         <configuration>
                             <sourceDirectories>
                                 <!-- Additional source directories -->
-                                <File>java/tmp</File>
                                 <File>target/generated-sources/javacc</File>
                                 <File>target/generated-sources/jjtree</File>
                             </sourceDirectories>
@@ -194,7 +193,7 @@
                                         <sourceDirectory>${basedir}</sourceDirectory>
                                     </sourceDirectories>
                                     <includes>**/*</includes>
-                                    <excludes>**/*.jpg,**/*.jar,web/app/node_modules/**,.git/**,target/**,java/tmp/**</excludes>
+                                    <excludes>**/*.jpg,**/*.jar,web/app/node_modules/**,.git/**,target/**</excludes>
                                     <!-- only show errors, not warnings or infos -->
                                     <violationSeverity>error</violationSeverity>
                                 </configuration>
@@ -816,7 +815,7 @@
                         <sourceDirectory>${basedir}</sourceDirectory>
                     </sourceDirectories>
                     <includes>**/*</includes>
-                    <excludes>**/*.jpg,**/*.jar,web/app/node_modules/**,.git/**,target/**,java/tmp/**</excludes>
+                    <excludes>**/*.jpg,**/*.jar,web/app/node_modules/**,.git/**,target/**</excludes>
                     <!-- show errors, warnings, and infos -->
                     <violationSeverity>info</violationSeverity>
                 </configuration>

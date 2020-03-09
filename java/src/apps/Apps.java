@@ -86,7 +86,7 @@ import jmri.util.Log4JUtil;
 import jmri.util.SystemType;
 import jmri.util.ThreadingUtil;
 import jmri.util.WindowMenu;
-import jmri.util.iharder.dnd.FileDrop;
+import jmri.util.iharder.dnd.URIDrop;
 import jmri.util.swing.FontComboUtil;
 import jmri.util.swing.JFrameInterface;
 import jmri.util.swing.SliderSnap;
@@ -480,9 +480,9 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     protected void setJynstrumentSpace() {
         _jynstrumentSpace = new JPanel();
         _jynstrumentSpace.setLayout(new FlowLayout());
-        new FileDrop(_jynstrumentSpace, (File[] files) -> {
-            for (File file : files) {
-                ynstrument(file.getPath());
+        new URIDrop(_jynstrumentSpace, (java.net.URI[] uris) -> {
+            for (java.net.URI uri : uris) {
+                ynstrument(uri.getPath());
             }
         });
     }

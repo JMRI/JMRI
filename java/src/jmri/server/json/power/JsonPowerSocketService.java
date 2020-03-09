@@ -1,5 +1,6 @@
 package jmri.server.json.power;
 
+import static jmri.server.json.JSON.GET;
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.power.JsonPowerServiceFactory.POWER;
 
@@ -32,7 +33,7 @@ public class JsonPowerSocketService extends JsonSocketService<JsonPowerHttpServi
     }
 
     @Override
-    public void onMessage(String type, JsonNode data, String method, JsonRequest request) throws IOException, JmriException, JsonException {
+    public void onMessage(String type, JsonNode data, JsonRequest request) throws IOException, JmriException, JsonException {
         addListeners();
         connection.sendMessage(service.doPost(type, data.path(NAME).asText(), data, request), request.id);
     }
@@ -55,7 +56,7 @@ public class JsonPowerSocketService extends JsonSocketService<JsonPowerHttpServi
         try {
             try {
                 String name = ((PowerManager) evt.getSource()).getUserName();
-                connection.sendMessage(service.doGet(POWER, name, connection.getObjectMapper().createObjectNode(), new JsonRequest(connection.getLocale(), connection.getVersion(), 0)), 0);
+                connection.sendMessage(service.doGet(POWER, name, connection.getObjectMapper().createObjectNode(), new JsonRequest(connection.getLocale(), connection.getVersion(), GET, 0)), 0);
             } catch (JsonException ex) {
                 connection.sendMessage(ex.getJsonMessage(), 0);
             }

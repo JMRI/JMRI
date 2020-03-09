@@ -1,12 +1,10 @@
 package jmri.managers;
 
 import javax.annotation.Nonnull;
+import jmri.Manager;
 
 import jmri.Sensor;
 import jmri.SensorManager;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of a SensorManager that can serve as a proxy for multiple
@@ -37,9 +35,8 @@ public class ProxySensorManager extends AbstractProxyManager<Sensor>
     }
 
     @Override
-    protected Sensor makeBean(int i, String systemName, String userName) throws IllegalArgumentException {
-        log.debug("makeBean({}, \"{}\", \"{}\"", i, systemName, userName);
-        return ((SensorManager) getMgr(i)).newSensor(systemName, userName);
+    protected Sensor makeBean(Manager<Sensor> manager, String systemName, String userName) {
+        return ((SensorManager) manager).newSensor(systemName, userName);
     }
 
     @Override
@@ -94,11 +91,7 @@ public class ProxySensorManager extends AbstractProxyManager<Sensor>
 
     @Override
     public boolean allowMultipleAdditions(@Nonnull String systemName) {
-        int i = matchTentative(systemName);
-        if (i >= 0) {
-            return ((SensorManager) getMgr(i)).allowMultipleAdditions(systemName);
-        }
-        return ((SensorManager) getMgr(0)).allowMultipleAdditions(systemName);
+        return ((SensorManager) getManagerOrDefault(systemName)).allowMultipleAdditions(systemName);
     }
 
     @Override
@@ -122,26 +115,22 @@ public class ProxySensorManager extends AbstractProxyManager<Sensor>
 
     @Override
     public long getDefaultSensorDebounceGoingActive() {
-        return ((SensorManager) getMgr(0)).getDefaultSensorDebounceGoingActive();
+        return ((SensorManager) getDefaultManager()).getDefaultSensorDebounceGoingActive();
     }
 
     @Override
     public long getDefaultSensorDebounceGoingInActive() {
-        return ((SensorManager) getMgr(0)).getDefaultSensorDebounceGoingInActive();
+        return ((SensorManager) getDefaultManager()).getDefaultSensorDebounceGoingInActive();
     }
 
     @Override
     public void setDefaultSensorDebounceGoingActive(long timer) {
-        for (int i = 0; i < nMgrs(); i++) {
-            ((SensorManager) getMgr(i)).setDefaultSensorDebounceGoingActive(timer);
-        }
+        getManagerList().forEach(m -> ((SensorManager) m).setDefaultSensorDebounceGoingActive(timer));
     }
 
     @Override
     public void setDefaultSensorDebounceGoingInActive(long timer) {
-        for (int i = 0; i < nMgrs(); i++) {
-            ((SensorManager) getMgr(i)).setDefaultSensorDebounceGoingInActive(timer);
-        }
+        getManagerList().forEach(m -> ((SensorManager) m).setDefaultSensorDebounceGoingInActive(timer));
     }
 
     @Override
@@ -175,7 +164,5 @@ public class ProxySensorManager extends AbstractProxyManager<Sensor>
        return false;
     }
 
-    // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(ProxySensorManager.class);
-
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ProxySensorManager.class);
 }

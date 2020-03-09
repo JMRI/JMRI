@@ -67,6 +67,7 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
            _buttonPosition = 2;
            _initialized = true;
         }
+        hideIcons();
     }
 
     /**
@@ -89,9 +90,9 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
     public void initUpdate(ActionListener doneAction, HashMap<String, HashMap<String, NamedIcon>> iconMaps) {
         _iconGroupsMap = iconMaps;
         checkCurrentMaps(iconMaps); // is map in families?, does user want to add it? etc.
-        super.init(doneAction, null);
 //        _bottom1Panel.remove(_editIconsButton);
         _detectPanel = new DetectionPanel(this);
+        super.init(doneAction, null);
         add(_detectPanel, 1);
         add(_iconFamilyPanel, 2);
         _buttonPosition = 2;
@@ -264,8 +265,8 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
                 }
                 image.setToolTipText(icon.getName());
                 panel.add(image);
-                int width = Math.max(85, panel.getPreferredSize().width);
-                panel.setPreferredSize(new java.awt.Dimension(width, panel.getPreferredSize().height));
+//                int width = Math.max(85, panel.getPreferredSize().width);
+//                panel.setPreferredSize(new java.awt.Dimension(width, panel.getPreferredSize().height));
                 gridbag.setConstraints(panel, c);
                 _iconPanel.add(panel);
                 c.gridx++;
@@ -290,7 +291,6 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
             panel.add(button);
             gridbag.setConstraints(panel, c);
             _iconPanel.add(panel);
-            //if (log.isDebugEnabled()) log.debug("addIcons2Panel: row "+c.gridy+" has "+iconMap.size()+" icons");
         }
     }
 
@@ -392,9 +392,6 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
             _tablePanel.setVisible(true);
             initIconFamiliesPanel();
             setFamily(_family);
- //           getIconMaps();
- //           updateFamiliesPanel();
- //           hideIcons();
         }
     }
 
@@ -455,14 +452,6 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
         hideIcons();
         setFamilyButton();
     }
-/*
-    @Override
-    protected void updateFamiliesPanel() {
-        super.updateFamiliesPanel();
-        if (!_suppressDragging) {
-            makeDragIconPanel(1);
-        }
-    }*/
 
     private void openStatusEditDialog(String key) {
         if (log.isDebugEnabled()) {

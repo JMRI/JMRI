@@ -22,8 +22,8 @@ public class JsonSchemaSocketService extends JsonSocketService<JsonSchemaHttpSer
     }
 
     @Override
-    public void onMessage(String type, JsonNode data, String method, JsonRequest request) throws IOException, JmriException, JsonException {
-        switch (method) {
+    public void onMessage(String type, JsonNode data, JsonRequest request) throws IOException, JmriException, JsonException {
+        switch (request.method) {
             case JSON.DELETE:
                 throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, Bundle.getMessage(request.locale, "DeleteNotAllowed", type), request.id);
             case JSON.POST:
@@ -34,7 +34,7 @@ public class JsonSchemaSocketService extends JsonSocketService<JsonSchemaHttpSer
                 connection.sendMessage(service.doGet(type, data.path(JSON.NAME).asText(JSON.JSON), data, request), request.id);
                 break;
             default:
-                throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, Bundle.getMessage(request.locale, "MethodNotImplemented", method, type), request.id);
+                throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, Bundle.getMessage(request.locale, "MethodNotImplemented", request.method, type), request.id);
         }
     }
 

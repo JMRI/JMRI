@@ -6,6 +6,7 @@ import java.io.File;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -71,10 +72,7 @@ public class LoadVSDFileAction extends AbstractAction {
             log.debug("Using path: {}", start_dir);
 
             fileChooser = new JFileChooser(start_dir);
-            jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter(Bundle.getMessage("LoadVSDFileChooserFilterLabel"));
-            filt.addExtension("vsd");
-            filt.addExtension("zip");
-            fileChooser.setFileFilter(filt);
+            fileChooser.setFileFilter(new FileNameExtensionFilter(Bundle.getMessage("LoadVSDFileChooserFilterLabel"), "vsd", "zip")); // NOI18N
             fileChooser.setDialogType(JFileChooser.OPEN_DIALOG);
             fileChooser.setCurrentDirectory(new File(start_dir));
         }

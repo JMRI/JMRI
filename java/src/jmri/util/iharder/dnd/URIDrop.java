@@ -1,5 +1,6 @@
 package jmri.util.iharder.dnd;
 
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
@@ -24,18 +25,19 @@ import javax.swing.border.Border;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
 /**
  * This class makes it easy to drag and drop files from the operating system to
  * a Java program. Any {@code Component} can be dropped onto, but only
  * {@code JComponent}s will indicate the drop event with a changed border.
  * <p>
- * To use this class, construct a new {@code FileDrop} by passing it the target
+ * To use this class, construct a new {@code URIDrop} by passing it the target
  * component and a {@code Listener} to receive notification when file(s) have
  * been dropped. Here is an example:
  * <p>
  * <code>
  *      JPanel myPanel = new JPanel();
- *      new FileDrop( myPanel, new FileDrop.Listener()
+ *      new URIDrop( myPanel, new URIDrop.Listener()
  *      {   public void filesDropped( java.io.File[] files )
  *          {
  *              // handle file drop
@@ -56,7 +58,7 @@ import org.slf4j.LoggerFactory;
  * @author Nathan Blomquist
  * @version 1.0.1
  */
-public class FileDrop {
+public class URIDrop {
 
     private transient Border normalBorder;
     private transient DropTargetListener dropListener;
@@ -65,7 +67,7 @@ public class FileDrop {
     private static Color defaultBorderColor = new Color(0f, 0f, 1f, 0.25f);
 
     /**
-     * Constructs a {@link FileDrop} with a default light-blue border and, if
+     * Constructs a {@link URIDrop} with a default light-blue border and, if
      * <var>c</var> is a {@link Container}, recursively sets all elements
      * contained within as drop targets, though only the top level container
      * will change borders.
@@ -74,7 +76,7 @@ public class FileDrop {
      * @param listener Listens for {@code filesDropped}.
      * @since 1.0
      */
-    public FileDrop(
+    public URIDrop(
             final Component c,
             final Listener listener) {
         this(null, // Logging stream
@@ -95,7 +97,7 @@ public class FileDrop {
      * @param listener  Listens for {@code filesDropped}.
      * @since 1.0
      */
-    public FileDrop(
+    public URIDrop(
             final Component c,
             final boolean recursive,
             final Listener listener) {
@@ -123,7 +125,7 @@ public class FileDrop {
      * @param listener  Listens for {@code filesDropped}.
      * @since 1.0
      */
-    public FileDrop(
+    public URIDrop(
             final java.io.PrintStream out,
             final Component c,
             final boolean recursive,
@@ -144,7 +146,7 @@ public class FileDrop {
      * @param listener   Listens for {@code filesDropped}.
      * @since 1.0
      */
-    public FileDrop(
+    public URIDrop(
             final Component c,
             final Border dragBorder,
             final Listener listener) {
@@ -169,7 +171,7 @@ public class FileDrop {
      * @param listener   Listens for {@code filesDropped}.
      * @since 1.0
      */
-    public FileDrop(
+    public URIDrop(
             final Component c,
             final Border dragBorder,
             final boolean recursive,
@@ -197,7 +199,7 @@ public class FileDrop {
      * @param listener   Listens for {@code filesDropped}.
      * @since 1.0
      */
-    public FileDrop(
+    public URIDrop(
             final java.io.PrintStream out,
             final Component c,
             final Border dragBorder,
@@ -226,7 +228,7 @@ public class FileDrop {
      * @param listener   Listens for {@code filesDropped}.
      * @since 1.0
      */
-    public FileDrop(
+    public URIDrop(
             final java.io.PrintStream out,
             final Component c,
             final Border dragBorder,
@@ -236,7 +238,7 @@ public class FileDrop {
         dropListener = new DropTargetListener() {
             @Override
             public void dragEnter(DropTargetDragEvent evt) {
-                log.debug("FileDrop: dragEnter event.");
+                log.debug("URIDrop: dragEnter event.");
 
                 // Is this an acceptable drag event?
                 if (isDragOk(evt)) {
@@ -244,18 +246,18 @@ public class FileDrop {
                     if (c instanceof JComponent) {
                         JComponent jc = (JComponent) c;
                         normalBorder = jc.getBorder();
-                        log.debug("FileDrop: normal border saved.");
+                        log.debug("URIDrop: normal border saved.");
                         jc.setBorder(dragBorder);
-                        log.debug("FileDrop: drag border set.");
+                        log.debug("URIDrop: drag border set.");
                     }
 
                     // Acknowledge that it's okay to enter
                     //evt.acceptDrag( DnDConstants.ACTION_COPY_OR_MOVE );
                     evt.acceptDrag(DnDConstants.ACTION_COPY);
-                    log.debug("FileDrop: event accepted.");
+                    log.debug("URIDrop: event accepted.");
                 } else {   // Reject the drag event
                     evt.rejectDrag();
-                    log.debug("FileDrop: event rejected.");
+                    log.debug("URIDrop: event rejected.");
                 }
             }
 
@@ -263,102 +265,109 @@ public class FileDrop {
             public void dragOver(DropTargetDragEvent evt) {   // This is called continually as long as the mouse is
                 // over the drag target.
             }
-
+           
             @SuppressWarnings("unchecked")
             @Override
             public void drop(DropTargetDropEvent evt) {
-                log.debug("FileDrop: drop event.");
+                log.debug("URIDrop: drop event.");
                 try {   // Get whatever was dropped
-                    Transferable tr = evt.getTransferable();
-
+                    Transferable tr = evt.getTransferable();                    
+                    boolean handled = false;
                     // Is it a file list?
-                    if (tr.isDataFlavorSupported(DataFlavor.javaFileListFlavor)) {
+                    if (!handled && tr.isDataFlavorSupported(DataFlavor.javaFileListFlavor)) {
                         // Say we'll take it.
-                        //evt.acceptDrop ( DnDConstants.ACTION_COPY_OR_MOVE );
                         evt.acceptDrop(DnDConstants.ACTION_COPY);
                         log.debug("FileDrop: file list accepted.");
-
                         // Get a useful list
-                        List<File> fileList = (List<File>) tr.getTransferData(DataFlavor.javaFileListFlavor);
-
-                        // Convert list to array
-                        java.io.File[] filesTemp = new java.io.File[fileList.size()];
-                        fileList.toArray(filesTemp);
-                        final java.io.File[] files = filesTemp;
-
+                        List<File> fileList = (List<File>) tr.getTransferData(DataFlavor.javaFileListFlavor);    
                         // Alert listener to drop.
                         if (listener != null) {
-                            listener.filesDropped(files);
+                            listener.URIsDropped(createURIArray(fileList));
                         }
-
                         // Mark that drop is completed.
                         evt.getDropTargetContext().dropComplete(true);
-                        log.debug("FileDrop: drop complete.");
-                    } else // this section will check for a reader flavor.
-                    {
-                        DataFlavor[] flavors = tr.getTransferDataFlavors();
-                        boolean handled = false;
+                        handled = true;
+                        log.debug("FileDrop: drop complete as files.");                        
+                    }                    
+                    // Is it a string?
+                    if (!handled && tr.isDataFlavorSupported(DataFlavor.stringFlavor)) {
+                        // Say we'll take it.
+                        evt.acceptDrop(DnDConstants.ACTION_COPY);
+                        log.debug("URIDrop: string accepted.");
+                        // Get a useful list
+                        String uristr = (String) tr.getTransferData(DataFlavor.stringFlavor);
+                        // Alert listener to drop.
+                        if (listener != null) {
+                            listener.URIsDropped(createURIArray(uristr));
+                        }
+                        // Mark that drop is completed.
+                        evt.getDropTargetContext().dropComplete(true);
+                        handled = true;
+                        log.debug("URIDrop: drop complete as URIs.");
+                    } 
+                    // this section will check for a reader flavor.
+                    if (!handled) {
+                        DataFlavor[] flavors = tr.getTransferDataFlavors();                        
                         for (DataFlavor flavor : flavors) {
                             if (flavor.isRepresentationClassReader()) {
                                 // Say we'll take it.
-                                //evt.acceptDrop ( DnDConstants.ACTION_COPY_OR_MOVE );
                                 evt.acceptDrop(DnDConstants.ACTION_COPY);
-                                log.debug("FileDrop: reader accepted.");
+                                log.debug("URIDrop: reader accepted.");
                                 Reader reader = flavor.getReaderForText(tr);
                                 BufferedReader br = new BufferedReader(reader);
                                 if (listener != null) {
-                                    listener.filesDropped(createFileArray(br));
+                                    listener.URIsDropped(createURIArray(br));
                                 }
                                 // Mark that drop is completed.
                                 evt.getDropTargetContext().dropComplete(true);
-                                log.debug("FileDrop: drop complete.");
+                                log.debug("URIDrop: drop complete as ",flavor.getHumanPresentableName());
                                 handled = true;
                                 break;
                             }
                         }
-                        if (!handled) {
-                            log.debug("FileDrop: not a file list or reader - abort.");
-                            evt.rejectDrop();
-                        }
+                    }
+                    if (!handled) {
+                        log.debug("URIDrop: not droppable.");
+                        evt.rejectDrop();
                     }
                 } catch (java.io.IOException io) {
-                    log.error("FileDrop: IOException - abort:", io);
+                    log.error("URIDrop: IOException - abort:", io);
                     evt.rejectDrop();
                 } catch (UnsupportedFlavorException ufe) {
-                    log.error("FileDrop: UnsupportedFlavorException - abort:", ufe);
+                    log.error("URIDrop: UnsupportedFlavorException - abort:", ufe);
                     evt.rejectDrop();
                 } finally {
                     // If it's a Swing component, reset its border
                     if (c instanceof JComponent) {
                         JComponent jc = (JComponent) c;
                         jc.setBorder(normalBorder);
-                        log.debug("FileDrop: normal border restored.");
+                        log.debug("URIDrop: normal border restored.");
                     }
                 }
             }
 
             @Override
             public void dragExit(DropTargetEvent evt) {
-                log.debug("FileDrop: dragExit event.");
+                log.debug("URIDrop: dragExit event.");
                 // If it's a Swing component, reset its border
                 if (c instanceof JComponent) {
                     JComponent jc = (JComponent) c;
                     jc.setBorder(normalBorder);
-                    log.debug("FileDrop: normal border restored.");
+                    log.debug("URIDrop: normal border restored.");
                 }
 
             }
 
             @Override
             public void dropActionChanged(DropTargetDragEvent evt) {
-                log.debug("FileDrop: dropActionChanged event.");
+                log.debug("URIDrop: dropActionChanged event.");
                 // Is this an acceptable drag event?
                 if (isDragOk(evt)) {   //evt.acceptDrag( DnDConstants.ACTION_COPY_OR_MOVE );
                     evt.acceptDrag(DnDConstants.ACTION_COPY);
-                    log.debug("FileDrop: event accepted.");
+                    log.debug("URIDrop: event accepted.");
                 } else {
                     evt.rejectDrag();
-                    log.debug("FileDrop: event rejected.");
+                    log.debug("URIDrop: event rejected.");
                 }
             }
         };
@@ -369,10 +378,10 @@ public class FileDrop {
 
     private static String ZERO_CHAR_STRING = "" + (char) 0;
 
-    private static File[] createFileArray(BufferedReader bReader) {
+    private static java.net.URI[] createURIArray(BufferedReader bReader) {
         try {
-            java.util.List<File> list = new java.util.ArrayList<>();
-            java.lang.String line = null;
+            java.util.List<java.net.URI> list = new java.util.ArrayList<>();
+            java.lang.String line;
             while ((line = bReader.readLine()) != null) {
                 try {
                     // kde seems to append a 0 char to the end of the reader
@@ -380,18 +389,45 @@ public class FileDrop {
                         continue;
                     }
 
-                    java.io.File file = new java.io.File(new java.net.URI(line));
-                    list.add(file);
+                    java.net.URI uri = new java.net.URI(line);
+                    list.add(uri);
                 } catch (java.net.URISyntaxException ex) {
-                    log.debug("FileDrop: URISyntaxException");
+                    log.error("URIDrop: URISyntaxException");
+                    log.debug("URIDrop: line for URI : ",line);
                 }
             }
 
-            return list.toArray(new File[list.size()]);
+            return list.toArray(new java.net.URI[list.size()]);
         } catch (IOException ex) {
-            log.debug("FileDrop: IOException");
+            log.debug("URIDrop: IOException");
         }
-        return new File[0];
+        return new java.net.URI[0];
+    }
+    
+    private static java.net.URI[] createURIArray(String str) {
+        java.util.List<java.net.URI> list = new java.util.ArrayList<>();
+        String lines[] = str.split("(\\r|\\n)");
+        for (String line : lines) {
+            // kde seems to append a 0 char to the end of the reader
+            if (ZERO_CHAR_STRING.equals(line)) {
+                continue;
+            }
+            try {
+                java.net.URI uri = new java.net.URI(line);
+                list.add(uri);
+            }catch (java.net.URISyntaxException ex) {
+                log.error("URIDrop: URISyntaxException");
+            }
+        }
+        return list.toArray(new java.net.URI[list.size()]);
+    }
+    
+    private static java.net.URI[] createURIArray(List<File> fileList) {
+        java.util.List<java.net.URI> list = new java.util.ArrayList<>();
+        fileList.forEach((f) -> {
+            list.add(f.toURI());
+        });
+        return list.toArray(new java.net.URI[list.size()]);
     }
 
     private void makeDropTarget(final Component c, boolean recursive) {
@@ -400,19 +436,19 @@ public class FileDrop {
         try {
             dt.addDropTargetListener(dropListener);
         } catch (java.util.TooManyListenersException e) {
-            log.error("FileDrop: Drop will not work due to previous error. Do you have another listener attached?", e);
+            log.error("URIDrop: Drop will not work due to previous error. Do you have another listener attached?", e);
         }
 
         // Listen for hierarchy changes and remove the drop target when the parent gets cleared out.
         c.addHierarchyListener((HierarchyEvent evt) -> {
-            log.debug("FileDrop: Hierarchy changed.");
+            log.debug("URIDrop: Hierarchy changed.");
             Component parent = c.getParent();
             if (parent == null) {
                 c.setDropTarget(null);
-                log.debug("FileDrop: Drop target cleared from component.");
+                log.debug("URIDrop: Drop target cleared from component.");
             } else {
                 new DropTarget(c, dropListener);
-                log.debug("FileDrop: Drop target added to component.");
+                log.debug("URIDrop: Drop target added to component.");
             }
         });
         if (c.getParent() != null) {
@@ -457,7 +493,7 @@ public class FileDrop {
         // If logging is enabled, show data flavors
         if (log.isDebugEnabled()) {
             if (flavors.length == 0) {
-                log.debug("FileDrop: no data flavors.");
+                log.debug("URIDrop: no data flavors.");
             }
             for (i = 0; i < flavors.length; i++) {
                 log.debug(flavors[i].toString());
@@ -493,7 +529,7 @@ public class FileDrop {
      * @since 1.0
      */
     public static boolean remove(Component c, boolean recursive) {
-        log.debug("FileDrop: Removing drag-and-drop hooks.");
+        log.debug("URIDrop: Removing drag-and-drop hooks.");
         c.setDropTarget(null);
         if (recursive && (c instanceof Container)) {
             Component[] comps = ((Container) c).getComponents();
@@ -508,12 +544,12 @@ public class FileDrop {
 
     /* ********  I N N E R   I N T E R F A C E   L I S T E N E R  ******** */
     /**
-     * Implement this inner interface to listen for when files are dropped. For
+     * Implement this inner interface to listen for when uris are dropped. For
      * example your class declaration may begin like this:
      * <pre><code>
-     *      public class MyClass implements FileDrop.Listener
+     *      public class MyClass implements URIsDrop.Listener
      *      ...
-     *      public void filesDropped( java.io.File[] files )
+     *      public void URIsDropped( java.io.URI[] files )
      *      {
      *          ...
      *      }
@@ -525,13 +561,13 @@ public class FileDrop {
     public interface Listener {
 
         /**
-         * This method is called when files have been successfully dropped.
+         * This method is called when uris have been successfully dropped.
          *
-         * @param files An array of {@code File}s that were dropped.
+         * @param uris An array of {@code URI}s that were dropped.
          * @since 1.0
          */
-        public abstract void filesDropped(java.io.File[] files);
+        public abstract void URIsDropped(java.net.URI[] uris);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(FileDrop.class);
+    private final static Logger log = LoggerFactory.getLogger(URIDrop.class);
 }

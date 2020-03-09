@@ -51,7 +51,7 @@ public class CbusNode extends CbusBasicNodeWithMgrsCommandStation {
         }
     }
     
-        /**
+    /**
      * Get Module Type Name from a previous NAME OPC response
      * Used when a module type is not identified within JMRI.
      * @return Module type name, NOT prefixed with CAN or ETH, may be empty.
@@ -66,6 +66,9 @@ public class CbusNode extends CbusBasicNodeWithMgrsCommandStation {
      * @param newName The module type name, should NOT be prefixed with CAN or ETH
      */
     public void setNodeNameFromName( String newName ){
+        if (newName==null) {
+            newName = "";
+        }
         _nodeNameFromName = newName;
         notifyPropertyChangeListener("NAMECHANGE", null, null);
     }
