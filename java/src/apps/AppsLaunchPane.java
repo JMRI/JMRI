@@ -7,6 +7,7 @@ import java.awt.FlowLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
+import java.net.URI;
 import java.util.Locale;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -22,8 +23,8 @@ import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.JmrixConfigPane;
 import jmri.util.FileUtil;
-import jmri.util.iharder.dnd.FileDrop;
-import jmri.util.iharder.dnd.FileDrop.Listener;
+import jmri.util.iharder.dnd.URIDrop;
+import jmri.util.iharder.dnd.URIDrop.Listener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -83,12 +84,9 @@ public abstract class AppsLaunchPane extends JPanel implements PropertyChangeLis
     protected void setJynstrumentSpace() {
         _jynstrumentSpace = new JPanel();
         _jynstrumentSpace.setLayout(new FlowLayout());
-        new FileDrop(_jynstrumentSpace, new Listener() {
-            @Override
-            public void filesDropped(File[] files) {
-                for (int i = 0; i < files.length; i++) {
-                    ynstrument(files[i].getPath());
-                }
+        new URIDrop(_jynstrumentSpace, (java.net.URI[] uris) -> {
+            for (URI uri : uris) {
+                ynstrument(uri.getPath());
             }
         });
     }

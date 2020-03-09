@@ -69,20 +69,24 @@ public class CbusDccProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     }
 
 */
+    
+    private TrafficControllerScaffold tcis;
 
     // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        programmer = new CbusDccProgrammer(new TrafficControllerScaffold());
+        tcis = new TrafficControllerScaffold();
+        programmer = new CbusDccProgrammer(tcis);
     }
 
     @Override
     @After
     public void tearDown() {
         programmer = null;
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        tcis.terminateThreads();
+        tcis = null;
         JUnitUtil.tearDown();
 
     }

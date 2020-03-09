@@ -9,6 +9,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Objects;
 import javax.swing.*;
+import javax.swing.event.TableModelEvent;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
@@ -24,7 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Frame providing a Cbus node table.
+ * Pane providing a CBUS node table.
  *
  * @author Steve Young (C) 2019
  * @see CbusNodeTableDataModel
@@ -33,8 +34,8 @@ import org.slf4j.LoggerFactory;
  */
 public class CbusNodeTablePane extends JPanel {
 
-    private CbusNodeTableDataModel nodeModel=null;
-    protected JTable nodeTable=null;
+    private CbusNodeTableDataModel nodeModel;
+    protected JTable nodeTable;
     
     private TableRowSorter<CbusNodeTableDataModel> sorter;
 
@@ -131,9 +132,13 @@ public class CbusNodeTablePane extends JPanel {
         repaint();
         
         nodeModel.fireTableDataChanged();
-
+        nodeModel.addTableModelListener((TableModelEvent e) -> {
+            if (nodeModel.getRequestNodeRowToDisplay()>-1) {
+                nodeTable.setRowSelectionInterval(nodeModel.getRequestNodeRowToDisplay(), nodeModel.getRequestNodeRowToDisplay());
+                nodeTable.scrollRectToVisible(nodeTable.getCellRect(nodeModel.getRequestNodeRowToDisplay(), 0, true));
+            }
+        });
     }
-    
 
     /**
      * Cell Renderer for string table columns

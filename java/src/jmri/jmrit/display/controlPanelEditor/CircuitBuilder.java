@@ -1607,7 +1607,7 @@ public class CircuitBuilder {
             setContentPane(contentPane);
             _blockTable.clearSelection();
             pack();
-            setLocation(jmri.util.PlaceWindow.nextTo(_editor, null, this));
+            InstanceManager.getDefault(jmri.util.PlaceWindow.class).nextTo(_editor, null, this);
             setVisible(true);
         }
 
