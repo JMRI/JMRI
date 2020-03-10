@@ -522,7 +522,7 @@ git push github
 
 - Update the web site front page and downloads page:
 ```
-     index.shtml download/Sidebar download/index.shtml releaselist
+     index.shtml download/Sidebar.shtml download/index.shtml releaselist
 ```
 
 - Commit site, push to github
