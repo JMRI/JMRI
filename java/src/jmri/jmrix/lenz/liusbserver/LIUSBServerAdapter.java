@@ -61,7 +61,7 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
     }
 
     @Override
-    synchronized public void connect() throws java.io.IOException {
+    public synchronized void connect() throws java.io.IOException {
         opened = false;
         log.debug("connect called");
         // open the port in XpressNet mode
@@ -76,13 +76,13 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
             pin = new DataInputStream(new PipedInputStream(tempPipeO));
             opened = true;
         } catch (java.io.IOException e) {
-            log.error("init (pipe): Exception: " + e.toString());
+            log.error("init (pipe): Exception: {}",e);
             ConnectionStatus.instance().setConnectionState(
                         this.getSystemConnectionMemo().getUserName(),
                         m_HostName, ConnectionStatus.CONNECTION_DOWN);
             throw e; // re-throw so this can be seen externally.
         } catch (Exception ex) {
-            log.error("init (connect): Exception: " + ex.toString());
+            log.error("init (connect): Exception: {}", ex);
             ConnectionStatus.instance().setConnectionState(
                         this.getSystemConnectionMemo().getUserName(),
                         m_HostName, ConnectionStatus.CONNECTION_DOWN);
@@ -138,8 +138,6 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
         XNetTrafficController packets = (new LIUSBServerXNetPacketizer(new LenzCommandStation()));
         packets.connectPort(this);
 
-        // start operation
-        // packets.startThreads();
         this.getSystemConnectionMemo().setXNetTrafficController(packets);
 
         // Start the threads that handle the network communication.
@@ -153,9 +151,7 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
      * Start the Communication port thread.
      */
     private void startCommThread() {
-        commThread = new Thread(new Runnable() {
-            @Override
-            public void run() { // start a new thread
+        commThread = new Thread(() -> { // start a new thread
                 // this thread has one task.  It repeatedly reads from the two
                 // incomming network connections and writes the resulting
                 // messages from the network ports and writes any data
@@ -172,20 +168,15 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
                             r = loadChars(bufferedin);
                         }
                     } catch (java.io.IOException e) {
-                        // continue;
                         // start the process of trying to recover from
                         // a failed connection.
                         commAdapter.recover();
                         break; // then exit the for loop.
                     }
-                    if (log.isDebugEnabled()) {
-                        log.debug("Network Adapter Received Reply: "
-                                + r.toString());
-                    }
+                    log.debug("Network Adapter Received Reply: {}",r);
                     writeReply(r);
                 }
-            }
-        });
+            });
         commThread.start();
     }
 
@@ -193,9 +184,7 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
      * Start the Broadcast Port thread.
      */
     private void startBCastThread() {
-        bcastThread = new Thread(new Runnable() {
-            @Override
-            public void run() { // start a new thread
+        bcastThread = new Thread(() -> { // start a new thread
                 // this thread has one task.  It repeatedly reads from the two
                 // incomming network connections and writes the resulting
                 // messages from the network ports and writes any data received
@@ -212,7 +201,6 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
                             r = loadChars(bufferedin);
                         }
                     } catch (java.io.IOException e) {
-                        //continue;
                         // start the process of trying to recover from
                         // a failed connection.
                         bcastAdapter.recover();
@@ -227,26 +215,12 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
                     // unsolicited message.
                     writeReply(r);
                 }
-            }
-        });
+            });
         bcastThread.start();
     }
 
-    /**
-     * Local method to do specific configuration.
-     */
-    @Deprecated
-    static public LIUSBServerAdapter instance() {
-        if (mInstance == null) {
-            mInstance = new LIUSBServerAdapter();
-        }
-        return mInstance;
-    }
-
-    volatile static LIUSBServerAdapter mInstance = null;
-
     private synchronized void writeReply(XNetReply r) {
-        log.debug("Write reply to outpipe: {}", r.toString());
+        log.debug("Write reply to outpipe: {}", r);
         int i;
         int len = (r.getElement(0) & 0x0f) + 2;  // opCode+Nbytes+ECC
         for (i = 0; i < len; i++) {
@@ -286,7 +260,7 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
      * it calls the default recovery method for both of the internal adapters.
      */
     @Override
-    synchronized public void recover() {
+    public synchronized void recover() {
         bcastAdapter.recover();
         commAdapter.recover();
     }
@@ -317,6 +291,7 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
 
         @Override
         public void configure() {
+            // no additional configuration required
         }
 
         @Override
@@ -359,6 +334,7 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
 
         @Override
         public void configure() {
+            // no additional configuration required
         }
 
         @Override
@@ -414,6 +390,6 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
         jmri.util.TimerUtil.schedule(keepAliveTimer,keepAliveTimeoutValue,keepAliveTimeoutValue);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LIUSBServerAdapter.class);
+    private static final Logger log = LoggerFactory.getLogger(LIUSBServerAdapter.class);
 
 }

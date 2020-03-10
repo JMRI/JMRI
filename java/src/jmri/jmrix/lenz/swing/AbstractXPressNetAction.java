@@ -14,7 +14,7 @@ import jmri.jmrix.lenz.XNetSystemConnectionMemo;
  *
  * @author Paul Bender Copyright (C) 2016 
  */
-abstract public class AbstractXPressNetAction extends AbstractAction implements jmri.jmrix.swing.SystemConnectionAction {
+public abstract class AbstractXPressNetAction extends AbstractAction implements jmri.jmrix.swing.SystemConnectionAction {
 
     protected XNetSystemConnectionMemo _memo = null;
 
@@ -48,7 +48,7 @@ abstract public class AbstractXPressNetAction extends AbstractAction implements 
      * @throws IllegalArgumentException if the SystemConnectionMemo is invalid
      */
     @Override
-    public void setSystemConnectionMemo(@Nonnull SystemConnectionMemo memo) throws IllegalArgumentException{
+    public void setSystemConnectionMemo(@Nonnull SystemConnectionMemo memo) {
          if(memo == null) {
             throw new IllegalArgumentException("Attempt to set null system connection");
          }
