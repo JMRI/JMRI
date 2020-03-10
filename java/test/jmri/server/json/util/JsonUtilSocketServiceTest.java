@@ -76,10 +76,10 @@ public class JsonUtilSocketServiceTest {
         JsonNode empty = connection.getObjectMapper().createObjectNode();
         JsonUtilSocketService instance = new JsonUtilSocketService(connection);
         // JSON.LOCALE
-        instance.onMessage(JSON.LOCALE, empty, JSON.POST, new JsonRequest(locale, JSON.V5, 42));
+        instance.onMessage(JSON.LOCALE, empty, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
         Assert.assertNull(connection.getMessage()); // assert no reply
         // JSON.PING
-        instance.onMessage(JSON.PING, empty, JSON.POST, new JsonRequest(locale, JSON.V5, 42));
+        instance.onMessage(JSON.PING, empty, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
         message = connection.getMessage();
         Assert.assertNotNull("message is not null", message);
         JsonNode result = message.path(JSON.TYPE);
@@ -89,7 +89,7 @@ public class JsonUtilSocketServiceTest {
         Assert.assertTrue(message.path(JSON.DATA).isMissingNode());
         // JSON.RAILROAD
         WebServerPreferences wsp = InstanceManager.getDefault(WebServerPreferences.class);
-        instance.onMessage(JSON.RAILROAD, empty, JSON.GET, new JsonRequest(locale, JSON.V5, 42));
+        instance.onMessage(JSON.RAILROAD, empty, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         message = connection.getMessage();
         Assert.assertNotNull("message is not null", message);
         result = message.path(JSON.DATA);
@@ -107,7 +107,7 @@ public class JsonUtilSocketServiceTest {
         // requested service)
         message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, JSON.ZEROCONF_SERVICE_TYPE);
         try {
-            instance.onMessage(JSON.NETWORK_SERVICE, message, JSON.GET, new JsonRequest(locale, JSON.V5, 42));
+            instance.onMessage(JSON.NETWORK_SERVICE, message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
             Assert.fail("Expected exception not thrown");
         } catch (JsonException ex) {
             Assert.assertEquals("HTTP Not Found", 404, ex.getCode());
@@ -115,7 +115,7 @@ public class JsonUtilSocketServiceTest {
                     ex.getMessage());
         }
         // JSON.GOODBYE
-        instance.onMessage(JSON.GOODBYE, empty, JSON.POST, new JsonRequest(locale, JSON.V5, 42));
+        instance.onMessage(JSON.GOODBYE, empty, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
         message = connection.getMessage();
         Assert.assertNotNull("message is not null", message);
         result = message.path(JSON.TYPE);
@@ -140,7 +140,7 @@ public class JsonUtilSocketServiceTest {
         JsonNode empty = connection.getObjectMapper().createObjectNode();
         JsonUtilSocketService instance = new JsonUtilSocketService(connection);
         try {
-            instance.onMessage(JSON.PANELS, empty, JSON.GET, new JsonRequest(locale, JSON.V5, 42));
+            instance.onMessage(JSON.PANELS, empty, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
             Assert.fail("Expected exception not thrown");
         } catch (JsonException ex) {
             Assert.assertEquals("HTTP Not Found", 404, ex.getCode());
@@ -149,7 +149,7 @@ public class JsonUtilSocketServiceTest {
         }
         JsonNode data =
                 connection.getObjectMapper().createObjectNode().put(JSON.NAME, "Switchboard/json%20test%20switchboard");
-        instance.onMessage(JSON.PANEL, data, JSON.GET, new JsonRequest(locale, JSON.V5, 42));
+        instance.onMessage(JSON.PANEL, data, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
 
         JUnitUtil.dispose(editor.getTargetFrame());
         JUnitUtil.dispose(editor);
@@ -173,12 +173,12 @@ public class JsonUtilSocketServiceTest {
         JsonUtilSocketService instance = new JsonUtilSocketService(connection);
         JsonUtilHttpService helper = new JsonUtilHttpService(mapper);
         InstanceManager.getDefault(JsonServerPreferences.class).setHeartbeatInterval(10);
-        instance.onList(JSON.METADATA, empty, new JsonRequest(locale, JSON.V5, 42));
-        Assert.assertEquals(helper.getMetadata(new JsonRequest(locale, JSON.V5, 42)), connection.getMessage());
-        instance.onList(JSON.NETWORK_SERVICES, empty, new JsonRequest(locale, JSON.V5, 42));
-        Assert.assertEquals(helper.getNetworkServices(new JsonRequest(locale, JSON.V5, 42)), connection.getMessage());
-        instance.onList(JSON.SYSTEM_CONNECTIONS, empty, new JsonRequest(locale, JSON.V5, 42));
-        Assert.assertEquals(helper.getSystemConnections(new JsonRequest(locale, JSON.V5, 42)), connection.getMessage());
+        instance.onList(JSON.METADATA, empty, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
+        Assert.assertEquals(helper.getMetadata(new JsonRequest(locale, JSON.V5, JSON.GET, 42)), connection.getMessage());
+        instance.onList(JSON.NETWORK_SERVICES, empty, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
+        Assert.assertEquals(helper.getNetworkServices(new JsonRequest(locale, JSON.V5, JSON.GET, 42)), connection.getMessage());
+        instance.onList(JSON.SYSTEM_CONNECTIONS, empty, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
+        Assert.assertEquals(helper.getSystemConnections(new JsonRequest(locale, JSON.V5, JSON.GET, 42)), connection.getMessage());
     }
 
     /**
@@ -197,8 +197,8 @@ public class JsonUtilSocketServiceTest {
         JsonUtilSocketService instance = new JsonUtilSocketService(connection);
         JsonUtilHttpService helper = new JsonUtilHttpService(mapper);
         InstanceManager.getDefault(JsonServerPreferences.class).setHeartbeatInterval(10);
-        instance.onList(JSON.CONFIG_PROFILES, empty, new JsonRequest(locale, JSON.V5, 42));
-        Assert.assertEquals(helper.getConfigProfiles(new JsonRequest(locale, JSON.V5, 42)), connection.getMessage());
+        instance.onList(JSON.CONFIG_PROFILES, empty, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
+        Assert.assertEquals(helper.getConfigProfiles(new JsonRequest(locale, JSON.V5, JSON.GET, 42)), connection.getMessage());
     }
 
     /**
@@ -221,7 +221,7 @@ public class JsonUtilSocketServiceTest {
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         JsonNode empty = connection.getObjectMapper().createObjectNode();
         JsonUtilSocketService instance = new JsonUtilSocketService(connection);
-        instance.onList(JSON.PANELS, empty, new JsonRequest(locale, JSON.V5, 42));
+        instance.onList(JSON.PANELS, empty, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         JsonNode message = connection.getMessage();
         Assert.assertNotNull("Message is not null", message);
         Assert.assertTrue("Message is array", message.isArray());
@@ -248,7 +248,7 @@ public class JsonUtilSocketServiceTest {
         JsonUtilSocketService instance = new JsonUtilSocketService(connection, httpService);
         WebServerPreferences preferences = InstanceManager.getDefault(WebServerPreferences.class);
         Assert.assertEquals("No preferences listener", 0, preferences.getPropertyChangeListeners().length);
-        instance.onMessage(JSON.RAILROAD, empty, JSON.GET, new JsonRequest(locale, JSON.V5, 42));
+        instance.onMessage(JSON.RAILROAD, empty, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         JsonNode message = connection.getMessage();
         Assert.assertNotNull("Message is not null", message);
         Assert.assertEquals("Message has RR Name", preferences.getRailroadName(),
@@ -291,8 +291,8 @@ public class JsonUtilSocketServiceTest {
         WebServerPreferences wsp = InstanceManager.getDefault(WebServerPreferences.class);
         Assert.assertEquals("listeners", 0, wsp.getPropertyChangeListeners().length);
         JsonUtilSocketService instance = new JsonUtilSocketService(new JsonMockConnection((DataOutputStream) null));
-        instance.onMessage(JSON.RAILROAD, instance.getConnection().getObjectMapper().nullNode(), JSON.GET,
-                new JsonRequest(locale, JSON.V5, 0));
+        instance.onMessage(JSON.RAILROAD, instance.getConnection().getObjectMapper().nullNode(),
+                new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         Assert.assertEquals("listeners", 1, wsp.getPropertyChangeListeners().length);
         instance.onClose();
         Assert.assertEquals("listeners", 0, wsp.getPropertyChangeListeners().length);

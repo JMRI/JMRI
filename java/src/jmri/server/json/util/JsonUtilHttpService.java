@@ -203,7 +203,7 @@ public class JsonUtilHttpService extends JsonHttpService {
      */
     @Deprecated
     public JsonNode getHello(Locale locale, int heartbeat, int id) {
-        return getHello(heartbeat, new JsonRequest(locale, JSON.V5, id));
+        return getHello(heartbeat, new JsonRequest(locale, JSON.V5, JSON.GET, id));
     }
 
     /**
@@ -238,7 +238,7 @@ public class JsonUtilHttpService extends JsonHttpService {
      * @throws JsonException if name is not a recognized metadata element.
      */
     public JsonNode getMetadata(Locale locale, String name, int id) throws JsonException {
-        return getMetadata(name, new JsonRequest(locale, JSON.V5, id));
+        return getMetadata(name, new JsonRequest(locale, JSON.V5, JSON.GET, id));
     }
 
     /**
@@ -271,7 +271,7 @@ public class JsonUtilHttpService extends JsonHttpService {
      */
     @Deprecated
     public ArrayNode getMetadata(Locale locale, int id) throws JsonException {
-        return getMetadata(new JsonRequest(locale, JSON.V5, id));
+        return getMetadata(new JsonRequest(locale, JSON.V5, JSON.GET, id));
     }
 
     /**
@@ -310,7 +310,7 @@ public class JsonUtilHttpService extends JsonHttpService {
      */
     @Deprecated
     public JsonNode getNetworkService(Locale locale, String name, int id) throws JsonException {
-        return getNetworkService(name, new JsonRequest(locale, JSON.V5, id));
+        return getNetworkService(name, new JsonRequest(locale, JSON.V5, JSON.GET, id));
     }
 
     private JsonNode getNetworkService(ZeroConfService service, int id) {
@@ -344,7 +344,7 @@ public class JsonUtilHttpService extends JsonHttpService {
      * @return the JSON networkServices message.
      */
     public ArrayNode getNetworkServices(Locale locale, int id) {
-        return getNetworkServices(new JsonRequest(locale, JSON.V5, id));
+        return getNetworkServices(new JsonRequest(locale, JSON.V5, JSON.GET, id));
     }
 
     /**
@@ -376,7 +376,7 @@ public class JsonUtilHttpService extends JsonHttpService {
      */
     @Deprecated
     public JsonNode getNode(Locale locale, int id) {
-        return getNode(new JsonRequest(locale, JSON.V5, id));
+        return getNode(new JsonRequest(locale, JSON.V5, JSON.GET, id));
     }
 
     /**
@@ -478,7 +478,7 @@ public class JsonUtilHttpService extends JsonHttpService {
      */
     @Deprecated
     public JsonNode getRailroad(Locale locale, int id) {
-        return getRailroad(new JsonRequest(locale, JSON.V5, id));
+        return getRailroad(new JsonRequest(locale, JSON.V5, JSON.GET, id));
     }
 
     /**
@@ -516,7 +516,7 @@ public class JsonUtilHttpService extends JsonHttpService {
      */
     @Deprecated
     public JsonNode getSystemConnection(Locale locale, String name, int id) throws JsonException {
-        return getSystemConnection(name, new JsonRequest(locale, JSON.V5, id));
+        return getSystemConnection(name, new JsonRequest(locale, JSON.V5, JSON.GET, id));
     }
 
     /**
@@ -579,7 +579,7 @@ public class JsonUtilHttpService extends JsonHttpService {
      */
     @Deprecated
     public ArrayNode getSystemConnections(Locale locale, int id) {
-        return getSystemConnections(new JsonRequest(locale, JSON.V5, id));
+        return getSystemConnections(new JsonRequest(locale, JSON.V5, JSON.GET, id));
     }
 
     /**
@@ -640,7 +640,7 @@ public class JsonUtilHttpService extends JsonHttpService {
      */
     @Deprecated
     public JsonNode getConfigProfile(Locale locale, String name, int id) throws JsonException {
-        return getConfigProfile(name, new JsonRequest(locale, JSON.V5, id));
+        return getConfigProfile(name, new JsonRequest(locale, JSON.V5, JSON.GET, id));
     }
 
     /**
@@ -671,7 +671,7 @@ public class JsonUtilHttpService extends JsonHttpService {
      */
     @Deprecated
     public ArrayNode getConfigProfiles(Locale locale, int id) {
-        return getConfigProfiles(new JsonRequest(locale, JSON.V5, id));
+        return getConfigProfiles(new JsonRequest(locale, JSON.V5, JSON.GET, id));
     }
 
     /**

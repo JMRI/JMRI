@@ -34,13 +34,13 @@ public class JsonConsistSocketService extends JsonSocketService<JsonConsistHttpS
     }
 
     @Override
-    public void onMessage(String type, JsonNode data, String method, JsonRequest request) throws IOException, JmriException, JsonException {
+    public void onMessage(String type, JsonNode data, JsonRequest request) throws IOException, JmriException, JsonException {
         if (JsonConsist.CONSISTS.equals(type)) {
             connection.sendMessage(service.doGetList(type, data, request), request.id);
         } else {
             DccLocoAddress address = new DccLocoAddress(data.path(JSON.ADDRESS).asInt(), data.path(JSON.IS_LONG_ADDRESS).asBoolean());
             String name = address.getNumber() + (address.isLongAddress() ? "L" : "");
-            if (method.equals(JSON.PUT)) {
+            if (request.method.equals(JSON.PUT)) {
                 connection.sendMessage(service.doPut(type, name, data, request), request.id);
             } else {
                 connection.sendMessage(service.doPost(type, name, data, request), request.id);
@@ -70,7 +70,7 @@ public class JsonConsistSocketService extends JsonSocketService<JsonConsistHttpS
         public void consistReply(LocoAddress locoaddress, int status) {
             try {
                 try {
-                    connection.sendMessage(service.getConsist(locoaddress, new JsonRequest(getLocale(), JSON.V5, 0)), 0);
+                    connection.sendMessage(service.getConsist(locoaddress, new JsonRequest(getLocale(), JSON.V5, JSON.GET, 0)), 0);
                 } catch (JsonException ex) {
                     connection.sendMessage(ex.getJsonMessage(), 0);
                 }
@@ -95,7 +95,7 @@ public class JsonConsistSocketService extends JsonSocketService<JsonConsistHttpS
             try {
                 try {
                     connection.sendMessage(service.doGetList(JsonConsist.CONSISTS,
-                            service.getObjectMapper().createObjectNode(), new JsonRequest(getLocale(), getVersion(), 0)), 0);
+                            service.getObjectMapper().createObjectNode(), new JsonRequest(getLocale(), getVersion(), JSON.GET, 0)), 0);
                 } catch (JsonException ex) {
                     connection.sendMessage(ex.getJsonMessage(), 0);
                 }

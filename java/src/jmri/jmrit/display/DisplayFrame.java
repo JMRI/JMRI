@@ -113,7 +113,7 @@ public class DisplayFrame extends JmriJFrame {
 
     public void setPreviewBg(int index) {
         previewBgSet = index;
-        log.debug("prev set to {}", index);
+//        log.debug("prev set to {}", index);
     }
 
     public int getPreviewBg() {
@@ -131,14 +131,13 @@ public class DisplayFrame extends JmriJFrame {
      * @param ed panel editor
      */
     public void reSize(java.awt.Container container, Dimension deltaDim, Dimension newDim, Editor ed) {
-        Dimension dim = new Dimension(deltaDim.width + newDim.width + 10, 
-                deltaDim.height + newDim.height + 10);
+        Dimension dim = new Dimension(deltaDim.width + newDim.width, deltaDim.height + newDim.height);
         container.setPreferredSize(dim);
+        container.invalidate();
         if (log.isDebugEnabled())
             log.debug(" deltaDim= ({}, {}) NewDim= ({}, {}) setPreferredSize to ({}, {})", 
                 deltaDim.width, deltaDim.height, newDim.width, newDim.height, dim.width, dim.height);
         pack();
-        setLocation(jmri.util.PlaceWindow.nextTo(ed, null, this));
         if (log.isDebugEnabled()) {
             dim = container.getSize();
             log.debug(" Resized to ({}, {})", dim.width, dim.height);

@@ -3,7 +3,9 @@ package jmri.implementation;
 import java.beans.*;
 import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.annotation.*;
 import jmri.InstanceManager;
 import jmri.JmriException;
@@ -278,6 +280,13 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     @Override
     public void setControlType(int num) {
         _controlType = num;
+    }
+
+    @Override
+    public Set<Integer> getValidFeedbackModes() {
+        Set<Integer> modes = new HashSet<>();
+        Arrays.stream(_validFeedbackModes).forEach(modes::add);
+        return modes;
     }
 
     @Override

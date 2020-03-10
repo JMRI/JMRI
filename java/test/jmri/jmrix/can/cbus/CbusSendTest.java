@@ -145,20 +145,17 @@ public class CbusSendTest {
         Assert.assertNotNull("exists",tasend);
         tasend.nodeExitLearnEvMode(22222);
         Assert.assertTrue("textarea is updated 2",(ta.getText()).contains("2 exit learn mode."));
-        tasend = null;
-        ta = null;
+        
     }
 
 
     @Test
     public void testTextAreaAdd3() {
-        TextAreaFIFO ta = new TextAreaFIFO(9);
+        ta = new TextAreaFIFO(9);
         CbusSend tasend = new CbusSend(memo,ta);
         Assert.assertNotNull("exists",tasend);
         tasend.nodeEnterLearnEvMode(33333);
         Assert.assertTrue("textarea is updated 3",(ta.getText()).contains("3 enter learn mode."));
-        tasend = null;
-        ta = null;
     }
 
     public void checknodeExitLearnEvMode() {
@@ -264,10 +261,11 @@ public class CbusSendTest {
     @After
     public void tearDown() {
         send = null;
+        memo.dispose();
+        tcis.terminateThreads();
         tcis = null;
         memo = null;
         ta = null;
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
 
     }

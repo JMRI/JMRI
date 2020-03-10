@@ -43,31 +43,31 @@ public class JsonSensorHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<
         SensorManager manager = InstanceManager.getDefault(SensorManager.class);
         Sensor sensor1 = manager.provideSensor("IS1"); // no value
         JsonNode result;
-        result = service.doGet(JsonSensor.SENSOR, "IS1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 42));
+        result = service.doGet(JsonSensor.SENSOR, "IS1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         validate(result);
         assertEquals(JsonSensor.SENSOR, result.path(JSON.TYPE).asText());
         assertEquals("IS1", result.path(JSON.DATA).path(JSON.NAME).asText());
         assertEquals(JSON.UNKNOWN, result.path(JSON.DATA).path(JSON.STATE).asInt(-1)); // -1 is not a possible value
         sensor1.setKnownState(Sensor.ACTIVE);
-        result = service.doGet(JsonSensor.SENSOR, "IS1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 42));
+        result = service.doGet(JsonSensor.SENSOR, "IS1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         validate(result);
         assertEquals(JSON.ACTIVE, result.path(JSON.DATA).path(JSON.STATE).asInt(-1));
         sensor1.setKnownState(Sensor.INACTIVE);
-        result = service.doGet(JsonSensor.SENSOR, "IS1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 42));
+        result = service.doGet(JsonSensor.SENSOR, "IS1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         validate(result);
         assertEquals(JSON.INACTIVE, result.path(JSON.DATA).path(JSON.STATE).asInt(-1));
         sensor1.setKnownState(Sensor.INCONSISTENT);
-        result = service.doGet(JsonSensor.SENSOR, "IS1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 42));
+        result = service.doGet(JsonSensor.SENSOR, "IS1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         validate(result);
         assertEquals(JSON.INCONSISTENT, result.path(JSON.DATA).path(JSON.STATE).asInt(-1));
         sensor1.setKnownState(Sensor.UNKNOWN);
-        result = service.doGet(JsonSensor.SENSOR, "IS1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 42));
+        result = service.doGet(JsonSensor.SENSOR, "IS1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         validate(result);
         assertEquals(JSON.UNKNOWN, result.path(JSON.DATA).path(JSON.STATE).asInt(-1));
         // test an unexpected state
         Sensor sensor2 = new ErrorSensor("IS2");
         try {
-            service.doGet(sensor2, "IS2", JsonSensor.SENSOR, new JsonRequest(locale, JSON.V5, 42));
+            service.doGet(sensor2, "IS2", JsonSensor.SENSOR, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
             fail("Expected exception not thrown");
         } catch (JsonException ex) {
             assertEquals("HTTP error code", 500, ex.getCode());
@@ -83,42 +83,42 @@ public class JsonSensorHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<
         JsonNode message;
         // set ACTIVE
         message = mapper.createObjectNode().put(JSON.NAME, "IS1").put(JSON.STATE, JSON.ACTIVE);
-        result = service.doPost(JsonSensor.SENSOR, "IS1", message, new JsonRequest(locale, JSON.V5, 42));
+        result = service.doPost(JsonSensor.SENSOR, "IS1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         assertEquals(Sensor.ACTIVE, sensor1.getKnownState());
         validate(result);
         assertEquals(JSON.ACTIVE, result.path(JSON.DATA).path(JSON.STATE).asInt(-1)); // -1 is not a possible value
         // set INACTIVE
         message = mapper.createObjectNode().put(JSON.NAME, "IS1").put(JSON.STATE, JSON.INACTIVE);
-        result = service.doPost(JsonSensor.SENSOR, "IS1", message, new JsonRequest(locale, JSON.V5, 42));
+        result = service.doPost(JsonSensor.SENSOR, "IS1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         assertEquals(Sensor.INACTIVE, sensor1.getKnownState());
         validate(result);
         assertEquals(JSON.INACTIVE, result.path(JSON.DATA).path(JSON.STATE).asInt(-1));
         // set UNKNOWN
         message = mapper.createObjectNode().put(JSON.NAME, "IS1").put(JSON.STATE, JSON.UNKNOWN);
-        result = service.doPost(JsonSensor.SENSOR, "IS1", message, new JsonRequest(locale, JSON.V5, 42));
+        result = service.doPost(JsonSensor.SENSOR, "IS1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         assertEquals(Sensor.INACTIVE, sensor1.getKnownState());
         assertEquals(JSON.INACTIVE, result.path(JSON.DATA).path(JSON.STATE).asInt(-1));
         // set INCONSISTENT
         message = mapper.createObjectNode().put(JSON.NAME, "IS1").put(JSON.STATE, JSON.INCONSISTENT);
-        result = service.doPost(JsonSensor.SENSOR, "IS1", message, new JsonRequest(locale, JSON.V5, 42));
+        result = service.doPost(JsonSensor.SENSOR, "IS1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         assertEquals(Sensor.INACTIVE, sensor1.getKnownState());
         assertEquals(JSON.INACTIVE, result.path(JSON.DATA).path(JSON.STATE).asInt(-1));
         // set inverted - becomes active
         assertFalse(sensor1.getInverted());
         message = mapper.createObjectNode().put(JSON.NAME, "IS1").put(JSON.INVERTED, true);
-        result = service.doPost(JsonSensor.SENSOR, "IS1", message, new JsonRequest(locale, JSON.V5, 42));
+        result = service.doPost(JsonSensor.SENSOR, "IS1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         assertTrue("Sensor is inverted", sensor1.getInverted());
         assertEquals(JSON.ACTIVE, result.path(JSON.DATA).path(JSON.STATE).asInt());
         assertEquals(true, result.path(JSON.DATA).path(JSON.INVERTED).asBoolean());
         // reset inverted - becomes inactive
         message = mapper.createObjectNode().put(JSON.NAME, "IS1").put(JSON.INVERTED, false);
-        result = service.doPost(JsonSensor.SENSOR, "IS1", message, new JsonRequest(locale, JSON.V5, 42));
+        result = service.doPost(JsonSensor.SENSOR, "IS1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         assertFalse("Sensor is not inverted", sensor1.getInverted());
         assertEquals(JSON.INACTIVE, result.path(JSON.DATA).path(JSON.STATE).asInt());
         // set invalid state
         message = mapper.createObjectNode().put(JSON.NAME, "IS1").put(JSON.STATE, 42); // Invalid value
         try {
-            service.doPost(JsonSensor.SENSOR, "IS1", message, new JsonRequest(locale, JSON.V5, 42));
+            service.doPost(JsonSensor.SENSOR, "IS1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
             fail("Expected exception not thrown");
         } catch (JsonException ex) {
             assertEquals(HttpServletResponse.SC_BAD_REQUEST, ex.getCode());
@@ -129,7 +129,7 @@ public class JsonSensorHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<
         manager.register(sensor2);
         message = mapper.createObjectNode().put(JSON.NAME, "IS2").put(JSON.STATE, JSON.ACTIVE);
         try {
-            service.doPost(JsonSensor.SENSOR, "IS2", message, new JsonRequest(locale, JSON.V5, 42));
+            service.doPost(JsonSensor.SENSOR, "IS2", message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
             fail("Expected exception not thrown");
         } catch (JsonException ex) {
             assertEquals("HTTP error code", 500, ex.getCode());
@@ -144,7 +144,7 @@ public class JsonSensorHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<
         // add a sensor
         assertNull(manager.getSensor("IS1"));
         message = mapper.createObjectNode().put(JSON.NAME, "IS1").put(JSON.STATE, JSON.UNKNOWN);
-        service.doPut(JsonSensor.SENSOR, "IS1", message, new JsonRequest(locale, JSON.V5, 42));
+        service.doPut(JsonSensor.SENSOR, "IS1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         assertNotNull(manager.getSensor("IS1"));
     }
 
@@ -156,7 +156,7 @@ public class JsonSensorHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<
         // delete non-existant bean
         try {
             assumeNotNull(service); // protect against JUnit tests in Eclipse that test this class directly
-            service.doDelete(service.getType(), "non-existant", message, new JsonRequest(locale, JSON.V5, 42));
+            service.doDelete(service.getType(), "non-existant", message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
             fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             assertEquals("Code is HTTP NOT FOUND", 404, ex.getCode());
@@ -166,7 +166,7 @@ public class JsonSensorHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<
         manager.newSensor("IS1", null);
         // delete existing bean (no named listener)
         assertNotNull(manager.getBySystemName("IS1"));
-        service.doDelete(service.getType(), "IS1", message, new JsonRequest(locale, JSON.V5, 42));
+        service.doDelete(service.getType(), "IS1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         assertNull(manager.getBySystemName("IS1"));
         Sensor sensor = manager.newSensor("IS1", null);
         assertNotNull(sensor);
@@ -179,7 +179,7 @@ public class JsonSensorHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<
         }, "IS1", "Test Listener");
         // delete existing bean (with named listener)
         try {
-            service.doDelete(service.getType(), "IS1", message, new JsonRequest(locale, JSON.V5, 42));
+            service.doDelete(service.getType(), "IS1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
             fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             assertEquals(409, ex.getCode());
@@ -189,11 +189,11 @@ public class JsonSensorHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<
         }
         assertNotNull(manager.getBySystemName("IS1"));
         // will throw if prior catch failed
-        service.doDelete(service.getType(), "IS1", message, new JsonRequest(locale, JSON.V5, 0));
+        service.doDelete(service.getType(), "IS1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         assertNull(manager.getBySystemName("IS1"));
         try {
             // deleting again should throw an exception
-            service.doDelete(service.getType(), "IS1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 0));
+            service.doDelete(service.getType(), "IS1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
             fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             assertEquals(404, ex.getCode());
@@ -204,12 +204,12 @@ public class JsonSensorHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<
     public void testDoGetList() throws JsonException {
         SensorManager manager = InstanceManager.getDefault(SensorManager.class);
         JsonNode result;
-        result = service.doGetList(JsonSensor.SENSOR, mapper.createObjectNode(), new JsonRequest(locale, JSON.V5, 0));
+        result = service.doGetList(JsonSensor.SENSOR, mapper.createObjectNode(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         validate(result);
         assertEquals(0, result.size());
         manager.provideSensor("IS1");
         manager.provideSensor("IS2");
-        result = service.doGetList(JsonSensor.SENSOR, mapper.createObjectNode(), new JsonRequest(locale, JSON.V5, 0));
+        result = service.doGetList(JsonSensor.SENSOR, mapper.createObjectNode(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         validate(result);
         assertEquals(2, result.size());
     }

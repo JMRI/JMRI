@@ -1,5 +1,6 @@
 package jmri;
 
+import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.CheckForNull;
 
@@ -161,6 +162,14 @@ public interface Turnout extends DigitalIO {
     public static final int LOCKED = 1;
 
     /**
+     * Get a list of valid feedback types. The valid types depend on the
+     * implemented system.
+     *
+     * @return array of feedback types
+     */
+    public Set<Integer> getValidFeedbackModes();
+
+    /**
      * Get a representation of the feedback type. This is the OR of possible
      * values: DIRECT, EXACT, etc. The valid combinations depend on the
      * implemented system.
@@ -274,9 +283,23 @@ public interface Turnout extends DigitalIO {
      * Sensor-based feedback will not function until these sensors have been
      * provided.
      *
-     * @param pName the user or system name of the sensor
+     * @param name the user or system name of the sensor
+     * @param number the feedback number of the sensor, indexed from 0
      * @throws jmri.JmriException if unable to assign the feedback sensor
      */
+    public default void provideFeedbackSensor(@CheckForNull String name, int number) throws JmriException {
+        switch (number) {
+            case 0:
+                provideFirstFeedbackSensor(name);
+                break;
+            case 1:
+                provideSecondFeedbackSensor(name);
+                break;
+            default:
+                throw new IllegalArgumentException("Turnouts have no more than two sensors");
+        }
+    }
+    
     public void provideFirstFeedbackSensor(@CheckForNull String pName) throws JmriException;
 
     public void provideSecondFeedbackSensor(@CheckForNull String pName) throws JmriException;

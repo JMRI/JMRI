@@ -63,7 +63,7 @@ public abstract class EditFrame extends jmri.util.JmriJFrame {
 
         pack();
         if (_loc.x < 0) {
-            setLocation(jmri.util.PlaceWindow. nextTo(_parent._editor, null, this));
+            InstanceManager.getDefault(jmri.util.PlaceWindow.class).nextTo(_parent._editor, null, this);
         } else {
             setLocation(_loc);
             setSize(_dim);
