@@ -9,6 +9,8 @@ import jmri.BeanSetting;
 import jmri.Block;
 import jmri.InstanceManager;
 import jmri.Turnout;
+import jmri.jmrit.display.Positionable;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -317,22 +319,27 @@ public class OPath extends jmri.Path {
         if (_toPortal != null && !_toPortal.equals(toPort) && !_toPortal.equals(fromPort)) {
             return false;
         }
+        
+        
         List<BeanSetting> settings = path.getSettings();
         if (settings.size() != getSettings().size()) {
             return false;
         }
+      
         Iterator<BeanSetting> iter = settings.iterator();
         Iterator<BeanSetting> it = getSettings().iterator();
         while (iter.hasNext()) {
             BeanSetting beanSetting = iter.next();
+            boolean found = false;
             while (it.hasNext()) {
                 BeanSetting bs = it.next();
-                if (!bs.getBeanName().equals(beanSetting.getBeanName())) {
-                    return false;
+                if (bs.getBeanName().equals(beanSetting.getBeanName())
+                        && (bs.getSetting() == beanSetting.getSetting())) {
+                    found  = true;
                 }
-                if (bs.getSetting() != beanSetting.getSetting()) {
-                    return false;
-                }
+            }
+            if (!found) {
+                return false;
             }
         }
         return true;
