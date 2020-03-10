@@ -342,7 +342,7 @@ and attach jvisualvm to the AllTest class when it appears. When that's done, put
 
 First JMRI 4.19.4 files are available in the usual way at:
 
-http://builds.jmri.org/jenkins/job/TestReleases/job/4.19.4
+https://builds.jmri.org/jenkins/job/testreleases/job/4.19.4/
 
 Feedback appreciated. I would like to release this later today or tomorrow morning if the files are OK.
 
