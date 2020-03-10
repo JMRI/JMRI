@@ -17,9 +17,15 @@ import jmri.jmrix.SystemConnectionMemo;
 public class JmriSRCPSensorServer extends AbstractSensorServer {
 
     private DataOutputStream output;
+    private InstanceManager instanceManager;
 
     public JmriSRCPSensorServer(DataInputStream inStream, DataOutputStream outStream) {
+        this(inStream,outStream,InstanceManager.getDefault());
+    }
+
+    public JmriSRCPSensorServer(DataInputStream inStream, DataOutputStream outStream, InstanceManager instanceManager) {
         output = outStream;
+        this.instanceManager = instanceManager;
     }
 
 
@@ -30,7 +36,7 @@ public class JmriSRCPSensorServer extends AbstractSensorServer {
     public void sendStatus(String sensorName, int Status) throws IOException {
         int bus = 0;
         int address = 0;
-        java.util.List<SystemConnectionMemo> list = jmri.InstanceManager.getList(SystemConnectionMemo.class);
+        java.util.List<SystemConnectionMemo> list = instanceManager.getList(SystemConnectionMemo.class);
         for (SystemConnectionMemo memo : list) {
             String prefix = memo.getSystemPrefix();
             if (sensorName.startsWith(prefix)) {
@@ -62,7 +68,7 @@ public class JmriSRCPSensorServer extends AbstractSensorServer {
 
     public void sendStatus(int bus, int address) throws IOException {
         log.debug("send Status called with bus " + bus + " and address " + address);
-        java.util.List<SystemConnectionMemo> list = jmri.InstanceManager.getList(SystemConnectionMemo.class);
+        java.util.List<SystemConnectionMemo> list = instanceManager.getList(SystemConnectionMemo.class);
         SystemConnectionMemo memo;
         try {
             memo = list.get(bus - 1);
@@ -73,7 +79,7 @@ public class JmriSRCPSensorServer extends AbstractSensorServer {
         String sensorName = memo.getSystemPrefix()
                 + "S" + address;
         try {
-            int Status = InstanceManager.sensorManagerInstance().provideSensor(sensorName).getKnownState();
+            int Status = instanceManager.sensorManagerInstance().provideSensor(sensorName).getKnownState();
             if (Status == Sensor.ACTIVE) {
                 TimeStampedOutput.writeTimestamp(output, "100 INFO " + bus + " FB " + address + " 1\n\r");
             } else if (Status == Sensor.INACTIVE) {
@@ -104,7 +110,7 @@ public class JmriSRCPSensorServer extends AbstractSensorServer {
     public void parseStatus(int bus, int address, int value) throws jmri.JmriException, java.io.IOException {
         log.debug("parse Status called with bus " + bus + " address " + address
                 + " and value " + value);
-        java.util.List<SystemConnectionMemo> list = jmri.InstanceManager.getList(SystemConnectionMemo.class);
+        java.util.List<SystemConnectionMemo> list = instanceManager.getList(SystemConnectionMemo.class);
         SystemConnectionMemo memo;
         try {
             memo = list.get(bus - 1);
@@ -135,7 +141,7 @@ public class JmriSRCPSensorServer extends AbstractSensorServer {
         if (e.getPropertyName().equals("KnownState")) {
             try {
                 String Name = ((jmri.Sensor) e.getSource()).getSystemName();
-                java.util.List<SystemConnectionMemo> List = jmri.InstanceManager.getList(SystemConnectionMemo.class);
+                java.util.List<SystemConnectionMemo> List = instanceManager.getList(SystemConnectionMemo.class);
                 int i = 0;
                 int address;
                 for (Object memo : List) {

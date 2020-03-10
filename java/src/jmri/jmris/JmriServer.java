@@ -28,10 +28,11 @@ public class JmriServer {
     protected ShutDownTask shutDownTask = null;
     private Thread listenThread = null;
     protected ArrayList<ClientListener> connectedClientThreads = new ArrayList<>();
+    private InstanceManager instanceManager;
 
     // Create a new server using the default port
     public JmriServer() {
-        this(3000);
+        this(3000,InstanceManager.getDefault());
     }
 
     // Create a new server using a given port and no timeout
@@ -39,9 +40,17 @@ public class JmriServer {
         this(port, 0);
     }
 
+    public JmriServer(int port, InstanceManager instanceManager) {
+        this(port, 0, instanceManager);
+    }
+
     // Create a new server using a given port with a timeout
     // A timeout of 0 is infinite
     public JmriServer(int port, int timeout) {
+        this(port,timeout,InstanceManager.getDefault());
+    }
+
+    public JmriServer(int port, int timeout, InstanceManager instanceManager) {
         super();
         // Try registering the server on the given port
         try {
@@ -51,6 +60,7 @@ public class JmriServer {
         }
         this.portNo = port;
         this.timeout = timeout;
+        this.instanceManager = instanceManager;
     }
 
     // Maintain a vector of connected clients
@@ -78,7 +88,7 @@ public class JmriServer {
             this.advertise();
         }
         if (this.shutDownTask != null) {
-            InstanceManager.getDefault(jmri.ShutDownManager.class).register(this.shutDownTask);
+            instanceManager.getDefault(jmri.ShutDownManager.class).register(this.shutDownTask);
         }
     }
 
@@ -105,7 +115,7 @@ public class JmriServer {
         this.listenThread = null;
         this.service.stop();
         if (this.shutDownTask != null) {
-            InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(this.shutDownTask);
+            instanceManager.getDefault(jmri.ShutDownManager.class).deregister(this.shutDownTask);
         }
     }
 

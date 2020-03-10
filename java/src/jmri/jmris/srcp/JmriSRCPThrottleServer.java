@@ -5,13 +5,8 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import jmri.DccLocoAddress;
-import jmri.DccThrottle;
-import jmri.JmriException;
-import jmri.LocoAddress;
-import jmri.Throttle;
-import jmri.ThrottleManager;
-import jmri.SpeedStepMode;
+
+import jmri.*;
 import jmri.jmris.AbstractThrottleServer;
 import jmri.jmrix.SystemConnectionMemo;
 import org.slf4j.Logger;
@@ -31,11 +26,17 @@ public class JmriSRCPThrottleServer extends AbstractThrottleServer {
     private final ArrayList<Integer> busList;
     private final ArrayList<LocoAddress> addressList;
 
+    private InstanceManager instanceManager;
+
     public JmriSRCPThrottleServer(DataInputStream inStream, DataOutputStream outStream) {
-        super();
+        this(inStream,outStream,InstanceManager.getDefault());
+    }
+    public JmriSRCPThrottleServer(DataInputStream inStream, DataOutputStream outStream, InstanceManager instanceManager) {
+        super(instanceManager);
         busList = new ArrayList<>();
         addressList = new ArrayList<>();
         output = outStream;
+        this.instanceManager = instanceManager;
     }
 
 
@@ -56,7 +57,7 @@ public class JmriSRCPThrottleServer extends AbstractThrottleServer {
         log.debug("send Status called with bus {} and address {}", bus, address);
 
         /* translate the bus into a system connection memo */
-        java.util.List<SystemConnectionMemo> list = jmri.InstanceManager.getList(SystemConnectionMemo.class);
+        java.util.List<SystemConnectionMemo> list = instanceManager.getList(SystemConnectionMemo.class);
         SystemConnectionMemo memo;
         try {
             memo = list.get(bus - 1);
@@ -208,7 +209,7 @@ public class JmriSRCPThrottleServer extends AbstractThrottleServer {
         log.debug("initThrottle called with bus {} and address {}", bus, address);
 
         /* translate the bus into a system connection memo */
-        java.util.List<SystemConnectionMemo> list = jmri.InstanceManager.getList(SystemConnectionMemo.class);
+        java.util.List<SystemConnectionMemo> list = instanceManager.getList(SystemConnectionMemo.class);
         SystemConnectionMemo memo;
         try {
             memo = list.get(bus - 1);
@@ -234,7 +235,7 @@ public class JmriSRCPThrottleServer extends AbstractThrottleServer {
         log.debug("releaseThrottle called with bus {} and address {}", bus, address);
 
         /* translate the bus into a system connection memo */
-        java.util.List<SystemConnectionMemo> list = jmri.InstanceManager.getList(SystemConnectionMemo.class);
+        java.util.List<SystemConnectionMemo> list = instanceManager.getList(SystemConnectionMemo.class);
         SystemConnectionMemo memo;
         try {
             memo = list.get(bus - 1);
@@ -267,7 +268,7 @@ public class JmriSRCPThrottleServer extends AbstractThrottleServer {
     public void setThrottleSpeedAndDirection(int bus, int address, float speed, boolean isForward) {
         log.debug("Setting Speed for address {} bus {} to {} with direction {}",
                 address, bus, speed, isForward ? "forward" : "reverse");
-        java.util.List<SystemConnectionMemo> list = jmri.InstanceManager.getList(SystemConnectionMemo.class);
+        java.util.List<SystemConnectionMemo> list = instanceManager.getList(SystemConnectionMemo.class);
         SystemConnectionMemo memo;
         try {
             memo = list.get(bus - 1);
@@ -310,7 +311,7 @@ public class JmriSRCPThrottleServer extends AbstractThrottleServer {
     public void setThrottleFunctions(int bus, int address, ArrayList<Boolean> fList) {
         log.debug("Setting Functions for address {} bus {}",
                 address, bus);
-        java.util.List<SystemConnectionMemo> list = jmri.InstanceManager.getList(SystemConnectionMemo.class);
+        java.util.List<SystemConnectionMemo> list = instanceManager.getList(SystemConnectionMemo.class);
         SystemConnectionMemo memo;
         try {
             memo = list.get(bus - 1);

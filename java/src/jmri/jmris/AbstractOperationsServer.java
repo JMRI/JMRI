@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import javax.management.Attribute;
 
+import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
@@ -26,17 +27,23 @@ import org.slf4j.LoggerFactory;
  * @author Rodney Black Copyright (C) 2012
  * @author Randall Wood Copyright (C) 2012, 2014
  */
-abstract public class AbstractOperationsServer implements PropertyChangeListener {
+public abstract class AbstractOperationsServer implements PropertyChangeListener {
 
     protected final TrainManager tm;
     protected final LocationManager lm;
     protected final HashMap<String, TrainListener> trains;
+    private InstanceManager instanceManager;
+
+    public AbstractOperationsServer(){
+        this(InstanceManager.getDefault());
+    }
 
     @SuppressWarnings("LeakingThisInConstructor")
-    public AbstractOperationsServer() {
-        tm = jmri.InstanceManager.getDefault(TrainManager.class);
+    public AbstractOperationsServer(InstanceManager instanceManager) {
+        this.instanceManager = instanceManager;
+        tm = instanceManager.getDefault(TrainManager.class);
         tm.addPropertyChangeListener(this);
-        lm = jmri.InstanceManager.getDefault(LocationManager.class);
+        lm = instanceManager.getDefault(LocationManager.class);
         lm.addPropertyChangeListener(this);
         addPropertyChangeListeners();
         trains = new HashMap<>();
@@ -270,13 +277,13 @@ abstract public class AbstractOperationsServer implements PropertyChangeListener
     synchronized protected void addTrainToList(String trainId) {
         if (!trains.containsKey(trainId)) {
             trains.put(trainId, new TrainListener(trainId));
-            jmri.InstanceManager.getDefault(TrainManager.class).getTrainById(trainId).addPropertyChangeListener(trains.get(trainId));
+            instanceManager.getDefault(TrainManager.class).getTrainById(trainId).addPropertyChangeListener(trains.get(trainId));
         }
     }
 
     synchronized protected void removeTrainFromList(String trainId) {
         if (trains.containsKey(trainId)) {
-            jmri.InstanceManager.getDefault(TrainManager.class).getTrainById(trainId).removePropertyChangeListener(trains.get(trainId));
+            instanceManager.getDefault(TrainManager.class).getTrainById(trainId).removePropertyChangeListener(trains.get(trainId));
             trains.remove(trainId);
         }
     }
@@ -294,7 +301,7 @@ abstract public class AbstractOperationsServer implements PropertyChangeListener
             lm.removePropertyChangeListener(this);
         }
         for (Map.Entry<String, TrainListener> train : this.trains.entrySet()) {
-            jmri.InstanceManager.getDefault(TrainManager.class).getTrainById(train.getKey()).removePropertyChangeListener(train.getValue());
+            instanceManager.getDefault(TrainManager.class).getTrainById(train.getKey()).removePropertyChangeListener(train.getValue());
         }
         this.trains.clear();
     }
@@ -318,7 +325,7 @@ abstract public class AbstractOperationsServer implements PropertyChangeListener
         private final Train train;
 
         protected TrainListener(String trainId) {
-            this.train = jmri.InstanceManager.getDefault(TrainManager.class).getTrainById(trainId);
+            this.train = instanceManager.getDefault(TrainManager.class).getTrainById(trainId);
         }
 
         @Override

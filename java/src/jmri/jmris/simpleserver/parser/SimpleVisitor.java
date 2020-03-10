@@ -11,6 +11,16 @@ import org.slf4j.LoggerFactory;
 public class SimpleVisitor extends JmriServerParserDefaultVisitor {
 
     private String outputString = null;
+    private InstanceManager instanceManager;
+
+    public SimpleVisitor(){
+        this(InstanceManager.getDefault());
+    }
+
+    public SimpleVisitor(InstanceManager instanceManager){
+        super();
+        this.instanceManager = instanceManager;
+    }
 
     public String getOutputString() {
         return outputString;
@@ -23,7 +33,7 @@ public class SimpleVisitor extends JmriServerParserDefaultVisitor {
             // this is just a request for status
                try{
                   ((jmri.jmris.simpleserver.SimplePowerServer)
-                   data).sendStatus(InstanceManager.getDefault(jmri.PowerManager.class).getPower());
+                   data).sendStatus(instanceManager.getDefault(jmri.PowerManager.class).getPower());
                } catch(java.io.IOException ioe){
                } catch(jmri.JmriException je){
                }

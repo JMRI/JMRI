@@ -13,29 +13,22 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2010
  */
-abstract public class AbstractPowerServer implements PropertyChangeListener {
+public abstract class AbstractPowerServer implements PropertyChangeListener {
 
-    public AbstractPowerServer() {
+    private InstanceManager instanceManager;
 
-        // Check to see if the Power Manger has a current status
-/*        if(mgrOK()) {
-         try {
-         sendStatus(p.getPower());
-         } catch (JmriException ex) {
-         try {
-         sendErrorStatus();
-         } catch (IOException ie) {
-         } catch (java.lang.NullPointerException je) {
-         }
-         } catch(IOException ie2) {
-         } catch (java.lang.NullPointerException je2) {
-         }
-         }*/
+    public AbstractPowerServer(){
+        this(InstanceManager.getDefault());
+    }
+
+    public AbstractPowerServer(InstanceManager instanceManager){
+
+        this.instanceManager = instanceManager;
     }
 
     protected boolean mgrOK() {
         if (p == null) {
-            p = InstanceManager.getNullableDefault(PowerManager.class);
+            p = instanceManager.getNullableDefault(PowerManager.class);
             if (p == null) {
                 log.error("No power manager instance found");
                 try {

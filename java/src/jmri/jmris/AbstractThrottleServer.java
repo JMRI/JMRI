@@ -23,8 +23,14 @@ abstract public class AbstractThrottleServer implements ThrottleListener {
 
     private static final Logger log = LoggerFactory.getLogger(AbstractThrottleServer.class);
     protected ArrayList<Throttle> throttleList;
+    private InstanceManager instanceManager;
 
-    public AbstractThrottleServer() {
+    public AbstractThrottleServer(){
+        this(InstanceManager.getDefault());
+    }
+
+    public AbstractThrottleServer(InstanceManager instanceManager) {
+        this.instanceManager = instanceManager;
         throttleList = new ArrayList<>();
     }
 
@@ -99,7 +105,7 @@ abstract public class AbstractThrottleServer implements ThrottleListener {
      * @param l LocoAddress of the locomotive to request.
      */
     public void requestThrottle(LocoAddress l) {
-        ThrottleManager t = InstanceManager.throttleManagerInstance();
+        ThrottleManager t = instanceManager.throttleManagerInstance();
         boolean result;
         result = t.requestThrottle(l, this, false); 
         if (!result) {
@@ -118,7 +124,7 @@ abstract public class AbstractThrottleServer implements ThrottleListener {
      * @param l LocoAddress of the locomotive to request.
      */
     public void releaseThrottle(LocoAddress l) {
-        ThrottleManager t = InstanceManager.throttleManagerInstance();
+        ThrottleManager t = instanceManager.throttleManagerInstance();
         t.cancelThrottleRequest(l, this);
         if (l instanceof DccLocoAddress) {
             throttleList.forEach(throttle -> {
@@ -170,7 +176,7 @@ abstract public class AbstractThrottleServer implements ThrottleListener {
     @Override
     @Deprecated
     public void notifyStealThrottleRequired(LocoAddress address) {
-        InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.STEAL );
+        instanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.STEAL );
     }
 
     /**

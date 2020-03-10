@@ -20,8 +20,14 @@ abstract public class AbstractSensorServer {
 
     private final HashMap<String, SensorListener> sensors;
     private final static Logger log = LoggerFactory.getLogger(AbstractSensorServer.class);
+    private InstanceManager instanceManager;
 
-    public AbstractSensorServer() {
+    public AbstractSensorServer(){
+        this(InstanceManager.getDefault());
+    }
+
+    public AbstractSensorServer(InstanceManager instanceManager) {
+        this.instanceManager = instanceManager;
         sensors = new HashMap<String, SensorListener>();
     }
 
@@ -36,7 +42,7 @@ abstract public class AbstractSensorServer {
 
     synchronized protected void addSensorToList(String sensorName) {
         if (!sensors.containsKey(sensorName)) {
-            Sensor s = InstanceManager.sensorManagerInstance().getSensor(sensorName);
+            Sensor s = instanceManager.sensorManagerInstance().getSensor(sensorName);
             if(s!=null) {
                SensorListener sl = new SensorListener(sensorName);
                s.addPropertyChangeListener(sl);
@@ -47,7 +53,7 @@ abstract public class AbstractSensorServer {
 
     synchronized protected void removeSensorFromList(String sensorName) {
         if (sensors.containsKey(sensorName)) {
-            Sensor s = InstanceManager.sensorManagerInstance().getSensor(sensorName);
+            Sensor s = instanceManager.sensorManagerInstance().getSensor(sensorName);
             if(s!=null) {
                s.removePropertyChangeListener(sensors.get(sensorName));
                sensors.remove(sensorName);
@@ -56,7 +62,7 @@ abstract public class AbstractSensorServer {
     }
 
     public Sensor initSensor(String sensorName) throws IllegalArgumentException {
-        Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
+        Sensor sensor = instanceManager.sensorManagerInstance().provideSensor(sensorName);
         this.addSensorToList(sensorName);
         return sensor;
     }
@@ -66,7 +72,7 @@ abstract public class AbstractSensorServer {
         // load address from sensorAddrTextField
         try {
             addSensorToList(sensorName);
-            sensor = InstanceManager.sensorManagerInstance().getSensor(sensorName);
+            sensor = instanceManager.sensorManagerInstance().getSensor(sensorName);
             if (sensor == null) {
                 log.error("Sensor {} is not available", sensorName);
             } else {
@@ -91,7 +97,7 @@ abstract public class AbstractSensorServer {
 
     public void dispose() {
         for (Map.Entry<String, SensorListener> sensor : this.sensors.entrySet()) {
-            Sensor s = InstanceManager.sensorManagerInstance().getSensor(sensor.getKey());
+            Sensor s = instanceManager.sensorManagerInstance().getSensor(sensor.getKey());
             if(s!=null) {
                s.removePropertyChangeListener(sensor.getValue());
             }
@@ -103,7 +109,7 @@ abstract public class AbstractSensorServer {
         Sensor sensor;
         try {
             addSensorToList(sensorName);
-            sensor = InstanceManager.sensorManagerInstance().getSensor(sensorName);
+            sensor = instanceManager.sensorManagerInstance().getSensor(sensorName);
 
             if (sensor == null) {
                 log.error("Sensor " + sensorName
@@ -132,7 +138,7 @@ abstract public class AbstractSensorServer {
 
         SensorListener(String sensorName) {
             name = sensorName;
-            sensor = InstanceManager.sensorManagerInstance().getSensor(sensorName);
+            sensor = instanceManager.sensorManagerInstance().getSensor(sensorName);
         }
 
         // update state as state of sensor changes

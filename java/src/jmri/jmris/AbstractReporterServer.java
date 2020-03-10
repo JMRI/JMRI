@@ -22,8 +22,15 @@ abstract public class AbstractReporterServer {
     private final HashMap<String, ReporterListener> reporters;
     private static final Logger log = LoggerFactory.getLogger(AbstractReporterServer.class);
 
-    public AbstractReporterServer() {
+    private InstanceManager instanceManager;
+
+    public AbstractReporterServer(){
+        this(InstanceManager.getDefault());
+    }
+
+    public AbstractReporterServer(InstanceManager instanceManager) {
         reporters = new HashMap<String, ReporterListener>();
+        this.instanceManager = instanceManager;
     }
 
     /*
@@ -38,7 +45,7 @@ abstract public class AbstractReporterServer {
     synchronized protected void addReporterToList(String reporterName) {
         if (!reporters.containsKey(reporterName)) {
             reporters.put(reporterName, new ReporterListener(reporterName));
-            Reporter reporter = InstanceManager.getDefault(jmri.ReporterManager.class).getReporter(reporterName);
+            Reporter reporter = instanceManager.getDefault(jmri.ReporterManager.class).getReporter(reporterName);
             if(reporter!=null) {
                reporter.addPropertyChangeListener(reporters.get(reporterName));
             }
@@ -47,7 +54,7 @@ abstract public class AbstractReporterServer {
 
     synchronized protected void removeReporterFromList(String reporterName) {
         if (reporters.containsKey(reporterName)) {
-            Reporter reporter = InstanceManager.getDefault(jmri.ReporterManager.class).getReporter(reporterName);
+            Reporter reporter = instanceManager.getDefault(jmri.ReporterManager.class).getReporter(reporterName);
             if(reporter!=null) {
                reporter.removePropertyChangeListener(reporters.get(reporterName));
             }
@@ -56,7 +63,7 @@ abstract public class AbstractReporterServer {
     }
 
     public Reporter initReporter(String reporterName) throws IllegalArgumentException {
-        Reporter reporter = InstanceManager.getDefault(jmri.ReporterManager.class).provideReporter(reporterName);
+        Reporter reporter = instanceManager.getDefault(jmri.ReporterManager.class).provideReporter(reporterName);
         this.addReporterToList(reporterName);
         return reporter;
     }
@@ -72,7 +79,7 @@ abstract public class AbstractReporterServer {
         // load address from reporterAddrTextField
         try {
             addReporterToList(reporterName);
-            reporter = InstanceManager.getDefault(jmri.ReporterManager.class).getReporter(reporterName);
+            reporter = instanceManager.getDefault(jmri.ReporterManager.class).getReporter(reporterName);
             if (reporter == null) {
                 log.error("Reporter {} is not available", reporterName);
             } else {
@@ -86,7 +93,7 @@ abstract public class AbstractReporterServer {
 
     public void dispose() {
         for (Map.Entry<String, ReporterListener> entry: this.reporters.entrySet()) {
-            Reporter reporter = InstanceManager.getDefault(jmri.ReporterManager.class).getReporter(entry.getKey());
+            Reporter reporter = instanceManager.getDefault(jmri.ReporterManager.class).getReporter(entry.getKey());
             if(reporter!=null) {
                reporter.removePropertyChangeListener(entry.getValue());
             }
@@ -98,7 +105,7 @@ abstract public class AbstractReporterServer {
 
         ReporterListener(String reporterName) {
             name = reporterName;
-            reporter = InstanceManager.getDefault(jmri.ReporterManager.class).getReporter(reporterName);
+            reporter = instanceManager.getDefault(jmri.ReporterManager.class).getReporter(reporterName);
         }
 
         // update state as state of reporter changes

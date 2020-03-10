@@ -9,21 +9,23 @@ public class JmriSRCPServerManager {
     static private JmriSRCPServerManager instance = null;
     private JmriSRCPServerPreferences preferences;
     private JmriSRCPServer server;
+    private InstanceManager instanceManager;
 
-    private JmriSRCPServerManager() {
-        if (InstanceManager.getNullableDefault(JmriSRCPServerPreferences.class) == null) {
+    private JmriSRCPServerManager(InstanceManager instanceManager) {
+        this.instanceManager = instanceManager;
+        if (instanceManager.getNullableDefault(JmriSRCPServerPreferences.class) == null) {
             String fileName = FileUtil.getUserFilesPath() + "networkServices" + File.separator + "JmriSRCPServerPreferences.xml";
             if ((new File(fileName)).exists()) {
-                InstanceManager.store(new JmriSRCPServerPreferences(fileName), JmriSRCPServerPreferences.class); // NOI18N
+                instanceManager.store(new JmriSRCPServerPreferences(fileName), JmriSRCPServerPreferences.class); // NOI18N
             } else {
-                InstanceManager.store(new JmriSRCPServerPreferences(), JmriSRCPServerPreferences.class); // NOI18N
+                instanceManager.store(new JmriSRCPServerPreferences(), JmriSRCPServerPreferences.class); // NOI18N
             }
         }
     }
 
-    synchronized public static JmriSRCPServerManager getInstance() {
+    public static synchronized JmriSRCPServerManager getInstance() {
         if (instance == null) {
-            instance = new JmriSRCPServerManager();
+            instance = new JmriSRCPServerManager(InstanceManager.getDefault());
         }
         return instance;
     }
