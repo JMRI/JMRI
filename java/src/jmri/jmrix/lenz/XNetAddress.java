@@ -139,6 +139,6 @@ public class XNetAddress {
         return ("");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XNetAddress.class);
+    private static final Logger log = LoggerFactory.getLogger(XNetAddress.class);
 
 }
