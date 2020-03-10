@@ -44,6 +44,7 @@ public interface CatalogTreeManager extends Manager<CatalogTree> {
      * @param systemName CatalogTree object to locate
      * @return requested CatalogTree object or null if none exists
      */
+    @Override
     public CatalogTree getBySystemName(@Nonnull String systemName);
 
     /**
@@ -53,6 +54,7 @@ public interface CatalogTreeManager extends Manager<CatalogTree> {
      * @param userName CatalogTree object to locate
      * @return requested CatalogTree object or null if none exists
      */
+    @Override
     public CatalogTree getByUserName(@Nonnull String userName);
 
     /**

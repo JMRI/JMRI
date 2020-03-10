@@ -138,6 +138,7 @@ public class FrmSWDI extends javax.swing.JFrame {
 
         _mSaveAndClose.setText(Bundle.getMessage("ButtonSaveClose"));
         _mSaveAndClose.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mSaveAndCloseActionPerformed(evt);
             }
@@ -161,6 +162,7 @@ public class FrmSWDI extends javax.swing.JFrame {
 
         jButton2.setText(Bundle.getMessage("ButtonReapply"));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
@@ -175,6 +177,7 @@ public class FrmSWDI extends javax.swing.JFrame {
         _mSWDI_GUITurnoutType.add(_mTurnout);
         _mTurnout.setText(Bundle.getMessage("LabelSWDITurnout"));
         _mTurnout.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mTurnoutActionPerformed(evt);
             }
@@ -183,6 +186,7 @@ public class FrmSWDI extends javax.swing.JFrame {
         _mSWDI_GUITurnoutType.add(_mCrossover);
         _mCrossover.setText(Bundle.getMessage("LabelSWDIXOver"));
         _mCrossover.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mCrossoverActionPerformed(evt);
             }
@@ -191,6 +195,7 @@ public class FrmSWDI extends javax.swing.JFrame {
         _mSWDI_GUITurnoutType.add(_mDoubleCrossover);
         _mDoubleCrossover.setText(Bundle.getMessage("LabelSWDIDouble"));
         _mDoubleCrossover.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mDoubleCrossoverActionPerformed(evt);
             }
