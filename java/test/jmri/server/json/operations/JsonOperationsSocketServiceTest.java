@@ -32,11 +32,11 @@ public class JsonOperationsSocketServiceTest {
     private JsonMockConnection connection;
     private JsonOperationsSocketService service;
     private ObjectMapper mapper;
-    private Locale locale = Locale.ENGLISH;
+    private final Locale locale = Locale.ENGLISH;
 
     @Test
     public void testOnListCar() throws IOException, JmriException, JsonException {
-        service.onList(JsonOperations.CAR, mapper.createObjectNode(), new JsonRequest(locale, JSON.V5, 0));
+        service.onList(JsonOperations.CAR, mapper.createObjectNode(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         JsonNode message = connection.getMessage();
         assertNotNull(message);
         assertEquals(9, message.size());
@@ -63,8 +63,8 @@ public class JsonOperationsSocketServiceTest {
     @Test
     public void testOnMessageKernel() throws IOException, JmriException, JsonException {
         try {
-            service.onMessage(JsonOperations.KERNEL, mapper.createObjectNode().put(JSON.NAME, "non-existant"), JSON.GET,
-                    new JsonRequest(locale, JSON.V5, 42));
+            service.onMessage(JsonOperations.KERNEL, mapper.createObjectNode().put(JSON.NAME, "non-existant"),
+                    new JsonRequest(locale, JSON.V5, JSON.GET, 42));
             fail("Expected exception not thrown");
         } catch (JsonException ex) {
             assertEquals(404, ex.getCode());
@@ -73,7 +73,7 @@ public class JsonOperationsSocketServiceTest {
 
     @Test
     public void testOnListKernel() throws IOException, JmriException, JsonException {
-        service.onList(JsonOperations.KERNEL, mapper.createObjectNode(), new JsonRequest(locale, JSON.V5, 0));
+        service.onList(JsonOperations.KERNEL, mapper.createObjectNode(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         JsonNode message = connection.getMessage();
         assertNotNull(message);
         assertEquals(1, message.size());

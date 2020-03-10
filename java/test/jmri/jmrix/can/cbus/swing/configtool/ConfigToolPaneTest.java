@@ -20,33 +20,6 @@ import org.netbeans.jemmy.operators.*;
  */
 public class ConfigToolPaneTest extends jmri.util.swing.JmriPanelTest {
 
-    private CanSystemConnectionMemo memo; 
-    private TrafficControllerScaffold tcis;
- 
-    @Override
-    @Before
-    public void setUp() {
-        JUnitUtil.setUp();
-        title = Bundle.getMessage("CapConfigTitle");
-        helpTarget = "package.jmri.jmrix.can.cbus.swing.configtool.ConfigToolFrame";
-        memo = new CanSystemConnectionMemo();
-        tcis = new TrafficControllerScaffold();
-        memo.setTrafficController(tcis);
-        
-        panel = new ConfigToolPane();
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-        JUnitUtil.resetWindows(false,false);
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
-        super.tearDown();
-        Assert.assertEquals("no listener after dispose",0,tcis.numListeners());
-        tcis = null;
-        memo = null;
-    }
-    
     @Test
     public void testInitComp() {
         
@@ -114,6 +87,35 @@ public class ConfigToolPaneTest extends jmri.util.swing.JmriPanelTest {
     
     private String getStringCaptureTwo( JFrameOperator jfo ){
         return ( new JTextFieldOperator(jfo,1).getText() );
+    }
+    
+    private CanSystemConnectionMemo memo; 
+    private TrafficControllerScaffold tcis;
+ 
+    @Override
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
+        title = Bundle.getMessage("CapConfigTitle");
+        helpTarget = "package.jmri.jmrix.can.cbus.swing.configtool.ConfigToolFrame";
+        memo = new CanSystemConnectionMemo();
+        tcis = new TrafficControllerScaffold();
+        memo.setTrafficController(tcis);
+        
+        panel = new ConfigToolPane();
+    }
+
+    @Override
+    @After
+    public void tearDown() {
+        JUnitUtil.resetWindows(false,false);
+        panel.dispose();
+        Assert.assertEquals("no listener after dispose",0,tcis.numListeners());
+        tcis.terminateThreads();
+        memo.dispose();
+        tcis = null;
+        memo = null;
+        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ConfigToolPaneTest.class);

@@ -209,13 +209,13 @@ public class CbusEventTableActionTest {
     @After
     public void tearDown() {
         
+        model.skipSaveOnDispose();
         model.dispose();
         memo.dispose();
         memo = null;
         tcis.terminateThreads();
         tcis = null;
         
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
 
     }

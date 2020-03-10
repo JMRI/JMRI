@@ -99,7 +99,7 @@ public abstract class JsonHttpService {
     public JsonNode doGet(@Nonnull String type, @Nonnull String name, @Nonnull JsonNode data,
             @Nonnull Locale locale, int id)
             throws JsonException {
-        return doGet(type, name, data, new JsonRequest(locale, JSON.V5, id));
+        return doGet(type, name, data, new JsonRequest(locale, JSON.V5, JSON.GET, id));
     }
 
     /**
@@ -146,7 +146,7 @@ public abstract class JsonHttpService {
     @Nonnull
     public JsonNode doPost(@Nonnull String type, @Nonnull String name, @Nonnull JsonNode data,
             @Nonnull Locale locale, int id) throws JsonException {
-        return doPost(type, name, data, new JsonRequest(locale, JSON.V5, id));
+        return doPost(type, name, data, new JsonRequest(locale, JSON.V5, JSON.POST, id));
     }
 
     /**
@@ -193,7 +193,7 @@ public abstract class JsonHttpService {
     public JsonNode doPut(@Nonnull String type, @Nonnull String name, @Nonnull JsonNode data, @Nonnull Locale locale,
             int id)
             throws JsonException {
-        return doPut(type, name, data, new JsonRequest(locale, JSON.V5, id));
+        return doPut(type, name, data, new JsonRequest(locale, JSON.V5, JSON.PUT, id));
     }
 
     /**
@@ -239,7 +239,7 @@ public abstract class JsonHttpService {
     public void doDelete(@Nonnull String type, @Nonnull String name, @Nonnull JsonNode data, @Nonnull Locale locale,
             int id)
             throws JsonException {
-        doDelete(type, name, data, new JsonRequest(locale, JSON.V5, id));
+        doDelete(type, name, data, new JsonRequest(locale, JSON.V5, JSON.DELETE, id));
     }
 
     /**
@@ -287,7 +287,7 @@ public abstract class JsonHttpService {
     @Nonnull
     public JsonNode doGetList(@Nonnull String type, @Nonnull JsonNode data, @Nonnull Locale locale, int id)
             throws JsonException {
-        return doGetList(type, data, new JsonRequest(locale, JSON.V5, id));
+        return doGetList(type, data, new JsonRequest(locale, JSON.V5, JSON.GET, id));
     }
 
     /**
@@ -353,7 +353,7 @@ public abstract class JsonHttpService {
     @Nonnull
     public JsonNode doSchema(@Nonnull String type, boolean server, @Nonnull Locale locale, int id)
             throws JsonException {
-        return doSchema(type, server, new JsonRequest(locale, JSON.V5, id));
+        return doSchema(type, server, new JsonRequest(locale, JSON.V5, JSON.GET, id));
     }
 
     /**
@@ -479,7 +479,7 @@ public abstract class JsonHttpService {
     public final void throwDeleteConflictException(@Nonnull String type, @Nonnull String name,
             @Nonnull ArrayNode conflicts,
             @Nonnull Locale locale, int id) throws JsonException {
-        throwDeleteConflictException(type, name, conflicts, new JsonRequest(locale, JSON.V5, id));
+        throwDeleteConflictException(type, name, conflicts, new JsonRequest(locale, JSON.V5, JSON.DELETE, id));
     }
 
     /**

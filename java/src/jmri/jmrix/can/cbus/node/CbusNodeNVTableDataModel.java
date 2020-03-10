@@ -150,7 +150,7 @@ public class CbusNodeNVTableDataModel extends javax.swing.table.AbstractTableMod
                 return nodeOfInterest.getNodeNvManager().getNV(row+1);
             case NV_CURRENT_HEX_COLUMN:
                 if ( nodeOfInterest.getNodeNvManager().getNV(row+1) > -1 ) {
-                    return String.valueOf(Integer.toHexString(nodeOfInterest.getNodeNvManager().getNV(row+1)));
+                    return jmri.util.StringUtil.twoHexFromInt(nodeOfInterest.getNodeNvManager().getNV(row+1));
                 }
                 else {
                     break;
@@ -178,7 +178,7 @@ public class CbusNodeNVTableDataModel extends javax.swing.table.AbstractTableMod
                     break;
                 }
                 if (newNVs[(row+1)]>-1) {
-                    return String.valueOf(Integer.toHexString(newNVs[(row+1)])); 
+                    return jmri.util.StringUtil.twoHexFromInt(newNVs[(row+1)]);
                 }
                 else {
                     break;
@@ -214,9 +214,7 @@ public class CbusNodeNVTableDataModel extends javax.swing.table.AbstractTableMod
             
             newNVs[(row+1)] = newval;
             ThreadingUtil.runOnGUIEventually( ()->{ 
-                fireTableCellUpdated(row,col);
-                fireTableCellUpdated(row,NV_SELECT_HEX_COLUMN);
-                fireTableCellUpdated(row,NV_SELECT_BIT_COLUMN);
+                fireTableRowsUpdated(row,row);
             });
         }
     }

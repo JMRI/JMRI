@@ -258,6 +258,6 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
         return Bundle.getMessage("AddInputEntryToolTip");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XNetSensorManager.class);
+    private static final Logger log = LoggerFactory.getLogger(XNetSensorManager.class);
 
 }

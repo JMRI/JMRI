@@ -12,14 +12,14 @@ package jmri.util.iharder.dnd;
  * @author rharder@usa.net
  * @version 1.1
  */
-public interface FileDropListener extends java.util.EventListener {
+public interface URIDropListener extends java.util.EventListener {
 
     /**
      * Fired by the source when files are dropped onto a drop target.
      *
-     * @param evt The {@link FileDropEvent} associated with this event
+     * @param evt The {@link URIDropEvent} associated with this event
      * @since 1.1
      */
-    public abstract void filesDropped(FileDropEvent evt);
+    public abstract void urisDropped(URIDropEvent evt);
 
 }   // end interface FileDropListener

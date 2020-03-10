@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
  */
 public class XNetConsistManager extends AbstractConsistManager {
 
-    private Thread initThread = null;
     protected XNetTrafficController tc = null;
     private boolean requestingUpdate = false;
 
@@ -72,12 +71,8 @@ public class XNetConsistManager extends AbstractConsistManager {
     @Override
     public void requestUpdateFromLayout() {
         if (shouldRequestUpdateFromLayout()) {
-            // Initilize the consist reader thread.
-            initThread = new Thread(new XNetConsistReader());
-            int it = initThread.getPriority();
-            it--;
-            initThread.setPriority(it);
-            initThread.start();
+            // Initilize the consist reader.
+            new XNetConsistReader();
         }
     }
 
@@ -89,7 +84,7 @@ public class XNetConsistManager extends AbstractConsistManager {
     /**
      * Internal class to read consists from the Command Station.
      */
-    private class XNetConsistReader implements Runnable, XNetListener {
+    private class XNetConsistReader implements XNetListener {
 
         // Storage for addresses
         int _lastMUAddress = 0;
@@ -97,12 +92,12 @@ public class XNetConsistManager extends AbstractConsistManager {
         int _lastMemberAddress = 0;
         XNetConsist currentConsist = null;
         // Possible States
-        final static int IDLE = 0;
-        final static int SEARCHREQUESTSENT = 1;
-        final static int MUSEARCHSENT = 2;
-        final static int MUINFOREQUESTSENT = 4;
-        final static int DHADDRESS1INFO = 8;
-        final static int DHADDRESS2INFO = 16;
+        static final int IDLE = 0;
+        static final int SEARCHREQUESTSENT = 1;
+        static final int MUSEARCHSENT = 2;
+        static final int MUINFOREQUESTSENT = 4;
+        static final int DHADDRESS1INFO = 8;
+        static final int DHADDRESS2INFO = 16;
         // Current State
         int currentState = IDLE;
 
@@ -115,33 +110,23 @@ public class XNetConsistManager extends AbstractConsistManager {
             searchNext();
         }
 
-        @Override
-        public void run() {
-        }
-
         private void searchNext() {
             requestingUpdate = true;
-            if (log.isDebugEnabled()) {
-                log.debug("Sending search for next DB Entry, _lastAddress is: " + _lastAddress);
-            }
+            log.debug("Sending search for next DB Entry, _lastAddress is: {}",_lastAddress);
             currentState = SEARCHREQUESTSENT;
             XNetMessage msg = XNetMessage.getNextAddressOnStackMsg(_lastAddress, true);
             tc.sendXNetMessage(msg, this);
         }
 
         private void searchMU() {
-            if (log.isDebugEnabled()) {
-                log.debug("Sending search for next MU Entry, _lastMUAddress is: " + _lastMUAddress + " _lastMemberAddress is: " + _lastMemberAddress);
-            }
+            log.debug("Sending search for next MU Entry, _lastMUAddress is: {} _lastMemberAddress is: {}",_lastMUAddress,_lastMemberAddress);
             currentState = MUSEARCHSENT;
             XNetMessage msg = XNetMessage.getDBSearchMsgNextMULoco(_lastMUAddress, _lastMemberAddress, true);
             tc.sendXNetMessage(msg, this);
         }
 
         private void requestInfoMU() {
-            if (log.isDebugEnabled()) {
-                log.debug("Sending search for next MU Entry information , _lastMemberAddress is: " + _lastMemberAddress);
-            }
+            log.debug("Sending search for next MU Entry information , _lastMemberAddress is: {}",_lastMemberAddress);
             currentState = MUINFOREQUESTSENT;
             XNetMessage msg = XNetMessage.getLocomotiveInfoRequestMsg(_lastMemberAddress);
             tc.sendXNetMessage(msg, this);
@@ -162,7 +147,7 @@ public class XNetConsistManager extends AbstractConsistManager {
                     // of the stack, then we can quit. Otherwise,
                     // we just request the next address.
                     if (log.isDebugEnabled()) {
-                        log.debug("Message Received in SEARCHREQUESTSENT state.  Message is: " + l.toString());
+                        log.debug("Message Received in SEARCHREQUESTSENT state.  Message is: {}",l);
                     }
                     if (l.getElement(0) == XNetConstants.LOCO_INFO_RESPONSE) {
                         switch (l.getElement(1)) {
@@ -203,7 +188,7 @@ public class XNetConsistManager extends AbstractConsistManager {
                     break;
                 case MUSEARCHSENT:
                     if (log.isDebugEnabled()) {
-                        log.debug("Message Received in MUSEARCHSENT state.  Message is: " + l.toString());
+                        log.debug("Message Received in MUSEARCHSENT state.  Message is: {}",l);
                     }
                     if (l.getElement(0) == XNetConstants.LOCO_INFO_RESPONSE) {
                         switch (l.getElement(1)) {
@@ -233,7 +218,7 @@ public class XNetConsistManager extends AbstractConsistManager {
                     break;
                 case MUINFOREQUESTSENT:
                     if (log.isDebugEnabled()) {
-                        log.debug("Message Received in MUINFOREQUESTSENT state.  Message is: " + l.toString());
+                        log.debug("Message Received in MUINFOREQUESTSENT state.  Message is: {}",l);
                     }
                     if (l.getElement(0) == XNetConstants.LOCO_INFO_MUED_UNIT) {
                         currentConsist.restore(new DccLocoAddress(_lastMemberAddress, _lastMemberAddress > 99),
@@ -243,7 +228,7 @@ public class XNetConsistManager extends AbstractConsistManager {
                     break;
                 case DHADDRESS1INFO:
                     if (log.isDebugEnabled()) {
-                        log.debug("Message Received in DHADDRESS1INFO state.  Message is: " + l.toString());
+                        log.debug("Message Received in DHADDRESS1INFO state.  Message is: {}",l);
                     }
                     if (l.getElement(0) == XNetConstants.LOCO_INFO_DH_UNIT) {
                         DccLocoAddress firstMember = new DccLocoAddress(_lastMemberAddress, _lastMemberAddress > 99);
@@ -280,9 +265,7 @@ public class XNetConsistManager extends AbstractConsistManager {
                     }
                     break;
                 case DHADDRESS2INFO:
-                    if (log.isDebugEnabled()) {
-                        log.debug("Message Received in DHADDRESS2INFO state.  Message is: " + l.toString());
-                    }
+                    log.debug("Message Received in DHADDRESS2INFO state.  Message is: {}",l);
                     if (l.getElement(0) == XNetConstants.LOCO_INFO_DH_UNIT) {
                         currentConsist.restore(new DccLocoAddress(_lastMemberAddress, _lastMemberAddress > 99),
                                 (l.getElement(2) & 0x80) == 0x80);
@@ -293,7 +276,7 @@ public class XNetConsistManager extends AbstractConsistManager {
                     break;
                 case IDLE:
                 default:
-                    log.debug("Message Received in default(IDLE) state. Message is: {}", l.toString());
+                    log.debug("Message Received in default(IDLE) state. Message is: {}", l);
             }
         }
 
@@ -302,6 +285,7 @@ public class XNetConsistManager extends AbstractConsistManager {
          */
         @Override
         public void message(XNetMessage l) {
+            // this class does not utilize outgoing messages
         }
 
         /**
@@ -310,10 +294,10 @@ public class XNetConsistManager extends AbstractConsistManager {
         @Override
         public void notifyTimeout(XNetMessage msg) {
             if (log.isDebugEnabled()) {
-                log.debug("Notified of timeout on message" + msg.toString());
+                log.debug("Notified of timeout on message {}", msg);
             }
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XNetConsistManager.class);
+    private static final Logger log = LoggerFactory.getLogger(XNetConsistManager.class);
 }

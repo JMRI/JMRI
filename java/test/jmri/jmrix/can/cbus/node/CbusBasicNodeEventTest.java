@@ -2,10 +2,12 @@ package jmri.jmrix.can.cbus.node;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
@@ -16,13 +18,13 @@ public class CbusBasicNodeEventTest {
 
     @Test
     public void testCTor() {
-        Assert.assertNotNull("exists",new CbusBasicNodeEvent(memo,1,2,3,4));
+        assertThat(new CbusBasicNodeEvent(memo,1,2,3,4)).isNotNull();
     }
     
     private CanSystemConnectionMemo memo;
     
     // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         
@@ -30,7 +32,7 @@ public class CbusBasicNodeEventTest {
         
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         
         memo.dispose();

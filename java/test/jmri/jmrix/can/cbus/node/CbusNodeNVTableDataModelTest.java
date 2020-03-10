@@ -146,11 +146,11 @@ public class CbusNodeNVTableDataModelTest {
         Assert.assertTrue("NV_SELECT_COLUMN",255== (Integer) t.getValueAt( 
             2,CbusNodeNVTableDataModel.NV_SELECT_COLUMN) );
         
-        Assert.assertEquals("NV_SELECT_HEX_COLUMN","0",t.getValueAt( 
+        Assert.assertEquals("NV_SELECT_HEX_COLUMN","00",t.getValueAt( 
             0,CbusNodeNVTableDataModel.NV_SELECT_HEX_COLUMN) );
-        Assert.assertEquals("NV_SELECT_HEX_COLUMN","7a",t.getValueAt( 
+        Assert.assertEquals("NV_SELECT_HEX_COLUMN","7A",t.getValueAt( 
             1,CbusNodeNVTableDataModel.NV_SELECT_HEX_COLUMN) );
-        Assert.assertEquals("NV_SELECT_HEX_COLUMN","ff",t.getValueAt( 
+        Assert.assertEquals("NV_SELECT_HEX_COLUMN","FF",t.getValueAt( 
             2,CbusNodeNVTableDataModel.NV_SELECT_HEX_COLUMN) );
         
         Assert.assertEquals("NV_SELECT_BIT_COLUMN","0000 0000",t.getValueAt( 
@@ -199,7 +199,6 @@ public class CbusNodeNVTableDataModelTest {
         memo.dispose();
         memo = null;
         
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
 
     }

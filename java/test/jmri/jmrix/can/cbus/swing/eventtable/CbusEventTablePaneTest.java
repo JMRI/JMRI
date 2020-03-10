@@ -4,17 +4,21 @@ import java.awt.GraphicsEnvironment;
 import java.util.List;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import jmri.InstanceManager;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.jmrix.can.cbus.CbusConfigurationManager;
 import jmri.jmrix.can.cbus.CbusPreferences;
+import jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel;
 import jmri.util.JmriJFrame;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 import org.netbeans.jemmy.operators.*;
 
 /**
@@ -91,6 +95,9 @@ public class CbusEventTablePaneTest extends jmri.util.swing.JmriPanelTest {
     private boolean getClearFilterButtonEnabled( JFrameOperator jfo ){
         return ( new JButtonOperator(jfo,Bundle.getMessage("ClearFilter")).isEnabled() );
     }
+    
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
 
     private CanSystemConnectionMemo memo; 
     private TrafficControllerScaffold tcis; 
@@ -109,22 +116,31 @@ public class CbusEventTablePaneTest extends jmri.util.swing.JmriPanelTest {
         configM = new CbusConfigurationManager(memo);
         
         jmri.InstanceManager.setDefault(CbusPreferences.class,new CbusPreferences() );
-        
+
+        try {
+            JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
+        } catch ( java.io.IOException e) {
+            Assert.assertFalse("Exception creating temp. user folder",true);
+        }
         panel = new CbusEventTablePane();
     }
     
-    
-
     @Override
     @After
     public void tearDown() {
+        // event model instance should have been created following init
+        CbusEventTableDataModel dm = InstanceManager.getNullableDefault(CbusEventTableDataModel.class);
+        if ( dm !=null ){
+            dm.skipSaveOnDispose();
+            dm.dispose();
+        }
+        
         configM.dispose();
         tcis.terminateThreads();
         memo.dispose();
         memo = null;
         tcis = null;
         JUnitUtil.resetWindows(false,false);
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         super.tearDown();
     }    
     

@@ -47,7 +47,7 @@ public class JsonRouteSocketServiceTest {
             Assert.assertEquals("IO1 has one listener", 1, route1.getNumPropertyChangeListeners());
             Assert.assertEquals("IS1 has one listener", 1, sensor1.getNumPropertyChangeListeners());
             JsonRouteSocketService service = new JsonRouteSocketService(connection);
-            service.onMessage(JsonRouteServiceFactory.ROUTE, message, JSON.POST, new JsonRequest(locale, JSON.V5, 42));
+            service.onMessage(JsonRouteServiceFactory.ROUTE, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
             Assert.assertEquals("IO1 has two listeners", 2, route1.getNumPropertyChangeListeners());
             // TODO: test that service is listener in RouteManager
             message = connection.getMessage();
@@ -94,25 +94,25 @@ public class JsonRouteSocketServiceTest {
             Assert.assertNotNull(route1.getTurnoutsAlgdSensor());
             // Route ACTIVE - becomes ACTIVE
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IO1").put(JSON.STATE, JSON.ACTIVE);
-            service.onMessage(JsonRouteServiceFactory.ROUTE, message, JSON.POST, new JsonRequest(locale, JSON.V5, 42));
+            service.onMessage(JsonRouteServiceFactory.ROUTE, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
             JUnitUtil.waitFor(() -> {
                 return route1.getState() == Sensor.ACTIVE;
             }, "Route to activate");
             Assert.assertEquals(Sensor.ACTIVE, route1.getState());
             // Route INACTIVE - remains ACTIVE
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IO1").put(JSON.STATE, JSON.INACTIVE);
-            service.onMessage(JsonRouteServiceFactory.ROUTE, message, JSON.POST, new JsonRequest(locale, JSON.V5, 42));
+            service.onMessage(JsonRouteServiceFactory.ROUTE, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
             Assert.assertEquals(Sensor.ACTIVE, route1.getState());
             // Route UNKNOWN - remains ACTIVE
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IO1").put(JSON.STATE, JSON.UNKNOWN);
-            service.onMessage(JsonRouteServiceFactory.ROUTE, message, JSON.POST, new JsonRequest(locale, JSON.V5, 42));
+            service.onMessage(JsonRouteServiceFactory.ROUTE, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
             JUnitUtil.waitFor(() -> {
                 return route1.getState() == Sensor.ACTIVE;
             }, "Route to activate");
             Assert.assertEquals(Sensor.ACTIVE, route1.getState());
             // Route TOGGLE - remains ACTIVE
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IO1").put(JSON.STATE, JSON.TOGGLE);
-            service.onMessage(JsonRouteServiceFactory.ROUTE, message, JSON.POST, new JsonRequest(locale, JSON.V5, 42));
+            service.onMessage(JsonRouteServiceFactory.ROUTE, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
             JUnitUtil.waitFor(() -> {
                 return route1.getState() == Sensor.ACTIVE;
             }, "Route to activate");
@@ -120,7 +120,7 @@ public class JsonRouteSocketServiceTest {
             // Route TOGGLE - becomes ACTIVE
             sensor1.setKnownState(Sensor.INACTIVE);
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IO1").put(JSON.STATE, JSON.TOGGLE);
-            service.onMessage(JsonRouteServiceFactory.ROUTE, message, JSON.POST, new JsonRequest(locale, JSON.V5, 42));
+            service.onMessage(JsonRouteServiceFactory.ROUTE, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
             JUnitUtil.waitFor(() -> {
                 return route1.getState() == Sensor.ACTIVE;
             }, "Route to activate");
@@ -129,7 +129,7 @@ public class JsonRouteSocketServiceTest {
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IO1").put(JSON.STATE, 42); // invalid state
             JsonException exception = null;
             try {
-                service.onMessage(JsonRouteServiceFactory.ROUTE, message, JSON.POST, new JsonRequest(locale, JSON.V5, 42));
+                service.onMessage(JsonRouteServiceFactory.ROUTE, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
             } catch (JsonException ex) {
                 exception = ex;
             }

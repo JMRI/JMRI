@@ -3,6 +3,7 @@ package jmri.managers;
 import javax.annotation.Nonnull;
 import jmri.Light;
 import jmri.LightManager;
+import jmri.Manager;
 
 /**
  * Implementation of a LightManager that can serve as a proxy for multiple
@@ -39,8 +40,8 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
     }
 
     @Override
-    protected Light makeBean(int i, String systemName, String userName) {
-        return ((LightManager) getMgr(i)).newLight(systemName, userName);
+    protected Light makeBean(Manager<Light> manager, String systemName, String userName) {
+        return ((LightManager) manager).newLight(systemName, userName);
     }
 
     /** {@inheritDoc} */
@@ -98,19 +99,16 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
 
     /**
      * Validate system name against the hardware configuration Locate a system
-     * specfic LightManager based on a system name.
+     * specific LightManager based on a system name.
      *
      * @return if a manager is found, return its determination of validity of
-     * system name formatrelative to the hardware configuration.
-     * Return false if no manager exists.
+     * system name format relative to the hardware configuration; false if no
+     * manager exists.
      */
     @Override
     public boolean validSystemNameConfig(@Nonnull String systemName) {
-        int i = matchTentative(systemName);
-        if (i >= 0) {
-            return ((LightManager) getMgr(i)).validSystemNameConfig(systemName);
-        }
-        return false;
+        LightManager m = (LightManager) getManager(systemName);
+        return (m == null) ? false : m.validSystemNameConfig(systemName);
     }
 
     /**
@@ -121,11 +119,8 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
     @Override
     @Nonnull
     public String convertSystemNameToAlternate(@Nonnull String systemName) {
-        int i = matchTentative(systemName);
-        if (i >= 0) {
-            return ((LightManager) getMgr(i)).convertSystemNameToAlternate(systemName);
-        }
-        return "";
+        LightManager m = (LightManager) getManager(systemName);
+        return (m == null) ? "" : m.convertSystemNameToAlternate(systemName);
     }
 
     /**
@@ -134,9 +129,7 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
      */
     @Override
     public void activateAllLights() {
-        for (int i = 0; i < nMgrs(); i++) {
-            ((LightManager) getMgr(i)).activateAllLights();
-        }
+        getManagerList().forEach(m -> ((LightManager) m).activateAllLights());
     }
 
     /**
@@ -146,11 +139,8 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
      */
     @Override
     public boolean supportsVariableLights(@Nonnull String systemName) {
-        int i = matchTentative(systemName);
-        if (i >= 0) {
-            return ((LightManager) getMgr(i)).supportsVariableLights(systemName);
-        }
-        return false;
+        LightManager m = (LightManager) getManager(systemName);
+        return (m == null) ? false : m.supportsVariableLights(systemName);
     }
 
     /**
@@ -160,11 +150,8 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
      */
     @Override
     public boolean allowMultipleAdditions(@Nonnull String systemName) {
-        int i = matchTentative(systemName);
-        if (i >= 0) {
-            return ((LightManager) getMgr(i)).allowMultipleAdditions(systemName);
-        }
-        return false;
+        LightManager m = (LightManager) getManager(systemName);
+        return (m == null) ? false : m.allowMultipleAdditions(systemName);
     }
 
     /**
