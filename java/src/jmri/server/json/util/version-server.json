@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
-    "title": "jmri-json-server-version-message",
+    "title": "jmri-json-version-server-message",
     "type": "object",
     "description": "Data portion of message from JMRI to client for type \"version\"; property names are version numbers in major.minor.patch form; property values are the RESTful URL portion for that version"
 }

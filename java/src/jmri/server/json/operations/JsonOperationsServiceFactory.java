@@ -28,7 +28,12 @@ public class JsonOperationsServiceFactory implements JsonServiceFactory<JsonOper
 
     @Override
     public String[] getTypes(String version) {
-        return new String[]{CAR, CARS, CAR_TYPE, ENGINE, ENGINES, KERNEL, LOCATION, LOCATIONS, ROLLING_STOCK, TRACK, TRAIN, TRAINS};
+        return new String[]{CAR, CARS, CAR_TYPE, ENGINE, ENGINES, KERNEL, LOCATION, LOCATIONS, TRACK, TRAIN, TRAINS};
+    }
+
+    @Override
+    public String[] getSentTypes(String version) {
+        return new String[]{ROLLING_STOCK};
     }
 
     @Override
