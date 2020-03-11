@@ -1,4 +1,4 @@
-package jmri.server.json.throttle;
+package jmri.server.json.time;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -8,21 +8,18 @@ import org.junit.jupiter.api.Test;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonServiceFactoryTestBase;
 
-/**
- * @author Randall Wood Copyright 2020
- */
-public class JsonThrottleServiceFactoryTest extends JsonServiceFactoryTestBase<JsonThrottleHttpService, JsonThrottleSocketService> {
+public class JsonTimeServiceFactoryTest extends JsonServiceFactoryTestBase<JsonTimeHttpService, JsonTimeSocketService> {
 
     @Override
     @Test
     public void testGetTypesV5() {
-        assertThat(factory.getTypes(JSON.V5)).containsExactly(JsonThrottle.THROTTLE);
+        assertThat(factory.getTypes(JSON.V5)).containsExactly(JSON.TIME);
     }
 
-    @Override
     @BeforeEach
+    @Override
     public void setUp() throws Exception {
         super.setUp();
-        factory = new JsonThrottleServiceFactory();
+        factory = new JsonTimeServiceFactory();
     }
 }
