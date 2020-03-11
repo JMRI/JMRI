@@ -9,6 +9,7 @@ import java.util.List;
 import javax.swing.JComboBox;
 import jmri.InstanceManager;
 import jmri.Reporter;
+import jmri.jmrit.operations.Identified;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
@@ -30,7 +31,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2012, 2013
  */
-public class Location implements java.beans.PropertyChangeListener {
+public class Location implements Identified, java.beans.PropertyChangeListener {
 
     public static final String LOC_TRACK_REGIX = "s";
 
@@ -116,6 +117,7 @@ public class Location implements java.beans.PropertyChangeListener {
         addPropertyChangeListeners();
     }
 
+    @Override
     public String getId() {
         return _id;
     }
