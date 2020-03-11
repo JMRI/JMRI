@@ -606,7 +606,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         public static final int NODEDESC_COLUMN = 8;
         public static final int NUM_COLUMNS = NODEDESC_COLUMN + 1;
 
-//        private String[] pollStatus = {"ERROR","IDLE","POLLING","TIMEOUT","SLOW POLL"};
+//        private String[] pollStatus = {"ERROR", "IDLE", "POLLING", "TIMEOUT", "SLOW POLL"};
         /**
          * Method to print or print preview the assignment table. Printed in
          * proportionately sized columns across the page with headings and
@@ -2402,7 +2402,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         public static final int CARDNUM_COLUMN = 1;
         public static final int CARDTYPE_COLUMN = 2;
     }
-    private final String[] cpnodeConfigColumnNames = {"Card","IOX Addr Port", "Port Type"};
+    private final String[] cpnodeConfigColumnNames = {"Card", "IOX Addr Port", "Port Type"};
 
     /**
      * Set up table for selecting card type by address for CPNODE/CPMEGA nodes

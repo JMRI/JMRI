@@ -23,8 +23,7 @@ public class CbusNodeEventTableDataModelTest {
         CbusNodeEventTableDataModel t = new CbusNodeEventTableDataModel( null,
             memo, 3,CbusNodeEventTableDataModel.MAX_COLUMN);
         Assert.assertNotNull("exists",t);
-        
-        t = null;
+
     }
 
     @Test
@@ -56,8 +55,6 @@ public class CbusNodeEventTableDataModelTest {
         
         
         myNode.dispose();
-        myNode = null;
-        t = null;
         
     }
     
@@ -75,10 +72,10 @@ public class CbusNodeEventTableDataModelTest {
             memo, 3,CbusNodeEventTableDataModel.MAX_COLUMN);
         
         CbusNode myNode = new CbusNode(memo,12345);        
-        CbusNodeEvent myNodeEvent = new CbusNodeEvent(3011,7,12345,-1,4);
+        CbusNodeEvent myNodeEvent = new CbusNodeEvent(memo,3011,7,12345,-1,4);
         myNodeEvent.setEvArr(new int[]{1,2,3,4});
         
-        myNode.addNewEvent(myNodeEvent);
+        myNode.getNodeEventManager().addNewEvent(myNodeEvent);
         t.setNode(myNode);
         
         Assert.assertTrue( t.getRowCount()== 1 );
@@ -105,11 +102,11 @@ public class CbusNodeEventTableDataModelTest {
         Assert.assertTrue("getValueAt NODE_EDIT_BUTTON_COLUMN number", (String)t.getValueAt(
             0,CbusNodeEventTableDataModel.NODE_EDIT_BUTTON_COLUMN) != null );
             
-        Assert.assertTrue("getValueAt NODE_NAME_COLUMN number", (String)t.getValueAt(
-            0,CbusNodeEventTableDataModel.NODE_NAME_COLUMN) == "" );
+        Assert.assertTrue("getValueAt NODE_NAME_COLUMN number", ((String)t.getValueAt(
+            0,CbusNodeEventTableDataModel.NODE_NAME_COLUMN)).isEmpty());
             
-        Assert.assertTrue("getValueAt EVENT_NAME_COLUMN number", (String)t.getValueAt(
-            0,CbusNodeEventTableDataModel.EVENT_NAME_COLUMN) == "" );
+        Assert.assertTrue("getValueAt EVENT_NAME_COLUMN number", ((String)t.getValueAt(
+            0,CbusNodeEventTableDataModel.EVENT_NAME_COLUMN)).isEmpty() );
             
         Assert.assertTrue("getValueAt EVENT_NAME_COLUMN number", (Integer)t.getValueAt(
             0,CbusNodeEventTableDataModel.EV_INDEX_COLUMN) == -1 );
@@ -120,11 +117,8 @@ public class CbusNodeEventTableDataModelTest {
         Assert.assertTrue("getValueAt nac", (String)t.getValueAt(0,999) == null );
 
         mainpane.dispose();
-        mainpane = null;
         myNode.dispose();
-        myNode = null;
-        myNodeEvent = null;
-        t = null;
+
         
     }    
     
@@ -148,13 +142,14 @@ public class CbusNodeEventTableDataModelTest {
     @After
     public void tearDown() {
         
-        memo = null;
-        tcis = null;
-        
         nodeModel.dispose();
         nodeModel = null;
         
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        tcis.terminateThreads();
+        memo.dispose();
+        memo = null;
+        tcis = null;
+        
         JUnitUtil.tearDown();
 
     }

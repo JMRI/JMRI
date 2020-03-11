@@ -22,7 +22,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -64,7 +64,7 @@
         create a new follower or modify an existing one.</dd>
       </dl>
 
-      page <!--#include virtual="/Footer" -->
+      page <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

@@ -109,6 +109,7 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
         ResourceBundle bundle = ResourceBundle.getBundle("apps/startup/Bundle"); // NOI18N
         addBtn.setText(bundle.getString("StartupActionsPreferencesPanel.addBtn.text")); // NOI18N
         addBtn.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 addBtnActionPerformed(evt);
             }
@@ -117,6 +118,7 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
         removeBtn.setText(bundle.getString("StartupActionsPreferencesPanel.removeBtn.text")); // NOI18N
         removeBtn.setEnabled(false);
         removeBtn.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 removeBtnActionPerformed(evt);
             }
@@ -127,6 +129,7 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
         upBtn.setText(bundle.getString("StartupActionsPreferencesPanel.upBtn.text")); // NOI18N
         upBtn.setEnabled(false);
         upBtn.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 upBtnActionPerformed(evt);
             }
@@ -135,6 +138,7 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
         downBtn.setText(bundle.getString("StartupActionsPreferencesPanel.downBtn.text")); // NOI18N
         downBtn.setEnabled(false);
         downBtn.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 downBtnActionPerformed(evt);
             }

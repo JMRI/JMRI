@@ -2,10 +2,16 @@ package jmri.implementation;
 
 import java.beans.*;
 import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import javax.annotation.*;
 import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.NamedBean;
 import jmri.NamedBeanHandle;
+import jmri.NamedBeanUsageReport;
 import jmri.PushbuttonPacket;
 import jmri.Sensor;
 import jmri.SensorManager;
@@ -156,7 +162,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * going to THROWN or CLOSED, because there may be others listening to
      * network state.
      * <p>
-     * This method is not intended for general use, e.g. for users to set the 
+     * This method is not intended for general use, e.g. for users to set the
      * KnownState, so it doesn't appear in the Turnout interface.
      *
      * @param s New state value
@@ -274,6 +280,13 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     @Override
     public void setControlType(int num) {
         _controlType = num;
+    }
+
+    @Override
+    public Set<Integer> getValidFeedbackModes() {
+        Set<Integer> modes = new HashSet<>();
+        Arrays.stream(_validFeedbackModes).forEach(modes::add);
+        return modes;
     }
 
     @Override
@@ -712,7 +725,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         if (temp != null) {
             temp.addPropertyChangeListener(this, s.getName(), "Feedback Sensor for " + getDisplayName());
         }
-        // set initial state 
+        // set initial state
         setInitialKnownStateFromFeedback();
     }
 
@@ -1027,6 +1040,20 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
                 throw new java.beans.PropertyVetoException(Bundle.getMessage("InUseSensorTurnoutVeto", getDisplayName()), e); //IN18N
             }
         }
+    }
+
+    @Override
+    public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
+        List<NamedBeanUsageReport> report = new ArrayList<>();
+        if (bean != null) {
+            if (bean.equals(getFirstSensor())) {
+                report.add(new NamedBeanUsageReport("TurnoutFeedback1"));  // NOI18N
+            }
+            if (bean.equals(getSecondSensor())) {
+                report.add(new NamedBeanUsageReport("TurnoutFeedback2"));  // NOI18N
+            }
+        }
+        return report;
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractTurnout.class);

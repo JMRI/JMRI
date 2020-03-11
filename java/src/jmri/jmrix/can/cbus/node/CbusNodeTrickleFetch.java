@@ -20,13 +20,13 @@ import jmri.util.TimerUtil;
 
 public class CbusNodeTrickleFetch implements CanListener {
     
-    private final CbusNodeTableDataModel nodeModel;
+    private final CbusBasicNodeTableFetch nodeModel;
     private final TrafficController tc;
     private TimerTask trickleTimer;
     private final long trickleTimeoutValue;
     private boolean networkActive;
     
-    public CbusNodeTrickleFetch(CanSystemConnectionMemo memo, CbusNodeTableDataModel model, long timeoutValue) {
+    public CbusNodeTrickleFetch(CanSystemConnectionMemo memo, CbusBasicNodeTableFetch model, long timeoutValue) {
         
         nodeModel = model;
         trickleTimeoutValue = timeoutValue;

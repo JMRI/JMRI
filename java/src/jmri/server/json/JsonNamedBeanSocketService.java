@@ -42,23 +42,23 @@ public class JsonNamedBeanSocketService<T extends NamedBean, H extends JsonNamed
     }
 
     @Override
-    public void onMessage(String type, JsonNode data, String method, JsonRequest request)
+    public void onMessage(String type, JsonNode data, JsonRequest request)
             throws IOException, JmriException, JsonException {
         String name = data.path(NAME).asText();
         T bean = null;
         // protect against a request made with a user name instead of a system name
-        if (!method.equals(PUT)) {
+        if (!request.method.equals(PUT)) {
             bean = service.getManager().getBySystemName(name);
             if (bean == null) {
                 bean = service.getManager().getByUserName(name);
                 if (bean != null) {
                     // set to warn so users can provide specific feedback to developers of JSON clients
-                    log.warn("{} request for {} made with user name \"{}\"; should use system name", method, type, name);
+                    log.warn("{} request for {} made with user name \"{}\"; should use system name", request.method, type, name);
                     name = bean.getSystemName();
                 } // service will throw appropriate error to client later if bean is still null
             }
         }
-        switch (method) {
+        switch (request.method) {
             case DELETE:
                 service.doDelete(type, name, data, request);
                 break;
@@ -122,7 +122,7 @@ public class JsonNamedBeanSocketService<T extends NamedBean, H extends JsonNamed
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
             try {
-                connection.sendMessage(service.doGet(this.bean, this.bean.getSystemName(), service.getType(), new JsonRequest(getLocale(), getVersion(), 0)), 0);
+                connection.sendMessage(service.doGet(this.bean, this.bean.getSystemName(), service.getType(), new JsonRequest(getLocale(), getVersion(), JSON.GET, 0)), 0);
             } catch (
                     IOException |
                     JsonException ex) {
@@ -150,7 +150,7 @@ public class JsonNamedBeanSocketService<T extends NamedBean, H extends JsonNamed
             try {
                 // send the new list
                 connection.sendMessage(service.doGetList(service.getType(),
-                        service.getObjectMapper().createObjectNode(), new JsonRequest(getLocale(), getVersion(), 0)), 0);
+                        service.getObjectMapper().createObjectNode(), new JsonRequest(getLocale(), getVersion(), JSON.GET, 0)), 0);
                 //child added or removed, reset listeners
                 if (evt.getPropertyName().equals("length")) { // NOI18N
                     removeListenersFromRemovedBeans();

@@ -1,11 +1,14 @@
 package jmri.jmrit.operations.routes;
 
 import java.awt.GraphicsEnvironment;
-import jmri.jmrit.operations.OperationsTestCase;
-import jmri.util.JUnitUtil;
+
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Test;
+
+import jmri.jmrit.operations.OperationsTestCase;
+import jmri.util.JUnitOperationsUtil;
+import jmri.util.JUnitUtil;
 
 /**
  *
@@ -19,6 +22,8 @@ public class RoutesTableFrameTest extends OperationsTestCase {
         RoutesTableFrame t = new RoutesTableFrame();
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(t);
+        
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(RoutesTableFrameTest.class);

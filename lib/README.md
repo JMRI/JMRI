@@ -14,22 +14,20 @@ macOS binaries are treated slightly differently, see the README file there.
 
 If you make a change in this directory (add/change/remove a file), please make corresponding changes in the control files that are used for various JMRI development and release operations:
 - build.xml - used by Ant, and in turn by various IDEs. Note that in addition to changing the classpath entry or entries, you should also check to make sure that the three javadoc targets are linking to the proper sources.
-- .classpath - used by Eclipse
 - pom.xml - used by Maven (see notes below)
 - nbproject/ide-file-targets.xml, nbproject/project.xml - used by NetBeans
+- .factorypath - used by Visual Studio Code
 
-On macOS, most of these changes can be affected with:
+On macOS, most of these changes can be affected with (Javadoc links will need to fixed manually):
 ```
 find . -type f -not -path './.git/*' -exec gsed -i 's/OLD_JAR_NAME/NEW_JAR_NAME/g' {} \;
 ```
-(you may need to install gsed using [Homebrew](http://brew.sh)), although this probably doesn't fix the Javadoc links.
+(you may need to install gsed using [Homebrew](http://brew.sh)) by running `brew install gnu-sed`)
 
-On Linux, these same changes can be affected with:
+On Linux, these same changes can be affected with (Javadoc links will need to fixed manually):
 ```
 find . -type f -not -path './.git/*' -exec sed -i 's/OLD_JAR_NAME/NEW_JAR_NAME/g' {} \;
 ```
-
-Note that Windows installers don't necessarily remove existing library versions. (See [JMRI Issue #359](https://github.com/JMRI/JMRI/issues/359) for discussion on this)  Until that's changed, if you remove a library from here that really needs to _not_ be in user installs, you need to add an explicit delete to the scripts/WinInstallFiles/InstallJMRI.nsi file, in addition to modifying those above.
 
 If the specific library being added or updated is not published to [Maven Central](http://maven.org) by the upstream provider, run the following command after updating the pom.xml file, replacing the tokens in ALL CAPS with the correct values for that library:
 ```
@@ -67,9 +65,10 @@ After that, add and commit the additional files that were created within lib/
 - provides Apache Commons string utilities
 - from https://commons.apache.org/proper/commons-text/
 
-##### javacsv.jar
-- version 2.0 of 2006-12-12
-- from <http://javacsv.sourceforge.net/>
+##### commons-csv-1.7.jar
+- version 1.7
+- provides Apache Commons CSV file parsing
+- from https://commons.apache.org/proper/commons-csv/
 
 ##### jhall.jar
 - version 2.03
@@ -93,20 +92,11 @@ After that, add and commit the additional files that were created within lib/
 - from http://www.sparetimelabs.com/maven2/com/sparetimelabs/purejavacomm/1.0.1/
 - javadoc at https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE
 
-##### jna-4.2.2.jar
-- version 4.2.2
-- from https://maven.java.net/content/repositories/releases/net/java/dev/jna/jna/4.2.2/
-
 ##### security.policy
 - (JMRI file)
 
-##### jdom.jar
-- (deprecated, we've moved to JDOM2; will be removed from here and control files post JMRI 3.12, but remains for e.g. CATS now)
-- version 1.1
-- from <jdom.org>
-
-##### jdom-2.0.5.jar
-- version 2.0.5
+##### jdom2-2.0.6.jar
+- version 2.0.6
 - from <jdom.org>
 
 ##### jackson-annotations-2.10.0.jar, jackson-core-2.10.0.jar, jackson-databind-2.10.0.jar
@@ -156,9 +146,8 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - from <https://jinput.dev.java.net/> jinput_dist_20090401
 - (most recent as of 2010-Jan-02)
 
-##### JavaMail 1.4.1
+##### JavaMail 1.4.1 (used to validate email address formats)
 - mailapi.jar
-- smtp.jar
 
 ##### Joal 2.3.1
 - from <http://jogamp.org/deployment/archive/rc/v2.3.1/jar/>
@@ -252,8 +241,11 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 - version Xerces-J 2.11.0
 - from http://www.apache.org/dist/xerces/j/
 
-
-
+##### usb-api-1.0.2.jar, usb4java-*.jar, libusb4java-*.jar
+- usb4java version 1.3.0
+- support for direct USB device usage
+- from https://github.com/usb4java/usb4java/releases/tag/usb4java-1.3.0
+  and https://github.com/usb4java/usb4java-javax/releases/tag/usb4java-javax-1.3.0
 
 
 ## For unit tests & development work only:
@@ -325,6 +317,11 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 
 
 ## Older, no longer present:
+
+##### javacsv.jar
+- version 2.0
+- from http://javacsv.sourceforge.net
+- No longer used as of JMRI 4.19.3
 
 ##### crimson.jar    
 - version 1.1.3

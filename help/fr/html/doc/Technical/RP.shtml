@@ -17,7 +17,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -72,11 +72,11 @@
         <li>
         Si vous avez besoin d'utiliser les fichiers de variables s&#233;par&#233;es par des virgules (CSV),
         s'il vous pla&#238;t utiliser les
-        <a href="http://javacsv.sourceforge.net/"> API javacsv</a>
+        <a href="https://commons.apache.org/proper/commons-csv/"> API Apache Commons CSV</a>
         si possible. Nous utilisons d&#233;j&#224;, dans un certain nombred'endroit,
         et probablement l'utiliser plus. Si cela ne donne pas
         suffisamment de fonctionnalit&#233;s, nous pourrions &#233;ventuellement passer &#224; l'
-        <a href="http://opencsv.sourceforge.net/api/au/com/bytecode/opencsv/"> API opencsv</a>, mais comme nous voulons n'en utiliser qu'un
+        <a href="http://opencsv.sourceforge.net/"> API opencsv</a>, mais comme nous voulons n'en utiliser qu'un
         la conversion demandera beaucoup de travail.</li>
     </ul>
 
@@ -137,7 +137,7 @@
     o&#249; la ligne contenant la version dans laquelle la d&#233;valorisation est appliqu&#233;e.
     Cela vous permet de savoir facilement depuis combien de temps elle a &#233;t&#233; d&#233;sapprouv&#233;e.
 
-        <!--#include virtual="/Footer" -->
+        <!--#include virtual="/Footer.shtml" -->
 	 </div><!-- closes #mainContent-->
 	</div> <!-- closes #mBody-->
 </body>

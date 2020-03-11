@@ -11,8 +11,6 @@
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Memory Table">
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css"
@@ -23,7 +21,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -185,7 +183,7 @@ qui lui sont associ&#233;s. Parfois, un aiguillage doit &#234;tre r&#233;gl&#233
  r&#233;alise cette information. Les Chemins et Le param&#232;tres Bean sont mis en place automatiquement pour
 les Cantons d&#233;finis dans un panneau &#233;diteur de R&#233;seau. Ils peuvent &#233;galement &#234;tre mis en place dans un script. Il y a
 actuellement aucun moyen d'entrer manuellement les chemins ou les param&#232;tres Bean. Les Chemins et param&#232;tres Bean sont non repr&#233;sent&#233; sur la table Canton, et sont d&#233;crits ici  pour que ce soit complet.</p>
-<p> Pour une utilisation pour les trains circulants automatiquement, un attribut de la longueur et un attribut de courbure 
+<p> Pour une utilisation pour les trains circulants automatiquement, un attribut de la longueur et un attribut de courbure
 peuvent &#233;ventuellement &#234;tre affect&#233;s &#224; un Canton. Ces attributs optionnels sont entr&#233;s manuellement
 dans ce tableau. Si les trains ne sont pas ex&#233;cut&#233; automatiquement pour
 un Canton, il n'est pas n&#233;cessaire d'ajouter ces attributs.</p>
@@ -227,17 +225,17 @@ doit &#234;tre s&#233;lectionn&#233; si le train doit ralentir ; <b> S&#233;v&#2
 si le train doit ralentir d'un montant maximum. Si le Canton a une courbure variable, votre
 s&#233;lection devrait &#234;tre faite en fonction de la partie la plus s&#233;v&#233;re du Canton.</p></li>
 
-<li><p><b>Statut</b> - 
+<li><p><b>Statut</b> -
 Montre le statut actuel du canton, Occup&#233; ou Non-occup&#233;.
 
-<li><p><b>Rapport</b> - 
+<li><p><b>Rapport</b> -
 Le Rapport affecter &#224; ce Canton. Noir le tableau Rapport. Entrez la valeur du Rapport dans la valeur de Canton.
 
-<li><p><b>Utilisation actuelle?</b> - 
+<li><p><b>Utilisation actuelle?</b> -
 Si l'on consid&#232;re le sc&#233;nario dans lequel nous voulons suivre un train autour du r&#233;seau, g&#233;n&#233;ralement ceci
 est r&#233;alis&#233;e par l'utilisation d'objets M&#233;moire associ&#233;s &#224; des Cantons. Jusqu'&#224; ce que le train soitt connu, nous
 n'ont rien &#224; suivre. En r&#232;gle g&#233;n&#233;rale, nous pouvons saisir manuellement le num&#233;ro de train dans un panneau, puis
-cela est suivi autour du r&#233;seau par l'occupation de canton. Si, toutefois, nous avons un 
+cela est suivi autour du r&#233;seau par l'occupation de canton. Si, toutefois, nous avons un
 dispositif qui peut nous fournir l'identification du train, comme un lecteur RFID, nous n'avons plus besoin d'
 taper manuellement l'ID de train - le lecteur fait cela pour nous. En substance, le lecteur est un peu
 plus d'un capteur "intelligent" - il peut non seulement sentir que "quelque chose" est l&#224;, il peut
@@ -258,13 +256,13 @@ Lorsque la chose est 'hors fourchette '2 et 3 sont alors actif.
 Avec '"utilisation actuelle"? s&#233;lectionn&#233;e valeur du canton commutera entre 1 et 2,
 alors qu'avec "l'utilisation actuelle"? d&#233;coch&#233;e valeur du canton commutera entre 3 et 4.</li>
 
-<li><p><b>permissive</b> - 
+<li><p><b>permissive</b> -
 L'option permissive facultative est utilis&#233;e pour identifier les cantons qui peuvent &#234;tre saisis alors que le
 Canton est occup&#233;. Il est utilis&#233; avec certains outils d'automatisation et de la logique, pour aider &#224;
 d&#233;terminer si un train peut entrer dans un Canton occup&#233; et quel aspect doit &#234;tre affich&#233;
 sur un m&#226;t de signalisation.</li>
 
-<li><p><b>Vitesse Canton</b> - 
+<li><p><b>Vitesse Canton</b> -
 La vitesse est utilis&#233;e avec certains outils d'automatisation et de logique, pour aider &#224;
 d&#233;terminer &#224; quelle vitesse un train peut &#234;tre r&#233;gl&#233; &#224; travers le Canton.
 Elle est &#233;galement utilis&#233; par la logique du m&#226;t de signalisation pour d&#233;terminer quel aspect doit
@@ -283,7 +281,7 @@ ont &#233;t&#233; pr&#233;d&#233;finies dans le fichier signalSpeed.xml, en plus
 
 Localis&#233; &#224; package/jmri/jmrt/beantable/BlockTable
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

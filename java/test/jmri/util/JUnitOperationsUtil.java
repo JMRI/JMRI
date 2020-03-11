@@ -1,22 +1,20 @@
 package jmri.util;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.ResourceBundle; // for access operations keys directly.
+
+import org.junit.Assert;
+
 import jmri.InstanceManager;
+import jmri.ShutDownManager;
+import jmri.ShutDownTask;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.automation.Automation;
 import jmri.jmrit.operations.automation.AutomationItem;
 import jmri.jmrit.operations.automation.AutomationManager;
-import jmri.jmrit.operations.automation.actions.ActivateTrainScheduleAction;
-import jmri.jmrit.operations.automation.actions.BuildTrainAction;
-import jmri.jmrit.operations.automation.actions.GotoAction;
-import jmri.jmrit.operations.automation.actions.MoveTrainAction;
-import jmri.jmrit.operations.automation.actions.RunAutomationAction;
+import jmri.jmrit.operations.automation.actions.*;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.LocationManagerXml;
@@ -24,16 +22,8 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.locations.schedules.Schedule;
 import jmri.jmrit.operations.locations.schedules.ScheduleItem;
 import jmri.jmrit.operations.locations.schedules.ScheduleManager;
-import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.rollingstock.cars.CarManager;
-import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
-import jmri.jmrit.operations.rollingstock.cars.CarOwners;
-import jmri.jmrit.operations.rollingstock.cars.CarTypes;
-import jmri.jmrit.operations.rollingstock.engines.Consist;
-import jmri.jmrit.operations.rollingstock.engines.Engine;
-import jmri.jmrit.operations.rollingstock.engines.EngineManager;
-import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
-import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
+import jmri.jmrit.operations.rollingstock.cars.*;
+import jmri.jmrit.operations.rollingstock.engines.*;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
@@ -45,7 +35,6 @@ import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
-import org.junit.Assert;
 
 /**
  * Common utility methods for working with Operations related JUnit tests.
@@ -667,14 +656,41 @@ public class JUnitOperationsUtil {
     public static BufferedReader getBufferedReader(File file) {
         BufferedReader in = null;
         try {
-            in = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8")); // NOI18N
+            in = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8)); // NOI18N
         } catch (FileNotFoundException e) {
-
-        } catch (UnsupportedEncodingException e) {
 
         }
         Assert.assertNotNull(in);
         return in;
+    }
+    
+    public static void checkOperationsShutDownTask() {
+        // remove the operations shut down tasks
+        Assert.assertTrue(InstanceManager.containsDefault(ShutDownManager.class));
+        ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
+        List<ShutDownTask> list = sm.tasks();
+        Assert.assertTrue("Two shut down tasks max", list.size() < 3);
+        ShutDownTask operationShutdownTask = null;
+        for (ShutDownTask task : list) {
+            if (task.getName().equals("Operations Train Window Check")
+                    || task.getName().equals("Save Operations State")) {
+                operationShutdownTask = task;
+            }
+        }
+        Assert.assertNotNull(operationShutdownTask);
+        sm.deregister(operationShutdownTask);
+    }
+    
+    /**
+     * Only the NCE traffic controller shutdown task is running
+     */
+    public static void checkNceShutDownTask() {
+        Assert.assertTrue(InstanceManager.containsDefault(ShutDownManager.class));
+        ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
+        List<ShutDownTask> list = sm.tasks();
+        ShutDownTask nceShutdownTask = list.get(0);
+        Assert.assertNotNull(nceShutdownTask);
+        sm.deregister(nceShutdownTask);
     }
 
     // private final static Logger log = LoggerFactory.getLogger(JUnitOperationsUtil.class);

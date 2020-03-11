@@ -105,6 +105,7 @@ function displayCellValue(type, colName, value) {
 			ret = "";
 			comma = "";
 			value.forEach(function(item) { //return list
+                            if (item) {
 				if (item.name)
 					ret += comma + item.name + " " + item.userName; //if named, list name and username only
 				else { 
@@ -113,6 +114,7 @@ function displayCellValue(type, colName, value) {
 					});
 				}
 				comma = ", ";
+                            }
 			});
 			return ret;
 		}

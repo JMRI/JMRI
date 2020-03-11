@@ -20,9 +20,11 @@
   <!-- /Style -->
 </head>
 
+<!-- Reorganized and expanded by @jerryg2003 2020-01-28 -->
+
 <body>
   <div id="container">
-    <!--#include virtual="/Header" -->
+    <!--#include virtual="../../../../Header.shtml" -->
   <div id="mBody">
       <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -30,43 +32,40 @@
 
         <h1>JMRI: Tools</h1>
 
-        <p>JMRI provides a range of tools that are optimized for
-        specific purposes:</p>
+        <p>JMRI provides a range of powerful tools for working with your layout:</p>
 
         <ul>
           <!-- TOC -->
 
           <li><a href="#commontools">Common Tools</a></li>
 
-          <li><a href="#systemSpecificTools">System-specific
-          Tools</a></li>
+          <li><a href="#blocktools">Block Tools</a></li>
 
-          <li><a href="#scripting">Create your own by Scripting
-          JMRI</a></li>
-        </ul><a name="commontools" id="commontools"></a>
+          <li><a href="#routingtools">Routing and Control Tools</a></li>
 
-        <h2>Common tools</h2>
+          <li><a href="#systemSpecificTools">System-specific Tools</a></li>
 
-        <p>The following tools in the Tools menu work with most DCC
-        hardware connections:</p>
+          <li><a href="#othertools">Other Tools</a></li>
+        </ul>
+
+        <p>Or create your own tools by <a href="#scripting">Scripting JMRI</a>.</p>
+
+        <h2><a name="commontools" id="commontools"></a>Common tools</h2>
+
+        <p>The following tools in the Tools menu work with most DCC hardware connections:</p>
 
         <dl>
-          <dd>
-            <h3><a href="Turnouts.shtml">Turnouts</a></h3>
-          </dd>
 
+          <dd><h3><a href="throttle/ThrottleMain.shtml">Throttles</a></h3></dd>
+          <dd>You can open multiple software Throttles to run your DCC locomotives.</dd>
+
+          <dd><h3><a href="Turnouts.shtml">Turnouts</a></h3></dd>
           <dd>JMRI calls just about any output to the layout a
           "Turnout". The Turnout object has 2 states: Closed (On)
-          and Thrown (Off).<br>
-          For outputs such as <a href="#lights">Lights</a> and
-          <a href="#signals">Signals</a> JMRI provides special
-          objects (see below).</dd>
+          and Thrown (Off).<br>For outputs such as <a href="#lights">Lights</a> and
+          <a href="#signals">Signals</a> JMRI provides special objects (see below).</dd>
 
-          <dd>
-            <h3><a name="lights" href="Lights.shtml" id=
-            "lights">Lights</a></h3>
-          </dd>
-
+          <dd><h3><a name="lights" href="Lights.shtml" id="lights">Lights</a></h3></dd>
           <dd>Lights are digital output bits that function as
           on/off switches. Lights were created to provide easy
           control for fascia panel lights and scenery lighting.
@@ -76,34 +75,11 @@
           pre-determined time in response to a fascia panel
           button.</dd>
 
-          <dd>
-            <h3><a href="Sensors.shtml">Sensors</a></h3>
-          </dd>
-
+          <dd><h3><a href="Sensors.shtml">Sensors</a></h3></dd>
           <dd>A Sensor is JMRI's way of representing an input from
           the layout.</dd>
 
-          <dd>
-            <h3><a href=
-            "throttle/ThrottleMain.shtml">Throttles</a></h3>
-          </dd>
-
-          <dd>You can open multiple software Throttles to run your
-          DCC locomotives.</dd>
-
-          <dd>
-            <h3><a href=
-            "consisttool/ConsistTool.shtml">Consisting</a></h3>
-          </dd>
-
-          <dd>JMRI provides tools for managing locomotive
-          consists.</dd>
-
-          <dd>
-            <h3><a name="signals" href="signaling/index.shtml" id=
-            "signals">Signals</a></h3>
-          </dd>
-
+          <dd><h3><a name="signals" href="signaling/index.shtml" id="signals">Signals</a></h3></dd>
           <dd>Signal Heads and Signal Masts are how JMRI represents
           and controls signals on a layout. They are a specific
           kind of output device that can be set to various
@@ -111,69 +87,37 @@
           or Aspects (Stop, Clear, Approach limited etc.) following
           prototype rules.</dd>
 
-          <dd>
-            <h3><a name="blocks" href="Blocks.shtml" id=
-            "blocks">Blocks</a></h3>
-          </dd>
+          <dd><h3><a href="consisttool/ConsistTool.shtml">Consisting</a></h3></dd>
+          <dd>JMRI provides tools for managing locomotive consists.</dd>
 
+         <dd><h3><a href="Reporters.shtml">Reporters</a></h3></dd>
+          <dd>Reporters are JMRI's way of representing information
+          reported back from the layout and can contain arbitrary
+          information.</dd>
+
+          <dd><h3><a href="Memories.shtml">Memory Variables</a></h3></dd>
+          <dd>A JMRI Memory Variable can hold any type of object
+          specified by the user.</dd>
+
+        </dl>
+
+         <h2><a name="blocktools" id="blocktools">Block Tools</a></h2>
+        <dl>
+
+          <dd><h3><a name="blocks" href="Blocks.shtml" id="blocks">Blocks</a></h3></dd>
           <dd>Blocks are sections of track whose occupancy may be
           individually monitored in JMRI. Dividing your track into
           Blocks is optional. Block occupancy is indicated by the
           state of an occupancy Sensor.</dd>
 
-          <dd>
-            <h3><a href="Reporters.shtml">Reporters</a></h3>
-          </dd>
-
-          <dd>Reporters are JMRI's way of representing information
-          reported back from the layout and can contain arbitrary
-          information.</dd>
-
-          <dd>
-            <h3><a href="Memories.shtml">Memory Variables</a></h3>
-          </dd>
-
-          <dd>A JMRI Memory Variable can hold any type of object
-          specified by the user.</dd>
-
-          <dd>
-            <h3><a href="Routes.shtml">Routes</a></h3>
-          </dd>
-
-          <dd>Routes are a tool for driving multiple turnouts when
-          something happens on the layout. You can have a panel
-          switch through all the Turnouts in your yard throat, etc.
-          They can also change the status of Sensors, play sound
-          files, and invoke scripts. They have some simple logic
-          capabilities for deciding when to set the Route's
-          outputs.</dd>
-
-          <dd>
-            <h3><a href="LRoutes.shtml">LRoutes</a></h3>
-          </dd>
-
-          <dd>LRoutes extend the capabilities of Routes by
-          implementing them as a Logix. LRoutes can be defined with
-          an unlimited number of Sensors, Turnouts, Lights, and/or
-          SignalHeads for actions or controls. LRoutes provide an
-          easy starting point for creating new Logix since they may
-          be extended to include any of the Logix
-          capabilities.</dd>
-
-          <dd>
-            <h3><a href="Sections.shtml">Sections</a></h3>
-          </dd>
-
+          <dd><h3><a href="Sections.shtml">Sections</a></h3></dd>
           <dd>A <b>Section</b> is a group of one or more connected
           <a href="Blocks.shtml">Blocks</a> that may be allocated
           to a Train traveling in a given direction. Sections were
           created to solve the direction problem that can occur
           when using Blocks directly.</dd>
 
-          <dd>
-            <h3><a href="Transits.shtml">Transits</a></h3>
-          </dd>
-
+          <dd><h3><a href="Transits.shtml">Transits</a></h3></dd>
           <dd>A <b>Transit</b> is a group of two or more connected
             <b><a href="Sections.shtml">Sections</a></b> that
             describes a route around the layout of a Train traveling in a
@@ -183,10 +127,34 @@
             "../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher</a>
           </dd>
 
-          <dd>
-            <h3><a href="Logix.shtml">Logix</a></h3>
-          </dd>
+        </dl>
 
+       <h2><a name="routingtools" id="routingtools">Routing and Control Tools</a></h2>
+
+        <dl>
+          <dd><h3><a href="Routes.shtml">Routes</a></h3></dd>
+          <dd>Routes are a tool for driving multiple turnouts when
+          something happens on the layout. You can have a panel
+          switch through all the Turnouts in your yard throat, etc.
+          They can also change the status of Sensors, play sound
+          files, and invoke scripts. They have some simple logic
+          capabilities for deciding when to set the Route's
+          outputs.</dd>
+
+          <dd><h3><a href="LRoutes.shtml">LRoutes</a></h3></dd>
+          <dd>LRoutes extend the capabilities of Routes by
+          implementing them as a Logix. LRoutes can be defined with
+          an unlimited number of Sensors, Turnouts, Lights, and/or
+          SignalHeads for actions or controls. LRoutes provide an
+          easy starting point for creating new Logix since they may
+          be extended to include any of the Logix
+          capabilities.</dd>
+
+          <dd><h3><a href="EntryExit.shtml">Entry/Exit (NX) Routing</a></h3></dd>
+          <dd><b>NX Routing</b> allows you to build a dynamic valid path
+          between two locations on a Layout Editor panel.</dd>
+
+          <dd><h3><a href="Logix.shtml">Logix</a></h3></dd>
           <dd>A <b>Logix</b> is a tool for entering powerful logical
           expressions that can control parts of a layout. Each one
           can monitor multiple inputs and logical operations
@@ -195,7 +163,19 @@
           control, combine the logical reasoning of a Logix with
           the powerful output controls of a Route.</dd>
 
+        </dl>
+
+        <h2><a name="othertools" id="othertools">Other Tools</a></h2>
+          <dl>
+
           <dd>
+            <h3><a href="Audio.shtml">Audio</a></h3>
+          </dd>
+
+          <dd>JMRI audio objects hold information about sounds that
+          can be played-back by the computer.</dd>
+
+         <dd>
             <h3><a href="fastclock/index.shtml">Fast
             Clocks</a></h3>
           </dd>
@@ -203,6 +183,8 @@
           <dd>JMRI can both provide various types of Fast Clocks on
           the computer screen, and also work with the fast clocks
           already installed on your DCC layout.</dd>
+
+<!-- Add ID Tags Routing -->
 
           <dd>
             <h3><a href=
@@ -215,19 +197,23 @@
           locomotives before running them in a consist or for
           whatever you'd like.</dd>
 
-          <dd>
-            <h3><a href="Audio.shtml">Audio</a></h3>
-          </dd>
-
-          <dd>JMRI audio objects hold information about sounds that
-          can be played-back by the computer.</dd>
-
-          <dd>
+           <dd>
             <h3><a href="TimeTable.shtml">Timetable</a></h3>
           </dd>
 
           <dd>Create a timetable to manage train movements.  Display a
           graph that can help schedule meets.</dd>
+
+           <dd>
+            <h3><a href="../../package/jmri/jmrit/whereused/WhereUsed.shtml">Where Used</a></h3>
+          </dd>
+
+          <dd>Search JMRI for references to a selected item based on its type.
+          For example, see where a sensor is used.</dd>
+
+
+<!-- Are these apps? -->
+
 
           <dd>
             <h3><a href=
@@ -293,28 +279,30 @@
           Console</a></li>
         </ul>
 
-        <h3><a href="../hardware/cmri/CMRI.shtml#tools">C/MRI
+        <h3><a href="../hardware/cmri/CMRI.shtml">C/MRI
         Tools</a></h3>
 
         <p>When JMRI is connected to a layout via this system, a
         <b>CMRI</b> menu is shown:</p>
 
         <ul>
-          <li>CMRI Monitor</li>
+          <li><a href="../hardware/cmri/CMRI.shtml#L568">
+          CMRI Network Manager (enable/disable individual nodes)</a></li>
 
-          <li>Send Command</li>
+          <li><a href="../hardware/cmri/CMRI.shtml#L597">
+          CMRI Metrics</a></li>
 
-          <li><a href=
-          "../../package/jmri/jmrix/cmri/serial/nodeconfig/NodeConfigFrame.shtml">
+          <li><a href="../hardware/cmri/CMRI.shtml#L580">
+          CMRI Monitor (displays traffic sent and received to CMRI nodes)</a></li>
+
+           <li><a href="../hardware/cmri/CMRI.shtml#L268">
           Configure C/MRI Nodes</a></li>
 
-          <li><a href=
-          "../../package/jmri/jmrix/cmri/serial/diagnostic/DiagnosticFrame.shtml">
-          Run Diagnostic</a></li>
+          <li><a href="../hardware/cmri/CMRI.shtml#L609">
+          List Assignments (lists input/output bit assignments for each node)</a></li>
 
-          <li><a href=
-          "../../package/jmri/jmrix/cmri/serial/assignment/ListFrame.shtml">
-          List Assignments</a></li>
+          <li><a href="../hardware/cmri/CMRI.shtml#L624">
+          Run Diagnostic</a></li>
         </ul>
 
         <h3><a href="../hardware/can/index.shtml#tools">CAN
@@ -633,7 +621,7 @@
         <p>Run your own scripts or scripts shared by other JMRI
         user from the Panels &gt; Run Script... menu.</p>
 
-        <!--#include virtual="/Footer" -->
+        <!--#include virtual="/Footer.shtml" -->
       </div><!-- closes #mainContent-->
     </div><!-- closes #mBody-->
   </div><!-- closes #container -->

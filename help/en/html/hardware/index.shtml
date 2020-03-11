@@ -21,7 +21,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -51,6 +51,18 @@
           <dt>JMRI Support <!-- header, link--></dt>
           <dd>&nbsp;</dd>
 
+          <dt class="im"><a href="https://arduino.cc" target="_blank">
+          <img src="arduino/images/arduinologo.png" width="44" height="34" 
+          alt="Arduino (micro-controller)"></a></dt>
+          <dt><a href="arduino/index.shtml">Arduino (micro-controller)</a></dt>
+          <dd>
+            <p class="dl">Configure: See <a href="arduino/index.shtml"> the 
+            JMRI arduino help page</a> for information on configuring for accessory control.
+            See also <a href="dccpp/index.shtml">DCC++</a> for use as a DCC command station.
+            </p>
+            <p>&nbsp;</p>
+          </dd>
+          
           <dt class="im"><a href=
           "https://shop.atlasrr.com/t-atlascommander.aspx"><img src=
           "images/atlas_logo.gif" width="44" height="34" alt=
@@ -692,7 +704,7 @@
         <dd>A way to use a PDA to access JMRI.</dd>
       </dl>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

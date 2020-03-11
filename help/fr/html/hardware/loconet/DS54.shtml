@@ -23,7 +23,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
   <!--#include virtual="Sidebar" -->
   <div id="mainContent">
@@ -229,7 +229,7 @@ utiliser la r&eacute;tro-signalisation "EXACT".
   <p>LocoNet&reg; est une marque d&eacute;pos&eacute;e de <a href=
   "http://www.digitrax.com">Digitrax, Inc.</a></p>
 
-  <!--#include virtual="/Footer" -->
+  <!--#include virtual="/Footer.shtml" -->
   </div>
 </div>
 </body>

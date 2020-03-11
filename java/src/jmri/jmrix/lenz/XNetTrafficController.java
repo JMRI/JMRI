@@ -339,6 +339,6 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
        return ((XNetPortController)controller).hasTimeSlot();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XNetTrafficController.class);
+    private static final Logger log = LoggerFactory.getLogger(XNetTrafficController.class);
 
 }

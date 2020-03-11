@@ -33,6 +33,7 @@
 			<li><a href="Swing.shtml">Swing Structure</a></li>
 			<li><a href="SystemStructure.shtml">External Connection Structure</a></li>
 			<li><a href="AppPreferences.shtml">Application Preferences</a></li>
+			<li><a href="ProfileFileStructure.shtml">Profile Files</a></li>
 			<li><a href="Threads.shtml">Threading</a></li>
 			<li><a href="XmlUsage.shtml">Use of XML</a>
 				<ul class="navigation">
@@ -93,11 +94,9 @@
 			</ul>
 		</dd>
 	</dl>
+	
+	<!--#include virtual="../../../parts/SidebarTail.shtml" -->
+	
 	</div> <!-- closes #side -->
-
-	<!-- Sidebar-Tail -->
-	<script type="text/javascript" src="/web/js/jquery-2.0.3.min.js"></script>
-	<script type="text/javascript" src="/web/js/here.js"></script>
-	<!-- /Sidebar-Tail -->
 
 <!-- /Sidebar -->

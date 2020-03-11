@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
@@ -71,20 +72,16 @@ public class TrainPrintUtilities {
             return;
         }
         // set font
-        if (!fontName.equals("")) {
+        if (!fontName.isEmpty()) {
             writer.setFontName(fontName);
         }
 
         // now get the build file to print
         BufferedReader in = null;
         try {
-            in = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8")); // NOI18N
+            in = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));
         } catch (FileNotFoundException e) {
             log.error("Build file doesn't exist");
-            writer.close();
-            return;
-        } catch (UnsupportedEncodingException e) {
-            log.error("Doesn't support UTF-8 encoding");
             writer.close();
             return;
         }
@@ -122,7 +119,7 @@ public class TrainPrintUtilities {
             // check for build report print level
             if (isBuildReport) {
                 line = filterBuildReport(line, false); // no indent
-                if (line.equals("")) {
+                if (line.isEmpty()) {
                     continue;
                 }
                 // printing the train manifest
@@ -249,12 +246,9 @@ public class TrainPrintUtilities {
         // make a new file with the build report levels removed
         BufferedReader in = null;
         try {
-            in = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8")); // NOI18N
+            in = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));
         } catch (FileNotFoundException e) {
             log.error("Build file doesn't exist");
-            return;
-        } catch (UnsupportedEncodingException e) {
-            log.error("Doesn't support UTF-8 encoding");
             return;
         }
         PrintWriter out;
@@ -262,7 +256,7 @@ public class TrainPrintUtilities {
                 Bundle.getMessage("Report") + " " + name);
         try {
             out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
-                    new FileOutputStream(buildReport), "UTF-8")), true); // NOI18N
+                    new FileOutputStream(buildReport), StandardCharsets.UTF_8)), true);
         } catch (IOException e) {
             log.error("Can not create build report file");
             try {
@@ -279,7 +273,7 @@ public class TrainPrintUtilities {
                     break;
                 }
                 line = filterBuildReport(line, Setup.isBuildReportIndentEnabled());
-                if (line.equals("")) {
+                if (line.isEmpty()) {
                     continue;
                 }
                 out.println(line); // indent lines for each level

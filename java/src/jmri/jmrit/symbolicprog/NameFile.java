@@ -109,7 +109,7 @@ public class NameFile extends XmlFile {
     public static class Initializer extends AbstractInstanceInitializer {
 
         @Override
-        public <T> Object getDefault(Class<T> type) throws IllegalArgumentException {
+        public <T> Object getDefault(Class<T> type) {
             if (type.equals(NameFile.class)) {
                 if (log.isDebugEnabled()) {
                     log.debug("NameFile creating instance");

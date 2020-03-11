@@ -21,7 +21,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -345,7 +345,7 @@
         <p>More information on <a href="MoreInfo.shtml">how
         DecoderPro works</a>, including <a href=
         "CreateDecoder.shtml">how to add new Decoder Types</a>.</p>
-        <!--#include virtual="/Footer" -->
+        <!--#include virtual="/Footer.shtml" -->
       </div><!-- close #mainContent -->
     </div><!-- close #mBody -->
   </div>

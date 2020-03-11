@@ -950,8 +950,8 @@
                         var m = JSON.parse(e.originalEvent.data);
 
                         if ($.isArray(m)) {
-                            m.forEach(o => {
-                                h = jmri.events[o.type];
+                            m.forEach(function(o) {
+                                var h = jmri.events[o.type];
                                 if (h) {
                                     h.call(this, o);
                                 } else if (!o.type) {
@@ -961,7 +961,7 @@
                                 }
                             })
                         } else {
-                            h = jmri.events[m.type];
+                            var h = jmri.events[m.type];
                             if (h) {
                                 h.call(this, m);
                             } else if (!m.type) {

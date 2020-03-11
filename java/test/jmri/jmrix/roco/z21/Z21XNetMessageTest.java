@@ -52,6 +52,20 @@ public class Z21XNetMessageTest extends jmri.jmrix.lenz.XNetMessageTest {
         Assert.assertEquals("7th byte", x.getElement(7)& 0xFF, msg.getElement(7)& 0xFF);
     }
 
+    @Test
+    public void testToMonitorStringZ21_LAN_X_GET_TURNOUT_INFO(){
+        Z21XNetMessage m = Z21XNetMessage.getZ21TurnoutInfoRequestMessage(1);
+        Assert.assertEquals("Monitor String",Bundle.getMessage("Z21LAN_X_GET_TURNOUT_INFO",1),m.toMonitorString());
+    }
+
+    @Test
+    public void testToMonitorStringZ21_LAN_X_SET_TURNOUT() {
+        Z21XNetMessage m = Z21XNetMessage.getZ21SetTurnoutRequestMessage(1, true, false, false);
+        Assert.assertEquals("Set Turnout Thrown Monitor String", Bundle.getMessage("Z21LAN_X_SET_TURNOUT", 1, "deactivate", 1, false), m.toMonitorString());
+        m = Z21XNetMessage.getZ21SetTurnoutRequestMessage(1, false, true, true);
+        Assert.assertEquals("Set Turnout Closed Monitor String", Bundle.getMessage("Z21LAN_X_SET_TURNOUT", 1, "activate", 0, true), m.toMonitorString());
+    }
+
     // The minimal setup for log4J
     @Before
     @Override

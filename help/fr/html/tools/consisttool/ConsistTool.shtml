@@ -19,7 +19,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
 	<!--#include virtual="Sidebar" -->
 	<div id="mainContent">
@@ -40,7 +40,7 @@
 		une adresse principale de couplage.</p>
 		</li>
 		<li>
-		<p> Une Centrale de Commande &#224; Couplage Assist&#233; (CSAC). Une centrale de commande 
+		<p> Une Centrale de Commande &#224; Couplage Assist&#233; (CSAC). Une centrale de commande
 		&#224; couplage assist&#233;  est construite en utilisant une fonction de votre
 		centrale de commande.</p>
 
@@ -84,7 +84,7 @@
 		qu'une commande s&#233;par&#233;e de vitesse et d direction est envoy&#233;e
 		&#224; la voie pour chaque Locomotive qui est dans la couplage.</p>
 		</li>
-		
+
 		<li>
 		<p>
 		Un <i>D&#233;codeur Couplage Assist&#233;</i> (CAD), qui est &#233;galement
@@ -97,13 +97,13 @@
 		<p>
 		Si CV19 contient une valeur autre que 0, la locomotive
 		r&#233;agira  aux instructions de vitesse et de direction contenues &#224; l'
-		adresse dans CV19. Sinon, elle  r&#233;pondra &#224; la vitesse et et commande de direction 
+		adresse dans CV19. Sinon, elle  r&#233;pondra &#224; la vitesse et et commande de direction
 		envoy&#233;es sur l'adresse courte ou longue habituelle.
 		</p>
 		<p>
 		Comme l'adresse de couplage est un CV unique, elle est limit&#233;e
 		&#224; la gamme de 1 &#224; 127. Si vous ajoutez 128 &#224; l'
-		adresse de couplage, la locomotive sera ex&#233;cut&#233;e en arri&#232;re (par rapport 
+		adresse de couplage, la locomotive sera ex&#233;cut&#233;e en arri&#232;re (par rapport
 		au sens normal de d&#233;placement) dans les couplage.
 		</p>
 		<p>
@@ -121,7 +121,7 @@
 		</p>
 		<p>
 		L'avantage de DCA, comparativement aux CSAC est que seulement
-		une commande de  vitesse et de direction est envoy&#233;e &#224; l'ensemble 
+		une commande de  vitesse et de direction est envoy&#233;e &#224; l'ensemble
 		du couplage.
 		</p>
 		<p>
@@ -136,7 +136,7 @@
 		<p>
 		Une note finale, le Couplage Avanc&#233; fonctionner en 28 crans de vitesse
 		(Toujours). Vous pouvez avoir besoin de vous assurer que votre r&#233;gulateur envoie bien
-		28 crans de vitesse &#224; l'adresse pour &#233;viter le clignotement 
+		28 crans de vitesse &#224; l'adresse pour &#233;viter le clignotement
 		des feux.
 		</p>
 		</li>
@@ -145,9 +145,9 @@
 	<h3>Support Couplage dans JMRI.</h3>
 	<p>
 		JMRI fournit un support pour les couplages utilisant l'outil couplage,
-		qui est accessible via le menu outils de toute 
+		qui est accessible via le menu outils de toute
 		application JMRI.
-		( Il y a aussi un 
+		( Il y a aussi un
 		<a href="../../../package/jmri/jmrix/nce/consist/NceConsistEditFrame.shtml">outil couplage NCE-sp&#233;cifiques </a>
 		qui fonctionne un peu diff&#233;remment de l'outil d&#233;crit ici ).
 	</p>
@@ -168,13 +168,13 @@
 		<li>
 			<p>
 				Le <i>Gestionnaire G&#233;n&#233;rique de Couplage</i> est utilis&#233; sur n'importe quel syst&#232;me
-				qui n'a pas son propre gestionnaire couplage, mais supporte la 
+				qui n'a pas son propre gestionnaire couplage, mais supporte la
 				programmation en mode exploitation. Ce gestionnaire est seulement
 				en mesure de manipuler le D&#233;codeur Couplage Assist&#233;.
 			</p>
 			<p>
 				Le <i>Gestionnaire G&#233;n&#233;rique de Couplage contourne toutes les routines que la
-				centrale de commande doit d&#233;finir  pour l'adresse couplage.</i> 
+				centrale de commande doit d&#233;finir  pour l'adresse couplage.</i>
 				L'importance de cela est que si votre centrale de commande fournit un
 				m&#233;thode pour faire fonctionner un couplage en s&#233;lectionnant une locomotive par
 				son adresse, &#231;a ne fonctionnera pas. Vous aurez besoin d'utiliser l'identifiant de
@@ -190,12 +190,12 @@
 				en plus des Couplage Avanc&#233;.
 			</p>
 			<p>
-				Puisque ce gestionnaire utilise les instructions de cr&#233;ation de 
-				couplage fournies par le protocole XPressNet, le dispositif 
+				Puisque ce gestionnaire utilise les instructions de cr&#233;ation de
+				couplage fournies par le protocole XPressNet, le dispositif
 				Lenz de <i>Couplage Intelligent</i> fonctionne avec les couplages cr&#233;&#233;s
 				par l'outil. Sur les syst&#232;mes Lenz, <i>Couplage Intelligent</i>
 				renvoie &#224; la capacit&#233; d'&#234;tre en mesure d'ex&#233;cuter un couplage &#224; partir de <i>toutes</i>
-				les adresses de locomotive coupl&#233;es ou depuis les adresse 
+				les adresses de locomotive coupl&#233;es ou depuis les adresse
 				de couplage.
 			</p>
 			<p>
@@ -206,31 +206,31 @@
 		</li>
 		<li>
 			<p>
-				Le <i>Gestionnaire de Couplage EasyDCC </i> utilise le support fournit 
+				Le <i>Gestionnaire de Couplage EasyDCC </i> utilise le support fournit
 				par le syst&#232;me EasyDCC CVP pour manipuler des couplage. Ce gestionnaire de
-				couplage est capable de construire un "Couplage Standard" EasyDCC 
+				couplage est capable de construire un "Couplage Standard" EasyDCC
 				en plus du Couplage Avanc&#233;.
 			</p>
 			<p>
 				CVP ne fournit pas une m&#233;thode pour construire des Couplages Avanc&#233;es
 				En cons&#233;quence, les couplage avanc&#233;s sont cr&#233;&#233;s en contournant la
-				centrale de commande. Contrairement au Gestionnaire G&#233;n&#233;rique de Couplage, le 
+				centrale de commande. Contrairement au Gestionnaire G&#233;n&#233;rique de Couplage, le
 				Gestionnaire de Couplage EasyDCC  cr&#233;e ces couplage en &#233;mettant un
 				paquets  de Commande de couplage  sur  la voie. Cela permet l'inclusion de
 				locomotives qui ne permettent pas l'&#233;criture en utilisant CV19 en
-				mode de programmation Ops. Comme avec le Gestionnaire G&#233;n&#233;rique de Couplage, 
-				vous devez utiliser l'adresse courte s&#233;lectionn&#233;e comme Adresse de couplage pour 
+				mode de programmation Ops. Comme avec le Gestionnaire G&#233;n&#233;rique de Couplage,
+				vous devez utiliser l'adresse courte s&#233;lectionn&#233;e comme Adresse de couplage pour
 				contr&#244;ler le couplage.
 			<p>
- 				Pour le Couplage Standard EasyDCC, il y a un couple de restrictions 
-				impos&#233;es par le Protocole EasyDCC. Premi&#232;rement, comme avec les couplage cr&#233;&#233;s 
+ 				Pour le Couplage Standard EasyDCC, il y a un couple de restrictions
+				impos&#233;es par le Protocole EasyDCC. Premi&#232;rement, comme avec les couplage cr&#233;&#233;s
 				directement par la centrale de commande , ces couplage sont limit&#233;s &#224; 8
-				adresses. Deuxi&#232;mement, contrairement au couplage cr&#233;&#233; par la centrale de commande 
+				adresses. Deuxi&#232;mement, contrairement au couplage cr&#233;&#233; par la centrale de commande
 				directement,  CVP limite les adresses des couplages standard &#224; des adresse
 				entre 1 et 255.
 			</p>
 			<p>
-				Le Gestionnaire de Couplage EasyDCC lira les Informations Standards de Couplage 
+				Le Gestionnaire de Couplage EasyDCC lira les Informations Standards de Couplage
 				dans la gamme autoris&#233;e (1-255) de la m&#233;moire de la centrale de commande.
 				Puisque la centrale de commande  est contourn&#233;e pour cr&#233;er des
 				Couplages Avanc&#233;s, ceux-ci ne peuvent &#234;tre lues &#224; partir de la centrale de commande.
@@ -244,16 +244,16 @@
 	</p>
 	<img src="images/ConsistTool.jpg" alt="Blank Consit Tool">
 	<p>
-	sur la rang&#233;e sup&#233;rieure sont utilis&#233;s pour choisir entre un Couplage Avanc&#233; 
-	( D&#233;codeur Assist&#233; )  et une Centrale de Commande à Couplage Assisté. 
+	sur la rang&#233;e sup&#233;rieure sont utilis&#233;s pour choisir entre un Couplage Avanc&#233;
+	( D&#233;codeur Assist&#233; )  et une Centrale de Commande ï¿½ Couplage Assist&#233;. 
 	Si les Centrales de Commande  &#224; Couplage Assist&#233; ne sont pas
 	prises en charge par l'outil de votre syst&#232;me, ces s&#233;lections seront
 	gris&#233;es.
 	</p>
 	<p>
-	La case &#224; c&#244;t&#233; de l'&#233;tiquette  <b>Couplage:</b> est utilis&#233;e pour sp&#233;cifier 
+	La case &#224; c&#244;t&#233; de l'&#233;tiquette  <b>Couplage:</b> est utilis&#233;e pour sp&#233;cifier
 	l'ID  du couplage. Pour les D&#233;codeur &#224; Couplage Assist&#233;, ce devrait &#234;tre l'
-	adresse courte  qui doit &#234;tre utilis&#233;e pour identifier les couplage. Pour les Centrale de 
+	adresse courte  qui doit &#234;tre utilis&#233;e pour identifier les couplage. Pour les Centrale de
 	Commande &#224; Couplage Assist&#233;, , cette valeur peut &#234;tre automatiquement
 	rempli avec l'adresse Locomotive de t&#234;te quand vous essayez de l'ajouter
 	dans le couplage.
@@ -281,12 +281,12 @@
 	</p>
 	<p>
 	La case <b>Direction Normale</b> est utilis&#233;e pour si
-	une Locomotive circule en avant ou en inverse quand le 
+	une Locomotive circule en avant ou en inverse quand le
 	couplage est  en avant.
 	</p>
 	<p>
 	Vous remarquerez &#224; partir des captures d'&#233;cran pr&#233;c&#233;dentes que cette case est
-	gris&#233;e jusqu'&#224; ce qu'une Locomotive de t&#234;te soit choisie. Avec les 
+	gris&#233;e jusqu'&#224; ce qu'une Locomotive de t&#234;te soit choisie. Avec les
 	Locomotives ult&#233;rieures, vous pouvez cocher cette case pour indiquer la
 	direction de la locomotive par rapport &#224; la Locomotive de t&#234;te.
 	</p>
@@ -320,17 +320,17 @@
 	mettre en place un r&#233;gulateur JMRI pour cette adresse.
 	</p>
 	<p>
-	Pour ajouter un nouveau couplage, vous pouvez s&#233;lectionner l'entr&#233;e vide dans la 
+	Pour ajouter un nouveau couplage, vous pouvez s&#233;lectionner l'entr&#233;e vide dans la
 	liste d&#233;roulante &#224; c&#244;t&#233; de l'actuel ID de couplage .
 	</p>
 	<img src="images/ConsistTool-NewConsist.jpg" alt="Select new Consist">
 	<p>
-	Pour rappeler un existantes couplage, vous pouvez s&#233;lectionner l'entr&#233;e 
-	appropri&#233;e de la bo&#238;te d&#233;roulante &#224; c&#244;t&#233; de l'actuel ID de couplage 
+	Pour rappeler un existantes couplage, vous pouvez s&#233;lectionner l'entr&#233;e
+	appropri&#233;e de la bo&#238;te d&#233;roulante &#224; c&#244;t&#233; de l'actuel ID de couplage
 	</p>
 	<img src="images/ConsistTool-SelectConsist.jpg" alt="Select &#224; Consist">
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
 </body>

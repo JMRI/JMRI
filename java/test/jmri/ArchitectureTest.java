@@ -80,6 +80,16 @@ public class ArchitectureTest {
                             .should()
                                 .dependOnClassesThat().haveFullyQualifiedName("java.util.Timer");
      
+    /**
+     * No access to javax.annotation.Nullable except the FindBugsCheck test routine
+     */
+    @ArchTest 
+    public static final ArchRule checkNullableAnnotationRestricted = noClasses().that()
+                                // classes with permitted access
+                                .haveNameNotMatching("apps\\.FindBugsCheck")
+                            .should()
+                                .dependOnClassesThat().haveFullyQualifiedName("javax.annotation.Nullable");
+     
    /**
      * No jmri.jmrix in basic interfaces.
      * <p>

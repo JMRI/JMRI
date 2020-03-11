@@ -2,6 +2,13 @@ package jmri.jmrit.operations.rollingstock.engines.tools;
 
 import java.awt.GraphicsEnvironment;
 import java.io.File;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.Timeout;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.OperationsXml;
@@ -11,11 +18,8 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.util.JUnitOperationsUtil;
-import jmri.util.junit.rules.*;
+import jmri.util.junit.rules.RetryRule;
 import jmri.util.swing.JemmyUtil;
-
-import org.junit.*;
-import org.junit.rules.*;
 
 /**
  *
@@ -116,6 +120,8 @@ public class ImportEnginesTest extends OperationsTestCase {
         }
         // confirm import successful
         Assert.assertEquals("engines", 4, emanager.getNumEntries());
+        
+
     }
 
     @Test
@@ -234,6 +240,8 @@ public class ImportEnginesTest extends OperationsTestCase {
 
         // confirm import successful
         Assert.assertEquals("engines", 4, emanager.getNumEntries());
+        
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ImportEnginesTest.class);

@@ -22,7 +22,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -171,7 +171,7 @@
         <li>Preferences &#8209;&gt; Locations &#8209;&gt; User
         Files Location and set it to the JMRI folder you created in
         Dropbox.</li>
-      </ul><!--#include virtual="/Footer" -->
+      </ul><!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

@@ -15,6 +15,7 @@ import jmri.Block;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.NamedBeanHandle;
+import jmri.NamedBeanUsageReport;
 import jmri.Section;
 import jmri.Sensor;
 import jmri.SignalMast;
@@ -2879,6 +2880,57 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
 
     @Override
     public void setState(int i) {
+    }
+
+    @Override
+    public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
+        List<NamedBeanUsageReport> report = new ArrayList<>();
+        if (bean != null) {
+            if (bean.equals(getSourceMast())) {
+                report.add(new NamedBeanUsageReport("SMLSourceMast"));  // NOI18N
+            }
+            getDestinationList().forEach((dest) -> {
+                if (bean.equals(dest)) {
+                    report.add(new NamedBeanUsageReport("SMLDestinationMast"));  // NOI18N
+                }
+                getAutoBlocks(dest).forEach((block) -> {
+                    if (bean.equals(block)) {
+                        report.add(new NamedBeanUsageReport("SMLBlockAuto", dest));  // NOI18N
+                    }
+                });
+                getBlocks(dest).forEach((block) -> {
+                    if (bean.equals(block)) {
+                        report.add(new NamedBeanUsageReport("SMLBlockUser", dest));  // NOI18N
+                    }
+                });
+                getAutoTurnouts(dest).forEach((turnout) -> {
+                    if (bean.equals(turnout)) {
+                        report.add(new NamedBeanUsageReport("SMLTurnoutAuto", dest));  // NOI18N
+                    }
+                });
+                getTurnouts(dest).forEach((turnout) -> {
+                    if (bean.equals(turnout)) {
+                        report.add(new NamedBeanUsageReport("SMLTurnoutUser", dest));  // NOI18N
+                    }
+                });
+                getSensors(dest).forEach((sensor) -> {
+                    if (bean.equals(sensor)) {
+                        report.add(new NamedBeanUsageReport("SMLSensor", dest));  // NOI18N
+                    }
+                });
+                getAutoMasts(dest).forEach((mast) -> {
+                    if (bean.equals(mast)) {
+                        report.add(new NamedBeanUsageReport("SMLMastAuto", dest));  // NOI18N
+                    }
+                });
+                getSignalMasts(dest).forEach((mast) -> {
+                    if (bean.equals(mast)) {
+                        report.add(new NamedBeanUsageReport("SMLMastUser", dest));  // NOI18N
+                    }
+                });
+            });
+        }
+        return report;
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastLogic.class);

@@ -13,7 +13,6 @@ import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeEventTableDataModel;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
-import jmri.jmrix.can.CanSystemConnectionMemo;
 
 /**
  * Pane providing a CBUS Node Event table for a single node.
@@ -39,14 +38,6 @@ public class CbusNodeEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         super();
         nodeEventModel = model;
         nodeEventTable = new JTable(nodeEventModel);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void initComponents(CanSystemConnectionMemo memo) {
-        super.initComponents(memo);
     }
     
     /**

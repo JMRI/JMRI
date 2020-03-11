@@ -2,6 +2,12 @@ package jmri.jmrit.operations.rollingstock.cars;
 
 import java.awt.GraphicsEnvironment;
 import java.util.List;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
@@ -11,10 +17,6 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for the Operations CarsTableFrame class
@@ -334,6 +336,8 @@ public class CarsTableFrameTest extends OperationsTestCase {
         jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("RFID 1");
         c5.setRfid("RFID 1");
         c5.setTypeName("Coilcar");
+
+        JUnitOperationsUtil.checkOperationsShutDownTask();
 
     }
 

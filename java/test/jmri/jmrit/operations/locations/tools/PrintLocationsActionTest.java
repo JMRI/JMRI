@@ -115,6 +115,7 @@ public class PrintLocationsActionTest extends OperationsTestCase {
         
         Assert.assertNotNull("exists", printPreviewFrame);
         JUnitUtil.dispose(printPreviewFrame);
+
     }
 
     @Test
@@ -139,6 +140,7 @@ public class PrintLocationsActionTest extends OperationsTestCase {
 
         JUnitUtil.dispose(f);
         JUnitUtil.dispose(printPreviewFrame);
+
     }
 
     @Test
@@ -170,6 +172,7 @@ public class PrintLocationsActionTest extends OperationsTestCase {
         JUnitUtil.dispose(printPreviewFrame);
 
         JUnitUtil.dispose(printOptionFrame);
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(PrintLocationsActionTest.class);

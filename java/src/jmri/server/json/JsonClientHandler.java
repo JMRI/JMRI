@@ -26,7 +26,6 @@ import javax.annotation.Nonnull;
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.JmriException;
-import jmri.jmris.json.JsonServerPreferences;
 import jmri.server.json.schema.JsonSchemaServiceCache;
 import jmri.spi.JsonServiceFactory;
 import org.slf4j.Logger;
@@ -110,7 +109,7 @@ public class JsonClientHandler {
         String type = root.path(TYPE).asText();
         int id = root.path(ID).asInt(0);
         JsonNode data = root.path(DATA);
-        JsonRequest request = new JsonRequest(connection.getLocale(), connection.getVersion(), id);
+        JsonRequest request = new JsonRequest(connection.getLocale(), connection.getVersion(), method, id);
         try {
             if (preferences.getValidateClientMessages()) {
                 schemas.validateMessage(root, false, request);
@@ -147,35 +146,30 @@ public class JsonClientHandler {
                     for (JsonSocketService<?> service : services.get(type)) {
                         service.onList(type, data, request);
                     }
-                    return;
                 } else {
                     log.warn("Requested list type '{}' unknown.", type);
                     sendErrorMessage(HttpServletResponse.SC_NOT_FOUND,
                             Bundle.getMessage(connection.getLocale(), JsonException.ERROR_UNKNOWN_TYPE, type), id);
-                    return;
                 }
-            } else if (!data.isMissingNode()) {
+                return;
+            } else {
                 if (type.equals(HELLO) || type.equals(LOCALE) && !data.path(LOCALE).isMissingNode()) {
                     connection.setLocale(
                             Locale.forLanguageTag(data.path(LOCALE).asText(connection.getLocale().getLanguage())));
                     setVersion(data.path(VERSION).asText(connection.getVersion()), id);
                     // since locale or version may have changed, ensure any
                     // response is using new version and locale
-                    request = new JsonRequest(connection.getLocale(), connection.getVersion(), id);
+                    request = new JsonRequest(connection.getLocale(), connection.getVersion(), method, id);
                 }
                 if (services.get(type) != null) {
                     for (JsonSocketService<?> service : services.get(type)) {
-                        service.onMessage(type, data, method, request);
+                        service.onMessage(type, data, request);
                     }
                 } else {
                     log.warn("Requested type '{}' unknown.", type);
                     sendErrorMessage(HttpServletResponse.SC_NOT_FOUND,
                             Bundle.getMessage(connection.getLocale(), JsonException.ERROR_UNKNOWN_TYPE, type), id);
                 }
-            } else {
-                log.warn("Data property of JSON message missing");
-                sendErrorMessage(HttpServletResponse.SC_BAD_REQUEST,
-                        Bundle.getMessage(connection.getLocale(), "ErrorMissingData"), id);
             }
             if (type.equals(GOODBYE)) {
                 // close the connection if GOODBYE is received.

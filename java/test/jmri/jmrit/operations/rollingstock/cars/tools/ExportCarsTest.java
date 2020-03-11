@@ -2,15 +2,17 @@ package jmri.jmrit.operations.rollingstock.cars.tools;
 
 import java.awt.GraphicsEnvironment;
 import java.util.List;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
 
 /**
  *
@@ -53,6 +55,7 @@ public class ExportCarsTest extends OperationsTestCase {
 
         java.io.File file = new java.io.File(ExportCars.defaultOperationsFilename());
         Assert.assertTrue("Confirm file creation", file.exists());
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ExportCarsTest.class);

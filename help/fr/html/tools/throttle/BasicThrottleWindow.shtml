@@ -19,7 +19,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -236,7 +236,7 @@ Jynstrumentable, donc ici nous d&#233;posons le Jynstruments sur </span> <span s
 lui-m&#234;me, non pas sur la barre d'outils.
 </span>
 
-		<!--#include virtual="/Footer" -->
+		<!--#include virtual="/Footer.shtml" -->
       </div><!-- closes #mainContent-->
     </div> <!-- closes #mBody-->
 </body>

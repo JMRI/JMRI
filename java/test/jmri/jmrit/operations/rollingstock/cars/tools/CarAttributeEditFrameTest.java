@@ -3,15 +3,17 @@ package jmri.jmrit.operations.rollingstock.cars.tools;
 import java.awt.GraphicsEnvironment;
 import java.text.MessageFormat;
 import java.util.List;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
 
 /**
  * Tests for the Operations CarAttributeEditFrame class
@@ -48,6 +50,7 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("old color", "Black", f.comboBox.getItemAt(0));
 
         JUnitUtil.dispose(f);
+
     }
 
     @Test

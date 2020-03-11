@@ -22,7 +22,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="../SidebarUp" -->
     <div id="mainContent">
@@ -202,7 +202,7 @@
       "http://uk.groups.yahoo.com/group/sprog-dcc/">groupe de
       discussion Yahoo</a> pour Sprog.</p>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

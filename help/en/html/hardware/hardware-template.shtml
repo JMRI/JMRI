@@ -6,7 +6,7 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI Hardware Support - [System]</title>
+  <title>JMRI Hardware Support - __System__</title>
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -20,12 +20,12 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
 
-      <h1>Hardware Support: [System]</h1>
+      <h1>Hardware Support: __System__</h1>
 
       <p>A template for new Hardware Help</p>
 
@@ -71,7 +71,7 @@
 
       <p>Text</p><a name="tools" id="tools"></a>
 
-      <h2>JMRI [this system] Tools</h2><img src="[System]Menu.png"
+      <h2>JMRI __this system__ Tools</h2><img src="__System__Menu.png"
       width="100" height="100" align="right" alt="Menu">
 
       <h4>Tool 1</h4>
@@ -93,7 +93,7 @@
 
       <p>Link to external web sites, downloads</p>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

@@ -562,6 +562,10 @@ public class TrainCommon {
         if (location != null) {
             List<Track> tracks = location.getTrackByNameList(null);
             for (Track track : tracks) {
+                if (isManifest && !track.isPrintManifestCommentEnabled() ||
+                        !isManifest && !track.isPrintSwitchListCommentEnabled()) {
+                    continue;
+                }
                 // any pick ups or set outs to this track?
                 boolean pickup = false;
                 boolean setout = false;

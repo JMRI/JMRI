@@ -3,11 +3,7 @@ package jmri.jmrit.operations.locations;
 import java.awt.Color;
 import java.awt.GridBagLayout;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,11 +12,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.schedules.Schedule;
 import jmri.jmrit.operations.locations.schedules.ScheduleEditFrame;
 import jmri.jmrit.operations.locations.schedules.ScheduleManager;
-import jmri.jmrit.operations.locations.tools.AlternateTrackAction;
-import jmri.jmrit.operations.locations.tools.ChangeTrackTypeAction;
-import jmri.jmrit.operations.locations.tools.IgnoreUsedTrackAction;
-import jmri.jmrit.operations.locations.tools.ShowCarsByLocationAction;
-import jmri.jmrit.operations.locations.tools.ShowTrainsServingLocationAction;
+import jmri.jmrit.operations.locations.tools.*;
 import jmri.jmrit.operations.setup.Control;
 
 /**
@@ -96,6 +88,7 @@ public class SpurEditFrame extends TrackEditFrame {
     
     @Override
     public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
+        removeSchedulePropertyListener();
         updateScheduleButtonText();
     }
     
@@ -142,6 +135,12 @@ public class SpurEditFrame extends TrackEditFrame {
         super.addNewTrack();
         updateScheduleComboBox(); // reset schedule and error text
     }
+    
+    @Override
+    protected void deleteTrack() {
+        removeSchedulePropertyListener();
+        super.deleteTrack();
+    }
 
     private void updateScheduleComboBox() {
         InstanceManager.getDefault(ScheduleManager.class).updateComboBox(comboBoxSchedules);
@@ -158,13 +157,16 @@ public class SpurEditFrame extends TrackEditFrame {
 
     @Override
     public void dispose() {
-        InstanceManager.getDefault(ScheduleManager.class).removePropertyChangeListener(this);
+        removeSchedulePropertyListener();
+        super.dispose();
+    }
+    
+    private void removeSchedulePropertyListener() {
         if (_track != null) {
             Schedule sch = InstanceManager.getDefault(ScheduleManager.class).getScheduleById(_track.getScheduleId());
             if (sch != null)
                 sch.removePropertyChangeListener(this);
         }
-        super.dispose();
     }
 
     @Override
@@ -177,7 +179,7 @@ public class SpurEditFrame extends TrackEditFrame {
                 || e.getPropertyName().equals(Track.SCHEDULE_ID_CHANGED_PROPERTY)) {
             updateScheduleComboBox();
         }
-        if (e.getSource().getClass().equals(Schedule.class)) {
+        if (e.getSource().getClass().equals(Schedule.class) && _track != null) {
             textSchError.setText(_track.checkScheduleValid());
         }
         super.propertyChange(e);

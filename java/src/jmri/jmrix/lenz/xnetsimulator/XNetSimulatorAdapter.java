@@ -56,14 +56,14 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
     private int momentaryGroup3 = 0;
     private int momentaryGroup4 = 0;
     private int momentaryGroup5 = 0;
-
+    
     public XNetSimulatorAdapter() {
         setPort(Bundle.getMessage("None"));
         try {
-            PipedOutputStream tempPipeI = new PipedOutputStream();
+            PipedOutputStream tempPipeI = new ImmediatePipeOutputStream();
             pout = new DataOutputStream(tempPipeI);
             inpipe = new DataInputStream(new PipedInputStream(tempPipeI));
-            PipedOutputStream tempPipeO = new PipedOutputStream();
+            PipedOutputStream tempPipeO = new ImmediatePipeOutputStream();
             outpipe = new DataOutputStream(tempPipeO);
             pin = new DataInputStream(new PipedInputStream(tempPipeO));
         } catch (java.io.IOException e) {
@@ -71,6 +71,35 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
             return;
         }
         csStatus = CS_NORMAL_MODE;
+    }
+    
+    /**
+     * Makes a workaround for standard {@link PipedOutputStream} wait.
+     * <p>The {@link PipedInputStream#read()}, in case the receive buffer is
+     * empty at the time of the call, waits for up to 1000ms. 
+     * {@link PipedOutputStream#write(int)} does call <code>sink.receive</code>,
+     * but does not <code>notify()</code> the sink object so that read's
+     * wait() terminates.
+     * </p><p>
+     * As a result, the read side of the pipe waits full 1000ms even though data
+     * become available during the wait.
+     * </p><p>
+     * The workaround is to simply {@link PipedOutputStream#flush} after write, 
+     * which returns from wait()s immediately.
+     * </p>
+     */
+    final static class ImmediatePipeOutputStream extends PipedOutputStream {
+        @Override
+        public void write(byte[] b, int off, int len) throws IOException {
+            super.write(b, off, len);
+            flush();
+        }
+
+        @Override
+        public void write(int b) throws IOException {
+            super.write(b);
+            flush();
+        }
     }
 
     @Override
@@ -557,6 +586,6 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
     private DataInputStream inpipe = null; // feed pout
     private Thread sourceThread;
 
-    private final static Logger log = LoggerFactory.getLogger(XNetSimulatorAdapter.class);
+    private static final Logger log = LoggerFactory.getLogger(XNetSimulatorAdapter.class);
 
 }

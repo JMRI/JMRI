@@ -12,7 +12,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-
 import jmri.NamedBean;
 import jmri.jmrit.picker.PickListModel;
 import jmri.jmrit.picker.PickSinglePanel;
@@ -21,6 +20,7 @@ import jmri.jmrit.picker.PickSinglePanel;
  *
  * @author Pete Cressman Copyright: Copyright (c) 2019
  *
+ * @param <T> type of NamedBean in PickList 
  */
 public class OpenPickListButton<T extends NamedBean> {
 
@@ -92,7 +92,7 @@ public class OpenPickListButton<T extends NamedBean> {
                 closePickList();
             }
         });
-        _pickFrame.setLocation(jmri.util.PlaceWindow. nextTo(_parent, null, _pickFrame));
+        jmri.InstanceManager.getDefault(jmri.util.PlaceWindow.class). nextTo(_parent, null, _pickFrame);
         _pickFrame.toFront();
         _pickFrame.setVisible(true);
         _pickFrame.pack();

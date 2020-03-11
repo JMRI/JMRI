@@ -292,45 +292,34 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
     public void filterButtonActionPerformed(ActionEvent e) {
         // log.debug("Cbus Console filter button action performed");
         
-        
         if ( _console != null ) {
-            _console.filterButton.doClick();
+            _console.displayPane.filterButton.doClick();
             return;
         }
         
-        
         if (_filterFrame == null) {
             _filterFrame = new CbusFilterFrame(_console,this);
-            try {
-                _filterFrame.initComponents();
-            } catch (Exception ex) {
-                log.error("Exception: " + ex.toString());
-            }
-            _filterFrame.setVisible(true);
+            _filterFrame.initComponents();
         } else {
             _filterFrame.setState(Frame.NORMAL);
-            _filterFrame.setVisible(true);
         }
+        _filterFrame.setVisible(true);
     }
 
     public void highlightButtonActionPerformed(ActionEvent e) {
         // log.debug("Cbus Console filter button action performed");
         if ( _console != null ) {
-            _console.highlightButton.doClick();
+            _console.displayPane.highlightButton.doClick();
             return;
         }
         if (_highlightFrame == null) {
             _highlightFrame = new CbusEventHighlightFrame(null,this);
-            try {
-                _highlightFrame.initComponents();
-            } catch (Exception ex) {
-                log.error("Exception: " + ex.toString());
-            }
-            _highlightFrame.setVisible(true);
+            _highlightFrame.initComponents();
+            
         } else {
             _highlightFrame.setState(Frame.NORMAL);
-            _highlightFrame.setVisible(true);
         }
+        _highlightFrame.setVisible(true);
     }
 
     public void setHighlighter( CbusEventHighlightFrame highlightFrame){

@@ -9,7 +9,6 @@ import java.util.List;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.InstanceManager;
-import jmri.jmris.json.JsonServerPreferences;
 import org.eclipse.jetty.websocket.api.Session;
 import org.junit.Assert;
 
@@ -86,7 +85,7 @@ public class JsonMockConnection extends JsonConnection {
      */
     @Override
     public void sendMessage(@CheckForNull JsonNode message, int id) throws IOException {
-        sendMessage(message, new JsonRequest(getLocale(), getVersion(), id));
+        sendMessage(message, new JsonRequest(getLocale(), getVersion(), JSON.GET, id));
     }
 
     @CheckForNull

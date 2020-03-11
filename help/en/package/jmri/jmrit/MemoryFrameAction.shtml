@@ -18,7 +18,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -58,7 +58,7 @@
         JMRI.</li>
       </ul>At the top of the left column, the maximum memory that
       can be available to JMRI is displayed. 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

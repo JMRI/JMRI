@@ -4,11 +4,7 @@ import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -146,10 +142,10 @@ public class EngineEditFrame extends RollingStockEditFrame {
                 // load the default hp and length for the model selected
                 hpTextField.setText(engineModels.getModelHorsepower(model));
                 weightTonsTextField.setText(engineModels.getModelWeight(model));
-                if (engineModels.getModelLength(model) != null && !engineModels.getModelLength(model).equals("")) {
+                if (engineModels.getModelLength(model) != null && !engineModels.getModelLength(model).isEmpty()) {
                     lengthComboBox.setSelectedItem(engineModels.getModelLength(model));
                 }
-                if (engineModels.getModelType(model) != null && !engineModels.getModelType(model).equals("")) {
+                if (engineModels.getModelType(model) != null && !engineModels.getModelType(model).isEmpty()) {
                     typeComboBox.setSelectedItem(engineModels.getModelType(model));
                 }
             }

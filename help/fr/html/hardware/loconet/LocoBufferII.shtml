@@ -16,7 +16,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -47,7 +47,7 @@ La configuration recommand&#233;e pour le LocoBuffer II est:</p>
     <li>Boot Program Mode off</li>
     <li>Alimentation isol&#233;e (<a href="#locoBufferIIPower">voir ci-dessous</a>)</li>
 </ul>
-<p>La configuration recommandée de JMRI pour le LocoBuffer-II est:
+<p>La configuration recommand&#233; de JMRI pour le LocoBuffer-II est:
 </p>
 
 <ul>
@@ -110,6 +110,6 @@ Pour configurer LocoBufferII pour "Local Power", emlevezla connexion d'alimentat
 
 <p>LocoNet&reg; est une marque d&#233;pos&#233;e de <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
     </div>
-  </div><!--#include virtual="/Footer" -->
+  </div><!--#include virtual="/Footer.shtml" -->
 </body>
 </html>

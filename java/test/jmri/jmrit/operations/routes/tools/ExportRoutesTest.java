@@ -49,6 +49,8 @@ public class ExportRoutesTest extends OperationsTestCase {
 
         java.io.File file = new java.io.File(ExportRoutes.defaultOperationsFilename());
         Assert.assertTrue("Confirm file creation", file.exists());
+        
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ExportTrainsTest.class);

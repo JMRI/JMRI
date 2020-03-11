@@ -35,7 +35,7 @@ table.sortable th {
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
   <!--#include virtual="../html/Sidebar" -->
   <div id="mainContent">
@@ -95,7 +95,7 @@ table.sortable th {
 <tr>
   <td class="app">All</td>
   <td class="en">Memory (Variable)</td>
-  <td class="descr">Objet logiciel JMRI qui peut contenir tout type de contenu, comme une chaîne de texte ou une image. Logix peut tester - et d&#233;finir  - les contenus d'une Variable M&#233;moire. Les panneaux peuvent les afficher. <a href="../html/tools/Memories.shtml">...</a></td>
+  <td class="descr">Objet logiciel JMRI qui peut contenir tout type de contenu, comme une chaï¿½ne de texte ou une image. Logix peut tester - et d&#233;finir  - les contenus d'une Variable M&#233;moire. Les panneaux peuvent les afficher. <a href="../html/tools/Memories.shtml">...</a></td>
   <td class="de">Speicher</td>
   <td class="it">Variabili in Memoria</td>
   <td class="fr">M&eacute;moire</td>
@@ -1273,7 +1273,7 @@ table.sortable th {
 
 <!-- end of Glossary table -->
 
-   <!--#include virtual="/Footer" -->
+   <!--#include virtual="/Footer.shtml" -->
    </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
 
