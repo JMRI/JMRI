@@ -39,9 +39,9 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
 
     private int csStatus;
     // status flags from the XpressNet Documentation.
-    private final static int CS_EMERGENCY_STOP = 0x01; // bit 0
+    private static final int CS_EMERGENCY_STOP = 0x01; // bit 0
     // 0x00 means normal mode.
-    private final static int CS_NORMAL_MODE = 0x00;
+    private static final int CS_NORMAL_MODE = 0x00;
 
     // information about the last throttle command(s).
     private int currentSpeedStepMode = XNetConstants.LOCO_SPEED_128;
@@ -116,7 +116,7 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
      * @param s true if the buffer is empty; false otherwise
      */
     @Override
-    synchronized public void setOutputBufferEmpty(boolean s) {
+    public synchronized void setOutputBufferEmpty(boolean s) {
         outputBufferEmpty = s;
     }
 
@@ -148,7 +148,6 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
         packets.connectPort(this);
 
         // start operation
-        // packets.startThreads();
         this.getSystemConnectionMemo().setXNetTrafficController(packets);
 
         sourceThread = new Thread(this);
@@ -184,14 +183,6 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
     @Override
     public boolean status() {
         return (pout != null && pin != null);
-    }
-
-    @Deprecated
-    static public XNetSimulatorAdapter instance() {
-        if (mInstance == null) {
-            mInstance = new XNetSimulatorAdapter();
-        }
-        return mInstance;
     }
 
     @Override
@@ -578,7 +569,6 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
         }
     }
 
-    volatile static XNetSimulatorAdapter mInstance = null;
     private DataOutputStream pout = null; // for output to other classes
     private DataInputStream pin = null; // for input from other classes
     // internal ends of the pipes
