@@ -1194,7 +1194,9 @@ public class CircuitBuilder {
                 PositionableLabel pos = (PositionableLabel) p;
                 if (CircuitBuilder.isUnconvertedTrack(pos)) {
                     _editor.highlight(pos);
-                    int result = JOptionPane.showConfirmDialog(_editFrame, Bundle.getMessage("notIndicatorIcon"),
+                    new ConvertDialog(this, pos, block);
+                    _editor.highlight(null);
+/*                    int result = JOptionPane.showConfirmDialog(_editor, Bundle.getMessage("notIndicatorIcon"),
                              Bundle.getMessage("incompleteCircuit"), JOptionPane.YES_NO_OPTION,
                              JOptionPane.QUESTION_MESSAGE);
                     if (result == JOptionPane.YES_OPTION) {
@@ -1202,7 +1204,7 @@ public class CircuitBuilder {
                     } else {
                          msg = Bundle.getMessage("cantSaveIcon", block.getDisplayName(), Bundle.getMessage(key));
                          _editor.highlight(null);
-                    }
+                    }*/
                 }
             }
         }
@@ -1220,9 +1222,9 @@ public class CircuitBuilder {
      */
     private void convertIcon(PositionableLabel pos, OBlock block) {
         _editor.toFront();
-        _editor.repaint();
+//        _editor.repaint();
         new ConvertDialog(this, pos, block);
-        _editor.repaint();
+//        _editor.repaint();
     }
 
 

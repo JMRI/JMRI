@@ -319,23 +319,22 @@ public class OPath extends jmri.Path {
         if (_toPortal != null && !_toPortal.equals(toPort) && !_toPortal.equals(fromPort)) {
             return false;
         }
-        
-        
         List<BeanSetting> settings = path.getSettings();
         if (settings.size() != getSettings().size()) {
             return false;
         }
-      
         Iterator<BeanSetting> iter = settings.iterator();
         Iterator<BeanSetting> it = getSettings().iterator();
+        boolean found = false;
         while (iter.hasNext()) {
             BeanSetting beanSetting = iter.next();
-            boolean found = false;
             while (it.hasNext()) {
+                found = false;
                 BeanSetting bs = it.next();
-                if (bs.getBeanName().equals(beanSetting.getBeanName())
-                        && (bs.getSetting() == beanSetting.getSetting())) {
-                    found  = true;
+                if (bs.getBean().getSystemName().equals(beanSetting.getBean().getSystemName())
+                        && bs.getSetting() == beanSetting.getSetting()) {
+                    found = true;
+                    break;
                 }
             }
             if (!found) {

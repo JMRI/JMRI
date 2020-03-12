@@ -184,6 +184,9 @@ public class PlaceWindow implements InstanceManagerAutoDefault {
         } else if (vOff + targetDim.width > parentLoc.x + parentDim.width) {
             vOff = parentLoc.x + parentDim.width - targetDim.width;
         }
+        if (vOff < 0) {
+            vOff = 0;
+        }
 
         // try to keep completely within the parent window
         if (xl >= parentLoc.x){    
@@ -244,6 +247,9 @@ public class PlaceWindow implements InstanceManagerAutoDefault {
         
         offScreen = -ya;        // !(ya >= 0)
         if (offScreen < minOff) {
+            if (ya < 0) {
+                ya = 0;
+            }
             minOff = offScreen;
             loc = new Point(vOff, ya);
         }
@@ -257,60 +263,17 @@ public class PlaceWindow implements InstanceManagerAutoDefault {
      * Choose the first position (Left, Right, Below, Above) where there is no overlap.
      * If all overlap, choose first position (Left, Right, Below, Above) where there
      * is no overlap of the component in the parent. Finally bail out using the 
-     * upper left corner.  
+     * upper left corner.
+     * Deprecated. use method nextTo(Window parent, Component comp, Window target)
      * @param parent Window containing the Component
      * @param comp Component contained in the parent Window 
      * @param target a popup or some kind of window with tools to
      *  edit the component that should not be covered by the target.
      * @return the location Point to open the target window.
      */
+    @Deprecated
     public Point inside(Window parent, Component comp, Window target) {
-        if (target == null || parent == null) {
-            return new Point(0, 0);
-        }
-        Point loc;
-        Point parentLoc = parent.getLocation();
-        Dimension parentDim = parent.getSize();
-        Dimension targetDim = target.getPreferredSize();
-        Point compLoc;
-        Dimension compDim;
-        if (comp != null) {
-            compLoc = comp.getLocation();
-            compDim = comp.getSize();
-        } else {
-            compLoc = new Point(parentLoc.x + parentDim.width/2, parentLoc.y + parentDim.height/2);
-            compDim = new Dimension(0, 0);
-        }
-
-        int xr = compLoc.x + compDim.width;
-        int xl = compLoc.x - targetDim.width;
-        int ya = compLoc.y + (compDim.height - targetDim.height)/2;
-        if (ya < 0) {
-            ya = 0;
-        }
-        if (xl >=0) {   // try alongside left of component
-            loc = new Point(xl, ya);
-        } else if (xr < parentDim.width) {   // try alongside right of component
-            loc = new Point(xr, ya);
-        } else {
-            xl = compLoc.x +  (compDim.width - targetDim.width)/2;
-            if (xl < 0) {
-                xl = 0;
-            }
-            ya = compLoc.y - targetDim.height;
-            int yb = compLoc.y + compDim.height;
-            if (ya > 0) {   // try above of component
-                loc = new Point(xl, ya);                
-            } else if (yb < parentDim.height - targetDim.height){
-                loc = new Point(xl, yb);                                
-            } else {
-                loc = new Point(0, 0);
-            }
-        }
-        loc.x += parentLoc.x;
-        loc.y += parentLoc.y;
-
-        return loc;
+        return nextTo( parent, comp,  target);
     }
     
     private final static Logger log = LoggerFactory.getLogger(PlaceWindow.class);
