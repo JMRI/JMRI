@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.locations;
 
 import java.awt.Point;
+import java.beans.PropertyChangeListener;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -31,7 +32,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2012, 2013
  */
-public class Location implements Identified, java.beans.PropertyChangeListener {
+public class Location extends Identified implements PropertyChangeListener {
 
     public static final String LOC_TRACK_REGIX = "s";
 
@@ -1632,16 +1633,6 @@ public class Location implements Identified, java.beans.PropertyChangeListener {
         if (e.getPropertyName().equals(CarRoads.CARROADS_NAME_CHANGED_PROPERTY)) {
             replaceRoad((String) e.getOldValue(), (String) e.getNewValue());
         }
-    }
-
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
     }
 
     protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {

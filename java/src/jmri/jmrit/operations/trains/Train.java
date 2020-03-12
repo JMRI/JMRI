@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.trains;
 
 import java.awt.Color;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -48,7 +49,7 @@ import jmri.util.FileUtil;
  *
  * @author Rodney Black Copyright (C) 2011
  */
-public class Train implements Identified, java.beans.PropertyChangeListener {
+public class Train extends Identified implements PropertyChangeListener {
 
     /*
      * WARNING DO NOT LOAD CAR OR ENGINE MANAGERS WHEN Train.java IS CREATED IT
@@ -4322,16 +4323,6 @@ public class Train implements Identified, java.beans.PropertyChangeListener {
         if (e.getSource().getClass().equals(Route.class)) {
             setDirtyAndFirePropertyChange(e.getPropertyName(), e.getOldValue(), e.getNewValue());
         }
-    }
-
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
     }
 
     protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {

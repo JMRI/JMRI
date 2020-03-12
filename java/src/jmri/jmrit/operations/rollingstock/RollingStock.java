@@ -29,7 +29,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  *
  * @author Daniel Boudreau Copyright (C) 2009, 2010, 2013
  */
-public abstract class RollingStock implements Identified, java.beans.PropertyChangeListener {
+public abstract class RollingStock extends Identified implements PropertyChangeListener {
 
     public static final String NONE = "";
     public static final int DEFAULT_BLOCKING_ORDER = 0;
@@ -106,8 +106,7 @@ public abstract class RollingStock implements Identified, java.beans.PropertyCha
     }
 
     public static String createId(String road, String number) {
-        String id = road + number;
-        return id;
+        return road + number;
     }
 
     @Override
@@ -1517,16 +1516,6 @@ public abstract class RollingStock implements Identified, java.beans.PropertyCha
                 setColor((String) e.getNewValue());
             }
         }
-    }
-
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
     }
 
     protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
