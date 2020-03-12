@@ -143,6 +143,7 @@ public class FrmGUIDesign extends javax.swing.JFrame {
 
         _mSaveAndClose.setText(Bundle.getMessage("ButtonSaveClose"));
         _mSaveAndClose.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mSaveAndCloseActionPerformed(evt);
             }
@@ -181,6 +182,7 @@ public class FrmGUIDesign extends javax.swing.JFrame {
 
         _mGUIDesign_AnalogClockEtc.setText(Bundle.getMessage("LableDlgGUIClock"));
         _mGUIDesign_AnalogClockEtc.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mGUIDesign_AnalogClockEtcActionPerformed(evt);
             }

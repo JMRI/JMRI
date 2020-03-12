@@ -112,6 +112,6 @@ public class XNetTrafficRouter extends XNetTrafficController implements XNetList
         lastSender = null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XNetTrafficRouter.class);
+    private static final Logger log = LoggerFactory.getLogger(XNetTrafficRouter.class);
 
 }

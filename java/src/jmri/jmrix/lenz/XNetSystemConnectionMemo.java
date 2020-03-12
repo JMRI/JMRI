@@ -315,6 +315,6 @@ public class XNetSystemConnectionMemo extends SystemConnectionMemo {
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XNetSystemConnectionMemo.class);
+    private static final Logger log = LoggerFactory.getLogger(XNetSystemConnectionMemo.class);
 
 }

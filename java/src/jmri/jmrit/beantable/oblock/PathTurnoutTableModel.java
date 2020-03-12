@@ -264,6 +264,7 @@ public class PathTurnoutTableModel extends AbstractTableModel implements Propert
         return 5;
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent e) {
         if (_path.getBlock().equals(e.getSource())) {
             String property = e.getPropertyName();
