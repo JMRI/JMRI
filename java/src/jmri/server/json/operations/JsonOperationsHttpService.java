@@ -38,7 +38,6 @@ import static jmri.server.json.operations.JsonOperations.WEIGHT;
 import static jmri.server.json.operations.JsonOperations.WEIGHT_TONS;
 import static jmri.server.json.reporter.JsonReporter.REPORTER;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -72,7 +71,7 @@ import jmri.server.json.JsonHttpService;
 import jmri.server.json.JsonRequest;
 
 /**
- * @author Randall Wood (C) 2016, 2018, 2019
+ * @author Randall Wood (C) 2016, 2018, 2019, 2020
  */
 public class JsonOperationsHttpService extends JsonHttpService {
 

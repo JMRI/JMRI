@@ -15,6 +15,9 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Objects;
+
+import javax.annotation.Nonnull;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -26,6 +29,7 @@ import jmri.JmriException;
 import jmri.jmrit.operations.Identified;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
+import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
@@ -39,18 +43,18 @@ import jmri.server.json.JsonRequest;
 import jmri.server.json.JsonSocketService;
 
 /**
- * @author Randall Wood (C) 2016, 2019
+ * @author Randall Wood (C) 2016, 2019, 2020
  */
 public class JsonOperationsSocketService extends JsonSocketService<JsonOperationsHttpService> {
 
-    private final HashMap<String, TrainListener> trainListeners = new HashMap<>();
-    private final TrainsListener trainsListener = new TrainsListener();
-    private final HashMap<String, CarListener> carListeners = new HashMap<>();
+    private final HashMap<String, SingleListener<Car>> carListeners = new HashMap<>();
+    private final HashMap<String, SingleListener<Engine>> engineListeners = new HashMap<>();
+    private final HashMap<String, SingleListener<Location>> locationListeners = new HashMap<>();
+    private final HashMap<String, SingleListener<Train>> trainListeners = new HashMap<>();
     private final CarsListener carsListener = new CarsListener();
-    private final HashMap<String, LocationListener> locationListeners = new HashMap<>();
-    private final LocationsListener locationsListener = new LocationsListener();
-    private final HashMap<String, EngineListener> engineListeners = new HashMap<>();
     private final EnginesListener enginesListener = new EnginesListener();
+    private final LocationsListener locationsListener = new LocationsListener();
+    private final TrainsListener trainsListener = new TrainsListener();
 
     private static final Logger log = LoggerFactory.getLogger(JsonOperationsSocketService.class);
 
@@ -66,42 +70,6 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
     public void onMessage(String type, JsonNode data, JsonRequest request)
             throws IOException, JmriException, JsonException {
         String name = data.path(JSON.NAME).asText();
-        // add listener to name if not already listening
-        if (!request.method.equals(JSON.DELETE)) {
-            switch (type) {
-                case TRAIN:
-                    trainListeners.computeIfAbsent(name, id -> {
-                        TrainListener l = new TrainListener(id);
-                        InstanceManager.getDefault(TrainManager.class).getTrainById(id).addPropertyChangeListener(l);
-                        return l;
-                    });
-                    break;
-                case CAR:
-                    carListeners.computeIfAbsent(name, id -> {
-                        CarListener l = new CarListener(id);
-                        InstanceManager.getDefault(CarManager.class).getById(id).addPropertyChangeListener(l);
-                        return l;
-                    });
-                    break;
-                case LOCATION:
-                    locationListeners.computeIfAbsent(name, id -> {
-                        LocationListener l = new LocationListener(id);
-                        InstanceManager.getDefault(LocationManager.class).getLocationById(id).addPropertyChangeListener(l);
-                        return l;
-                    });
-                    break;
-                case ENGINE:
-                    engineListeners.computeIfAbsent(name, id -> {
-                        EngineListener l = new EngineListener(id);
-                        InstanceManager.getDefault(EngineManager.class).getById(id).addPropertyChangeListener(l);
-                        return l;
-                    });
-                    break;
-                default:
-                    // other types ignored
-                    break;
-            }
-        }
         switch (request.method) {
             case JSON.GET:
                 connection.sendMessage(service.doGet(type, name, data, request), request.id);
@@ -116,6 +84,63 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
             default:
                 connection.sendMessage(service.doPost(type, name, data, request), request.id);
         }
+        // add listener to name if not already listening
+        if (!request.method.equals(JSON.DELETE)) {
+            if (name.isEmpty()) {
+                name = RollingStock.createId(data.path(JSON.ROAD).asText(), data.path(JSON.NUMBER).asText());
+            }
+            switch (type) {
+                case CAR:
+                    carListeners.computeIfAbsent(name, id -> {
+                        CarListener l = new CarListener(id);
+                        InstanceManager.getDefault(CarManager.class).getById(id).addPropertyChangeListener(l);
+                        return l;
+                    });
+                    break;
+                case ENGINE:
+                    engineListeners.computeIfAbsent(name, id -> {
+                        EngineListener l = new EngineListener(id);
+                        InstanceManager.getDefault(EngineManager.class).getById(id).addPropertyChangeListener(l);
+                        return l;
+                    });
+                    break;
+                case LOCATION:
+                    locationListeners.computeIfAbsent(name, id -> {
+                        LocationListener l = new LocationListener(id);
+                        InstanceManager.getDefault(LocationManager.class).getLocationById(id).addPropertyChangeListener(l);
+                        return l;
+                    });
+                    break;
+                case TRAIN:
+                    trainListeners.computeIfAbsent(name, id -> {
+                        TrainListener l = new TrainListener(id);
+                        InstanceManager.getDefault(TrainManager.class).getTrainById(id).addPropertyChangeListener(l);
+                        return l;
+                    });
+                    break;
+                default:
+                    // other types ignored
+                    break;
+            }
+        } else {
+            switch (type) {
+                case CAR:
+                    carListeners.remove(name);
+                    break;
+                case ENGINE:
+                    engineListeners.remove(name);
+                    break;
+                case LOCATION:
+                    locationListeners.remove(name);
+                    break;
+                case TRAIN:
+                    trainListeners.remove(name);
+                    break;
+                default:
+                    // other types ignored
+                    break;
+            }
+        }
     }
 
     @Override
@@ -123,25 +148,25 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
             throws IOException, JmriException, JsonException {
         connection.sendMessage(service.doGetList(type, data, request), request.id);
         switch (type) {
-            case TRAIN:
-            case TRAINS:
-                log.debug("adding TrainsListener");
-                InstanceManager.getDefault(TrainManager.class).addPropertyChangeListener(trainsListener);
-                break;
             case CAR:
             case CARS:
                 log.debug("adding CarsListener");
                 InstanceManager.getDefault(CarManager.class).addPropertyChangeListener(carsListener);
+                break;
+            case ENGINE:
+            case ENGINES:
+                log.debug("adding EnginesListener");
+                InstanceManager.getDefault(EngineManager.class).addPropertyChangeListener(enginesListener);
                 break;
             case LOCATION:
             case LOCATIONS:
                 log.debug("adding LocationsListener");
                 InstanceManager.getDefault(LocationManager.class).addPropertyChangeListener(locationsListener);
                 break;
-            case ENGINE:
-            case ENGINES:
-                log.debug("adding EnginesListener");
-                InstanceManager.getDefault(EngineManager.class).addPropertyChangeListener(enginesListener);
+            case TRAIN:
+            case TRAINS:
+                log.debug("adding TrainsListener");
+                InstanceManager.getDefault(TrainManager.class).addPropertyChangeListener(trainsListener);
                 break;
             default:
                 break;
@@ -158,83 +183,62 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
         }
     }
 
-    private <E extends Identified> void sendSingleChange(String type, E object) throws IOException {
-        try {
-            connection.sendMessage(service.doGet(type, object.getId(),
-                    connection.getObjectMapper().createObjectNode(),
-                    new JsonRequest(getLocale(), getVersion(), JSON.GET, 0)), 0);
-        } catch (JsonException ex) {
-            log.warn("json error sending {}: {}", type, ex.getJsonMessage());
-            connection.sendMessage(ex.getJsonMessage(), 0);
-        }
-    }
-
     @Override
     public void onClose() {
-        trainListeners.values().forEach(listener -> listener.train.removePropertyChangeListener(listener));
+        carListeners.values().forEach(listener -> listener.object.removePropertyChangeListener(listener));
+        carListeners.clear();
+        engineListeners.values().forEach(listener -> listener.object.removePropertyChangeListener(listener));
+        engineListeners.clear();
+        locationListeners.values().forEach(listener -> listener.object.removePropertyChangeListener(listener));
+        locationListeners.clear();
+        trainListeners.values().forEach(listener -> listener.object.removePropertyChangeListener(listener));
         trainListeners.clear();
+        InstanceManager.getDefault(CarManager.class).removePropertyChangeListener(carsListener);
+        InstanceManager.getDefault(EngineManager.class).removePropertyChangeListener(enginesListener);
+        InstanceManager.getDefault(LocationManager.class).removePropertyChangeListener(locationsListener);
         InstanceManager.getDefault(TrainManager.class).removePropertyChangeListener(trainsListener);
     }
 
-    private class TrainListener implements PropertyChangeListener {
-
-        protected final Train train;
-
-        protected TrainListener(String id) {
-            train = InstanceManager.getDefault(TrainManager.class).getTrainById(id);
+    private abstract class SingleListener<O extends Identified> implements PropertyChangeListener {
+        
+        protected final O object;
+        
+        protected SingleListener(@Nonnull O obj) {
+            Objects.requireNonNull(obj);
+            this.object = obj;
+        }
+        
+        protected void propertyChange(String type, HashMap<String, SingleListener<O>> map) {
+            try {
+                sendSingleChange(type, object);
+            } catch (IOException ex) {
+                // stop listening to this object on error
+                object.removePropertyChangeListener(this);
+                map.remove(object.getId());
+            }
         }
 
-        @Override
-        public void propertyChange(PropertyChangeEvent evt) {
-            log.debug("in TrainListener for '{}' '{}' ('{}'=>'{}')", train.getId(), evt.getPropertyName(),
-                    evt.getOldValue(), evt.getNewValue());
+        private <E extends Identified> void sendSingleChange(String type, E object) throws IOException {
             try {
-                sendSingleChange(TRAIN, train);
-            } catch (IOException ex) {
-                // if we get an error, de-register
-                log.debug("deregistering trainListener due to IOException");
-                train.removePropertyChangeListener(this);
-                trainListeners.remove(train.getId());
+                connection.sendMessage(service.doGet(type, object.getId(),
+                        connection.getObjectMapper().createObjectNode(),
+                        new JsonRequest(getLocale(), getVersion(), JSON.GET, 0)), 0);
+            } catch (JsonException ex) {
+                log.warn("json error sending {}: {}", type, ex.getJsonMessage());
+                connection.sendMessage(ex.getJsonMessage(), 0);
             }
         }
     }
 
-    private class TrainsListener implements PropertyChangeListener {
-
-        @Override
-        public void propertyChange(PropertyChangeEvent evt) {
-            log.debug("in TrainsListener for '{}' ('{}' => '{}')", evt.getPropertyName(), evt.getOldValue(),
-                    evt.getNewValue());
-            try {
-                sendListChange(TRAIN);
-            } catch (IOException ex) {
-                // if we get an error, de-register
-                log.debug("deregistering trainsListener due to IOException");
-                InstanceManager.getDefault(TrainManager.class).removePropertyChangeListener(trainsListener);
-            }
-        }
-    }
-
-    private class CarListener implements PropertyChangeListener {
-
-        protected final Car car;
+    private class CarListener extends SingleListener<Car> {
 
         protected CarListener(String id) {
-            car = InstanceManager.getDefault(CarManager.class).getById(id);
+            super(InstanceManager.getDefault(CarManager.class).getById(id));
         }
 
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            log.debug("in CarListener for '{}' '{}' ('{}'=>'{}')", car.getId(), evt.getPropertyName(),
-                    evt.getOldValue(), evt.getNewValue());
-            try {
-                sendSingleChange(CAR, car);
-            } catch (IOException ex) {
-                // if we get an error, de-register
-                log.debug("deregistering carListener due to IOException");
-                car.removePropertyChangeListener(this);
-                carListeners.remove(car.getId());
-            }
+            propertyChange(CAR, carListeners);
         }
     }
 
@@ -254,31 +258,48 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
         }
     }
 
-    private class LocationListener implements PropertyChangeListener {
+    private class EngineListener extends SingleListener<Engine> {
 
-        protected final Location location;
-
-        protected LocationListener(String id) {
-            location = InstanceManager.getDefault(LocationManager.class).getLocationById(id);
+        protected EngineListener(String id) {
+            super(InstanceManager.getDefault(EngineManager.class).getById(id));
         }
 
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            log.debug("in LocationListener for '{}' '{}' ('{}'=>'{}')", location.getId(), evt.getPropertyName(),
-                    evt.getOldValue(), evt.getNewValue());
+            propertyChange(ENGINE, engineListeners);
+        }
+    }
+
+    private class EnginesListener implements PropertyChangeListener {
+
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            log.debug("in EnginesListener for '{}' ('{}' => '{}')", evt.getPropertyName(), evt.getOldValue(),
+                    evt.getNewValue());
+            try {
+                sendListChange(ENGINE);
+            } catch (IOException ex) {
+                // if we get an error, de-register
+                log.debug("deregistering enginesListener due to IOException");
+                InstanceManager.getDefault(CarManager.class).removePropertyChangeListener(enginesListener);
+            }
+        }
+    }
+
+    private class LocationListener extends SingleListener<Location> {
+
+        protected LocationListener(String id) {
+            super(InstanceManager.getDefault(LocationManager.class).getLocationById(id));
+        }
+
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
             // only send changes to properties that are included in object
             if (evt.getPropertyName().equals(JSON.ID) ||
                     evt.getPropertyName().equals(LOCATION_NAME) ||
                     evt.getPropertyName().equals(JSON.LENGTH) ||
                     evt.getPropertyName().equals(LOCATION_COMMENT)) {
-                try {
-                    sendSingleChange(LOCATION, location);
-                } catch (IOException ex) {
-                    // if we get an error, de-register
-                    log.debug("deregistering locationListener due to IOException");
-                    location.removePropertyChangeListener(this);
-                    locationListeners.remove(location.getId());
-                }
+                propertyChange(LOCATION, locationListeners);
             }
         }
     }
@@ -299,41 +320,30 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
         }
     }
 
-    private class EngineListener implements PropertyChangeListener {
+    private class TrainListener extends SingleListener<Train> {
 
-        protected final Engine engine;
-
-        protected EngineListener(String id) {
-            engine = InstanceManager.getDefault(EngineManager.class).getById(id);
+        protected TrainListener(String id) {
+            super(InstanceManager.getDefault(TrainManager.class).getTrainById(id));
         }
 
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            log.debug("in EngineListener for '{}' '{}' ('{}'=>'{}')", engine.getId(), evt.getPropertyName(),
-                    evt.getOldValue(), evt.getNewValue());
-            try {
-                sendSingleChange(ENGINE, engine);
-            } catch (IOException ex) {
-                // if we get an error, de-register
-                log.debug("deregistering engineListener due to IOException");
-                engine.removePropertyChangeListener(this);
-                carListeners.remove(engine.getId());
-            }
+            propertyChange(TRAIN, trainListeners);
         }
     }
 
-    private class EnginesListener implements PropertyChangeListener {
+    private class TrainsListener implements PropertyChangeListener {
 
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            log.debug("in EnginesListener for '{}' ('{}' => '{}')", evt.getPropertyName(), evt.getOldValue(),
+            log.debug("in TrainsListener for '{}' ('{}' => '{}')", evt.getPropertyName(), evt.getOldValue(),
                     evt.getNewValue());
             try {
-                sendListChange(ENGINE);
+                sendListChange(TRAIN);
             } catch (IOException ex) {
                 // if we get an error, de-register
-                log.debug("deregistering enginesListener due to IOException");
-                InstanceManager.getDefault(CarManager.class).removePropertyChangeListener(enginesListener);
+                log.debug("deregistering trainsListener due to IOException");
+                InstanceManager.getDefault(TrainManager.class).removePropertyChangeListener(trainsListener);
             }
         }
     }
