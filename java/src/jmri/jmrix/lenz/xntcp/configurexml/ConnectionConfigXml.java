@@ -141,6 +141,6 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class);
+    private static final Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class);
 
 }

@@ -6,7 +6,7 @@
     <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>4.19.4-SNAPSHOT</version>
+    <version>4.19.5-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
@@ -87,7 +87,6 @@
                         <configuration>
                             <sourceDirectories>
                                 <!-- Additional source directories -->
-                                <File>java/tmp</File>
                                 <File>target/generated-sources/javacc</File>
                                 <File>target/generated-sources/jjtree</File>
                             </sourceDirectories>
@@ -194,7 +193,7 @@
                                         <sourceDirectory>${basedir}</sourceDirectory>
                                     </sourceDirectories>
                                     <includes>**/*</includes>
-                                    <excludes>**/*.jpg,**/*.jar,web/app/node_modules/**,.git/**,target/**,java/tmp/**</excludes>
+                                    <excludes>**/*.jpg,**/*.jar,web/app/node_modules/**,.git/**,target/**</excludes>
                                     <!-- only show errors, not warnings or infos -->
                                     <violationSeverity>error</violationSeverity>
                                 </configuration>
@@ -816,7 +815,7 @@
                         <sourceDirectory>${basedir}</sourceDirectory>
                     </sourceDirectories>
                     <includes>**/*</includes>
-                    <excludes>**/*.jpg,**/*.jar,web/app/node_modules/**,.git/**,target/**,java/tmp/**</excludes>
+                    <excludes>**/*.jpg,**/*.jar,web/app/node_modules/**,.git/**,target/**</excludes>
                     <!-- show errors, warnings, and infos -->
                     <violationSeverity>info</violationSeverity>
                 </configuration>

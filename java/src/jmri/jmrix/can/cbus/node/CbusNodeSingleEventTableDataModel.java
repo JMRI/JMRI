@@ -191,7 +191,7 @@ public class CbusNodeSingleEventTableDataModel extends javax.swing.table.Abstrac
                 return currEvVal;
             case EV_CURRENT_HEX_COLUMN:
                 if ( currEvVal > -1 ) {
-                    return String.valueOf(Integer.toHexString(currEvVal));
+                    return jmri.util.StringUtil.twoHexFromInt(currEvVal);
                 }
                 else {
                     return currEvVal;
@@ -212,7 +212,7 @@ public class CbusNodeSingleEventTableDataModel extends javax.swing.table.Abstrac
                 }
             case EV_SELECT_HEX_COLUMN:
                 if ( newEVs[(row)] != currEvVal ) {
-                    return String.valueOf(Integer.toHexString(newEVs[(row)])); 
+                    return jmri.util.StringUtil.twoHexFromInt(newEVs[(row)]);
                 } else {
                     return "";
                 }

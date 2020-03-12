@@ -95,7 +95,7 @@ public class CbusNodeNVManager {
             return;
         }
         _nvArray[index]=newnv;
-        _node.notifyPropertyChangeListener("NVUPDATE",null,( index -1));
+        _node.notifyPropertyChangeListener("SINGLENVUPDATE",null,( index -1));
         
     }
     

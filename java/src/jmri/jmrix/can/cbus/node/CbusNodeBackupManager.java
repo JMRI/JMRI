@@ -349,9 +349,8 @@ public class CbusNodeBackupManager {
         }
         
         Document doc = new Document(root);
-        Element values;
-        
-        root.addContent(values = new Element("Backups"));  // NOI18N
+        Element values = new Element("Backups");
+        root.addContent(values);  // NOI18N
         _backupInfos.stream().map((node) -> {
             Element e = new Element("BackupInfo");  // NOI18N
             e.setAttribute("dateTimeStamp",xmlDateStyle.format( node.getBackupTimeStamp() ));  // NOI18N

@@ -19,6 +19,7 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusAddress;
 import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.cbus.CbusPreferences;
+import jmri.jmrix.can.cbus.CbusSend;
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeEvent;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
@@ -103,7 +104,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         super();
     }
 
-    protected ArrayList<CbusNodeConfigTab> getTabs() {
+    protected final ArrayList<CbusNodeConfigTab> getTabs() {
         if (tabbedPanes==null) {
             tabbedPanes = new ArrayList<>(6);
             tabbedPanes.add( new CbusNodeInfoPane(this));
@@ -113,7 +114,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
             tabbedPanes.add( new CbusNodeSetupPane(this));
             tabbedPanes.add( new CbusNodeBackupsPane(this));
         }
-        return tabbedPanes;
+        return new ArrayList<>(this.tabbedPanes);
     }
     
     /**
@@ -192,9 +193,6 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
        
     }
     
-    
-    // 
-    
     private final JFrame topFrame = (JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
     
     /**
@@ -259,7 +257,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
             nodeTable.setRowSelectionInterval(sel,sel);
             
             // this also starts urgent fetch loop if not currently looping
-            nodeModel.setUrgentFetch(tabindex,_selectedNode,nodeBefore,nodeAfter);
+            nodeModel.setUrgentFetch(_selectedNode,nodeBefore,nodeAfter);
             
             getTabs().get(tabindex).setNode( nodeModel.getNodeByNodeNum(_selectedNode) );
             
@@ -430,7 +428,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         searchForNodesMenuItem.addActionListener(updatenodes);
         
         ActionListener systemReset = ae -> {
-            nodeModel.sendSystemReset();
+            new CbusSend(memo).aRST();
             // flash something to user so they know that something has happened
             busy_dialog = new jmri.util.swing.BusyDialog(topFrame, "System Reset", false);
             busy_dialog.start();
@@ -746,7 +744,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         if (ev.getPropertyName().equals("TEACHNVCOMPLETE")) {
             nVTeachComplete((Integer) ev.getNewValue());
         }
-        if (ev.getPropertyName().equals("ADDALLEVCOMPLETE")) {
+        else if (ev.getPropertyName().equals("ADDALLEVCOMPLETE")) {
             teachEventsComplete((Integer) ev.getNewValue());
         }
     }

@@ -132,6 +132,7 @@ public class FrmCB extends javax.swing.JFrame {
 
         _mSaveAndClose.setText(Bundle.getMessage("ButtonSaveClose"));
         _mSaveAndClose.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mSaveAndCloseActionPerformed(evt);
             }
@@ -139,6 +140,7 @@ public class FrmCB extends javax.swing.JFrame {
 
         jButton2.setText(Bundle.getMessage("ButtonReapply"));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
@@ -147,6 +149,7 @@ public class FrmCB extends javax.swing.JFrame {
         _mOSSectionOccupiedExternalSensorPrompt.setText(Bundle.getMessage("LabelDlgCBPriSensor"));
 
         _mOSSectionSwitchSlavedToUniqueID.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mOSSectionSwitchSlavedToUniqueIDActionPerformed(evt);
             }
