@@ -740,6 +740,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
                         id);
             case CAR_TYPE:
             case KERNEL:
+            case ROLLING_STOCK:
             case TRACK:
                 return doSchema(type,
                         server,
@@ -760,20 +761,6 @@ public class JsonOperationsHttpService extends JsonHttpService {
                         "jmri/server/json/operations/location-server.json",
                         "jmri/server/json/operations/location-client.json",
                         id);
-            case ROLLING_STOCK:
-                if (server) {
-                    try {
-                        return doSchema(type, server,
-                                mapper.readTree(getClass().getClassLoader()
-                                        .getResource("jmri/server/json/operations/rollingStock-server.json")),
-                                id);
-                    } catch (IOException ex) {
-                        throw new JsonException(500, ex, id);
-                    }
-                } else {
-                    throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
-                            Bundle.getMessage(request.locale, "NotAClientType", type), id);
-                }
             case TRAIN:
             case TRAINS:
                 return doSchema(type,

@@ -36,13 +36,7 @@ public class JsonOperationsServiceFactoryTest extends JsonServiceFactoryTestBase
     @Test
     public void testGetTypesV5() {
         assertThat(factory.getTypes(JSON.V5))
-                .containsExactly(CAR, CARS, CAR_TYPE, ENGINE, ENGINES, KERNEL, LOCATION, LOCATIONS,
+                .containsExactly(CAR, CARS, CAR_TYPE, ENGINE, ENGINES, KERNEL, LOCATION, LOCATIONS, ROLLING_STOCK,
                         TRACK, TRAIN, TRAINS);
-    }
-    
-    @Override
-    @Test
-    public void testGetSentTypesV5() {
-        assertThat(factory.getSentTypes(JSON.V5)).containsExactly(ROLLING_STOCK);
     }
 }
