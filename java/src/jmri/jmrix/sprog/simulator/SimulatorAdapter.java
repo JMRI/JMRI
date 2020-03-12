@@ -11,6 +11,7 @@ import jmri.jmrix.sprog.SprogPortController; // no special xSimulatorController
 import jmri.jmrix.sprog.SprogReply;
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 import jmri.jmrix.sprog.SprogTrafficController;
+import jmri.util.ImmediatePipeOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -65,12 +66,12 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
     @Override
     public String openPort(String portName, String appName) {
         try {
-            PipedOutputStream tempPipeI = new PipedOutputStream();
+            PipedOutputStream tempPipeI = new ImmediatePipeOutputStream();
             log.debug("tempPipeI created");
             pout = new DataOutputStream(tempPipeI);
             inpipe = new DataInputStream(new PipedInputStream(tempPipeI));
             log.debug("inpipe created {}", inpipe != null);
-            PipedOutputStream tempPipeO = new PipedOutputStream();
+            PipedOutputStream tempPipeO = new ImmediatePipeOutputStream();
             outpipe = new DataOutputStream(tempPipeO);
             pin = new DataInputStream(new PipedInputStream(tempPipeO));
         } catch (java.io.IOException e) {

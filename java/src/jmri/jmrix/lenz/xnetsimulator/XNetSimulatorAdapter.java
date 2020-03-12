@@ -14,6 +14,7 @@ import jmri.jmrix.lenz.XNetPacketizer;
 import jmri.jmrix.lenz.XNetReply;
 import jmri.jmrix.lenz.XNetSimulatorPortController;
 import jmri.jmrix.lenz.XNetTrafficController;
+import jmri.util.ImmediatePipeOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -67,39 +68,10 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
             outpipe = new DataOutputStream(tempPipeO);
             pin = new DataInputStream(new PipedInputStream(tempPipeO));
         } catch (java.io.IOException e) {
-            log.error("init (pipe): Exception: " + e.toString());
+            log.error("init (pipe): Exception: {}",e);
             return;
         }
         csStatus = CS_NORMAL_MODE;
-    }
-    
-    /**
-     * Makes a workaround for standard {@link PipedOutputStream} wait.
-     * <p>The {@link PipedInputStream#read()}, in case the receive buffer is
-     * empty at the time of the call, waits for up to 1000ms. 
-     * {@link PipedOutputStream#write(int)} does call <code>sink.receive</code>,
-     * but does not <code>notify()</code> the sink object so that read's
-     * wait() terminates.
-     * </p><p>
-     * As a result, the read side of the pipe waits full 1000ms even though data
-     * become available during the wait.
-     * </p><p>
-     * The workaround is to simply {@link PipedOutputStream#flush} after write, 
-     * which returns from wait()s immediately.
-     * </p>
-     */
-    final static class ImmediatePipeOutputStream extends PipedOutputStream {
-        @Override
-        public void write(byte[] b, int off, int len) throws IOException {
-            super.write(b, off, len);
-            flush();
-        }
-
-        @Override
-        public void write(int b) throws IOException {
-            super.write(b);
-            flush();
-        }
     }
 
     @Override
@@ -469,7 +441,7 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
         reply.setOpCode(XNetConstants.CS_SERVICE_MODE_RESPONSE);
         reply.setElement(1, XNetConstants.CS_SOFTWARE_VERSION);
         reply.setElement(2, 0x36 & 0xff); // indicate we are version 3.6
-        reply.setElement(3, 0x00 & 0xff); // indicate we are an LZ100;
+        reply.setElement(3, 0x00 & 0xff); // indicate we are an LZ100
         reply.setElement(4, 0x00); // set the parity byte to 0
         reply.setParity();
         return reply;

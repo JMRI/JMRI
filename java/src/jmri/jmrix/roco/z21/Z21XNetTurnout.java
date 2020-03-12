@@ -42,8 +42,7 @@ public class Z21XNetTurnout extends XNetTurnout {
             tc.sendXNetMessage(msg, null);
             sendOffMessage();
         } else {
-            tc.sendXNetMessage(msg, this);
-            internalState = COMMANDSENT;
+            queueMessage(msg,COMMANDSENT,this);
         }
     }
 
@@ -58,10 +57,7 @@ public class Z21XNetTurnout extends XNetTurnout {
         // On the z21, we send a LAN_X_GET_TURNOUT_INFO message
         // (see section 5.1 of the protocol documenation ).
         XNetMessage msg = Z21XNetMessage.getZ21TurnoutInfoRequestMessage(mNumber);
-        synchronized (this) {
-            internalState = STATUSREQUESTSENT;
-        }
-        tc.sendXNetMessage(msg, null); //status is returned via the manager.
+        queueMessage(msg,STATUSREQUESTSENT,null); //status is returned via the manager.
     }
 
     // Handle a timeout notification.
@@ -126,7 +122,7 @@ public class Z21XNetTurnout extends XNetTurnout {
               }
               if(internalState == COMMANDSENT) {
                 /* the command was successfully received */
-                internalState = IDLE;
+                //internalState = IDLE;
                 sendOffMessage();  // turn off the repition on the track.
              }
           }
