@@ -1196,15 +1196,6 @@ public class CircuitBuilder {
                     _editor.highlight(pos);
                     new ConvertDialog(this, pos, block);
                     _editor.highlight(null);
-/*                    int result = JOptionPane.showConfirmDialog(_editor, Bundle.getMessage("notIndicatorIcon"),
-                             Bundle.getMessage("incompleteCircuit"), JOptionPane.YES_NO_OPTION,
-                             JOptionPane.QUESTION_MESSAGE);
-                    if (result == JOptionPane.YES_OPTION) {
-                         convertIcon(pos, block);
-                    } else {
-                         msg = Bundle.getMessage("cantSaveIcon", block.getDisplayName(), Bundle.getMessage(key));
-                         _editor.highlight(null);
-                    }*/
                 }
             }
         }
@@ -1215,16 +1206,6 @@ public class CircuitBuilder {
         } else {
             return true;
         }
-    }
-
-    /**
-     * Converts icon to IndicatorTrack
-     */
-    private void convertIcon(PositionableLabel pos, OBlock block) {
-        _editor.toFront();
-//        _editor.repaint();
-        new ConvertDialog(this, pos, block);
-//        _editor.repaint();
     }
 
 
