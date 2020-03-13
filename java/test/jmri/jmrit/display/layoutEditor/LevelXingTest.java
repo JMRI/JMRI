@@ -294,13 +294,13 @@ public class LevelXingTest {
 
         //unexpected type of connection
         levelXing.setConnectA(ts, LayoutTrack.NONE);
-        JUnitAppender.assertErrorMessage("MyLevelXing.setConnectA(ts, 0); unexpected type");
+        JUnitAppender.assertErrorMessage("MyLevelXing.setConnectA(TS1, 0); unexpected type");
         levelXing.setConnectB(ts, LayoutTrack.NONE);
-        JUnitAppender.assertErrorMessage("MyLevelXing.setConnectB(ts, 0); unexpected type");
+        JUnitAppender.assertErrorMessage("MyLevelXing.setConnectB(TS1, 0); unexpected type");
         levelXing.setConnectC(ts, LayoutTrack.NONE);
-        JUnitAppender.assertErrorMessage("MyLevelXing.setConnectC(ts, 0); unexpected type");
+        JUnitAppender.assertErrorMessage("MyLevelXing.setConnectC(TS1, 0); unexpected type");
         levelXing.setConnectD(ts, LayoutTrack.NONE);
-        JUnitAppender.assertErrorMessage("MyLevelXing.setConnectD(ts, 0); unexpected type");
+        JUnitAppender.assertErrorMessage("MyLevelXing.setConnectD(TS1, 0); unexpected type");
 
         //everything should be good here (no error output)
         levelXing.setConnectA(ts, LayoutTrack.TRACK);
