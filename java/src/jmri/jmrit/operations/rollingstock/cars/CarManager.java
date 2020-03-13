@@ -426,6 +426,9 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
                 // sort order based on train direction when serving track, low to high if West or North bound trains
                 if (car.getDestinationTrack() != null && car.getDestinationTrack().getBlockingOrder() > 0) {
                     for (int j = 0; j < out.size(); j++) {
+                        if (out.get(j).getDestinationTrack() == null) {
+                            continue;
+                        }
                         if (car.getRouteDestination() != null
                                 && (car.getRouteDestination().getTrainDirectionString().equals(RouteLocation.WEST_DIR)
                                 || car.getRouteDestination().getTrainDirectionString()
