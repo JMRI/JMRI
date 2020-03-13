@@ -576,7 +576,7 @@
         <label xml:lang="ca">Temps de mantinguda del PowerPack</label>
     </variable>
     <variable CV="116" exclude="Essential Sound Unit" default="50" item="EMF Option 6">
-        <decVal min="50" max="200"/>
+        <decVal min="25" max="200"/>
         <label>Slow Speed BEMF Sampling Period</label>
         <label xml:lang="de">EMK Messperiode bei Vmin</label>
         <tooltip>At speed step 1. Unit is 0.1 milliseconds.</tooltip>
@@ -590,7 +590,7 @@
         <tooltip xml:lang="de">Häufigkeit der EMK-Messung in 0,1 Millisekunden bei Fahrstufe 1</tooltip>
     </variable>
     <variable CV="117" exclude="Essential Sound Unit" default="150" item="EMF Option 7">
-        <decVal min="50" max="200"/>
+        <decVal min="25" max="200"/>
         <label>Full Speed BEMF Sampling Period</label>
         <label xml:lang="de">EMK Messperiode bei Vmax</label>
         <tooltip>At speed step 255. Unit is 0.1 milliseconds.</tooltip>
@@ -604,7 +604,7 @@
         <tooltip xml:lang="de">Häufigkeit der EMK-Messung in 0,1 Millisekunden bei Fahrstufe 255</tooltip>
     </variable>
     <variable CV="118" exclude="Essential Sound Unit" default="15" item="EMF Option 8">
-        <decVal min="10" max="40"/>
+        <decVal min="3" max="40"/>
         <label>Slow Speed BEMF Measurement Gap</label>
         <label xml:lang="de">Austastlücke der EMK-Spannung bei Vmin</label>
         <tooltip>At speed step 1. Unit is 0.1 milliseconds.</tooltip>
@@ -618,7 +618,7 @@
         <tooltip xml:lang="de">Länge der Meßlücke in 0,1 Millisekunden bei Fahrstufe 1</tooltip>
     </variable>
     <variable CV="119" exclude="Essential Sound Unit" default="20" item="EMF Option 9">
-        <decVal min="10" max="40"/>
+        <decVal min="3" max="40"/>
         <label>Full Speed BEMF Measurement Gap</label>
         <label xml:lang="de">Austastlücke der EMK-Spannung bei Vmax</label>
         <tooltip>At speed step 255. Unit is 0.1 milliseconds.</tooltip>
