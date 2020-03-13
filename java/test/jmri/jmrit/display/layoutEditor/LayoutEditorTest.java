@@ -3,7 +3,6 @@ package jmri.jmrit.display.layoutEditor;
 import java.awt.Color;
 import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
-import java.awt.geom.Point2D;
 import java.io.File;
 import jmri.*;
 import jmri.jmrit.display.*;
@@ -391,6 +390,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         LayoutBlock layoutBlock = InstanceManager.getDefault(LayoutBlockManager.class).createNewLayoutBlock("ILB999", "Test Block");
+        Assert.assertNotNull("layoutBlock created", layoutBlock);
         
         Assert.assertEquals("BlockTrackColor default", e.getDefaultTrackColorColor(), layoutBlock.getBlockTrackColor());
         layoutBlock.setBlockTrackColor(Color.pink);
