@@ -56,7 +56,7 @@ public class YardmasterByTrackFrameTest extends OperationsTestCase {
         OperationsPanel p = f.getContentPane();
         YardmasterByTrackPanel yp = (YardmasterByTrackPanel)p;
         
-        JemmyUtil.enterClickAndLeave(yp.nextButton);
+        JemmyUtil.enterPushAndLeave(yp.nextButton);
         JUnitUtil.dispose(f);
         JUnitOperationsUtil.checkOperationsShutDownTask();
 

@@ -2,7 +2,6 @@ package jmri.web.servlet.panel;
 
 import java.awt.Color;
 import java.util.List;
-
 import javax.annotation.Nonnull;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
