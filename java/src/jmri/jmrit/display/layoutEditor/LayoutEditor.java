@@ -1249,9 +1249,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         JMenuItem setAllTracksToDefaultColorsMenuItem = new JMenuItem(Bundle.getMessage("SetAllTracksToDefaultColors"));
         trkColourMenu.add(setAllTracksToDefaultColorsMenuItem);
         setAllTracksToDefaultColorsMenuItem.addActionListener((ActionEvent event) -> {
-            setAllTracksToDefaultColors();
-            setDirty();
-            redrawPanel();
+            if (setAllTracksToDefaultColors() > 0) {
+                setDirty();
+                redrawPanel();
+            }
         });
 
         //Automatically Assign Blocks to Track
@@ -2406,8 +2407,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     /**
      *   loop through all LayoutBlocks and set colors to the default colors from this LayoutEditor
+     *   @return count of changed blocks
      */
-    public void setAllTracksToDefaultColors() {
+    public int setAllTracksToDefaultColors() {
         LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
         SortedSet<LayoutBlock> lBList = lbm.getNamedBeanSet();
         int changed = 0;
@@ -2418,7 +2420,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             changed++;
         }
         log.info("Track Colors set to default values for {} layoutBlocks.", changed);
-        return;
+        return changed;
     }
 
     private transient Rectangle2D undoRect;
