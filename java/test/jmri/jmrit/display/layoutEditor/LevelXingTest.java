@@ -290,16 +290,6 @@ public class LevelXingTest {
         Assert.assertNotNull("layoutEditor is null", layoutEditor);
         Assert.assertNotNull("levelXing is null", levelXing);
 
-        //unexpected type of connection
-        levelXing.setConnectA(null, LayoutTrack.TRACK);
-        JUnitAppender.assertErrorMessage("MyLevelXing.setConnectA(null, 10); unexpected type");
-        levelXing.setConnectB(null, LayoutTrack.TRACK);
-        JUnitAppender.assertErrorMessage("MyLevelXing.setConnectB(null, 10); unexpected type");
-        levelXing.setConnectC(null, LayoutTrack.TRACK);
-        JUnitAppender.assertErrorMessage("MyLevelXing.setConnectC(null, 10); unexpected type");
-        levelXing.setConnectD(null, LayoutTrack.TRACK);
-        JUnitAppender.assertErrorMessage("MyLevelXing.setConnectD(null, 10); unexpected type");
-
         TrackSegment ts = new TrackSegment("TS1", null, LayoutTrack.NONE, null, LayoutTrack.NONE, false, false, false, layoutEditor);
 
         //unexpected type of connection
