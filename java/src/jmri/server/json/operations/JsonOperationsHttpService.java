@@ -288,7 +288,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
                 return message(getCars(locale, id).addAll(getEngines(locale, id)), id);
             case TRAIN:
             case TRAINS:
-                return message(utilities.getTrains(locale), id);
+                return getTrains(locale, id);
             default:
                 throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
                         Bundle.getMessage(locale, "ErrorInternal", type), id); // NOI18N
@@ -308,11 +308,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
             case CAR_TYPE:
                 List<Car> cars = carManager().getByTypeList(name);
                 List<Location> locations = new ArrayList<>();
-                for (Location location : locationManager().getList()) {
-                    if (location.acceptsTypeName(name)) {
-                        locations.add(location);
-                    }
-                }
+                locationManager().getList().stream().filter(l -> l.acceptsTypeName(name)).forEach(locations::add);
                 if ((!cars.isEmpty() || !locations.isEmpty()) && !acceptForceDeleteToken(type, name, token)) {
                     ArrayNode conflicts = mapper.createArrayNode();
                     for (Car car : cars) {
@@ -433,6 +429,13 @@ public class JsonOperationsHttpService extends JsonHttpService {
         ArrayNode array = mapper.createArrayNode();
         locationManager().getLocationsByIdList()
                 .forEach(location -> array.add(message(LOCATION, utilities.getLocation(location, locale), id)));
+        return message(array, id);
+    }
+
+    public JsonNode getTrains(Locale locale, int id) {
+        ArrayNode array = mapper.createArrayNode();
+        trainManager().getTrainsByIdList()
+                .forEach(train -> array.add(message(TRAIN, utilities.getTrain(train, locale), id)));
         return message(array, id);
     }
 
@@ -724,6 +727,10 @@ public class JsonOperationsHttpService extends JsonHttpService {
 
     protected LocationManager locationManager() {
         return InstanceManager.getDefault(LocationManager.class);
+    }
+
+    protected TrainManager trainManager() {
+        return InstanceManager.getDefault(TrainManager.class);
     }
 
     @Override

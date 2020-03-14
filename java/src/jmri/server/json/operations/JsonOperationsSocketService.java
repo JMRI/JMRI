@@ -6,8 +6,6 @@ import static jmri.server.json.operations.JsonOperations.ENGINE;
 import static jmri.server.json.operations.JsonOperations.ENGINES;
 import static jmri.server.json.operations.JsonOperations.LOCATION;
 import static jmri.server.json.operations.JsonOperations.LOCATIONS;
-import static jmri.server.json.operations.JsonOperations.LOCATION_COMMENT;
-import static jmri.server.json.operations.JsonOperations.LOCATION_NAME;
 import static jmri.server.json.operations.JsonOperations.TRAIN;
 import static jmri.server.json.operations.JsonOperations.TRAINS;
 
@@ -18,6 +16,7 @@ import java.util.HashMap;
 import java.util.Objects;
 
 import javax.annotation.Nonnull;
+import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -76,6 +75,24 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
                 break;
             case JSON.DELETE:
                 service.doDelete(type, name, data, request);
+                // remove listener to object being deleted
+                switch (type) {
+                    case CAR:
+                        carListeners.remove(name);
+                        break;
+                    case ENGINE:
+                        engineListeners.remove(name);
+                        break;
+                    case LOCATION:
+                        locationListeners.remove(name);
+                        break;
+                    case TRAIN:
+                        trainListeners.remove(name);
+                        break;
+                    default:
+                        // other types ignored
+                        break;
+                }
                 break;
             case JSON.PUT:
                 connection.sendMessage(service.doPut(type, name, data, request), request.id);
@@ -86,8 +103,15 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
         }
         // add listener to name if not already listening
         if (!request.method.equals(JSON.DELETE)) {
-            if (name.isEmpty()) {
-                name = RollingStock.createId(data.path(JSON.ROAD).asText(), data.path(JSON.NUMBER).asText());
+            if (request.method.equals(JSON.PUT) && name.isEmpty()) {
+                // cover situations where object was just created, so client could not specify correct name
+                if (CAR.equals(type) || ENGINE.equals(type)) {
+                    name = RollingStock.createId(data.path(JSON.ROAD).asText(), data.path(JSON.NUMBER).asText());
+                } else if (LOCATION.equals(type)) {
+                    name = InstanceManager.getDefault(LocationManager.class).getLocationByName(data.path(JSON.USERNAME).asText()).getId();
+                } else {
+                    throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, "ErrorMissingName", request.id);
+                }
             }
             switch (type) {
                 case CAR:
@@ -117,24 +141,6 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
                         InstanceManager.getDefault(TrainManager.class).getTrainById(id).addPropertyChangeListener(l);
                         return l;
                     });
-                    break;
-                default:
-                    // other types ignored
-                    break;
-            }
-        } else {
-            switch (type) {
-                case CAR:
-                    carListeners.remove(name);
-                    break;
-                case ENGINE:
-                    engineListeners.remove(name);
-                    break;
-                case LOCATION:
-                    locationListeners.remove(name);
-                    break;
-                case TRAIN:
-                    trainListeners.remove(name);
                     break;
                 default:
                     // other types ignored
@@ -178,7 +184,7 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
             connection.sendMessage(service.doGetList(type, service.getObjectMapper().createObjectNode(),
                     new JsonRequest(getLocale(), getVersion(), JSON.GET, 0)), 0);
         } catch (JsonException ex) {
-            log.warn("json error sending Engines: {}", ex.getJsonMessage());
+            log.warn("json error sending {}: {}", type, ex.getJsonMessage());
             connection.sendMessage(ex.getJsonMessage(), 0);
         }
     }
@@ -251,7 +257,7 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
             try {
                 sendListChange(CARS);
             } catch (IOException ex) {
-                // if we get an error, de-register
+                // stop listening to this manager on error
                 log.debug("deregistering carsListener due to IOException");
                 InstanceManager.getDefault(CarManager.class).removePropertyChangeListener(carsListener);
             }
@@ -279,7 +285,7 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
             try {
                 sendListChange(ENGINE);
             } catch (IOException ex) {
-                // if we get an error, de-register
+                // stop listening to this manager on error
                 log.debug("deregistering enginesListener due to IOException");
                 InstanceManager.getDefault(CarManager.class).removePropertyChangeListener(enginesListener);
             }
@@ -294,13 +300,7 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
 
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            // only send changes to properties that are included in object
-            if (evt.getPropertyName().equals(JSON.ID) ||
-                    evt.getPropertyName().equals(LOCATION_NAME) ||
-                    evt.getPropertyName().equals(JSON.LENGTH) ||
-                    evt.getPropertyName().equals(LOCATION_COMMENT)) {
-                propertyChange(LOCATION, locationListeners);
-            }
+            propertyChange(LOCATION, locationListeners);
         }
     }
 
@@ -313,7 +313,7 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
             try {
                 sendListChange(LOCATION);
             } catch (IOException ex) {
-                // if we get an error, de-register
+                // stop listening to this manager on error
                 log.debug("deregistering locationsListener due to IOException");
                 InstanceManager.getDefault(LocationManager.class).removePropertyChangeListener(locationsListener);
             }
@@ -341,7 +341,7 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
             try {
                 sendListChange(TRAIN);
             } catch (IOException ex) {
-                // if we get an error, de-register
+                // stop listening to this manager on error
                 log.debug("deregistering trainsListener due to IOException");
                 InstanceManager.getDefault(TrainManager.class).removePropertyChangeListener(trainsListener);
             }
