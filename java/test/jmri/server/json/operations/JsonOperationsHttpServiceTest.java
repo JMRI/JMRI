@@ -1,5 +1,6 @@
 package jmri.server.json.operations;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
@@ -37,6 +38,37 @@ import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 
 public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonOperationsHttpService> {
+
+    @Test
+    public void testGetRollingStock() {
+        try {
+            service.doGet(JsonOperations.ROLLING_STOCK, "", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
+            fail("Expected exception not thrown");
+        } catch (JsonException ex) {
+            assertThat(ex.getCode()).isEqualTo(405);
+        }
+    }
+
+    @Test
+    public void testDeleteInvalidType() {
+        try {
+            service.doGet("invalid-type", "", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.DELETE, 0));
+            fail("Expected exception not thrown");
+        } catch (JsonException ex) {
+            assertThat(ex.getCode()).isEqualTo(500);
+        }
+    }
+
+
+    @Test
+    public void testGetInvalidType() {
+        try {
+            service.doGet("invalid-type", "", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
+            fail("Expected exception not thrown");
+        } catch (JsonException ex) {
+            assertThat(ex.getCode()).isEqualTo(500);
+        }
+    }
 
     @Test
     public void testCar() throws JsonException {
