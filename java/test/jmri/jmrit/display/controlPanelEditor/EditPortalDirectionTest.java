@@ -60,11 +60,9 @@ public class EditPortalDirectionTest {
         OBlock ob1 = blkMgr.createNewOBlock("OB1", "a");
 
         new Thread(() -> {
-            System.out.println("run  new Thread");
             JFrameOperator jfo = new JFrameOperator("Edit Direction Arrows");
             JDialogOperator jdo = new JDialogOperator(jfo, Bundle.getMessage("incompleteCircuit"));
             JButtonOperator jbo = new JButtonOperator(jdo, "OK");
-            System.out.println("'OK' button pushed");
             jbo.push();
         }).start();
 
