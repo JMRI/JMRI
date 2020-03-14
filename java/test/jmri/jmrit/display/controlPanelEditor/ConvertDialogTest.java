@@ -32,7 +32,6 @@ import org.netbeans.jemmy.operators.JDialogOperator;
 public class ConvertDialogTest {
 
     @Test
-    @Ignore("'incompleteCircuit' JOptionPane cannot be canceled. Ignore until I figure out how to fix the test ")
     public void testCTorConvert() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ControlPanelEditor frame = new ControlPanelEditor("ConvertDialogTest");
@@ -50,17 +49,15 @@ public class ConvertDialogTest {
 
         new Thread(() -> {
             // constructor for d will wait until the dialog is visible
-            String title = Bundle.getMessage("IndicatorTrack");
-            JDialogOperator d = new JDialogOperator(title);
-            String label = Bundle.getMessage("convert");
-            JButtonOperator bo = new JButtonOperator(d, label);
+//            String title = Bundle.getMessage("IndicatorTrack");
+            JDialogOperator d = new JDialogOperator("Indicator Track");
+//            String label = Bundle.getMessage("convert");
+            JButtonOperator bo = new JButtonOperator(d, "Convert Icon");
             bo.doClick();
         }).start();
 
-//        System.out.println(" Open ConvertDialog!");
         ConvertDialog dialog = new ConvertDialog(cb, pos, ob1);
         Assert.assertNotNull("exists",dialog);
-//        System.out.println(" ConvertDialog Opened!");
 
         dialog.dispose();
         frame.dispose();

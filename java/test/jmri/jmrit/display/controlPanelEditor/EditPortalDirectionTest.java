@@ -10,6 +10,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import org.netbeans.jemmy.operators.JButtonOperator;
@@ -45,10 +46,11 @@ public class EditPortalDirectionTest {
         Assert.assertNotNull("exists", dFrame);
         
         JUnitUtil.dispose(frame);
-        JUnitUtil.dispose(dFrame);
+//        JUnitUtil.dispose(dFrame);    // OK button should close dFrame
     }
 
     @Test
+//    @Ignore ("'OK' button does not dismiss dialog.")
     public void testPart() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
@@ -56,6 +58,15 @@ public class EditPortalDirectionTest {
         frame.makeCircuitMenu(true);
         CircuitBuilder cb = frame.getCircuitBuilder();
         OBlock ob1 = blkMgr.createNewOBlock("OB1", "a");
+
+        new Thread(() -> {
+            System.out.println("run  new Thread");
+            JFrameOperator jfo = new JFrameOperator("Edit Direction Arrows");
+            JDialogOperator jdo = new JDialogOperator(jfo, Bundle.getMessage("incompleteCircuit"));
+            JButtonOperator jbo = new JButtonOperator(jdo, "OK");
+            System.out.println("'OK' button pushed");
+            jbo.push();
+        }).start();
 
         EditPortalDirection dFrame = new EditPortalDirection("Edit Direction Arrows", cb, ob1){
             protected void contructorChecks(String title, CircuitBuilder parent, OBlock block) {}
