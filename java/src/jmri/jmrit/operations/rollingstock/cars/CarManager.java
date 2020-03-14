@@ -38,18 +38,6 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
     }
 
     /**
-     * Get the default instance of this class.
-     *
-     * @return the default instance of this class
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static synchronized CarManager instance() {
-        return InstanceManager.getDefault(CarManager.class);
-    }
-
-    /**
      * Finds an existing Car or creates a new Car if needed requires car's road
      * and number
      *

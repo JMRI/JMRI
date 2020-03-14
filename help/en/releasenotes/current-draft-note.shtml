@@ -497,6 +497,9 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Long deprecated <code>instance()</code> methods to get the default
+                instance of a manager have been removed. Use
+                <code>InstanceManager.getDefault(NameOfManager.class)</code>
+                instead.</li>
         </ul>
 

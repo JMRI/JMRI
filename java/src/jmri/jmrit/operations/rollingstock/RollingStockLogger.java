@@ -44,18 +44,6 @@ public class RollingStockLogger extends XmlFile implements InstanceManagerAutoDe
         // nothing to do
     }
 
-    /**
-     * Get the default instance of this class.
-     *
-     * @return the default instance of this class
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static synchronized RollingStockLogger instance() {
-        return InstanceManager.getDefault(RollingStockLogger.class);
-    }
-
     public void enableCarLogging(boolean enable) {
         if (enable) {
             addCarListeners();

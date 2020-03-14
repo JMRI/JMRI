@@ -8,18 +8,6 @@ public class TrainCustomManifest extends TrainCustomCommon implements InstanceMa
 
     private String directoryName = "csvManifests"; // NOI18N
 
-    /**
-     * Get the default instance of this class.
-     *
-     * @return the default instance of this class
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static synchronized TrainCustomManifest instance() {
-        return InstanceManager.getDefault(TrainCustomManifest.class);
-    }
-
     @Override
     public String getDirectoryName() {
         return directoryName;

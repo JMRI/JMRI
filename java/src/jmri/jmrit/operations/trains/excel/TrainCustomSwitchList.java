@@ -8,18 +8,6 @@ public class TrainCustomSwitchList extends TrainCustomCommon implements Instance
 
     private String directoryName = "csvSwitchLists"; // NOI18N
 
-    /**
-     * Get the default instance of this class.
-     *
-     * @return the default instance of this class
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static synchronized TrainCustomSwitchList instance() {
-        return InstanceManager.getDefault(TrainCustomSwitchList.class);
-    }
-
     @Override
     public String getDirectoryName() {
         return directoryName;
