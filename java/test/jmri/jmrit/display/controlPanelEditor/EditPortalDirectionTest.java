@@ -49,32 +49,6 @@ public class EditPortalDirectionTest {
 //        JUnitUtil.dispose(dFrame);    // OK button should close dFrame
     }
 
-    @Test
-//    @Ignore ("'OK' button does not dismiss dialog.")
-    public void testPart() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
-        ControlPanelEditor frame = new ControlPanelEditor("EditPortalDirectionTest");
-        frame.makeCircuitMenu(true);
-        CircuitBuilder cb = frame.getCircuitBuilder();
-        OBlock ob1 = blkMgr.createNewOBlock("OB1", "a");
-
-        new Thread(() -> {
-            JFrameOperator jfo = new JFrameOperator("Edit Direction Arrows");
-            JDialogOperator jdo = new JDialogOperator(jfo, Bundle.getMessage("incompleteCircuit"));
-            JButtonOperator jbo = new JButtonOperator(jdo, "OK");
-            jbo.push();
-        }).start();
-
-        EditPortalDirection dFrame = new EditPortalDirection("Edit Direction Arrows", cb, ob1){
-            protected void contructorChecks(String title, CircuitBuilder parent, OBlock block) {}
-        };
-        Assert.assertNotNull("exists", dFrame);
-        
-        JUnitUtil.dispose(frame);
-        JUnitUtil.dispose(dFrame);
-    }
-    
     // The minimal setup for log4J
     @Before
     public void setUp() {
