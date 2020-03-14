@@ -417,8 +417,7 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
         // now place cabooses, cars with FRED, and passenger cars at the rear of the train
         List<Car> out = new ArrayList<>();
         int lastCarsIndex = 0; // incremented each time a car is added to the end of the list
-        for (Car rs : byDestination) {
-            Car car = rs;
+        for (Car car : byDestination) {
             if (car.getKernel() != null && !car.isLead()) {
                 continue; // not the lead car, skip for now.
             }
