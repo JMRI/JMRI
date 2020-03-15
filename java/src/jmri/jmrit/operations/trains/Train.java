@@ -4327,7 +4327,7 @@ public class Train extends Identified implements PropertyChangeListener {
 
     protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
         InstanceManager.getDefault(TrainManagerXml.class).setDirty(true);
-        pcs.firePropertyChange(p, old, n);
+        propertyChangeSupport.firePropertyChange(p, old, n);
     }
 
     private final static Logger log = LoggerFactory.getLogger(Train.class);

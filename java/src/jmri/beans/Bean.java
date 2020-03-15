@@ -11,6 +11,8 @@ import jmri.util.ThreadingUtil;
  * <p>
  * See the PropertyChangeSupport documentation for complete documentation of
  * those methods.
+ * <p>
+ * This class is thread safe.
  *
  * @author Randall Wood (c) 2011, 2014, 2015, 2016
  * @see java.beans.PropertyChangeSupport

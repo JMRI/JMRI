@@ -124,7 +124,7 @@ public abstract class RollingStock extends Identified implements PropertyChangeL
         String oldNumber = _number;
         _number = number;
         if (!oldNumber.equals(number)) {
-            pcs.firePropertyChange("rolling stock number", oldNumber, number); // NOI18N
+            propertyChangeSupport.firePropertyChange("rolling stock number", oldNumber, number); // NOI18N
             String oldId = _id;
             _id = createId(_road, number);
             setDirtyAndFirePropertyChange(Xml.ID, oldId, _id);
@@ -139,7 +139,7 @@ public abstract class RollingStock extends Identified implements PropertyChangeL
         String old = _road;
         _road = road;
         if (!old.equals(road)) {
-            pcs.firePropertyChange("rolling stock road", old, road); // NOI18N
+            propertyChangeSupport.firePropertyChange("rolling stock road", old, road); // NOI18N
             String oldId = _id;
             _id = createId(road, _number);
             setDirtyAndFirePropertyChange(Xml.ID, oldId, _id);
@@ -1519,7 +1519,7 @@ public abstract class RollingStock extends Identified implements PropertyChangeL
     }
 
     protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
-        pcs.firePropertyChange(p, old, n);
+        propertyChangeSupport.firePropertyChange(p, old, n);
     }
 
     private final static Logger log = LoggerFactory.getLogger(RollingStock.class);
