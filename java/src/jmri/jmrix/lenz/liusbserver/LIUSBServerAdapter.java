@@ -15,7 +15,7 @@ import jmri.jmrix.lenz.XNetNetworkPortController;
 import jmri.jmrix.lenz.XNetReply;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 import jmri.jmrix.lenz.XNetTrafficController;
-import jmri.util.ImmediatePipeOutputStream;
+import jmri.util.ImmediatePipedOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -72,7 +72,7 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
             bcastAdapter.connect();
             commAdapter.connect();
             pout = commAdapter.getOutputStream();
-            PipedOutputStream tempPipeO = new ImmediatePipeOutputStream();
+            PipedOutputStream tempPipeO = new ImmediatePipedOutputStream();
             outpipe = new DataOutputStream(tempPipeO);
             pin = new DataInputStream(new PipedInputStream(tempPipeO));
             opened = true;

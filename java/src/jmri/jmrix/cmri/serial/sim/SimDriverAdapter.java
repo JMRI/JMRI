@@ -7,7 +7,7 @@ import java.io.PipedInputStream;
 
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
-import jmri.util.ImmediatePipeOutputStream;
+import jmri.util.ImmediatePipedOutputStream;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
@@ -66,7 +66,7 @@ public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.Serial
     @Override
     public DataInputStream getInputStream() {
         try {
-            return new DataInputStream(new PipedInputStream(new ImmediatePipeOutputStream()));
+            return new DataInputStream(new PipedInputStream(new ImmediatePipedOutputStream()));
         } catch (Exception e) {
             return null;
         }

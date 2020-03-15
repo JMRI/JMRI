@@ -14,7 +14,7 @@ import jmri.jmrix.lenz.XNetPacketizer;
 import jmri.jmrix.lenz.XNetReply;
 import jmri.jmrix.lenz.XNetSimulatorPortController;
 import jmri.jmrix.lenz.XNetTrafficController;
-import jmri.util.ImmediatePipeOutputStream;
+import jmri.util.ImmediatePipedOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -61,10 +61,10 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
     public XNetSimulatorAdapter() {
         setPort(Bundle.getMessage("None"));
         try {
-            PipedOutputStream tempPipeI = new ImmediatePipeOutputStream();
+            PipedOutputStream tempPipeI = new ImmediatePipedOutputStream();
             pout = new DataOutputStream(tempPipeI);
             inpipe = new DataInputStream(new PipedInputStream(tempPipeI));
-            PipedOutputStream tempPipeO = new ImmediatePipeOutputStream();
+            PipedOutputStream tempPipeO = new ImmediatePipedOutputStream();
             outpipe = new DataOutputStream(tempPipeO);
             pin = new DataInputStream(new PipedInputStream(tempPipeO));
         } catch (java.io.IOException e) {

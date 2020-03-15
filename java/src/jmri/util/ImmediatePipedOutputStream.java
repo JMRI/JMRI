@@ -11,15 +11,17 @@ import java.io.PipedOutputStream;
  * {@link PipedOutputStream#write(int)} does call <code>sink.receive</code>,
  * but does not <code>notify()</code> the sink object so that read's
  * wait() terminates.
- * </p><p>
+ * <p>
  * As a result, the read side of the pipe waits full 1000ms even though data
  * become available during the wait.
- * </p><p>
+ * <p>
  * The workaround is to simply {@link PipedOutputStream#flush} after write,
  * which returns from wait()s immediately.
- * </p>
+ *
+ * @author Svata Dedic Copyright (C) 2020
  */
-public class ImmediatePipeOutputStream extends PipedOutputStream {
+
+public class ImmediatePipedOutputStream extends PipedOutputStream {
     @Override
     public void write(byte[] b, int off, int len) throws IOException {
         super.write(b, off, len);
