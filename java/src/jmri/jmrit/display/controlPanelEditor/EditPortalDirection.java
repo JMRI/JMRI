@@ -36,22 +36,10 @@ public class EditPortalDirection extends EditFrame implements ActionListener, Li
 
     public EditPortalDirection(String title, CircuitBuilder parent, OBlock block) {
         super(title, parent, block);
+        checkCircuitIcons("DirectionArrow");
         pack();
-        contructorChecks(title, parent, block);
     }
 
-    protected void contructorChecks(String title, CircuitBuilder parent, OBlock block) {
-        String msg = _parent.checkForPortals(block, "DirectionArrow");
-        if (msg == null) {
-            msg = _parent.checkForPortalIcons(block, "DirectionArrow");
-        }
-        if (msg != null) {
-            JOptionPane.showMessageDialog(this, msg,
-                    Bundle.getMessage("incompleteCircuit"), JOptionPane.INFORMATION_MESSAGE);
-            _canEdit = false;
-        }
-    }
-    
     private JPanel makeArrowPanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -212,13 +200,13 @@ public class EditPortalDirection extends EditFrame implements ActionListener, Li
     protected void closingEvent(boolean close) {
         StringBuffer sb = new StringBuffer();
         String msg = _parent.checkForPortals(_homeBlock, "BlockPaths");
-        if (msg != null) {
+        if (msg.length() > 0) {
             sb.append(msg);
             sb.append("\n");
             close = true;
         }
         msg = _parent.checkForPortalIcons(_homeBlock, "DirectionArrow");
-        if (msg != null) {
+        if (msg.length() > 0) {
             sb.append(msg);
             sb.append("\n");
             close = true;

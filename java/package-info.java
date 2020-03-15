@@ -20,5 +20,7 @@
 */
 
 //@annotations for the entire package go here
-
+// include empty SuppressFBWarnings to avoid excessive recompilation unless
+// suppressing multiple warnings within the entire package
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings({})
 package jmri;

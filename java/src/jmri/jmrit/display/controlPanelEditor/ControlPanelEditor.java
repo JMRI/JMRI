@@ -1063,6 +1063,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                             }
                             if (((String) select).equals(name)) {
                                 _manualSelection = true;
+                                highlight(pos);
                                 return pos;
                             }
                         }
