@@ -802,7 +802,7 @@ public abstract class AbstractMRTrafficController {
             rcvThread.start();
             
         } catch (RuntimeException e) {
-            log.error("Failed to start up communications. Error was {}", e);
+            log.error("Failed to start up communications. Error was {}", e.toString());
             log.debug("Full trace:", e);
         }
     }
