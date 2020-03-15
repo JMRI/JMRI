@@ -11,4 +11,5 @@
  * <!-- Put @see and @since tags down here. -->
  * @since 2.1.7
  */
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings({})
 package jmri.jmrix.openlcb;

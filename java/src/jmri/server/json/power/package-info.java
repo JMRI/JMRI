@@ -17,4 +17,5 @@
  * default system connection, otherwise it returns the power state for the named
  * system connection.
  */
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings({})
 package jmri.server.json.power;

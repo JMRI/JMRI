@@ -1,5 +1,3 @@
-package apps.gui3.tabbedpreferences;
-
 /**
  * Provides the tabbed preferences window and its contents.
  * <p>
@@ -45,3 +43,5 @@ package apps.gui3.tabbedpreferences;
  * @see jmri.swing.PreferencesPanel
  * @see apps.AppConfigBase
  */
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings({})
+package apps.gui3.tabbedpreferences;

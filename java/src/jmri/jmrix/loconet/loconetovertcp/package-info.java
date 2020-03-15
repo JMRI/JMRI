@@ -12,4 +12,5 @@
  * over TCP servers</a>
  * @since 1.3.6
  */
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings({})
 package jmri.jmrix.loconet.loconetovertcp;
