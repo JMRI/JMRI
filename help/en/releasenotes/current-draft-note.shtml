@@ -244,6 +244,11 @@
                 <li></li>
             </ul>
 
+        <h4>Public Domain and DIY decoders</h4>
+            <ul>
+                <li></li>
+            </ul>
+
         <h4>QSI</h4>
             <ul>
                 <li></li>
@@ -343,6 +348,11 @@
 	        <li></li>
         </ul>
 
+        <h4>NX - Entry/Exit Tool</h4>
+            <ul>
+                <li></li>
+            </ul>
+
     <h3>Logix</h3>
         <a id="Logix" name="Logix"></a>
         <ul>
@@ -393,15 +403,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>The JavaCSV API has been replaced with the Apache Commons CSV API.
-                This may impact some scripts. See
-                <a href="https://github.com/JMRI/JMRI/blob/master/jython/TurnoutStatePersistence.py">TurnoutStatePersistence.py</a>
-                for an example of how to use the new CSV parsing API. If unable to
-                use the new API, the JAR for the old API can be
-                <a href="https://repo1.maven.org/maven2/net/sourceforge/javacsv/javacsv/2.0/javacsv-2.0.jar">downloaded</a>
-                and added to jmri.conf using the
-                <em><a href="https://www.jmri.org/help/en/html/doc/Technical/StartUpScripts.shtml">--cp:a=path/to/javacsv.jar</a></em>
-                parameter.</li>
+            <li></li>
         </ul>
 
     <h3>Signals</h3>
@@ -411,7 +413,7 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li></li>
+                <li>Eckart Meyer updated the DB HV 1969 system to have proper aspect control.</li>
             </ul>
 
         <h4>Signal Heads</h4>
@@ -429,12 +431,12 @@
                 <li></li>
             </ul>
 
-    	<h4>Simple Signal Logic</h4>
+	    <h4>Cab Signals</h4>
             <ul>
-                <li></li>
+                <li>Better set row height in table.</li>
             </ul>
 
-	    <h4>NX Entry/Exit Logic</h4>
+    	<h4>Simple Signal Logic</h4>
             <ul>
                 <li></li>
             </ul>
@@ -448,6 +450,20 @@
         <a id="SW" name="SW"></a>
         <ul>
             <li></li>
+        </ul>
+
+   <h3>Throttle</h3>
+        <a id="throttle" name="throttle"></a>
+        <ul>
+            <li>Add a speed step dropdown to the extended throttle;
+                this makes it easier to select the speed step mode and 
+                makes it possible to select the less common speed step modes 
+                exposed by some systems. 
+            </li>
+            <li>Consolidated the throttle layout code, 
+                centralized the logic for determining if throttle icons should be shown, 
+                and added unit tests for the control panel layout and some preferences.
+            </li>
         </ul>
 
     <h3>Timetable</h3>
@@ -471,7 +487,13 @@
    <h3>Web Access</h3>
         <a id="WA" name="WA"></a>
         <ul>
-            <li>Fixed a problem preventing JMRI application web services from working with iOS 9.3.6</li>
+            <li></li>
+        </ul>
+
+    <h3>Where Used</h3>
+        <a id="WhereUsed" name="WhereUsed"></a>
+        <ul>
+            <li></li>
         </ul>
 
    <h3>WiThrottle Server</h3>
@@ -483,17 +505,15 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li>Fixed a crashing bug with short sequences.</li>
+            <li></li>
         </ul>
 
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Added a feature which lets you set the height of rows
-                in the 
-                <a href="https://www.jmri.org/help/en/package/jmri/jmrit/cabsignals/CabSignalPane.shtml">cab display table</a>, 
-                so that signal icons can be made fully visible.</li>
-            <li>Lots of updates to the organization of the web site so that the sidebars
-                provide better navigation.</li>
+            <li>Long deprecated <code>instance()</code> methods to get the default
+                instance of a manager have been removed. Use
+                <code>InstanceManager.getDefault(NameOfManager.class)</code>
+                instead.</li>
         </ul>
 

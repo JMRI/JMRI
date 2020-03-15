@@ -20,7 +20,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -88,7 +88,7 @@
           "Operations in Tools Menu"></a></td>
 
           <td valign="top">
-            <a href="=&quot;images/Ops_Start02.png&quot;"><img src=
+            <a href="images/Ops_Start02.png"><img src=
             "images/Ops_Start02.png" width="248" height="141" alt=
             "Operations in Main Menubar"></a>
 
@@ -157,7 +157,7 @@
 
       <div align="right">
         <p><a href="index.shtml#startOps">Back to Index</a></p>
-      </div><!--#include virtual="/Footer" -->
+      </div><!--#include virtual="/Footer.shtml" -->
     </div><!-- close #mainContent -->
   </div><!-- close #mBody -->
 </body>

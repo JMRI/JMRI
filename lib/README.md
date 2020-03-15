@@ -92,10 +92,6 @@ After that, add and commit the additional files that were created within lib/
 - from http://www.sparetimelabs.com/maven2/com/sparetimelabs/purejavacomm/1.0.1/
 - javadoc at https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE
 
-##### jna-4.2.2.jar
-- version 4.2.2
-- from https://maven.java.net/content/repositories/releases/net/java/dev/jna/jna/4.2.2/
-
 ##### security.policy
 - (JMRI file)
 
@@ -150,9 +146,8 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - from <https://jinput.dev.java.net/> jinput_dist_20090401
 - (most recent as of 2010-Jan-02)
 
-##### JavaMail 1.4.1
+##### JavaMail 1.4.1 (used to validate email address formats)
 - mailapi.jar
-- smtp.jar
 
 ##### Joal 2.3.1
 - from <http://jogamp.org/deployment/archive/rc/v2.3.1/jar/>

@@ -22,7 +22,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -543,7 +543,9 @@
         info</li>
 
         <li>Austin Hendrix, <!-- trainman419 -->
-        who improved the quality of the code and documentation.</li>
+        who improved how the throttle handles speed steps
+        andimproved the quality of the code and documentation.
+        </li>
 
         <li>William Hipple, who registered the JMRI.org and
         DecoderPro.org domains for us</li>
@@ -766,6 +768,10 @@
         <li>Larry Meaney provided decoder ID for the Digitrax
         DN163K0b decoder</li>
 
+        <li>Eckart Meyer, <!-- emey05 -->
+        who updated the aspect controls in the DB HV 1969
+        signals.</li>
+        
         <li>Philip Middlemiss provided a decoder definition Hornby
         R8215 decoder.</li>
 
@@ -1212,7 +1218,7 @@
       "http://jmri.org/community/visuals/codeswarm.shtml">Code Swarm</a>
       page.</p>
             
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

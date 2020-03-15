@@ -67,7 +67,7 @@ public class YardmasterFrameTest extends OperationsTestCase {
 
         JUnitUtil.dispose(ymFrame);
         JUnitOperationsUtil.checkOperationsShutDownTask();
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(YardmasterFrameTest.class);

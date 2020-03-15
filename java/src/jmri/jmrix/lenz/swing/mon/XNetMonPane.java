@@ -52,7 +52,7 @@ public class XNetMonPane extends jmri.jmrix.AbstractMonPane implements XNetListe
 
     @Override
     public synchronized void message(XNetReply l) { // receive an XpressNet message and log it
-        logMessage(l);
+        logMessage("","packet:",l);
     }
 
     /**
@@ -83,6 +83,6 @@ public class XNetMonPane extends jmri.jmrix.AbstractMonPane implements XNetListe
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XNetMonPane.class);
+    private static final Logger log = LoggerFactory.getLogger(XNetMonPane.class);
 
 }

@@ -21,7 +21,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -86,7 +86,7 @@
       vous devriez faire attention &agrave; ne pas mettre du
       contenu important dans ces r&eacute;pertoires ou de lien vers
       d'autres parties de votre ordinateur. 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

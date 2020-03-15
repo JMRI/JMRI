@@ -46,8 +46,8 @@ public class CbusNodeNVTableDataModelTest {
         
         Assert.assertTrue("column has NO name", t.getColumnName(999).equals("unknown 999") );
         
+        t.dispose();
         myNode.dispose();
-        myNode = null;
         
     }
     
@@ -60,7 +60,7 @@ public class CbusNodeNVTableDataModelTest {
         CbusNode myNode = new CbusNode(memo,12345);        
         
         // set node to 3 node vars , param6
-        myNode.setParameters(new int[]{7,1,2,3,4,5,3,7});
+        myNode.getNodeParamManager().setParameters(new int[]{7,1,2,3,4,5,3,7});
         
         t.setNode(myNode);
         
@@ -91,7 +91,7 @@ public class CbusNodeNVTableDataModelTest {
         Assert.assertEquals("NV_CURRENT_BIT_COLUMN","",t.getValueAt( 
             0,CbusNodeNVTableDataModel.NV_CURRENT_BIT_COLUMN) );
         
-        Assert.assertEquals("NV_SELECT_COLUMN",-1,t.getValueAt( 
+        Assert.assertTrue("NV_SELECT_COLUMN",-1== (Integer) t.getValueAt( 
             0,CbusNodeNVTableDataModel.NV_SELECT_COLUMN) );
         
         Assert.assertEquals("NV_SELECT_HEX_COLUMN","",t.getValueAt( 
@@ -139,18 +139,18 @@ public class CbusNodeNVTableDataModelTest {
         Assert.assertEquals("NV_CURRENT_BIT_COLUMN","",t.getValueAt( 
             2,CbusNodeNVTableDataModel.NV_CURRENT_BIT_COLUMN) );
         
-        Assert.assertEquals("NV_SELECT_COLUMN",0,t.getValueAt( 
+        Assert.assertTrue("NV_SELECT_COLUMN",0== (Integer) t.getValueAt( 
             0,CbusNodeNVTableDataModel.NV_SELECT_COLUMN) );
-        Assert.assertEquals("NV_SELECT_COLUMN",122,t.getValueAt( 
+        Assert.assertTrue("NV_SELECT_COLUMN",122== (Integer) t.getValueAt( 
             1,CbusNodeNVTableDataModel.NV_SELECT_COLUMN) );
-        Assert.assertEquals("NV_SELECT_COLUMN",255,t.getValueAt( 
+        Assert.assertTrue("NV_SELECT_COLUMN",255== (Integer) t.getValueAt( 
             2,CbusNodeNVTableDataModel.NV_SELECT_COLUMN) );
         
-        Assert.assertEquals("NV_SELECT_HEX_COLUMN","0",t.getValueAt( 
+        Assert.assertEquals("NV_SELECT_HEX_COLUMN","00",t.getValueAt( 
             0,CbusNodeNVTableDataModel.NV_SELECT_HEX_COLUMN) );
-        Assert.assertEquals("NV_SELECT_HEX_COLUMN","7a",t.getValueAt( 
+        Assert.assertEquals("NV_SELECT_HEX_COLUMN","7A",t.getValueAt( 
             1,CbusNodeNVTableDataModel.NV_SELECT_HEX_COLUMN) );
-        Assert.assertEquals("NV_SELECT_HEX_COLUMN","ff",t.getValueAt( 
+        Assert.assertEquals("NV_SELECT_HEX_COLUMN","FF",t.getValueAt( 
             2,CbusNodeNVTableDataModel.NV_SELECT_HEX_COLUMN) );
         
         Assert.assertEquals("NV_SELECT_BIT_COLUMN","0000 0000",t.getValueAt( 
@@ -163,16 +163,15 @@ public class CbusNodeNVTableDataModelTest {
         t.resetNewNvs();
         Assert.assertTrue("isTableDirty after reset", t.isTableDirty() == false );
         
-        Assert.assertEquals("NV_SELECT_COLUMN after reset",-1,t.getValueAt( 
+        Assert.assertTrue("NV_SELECT_COLUMN after reset",-1== (Integer) t.getValueAt( 
             1,CbusNodeNVTableDataModel.NV_SELECT_COLUMN) );
         
         t.setValueAt(255,0,CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
         // t.setValueAt(122,1,CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
         // t.setValueAt(255,2,CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
         
-        
+        t.dispose();
         myNode.dispose();
-        myNode = null;
     
     }
     
@@ -195,10 +194,11 @@ public class CbusNodeNVTableDataModelTest {
     @After
     public void tearDown() {
         t = null;
-        memo = null;
+        tcis.terminateThreads();
         tcis = null;
+        memo.dispose();
+        memo = null;
         
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
 
     }

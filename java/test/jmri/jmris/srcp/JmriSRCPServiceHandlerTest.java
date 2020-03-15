@@ -1,10 +1,11 @@
 package jmri.jmris.srcp;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
@@ -15,16 +16,16 @@ public class JmriSRCPServiceHandlerTest {
     @Test
     public void testCTor() {
         JmriSRCPServiceHandler t = new JmriSRCPServiceHandler(42);
-        Assert.assertNotNull("exists",t);
+        assertThat(t).isNotNull().withFailMessage("exists");
     }
 
     // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

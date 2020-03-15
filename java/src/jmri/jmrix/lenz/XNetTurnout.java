@@ -588,7 +588,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
             if (internalState != OFFSENT) {
                 jmri.util.ThreadingUtil.runOnLayoutDelayed( () -> {
                    tc.sendHighPriorityXNetMessage(msg, this);
-                }, 30);
+                }, 29);
                 newKnownState(getCommandedState());
                 internalState = OFFSENT;
                 return;
@@ -796,6 +796,6 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     protected int mNumber;   // XpressNet turnout number
     XNetTurnoutStateListener _stateListener;  // Internal class object
 
-    private final static Logger log = LoggerFactory.getLogger(XNetTurnout.class);
+    private static final Logger log = LoggerFactory.getLogger(XNetTurnout.class);
 
 }

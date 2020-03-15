@@ -2,10 +2,12 @@ package jmri.implementation;
 
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.List;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
+import jmri.NamedBeanUsageReport;
 import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.SignalMast;
@@ -748,6 +750,32 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
 
     @Override
     public void setState(int state) {
+    }
+
+    @Override
+    public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
+        List<NamedBeanUsageReport> report = new ArrayList<>();
+        if (bean != null) {
+            if (bean.equals(getSignalMast())) {
+                report.add(new NamedBeanUsageReport("SignalGroupMast"));  // NOI18N
+            }
+            for (int i = 0; i < getNumHeadItems(); i++) {
+                if (bean.equals(getHeadItemBeanByIndex(i))) {
+                    report.add(new NamedBeanUsageReport("SignalGroupHead"));  // NOI18N
+                }
+                for (int j = 0; j < getNumHeadSensorsByIndex(i); j++) {
+                    if (bean.equals(getSensorByIndex(i, j))) {
+                        report.add(new NamedBeanUsageReport("SignalGroupHeadSensor"));  // NOI18N
+                    }
+                }
+                for (int k = 0; k < getNumHeadTurnoutsByIndex(i); k++) {
+                    if (bean.equals(getTurnoutByIndex(i, k))) {
+                        report.add(new NamedBeanUsageReport("SignalGroupHeadTurnout"));  // NOI18N
+                    }
+                }
+            }
+        }
+        return report;
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultSignalGroup.class);

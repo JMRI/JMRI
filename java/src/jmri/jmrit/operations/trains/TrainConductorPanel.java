@@ -139,6 +139,8 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
             // listen for train changes
             _train.addPropertyChangeListener(this);
         }
+        
+        trainManager.addPropertyChangeListener(this);
 
         setVisible(true);
 
@@ -216,6 +218,7 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
 
     @Override
     public void dispose() {
+        trainManager.removePropertyChangeListener(this);
         removePropertyChangeListerners();
         if (_train != null) {
             _train.removePropertyChangeListener(this);
@@ -237,7 +240,8 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
                 (e.getPropertyName().equals(RollingStock.ROUTE_DESTINATION_CHANGED_PROPERTY) &&
                         e.getNewValue() == null) ||
                 e.getPropertyName().equals(RollingStock.TRAIN_CHANGED_PROPERTY) ||
-                e.getPropertyName().equals(Train.TRAIN_MODIFIED_CHANGED_PROPERTY)) {
+                e.getPropertyName().equals(Train.TRAIN_MODIFIED_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(TrainManager.TRAINS_SHOW_FULL_NAME_PROPERTY)) {
             // remove car from list
             if (e.getSource().getClass().equals(Car.class)) {
                 Car car = (Car) e.getSource();

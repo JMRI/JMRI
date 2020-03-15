@@ -25,7 +25,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -148,7 +148,7 @@
       possible d'enregistrer les personnalisations des
       &eacute;tapes 5) et 6) pour le moment.</span>
 
-    </div><!--#include virtual="/Footer" -->
+    </div><!--#include virtual="/Footer.shtml" -->
   </div>
 </body>
 </html>

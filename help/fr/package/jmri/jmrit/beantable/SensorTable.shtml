@@ -12,8 +12,6 @@
   "text/html; charset=us-ascii">
   <meta name="keywords" content="JMRI help Sensor Table">
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css"
@@ -24,7 +22,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -139,7 +137,7 @@
           jusqu'&agrave; ce que l'&eacute;tat soit le m&ecirc;me
           avant et apr&egrave;s que le chronom&egrave;tre ait
           &eacute;t&eacute; lanc&eacute;.</p>
-        </dd><!--#include virtual="/Footer" -->
+        </dd><!--#include virtual="/Footer.shtml" -->
       </dl>
     </div>
   </div>

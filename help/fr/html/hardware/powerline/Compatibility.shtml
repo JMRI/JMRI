@@ -21,7 +21,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
   <!--#include virtual="Sidebar" -->
   <div id="mainContent">
@@ -211,7 +211,7 @@
                 Derni&egrave;re Edition: 4 Feb 2008</td>
                 <!-- Type -->
               </tr>
-            </table><!--#include virtual="/Footer" -->
+            </table><!--#include virtual="/Footer.shtml" -->
           </td>
         </tr>
       </table>

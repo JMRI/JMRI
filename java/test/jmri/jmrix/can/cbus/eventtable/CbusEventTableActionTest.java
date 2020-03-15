@@ -2,6 +2,7 @@ package jmri.jmrix.can.cbus.eventtable;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
+import jmri.jmrix.can.cbus.CbusPreferences;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -23,7 +24,6 @@ public class CbusEventTableActionTest {
         
         CbusEventTableAction t = new CbusEventTableAction(null);
         Assert.assertNotNull("exists",t);
-        t = null;
     }
     
     @Test
@@ -185,6 +185,8 @@ public class CbusEventTableActionTest {
     }
     
     private CbusEventTableDataModel model;
+    private TrafficControllerScaffold tcis;
+    private CanSystemConnectionMemo memo;
     
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
@@ -193,19 +195,27 @@ public class CbusEventTableActionTest {
     @Before
     public void setUp() throws java.io.IOException {
         JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
         
-        TrafficControllerScaffold tcis = new TrafficControllerScaffold();
-        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
+        tcis = new TrafficControllerScaffold();
+        memo = new CanSystemConnectionMemo();
         memo.setTrafficController(tcis);
+        jmri.InstanceManager.store(new CbusPreferences(),CbusPreferences.class );
         model = new CbusEventTableDataModel( memo,4,CbusEventTableDataModel.MAX_COLUMN);
       
     }
 
     @After
     public void tearDown() {
+        
+        model.skipSaveOnDispose();
         model.dispose();
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        memo.dispose();
+        memo = null;
+        tcis.terminateThreads();
+        tcis = null;
+        
         JUnitUtil.tearDown();
 
     }

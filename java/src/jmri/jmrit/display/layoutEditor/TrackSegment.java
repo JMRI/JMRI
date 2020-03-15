@@ -190,9 +190,9 @@ public class TrackSegment extends LayoutTrack {
         boolean result = false; //assume failure (pessimist!)
         //trying to replace old track with null?
         if (newTrack == null) {
+            result = true;  //assume success (optimist!)
             //(yes) remove old connection
             if (oldTrack != null) {
-                result = true;  //assume success (optimist!)
                 if (connect1 == oldTrack) {
                     connect1 = null;
                     type1 = NONE;
@@ -200,11 +200,13 @@ public class TrackSegment extends LayoutTrack {
                     connect2 = null;
                     type2 = NONE;
                 } else {
-                    log.error("Attempt to remove invalid track connection");
+                    log.error("{}.replaceTrackConnection({}, null, {}); Attempt to remove invalid track connection",
+                            getName(), oldTrack.getName(), newType);
                     result = false;
                 }
             } else {
-                log.error("Can't replace null track connection with null");
+                log.warn("{}.replaceTrackConnection(null, null, {}); Can't replace null track connection with null",
+                        getName(), newType);
                 result = false;
             }
         } else //already connected to newTrack?
@@ -218,7 +220,8 @@ public class TrackSegment extends LayoutTrack {
                 connect2 = newTrack;
                 type2 = newType;
             } else {
-                log.error("Attempt to replace invalid track connection");
+                log.error("{}.replaceTrackConnection({}, {}, {}); Attempt to replace invalid track connection",
+                        getName(), (oldTrack == null) ? "null" : oldTrack.getName(), newTrack.getName(), newType);
                 result = false;
             }
         }
@@ -267,6 +270,7 @@ public class TrackSegment extends LayoutTrack {
         if (arc != boo) {
             arc = boo;
             if (arc) {
+                circle = false;
                 bezier = false;
                 hideConstructionLines(SHOWCON);
             }
@@ -285,7 +289,40 @@ public class TrackSegment extends LayoutTrack {
         if (circle != boo) {
             circle = boo;
             if (circle) {
-                bezier = false;
+                //if it was a bezier
+                if (bezier) {
+                    //then use control point to calculate arc
+                    // adjacent connections must be defined...
+                    if ((connect1 != null) && (connect2 != null)) {
+                        Point2D end1 = LayoutEditor.getCoords(connect1, type1);
+                        Point2D end2 = LayoutEditor.getCoords(connect2, type2);
+                        double chordLength = MathUtil.distance(end1, end2);
+
+                        //get first and last control points
+                        int cnt = bezierControlPoints.size();
+
+                        Point2D cp0 = bezierControlPoints.get(0);
+                        Point2D cpN = bezierControlPoints.get(cnt - 1);
+                        //calculate orthoginal points
+                        Point2D op1 = MathUtil.add(end1, MathUtil.orthogonal(MathUtil.subtract(cp0, end1)));
+                        Point2D op2 = MathUtil.subtract(end2, MathUtil.orthogonal(MathUtil.subtract(cpN, end2)));
+                        //use them to find center point
+                        Point2D ip = MathUtil.intersect(end1, op1, end2, op2);
+                        if (ip != null) {   //single intersection point found
+                            double r1 = MathUtil.distance(ip, end1);
+                            double r2 = MathUtil.distance(ip, end2);
+                            if (Math.abs(r1 - r2) <= 1.0) {
+                                //calculate arc: θ = 2 sin-1(c/(2r))
+                                setAngle(Math.toDegrees(2.0 * Math.asin(chordLength / (2.0 * r1))));
+                                // the sign of the distance tells what side of the line the center point is on
+                                double distance = MathUtil.distance(end1, end2, ip);
+                                setFlip(distance < 0.0);
+                            }
+                        }
+                    }
+                    bezier = false;
+                }
+                arc = true;
                 hideConstructionLines(SHOWCON);
             }
             changed = true;
@@ -450,6 +487,10 @@ public class TrackSegment extends LayoutTrack {
         }
     }
 
+    public ArrayList<Point2D> getBezierControlPoints() {
+        return bezierControlPoints;
+    }
+
     /**
      * Set up a Layout Block for a Track Segment.
      */
@@ -559,7 +600,8 @@ public class TrackSegment extends LayoutTrack {
                 namedLayoutBlock = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb);
                 lb.incrementUse();
             } else {
-                log.error("bad blockname '{}' in tracksegment {}", tLayoutBlockName, getName());
+                log.error("{}.setObjects(...); bad blockname '{}' in tracksegment {}",
+                        getName(), tLayoutBlockName, getName());
                 namedLayoutBlock = null;
             }
             tLayoutBlockName = null; //release this memory
@@ -569,12 +611,14 @@ public class TrackSegment extends LayoutTrack {
         //(read comments for findObjectByName in LayoutEditorFindItems.java)
         connect1 = p.getFinder().findObjectByName(tConnect1Name);
         if (null == connect1) { //findObjectByName failed... try findObjectByTypeAndName
-            log.warn("Unknown connect1 object prefix: '{}' of type {}.", tConnect1Name, type1);
+            log.warn("{}.setObjects(...); Unknown connect1 object prefix: '{}' of type {}.",
+                    getName(), tConnect1Name, type1);
             connect1 = p.getFinder().findObjectByTypeAndName(type1, tConnect1Name);
         }
         connect2 = p.getFinder().findObjectByName(tConnect2Name);
         if (null == connect2) { //findObjectByName failed; try findObjectByTypeAndName
-            log.warn("Unknown connect2 object prefix: '{}' of type {}.", tConnect2Name, type2);
+            log.warn("{}.setObjects(...); Unknown connect2 object prefix: '{}' of type {}.",
+                    getName(), tConnect2Name, type2);
             connect2 = p.getFinder().findObjectByTypeAndName(type2, tConnect2Name);
         }
     }
@@ -626,47 +670,45 @@ public class TrackSegment extends LayoutTrack {
         int result = NONE;  //assume point not on connection
 
         if (!requireUnconnected) {
-            if (MathUtil.inset(getBounds(), -LayoutEditor.SIZE).contains(hitPoint)) {
-                //note: optimization here: instead of creating rectangles for all the
-                // points to check below, we create a rectangle for the test point
-                // and test if the points below are in that rectangle instead.
-                Rectangle2D r = layoutEditor.layoutEditorControlCircleRectAt(hitPoint);
-                Point2D p, minPoint = MathUtil.zeroPoint2D;
-                double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
-                double distance, minDistance = Float.POSITIVE_INFINITY;
+            //note: optimization here: instead of creating rectangles for all the
+            // points to check below, we create a rectangle for the test point
+            // and test if the points below are in that rectangle instead.
+            Rectangle2D r = layoutEditor.layoutEditorControlCircleRectAt(hitPoint);
+            Point2D p, minPoint = MathUtil.zeroPoint2D;
+            double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
+            double distance, minDistance = Float.POSITIVE_INFINITY;
 
-                if (isCircle()) {
-                    p = getCoordsCenterCircle();
+            if (isCircle()) {
+                p = getCoordsCenterCircle();
+                distance = MathUtil.distance(p, hitPoint);
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    minPoint = p;
+                    result = TRACK_CIRCLE_CENTRE;
+                }
+            } else if (isBezier()) {
+                // hit testing for the control points
+                for (int index = 0; index < bezierControlPoints.size(); index++) {
+                    p = bezierControlPoints.get(index);
                     distance = MathUtil.distance(p, hitPoint);
                     if (distance < minDistance) {
                         minDistance = distance;
                         minPoint = p;
-                        result = TRACK_CIRCLE_CENTRE;
-                    }
-                } else if (isBezier()) {
-                    // hit testing for the control points
-                    for (int index = 0; index < bezierControlPoints.size(); index++) {
-                        p = bezierControlPoints.get(index);
-                        distance = MathUtil.distance(p, hitPoint);
-                        if (distance < minDistance) {
-                            minDistance = distance;
-                            minPoint = p;
-                            result = BEZIER_CONTROL_POINT_OFFSET_MIN + index;
-                        }
+                        result = BEZIER_CONTROL_POINT_OFFSET_MIN + index;
                     }
                 }
-                p = getCentreSeg();
-                if (r.contains(p)) {
-                    distance = MathUtil.distance(p, hitPoint);
-                    if (distance <= minDistance) {
-                        minDistance = distance;
-                        minPoint = p;
-                        result = LayoutTrack.TRACK;
-                    }
+            }
+            p = getCentreSeg();
+            if (r.contains(p)) {
+                distance = MathUtil.distance(p, hitPoint);
+                if (distance <= minDistance) {
+                    minDistance = distance;
+                    minPoint = p;
+                    result = LayoutTrack.TRACK;
                 }
-                if ((result != NONE) && (useRectangles ? !r.contains(minPoint) : (minDistance > circleRadius))) {
-                    result = NONE;
-                }
+            }
+            if ((result != NONE) && (useRectangles ? !r.contains(minPoint) : (minDistance > circleRadius))) {
+                result = NONE;
             }
         }
         return result;
@@ -719,19 +761,19 @@ public class TrackSegment extends LayoutTrack {
     /**
      * Maximum length of the bumper decoration.
      */
-    public static final int MAX_BUMPER_LENGTH = 200;
-    public static final int MAX_BUMPER_WIDTH = 200;
+    public static final int MAX_BUMPER_LENGTH = 40;
+    public static final int MAX_BUMPER_WIDTH = 10;
 
-    private static final int MAX_ARROW_LINE_WIDTH = 200;
-    private static final int MAX_ARROW_LENGTH = 200;
-    private static final int MAX_ARROW_GAP = 200;
-    private static final int MAX_BRIDGE_LINE_WIDTH = 200;
-    private static final int MAX_BRIDGE_APPROACH_WIDTH = 200;
-    private static final int MAX_BRIDGE_DECK_WIDTH = 200;
-    private static final int MAX_BUMPER_LINE_WIDTH = 200;
-    private static final int MAX_TUNNEL_FLOOR_WIDTH = 200;
-    private static final int MAX_TUNNEL_LINE_WIDTH = 200;
-    private static final int MAX_TUNNEL_ENTRANCE_WIDTH = 200;
+    private static final int MAX_ARROW_LINE_WIDTH = 5;
+    private static final int MAX_ARROW_LENGTH = 60;
+    private static final int MAX_ARROW_GAP = 40;
+    private static final int MAX_BRIDGE_LINE_WIDTH = 5;
+    private static final int MAX_BRIDGE_APPROACH_WIDTH = 100;
+    private static final int MAX_BRIDGE_DECK_WIDTH = 80;
+    private static final int MAX_BUMPER_LINE_WIDTH = 9;
+    private static final int MAX_TUNNEL_FLOOR_WIDTH = 40;
+    private static final int MAX_TUNNEL_LINE_WIDTH = 9;
+    private static final int MAX_TUNNEL_ENTRANCE_WIDTH = 80;
 
     /**
      * Helper method, which adds "Set value" item to the menu. The value can be
@@ -1198,7 +1240,7 @@ public class TrackSegment extends LayoutTrack {
         addNumericMenuItem(bridgeMenu,
                 "DecorationLineWidthMenuItemTitle", "DecorationLineWidthMenuItemToolTip",
                 this::getBridgeLineWidth, this::setBridgeLineWidth,
-                QuickPromptUtil.checkIntRange(10, MAX_BRIDGE_LINE_WIDTH, null));
+                QuickPromptUtil.checkIntRange(1, MAX_BRIDGE_LINE_WIDTH, null));
 
         addNumericMenuItem(bridgeMenu,
                 "BridgeApproachWidthMenuItemTitle", "BridgeApproachWidthMenuItemToolTip",
@@ -1814,10 +1856,10 @@ public class TrackSegment extends LayoutTrack {
                 setBezier(false);
                 break;
             case 1: //circle
-                setArc(true);
-                setAngle(90.0D);
                 setCircle(true);
-                setBezier(false);
+                setArc(true);
+//                setAngle(90.0D);
+//                setBezier(false); //this is done in setCircle
                 break;
             case 2: //arc
                 setArc(true);
@@ -1841,7 +1883,7 @@ public class TrackSegment extends LayoutTrack {
                     offset = MathUtil.normalize(offset, MathUtil.length(offset) / 3.0);
                     offset = MathUtil.orthogonal(offset);
 
-                    //add orthogonal offset0 to 1/3rd and 2/3rd points
+                    //add & subtract orthogonal offset0 to 1/3rd and 2/3rd points
                     Point2D pt1 = MathUtil.add(MathUtil.oneThirdPoint(ep1, ep2), offset);
                     Point2D pt2 = MathUtil.subtract(MathUtil.twoThirdsPoint(ep1, ep2), offset);
 
@@ -2140,7 +2182,6 @@ public class TrackSegment extends LayoutTrack {
      * Called when the user changes the angle dynamically in edit mode
      * by dragging the centre of the cirle.
      */
-    //NOTE: AFAICT this isn't called from anywhere
     protected void reCalculateTrackSegmentAngle(double x, double y) {
         if (!isBezier()) {
             double pt2x;
@@ -3096,7 +3137,7 @@ public class TrackSegment extends LayoutTrack {
         super.setDecorations(decorations);
         if (decorations != null) {
             for (Map.Entry<String, String> entry : decorations.entrySet()) {
-                log.debug("Key = {}, Value = {}", entry.getKey(), entry.getValue());
+                log.debug("Key = ''{}'', Value = ''{}''", entry.getKey(), entry.getValue());
                 String key = entry.getKey();
                 //
                 //arrow decorations
@@ -3176,7 +3217,7 @@ public class TrackSegment extends LayoutTrack {
                     String[] values = bridgeValue.split(";");
                     for (int i = 0; i < values.length; i++) {
                         String value = values[i];
-                        //log.info("value[{}]: \"{}\"", i, value);
+                        //log.info("value[{}]: ''{}''", i, value);
                         if (value.equals("left")) {
                             hasRight = false;
                         } else if (value.equals("right")) {
@@ -3233,7 +3274,7 @@ public class TrackSegment extends LayoutTrack {
                     String[] values = bumperValue.split(";");
                     for (int i = 0; i < values.length; i++) {
                         String value = values[i];
-                        //log.info("value[{}]: \"{}\"", i, value);
+                        //log.info("value[{}]: ''{}''", i, value);
                         if (value.equals("start")) {
                             atStop = false;
                         } else if (value.equals("stop")) {
@@ -3276,7 +3317,7 @@ public class TrackSegment extends LayoutTrack {
                     String[] values = tunnelValue.split(";");
                     for (int i = 0; i < values.length; i++) {
                         String value = values[i];
-                        //log.info("value[{}]: \"{}\"", i, value);
+                        //log.info("value[{}]: ''{}''", i, value);
                         if (value.equals("left")) {
                             hasRight = false;
                         } else if (value.equals("right")) {
@@ -3832,7 +3873,7 @@ public class TrackSegment extends LayoutTrack {
                     }
                     if ((lb2 != null) && (lb1 != lb2)) {
                         //have a block boundary, create a LayoutConnectivity
-                        log.debug("Block boundary  ('{}'<->'{}') found at {}", lb1, lb2, this);
+                        log.debug("Block boundary  (''{}''<->''{}'') found at {}", lb1, lb2, this);
                         lc = new LayoutConnectivity(lb1, lb2);
                         lc.setConnections(this, lt, type1, null);
                         lc.setDirection(Path.computeDirection(
@@ -3850,7 +3891,7 @@ public class TrackSegment extends LayoutTrack {
                     }
                     if ((lb2 != null) && (lb1 != lb2)) {
                         //have a block boundary, create a LayoutConnectivity
-                        log.debug("Block boundary  ('{}'<->'{}') found at {}", lb1, lb2, this);
+                        log.debug("Block boundary  (''{}''<->''{}'') found at {}", lb1, lb2, this);
                         lc = new LayoutConnectivity(lb1, lb2);
                         lc.setConnections(this, lx, type1, null);
                         lc.setDirection(Path.computeDirection(
@@ -3865,7 +3906,7 @@ public class TrackSegment extends LayoutTrack {
                 lb2 = ls.getLayoutBlock();
                 if ((lb2 != null) && (lb1 != lb2)) {
                     //have a block boundary, create a LayoutConnectivity
-                    log.debug("Block boundary  ('{}'<->'{}') found at {}", lb1, lb2, this);
+                    log.debug("Block boundary  (''{}''<->''{}'') found at {}", lb1, lb2, this);
                     lc = new LayoutConnectivity(lb1, lb2);
                     lc.setConnections(this, ls, type1, null);
                     lc.setDirection(Path.computeDirection(LayoutEditor.getCoords(getConnect2(),
@@ -3894,7 +3935,7 @@ public class TrackSegment extends LayoutTrack {
                     }
                     if ((lb2 != null) && (lb1 != lb2)) {
                         //have a block boundary, create a LayoutConnectivity
-                        log.debug("Block boundary  ('{}'<->'{}') found at {}", lb1, lb2, this);
+                        log.debug("Block boundary  (''{}''<->''{}'') found at {}", lb1, lb2, this);
                         lc = new LayoutConnectivity(lb1, lb2);
                         lc.setConnections(this, lt, type2, null);
                         lc.setDirection(Path.computeDirection(
@@ -3912,7 +3953,7 @@ public class TrackSegment extends LayoutTrack {
                     }
                     if ((lb2 != null) && (lb1 != lb2)) {
                         //have a block boundary, create a LayoutConnectivity
-                        log.debug("Block boundary  ('{}'<->'{}') found at {}", lb1, lb2, this);
+                        log.debug("Block boundary  (''{}''<->''{}'') found at {}", lb1, lb2, this);
                         lc = new LayoutConnectivity(lb1, lb2);
                         lc.setConnections(this, lx, type2, null);
                         lc.setDirection(Path.computeDirection(
@@ -3927,7 +3968,7 @@ public class TrackSegment extends LayoutTrack {
                 lb2 = ls.getLayoutBlock();
                 if ((lb2 != null) && (lb1 != lb2)) {
                     //have a block boundary, create a LayoutConnectivity
-                    log.debug("Block boundary  ('{}'<->'{}') found at {}", lb1, lb2, this);
+                    log.debug("Block boundary  (''{}''<->''{}'') found at {}", lb1, lb2, this);
                     lc = new LayoutConnectivity(lb1, lb2);
                     lc.setConnections(this, ls, type2, null);
                     lc.setDirection(Path.computeDirection(
@@ -3993,7 +4034,7 @@ public class TrackSegment extends LayoutTrack {
                     }
                 }
             } else {    //(#3)
-                log.debug("*New block ('{}') trackNameSets", blockName);
+                log.debug("*New block (''{}'') trackNameSets", blockName);
                 TrackNameSets = new ArrayList<>();
                 blockNamesToTrackNameSetsMap.put(blockName, TrackNameSets);
             }
@@ -4002,7 +4043,7 @@ public class TrackSegment extends LayoutTrack {
                 TrackNameSets.add(TrackNameSet);
             }
             if (TrackNameSet.add(getName())) {
-                log.debug("*    Add track '{}' to TrackNameSets for block '{}'", getName(), blockName);
+                log.debug("*    Add track ''{}'' to TrackNameSets for block ''{}''", getName(), blockName);
             }
             //(#4)
             if (connect1 != null) {
@@ -4025,7 +4066,7 @@ public class TrackSegment extends LayoutTrack {
             if (getBlockName().equals(blockName)) {
                 //if we are added to the TrackNameSet
                 if (TrackNameSet.add(getName())) {
-                    log.debug("*    Add track '{}'for block '{}'", getName(), blockName);
+                    log.debug("*    Add track ''{}''for block ''{}''", getName(), blockName);
                 }
                 //these should never be null... but just in case...
                 //it's time to play... flood your neighbours!

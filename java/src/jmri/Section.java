@@ -756,12 +756,7 @@ public class Section extends AbstractNamedBean {
         if (mFirstBlock == null) {
             return "unknown";
         }
-        String s = mFirstBlock.getSystemName();
-        String uName = mFirstBlock.getUserName();
-        if ((uName != null) && !uName.isEmpty()) {
-            return (s + "( " + uName + " )");
-        }
-        return s;
+        return mFirstBlock.getDisplayName();
     }
 
     public String getEndBlockName() {
@@ -771,12 +766,7 @@ public class Section extends AbstractNamedBean {
         if (mLastBlock == null) {
             return "unknown";
         }
-        String s = mLastBlock.getSystemName();
-        String uName = mLastBlock.getUserName();
-        if ((uName != null) && (!uName.equals(""))) {
-            return (s + "( " + uName + " )");
-        }
-        return s;
+        return mLastBlock.getDisplayName();
     }
 
     public void addToForwardList(EntryPoint ep) {
@@ -2734,6 +2724,31 @@ public class Section extends AbstractNamedBean {
             }
         }
         // "DoDelete" case, if needed, should be handled here.
+    }
+
+    @Override
+    public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
+        List<NamedBeanUsageReport> report = new ArrayList<>();
+        if (bean != null) {
+            getBlockList().forEach((block) -> {
+                if (bean.equals(block)) {
+                    report.add(new NamedBeanUsageReport("SectionBlock"));
+                }
+            });
+            if (bean.equals(getForwardBlockingSensor())) {
+                report.add(new NamedBeanUsageReport("SectionSensorForwardBlocking"));
+            }
+            if (bean.equals(getForwardStoppingSensor())) {
+                report.add(new NamedBeanUsageReport("SectionSensorForwardStopping"));
+            }
+            if (bean.equals(getReverseBlockingSensor())) {
+                report.add(new NamedBeanUsageReport("SectionSensorReverseBlocking"));
+            }
+            if (bean.equals(getReverseStoppingSensor())) {
+                report.add(new NamedBeanUsageReport("SectionSensorReverseStopping"));
+            }
+        }
+        return report;
     }
 
     private final static Logger log = LoggerFactory.getLogger(Section.class);

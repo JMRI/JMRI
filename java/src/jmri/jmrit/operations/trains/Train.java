@@ -2020,6 +2020,44 @@ public class Train implements java.beans.PropertyChangeListener {
 
         return number;
     }
+    
+    public int getNumberLoadedCarsInTrain(RouteLocation routeLocation) {
+        return getNumberCarsInTrain(routeLocation) - getNumberEmptyCarsInTrain(routeLocation);
+    }
+    
+    
+    /**
+     * Gets the number of cars pulled from a location
+     * 
+     * @param routeLocation the location
+     * @return number of pick ups
+     */
+    public int getNumberCarsPickedUp(RouteLocation routeLocation) {
+        int number = 0;
+        for (Car rs : InstanceManager.getDefault(CarManager.class).getList(this)) {
+            if (rs.getRouteLocation() == routeLocation) {
+                number++;
+            }
+        }
+        return number;
+    }
+    
+    /**
+     * Gets the number of cars delivered to a location
+     * 
+     * @param routeLocation the location
+     * @return number of set outs
+     */
+    public int getNumberCarsSetout(RouteLocation routeLocation) {
+        int number = 0;
+        for (Car rs : InstanceManager.getDefault(CarManager.class).getList(this)) {
+            if (rs.getRouteDestination() == routeLocation) {
+                number++;
+            }
+        }
+        return number;
+    }
+    
 
     /**
      * Gets the train's length at the current location in the train's route.
@@ -3402,6 +3440,29 @@ public class Train implements java.beans.PropertyChangeListener {
             _leadEngineId = NONE;
         }
         _leadEngine = engine;
+    }
+    
+    /**
+     * Returns the lead engine in a train's route.  There can be up to two changes
+     * in the lead engine for a train.
+     * 
+     * @param routeLocation where in the train's route to find the lead engine.
+     * @return lead engine
+     */
+    public Engine getLeadEngine(RouteLocation routeLocation) {
+        Engine lead = null;
+        for (RouteLocation rl : getRoute().getLocationsBySequenceList()) {
+            for (Engine engine : InstanceManager.getDefault(EngineManager.class).getByTrainList(this)) {
+                if (engine.getRouteLocation() == rl && (engine.getConsist() == null || engine.isLead())) {
+                    lead = engine;
+                    break;
+                }
+            }
+            if (rl == routeLocation) {
+                break;
+            }
+        }
+        return lead;
     }
 
     protected TrainIcon _trainIcon = null;

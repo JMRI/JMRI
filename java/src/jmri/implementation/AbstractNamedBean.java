@@ -258,19 +258,28 @@ public abstract class AbstractNamedBean implements NamedBean {
         return mSystemName;
     }
 
-    /**
-     * {@inheritDoc}
-     * <p>
-     * It would be good to eventually make this final to 
-     * keep it consistent system-wide, but 
-     * we have some existing classes to update first.
-     */
+    /** {@inheritDoc}
+    */
     @Nonnull
     @Override
-    public String toString() {
-        return getSystemName();
+    final public String toString() {
+        /*
+         * Implementation note:  This method is final to ensure that the
+         * contract for toString is properly implemented.  See the 
+         * comment in NamedBean#toString() for more info.
+         * If a subclass wants to add extra info at the end of the
+         * toString output, extend {@link #toStringSuffix}.
+         */
+        return getSystemName()+toStringSuffix();
     }
 
+    /**
+     * Overload this in a sub-class to add extra info to the results of toString()
+     */
+    protected String toStringSuffix() {
+        return "";
+    }
+    
     @Override
     final public String getUserName() {
         return mUserName;

@@ -438,28 +438,30 @@ public class CbusMessage {
      * Microchip AN247 format NOP message to set address.
      * <p>
      * The CBUS bootloader uses extended ID frames
-     * @param header CAN ID
+     * 
+     * @param a address
+     * @param header CAN ID - overridden by call to setHeader
      * @return ready to send CanMessage
      */
     static public CanMessage getBootNop(int a, int header) {
         CanMessage m = new CanMessage(8, header);
         m.setExtended(true);
         m.setHeader(0x4);
-        m.setElement(0, (a / 65536) & 0xFF);
+        m.setElement(0, a & 0xFF);
         m.setElement(1, (a / 256) & 0xFF);
-        m.setElement(2, a & 0xFF);
+        m.setElement(2, (a / 65536) & 0xFF);
         m.setElement(3, 0);
         m.setElement(4, 0x0D);
-        m.setElement(5, 0);
+        m.setElement(5, CbusConstants.CBUS_BOOT_NOP);
         m.setElement(6, 0);
         m.setElement(7, 0);
-        setPri(m, 0xb);
         return m;
     }
 
     /**
      * Microchip AN247 format message to reset and enter normal mode.
-     * @param header CAN ID
+     * 
+     * @param header CAN ID - overridden by call to setHeader
      * @return ready to send CanMessage
      */
     static public CanMessage getBootReset(int header) {
@@ -471,39 +473,43 @@ public class CbusMessage {
         m.setElement(2, 0);
         m.setElement(3, 0);
         m.setElement(4, 0x0D);
-        m.setElement(5, 1);
+        m.setElement(5, CbusConstants.CBUS_BOOT_RESET);
         m.setElement(6, 0);
         m.setElement(7, 0);
-        setPri(m, 0xb);
         return m;
     }
 
     /**
      * Microchip AN247 format message to initialise the bootloader and set the
      * start address.
-     * @param header CAN ID
+     * 
+     * @param a start address
+     * @param header CAN ID - overridden by call to setHeader
      * @return ready to send CanMessage
      */
     static public CanMessage getBootInitialise(int a, int header) {
         CanMessage m = new CanMessage(8, header);
         m.setExtended(true);
         m.setHeader(0x4);
-        m.setElement(0, (a / 65536) & 0xFF);
+        m.setElement(0, a & 0xFF);
         m.setElement(1, (a / 256) & 0xFF);
-        m.setElement(2, a & 0xFF);
+        m.setElement(2, (a / 65536) & 0xFF);
         m.setElement(3, 0);
         m.setElement(4, 0x0D);
-        m.setElement(5, 2);
+        m.setElement(5, CbusConstants.CBUS_BOOT_INIT);
         m.setElement(6, 0);
         m.setElement(7, 0);
-        setPri(m, 0xb);
         return m;
     }
 
     /**
      * Microchip AN247 format message to send the checksum for comparison.
-     * @param c 0-65535
-     * @param header CAN ID
+     * 
+     * At time of writing [6th Feb '20] The MERG bootloader doc is incorrect and
+     * shows the checksum as being byte swapped.
+     * 
+     * @param c 0-65535 2's complement of sum of all program bytes sent
+     * @param header CAN ID - overridden by call to setHeader
      * @return ready to send CanMessage
      */
     static public CanMessage getBootCheck(int c, int header) {
@@ -515,16 +521,16 @@ public class CbusMessage {
         m.setElement(2, 0);
         m.setElement(3, 0);
         m.setElement(4, 0x0D);
-        m.setElement(5, 3);
-        m.setElement(6, (c / 256) & 0xff);
-        m.setElement(7, c & 0xff);
-        setPri(m, 0xb);
+        m.setElement(5, CbusConstants.CBUS_BOOT_CHECK);
+        m.setElement(6, c & 0xff);
+        m.setElement(7, (c >> 8) & 0xff);
         return m;
     }
 
     /**
      * Microchip AN247 format message to check if a module is in boot mode.
-     * @param header CAN ID
+     * 
+     * @param header CAN ID - overridden by call to setHeader
      * @return ready to send CanMessage
      */
     static public CanMessage getBootTest(int header) {
@@ -536,17 +542,17 @@ public class CbusMessage {
         m.setElement(2, 0);
         m.setElement(3, 0);
         m.setElement(4, 0x0D);
-        m.setElement(5, 4);
+        m.setElement(5, CbusConstants.CBUS_BOOT_TEST);
         m.setElement(6, 0);
         m.setElement(7, 0);
-        setPri(m, 0xb);
         return m;
     }
 
     /**
      * Microchip AN247 format message to write 8 bytes of data
+     * 
      * @param d data array, 8 length, values 0-255
-     * @param header CAN ID
+     * @param header CAN ID - overridden by call to setHeader
      * @return ready to send CanMessage
      */
     static public CanMessage getBootWriteData(int[] d, int header) {
@@ -565,8 +571,46 @@ public class CbusMessage {
         } catch (Exception e) {
             log.error("Exception in bootloader data {}", e);
         }
-        setPri(m, 0xb);
         return m;
+    }
+
+    /**
+     * Microchip AN247 format message to write 8 bytes of data
+     * 
+     * @param d data array, 8 length, values 0-255
+     * @param header CAN ID - overridden by call to setHeader
+     * @return ready to send CanMessage
+     */
+    static public CanMessage getBootWriteData(byte[] d, int header) {
+        CanMessage m = new CanMessage(8, header);
+        m.setExtended(true);
+        m.setHeader(0x5);
+        try {
+            m.setElement(0, d[0] & 0xff);
+            m.setElement(1, d[1] & 0xff);
+            m.setElement(2, d[2] & 0xff);
+            m.setElement(3, d[3] & 0xff);
+            m.setElement(4, d[4] & 0xff);
+            m.setElement(5, d[5] & 0xff);
+            m.setElement(6, d[6] & 0xff);
+            m.setElement(7, d[7] & 0xff);
+        } catch (Exception e) {
+            log.error("Exception in bootloader data {}", e);
+        }
+        return m;
+    }
+
+    /**
+     * Tests if a message is a bootloader data write
+     * 
+     * @param m message
+     * @return true if the message is a bootloader data write
+     */
+    public static boolean isBootWriteData(CanMessage m) {
+        if (m.isExtended() && (m.getHeader() == 0x5)) {
+            return (true);
+        } 
+        return (false);
     }
 
     /**
@@ -576,7 +620,7 @@ public class CbusMessage {
      * @return True if is a Boot Error
      */
     public static boolean isBootError(CanReply r) {
-        if (r.isExtended() && (r.getHeader() == 0x10000004) && (r.getElement(0) == 0)) {
+        if (r.isExtended() && (r.getHeader() == 0x10000004) && (r.getElement(0) == CbusConstants.CBUS_EXT_BOOT_ERROR)) {
             return (true);
         } 
         return (false);
@@ -589,7 +633,7 @@ public class CbusMessage {
      * @return True if is a Boot OK
      */
     public static boolean isBootOK(CanReply r) {
-        if (r.isExtended() && (r.getHeader() == 0x10000004) && (r.getElement(0) == 1)) {
+        if (r.isExtended() && (r.getHeader() == 0x10000004) && (r.getElement(0) == CbusConstants.CBUS_EXT_BOOT_OK)) {
             return (true);
         }
         return (false);
@@ -602,7 +646,7 @@ public class CbusMessage {
      * @return True if is a Boot Confirm
      */
     public static boolean isBootConfirm(CanReply r) {
-        if (r.isExtended() && (r.getHeader() == 0x10000004) && (r.getElement(0) == 2)) {
+        if (r.isExtended() && (r.getHeader() == 0x10000004) && (r.getElement(0) == CbusConstants.CBUS_EXT_BOOTC)) {
             return (true);
         }
         return (false);

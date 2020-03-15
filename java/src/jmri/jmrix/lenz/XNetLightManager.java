@@ -117,6 +117,6 @@ public class XNetLightManager extends AbstractLightManager {
         return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(XNetLightManager.class);
+    // private static final Logger log = LoggerFactory.getLogger(XNetLightManager.class);
 
 }

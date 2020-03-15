@@ -55,7 +55,7 @@ public class JsonSchemaSocketServiceTest {
         JsonSchemaSocketService instance = new JsonSchemaSocketService(connection);
         // DELETE should fail
         try {
-            instance.onMessage(JSON.SCHEMA, data, JSON.DELETE, new JsonRequest(locale, JSON.V5, 42));
+            instance.onMessage(JSON.SCHEMA, data, new JsonRequest(locale, JSON.V5, JSON.DELETE, 42));
             Assert.fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             Assert.assertEquals("Error is HTTP 405", 405, ex.getCode());
@@ -63,7 +63,7 @@ public class JsonSchemaSocketServiceTest {
         }
         // GET with type != "schema" or "type"
         try {
-            instance.onMessage("invalid-type", data, JSON.GET, new JsonRequest(locale, JSON.V5, 42));
+            instance.onMessage("invalid-type", data, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
             Assert.fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             Assert.assertEquals("Error is HTTP 400", 400, ex.getCode());
@@ -71,7 +71,7 @@ public class JsonSchemaSocketServiceTest {
         }
         // GET with unknown type
         try {
-            instance.onMessage(JSON.TYPE, data.put(JSON.NAME, "invalid-type"), JSON.GET, new JsonRequest(locale, JSON.V5, 42));
+            instance.onMessage(JSON.TYPE, data.put(JSON.NAME, "invalid-type"), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
             Assert.fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             Assert.assertEquals("Error is HTTP 404", 404, ex.getCode());
@@ -79,7 +79,7 @@ public class JsonSchemaSocketServiceTest {
         }
         // POST should fail
         try {
-            instance.onMessage(JSON.SCHEMA, data, JSON.POST, new JsonRequest(locale, JSON.V5, 42));
+            instance.onMessage(JSON.SCHEMA, data, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
             Assert.fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             Assert.assertEquals("Error is HTTP 405", 405, ex.getCode());
@@ -87,14 +87,14 @@ public class JsonSchemaSocketServiceTest {
         }
         // PUT should fail
         try {
-            instance.onMessage(JSON.SCHEMA, data, JSON.PUT, new JsonRequest(locale, JSON.V5, 42));
+            instance.onMessage(JSON.SCHEMA, data, new JsonRequest(locale, JSON.V5, JSON.PUT, 42));
             Assert.fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             Assert.assertEquals("Error is HTTP 405", 405, ex.getCode());
             Assert.assertEquals("Putting schema is not allowed.", ex.getMessage());
         }
         try {
-            instance.onMessage(JSON.SCHEMA, data, "TRACE", new JsonRequest(locale, JSON.V5, 42));
+            instance.onMessage(JSON.SCHEMA, data, new JsonRequest(locale, JSON.V5, "TRACE", 42));
             Assert.fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             Assert.assertEquals("Error is HTTP 405", 405, ex.getCode());
@@ -118,7 +118,7 @@ public class JsonSchemaSocketServiceTest {
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         JsonSchemaSocketService instance = new JsonSchemaSocketService(connection);
         // GET without NAME returns JSON schema
-        instance.onMessage(type, data, JSON.GET, new JsonRequest(locale, JSON.V5, 0));
+        instance.onMessage(type, data, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         message = connection.getMessage();
         Assert.assertNotNull("Message is not null", message);
         Assert.assertTrue("Returned array", message.isArray());
@@ -135,7 +135,7 @@ public class JsonSchemaSocketServiceTest {
         JUnitAppender.checkForMessageStartingWith(
                 "Unknown keyword exclusiveMinimum - you should define your own Meta Schema.");
         // GET with NAME returns the desired schema
-        instance.onMessage(type, mapper.readTree("{\"name\":\"schema\"}"), JSON.GET, new JsonRequest(locale, JSON.V5, 0));
+        instance.onMessage(type, mapper.readTree("{\"name\":\"schema\"}"), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         message = connection.getMessage();
         Assert.assertNotNull("Message is not null", message);
         Assert.assertTrue("Returned array", message.isArray());
@@ -149,7 +149,7 @@ public class JsonSchemaSocketServiceTest {
         Assert.assertFalse("Returned schema is for client",
                 message.get(1).path(JSON.DATA).path(JSON.SERVER).asBoolean());
         // GET with NAME and SERVER==true returns a single schema
-        instance.onMessage(type, mapper.readTree("{\"name\":\"schema\", \"server\":true}"), JSON.GET, new JsonRequest(locale, JSON.V5, 42));
+        instance.onMessage(type, mapper.readTree("{\"name\":\"schema\", \"server\":true}"), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         message = connection.getMessage();
         Assert.assertNotNull("Message is not null", message);
         Assert.assertTrue("Returned single object", message.isObject());
@@ -157,7 +157,7 @@ public class JsonSchemaSocketServiceTest {
                 message.path(JSON.DATA).path(JSON.NAME).asText());
         Assert.assertTrue("Returned schema is for server", message.path(JSON.DATA).path(JSON.SERVER).asBoolean());
         // GET with NAME and SERVER==false returns a single schema
-        instance.onMessage(type, mapper.readTree("{\"name\":\"schema\", \"server\":false}"), JSON.GET, new JsonRequest(locale, JSON.V5, 42));
+        instance.onMessage(type, mapper.readTree("{\"name\":\"schema\", \"server\":false}"), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         message = connection.getMessage();
         Assert.assertNotNull("Message is not null", message);
         Assert.assertTrue("Returned single object", message.isObject());
@@ -165,7 +165,7 @@ public class JsonSchemaSocketServiceTest {
                 message.path(JSON.DATA).path(JSON.NAME).asText());
         Assert.assertFalse("Returned schema is for client", message.path(JSON.DATA).path(JSON.SERVER).asBoolean());
         // GET with NAME and CLIENT==false returns a single schema
-        instance.onMessage(type, mapper.readTree("{\"name\":\"schema\", \"client\":false}"), JSON.GET, new JsonRequest(locale, JSON.V5, 42));
+        instance.onMessage(type, mapper.readTree("{\"name\":\"schema\", \"client\":false}"), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         message = connection.getMessage();
         Assert.assertNotNull("Message is not null", message);
         Assert.assertTrue("Returned single object", message.isObject());
@@ -173,7 +173,7 @@ public class JsonSchemaSocketServiceTest {
                 message.path(JSON.DATA).path(JSON.NAME).asText());
         Assert.assertTrue("Returned schema is for server", message.path(JSON.DATA).path(JSON.SERVER).asBoolean());
         // GET with NAME and CLIENT==true returns a single schema
-        instance.onMessage(type, mapper.readTree("{\"name\":\"schema\", \"client\":true}"), JSON.GET, new JsonRequest(locale, JSON.V5, 42));
+        instance.onMessage(type, mapper.readTree("{\"name\":\"schema\", \"client\":true}"), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         message = connection.getMessage();
         Assert.assertNotNull("Message is not null", message);
         Assert.assertTrue("Returned single object", message.isObject());
@@ -182,7 +182,7 @@ public class JsonSchemaSocketServiceTest {
         Assert.assertFalse("Returned schema is for client", message.path(JSON.DATA).path(JSON.SERVER).asBoolean());
         // GET with NAME, SERVER==true, and CLIENT==true returns the desired schema
         instance.onMessage(type, mapper.readTree("{\"name\":\"schema\", \"server\":true, \"client\":true}"),
-                    JSON.GET, new JsonRequest(locale, JSON.V5, 0));
+                    new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         message = connection.getMessage();
         Assert.assertNotNull("Message is not null", message);
         Assert.assertTrue("Returned array", message.isArray());
@@ -212,12 +212,12 @@ public class JsonSchemaSocketServiceTest {
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         JsonSchemaSocketService instance = new JsonSchemaSocketService(connection);
         try {
-            instance.onList(JSON.SCHEMA, data, new JsonRequest(locale, JSON.V5, 42));
+            instance.onList(JSON.SCHEMA, data, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
             Assert.fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             Assert.assertEquals(HttpServletResponse.SC_BAD_REQUEST, ex.getCode());
         }
-        instance.onList(JSON.TYPE, data, new JsonRequest(locale, JSON.V5, 0));
+        instance.onList(JSON.TYPE, data, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         message = connection.getMessage();
         Assert.assertNotNull("Message is not null", message);
         Assert.assertTrue("Result is array", message.isArray());

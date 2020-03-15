@@ -73,7 +73,7 @@ public class WaitSwitchListActionTest extends OperationsTestCase {
         Assert.assertFalse(automationItem.isActionRunning());
         Assert.assertFalse(automationItem.isActionSuccessful());
         
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
     
     @Test
@@ -104,7 +104,7 @@ public class WaitSwitchListActionTest extends OperationsTestCase {
         Assert.assertTrue(automationItem.isActionSuccessful());
         
         JUnitOperationsUtil.checkOperationsShutDownTask();
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(WaitSwitchListActionTest.class);

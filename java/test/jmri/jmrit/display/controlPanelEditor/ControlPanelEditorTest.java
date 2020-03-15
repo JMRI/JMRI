@@ -23,6 +23,7 @@ public class ControlPanelEditorTest extends AbstractEditorTestBase<ControlPanelE
         ControlPanelEditor f = new ControlPanelEditor();
         Assert.assertNotNull("exists", f);
         f.dispose();
+        if (f.makeCatalogWorker != null) JUnitUtil.waitFor(() -> {return f.makeCatalogWorker.isDone();}, "wait for catalog SwingWorker failed");
     }
 
     @Test
@@ -46,6 +47,8 @@ public class ControlPanelEditorTest extends AbstractEditorTestBase<ControlPanelE
     public void tearDown() {
         if (e != null) {
             JUnitUtil.dispose(e);
+            if (e.makeCatalogWorker != null) 
+                JUnitUtil.waitFor(() -> {return e.makeCatalogWorker.isDone();}, "wait for catalog SwingWorker failed");
             e = null;
         }
         JUnitUtil.tearDown();

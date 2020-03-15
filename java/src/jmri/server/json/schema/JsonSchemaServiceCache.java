@@ -191,7 +191,7 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
     @Deprecated
     @Nonnull
     public JsonSchema getClientSchema(@Nonnull String type, @Nonnull Locale locale, int id) throws JsonException {
-        return getClientSchema(type, new JsonRequest(locale, JSON.V5, id));
+        return getClientSchema(type, new JsonRequest(locale, JSON.V5, JSON.GET, id));
     }
 
     /**
@@ -229,7 +229,7 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
     @Deprecated
     @Nonnull
     public JsonSchema getServerSchema(@Nonnull String type, @Nonnull Locale locale, int id) throws JsonException {
-        return getServerSchema(type, new JsonRequest(locale, JSON.V5, id));
+        return getServerSchema(type, new JsonRequest(locale, JSON.V5, JSON.GET, id));
     }
 
     private synchronized JsonSchema getSchema(@Nonnull String type, boolean server,
@@ -301,7 +301,7 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
     @Deprecated
     public void validateMessage(@Nonnull JsonNode message, boolean server, @Nonnull Locale locale, int id)
             throws JsonException {
-        validateMessage(message, server, new JsonRequest(locale, JSON.V5, id));
+        validateMessage(message, server, new JsonRequest(locale, JSON.V5, JSON.GET, id));
     }
 
     /**
@@ -346,7 +346,7 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
     @Deprecated
     public void validateData(@Nonnull String type, @Nonnull JsonNode data, boolean server, @Nonnull Locale locale,
             int id) throws JsonException {
-        validateData(type, data, server, new JsonRequest(locale, JSON.V5, id));
+        validateData(type, data, server, new JsonRequest(locale, JSON.V5, JSON.GET, id));
     }
 
     private void validateJsonNode(@Nonnull JsonNode node, @Nonnull String type, boolean server,

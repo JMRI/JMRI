@@ -8,6 +8,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -156,9 +157,8 @@ public class ReportPanel extends JPanel {
             email.validate();
 
             log.debug("start send");
-            String charSet = "UTF-8";  //NO18N
 
-            MultipartMessage msg = new MultipartMessage(requestURL, charSet);
+            MultipartMessage msg = new MultipartMessage(requestURL, StandardCharsets.UTF_8.name());
 
             // add reporter email address
             log.debug("start creating message");

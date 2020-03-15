@@ -13,7 +13,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <!--#include virtual="Sidebar" -->
 
 <div id="mainContent">
@@ -217,7 +217,7 @@ La Version 4.2 demande Java 1.8.</p>
 Obtenir la derni&#232;re version de Java en t&#233;l&#233;chargement libre l'adresse: 
 	<a href="http://java.com/download/" target="_blank">java.com/download</a>.</p>
 
-	<!--#include virtual="/Footer" -->
+	<!--#include virtual="/Footer.shtml" -->
   </div><!-- closes #mainContent-->
  </div> <!-- closes #mBody-->
 </body>

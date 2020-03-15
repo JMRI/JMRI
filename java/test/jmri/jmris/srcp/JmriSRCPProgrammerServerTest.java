@@ -1,7 +1,10 @@
 package jmri.jmris.srcp;
 
-import org.junit.*;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 /**
@@ -22,10 +25,10 @@ public class JmriSRCPProgrammerServerTest{
                     }
                 });
         JmriSRCPProgrammerServer a = new JmriSRCPProgrammerServer(output);
-        Assert.assertNotNull(a);
+        assertThat(a).isNotNull();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         
@@ -33,7 +36,7 @@ public class JmriSRCPProgrammerServerTest{
         jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }

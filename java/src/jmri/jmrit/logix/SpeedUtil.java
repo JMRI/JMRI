@@ -40,7 +40,6 @@ public class SpeedUtil {
     private DccLocoAddress _dccAddress;
     private String _rosterId;        // Roster title for train
     private RosterEntry _rosterEntry;
-    private List<BlockOrder> _orders;
 
     private DccThrottle _throttle;
     private boolean _isForward = true;
@@ -55,18 +54,9 @@ public class SpeedUtil {
 
     public static final float SCALE_FACTOR = 110; // divided by _scale, gives a rough correction for track speed
 
-    protected SpeedUtil(List<BlockOrder> orders) {
-        if (orders !=null) {
-            _orders = orders;
-        }
+    protected SpeedUtil() {
     }
     
-    protected void setOrders(List<BlockOrder> orders) {
-        if (orders !=null) {
-            _orders = orders;
-        }
-    }
-
     protected void setIsForward(boolean forward) {
         _isForward = forward;
     }
@@ -706,29 +696,33 @@ public class SpeedUtil {
     float _distanceTravelled;
     float _settingsTravelled;
     long _changetime;
-    int _numchanges;
+    int _numchanges;            // number of time changes within the block
 
     /**
-     * Just entered block at newIdx. Do that calculation of speed from lastIdx
+     * Just entered a new block at 'toTime'. Do the calculation of speed of the
+     * previous block from 'fromTime' to 'toTime'.
+     * when the exiting block was entered.
+     * 
+     * Throttle changes within the block will cause different speeds.  We attempt
+     * to accumulate these time and distances to calculate a weighted speed average.
+     * See method speedChange() below.
      *  Dynamic measurement of speed profile is being studied further.  For now the
-     *  only recorded speeds are those at constant speed.
-     * @param lastIdx BlockOrder index of where data collection started
-     * @param newIdx BlockOrder index of block just entered
+     *  only recorded speeds are those at constant speed. i.e. weighted averages not
+     *  used
+     * @param fromTime time of start of data collection
+     * @param toTime time of end of data collection
+     * @param length distance traveled. (from user's input of path lengths
      */
-    protected void enteredBlock(int lastIdx, int newIdx) {
-        if (lastIdx <= 0) {
-            clearStats();
+    protected void enteredBlock(long fromTime, long toTime, float length) {
+        if (fromTime <= 0) {
             return;
         }
         boolean isForward = _throttle.getIsForward();
         float throttle = _throttle.getSpeedSetting();   // may not be a multiple of a speed step
-        BlockOrder blkOrder = _orders.get(lastIdx);
-        OBlock toBlock = _orders.get(newIdx).getBlock();
-        OBlock fromBlock = blkOrder.getBlock();
         if (_numchanges == 0) {
-            _changetime = fromBlock._entryTime;
+            _changetime = fromTime;
         }
-        long elapsedTime = toBlock._entryTime - _changetime;
+        long elapsedTime = toTime - _changetime;
 
         // distance traveled according to current speed profile.
         _distanceTravelled += getDistanceOfSpeedChange(_prevSpeed, throttle, elapsedTime);
@@ -736,10 +730,10 @@ public class SpeedUtil {
         _settingsTravelled += throttle * elapsedTime;
         _timeAtSpeed += elapsedTime;
 
-        float length = blkOrder.getPath().getLengthMm();
         boolean mergeOK = (length > 0);
-        elapsedTime = toBlock._entryTime - fromBlock._entryTime;
-        if (Math.abs(elapsedTime - _timeAtSpeed) > 10) {
+        // Next lines restrict saving of data to constant speed measured through block
+        elapsedTime = toTime - fromTime;
+        if (Math.abs(elapsedTime - _timeAtSpeed) > 10) { // 
             mergeOK = false;
         }
         float measuredSpeed = 0;
@@ -751,8 +745,8 @@ public class SpeedUtil {
             if (log.isDebugEnabled()) {
                 float aveSpeed = 1000 * _distanceTravelled / _timeAtSpeed;
                 float profileSpeed =  getSpeedProfile().getSpeed(aveSettings, isForward);
-                log.debug("{} changes on block {}: length={} exitSetting={} speed={}. calcDist={} aveThrottleSetting={} aveProfileSpeed={} calcAveSpeed={}",
-                       _numchanges, fromBlock.getDisplayName(), length, throttle, measuredSpeed, _distanceTravelled, aveSettings, profileSpeed, aveSpeed);
+                log.debug("{} changes length={} exitSetting={} speed={}. calcDist={} aveThrottleSetting={} aveProfileSpeed={} calcAveSpeed={}",
+                       _numchanges, length, throttle, measuredSpeed, _distanceTravelled, aveSettings, profileSpeed, aveSpeed);
             }
             // check for legitimate speed - derailing, abort, etc. can make bogus measurement.
             float ratio = getTrackSpeed(aveSettings) / measuredSpeed;
@@ -771,8 +765,8 @@ public class SpeedUtil {
         setSpeed(_sessionProfile, aveSettings, measuredSpeed, isForward);
         if (log.isDebugEnabled())  {
             int step = Math.round(aveSettings / stepIncrement);
-            log.debug("Block \"{}\", train \"{}\", {} Profile setting= {} (speedStep= {}), measuredSpeed= {} {}",
-                    fromBlock.getDisplayName(), _rosterId, _numchanges, aveSettings, step, measuredSpeed, (isForward?"forward":"reverse"));
+            log.debug("{} changes, ThrottleSetting= {} (speedStep= {}), measuredSpeed= {} {}",
+                    _numchanges, aveSettings, step, measuredSpeed, (isForward?"forward":"reverse"));
         }
 
         setSpeed(_mergeProfile, aveSettings, measuredSpeed, isForward);
@@ -816,7 +810,7 @@ public class SpeedUtil {
     }
 
     /*
-     * Speed is being changed
+     * Speed is being changed. The engineer makes this notification when setting a new speed
      */
     protected void speedChange() {
         _numchanges++;

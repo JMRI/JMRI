@@ -345,17 +345,7 @@
         for generating multiple documentation forms is also being
         considered.</li>
 
-        <li>Our use of JUnit has been partially migrated to the 
-        <a href="http://junit.org">JUnit 4 release</a>, 
-        currently 4.12.
-        Among other improvements, this can allow use of the Java
-        <a href="http://stackoverflow.com/questions/3806173/assert-keyword-in-java">assert keyword</a>. 
-        We're working on how best to use the
-        new capabilities, see the <a href="JUnit.shtml#junit4">JMRI
-        JUnit page</a>. At some point, perhaps in 2019, we'll want to migrate to
-        <a href="https://junit.org/junit5/">JUnit 5</a> to get access to 
-        <a href="https://developer.ibm.com/dwblog/2017/top-five-reasons-to-use-junit-5-java/">new testing tools</a>,
-        particularly for parameterized tests.
+        <li>
         We also need to complete the conversion from JFCUnit to Jemmy for
         Swing testing.</li>
 
@@ -380,13 +370,6 @@
       <h2>Migration Notes</h2>This is a section of notes for
       various code migrations that are in progress or contemplated.
 
-      <a id="junit4" name="junit4"></a><h3>From JUnit 3 to JUnit 4</h3>
-      JMRI's
-      <a href="ContinuousIntegration.shtml">continuous integration</a>
-      test suites and infrastructure are migrating from
-      JUnit 3 to JUnit 4.  For more information, see the
-      section on
-      <a href="JUnit.shtml#junit4">our JUnit page</a>.
 
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->

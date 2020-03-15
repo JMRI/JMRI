@@ -244,6 +244,11 @@
                 <li></li>
             </ul>
 
+        <h4>Public Domain and DIY decoders</h4>
+            <ul>
+                <li></li>
+            </ul>
+
         <h4>QSI</h4>
             <ul>
                 <li></li>
@@ -343,6 +348,11 @@
 	        <li></li>
         </ul>
 
+        <h4>NX - Entry/Exit Tool</h4>
+            <ul>
+                <li></li>
+            </ul>
+
     <h3>Logix</h3>
         <a id="Logix" name="Logix"></a>
         <ul>
@@ -421,12 +431,12 @@
                 <li></li>
             </ul>
 
-    	<h4>Simple Signal Logic</h4>
+	    <h4>Cab Signals</h4>
             <ul>
-                <li></li>
+                <li>Better set row height in table.</li>
             </ul>
 
-	    <h4>NX Entry/Exit Logic</h4>
+    	<h4>Simple Signal Logic</h4>
             <ul>
                 <li></li>
             </ul>
@@ -463,7 +473,13 @@
    <h3>Web Access</h3>
         <a id="WA" name="WA"></a>
         <ul>
-            <li> </li>
+            <li></li>
+        </ul>
+
+    <h3>Where Used</h3>
+        <a id="WhereUsed" name="WhereUsed"></a>
+        <ul>
+            <li></li>
         </ul>
 
    <h3>WiThrottle Server</h3>

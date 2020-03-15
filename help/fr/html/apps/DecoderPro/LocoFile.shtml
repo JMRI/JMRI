@@ -20,7 +20,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -88,7 +88,7 @@
               &lt;cvvalue name="2" value="0" /&gt;<br>
               &lt;cvvalue name="3" value="0" /&gt;<br>
               &lt;cvvalue name="4" value="0" /&gt;<br></p>
-      <!--#include virtual="/footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

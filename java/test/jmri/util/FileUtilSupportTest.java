@@ -11,7 +11,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URI;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -271,7 +271,7 @@ public class FileUtilSupportTest {
         File file = File.createTempFile("FileUtilTest", null);
         String text = "jmri.util.FileUtil#appendTextToFile";
         instance.appendTextToFile(file, text);
-        List<String> lines = Files.readAllLines(Paths.get(file.toURI()), Charset.forName("UTF-8"));
+        List<String> lines = Files.readAllLines(Paths.get(file.toURI()), StandardCharsets.UTF_8);
         assertEquals(text, lines.get(0));
     }
 

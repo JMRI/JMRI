@@ -66,7 +66,7 @@ public class JmrixConfigPaneXml extends AbstractXmlAdapter {
         if (className != null) {
             try {
                 if (!className.equals(UIManager.getLookAndFeel().getClass().getName())) {
-                    log.debug("set GUI to " + name + "," + className);
+                    log.debug("set GUI to {},{}", name, className);
                     updateLookAndFeel(name, className);
                 } else {
                     log.debug("skip updateLAF as already has className==" + className);

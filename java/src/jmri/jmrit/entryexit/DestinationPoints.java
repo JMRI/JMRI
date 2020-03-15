@@ -939,6 +939,13 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
     }
 
     synchronized void activeBean(boolean reverseDirection, boolean showMessage) {
+        // Clear any previous memory message
+        jmri.MemoryManager mgr = InstanceManager.getDefault(jmri.MemoryManager.class);
+        jmri.Memory nxMem = mgr.getMemory(manager.getMemoryOption());
+        if (nxMem != null) {
+            nxMem.setValue("");
+        }
+
         if (!isEnabled()) {
             JOptionPane.showMessageDialog(null, Bundle.getMessage("RouteDisabled", getDisplayName()));  // NOI18N
             src.pd.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
@@ -1187,6 +1194,8 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                     options[1]);
             if (ans == 0) {
                 opt = EntryExitPairs.OVERLAP_STACK;
+            } else {
+                opt = EntryExitPairs.OVERLAP_CANCEL;
             }
         }
 
@@ -1195,6 +1204,29 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
             firePropertyChange("stacked", null, null);  // NOI18N
         } else {
             firePropertyChange("failed", null, null);  // NOI18N
+        }
+
+        // Set memory value if requested
+        jmri.MemoryManager mgr = InstanceManager.getDefault(jmri.MemoryManager.class);
+        jmri.Memory nxMem = mgr.getMemory(manager.getMemoryOption());
+        if (nxMem != null) {
+            String optString = (opt == EntryExitPairs.OVERLAP_STACK)
+                    ? Bundle.getMessage("StackRoute")       // NOI18N
+                    : Bundle.getMessage("CancelRoute");     // NOI18N
+            nxMem.setValue(Bundle.getMessage("MemoryMessage", message, optString));  // NOI18N
+
+            // Check for auto memory clear delay
+            int delay = manager.getMemoryClearDelay() * 1000;
+            if (delay > 0) {
+                javax.swing.Timer memoryClear = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
+                    @Override
+                    public void actionPerformed(java.awt.event.ActionEvent e) {
+                        nxMem.setValue("");
+                    }
+                });
+                memoryClear.setRepeats(false);
+                memoryClear.start();
+            }
         }
     }
 
@@ -1234,6 +1266,26 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
         src.setMenuEnabled(boo);
         firePropertyChange("active", oldvalue, getState());  // NOI18N
 
+    }
+
+    @Override
+    public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
+        List<NamedBeanUsageReport> report = new ArrayList<>();
+        if (bean != null) {
+            if (bean.equals(getSource().getPoint().getSensor())) {
+                report.add(new NamedBeanUsageReport("EntryExitSourceSensor"));  // NOI18N
+            }
+            if (bean.equals(getSource().getPoint().getSignal())) {
+                report.add(new NamedBeanUsageReport("EntryExitSourceSignal"));  // NOI18N
+            }
+            if (bean.equals(getDestPoint().getSensor())) {
+                report.add(new NamedBeanUsageReport("EntryExitDestinationSensor"));  // NOI18N
+            }
+            if (bean.equals(getDestPoint().getSignal())) {
+                report.add(new NamedBeanUsageReport("EntryExitDesinationSignal"));  // NOI18N
+            }
+        }
+        return report;
     }
 
     private final static Logger log = LoggerFactory.getLogger(DestinationPoints.class);

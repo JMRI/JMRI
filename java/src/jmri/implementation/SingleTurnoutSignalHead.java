@@ -205,11 +205,6 @@ public class SingleTurnoutSignalHead extends DefaultSignalHead implements Proper
         for (int state : getValidStates()) {
             validStateKeys[i++] = getSignalColorKey(state);
         }
-//        String contents = "";
-//        for (String key : validStateKeys) {
-//            contents = contents + key + ",";
-//        };
-//        log.debug(contents);
         return validStateKeys;
     }
 

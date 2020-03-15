@@ -58,6 +58,7 @@ public class FrmFixErrors extends javax.swing.JFrame {
 
         jButton1.setText(Bundle.getMessage("ButtonProceed"));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
@@ -65,6 +66,7 @@ public class FrmFixErrors extends javax.swing.JFrame {
 
         _mCancel.setText(Bundle.getMessage("ButtonCancel"));
         _mCancel.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mCancelActionPerformed(evt);
             }

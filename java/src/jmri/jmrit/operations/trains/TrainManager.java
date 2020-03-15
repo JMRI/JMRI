@@ -75,24 +75,12 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
 //    public static final String ACTIVE_TRAIN_SCHEDULE_ID = "ActiveTrainScheduleId"; // NOI18N
     public static final String ROW_COLOR_NAME_CHANGED_PROPERTY = "TrainsRowColorChange"; // NOI18N
     public static final String TRAINS_BUILT_CHANGED_PROPERTY = "TrainsBuiltChange"; // NOI18N
+    public static final String TRAINS_SHOW_FULL_NAME_PROPERTY = "TrainsShowFullName"; // NOI18N
 
     public TrainManager() {
     }
 
     private int _id = 0; // train ids
-
-    /**
-     * Get the default instance of this class.
-     *
-     * @return the default instance of this class
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static synchronized TrainManager instance() {
-        jmri.util.Log4JUtil.deprecationWarning(log, "instance");        
-        return InstanceManager.getDefault(TrainManager.class);
-    }
 
     /**
      * Get the number of items in the roster
@@ -182,6 +170,12 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
      */
     public boolean isShowLocationHyphenNameEnabled() {
         return _showLocationHyphenName;
+    }
+    
+    public void setShowLocationHyphenNameEnabled(boolean enable) {
+        boolean old = _showLocationHyphenName;
+        _showLocationHyphenName = enable;
+        setDirtyAndFirePropertyChange(TRAINS_SHOW_FULL_NAME_PROPERTY, old, enable);
     }
 
     public String getTrainsFrameTrainAction() {
@@ -449,6 +443,7 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
     public boolean isAnyTrainBuilding() {
         for (Train train : getTrainsByIdList()) {
             if (train.getStatusCode() == Train.CODE_BUILDING) {
+                log.debug("Train {} is currently building", train.getName());
                 return true;
             }
         }

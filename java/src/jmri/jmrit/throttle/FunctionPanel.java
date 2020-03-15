@@ -390,6 +390,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
      * loaded from a roster entry, update buttons accordingly
      */
     public void resetFnButtons() {
+        final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences();
         // Buttons names, ids,
         for (int i = 0; i < NUM_FUNCTION_BUTTONS; i++) {
             functionButton[i].setIdentity(i);
@@ -401,9 +402,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
             }
 
             functionButton[i].setDisplay(true);
-            if ((i < 3)
-                    && InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingExThrottle()
-                    && InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingFunctionIcon()) {
+            if ((i < 3) && preferences.isUsingIcons()) {
                 switch (i) {
                     case 0:
                         functionButton[i].setIconPath("resources/icons/throttles/Light.png");
@@ -469,6 +468,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 
     // Update buttons value from slot + load buttons definition from roster if any
     private void setFnButtons() {
+        final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences();
         if (mThrottle != null) {
             if (addressPanel == null) {
                 return;
@@ -499,8 +499,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
                     if (text != null) {
                         functionButton[i].setDisplay(true);
                         functionButton[i].setButtonLabel(text);
-                        if ((InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingExThrottle())
-                                && (InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingFunctionIcon())) {
+                        if (preferences.isUsingIcons()) {
                             functionButton[i].setIconPath(rosterEntry.getFunctionImage(i));
                             functionButton[i].setSelectedIconPath(rosterEntry.getFunctionSelectedImage(i));
                         } else {
@@ -513,10 +512,8 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
                             functionButton[i].setVisible(true);
                         }
                         maxi++; // bump number of buttons shown
-                    } else if (InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences()
-                            .isUsingExThrottle()
-                            && InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences()
-                            .isHidingUndefinedFuncButt()) {
+                    } else if (preferences.isUsingExThrottle()
+                            && preferences.isHidingUndefinedFuncButt()) {
                         functionButton[i].setDisplay(false);
                         functionButton[i].setVisible(false);
                     }
@@ -524,11 +521,8 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
             }
             // hide alt buttons if not required
             if ((rosterEntry != null) && (maxi < NUM_FUNC_BUTTONS_INIT
-                    && InstanceManager.getDefault(ThrottleFrameManager.class)
-                    .getThrottlesPreferences().isUsingExThrottle()
-                    && InstanceManager.getDefault(ThrottleFrameManager.class)
-                    .getThrottlesPreferences()
-                    .isHidingUndefinedFuncButt())) {
+                    && preferences.isUsingExThrottle()
+                    && preferences.isHidingUndefinedFuncButt())) {
                 alt1Button.setVisible(false);
                 alt2Button.setVisible(false);
             }

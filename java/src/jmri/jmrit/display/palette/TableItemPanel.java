@@ -77,6 +77,7 @@ public class TableItemPanel<E extends NamedBean> extends FamilyItemPanel impleme
             add(initTablePanel(_model, _editor), 0); // top of Panel
             _buttonPosition = 1;
         }
+        hideIcons();
     }
 
     /**
@@ -85,12 +86,12 @@ public class TableItemPanel<E extends NamedBean> extends FamilyItemPanel impleme
      */
     @Override
     public void init(ActionListener doneAction, HashMap<String, NamedIcon> iconMap) {
-        super.init(doneAction, iconMap);
         add(initTablePanel(_model, _editor), 0);
         _buttonPosition = 1;
+        super.init(doneAction, iconMap);
     }
 
-    /**
+    /*
      * Top Panel.
      */
     protected JPanel initTablePanel(PickListModel<E> model, Editor editor) {
@@ -101,7 +102,7 @@ public class TableItemPanel<E extends NamedBean> extends FamilyItemPanel impleme
         topPanel.setLayout(new BorderLayout());
         topPanel.add(new JLabel(model.getName(), SwingConstants.CENTER), BorderLayout.NORTH);
         _scrollPane = new JScrollPane(_table);
-        int cnt = Math.min(8, _table.getRowCount()) + 2;
+        int cnt = Math.max(Math.min(10, _table.getRowCount()), 4);  // at least 4 rows, no more than 10
         _scrollPane.setPreferredSize(new Dimension(_scrollPane.getPreferredSize().width, cnt*ROW_HEIGHT));
         topPanel.add(_scrollPane, BorderLayout.CENTER);
         topPanel.setToolTipText(Bundle.getMessage("ToolTipDragTableRow"));
@@ -233,18 +234,20 @@ public class TableItemPanel<E extends NamedBean> extends FamilyItemPanel impleme
      */
     @Override
     public void valueChanged(ListSelectionEvent e) {
-        if (_table == null || _updateButton == null) {
+        if (_table == null) {
             return;
         }
         int row = _table.getSelectedRow();
         log.debug("Table valueChanged: row = {}", row);
-        if (row >= 0) {
-            _updateButton.setEnabled(true);
-            _updateButton.setToolTipText(null);
+        if (_updateButton != null) {
+            if (row >= 0) {
+                _updateButton.setEnabled(true);
+                _updateButton.setToolTipText(null);
 
-        } else {
-            _updateButton.setEnabled(false);
-            _updateButton.setToolTipText(Bundle.getMessage("ToolTipPickFromTable"));
+            } else {
+                _updateButton.setEnabled(false);
+                _updateButton.setToolTipText(Bundle.getMessage("ToolTipPickFromTable"));
+            }
         }
         hideIcons();
     }
