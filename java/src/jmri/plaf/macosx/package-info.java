@@ -6,4 +6,5 @@
  * which is expanded in JDK 9 to support OS X integration that once depended
  * upon the com.apple.eawt package.
  */
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings({})
 package jmri.plaf.macosx;

@@ -54,18 +54,18 @@ public class OBlockManager extends AbstractManager<OBlock>
                 return null;
             }
         }
-        if (!systemName.startsWith("OB")) {
+        if (!isValidSystemNameFormat(systemName)) {
             return null;
         }
-        if (systemName.length() < 3) {
-            return null;
-        }
+
         r = getBySystemName(systemName);
         if (r != null) {
             return null;
         }
         // OBlock does not exist, create a new OBlock
         r = new OBlock(systemName, userName);
+
+        updateAutoNumber(systemName);
         // save in the maps
         register(r);
         return r;

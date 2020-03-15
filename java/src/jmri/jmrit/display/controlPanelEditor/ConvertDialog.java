@@ -8,7 +8,11 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import jmri.InstanceManager;
 import jmri.NamedBeanHandleManager;
@@ -25,8 +29,8 @@ import jmri.jmrit.display.palette.IndicatorItemPanel;
 import jmri.jmrit.display.palette.IndicatorTOItemPanel;
 import jmri.jmrit.logix.OBlock;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 class ConvertDialog extends JDialog {
 
@@ -88,7 +92,25 @@ class ConvertDialog extends JDialog {
                 };
             }
             _panel.init(updateAction);
+            
+/*            JPanel content = new JPanel();
+            content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
+            content.add(new JLabel(Bundle.getMessage("notIndicatorIcon")));
+            content.add(_panel);
+            Dimension dim = content.getPreferredSize();
+            */
+            JPanel buttonPanel = _panel.getBottomPanel();
+            _panel.getUpdateButton().setText(Bundle.getMessage("convert"));
+            JButton button = new JButton(Bundle.getMessage("skip"));
+            button.addActionListener((ActionEvent a) -> {
+                dispose();
+            });
+            buttonPanel.add(button);
+            JPanel p = new JPanel();
+             p.add(new JLabel(Bundle.getMessage("notIndicatorIcon")));
+            _panel.add(p, 0);
             Dimension dim = _panel.getPreferredSize();
+
             javax.swing.JScrollPane sp = new javax.swing.JScrollPane(_panel);
             dim = new Dimension(dim.width +25, dim.height + 25);
             sp.setPreferredSize(dim);
@@ -172,5 +194,5 @@ class ConvertDialog extends JDialog {
             _filler.dispose();
         }
 
-    //    private final static Logger log = LoggerFactory.getLogger(ConvertDialog.class);
+//        private final static Logger log = LoggerFactory.getLogger(ConvertDialog.class);
     }
