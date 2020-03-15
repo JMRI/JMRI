@@ -14,14 +14,14 @@ public class CbusDccProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     @Test
     @Override
     public void testDefault() {
-        Assert.assertEquals("Check Default", ProgrammingMode.PAGEMODE,
+        Assert.assertEquals("Check Default", ProgrammingMode.DIRECTBITMODE,
                 programmer.getMode());        
     }
     
     @Override
     @Test
     public void testDefaultViaBestMode() {
-        Assert.assertEquals("Check Default", ProgrammingMode.PAGEMODE,
+        Assert.assertEquals("Check Default", ProgrammingMode.DIRECTBITMODE,
                 ((CbusDccProgrammer)programmer).getBestMode());        
     }
 

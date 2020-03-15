@@ -28,18 +28,6 @@ public class AutomationManager implements InstanceManagerAutoDefault, PropertyCh
     public AutomationManager() {
     }
 
-    /**
-     * Get the default instance of this class.
-     *
-     * @return the default instance of this class
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static synchronized AutomationManager instance() {
-        return InstanceManager.getDefault(AutomationManager.class);
-    }
-
     // stores known Automation instances by id
     protected Hashtable<String, Automation> _automationHashTable = new Hashtable<>();
 
