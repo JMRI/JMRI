@@ -32,18 +32,6 @@ public class LocationManager implements InstanceManagerAutoDefault, InstanceMana
 
     private int _id = 0;
 
-    /**
-     * Get the default instance of this class.
-     *
-     * @return the default instance of this class
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static synchronized LocationManager instance() {
-        return InstanceManager.getDefault(LocationManager.class);
-    }
-
     public void dispose() {
         _locationHashTable.clear();
         _id = 0;
