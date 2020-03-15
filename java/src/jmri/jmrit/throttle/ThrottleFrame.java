@@ -271,6 +271,8 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
      * </ul>
      */
     private void initGUI() {
+        final ThrottlesPreferences preferences =
+            InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences();
         frameListener = new FrameListener();
 
         controlPanel = new ControlPanel();
@@ -295,8 +297,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         int width = 3 * (FunctionButton.BUT_WDTH) + 2 * 3 * 5 + 10;   // = 192
         int height = 6 * (FunctionButton.BUT_HGHT) + 2 * 6 * 5 + 20; // = 240 (but there seems to be another 10 needed for some LAFs)
 
-        if (InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingExThrottle()
-                && InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingFunctionIcon()) {
+        if (preferences.isUsingIcons()) {
             width = FunctionButton.BUT_WDTH * 3 + 2 * 3 * 5 + 10;
             height = FunctionButton.BUT_IMG_SIZE * 2 + FunctionButton.BUT_HGHT * 4 + 2 * 6 * 5 + 20;
         }
@@ -334,14 +335,13 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         if (controlPanel.getHeight() > functionPanel.getHeight() + addressPanel.getHeight()) {
             addressPanel.setSize(addressPanel.getWidth(), controlPanel.getHeight() - functionPanel.getHeight());
         }
-        if (!(InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingExThrottle() && InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingFunctionIcon())
+        if (!(preferences.isUsingIcons())
                 && (functionPanel.getWidth() < addressPanel.getWidth())) {
             functionPanel.setSize(addressPanel.getWidth(), functionPanel.getHeight());
         }
         // SpotBugs flagged the following (apparently correctly) as a
         // useless control statement, so it has been commented out.
-        //if (!(InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingExThrottle()
-        //        && InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingFunctionIcon())
+        //if (!(preferences.isUsingIcons())
         //        && (functionPanel.getWidth() < addressPanel.getWidth())) {
         //}
 
@@ -359,13 +359,13 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         add(addressPanel, PANEL_LAYER_FRAME);
         add(speedPanel, PANEL_LAYER_FRAME);
 
-        if (InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingExThrottle()) {
-            /*         if ( InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingTransparentCtl() ) {
+        if (preferences.isUsingExThrottle()) {
+            /*         if ( preferences.isUsingTransparentCtl() ) {
              setTransparent(functionPanel);
              setTransparent(addressPanel);
              setTransparent(controlPanel);
              }*/
-            if (InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingRosterImage()) {
+            if (preferences.isUsingRosterImage()) {
                 backgroundPanel = new BackgroundPanel();
                 backgroundPanel.setAddressPanel(addressPanel); // reusing same way to do it than existing thing in functionPanel
                 addComponentListener(backgroundPanel); // backgroudPanel warned when desktop resized

@@ -101,9 +101,9 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     private String occupancySensorName = "";
     private String memoryName = "";
     private int occupiedSense = Sensor.ACTIVE;
-    private Color blockTrackColor = Color.black;
-    private Color blockOccupiedColor = Color.black;
-    private Color blockExtraColor = Color.black;
+    private Color blockTrackColor = Color.darkGray;
+    private Color blockOccupiedColor = Color.red;
+    private Color blockExtraColor = Color.white;
 
     /*
      * Creates a LayoutBlock object.

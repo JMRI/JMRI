@@ -22,18 +22,6 @@ public class CarColors extends RollingStockAttribute implements InstanceManagerA
     public CarColors() {
     }
 
-    /**
-     * Get the default instance of this class.
-     *
-     * @return the default instance of this class
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static synchronized CarColors instance() {
-        return InstanceManager.getDefault(CarColors.class);
-    }
-
     @Override
     protected String getDefaultNames() {
         return COLORS;

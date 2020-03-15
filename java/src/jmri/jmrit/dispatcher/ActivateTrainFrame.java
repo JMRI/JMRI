@@ -36,6 +36,7 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Displays the Activate New Train dialog and processes information entered
@@ -193,10 +194,10 @@ public class ActivateTrainFrame {
         if (initiateFrame == null) {
             initiateFrame = new JmriJFrame(Bundle.getMessage("AddTrainTitle"), false, true);
             initiateFrame.addHelpMenu("package.jmri.jmrit.dispatcher.NewTrain", true);
-            
+
             initiatePane = new JPanel();
             initiatePane.setLayout(new BoxLayout(initiatePane, BoxLayout.Y_AXIS));
-            
+
             // add buttons to load and save train information
             JPanel p0 = new JPanel();
             p0.setLayout(new FlowLayout());
@@ -451,7 +452,7 @@ public class ActivateTrainFrame {
                 }
             });
             addNewTrainButton.setToolTipText(Bundle.getMessage("AddNewTrainButtonHint"));
-            
+
             JPanel mainPane = new JPanel();
             mainPane.setLayout(new BoxLayout(mainPane, BoxLayout.Y_AXIS));
             JScrollPane scrPane = new JScrollPane(initiatePane);
@@ -459,7 +460,7 @@ public class ActivateTrainFrame {
             mainPane.add(scrPane);
             mainPane.add(p7);
             initiateFrame.setContentPane(mainPane);
-            
+
         }
         if (_TrainsFromRoster || _TrainsFromOperations) {
             trainBoxLabel.setVisible(true);
@@ -822,15 +823,12 @@ public class ActivateTrainFrame {
                 }
             }
             if (free) {
-                String tName = t.getSystemName();
+                String tName = t.getDisplayName();
                 transitBoxList.add(t);
-                String uname = t.getUserName();
-                if ((uname != null) && (!uname.equals("")) && (!uname.equals(tName))) {
-                    tName = tName + "(" + uname + ")";
-                }
                 transitSelectBox.addItem(tName);
             }
         }
+        JComboBoxUtil.setupComboBoxMaxRows(transitSelectBox);
         if (transitBoxList.size() > 0) {
             transitSelectBox.setSelectedIndex(0);
             selectedTransit = transitBoxList.get(0);
@@ -966,6 +964,7 @@ public class ActivateTrainFrame {
                 found = true;
             }
         }
+        JComboBoxUtil.setupComboBoxMaxRows(startingBlockBox);
     }
 
     private void initializeDestinationBlockCombo() {
@@ -988,16 +987,12 @@ public class ActivateTrainFrame {
             }
             destinationBlockBox.addItem(bName);
         }
+        JComboBoxUtil.setupComboBoxMaxRows(destinationBlockBox);
     }
 
     private String getBlockName(Block b) {
         if (b != null) {
-            String sName = b.getSystemName();
-            String uName = b.getUserName();
-            if ((uName != null) && (!uName.equals("")) && (!uName.equals(sName))) {
-                return (sName + "(" + uName + ")");
-            }
-            return sName;
+            return b.getDisplayName();
         }
         return " ";
     }
