@@ -82,13 +82,22 @@ public class WebServerAcceptanceSteps implements En {
 
            WebElement tableBody = webTable.findElement(By.tagName("tbody"));
            List<WebElement> rows = tableBody.findElements(By.tagName("tr"));
-           // we make an assumption that the first column is the systemName and
-           // the last column is the state
+           List<WebElement> header = rows.get(0).findElements(By.tagName("td"));
+           int nameCol=0;
+           int stateCol=3;
+           for(int i =0;i<header.size();i++){
+               if(header.get(i).equals("name")){
+                   nameCol =i;
+               }
+               if(header.get(i).equals("state")){
+                   stateCol = i;
+               }
+           }
            int i;
-           for(i =0; i< rows.size(); i++){
+           for(i =1; i< rows.size(); i++){
                List<WebElement> cols = rows.get(i).findElements(By.tagName("td"));
-               if(cols.size()>0 && cols.get(0).getText().equals(item)){
-                  assertThat(cols.get(cols.size()-1).getText()).isEqualTo(state);
+               if(cols.size()>0 && cols.get(nameCol).getText().equals(item)){
+                  assertThat(cols.get(stateCol).getText()).isEqualTo(state);
                   break;
                }
            }
