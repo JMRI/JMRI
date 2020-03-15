@@ -49,5 +49,6 @@
  * <dt>Extend {@link java.beans.Beans} introspection tools</dt>
  * <dd>{@link jmri.beans.BeanUtil} provides support for setting, getting,
  * and discovering JMRI arbitrary properties.</dd>
+ * </dl>
  */
 package jmri.beans;
