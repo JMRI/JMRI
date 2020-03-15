@@ -345,10 +345,6 @@
         for generating multiple documentation forms is also being
         considered.</li>
 
-        <li>
-        We also need to complete the conversion from JFCUnit to Jemmy for
-        Swing testing.</li>
-
         <li>USB access technology has advanced a lot since support
         for some basic libraries was added to JMRI. At some point,
         we should replace those early library versions, but it will
