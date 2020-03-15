@@ -7,7 +7,7 @@ import javax.annotation.CheckForNull;
 /**
  * Simple interface for basic methods that implement JMRI Bean handling methods.
  *
- * Various methods in {@link jmri.beans.Beans} test that objects implement this
+ * Various methods in {@link BeanUtil} test that objects implement this
  * interface before attempting to get or set properties of those objects.
  * Classes implementing this interface can bypass the need to introspect the
  * class to manipulate a property, and can also implement properties that the
@@ -19,7 +19,7 @@ import javax.annotation.CheckForNull;
  * extend or extends a subclass of Bean.
  *
  * @author Randall Wood
- * @see Beans
+ * @see BeanUtil
  * @see Bean
  */
 public interface BeanInterface {

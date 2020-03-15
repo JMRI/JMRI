@@ -30,7 +30,7 @@ public abstract class UnboundBean implements BeanInterface {
      */
     @Override
     public Object getIndexedProperty(String key, int index) {
-        return Beans.getIntrospectedIndexedProperty(this, key, index);
+        return BeanUtil.getIntrospectedIndexedProperty(this, key, index);
     }
 
     /**
@@ -46,7 +46,7 @@ public abstract class UnboundBean implements BeanInterface {
      */
     @Override
     public Object getProperty(String key) {
-        return Beans.getIntrospectedProperty(this, key);
+        return BeanUtil.getIntrospectedProperty(this, key);
     }
 
     /**
@@ -57,7 +57,7 @@ public abstract class UnboundBean implements BeanInterface {
      */
     @Override
     public Set<String> getPropertyNames() {
-        return Beans.getIntrospectedPropertyNames(this);
+        return BeanUtil.getIntrospectedPropertyNames(this);
     }
 
     /**
@@ -68,12 +68,12 @@ public abstract class UnboundBean implements BeanInterface {
      */
     @Override
     public boolean hasProperty(String key) {
-        return Beans.hasIntrospectedProperty(this, key);
+        return BeanUtil.hasIntrospectedProperty(this, key);
     }
 
     @Override
     public boolean hasIndexedProperty(String key) {
-        return Beans.hasIntrospectedIndexedProperty(this, key);
+        return BeanUtil.hasIntrospectedIndexedProperty(this, key);
     }
 
     /**
@@ -89,7 +89,7 @@ public abstract class UnboundBean implements BeanInterface {
      */
     @Override
     public void setIndexedProperty(String key, int index, Object value) {
-        Beans.setIntrospectedIndexedProperty(this, key, index, value);
+        BeanUtil.setIntrospectedIndexedProperty(this, key, index, value);
     }
 
     /**
@@ -102,6 +102,6 @@ public abstract class UnboundBean implements BeanInterface {
      */
     @Override
     public void setProperty(String key, Object value) {
-        Beans.setIntrospectedProperty(this, key, value);
+        BeanUtil.setIntrospectedProperty(this, key, value);
     }
 }

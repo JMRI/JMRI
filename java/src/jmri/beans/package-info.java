@@ -46,8 +46,8 @@
  * handling properties related to the JMRI preferences mechanisms.</li>
  * </ul>
  * </dd>
- * <dt>Extend {@linkplain java.beans.Beans} introspection tools</dt>
- * <dd>{@linkplain jmri.beans.Beans} extends java.beans.Beans to include support
- * for the JMRI arbitrary properties.</dd>
+ * <dt>Extend {@link java.beans.Beans} introspection tools</dt>
+ * <dd>{@link jmri.beans.BeanUtil} provides support for setting, getting,
+ * and discovering JMRI arbitrary properties.</dd>
  */
 package jmri.beans;

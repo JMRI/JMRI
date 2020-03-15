@@ -18,8 +18,8 @@ public class ConstrainedArbitraryBean extends ConstrainedBean {
     public void setProperty(String key, Object value) {
         try {
             this.fireVetoableChange(key, getProperty(key), value);
-            if (Beans.hasIntrospectedProperty(this, key)) {
-                Beans.setIntrospectedProperty(this, key, value);
+            if (BeanUtil.hasIntrospectedProperty(this, key)) {
+                BeanUtil.setIntrospectedProperty(this, key, value);
             } else {
                 Object oldValue = this.arbitraryPropertySupport.getProperty(key);
                 this.arbitraryPropertySupport.setProperty(key, value);
@@ -39,8 +39,8 @@ public class ConstrainedArbitraryBean extends ConstrainedBean {
     public void setIndexedProperty(String key, int index, Object value) {
         try {
             this.fireVetoableChange(new IndexedPropertyChangeEvent(this, key, this.getIndexedProperty(key, index), value, index));
-            if (Beans.hasIntrospectedIndexedProperty(this, key)) {
-                Beans.setIntrospectedIndexedProperty(this, key, index, value);
+            if (BeanUtil.hasIntrospectedIndexedProperty(this, key)) {
+                BeanUtil.setIntrospectedIndexedProperty(this, key, index, value);
             } else {
                 Object oldValue = this.arbitraryPropertySupport.getIndexedProperty(key, index);
                 this.arbitraryPropertySupport.setIndexedProperty(key, index, value);

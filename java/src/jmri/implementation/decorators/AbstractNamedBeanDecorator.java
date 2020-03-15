@@ -1,7 +1,7 @@
 package jmri.implementation.decorators;
 
 import jmri.NamedBean;
-import jmri.beans.Beans;
+import jmri.beans.BeanUtil;
 
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
@@ -117,7 +117,7 @@ public abstract class AbstractNamedBeanDecorator implements NamedBean {
     @OverridingMethodsMustInvokeSuper
     public synchronized void removePropertyChangeListener(PropertyChangeListener listener) {
         pcs.removePropertyChangeListener(listener);
-        if (listener != null && !Beans.contains(pcs.getPropertyChangeListeners(), listener)) {
+        if (listener != null && !BeanUtil.contains(pcs.getPropertyChangeListeners(), listener)) {
             register.remove(listener);
             listenerRefs.remove(listener);
         }
@@ -127,7 +127,7 @@ public abstract class AbstractNamedBeanDecorator implements NamedBean {
     @OverridingMethodsMustInvokeSuper
     public synchronized void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
         pcs.removePropertyChangeListener(propertyName, listener);
-        if (listener != null && !Beans.contains(pcs.getPropertyChangeListeners(), listener)) {
+        if (listener != null && !BeanUtil.contains(pcs.getPropertyChangeListeners(), listener)) {
             register.remove(listener);
             listenerRefs.remove(listener);
         }
