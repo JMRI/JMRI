@@ -64,7 +64,36 @@ public class WebServerAcceptanceSteps implements En {
             jmri.util.JUnitUtil.closeAllPanels();
         });
 
-        //Find the specified cell in the table, check value, then click on it and 
+        Then("^(.*) has item (.*) with state (.*)$", (String table, String item, String state) -> {
+           webDriver.get("http://localhost:12080/");
+           waitLoad();
+           // navigate to the table.
+           (webDriver.findElement(By.linkText("Tables"))).click();
+           (webDriver.findElement(By.linkText(table))).click();
+           waitLoad();
+           // wait for the table to load.
+           WebDriverWait wait = new WebDriverWait(webDriver, 10 );
+           wait.until(ExpectedConditions.visibilityOfElementLocated(By.tagName("table")));
+           WebElement webTable = webDriver.findElement(By.xpath("//div[@id='wrap']//div[@class='container']//table"));
+
+           // find the table body.
+
+           WebElement tableBody = webTable.findElement(By.tagName("tbody"));
+           List<WebElement> rows = tableBody.findElements(By.tagName("tr"));
+           // we make an assumption that the first column is the systemName and
+           // the last column is the state
+           int i;
+           for(i =0; i< rows.size(); i++){
+               List<WebElement> cols = rows.get(i).findElements(By.tagName("td"));
+               if(cols.size()>0 && cols.get(0).getText().equals(item)){
+                  assertThat(cols.get(cols.size()-1).getText()).isEqualTo(state);
+                  break;
+               }
+           }
+           assertThat(rows.size()).isNotEqualTo(i).withFailMessage("item not found");
+        });
+
+        //Find the specified cell in the table, check value, then click on it and
         //  verify new value is as expected. Some columns are not supposed to change. 
         Then("^table (.*) has row (.*) column (.*) with text (.*) after click (.*)$",
                 (String table, String row, String column, String text, String after) -> {
