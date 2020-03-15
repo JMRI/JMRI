@@ -413,7 +413,7 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li></li>
+                <li>Eckart Meyer updated the DB HV 1969 system to have proper aspect control.</li>
             </ul>
 
         <h4>Signal Heads</h4>
@@ -450,6 +450,20 @@
         <a id="SW" name="SW"></a>
         <ul>
             <li></li>
+        </ul>
+
+   <h3>Throttle</h3>
+        <a id="throttle" name="throttle"></a>
+        <ul>
+            <li>Add a speed step dropdown to the extended throttle;
+                this makes it easier to select the speed step mode and 
+                makes it possible to select the less common speed step modes 
+                exposed by some systems. 
+            </li>
+            <li>Consolidated the throttle layout code, 
+                centralized the logic for determining if throttle icons should be shown, 
+                and added unit tests for the control panel layout and some preferences.
+            </li>
         </ul>
 
     <h3>Timetable</h3>
