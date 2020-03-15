@@ -211,7 +211,6 @@ public class SimpleOperationsServer extends AbstractOperationsServer {
      * @return an ArrayList of Attributes of the constituent pieces of the
      *         message
      */
-    @Deprecated
     private static ArrayList<Attribute> parseOperationsMessage(String message) {
         ArrayList<Attribute> contents = new ArrayList<Attribute>();
         int start;
