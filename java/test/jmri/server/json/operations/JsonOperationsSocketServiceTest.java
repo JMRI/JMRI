@@ -390,6 +390,12 @@ public class JsonOperationsSocketServiceTest {
         assertThat(message).isNotNull();
         assertThat(message.path(JSON.DATA).path(JsonOperations.LOCATION).asText()).isEqualTo(location2.getName());
         assertThat(message.path(JSON.DATA).path(JSON.COMMENT).asText()).isEqualTo("Test comment for train STF");
+        // makes ignored change
+        service.onMessage(JsonOperations.TRAIN, mapper.createObjectNode().put(JSON.NAME, train.getId()).put(JSON.COMMENT, "Watch for coyotes"), new JsonRequest(locale, JSON.V5, JSON.POST, 42));
+        message = connection.getMessage();
+        assertThat(message).isNotNull();
+        assertThat(message.path(JSON.DATA).path(JsonOperations.LOCATION).asText()).isEqualTo(location2.getName());
+        assertThat(message.path(JSON.DATA).path(JSON.COMMENT).asText()).isEqualTo("Test comment for train STF");
         // gets external change
         train.setComment("Watch for coyotes");
         message = connection.getMessage();

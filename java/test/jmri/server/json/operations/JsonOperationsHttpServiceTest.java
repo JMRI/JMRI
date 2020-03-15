@@ -731,6 +731,12 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         validate(result);
         assertTrue(result.isArray());
         assertEquals(3, result.size());
+        // add empty name
+        try {
+            service.doPut(JsonOperations.CAR_TYPE, "", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.PUT, 0));
+        } catch (JsonException ex) {
+            assertThat(ex.getCode()).isEqualTo(400);
+        }
     }
 
     @Test
@@ -792,6 +798,143 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertNull(c1.getKernel());
     }
 
+    @Test
+    public void testDoPutInvalidCar() {
+        // put a car without a road
+        try {
+            service.doPut(JsonOperations.CAR, "", service.getObjectMapper().createObjectNode()
+                    .put(JSON.NUMBER, "1234"),
+                    new JsonRequest(locale, JSON.V5, JSON.PUT, 0));
+            fail("Expected exception not thrown");
+        } catch (JsonException ex) {
+            assertThat(ex.getCode()).isEqualTo(400);
+            assertThat(ex.getMessage()).isEqualTo("Property \"road\" is required to create a new car.");
+        }
+        // put a car without a number
+        try {
+            service.doPut(JsonOperations.CAR, "", service.getObjectMapper().createObjectNode()
+                    .put(JSON.ROAD, "GNWR"),
+                    new JsonRequest(locale, JSON.V5, JSON.PUT, 0));
+            fail("Expected exception not thrown");
+        } catch (JsonException ex) {
+            assertThat(ex.getCode()).isEqualTo(400);
+            assertThat(ex.getMessage()).isEqualTo("Property \"number\" is required to create a new car.");
+        }
+        // put an already existing car by road and number
+        Car car = InstanceManager.getDefault(CarManager.class).getById("CP777");
+        assertThat(car).isNotNull();
+        try {
+            service.doPut(JsonOperations.CAR, "", service.getObjectMapper().createObjectNode()
+                    .put(JSON.ROAD, car.getRoadName())
+                    .put(JSON.NUMBER, car.getNumber()),
+                    new JsonRequest(locale, JSON.V5, JSON.PUT, 0));
+            fail("Expected exception not thrown");
+        } catch (JsonException ex) {
+            assertThat(ex.getCode()).isEqualTo(409);
+            assertThat(ex.getMessage()).isEqualTo("Unable to create new car with road number CP 777 since another car with that road number already exists.");
+        }
+        // put an already existing car by id
+        try {
+            service.doPut(JsonOperations.CAR, car.getId(), service.getObjectMapper().createObjectNode()
+                    .put(JSON.ROAD, car.getRoadName())
+                    .put(JSON.NUMBER, car.getNumber()),
+                    new JsonRequest(locale, JSON.V5, JSON.PUT, 0));
+            fail("Expected exception not thrown");
+        } catch (JsonException ex) {
+            assertThat(ex.getCode()).isEqualTo(409);
+            assertThat(ex.getMessage()).isEqualTo("Unable to create new car with road number CP 777 since another car with that road number already exists.");
+        }
+    }
+
+    @Test
+    public void testDoPutInvalidEngine() {
+        // put an engine without a road
+        try {
+            service.doPut(JsonOperations.ENGINE, "", service.getObjectMapper().createObjectNode()
+                    .put(JSON.NUMBER, "1234"),
+                    new JsonRequest(locale, JSON.V5, JSON.PUT, 0));
+            fail("Expected exception not thrown");
+        } catch (JsonException ex) {
+            assertThat(ex.getCode()).isEqualTo(400);
+            assertThat(ex.getMessage()).isEqualTo("Property \"road\" is required to create a new engine.");
+        }
+        // put an engine without a number
+        try {
+            service.doPut(JsonOperations.ENGINE, "", service.getObjectMapper().createObjectNode()
+                    .put(JSON.ROAD, "GNWR"),
+                    new JsonRequest(locale, JSON.V5, JSON.PUT, 0));
+            fail("Expected exception not thrown");
+        } catch (JsonException ex) {
+            assertThat(ex.getCode()).isEqualTo(400);
+            assertThat(ex.getMessage()).isEqualTo("Property \"number\" is required to create a new engine.");
+        }
+        // put an already existing engine by road and number
+        Engine engine = InstanceManager.getDefault(EngineManager.class).getById("PC5016");
+        assertThat(engine).isNotNull();
+        try {
+            service.doPut(JsonOperations.ENGINE, "", service.getObjectMapper().createObjectNode()
+                    .put(JSON.ROAD, engine.getRoadName())
+                    .put(JSON.NUMBER, engine.getNumber()),
+                    new JsonRequest(locale, JSON.V5, JSON.PUT, 0));
+            fail("Expected exception not thrown");
+        } catch (JsonException ex) {
+            assertThat(ex.getCode()).isEqualTo(409);
+            assertThat(ex.getMessage()).isEqualTo("Unable to create new engine with road number PC 5016 since another engine with that road number already exists.");
+        }
+        // put an already existing engine by id
+        try {
+            service.doPut(JsonOperations.ENGINE, engine.getId(), service.getObjectMapper().createObjectNode()
+                    .put(JSON.ROAD, engine.getRoadName())
+                    .put(JSON.NUMBER, engine.getNumber()),
+                    new JsonRequest(locale, JSON.V5, JSON.PUT, 0));
+            fail("Expected exception not thrown");
+        } catch (JsonException ex) {
+            assertThat(ex.getCode()).isEqualTo(409);
+            assertThat(ex.getMessage()).isEqualTo("Unable to create new engine with road number PC 5016 since another engine with that road number already exists.");
+        }
+    }
+
+    @Test
+    public void testDoDeleteInvalidType() {
+        try {
+            service.doDelete("invalid-type", "", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.DELETE, 0));
+            fail("Expected exception not thrown");
+        } catch (JsonException ex) {
+            assertThat(ex.getCode()).isEqualTo(405);
+        }
+    }
+
+    @Test
+    public void testPostLocationInvalidReporter() throws JsonException {
+        Location location = InstanceManager.getDefault(LocationManager.class).getLocationById("1");
+        assertThat(location.getReporter()).isNull();
+        try {
+            service.doPost(JsonOperations.LOCATION, location.getId(), service.getObjectMapper().createObjectNode().put(JsonReporter.REPORTER, "no-such-reporter"), new JsonRequest(locale, JSON.V5, JSON.POST, 0));
+            fail("Expected exception not thrown");
+        } catch (JsonException ex) {
+            assertThat(ex.getCode()).isEqualTo(404);
+            assertThat(ex.getMessage()).isEqualTo("Object type reporter named \"no-such-reporter\" not found.");
+        }
+    }
+
+    @Test
+    public void testPostTrackInvalidReporter() throws JsonException {
+        Location location = InstanceManager.getDefault(LocationManager.class).getLocationById("1");
+        Track track = location.getTrackById("1s1");
+        assertThat(track.getReporter()).isNull();
+        try {
+            service.doPost(JsonOperations.TRACK, track.getId(),
+                    service.getObjectMapper().createObjectNode()
+                            .put(JsonReporter.REPORTER, "no-such-reporter")
+                            .put(JsonOperations.LOCATION,  location.getId()),
+                    new JsonRequest(locale, JSON.V5, JSON.POST, 0));
+            fail("Expected exception not thrown");
+        } catch (JsonException ex) {
+            assertThat(ex.getCode()).isEqualTo(404);
+            assertThat(ex.getMessage()).isEqualTo("Object type reporter named \"no-such-reporter\" not found.");
+        }
+    }
+    
     @Before
     @Override
     public void setUp() throws Exception {
