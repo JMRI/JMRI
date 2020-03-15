@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.InstanceManagerAutoInitialize;
+import jmri.beans.PropertyChangeProvider;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
@@ -40,7 +41,7 @@ import jmri.util.ColorUtil;
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011, 2012, 2013,
  * 2014
  */
-public class TrainManager implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize, PropertyChangeListener {
+public class TrainManager implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize, PropertyChangeListener, PropertyChangeProvider {
 
     static final String NONE = "";
 
@@ -1171,12 +1172,10 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
      */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        log.debug("TrainManager sees property change: "
-                + e.getPropertyName()
-                + " old: "
-                + e.getOldValue()
-                + " new "
-                + e.getNewValue()); // NOI18N
+        log.debug("TrainManager sees property change: {} old: {} new: {}",
+                e.getPropertyName(),
+                e.getOldValue(),
+                e.getNewValue());
         // TODO use listener to determine if load name has changed
         // if (e.getPropertyName().equals(CarLoads.LOAD_NAME_CHANGED_PROPERTY)){
         // replaceLoad((String)e.getOldValue(), (String)e.getNewValue());
@@ -1185,12 +1184,34 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
 
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
 
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
+    @Override
+    public synchronized void addPropertyChangeListener(PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
     }
 
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
+    @Override
+    public synchronized void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(propertyName, listener);
+    }
+
+    @Override
+    public synchronized void removePropertyChangeListener(PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
+    }
+
+    @Override
+    public synchronized PropertyChangeListener[] getPropertyChangeListeners() {
+        return pcs.getPropertyChangeListeners();
+    }
+
+    @Override
+    public synchronized PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
+        return pcs.getPropertyChangeListeners(propertyName);
+    }
+
+    @Override
+    public synchronized void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        pcs.removePropertyChangeListener(propertyName, listener);
     }
 
     private void setDirtyAndFirePropertyChange(String p, Object old, Object n) {

@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.beans.PropertyChangeProvider;
 import jmri.jmrit.operations.Identified;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -46,10 +47,10 @@ import jmri.server.json.JsonSocketService;
  */
 public class JsonOperationsSocketService extends JsonSocketService<JsonOperationsHttpService> {
 
-    private final HashMap<String, SingleListener<Car>> carListeners = new HashMap<>();
-    private final HashMap<String, SingleListener<Engine>> engineListeners = new HashMap<>();
-    private final HashMap<String, SingleListener<Location>> locationListeners = new HashMap<>();
-    private final HashMap<String, SingleListener<Train>> trainListeners = new HashMap<>();
+    private final HashMap<String, ObjectListener<Car>> carListeners = new HashMap<>();
+    private final HashMap<String, ObjectListener<Engine>> engineListeners = new HashMap<>();
+    private final HashMap<String, ObjectListener<Location>> locationListeners = new HashMap<>();
+    private final HashMap<String, ObjectListener<Train>> trainListeners = new HashMap<>();
     private final CarsListener carsListener = new CarsListener();
     private final EnginesListener enginesListener = new EnginesListener();
     private final LocationsListener locationsListener = new LocationsListener();
@@ -179,16 +180,6 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
         }
     }
 
-    private void sendListChange(String type) throws IOException {
-        try {
-            connection.sendMessage(service.doGetList(type, service.getObjectMapper().createObjectNode(),
-                    new JsonRequest(getLocale(), getVersion(), JSON.GET, 0)), 0);
-        } catch (JsonException ex) {
-            log.warn("json error sending {}: {}", type, ex.getJsonMessage());
-            connection.sendMessage(ex.getJsonMessage(), 0);
-        }
-    }
-
     @Override
     public void onClose() {
         carListeners.values().forEach(listener -> listener.object.removePropertyChangeListener(listener));
@@ -205,16 +196,16 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
         InstanceManager.getDefault(TrainManager.class).removePropertyChangeListener(trainsListener);
     }
 
-    private abstract class SingleListener<O extends Identified> implements PropertyChangeListener {
+    private abstract class ObjectListener<O extends Identified> implements PropertyChangeListener {
         
         protected final O object;
         
-        protected SingleListener(@Nonnull O obj) {
+        protected ObjectListener(@Nonnull O obj) {
             Objects.requireNonNull(obj);
             this.object = obj;
         }
         
-        protected void propertyChange(String type, HashMap<String, SingleListener<O>> map) {
+        protected void propertyChange(String type, HashMap<String, ObjectListener<O>> map) {
             try {
                 sendSingleChange(type, object);
             } catch (IOException ex) {
@@ -236,7 +227,35 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
         }
     }
 
-    private class CarListener extends SingleListener<Car> {
+    private abstract class ManagerListener<M extends PropertyChangeProvider> implements PropertyChangeListener {
+    
+        protected final M manager;
+        
+        protected ManagerListener(@Nonnull M mgr) {
+            Objects.requireNonNull(mgr);
+            this.manager = mgr;
+        }
+
+        protected void propertyChange(String type) {
+            try {
+                sendListChange(type);
+            } catch (IOException ex) {
+                manager.removePropertyChangeListener(this);
+            }
+        }
+
+        private void sendListChange(String type) throws IOException {
+            try {
+                connection.sendMessage(service.doGetList(type, service.getObjectMapper().createObjectNode(),
+                        new JsonRequest(getLocale(), getVersion(), JSON.GET, 0)), 0);
+            } catch (JsonException ex) {
+                log.warn("json error sending {}: {}", type, ex.getJsonMessage());
+                connection.sendMessage(ex.getJsonMessage(), 0);
+            }
+        }
+    }
+
+    private class CarListener extends ObjectListener<Car> {
 
         protected CarListener(String id) {
             super(InstanceManager.getDefault(CarManager.class).getById(id));
@@ -248,23 +267,19 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
         }
     }
 
-    private class CarsListener implements PropertyChangeListener {
+    private class CarsListener extends ManagerListener<CarManager> {
+
+        protected CarsListener() {
+            super(InstanceManager.getDefault(CarManager.class));
+        }
 
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            log.debug("in CarsListener for '{}' ('{}' => '{}')", evt.getPropertyName(), evt.getOldValue(),
-                    evt.getNewValue());
-            try {
-                sendListChange(CARS);
-            } catch (IOException ex) {
-                // stop listening to this manager on error
-                log.debug("deregistering carsListener due to IOException");
-                InstanceManager.getDefault(CarManager.class).removePropertyChangeListener(carsListener);
-            }
+            propertyChange(CAR);
         }
     }
 
-    private class EngineListener extends SingleListener<Engine> {
+    private class EngineListener extends ObjectListener<Engine> {
 
         protected EngineListener(String id) {
             super(InstanceManager.getDefault(EngineManager.class).getById(id));
@@ -276,23 +291,19 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
         }
     }
 
-    private class EnginesListener implements PropertyChangeListener {
+    private class EnginesListener extends ManagerListener<EngineManager> {
+
+        protected EnginesListener() {
+            super(InstanceManager.getDefault(EngineManager.class));
+        }
 
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            log.debug("in EnginesListener for '{}' ('{}' => '{}')", evt.getPropertyName(), evt.getOldValue(),
-                    evt.getNewValue());
-            try {
-                sendListChange(ENGINE);
-            } catch (IOException ex) {
-                // stop listening to this manager on error
-                log.debug("deregistering enginesListener due to IOException");
-                InstanceManager.getDefault(CarManager.class).removePropertyChangeListener(enginesListener);
-            }
+            propertyChange(ENGINE);
         }
     }
 
-    private class LocationListener extends SingleListener<Location> {
+    private class LocationListener extends ObjectListener<Location> {
 
         protected LocationListener(String id) {
             super(InstanceManager.getDefault(LocationManager.class).getLocationById(id));
@@ -304,23 +315,19 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
         }
     }
 
-    private class LocationsListener implements PropertyChangeListener {
+    private class LocationsListener extends ManagerListener<LocationManager> {
+
+        protected LocationsListener() {
+            super(InstanceManager.getDefault(LocationManager.class));
+        }
 
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            log.debug("in LocationsListener for '{}' ('{}' => '{}')", evt.getPropertyName(), evt.getOldValue(),
-                    evt.getNewValue());
-            try {
-                sendListChange(LOCATION);
-            } catch (IOException ex) {
-                // stop listening to this manager on error
-                log.debug("deregistering locationsListener due to IOException");
-                InstanceManager.getDefault(LocationManager.class).removePropertyChangeListener(locationsListener);
-            }
+            propertyChange(LOCATION);
         }
     }
 
-    private class TrainListener extends SingleListener<Train> {
+    private class TrainListener extends ObjectListener<Train> {
 
         protected TrainListener(String id) {
             super(InstanceManager.getDefault(TrainManager.class).getTrainById(id));
@@ -332,19 +339,15 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
         }
     }
 
-    private class TrainsListener implements PropertyChangeListener {
+    private class TrainsListener extends ManagerListener<TrainManager> {
+
+        protected TrainsListener() {
+            super(InstanceManager.getDefault(TrainManager.class));
+        }
 
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            log.debug("in TrainsListener for '{}' ('{}' => '{}')", evt.getPropertyName(), evt.getOldValue(),
-                    evt.getNewValue());
-            try {
-                sendListChange(TRAIN);
-            } catch (IOException ex) {
-                // stop listening to this manager on error
-                log.debug("deregistering trainsListener due to IOException");
-                InstanceManager.getDefault(TrainManager.class).removePropertyChangeListener(trainsListener);
-            }
+            propertyChange(TRAIN);
         }
     }
 }

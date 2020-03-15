@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
+import jmri.beans.PropertyChangeProvider;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.trains.Train;
@@ -21,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * @author Daniel Boudreau Copyright (C) 2010, 2011
  * @param <T> the type of RollingStock managed by this manager
  */
-public abstract class RollingStockManager<T extends RollingStock> implements PropertyChangeListener {
+public abstract class RollingStockManager<T extends RollingStock> implements PropertyChangeListener, PropertyChangeProvider {
 
     public static final String NONE = "";
 
@@ -617,12 +618,34 @@ public abstract class RollingStockManager<T extends RollingStock> implements Pro
 
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
 
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
+    @Override
+    public synchronized void addPropertyChangeListener(PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
     }
 
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
+    @Override
+    public synchronized void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(propertyName, listener);
+    }
+
+    @Override
+    public synchronized void removePropertyChangeListener(PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
+    }
+
+    @Override
+    public synchronized PropertyChangeListener[] getPropertyChangeListeners() {
+        return pcs.getPropertyChangeListeners();
+    }
+
+    @Override
+    public synchronized PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
+        return pcs.getPropertyChangeListeners(propertyName);
+    }
+
+    @Override
+    public synchronized void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        pcs.removePropertyChangeListener(propertyName, listener);
     }
 
     protected void firePropertyChange(String p, Object old, Object n) {

@@ -8,8 +8,8 @@ import javax.annotation.Nonnull;
 import jmri.beans.PropertyChangeProvider;
 
 /**
- * An object that has an identity.
- *
+ * An operations object that has an identity and provides support for listening to property changes.Ï
+ * 
  * @author Randall Wood Copyright 2020
  */
 public abstract class Identified implements PropertyChangeProvider {

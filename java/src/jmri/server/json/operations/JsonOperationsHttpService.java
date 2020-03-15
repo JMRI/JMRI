@@ -43,7 +43,6 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
-import javax.annotation.CheckForNull;
 import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -156,8 +155,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
     }
 
     @Override
-    // Nullable overrides super class'es non-null requirement for name
-    public JsonNode doPut(String type, @CheckForNull String name, JsonNode data, JsonRequest request)
+    public JsonNode doPut(String type, String name, JsonNode data, JsonRequest request)
             throws JsonException {
         Locale locale = request.locale;
         int id = request.id;
@@ -177,10 +175,9 @@ public class JsonOperationsHttpService extends JsonHttpService {
                     throw new JsonException(HttpServletResponse.SC_CONFLICT,
                             Bundle.getMessage(locale, "ErrorPutRollingStockConflict", type, road, number), id); // NOI18N
                 }
-                Car car = carManager().newRS(road, number);
-                return message(type, postCar(car, data, locale, id), id);
+                return message(type, postCar(carManager().newRS(road, number), data, locale, id), id);
             case CAR_TYPE:
-                if (name == null) {
+                if (name.isEmpty()) {
                     throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
                             Bundle.getMessage(locale, JsonException.ERROR_MISSING_PROPERTY_PUT, NAME, type), id); // NOI18N
                 }
@@ -201,22 +198,20 @@ public class JsonOperationsHttpService extends JsonHttpService {
                     throw new JsonException(HttpServletResponse.SC_CONFLICT,
                             Bundle.getMessage(locale, "ErrorPutRollingStockConflict", type, road, number), id); // NOI18N
                 }
-                Engine engine = engineManager().newRS(road, number);
-                return message(type, postEngine(engine, data, locale, id), id);
+                return message(type, postEngine(engineManager().newRS(road, number), data, locale, id), id);
             case KERNEL:
-                if (name == null) {
+                if (name.isEmpty()) {
                     throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
                             Bundle.getMessage(locale, JsonException.ERROR_MISSING_PROPERTY_PUT, NAME, type), id); // NOI18N
                 }
-                Kernel kernel = carManager().newKernel(name);
-                return getKernel(kernel, locale, id);
+                return getKernel(carManager().newKernel(name), locale, id);
             case LOCATION:
                 if (data.path(USERNAME).isMissingNode()) {
                     throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
                             Bundle.getMessage(locale, JsonException.ERROR_MISSING_PROPERTY_PUT, USERNAME, type), id); // NOI18N
                 }
                 String userName = data.path(USERNAME).asText();
-                if (name != null && locationManager().getLocationById(name) != null) {
+                if (locationManager().getLocationById(name) != null) {
                     throw new JsonException(HttpServletResponse.SC_CONFLICT,
                             Bundle.getMessage(locale, "ErrorPutNameConflict", type, name), id); // NOI18N
                 }
@@ -224,8 +219,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
                     throw new JsonException(HttpServletResponse.SC_CONFLICT,
                             Bundle.getMessage(locale, "ErrorPutUserNameConflict", type, userName), id); // NOI18N
                 }
-                Location location = locationManager().newLocation(userName);
-                return message(type, postLocation(location, data, locale, id), id);
+                return message(type, postLocation(locationManager().newLocation(userName), data, locale, id), id);
             case TRACK:
                 if (data.path(USERNAME).isMissingNode()) {
                     throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
@@ -242,12 +236,12 @@ public class JsonOperationsHttpService extends JsonHttpService {
                             Bundle.getMessage(locale, JsonException.ERROR_MISSING_PROPERTY_PUT, LOCATION, type), id); // NOI18N
                 }
                 String locationName = data.path(LOCATION).asText();
-                location = locationManager().getLocationById(locationName);
+                Location location = locationManager().getLocationById(locationName);
                 if (location == null) {
                     throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
                             Bundle.getMessage(locale, JsonException.ERROR_NOT_FOUND, LOCATION, locationName), id); // NOI18N
                 }
-                if (name != null && location.getTrackById(name) != null) {
+                if (location.getTrackById(name) != null) {
                     throw new JsonException(HttpServletResponse.SC_CONFLICT,
                             Bundle.getMessage(locale, "ErrorPutNameConflict", type, name), id); // NOI18N
                 }
@@ -255,13 +249,8 @@ public class JsonOperationsHttpService extends JsonHttpService {
                     throw new JsonException(HttpServletResponse.SC_CONFLICT,
                             Bundle.getMessage(locale, "ErrorPutUserNameConflict", type, userName), id); // NOI18N
                 }
-                Track track = location.addTrack(userName, trackType);
-                return message(type, postTrack(track, data, locale, id), id);
+                return message(type, postTrack(location.addTrack(userName, trackType), data, locale, id), id);
             default:
-                if (name == null) {
-                    throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
-                            Bundle.getMessage(locale, JsonException.ERROR_MISSING_PROPERTY_PUT, NAME, type), id); // NOI18N
-                }
                 return super.doPut(type, name, data, request);
         }
     }
