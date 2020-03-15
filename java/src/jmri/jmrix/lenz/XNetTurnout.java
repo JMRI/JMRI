@@ -263,7 +263,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         // address in for the address. after the message is returned.
         XNetMessage msg = XNetMessage.getFeedbackRequestMsg(mNumber,
                 ((mNumber - 1) % 4) < 2);
-        queueMessage(msg,STATUSREQUESTSENT ,null); //status is returned via the manager.
+        queueMessage(msg,IDLE,null); //status is returned via the manager.
 
     }
 
