@@ -1,7 +1,7 @@
 /**
  * Contains JMRI classes related to supporting JavaBeans and
  * {@link java.beans.PropertyChangeListener}s. The classes in this package can
- * be broadly separated into four purposes:
+ * be broadly separated into five purposes:
  * <dl>
  * <dt>Implementing the {@link java.beans.PropertyChangeSupport} listener
  * management API</dt>
@@ -36,6 +36,16 @@
  * this package, principally {@link jmri.beans.ArbitraryBean} and
  * {@link jmri.beans.ConstrainedArbitraryBean}, provide simple concrete
  * implementations of that interface that can be built upon.</dd>
+ * <dt>Provide basic implementations of specific types of Beans</dt>
+ * <dd>
+ * <ul>
+ * <li>{@link jmri.beans.IdentifiedBean} and
+ * {@link jmri.beans.MutableIdentifiedBean} provide a bean with an identity
+ * property.</li>
+ * <li>{@link jmri.beans.PreferencesBean} provides a bean with methods for
+ * handling properties related to the JMRI preferences mechanisms.</li>
+ * </ul>
+ * </dd>
  * <dt>Extend {@linkplain java.beans.Beans} introspection tools</dt>
  * <dd>{@linkplain jmri.beans.Beans} extends java.beans.Beans to include support
  * for the JMRI arbitrary properties.</dd>

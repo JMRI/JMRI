@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import jmri.IdTag;
 import jmri.IdTagManager;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.Identified;
+import jmri.beans.IdentifiedBean;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
@@ -29,7 +29,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  *
  * @author Daniel Boudreau Copyright (C) 2009, 2010, 2013
  */
-public abstract class RollingStock extends Identified implements PropertyChangeListener {
+public abstract class RollingStock extends IdentifiedBean implements PropertyChangeListener {
 
     public static final String NONE = "";
     public static final int DEFAULT_BLOCKING_ORDER = 0;

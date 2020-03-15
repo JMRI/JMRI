@@ -25,8 +25,8 @@ import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.beans.IdentifiedBean;
 import jmri.beans.PropertyChangeProvider;
-import jmri.jmrit.operations.Identified;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.rollingstock.RollingStock;
@@ -47,10 +47,10 @@ import jmri.server.json.JsonSocketService;
  */
 public class JsonOperationsSocketService extends JsonSocketService<JsonOperationsHttpService> {
 
-    private final HashMap<String, ObjectListener<Car>> carListeners = new HashMap<>();
-    private final HashMap<String, ObjectListener<Engine>> engineListeners = new HashMap<>();
-    private final HashMap<String, ObjectListener<Location>> locationListeners = new HashMap<>();
-    private final HashMap<String, ObjectListener<Train>> trainListeners = new HashMap<>();
+    private final HashMap<String, BeanListener<Car>> carListeners = new HashMap<>();
+    private final HashMap<String, BeanListener<Engine>> engineListeners = new HashMap<>();
+    private final HashMap<String, BeanListener<Location>> locationListeners = new HashMap<>();
+    private final HashMap<String, BeanListener<Train>> trainListeners = new HashMap<>();
     private final CarsListener carsListener = new CarsListener();
     private final EnginesListener enginesListener = new EnginesListener();
     private final LocationsListener locationsListener = new LocationsListener();
@@ -182,13 +182,13 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
 
     @Override
     public void onClose() {
-        carListeners.values().forEach(listener -> listener.object.removePropertyChangeListener(listener));
+        carListeners.values().forEach(listener -> listener.bean.removePropertyChangeListener(listener));
         carListeners.clear();
-        engineListeners.values().forEach(listener -> listener.object.removePropertyChangeListener(listener));
+        engineListeners.values().forEach(listener -> listener.bean.removePropertyChangeListener(listener));
         engineListeners.clear();
-        locationListeners.values().forEach(listener -> listener.object.removePropertyChangeListener(listener));
+        locationListeners.values().forEach(listener -> listener.bean.removePropertyChangeListener(listener));
         locationListeners.clear();
-        trainListeners.values().forEach(listener -> listener.object.removePropertyChangeListener(listener));
+        trainListeners.values().forEach(listener -> listener.bean.removePropertyChangeListener(listener));
         trainListeners.clear();
         InstanceManager.getDefault(CarManager.class).removePropertyChangeListener(carsListener);
         InstanceManager.getDefault(EngineManager.class).removePropertyChangeListener(enginesListener);
@@ -196,28 +196,27 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
         InstanceManager.getDefault(TrainManager.class).removePropertyChangeListener(trainsListener);
     }
 
-    private abstract class ObjectListener<O extends Identified> implements PropertyChangeListener {
+    private abstract class BeanListener<B extends IdentifiedBean> implements PropertyChangeListener {
         
-        protected final O object;
+        protected final B bean;
         
-        protected ObjectListener(@Nonnull O obj) {
-            Objects.requireNonNull(obj);
-            this.object = obj;
+        protected BeanListener(@Nonnull B bean) {
+            this.bean = bean;
         }
         
-        protected void propertyChange(String type, HashMap<String, ObjectListener<O>> map) {
+        protected void propertyChange(String type, HashMap<String, BeanListener<B>> map) {
             try {
-                sendSingleChange(type, object);
+                sendSingleChange(type);
             } catch (IOException ex) {
                 // stop listening to this object on error
-                object.removePropertyChangeListener(this);
-                map.remove(object.getId());
+                bean.removePropertyChangeListener(this);
+                map.remove(bean.getId());
             }
         }
 
-        private <E extends Identified> void sendSingleChange(String type, E object) throws IOException {
+        private void sendSingleChange(String type) throws IOException {
             try {
-                connection.sendMessage(service.doGet(type, object.getId(),
+                connection.sendMessage(service.doGet(type, bean.getId(),
                         connection.getObjectMapper().createObjectNode(),
                         new JsonRequest(getLocale(), getVersion(), JSON.GET, 0)), 0);
             } catch (JsonException ex) {
@@ -255,7 +254,7 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
         }
     }
 
-    private class CarListener extends ObjectListener<Car> {
+    private class CarListener extends BeanListener<Car> {
 
         protected CarListener(String id) {
             super(InstanceManager.getDefault(CarManager.class).getById(id));
@@ -279,7 +278,7 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
         }
     }
 
-    private class EngineListener extends ObjectListener<Engine> {
+    private class EngineListener extends BeanListener<Engine> {
 
         protected EngineListener(String id) {
             super(InstanceManager.getDefault(EngineManager.class).getById(id));
@@ -303,7 +302,7 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
         }
     }
 
-    private class LocationListener extends ObjectListener<Location> {
+    private class LocationListener extends BeanListener<Location> {
 
         protected LocationListener(String id) {
             super(InstanceManager.getDefault(LocationManager.class).getLocationById(id));
@@ -327,7 +326,7 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
         }
     }
 
-    private class TrainListener extends ObjectListener<Train> {
+    private class TrainListener extends BeanListener<Train> {
 
         protected TrainListener(String id) {
             super(InstanceManager.getDefault(TrainManager.class).getTrainById(id));
