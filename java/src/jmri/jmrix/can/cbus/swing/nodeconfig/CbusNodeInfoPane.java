@@ -29,7 +29,7 @@ public class CbusNodeInfoPane extends CbusNodeConfigTab {
     private URI supportlink;
     private JLabel header;
     private JPanel menuPane;
-    private JTextArea textArea;
+    protected JTextArea textArea;
     private CbusNodeParameterManager paramMgr;
     private JScrollPane textAreaPanel;
     

@@ -19,10 +19,6 @@ import org.junit.Test;
  */
 public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase {
 
-    private CanSystemConnectionMemo memo = null;
-    // private TrafficControllerScaffold tc;
-    // CbusLightManager l;
-
     @Test
     public void testctor() {
         // create and register the manager object
@@ -343,12 +339,15 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
     public void testvalidSystemNameConfig() {
         Assert.assertTrue(l.validSystemNameConfig("ML+123"));
         try {
-            l.validSystemNameConfig("");
-            Assert.fail("Expected exception not thrown");
+            boolean val = l.validSystemNameConfig("");
+            Assert.fail("Expected exception not thrown " + val);
         } catch (StringIndexOutOfBoundsException ex) {
             Assert.assertEquals("String index out of range: -2", ex.getMessage());
         }
     }
+    
+    private CanSystemConnectionMemo memo;
+    private TrafficControllerScaffold tc;
 
     // The minimal setup for log4J
     @Before
@@ -356,15 +355,18 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
     public void setUp() {
         JUnitUtil.setUp();
         memo = new CanSystemConnectionMemo();
-        memo.setTrafficController(new TrafficControllerScaffold());
+        tc = new TrafficControllerScaffold();
+        memo.setTrafficController(tc);
         l = new CbusLightManager(memo);
     }
 
     @After
     public void tearDown() {
         l.dispose();
+        tc.terminateThreads();
+        tc = null;
         memo.dispose();
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        memo = null;
         JUnitUtil.tearDown();
 
     }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" href="/xml/XSLT/antdoc.xsl"?> 
+<?xml-stylesheet type="text/xsl" href="/xml/XSLT/antdoc.xsl"?>
 <!-- Ant build.xml file for JMRI development                                -->
 <!-- Bob Jacobsen, Copyright 2002-2017                                      -->
 
@@ -138,7 +138,6 @@
         <pathelement location="${libdir}/javax.servlet-api-3.1.0.jar"/>
         <pathelement location="${libdir}/vecmath-1.5.2.jar"/>
         <pathelement location="${libdir}/mailapi.jar"/>
-        <pathelement location="${libdir}/smtp.jar"/>
         <pathelement location="${libdir}/xAPlib.jar"/>
         <pathelement location="${libdir}/jna-4.4.0.jar"/>
         <pathelement location="${libdir}/jna-platform-4.4.0.jar"/>
@@ -224,7 +223,7 @@
         <pathelement location="${libdir}/jsr305.jar"/>
         <pathelement location="${libdir}/spotbugs-annotations.jar"/>
         <!-- ServiceProvider annotations -->
-        <pathelement location="${libdir}/org-openide-util-lookup-RELEASE110.jar"/>
+        <pathelement location="${libdir}/org-openide-util-lookup-RELEASE113.jar"/>
     </path>
 
     <!-- path to run regular executables -->
@@ -368,9 +367,7 @@
         <quiet>
         <mkdir dir="${target}"/>
         <mkdir dir="${target}/resources"/>
-        <mkdir dir="${basedir}/target/testreport"/>
-        <mkdir dir="${genjavasrcdir}/jmri/jmris/srcp/parser"/>
-        <mkdir dir="${genjavasrcdir}/jmri/jmrix/srcp/parser"/>
+        <mkdir dir="${maventarget}/testreport"/>
         </quiet>
 
         <filterset id="release-information"
@@ -435,7 +432,7 @@
         <delete dir="temp"/>
         <delete dir="web/TrainCrew"/>
         <delete dir="lib/cachedir"/>
-        <delete dir="${coveragetarget}"/>
+        <delete dir="java/tmp"/>
         <delete includeEmptyDirs="true" quiet="true" verbose="true">
             <!-- .gitignore build artifacts -->
             <fileset file="jmri.jar"/>
@@ -457,7 +454,6 @@
         <delete dir="${javadir}/classes"/>
         <delete dir="${javadir}/test-classes"/>
         <delete dir="${dist}"/>
-        <delete dir="${genjavasrcdir}"/>
         <delete dir="${tempdir}"/>
         <delete includeEmptyDirs="true" quiet="true"  verbose="true">
             <fileset file="log.txt"/>
@@ -508,7 +504,7 @@
     <!-- target/classes where the jmri.Version class can reference -->
     <!-- the values at run time -->
     <target name="update-template-code" depends="init"><!-- create the substituted template java code, not for user use -->
-        <copy todir="${genjavasrcdir}" overwrite="true" >
+        <copy todir="${target}" overwrite="true" >
             <filterset refid="release-information"/>
             <fileset dir="${templatedir}"/>
         </copy>
@@ -524,20 +520,20 @@
         <quiet>
         <!-- Run JJTree -->
         <!-- Create the build directory structure used by compiler -->
-        <mkdir dir="${genjavasrcdir}/jmri/jmris/srcp/parser"/>
+        <mkdir dir="${jjtreegen}/jmri/jmris/srcp/parser"/>
         <jjtree
             target="${source}/jmri/jmris/srcp/SRCPParser.jjt"
-            outputdirectory="${genjavasrcdir}/jmri/jmris/srcp/parser"
+            outputdirectory="${jjtreegen}/jmri/jmris/srcp/parser"
             javacchome="${libdir}"/>
-        <mkdir dir="${genjavasrcdir}/jmri/jmrix/srcp/parser"/>
+        <mkdir dir="${jjtreegen}/jmri/jmrix/srcp/parser"/>
         <jjtree
             target="${source}/jmri/jmrix/srcp/SRCPClientParser.jjt"
-            outputdirectory="${genjavasrcdir}/jmri/jmrix/srcp/parser"
+            outputdirectory="${jjtreegen}/jmri/jmrix/srcp/parser"
             javacchome="${libdir}"/>
-        <mkdir dir="${genjavasrcdir}/jmri/jmris/simpleserver/parser"/>
+        <mkdir dir="${jjtreegen}/jmri/jmris/simpleserver/parser"/>
         <jjtree
             target="${source}/jmri/jmris/simpleserver/JmriServerParser.jjt"
-            outputdirectory="${genjavasrcdir}/jmri/jmris/simpleserver/parser"
+            outputdirectory="${jjtreegen}/jmri/jmris/simpleserver/parser"
             javacchome="${libdir}"/>
         </quiet>
     </target>
@@ -548,15 +544,15 @@
             depends="init, javacc">
         <quiet>
         <mkdir dir="${doctarget}/jmri/jmris/srcp/"/>
-        <jjdoc target="${genjavasrcdir}/jmri/jmris/srcp/parser/SRCPParser.jj"
+        <jjdoc target="${jjtreegen}/jmri/jmris/srcp/parser/SRCPParser.jj"
                javacchome="${libdir}"
                outputfile="${doctarget}/jmri/jmris/srcp/SRCPParser.html"/>
         <mkdir dir="${doctarget}/jmri/jmrix/srcp/"/>
-        <jjdoc target="${genjavasrcdir}/jmri/jmrix/srcp/parser/SRCPClientParser.jj"
+        <jjdoc target="${jjtreegen}/jmri/jmrix/srcp/parser/SRCPClientParser.jj"
                javacchome="${libdir}"
                outputfile="${doctarget}/jmri/jmrix/srcp/SRCPClientParser.html"/>
         <mkdir dir="${doctarget}/jmri/jmris/simpleserver/"/>
-        <jjdoc target="${genjavasrcdir}/jmri/jmris/simpleserver/parser/JmriServerParser.jj"
+        <jjdoc target="${jjtreegen}/jmri/jmris/simpleserver/parser/JmriServerParser.jj"
                javacchome="${libdir}"
                outputfile="${doctarget}/jmri/jmris/simpleserver/JmriServerParser.html"/>
         </quiet>
@@ -568,22 +564,25 @@
             depends="jjtree">
         <!-- Run JavaCC -->
         <quiet>
+        <mkdir dir="${javaccgen}/jmri/jmris/srcp/parser"/>
         <javacc
-            target="${genjavasrcdir}/jmri/jmris/srcp/parser/SRCPParser.jj"
-            outputdirectory="${genjavasrcdir}/jmri/jmris/srcp/parser"
+            target="${jjtreegen}/jmri/jmris/srcp/parser/SRCPParser.jj"
+            outputdirectory="${javaccgen}/jmri/jmris/srcp/parser"
             javacchome="${libdir}"/>
-        <javacc
-            target="${genjavasrcdir}/jmri/jmrix/srcp/parser/SRCPClientParser.jj"
-            outputdirectory="${genjavasrcdir}/jmri/jmrix/srcp/parser"
+        <mkdir dir="${javaccgen}/jmri/jmrix/srcp/parser"/>
+            <javacc
+            target="${jjtreegen}/jmri/jmrix/srcp/parser/SRCPClientParser.jj"
+            outputdirectory="${javaccgen}/jmri/jmrix/srcp/parser"
             javacchome="${libdir}"/>
+        <mkdir dir="${javaccgen}/jmri/jmris/simpleserver/parser"/>
         <javacc
-            target="${genjavasrcdir}/jmri/jmris/simpleserver/parser/JmriServerParser.jj"
-            outputdirectory="${genjavasrcdir}/jmri/jmris/simpleserver/parser"
+            target="${jjtreegen}/jmri/jmris/simpleserver/parser/JmriServerParser.jj"
+            outputdirectory="${javaccgen}/jmri/jmris/simpleserver/parser"
             javacchome="${libdir}"/>
         </quiet>
         <!-- Turn all Javadoc comments in generated code into plain comments -->
         <replaceregexp match="\/\*\*" replace="\/\*" flags="g">
-            <fileset dir="${genjavasrcdir}">
+            <fileset dir="${javaccgen}">
                 <include name="**/*.java"/>
             </fileset>
         </replaceregexp>
@@ -631,12 +630,9 @@
             depends="javacc, update-template-code"><!-- compile all generated Java source; internal target -->
         <!-- Compile the java code from ${genjavasrcdir} into ${target} -->
         <java-compile
-                javac.source="${genjavasrcdir}"
+                javac.source="${javaccgen};${jjtreegen}"
                 javac.deprecation="off"
         />
-        <copy todir="${target}/jmri" overwrite="true">
-            <fileset dir="${genjavasrcdir}/jmri" includes="*.properties"/>
-        </copy>
     </target>
 
 
@@ -654,7 +650,7 @@
             description="compile source with debugging on, omitting tests - identical to compile target"
             depends="compile">
     </target>
-    
+
     <target name="tests"
             description="compile test classes"
             depends="debug">
@@ -1806,7 +1802,10 @@
                 <include name="jmri/**"/>
                 <include name="apps/**"/>
             </packageset>
-            <packageset dir="${tmptarget}" defaultexcludes="yes">
+            <packageset dir="${javaccgen}" defaultexcludes="yes">
+                <include name="jmri/**"/>
+            </packageset>
+            <packageset dir="${jjtreegen}" defaultexcludes="yes">
                 <include name="jmri/**"/>
             </packageset>
             <arg value="-Xdoclint:all,-missing"/><!-- remove -missing to get warnings about missing javadoc tags -->
@@ -1836,16 +1835,16 @@
                        <br><a href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
                 ]]>
             </bottom>
-            
+
             <!-- <link href="http://java.sun.com/products/javacomm/reference/api/"/> redirected to next line -->
             <link href="https://docs.oracle.com/cd/E17802_01/products/products/javacomm/reference/api/" />
-                        
+
             <!-- <link href="https://static.javadoc.io/com.fasterxml.jackson.core/jackson-databind/2.9.8/"/>  redirected to next line -->
             <link href="https://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/2.9.8/" />
-                        
+
             <!-- <link href="http://download.java.net/media/java3d/javadoc/1.3.2/"/>  redirected to next line -->
             <link href="https://download.java.net/media/java3d/javadoc/1.3.2/" />
-            
+
             <!-- <link href="https://static.javadoc.io/org.openlcb/openlcb/0.7.23/"/>  redirected to next line -->
             <link href="https://www.javadoc.io/doc/org.openlcb/openlcb/0.7.23/" />
 
@@ -1854,7 +1853,7 @@
 
             <!-- <link href="https://static.javadoc.io/com.alexandriasoftware.swing/jsplitbutton/1.3.1/" packagelistLoc="lib/jsplitbutton-1.3.1-package-list"/>  redirected to next line -->
             <link href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jsplitbutton/1.3.1/" packagelistLoc="lib/jsplitbutton-1.3.1-package-list"/>
-            
+
             <link href="https://docs.oracle.com/javase/8/docs/api/"/>
             <link href="http://www.jdom.org/docs/apidocs/"/>
             <link href="https://commons.apache.org/proper/commons-csv/apidocs/"/>
@@ -1865,7 +1864,7 @@
             <!-- The following Javadocs were built with JDK 11+ and can't be directly linked -->
             <link offline="true" href="https://static.javadoc.io/com.alexandriasoftware.swing/jinputvalidator/0.8.0/" packagelistLoc="lib/jinputvalidator-0.8.0-package-list"/>
             <link offline="true" href="https://static.javadoc.io/com.tngtech.archunit/archunit/0.11.0/" packagelistLoc="lib/archunit-0.11.0-package-list"/>
-            
+
         </javadoc>
     </target>
 
@@ -1890,7 +1889,10 @@
                 <include name="jmri/**"/>
                 <include name="apps/**"/>
             </packageset>
-            <packageset dir="${tmptarget}" defaultexcludes="yes">
+            <packageset dir="${javaccgen}" defaultexcludes="yes">
+                <include name="jmri/**"/>
+            </packageset>
+            <packageset dir="${jjtreegen}" defaultexcludes="yes">
                 <include name="jmri/**"/>
             </packageset>
             <arg value="-Xdoclint:all"/><!-- remove -missing to get warnings about missing javadoc tags -->
@@ -1922,16 +1924,16 @@
                        <br><a href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
                 ]]>
             </bottom>
-            
+
             <!-- <link href="http://java.sun.com/products/javacomm/reference/api/"/> redirected to next line -->
             <link href="https://docs.oracle.com/cd/E17802_01/products/products/javacomm/reference/api/" />
-                        
+
             <!-- <link href="https://static.javadoc.io/com.fasterxml.jackson.core/jackson-databind/2.9.8/"/>  redirected to next line -->
             <link href="https://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/2.9.8/" />
-                        
+
             <!-- <link href="http://download.java.net/media/java3d/javadoc/1.3.2/"/>  redirected to next line -->
             <link href="https://download.java.net/media/java3d/javadoc/1.3.2/" />
-            
+
             <!-- <link href="https://static.javadoc.io/org.openlcb/openlcb/0.7.23/"/>  redirected to next line -->
             <link href="https://www.javadoc.io/doc/org.openlcb/openlcb/0.7.23/" />
 
@@ -1940,7 +1942,7 @@
 
             <!-- <link href="https://static.javadoc.io/com.alexandriasoftware.swing/jsplitbutton/1.3.1/" packagelistLoc="lib/jsplitbutton-1.3.1-package-list"/>  redirected to next line -->
             <link href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jsplitbutton/1.3.1/" packagelistLoc="lib/jsplitbutton-1.3.1-package-list"/>
-            
+
             <link href="https://docs.oracle.com/javase/8/docs/api/"/>
             <link href="http://www.jdom.org/docs/apidocs/"/>
             <link href="https://commons.apache.org/proper/commons-csv/apidocs/"/>
@@ -1981,7 +1983,10 @@
                 <include name="jmri/**"/>
                 <include name="apps/**"/>
             </packageset>
-            <packageset dir="${tmptarget}" defaultexcludes="yes">
+            <packageset dir="${javaccgen}" defaultexcludes="yes">
+                <include name="jmri/**"/>
+            </packageset>
+            <packageset dir="${jjtreegen}" defaultexcludes="yes">
                 <include name="jmri/**"/>
             </packageset>
             <arg value="-Xdoclint:all,-missing"/><!-- remove -missing to get warnings about missing javadoc tags -->
@@ -2024,15 +2029,15 @@
 
             <!-- <link href="http://java.sun.com/products/javacomm/reference/api/"/> redirected to next line -->
             <link href="https://docs.oracle.com/cd/E17802_01/products/products/javacomm/reference/api/" />
-                        
+
             <!-- <link href="https://static.javadoc.io/com.fasterxml.jackson.core/jackson-databind/2.9.8/"/>  redirected to next line -->
             <!-- marking this offline as linking to JavaDoc hosted on javadoc.io seems to break the build -->
             <!-- due to UmlGraph doclet attempting to interpret the injected Google Tag Manager script on javadoc.io -->
             <link offline="true" href="https://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/2.9.8/" packagelistLoc="lib/jackson-databind-2.9.8-package-list"/>
-                        
+
             <!-- <link href="http://download.java.net/media/java3d/javadoc/1.3.2/"/>  redirected to next line -->
             <link href="https://download.java.net/media/java3d/javadoc/1.3.2/" />
-            
+
             <!-- <link href="https://static.javadoc.io/org.openlcb/openlcb/0.7.23/"/>  redirected to next line -->
             <!-- marking this offline as linking to JavaDoc hosted on javadoc.io seems to break the build -->
             <link offline="true" href="https://www.javadoc.io/doc/org.openlcb/openlcb/0.7.23/" packagelistLoc="openlcb-0.7.23-package-list"/>
@@ -2044,7 +2049,7 @@
             <!-- <link href="https://static.javadoc.io/com.alexandriasoftware.swing/jsplitbutton/1.3.1/" packagelistLoc="lib/jsplitbutton-1.3.1-package-list"/>  redirected to next line -->
             <!-- marking this offline as linking to JavaDoc hosted on javadoc.io seems to break the build -->
             <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jsplitbutton/1.3.1/" packagelistLoc="lib/jsplitbutton-1.3.1-package-list"/>
-            
+
             <link href="https://docs.oracle.com/javase/8/docs/api/"/>
             <link href="http://www.jdom.org/docs/apidocs/"/>
             <link href="https://commons.apache.org/proper/commons-csv/apidocs/"/>
@@ -2225,7 +2230,6 @@
                 <exclude name="web/app/node_modules/**" />
                 <exclude name=".git/**" />
                 <exclude name="target/**" />
-                <exclude name="java/tmp/**" />
             </fileset>
         </checkstyle>
     </target>

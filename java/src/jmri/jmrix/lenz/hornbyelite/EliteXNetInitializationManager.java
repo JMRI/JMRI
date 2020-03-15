@@ -50,6 +50,6 @@ public class EliteXNetInitializationManager extends AbstractXNetInitializationMa
         log.debug("XpressNet Initialization Complete");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EliteXNetInitializationManager.class);
+    private static final Logger log = LoggerFactory.getLogger(EliteXNetInitializationManager.class);
 
 }

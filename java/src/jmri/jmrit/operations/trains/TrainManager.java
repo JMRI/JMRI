@@ -83,19 +83,6 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
     private int _id = 0; // train ids
 
     /**
-     * Get the default instance of this class.
-     *
-     * @return the default instance of this class
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static synchronized TrainManager instance() {
-        jmri.util.Log4JUtil.deprecationWarning(log, "instance");        
-        return InstanceManager.getDefault(TrainManager.class);
-    }
-
-    /**
      * Get the number of items in the roster
      *
      * @return Number of trains in the roster

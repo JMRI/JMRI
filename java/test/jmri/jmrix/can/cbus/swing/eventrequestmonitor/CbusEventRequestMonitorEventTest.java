@@ -23,8 +23,6 @@ public class CbusEventRequestMonitorEventTest {
         // nn , en, Evstate, timestamp, feedback timeout, feedbacktotreqd, eventRequestModel
         Assert.assertNotNull("exists", t);
         
-        t = null;
-        
     }
     
     @Test
@@ -42,8 +40,6 @@ public class CbusEventRequestMonitorEventTest {
         Assert.assertNull( t.getDate() );
         t.setDate ( new java.util.Date() );
         Assert.assertNotNull( t.getDate() );
-        
-        t = null;
         
     }
     
@@ -67,8 +63,6 @@ public class CbusEventRequestMonitorEventTest {
         Assert.assertFalse( t.matchesFeedback(6666,7));
         Assert.assertFalse( t.matchesFeedback(6,777));
         Assert.assertTrue( t.matchesFeedback(6666,777));
-        
-        t = null;
     }
 
     @Before

@@ -756,12 +756,7 @@ public class Section extends AbstractNamedBean {
         if (mFirstBlock == null) {
             return "unknown";
         }
-        String s = mFirstBlock.getSystemName();
-        String uName = mFirstBlock.getUserName();
-        if ((uName != null) && !uName.isEmpty()) {
-            return (s + "( " + uName + " )");
-        }
-        return s;
+        return mFirstBlock.getDisplayName();
     }
 
     public String getEndBlockName() {
@@ -771,12 +766,7 @@ public class Section extends AbstractNamedBean {
         if (mLastBlock == null) {
             return "unknown";
         }
-        String s = mLastBlock.getSystemName();
-        String uName = mLastBlock.getUserName();
-        if ((uName != null) && (!uName.equals(""))) {
-            return (s + "( " + uName + " )");
-        }
-        return s;
+        return mLastBlock.getDisplayName();
     }
 
     public void addToForwardList(EntryPoint ep) {

@@ -33,6 +33,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     public final CbusEventTableAction ta;
     private final CbusPreferences preferences;
     private final CanSystemConnectionMemo _memo;
+    private final ShutDownTask shutDownTask;
     
     // column order needs to match list in column tooltips
     static public final int NODE_COLUMN = 0; 
@@ -86,11 +87,18 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
                 ta.restoreEventsFromXmlTablestart();
         }
         
-        ShutDownTask shutDownTask = new CbusEventTableShutdownTask("CbusEventTableShutdownTask");
+        shutDownTask = new CbusEventTableShutdownTask("CbusEventTableShutdownTask");
         jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(shutDownTask);
         
     }
 
+    /**
+     * De-register the shut down task which saves table details.
+     */
+    public void skipSaveOnDispose(){
+        jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(shutDownTask);
+    }
+    
     /**
      * Get the Column Tooltips.
      *<p>

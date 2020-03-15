@@ -6,6 +6,7 @@ import static jmri.server.json.JSON.DECODER_FAMILY;
 import static jmri.server.json.JSON.DECODER_MODEL;
 import static jmri.server.json.JSON.F;
 import static jmri.server.json.JSON.FUNCTION_KEYS;
+import static jmri.server.json.JSON.GET;
 import static jmri.server.json.JSON.GROUP;
 import static jmri.server.json.JSON.ICON;
 import static jmri.server.json.JSON.IMAGE;
@@ -243,7 +244,7 @@ public class JsonRosterHttpService extends JsonHttpService {
      */
     @Deprecated
     public JsonNode getRosterGroups(Locale locale, int id) throws JsonException {
-        return getRosterGroups(new JsonRequest(locale, V5, id));
+        return getRosterGroups(new JsonRequest(locale, V5, GET, id));
     }
 
     public JsonNode getRosterGroup(Locale locale, String name, int id) throws JsonException {

@@ -26,7 +26,6 @@ import javax.annotation.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.*;
-import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import jmri.*;
 import jmri.configurexml.StoreXmlUserAction;
@@ -1246,6 +1245,16 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             }
         });
 
+        // Set All Tracks To Default Colors
+        JMenuItem setAllTracksToDefaultColorsMenuItem = new JMenuItem(Bundle.getMessage("SetAllTracksToDefaultColors"));
+        trkColourMenu.add(setAllTracksToDefaultColorsMenuItem);
+        setAllTracksToDefaultColorsMenuItem.addActionListener((ActionEvent event) -> {
+            if (setAllTracksToDefaultColors() > 0) {
+                setDirty();
+                redrawPanel();
+            }
+        });
+
         //Automatically Assign Blocks to Track
         autoAssignBlocksCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("AutoAssignBlock"));
         trackMenu.add(autoAssignBlocksCheckBoxMenuItem);
@@ -2394,6 +2403,24 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         resizePanelBounds(true);
         return true;
+    }
+
+    /**
+     *   loop through all LayoutBlocks and set colors to the default colors from this LayoutEditor
+     *   @return count of changed blocks
+     */
+    public int setAllTracksToDefaultColors() {
+        LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
+        SortedSet<LayoutBlock> lBList = lbm.getNamedBeanSet();
+        int changed = 0;
+        for (LayoutBlock lb : lBList) {
+            lb.setBlockTrackColor(this.getDefaultTrackColorColor());
+            lb.setBlockOccupiedColor(this.getDefaultOccupiedTrackColorColor());
+            lb.setBlockExtraColor(this.getDefaultAlternativeTrackColorColor());
+            changed++;
+        }
+        log.info("Track Colors set to default values for {} layoutBlocks.", changed);
+        return changed;
     }
 
     private transient Rectangle2D undoRect;
@@ -6515,15 +6542,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 // operating system. This may not be desirable because it will
                 // allow images that may not be supported by operating systems
                 // other than the current one.
-                FileFilter filt = new FileNameExtensionFilter("Image files", ImageIO.getReaderFileSuffixes());
-                inputFileChooser.setFileFilter(filt);
+                inputFileChooser.setFileFilter(new FileNameExtensionFilter("Image files", ImageIO.getReaderFileSuffixes()));
             } else {
-                FileChooserFilter filt = new FileChooserFilter("Graphics Files");
-                filt.addExtension("gif");
-                filt.addExtension("jpg");
                 //TODO: discuss with jmri-developers - support png image files?
-                filt.addExtension("png");
-                inputFileChooser.setFileFilter(filt);
+                inputFileChooser.setFileFilter(new FileNameExtensionFilter("Graphics Files", "gif", "jpg", "png"));
             }
         }
         inputFileChooser.rescanCurrentDirectory();

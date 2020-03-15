@@ -55,19 +55,6 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
     private boolean _addtoReportVeryDetailed = false;
 
     /**
-     * Get the default instance of this class.
-     *
-     * @return the default instance of this class
-     * @deprecated since 4.9.2; use
-     *             {@link jmri.InstanceManager#getDefault(java.lang.Class)}
-     *             instead
-     */
-    @Deprecated
-    public static synchronized Router instance() {
-        return InstanceManager.getDefault(Router.class);
-    }
-
-    /**
      * Returns the status of the router when using the setDestination() for a
      * car.
      *
