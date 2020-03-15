@@ -65,12 +65,12 @@ public class ThrottlesTableCellRenderer implements TableCellRenderer {
         retPanel.add(locoID, BorderLayout.CENTER);
 
         if (tf.getAddressPanel().getThrottle() != null) {
+            final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences();
             JPanel ctrlPanel = new JPanel();
             ctrlPanel.setLayout(new BorderLayout());
             Throttle thr = tf.getAddressPanel().getThrottle();
             JLabel dir = new JLabel();
-            if (InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingExThrottle()
-                    && InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingFunctionIcon()) {
+            if (preferences.isUsingIcons()) {
                 if (thr.getIsForward()) {
                     dir.setIcon(fwdIcon);
                 } else {
@@ -85,8 +85,7 @@ public class ThrottlesTableCellRenderer implements TableCellRenderer {
             }
             dir.setVerticalAlignment(JLabel.CENTER);
             ctrlPanel.add(dir, BorderLayout.WEST);
-            if (InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingExThrottle()
-                    && InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingFunctionIcon()) {
+            if (preferences.isUsingIcons()) {
                 if (thr.getSpeedSetting() == -1) {
                     JLabel estop = new JLabel();
                     estop.setPreferredSize(new Dimension(64, height - 8));

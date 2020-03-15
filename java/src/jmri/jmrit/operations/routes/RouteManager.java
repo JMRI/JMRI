@@ -30,18 +30,6 @@ public class RouteManager implements InstanceManagerAutoDefault, InstanceManager
 
     private int _id = 0;
 
-    /**
-     * Get the default instance of this class.
-     *
-     * @return the default instance of this class
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static synchronized RouteManager instance() {
-        return InstanceManager.getDefault(RouteManager.class);
-    }
-
     public void dispose() {
         _routeHashTable.clear();
         _id = 0;
