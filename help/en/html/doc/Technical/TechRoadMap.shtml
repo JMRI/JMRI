@@ -356,9 +356,10 @@
 
         <li>Our <a href="Logging.shtml">logging methodology</a> is
         now a hybrid of native logging (in some included
-        libraries), Log4J (our original solution) and SLF4J (the
-        most recent addition). It's likely that we'll eventually
-        simplify that.</li>
+        libraries), Log4J 1.2.15 (our original solution) and SLF4J (the
+        most recent addition). We may choose to simplify that, but at 
+        least we have to move to Log4J 2 at some point.
+        </li>
 
       </ul>
 

@@ -149,17 +149,13 @@ public class CbusMessage {
     public static void setId(AbstractMessage am, int id) throws IllegalArgumentException {
         if (am instanceof CanMutableFrame){
             CanMutableFrame m = (CanMutableFrame) am;
+            int update = m.getHeader();
             if (m.isExtended()) {
-                if ((id & ~0x1fffff) != 0) {
-                    throw new IllegalArgumentException("invalid extended ID value: " + id);
-                }
-                int update = m.getHeader();
-                m.setHeader((update & ~0x01ffffff) | id);
+                throw new IllegalArgumentException("No CAN ID Concept on Extended CBUS CAN Frame.");
             } else {
                 if ((id & ~0x7f) != 0) {
                     throw new IllegalArgumentException("invalid standard ID value: " + id);
                 }
-                int update = m.getHeader();
                 m.setHeader((update & ~0x07f) | id);
             }
         }
@@ -180,11 +176,10 @@ public class CbusMessage {
             if ((pri & ~0x0F) != 0) {
                 throw new IllegalArgumentException("Invalid CBUS Priority value: " + pri);
             }
-            int update = m.getHeader();
             if (m.isExtended()) {
-                m.setHeader((update & ~0x1e000000) | (pri << 25));
+                throw new IllegalArgumentException("Extended CBUS CAN Frames do not have a priority concept.");
             } else {
-                m.setHeader((update & ~0x780) | (pri << 7));
+                m.setHeader((m.getHeader() & ~0x780) | (pri << 7));
             }
         }
         else {
