@@ -78,23 +78,29 @@ public class WebServerAcceptanceSteps implements En {
            wait.until(ExpectedConditions.visibilityOfElementLocated(By.tagName("table")));
            WebElement webTable = webDriver.findElement(By.xpath("//div[@id='wrap']//div[@class='container']//table"));
 
-           // find the table body.
 
-           WebElement tableBody = webTable.findElement(By.tagName("tbody"));
-           List<WebElement> rows = tableBody.findElements(By.tagName("tr"));
-           List<WebElement> header = rows.get(0).findElements(By.tagName("td"));
+           // find the columns containing the name and the state in the table header.
+           WebElement tableHeader = webTable.findElement(By.tagName("thead"));
+           List<WebElement> headerRows= tableHeader.findElements(By.tagName("tr"));
+           List<WebElement> header = headerRows.get(0).findElements(By.tagName("th"));
            int nameCol=0;
            int stateCol=3;
            for(int i =0;i<header.size();i++){
-               if(header.get(i).equals("name")){
+               if(header.get(i).getText().equals("name")){
                    nameCol =i;
                }
-               if(header.get(i).equals("state")){
+               if(header.get(i).getText().equals("state")){
                    stateCol = i;
                }
            }
+
+            // find the table body.
+
+            WebElement tableBody = webTable.findElement(By.tagName("tbody"));
+            List<WebElement> rows = tableBody.findElements(By.tagName("tr"));
+
            int i;
-           for(i =1; i< rows.size(); i++){
+           for(i =0; i< rows.size(); i++){
                List<WebElement> cols = rows.get(i).findElements(By.tagName("td"));
                if(cols.size()>0 && cols.get(nameCol).getText().equals(item)){
                   assertThat(cols.get(stateCol).getText()).isEqualTo(state);
