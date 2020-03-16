@@ -15,7 +15,7 @@ public class XNetFeedbackMessageCache implements XNetListener {
     private XNetReply[][] messageCache; // an to hold each of the 512 possible
     // reply messages for the turnouts.
 
-    private Boolean[][] messagePending; // hold pending status for each of
+    private boolean[][] messagePending; // hold pending status for each of
     // the possible status request messages.
 
     // ctor has to register for XNet events
@@ -24,7 +24,7 @@ public class XNetFeedbackMessageCache implements XNetListener {
         for (int i = 0; i < 256; i++) {
             messageCache[i][0] = messageCache[i][1] = null;
         }
-        messagePending = new Boolean[256][2];
+        messagePending = new boolean[256][2];
         for (int i = 0; i < 256; i++) {
             messagePending[i][0] = messagePending[i][1] = false;
         }
@@ -36,16 +36,15 @@ public class XNetFeedbackMessageCache implements XNetListener {
     // provide any cached state to the turnout.  Otherwise, call the turnout's 
     // requestUpdateFromLayout() method.
     // @param turnout  the XNetTurnout object we are requesting data for.
-    synchronized public void requestCachedStateFromLayout(XNetTurnout turnout) {
+    public synchronized void requestCachedStateFromLayout(XNetTurnout turnout) {
         int pNumber = turnout.getNumber();
+        log.debug("asking for cached feedback for turnout {}.",pNumber);
         if (messagePending[(pNumber - 1) / 4][((pNumber - 1) % 4) < 2 ? 0 : 1]) {
             return;
         }
         try {
             if (messageCache[(pNumber - 1) / 4][((pNumber - 1) % 4) < 2 ? 0 : 1] != null) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Message for turnout " + pNumber + " cached.");
-                }
+                log.debug("Message for turnout {} found in cache.",pNumber);
                 turnout.message(messageCache[(pNumber - 1) / 4][((pNumber - 1) % 4) < 2 ? 0 : 1]);
             } else {
                 messagePending[(pNumber - 1) / 4][((pNumber - 1) % 4) < 2 ? 0 : 1] = true;
@@ -63,16 +62,15 @@ public class XNetFeedbackMessageCache implements XNetListener {
      *
      * @param sensor the XNetSensor object we are requesting data for
      */
-    synchronized public void requestCachedStateFromLayout(XNetSensor sensor) {
+    public synchronized void requestCachedStateFromLayout(XNetSensor sensor) {
         int pNumber = sensor.getNumber();
+        log.debug("asking for cached feedback for sensor {}.",pNumber);
         if (messagePending[sensor.getBaseAddress()][sensor.getNibble() >> 4]) {
             return;
         }
         try {
             if (messageCache[sensor.getBaseAddress()][sensor.getNibble() >> 4] != null) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Message for sensor " + pNumber + " cached.");
-                }
+                log.debug("Message for sensor {} found in cache.",pNumber);
                 sensor.message(messageCache[sensor.getBaseAddress()][sensor.getNibble() >> 4]);
             } else {
                 messagePending[sensor.getBaseAddress()][sensor.getNibble() >> 4] = true;
@@ -88,9 +86,9 @@ public class XNetFeedbackMessageCache implements XNetListener {
      * Listen for turnouts, creating them as needed.
      */
     @Override
-    synchronized public void message(XNetReply l) {
+    public synchronized void message(XNetReply l) {
         if (log.isDebugEnabled()) {
-            log.debug("received message: " + l);
+            log.debug("received message: {}",l);
         }
         if (l.isFeedbackBroadcastMessage()) {
             int numDataBytes = l.getElement(0) & 0x0f;
@@ -107,6 +105,7 @@ public class XNetFeedbackMessageCache implements XNetListener {
      */
     @Override
     public void message(XNetMessage l) {
+        // outgoing messages are not currently used
     }
 
     /**
@@ -115,7 +114,7 @@ public class XNetFeedbackMessageCache implements XNetListener {
     @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message" + msg.toString());
+            log.debug("Notified of timeout on message {}",msg);
         }
     }
 

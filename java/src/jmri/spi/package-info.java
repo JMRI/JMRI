@@ -17,4 +17,5 @@
  *
  * @see java.util.ServiceLoader
  */
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings({})
 package jmri.spi;

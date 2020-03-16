@@ -10,6 +10,7 @@
  * @see jmri.jmrit.display
  * @see jmri.jmrit.picker
  */
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings({})
 package jmri.jmrit.display.palette;
 
 /*
