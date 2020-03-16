@@ -95,7 +95,7 @@ public abstract class UnboundBean implements BeanInterface {
     /**
      * Set property <i>key</i> to <i>value</i>.
      * <p>
-     * This implementation calls a write method for the indexed property using
+     * This implementation calls a write method for the property using
      * JavaBeans introspection.
      *
      * @see BeanInterface#setProperty(java.lang.String, java.lang.Object)

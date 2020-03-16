@@ -79,8 +79,9 @@ public class BeanUtil {
                 for (PropertyDescriptor pd : pds) {
                     if (pd instanceof IndexedPropertyDescriptor && pd.getName().equalsIgnoreCase(key)) {
                         ((IndexedPropertyDescriptor) pd).getIndexedWriteMethod().invoke(bean, index, value);
-                        return; // short circut, since there is nothing left to
-                                // do at this point.
+                        // short circuit, since there is nothing left to do at
+                        // this point
+                        return;
                     }
                 }
                 // catch only introspection-related exceptions, and allow all

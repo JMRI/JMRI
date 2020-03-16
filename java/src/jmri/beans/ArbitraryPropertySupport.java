@@ -10,7 +10,7 @@ import java.util.Set;
  * versions of those classes so that the Arbitrary* version can extend the
  * non-arbitrary class.
  * 
- * @author Randall Wood
+ * @author Randall Wood Copyright 2015, 2020
  */
 public class ArbitraryPropertySupport implements BeanInterface {
 
@@ -21,6 +21,7 @@ public class ArbitraryPropertySupport implements BeanInterface {
         this.bean = bean;
     }
 
+    /** {@inheritDoc} */
     @Override
     public void setIndexedProperty(String key, int index, Object value) {
         if (BeanUtil.hasIntrospectedProperty(this.bean, key)) {
@@ -40,6 +41,7 @@ public class ArbitraryPropertySupport implements BeanInterface {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public Object getIndexedProperty(String key, int index) {
         if (this.properties.containsKey(key) && this.properties.get(key).getClass().isArray()) {
@@ -52,6 +54,7 @@ public class ArbitraryPropertySupport implements BeanInterface {
         return BeanUtil.getIntrospectedIndexedProperty(this.bean, key, index);
     }
 
+    /** {@inheritDoc} */
     @Override
     public void setProperty(String key, Object value) {
         // use write method for property if it exists
@@ -62,6 +65,7 @@ public class ArbitraryPropertySupport implements BeanInterface {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public Object getProperty(String key) {
         if (this.properties.containsKey(key)) {
@@ -70,17 +74,20 @@ public class ArbitraryPropertySupport implements BeanInterface {
         return BeanUtil.getIntrospectedProperty(this.bean, key);
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean hasProperty(String key) {
         return (this.properties.containsKey(key) || BeanUtil.hasIntrospectedProperty(this.bean, key));
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean hasIndexedProperty(String key) {
-        return ((this.properties.containsKey(key) && this.properties.get(key).getClass().isArray())
-                || BeanUtil.hasIntrospectedIndexedProperty(this.bean, key));
+        return ((this.properties.containsKey(key) && this.properties.get(key).getClass().isArray()) ||
+                BeanUtil.hasIntrospectedIndexedProperty(this.bean, key));
     }
 
+    /** {@inheritDoc} */
     @Override
     public Set<String> getPropertyNames() {
         HashSet<String> names = new HashSet<>();
