@@ -2,11 +2,13 @@ package jmri.web;
 
 import cucumber.api.java8.En;
 import java.io.File;
+import java.util.List;
 import jmri.InstanceManager;
 import jmri.ConfigureManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -64,7 +66,51 @@ public class WebServerAcceptanceSteps implements En {
             jmri.util.JUnitUtil.closeAllPanels();
         });
 
-        //Find the specified cell in the table, check value, then click on it and 
+        Then("^(.*) has item (.*) with state (.*)$", (String table, String item, String state) -> {
+           webDriver.get("http://localhost:12080/");
+           waitLoad();
+           // navigate to the table.
+           (webDriver.findElement(By.linkText("Tables"))).click();
+           (webDriver.findElement(By.linkText(table))).click();
+           waitLoad();
+           // wait for the table to load.
+           WebDriverWait wait = new WebDriverWait(webDriver, 10 );
+           wait.until(ExpectedConditions.visibilityOfElementLocated(By.tagName("table")));
+           WebElement webTable = webDriver.findElement(By.xpath("//div[@id='wrap']//div[@class='container']//table"));
+
+
+           // find the columns containing the name and the state in the table header.
+           WebElement tableHeader = webTable.findElement(By.tagName("thead"));
+           List<WebElement> headerRows= tableHeader.findElements(By.tagName("tr"));
+           List<WebElement> header = headerRows.get(0).findElements(By.tagName("th"));
+           int nameCol=0;
+           int stateCol=3;
+           for(int i =0;i<header.size();i++){
+               if(header.get(i).getText().equals("name")){
+                   nameCol =i;
+               }
+               if(header.get(i).getText().equals("state")){
+                   stateCol = i;
+               }
+           }
+
+            // find the table body.
+
+            WebElement tableBody = webTable.findElement(By.tagName("tbody"));
+            List<WebElement> rows = tableBody.findElements(By.tagName("tr"));
+
+           int i;
+           for(i =0; i< rows.size(); i++){
+               List<WebElement> cols = rows.get(i).findElements(By.tagName("td"));
+               if(cols.size()>0 && cols.get(nameCol).getText().equals(item)){
+                  assertThat(cols.get(stateCol).getText()).isEqualTo(state);
+                  break;
+               }
+           }
+           assertThat(rows.size()).isNotEqualTo(i).withFailMessage("item not found");
+        });
+
+        //Find the specified cell in the table, check value, then click on it and
         //  verify new value is as expected. Some columns are not supposed to change. 
         Then("^table (.*) has row (.*) column (.*) with text (.*) after click (.*)$",
                 (String table, String row, String column, String text, String after) -> {
