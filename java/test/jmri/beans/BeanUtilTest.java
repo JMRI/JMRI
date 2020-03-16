@@ -115,7 +115,7 @@ public class BeanUtilTest {
         assertThat(BeanUtil.getIntrospectedIndexedProperty(hashedTarget, STRING_PROPERTY, 0)).isNull();
         assertThat(BeanUtil.getIntrospectedIndexedProperty(hashedTarget, NOT_A_PROPERTY, 0)).isNull();
         // either parameter being null returns null
-        assertThat(BeanUtil.getIntrospectedIndexedProperty(null, INDEXED_PROPERTY, 0)).isNull();;
+        assertThat(BeanUtil.getIntrospectedIndexedProperty(null, INDEXED_PROPERTY, 0)).isNull();
         assertThat(BeanUtil.getIntrospectedIndexedProperty(new Object(), null, 0)).isNull();
     }
 
