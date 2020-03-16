@@ -57,7 +57,7 @@ public class ConstrainedArbitraryBeanTest {
         bean.addVetoableChangeListener(vetoer);
         assertThat(changed).isFalse();
         assertThat(bean.hasProperty(ap)).isFalse();
-        assertThat(bean.hasProperty(dp)).isFalse();
+        assertThat(bean.hasProperty(dp)).isTrue();
         assertThat(bean.getProperty(ap)).isEqualTo(null);
         assertThat(bean.getProperty(dp)).isEqualTo(null);
         veto = false;
