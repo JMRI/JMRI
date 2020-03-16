@@ -82,13 +82,9 @@ public class EntryPoint {
         if (needsInitialize) {
             initialize();
         }
-        String s = mFromBlock.getSystemName();
-        String u = mFromBlock.getUserName();
-        if ((u != null) && (!u.equals(""))) {
-            s = s + "( " + u + " )";
-        }
+        String s = mFromBlock.getDisplayName();
         if ((mFromBlockDirection != null) && (!mFromBlockDirection.equals(""))) {
-            s = s + "( " + mFromBlockDirection + " )";
+            s = s + " ( " + mFromBlockDirection + " )";
         }
         return s;
     }
