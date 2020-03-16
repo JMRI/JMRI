@@ -36,7 +36,7 @@
 		<br>
 		  <a href='https://builds.jmri.org/jenkins/job/development/job/cucumber/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fcucumber' title="Cucumber"></a>
 		  <a href='http://builds.jmri.org/jenkins/job/development/job/jacoco/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fjacoco' title="JaCoCo"></a>
-		  <a href='https://builds.jmri.org/jenkins/job/development/job/jqassistant-reports/'><img src='https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fjqassistant-reports' title=""JQassistant></a>
+		  <a href='https://builds.jmri.org/jenkins/job/development/job/jqassistant-reports/'><img src='https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fjqassistant-reports' title="JQassistant"></a>
 		  <a href='https://builds.jmri.org/jenkins/job/development/job/pit/'><img src='https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fpit' title="Pit"></a>
 		</td></tr><tr><td align="right">
 		<a href="http://builds.jmri.org/jenkins/job/development/job/versionchecks/">Version Checks</a>:</td><td>
