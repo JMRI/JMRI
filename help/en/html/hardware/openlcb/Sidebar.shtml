@@ -11,9 +11,7 @@
 
              <!--#include virtual="../../../parts/SidebarSupportedHardware.shtml" -->    
 
-             <!--#include virtual="../../../parts/SidebarInstall.shtml" -->    
-
-             <!--#include virtual="../../../parts/SidebarApplications.shtml" -->
+              <!--#include virtual="../../../parts/SidebarApplications.shtml" -->
 
              <!--#include virtual="../../../parts/SidebarTools.shtml" -->
 
