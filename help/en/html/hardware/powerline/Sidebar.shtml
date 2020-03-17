@@ -1,5 +1,5 @@
 <!-- Sidebar.shtml -->
-<!-- This is the common sidebar definition for html/hardware/cmri pages -->
+<!-- This is the common sidebar definition for html/hardware/[subdirectory] pages -->
 
 	  <hr class="hide">
 	  <div id="side"> <!-- Block of text on left side of page -->
