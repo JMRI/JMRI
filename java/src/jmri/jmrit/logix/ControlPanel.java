@@ -80,10 +80,10 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         speedSpinner.setModel(speedSpinnerModel);
         speedSpinner.setFocusable(false);
 
-        speedStep128Button = new JRadioButton(Bundle.getMessage("Button128SS"));
-        speedStep28Button = new JRadioButton(Bundle.getMessage("Button28SS"));
-        speedStep27Button = new JRadioButton(Bundle.getMessage("Button27SS"));
-        speedStep14Button = new JRadioButton(Bundle.getMessage("Button14SS"));
+        speedStep128Button = new JRadioButton(SpeedStepMode.NMRA_DCC_128.description);
+        speedStep28Button = new JRadioButton(SpeedStepMode.NMRA_DCC_28.description);
+        speedStep27Button = new JRadioButton(SpeedStepMode.NMRA_DCC_27.description);
+        speedStep14Button = new JRadioButton(SpeedStepMode.NMRA_DCC_14.description);
 
         initGUI();
         pack();

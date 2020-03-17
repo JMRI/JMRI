@@ -26,5 +26,5 @@
 // See https://jmri.org/help/en/html/doc//Technical/Javadoc.shtml
 
 //@annotations for the entire package go here
-
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings({})
 package jmri.jmrit.logix;

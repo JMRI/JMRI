@@ -6,7 +6,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.File;
 import java.net.URI;
 import java.util.Locale;
 import javax.swing.Box;
@@ -24,7 +23,6 @@ import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.JmrixConfigPane;
 import jmri.util.FileUtil;
 import jmri.util.iharder.dnd.URIDrop;
-import jmri.util.iharder.dnd.URIDrop.Listener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

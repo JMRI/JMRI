@@ -44,17 +44,17 @@ public class JsonRouteHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<R
         Sensor sensor1 = InstanceManager.getDefault(SensorManager.class).provideSensor("IS1");
         route1.setTurnoutsAlignedSensor(sensor1.getSystemName());
         JsonNode result;
-        result = service.doGet(JsonRouteServiceFactory.ROUTE, "IO1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 42));
+        result = service.doGet(JsonRouteServiceFactory.ROUTE, "IO1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         validate(result);
         assertEquals(JsonRouteServiceFactory.ROUTE, result.path(JSON.TYPE).asText());
         assertEquals("IO1", result.path(JSON.DATA).path(JSON.NAME).asText());
         assertEquals(JSON.UNKNOWN, result.path(JSON.DATA).path(JSON.STATE).asInt());
         sensor1.setKnownState(Sensor.ACTIVE);
-        result = service.doGet(JsonRouteServiceFactory.ROUTE, "IO1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 42));
+        result = service.doGet(JsonRouteServiceFactory.ROUTE, "IO1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         validate(result);
         assertEquals(JSON.ACTIVE, result.path(JSON.DATA).path(JSON.STATE).asInt());
         sensor1.setKnownState(Sensor.INACTIVE);
-        result = service.doGet(JsonRouteServiceFactory.ROUTE, "IO1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 42));
+        result = service.doGet(JsonRouteServiceFactory.ROUTE, "IO1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         validate(result);
         assertEquals(JSON.INACTIVE, result.path(JSON.DATA).path(JSON.STATE).asInt());
     }
@@ -64,16 +64,16 @@ public class JsonRouteHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<R
         RouteManager manager = InstanceManager.getDefault(RouteManager.class);
         Route route1 = manager.provideRoute("IO1", "Route1");
         JsonNode result;
-        result = service.doGet(JsonRouteServiceFactory.ROUTE, "IO1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 42));
+        result = service.doGet(JsonRouteServiceFactory.ROUTE, "IO1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         validate(result);
         assertEquals("IO1", result.path(JSON.DATA).path(JSON.NAME).asText());
         assertEquals(JSON.UNKNOWN, result.path(JSON.DATA).path(JSON.STATE).asInt());
         route1.setState(Sensor.ACTIVE);
-        result = service.doGet(JsonRouteServiceFactory.ROUTE, "IO1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 42));
+        result = service.doGet(JsonRouteServiceFactory.ROUTE, "IO1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         validate(result);
         assertEquals(JSON.UNKNOWN, result.path(JSON.DATA).path(JSON.STATE).asInt());
         route1.setState(Sensor.INACTIVE);
-        result = service.doGet(JsonRouteServiceFactory.ROUTE, "IO1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 42));
+        result = service.doGet(JsonRouteServiceFactory.ROUTE, "IO1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         validate(result);
         assertEquals(JSON.UNKNOWN, result.path(JSON.DATA).path(JSON.STATE).asInt());
     }
@@ -95,7 +95,7 @@ public class JsonRouteHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<R
         // set ACTIVE
         message = mapper.createObjectNode().put(JSON.NAME, "IO1").put(JSON.STATE, JSON.ACTIVE);
         assertEquals(Sensor.INACTIVE, route1.getState());
-        result = service.doPost(JsonRouteServiceFactory.ROUTE, "IO1", message, new JsonRequest(locale, JSON.V5, 42));
+        result = service.doPost(JsonRouteServiceFactory.ROUTE, "IO1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         JUnitUtil.waitFor(() -> {
             return route1.getState() == Sensor.ACTIVE;
         }, "Route to activate");
@@ -103,7 +103,7 @@ public class JsonRouteHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<R
         validate(result);
         // set INACTIVE - remains ACTIVE
         message = mapper.createObjectNode().put(JSON.NAME, "IO1").put(JSON.STATE, JSON.INACTIVE);
-        result = service.doPost(JsonRouteServiceFactory.ROUTE, "IO1", message, new JsonRequest(locale, JSON.V5, 42));
+        result = service.doPost(JsonRouteServiceFactory.ROUTE, "IO1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         JUnitUtil.waitFor(() -> {
             return route1.getState() == Sensor.ACTIVE;
         }, "Route to activate");
@@ -113,7 +113,7 @@ public class JsonRouteHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<R
         validate(result);
         // set UNKNOWN - remains ACTIVE
         message = mapper.createObjectNode().put(JSON.NAME, "IO1").put(JSON.STATE, JSON.UNKNOWN);
-        result = service.doPost(JsonRouteServiceFactory.ROUTE, "IO1", message, new JsonRequest(locale, JSON.V5, 42));
+        result = service.doPost(JsonRouteServiceFactory.ROUTE, "IO1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         JUnitUtil.waitFor(() -> {
             return route1.getState() == Sensor.ACTIVE;
         }, "Route to activate");
@@ -128,7 +128,7 @@ public class JsonRouteHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<R
         // set TOGGLE - becomes ACTIVE
         log.debug("Toggling route in testDoPostWithRouteSensor");
         message = mapper.createObjectNode().put(JSON.NAME, "IO1").put(JSON.STATE, JSON.TOGGLE);
-        result = service.doPost(JsonRouteServiceFactory.ROUTE, "IO1", message, new JsonRequest(locale, JSON.V5, 42));
+        result = service.doPost(JsonRouteServiceFactory.ROUTE, "IO1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         JUnitUtil.waitFor(() -> {
             return route1.getState() == Sensor.ACTIVE;
         }, "Route to activate");
@@ -136,7 +136,7 @@ public class JsonRouteHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<R
         validate(result);
         // set TOGGLE - remains ACTIVE
         message = mapper.createObjectNode().put(JSON.NAME, "IO1").put(JSON.STATE, JSON.TOGGLE);
-        result = service.doPost(JsonRouteServiceFactory.ROUTE, "IO1", message, new JsonRequest(locale, JSON.V5, 42));
+        result = service.doPost(JsonRouteServiceFactory.ROUTE, "IO1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         JUnitUtil.waitFor(() -> {
             return route1.getState() == Sensor.ACTIVE;
         }, "Route to activate");
@@ -145,7 +145,7 @@ public class JsonRouteHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<R
         // set invalid state
         message = mapper.createObjectNode().put(JSON.NAME, "IO1").put(JSON.STATE, 42); // Invalid value
         try {
-            service.doPost(JsonRouteServiceFactory.ROUTE, "IO1", message, new JsonRequest(locale, JSON.V5, 42));
+            service.doPost(JsonRouteServiceFactory.ROUTE, "IO1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
             fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             assertEquals(400, ex.getCode());
@@ -162,26 +162,26 @@ public class JsonRouteHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<R
         JsonNode message;
         // set off
         message = mapper.createObjectNode().put(JSON.NAME, "IO1").put(JSON.STATE, JSON.INACTIVE);
-        result = service.doPost(JsonRouteServiceFactory.ROUTE, "IO1", message, new JsonRequest(locale, JSON.V5, 42));
+        result = service.doPost(JsonRouteServiceFactory.ROUTE, "IO1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         validate(result);
         assertEquals(JSON.UNKNOWN, result.path(JSON.DATA).path(JSON.STATE).asInt());
         // set on
         message = mapper.createObjectNode().put(JSON.NAME, "IO1").put(JSON.STATE, JSON.ACTIVE);
-        result = service.doPost(JsonRouteServiceFactory.ROUTE, "IO1", message, new JsonRequest(locale, JSON.V5, 42));
+        result = service.doPost(JsonRouteServiceFactory.ROUTE, "IO1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         validate(result);
         assertEquals(JSON.UNKNOWN, result.path(JSON.DATA).path(JSON.STATE).asInt());
         // set unknown
         message = mapper.createObjectNode().put(JSON.NAME, "IO1").put(JSON.STATE, JSON.UNKNOWN);
-        result = service.doPost(JsonRouteServiceFactory.ROUTE, "IO1", message, new JsonRequest(locale, JSON.V5, 42));
+        result = service.doPost(JsonRouteServiceFactory.ROUTE, "IO1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         assertEquals(JSON.UNKNOWN, result.path(JSON.DATA).path(JSON.STATE).asInt());
         // set toggle
         message = mapper.createObjectNode().put(JSON.NAME, "IO1").put(JSON.STATE, JSON.TOGGLE);
-        result = service.doPost(JsonRouteServiceFactory.ROUTE, "IO1", message, new JsonRequest(locale, JSON.V5, 42));
+        result = service.doPost(JsonRouteServiceFactory.ROUTE, "IO1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         assertEquals(JSON.UNKNOWN, result.path(JSON.DATA).path(JSON.STATE).asInt());
         // set invalid state
         message = mapper.createObjectNode().put(JSON.NAME, "IO1").put(JSON.STATE, 42); // Invalid value
         try {
-            service.doPost(JsonRouteServiceFactory.ROUTE, "IO1", message, new JsonRequest(locale, JSON.V5, 42));
+            service.doPost(JsonRouteServiceFactory.ROUTE, "IO1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
             fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             assertEquals(400, ex.getCode());
@@ -196,7 +196,7 @@ public class JsonRouteHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<R
         try {
             // add a route
             message = mapper.createObjectNode().put(JSON.NAME, "IO1").put(JSON.STATE, Sensor.INACTIVE);
-            service.doPut(JsonRouteServiceFactory.ROUTE, "IO1", message, new JsonRequest(locale, JSON.V5, 42));
+            service.doPut(JsonRouteServiceFactory.ROUTE, "IO1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
             fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             assertEquals(405, ex.getCode());
@@ -208,12 +208,12 @@ public class JsonRouteHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<R
     public void testDoGetList() throws JsonException {
         RouteManager manager = InstanceManager.getDefault(RouteManager.class);
         JsonNode result;
-        result = service.doGetList(JsonRouteServiceFactory.ROUTE, mapper.createObjectNode(), new JsonRequest(locale, JSON.V5, 0));
+        result = service.doGetList(JsonRouteServiceFactory.ROUTE, mapper.createObjectNode(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         validate(result);
         assertEquals(0, result.size());
         manager.provideRoute("IO1", "Route1");
         manager.provideRoute("IO2", "Route2");
-        result = service.doGetList(JsonRouteServiceFactory.ROUTE, mapper.createObjectNode(), new JsonRequest(locale, JSON.V5, 0));
+        result = service.doGetList(JsonRouteServiceFactory.ROUTE, mapper.createObjectNode(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         validate(result);
         assertEquals(2, result.size());
     }

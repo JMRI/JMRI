@@ -47,7 +47,7 @@ public class WebServerAcceptanceSteps implements En {
 
         Given("^panel (.*) is loaded$", (String path) -> {
             InstanceManager.getDefault(ConfigureManager.class)
-                .load(new File(path));
+                    .load(new File(path));
         });
 
         Then("^a page with title (.*) is returned$", (String pageTitle) -> {
@@ -55,18 +55,17 @@ public class WebServerAcceptanceSteps implements En {
             assertThat(webDriver.getTitle()).isEqualTo(pageTitle);
         });
 
-        Then("^either (.*) or (.*) is returned as the title$", (String pageTitle,String formatedPageTitle) -> {
+        Then("^either (.*) or (.*) is returned as the title$", (String pageTitle, String formatedPageTitle) -> {
             waitLoad();
-            assertThat(webDriver.getTitle()).isIn(newLinkedHashSet(pageTitle,formatedPageTitle));
+            assertThat(webDriver.getTitle()).isIn(newLinkedHashSet(pageTitle, formatedPageTitle));
         });
-
 
         After(paneltags, () -> {
-           // navigate back home to prevent the webpage from reloading.
-           webDriver.get("http://localhost:12080/");
-           jmri.util.JUnitUtil.closeAllPanels();
+            // navigate back home to prevent the webpage from reloading.
+            webDriver.get("http://localhost:12080/");
+            jmri.util.JUnitUtil.closeAllPanels();
         });
-    
+
         Then("^(.*) has item (.*) with state (.*)$", (String table, String item, String state) -> {
            webDriver.get("http://localhost:12080/");
            waitLoad();
@@ -79,26 +78,41 @@ public class WebServerAcceptanceSteps implements En {
            wait.until(ExpectedConditions.visibilityOfElementLocated(By.tagName("table")));
            WebElement webTable = webDriver.findElement(By.xpath("//div[@id='wrap']//div[@class='container']//table"));
 
-           // find the table body.
 
-           WebElement tableBody = webTable.findElement(By.tagName("tbody"));
-           List<WebElement> rows = tableBody.findElements(By.tagName("tr"));
-           // we make an assumption that the first column is the systemName and
-           // the last column is the state
+           // find the columns containing the name and the state in the table header.
+           WebElement tableHeader = webTable.findElement(By.tagName("thead"));
+           List<WebElement> headerRows= tableHeader.findElements(By.tagName("tr"));
+           List<WebElement> header = headerRows.get(0).findElements(By.tagName("th"));
+           int nameCol=0;
+           int stateCol=3;
+           for(int i =0;i<header.size();i++){
+               if(header.get(i).getText().equals("name")){
+                   nameCol =i;
+               }
+               if(header.get(i).getText().equals("state")){
+                   stateCol = i;
+               }
+           }
+
+            // find the table body.
+
+            WebElement tableBody = webTable.findElement(By.tagName("tbody"));
+            List<WebElement> rows = tableBody.findElements(By.tagName("tr"));
+
            int i;
            for(i =0; i< rows.size(); i++){
                List<WebElement> cols = rows.get(i).findElements(By.tagName("td"));
-               if(cols.size()>0 && cols.get(0).getText().equals(item)){
-                  assertThat(cols.get(cols.size()-1).getText()).isEqualTo(state);
+               if(cols.size()>0 && cols.get(nameCol).getText().equals(item)){
+                  assertThat(cols.get(stateCol).getText()).isEqualTo(state);
                   break;
                }
            }
            assertThat(rows.size()).isNotEqualTo(i).withFailMessage("item not found");
         });
 
-        //Find the specified cell in the table, check value, then click on it and 
+        //Find the specified cell in the table, check value, then click on it and
         //  verify new value is as expected. Some columns are not supposed to change. 
-        Then("^table (.*) has row (.*) column (.*) with text (.*) after click (.*)$", 
+        Then("^table (.*) has row (.*) column (.*) with text (.*) after click (.*)$",
                 (String table, String row, String column, String text, String after) -> {
 
                     //navigate to home page and wait for it to load
@@ -109,49 +123,46 @@ public class WebServerAcceptanceSteps implements En {
                     (webDriver.findElement(By.linkText(table))).click();
                     // wait for the page to load. note that table is loaded via ajax, so it may still be loading
                     waitLoad();
-                    WebDriverWait wait = new WebDriverWait(webDriver, 10 );
+                    WebDriverWait wait = new WebDriverWait(webDriver, 10);
 
                     //set xpath paths to items of interest
                     String tablePath = "//table[@id='jmri-data']";
-                    String cellPath = tablePath + "//tr[@data-name='" + row + "']//td[@class='" + column +"']";
-                    String cellAfterPath = cellPath + "[text()='" + after +"']";
+                    String cellPath = tablePath + "//tr[@data-name='" + row + "']//td[@class='" + column + "']";
+                    String cellAfterPath = cellPath + "[text()='" + after + "']";
 
                     //wait until the requested cell is visible (twice, since row is immed. repainted from json update)
                     wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(cellPath)));
                     wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(cellPath)));
                     //must be only one cell that matches
-                    assertThat((Integer)webDriver.findElements(By.xpath(cellPath)).size()).isEqualTo(1); 
+                    assertThat((Integer) webDriver.findElements(By.xpath(cellPath)).size()).isEqualTo(1);
                     //cell text must match expected value
-                    assertThat(webDriver.findElement(By.xpath(cellPath)).getText()).isEqualTo(text); 
+                    assertThat(webDriver.findElement(By.xpath(cellPath)).getText()).isEqualTo(text);
                     //click on the target cell
                     webDriver.findElement(By.xpath(cellPath)).click();
                     //wait for cell to be updated with the "after" value
-                    wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(cellAfterPath)));            
+                    wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(cellAfterPath)));
                     //check that "after" value is correct
-                    assertThat(webDriver.findElement(By.xpath(cellAfterPath)).getText()).isEqualTo(after); 
+                    assertThat(webDriver.findElement(By.xpath(cellAfterPath)).getText()).isEqualTo(after);
                 });
     }
 
-    private void waitLoad(){
-            WebDriverWait wait = new WebDriverWait(webDriver, 10);
-            wait.until(new ExpectedCondition<Boolean>() {
-                // this ExpectedCondition code is derived from code posted by user 
-                // Jeff Vincent to
-                // https://stackoverflow.com/questions/12858972/how-can-i-ask-the-selenium-webdriver-to-wait-for-few-seconds-in-java
-                @Override
-                public Boolean apply(WebDriver driver) {
-                    String script =
-                            "if (typeof window != 'undefined' && window.document) { return window.document.readyState; } else { return 'notready'; }";
-                    Boolean result = Boolean.FALSE;
-                    if (driver != null) {
-                        try {
-                            result = ((JavascriptExecutor) driver).executeScript(script).equals("complete");
-                        } catch (Exception ex) {
-                            // nothing to do, but silence the error
-                        }
-                    }
-                    return result;
+    private void waitLoad() {
+        WebDriverWait wait = new WebDriverWait(webDriver, 10);
+        wait.until((ExpectedCondition<Boolean>) (WebDriver driver) -> {
+            // this ExpectedCondition code is derived from code posted by user
+            // Jeff Vincent to
+            // https://stackoverflow.com/questions/12858972/how-can-i-ask-the-selenium-webdriver-to-wait-for-few-seconds-in-java
+            String script
+                    = "if (typeof window != 'undefined' && window.document) { return window.document.readyState; } else { return 'notready'; }";
+            Boolean result = Boolean.FALSE;
+            if (driver != null) {
+                try {
+                    result = ((JavascriptExecutor) driver).executeScript(script).equals("complete");
+                } catch (Exception ex) {
+                    // nothing to do, but silence the error
                 }
-            });
+            }
+            return result;
+        });
     }
 }

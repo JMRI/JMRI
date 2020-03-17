@@ -1,17 +1,11 @@
 package jmri.implementation.decorators;
 
 import jmri.*;
-import jmri.implementation.AbstractReporter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.CheckForNull;
-import javax.annotation.Nonnull;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyVetoException;
-import java.util.ArrayList;
-import java.util.Set;
 
 /**
  * Timeout decorator implementation for reporters.

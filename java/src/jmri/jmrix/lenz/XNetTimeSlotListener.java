@@ -72,6 +72,6 @@ public class XNetTimeSlotListener implements XNetListener {
        // do nothing
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XNetTimeSlotListener.class);
+    private static final Logger log = LoggerFactory.getLogger(XNetTimeSlotListener.class);
 
 }

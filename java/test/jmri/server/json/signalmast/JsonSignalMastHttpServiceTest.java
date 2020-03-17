@@ -45,31 +45,31 @@ public class JsonSignalMastHttpServiceTest extends JsonNamedBeanHttpServiceTestB
 
         JsonNode result;
         // retrieve by systemname
-        result = service.doGet(JsonSignalMast.SIGNAL_MAST, sysName, NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 42));
+        result = service.doGet(JsonSignalMast.SIGNAL_MAST, sysName, NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         validate(result);
         assertEquals(JsonSignalMast.SIGNAL_MAST, result.path(JSON.TYPE).asText());
         assertEquals(sysName, result.path(JSON.DATA).path(JSON.NAME).asText());
         // verify initial aspect/state is "Unknown"
         assertEquals(JSON.ASPECT_UNKNOWN, result.path(JSON.DATA).path(JSON.STATE).asText());
         // retrieve by username
-        result = service.doGet(JsonSignalMast.SIGNAL_MAST, userName, NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 42));
+        result = service.doGet(JsonSignalMast.SIGNAL_MAST, userName, NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         validate(result);
         assertEquals(JsonSignalMast.SIGNAL_MAST, result.path(JSON.TYPE).asText());
         assertEquals(sysName, result.path(JSON.DATA).path(JSON.NAME).asText());
         // change to Clear, then verify change
         s.setAspect("Clear");
-        result = service.doGet(JsonSignalMast.SIGNAL_MAST, sysName, NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 42));
+        result = service.doGet(JsonSignalMast.SIGNAL_MAST, sysName, NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         assertEquals("Clear", result.path(JSON.DATA).path(JSON.STATE).asText());
         assertEquals("Clear", result.path(JSON.DATA).path(JSON.ASPECT).asText());
         // change to Held, then verify change
         s.setHeld(true);
-        result = service.doGet(JsonSignalMast.SIGNAL_MAST, sysName, NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 42));
+        result = service.doGet(JsonSignalMast.SIGNAL_MAST, sysName, NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         assertEquals(JSON.ASPECT_HELD, result.path(JSON.DATA).path(JSON.STATE).asText());
         assertEquals("Clear", result.path(JSON.DATA).path(JSON.ASPECT).asText());
         // change to Dark, then verify change
         s.setHeld(false);
         s.setLit(false);
-        result = service.doGet(JsonSignalMast.SIGNAL_MAST, sysName, NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 42));
+        result = service.doGet(JsonSignalMast.SIGNAL_MAST, sysName, NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         assertEquals(JSON.ASPECT_DARK, result.path(JSON.DATA).path(JSON.STATE).asText());
         assertEquals("Clear", result.path(JSON.DATA).path(JSON.ASPECT).asText());
     }
@@ -88,7 +88,7 @@ public class JsonSignalMastHttpServiceTest extends JsonNamedBeanHttpServiceTestB
 
         // set signalmast to Clear and verify change
         message = mapper.createObjectNode().put(JSON.NAME, sysName).put(JSON.STATE, "Clear");
-        result = service.doPost(JsonSignalMast.SIGNAL_MAST, sysName, message, new JsonRequest(locale, JSON.V5, 42));
+        result = service.doPost(JsonSignalMast.SIGNAL_MAST, sysName, message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         validate(result);
         assertEquals("Clear", s.getAspect());
         assertEquals("Clear", result.path(JSON.DATA).path(JSON.STATE).asText());
@@ -97,7 +97,7 @@ public class JsonSignalMastHttpServiceTest extends JsonNamedBeanHttpServiceTestB
         // try to set to UNKNOWN, which should not be allowed, so state should not change
         try {
             message = mapper.createObjectNode().put(JSON.NAME, sysName).put(JSON.STATE, JSON.ASPECT_UNKNOWN);
-            result = service.doPost(JsonSignalMast.SIGNAL_MAST, sysName, message, new JsonRequest(locale, JSON.V5, 42));
+            result = service.doPost(JsonSignalMast.SIGNAL_MAST, sysName, message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
             fail("Expected exceiton not thrown");
         } catch (JsonException ex) {
             assertEquals("Error code is HTTP 400", 400, ex.getCode());
@@ -106,7 +106,7 @@ public class JsonSignalMastHttpServiceTest extends JsonNamedBeanHttpServiceTestB
 
         // set to HELD and verify change
         message = mapper.createObjectNode().put(JSON.NAME, sysName).put(JSON.STATE, JSON.ASPECT_HELD);
-        result = service.doPost(JsonSignalMast.SIGNAL_MAST, sysName, message, new JsonRequest(locale, JSON.V5, 42));
+        result = service.doPost(JsonSignalMast.SIGNAL_MAST, sysName, message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         validate(result);
         assertTrue("Signalmast is held", s.getHeld());
         assertEquals("Clear", s.getAspect());
@@ -115,7 +115,7 @@ public class JsonSignalMastHttpServiceTest extends JsonNamedBeanHttpServiceTestB
 
         // set to STOP and verify change
         message = mapper.createObjectNode().put(JSON.NAME, sysName).put(JSON.STATE, "Stop");
-        result = service.doPost(JsonSignalMast.SIGNAL_MAST, sysName, message, new JsonRequest(locale, JSON.V5, 42));
+        result = service.doPost(JsonSignalMast.SIGNAL_MAST, sysName, message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         validate(result);
         assertFalse("Signalmast is not held", s.getHeld());
         assertEquals("Stop", s.getAspect());
@@ -128,14 +128,14 @@ public class JsonSignalMastHttpServiceTest extends JsonNamedBeanHttpServiceTestB
         SignalHeadManager headManager = InstanceManager.getDefault(SignalHeadManager.class);
         SignalMastManager mastManager = InstanceManager.getDefault(SignalMastManager.class);
         JsonNode result;
-        result = service.doGetList(JsonSignalMast.SIGNAL_MAST, mapper.createObjectNode(), new JsonRequest(locale, JSON.V5, 0));
+        result = service.doGetList(JsonSignalMast.SIGNAL_MAST, mapper.createObjectNode(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         validate(result);
         assertEquals(0, result.size());
         headManager.register(new VirtualSignalHead("IH1"));
         mastManager.provideSignalMast("IF$shsm:basic:one-searchlight:IH1");
         headManager.register(new VirtualSignalHead("IH2"));
         mastManager.provideSignalMast("IF$shsm:basic:one-searchlight:IH2");
-        result = service.doGetList(JsonSignalMast.SIGNAL_MAST, mapper.createObjectNode(), new JsonRequest(locale, JSON.V5, 0));
+        result = service.doGetList(JsonSignalMast.SIGNAL_MAST, mapper.createObjectNode(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         validate(result);
         assertEquals(2, result.size());
     }

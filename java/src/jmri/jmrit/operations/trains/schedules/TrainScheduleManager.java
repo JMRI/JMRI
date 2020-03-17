@@ -41,18 +41,6 @@ public class TrainScheduleManager implements InstanceManagerAutoDefault, Instanc
     public static final String LISTLENGTH_CHANGED_PROPERTY = "trainScheduleListLength"; // NOI18N
     public static final String SCHEDULE_ID_CHANGED_PROPERTY = "ActiveTrainScheduleId"; // NOI18N
 
-    /**
-     * Get the default instance of this class.
-     *
-     * @return the default instance of this class
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static synchronized TrainScheduleManager instance() {
-        return InstanceManager.getDefault(TrainScheduleManager.class);
-    }
-
     public void dispose() {
         _scheduleHashTable.clear();
     }

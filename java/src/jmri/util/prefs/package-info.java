@@ -28,4 +28,5 @@
  * in any class in this package refer to the results of
 {@link jmri.profile.ProfileManager#getActiveProfile()}.
  */
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings({})
 package jmri.util.prefs;
