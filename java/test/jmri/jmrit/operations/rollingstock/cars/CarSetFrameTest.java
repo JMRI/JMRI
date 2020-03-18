@@ -78,7 +78,7 @@ public class CarSetFrameTest extends OperationsTestCase {
             return c3.isOutOfService();
         }, "Out of service Again");
         Assert.assertTrue("Location unknown", c3.isLocationUnknown());
-        
+
         // change car's status
         toggleCheckBoxThenClickSave(f,f.locationUnknownCheckBox);
         // location unknown checkbox also causes the car to be out of service

@@ -31,7 +31,7 @@ import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 import org.netbeans.jemmy.ComponentChooser;
-import org.netbeans.jemmy.QueueTool;
+import org.netbeans.jemmy.EventTool;
 import org.netbeans.jemmy.operators.JLabelOperator;
 
 /**
@@ -96,15 +96,12 @@ public class PositionableLabelTest extends PositionableTestBase {
         // make four windows
         InstanceManager.getDefault(ConfigureManager.class)
                 .load(new File("java/test/jmri/jmrit/display/configurexml/valid/backgrounds.xml"));
-        new QueueTool().waitEmpty(100);
+        new EventTool().waitNoEvent(100);
 
         // Find color in label by frame name
         int color1 = getColor("F Bkg none, label Bkg none"); // transparent background
-
         int color2 = getColor("F Bkg blue, label Bkg none"); // transparent background shows blue
-
         int color3 = getColor("F Bkg none, label Bkg yellow"); // yellow
-
         int color4 = getColor("F Bkg blue, label Bkg yellow");
 
         assertPixel("F Bkg none, label Bkg none color", Pixel.TRANSPARENT, color1); // transparent shows neutral frame background
@@ -115,7 +112,7 @@ public class PositionableLabelTest extends PositionableTestBase {
 
     int getColor(String name) {
 
-        new QueueTool().waitEmpty(100);
+        new EventTool().waitNoEvent(100);
 
         // Find window by name
         JmriJFrame frame = JmriJFrame.getFrame(name);
@@ -164,7 +161,7 @@ public class PositionableLabelTest extends PositionableTestBase {
 
         f.add(label);
         f.pack();
-        new QueueTool().waitEmpty(100);
+        new EventTool().waitNoEvent(100);
         Assert.assertEquals("icon size", new Dimension(13, 13).toString(), label.getSize().toString());
 
         int[] val = getDisplayedContent(label, label.getSize(), new Point(0, 0));
@@ -206,7 +203,7 @@ public class PositionableLabelTest extends PositionableTestBase {
 
         f.add(label);
         f.pack();
-        new QueueTool().waitEmpty(100);
+        new EventTool().waitNoEvent(100);
         Assert.assertEquals("icon size", new Dimension(13, 13).toString(), label.getSize().toString());
 
         // do the rotation, which transforms 13x13 to sqrt(2) bigger, 19x19
@@ -214,7 +211,7 @@ public class PositionableLabelTest extends PositionableTestBase {
         Assert.assertEquals("icon size", new Dimension(19, 19).toString(), label.getSize().toString());
 
         f.pack();
-        new QueueTool().waitEmpty(100);
+        new EventTool().waitNoEvent(100);
         Assert.assertEquals("icon size", new Dimension(19, 19).toString(), label.getSize().toString());
 
         // and check
@@ -266,12 +263,12 @@ public class PositionableLabelTest extends PositionableTestBase {
 
         f.add(label);
         f.pack();
-        new QueueTool().waitEmpty(100);
+        new EventTool().waitNoEvent(100);
         Assert.assertEquals("icon size", new Dimension(13, 13).toString(), label.getSize().toString());
 
         // wait for a bit
         f.setVisible(true); // needed to get initial animation contents
-        new QueueTool().waitEmpty(100);
+        new EventTool().waitNoEvent(100);
 
         // check for initial red
         int[] val = getDisplayedContent(label, label.getSize(), new Point(0, 0));
@@ -296,7 +293,7 @@ public class PositionableLabelTest extends PositionableTestBase {
                 Pixel.RED, Pixel.RED, Pixel.RED);
 
         // wait for long enough to reach final red, skipping intermediate green as timing too fussy
-        new QueueTool().waitEmpty(250);
+        new EventTool().waitNoEvent(250);
 
         val = getDisplayedContent(label, label.getSize(), new Point(0, 0));
 
@@ -343,7 +340,7 @@ public class PositionableLabelTest extends PositionableTestBase {
 
         f.add(label);
         f.pack();
-        new QueueTool().waitEmpty(100);
+        new EventTool().waitNoEvent(100);
         Assert.assertEquals("icon size", new Dimension(13, 13).toString(), label.getSize().toString());
 
         // do the rotation, which transforms 13x13 to sqrt(2) bigger, 19x19
@@ -351,12 +348,12 @@ public class PositionableLabelTest extends PositionableTestBase {
         Assert.assertEquals("icon size", new Dimension(19, 19).toString(), label.getSize().toString());
 
         f.pack();
-        new QueueTool().waitEmpty(100);
+        new EventTool().waitNoEvent(100);
         Assert.assertEquals("icon size", new Dimension(19, 19).toString(), label.getSize().toString());
 
         // wait for a bit
         f.setVisible(true); // needed to get initial animation contents
-        new QueueTool().waitEmpty(100);
+        new EventTool().waitNoEvent(100);
 
         // and check
         int[] val = getDisplayedContent(label, label.getSize(), new Point(0, 0));
@@ -381,7 +378,7 @@ public class PositionableLabelTest extends PositionableTestBase {
                 Pixel.GREEN, Pixel.RED, Pixel.GREEN);
 
         // wait for long enough to reach final blue, skipping intermediate green as timing too fussy
-        new QueueTool().waitEmpty(250);
+        new EventTool().waitNoEvent(250);
 
         // and check
         val = getDisplayedContent(label, label.getSize(), new Point(0, 0));
@@ -430,7 +427,7 @@ public class PositionableLabelTest extends PositionableTestBase {
 
         f.add(label);
         f.pack();
-        new QueueTool().waitEmpty(100);
+        new EventTool().waitNoEvent(100);
 
         Assert.assertTrue("Expect size " + label.getSize() + " wider than height",
                 label.getSize().width > label.getSize().height);
@@ -471,12 +468,12 @@ public class PositionableLabelTest extends PositionableTestBase {
 
         f.add(label);
         f.pack();
-        new QueueTool().waitEmpty(100);
+        new EventTool().waitNoEvent(100);
 
         label.rotate(90);
 
         f.pack();
-        new QueueTool().waitEmpty(100);
+        new EventTool().waitNoEvent(100);
 
         Assert.assertTrue("Expect size " + label.getSize() + " higher than width",
                 label.getSize().width < label.getSize().height);
@@ -517,12 +514,12 @@ public class PositionableLabelTest extends PositionableTestBase {
 
         f.add(label);
         f.pack();
-        new QueueTool().waitEmpty(100);
+        new EventTool().waitNoEvent(100);
 
         label.rotate(45);
 
         f.pack();
-        new QueueTool().waitEmpty(100);
+        new EventTool().waitNoEvent(100);
 
         int[] val = getDisplayedContent(label, label.getSize(), new Point(0, 0));
 

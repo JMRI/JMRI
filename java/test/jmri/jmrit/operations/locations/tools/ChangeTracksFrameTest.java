@@ -55,7 +55,7 @@ public class ChangeTracksFrameTest extends OperationsTestCase {
         Assert.assertTrue(loc.hasYards());
         
         JemmyUtil.enterClickAndLeave(ctf.spurRadioButton);
-        JemmyUtil.enterClickAndLeave(ctf.saveButton);
+        JemmyUtil.enterPushAndLeave(ctf.saveButton);
         
         // confirm change
         Assert.assertFalse(loc.hasYards());
