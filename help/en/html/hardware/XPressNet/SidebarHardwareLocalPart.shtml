@@ -4,15 +4,11 @@
 		<dd>
 		    <ul>
                     <li><a href="XNetAddressing.shtml">XPressNet Addressing</a>
-                    <li>Tools
-                    <ul>
-                        <li><a href="LI101Configurationtool.shtml">LI101 Config</a>
-                        <li><a href="LZV100Configurationtool.shtml">LZV100 Config</a>
-                        <li><a href="XNetSystemInformationtool.shtml">System Information</a>
-                        <li><a href="CreateXNetLogFile.shtml">XPressNet Log</a>
+                    <li><a href="LI101Configurationtool.shtml">LI101 Config</a>
+                    <li><a href="LZV100Configurationtool.shtml">LZV100 Config</a>
+                    <li><a href="XNetSystemInformationtool.shtml">System Information</a>
+                    <li><a href="CreateXNetLogFile.shtml">XPressNet Log</a>
                     </ul>
-                    </li>
-                </ul>
-		</dd>
+                </dd>
     
     <!-- /SidebarHardwareLocalPart.shtml -->
