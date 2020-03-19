@@ -146,7 +146,7 @@ public class CbusOpCodesTest {
         Assert.assertEquals("extended 5 data","Bootloader: Data : 05 01 02 03 0D 05 06 07",CbusOpCodes.decode(m));
         
         
-        m = new CanMessage( new int[]{0},10000004  );
+        m = new CanMessage( new int[]{0},0x10000004 );
         m.setExtended(true);
         Assert.assertEquals("extended 10000004 0","Bootloader: Boot Error",CbusOpCodes.decode(m));
         
