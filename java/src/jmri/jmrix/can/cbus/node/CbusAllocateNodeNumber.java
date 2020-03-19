@@ -247,6 +247,7 @@ public class CbusAllocateNodeNumber implements CanListener {
                     nd.resetNodeAll();
                     nodeModel.startUrgentFetch();
                     nodeModel.setRequestNodeDisplay(-1);
+                    send.searchForCommandStations();
                 }   
                 _paramsArr = null;
                 break;
