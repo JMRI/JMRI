@@ -5,7 +5,7 @@ import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import jmri.InstanceManager;
+import jmri.InstanceManagerDelegate;
 import jmri.JmriException;
 import jmri.Reporter;
 import org.slf4j.Logger;
@@ -22,13 +22,13 @@ abstract public class AbstractReporterServer {
     private final HashMap<String, ReporterListener> reporters;
     private static final Logger log = LoggerFactory.getLogger(AbstractReporterServer.class);
 
-    private InstanceManager instanceManager;
+    private InstanceManagerDelegate instanceManager;
 
     public AbstractReporterServer(){
-        this(InstanceManager.getDefault());
+        this(new InstanceManagerDelegate());
     }
 
-    public AbstractReporterServer(InstanceManager instanceManager) {
+    public AbstractReporterServer(InstanceManagerDelegate instanceManager) {
         reporters = new HashMap<String, ReporterListener>();
         this.instanceManager = instanceManager;
     }

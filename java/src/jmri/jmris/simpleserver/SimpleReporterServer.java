@@ -3,7 +3,7 @@ package jmri.jmris.simpleserver;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import jmri.InstanceManager;
+import jmri.InstanceManagerDelegate;
 import jmri.JmriException;
 import jmri.Reporter;
 import jmri.jmris.AbstractReporterServer;
@@ -20,23 +20,23 @@ public class SimpleReporterServer extends AbstractReporterServer {
 
     private DataOutputStream output;
     private JmriConnection connection;
-    private InstanceManager instanceManager;
+    private InstanceManagerDelegate instanceManager;
 
     public SimpleReporterServer(JmriConnection connection){
-        this(connection,InstanceManager.getDefault());
+        this(connection,new InstanceManagerDelegate());
     }
 
-    public SimpleReporterServer(JmriConnection connection,InstanceManager instanceManager) {
+    public SimpleReporterServer(JmriConnection connection,InstanceManagerDelegate instanceManager) {
         super();
         this.connection = connection;
         this.instanceManager = instanceManager;
     }
 
     public SimpleReporterServer(DataInputStream inStream, DataOutputStream outStream) {
-        this(inStream,outStream,InstanceManager.getDefault());
+        this(inStream,outStream,new InstanceManagerDelegate());
     }
 
-    public SimpleReporterServer(DataInputStream inStream, DataOutputStream outStream,InstanceManager instanceManager) {
+    public SimpleReporterServer(DataInputStream inStream, DataOutputStream outStream,InstanceManagerDelegate instanceManager) {
         super();
         output = outStream;
         this.instanceManager = instanceManager;

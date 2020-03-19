@@ -7,7 +7,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
-import jmri.InstanceManager;
+import jmri.InstanceManagerDelegate;
 import jmri.ShutDownTask;
 import jmri.util.zeroconf.ZeroConfService;
 import org.slf4j.Logger;
@@ -28,11 +28,11 @@ public class JmriServer {
     protected ShutDownTask shutDownTask = null;
     private Thread listenThread = null;
     protected ArrayList<ClientListener> connectedClientThreads = new ArrayList<>();
-    private InstanceManager instanceManager;
+    private InstanceManagerDelegate instanceManager;
 
     // Create a new server using the default port
     public JmriServer() {
-        this(3000,InstanceManager.getDefault());
+        this(3000,new InstanceManagerDelegate());
     }
 
     // Create a new server using a given port and no timeout
@@ -40,17 +40,17 @@ public class JmriServer {
         this(port, 0);
     }
 
-    public JmriServer(int port, InstanceManager instanceManager) {
+    public JmriServer(int port, InstanceManagerDelegate instanceManager) {
         this(port, 0, instanceManager);
     }
 
     // Create a new server using a given port with a timeout
     // A timeout of 0 is infinite
     public JmriServer(int port, int timeout) {
-        this(port,timeout,InstanceManager.getDefault());
+        this(port,timeout,new InstanceManagerDelegate());
     }
 
-    public JmriServer(int port, int timeout, InstanceManager instanceManager) {
+    public JmriServer(int port, int timeout, InstanceManagerDelegate instanceManager) {
         super();
         // Try registering the server on the given port
         try {

@@ -3,7 +3,7 @@ package jmri.jmris.srcp;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import jmri.InstanceManager;
+import jmri.InstanceManagerDelegate;
 import jmri.Sensor;
 import jmri.jmris.AbstractSensorServer;
 import jmri.jmrix.SystemConnectionMemo;
@@ -17,13 +17,13 @@ import jmri.jmrix.SystemConnectionMemo;
 public class JmriSRCPSensorServer extends AbstractSensorServer {
 
     private DataOutputStream output;
-    private InstanceManager instanceManager;
+    private InstanceManagerDelegate instanceManager;
 
     public JmriSRCPSensorServer(DataInputStream inStream, DataOutputStream outStream) {
-        this(inStream,outStream,InstanceManager.getDefault());
+        this(inStream,outStream,new InstanceManagerDelegate());
     }
 
-    public JmriSRCPSensorServer(DataInputStream inStream, DataOutputStream outStream, InstanceManager instanceManager) {
+    public JmriSRCPSensorServer(DataInputStream inStream, DataOutputStream outStream, InstanceManagerDelegate instanceManager) {
         output = outStream;
         this.instanceManager = instanceManager;
     }

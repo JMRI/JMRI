@@ -5,7 +5,7 @@ import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import jmri.InstanceManager;
+import jmri.InstanceManagerDelegate;
 import jmri.JmriException;
 import jmri.SignalMast;
 import jmri.server.json.JsonException;
@@ -22,13 +22,13 @@ abstract public class AbstractSignalMastServer {
 
     private final HashMap<String, SignalMastListener> signalMasts;
     static private final Logger log = LoggerFactory.getLogger(AbstractSignalMastServer.class);
-    private InstanceManager instanceManager;
+    private InstanceManagerDelegate instanceManager;
 
     public AbstractSignalMastServer(){
-        this(InstanceManager.getDefault());
+        this(new InstanceManagerDelegate());
     }
 
-    public AbstractSignalMastServer(InstanceManager instanceManager) {
+    public AbstractSignalMastServer(InstanceManagerDelegate instanceManager) {
         this.instanceManager = instanceManager;
         signalMasts = new HashMap<String, SignalMastListener>();
     }

@@ -5,7 +5,7 @@ import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import jmri.InstanceManager;
+import jmri.InstanceManagerDelegate;
 import jmri.JmriException;
 import jmri.Turnout;
 import org.slf4j.Logger;
@@ -21,13 +21,13 @@ abstract public class AbstractTurnoutServer {
 
     protected final HashMap<String, TurnoutListener> turnouts;
     private final static Logger log = LoggerFactory.getLogger(AbstractTurnoutServer.class);
-    private InstanceManager instanceManager;
+    private InstanceManagerDelegate instanceManager;
 
     public AbstractTurnoutServer(){
-        this(InstanceManager.getDefault());
+        this(new InstanceManagerDelegate());
     }
 
-    public AbstractTurnoutServer(InstanceManager instanceManager) {
+    public AbstractTurnoutServer(InstanceManagerDelegate instanceManager) {
         turnouts = new HashMap<String, TurnoutListener>();
         this.instanceManager = instanceManager;
     }

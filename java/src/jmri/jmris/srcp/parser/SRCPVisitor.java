@@ -1,6 +1,6 @@
 package jmri.jmris.srcp.parser;
 
-import jmri.InstanceManager;
+import jmri.InstanceManagerDelegate;
 import jmri.ProgrammingMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,13 +12,13 @@ import org.slf4j.LoggerFactory;
 public class SRCPVisitor extends SRCPParserDefaultVisitor {
 
     private String outputString = null;
-    private InstanceManager instanceManager;
+    private InstanceManagerDelegate instanceManager;
 
     public SRCPVisitor(){
-        this(InstanceManager.getDefault());
+        this(new InstanceManagerDelegate());
     }
 
-    public SRCPVisitor(InstanceManager instanceManager){
+    public SRCPVisitor(InstanceManagerDelegate instanceManager){
         this.instanceManager = instanceManager;
     }
 

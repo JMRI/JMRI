@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import jmri.InstanceManager;
+import jmri.InstanceManagerDelegate;
 import jmri.JmriException;
 import jmri.Light;
 import org.slf4j.Logger;
@@ -23,13 +23,13 @@ abstract public class AbstractLightServer {
     private final HashMap<String, LightListener> lights;
     private final static Logger log = LoggerFactory.getLogger(AbstractLightServer.class);
 
-    private InstanceManager instanceManager;
+    private InstanceManagerDelegate instanceManager;
 
     public AbstractLightServer(){
-        this(InstanceManager.getDefault());
+        this(new InstanceManagerDelegate());
     }
 
-    public AbstractLightServer(InstanceManager instanceManager) {
+    public AbstractLightServer(InstanceManagerDelegate instanceManager) {
         lights = new HashMap<String, LightListener>();
         this.instanceManager = instanceManager;
     }

@@ -1,6 +1,6 @@
 package jmri.jmris.simpleserver.parser;
 
-import jmri.InstanceManager;
+import jmri.InstanceManagerDelegate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,13 +11,13 @@ import org.slf4j.LoggerFactory;
 public class SimpleVisitor extends JmriServerParserDefaultVisitor {
 
     private String outputString = null;
-    private InstanceManager instanceManager;
+    private InstanceManagerDelegate instanceManager;
 
     public SimpleVisitor(){
-        this(InstanceManager.getDefault());
+        this(new InstanceManagerDelegate());
     }
 
-    public SimpleVisitor(InstanceManager instanceManager){
+    public SimpleVisitor(InstanceManagerDelegate instanceManager){
         super();
         this.instanceManager = instanceManager;
     }

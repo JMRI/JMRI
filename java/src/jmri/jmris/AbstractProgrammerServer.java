@@ -1,7 +1,7 @@
 package jmri.jmris;
 
 import java.io.IOException;
-import jmri.InstanceManager;
+import jmri.InstanceManagerDelegate;
 import jmri.Programmer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,13 +23,13 @@ abstract public class AbstractProgrammerServer implements jmri.ProgListener {
 
     protected int lastCV = -1;
 
-    private InstanceManager instanceManager;
+    private InstanceManagerDelegate instanceManager;
 
     public AbstractProgrammerServer(){
-        this(InstanceManager.getDefault());
+        this(new InstanceManagerDelegate());
     }
 
-    public AbstractProgrammerServer(InstanceManager instanceManager) {
+    public AbstractProgrammerServer(InstanceManagerDelegate instanceManager) {
         this.instanceManager = instanceManager;
         if (instanceManager.getNullableDefault(jmri.GlobalProgrammerManager.class) != null) {
             p = instanceManager.getDefault(jmri.GlobalProgrammerManager.class).getGlobalProgrammer();

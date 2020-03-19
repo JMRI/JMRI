@@ -2,7 +2,7 @@ package jmri.jmris;
 
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
-import jmri.InstanceManager;
+import jmri.InstanceManagerDelegate;
 import jmri.JmriException;
 import jmri.PowerManager;
 import org.slf4j.Logger;
@@ -15,13 +15,13 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AbstractPowerServer implements PropertyChangeListener {
 
-    private InstanceManager instanceManager;
+    private InstanceManagerDelegate instanceManager;
 
     public AbstractPowerServer(){
-        this(InstanceManager.getDefault());
+        this(new InstanceManagerDelegate());
     }
 
-    public AbstractPowerServer(InstanceManager instanceManager){
+    public AbstractPowerServer(InstanceManagerDelegate instanceManager){
 
         this.instanceManager = instanceManager;
     }

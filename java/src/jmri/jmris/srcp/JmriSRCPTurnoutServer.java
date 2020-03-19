@@ -4,7 +4,7 @@ import java.beans.PropertyChangeEvent;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import jmri.InstanceManager;
+import jmri.InstanceManagerDelegate;
 import jmri.Turnout;
 import jmri.jmris.AbstractTurnoutServer;
 import jmri.jmrix.SystemConnectionMemo;
@@ -20,13 +20,13 @@ import org.slf4j.LoggerFactory;
 public class JmriSRCPTurnoutServer extends AbstractTurnoutServer {
 
     private DataOutputStream output;
-    private InstanceManager instanceManager;
+    private InstanceManagerDelegate instanceManager;
 
     public JmriSRCPTurnoutServer(DataInputStream inStream, DataOutputStream outStream) {
-        this(inStream,outStream,InstanceManager.getDefault());
+        this(inStream,outStream,new InstanceManagerDelegate());
     }
 
-    public JmriSRCPTurnoutServer(DataInputStream inStream, DataOutputStream outStream,InstanceManager instanceManager) {
+    public JmriSRCPTurnoutServer(DataInputStream inStream, DataOutputStream outStream,InstanceManagerDelegate instanceManager) {
         this.instanceManager = instanceManager;
         output = outStream;
     }

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import javax.management.Attribute;
 
-import jmri.InstanceManager;
+import jmri.InstanceManagerDelegate;
 import jmri.JmriException;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
@@ -32,14 +32,14 @@ public abstract class AbstractOperationsServer implements PropertyChangeListener
     protected final TrainManager tm;
     protected final LocationManager lm;
     protected final HashMap<String, TrainListener> trains;
-    private InstanceManager instanceManager;
+    private InstanceManagerDelegate instanceManager;
 
     public AbstractOperationsServer(){
-        this(InstanceManager.getDefault());
+        this(new InstanceManagerDelegate());
     }
 
     @SuppressWarnings("LeakingThisInConstructor")
-    public AbstractOperationsServer(InstanceManager instanceManager) {
+    public AbstractOperationsServer(InstanceManagerDelegate instanceManager) {
         this.instanceManager = instanceManager;
         tm = instanceManager.getDefault(TrainManager.class);
         tm.addPropertyChangeListener(this);

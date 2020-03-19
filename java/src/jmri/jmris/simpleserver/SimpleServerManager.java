@@ -1,31 +1,35 @@
 package jmri.jmris.simpleserver;
 
 import java.io.File;
-import jmri.InstanceManager;
+import jmri.InstanceManagerDelegate;
 import jmri.util.FileUtil;
 
 public class SimpleServerManager {
 
     private SimpleServerPreferences preferences;
     private SimpleServer server;
+    private final InstanceManagerDelegate instanceManagerDelegate;
 
-    private SimpleServerManager() {
-        if (InstanceManager.getNullableDefault(SimpleServerPreferences.class) == null) {
+
+    private SimpleServerManager(InstanceManagerDelegate instanceManagerDelegate) {
+        this.instanceManagerDelegate = instanceManagerDelegate;
+        if (instanceManagerDelegate.getNullableDefault(SimpleServerPreferences.class) == null) {
             String fileName = FileUtil.getUserFilesPath() + "networkServices" + File.separator + "SimpleServer.xml";
             if ((new File(fileName)).exists()) {
-                InstanceManager.store(new SimpleServerPreferences(fileName), SimpleServerPreferences.class); // NOI18N
+                instanceManagerDelegate.store(new SimpleServerPreferences(fileName), SimpleServerPreferences.class); // NOI18N
             } else {
-                InstanceManager.store(new SimpleServerPreferences(), SimpleServerPreferences.class);
+                instanceManagerDelegate.store(new SimpleServerPreferences(), SimpleServerPreferences.class);
             }
         }
-        preferences = InstanceManager.getDefault(SimpleServerPreferences.class);
+        preferences = instanceManagerDelegate.getDefault(SimpleServerPreferences.class);
     }
 
     public static SimpleServerManager getInstance() {
-        if (InstanceManager.getNullableDefault(SimpleServerManager.class) == null) {
-            InstanceManager.store(new SimpleServerManager(), SimpleServerManager.class); // NOI18N
+        InstanceManagerDelegate instanceManagerDelegate = new InstanceManagerDelegate();
+        if (instanceManagerDelegate.getNullableDefault(SimpleServerManager.class) == null) {
+            instanceManagerDelegate.store(new SimpleServerManager(instanceManagerDelegate), SimpleServerManager.class); // NOI18N
         }
-        return InstanceManager.getDefault(SimpleServerManager.class);
+        return instanceManagerDelegate.getDefault(SimpleServerManager.class);
     }
 
     public SimpleServerPreferences getPreferences() {
@@ -41,7 +45,7 @@ public class SimpleServerManager {
 
     public SimpleServer getServer() {
         if (server == null) {
-            server = new SimpleServer(this.getPreferences().getPort());
+            server = new SimpleServer(this.getPreferences().getPort(),instanceManagerDelegate);
         }
         return server;
     }

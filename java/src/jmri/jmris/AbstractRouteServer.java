@@ -5,7 +5,7 @@ import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import jmri.InstanceManager;
+import jmri.InstanceManagerDelegate;
 import jmri.JmriException;
 import jmri.Sensor;
 import jmri.Route;
@@ -23,13 +23,13 @@ abstract public class AbstractRouteServer {
     private final HashMap<String, RouteListener> routes;
     private final static Logger log = LoggerFactory.getLogger(AbstractRouteServer.class);
 
-    private static InstanceManager instanceManager;
+    private static InstanceManagerDelegate instanceManager;
 
     public AbstractRouteServer(){
-        this(InstanceManager.getDefault());
+        this(new InstanceManagerDelegate());
     }
 
-    public AbstractRouteServer(InstanceManager instanceManager) {
+    public AbstractRouteServer(InstanceManagerDelegate instanceManager) {
         this.instanceManager = instanceManager;
         routes = new HashMap<String, RouteListener>();
     }

@@ -26,12 +26,12 @@ public class JmriSRCPThrottleServer extends AbstractThrottleServer {
     private final ArrayList<Integer> busList;
     private final ArrayList<LocoAddress> addressList;
 
-    private InstanceManager instanceManager;
+    private InstanceManagerDelegate instanceManager;
 
     public JmriSRCPThrottleServer(DataInputStream inStream, DataOutputStream outStream) {
-        this(inStream,outStream,InstanceManager.getDefault());
+        this(inStream,outStream,new InstanceManagerDelegate());
     }
-    public JmriSRCPThrottleServer(DataInputStream inStream, DataOutputStream outStream, InstanceManager instanceManager) {
+    public JmriSRCPThrottleServer(DataInputStream inStream, DataOutputStream outStream, InstanceManagerDelegate instanceManager) {
         super(instanceManager);
         busList = new ArrayList<>();
         addressList = new ArrayList<>();

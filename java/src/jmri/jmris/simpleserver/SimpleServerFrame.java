@@ -1,5 +1,7 @@
 package jmri.jmris.simpleserver;
 
+import jmri.InstanceManagerDelegate;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
@@ -13,12 +15,19 @@ import javax.swing.JToggleButton;
  */
 public class SimpleServerFrame extends jmri.util.JmriJFrame {
 
+    private final InstanceManagerDelegate instanceManagerDelegate;
+
     public SimpleServerFrame() {
         this("Jmri Simple Server Starter");
     }
 
-    public SimpleServerFrame(String FrameName) {
+    public SimpleServerFrame(String FrameName){
+        this(FrameName,new InstanceManagerDelegate());
+    }
+
+    public SimpleServerFrame(String FrameName, InstanceManagerDelegate instanceManagerDelegate) {
         super(FrameName);
+        this.instanceManagerDelegate = instanceManagerDelegate;
         getContentPane().setLayout(new BoxLayout(getContentPane(),
                 BoxLayout.Y_AXIS));
 
@@ -78,11 +87,11 @@ public class SimpleServerFrame extends jmri.util.JmriJFrame {
     }
 
     public void startSimpleServer() {
-        jmri.InstanceManager.getDefault(SimpleServer.class).start();
+        instanceManagerDelegate.getDefault(SimpleServer.class).start();
     }
 
     public void stopSimpleServer() {
-        jmri.InstanceManager.getDefault(SimpleServer.class).stop();
+        instanceManagerDelegate.getDefault(SimpleServer.class).stop();
     }
 
 }

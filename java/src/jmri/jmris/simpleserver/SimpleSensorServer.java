@@ -4,7 +4,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import jmri.InstanceManager;
+import jmri.InstanceManagerDelegate;
 import jmri.Sensor;
 import jmri.jmris.AbstractSensorServer;
 import jmri.jmris.JmriConnection;
@@ -21,23 +21,23 @@ public class SimpleSensorServer extends AbstractSensorServer {
 
     private DataOutputStream output;
     private JmriConnection connection;
-    private InstanceManager instanceManager;
+    private InstanceManagerDelegate instanceManager;
 
     public SimpleSensorServer(JmriConnection connection){
-        this(connection,InstanceManager.getDefault());
+        this(connection,new InstanceManagerDelegate());
     }
 
-    public SimpleSensorServer(JmriConnection connection,InstanceManager instanceManager) {
+    public SimpleSensorServer(JmriConnection connection,InstanceManagerDelegate instanceManager) {
         super();
         this.connection = connection;
         this.instanceManager = instanceManager;
     }
 
     public SimpleSensorServer(DataInputStream inStream, DataOutputStream outStream) {
-        this(inStream,outStream,InstanceManager.getDefault());
+        this(inStream,outStream,new InstanceManagerDelegate());
     }
 
-    public SimpleSensorServer(DataInputStream inStream, DataOutputStream outStream,InstanceManager instanceManager) {
+    public SimpleSensorServer(DataInputStream inStream, DataOutputStream outStream,InstanceManagerDelegate instanceManager) {
         super();
         output = outStream;
         this.instanceManager = instanceManager;

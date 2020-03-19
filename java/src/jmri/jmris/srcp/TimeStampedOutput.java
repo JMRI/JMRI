@@ -1,5 +1,9 @@
 package jmri.jmris.srcp;
 
+import jmri.InstanceManager;
+import jmri.InstanceManagerDelegate;
+
+import java.sql.Time;
 import java.util.Date;
 
 /*
@@ -11,8 +15,18 @@ import java.util.Date;
  */
 public class TimeStampedOutput {
 
+    private final InstanceManagerDelegate instanceManagerDelegate;
+
+    public TimeStampedOutput(){
+        this(new InstanceManagerDelegate());
+    }
+
+    public TimeStampedOutput(InstanceManagerDelegate instanceManagerDelegate){
+        this.instanceManagerDelegate = instanceManagerDelegate;
+    }
+
     static public void writeTimestamp(java.io.DataOutputStream outStream, String s) throws java.io.IOException {
-        Date currenttime = jmri.InstanceManager.getDefault(jmri.Timebase.class).getTime();
+        Date currenttime = InstanceManager.getDefault(jmri.Timebase.class).getTime();
         long time = currenttime.getTime();
         outStream.writeBytes("" + time / 1000 + "." + time % 1000 + " " + s);
     }

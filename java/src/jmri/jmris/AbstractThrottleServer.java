@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
-import jmri.InstanceManager;
+import jmri.InstanceManagerDelegate;
 import jmri.JmriException;
 import jmri.LocoAddress;
 import jmri.Throttle;
@@ -23,13 +23,13 @@ abstract public class AbstractThrottleServer implements ThrottleListener {
 
     private static final Logger log = LoggerFactory.getLogger(AbstractThrottleServer.class);
     protected ArrayList<Throttle> throttleList;
-    private InstanceManager instanceManager;
+    private InstanceManagerDelegate instanceManager;
 
     public AbstractThrottleServer(){
-        this(InstanceManager.getDefault());
+        this(new InstanceManagerDelegate());
     }
 
-    public AbstractThrottleServer(InstanceManager instanceManager) {
+    public AbstractThrottleServer(InstanceManagerDelegate instanceManager) {
         this.instanceManager = instanceManager;
         throttleList = new ArrayList<>();
     }

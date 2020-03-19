@@ -5,7 +5,7 @@ import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import jmri.InstanceManager;
+import jmri.InstanceManagerDelegate;
 import jmri.JmriException;
 import jmri.Sensor;
 import org.slf4j.Logger;
@@ -20,13 +20,13 @@ abstract public class AbstractSensorServer {
 
     private final HashMap<String, SensorListener> sensors;
     private final static Logger log = LoggerFactory.getLogger(AbstractSensorServer.class);
-    private InstanceManager instanceManager;
+    private InstanceManagerDelegate instanceManager;
 
     public AbstractSensorServer(){
-        this(InstanceManager.getDefault());
+        this(new InstanceManagerDelegate());
     }
 
-    public AbstractSensorServer(InstanceManager instanceManager) {
+    public AbstractSensorServer(InstanceManagerDelegate instanceManager) {
         this.instanceManager = instanceManager;
         sensors = new HashMap<String, SensorListener>();
     }
