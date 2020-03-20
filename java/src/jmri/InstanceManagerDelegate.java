@@ -23,7 +23,7 @@ import java.util.*;
  * @author Matthew Harris copyright (c) 2009
  * @author Paul Bender Copyright (C) 2020
  */
-public final class InstanceManagerDelegate {
+public class InstanceManagerDelegate {
 
     /**
      * Store an object of a particular type for later retrieval via
