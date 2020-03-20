@@ -1,6 +1,5 @@
 package jmri.jmris.srcp;
 
-import edu.umd.cs.findbugs.annotations.NonNull;
 import jmri.InstanceManager;
 import jmri.InstanceManagerDelegate;
 
@@ -31,7 +30,7 @@ public class TimeStampedOutput extends OutputStream {
     }
 
     @Override
-    public void write(@NonNull byte[] bytes, int i, int i1) throws IOException {
+    public void write(byte[] bytes, int i, int i1) throws IOException {
        outputStream.write(bytes,i,i1);
     }
 
@@ -71,7 +70,7 @@ public class TimeStampedOutput extends OutputStream {
      */
     @Deprecated
     public static void writeTimestamp(java.io.DataOutputStream outStream, String s) throws java.io.IOException {
-        Date currenttime = InstanceManager.getDefault(jmri.Timebase.class).getTime();
+     Date currenttime = InstanceManager.getDefault(jmri.Timebase.class).getTime();
         long time = currenttime.getTime();
         outStream.writeBytes("" + time / 1000 + "." + time % 1000 + " " + s);
     }
