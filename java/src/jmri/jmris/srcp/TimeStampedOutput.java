@@ -3,7 +3,9 @@ package jmri.jmris.srcp;
 import jmri.InstanceManager;
 import jmri.InstanceManagerDelegate;
 
-import java.sql.Time;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Date;
 
 /*
@@ -13,18 +15,56 @@ import java.util.Date;
  *
  * @author Paul Bender Copyright 2014
  */
-public class TimeStampedOutput {
+public class TimeStampedOutput extends OutputStream {
 
     private final InstanceManagerDelegate instanceManagerDelegate;
+    private final OutputStream outputStream;
 
-    public TimeStampedOutput(){
-        this(new InstanceManagerDelegate());
+    public TimeStampedOutput(OutputStream outputStream){
+        this(outputStream,new InstanceManagerDelegate());
     }
 
-    public TimeStampedOutput(InstanceManagerDelegate instanceManagerDelegate){
+    public TimeStampedOutput(OutputStream outputStream,InstanceManagerDelegate instanceManagerDelegate){
+        super();
+        this.outputStream = outputStream;
         this.instanceManagerDelegate = instanceManagerDelegate;
     }
 
+    @Override
+    public synchronized void write(byte[] bytes) throws IOException {
+        Date currentTime = instanceManagerDelegate.getDefault(jmri.Timebase.class).getTime();
+        long time = currentTime.getTime();
+        String timeString = String.format(" %s.%s ",time/1000,time%1000);
+        byte[] outputBytes = new byte[timeString.length() + bytes.length];
+        System.arraycopy(timeString.getBytes(),0,outputBytes,0,timeString.length());
+        System.arraycopy(bytes,0, outputBytes,timeString.length(),bytes.length);
+        outputStream.write(outputBytes);
+    }
+
+    @Override
+    public void write(int i) throws IOException {
+        outputStream.write(i);
+    }
+
+    @Override
+    public void flush() throws IOException {
+        outputStream.flush();
+    }
+
+    @Override
+    public void close() throws IOException {
+        outputStream.close();
+    }
+
+    /**
+     * Write to an output stream with a pre-pended time stamp
+     *
+     * @param outStream to write to
+     * @param s data to write
+     * @throws java.io.IOException
+     * @deprecated use the TimeStampOutput stream decorator instead.
+     */
+    @Deprecated
     static public void writeTimestamp(java.io.DataOutputStream outStream, String s) throws java.io.IOException {
         Date currenttime = InstanceManager.getDefault(jmri.Timebase.class).getTime();
         long time = currenttime.getTime();

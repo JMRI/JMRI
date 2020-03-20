@@ -4,6 +4,8 @@ import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 
+import java.io.OutputStream;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -59,13 +61,12 @@ public class JmriSRCPSensorServerTest extends jmri.jmris.AbstractSensorServerTes
         jmri.util.JUnitUtil.initInternalSensorManager();
         jmri.util.JUnitUtil.initDebugThrottleManager();
         sb = new StringBuilder();
-        java.io.DataOutputStream output = new java.io.DataOutputStream(
-                new java.io.OutputStream() {
+        OutputStream output = new OutputStream() {
                     @Override
                     public void write(int b) throws java.io.IOException {
                         sb.append((char)b);
                     }
-                });
+                };
         java.io.DataInputStream input = new java.io.DataInputStream(System.in);
         ss = new JmriSRCPSensorServer(input, output);
     }

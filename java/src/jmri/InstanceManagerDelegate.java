@@ -35,7 +35,7 @@ public final class InstanceManagerDelegate {
      *             the key to retrieve the object later.
      */
     public <T> void store(@Nonnull T item, @Nonnull Class<T> type) {
-        InstanceManager.getDefault().store(item,type);
+        InstanceManager.store(item,type);
     }
 
     /**

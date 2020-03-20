@@ -1,8 +1,9 @@
 package jmri.jmris.srcp;
 
 import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+
 import jmri.InstanceManagerDelegate;
 import jmri.Sensor;
 import jmri.jmris.AbstractSensorServer;
@@ -16,14 +17,14 @@ import jmri.jmrix.SystemConnectionMemo;
  */
 public class JmriSRCPSensorServer extends AbstractSensorServer {
 
-    private DataOutputStream output;
+    private OutputStream output;
     private InstanceManagerDelegate instanceManager;
 
-    public JmriSRCPSensorServer(DataInputStream inStream, DataOutputStream outStream) {
+    public JmriSRCPSensorServer(DataInputStream inStream, OutputStream outStream) {
         this(inStream,outStream,new InstanceManagerDelegate());
     }
 
-    public JmriSRCPSensorServer(DataInputStream inStream, DataOutputStream outStream, InstanceManagerDelegate instanceManager) {
+    public JmriSRCPSensorServer(DataInputStream inStream, OutputStream outStream, InstanceManagerDelegate instanceManager) {
         output = outStream;
         this.instanceManager = instanceManager;
     }
@@ -51,29 +52,29 @@ public class JmriSRCPSensorServer extends AbstractSensorServer {
         }
 
         if (bus > list.size()) {
-            TimeStampedOutput.writeTimestamp(output, "499 ERROR unspecified error\n\r");
+            output.write("499 ERROR unspecified error\n\r".getBytes());
             return;
         }
 
         if (Status == Sensor.ACTIVE) {
-            TimeStampedOutput.writeTimestamp(output, "100 INFO " + bus + " FB " + address + " 1\n\r");
+            output.write(( "100 INFO " + bus + " FB " + address + " 1\n\r").getBytes());
         } else if (Status == Sensor.INACTIVE) {
-            TimeStampedOutput.writeTimestamp(output, "100 INFO " + bus + " FB " + address + " 0\n\r");
+            output.write(("100 INFO " + bus + " FB " + address + " 0\n\r").getBytes());
         } else {
             //  unknown state
-            TimeStampedOutput.writeTimestamp(output, "411 ERROR unknown value\n\r");
+            output.write( "411 ERROR unknown value\n\r".getBytes());
         }
 
     }
 
     public void sendStatus(int bus, int address) throws IOException {
-        log.debug("send Status called with bus " + bus + " and address " + address);
+        log.debug("send Status called with bus {} and address {}",bus,address);
         java.util.List<SystemConnectionMemo> list = instanceManager.getList(SystemConnectionMemo.class);
         SystemConnectionMemo memo;
         try {
             memo = list.get(bus - 1);
         } catch (java.lang.IndexOutOfBoundsException obe) {
-            TimeStampedOutput.writeTimestamp(output, "412 ERROR wrong value\n\r");
+            output.write("412 ERROR wrong value\n\r".getBytes());
             return;
         }
         String sensorName = memo.getSystemPrefix()
@@ -81,12 +82,12 @@ public class JmriSRCPSensorServer extends AbstractSensorServer {
         try {
             int Status = instanceManager.sensorManagerInstance().provideSensor(sensorName).getKnownState();
             if (Status == Sensor.ACTIVE) {
-                TimeStampedOutput.writeTimestamp(output, "100 INFO " + bus + " FB " + address + " 1\n\r");
+                output.write(("100 INFO " + bus + " FB " + address + " 1\n\r").getBytes());
             } else if (Status == Sensor.INACTIVE) {
-                TimeStampedOutput.writeTimestamp(output, "100 INFO " + bus + " FB " + address + " 0\n\r");
+                output.write(("100 INFO " + bus + " FB " + address + " 0\n\r").getBytes());
             } else {
                 //  unknown state
-                TimeStampedOutput.writeTimestamp(output, "411 ERROR unknown value\n\r");
+                output.write("411 ERROR unknown value\n\r".getBytes());
             }
         } catch (IllegalArgumentException ex) {
             log.warn("Failed to provide Sensor \"{}\" in sendStatus", sensorName);
@@ -95,27 +96,26 @@ public class JmriSRCPSensorServer extends AbstractSensorServer {
 
     @Override
     public void sendErrorStatus(String sensorName) throws IOException {
-        TimeStampedOutput.writeTimestamp(output, "499 ERROR unspecified error\n\r");
+        output.write("499 ERROR unspecified error\n\r".getBytes());
     }
 
     @Override
     public void parseStatus(String statusString) throws jmri.JmriException, java.io.IOException {
-        TimeStampedOutput.writeTimestamp(output, "499 ERROR unspecified error\n\r");
+        output.write("499 ERROR unspecified error\n\r".getBytes());
     }
 
     /*
      * for SRCP, we're doing the parsing elsewhere, so we just need to build
      * the correct string from the provided compoents.
      */
-    public void parseStatus(int bus, int address, int value) throws jmri.JmriException, java.io.IOException {
-        log.debug("parse Status called with bus " + bus + " address " + address
-                + " and value " + value);
+    public void parseStatus(int bus, int address, int value) throws java.io.IOException {
+        log.debug("parse Status called with bus {} address {} and value {}",bus,address,value);
         java.util.List<SystemConnectionMemo> list = instanceManager.getList(SystemConnectionMemo.class);
         SystemConnectionMemo memo;
         try {
             memo = list.get(bus - 1);
         } catch (java.lang.IndexOutOfBoundsException obe) {
-            TimeStampedOutput.writeTimestamp(output, "412 ERROR wrong value\n\r");
+            output.write("412 ERROR wrong value\n\r".getBytes());
             return;
         }
         String sensorName = memo.getSystemPrefix()
@@ -132,7 +132,6 @@ public class JmriSRCPSensorServer extends AbstractSensorServer {
             }
             setSensorActive(sensorName);
         }
-        //sendStatus(bus,address);
     }
 
     // update state as state of sensor changes
@@ -158,5 +157,5 @@ public class JmriSRCPSensorServer extends AbstractSensorServer {
             }
         }
     }
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JmriSRCPSensorServer.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JmriSRCPSensorServer.class);
 }

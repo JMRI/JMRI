@@ -31,8 +31,8 @@ abstract public class AbstractProgrammerServer implements jmri.ProgListener {
 
     public AbstractProgrammerServer(InstanceManagerDelegate instanceManager) {
         this.instanceManager = instanceManager;
-        if (instanceManager.getNullableDefault(jmri.GlobalProgrammerManager.class) != null) {
-            p = instanceManager.getDefault(jmri.GlobalProgrammerManager.class).getGlobalProgrammer();
+        if (this.instanceManager.getNullableDefault(jmri.GlobalProgrammerManager.class) != null) {
+            p = this.instanceManager.getDefault(jmri.GlobalProgrammerManager.class).getGlobalProgrammer();
         } else {
             log.warn("no Service Mode ProgrammerManager configured, network programming disabled");
         }

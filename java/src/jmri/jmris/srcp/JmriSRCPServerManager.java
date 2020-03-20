@@ -13,12 +13,12 @@ public class JmriSRCPServerManager {
 
     private JmriSRCPServerManager(InstanceManagerDelegate instanceManager) {
         this.instanceManager = instanceManager;
-        if (instanceManager.getNullableDefault(JmriSRCPServerPreferences.class) == null) {
+        if (this.instanceManager.getNullableDefault(JmriSRCPServerPreferences.class) == null) {
             String fileName = FileUtil.getUserFilesPath() + "networkServices" + File.separator + "JmriSRCPServerPreferences.xml";
             if ((new File(fileName)).exists()) {
-                instanceManager.store(new JmriSRCPServerPreferences(fileName), JmriSRCPServerPreferences.class); // NOI18N
+                this.instanceManager.store(new JmriSRCPServerPreferences(fileName), JmriSRCPServerPreferences.class); // NOI18N
             } else {
-                instanceManager.store(new JmriSRCPServerPreferences(), JmriSRCPServerPreferences.class); // NOI18N
+                this.instanceManager.store(new JmriSRCPServerPreferences(), JmriSRCPServerPreferences.class); // NOI18N
             }
         }
     }

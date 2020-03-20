@@ -4,6 +4,10 @@ import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 
@@ -73,13 +77,12 @@ public class JmriSRCPPowerServerTest extends jmri.jmris.AbstractPowerServerTestB
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.initDebugPowerManager();
         sb = new StringBuilder();
-        java.io.DataOutputStream output = new java.io.DataOutputStream(
-                new java.io.OutputStream() {
+        OutputStream output = new OutputStream() {
             @Override
             public void write(int b) throws java.io.IOException {
                 sb.append((char) b);
             }
-        });
+        };
         ps = new JmriSRCPPowerServer(output);
     }
 

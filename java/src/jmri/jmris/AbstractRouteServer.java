@@ -23,7 +23,7 @@ abstract public class AbstractRouteServer {
     private final HashMap<String, RouteListener> routes;
     private final static Logger log = LoggerFactory.getLogger(AbstractRouteServer.class);
 
-    private static InstanceManagerDelegate instanceManager;
+    private InstanceManagerDelegate instanceManager;
 
     public AbstractRouteServer(){
         this(new InstanceManagerDelegate());
