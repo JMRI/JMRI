@@ -1,19 +1,19 @@
 package jmri.jmris.srcp;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import jmri.InstanceManager;
 import jmri.InstanceManagerDelegate;
 
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Date;
 
 /*
- * The SRCP protocol requires that respose messages include a timestamp based
+ * The SRCP protocol requires that response messages include a timestamp based
  * on the fast clock.  This class is a utility class to generate timestamp
  * and send it on to the stream with the output.
  *
- * @author Paul Bender Copyright 2014
+ * @author Paul Bender Copyright 2014,2020
  */
 public class TimeStampedOutput extends OutputStream {
 
@@ -28,6 +28,11 @@ public class TimeStampedOutput extends OutputStream {
         super();
         this.outputStream = outputStream;
         this.instanceManagerDelegate = instanceManagerDelegate;
+    }
+
+    @Override
+    public void write(@NonNull byte[] bytes, int i, int i1) throws IOException {
+       outputStream.write(bytes,i,i1);
     }
 
     @Override
@@ -61,11 +66,11 @@ public class TimeStampedOutput extends OutputStream {
      *
      * @param outStream to write to
      * @param s data to write
-     * @throws java.io.IOException
-     * @deprecated use the TimeStampOutput stream decorator instead.
+     * @throws java.io.IOException if there is an IO Exception
+     * @deprecated since 4.19.5 use the TimeStampOutput stream decorator instead.
      */
     @Deprecated
-    static public void writeTimestamp(java.io.DataOutputStream outStream, String s) throws java.io.IOException {
+    public static void writeTimestamp(java.io.DataOutputStream outStream, String s) throws java.io.IOException {
         Date currenttime = InstanceManager.getDefault(jmri.Timebase.class).getTime();
         long time = currenttime.getTime();
         outStream.writeBytes("" + time / 1000 + "." + time % 1000 + " " + s);

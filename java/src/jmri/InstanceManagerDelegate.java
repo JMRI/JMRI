@@ -7,7 +7,7 @@ import java.util.*;
 
 /**
  * This class provides an instantiable object that delegates to the static
- * {@Link InstanceManager} class.
+ * {@link InstanceManager} class.
  * <hr>
  * This file is part of JMRI.
  * <p>
