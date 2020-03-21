@@ -196,7 +196,7 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
         InstanceManager.getDefault(TrainManager.class).removePropertyChangeListener(trainsListener);
     }
 
-    private abstract class BeanListener<B extends IdentifiedBean> implements PropertyChangeListener {
+    protected abstract class BeanListener<B extends IdentifiedBean> implements PropertyChangeListener {
         
         protected final B bean;
         
@@ -226,7 +226,7 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
         }
     }
 
-    private abstract class ManagerListener<M extends PropertyChangeProvider> implements PropertyChangeListener {
+    protected abstract class ManagerListener<M extends PropertyChangeProvider> implements PropertyChangeListener {
     
         protected final M manager;
         

@@ -5,11 +5,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.fail;
 
+import java.beans.PropertyChangeEvent;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Locale;
-
-import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -21,13 +21,12 @@ import org.junit.Test;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.beans.PropertyChangeProvider;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.Kernel;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
-import jmri.jmrit.operations.routes.Route;
-import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.server.json.JSON;
@@ -83,7 +82,8 @@ public class JsonOperationsSocketServiceTest {
         assertThat(manager.getById("GNWR300005")).isNull();
         // get non-existent car
         try {
-            service.onMessage(JsonOperations.CAR, mapper.createObjectNode().put(JSON.NAME, "GNWR300005"), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
+            service.onMessage(JsonOperations.CAR, mapper.createObjectNode().put(JSON.NAME, "GNWR300005"),
+                    new JsonRequest(locale, JSON.V5, JSON.GET, 42));
             fail("Expected exception not thrown");
         } catch (JsonException ex) {
             assertThat(ex.getCode()).isEqualTo(404);
@@ -93,7 +93,8 @@ public class JsonOperationsSocketServiceTest {
         manager.newRS("GNWR", "300005");
         assertThat(manager.getById("GNWR300005")).isNotNull();
         // get existent car
-        service.onMessage(JsonOperations.CAR, mapper.createObjectNode().put(JSON.NAME, "GNWR300005"), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
+        service.onMessage(JsonOperations.CAR, mapper.createObjectNode().put(JSON.NAME, "GNWR300005"),
+                new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         JsonNode message = connection.getMessage();
         assertThat(message).isNotNull();
         assertThat(message.path(JSON.TYPE).asText()).isEqualTo(JsonOperations.CAR);
@@ -107,20 +108,24 @@ public class JsonOperationsSocketServiceTest {
         assertThat(message.path(JSON.DATA).path(JSON.NAME).asText()).isEqualTo("GNWR300005");
         assertThat(message.path(JSON.DATA).path(JsonOperations.CAR_TYPE).asText()).isEqualTo("Boxcar");
     }
-    
+
     @Test
     public void testEditCar() throws IOException, JmriException, JsonException {
         CarManager manager = InstanceManager.getDefault(CarManager.class);
         assertThat(manager.getById("GNWR300005")).isNull();
         // creates car
-        service.onMessage(JsonOperations.CAR, mapper.createObjectNode().put(JSON.ROAD, "GNWR").put(JSON.NUMBER, "300005"), new JsonRequest(locale, JSON.V5, JSON.PUT, 42));
+        service.onMessage(JsonOperations.CAR,
+                mapper.createObjectNode().put(JSON.ROAD, "GNWR").put(JSON.NUMBER, "300005"),
+                new JsonRequest(locale, JSON.V5, JSON.PUT, 42));
         assertThat(manager.getById("GNWR300005")).isNotNull();
         JsonNode message = connection.getMessage();
         assertThat(message).isNotNull();
         assertThat(message.path(JSON.TYPE).asText()).isEqualTo(JsonOperations.CAR);
         assertThat(message.path(JSON.DATA).path(JsonOperations.CAR_TYPE).asText()).isEqualTo("");
         // makes change
-        service.onMessage(JsonOperations.CAR, mapper.createObjectNode().put(JSON.NAME, "GNWR300005").put(JsonOperations.CAR_TYPE, "Boxcar"), new JsonRequest(locale, JSON.V5, JSON.POST, 42));
+        service.onMessage(JsonOperations.CAR,
+                mapper.createObjectNode().put(JSON.NAME, "GNWR300005").put(JsonOperations.CAR_TYPE, "Boxcar"),
+                new JsonRequest(locale, JSON.V5, JSON.POST, 42));
         message = connection.getMessage();
         assertThat(message).isNotNull();
         assertThat(message.path(JSON.DATA).path(JsonOperations.CAR_TYPE).asText()).isEqualTo("Boxcar");
@@ -130,7 +135,8 @@ public class JsonOperationsSocketServiceTest {
         assertThat(message).isNotNull();
         assertThat(message.path(JSON.DATA).path(JsonOperations.CAR_TYPE).asText()).isEqualTo("Flatcar");
         // deletes car
-        service.onMessage(JsonOperations.CAR, mapper.createObjectNode().put(JSON.NAME, "GNWR300005"), new JsonRequest(locale, JSON.V5, JSON.DELETE, 42));
+        service.onMessage(JsonOperations.CAR, mapper.createObjectNode().put(JSON.NAME, "GNWR300005"),
+                new JsonRequest(locale, JSON.V5, JSON.DELETE, 42));
         assertThat(manager.getById("GNWR300005")).isNull();
     }
 
@@ -162,7 +168,8 @@ public class JsonOperationsSocketServiceTest {
         assertThat(manager.getById("GNWR45")).isNull();
         // get non-existent car
         try {
-            service.onMessage(JsonOperations.ENGINE, mapper.createObjectNode().put(JSON.NAME, "GNWR45"), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
+            service.onMessage(JsonOperations.ENGINE, mapper.createObjectNode().put(JSON.NAME, "GNWR45"),
+                    new JsonRequest(locale, JSON.V5, JSON.GET, 42));
             fail("Expected exception not thrown");
         } catch (JsonException ex) {
             assertThat(ex.getCode()).isEqualTo(404);
@@ -172,7 +179,8 @@ public class JsonOperationsSocketServiceTest {
         manager.newRS("GNWR", "45");
         assertThat(manager.getById("GNWR45")).isNotNull();
         // get existent car
-        service.onMessage(JsonOperations.ENGINE, mapper.createObjectNode().put(JSON.NAME, "GNWR45"), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
+        service.onMessage(JsonOperations.ENGINE, mapper.createObjectNode().put(JSON.NAME, "GNWR45"),
+                new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         JsonNode message = connection.getMessage();
         assertThat(message).isNotNull();
         assertThat(message.path(JSON.TYPE).asText()).isEqualTo(JsonOperations.ENGINE);
@@ -189,20 +197,24 @@ public class JsonOperationsSocketServiceTest {
         JUnitAppender.assertErrorMessage("Rolling stock (GNWR 45) length () is not valid");
         JUnitAppender.assertErrorMessage("Rolling stock (GNWR 45) length () is not valid");
     }
-    
+
     @Test
     public void testEditEngine() throws IOException, JmriException, JsonException {
         EngineManager manager = InstanceManager.getDefault(EngineManager.class);
         assertThat(manager.getById("GNWR45")).isNull();
         // creates car
-        service.onMessage(JsonOperations.ENGINE, mapper.createObjectNode().put(JSON.ROAD, "GNWR").put(JSON.NUMBER, "45"), new JsonRequest(locale, JSON.V5, JSON.PUT, 42));
+        service.onMessage(JsonOperations.ENGINE,
+                mapper.createObjectNode().put(JSON.ROAD, "GNWR").put(JSON.NUMBER, "45"),
+                new JsonRequest(locale, JSON.V5, JSON.PUT, 42));
         assertThat(manager.getById("GNWR45")).isNotNull();
         JsonNode message = connection.getMessage();
         assertThat(message).isNotNull();
         assertThat(message.path(JSON.TYPE).asText()).isEqualTo(JsonOperations.ENGINE);
         assertThat(message.path(JSON.DATA).path(JSON.MODEL).asText()).isEqualTo("");
         // makes change
-        service.onMessage(JsonOperations.ENGINE, mapper.createObjectNode().put(JSON.NAME, "GNWR45").put(JSON.MODEL, "MP15DC"), new JsonRequest(locale, JSON.V5, JSON.POST, 42));
+        service.onMessage(JsonOperations.ENGINE,
+                mapper.createObjectNode().put(JSON.NAME, "GNWR45").put(JSON.MODEL, "MP15DC"),
+                new JsonRequest(locale, JSON.V5, JSON.POST, 42));
         message = connection.getMessage();
         assertThat(message).isNotNull();
         assertThat(message.path(JSON.DATA).path(JSON.MODEL).asText()).isEqualTo("MP15DC");
@@ -212,7 +224,8 @@ public class JsonOperationsSocketServiceTest {
         assertThat(message).isNotNull();
         assertThat(message.path(JSON.DATA).path(JSON.MODEL).asText()).isEqualTo("");
         // deletes car
-        service.onMessage(JsonOperations.ENGINE, mapper.createObjectNode().put(JSON.NAME, "GNWR45"), new JsonRequest(locale, JSON.V5, JSON.DELETE, 42));
+        service.onMessage(JsonOperations.ENGINE, mapper.createObjectNode().put(JSON.NAME, "GNWR45"),
+                new JsonRequest(locale, JSON.V5, JSON.DELETE, 42));
         assertThat(manager.getById("GNWR45")).isNull();
         // capture error messages from using "unknown" engine model
         JUnitAppender.assertErrorMessage("Rolling stock (GNWR 45) length () is not valid");
@@ -224,7 +237,8 @@ public class JsonOperationsSocketServiceTest {
 
     @Test
     public void testOnListLocation() throws IOException, JmriException, JsonException {
-        service.onList(JsonOperations.LOCATION, mapper.createObjectNode(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
+        service.onList(JsonOperations.LOCATION, mapper.createObjectNode(),
+                new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         JsonNode message = connection.getMessage();
         assertThat(message).isNotNull();
         assertEquals(3, message.size());
@@ -248,7 +262,8 @@ public class JsonOperationsSocketServiceTest {
         assertThat(manager.getLocationByName("Acme Transfer")).isNull();
         // get non-existent location
         try {
-            service.onMessage(JsonOperations.LOCATION, mapper.createObjectNode().put(JSON.NAME, "Acme Transfer"), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
+            service.onMessage(JsonOperations.LOCATION, mapper.createObjectNode().put(JSON.NAME, "Acme Transfer"),
+                    new JsonRequest(locale, JSON.V5, JSON.GET, 42));
             fail("Expected exception not thrown");
         } catch (JsonException ex) {
             assertThat(ex.getCode()).isEqualTo(404);
@@ -258,7 +273,8 @@ public class JsonOperationsSocketServiceTest {
         Location location = manager.newLocation("Acme Transfer");
         assertThat(location).isNotNull();
         // get existent location
-        service.onMessage(JsonOperations.LOCATION, mapper.createObjectNode().put(JSON.NAME, location.getId()), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
+        service.onMessage(JsonOperations.LOCATION, mapper.createObjectNode().put(JSON.NAME, location.getId()),
+                new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         JsonNode message = connection.getMessage();
         assertThat(message).isNotNull();
         assertThat(message.path(JSON.TYPE).asText()).isEqualTo(JsonOperations.LOCATION);
@@ -274,13 +290,14 @@ public class JsonOperationsSocketServiceTest {
         // silence expected error
         JUnitAppender.assertErrorMessage("Unable to get location id [Acme Transfer].");
     }
-    
+
     @Test
     public void testEditLocation() throws IOException, JmriException, JsonException {
         LocationManager manager = InstanceManager.getDefault(LocationManager.class);
         assertThat(manager.getLocationByName("Acme Transfer")).isNull();
         // creates location
-        service.onMessage(JsonOperations.LOCATION, mapper.createObjectNode().put(JSON.USERNAME, "Acme Transfer"), new JsonRequest(locale, JSON.V5, JSON.PUT, 42));
+        service.onMessage(JsonOperations.LOCATION, mapper.createObjectNode().put(JSON.USERNAME, "Acme Transfer"),
+                new JsonRequest(locale, JSON.V5, JSON.PUT, 42));
         Location location = manager.getLocationByName("Acme Transfer");
         assertThat(location).isNotNull();
         JsonNode message = connection.getMessage();
@@ -288,7 +305,9 @@ public class JsonOperationsSocketServiceTest {
         assertThat(message.path(JSON.TYPE).asText()).isEqualTo(JsonOperations.LOCATION);
         assertThat(message.path(JSON.DATA).path(JSON.COMMENT).asText()).isEqualTo("");
         // makes change
-        service.onMessage(JsonOperations.LOCATION, mapper.createObjectNode().put(JSON.NAME, location.getId()).put(JSON.COMMENT, "Watch for coyotes"), new JsonRequest(locale, JSON.V5, JSON.POST, 42));
+        service.onMessage(JsonOperations.LOCATION,
+                mapper.createObjectNode().put(JSON.NAME, location.getId()).put(JSON.COMMENT, "Watch for coyotes"),
+                new JsonRequest(locale, JSON.V5, JSON.POST, 42));
         message = connection.getMessage();
         assertThat(message).isNotNull();
         assertThat(message.path(JSON.DATA).path(JSON.COMMENT).asText()).isEqualTo("Watch for coyotes");
@@ -298,7 +317,8 @@ public class JsonOperationsSocketServiceTest {
         assertThat(message).isNotNull();
         assertThat(message.path(JSON.DATA).path(JSON.COMMENT).asText()).isEqualTo("");
         // deletes location
-        service.onMessage(JsonOperations.LOCATION, mapper.createObjectNode().put(JSON.NAME, location.getId()), new JsonRequest(locale, JSON.V5, JSON.DELETE, 42));
+        service.onMessage(JsonOperations.LOCATION, mapper.createObjectNode().put(JSON.NAME, location.getId()),
+                new JsonRequest(locale, JSON.V5, JSON.DELETE, 42));
         assertThat(manager.getLocationById(location.getId())).isNull();
     }
 
@@ -326,7 +346,8 @@ public class JsonOperationsSocketServiceTest {
         assertThat(manager.getTrainByName("Acme Transfer")).isNull();
         // get non-existent train
         try {
-            service.onMessage(JsonOperations.LOCATION, mapper.createObjectNode().put(JSON.NAME, "Acme Transfer"), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
+            service.onMessage(JsonOperations.LOCATION, mapper.createObjectNode().put(JSON.NAME, "Acme Transfer"),
+                    new JsonRequest(locale, JSON.V5, JSON.GET, 42));
             fail("Expected exception not thrown");
         } catch (JsonException ex) {
             assertThat(ex.getCode()).isEqualTo(404);
@@ -336,7 +357,8 @@ public class JsonOperationsSocketServiceTest {
         Train train = manager.newTrain("Acme Transfer");
         assertThat(train).isNotNull();
         // get existent location
-        service.onMessage(JsonOperations.TRAIN, mapper.createObjectNode().put(JSON.NAME, train.getId()), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
+        service.onMessage(JsonOperations.TRAIN, mapper.createObjectNode().put(JSON.NAME, train.getId()),
+                new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         JsonNode message = connection.getMessage();
         assertThat(message).isNotNull();
         assertThat(message.path(JSON.TYPE).asText()).isEqualTo(JsonOperations.TRAIN);
@@ -352,7 +374,7 @@ public class JsonOperationsSocketServiceTest {
         // silence expected error
         JUnitAppender.assertErrorMessage("Unable to get location id [Acme Transfer].");
     }
-    
+
     @Test
     public void testEditTrain() throws IOException, JmriException, JsonException {
         JUnitOperationsUtil.loadTrains();
@@ -365,33 +387,41 @@ public class JsonOperationsSocketServiceTest {
         assertThat(manager.getTrainByName("Acme Transfer")).isNull();
         // creates train
         try {
-            service.onMessage(JsonOperations.TRAIN, mapper.createObjectNode().put(JSON.USERNAME, "Acme Transfer"), new JsonRequest(locale, JSON.V5, JSON.PUT, 42));
+            service.onMessage(JsonOperations.TRAIN, mapper.createObjectNode().put(JSON.USERNAME, "Acme Transfer"),
+                    new JsonRequest(locale, JSON.V5, JSON.PUT, 42));
             fail("Expected exception not thrown");
         } catch (JsonException ex) {
             assertThat(ex.getCode()).isEqualTo(405);
         }
         assertThat(train).isNotNull();
-        service.onMessage(JsonOperations.TRAIN, mapper.createObjectNode().put(JSON.NAME, train.getId()), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
+        service.onMessage(JsonOperations.TRAIN, mapper.createObjectNode().put(JSON.NAME, train.getId()),
+                new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         JsonNode message = connection.getMessage();
         assertThat(message).isNotNull();
         assertThat(message.path(JSON.TYPE).asText()).isEqualTo(JsonOperations.TRAIN);
         assertThat(message.path(JSON.DATA).path(JsonOperations.LOCATION).isEmpty()).isTrue();
         // makes invalid change
         try {
-            service.onMessage(JsonOperations.TRAIN, mapper.createObjectNode().put(JSON.NAME, train.getId()).put(JsonOperations.LOCATION, location1.getName()), new JsonRequest(locale, JSON.V5, JSON.POST, 42));
+            service.onMessage(
+                    JsonOperations.TRAIN, mapper.createObjectNode().put(JSON.NAME, train.getId())
+                            .put(JsonOperations.LOCATION, location1.getName()),
+                    new JsonRequest(locale, JSON.V5, JSON.POST, 42));
             fail("Expected exception not thrown");
         } catch (JsonException ex) {
             assertThat(ex.getCode()).isEqualTo(428);
             assertThat(ex.getMessage()).isEqualTo("Unable to move train 1 to location North End Staging.");
         }
         // makes valid change
-        service.onMessage(JsonOperations.TRAIN, mapper.createObjectNode().put(JSON.NAME, train.getId()).put(JsonOperations.LOCATION, location2.getName()), new JsonRequest(locale, JSON.V5, JSON.POST, 42));
+        service.onMessage(JsonOperations.TRAIN, mapper.createObjectNode().put(JSON.NAME, train.getId())
+                .put(JsonOperations.LOCATION, location2.getName()), new JsonRequest(locale, JSON.V5, JSON.POST, 42));
         message = connection.getMessage();
         assertThat(message).isNotNull();
         assertThat(message.path(JSON.DATA).path(JsonOperations.LOCATION).asText()).isEqualTo(location2.getName());
         assertThat(message.path(JSON.DATA).path(JSON.COMMENT).asText()).isEqualTo("Test comment for train STF");
         // makes ignored change
-        service.onMessage(JsonOperations.TRAIN, mapper.createObjectNode().put(JSON.NAME, train.getId()).put(JSON.COMMENT, "Watch for coyotes"), new JsonRequest(locale, JSON.V5, JSON.POST, 42));
+        service.onMessage(JsonOperations.TRAIN,
+                mapper.createObjectNode().put(JSON.NAME, train.getId()).put(JSON.COMMENT, "Watch for coyotes"),
+                new JsonRequest(locale, JSON.V5, JSON.POST, 42));
         message = connection.getMessage();
         assertThat(message).isNotNull();
         assertThat(message.path(JSON.DATA).path(JsonOperations.LOCATION).asText()).isEqualTo(location2.getName());
@@ -402,14 +432,17 @@ public class JsonOperationsSocketServiceTest {
         assertThat(message).isNotNull();
         assertThat(message.path(JSON.DATA).path(JSON.COMMENT).asText()).isEqualTo("Watch for coyotes");
         // terminates train
-        service.onMessage(JsonOperations.TRAIN, mapper.createObjectNode().put(JSON.NAME, train.getId()).putNull(JsonOperations.LOCATION), new JsonRequest(locale, JSON.V5, JSON.POST, 42));
+        service.onMessage(JsonOperations.TRAIN,
+                mapper.createObjectNode().put(JSON.NAME, train.getId()).putNull(JsonOperations.LOCATION),
+                new JsonRequest(locale, JSON.V5, JSON.POST, 42));
         message = connection.getMessage();
         assertThat(message).isNotNull();
         assertThat(message.path(JSON.DATA).path(JsonOperations.LOCATION).isNull()).isFalse();
         assertThat(message.path(JSON.DATA).path(JsonOperations.LOCATION).asText()).isEmpty();
         // deletes train
         try {
-            service.onMessage(JsonOperations.TRAIN, mapper.createObjectNode().put(JSON.NAME, train.getId()), new JsonRequest(locale, JSON.V5, JSON.DELETE, 42));
+            service.onMessage(JsonOperations.TRAIN, mapper.createObjectNode().put(JSON.NAME, train.getId()),
+                    new JsonRequest(locale, JSON.V5, JSON.DELETE, 42));
             fail("Expected exception not thrown");
         } catch (JsonException ex) {
             assertThat(ex.getCode()).isEqualTo(405);
@@ -472,6 +505,64 @@ public class JsonOperationsSocketServiceTest {
         }
     }
 
+    @Test
+    public void testBeanListenerFailures() {
+        InvalidJsonOperationsSocketService mock = new InvalidJsonOperationsSocketService(connection, new JsonOperationsHttpService(mapper));
+        Train train = InstanceManager.getDefault(TrainManager.class).getTrainById("1");
+        assertThat(mock.invalidBeanListeners).isEmpty();
+        assertThat(train.getPropertyChangeListeners()).isEmpty();
+        InvalidJsonOperationsSocketService.InvalidBeanListener bl = mock.addInvalidBeanListener(train);
+        // add listener to test that an IOException removes the listener
+        // the listener would normally be added by onMessage, but that method creates
+        // a valid listener, and we are not interested in that
+        train.addPropertyChangeListener(bl);
+        assertThat(mock.invalidBeanListeners.size()).isEqualTo(1);
+        assertThat(train.getPropertyChangeListeners().length).isEqualTo(1);
+        // throw JsonException on invalid type
+        bl.propertyChange("invalid-type", (PropertyChangeEvent) null);
+        assertThat(mock.invalidBeanListeners.size()).isEqualTo(1);
+        assertThat(train.getPropertyChangeListeners().length).isEqualTo(1);
+        JsonNode message = connection.getMessage();
+        assertThat(message).isNotNull();
+        assertThat(message.path(JSON.TYPE).asText()).isEqualTo(JsonException.ERROR);
+        assertThat(message.path(JSON.DATA).path(JsonException.CODE).asInt()).isEqualTo(500);
+        assertThat(message.path(JSON.DATA).path(JsonException.MESSAGE).asText()).isEqualTo("Internal invalid-type handling error. See JMRI logs for information.");
+        JUnitAppender.assertWarnMessageStartingWith("json error sending invalid-type:");
+        // throw IOException
+        connection.setThrowIOException(true);
+        assertThat(mock.invalidBeanListeners.size()).isEqualTo(1);
+        assertThat(train.getPropertyChangeListeners().length).isEqualTo(1);
+        bl.propertyChange(JsonOperations.TRAIN, (PropertyChangeEvent) null);
+        assertThat(mock.invalidBeanListeners).isEmpty();
+        assertThat(train.getPropertyChangeListeners()).isEmpty();
+    }
+
+    @Test
+    public void testManagerListenerFailures() {
+        InvalidJsonOperationsSocketService mock = new InvalidJsonOperationsSocketService(connection, new JsonOperationsHttpService(mapper));
+        TrainManager manager = InstanceManager.getDefault(TrainManager.class);
+        assertThat(manager.getPropertyChangeListeners()).isEmpty();
+        // add listener to test that an IOException removes the listener
+        // the listener would normally be added by onList, but that method creates
+        // a valid listener, and we are not interested in that
+        manager.addPropertyChangeListener(mock.invalidBeansListener);
+        assertThat(manager.getPropertyChangeListeners().length).isEqualTo(1);
+        // throw JsonException on invalid type
+        mock.invalidBeansListener.propertyChange("invalid-type");
+        assertThat(manager.getPropertyChangeListeners().length).isEqualTo(1);
+        JsonNode message = connection.getMessage();
+        assertThat(message).isNotNull();
+        assertThat(message.path(JSON.TYPE).asText()).isEqualTo(JsonException.ERROR);
+        assertThat(message.path(JSON.DATA).path(JsonException.CODE).asInt()).isEqualTo(500);
+        assertThat(message.path(JSON.DATA).path(JsonException.MESSAGE).asText()).isEqualTo("Internal invalid-type handling error. See JMRI logs for information.");
+        JUnitAppender.assertWarnMessageStartingWith("json error sending invalid-type:");
+        // throw IOException
+        connection.setThrowIOException(true);
+        assertThat(manager.getPropertyChangeListeners().length).isEqualTo(1);
+        mock.invalidBeansListener.propertyChange(JsonOperations.TRAIN);
+        assertThat(manager.getPropertyChangeListeners()).isEmpty();
+    }
+
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -495,4 +586,51 @@ public class JsonOperationsSocketServiceTest {
         JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
+    
+    protected class InvalidJsonOperationsSocketService extends JsonOperationsSocketService {
+        
+        protected final HashMap<String, BeanListener<Train>> invalidBeanListeners = new HashMap<>();
+        protected final InvalidBeansListener invalidBeansListener = new InvalidBeansListener();
+
+        protected InvalidJsonOperationsSocketService(JsonMockConnection connection, JsonOperationsHttpService service) {
+            super(connection, service);
+        }
+
+        protected class InvalidBeanListener extends BeanListener<Train> {
+
+            public InvalidBeanListener(Train bean) {
+                super(bean);
+            }
+
+            public void propertyChange(String type, PropertyChangeEvent evt) {
+                super.propertyChange(type, invalidBeanListeners);
+            }
+
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                // do nothing, use #propertyChange(String, PropertyChangeEvent) in tests
+            }
+
+        }
+        
+        protected InvalidBeanListener addInvalidBeanListener(Train bean) {
+            InvalidBeanListener l = new InvalidBeanListener(bean);
+            invalidBeanListeners.put(bean.getId(), l);
+            return l;
+        }
+        
+        protected class InvalidBeansListener extends ManagerListener<TrainManager> {
+
+            protected InvalidBeansListener() {
+                super(InstanceManager.getDefault(TrainManager.class));
+            }
+
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                // do nothing, use #propertyChange(String) directly in tests
+            }
+            
+        }
+    };
+
 }
