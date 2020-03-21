@@ -1,0 +1,160 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+
+    <title>
+ 	Hardware support: Multi-bit and Byte Communication Using CMRI
+    </title>
+    
+    <!-- Copyright 2020 Jerry Grochow -->
+    
+    <meta name="author" content="Jerry Grochow">
+    <meta name="keywords" content="Arduino CMRI JMRI Byte Communication">
+    
+    <!--#include virtual="/Style.shtml" -->
+    
+</head>
+
+<body>
+    <!--#include virtual="/Header.shtml" -->
+    
+    <div id="mBody">
+        <!--#include virtual="Sidebar.shtml" -->
+        
+    <div id="mainContent">
+
+	    <div id="teaser">
+		<h1>Optional Teaser</h1>
+		    <p>Learn how to use arduino-based CMRI nodes to communicate with JMRI
+            using complex bit strings and bytes of numbers and other data, </p>
+	    </div> <!-- closes #teaser-->
+
+
+
+	    <h1>Hardware support: Multi-bit and Byte Communication Using CMRI</h1>
+		
+		<div class="para">
+        <p>JMRI implements the <a href="../cmri/CMRI.shtml">CMRINet protocol</a> to send
+        and receive information either:</p>
+        
+        <ul>
+          <li>from JMRI to a CMRI node to indicate that a turnout should be thrown or closed, or 
+          a light should be turned on or off,</li>
+          <li>from a CMRI node to JMRI to indicate that a sensor has become active or inactive.</li>
+        </ul>
+
+        <p>JMRI
+        objects are associated with a single CMRI bit in the case of sensors and
+        lights, and one or two bits in the case of turnouts (see the 
+        <a href="../cmri/CMRI.shtml#L405">section on setting up turnouts and lights</a>
+        in the CMRI Help Page). With the introduction of microcontroller technology 
+        such as provided by the <a href="https://arduino.cc" target="_blank">arduino</a>,
+        CMRI nodes need no longer be restricted to operate layout hardware based on single
+        (or two) bit commands. Arduinos are quite capable computers that can process
+        CMRINet messages and act on what they receive under local program control. 
+        <a href="index.shtml">An arduino</a> emulating CMRI node can be programmed to,
+        for example, start an animation, play a series of sounds, light buildings in a 
+        realistic way, or control the speed of a motor -- just about anything the modeller
+        can dream up. </p>
+
+        <p>Similarly, it is also possible to send information back to JMRI over CMRINet in
+        the form of numbers or letters, or any string that can be encoded in a few bytes of
+        information. JMRI would receive each byte as setting the state of eight sensors,
+        but a simple JMRI script can translate that binary information into the decimal
+        number or character it represents.</p>
+
+        <p class="im"><img src="images/CMRISensorsByte.png" align="left" height="165" width="275" 
+        alt="Sensor Table with 8 sensors> Create eight sensors"> 
+        One example of this type of usage would be using two JMRI lights (connected to one
+        CMRI bit apiece) to tell the arduino to either increase or decrease the speed
+        of a motor attached to an animation (perhaps a rotating carousel). The arduino can
+        change the speed of the motor and then send back a number indicating the
+        current speed (perhaps 1 to 8) by encoding that number in several bits to be
+        sent as part of the CMRINet transmission. A <a href="../../tools/scripting/index.shtml">
+        JMRI script</a> can be <a href="../../tools/scripting/HowTo.shtml#multturnouts">listening
+        to changes</a> in these “speed” bits and use them to create a decimal number in a
+        <a href="../../tools/Memories.shtml"></a>JMRI memory variable for display on a panel,
+        as illustrated in a <a href="https://www.jmri.org/jython/CmriBitsToBytes.py" target="_blank">
+        this example script.</a> The image here shows sensors 0, 1, 2, and 3 active which
+        would translate into the decimal number 15.
+        
+        <p class="im"> <img src="images/CMRINode-MotorControl.png" 
+        alt="Example Panel Using Bit Display" align="right" height="225" width="135">
+        Alternatively, a number of sensor bits can be allocated to a
+        speed display with the arduino activating the sensors to indicate percentage of maximum
+        speed, as shown.  This example image shows such a display for a Ferris wheel speed control
+        along with greater than/less than signs as clickable speed control, and a curved arrow for 
+        direction control of Motor B. This image shows four of the eight
+        bits "lit" or active, representing a speed of 50% of maximum.</p>
+
+		</div>
+
+		<div class="list">
+		<h1>Example of JMRI setup</h1>
+        
+		<p>The steps are fairly straightforward:</p>
+		<dl>
+		    <dt class="left">Configure a CMRI node</dt>
+		    <dd class="first">
+			<p><a href="../cmri/CMRI.shtml#L268">Configure a CMRI node</a>
+            representing the number of output bits (JMRI-&amp;gt;CMRI node) and input bits 
+            (CMRI node-&amp;gt;JMRI) desired. Remember that JMRI lights and turnouts output 
+            to CMRI and JMRI sensors get inputs (think of it in terms of the CMRI node: 
+            physical sensors input information to the node; the node then outputs information
+            to control physical turnouts and lights).</p>
+		    </dd>
+
+		    <dt class="left">Create light objcts</dt>
+		    <dd>
+			<p>Create as many <a href="../../tools//Lights.shtml">JMRI lights </a>
+            as you need to tell the arduino to perform some task. Controlling whether 
+            a motor is on or off can be done with a single light (INACTIVE (which sends a
+            0) for OFF, ACTIVE (which sends a 1) for ON). Controlling its speed requires
+            two lights – one to tell it to increase, one to tell it to decrease, neither on
+            to stay the same speed.</p>
+		    </dd>
+
+            <dt class="left">Create sensor objects</dt>
+		    <dd>
+			<p>Create <a href="../../tools/Sensors.shtml">sensors</a> as shown above
+            for each byte of information (number or character)
+            you want to receive back from the arduino. If you want to receive the motor
+            speed as a number from zero to seven, you need three sensors. If you want to
+            receive larger numbers, you need more sensors to get more bits. Eight bits can represent
+            numbers up to 255 (the picture here shows bits corresponding to the decimal number 14).
+            Make sure the sensors are linked to the appropriate bits on your arduino/CMRI node.</p>
+            
+            <p class="note">While JMRI sends and receives a 0 or 1 in the
+            CMRI bit steam, it translates a zero into a sensor INACTIVE state, which is
+            actually stored as 4 (requesting “state” and printing it as a number in a script
+            will return a 4) and ACTIVE as a 2.  This is important in writing your JMRI
+            script to translate received sensor states as binary bits.]</p>
+		    </dd>
+            
+            <dt class="left">Create memory variable</dt>
+		    <dd>
+			<p>Create <a href="../../tools/Memories.shtml">memory variable</a> to hold
+            each byte of information that will be computed by the script from the eight
+            sensors.</p>
+		    </dd>
+
+            <dt class="left">Run script</dt>
+		    <dd>
+			<p>Create <a href="../../tools/scripting/HowTo.shtml#multturnouts">a listening script</a>
+            as discussed above to translate the sensor states into bits and create a 
+            number of letter in the memory variable. An example script to convert eight sensor states 
+            (bits) into a number can be found 
+            <a href="https://www.jmri.org/jython/CmriBitsToBytes.py" target="_blank">here.</a> </p>
+		    </dd>
+
+		</dl>
+        
+        
+		</div> <!-- closes #list -->
+    
+    <!--#include virtual="/Footer.shtml" -->
+
+    </div><!-- closes #mainContent-->
+    </div> <!-- closes #mBody, from before Sidebar -->
+</body>
+</html>
