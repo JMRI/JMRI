@@ -24,19 +24,7 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
         tc = memo.getTrafficController();
 
         this.speedSetting = 0;
-        this.f0 = false;
-        this.f1 = false;
-        this.f2 = false;
-        this.f3 = false;
-        this.f4 = false;
-        this.f5 = false;
-        this.f6 = false;
-        this.f7 = false;
-        this.f8 = false;
-        this.f9 = false;
-        this.f10 = false;
-        this.f11 = false;
-        this.f12 = false;
+        // Functions default to false
         this.address = address;
         this.isForward = true;
 
@@ -56,11 +44,11 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
     @Override
     protected void sendFunctionGroup1() {
 
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 0, (f0 ? 0x01 : 0x00)), this);
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 1, (f1 ? 0x01 : 0x00)), this);
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 2, (f2 ? 0x01 : 0x00)), this);
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 3, (f3 ? 0x01 : 0x00)), this);
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 4, (f4 ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 0, (getFunction(0) ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 1, (getFunction(1) ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 2, (getFunction(2) ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 3, (getFunction(3) ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 4, (getFunction(4) ? 0x01 : 0x00)), this);
 
     }
 
@@ -70,48 +58,48 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
     @Override
     protected void sendFunctionGroup2() {
 
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 5, (f5 ? 0x01 : 0x00)), this);
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 6, (f6 ? 0x01 : 0x00)), this);
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 7, (f7 ? 0x01 : 0x00)), this);
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 8, (f8 ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 5, (getFunction(5) ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 6, (getFunction(6) ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 7, (getFunction(7) ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 8, (getFunction(8) ? 0x01 : 0x00)), this);
 
     }
 
     @Override
     protected void sendFunctionGroup3() {
 
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 9, (f9 ? 0x01 : 0x00)), this);
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 10, (f10 ? 0x01 : 0x00)), this);
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 11, (f11 ? 0x01 : 0x00)), this);
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 12, (f12 ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 9, (getFunction(9) ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 10, (getFunction(10) ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 11, (getFunction(11) ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 12, (getFunction(12) ? 0x01 : 0x00)), this);
 
     }
 
     @Override
     protected void sendFunctionGroup4() {
 
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 13, (f13 ? 0x01 : 0x00)), this);
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 14, (f14 ? 0x01 : 0x00)), this);
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 15, (f15 ? 0x01 : 0x00)), this);
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 16, (f16 ? 0x01 : 0x00)), this);
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 17, (f17 ? 0x01 : 0x00)), this);
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 18, (f18 ? 0x01 : 0x00)), this);
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 19, (f19 ? 0x01 : 0x00)), this);
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 20, (f20 ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 13, (getFunction(13) ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 14, (getFunction(14) ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 15, (getFunction(15) ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 16, (getFunction(16) ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 17, (getFunction(17) ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 18, (getFunction(18) ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 19, (getFunction(19) ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 20, (getFunction(20) ? 0x01 : 0x00)), this);
 
     }
 
     @Override
     protected void sendFunctionGroup5() {
 
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 21, (f21 ? 0x01 : 0x00)), this);
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 22, (f22 ? 0x01 : 0x00)), this);
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 23, (f23 ? 0x01 : 0x00)), this);
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 24, (f24 ? 0x01 : 0x00)), this);
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 25, (f25 ? 0x01 : 0x00)), this);
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 26, (f26 ? 0x01 : 0x00)), this);
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 27, (f27 ? 0x01 : 0x00)), this);
-        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 28, (f28 ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 21, (getFunction(21) ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 22, (getFunction(22) ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 23, (getFunction(23) ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 24, (getFunction(24) ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 25, (getFunction(25) ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 26, (getFunction(26) ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 27, (getFunction(27) ? 0x01 : 0x00)), this);
+        tc.sendMarklinMessage(MarklinMessage.setLocoFunction(getCANAddress(), 28, (getFunction(28) ? 0x01 : 0x00)), this);
 
     }
 
