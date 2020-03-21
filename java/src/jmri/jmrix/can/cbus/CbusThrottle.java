@@ -5,7 +5,6 @@ import jmri.LocoAddress;
 import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottle;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.Throttle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,11 +35,9 @@ public class CbusThrottle extends AbstractThrottle {
     public CbusThrottle(CanSystemConnectionMemo memo, LocoAddress address, int handle) {
         super(memo);
         log.debug("creating new CbusThrottle address {} handle {}",address,handle);
-        DccLocoAddress castaddress=null;
-        try {
-            castaddress = (DccLocoAddress) address;
-        } catch(java.lang.ClassCastException cce){
+        if (!( address instanceof DccLocoAddress )  ){
             log.error("{} is not a DccLocoAddress",address);
+            return;
         }
         log.debug("Throttle created");
         cs = (CbusCommandStation) adapterMemo.get(jmri.CommandStation.class);
@@ -83,7 +80,7 @@ public class CbusThrottle extends AbstractThrottle {
         this.f27 = false;
         this.f28 = false;
 
-        this.dccAddress = castaddress;
+        this.dccAddress = (DccLocoAddress) address;
         this.isForward = true;
 
 //        switch(slot.decoderType())
@@ -309,194 +306,6 @@ public class CbusThrottle extends AbstractThrottle {
     }
 
     /**
-     * Update the state of a single function in response to a message from the
-     * hardware
-     * @param fn Function Number 0-28
-     * @param state On - True, Off - False
-     */
-    protected void updateFunction(int fn, boolean state) {
-        switch (fn) {
-            case 0:
-                if ( this.f0 != state ){
-                    this.f0 = state;
-                    notifyPropertyChangeListener(Throttle.F0, !state, state);
-                }
-                break;
-            case 1:
-                if ( this.f1 != state ){
-                    this.f1 = state;
-                    notifyPropertyChangeListener(Throttle.F1, !state, state);
-                }
-                break;
-            case 2:
-                if ( this.f2 != state ){
-                    this.f2 = state;
-                    notifyPropertyChangeListener(Throttle.F2, !state, state);
-                }
-                break;
-            case 3:
-                if ( this.f3 != state ){
-                    this.f3 = state;
-                    notifyPropertyChangeListener(Throttle.F3, !state, state);
-                }
-                break;
-            case 4:
-                if ( this.f4 != state ){
-                    this.f4 = state;
-                    notifyPropertyChangeListener(Throttle.F4, !state, state);
-                }
-                break;
-            case 5:
-                if ( this.f5 != state ){
-                    this.f5 = state;
-                    notifyPropertyChangeListener(Throttle.F5, !state, state);
-                }
-                break;
-            case 6:
-                if ( this.f6 != state ){
-                    this.f6 = state;
-                    notifyPropertyChangeListener(Throttle.F6, !state, state);
-                }
-                break;
-            case 7:
-                if ( this.f7 != state ){
-                    this.f7 = state;
-                    notifyPropertyChangeListener(Throttle.F7, !state, state);
-                }
-                break;
-            case 8:
-                if ( this.f8 != state ){
-                    this.f8 = state;
-                    notifyPropertyChangeListener(Throttle.F8, !state, state);
-                }
-                break;
-            case 9:
-                if ( this.f9 != state ){
-                    this.f9 = state;
-                    notifyPropertyChangeListener(Throttle.F9, !state, state);
-                }
-                break;
-            case 10:
-                if ( this.f10 != state ){
-                    this.f10 = state;
-                    notifyPropertyChangeListener(Throttle.F10, !state, state);
-                }
-                break;
-            case 11:
-                if ( this.f11 != state ){
-                    this.f11 = state;
-                    notifyPropertyChangeListener(Throttle.F11, !state, state);
-                }
-                break;
-            case 12:
-                if ( this.f12 != state ){
-                    this.f12 = state;
-                    notifyPropertyChangeListener(Throttle.F12, !state, state);
-                }
-                break;
-            case 13:
-                if ( this.f13 != state ){
-                    this.f13 = state;
-                    notifyPropertyChangeListener(Throttle.F13, !state, state);
-                }
-                break;
-            case 14:
-                if ( this.f14 != state ){
-                    this.f14 = state;
-                    notifyPropertyChangeListener(Throttle.F14, !state, state);
-                }
-                break;
-            case 15:
-                if ( this.f15 != state ){
-                    this.f15 = state;
-                    notifyPropertyChangeListener(Throttle.F15, !state, state);
-                }
-                break;
-            case 16:
-                if ( this.f16 != state ){
-                    this.f16 = state;
-                    notifyPropertyChangeListener(Throttle.F16, !state, state);
-                }
-                break;
-            case 17:
-                if ( this.f17 != state ){
-                    this.f17 = state;
-                    notifyPropertyChangeListener(Throttle.F17, !state, state);
-                }
-                break;
-            case 18:
-                if ( this.f18 != state ){
-                    this.f18 = state;
-                    notifyPropertyChangeListener(Throttle.F18, !state, state);
-                }
-                break;
-            case 19:
-                if ( this.f19 != state ){
-                    this.f19 = state;
-                    notifyPropertyChangeListener(Throttle.F19, !state, state);
-                }
-                break;
-            case 20:
-                if ( this.f20 != state ){
-                    this.f20 = state;
-                    notifyPropertyChangeListener(Throttle.F20, !state, state);
-                }
-                break;
-            case 21:
-                if ( this.f21 != state ){
-                    this.f21 = state;
-                    notifyPropertyChangeListener(Throttle.F21, !state, state);
-                }
-                break;
-            case 22:
-                if ( this.f22 != state ){
-                    this.f22 = state;
-                    notifyPropertyChangeListener(Throttle.F22, !state, state);
-                }
-                break;
-            case 23:
-                if ( this.f23 != state ){
-                    this.f23 = state;
-                    notifyPropertyChangeListener(Throttle.F23, !state, state);
-                }
-                break;
-            case 24:
-                if ( this.f24 != state ){
-                    this.f24 = state;
-                    notifyPropertyChangeListener(Throttle.F24, !state, state);
-                }
-                break;
-            case 25:
-                if ( this.f25 != state ){
-                    this.f25 = state;
-                    notifyPropertyChangeListener(Throttle.F25, !state, state);
-                }
-                break;
-            case 26:
-                if ( this.f26 != state ){
-                    this.f26 = state;
-                    notifyPropertyChangeListener(Throttle.F26, !state, state);
-                }
-                break;
-            case 27:
-                if ( this.f27 != state ){
-                    this.f27 = state;
-                    notifyPropertyChangeListener(Throttle.F27, !state, state);
-                }
-                break;
-            case 28:
-                if ( this.f28 != state ){
-                    this.f28 = state;
-                    notifyPropertyChangeListener(Throttle.F28, !state, state);
-                }
-                break;
-            default:
-                log.warn("Unhandled function number: {}", fn);
-                break;
-        }
-    }
-
-    /**
      * Set the speed.
      * <p>
      * This intentionally skips the emergency stop value of 1.
@@ -587,19 +396,15 @@ public class CbusThrottle extends AbstractThrottle {
             notifyPropertyChangeListener(ISFORWARD, old, isForward);
         }
     }
-
+    
     /**
      * Update the throttles direction without sending to hardware.Used to
      * support CBUS sharing by taking direction received <b>from</b> the
      * hardware in an OPC_DSPD message.
      * @param forward True if Forward, else False
      */
-    protected void updateIsForward(boolean forward) {
-        boolean old = isForward;
-        isForward = forward;
-        if (old != isForward) {
-            notifyPropertyChangeListener(ISFORWARD, old, isForward);
-        }
+    protected void updateIsForward(boolean forward){
+        super.setIsForward(forward);
     }
 
     /**
@@ -721,7 +526,7 @@ public class CbusThrottle extends AbstractThrottle {
         
     }
 
-    javax.swing.Timer mRefreshTimer = null;
+    private javax.swing.Timer mRefreshTimer;
 
     // CBUS command stations expect DSPD per sesison every 4s
     protected final void startRefresh() {

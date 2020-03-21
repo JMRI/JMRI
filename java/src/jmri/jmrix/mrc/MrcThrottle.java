@@ -4,7 +4,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Date;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
-import jmri.Throttle;
 import jmri.jmrix.AbstractThrottle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -339,283 +338,53 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener 
                 }
             } else if (MrcPackets.startsWith(m, MrcPackets.FUNCTIONGROUP1PACKETHEADER)) {
                 int data = m.getElement(8) & 0xff;
-                if ((data & 0x10) == 0x10) {
-                    if (!this.f0) {
-                        notifyPropertyChangeListener(Throttle.F0, this.f0, true);
-                        this.f0 = true;
-                    }
-                } else if (this.f0) {
-                    notifyPropertyChangeListener(Throttle.F0, this.f0, false);
-                    this.f0 = false;
-                }
-                if ((data & 0x01) == 0x01) {
-                    if (!this.f1) {
-                        notifyPropertyChangeListener(Throttle.F1, this.f1, true);
-                        this.f1 = true;
-                    }
-                } else if (this.f1) {
-                    notifyPropertyChangeListener(Throttle.F1, this.f1, false);
-                    this.f1 = false;
-                }
-                if ((data & 0x02) == 0x02) {
-                    if (!this.f2) {
-                        notifyPropertyChangeListener(Throttle.F2, this.f2, true);
-                        this.f2 = true;
-                    }
-                } else if (this.f2) {
-                    notifyPropertyChangeListener(Throttle.F2, this.f2, false);
-                    this.f2 = false;
-                }
-                if ((data & 0x04) == 0x04) {
-                    if (!this.f3) {
-                        notifyPropertyChangeListener(Throttle.F3, this.f3, true);
-                        this.f3 = true;
-                    }
-                } else if (this.f3) {
-                    notifyPropertyChangeListener(Throttle.F3, this.f3, false);
-                    this.f3 = false;
-                }
-                if ((data & 0x08) == 0x08) {
-                    if (!this.f4) {
-                        notifyPropertyChangeListener(Throttle.F4, this.f4, true);
-                        this.f4 = true;
-                    }
-                } else if (this.f4) {
-                    notifyPropertyChangeListener(Throttle.F4, this.f4, false);
-                    this.f4 = false;
-                }
-                //reverse engineer the function
+                updateFunction(0,((data & 0x10) == 0x10));
+                updateFunction(1,((data & 0x01) == 0x01));
+                updateFunction(2,((data & 0x02) == 0x02));
+                updateFunction(3,((data & 0x04) == 0x04));
+                updateFunction(4,((data & 0x08) == 0x08));
+                
             } else if (MrcPackets.startsWith(m, MrcPackets.FUNCTIONGROUP2PACKETHEADER)) {
                 int data = m.getElement(8) & 0xff;
-                if ((data & 0x01) == 0x01) {
-                    if (!this.f5) {
-                        notifyPropertyChangeListener(Throttle.F5, this.f5, true);
-                        this.f5 = true;
-                    }
-                } else if (this.f5) {
-                    notifyPropertyChangeListener(Throttle.F5, this.f5, false);
-                    this.f5 = false;
-                }
-                if ((data & 0x02) == 0x02) {
-                    if (!this.f6) {
-                        notifyPropertyChangeListener(Throttle.F6, this.f6, true);
-                        this.f6 = true;
-                    }
-                } else if (this.f6) {
-                    notifyPropertyChangeListener(Throttle.F6, this.f6, false);
-                    this.f6 = false;
-                }
-                if ((data & 0x04) == 0x04) {
-                    if (!this.f7) {
-                        notifyPropertyChangeListener(Throttle.F7, this.f7, true);
-                        this.f7 = true;
-                    }
-                } else if (this.f7) {
-                    notifyPropertyChangeListener(Throttle.F7, this.f7, false);
-                    this.f7 = false;
-                }
-                if ((data & 0x08) == 0x08) {
-                    if (!this.f8) {
-                        notifyPropertyChangeListener(Throttle.F8, this.f8, true);
-                        this.f8 = true;
-                    }
-                } else if (this.f8) {
-                    notifyPropertyChangeListener(Throttle.F8, this.f8, false);
-                    this.f8 = false;
-                }
+                updateFunction(5,((data & 0x01) == 0x01));
+                updateFunction(6,((data & 0x02) == 0x02));
+                updateFunction(7,((data & 0x04) == 0x04));
+                updateFunction(8,((data & 0x08) == 0x08));
+                
             } else if (MrcPackets.startsWith(m, MrcPackets.FUNCTIONGROUP3PACKETHEADER)) {
                 int data = m.getElement(8) & 0xff;
-                if ((data & 0x01) == 0x01) {
-                    if (!this.f9) {
-                        notifyPropertyChangeListener(Throttle.F9, this.f9, true);
-                        this.f9 = true;
-                    }
-                } else if (this.f9) {
-                    notifyPropertyChangeListener(Throttle.F9, this.f9, false);
-                    this.f9 = false;
-                }
-                if ((data & 0x02) == 0x02) {
-                    if (!this.f10) {
-                        notifyPropertyChangeListener(Throttle.F10, this.f10, true);
-                        this.f10 = true;
-                    }
-                } else if (this.f10) {
-                    notifyPropertyChangeListener(Throttle.F10, this.f10, false);
-                    this.f10 = false;
-                }
-                if ((data & 0x04) == 0x04) {
-                    if (!this.f11) {
-                        notifyPropertyChangeListener(Throttle.F11, this.f11, true);
-                        this.f11 = true;
-                    }
-                } else if (this.f11) {
-                    notifyPropertyChangeListener(Throttle.F11, this.f11, false);
-                    this.f11 = false;
-                }
-                if ((data & 0x08) == 0x08) {
-                    if (!this.f12) {
-                        notifyPropertyChangeListener(Throttle.F12, this.f12, true);
-                        this.f12 = true;
-                    }
-                } else if (this.f12) {
-                    notifyPropertyChangeListener(Throttle.F12, this.f12, false);
-                    this.f12 = false;
-                }
+                updateFunction(9,((data & 0x01) == 0x01));
+                updateFunction(10,((data & 0x02) == 0x02));
+                updateFunction(11,((data & 0x04) == 0x04));
+                updateFunction(12,((data & 0x08) == 0x08));
+                
             } else if (MrcPackets.startsWith(m, MrcPackets.FUNCTIONGROUP4PACKETHEADER)) {
                 int data = m.getElement(8) & 0xff;
-                if ((data & 0x01) == 0x01) {
-                    if (!this.f13) {
-                        notifyPropertyChangeListener(Throttle.F13, this.f13, true);
-                        this.f13 = true;
-                    }
-                } else if (this.f13) {
-                    notifyPropertyChangeListener(Throttle.F13, this.f13, false);
-                    this.f13 = false;
-                }
-                if ((data & 0x02) == 0x02) {
-                    if (!this.f14) {
-                        notifyPropertyChangeListener(Throttle.F14, this.f14, true);
-                        this.f14 = true;
-                    }
-                } else if (this.f14) {
-                    notifyPropertyChangeListener(Throttle.F14, this.f14, false);
-                    this.f14 = false;
-                }
-                if ((data & 0x04) == 0x04) {
-                    if (!this.f15) {
-                        notifyPropertyChangeListener(Throttle.F15, this.f15, true);
-                        this.f15 = true;
-                    }
-                } else if (this.f15) {
-                    notifyPropertyChangeListener(Throttle.F15, this.f15, false);
-                    this.f15 = false;
-                }
-                if ((data & 0x08) == 0x08) {
-                    if (!this.f16) {
-                        notifyPropertyChangeListener(Throttle.F16, this.f16, true);
-                        this.f16 = true;
-                    }
-                } else if (this.f16) {
-                    notifyPropertyChangeListener(Throttle.F16, this.f16, false);
-                    this.f16 = false;
-                }
+                updateFunction(13,((data & 0x01) == 0x01));
+                updateFunction(14,((data & 0x02) == 0x02));
+                updateFunction(15,((data & 0x04) == 0x04));
+                updateFunction(16,((data & 0x08) == 0x08));
+                
             } else if (MrcPackets.startsWith(m, MrcPackets.FUNCTIONGROUP5PACKETHEADER)) {
                 int data = m.getElement(8) & 0xff;
-                if ((data & 0x01) == 0x01) {
-                    if (!this.f17) {
-                        notifyPropertyChangeListener(Throttle.F17, this.f17, true);
-                        this.f17 = true;
-                    }
-                } else if (this.f17) {
-                    notifyPropertyChangeListener(Throttle.F17, this.f17, false);
-                    this.f17 = false;
-                }
-                if ((data & 0x02) == 0x02) {
-                    if (!this.f18) {
-                        notifyPropertyChangeListener(Throttle.F18, this.f18, true);
-                        this.f18 = true;
-                    }
-                } else if (this.f18) {
-                    notifyPropertyChangeListener(Throttle.F18, this.f18, false);
-                    this.f18 = false;
-                }
-                if ((data & 0x04) == 0x04) {
-                    if (!this.f19) {
-                        notifyPropertyChangeListener(Throttle.F19, this.f19, true);
-                        this.f19 = true;
-                    }
-                } else if (this.f19) {
-                    notifyPropertyChangeListener(Throttle.F19, this.f19, false);
-                    this.f19 = false;
-                }
-                if ((data & 0x08) == 0x08) {
-                    if (!this.f20) {
-                        notifyPropertyChangeListener(Throttle.F20, this.f20, true);
-                        this.f20 = true;
-                    }
-                } else if (this.f20) {
-                    notifyPropertyChangeListener(Throttle.F20, this.f20, false);
-                    this.f20 = false;
-                }
+                updateFunction(17,((data & 0x01) == 0x01));
+                updateFunction(18,((data & 0x02) == 0x02));
+                updateFunction(19,((data & 0x04) == 0x04));
+                updateFunction(20,((data & 0x08) == 0x08));
+                
             } else if (MrcPackets.startsWith(m, MrcPackets.FUNCTIONGROUP6PACKETHEADER)) {
                 int data = m.getElement(8) & 0xff;
-                if ((data & 0x01) == 0x01) {
-                    if (!this.f21) {
-                        notifyPropertyChangeListener(Throttle.F21, this.f21, true);
-                        this.f21 = true;
-                    }
-                } else if (this.f21) {
-                    notifyPropertyChangeListener(Throttle.F21, this.f21, false);
-                    this.f21 = false;
-                }
-                if ((data & 0x02) == 0x02) {
-                    if (!this.f22) {
-                        notifyPropertyChangeListener(Throttle.F22, this.f22, true);
-                        this.f22 = true;
-                    }
-                } else if (this.f22) {
-                    notifyPropertyChangeListener(Throttle.F22, this.f22, false);
-                    this.f22 = false;
-                }
-                if ((data & 0x04) == 0x04) {
-                    if (!this.f23) {
-                        notifyPropertyChangeListener(Throttle.F23, this.f23, true);
-                        this.f23 = true;
-                    }
-                } else if (this.f23) {
-                    notifyPropertyChangeListener(Throttle.F23, this.f23, false);
-                    this.f23 = false;
-                }
-                if ((data & 0x08) == 0x08) {
-                    if (!this.f24) {
-                        notifyPropertyChangeListener(Throttle.F24, this.f24, true);
-                        this.f24 = true;
-                    }
-                } else if (this.f24) {
-                    notifyPropertyChangeListener(Throttle.F24, this.f24, false);
-                    this.f24 = false;
-                }
-                if ((data & 0x10) == 0x10) {
-                    if (!this.f25) {
-                        notifyPropertyChangeListener(Throttle.F25, this.f25, true);
-                        this.f25 = true;
-                    }
-                } else if (this.f25) {
-                    notifyPropertyChangeListener(Throttle.F25, this.f25, false);
-                    this.f25 = false;
-                }
-                if ((data & 0x20) == 0x20) {
-                    if (!this.f26) {
-                        notifyPropertyChangeListener(Throttle.F26, this.f26, true);
-                        this.f26 = true;
-                    }
-                } else if (this.f26) {
-                    notifyPropertyChangeListener(Throttle.F26, this.f26, false);
-                    this.f26 = false;
-                }
-                if ((data & 0x40) == 0x40) {
-                    if (!this.f27) {
-                        notifyPropertyChangeListener(Throttle.F27, this.f27, true);
-                        this.f27 = true;
-                    }
-                } else if (this.f27) {
-                    notifyPropertyChangeListener(Throttle.F27, this.f27, false);
-                    this.f27 = false;
-                }
-                if ((data & 0x80) == 0x80) {
-                    if (!this.f28) {
-                        notifyPropertyChangeListener(Throttle.F28, this.f28, true);
-                        this.f28 = true;
-                    }
-                } else if (this.f28) {
-                    notifyPropertyChangeListener(Throttle.F28, this.f28, false);
-                    this.f28 = false;
-                }
-            } else {
-                return;
+                updateFunction(21,((data & 0x01) == 0x01));
+                updateFunction(22,((data & 0x02) == 0x02));
+                updateFunction(23,((data & 0x04) == 0x04));
+                updateFunction(24,((data & 0x08) == 0x08));
+                
+                updateFunction(25,((data & 0x10) == 0x10));
+                updateFunction(26,((data & 0x20) == 0x20));
+                updateFunction(27,((data & 0x40) == 0x40));
+                updateFunction(28,((data & 0x80) == 0x80));
+                
             }
-        } else {
-            return;
         }
     }
 
