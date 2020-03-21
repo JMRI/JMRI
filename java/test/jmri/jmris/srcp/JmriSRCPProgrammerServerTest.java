@@ -1,9 +1,16 @@
 package jmri.jmris.srcp;
 
+import jmri.AddressedProgrammerManager;
+import jmri.GlobalProgrammerManager;
+import jmri.InstanceManagerDelegate;
+import jmri.Programmer;
+import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
+import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -16,30 +23,30 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class JmriSRCPProgrammerServerTest{
 
+    private InstanceManagerDelegate instanceManagerDelegate;
+
     @Test
     public void testCtor() {
-        OutputStream output = new OutputStream() {
-                    // null output string drops characters
-                    // could be replaced by one that checks for specific outputs
-                    @Override
-                    public void write(int b) throws java.io.IOException {
-                    }
-                };
-        JmriSRCPProgrammerServer a = new JmriSRCPProgrammerServer(output);
+        OutputStream output = new ByteArrayOutputStream();
+        GlobalProgrammerManager programmerManager = Mockito.mock(GlobalProgrammerManager.class);
+        Mockito.when(instanceManagerDelegate.getDefault(GlobalProgrammerManager.class)).thenReturn(programmerManager);
+        Mockito.when(instanceManagerDelegate.getNullableDefault(GlobalProgrammerManager.class)).thenReturn(programmerManager);
+        Programmer programmer = Mockito.mock(Programmer.class);
+        Mockito.when(programmerManager.getGlobalProgrammer()).thenReturn(programmer);
+        JmriSRCPProgrammerServer a = new JmriSRCPProgrammerServer(output,instanceManagerDelegate);
         assertThat(a).isNotNull();
     }
 
     @BeforeEach
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
-        
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
+        JUnitUtil.setUpForMockInstanceManager();
+        instanceManagerDelegate = Mockito.mock(InstanceManagerDelegate.class);
+        //jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
     }
 
     @AfterEach
     public void tearDown() {
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

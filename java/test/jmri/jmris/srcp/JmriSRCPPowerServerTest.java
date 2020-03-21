@@ -108,7 +108,7 @@ public class JmriSRCPPowerServerTest extends jmri.jmris.AbstractPowerServerTestB
     @BeforeEach
     @Override
     public void setUp() {
-        JUnitUtil.setUp(); // ToDo refactor common setup so there is a version that doesn't init instance manager.
+        JUnitUtil.setUpForMockInstanceManager();
         instanceManagerDelegate = Mockito.mock(InstanceManagerDelegate.class);
         powerManager = Mockito.mock(PowerManager.class);
         Mockito.when(instanceManagerDelegate.getDefault(PowerManager.class)).thenReturn(powerManager);

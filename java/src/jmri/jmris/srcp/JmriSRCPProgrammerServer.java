@@ -1,9 +1,9 @@
 package jmri.jmris.srcp;
 
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import jmri.InstanceManagerDelegate;
 import jmri.ProgListener;
 import jmri.jmris.AbstractProgrammerServer;
 import org.slf4j.Logger;
@@ -19,8 +19,12 @@ public class JmriSRCPProgrammerServer extends AbstractProgrammerServer {
 
     private OutputStream output;
 
-    public JmriSRCPProgrammerServer(OutputStream outStream) {
-        super();
+    public JmriSRCPProgrammerServer(OutputStream outputStream){
+        this(outputStream,new InstanceManagerDelegate());
+    }
+
+    public JmriSRCPProgrammerServer(OutputStream outStream,InstanceManagerDelegate instanceManagerDelegate) {
+        super(instanceManagerDelegate);
         output = outStream;
     }
 
@@ -36,17 +40,18 @@ public class JmriSRCPProgrammerServer extends AbstractProgrammerServer {
         if (status == ProgListener.OK) {
             output.write(("100 INFO 1 SM " + CV + " CV " + value + "\n\r").getBytes());
         } else {
-            output.write("416 ERROR no data\n\r".getBytes());
+            output.write(Bundle.getMessage("Error416").getBytes());
         }
     }
 
     @Override
     public void sendNotAvailableStatus() throws IOException {
-        output.write("499 ERROR unspecified error\n".getBytes());
+        output.write(Bundle.getMessage("Error499").getBytes());
     }
 
     @Override
     public void parseRequest(String statusString) throws jmri.JmriException, java.io.IOException {
+        // SRCP requests are parsed through the common parser.
     }
 
     private static final Logger log = LoggerFactory.getLogger(JmriSRCPProgrammerServer.class);
