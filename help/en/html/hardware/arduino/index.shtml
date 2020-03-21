@@ -21,13 +21,13 @@
 <body>
   <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="../Sidebar.shtml" -->
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
 
     <h1><a name="top" id="top">Hardware Support: Using Arduinos</a></h1>
     
     <img src="http://www.motorhomesites.org.uk/wp-content/uploads/2018/01/JMRIArduinoTitlepic.jpg" 
-    alt="Benson Valley Railway" height="192" width="360">
+    alt="Benson Valley Railway" align="middle" height="192" width="360">
     <p style="font-size:60%">Picture Credit:<a href="http://www.motorhomesites.org.uk/jmri-arduino-setup/" target="_blank">
     http://www.motorhomesites.org.uk/jmri-arduino-setup</a></p>
     
@@ -194,7 +194,7 @@
     </li>
     <li>
     When you change the state of more than one CMRI-connected device (say two turnouts) in one 
-    <a href="../../tools/Routes.shtml">Route</a> or <a href="../../tools/Logix.shtml">Logix</a>, 
+    <a href="">Route</a> or <a href="">Logix</a>, 
     you can't be sure whether you will get both bits the first time your arduino program asks for them. After a
     while (typically a fraction of a second), you will, but program your arduino sketch to be sensitive to this issue.    
     </li>
@@ -229,7 +229,7 @@
     number of arduinos in a "daisy chain" (each arduino connected to the next and finally a connection to
     the computer), as shown in this diagram:
     
-    <img src="images/rs485chain.jpg" alt="RS485 Daisy Chain" height="256" width="480">
+    <img src="images/rs485chain.jpg" alt="RS485 Daisy Chain" align="right" height="211" width="396">
     </p>
     
     <p>
@@ -281,9 +281,14 @@
     <li>Logix triggering: Connect an arduino to a fascia panel switch or pushbutton. Define a JMRI sensor that is used to trigger a Logix to
     do something (perhaps throw some turnouts,set some lights, etc.).  Program the arduino to set the sensor when the switch or
     pushbutton is activated.</li>
-    <li>Light or animation control: Add a motor controller to your arduino, create a <a href="../../tools/Lights.shtml">JMRI light object </a>to send a control command,
+    <li>Light or animation control: Add a motor controller to your arduino, create a JMRI <a href="">light </a>to send a control command,
     create a few sensors in JMRI for feedback, and use this <a href="https://github.com/jerryg2003/MRR-arduino-auxmotorcontrol" target="_blank">
-    sketch to control an auxiliary motor,</a> such as would be in a Ferris wheel.</li>
+    sketch to control an auxiliary motor,</a> such as would be in a Ferris wheel.  Use <a href="../../tools/Lights.shtml">JMRI light objects</a>
+    to send commands to change speed or other characteristics of the animation either via serial communications or using
+    the byte communication techniques discussed on <a href="ArduinoCMRIByteComm.shtml">this page.</a></li>
+    <li>Speedometer: monitor the time it takes for a locomotive to trigger between two (or more sensors), and using 
+    the distance between them, compute its speed.  Send that information to JMRI either via serial communications or using
+    the byte communication techniques discussed on <a href="ArduinoCMRIByteComm.shtml">this page.</a></li>
     <li>Car counter: using location detectors placed above the level of trucks and couplers, write an arduino sketch
     to count cars as they go by. Connect to JMRI via <a href="#serial">serial communications </a> and write a 
     <a href="../../tools/scripting/index.shtml">script </a>to write the number to a <a href="../../tools/Memories.shtml">JMRI memory object</a>
@@ -301,7 +306,7 @@
   
 <!-- *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= -->
  
-    <h2><a name="example-CMRI" id="example-CMRI">Step-by-Step Example Using Arduino as a CMRI Node</a></h2>
+    <h2><a name="example-CMRI" id="example-CMRI">Step-by-Step Example Using Arduino as a CMRI Node</a></h3>
       
     <p>
     This example will walk through main steps of using an arduino to monitor a block occupancy sensor and 
