@@ -10,7 +10,6 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.util.JUnitOperationsUtil;
 
 /**
  * Tests for the Operations Car class Last manually cross-checked on
