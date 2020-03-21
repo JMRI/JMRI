@@ -40,7 +40,6 @@ import jmri.util.ColorUtil;
  */
 public class TrainCommon {
 
-    public static final String LENGTHABV = Setup.LENGTHABV; // Length symbol
     protected static final String TAB = "    "; // NOI18N
     protected static final String NEW_LINE = "\n"; // NOI18N
     protected static final String SPACE = " ";
@@ -1468,7 +1467,7 @@ public class TrainCommon {
             return " " + padAndTruncateString(type[0], InstanceManager.getDefault(CarTypes.class).getMaxNameLength());
         } else if (attribute.equals(Setup.LENGTH)) {
             return " " +
-                    padAndTruncateString(rs.getLength() + LENGTHABV,
+                    padAndTruncateString(rs.getLength() + Setup.getLengthUnitAbv(),
                             InstanceManager.getDefault(CarLengths.class).getMaxNameLength());
         } else if (attribute.equals(Setup.WEIGHT)) {
             return " " +
