@@ -23,14 +23,6 @@
         
     <div id="mainContent">
 
-	    <div id="teaser">
-		<h1>Optional Teaser</h1>
-		    <p>Learn how to use arduino-based CMRI nodes to communicate with JMRI
-            using complex bit strings and bytes of numbers and other data, </p>
-	    </div> <!-- closes #teaser-->
-
-
-
 	    <h1>Hardware support: Multi-bit and Byte Communication Using CMRI</h1>
 		
 		<div class="para">
