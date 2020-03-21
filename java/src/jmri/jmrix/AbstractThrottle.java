@@ -32,9 +32,6 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     protected SpeedStepMode speedStepMode = SpeedStepMode.UNKNOWN;
     protected boolean isForward;
-    protected boolean f0, f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12;
-    protected boolean f13, f14, f15, f16, f17, f18, f19, f20, f21, f22, f23,
-            f24, f25, f26, f27, f28;
     protected boolean f0Momentary, f1Momentary, f2Momentary, f3Momentary,
             f4Momentary, f5Momentary, f6Momentary, f7Momentary, f8Momentary,
             f9Momentary, f10Momentary, f11Momentary, f12Momentary;
@@ -42,7 +39,13 @@ abstract public class AbstractThrottle implements DccThrottle {
             f17Momentary, f18Momentary, f19Momentary, f20Momentary,
             f21Momentary, f22Momentary, f23Momentary, f24Momentary,
             f25Momentary, f26Momentary, f27Momentary, f28Momentary;
-
+    
+    /**
+     * Array of Function values.
+     * Contains current Boolean value for functions 0-28.
+     */
+    private final boolean[] FUNCTION_BOOLEAN_ARRAY = new boolean[29];
+    
     /**
      * Is this object still usable? Set false after dispose, this variable is
      * used to check for incorrect usage.
@@ -165,7 +168,7 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public boolean getF0() {
-        return f0;
+        return FUNCTION_BOOLEAN_ARRAY[0];
     }
 
     /**
@@ -173,7 +176,7 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public boolean getF1() {
-        return f1;
+        return FUNCTION_BOOLEAN_ARRAY[1];
     }
 
     /**
@@ -181,7 +184,7 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public boolean getF2() {
-        return f2;
+        return FUNCTION_BOOLEAN_ARRAY[2];
     }
 
     /**
@@ -189,7 +192,7 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public boolean getF3() {
-        return f3;
+        return FUNCTION_BOOLEAN_ARRAY[3];
     }
 
     /**
@@ -197,7 +200,7 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public boolean getF4() {
-        return f4;
+        return FUNCTION_BOOLEAN_ARRAY[4];
     }
 
     /**
@@ -205,7 +208,7 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public boolean getF5() {
-        return f5;
+        return FUNCTION_BOOLEAN_ARRAY[5];
     }
 
     /**
@@ -213,7 +216,7 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public boolean getF6() {
-        return f6;
+        return FUNCTION_BOOLEAN_ARRAY[6];
     }
 
     /**
@@ -221,7 +224,7 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public boolean getF7() {
-        return f7;
+        return FUNCTION_BOOLEAN_ARRAY[7];
     }
 
     /**
@@ -229,7 +232,7 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public boolean getF8() {
-        return f8;
+        return FUNCTION_BOOLEAN_ARRAY[8];
     }
 
     /**
@@ -237,7 +240,7 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public boolean getF9() {
-        return f9;
+        return FUNCTION_BOOLEAN_ARRAY[9];
     }
 
     /**
@@ -245,7 +248,7 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public boolean getF10() {
-        return f10;
+        return FUNCTION_BOOLEAN_ARRAY[10];
     }
 
     /**
@@ -253,7 +256,7 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public boolean getF11() {
-        return f11;
+        return FUNCTION_BOOLEAN_ARRAY[11];
     }
 
     /**
@@ -261,7 +264,7 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public boolean getF12() {
-        return f12;
+        return FUNCTION_BOOLEAN_ARRAY[12];
     }
 
     /**
@@ -269,7 +272,7 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public boolean getF13() {
-        return f13;
+        return FUNCTION_BOOLEAN_ARRAY[13];
     }
 
     /**
@@ -277,7 +280,7 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public boolean getF14() {
-        return f14;
+        return FUNCTION_BOOLEAN_ARRAY[14];
     }
 
     /**
@@ -285,7 +288,7 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public boolean getF15() {
-        return f15;
+        return FUNCTION_BOOLEAN_ARRAY[15];
     }
 
     /**
@@ -293,7 +296,7 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public boolean getF16() {
-        return f16;
+        return FUNCTION_BOOLEAN_ARRAY[16];
     }
 
     /**
@@ -301,7 +304,7 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public boolean getF17() {
-        return f17;
+        return FUNCTION_BOOLEAN_ARRAY[17];
     }
 
     /**
@@ -309,7 +312,7 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public boolean getF18() {
-        return f18;
+        return FUNCTION_BOOLEAN_ARRAY[18];
     }
 
     /**
@@ -317,7 +320,7 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public boolean getF19() {
-        return f19;
+        return FUNCTION_BOOLEAN_ARRAY[19];
     }
 
     /**
@@ -325,7 +328,7 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public boolean getF20() {
-        return f20;
+        return FUNCTION_BOOLEAN_ARRAY[20];
     }
 
     /**
@@ -333,7 +336,7 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public boolean getF21() {
-        return f21;
+        return FUNCTION_BOOLEAN_ARRAY[21];
     }
 
     /**
@@ -341,7 +344,7 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public boolean getF22() {
-        return f22;
+        return FUNCTION_BOOLEAN_ARRAY[22];
     }
 
     /**
@@ -349,7 +352,7 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public boolean getF23() {
-        return f23;
+        return FUNCTION_BOOLEAN_ARRAY[23];
     }
 
     /**
@@ -357,7 +360,7 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public boolean getF24() {
-        return f24;
+        return FUNCTION_BOOLEAN_ARRAY[24];
     }
 
     /**
@@ -365,7 +368,7 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public boolean getF25() {
-        return f25;
+        return FUNCTION_BOOLEAN_ARRAY[25];
     }
 
     /**
@@ -373,7 +376,7 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public boolean getF26() {
-        return f26;
+        return FUNCTION_BOOLEAN_ARRAY[26];
     }
 
     /**
@@ -381,7 +384,7 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public boolean getF27() {
-        return f27;
+        return FUNCTION_BOOLEAN_ARRAY[27];
     }
 
     /**
@@ -389,7 +392,16 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public boolean getF28() {
-        return f28;
+        return FUNCTION_BOOLEAN_ARRAY[28];
+    }
+    
+    /**
+     * Get a Single Function Status.
+     * @param fN Function Number 0-28
+     * @return Boolean of whether Function is Active.
+     */
+    public boolean getFunction(int fN){
+        return FUNCTION_BOOLEAN_ARRAY[fN];
     }
 
     /**
@@ -1100,187 +1112,15 @@ abstract public class AbstractThrottle implements DccThrottle {
      * @param state On - True, Off - False
      */
     public void updateFunction(int fn, boolean state) {
-        switch (fn) {
-            case 0:
-                if ( this.f0 != state ){
-                    this.f0 = state;
-                    notifyPropertyChangeListener(Throttle.F0, !state, state);
-                }
-                break;
-            case 1:
-                if ( this.f1 != state ){
-                    this.f1 = state;
-                    notifyPropertyChangeListener(Throttle.F1, !state, state);
-                }
-                break;
-            case 2:
-                if ( this.f2 != state ){
-                    this.f2 = state;
-                    notifyPropertyChangeListener(Throttle.F2, !state, state);
-                }
-                break;
-            case 3:
-                if ( this.f3 != state ){
-                    this.f3 = state;
-                    notifyPropertyChangeListener(Throttle.F3, !state, state);
-                }
-                break;
-            case 4:
-                if ( this.f4 != state ){
-                    this.f4 = state;
-                    notifyPropertyChangeListener(Throttle.F4, !state, state);
-                }
-                break;
-            case 5:
-                if ( this.f5 != state ){
-                    this.f5 = state;
-                    notifyPropertyChangeListener(Throttle.F5, !state, state);
-                }
-                break;
-            case 6:
-                if ( this.f6 != state ){
-                    this.f6 = state;
-                    notifyPropertyChangeListener(Throttle.F6, !state, state);
-                }
-                break;
-            case 7:
-                if ( this.f7 != state ){
-                    this.f7 = state;
-                    notifyPropertyChangeListener(Throttle.F7, !state, state);
-                }
-                break;
-            case 8:
-                if ( this.f8 != state ){
-                    this.f8 = state;
-                    notifyPropertyChangeListener(Throttle.F8, !state, state);
-                }
-                break;
-            case 9:
-                if ( this.f9 != state ){
-                    this.f9 = state;
-                    notifyPropertyChangeListener(Throttle.F9, !state, state);
-                }
-                break;
-            case 10:
-                if ( this.f10 != state ){
-                    this.f10 = state;
-                    notifyPropertyChangeListener(Throttle.F10, !state, state);
-                }
-                break;
-            case 11:
-                if ( this.f11 != state ){
-                    this.f11 = state;
-                    notifyPropertyChangeListener(Throttle.F11, !state, state);
-                }
-                break;
-            case 12:
-                if ( this.f12 != state ){
-                    this.f12 = state;
-                    notifyPropertyChangeListener(Throttle.F12, !state, state);
-                }
-                break;
-            case 13:
-                if ( this.f13 != state ){
-                    this.f13 = state;
-                    notifyPropertyChangeListener(Throttle.F13, !state, state);
-                }
-                break;
-            case 14:
-                if ( this.f14 != state ){
-                    this.f14 = state;
-                    notifyPropertyChangeListener(Throttle.F14, !state, state);
-                }
-                break;
-            case 15:
-                if ( this.f15 != state ){
-                    this.f15 = state;
-                    notifyPropertyChangeListener(Throttle.F15, !state, state);
-                }
-                break;
-            case 16:
-                if ( this.f16 != state ){
-                    this.f16 = state;
-                    notifyPropertyChangeListener(Throttle.F16, !state, state);
-                }
-                break;
-            case 17:
-                if ( this.f17 != state ){
-                    this.f17 = state;
-                    notifyPropertyChangeListener(Throttle.F17, !state, state);
-                }
-                break;
-            case 18:
-                if ( this.f18 != state ){
-                    this.f18 = state;
-                    notifyPropertyChangeListener(Throttle.F18, !state, state);
-                }
-                break;
-            case 19:
-                if ( this.f19 != state ){
-                    this.f19 = state;
-                    notifyPropertyChangeListener(Throttle.F19, !state, state);
-                }
-                break;
-            case 20:
-                if ( this.f20 != state ){
-                    this.f20 = state;
-                    notifyPropertyChangeListener(Throttle.F20, !state, state);
-                }
-                break;
-            case 21:
-                if ( this.f21 != state ){
-                    this.f21 = state;
-                    notifyPropertyChangeListener(Throttle.F21, !state, state);
-                }
-                break;
-            case 22:
-                if ( this.f22 != state ){
-                    this.f22 = state;
-                    notifyPropertyChangeListener(Throttle.F22, !state, state);
-                }
-                break;
-            case 23:
-                if ( this.f23 != state ){
-                    this.f23 = state;
-                    notifyPropertyChangeListener(Throttle.F23, !state, state);
-                }
-                break;
-            case 24:
-                if ( this.f24 != state ){
-                    this.f24 = state;
-                    notifyPropertyChangeListener(Throttle.F24, !state, state);
-                }
-                break;
-            case 25:
-                if ( this.f25 != state ){
-                    this.f25 = state;
-                    notifyPropertyChangeListener(Throttle.F25, !state, state);
-                }
-                break;
-            case 26:
-                if ( this.f26 != state ){
-                    this.f26 = state;
-                    notifyPropertyChangeListener(Throttle.F26, !state, state);
-                }
-                break;
-            case 27:
-                if ( this.f27 != state ){
-                    this.f27 = state;
-                    notifyPropertyChangeListener(Throttle.F27, !state, state);
-                }
-                break;
-            case 28:
-                if ( this.f28 != state ){
-                    this.f28 = state;
-                    notifyPropertyChangeListener(Throttle.F28, !state, state);
-                }
-                break;
-            default:
-                log.warn("Unhandled function number: {}", fn);
-                break;
+        if (fn < 0 || fn > 28){
+            log.warn("Unhandled function number: {}",fn);
+            return;
+        }
+        if ( this.FUNCTION_BOOLEAN_ARRAY[fn]!=state ) {
+            this.FUNCTION_BOOLEAN_ARRAY[fn]=state;
+            notifyPropertyChangeListener(Throttle.FUNCTION_STRING_ARRAY[fn], !state, state);
         }
     }
-
 
     /**
      * Send the message to set the state of functions F0, F1, F2, F3, F4.
