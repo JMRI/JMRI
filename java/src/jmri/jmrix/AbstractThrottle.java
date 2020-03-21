@@ -836,12 +836,8 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public void setF0(boolean f0) {
-        boolean old = this.f0;
-        this.f0 = f0;
+        updateFunction(0,f0);
         sendFunctionGroup1();
-        if (old != this.f0) {
-            notifyPropertyChangeListener(Throttle.F0, old, this.f0);
-        }
     }
 
     /**
@@ -849,12 +845,8 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public void setF1(boolean f1) {
-        boolean old = this.f1;
-        this.f1 = f1;
+        updateFunction(1,f1);
         sendFunctionGroup1();
-        if (old != this.f1) {
-            notifyPropertyChangeListener(Throttle.F1, old, this.f1);
-        }
     }
 
     /**
@@ -862,12 +854,8 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public void setF2(boolean f2) {
-        boolean old = this.f2;
-        this.f2 = f2;
+        updateFunction(2,f2);
         sendFunctionGroup1();
-        if (old != this.f2) {
-            notifyPropertyChangeListener(Throttle.F2, old, this.f2);
-        }
     }
 
     /**
@@ -875,12 +863,8 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public void setF3(boolean f3) {
-        boolean old = this.f3;
-        this.f3 = f3;
+        updateFunction(3,f3);
         sendFunctionGroup1();
-        if (old != this.f3) {
-            notifyPropertyChangeListener(Throttle.F3, old, this.f3);
-        }
     }
 
     /**
@@ -888,12 +872,8 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public void setF4(boolean f4) {
-        boolean old = this.f4;
-        this.f4 = f4;
+        updateFunction(4,f4);
         sendFunctionGroup1();
-        if (old != this.f4) {
-            notifyPropertyChangeListener(Throttle.F4, old, this.f4);
-        }
     }
 
     /**
@@ -901,12 +881,8 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public void setF5(boolean f5) {
-        boolean old = this.f5;
-        this.f5 = f5;
+        updateFunction(5,f5);
         sendFunctionGroup2();
-        if (old != this.f5) {
-            notifyPropertyChangeListener(Throttle.F5, old, this.f5);
-        }
     }
 
     /**
@@ -914,12 +890,8 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public void setF6(boolean f6) {
-        boolean old = this.f6;
-        this.f6 = f6;
+        updateFunction(6,f6);
         sendFunctionGroup2();
-        if (old != this.f6) {
-            notifyPropertyChangeListener(Throttle.F6, old, this.f6);
-        }
     }
 
     /**
@@ -927,12 +899,8 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public void setF7(boolean f7) {
-        boolean old = this.f7;
-        this.f7 = f7;
+        updateFunction(7,f7);
         sendFunctionGroup2();
-        if (old != this.f7) {
-            notifyPropertyChangeListener(Throttle.F7, old, this.f7);
-        }
     }
 
     /**
@@ -940,12 +908,8 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public void setF8(boolean f8) {
-        boolean old = this.f8;
-        this.f8 = f8;
+        updateFunction(8,f8);
         sendFunctionGroup2();
-        if (old != this.f8) {
-            notifyPropertyChangeListener(Throttle.F8, old, this.f8);
-        }
     }
 
     /**
@@ -953,12 +917,8 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public void setF9(boolean f9) {
-        boolean old = this.f9;
-        this.f9 = f9;
+        updateFunction(9,f9);
         sendFunctionGroup3();
-        if (old != this.f9) {
-            notifyPropertyChangeListener(Throttle.F9, old, this.f9);
-        }
     }
 
     /**
@@ -966,12 +926,8 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public void setF10(boolean f10) {
-        boolean old = this.f10;
-        this.f10 = f10;
+        updateFunction(10,f10);
         sendFunctionGroup3();
-        if (old != this.f10) {
-            notifyPropertyChangeListener(Throttle.F10, old, this.f10);
-        }
     }
 
     /**
@@ -979,12 +935,8 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public void setF11(boolean f11) {
-        boolean old = this.f11;
-        this.f11 = f11;
+        updateFunction(11,f11);
         sendFunctionGroup3();
-        if (old != this.f11) {
-            notifyPropertyChangeListener(Throttle.F11, old, this.f11);
-        }
     }
 
     /**
@@ -992,12 +944,8 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public void setF12(boolean f12) {
-        boolean old = this.f12;
-        this.f12 = f12;
+        updateFunction(12,f12);
         sendFunctionGroup3();
-        if (old != this.f12) {
-            notifyPropertyChangeListener(Throttle.F12, old, this.f12);
-        }
     }
 
     /**
@@ -1005,12 +953,8 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public void setF13(boolean f13) {
-        boolean old = this.f13;
-        this.f13 = f13;
+        updateFunction(13,f13);
         sendFunctionGroup4();
-        if (old != this.f13) {
-            notifyPropertyChangeListener(Throttle.F13, old, this.f13);
-        }
     }
 
     /**
@@ -1018,12 +962,8 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public void setF14(boolean f14) {
-        boolean old = this.f14;
-        this.f14 = f14;
+        updateFunction(14,f14);
         sendFunctionGroup4();
-        if (old != this.f14) {
-            notifyPropertyChangeListener(Throttle.F14, old, this.f14);
-        }
     }
 
     /**
@@ -1031,12 +971,8 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public void setF15(boolean f15) {
-        boolean old = this.f15;
-        this.f15 = f15;
+        updateFunction(15,f15);
         sendFunctionGroup4();
-        if (old != this.f15) {
-            notifyPropertyChangeListener(Throttle.F15, old, this.f15);
-        }
     }
 
     /**
@@ -1044,12 +980,8 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public void setF16(boolean f16) {
-        boolean old = this.f16;
-        this.f16 = f16;
+        updateFunction(16,f16);
         sendFunctionGroup4();
-        if (old != this.f16) {
-            notifyPropertyChangeListener(Throttle.F16, old, this.f16);
-        }
     }
 
     /**
@@ -1057,12 +989,8 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public void setF17(boolean f17) {
-        boolean old = this.f17;
-        this.f17 = f17;
+        updateFunction(17,f17);
         sendFunctionGroup4();
-        if (old != this.f17) {
-            notifyPropertyChangeListener(Throttle.F17, old, this.f17);
-        }
     }
 
     /**
@@ -1070,12 +998,8 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public void setF18(boolean f18) {
-        boolean old = this.f18;
-        this.f18 = f18;
+        updateFunction(18,f18);
         sendFunctionGroup4();
-        if (old != this.f18) {
-            notifyPropertyChangeListener(Throttle.F18, old, this.f18);
-        }
     }
 
     /**
@@ -1083,12 +1007,8 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public void setF19(boolean f19) {
-        boolean old = this.f19;
-        this.f19 = f19;
+        updateFunction(19,f19);
         sendFunctionGroup4();
-        if (old != this.f19) {
-            notifyPropertyChangeListener(Throttle.F19, old, this.f19);
-        }
     }
 
     /**
@@ -1096,12 +1016,8 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public void setF20(boolean f20) {
-        boolean old = this.f20;
-        this.f20 = f20;
+        updateFunction(20,f20);
         sendFunctionGroup4();
-        if (old != this.f20) {
-            notifyPropertyChangeListener(Throttle.F20, old, this.f20);
-        }
     }
 
     /**
@@ -1109,12 +1025,8 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public void setF21(boolean f21) {
-        boolean old = this.f21;
-        this.f21 = f21;
+        updateFunction(21,f21);
         sendFunctionGroup5();
-        if (old != this.f21) {
-            notifyPropertyChangeListener(Throttle.F21, old, this.f21);
-        }
     }
 
     /**
@@ -1122,12 +1034,8 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public void setF22(boolean f22) {
-        boolean old = this.f22;
-        this.f22 = f22;
+        updateFunction(22,f22);
         sendFunctionGroup5();
-        if (old != this.f22) {
-            notifyPropertyChangeListener(Throttle.F22, old, this.f22);
-        }
     }
 
     /**
@@ -1135,12 +1043,8 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public void setF23(boolean f23) {
-        boolean old = this.f23;
-        this.f23 = f23;
+        updateFunction(23,f23);
         sendFunctionGroup5();
-        if (old != this.f23) {
-            notifyPropertyChangeListener(Throttle.F23, old, this.f23);
-        }
     }
 
     /**
@@ -1148,12 +1052,8 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public void setF24(boolean f24) {
-        boolean old = this.f24;
-        this.f24 = f24;
+        updateFunction(24,f24);
         sendFunctionGroup5();
-        if (old != this.f24) {
-            notifyPropertyChangeListener(Throttle.F24, old, this.f24);
-        }
     }
 
     /**
@@ -1161,12 +1061,8 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public void setF25(boolean f25) {
-        boolean old = this.f25;
-        this.f25 = f25;
+        updateFunction(25,f25);
         sendFunctionGroup5();
-        if (old != this.f25) {
-            notifyPropertyChangeListener(Throttle.F25, old, this.f25);
-        }
     }
 
     /**
@@ -1174,12 +1070,8 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public void setF26(boolean f26) {
-        boolean old = this.f26;
-        this.f26 = f26;
+        updateFunction(26,f26);
         sendFunctionGroup5();
-        if (old != this.f26) {
-            notifyPropertyChangeListener(Throttle.F26, old, this.f26);
-        }
     }
 
     /**
@@ -1187,12 +1079,8 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public void setF27(boolean f27) {
-        boolean old = this.f27;
-        this.f27 = f27;
+        updateFunction(27,f27);
         sendFunctionGroup5();
-        if (old != this.f27) {
-            notifyPropertyChangeListener(Throttle.F27, old, this.f27);
-        }
     }
 
     /**
@@ -1200,13 +1088,199 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public void setF28(boolean f28) {
-        boolean old = this.f28;
-        this.f28 = f28;
+        updateFunction(28,f28);
         sendFunctionGroup5();
-        if (old != this.f28) {
-            notifyPropertyChangeListener(Throttle.F28, old, this.f28);
+    }
+    
+    /**
+     * Update the state of a single function.
+     * Updates function value and ChangeListener.
+     * Does not send outward message TO hardware.
+     * @param fn Function Number 0-28
+     * @param state On - True, Off - False
+     */
+    public void updateFunction(int fn, boolean state) {
+        switch (fn) {
+            case 0:
+                if ( this.f0 != state ){
+                    this.f0 = state;
+                    notifyPropertyChangeListener(Throttle.F0, !state, state);
+                }
+                break;
+            case 1:
+                if ( this.f1 != state ){
+                    this.f1 = state;
+                    notifyPropertyChangeListener(Throttle.F1, !state, state);
+                }
+                break;
+            case 2:
+                if ( this.f2 != state ){
+                    this.f2 = state;
+                    notifyPropertyChangeListener(Throttle.F2, !state, state);
+                }
+                break;
+            case 3:
+                if ( this.f3 != state ){
+                    this.f3 = state;
+                    notifyPropertyChangeListener(Throttle.F3, !state, state);
+                }
+                break;
+            case 4:
+                if ( this.f4 != state ){
+                    this.f4 = state;
+                    notifyPropertyChangeListener(Throttle.F4, !state, state);
+                }
+                break;
+            case 5:
+                if ( this.f5 != state ){
+                    this.f5 = state;
+                    notifyPropertyChangeListener(Throttle.F5, !state, state);
+                }
+                break;
+            case 6:
+                if ( this.f6 != state ){
+                    this.f6 = state;
+                    notifyPropertyChangeListener(Throttle.F6, !state, state);
+                }
+                break;
+            case 7:
+                if ( this.f7 != state ){
+                    this.f7 = state;
+                    notifyPropertyChangeListener(Throttle.F7, !state, state);
+                }
+                break;
+            case 8:
+                if ( this.f8 != state ){
+                    this.f8 = state;
+                    notifyPropertyChangeListener(Throttle.F8, !state, state);
+                }
+                break;
+            case 9:
+                if ( this.f9 != state ){
+                    this.f9 = state;
+                    notifyPropertyChangeListener(Throttle.F9, !state, state);
+                }
+                break;
+            case 10:
+                if ( this.f10 != state ){
+                    this.f10 = state;
+                    notifyPropertyChangeListener(Throttle.F10, !state, state);
+                }
+                break;
+            case 11:
+                if ( this.f11 != state ){
+                    this.f11 = state;
+                    notifyPropertyChangeListener(Throttle.F11, !state, state);
+                }
+                break;
+            case 12:
+                if ( this.f12 != state ){
+                    this.f12 = state;
+                    notifyPropertyChangeListener(Throttle.F12, !state, state);
+                }
+                break;
+            case 13:
+                if ( this.f13 != state ){
+                    this.f13 = state;
+                    notifyPropertyChangeListener(Throttle.F13, !state, state);
+                }
+                break;
+            case 14:
+                if ( this.f14 != state ){
+                    this.f14 = state;
+                    notifyPropertyChangeListener(Throttle.F14, !state, state);
+                }
+                break;
+            case 15:
+                if ( this.f15 != state ){
+                    this.f15 = state;
+                    notifyPropertyChangeListener(Throttle.F15, !state, state);
+                }
+                break;
+            case 16:
+                if ( this.f16 != state ){
+                    this.f16 = state;
+                    notifyPropertyChangeListener(Throttle.F16, !state, state);
+                }
+                break;
+            case 17:
+                if ( this.f17 != state ){
+                    this.f17 = state;
+                    notifyPropertyChangeListener(Throttle.F17, !state, state);
+                }
+                break;
+            case 18:
+                if ( this.f18 != state ){
+                    this.f18 = state;
+                    notifyPropertyChangeListener(Throttle.F18, !state, state);
+                }
+                break;
+            case 19:
+                if ( this.f19 != state ){
+                    this.f19 = state;
+                    notifyPropertyChangeListener(Throttle.F19, !state, state);
+                }
+                break;
+            case 20:
+                if ( this.f20 != state ){
+                    this.f20 = state;
+                    notifyPropertyChangeListener(Throttle.F20, !state, state);
+                }
+                break;
+            case 21:
+                if ( this.f21 != state ){
+                    this.f21 = state;
+                    notifyPropertyChangeListener(Throttle.F21, !state, state);
+                }
+                break;
+            case 22:
+                if ( this.f22 != state ){
+                    this.f22 = state;
+                    notifyPropertyChangeListener(Throttle.F22, !state, state);
+                }
+                break;
+            case 23:
+                if ( this.f23 != state ){
+                    this.f23 = state;
+                    notifyPropertyChangeListener(Throttle.F23, !state, state);
+                }
+                break;
+            case 24:
+                if ( this.f24 != state ){
+                    this.f24 = state;
+                    notifyPropertyChangeListener(Throttle.F24, !state, state);
+                }
+                break;
+            case 25:
+                if ( this.f25 != state ){
+                    this.f25 = state;
+                    notifyPropertyChangeListener(Throttle.F25, !state, state);
+                }
+                break;
+            case 26:
+                if ( this.f26 != state ){
+                    this.f26 = state;
+                    notifyPropertyChangeListener(Throttle.F26, !state, state);
+                }
+                break;
+            case 27:
+                if ( this.f27 != state ){
+                    this.f27 = state;
+                    notifyPropertyChangeListener(Throttle.F27, !state, state);
+                }
+                break;
+            case 28:
+                if ( this.f28 != state ){
+                    this.f28 = state;
+                    notifyPropertyChangeListener(Throttle.F28, !state, state);
+                }
+                break;
+            default:
+                log.warn("Unhandled function number: {}", fn);
+                break;
         }
     }
+
 
     /**
      * Send the message to set the state of functions F0, F1, F2, F3, F4.
