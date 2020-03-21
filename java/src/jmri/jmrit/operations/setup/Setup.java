@@ -121,8 +121,6 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
     public static final String PAGE_PER_TRAIN = Bundle.getMessage("PagePerTrain");
     public static final String PAGE_PER_VISIT = Bundle.getMessage("PagePerVisit");
 
-    public static final String LENGTHABV = Bundle.getMessage("LengthSymbol");
-
     public static final String BUILD_REPORT_MINIMAL = "1";
     public static final String BUILD_REPORT_NORMAL = "3";
     public static final String BUILD_REPORT_DETAILED = "5";
@@ -172,6 +170,8 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
     // Unit of Length
     public static final String FEET = Bundle.getMessage("Feet");
     public static final String METER = Bundle.getMessage("Meter");
+    public static final String FEET_ABV = Bundle.getMessage("FeetAbbreviation");
+    public static final String METER_ABV = Bundle.getMessage("MeterAbbreviation");
 
     private static final String[] CAR_ATTRIBUTES
             = {ROAD, NUMBER, TYPE, LENGTH, WEIGHT, LOAD, LOAD_TYPE, HAZARDOUS, COLOR, KERNEL, KERNEL_SIZE, OWNER,
@@ -241,6 +241,7 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
     private int travelTime = 4; // how long it takes a train to move from one location to another in minutes
     private String yearModeled = NONE; // year being modeled
     private String lengthUnit = FEET;
+    private String lengthUnitAbv = FEET_ABV;
     private String iconNorthColor = NONE;
     private String iconSouthColor = NONE;
     private String iconEastColor = NONE;
@@ -674,9 +675,22 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
     public static String getLengthUnit() {
         return getDefault().lengthUnit;
     }
+    
+    /**
+     * Abbreviation unit of length
+     * @return symbol for feet or meter
+     */
+    public static String getLengthUnitAbv() {
+        return getDefault().lengthUnitAbv;
+    }
 
     public static void setLengthUnit(String unit) {
         getDefault().lengthUnit = unit;
+        if (unit.equals(FEET)) {
+            getDefault().lengthUnitAbv = FEET_ABV;
+        } else {
+            getDefault().lengthUnitAbv = METER_ABV;
+        }
     }
 
     public static String getYearModeled() {
