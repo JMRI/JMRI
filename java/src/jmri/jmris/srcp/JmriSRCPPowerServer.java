@@ -1,9 +1,9 @@
 package jmri.jmris.srcp;
 
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import jmri.InstanceManagerDelegate;
 import jmri.PowerManager;
 import jmri.jmris.AbstractPowerServer;
 import org.slf4j.Logger;
@@ -19,7 +19,12 @@ public class JmriSRCPPowerServer extends AbstractPowerServer {
     private OutputStream output;
 
     public JmriSRCPPowerServer(OutputStream outStream) {
-        output = outStream;
+        this(outStream,new InstanceManagerDelegate());
+    }
+
+    public JmriSRCPPowerServer(OutputStream outputStream, InstanceManagerDelegate instanceManagerDelegate){
+        super(instanceManagerDelegate);
+        output = outputStream;
         mgrOK();
     }
 
@@ -74,6 +79,6 @@ public class JmriSRCPPowerServer extends AbstractPowerServer {
         } catch (IOException ie2) {
         }
     }
-    private final static Logger log = LoggerFactory.getLogger(JmriSRCPPowerServer.class);
+    private static final Logger log = LoggerFactory.getLogger(JmriSRCPPowerServer.class);
 
 }
