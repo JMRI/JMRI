@@ -281,7 +281,8 @@
     <li>Logix triggering: Connect an arduino to a fascia panel switch or pushbutton. Define a JMRI sensor that is used to trigger a Logix to
     do something (perhaps throw some turnouts,set some lights, etc.).  Program the arduino to set the sensor when the switch or
     pushbutton is activated.</li>
-    <li>Light or animation control: Add a motor controller to your arduino, create a JMRI <a href="../../tools/Lights.shtml">light </a>to send a control command,
+      <li>Light or animation control: Add a motor controller to your arduino, create a <a href="../../tools/Lights.shtml">JMRI light object</a>
+    to send a control command,
     create a few sensors in JMRI for feedback, and use this <a href="https://github.com/jerryg2003/MRR-arduino-auxmotorcontrol" target="_blank">
     sketch to control an auxiliary motor,</a> such as would be in a Ferris wheel.  Use <a href="../../tools/Lights.shtml">JMRI light objects</a>
     to send commands to change speed or other characteristics of the animation either via serial communications or using
