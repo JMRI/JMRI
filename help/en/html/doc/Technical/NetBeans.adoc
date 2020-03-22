@@ -57,7 +57,7 @@ You **must** install and configure the http://plugins.netbeans.org/plugin/46829/
 ===== Installation
 . Choose menu:Tools[Plugins]
 . Click btn:[Settings]
-. Select _????which site_
+. Select _Netbeans Plugin Portal_ and ensure it is active
 . Click btn:[Available Plugins]
 . Select _Change Line Endings on Save_
 . Click btn:[Install]
@@ -178,7 +178,7 @@ repository, where they'll automatically be picked up.
 
 == Building and running JMRI
 
-TIP: Ensure your computer is connected to the internet the first time you build, test, or run JMRI after checking out a new copy of JMRI from GitHub to allow any potentially missing external dependencies to be automatically downloaded.
+TIP: Ensure your computer is connected to the internet the first time you build, test, or run JMRI after checking out a new copy of JMRI from GitHub to allow any potentially missing external dependencies or build tools to be automatically downloaded.
 
 === Prime
 
@@ -196,8 +196,6 @@ To resolve this problem:
 NOTE: You may also see an error icon if using a JDK version greater than 8 due to changes in how Java interacts with macOS in JDK versions 9 or newer.
 
 === Build
-
-NOTE: Apache NetBeans compiles each class when it is saved, so if the project has been primed, building is only required if the project has been cleaned.
 
 To build JMRI, choose menu:Run[Build Project (JMRI)] or menu:Run[Clean and Build Project (JMRI)]. This will build and test the JMRI code.
 
