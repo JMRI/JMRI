@@ -301,7 +301,8 @@ public class JsonOperationsHttpService extends JsonHttpService {
                 if ((!cars.isEmpty() || !locations.isEmpty()) && !acceptForceDeleteToken(type, name, token)) {
                     ArrayNode conflicts = mapper.createArrayNode();
                     cars.forEach(car -> conflicts.add(message(CAR, utilities.getCar(car, locale), 0)));
-                    locations.forEach(location -> conflicts.add(message(LOCATION, utilities.getLocation(location, locale), 0)));
+                    locations.forEach(
+                            location -> conflicts.add(message(LOCATION, utilities.getLocation(location, locale), 0)));
                     throwDeleteConflictException(type, name, conflicts, request);
                 }
                 InstanceManager.getDefault(CarTypes.class).deleteName(name);
@@ -593,24 +594,44 @@ public class JsonOperationsHttpService extends JsonHttpService {
         if (!node.isMissingNode() && !node.path(NAME).isMissingNode()) {
             Location location = locationManager().getLocationById(node.path(NAME).asText());
             if (location != null) {
-                Track track = location.getTrackById(node.path(TRACK).path(NAME).asText());
-                if (!rs.setLocation(location, track).equals(Track.OKAY)) {
-                    throw new JsonException(HttpServletResponse.SC_CONFLICT, Bundle.getMessage(locale, "ErrorMovingCar",
-                            rs.getId(), location.getId(), track != null ? track.getId() : null), id);
+                String trackId = node.path(TRACK).path(NAME).asText();
+                Track track = location.getTrackById(trackId);
+                if (trackId.isEmpty() || track != null) {
+                    if (!rs.setLocation(location, track).equals(Track.OKAY)) {
+                        throw new JsonException(HttpServletResponse.SC_CONFLICT,
+                                Bundle.getMessage(locale, "ErrorMovingCar",
+                                        rs.getId(), LOCATION, location.getId(), track != null ? track.getId() : null),
+                                id);
+                    }
+                } else {
+                    throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
+                            Bundle.getMessage(locale, "ErrorNotFound", TRACK, trackId), id);
                 }
+            } else {
+                throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
+                        Bundle.getMessage(locale, "ErrorNotFound", LOCATION, node.path(NAME).asText()), id);
             }
         }
         node = data.path(DESTINATION);
         if (!node.isMissingNode() && !node.path(NAME).isMissingNode()) {
             Location location = locationManager().getLocationById(node.path(NAME).asText());
             if (location != null) {
-                Track track = location.getTrackById(node.path(TRACK).path(NAME).asText());
-                if (!rs.setDestination(location, track).equals(Track.OKAY)) {
-                    throw new JsonException(HttpServletResponse.SC_CONFLICT,
-                            Bundle.getMessage(locale, "ErrorMovingCar", rs.getId(),
-                                    location.getId(), track != null ? track.getId() : null),
-                            id);
+                String trackId = node.path(TRACK).path(NAME).asText();
+                Track track = location.getTrackById(trackId);
+                if (trackId.isEmpty() || track != null) {
+                    if (!rs.setDestination(location, track).equals(Track.OKAY)) {
+                        throw new JsonException(HttpServletResponse.SC_CONFLICT,
+                                Bundle.getMessage(locale, "ErrorMovingCar", rs.getId(),
+                                        DESTINATION, location.getId(), track != null ? track.getId() : null),
+                                id);
+                    }
+                } else {
+                    throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
+                            Bundle.getMessage(locale, "ErrorNotFound", TRACK, trackId), id);
                 }
+            } else {
+                throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
+                        Bundle.getMessage(locale, "ErrorNotFound", DESTINATION, node.path(NAME).asText()), id);
             }
         }
         // set properties using the existing property as the default
