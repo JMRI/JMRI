@@ -23,37 +23,42 @@
         
     <div id="mainContent">
 
-	    <h1>Hardware support: Multi-bit and Byte Communication Using CMRI</h1>
+	    <h1>Hardware support: Multi-bit and Byte Communication Using CMRI and arduinos</h1>
 		
 		<div class="para">
-        <p>JMRI implements the <a href="../cmri/CMRI.shtml">CMRINet protocol</a> to send
-        and receive information either:</p>
+        <p>JMRI implements the <a href="../cmri/CMRI.shtml">CMRInet protocol</a> to send
+        and receive information via changing the state of JMRI objects:</p>
         
         <ul>
-          <li>from JMRI to a CMRI node to indicate that a turnout should be thrown or closed, or 
-          a light should be turned on or off,</li>
-          <li>from a CMRI node to JMRI to indicate that a sensor has become active or inactive.</li>
+          <li>sending to a CMRI node that a turnout should be thrown or a light turned on or off
+          (any accessory attached to a CMRI output),</li>
+          <li>receiving from a CMRI node to indicate that a sensor has become active or inactive
+          (any CMRI input).</li>
         </ul>
 
-        <p>JMRI
-        objects are associated with a single CMRI bit in the case of sensors and
-        lights, and one or two bits in the case of turnouts (see the 
-        <a href="../cmri/CMRI.shtml#L405">section on setting up turnouts and lights</a>
-        in the CMRI Help Page). With the introduction of microcontroller technology 
-        such as provided by the <a href="https://arduino.cc" target="_blank">arduino</a>,
+        <p>JMRI objects are associated with a single CMRI bit in the case of sensors (input) and
+        lights (output), and one or two bits in the case of turnouts (see the CMRI help page
+        <a href="../cmri/CMRI.shtml#L405">section on setting up turnouts and lights</a> for use with
+        CMRI). With the introduction of microcontroller technology 
+        such as the <a href="https://arduino.cc" target="_blank">arduino</a>
         CMRI nodes need no longer be restricted to operate layout hardware based on single
         (or two) bit commands. Arduinos are quite capable computers that can process
         CMRINet messages and act on what they receive under local program control. 
-        <a href="index.shtml">An arduino</a> emulating CMRI node can be programmed to,
-        for example, start an animation, play a series of sounds, light buildings in a 
-        realistic way, or control the speed of a motor -- just about anything the modeller
-        can dream up. </p>
+        <a href="index.shtml#CMRI">An arduino emulating a CMRI node </a>can be programmed to
+        start animations, play a series of sounds, light buildings in a 
+        realistic way, or control the speed of accessory motors -- just about anything the modeller
+        can dream up.</p>
 
         <p>Similarly, it is also possible to send information back to JMRI over CMRINet in
         the form of numbers or letters, or any string that can be encoded in a few bytes of
         information. JMRI would receive each byte as setting the state of eight sensors,
         but a simple JMRI script can translate that binary information into the decimal
         number or character it represents.</p>
+        
+        <p class="note">It is also possible to send numbers and characters directly to JMRI
+        from arduinos by using <a href="index.shtml#serial">serial communications</a>
+        without taking advantage of JMRI's CMRInet capabilities.  Each approach has its 
+        advantages and disadvantages, as discussed<a href="index.shtml#connect"> here.</a></p>
 
         <p class="im"><img src="images/CMRISensorsByte.png" align="left" height="165" width="275" 
         alt="Sensor Table with 8 sensors> Create eight sensors"> 
@@ -74,10 +79,12 @@
         alt="Example Panel Using Bit Display" align="right" height="225" width="135">
         Alternatively, a number of sensor bits can be allocated to a
         speed display with the arduino activating the sensors to indicate percentage of maximum
-        speed, as shown.  This example image shows such a display for a Ferris wheel speed control
-        along with greater than/less than signs as clickable speed control, and a curved arrow for 
-        direction control of Motor B. This image shows four of the eight
-        bits "lit" or active, representing a speed of 50% of maximum.</p>
+        speed, as shown in the layout panel image. Four of the eight bits of this carousel speed
+        control are "lit" or active, representing a speed of 50% of maximum.  The panel also shows
+        the on-off slider control and clickable greater-than/less-than signs to command the arduino 
+        to run the carousel faster or slower. The bottom part of the panel shows another example with 
+        a curved arrow which  when clicked tells the arduino to change the direction of the attached 
+        Ferris wheel (currently off). </p>
 
 		</div>
 
@@ -90,8 +97,9 @@
 		    <dd class="first">
 			<p><a href="../cmri/CMRI.shtml#L268">Configure a CMRI node</a>
             representing the number of output bits (JMRI-&amp;gt;CMRI node) and input bits 
-            (CMRI node-&amp;gt;JMRI) desired. Remember that JMRI lights and turnouts output 
-            to CMRI and JMRI sensors get inputs (think of it in terms of the CMRI node: 
+            (CMRI node-&amp;gt;JMRI) desired. Remember that 
+            <a href="../cmri/CMRI.shtml#L391">JMRI lights and turnouts output 
+            to CMRI and JMRI sensors provide inputs</a> (think of it in terms of the CMRI node: 
             physical sensors input information to the node; the node then outputs information
             to control physical turnouts and lights).</p>
 		    </dd>
@@ -150,3 +158,4 @@
     </div> <!-- closes #mBody, from before Sidebar -->
 </body>
 </html>
+
