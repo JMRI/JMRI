@@ -11,7 +11,6 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.trains.Train;
-import jmri.util.JUnitOperationsUtil;
 
 /**
  * Tests for the Operations RollingStock Engine class Last manually

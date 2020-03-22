@@ -7,7 +7,6 @@ import org.junit.Assume;
 import org.junit.Test;
 
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 
 /**
