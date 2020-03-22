@@ -111,266 +111,159 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
         }
         return ((lSpeed) / 126.f);
     }
+    
+    private void setF(int Fn, boolean val){
+        updateFunction(Fn,val);
+        if (_haveControl) {
+            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[" + 
+                String.valueOf(Fn) + ", " + (getFunction(Fn) ? 1 : 0) + "])");
+            tc.sendEcosMessage(m, this);
+        }
+    }
 
     @Override
     public void setF0(boolean f0) {
-        updateFunction(0,f0);
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[0, " + (getF0() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
+        setF(0,f0);
     }
 
     @Override
     public void setF1(boolean f1) {
-        updateFunction(1,f1);
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[1, " + (getF1() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
+        setF(1,f1);
     }
 
     @Override
     public void setF2(boolean f2) {
-        updateFunction(2,f2);
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[2, " + (getF2() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
+        setF(2,f2);
     }
 
     @Override
     public void setF3(boolean f3) {
-        updateFunction(3,f3);
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[3, " + (getF3() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
+        setF(3,f3);
     }
 
     @Override
     public void setF4(boolean f4) {
-        updateFunction(4,f4);
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[4, " + (getF4() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
+        setF(4,f4);
     }
 
     @Override
     public void setF5(boolean f5) {
-        updateFunction(5,f5);
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[5, " + (getF5() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
+        setF(5,f5);
     }
 
     @Override
     public void setF6(boolean f6) {
-        updateFunction(6,f6);
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[6, " + (getF6() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
+        setF(6,f6);
     }
 
     @Override
     public void setF7(boolean f7) {
-        updateFunction(7,f7);
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[7, " + (getF7() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
+        setF(7,f7);
     }
 
     @Override
     public void setF8(boolean f8) {
-        updateFunction(8,f8);
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[8, " + (getF8() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
+        setF(8,f8);
     }
 
     @Override
     public void setF9(boolean f9) {
-        updateFunction(9,f9);
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[9, " + (getF9() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
+        setF(9,f9);
     }
 
     @Override
     public void setF10(boolean f10) {
-        updateFunction(10,f10);
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[10, " + (getF10() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
+        setF(10,f10);
     }
 
     @Override
     public void setF11(boolean f11) {
-        updateFunction(11,f11);
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[11, " + (getF11() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
+        setF(11,f11);
     }
 
     @Override
     public void setF12(boolean f12) {
-        updateFunction(12,f12);
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[12, " + (getF12() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
+        setF(12,f12);
     }
 
     @Override
     public void setF13(boolean f13) {
-        updateFunction(13,f13);
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[13, " + (getF13() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
+        setF(13,f13);
     }
 
     @Override
     public void setF14(boolean f14) {
-        updateFunction(14,f14);
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[14, " + (getF14() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
+        setF(14,f14);
     }
 
     @Override
     public void setF15(boolean f15) {
-        updateFunction(15,f15);
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[15, " + (getF15() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
+        setF(15,f15);
     }
 
     @Override
     public void setF16(boolean f16) {
-        updateFunction(16,f16);
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[16, " + (getF16() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
+        setF(16,f16);
     }
 
     @Override
     public void setF17(boolean f17) {
-        updateFunction(17,f17);
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[17, " + (getF17() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
+        setF(17,f17);
     }
 
     @Override
     public void setF18(boolean f18) {
-        updateFunction(18,f18);
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[18, " + (getF18() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
+        setF(18,f18);
     }
 
     @Override
     public void setF19(boolean f19) {
-        updateFunction(19,f19);
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[19, " + (getF19() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
+        setF(19,f19);
     }
 
     @Override
     public void setF20(boolean f20) {
-        updateFunction(20,f20);
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[20, " + (getF20() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
+        setF(20,f20);
     }
 
     @Override
     public void setF21(boolean f21) {
-        updateFunction(21,f21);
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[21, " + (getF21() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
+        setF(21,f21);
     }
 
     @Override
     public void setF22(boolean f22) {
-        updateFunction(22,f22);
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[22, " + (getF22() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
+        setF(22,f22);
     }
 
     @Override
     public void setF23(boolean f23) {
-        updateFunction(23,f23);
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[23, " + (getF23() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
+        setF(23,f23);
     }
 
     @Override
     public void setF24(boolean f24) {
-        updateFunction(24,f24);
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[24, " + (getF24() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
+        setF(24,f24);
     }
 
     @Override
     public void setF25(boolean f25) {
-        updateFunction(25,f25);
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[25, " + (getF25() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
+        setF(25,f25);
     }
 
     @Override
     public void setF26(boolean f26) {
-        updateFunction(26,f26);
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[26, " + (getF26() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
+        setF(26,f26);
     }
 
     @Override
     public void setF27(boolean f27) {
-        updateFunction(27,f27);
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[27, " + (getF27() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
+        setF(27,f27);
     }
 
     @Override
     public void setF28(boolean f28) {
-        updateFunction(28,f28);
-        if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[28, " + (getF28() ? 1 : 0) + "])");
-            tc.sendEcosMessage(m, this);
-        }
+        setF(28,f28);
     }
 
     /**
