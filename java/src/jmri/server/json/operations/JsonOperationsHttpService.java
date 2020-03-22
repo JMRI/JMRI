@@ -300,12 +300,8 @@ public class JsonOperationsHttpService extends JsonHttpService {
                 locationManager().getList().stream().filter(l -> l.acceptsTypeName(name)).forEach(locations::add);
                 if ((!cars.isEmpty() || !locations.isEmpty()) && !acceptForceDeleteToken(type, name, token)) {
                     ArrayNode conflicts = mapper.createArrayNode();
-                    for (Car car : cars) {
-                        conflicts.add(message(CAR, utilities.getCar(car, locale), 0));
-                    }
-                    for (Location location : locations) {
-                        conflicts.add(message(LOCATION, utilities.getLocation(location, locale), 0));
-                    }
+                    cars.forEach(car -> conflicts.add(message(CAR, utilities.getCar(car, locale), 0)));
+                    locations.forEach(location -> conflicts.add(message(LOCATION, utilities.getLocation(location, locale), 0)));
                     throwDeleteConflictException(type, name, conflicts, request);
                 }
                 InstanceManager.getDefault(CarTypes.class).deleteName(name);
@@ -662,7 +658,8 @@ public class JsonOperationsHttpService extends JsonHttpService {
         track.getLocation().deleteTrack(track);
     }
 
-    protected @Nonnull Car getCarByName(@Nonnull String name, @Nonnull Locale locale, int id) throws JsonException {
+    @Nonnull
+    protected Car getCarByName(@Nonnull String name, @Nonnull Locale locale, int id) throws JsonException {
         Car car = carManager().getById(name);
         if (car == null) {
             throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
@@ -671,7 +668,8 @@ public class JsonOperationsHttpService extends JsonHttpService {
         return car;
     }
 
-    protected @Nonnull Engine getEngineByName(@Nonnull String name, @Nonnull Locale locale, int id)
+    @Nonnull
+    protected Engine getEngineByName(@Nonnull String name, @Nonnull Locale locale, int id)
             throws JsonException {
         Engine engine = engineManager().getById(name);
         if (engine == null) {
@@ -681,7 +679,8 @@ public class JsonOperationsHttpService extends JsonHttpService {
         return engine;
     }
 
-    protected @Nonnull Location getLocationByName(@Nonnull String name, @Nonnull Locale locale, int id)
+    @Nonnull
+    protected Location getLocationByName(@Nonnull String name, @Nonnull Locale locale, int id)
             throws JsonException {
         Location location = locationManager().getLocationById(name);
         if (location == null) {
@@ -691,7 +690,8 @@ public class JsonOperationsHttpService extends JsonHttpService {
         return location;
     }
 
-    protected @Nonnull Track getTrackByName(@Nonnull String name, @Nonnull JsonNode data, @Nonnull Locale locale,
+    @Nonnull
+    protected Track getTrackByName(@Nonnull String name, @Nonnull JsonNode data, @Nonnull Locale locale,
             int id) throws JsonException {
         if (data.path(LOCATION).isMissingNode()) {
             throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
