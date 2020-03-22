@@ -211,7 +211,7 @@ public class CbusSend {
     }
     
     /**
-     * Sends a message to request details of any connected command stations.
+     * Sends an RSTAT message to request details of any connected command stations.
      * Responses are received by the CBUS node table.
      */
     public void searchForCommandStations(){
