@@ -18,18 +18,6 @@ public class CarOwners extends RollingStockAttribute implements InstanceManagerA
     public CarOwners() {
     }
 
-    /**
-     * Get the default instance of this class.
-     *
-     * @return the default instance of this class
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static synchronized CarOwners instance() {
-        return InstanceManager.getDefault(CarOwners.class);
-    }
-
     @Override
     protected String getDefaultNames() {
         return ""; // there aren't any

@@ -1,6 +1,5 @@
 package jmri.configurexml;
 
-import java.util.ResourceBundle;
 import javax.swing.JMenu;
 
 /**

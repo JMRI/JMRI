@@ -122,8 +122,8 @@ public class CbusConsoleDecodeOptionsPane extends javax.swing.JPanel implements 
             throw new IllegalArgumentException(m + " is Not a CanFrame");
         }
         addTime(output);
-        CanFrame msg;
-        updateMainStats( msg = (CanFrame) m);
+        CanFrame msg = (CanFrame) m;
+        updateMainStats( msg );
         
         if (!msg.isExtended()) {
             output.append(CbusOpCodes.decodeopc(m)).append(" ");
@@ -141,8 +141,9 @@ public class CbusConsoleDecodeOptionsPane extends javax.swing.JPanel implements 
         if (showAddressCheckBox.isSelected()) {
             output.append(" [").append(CbusMessage.toAddress(m)).append("] ");
         }
-        
-        addPriority(m,output);
+        if (!msg.isExtended()) {
+            addPriority(m,output);
+        }
         
         if (canidCheckBox.isSelected()) {
             output.append(Bundle.getMessage("CanID")).append(": ").append(CbusMessage.getId(m)).append(" ");

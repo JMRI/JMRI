@@ -19,4 +19,5 @@
  *
  * @see jmri.jmrix.cmri.serial
  */
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings({})
 package jmri.jmrix.cmri;

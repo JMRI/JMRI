@@ -50,4 +50,5 @@
  * client's locale and the JMRI server's locale.</dd>
  * </dl>
  */
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings({})
 package jmri.server.json.message;
