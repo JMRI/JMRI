@@ -631,6 +631,6 @@ public class JsonOperationsSocketServiceTest {
             }
             
         }
-    };
+    }
 
 }
