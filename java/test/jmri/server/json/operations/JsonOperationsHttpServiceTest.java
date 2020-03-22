@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -20,6 +21,7 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
+import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.cars.Kernel;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
@@ -815,11 +817,13 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
 
     @Test
     public void testCarType() throws JsonException {
+        // get the car types
         JsonNode result = service.doGetList(JsonOperations.CAR_TYPE, NullNode.getInstance(),
                 new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         validate(result);
         assertThat(result.isArray()).isTrue();
         assertEquals(3, result.size());
+        // add a car type
         result = service.doPut(JsonOperations.CAR_TYPE, "test1", NullNode.getInstance(),
                 new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         validate(result);
@@ -827,9 +831,11 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertEquals("test1", result.path(JSON.DATA).path(JSON.NAME).asText());
         assertThat(result.path(JSON.DATA).path(JsonOperations.CARS).isArray()).isTrue();
         assertThat(result.path(JSON.DATA).path(JsonOperations.LOCATIONS).isArray()).isTrue();
+        // get the added car type
         JsonNode result2 = service.doGet(JsonOperations.CAR_TYPE, "test1", NullNode.getInstance(),
                 new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         assertEquals(result, result2);
+        // get the car types again (the list changed)
         result = service.doGetList(JsonOperations.CAR_TYPE, NullNode.getInstance(),
                 new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         validate(result);
@@ -839,7 +845,18 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertEquals("test1", result.path(0).path(JSON.DATA).path(JSON.NAME).asText());
         assertThat(result.path(0).path(JSON.DATA).path(JsonOperations.CARS).isArray()).isTrue();
         assertThat(result.path(0).path(JSON.DATA).path(JsonOperations.LOCATIONS).isArray()).isTrue();
-        service.doDelete(JsonOperations.CAR_TYPE, "test1", NullNode.getInstance(),
+        // rename the added car type
+        result = service.doPost(JsonOperations.CAR_TYPE, "test1",
+                mapper.createObjectNode().put(JSON.RENAME, "test2"),
+                new JsonRequest(locale, JSON.V5, JSON.POST, 0));
+        validate(result);
+        assertEquals(JsonOperations.CAR_TYPE, result.path(JSON.TYPE).asText());
+        assertEquals("test2", result.path(JSON.DATA).path(JSON.NAME).asText());
+        assertEquals("test1", result.path(JSON.DATA).path(JSON.RENAME).asText());
+        assertThat(result.path(JSON.DATA).path(JsonOperations.CARS).isArray()).isTrue();
+        assertThat(result.path(JSON.DATA).path(JsonOperations.LOCATIONS).isArray()).isTrue();
+        // delete the renamed car type
+        service.doDelete(JsonOperations.CAR_TYPE, "test2", NullNode.getInstance(),
                 new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         result = service.doGetList(JsonOperations.CAR_TYPE, NullNode.getInstance(),
                 new JsonRequest(locale, JSON.V5, JSON.GET, 0));
@@ -856,15 +873,28 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
                 new JsonRequest(locale, JSON.V5, JSON.GET, 0)))
                         .isExactlyInstanceOf(JsonException.class)
                         .hasFieldOrPropertyWithValue(JsonException.CODE, 404);
+        // delete an in-use car type
+        CarTypes manager = InstanceManager.getDefault(CarTypes.class);
+        assertThat(manager.getNames()).contains("Caboose");
+        JsonException ex = assertThrows(JsonException.class, () -> service.doDelete(JsonOperations.CAR_TYPE, "Caboose",
+                NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.DELETE, 0)));
+        assertThat(ex.getCode()).isEqualTo(409);
+        assertThat(ex.getAdditionalData().path(JSON.FORCE_DELETE).isTextual()).isTrue();
+        assertThat(manager.getNames()).contains("Caboose");
+        service.doDelete(JsonOperations.CAR_TYPE, "Caboose", ex.getAdditionalData(),
+                new JsonRequest(locale, JSON.V5, JSON.DELETE, 0));
+        assertThat(manager.getNames()).doesNotContain("Caboose");
     }
 
     @Test
     public void testKernel() throws JsonException {
+        // get the kernels (should be none)
         JsonNode result = service.doGetList(JsonOperations.KERNEL, NullNode.getInstance(),
                 new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         validate(result);
         assertThat(result.isArray()).isTrue();
         assertEquals(0, result.size());
+        // create a kernel
         result = service.doPut(JsonOperations.KERNEL, "test1", NullNode.getInstance(),
                 new JsonRequest(locale, JSON.V5, JSON.PUT, 42));
         validate(result);
@@ -873,9 +903,11 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertEquals(0, result.path(JSON.DATA).path(JSON.LENGTH).asInt());
         assertEquals(0, result.path(JSON.DATA).path(JsonOperations.WEIGHT).asInt());
         assertThat(result.path(JSON.DATA).path(JsonOperations.CARS).isArray()).isTrue();
+        // get the newly created kernel
         JsonNode result2 = service.doGet(JsonOperations.KERNEL, "test1", NullNode.getInstance(),
                 new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         assertEquals(result, result2);
+        // get the kernels (should be one)
         result = service.doGetList(JsonOperations.KERNEL, NullNode.getInstance(),
                 new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         validate(result);
@@ -886,8 +918,21 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertEquals(0, result.path(0).path(JSON.DATA).path(JSON.LENGTH).asInt());
         assertEquals(0, result.path(0).path(JSON.DATA).path(JsonOperations.WEIGHT).asInt());
         assertThat(result.path(0).path(JSON.DATA).path(JsonOperations.CARS).isArray()).isTrue();
-        service.doDelete(JsonOperations.KERNEL, "test1", NullNode.getInstance(),
+        // rename the kernel
+        result = service.doPost(JsonOperations.KERNEL, "test1",
+                mapper.createObjectNode().put(JSON.RENAME, "test2"),
+                new JsonRequest(locale, JSON.V5, JSON.POST, 0));
+        validate(result);
+        assertEquals(JsonOperations.KERNEL, result.path(JSON.TYPE).asText());
+        assertEquals("test2", result.path(JSON.DATA).path(JSON.NAME).asText());
+        assertEquals("test1", result.path(JSON.DATA).path(JSON.RENAME).asText());
+        assertEquals(0, result.path(0).path(JSON.DATA).path(JSON.LENGTH).asInt());
+        assertEquals(0, result.path(0).path(JSON.DATA).path(JsonOperations.WEIGHT).asInt());
+        assertThat(result.path(JSON.DATA).path(JsonOperations.CARS).isArray()).isTrue();
+        // delete the kernel
+        service.doDelete(JsonOperations.KERNEL, "test2", NullNode.getInstance(),
                 new JsonRequest(locale, JSON.V5, JSON.GET, 42));
+        // get the kernels (should be empty)
         result = service.doGetList(JsonOperations.KERNEL, NullNode.getInstance(),
                 new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         validate(result);
