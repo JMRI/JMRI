@@ -26,7 +26,6 @@ import javax.annotation.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.*;
-import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import jmri.*;
 import jmri.configurexml.StoreXmlUserAction;
@@ -1247,6 +1246,16 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             }
         });
 
+        // Set All Tracks To Default Colors
+        JMenuItem setAllTracksToDefaultColorsMenuItem = new JMenuItem(Bundle.getMessage("SetAllTracksToDefaultColors"));
+        trkColourMenu.add(setAllTracksToDefaultColorsMenuItem);
+        setAllTracksToDefaultColorsMenuItem.addActionListener((ActionEvent event) -> {
+            if (setAllTracksToDefaultColors() > 0) {
+                setDirty();
+                redrawPanel();
+            }
+        });
+
         //Automatically Assign Blocks to Track
         autoAssignBlocksCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("AutoAssignBlock"));
         trackMenu.add(autoAssignBlocksCheckBoxMenuItem);
@@ -2395,6 +2404,24 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         resizePanelBounds(true);
         return true;
+    }
+
+    /**
+     *   loop through all LayoutBlocks and set colors to the default colors from this LayoutEditor
+     *   @return count of changed blocks
+     */
+    public int setAllTracksToDefaultColors() {
+        LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
+        SortedSet<LayoutBlock> lBList = lbm.getNamedBeanSet();
+        int changed = 0;
+        for (LayoutBlock lb : lBList) {
+            lb.setBlockTrackColor(this.getDefaultTrackColorColor());
+            lb.setBlockOccupiedColor(this.getDefaultOccupiedTrackColorColor());
+            lb.setBlockExtraColor(this.getDefaultAlternativeTrackColorColor());
+            changed++;
+        }
+        log.info("Track Colors set to default values for {} layoutBlocks.", changed);
+        return changed;
     }
 
     private transient Rectangle2D undoRect;

@@ -6,4 +6,5 @@
  * and
  * <a href="https://github.com/ekapus/TrainCrew">https://github.com/ekapus/TrainCrew</a>.
  */
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings({})
 package apps.TrainCrew;

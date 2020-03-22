@@ -590,8 +590,8 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             try {
                 panel.setDefaultTrackColor(ColorUtil.stringToColor(a.getValue()));
             } catch (IllegalArgumentException e) {
-                panel.setDefaultTrackColor(Color.BLACK);
-                log.error("Invalid color {}; using black", a.getValue());
+                panel.setDefaultTrackColor(Color.darkGray);
+                log.error("Invalid defaulttrackcolor {}; using 'darkGray'", a.getValue());
             }
         }
         // set default occupied track color
@@ -599,8 +599,8 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             try {
                 panel.setDefaultOccupiedTrackColor(ColorUtil.stringToColor(a.getValue()));
             } catch (IllegalArgumentException e) {
-                panel.setDefaultOccupiedTrackColor(Color.BLACK);
-                log.error("Invalid color {}; using black", a.getValue());
+                panel.setDefaultOccupiedTrackColor(Color.red);
+                log.error("Invalid defaultoccupiedtrackcolor {}; using 'red'", a.getValue());
             }
         }
         // set default alternative track color
@@ -608,8 +608,8 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             try {
                 panel.setDefaultAlternativeTrackColor(ColorUtil.stringToColor(a.getValue()));
             } catch (IllegalArgumentException e) {
-                panel.setDefaultAlternativeTrackColor(Color.BLACK);
-                log.error("Invalid color {}; using black", a.getValue());
+                panel.setDefaultAlternativeTrackColor(Color.white);
+                log.error("Invalid defaultalternativetrackcolor {}; using 'white'", a.getValue());
             }
         }
         try {

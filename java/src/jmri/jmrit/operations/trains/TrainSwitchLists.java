@@ -394,7 +394,7 @@ public class TrainSwitchLists extends TrainCommon {
                                                         Control.max_len_string_print_road_number),
                                                 padAndTruncateString(car.getTypeName().split("-")[0],
                                                         InstanceManager.getDefault(CarTypes.class).getMaxNameLength()),
-                                                padAndTruncateString(car.getLength() + LENGTHABV,
+                                                padAndTruncateString(car.getLength() + Setup.getLengthUnitAbv(),
                                                         Control.max_len_string_length_name),
                                                 padAndTruncateString(car.getLoadName(),
                                                         InstanceManager.getDefault(CarLoads.class).getMaxNameLength()),

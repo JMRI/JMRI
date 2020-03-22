@@ -9,4 +9,5 @@
  * The {@link jmri.util.com} package contains several sets of
  * imported code.
  */
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings({})
 package jmri.util;

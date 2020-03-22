@@ -33,18 +33,6 @@ public class EngineManager extends RollingStockManager<Engine> implements Instan
     }
 
     /**
-     * Get the default instance of this class.
-     *
-     * @return the default instance of this class
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static synchronized EngineManager instance() {
-        return InstanceManager.getDefault(EngineManager.class);
-    }
-
-    /**
      * @return requested Engine object or null if none exists
      */
     @Override

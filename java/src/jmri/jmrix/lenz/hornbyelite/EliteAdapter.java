@@ -5,7 +5,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
-import java.util.Vector;
 import jmri.jmrix.lenz.XNetPacketizer;
 import jmri.jmrix.lenz.XNetSerialPortController;
 import jmri.jmrix.lenz.XNetTrafficController;
@@ -33,8 +32,6 @@ public class EliteAdapter extends XNetSerialPortController {
         this.manufacturerName = EliteConnectionTypeList.HORNBY;
     }
 
-    Vector<String> portNameVector = null;
-
     @Override
     public String openPort(String portName, String appName) {
         // open the port in XpressNet mode, check ability to set moderators
@@ -50,7 +47,7 @@ public class EliteAdapter extends XNetSerialPortController {
             try {
                 setSerialPort();
             } catch (UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
+                log.error("Cannot set serial parameters on port {}: {}",portName,e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage(); // NOI18N
             }
 
@@ -59,8 +56,8 @@ public class EliteAdapter extends XNetSerialPortController {
                 activeSerialPort.enableReceiveTimeout(10);
                 log.debug("Serial timeout was observed as: {} {}", activeSerialPort.getReceiveTimeout(),
                         activeSerialPort.isReceiveTimeoutEnabled());
-            } catch (UnsupportedCommOperationException et) {
-                log.info("failed to set serial timeout: " + et);
+            } catch (Exception et) {
+                log.info("failed to set serial timeout: {}",et);
             }
 
             // get and save stream
@@ -113,7 +110,6 @@ public class EliteAdapter extends XNetSerialPortController {
         packets.connectPort(this);
 
         // start operation
-        // packets.startThreads();
         this.getSystemConnectionMemo().setXNetTrafficController(packets);
 
         new EliteXNetInitializationManager(this.getSystemConnectionMemo());
@@ -138,7 +134,7 @@ public class EliteAdapter extends XNetSerialPortController {
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
         } catch (IOException e) {
-            log.error("getOutputStream exception: " + e.getMessage());
+            log.error("getOutputStream exception: {}", e.getMessage());
         }
         return null;
     }
@@ -167,9 +163,6 @@ public class EliteAdapter extends XNetSerialPortController {
             flow = SerialPort.FLOWCONTROL_RTSCTS_OUT;
         }
         configureLeadsAndFlowControl(activeSerialPort, flow);
-
-        /*if (!getOptionState(option2Name).equals(validOption2[0]))
-         CheckBuffer = false;*/
     }
 
     /**
@@ -191,8 +184,6 @@ public class EliteAdapter extends XNetSerialPortController {
     /**
      * validOption1 controls flow control option.
      */
-    /*public String option1Name() { return "Elite connection uses "; }
-     public String[] validOption1() { return Arrays.copyOf(validOption1, validOption1.length); }*/
     protected String[] validSpeeds = new String[]{Bundle.getMessage("Baud9600"),
             Bundle.getMessage("Baud19200"), Bundle.getMessage("Baud38400"),
             Bundle.getMessage("Baud57600"), Bundle.getMessage("Baud115200")};
@@ -206,11 +197,8 @@ public class EliteAdapter extends XNetSerialPortController {
     // meanings are assigned to these above, so make sure the order is consistent
     protected String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionNo"), Bundle.getMessage("FlowOptionHw")};
 
-    private boolean opened = false;
     InputStream serialStream = null;
 
-    static volatile EliteAdapter mInstance = null;
-
-    private final static Logger log = LoggerFactory.getLogger(EliteAdapter.class);
+    private static final Logger log = LoggerFactory.getLogger(EliteAdapter.class);
 
 }

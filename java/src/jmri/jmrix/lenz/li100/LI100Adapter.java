@@ -214,6 +214,6 @@ public class LI100Adapter extends XNetSerialPortController {
     }
     static volatile LI100Adapter mInstance = null;
 
-    private final static Logger log = LoggerFactory.getLogger(LI100Adapter.class);
+    private static final Logger log = LoggerFactory.getLogger(LI100Adapter.class);
 
 }

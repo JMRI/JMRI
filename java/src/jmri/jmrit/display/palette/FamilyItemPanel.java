@@ -154,6 +154,12 @@ public abstract class FamilyItemPanel extends ItemPanel {
         add(bottomPanel);
     }
 
+    public JPanel getBottomPanel() {
+        return _bottom1Panel;
+    }
+    public JButton getUpdateButton() {
+        return _updateButton;
+    }
     /**
      * Add [Update] button to _bottom1Panel.
      * @param doneAction Action for button
