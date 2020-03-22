@@ -1072,7 +1072,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertThat(track.getReporter()).isNull();
         try {
             service.doPost(JsonOperations.TRACK, track.getId(),
-                    service.getObjectMapper().createObjectNode()
+                    mapper.createObjectNode()
                             .put(JsonReporter.REPORTER, "no-such-reporter")
                             .put(JsonOperations.LOCATION, location.getId()),
                     new JsonRequest(locale, JSON.V5, JSON.POST, 0));
@@ -1081,6 +1081,165 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
             assertThat(ex.getCode()).isEqualTo(404);
             assertThat(ex.getMessage()).isEqualTo("Object type reporter named \"no-such-reporter\" not found.");
         }
+    }
+
+    @Test
+    public void testMovingCar() throws JsonException {
+        Car car = InstanceManager.getDefault(CarManager.class).getByRoadAndNumber("CP", "C10099");
+        Location location = car.getLocation();
+        assertThat(car.getTypeName()).isEqualTo("Caboose");
+        assertThat(car.getLocation().getId()).isEqualTo("1");
+        assertThat(car.getTrack().getId()).isEqualTo("1s1");
+        // move to same location
+        service.doPost(JsonOperations.CAR, car.getId(), mapper.createObjectNode()
+                .set(JsonOperations.LOCATION, mapper.createObjectNode()
+                        .put(JSON.NAME, "1")
+                        .set(JsonOperations.TRACK, mapper.createObjectNode().put(JSON.NAME, "1s1"))),
+                new JsonRequest(locale, JSON.V5, JSON.POST, 0));
+        assertThat(car.getLocation().getId()).isEqualTo("1");
+        assertThat(car.getTrack().getId()).isEqualTo("1s1");
+        // move to location with empty id
+        assertThatCode(() -> service.doPost(JsonOperations.CAR, car.getId(), mapper.createObjectNode()
+                .set(JsonOperations.LOCATION,
+                        mapper.createObjectNode()
+                                .put(JSON.NAME, "")),
+                new JsonRequest(locale, JSON.V5, JSON.POST, 0)))
+                        .isExactlyInstanceOf(JsonException.class)
+                        .hasFieldOrPropertyWithValue(JsonException.CODE, 404);
+        // move to location with empty track id
+        service.doPost(JsonOperations.CAR, car.getId(), mapper.createObjectNode()
+                .set(JsonOperations.LOCATION, mapper.createObjectNode()
+                        .put(JSON.NAME, "1")
+                        .set(JsonOperations.TRACK, mapper.createObjectNode().put(JSON.NAME, ""))),
+                new JsonRequest(locale, JSON.V5, JSON.POST, 0));
+        assertThat(car.getLocation().getId()).isEqualTo("1");
+        assertThat(car.getTrack()).isNull();
+        // move to non-existent location
+        assertThatCode(() -> service.doPost(JsonOperations.CAR, car.getId(), mapper.createObjectNode()
+                .set(JsonOperations.LOCATION, mapper.createObjectNode()
+                        .put(JSON.NAME, "2")
+                        .set(JsonOperations.TRACK, mapper.createObjectNode().put(JSON.NAME, "2s1"))),
+                new JsonRequest(locale, JSON.V5, JSON.POST, 0)))
+                        .isExactlyInstanceOf(JsonException.class)
+                        .hasFieldOrPropertyWithValue(JsonException.CODE, 404);
+        assertThat(car.getLocation().getId()).isEqualTo("1");
+        assertThat(car.getTrack()).isNull();
+        // move to non-existent track
+        assertThatCode(() -> service.doPost(JsonOperations.CAR, car.getId(), mapper.createObjectNode()
+                .set(JsonOperations.LOCATION, mapper.createObjectNode()
+                        .put(JSON.NAME, "3")
+                        .set(JsonOperations.TRACK, mapper.createObjectNode().put(JSON.NAME, "invalid-track"))),
+                new JsonRequest(locale, JSON.V5, JSON.POST, 0)))
+                        .isExactlyInstanceOf(JsonException.class)
+                        .hasFieldOrPropertyWithValue(JsonException.CODE, 404);
+        assertThat(car.getLocation().getId()).isEqualTo("1");
+        assertThat(car.getTrack()).isNull();
+        // move to new location
+        service.doPost(JsonOperations.CAR, car.getId(), mapper.createObjectNode()
+                .set(JsonOperations.LOCATION, mapper.createObjectNode()
+                        .put(JSON.NAME, "20")
+                        .set(JsonOperations.TRACK, mapper.createObjectNode().put(JSON.NAME, "20s1"))),
+                new JsonRequest(locale, JSON.V5, JSON.POST, 0));
+        assertThat(car.getLocation().getId()).isEqualTo("20");
+        assertThat(car.getTrack().getId()).isEqualTo("20s1");
+        // move to new location without track
+        service.doPost(JsonOperations.CAR, car.getId(), mapper.createObjectNode()
+                .set(JsonOperations.LOCATION, mapper.createObjectNode()
+                        .put(JSON.NAME, "3")),
+                new JsonRequest(locale, JSON.V5, JSON.POST, 0));
+        assertThat(car.getLocation().getId()).isEqualTo("3");
+        assertThat(car.getTrack()).isNull();
+        // block car from track 1s1 by removing car type from track
+        location.getTrackById("1s1").deleteTypeName(car.getTypeName());
+        assertThat(location.getTrackById("1s1").accepts(car)).startsWith(Track.TYPE);
+        // move to unusable location
+        assertThatCode(() -> service.doPost(JsonOperations.CAR, car.getId(), mapper.createObjectNode()
+                .set(JsonOperations.LOCATION, mapper.createObjectNode()
+                        .put(JSON.NAME, "1")
+                        .set(JsonOperations.TRACK, mapper.createObjectNode().put(JSON.NAME, "1s1"))),
+                new JsonRequest(locale, JSON.V5, JSON.POST, 0)))
+                        .isExactlyInstanceOf(JsonException.class)
+                        .hasFieldOrPropertyWithValue(JsonException.CODE, 409);
+    }
+
+    @Test
+    public void testSettingDestinationForCar() throws JsonException {
+        Car car = InstanceManager.getDefault(CarManager.class).getByRoadAndNumber("CP", "C10099");
+        Location location = car.getLocation();
+        car.setDestination(location, location.getTrackById("1s1"));
+        assertThat(car.getTypeName()).isEqualTo("Caboose");
+        assertThat(car.getDestination().getId()).isEqualTo("1");
+        assertThat(car.getDestinationTrack().getId()).isEqualTo("1s1");
+        // move to same location
+        service.doPost(JsonOperations.CAR, car.getId(), mapper.createObjectNode()
+                .set(JsonOperations.DESTINATION, mapper.createObjectNode()
+                        .put(JSON.NAME, "1")
+                        .set(JsonOperations.TRACK, mapper.createObjectNode().put(JSON.NAME, "1s1"))),
+                new JsonRequest(locale, JSON.V5, JSON.POST, 0));
+        assertThat(car.getDestination().getId()).isEqualTo("1");
+        assertThat(car.getDestinationTrack().getId()).isEqualTo("1s1");
+        // move to location with empty id
+        assertThatCode(() -> service.doPost(JsonOperations.CAR, car.getId(), mapper.createObjectNode()
+                .set(JsonOperations.DESTINATION,
+                        mapper.createObjectNode()
+                                .put(JSON.NAME, "")),
+                new JsonRequest(locale, JSON.V5, JSON.POST, 0)))
+                        .isExactlyInstanceOf(JsonException.class)
+                        .hasFieldOrPropertyWithValue(JsonException.CODE, 404);
+        // move to location with empty track id
+        service.doPost(JsonOperations.CAR, car.getId(), mapper.createObjectNode()
+                .set(JsonOperations.DESTINATION, mapper.createObjectNode()
+                        .put(JSON.NAME, "1")
+                        .set(JsonOperations.TRACK, mapper.createObjectNode().put(JSON.NAME, ""))),
+                new JsonRequest(locale, JSON.V5, JSON.POST, 0));
+        assertThat(car.getDestination().getId()).isEqualTo("1");
+        assertThat(car.getDestinationTrack()).isNull();
+        // move to non-existent location
+        assertThatCode(() -> service.doPost(JsonOperations.CAR, car.getId(), mapper.createObjectNode()
+                .set(JsonOperations.DESTINATION, mapper.createObjectNode()
+                        .put(JSON.NAME, "2")
+                        .set(JsonOperations.TRACK, mapper.createObjectNode().put(JSON.NAME, "2s1"))),
+                new JsonRequest(locale, JSON.V5, JSON.POST, 0)))
+                        .isExactlyInstanceOf(JsonException.class)
+                        .hasFieldOrPropertyWithValue(JsonException.CODE, 404);
+        assertThat(car.getDestination().getId()).isEqualTo("1");
+        assertThat(car.getDestinationTrack()).isNull();
+        // move to non-existent track
+        assertThatCode(() -> service.doPost(JsonOperations.CAR, car.getId(), mapper.createObjectNode()
+                .set(JsonOperations.DESTINATION, mapper.createObjectNode()
+                        .put(JSON.NAME, "3")
+                        .set(JsonOperations.TRACK, mapper.createObjectNode().put(JSON.NAME, "invalid-track"))),
+                new JsonRequest(locale, JSON.V5, JSON.POST, 0)))
+                        .isExactlyInstanceOf(JsonException.class)
+                        .hasFieldOrPropertyWithValue(JsonException.CODE, 404);
+        assertThat(car.getDestination().getId()).isEqualTo("1");
+        assertThat(car.getDestinationTrack()).isNull();
+        // move to new location
+        service.doPost(JsonOperations.CAR, car.getId(), mapper.createObjectNode()
+                .set(JsonOperations.DESTINATION, mapper.createObjectNode()
+                        .put(JSON.NAME, "20")
+                        .set(JsonOperations.TRACK, mapper.createObjectNode().put(JSON.NAME, "20s1"))),
+                new JsonRequest(locale, JSON.V5, JSON.POST, 0));
+        assertThat(car.getDestination().getId()).isEqualTo("20");
+        assertThat(car.getDestinationTrack().getId()).isEqualTo("20s1");
+        // move to new location without track
+        service.doPost(JsonOperations.CAR, car.getId(), mapper.createObjectNode()
+                .set(JsonOperations.DESTINATION, mapper.createObjectNode()
+                        .put(JSON.NAME, "3")),
+                new JsonRequest(locale, JSON.V5, JSON.POST, 0));
+        assertThat(car.getDestination().getId()).isEqualTo("3");
+        assertThat(car.getDestinationTrack()).isNull();
+        // block car from track 1s1 by removing car type from track
+        location.getTrackById("1s1").deleteTypeName(car.getTypeName());
+        assertThat(location.getTrackById("1s1").accepts(car)).startsWith(Track.TYPE);
+        // move to unusable destination
+        assertThatCode(() -> service.doPost(JsonOperations.CAR, car.getId(), mapper.createObjectNode()
+                .set(JsonOperations.DESTINATION, mapper.createObjectNode()
+                        .put(JSON.NAME, "1")
+                        .set(JsonOperations.TRACK, mapper.createObjectNode().put(JSON.NAME, "1s1"))),
+                new JsonRequest(locale, JSON.V5, JSON.POST, 0)))
+                        .isExactlyInstanceOf(JsonException.class)
+                        .hasFieldOrPropertyWithValue(JsonException.CODE, 409);
     }
 
     @Before
