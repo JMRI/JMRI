@@ -21,15 +21,14 @@ public class JmriSRCPSensorServer extends AbstractSensorServer implements Proper
 
     private static final String ERROR = "Error499";
     private OutputStream output;
-    private InstanceManagerDelegate instanceManager;
 
     public JmriSRCPSensorServer(DataInputStream inStream, OutputStream outStream) {
         this(inStream,outStream,new InstanceManagerDelegate());
     }
 
     public JmriSRCPSensorServer(DataInputStream inStream, OutputStream outStream, InstanceManagerDelegate instanceManager) {
+        super(instanceManager);
         output = outStream;
-        this.instanceManager = instanceManager;
     }
 
 

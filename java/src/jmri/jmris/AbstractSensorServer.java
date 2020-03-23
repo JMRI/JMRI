@@ -22,7 +22,7 @@ public abstract class AbstractSensorServer {
     private static final String ERROR_SENDING_STATUS = "Error Sending Status";
     private final HashMap<String, SensorListener> sensors;
     private static final Logger log = LoggerFactory.getLogger(AbstractSensorServer.class);
-    private InstanceManagerDelegate instanceManager;
+    protected InstanceManagerDelegate instanceManager;
 
     public AbstractSensorServer(){
         this(new InstanceManagerDelegate());

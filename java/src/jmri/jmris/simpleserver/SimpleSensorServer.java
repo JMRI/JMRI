@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import jmri.InstanceManagerDelegate;
 import jmri.Sensor;
+import jmri.SensorManager;
 import jmri.jmris.AbstractSensorServer;
 import jmri.jmris.JmriConnection;
 import org.slf4j.Logger;
@@ -21,16 +22,14 @@ public class SimpleSensorServer extends AbstractSensorServer {
 
     private DataOutputStream output;
     private JmriConnection connection;
-    private InstanceManagerDelegate instanceManager;
 
     public SimpleSensorServer(JmriConnection connection){
         this(connection,new InstanceManagerDelegate());
     }
 
     public SimpleSensorServer(JmriConnection connection,InstanceManagerDelegate instanceManager) {
-        super();
+        super(instanceManager);
         this.connection = connection;
-        this.instanceManager = instanceManager;
     }
 
     public SimpleSensorServer(DataInputStream inStream, DataOutputStream outStream) {
@@ -93,7 +92,7 @@ public class SimpleSensorServer extends AbstractSensorServer {
                 sensorName = sensorName.substring(0,sensorName.indexOf(' '));
             }
             try {
-                Sensor sensor = instanceManager.sensorManagerInstance().provideSensor(sensorName);
+                Sensor sensor = instanceManager.getDefault(SensorManager.class).provideSensor(sensorName);
                 sendStatus(sensorName, sensor.getKnownState());
             } catch (IllegalArgumentException ex) {
                 log.warn("Failed to provide Sensor \"{}\" in sendStatus", sensorName);
