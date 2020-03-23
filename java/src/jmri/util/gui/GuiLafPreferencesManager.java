@@ -101,7 +101,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
             if (migrate) {
                 // using deprecated, not for removal, call to enable migration
                 // of preferences keys from "apps-gui" to "jmri-util-gui"
-                // JMRI <= 4.19.2 uses "apps-gui", JMRI >= 4.19.3 usses "jmri-util-gui"
+                // JMRI <= 4.19.5 uses "apps-gui", JMRI >= 4.19.5 usses "jmri-util-gui"
                 getPreferences(JmriPreferencesProvider.getPreferences(profile, "apps-gui", true));
             }
             getPreferences(preferences);
