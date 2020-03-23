@@ -755,7 +755,7 @@
             <arg value="--include-engine=junit-jupiter"/>
             <arg value="--include-engine=junit-vintage"/>
             <arg line="-n ${test.includes}"/>
-            <arg line="--reports-dir ${testreport}" />
+            <arg line="--reports-dir '${testreport}'" />
             <jvmarg value="-Xmx1536m"/>
 	    <jvmarg line="${test-single.jvmargs}"/>
         </java>    
