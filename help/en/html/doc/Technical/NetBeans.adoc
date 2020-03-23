@@ -197,9 +197,9 @@ NOTE: You may also see an error icon if using a JDK version greater than 8 due t
 
 === Build
 
-To build JMRI, choose menu:Run[Build Project (JMRI)] or menu:Run[Clean and Build Project (JMRI)]. This will build and test the JMRI code.
+To build JMRI, choose menu:Run[Build Project (JMRI)] or menu:Run[Clean and Build Project (JMRI)].
 
-TIP: To build without testing, run the maven lifecycle phase `compile`.
+TIP: To build only the JMRI Java source code, run the maven lifecycle phase `compile`.
 
 === Run an Application
 

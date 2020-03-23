@@ -430,7 +430,7 @@
             <div class="sect2">
             <h3 id="_build">Build</h3>
             <div class="paragraph">
-            <p>To build JMRI, choose <span class="menuseq"><b class="menu">Run</b>&#160;<b class="caret">&#8250;</b> <b class="menuitem">Build Project (JMRI)</b></span> or <span class="menuseq"><b class="menu">Run</b>&#160;<b class="caret">&#8250;</b> <b class="menuitem">Clean and Build Project (JMRI)</b></span>. This will build and test the JMRI code.</p>
+            <p>To build JMRI, choose <span class="menuseq"><b class="menu">Run</b>&#160;<b class="caret">&#8250;</b> <b class="menuitem">Build Project (JMRI)</b></span> or <span class="menuseq"><b class="menu">Run</b>&#160;<b class="caret">&#8250;</b> <b class="menuitem">Clean and Build Project (JMRI)</b></span>.</p>
             </div>
             <div class="admonitionblock tip">
             <table>
@@ -439,7 +439,7 @@
             <div class="title">Tip</div>
             </td>
             <td class="content">
-            To build without testing, run the maven lifecycle phase <code>compile</code>.
+            To build only the JMRI Java source code, run the maven lifecycle phase <code>compile</code>.
             </td>
             </tr>
             </table>
