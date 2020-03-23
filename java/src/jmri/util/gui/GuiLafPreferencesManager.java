@@ -41,12 +41,12 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     public static final String NONSTANDARD_MOUSE_EVENT = "nonstandardMouseEvent";
     public static final String GRAPHIC_TABLE_STATE = "graphicTableState";
     /**
-     * @deprecated since 4.19.3; use {@link #GRAPHIC_TABLE_STATE} instead
+     * @deprecated since 4.19.5; use {@link #GRAPHIC_TABLE_STATE} instead
      */
     @Deprecated
     public static final String GRAPHICTABLESTATE = GRAPHIC_TABLE_STATE;
     /**
-     * @deprecated since 4.19.3 without replacement
+     * @deprecated since 4.19.5 without replacement
      */
     @Deprecated
     public static final String VERTICAL_TOOLBAR = "verticalToolBar";
@@ -261,7 +261,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
      * Sets a new font by name
      *
      * @param name the name of the new font to set
-     * @deprecated since 4.19.3; use {@link #setFont(String)} instead
+     * @deprecated since 4.19.5; use {@link #setFont(String)} instead
      */
     @Deprecated
     public void setFontByName(@Nonnull String name) {
@@ -290,7 +290,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
      * with a null value.
      * 
      * @see #getDefaultFont()
-     * @deprecated since 4.19.3 without direct replacement
+     * @deprecated since 4.19.5 without direct replacement
      */
     @Deprecated
     public void setDefaultFont() {
@@ -334,7 +334,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
      * default font.
      * 
      * @see #getDefaultFontSize()
-     * @deprecated since 4.19.3 without direct replacement
+     * @deprecated since 4.19.5 without direct replacement
      */
     @Deprecated
     public void setDefaultFontSize() {
