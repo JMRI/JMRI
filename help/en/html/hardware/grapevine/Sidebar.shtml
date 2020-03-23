@@ -1,18 +1,14 @@
 <!-- Sidebar.shtml -->
-<!-- This is the common sidebar definition for html/hardware/grapevine pages -->
+<!-- This is the common sidebar definition for html/hardware/[subdirectory]/ pages -->
 
 	  <hr class="hide">
 	  <div id="side"> <!-- Block of text on left side of page -->
 	    <div style="text-align: center">JMRI&reg; connects to...</div>
 	    <dl>
+          
+          <!-- To include specific sidebar info for this subdirectory... -->
+           <!--#include virtual="SidebarHardwareLocalPart.shtml" -->      
 
-		<dt><h3 style="padding-left: 1em;"><a href="index.shtml">Protrak Grapevine</a></h3></dt>
-		<dd>
-		   <ul>
-                    <li><a href="Names.shtml">Grapevine Naming</a></li>
-                   </ul>
-		 </dd>			
-		
 	    <!--#include virtual="/help/en/parts/SidebarSupportedHardware.shtml" --> 
             
             <!--#include virtual="/help/en/parts/SidebarApplications.shtml" -->
@@ -21,7 +17,7 @@
 
             <!--#include virtual="/help/en/parts/SidebarLayoutAutomation.shtml" -->
 	
-            </dl>
+         </dl>
 
         <!--#include virtual="/help/en/parts/SidebarTail.shtml" -->
 

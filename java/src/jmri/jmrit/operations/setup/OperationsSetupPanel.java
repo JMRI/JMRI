@@ -67,8 +67,8 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
     private final JRadioButton meterUnit = new JRadioButton(Bundle.getMessage("Meter"));
 
     // check boxes
-    private final JCheckBox eastCheckBox = new JCheckBox(Bundle.getMessage("eastwest"));
-    private final JCheckBox northCheckBox = new JCheckBox(Bundle.getMessage("northsouth"));
+    final JCheckBox eastCheckBox = new JCheckBox(Bundle.getMessage("eastwest"));
+    final JCheckBox northCheckBox = new JCheckBox(Bundle.getMessage("northsouth"));
     private final JCheckBox mainMenuCheckBox = new JCheckBox(Bundle.getMessage("MainMenu"));
     private final JCheckBox closeOnSaveCheckBox = new JCheckBox(Bundle.getMessage("CloseOnSave"));
     private final JCheckBox autoSaveCheckBox = new JCheckBox(Bundle.getMessage("AutoSave"));

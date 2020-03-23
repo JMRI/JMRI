@@ -95,9 +95,6 @@
             <isset property="jvm.args"/>
         </not>
     </condition>
-    <condition property="test-single.jvmargs" value="">
-        <not><isset property="test-single.jvmargs"/></not>
-    </condition>
     <condition property="cp.append" value="">
         <not>
             <isset property="cp.append"/>
@@ -732,7 +729,7 @@
     <target depends="-test-single-src,-test-single-test,tests,runtime-library-selection" description="Run single unit test." name="test-single">
         <mkdir dir="${tempdir}"/>
         <mkdir dir="${testreport}"/>
-
+        <property name="test-single.jvmargs" value=""/>
         <java classpathref="test.class.path" classname="org.junit.platform.console.ConsoleLauncher" fork="true" failonerror="true"  >
             <sysproperty key="wdm.forceCache" value="true"/>
             <!-- wdm.targetPath specifies the locaion of the web drivers on appveyor. -->
@@ -755,7 +752,7 @@
             <arg value="--include-engine=junit-jupiter"/>
             <arg value="--include-engine=junit-vintage"/>
             <arg line="-n ${test.includes}"/>
-            <arg line="--reports-dir ${testreport}" />
+            <arg line="--reports-dir '${testreport}'" />
             <jvmarg value="-Xmx1536m"/>
 	    <jvmarg line="${test-single.jvmargs}"/>
         </java>    
@@ -770,7 +767,7 @@
         <mkdir dir="${tempdir}"/>
         <mkdir dir="${testreport}"/>
         <jacoco:agent property="jacocoagent" destfile="${jacocoexec}" excludes="org.slf4j.*" />
-
+        <property name="test-single.jvmargs" value=""/>
         <java classpathref="test.class.path" classname="org.junit.platform.console.ConsoleLauncher" fork="true" failonerror="true"  >
             <sysproperty key="wdm.forceCache" value="true"/>
             <!-- wdm.targetPath specifies the locaion of the web drivers on appveyor. -->
