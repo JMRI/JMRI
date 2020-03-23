@@ -41,7 +41,6 @@ public class JmriSRCPProgrammerServerTest{
     public void setUp() {
         JUnitUtil.setUpForMockInstanceManager();
         instanceManagerDelegate = Mockito.mock(InstanceManagerDelegate.class);
-        //jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
     }
 
     @AfterEach

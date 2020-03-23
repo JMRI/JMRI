@@ -8,6 +8,7 @@ import java.util.Map;
 import jmri.InstanceManagerDelegate;
 import jmri.JmriException;
 import jmri.Sensor;
+import jmri.SensorManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,10 +17,11 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2010
  */
-abstract public class AbstractSensorServer {
+public abstract class AbstractSensorServer {
 
+    private static final String ERROR_SENDING_STATUS = "Error Sending Status";
     private final HashMap<String, SensorListener> sensors;
-    private final static Logger log = LoggerFactory.getLogger(AbstractSensorServer.class);
+    private static final Logger log = LoggerFactory.getLogger(AbstractSensorServer.class);
     private InstanceManagerDelegate instanceManager;
 
     public AbstractSensorServer(){
@@ -28,21 +30,21 @@ abstract public class AbstractSensorServer {
 
     public AbstractSensorServer(InstanceManagerDelegate instanceManager) {
         this.instanceManager = instanceManager;
-        sensors = new HashMap<String, SensorListener>();
+        sensors = new HashMap<>();
     }
 
     /*
      * Protocol Specific Abstract Functions
      */
-    abstract public void sendStatus(String sensor, int Status) throws IOException;
+    public abstract void sendStatus(String sensor, int Status) throws IOException;
 
-    abstract public void sendErrorStatus(String sensor) throws IOException;
+    public abstract void sendErrorStatus(String sensor) throws IOException;
 
-    abstract public void parseStatus(String statusString) throws JmriException, IOException;
+    public abstract void parseStatus(String statusString) throws JmriException, IOException;
 
-    synchronized protected void addSensorToList(String sensorName) {
+    protected synchronized void addSensorToList(String sensorName) {
         if (!sensors.containsKey(sensorName)) {
-            Sensor s = instanceManager.sensorManagerInstance().getSensor(sensorName);
+            Sensor s = instanceManager.getDefault(SensorManager.class).getSensor(sensorName);
             if(s!=null) {
                SensorListener sl = new SensorListener(sensorName);
                s.addPropertyChangeListener(sl);
@@ -51,9 +53,9 @@ abstract public class AbstractSensorServer {
         }
     }
 
-    synchronized protected void removeSensorFromList(String sensorName) {
+    protected synchronized void removeSensorFromList(String sensorName) {
         if (sensors.containsKey(sensorName)) {
-            Sensor s = instanceManager.sensorManagerInstance().getSensor(sensorName);
+            Sensor s = instanceManager.getDefault(SensorManager.class).getSensor(sensorName);
             if(s!=null) {
                s.removePropertyChangeListener(sensors.get(sensorName));
                sensors.remove(sensorName);
@@ -61,8 +63,8 @@ abstract public class AbstractSensorServer {
         }
     }
 
-    public Sensor initSensor(String sensorName) throws IllegalArgumentException {
-        Sensor sensor = instanceManager.sensorManagerInstance().provideSensor(sensorName);
+    public Sensor initSensor(String sensorName) {
+        Sensor sensor = instanceManager.getDefault(SensorManager.class).provideSensor(sensorName);
         this.addSensorToList(sensorName);
         return sensor;
     }
@@ -72,7 +74,7 @@ abstract public class AbstractSensorServer {
         // load address from sensorAddrTextField
         try {
             addSensorToList(sensorName);
-            sensor = instanceManager.sensorManagerInstance().getSensor(sensorName);
+            sensor = instanceManager.getDefault(SensorManager.class).getSensor(sensorName);
             if (sensor == null) {
                 log.error("Sensor {} is not available", sensorName);
             } else {
@@ -83,11 +85,7 @@ abstract public class AbstractSensorServer {
                 } else {
                     // just notify the client.
                     log.debug("not changing sensor '{}', already Active ({})", sensorName, sensor.getKnownState());
-                    try {
-                        sendStatus(sensorName, Sensor.ACTIVE);
-                    } catch (IOException ie) {
-                        log.error("Error Sending Status");
-                    }
+                    sendStatusWithErrorHandling(sensorName,Sensor.ACTIVE);
                 }
             }
         } catch (JmriException ex) {
@@ -97,7 +95,7 @@ abstract public class AbstractSensorServer {
 
     public void dispose() {
         for (Map.Entry<String, SensorListener> sensor : this.sensors.entrySet()) {
-            Sensor s = instanceManager.sensorManagerInstance().getSensor(sensor.getKey());
+            Sensor s = instanceManager.getDefault(SensorManager.class).getSensor(sensor.getKey());
             if(s!=null) {
                s.removePropertyChangeListener(sensor.getValue());
             }
@@ -109,11 +107,10 @@ abstract public class AbstractSensorServer {
         Sensor sensor;
         try {
             addSensorToList(sensorName);
-            sensor = instanceManager.sensorManagerInstance().getSensor(sensorName);
+            sensor = instanceManager.getDefault(SensorManager.class).getSensor(sensorName);
 
             if (sensor == null) {
-                log.error("Sensor " + sensorName
-                        + " is not available");
+                log.error("Sensor {} is not available",sensorName);
             } else {
                 if (sensor.getKnownState() != Sensor.INACTIVE) {
                     // set state to INACTIVE
@@ -122,11 +119,7 @@ abstract public class AbstractSensorServer {
                 } else {
                     // just notify the client.
                     log.debug("not changing sensor '{}', already InActive ({})", sensorName, sensor.getKnownState());
-                    try {
-                        sendStatus(sensorName, Sensor.INACTIVE);
-                    } catch (IOException ie) {
-                        log.error("Error Sending Status");
-                    }
+                    sendStatusWithErrorHandling(sensorName,Sensor.INACTIVE);
                 }
             }
         } catch (JmriException ex) {
@@ -134,11 +127,19 @@ abstract public class AbstractSensorServer {
         }
     }
 
+    private void sendStatusWithErrorHandling(String sensorName,int status){
+        try {
+            sendStatus(sensorName, status);
+        } catch (IOException ie) {
+            log.error(ERROR_SENDING_STATUS);
+        }
+    }
+
     class SensorListener implements PropertyChangeListener {
 
         SensorListener(String sensorName) {
             name = sensorName;
-            sensor = instanceManager.sensorManagerInstance().getSensor(sensorName);
+            sensor = instanceManager.getDefault(SensorManager.class).getSensor(sensorName);
         }
 
         // update state as state of sensor changes
@@ -150,7 +151,7 @@ abstract public class AbstractSensorServer {
                 try {
                     sendStatus(name, now);
                 } catch (IOException ie) {
-                    log.debug("Error Sending Status");
+                    log.debug(ERROR_SENDING_STATUS);
                     // if we get an error, de-register
                     sensor.removePropertyChangeListener(this);
                     removeSensorFromList(name);
