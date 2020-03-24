@@ -1,8 +1,6 @@
 package jmri.jmrix.loconet.locogen;
 
 import java.awt.GridLayout;
-import java.util.ArrayList;
-import java.util.Iterator;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
@@ -11,12 +9,6 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
-import javax.swing.SpinnerNumberModel;
-import jmri.DccThrottle;
-import jmri.InstanceManager;
-import jmri.LocoAddress;
-import jmri.ThrottleListener;
-import jmri.ThrottleListener.DecisionType;
 import jmri.jmrix.loconet.LocoNetListener;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
@@ -38,20 +30,12 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2010
  */
 public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
-        implements LocoNetListener, ThrottleListener {
+        implements LocoNetListener {
 
     // member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton();
     javax.swing.JTextField packetTextField = new javax.swing.JTextField(12);
-
-    javax.swing.JButton addThrottles = new javax.swing.JButton("+Throttles");
-    javax.swing.JButton delThrottles = new javax.swing.JButton("-Throttles");
-    javax.swing.JLabel jLabel2 = new javax.swing.JLabel();
-    javax.swing.JSpinner numberOfThrottles = new javax.swing.JSpinner(new SpinnerNumberModel(50,1,400,1));
-    javax.swing.JLabel jLabel3 = new javax.swing.JLabel();
-    javax.swing.JSpinner firstThrottleAddress = new javax.swing.JSpinner(new SpinnerNumberModel(300,1,9999,1));
-
 
     public LocoGenPanel() {
         super();
@@ -106,31 +90,7 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
             pane1.add(jLabel1);
             pane1.add(packetTextField);
             pane1.add(sendButton);
-
-            jLabel2.setText("DCC Start #");
-            jLabel2.setVisible(true);
-            pane1.add(jLabel2);
-            pane1.add(firstThrottleAddress);
-            jLabel3.setText("# Throttles");
-            jLabel3.setVisible(true);
-            pane1.add(jLabel3);
-            pane1.add(numberOfThrottles);
-            pane1.add(addThrottles);
-            pane1.add(delThrottles);
             pane1.add(Box.createVerticalGlue());
-
-            addThrottles.addActionListener(new java.awt.event.ActionListener() {
-                @Override
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    addThrottlesActionPerformed(e);
-                }
-            });
-            delThrottles.addActionListener(new java.awt.event.ActionListener() {
-                @Override
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    delThrottlesActionPerformed(e);
-                }
-            });
 
             sendButton.addActionListener(new java.awt.event.ActionListener() {
                 @Override
@@ -184,128 +144,6 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
         memo.getLnTrafficController().sendLocoNetMessage(createPacket(packetTextField.getText()));
-    }
-
-    private final ArrayList<DccThrottle> throttles = new ArrayList<>();
-    private int throttleAddr = 300;
-    private int ac = 0;
-    public void addThrottlesActionPerformed(java.awt.event.ActionEvent e) {
-        int count=0;
-        try {
-            throttleAddr = (int) firstThrottleAddress.getValue();
-        }
-        catch (Exception e3) {
-            log.error("Bother leaving it at[{}]",throttleAddr);
-        }
-        while (count < (int) numberOfThrottles.getValue()) {
-            log.debug("requesting throttle address={}",  throttleAddr);
-            boolean ok;
-            ok = InstanceManager.throttleManagerInstance().requestThrottle(throttleAddr, this);
-            if (!ok) {
-                log.warn("Throttle for locomotive address {} could not be setup.", throttleAddr);
-            }
-            throttleAddr+=1;
-            count++;
-        }
-        firstThrottleAddress.setValue(throttleAddr);
-        log.info("Start 300 Current[{}] Size[{}] nonnull[{}] ergo Throttles Good[{}",throttleAddr, throttles.size(),ac,throttleAddr-300 );
-    }
-
-    @Override
-    public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
-        if ( question == DecisionType.STEAL ){
-            jmri.util.ThreadingUtil.runOnGUI(() -> {
-                if ( javax.swing.JOptionPane.YES_OPTION == javax.swing.JOptionPane.showConfirmDialog(
-                    this, "StealQuestionText", 
-                    "StealRequestTitle", javax.swing.JOptionPane.YES_NO_OPTION)) {
-                        InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.STEAL );
-                } else {
-                    InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
-                }
-            });
-        }
-        else if ( question == DecisionType.SHARE ){
-            jmri.util.ThreadingUtil.runOnGUI(() -> {
-                if ( javax.swing.JOptionPane.YES_OPTION == javax.swing.JOptionPane.showConfirmDialog(
-                    this, "ShareQuestionText", 
-                    "ShareRequestTitle", javax.swing.JOptionPane.YES_NO_OPTION)) {
-                        InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.SHARE );
-                } else {
-                    InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
-                }
-            });
-        }
-        else if ( question == DecisionType.STEAL_OR_SHARE ){
-            
-            String[] options = new String[] {"StealButton", 
-                "ShareButton", "CancelButton"};
-            jmri.util.ThreadingUtil.runOnGUI(() -> {
-                int response = javax.swing.JOptionPane.showOptionDialog(
-                    this, "StealShareQuestionText",
-                    "StealShareRequestTitle",
-                    javax.swing.JOptionPane.DEFAULT_OPTION, javax.swing.JOptionPane.QUESTION_MESSAGE,
-                    null, options, options[1]);
-            
-                if (response == 0){
-                    log.debug("steal clicked");
-                    InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.STEAL );
-                } else if ( response == 1 ) {
-                    log.debug("share clicked");
-                    InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.SHARE );
-                }
-                else {
-                    log.debug("cancel clicked");
-                    InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
-                }
-            });
-        }
-    }
-    public void delThrottlesActionPerformed(java.awt.event.ActionEvent e) {
-        int count = (int) numberOfThrottles.getValue();
-        int startingDCC = (int) firstThrottleAddress.getValue();
-        Iterator<DccThrottle> throttleList = throttles.iterator();
-        while (throttleList.hasNext()) {
-            DccThrottle item = throttleList.next();
-            if (item != null && item.getLocoAddress().getNumber() > (startingDCC -1) ) {
-                if ( count < 1) {
-                    break;
-                }
-                item.setSpeedSetting(0.0f);
-                InstanceManager.throttleManagerInstance().releaseThrottle(item, null);
-                throttleList.remove();
-                count--;
-            }
-        }
-    }
-
-    // Throttle feedback method - Initiates running AutoEngineer with the new throttle
-    @Override
-    public void notifyThrottleFound(DccThrottle t) {
-        if (t == null) {
-            log.error("Null Throttle returned");
-            return;
-        }
-        ac = 0;
-        for( DccThrottle item : throttles) {
-            if (item != null ) {
-                ac++;
-            }
-        }
-        throttles.add(t);
-    }
-
-    @Override
-    public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
-        log.error("Throttle request failed for {} because {}", address, reason);
-    }
-
-    @Override
-    public void notifyStealThrottleRequired(jmri.LocoAddress address) {
-        // this is an automatically stealing impelementation.
-        log.warn("Stealing");
-        //InstanceManager.getDefault(ThrottleManager.class).stealThrottleRequest(address, this, true);
-        //
-        InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
     }
 
     // control sequence operation
