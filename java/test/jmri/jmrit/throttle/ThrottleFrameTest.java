@@ -278,6 +278,7 @@ public class ThrottleFrameTest {
     @Test
     public void testChangeToSpeedStepMode() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
 
         to.setAddressValue(new DccLocoAddress(42, false));
 
