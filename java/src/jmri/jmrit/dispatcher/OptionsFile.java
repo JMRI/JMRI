@@ -56,9 +56,9 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
     /**
      * Read Dispatcher Options from a file in the user's preferences directory.
      * If the file containing Dispatcher Options does not exist, this routine returns quietly.
-     * @param f The dispatcher instance.
-     * @throws org.jdom2.JDOMException if dispatcher parameter logically incorrect
-     * @throws java.io.IOException if dispatcher parameter not found
+     * @param f   The dispatcher instance.
+     * @throws org.jdom2.JDOMException  if dispatcher parameter logically incorrect
+     * @throws java.io.IOException    if dispatcher parameter not found
      */
     public void readDispatcherOptions(DispatcherFrame f) throws org.jdom2.JDOMException, java.io.IOException {
         // check if file exists

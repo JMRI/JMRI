@@ -698,7 +698,7 @@ public class AutoActiveTrain implements ThrottleListener {
             // unless forceSpeedChange is true, such as beginning, resets of transit.
             // previous signal mast speed unless the mast is held.
             boolean weAreAtSpeedChangingMast=forceSpeedChange;
-            if ( !forceSpeedChange && nB != null ) {
+            if ( !forceSpeedChange  && nB != null ) {
                 sm  = _lbManager.getFacingSignalMast(cB, nB);
                 if (sm != null) {weAreAtSpeedChangingMast=true;}
             }

@@ -619,7 +619,7 @@ public class ActivateTrainFrame {
     private void cancelInitiateTrain(ActionEvent e) {
         initiateFrame.setVisible(false);
         initiateFrame.dispose();  // prevent this window from being listed in the Window menu.
-//        initiateFrame = null;
+        initiateFrame = null;
         _dispatcher.newTrainDone(null);
     }
 

@@ -1920,10 +1920,10 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         log.debug("setWhat code = {}", code);
         switch (code) {
             case TransitSectionAction.PAUSE:
-                whatMinuteSpinner1.setModel(new SpinnerNumberModel(1, 1, 65500, 1));
                 if (editActionMode) {
                     whatMinuteSpinner1.setValue(Math.max(curTSA.getDataWhat1(), 1));
                 }
+                whatMinuteSpinner1.setModel(new SpinnerNumberModel(1, 1, 65500, 1));
                 whatMinuteSpinner1.setVisible(true);
                 whatMinuteSpinner1.setToolTipText(rbx.getString("HintPauseData"));
                 break;
@@ -2053,8 +2053,8 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         list.add(curTSA);
         actionTableModel.fireTableDataChanged();
         addEditActionFrame.setVisible(false);
-//        addEditActionFrame.dispose();
-//        addEditActionFrame = null;
+        addEditActionFrame.dispose();
+        addEditActionFrame = null;
     }
 
     private void updateActionPressed(ActionEvent e) {
@@ -2071,14 +2071,14 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         curTSA.setStringWhat(tWhatString);
         actionTableModel.fireTableDataChanged();
         addEditActionFrame.setVisible(false);
-//        addEditActionFrame.dispose();
-//        addEditActionFrame = null;
+        addEditActionFrame.dispose();
+        addEditActionFrame = null;
     }
 
     private void cancelAddEditActionPressed(ActionEvent e) {
         addEditActionFrame.setVisible(false);
-//        addEditActionFrame.dispose();
-//        addEditActionFrame = null;
+        addEditActionFrame.dispose();
+        addEditActionFrame = null;
     }
 
     private boolean validateWhenData() {

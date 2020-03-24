@@ -4291,7 +4291,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      * destination then the route with the lowest count is returned.
      *
      * @param destination final block
-     * @param nextBlock   adjacent block
+     * @param nextBlock   adjcent block
      * @return hop count to final, -1 if not available
      */
     public int getBlockHopCount(Block destination, Block nextBlock) {
@@ -4302,34 +4302,6 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         for (int i = 0; i < routes.size(); i++) {
             if (routes.get(i).getDestBlock() == destination) {
                 if (routes.get(i).getNextBlock() == nextBlock) {
-                    return routes.get(i).getHopCount();
-                }
-            }
-        }
-        return -1;
-    }
-
-    /**
-     * Checks to see if there is a route between the desintation block going from
-     * the next directly connected block. If the destination block and nextblock
-     * are the same and the block is also registered as a neighbour then 1 is
-     * returned. If no valid route to the destination block can be found via the
-     * next block then -1 is returned. If more than one route exists to the
-     * destination then the route with the lowest count is returned.
-     *
-     * @param destination final block
-     * @param nextBlock   adjacent block
-     * @param count number of hops to check for.
-     * @return hop count to final, -1 if not available
-     */
-    public int checkBlockHopCount(Block destination, Block nextBlock, int count) {
-        if ((destination == nextBlock) && (isValidNeighbour(nextBlock) && count == 1)) {
-            return 1;
-        }
-
-        for (int i = 0; i < routes.size(); i++) {
-            if (routes.get(i).getDestBlock() == destination) {
-                if (routes.get(i).getNextBlock() == nextBlock && routes.get(i).getHopCount() == count) {
                     return routes.get(i).getHopCount();
                 }
             }

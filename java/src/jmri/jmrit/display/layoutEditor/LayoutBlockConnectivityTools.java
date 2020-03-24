@@ -315,7 +315,7 @@ public class LayoutBlockConnectivityTools {
             int desCount = 0;
             if (!destBlockn1.isEmpty()) {
                 desCount = currentBlock.getBlockHopCount(destBlock.getBlock(), nextBlock.getBlock());
-                proCount = currentBlock.checkBlockHopCount(destBlockn1.get(0).getBlock(), nextBlock.getBlock(), desCount + 1);
+                proCount = currentBlock.getBlockHopCount(destBlockn1.get(0).getBlock(), nextBlock.getBlock());
                 if (log.isDebugEnabled()) {
                     log.debug("dest {} protecting {}", desCount, proCount);
                 }

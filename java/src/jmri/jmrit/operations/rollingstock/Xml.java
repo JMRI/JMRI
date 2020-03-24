@@ -47,7 +47,6 @@ public class Xml {
     static final String DATE = "date"; // NOI18N
     static final String BLOCKING = "blocking"; // NOI18N
     static final String SELECTED = "selected"; // NOI18N
-    static final String IMAGE_PATH = "imagepath"; //NOI18N
 
     static final String LOCATION_ID = "locationId"; // NOI18N
     static final String SEC_LOCATION_ID = "secLocationId"; // NOI18N

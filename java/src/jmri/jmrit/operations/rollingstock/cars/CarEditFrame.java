@@ -1,11 +1,5 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
-// My Add
-import java.awt.Color;
-import java.awt.Dimension;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-// end my add
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 import java.text.NumberFormat;
@@ -30,11 +24,6 @@ import jmri.jmrit.operations.rollingstock.RollingStockEditFrame;
 import jmri.jmrit.operations.rollingstock.cars.tools.CarAttributeEditFrame;
 import jmri.jmrit.operations.rollingstock.cars.tools.CarLoadEditFrame;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.roster.LocoFile;
-import jmri.util.FileUtil;
-import jmri.util.swing.EditableResizableImagePanel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for user edit of car

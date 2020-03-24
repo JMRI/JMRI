@@ -2,8 +2,8 @@ package jmri.jmrix.roco.z21;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import jmri.jmrix.loconet.LnCommandStationType;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
+import jmri.jmrix.loconet.LnCommandStationType;
 
 /**
  * Override default LocoNet classes to use z21 specific versions.
@@ -34,7 +34,7 @@ public class Z21LnStreamPortController extends jmri.jmrix.loconet.streamport.LnS
         this.getSystemConnectionMemo().setLnTrafficController(packets);
         // do the common manager config
         this.getSystemConnectionMemo().configureCommandStation(commandStationType,
-                mTurnoutNoRetry, mTurnoutExtraSpace, false,false); // never transponding or Xp slots
+                mTurnoutNoRetry, mTurnoutExtraSpace, false, false); // never transponding
         this.getSystemConnectionMemo().configureManagers();
 
         // start operation
