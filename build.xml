@@ -272,6 +272,8 @@
         <pathelement location="${libdir}/spring-web-5.1.3.RELEASE.jar"/>
         <!-- Assertj -->
         <pathelement location="${libdir}/assertj-core-3.12.0.jar"/>
+        <pathelement location="${libdir}/assertj-swing-3.9.2.jar"/>
+        <pathelement location="${libdir}/assertj-swing-junit-3.9.2.jar"/>
         <!-- include JMRI classes last -->
         <pathelement location="${target}/"/>  <!-- after declared jars to check for name collisions -->
         <pathelement location="${testtarget}"/> <!-- test resources in classpath that collide with stock resources -->

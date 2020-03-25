@@ -13,8 +13,10 @@ import javax.annotation.Nonnull;
 import javax.swing.AbstractButton;
 
 import org.apache.log4j.Level;
+import org.assertj.swing.edt.FailOnThreadViolationRepaintManager;
 import org.junit.Assert;
 import org.netbeans.jemmy.FrameWaiter;
+import org.netbeans.jemmy.JemmyProperties;
 import org.netbeans.jemmy.TestOut;
 import org.netbeans.jemmy.operators.AbstractButtonOperator;
 import org.netbeans.jemmy.operators.JButtonOperator;
@@ -168,6 +170,7 @@ public class JUnitUtil {
     static private boolean isLoggingInitialized = false;
     static private String initPrefsDir = null;
 
+    static private boolean isFailOnThreadViolationRepaintManagerInstalled = false;
     /**
      * JMRI standard setUp for tests. This should be the first line in the {@code @Before}
      * annotated method.
@@ -178,6 +181,11 @@ public class JUnitUtil {
             isLoggingInitialized = true;
             String filename = System.getProperty("jmri.log4jconfigfilename", "tests.lcf");
             Log4JUtil.initLogging(filename);
+        }
+
+        if (!isFailOnThreadViolationRepaintManagerInstalled) {
+            FailOnThreadViolationRepaintManager.install();
+            isFailOnThreadViolationRepaintManagerInstalled = true;
         }
         
         // need to do this each time
@@ -1150,7 +1158,7 @@ public class JUnitUtil {
      * @param output a container for the input, output, and error streams
      */
     public static void setGUITestOutput(TestOut output) {
-        org.netbeans.jemmy.JemmyProperties.setCurrentOutput(output);
+        ThreadingUtil.runOnGUI(() -> JemmyProperties.setCurrentOutput(output));
     }
 
     /**
