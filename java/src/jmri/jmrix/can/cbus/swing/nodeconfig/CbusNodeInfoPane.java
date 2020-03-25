@@ -174,9 +174,10 @@ public class CbusNodeInfoPane extends CbusNodeConfigTab {
         //   nodePartTwobuilder.append ("<p> Processor : </p>");
         //   nodePartTwobuilder.append ("<p> Flags </p>");
         
-        textArea.setText(textAreaString.toString());
-        textArea.setCaretPosition(0);
-        
+        if ( !(textArea.getText().equals(textAreaString.toString()) )) {
+            textArea.setText(textAreaString.toString());
+            textArea.setCaretPosition(0);
+        }
     }
     
     private void appendNodeTypeInfo(StringBuilder sb) {
