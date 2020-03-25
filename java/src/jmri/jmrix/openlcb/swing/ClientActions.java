@@ -3,6 +3,8 @@ package jmri.jmrix.openlcb.swing;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JPanel;
@@ -31,7 +33,7 @@ public class ClientActions {
     }
 
     public void openCdiWindow(NodeID destNode, String description) {
-        final java.util.ArrayList<JButton> readList = new java.util.ArrayList<JButton>();
+//        final java.util.ArrayList<JButton> readList = new java.util.ArrayList<JButton>();
         final java.util.ArrayList<JButton> sensorButtonList = new java.util.ArrayList<JButton>();
         final java.util.ArrayList<JButton> turnoutButtonList = new java.util.ArrayList<JButton>();
 
@@ -39,7 +41,7 @@ public class ClientActions {
         f.setTitle(Bundle.getMessage("CdiPanelConfigure", description));
         f.setLayout(new javax.swing.BoxLayout(f.getContentPane(), javax.swing.BoxLayout.Y_AXIS));
 
-        CdiPanel m = new CdiPanel();
+        CdiPanel m = new CdiPanel(new File(jmri.util.FileUtil.getUserFilesPath()));
         f.add(m);
         m.setEventTable(iface.getNodeStore().getSimpleNodeIdent(destNode).getUserName(),
                 iface.getEventTable());
@@ -48,7 +50,7 @@ public class ClientActions {
             private boolean haveButtons = false;
             @Override
             public JButton handleReadButton(JButton button) {
-                readList.add(button);
+//                readList.add(button); never used
                 return button;
             }
 
@@ -86,6 +88,7 @@ public class ClientActions {
                             }
                             log.info("make sensor MS" + mevt1.getText() + ";" + mevt2.getText() +
                                     " [" + mdesc.getText() + "]");
+                            m.madeSensor(sensor.getUserName());
                         }
 
                         JTextField mdesc = desc;
@@ -105,6 +108,7 @@ public class ClientActions {
                             }
                             log.info("make turnout MT" + mevt1.getText() + ";" + mevt2.getText()
                                     + " [" + mdesc.getText() + "]");
+                            m.madeTurnout(turnout.getUserName());
                         }
 
                         JTextField mdesc = desc;
@@ -115,6 +119,8 @@ public class ClientActions {
                         haveButtons = true;
                         m.addButtonToFooter(buttonForList(sensorButtonList, Bundle.getMessage("CdiPanelMakeAllSensors")));
                         m.addButtonToFooter(buttonForList(turnoutButtonList, Bundle.getMessage("CdiPanelMakeAllTurnouts")));
+                    } else {
+                        p.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("CdiTitleSensorTurnout")));
                     }
                     gpane = null;
                     evt1 = null;
