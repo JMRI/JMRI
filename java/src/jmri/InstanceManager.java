@@ -94,6 +94,11 @@ public final class InstanceManager {
      */
     public static <T> void store(@Nonnull T item, @Nonnull Class<T> type) {
         log.debug("Store item of type {}", type.getName());
+        if (item == null) {
+            NullPointerException npe = new NullPointerException();
+            log.error("Should not store null value of type {}", type.getName());
+            throw npe;
+        }
         List<T> l = getList(type);
         l.add(item);
         getDefault().pcs.fireIndexedPropertyChange(getListPropertyName(type), l.indexOf(item), null, item);
@@ -389,6 +394,11 @@ public final class InstanceManager {
     @Nonnull
     public static <T> T setDefault(@Nonnull Class< T> type, @Nonnull T item) {
         log.trace("setDefault for type {}", type.getName());
+        if (item == null) {
+            NullPointerException npe = new NullPointerException();
+            log.error("Should not set default of type {} to null value", type.getName());
+            throw npe;
+        }
         Object oldDefault = containsDefault(type) ? getNullableDefault(type) : null;
         List<T> l = getList(type);
         l.remove(item);
