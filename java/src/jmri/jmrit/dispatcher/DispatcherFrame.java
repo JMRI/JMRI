@@ -268,7 +268,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     at.setRosterEntry(re);
                     at.setDccAddress(re.getDccAddress());
                 } else {
-                    log.warn("Roster Entry '{}' not found, could not create ActiveTrain '{}'", 
+                    log.warn("Roster Entry '{}' not found, could not create ActiveTrain '{}'",
                             trainNameToUse, info.getTrainName());
                     return -1;
                 }
@@ -797,11 +797,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     }
 
     public String getSectionName(Section sec) {
-        String s = sec.getSystemName();
-        String u = sec.getUserName();
-        if ((u != null) && (!u.equals("") && (!u.equals(s)))) {
-            return (s + "(" + u + ")");
-        }
+        String s = sec.getDisplayName();
         return s;
     }
 
@@ -1180,7 +1176,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         if ((!reverseAtEnd) && resetWhenDone && (!t.canBeResetWhenDone())) {
             if (showErrorMessages) {
                 JOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(Bundle.getMessage(
-                        "Error26"), new Object[]{(t.getSystemName() + "(" + t.getUserName() + ")")}),
+                        "Error26"), new Object[]{(t.getDisplayName())}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             }
             log.error("Incompatible Transit set up and request to Reset When Done when attempting to create an Active Train");
@@ -1542,15 +1538,15 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         ActiveTrain at = ar.getActiveTrain();
         Section s = ar.getSection();
         if (at.reachedRestartPoint()) {
-            log.debug("{}: waiting for restart, [{}] not allocated", at.getTrainName(), s.getUserName());
+            log.debug("{}: waiting for restart, [{}] not allocated", at.getTrainName(), s.getDisplayName());
             return null;
         }
         if (at.holdAllocation()) {
-            log.debug("{}: allocation is held, [{}] not allocated", at.getTrainName(), s.getUserName());
+            log.debug("{}: allocation is held, [{}] not allocated", at.getTrainName(), s.getDisplayName());
             return null;
         }
         if (s.getState() != Section.FREE) {
-            log.debug("{}: section [{}] is not free", at.getTrainName(), s.getUserName());
+            log.debug("{}: section [{}] is not free", at.getTrainName(), s.getDisplayName());
             return null;
         }
         // skip occupancy check if this is the first allocation and the train is occupying the Section
@@ -2048,11 +2044,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         Object choices[] = new Object[sList.size()];
         for (int i = 0; i < sList.size(); i++) {
             Section s = sList.get(i);
-            String txt = s.getSystemName();
-            String user = s.getUserName();
-            if ((user != null) && (!user.equals("")) && (!user.equals(txt))) {
-                txt = txt + "(" + user + ")";
-            }
+            String txt = s.getDisplayName();
             choices[i] = txt;
         }
         Object secName = JOptionPane.showInputDialog(dispatcherFrame,

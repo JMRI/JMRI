@@ -435,7 +435,7 @@
    <tocitem text="Open Scripting Arch (Apple) " target="html.tools.scripting.AppleScript"/>
 
   </tocitem>
-  <tocitem text="Sections ">
+  <tocitem text="Sections " target="html.tools.Sections">
    <tocitem text="Section Table " target="package.jmri.jmrit.beantable.SectionTable"/>
 
    <tocitem text="Add/Edit Sections " target="package.jmri.jmrit.beantable.SectionAddEdit"/>
@@ -501,10 +501,12 @@
 
   <tocitem text="Tracker (Blocks) " target="html.tools.tracker.index"/>
 
-  <tocitem text="Transits ">
+  <tocitem text="Transits " target="html.tools.Transits">
    <tocitem text="Transit Table " target="package.jmri.jmrit.beantable.TransitTable"/>
 
    <tocitem text="Add/Edit Transits " target="package.jmri.jmrit.beantable.TransitAddEdit"/>
+
+   <tocitem text="Transit Actions " target="package.jmri.jmrit.beantable.ViewSpecialActions"/>
 
   </tocitem>
   <tocitem text="Turnouts " target="html.tools.Turnouts">
