@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Class to encapsulate a hex record as used by Microchip tools
+ * Class to encapsulate a hex record as used by Microchip tools.
  * 
  * @author Andrew Crosland Copyright (C) 2020
  */
@@ -31,7 +31,7 @@ public class HexRecord {
     
     
     /**
-     * Create an empty record with invalid status
+     * Create an empty record with invalid status.
      */
     public HexRecord() {
         len = 0;
@@ -46,7 +46,7 @@ public class HexRecord {
     
     
     /**
-     * Read a new record from a file
+     * Read a new record from a file.
      * 
      * @param f hex file to read from
      */
@@ -57,9 +57,9 @@ public class HexRecord {
     
     
     /**
-     * Set the line number where the record was found in the file
+     * Set the line number where the record was found in the file.
      * 
-     * @param l 
+     * @param l the line number
      */
     protected void setLineNo(int l) {
         lineNo = l;
@@ -67,7 +67,7 @@ public class HexRecord {
     
     
     /**
-     * Get the data array from a hex record
+     * Get the data array from a hex record.
      * 
      * @return the data
      */
@@ -77,7 +77,7 @@ public class HexRecord {
     
     
     /**
-     * Get a data element from a hex record
+     * Get a data element from a hex record.
      * 
      * @param i index of the element to get
      * @return the data
@@ -88,7 +88,7 @@ public class HexRecord {
     
     
     /**
-     * Get current address from a hex record
+     * Get current address from a hex record.
      * <p>
      * Returns 16 bit address from a normal hex record. Extended address records
      * are handled elsewhere.
@@ -101,7 +101,7 @@ public class HexRecord {
     
     
     /**
-     * Look for the start of a new record
+     * Look for the start of a new record.
      * 
      * @param f Input hex file
      */
@@ -122,7 +122,7 @@ public class HexRecord {
     
     
     /**
-     * Read hex record header
+     * Read hex record header.
      * 
      * @param f Input hex file
      */
@@ -147,7 +147,7 @@ public class HexRecord {
     
     
     /**
-     * Read the data bytes
+     * Read the data bytes.
      * 
      * @param f Input hex file
      */
@@ -162,7 +162,7 @@ public class HexRecord {
     
     
     /**
-     * Verify the record checksum
+     * Verify the record checksum.
      * 
      * @param f Input hex file
      */
@@ -189,6 +189,6 @@ public class HexRecord {
     }
 
     
-    private final static Logger log = LoggerFactory.getLogger(HexRecord.class);
+    private static final Logger log = LoggerFactory.getLogger(HexRecord.class);
     
 }

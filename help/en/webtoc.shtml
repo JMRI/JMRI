@@ -1342,7 +1342,9 @@
 </ul>
 </li>
   
-<li>Sections <ul>
+<li>
+<a href="html/tools/Sections.shtml">Sections </a>
+<ul>
    
 <li>
 <a href="package/jmri/jmrit/beantable/SectionTable.shtml">Section Table </a>
@@ -1544,7 +1546,9 @@
 </li>
 
   
-<li>Transits <ul>
+<li>
+<a href="html/tools/Transits.shtml">Transits </a>
+<ul>
    
 <li>
 <a href="package/jmri/jmrit/beantable/TransitTable.shtml">Transit Table </a>
@@ -1554,6 +1558,12 @@
    
 <li>
 <a href="package/jmri/jmrit/beantable/TransitAddEdit.shtml">Add/Edit Transits </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="package/jmri/jmrit/beantable/ViewSpecialActions.shtml">Transit Actions </a>
 <ul></ul>
 </li>
 

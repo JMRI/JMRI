@@ -12,7 +12,7 @@ import jmri.InstanceManager;
 
 /**
  *
- * @author rhwood
+ * @author Randall Wood
  */
 class StartupModelCellEditor extends DefaultCellEditor {
 

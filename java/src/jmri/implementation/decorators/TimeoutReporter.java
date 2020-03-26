@@ -16,7 +16,6 @@ import java.beans.PropertyChangeListener;
  * <hr>
  * This file is part of JMRI.
  * <p>
- * <p>
  * based on TimeoutRfidReporter originally implemented by Matthew Harris
  * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
