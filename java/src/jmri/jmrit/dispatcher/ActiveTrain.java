@@ -235,16 +235,12 @@ public class ActiveTrain {
     }
 
     public String getTransitName() {
-        String s = mTransit.getSystemName();
-        String u = mTransit.getUserName();
-        if ((u != null) && (!u.equals("") && (!u.equals(s)))) {
-            return (s + "(" + u + ")");
-        }
+        String s = mTransit.getDisplayName();
         return s;
     }
 
     public String getActiveTrainName() {
-        return (mTrainName + "/" + getTransitName());
+        return (mTrainName + " / " + getTransitName());
     }
 
     // Note: Transit and Train may not be changed once an ActiveTrain is created.
@@ -472,7 +468,7 @@ public class ActiveTrain {
                             if (resetStartSensor) {
                                 try {
                                     getDelaySensor().setKnownState(jmri.Sensor.INACTIVE);
-                                    log.debug("Start sensor {} set back to inActive", getDelaySensorName());                                    
+                                    log.debug("Start sensor {} set back to inActive", getDelaySensorName());
                                 } catch (jmri.JmriException ex) {
                                     log.error("Error resetting start sensor {} back to inActive", getDelaySensorName());
                                 }
@@ -873,11 +869,7 @@ public class ActiveTrain {
     }
 
     private String getSectionName(jmri.Section sc) {
-        String s = sc.getSystemName();
-        String u = sc.getUserName();
-        if ((u != null) && (!u.equals("") && (!u.equals(s)))) {
-            return (s + "(" + u + ")");
-        }
+        String s = sc.getDisplayName();
         return s;
     }
 
@@ -1120,7 +1112,7 @@ public class ActiveTrain {
     }
 
     protected void restart() {
-        log.debug("{}: restarting", getTrainName());        
+        log.debug("{}: restarting", getTrainName());
         restartPoint = false;
         holdAllocation = false;
         setStatus(WAITING);
