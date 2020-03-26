@@ -8,7 +8,7 @@ import javax.swing.JFrame;
  * WindowInterface interface around a JFrame, so that menu items that expect the
  * WindowInterface can rely on its presence.
  *
- * @author rhwood
+ * @author Randall Wood
  */
 public class JFrameInterface implements WindowInterface {
 

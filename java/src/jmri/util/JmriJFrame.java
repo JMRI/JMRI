@@ -31,7 +31,7 @@ import jmri.InstanceManager;
 import jmri.ShutDownManager;
 import jmri.UserPreferencesManager;
 import jmri.beans.BeanInterface;
-import jmri.beans.Beans;
+import jmri.beans.BeanUtil;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.JmriPanel;
 import jmri.util.swing.WindowInterface;
@@ -1025,8 +1025,8 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
     /** {@inheritDoc} */
     @Override
     public void setIndexedProperty(String key, int index, Object value) {
-        if (Beans.hasIntrospectedProperty(this, key)) {
-            Beans.setIntrospectedIndexedProperty(this, key, index, value);
+        if (BeanUtil.hasIntrospectedProperty(this, key)) {
+            BeanUtil.setIntrospectedIndexedProperty(this, key, index, value);
         } else {
             if (!properties.containsKey(key)) {
                 properties.put(key, new Object[0]);
@@ -1041,7 +1041,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         if (properties.containsKey(key) && properties.get(key).getClass().isArray()) {
             return ((Object[]) properties.get(key))[index];
         }
-        return Beans.getIntrospectedIndexedProperty(this, key, index);
+        return BeanUtil.getIntrospectedIndexedProperty(this, key, index);
     }
 
     /** {@inheritDoc} 
@@ -1049,8 +1049,8 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
      */
     @Override
     public void setProperty(String key, Object value) {
-        if (Beans.hasIntrospectedProperty(this, key)) {
-            Beans.setIntrospectedProperty(this, key, value);
+        if (BeanUtil.hasIntrospectedProperty(this, key)) {
+            BeanUtil.setIntrospectedProperty(this, key, value);
         } else {
             properties.put(key, value);
         }
@@ -1064,20 +1064,20 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         if (properties.containsKey(key)) {
             return properties.get(key);
         }
-        return Beans.getIntrospectedProperty(this, key);
+        return BeanUtil.getIntrospectedProperty(this, key);
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean hasProperty(String key) {
-        return (properties.containsKey(key) || Beans.hasIntrospectedProperty(this, key));
+        return (properties.containsKey(key) || BeanUtil.hasIntrospectedProperty(this, key));
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean hasIndexedProperty(String key) {
         return ((this.properties.containsKey(key) && this.properties.get(key).getClass().isArray())
-                || Beans.hasIntrospectedIndexedProperty(this, key));
+                || BeanUtil.hasIntrospectedIndexedProperty(this, key));
     }
 
     protected transient WindowInterface windowInterface = null;
@@ -1120,7 +1120,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
     public Set<String> getPropertyNames() {
         Set<String> names = new HashSet<>();
         names.addAll(properties.keySet());
-        names.addAll(Beans.getIntrospectedPropertyNames(this));
+        names.addAll(BeanUtil.getIntrospectedPropertyNames(this));
         return names;
     }
 

@@ -8,7 +8,7 @@ import java.beans.PropertyChangeListener;
  * Objects that implement this interface will be able to provide a source for
  * getting a roster group to other objects that manipulate roster groups.
  *
- * @author rhwood
+ * @author Randall Wood
  */
 public interface RosterGroupSelector {
 

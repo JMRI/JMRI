@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author Egbert Broerse (C) 2017 -- based on ControlPanelServlet.java by rhwood
+ * @author Egbert Broerse (C) 2017 -- based on ControlPanelServlet.java by Randall Wood
  */
 @WebServlet(name = "SwitchboardServlet",
         urlPatterns = {"/panel/Switchboard"})
