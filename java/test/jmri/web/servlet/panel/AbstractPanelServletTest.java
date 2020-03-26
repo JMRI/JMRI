@@ -1,11 +1,12 @@
 package jmri.web.servlet.panel;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
+import org.assertj.swing.edt.GuiActionRunner;
 import org.jdom2.Element;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.Sensor;
@@ -19,26 +20,28 @@ public class AbstractPanelServletTest {
 
     @Test
     public void testPositionableElement() {
-        String systemName = "IS1";
-        String userName = "Internal Sensor 1";
-        AbstractPanelServlet servlet = new NullPanelServlet();
-        Sensor s = InstanceManager.getDefault(SensorManager.class).provide(systemName);
-        s.setUserName(userName);
-        MultiSensorIcon p = new MultiSensorIcon(null);
-        p.addEntry(userName, new NamedIcon("program:resources/logo.gif", "logo"));
-        Element e = ConfigXmlManager.elementFromObject(p);
-        assertEquals(userName, e.getChild("active").getAttribute("sensor").getValue());
-        e = servlet.positionableElement(p);
-        assertEquals(systemName, e.getChild("active").getAttribute("sensor").getValue());
+        GuiActionRunner.execute(() -> {
+            String systemName = "IS1";
+            String userName = "Internal Sensor 1";
+            AbstractPanelServlet servlet = new NullPanelServlet();
+            Sensor s = InstanceManager.getDefault(SensorManager.class).provide(systemName);
+            s.setUserName(userName);
+            MultiSensorIcon p = new MultiSensorIcon(null);
+            p.addEntry(userName, new NamedIcon("program:resources/logo.gif", "logo"));
+            Element e = ConfigXmlManager.elementFromObject(p);
+            assertThat(e.getChild("active").getAttribute("sensor").getValue()).isEqualTo(userName);
+            e = servlet.positionableElement(p);
+            assertThat(e.getChild("active").getAttribute("sensor").getValue()).isEqualTo(systemName);
+        });
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initInternalSensorManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }
@@ -59,6 +62,6 @@ public class AbstractPanelServletTest {
         protected String getXmlPanel(String name) {
             return null;
         }
-        
+
     }
 }
