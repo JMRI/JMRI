@@ -566,7 +566,7 @@
  </indexitem>
  <indexitem text="SECSI (TrakTronix) " target="html.hardware.secsi.index"/>
 
- <indexitem text="Section " target="package.jmri.jmrit.beantable.SectionTable">
+ <indexitem text="Section " target="html.tools.Sections">
   <indexitem text="Add/Edit a Section " target="package.jmri.jmrit.beantable.SectionAddEdit"/>
 
   <indexitem text="Section Table " target="package.jmri.jmrit.beantable.SectionTable"/>
@@ -695,11 +695,11 @@
  <indexitem text="Transit " target="html.tools.Transits">
   <indexitem text="Add/Edit a Transit " target="package.jmri.jmrit.beantable.TransitAddEdit"/>
 
+  <indexitem text="Transit Actions " target="package.jmri.jmrit.beantable.ViewSpecialActions"/>
+
   <indexitem text="Transit Table " target="package.jmri.jmrit.beantable.TransitTable"/>
 
  </indexitem>
- <indexitem text="Transit Table " target="package.jmri.jmrit.beantable.TransitTable"/>
-
  <indexitem text="Translate (Move) Selection (Panels) " target="package.jmri.jmrit.display.TranslateSelection"/>
 
  <indexitem text="Turnout " target="html.tools.Turnouts">

@@ -730,7 +730,6 @@ public class JsonUtilHttpService extends JsonHttpService {
                 case JsonException.ERROR:
                 case JSON.LIST:
                 case JSON.PONG:
-                case JSON.VERSION:
                     if (server) {
                         return doSchema(type, server,
                                 this.mapper.readTree(this.getClass().getClassLoader()
@@ -756,6 +755,7 @@ public class JsonUtilHttpService extends JsonHttpService {
                 case JSON.METADATA:
                 case JSON.NODE:
                 case JSON.RAILROAD:
+                case JSON.VERSION:
                     return doSchema(type,
                             server,
                             RESOURCE_PATH + type + "-server.json",

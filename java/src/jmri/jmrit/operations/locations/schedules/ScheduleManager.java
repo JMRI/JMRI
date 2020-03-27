@@ -35,18 +35,6 @@ public class ScheduleManager implements InstanceManagerAutoDefault, InstanceMana
 
     private int _id = 0;
 
-    /**
-     * Get the default instance of this class.
-     *
-     * @return the default instance of this class
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static synchronized ScheduleManager instance() {
-        return InstanceManager.getDefault(ScheduleManager.class);
-    }
-
     public void dispose() {
         _scheduleHashTable.clear();
     }

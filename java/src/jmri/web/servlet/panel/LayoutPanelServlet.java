@@ -18,7 +18,7 @@ import org.slf4j.*;
 /**
  * Return xml (for specified LayoutPanel) suitable for use by external clients
  *
- * @author mstevetodd -- based on PanelServlet.java by rhwood
+ * @author mstevetodd -- based on PanelServlet.java by Randall Wood
  */
 @WebServlet(name = "LayoutPanelServlet",
         urlPatterns = {"/panel/Layout"})

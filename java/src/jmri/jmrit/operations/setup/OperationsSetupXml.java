@@ -24,18 +24,6 @@ public class OperationsSetupXml extends OperationsXml implements InstanceManager
     public OperationsSetupXml() {
     }
 
-    /**
-     * Get the default instance of this class.
-     *
-     * @return the default instance of this class
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static synchronized OperationsSetupXml instance() {
-        return InstanceManager.getDefault(OperationsSetupXml.class);
-    }
-
     @Override
     public void writeFile(String name) throws java.io.FileNotFoundException, java.io.IOException {
         log.debug("writeFile {}", name);

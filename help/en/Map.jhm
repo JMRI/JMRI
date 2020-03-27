@@ -1580,6 +1580,8 @@
 
 <mapID target="html.doc.Technical.gitdeveloper_release" url="html/doc/Technical/gitdeveloper.shtml#release"/>
 
+<mapID target="html.hardware.cmri.SidebarHardwareLocalPart" url="html/hardware/cmri/SidebarHardwareLocalPart.shtml"/>
+
 <mapID target="html.hardware.loconet.StandaloneLocoNet_routeconnprefix" url="html/hardware/loconet/StandaloneLocoNet.shtml#routeconnprefix"/>
 
 <mapID target="html.hardware.loconet.DCS52_Dcs52GeneralCmdStn" url="html/hardware/loconet/DCS52.shtml#Dcs52GeneralCmdStn"/>
@@ -3174,6 +3176,8 @@
 
 <mapID target="html.hardware.oaktree.OakTree_connecting" url="html/hardware/oaktree/OakTree.shtml#connecting"/>
 
+<mapID target="html.hardware.loconet.SidebarHardwareLocalPart" url="html/hardware/loconet/SidebarHardwareLocalPart.shtml"/>
+
 <mapID target="html.hardware.TerminalServer" url="html/hardware/TerminalServer.shtml"/>
 
 <mapID target="package.jmri.jmrix.grapevine.serialmon.SerialMonFrame" url="package/jmri/jmrix/grapevine/serialmon/SerialMonFrame.shtml"/>
@@ -3960,6 +3964,8 @@
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_BuildReportPreveiw" url="manual/JMRI_OPS_UsersGuide/Ops_BuildReportPreveiw.shtml"/>
 
+<mapID target="html.hardware.can.SidebarHardwareLocalPart" url="html/hardware/can/SidebarHardwareLocalPart.shtml"/>
+
 <mapID target="html.hardware.rfid.index_connecting" url="html/hardware/rfid/index.shtml#connecting"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_Trains_buildbtn" url="manual/JMRI_OPS_UsersGuide/Ops_Trains.shtml#buildbtn"/>
@@ -4399,8 +4405,6 @@
 <mapID target="html.hardware.loconet.StandaloneLocoNet_multipleconnections" url="html/hardware/loconet/StandaloneLocoNet.shtml#multipleconnections"/>
 
 <mapID target="html.doc.Technical.CATS" url="html/doc/Technical/CATS.shtml"/>
-
-<mapID target="package.jmri.jmrit.beantable.SectionTable_SignalMast" url="package/jmri/jmrit/beantable/SectionTable.shtml#SignalMast"/>
 
 <mapID target="package.jmri.jmrit.speedometer.SpeedometerFrame" url="package/jmri/jmrit/speedometer/SpeedometerFrame.shtml"/>
 

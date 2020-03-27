@@ -57,14 +57,6 @@ public class Z21XNetMessage extends jmri.jmrix.lenz.XNetMessage {
     }
 
     @Override
-    public boolean replyExpected() {
-        if(getOpCode()==Z21Constants.LAN_X_SET_TURNOUT){
-            return false;
-        }
-        return super.replyExpected();
-    }
-
-    @Override
     public String toMonitorString() {
         switch(getElement(0)) {
             case Z21Constants.LAN_X_SET_TURNOUT: {

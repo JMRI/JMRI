@@ -5,4 +5,5 @@
  * repositories, etc.  Large bodies of code should be brought
  * in as libraries i.e. jar files.
  */
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings({})
 package jmri.util.com;
