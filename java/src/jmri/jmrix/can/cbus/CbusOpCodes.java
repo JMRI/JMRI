@@ -193,7 +193,7 @@ public class CbusOpCodes {
      */
     @Nonnull
     public static final String decodeExtended(CanFrame msg) {
-        StringBuilder sb = new StringBuilder(Bundle.getMessage("decodeBootloader")); 
+        StringBuilder sb = new StringBuilder(Bundle.getMessage("decodeBootloader"));
         switch (msg.getHeader()) {
             case 4: // outgoing Bootload Command
                 int newChecksum;
@@ -223,7 +223,7 @@ public class CbusOpCodes {
                 sb.append( Bundle.getMessage("OPC_DA")).append(" :");
                 msg.appendHexElements(sb);
                 break;
-            case 10000004: // incoming Bootload Info
+            case 0x10000004: // incoming Bootload Info
                 switch (msg.getElement(0)) { // data payload of bootloader control frames
                     case CbusConstants.CBUS_EXT_BOOT_ERROR: // 0
                         sb.append(Bundle.getMessage("decodeCBUS_EXT_BOOT_ERROR"));

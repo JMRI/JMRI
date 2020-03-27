@@ -130,6 +130,8 @@ public class JsonTurnoutHttpService extends JsonNamedBeanHttpService<Turnout> {
                     sensor = sensorService.getNamedBean(SENSOR, data.asText(), mapper.nullNode(), request);
                 } else if (data.isObject()) {
                     sensor = sensorService.getNamedBean(SENSOR, data.path(JSON.NAME).asText(), data, request);
+                } else {
+                    throw new JsonException(400, Bundle.getMessage(request.locale, "ErrorInvalidProperty", SENSOR, TURNOUT, turnout.getSystemName()), request.id);
                 }
                 if (sensor != null) {
                     turnout.provideFeedbackSensor(sensor.getSystemName(), number);

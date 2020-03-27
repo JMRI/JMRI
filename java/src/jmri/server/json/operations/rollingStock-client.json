@@ -1,0 +1,9 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "jmri-json-rollingStock-client-message",
+    "type": "object",
+    "description": "Data portion of message from client to JMRI for type \"rollingStock\" (note that the only valid client method for \"rollingStock\" is \"list\")",
+    "properties": {
+    },
+    "additionalProperties": false
+}
