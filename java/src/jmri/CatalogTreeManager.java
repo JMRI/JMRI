@@ -86,9 +86,13 @@ public interface CatalogTreeManager extends Manager<CatalogTree> {
     public CatalogTree newCatalogTree(@Nonnull String systemName, String userName);
 
     public void storeImageIndex();
-        
+
+    public void loadImageIndex();
+
     public boolean isIndexChanged();
-    
+
+    public boolean isIndexLoaded();
+
     public void indexChanged(boolean changed);
 
     @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY",
