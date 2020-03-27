@@ -172,409 +172,295 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
 
     // functions - note that we use the naming for DCC, though that's not the implication;
     // see also DccThrottle interface
+    // These overides are necassary as protocol 2 functions groups are non standard.
+    // F0-f6 are group 1, f7-f13 are group 2, f14-f20 are group 3 and f21-f28 are group 4. There is no group5.
     @Override
     public void setF0(boolean f0) {
-        boolean old = this.f0;
-        this.f0 = f0;
+        updateFunction(0,f0);
         if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup1();
         } else {
             sendExpFunctionGroup1();
-        }
-        if (old != this.f0) {
-            notifyPropertyChangeListener(Throttle.F0, old, this.f0);
         }
     }
 
     @Override
     public void setF1(boolean f1) {
-        boolean old = this.f1;
-        this.f1 = f1;
+        updateFunction(1,f1);
         if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup1();
         } else {
             sendExpFunctionGroup1();
-        }
-        if (old != this.f1) {
-            notifyPropertyChangeListener(Throttle.F1, old, this.f1);
         }
     }
 
     @Override
     public void setF2(boolean f2) {
-        boolean old = this.f2;
-        this.f2 = f2;
+        updateFunction(2,f2);
         if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup1();
         } else {
             sendExpFunctionGroup1();
-        }
-        if (old != this.f2) {
-            notifyPropertyChangeListener(Throttle.F2, old, this.f2);
         }
     }
 
     @Override
     public void setF3(boolean f3) {
-        boolean old = this.f3;
-        this.f3 = f3;
+        updateFunction(3,f3);
         if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup1();
         } else {
             sendExpFunctionGroup1();
-        }
-        if (old != this.f3) {
-            notifyPropertyChangeListener(Throttle.F3, old, this.f3);
         }
     }
 
     @Override
     public void setF4(boolean f4) {
-        boolean old = this.f4;
-        this.f4 = f4;
+        updateFunction(4,f4);
         if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup1();
         } else {
             sendExpFunctionGroup1();
         }
-        if (old != this.f4) {
-            notifyPropertyChangeListener(Throttle.F4, old, this.f4);
-        }
     }
 
     @Override
     public void setF5(boolean f5) {
-        boolean old = this.f5;
-        this.f5 = f5;
+        updateFunction(5,f5);
         if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup2();
         } else {
             sendExpFunctionGroup1();
-        }
-        if (old != this.f5) {
-            notifyPropertyChangeListener(Throttle.F5, old, this.f5);
         }
     }
 
     @Override
     public void setF6(boolean f6) {
-        boolean old = this.f6;
-        this.f6 = f6;
+        updateFunction(6,f6);
         if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup2();
         } else {
             sendExpFunctionGroup1();
         }
-        if (old != this.f6) {
-            notifyPropertyChangeListener(Throttle.F6, old, this.f6);
-        }
     }
 
     @Override
     public void setF7(boolean f7) {
-        boolean old = this.f7;
-        this.f7 = f7;
+        updateFunction(7,f7);
         if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup2();
         } else {
             sendExpFunctionGroup2();
-        }
-        if (old != this.f7) {
-            notifyPropertyChangeListener(Throttle.F7, old, this.f7);
         }
     }
 
     @Override
     public void setF8(boolean f8) {
-        boolean old = this.f8;
-        this.f8 = f8;
+        updateFunction(8,f8);
         if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup2();
         } else {
             sendExpFunctionGroup2();
         }
-        if (old != this.f8) {
-            notifyPropertyChangeListener(Throttle.F8, old, this.f8);
-        }
     }
 
     @Override
     public void setF9(boolean f9) {
-        boolean old = this.f9;
-        this.f9 = f9;
+        updateFunction(9,f9);
         if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup3();
         } else {
             sendExpFunctionGroup2();
-        }
-        if (old != this.f9) {
-            notifyPropertyChangeListener(Throttle.F9, old, this.f9);
         }
     }
 
     @Override
     public void setF10(boolean f10) {
-        boolean old = this.f10;
-        this.f10 = f10;
+        updateFunction(10,f10);
         if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup3();
         } else {
             sendExpFunctionGroup2();
-        }
-        if (old != this.f10) {
-            notifyPropertyChangeListener(Throttle.F10, old, this.f10);
         }
     }
 
     @Override
     public void setF11(boolean f11) {
-        boolean old = this.f11;
-        this.f11 = f11;
+        updateFunction(11,f11);
         if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup3();
         } else {
             sendExpFunctionGroup2();
-        }
-        if (old != this.f11) {
-            notifyPropertyChangeListener(Throttle.F11, old, this.f11);
         }
     }
 
     @Override
     public void setF12(boolean f12) {
-        boolean old = this.f12;
-        this.f12 = f12;
+        updateFunction(12,f12);
         if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup3();
         } else {
             sendExpFunctionGroup2();
         }
-        if (old != this.f12) {
-            notifyPropertyChangeListener(Throttle.F12, old, this.f12);
-        }
     }
 
     @Override
     public void setF13(boolean f13) {
-        boolean old = this.f13;
-        this.f13 = f13;
+        updateFunction(13,f13);
         if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup4();
         } else {
             sendExpFunctionGroup2();
         }
-        if (old != this.f13) {
-            notifyPropertyChangeListener(Throttle.F13, old, this.f13);
-        }
     }
 
     @Override
     public void setF14(boolean f14) {
-        boolean old = this.f14;
-        this.f14 = f14;
+        updateFunction(14,f14);
         if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup4();
         } else {
             sendExpFunctionGroup3();
-        }
-        if (old != this.f14) {
-            notifyPropertyChangeListener(Throttle.F14, old, this.f14);
         }
     }
 
     @Override
     public void setF15(boolean f15) {
-        boolean old = this.f15;
-        this.f15 = f15;
+        updateFunction(15,f15);
         if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup4();
         } else {
             sendExpFunctionGroup3();
-        }
-        if (old != this.f15) {
-            notifyPropertyChangeListener(Throttle.F15, old, this.f15);
         }
     }
 
     @Override
     public void setF16(boolean f16) {
-        boolean old = this.f16;
-        this.f16 = f16;
+        updateFunction(16,f16);
         if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup4();
         } else {
             sendExpFunctionGroup3();
-        }
-        if (old != this.f16) {
-            notifyPropertyChangeListener(Throttle.F16, old, this.f16);
         }
     }
 
     @Override
     public void setF17(boolean f17) {
-        boolean old = this.f17;
-        this.f17 = f17;
+        updateFunction(17,f17);
         if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup4();
         } else {
             sendExpFunctionGroup3();
-        }
-        if (old != this.f17) {
-            notifyPropertyChangeListener(Throttle.F17, old, this.f17);
         }
     }
 
     @Override
     public void setF18(boolean f18) {
-        boolean old = this.f18;
-        this.f18 = f18;
+        updateFunction(18,f18);
         if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup4();
         } else {
             sendExpFunctionGroup3();
-        }
-        if (old != this.f18) {
-            notifyPropertyChangeListener(Throttle.F18, old, this.f18);
         }
     }
 
     @Override
     public void setF19(boolean f19) {
-        boolean old = this.f19;
-        this.f19 = f19;
+        updateFunction(19,f19);
         if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup4();
         } else {
             sendExpFunctionGroup3();
-        }
-        if (old != this.f19) {
-            notifyPropertyChangeListener(Throttle.F19, old, this.f19);
         }
     }
 
     @Override
     public void setF20(boolean f20) {
-        boolean old = this.f20;
-        this.f20 = f20;
+        updateFunction(20,f20);
         if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup4();
         } else {
             sendExpFunctionGroup3();
         }
-        if (old != this.f20) {
-            notifyPropertyChangeListener(Throttle.F20, old, this.f20);
-        }
     }
 
     @Override
     public void setF21(boolean f21) {
-        boolean old = this.f21;
-        this.f21 = f21;
+        updateFunction(21,f21);
         if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup5();
         } else {
             sendExpFunctionGroup4();
-        }
-        if (old != this.f21) {
-            notifyPropertyChangeListener(Throttle.F21, old, this.f21);
         }
     }
 
     @Override
     public void setF22(boolean f22) {
-        boolean old = this.f22;
-        this.f22 = f22;
+        updateFunction(22,f22);
         if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup5();
         } else {
             sendExpFunctionGroup4();
-        }
-        if (old != this.f22) {
-            notifyPropertyChangeListener(Throttle.F22, old, this.f22);
         }
     }
 
     @Override
     public void setF23(boolean f23) {
-        boolean old = this.f23;
-        this.f23 = f23;
+        updateFunction(23,f23);
         if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup5();
         } else {
             sendExpFunctionGroup4();
-        }
-        if (old != this.f23) {
-            notifyPropertyChangeListener(Throttle.F23, old, this.f23);
         }
     }
 
     @Override
     public void setF24(boolean f24) {
-        boolean old = this.f24;
-        this.f24 = f24;
+        updateFunction(24,f24);
         if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup5();
         } else {
             sendExpFunctionGroup4();
-        }
-        if (old != this.f24) {
-            notifyPropertyChangeListener(Throttle.F24, old, this.f24);
         }
     }
 
     @Override
     public void setF25(boolean f25) {
-        boolean old = this.f25;
-        this.f25 = f25;
+        updateFunction(25,f25);
         if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup5();
         } else {
             sendExpFunctionGroup4();
-        }
-        if (old != this.f25) {
-            notifyPropertyChangeListener(Throttle.F25, old, this.f25);
         }
     }
 
     @Override
     public void setF26(boolean f26) {
-        boolean old = this.f26;
-        this.f26 = f26;
+        updateFunction(26,f26);
         if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup5();
         } else {
             sendExpFunctionGroup4();
-        }
-        if (old != this.f26) {
-            notifyPropertyChangeListener(Throttle.F26, old, this.f26);
         }
     }
 
     @Override
     public void setF27(boolean f27) {
-        boolean old = this.f27;
-        this.f27 = f27;
+        updateFunction(27,f27);
         if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup5();
         } else {
             sendExpFunctionGroup4();
-        }
-        if (old != this.f27) {
-            notifyPropertyChangeListener(Throttle.F27, old, this.f27);
         }
     }
 
     @Override
     public void setF28(boolean f28) {
-        boolean old = this.f28;
-        this.f28 = f28;
+        updateFunction(28,f28);
         if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup5();
         } else {
             sendExpFunctionGroup4();
-        }
-        if (old != this.f28) {
-            notifyPropertyChangeListener(Throttle.F28, old, this.f28);
         }
     }
 
