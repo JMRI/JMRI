@@ -3,6 +3,8 @@ package jmri.beans;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeListenerProxy;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,10 +19,52 @@ public class PropertyChangeSupportTest {
 
     private PropertyChangeSupport instance;
     private TestPropertyChangeListener listener;
-    private static String PROPERTY = "property";
+    private static final String PROPERTY = "property";
+
+    @Test
+    public void testAddPropertyChangeListener_PropertyChangeListener() {
+        assertThat(instance.getPropertyChangeListeners()).isEmpty();
+        assertThat(instance.getPropertyChangeListeners(PROPERTY)).isEmpty();
+        instance.addPropertyChangeListener(listener);
+        assertThat(instance.getPropertyChangeListeners()).containsExactly(listener);
+        assertThat(instance.getPropertyChangeListeners(PROPERTY)).isEmpty();
+    }
+
+    @Test
+    public void testAddPropertyChangeListener_String_PropertyChangeListener() {
+        assertThat(instance.getPropertyChangeListeners()).isEmpty();
+        assertThat(instance.getPropertyChangeListeners(PROPERTY)).isEmpty();
+        instance.addPropertyChangeListener(PROPERTY, listener);
+        PropertyChangeListener listener2 = instance.getPropertyChangeListeners()[0];
+        assertThat(listener2).isExactlyInstanceOf(PropertyChangeListenerProxy.class);
+        assertThat(((PropertyChangeListenerProxy) listener2).getListener()).isEqualTo(listener);
+        assertThat(((PropertyChangeListenerProxy) listener2).getPropertyName()).isEqualTo(PROPERTY);
+        assertThat(instance.getPropertyChangeListeners(PROPERTY)).containsExactly(listener);
+    }
+
+    @Test
+    public void testRemovePropertyChangeListener_PropertyChangeListener() {
+        instance.addPropertyChangeListener(listener);
+        assertThat(instance.getPropertyChangeListeners()).containsExactly(listener);
+        assertThat(instance.getPropertyChangeListeners(PROPERTY)).isEmpty();
+        instance.removePropertyChangeListener(listener);
+        assertThat(instance.getPropertyChangeListeners()).isEmpty();
+        assertThat(instance.getPropertyChangeListeners(PROPERTY)).isEmpty();
+    }
+
+    @Test
+    public void testRemovePropertyChangeListener_String_PropertyChangeListener() {
+        instance.addPropertyChangeListener(PROPERTY, listener);
+        assertThat(instance.getPropertyChangeListeners()[0]).isExactlyInstanceOf(PropertyChangeListenerProxy.class);
+        assertThat(instance.getPropertyChangeListeners(PROPERTY)).containsExactly(listener);
+        instance.removePropertyChangeListener(PROPERTY, listener);
+        assertThat(instance.getPropertyChangeListeners()).isEmpty();
+        assertThat(instance.getPropertyChangeListeners(PROPERTY)).isEmpty();
+    }
 
     @Test
     public void testFireIndexedPropertyChange_String_int_boolean_boolean() {
+        instance.addPropertyChangeListener(listener);
         instance.fireIndexedPropertyChange(PROPERTY, 0, false, true);
         assertThat(listener.getEvents().size()).isEqualTo(1);
         PropertyChangeEvent event = listener.getLastEvent();
@@ -35,6 +79,7 @@ public class PropertyChangeSupportTest {
 
     @Test
     public void testFireIndexedPropertyChange_String_int_int_int() {
+        instance.addPropertyChangeListener(listener);
         instance.fireIndexedPropertyChange(PROPERTY, 0, -1, 1);
         assertThat(listener.getEvents().size()).isEqualTo(1);
         PropertyChangeEvent event = listener.getLastEvent();
@@ -49,6 +94,7 @@ public class PropertyChangeSupportTest {
 
     @Test
     public void testFireIndexedPropertyChange_String_int_Object_Object() {
+        instance.addPropertyChangeListener(listener);
         Object object1 = new Object();
         Object object2 = new Object();
         assertThat(object1).isNotEqualTo(object2);
@@ -81,6 +127,7 @@ public class PropertyChangeSupportTest {
 
     @Test
     public void testFirePropertyChange_String_int_boolean_boolean() {
+        instance.addPropertyChangeListener(listener);
         instance.firePropertyChange(PROPERTY, false, true);
         assertThat(listener.getEvents().size()).isEqualTo(1);
         PropertyChangeEvent event = listener.getLastEvent();
@@ -95,6 +142,7 @@ public class PropertyChangeSupportTest {
 
     @Test
     public void testFirePropertyChange_String_int_int_int() {
+        instance.addPropertyChangeListener(listener);
         instance.firePropertyChange(PROPERTY, -1, 1);
         assertThat(listener.getEvents().size()).isEqualTo(1);
         PropertyChangeEvent event = listener.getLastEvent();
@@ -109,6 +157,7 @@ public class PropertyChangeSupportTest {
 
     @Test
     public void testFirePropertyChange_String_int_Object_Object() {
+        instance.addPropertyChangeListener(listener);
         Object object1 = new Object();
         Object object2 = new Object();
         assertThat(object1).isNotEqualTo(object2);
@@ -141,6 +190,7 @@ public class PropertyChangeSupportTest {
 
     @Test
     public void testFirePropertyChange_PropertyChangeEvent() {
+        instance.addPropertyChangeListener(listener);
         Object object1 = new Object();
         Object object2 = new Object();
         assertThat(object1).isNotEqualTo(object2);
@@ -155,9 +205,8 @@ public class PropertyChangeSupportTest {
         JUnitUtil.setUp();
         instance = new PropertyChangeSupport();
         listener = new TestPropertyChangeListener();
-        instance.addPropertyChangeListener(listener);
     }
-    
+
     @AfterEach
     public void tearDown() {
         instance = null;

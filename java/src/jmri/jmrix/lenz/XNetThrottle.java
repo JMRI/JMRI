@@ -611,7 +611,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
 
     protected void notifyNewSpeedStepMode(SpeedStepMode mode) {
         if (this.speedStepMode != mode) {
-            notifyPropertyChangeListener(SPEEDSTEPS,
+            firePropertyChange(SPEEDSTEPS,
                     this.speedStepMode,
                     this.speedStepMode = mode);
         }
@@ -641,7 +641,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             }
             if (java.lang.Math.abs(
                     this.getSpeedSetting() - ((float) speedVal / (float) 126)) >= 0.0079) {
-                notifyPropertyChangeListener(SPEEDSETTING, this.speedSetting, this.speedSetting
+                firePropertyChange(SPEEDSETTING, this.speedSetting, this.speedSetting
                         = (float) speedVal / (float) 126);
             }
         } else if (this.speedStepMode == SpeedStepMode.NMRA_DCC_28) {
@@ -659,7 +659,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             }
             if (java.lang.Math.abs(
                     this.getSpeedSetting() - ((float) speedVal / (float) 28)) >= 0.035) {
-                notifyPropertyChangeListener(SPEEDSETTING, this.speedSetting, this.speedSetting
+                firePropertyChange(SPEEDSETTING, this.speedSetting, this.speedSetting
                         = (float) speedVal / (float) 28);
             }
         } else if (this.speedStepMode == SpeedStepMode.NMRA_DCC_27) {
@@ -677,7 +677,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             }
             if (java.lang.Math.abs(
                     this.getSpeedSetting() - ((float) speedVal / (float) 27)) >= 0.037) {
-                notifyPropertyChangeListener(SPEEDSETTING, this.speedSetting, this.speedSetting
+                firePropertyChange(SPEEDSETTING, this.speedSetting, this.speedSetting
                         = (float) speedVal / (float) 27);
             }
         } else {
@@ -690,14 +690,14 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             }
             if (java.lang.Math.abs(
                     this.getSpeedSetting() - ((float) speedVal / (float) 14)) >= 0.071) {
-                notifyPropertyChangeListener(SPEEDSETTING, this.speedSetting, this.speedSetting
+                firePropertyChange(SPEEDSETTING, this.speedSetting, this.speedSetting
                         = (float) speedVal / (float) 14);
             }
         }
     }
 
     protected void notifyNewDirection(boolean forward) {
-        notifyPropertyChangeListener(ISFORWARD, this.isForward, this.isForward = forward);
+        firePropertyChange(ISFORWARD, this.isForward, this.isForward = forward);
         log.trace("Throttle - Changed direction to {} Locomotive: {}", forward ? "forward" : "reverse", getDccAddress());
     }
 
@@ -798,91 +798,91 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     protected void notifyFunctionMomentaryChanged(String function, boolean newValue) {
         switch (function) {
             case Throttle.F0Momentary:
-                notifyPropertyChangeListener(Throttle.F0Momentary, this.f0Momentary, this.f0Momentary = newValue);
+                firePropertyChange(Throttle.F0Momentary, this.f0Momentary, this.f0Momentary = newValue);
                 break;
             case Throttle.F1Momentary:
-                notifyPropertyChangeListener(Throttle.F1Momentary, this.f1Momentary, this.f1Momentary = newValue);
+                firePropertyChange(Throttle.F1Momentary, this.f1Momentary, this.f1Momentary = newValue);
                 break;
             case Throttle.F2Momentary:
-                notifyPropertyChangeListener(Throttle.F2Momentary, this.f2Momentary, this.f2Momentary = newValue);
+                firePropertyChange(Throttle.F2Momentary, this.f2Momentary, this.f2Momentary = newValue);
                 break;
             case Throttle.F3Momentary:
-                notifyPropertyChangeListener(Throttle.F3Momentary, this.f3Momentary, this.f3Momentary = newValue);
+                firePropertyChange(Throttle.F3Momentary, this.f3Momentary, this.f3Momentary = newValue);
                 break;
             case Throttle.F4Momentary:
-                notifyPropertyChangeListener(Throttle.F4Momentary, this.f4Momentary, this.f4Momentary = newValue);
+                firePropertyChange(Throttle.F4Momentary, this.f4Momentary, this.f4Momentary = newValue);
                 break;
             case Throttle.F5Momentary:
-                notifyPropertyChangeListener(Throttle.F5Momentary, this.f5Momentary, this.f5Momentary = newValue);
+                firePropertyChange(Throttle.F5Momentary, this.f5Momentary, this.f5Momentary = newValue);
                 break;
             case Throttle.F6Momentary:
-                notifyPropertyChangeListener(Throttle.F6Momentary, this.f6Momentary, this.f6Momentary = newValue);
+                firePropertyChange(Throttle.F6Momentary, this.f6Momentary, this.f6Momentary = newValue);
                 break;
             case Throttle.F7Momentary:
-                notifyPropertyChangeListener(Throttle.F7Momentary, this.f7Momentary, this.f7Momentary = newValue);
+                firePropertyChange(Throttle.F7Momentary, this.f7Momentary, this.f7Momentary = newValue);
                 break;
             case Throttle.F8Momentary:
-                notifyPropertyChangeListener(Throttle.F8Momentary, this.f8Momentary, this.f8Momentary = newValue);
+                firePropertyChange(Throttle.F8Momentary, this.f8Momentary, this.f8Momentary = newValue);
                 break;
             case Throttle.F9Momentary:
-                notifyPropertyChangeListener(Throttle.F8Momentary, this.f9Momentary, this.f9Momentary = newValue);
+                firePropertyChange(Throttle.F8Momentary, this.f9Momentary, this.f9Momentary = newValue);
                 break;
             case Throttle.F10Momentary:
-                notifyPropertyChangeListener(Throttle.F10Momentary, this.f10Momentary, this.f10Momentary = newValue);
+                firePropertyChange(Throttle.F10Momentary, this.f10Momentary, this.f10Momentary = newValue);
                 break;
             case Throttle.F11Momentary:
-                notifyPropertyChangeListener(Throttle.F11Momentary, this.f11Momentary, this.f11Momentary = newValue);
+                firePropertyChange(Throttle.F11Momentary, this.f11Momentary, this.f11Momentary = newValue);
                 break;
             case Throttle.F12Momentary:
-                notifyPropertyChangeListener(Throttle.F12Momentary, this.f12Momentary, this.f12Momentary = newValue);
+                firePropertyChange(Throttle.F12Momentary, this.f12Momentary, this.f12Momentary = newValue);
                 break;
             case Throttle.F13Momentary:
-                notifyPropertyChangeListener(Throttle.F13Momentary, this.f13Momentary, this.f13Momentary = newValue);
+                firePropertyChange(Throttle.F13Momentary, this.f13Momentary, this.f13Momentary = newValue);
                 break;
             case Throttle.F14Momentary:
-                notifyPropertyChangeListener(Throttle.F14Momentary, this.f14Momentary, this.f14Momentary = newValue);
+                firePropertyChange(Throttle.F14Momentary, this.f14Momentary, this.f14Momentary = newValue);
                 break;
             case Throttle.F15Momentary:
-                notifyPropertyChangeListener(Throttle.F15Momentary, this.f15Momentary, this.f15Momentary = newValue);
+                firePropertyChange(Throttle.F15Momentary, this.f15Momentary, this.f15Momentary = newValue);
                 break;
             case Throttle.F16Momentary:
-                notifyPropertyChangeListener(Throttle.F16Momentary, this.f16Momentary, this.f16Momentary = newValue);
+                firePropertyChange(Throttle.F16Momentary, this.f16Momentary, this.f16Momentary = newValue);
                 break;
             case Throttle.F17Momentary:
-                notifyPropertyChangeListener(Throttle.F17Momentary, this.f17Momentary, this.f17Momentary = newValue);
+                firePropertyChange(Throttle.F17Momentary, this.f17Momentary, this.f17Momentary = newValue);
                 break;
             case Throttle.F18Momentary:
-                notifyPropertyChangeListener(Throttle.F18Momentary, this.f18Momentary, this.f18Momentary = newValue);
+                firePropertyChange(Throttle.F18Momentary, this.f18Momentary, this.f18Momentary = newValue);
                 break;
             case Throttle.F19Momentary:
-                notifyPropertyChangeListener(Throttle.F19Momentary, this.f19Momentary, this.f19Momentary = newValue);
+                firePropertyChange(Throttle.F19Momentary, this.f19Momentary, this.f19Momentary = newValue);
                 break;
             case Throttle.F20Momentary:
-                notifyPropertyChangeListener(Throttle.F20Momentary, this.f20Momentary, this.f20Momentary = newValue);
+                firePropertyChange(Throttle.F20Momentary, this.f20Momentary, this.f20Momentary = newValue);
                 break;
             case Throttle.F21Momentary:
-                notifyPropertyChangeListener(Throttle.F21Momentary, this.f21Momentary, this.f21Momentary = newValue);
+                firePropertyChange(Throttle.F21Momentary, this.f21Momentary, this.f21Momentary = newValue);
                 break;
             case Throttle.F22Momentary:
-                notifyPropertyChangeListener(Throttle.F22Momentary, this.f22Momentary, this.f22Momentary = newValue);
+                firePropertyChange(Throttle.F22Momentary, this.f22Momentary, this.f22Momentary = newValue);
                 break;
             case Throttle.F23Momentary:
-                notifyPropertyChangeListener(Throttle.F23Momentary, this.f23Momentary, this.f23Momentary = newValue);
+                firePropertyChange(Throttle.F23Momentary, this.f23Momentary, this.f23Momentary = newValue);
                 break;
             case Throttle.F24Momentary:
-                notifyPropertyChangeListener(Throttle.F24Momentary, this.f24Momentary, this.f24Momentary = newValue);
+                firePropertyChange(Throttle.F24Momentary, this.f24Momentary, this.f24Momentary = newValue);
                 break;
             case Throttle.F25Momentary:
-                notifyPropertyChangeListener(Throttle.F25Momentary, this.f25Momentary, this.f25Momentary = newValue);
+                firePropertyChange(Throttle.F25Momentary, this.f25Momentary, this.f25Momentary = newValue);
                 break;
             case Throttle.F26Momentary:
-                notifyPropertyChangeListener(Throttle.F26Momentary, this.f26Momentary, this.f26Momentary = newValue);
+                firePropertyChange(Throttle.F26Momentary, this.f26Momentary, this.f26Momentary = newValue);
                 break;
             case Throttle.F27Momentary:
-                notifyPropertyChangeListener(Throttle.F27Momentary, this.f27Momentary, this.f27Momentary = newValue);
+                firePropertyChange(Throttle.F27Momentary, this.f27Momentary, this.f27Momentary = newValue);
                 break;
             case Throttle.F28Momentary:
-                notifyPropertyChangeListener(Throttle.F28Momentary, this.f28Momentary, this.f28Momentary = newValue);
+                firePropertyChange(Throttle.F28Momentary, this.f28Momentary, this.f28Momentary = newValue);
                 break;
             default:
                 log.trace("Attempt to set unknonw function {} to {}", function, newValue);
@@ -895,7 +895,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
      * @param available true if available; false otherwise
      */
     protected void setIsAvailable(boolean available) {
-        notifyPropertyChangeListener("IsAvailable", this.isAvailable, this.isAvailable = available);
+        firePropertyChange("IsAvailable", this.isAvailable, this.isAvailable = available);
         /* if we're setting this to true, stop the timer,
          otherwise start the timer. */
         if (available) {

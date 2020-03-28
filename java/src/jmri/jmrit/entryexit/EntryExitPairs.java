@@ -6,8 +6,6 @@ import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
-import java.beans.VetoableChangeListener;
-import java.beans.VetoableChangeSupport;
 import java.util.*;
 import java.util.Map.Entry;
 import javax.annotation.CheckReturnValue;
@@ -20,7 +18,7 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.Sensor;
-import jmri.beans.PropertyChangeProviderImpl;
+import jmri.beans.VetoableChangeSupport;
 import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
@@ -46,7 +44,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson Copyright (C) 2011
  */
-public class EntryExitPairs extends PropertyChangeProviderImpl implements jmri.Manager<DestinationPoints>, jmri.InstanceManagerAutoDefault,
+public class EntryExitPairs extends VetoableChangeSupport implements jmri.Manager<DestinationPoints>, jmri.InstanceManagerAutoDefault,
         PropertyChangeListener {
 
     public int routingMethod = LayoutBlockConnectivityTools.METRIC;
@@ -1294,10 +1292,6 @@ public class EntryExitPairs extends PropertyChangeProviderImpl implements jmri.M
         }
     }
 
-    protected void firePropertyChange(String p, Object old, Object n) {
-        propertyChangeSupport.firePropertyChange(p, old, n);
-    }
-
     boolean runWhenStabilised = false;
     LayoutEditor toUseWhenStable;
     int interlockTypeToUseWhenStable;
@@ -1367,38 +1361,6 @@ public class EntryExitPairs extends PropertyChangeProviderImpl implements jmri.M
 
     public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
 
-    }
-
-    VetoableChangeSupport vcs = new VetoableChangeSupport(this);
-
-    @Override
-    public synchronized void addVetoableChangeListener(VetoableChangeListener l) {
-        vcs.addVetoableChangeListener(l);
-    }
-
-    @Override
-    public synchronized void removeVetoableChangeListener(VetoableChangeListener l) {
-        vcs.removeVetoableChangeListener(l);
-    }
-
-    @Override
-    public void addVetoableChangeListener(String propertyName, VetoableChangeListener listener) {
-        vcs.addVetoableChangeListener(propertyName, listener);
-    }
-
-    @Override
-    public VetoableChangeListener[] getVetoableChangeListeners() {
-        return vcs.getVetoableChangeListeners();
-    }
-
-    @Override
-    public VetoableChangeListener[] getVetoableChangeListeners(String propertyName) {
-        return vcs.getVetoableChangeListeners(propertyName);
-    }
-
-    @Override
-    public void removeVetoableChangeListener(String propertyName, VetoableChangeListener listener) {
-        vcs.removeVetoableChangeListener(propertyName, listener);
     }
 
     @Override

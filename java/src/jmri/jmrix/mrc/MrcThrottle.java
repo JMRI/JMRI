@@ -211,7 +211,7 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener 
         }
         tc.sendMrcMessage(m);
 
-        notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
+        firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting);
         record(speed);
     }
 
@@ -221,7 +221,7 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener 
         isForward = forward;
         setSpeedSetting(speedSetting);  // send the command
         log.debug("setIsForward= {}", forward);
-        notifyPropertyChangeListener(ISFORWARD, old, isForward);
+        firePropertyChange(ISFORWARD, old, isForward);
     }
 
     @Override
@@ -253,13 +253,13 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener 
                         //Forward
                         if (!this.isForward) {
                             this.isForward = true;
-                            notifyPropertyChangeListener(ISFORWARD, !isForward, isForward);
+                            firePropertyChange(ISFORWARD, !isForward, isForward);
                         }
                         //speed = m.getElement(8);
                     } else if (this.isForward) {
                         //reverse
                         this.isForward = false;
-                        notifyPropertyChangeListener(ISFORWARD, !isForward, isForward);
+                        firePropertyChange(ISFORWARD, !isForward, isForward);
                         //speed = m.getElement(8);
                     }
                     speed = (speed & 0x7f) - 1;
@@ -272,7 +272,7 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener 
                     if (val != this.speedSetting) {
                         float old = this.speedSetting;
                         this.speedSetting = val;
-                        notifyPropertyChangeListener(SPEEDSETTING, old, this.speedSetting);
+                        firePropertyChange(SPEEDSETTING, old, this.speedSetting);
                         record(val);
                     }
                 } else if (m.getElement(10) == 0x00) {
@@ -300,7 +300,7 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener 
                     }
 
                     if (val != this.speedSetting) {
-                        notifyPropertyChangeListener(SPEEDSETTING, this.speedSetting, val); //IN18N
+                        firePropertyChange(SPEEDSETTING, this.speedSetting, val); //IN18N
                         this.speedSetting = val;
                         record(val);
                     }

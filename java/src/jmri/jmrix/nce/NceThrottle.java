@@ -348,7 +348,7 @@ public class NceThrottle extends AbstractThrottle {
             tc.sendNceMessage(m, null);
 
         }
-        notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
+        firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting);
         record(speed);
     }
 
@@ -358,7 +358,7 @@ public class NceThrottle extends AbstractThrottle {
         isForward = forward;
         setSpeedSetting(speedSetting);  // send the command
         log.debug("setIsForward= {}", forward);
-        notifyPropertyChangeListener(ISFORWARD, old, isForward);
+        firePropertyChange(ISFORWARD, old, isForward);
     }
 
     @Override

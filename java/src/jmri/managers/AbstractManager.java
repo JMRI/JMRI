@@ -15,7 +15,7 @@ import jmri.Manager;
 import jmri.NamedBean;
 import jmri.NamedBean.DuplicateSystemNameException;
 import jmri.NamedBeanPropertyDescriptor;
-import jmri.beans.PropertyChangeProviderImpl;
+import jmri.beans.VetoableChangeSupport;
 import jmri.jmrix.SystemConnectionMemo;
 
 /**
@@ -34,7 +34,7 @@ import jmri.jmrix.SystemConnectionMemo;
  *
  * @author Bob Jacobsen Copyright (C) 2003
  */
-public abstract class AbstractManager<E extends NamedBean> extends PropertyChangeProviderImpl implements Manager<E>, PropertyChangeListener, VetoableChangeListener {
+public abstract class AbstractManager<E extends NamedBean> extends VetoableChangeSupport implements Manager<E>, PropertyChangeListener, VetoableChangeListener {
 
     // The data model consists of several components:
     // * The primary reference is _beans, a SortedSet of NamedBeans, sorted automatically on system name.
@@ -407,62 +407,6 @@ public abstract class AbstractManager<E extends NamedBean> extends PropertyChang
         return Collections.unmodifiableSortedSet(_beans);
     }
 
-    @OverridingMethodsMustInvokeSuper
-    protected void firePropertyChange(String p, Object old, Object n) {
-        propertyChangeSupport.firePropertyChange(p, old, n);
-    }
-
-    @OverridingMethodsMustInvokeSuper
-    protected void fireIndexedPropertyChange(String propertyName, int index, Object oldValue, Object newValue) {
-        propertyChangeSupport.fireIndexedPropertyChange(propertyName, index, oldValue, newValue);
-    }
-
-    private VetoableChangeSupport vcs = new VetoableChangeSupport(this);
-
-    /** {@inheritDoc} */
-    @Override
-    @OverridingMethodsMustInvokeSuper
-    public synchronized void addVetoableChangeListener(VetoableChangeListener l) {
-        vcs.addVetoableChangeListener(l);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    @OverridingMethodsMustInvokeSuper
-    public synchronized void removeVetoableChangeListener(VetoableChangeListener l) {
-        vcs.removeVetoableChangeListener(l);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    @OverridingMethodsMustInvokeSuper
-    public void addVetoableChangeListener(String propertyName, VetoableChangeListener listener) {
-        vcs.addVetoableChangeListener(propertyName, listener);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    @Nonnull
-    @OverridingMethodsMustInvokeSuper
-    public VetoableChangeListener[] getVetoableChangeListeners() {
-        return vcs.getVetoableChangeListeners();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    @Nonnull
-    @OverridingMethodsMustInvokeSuper
-    public VetoableChangeListener[] getVetoableChangeListeners(String propertyName) {
-        return vcs.getVetoableChangeListeners(propertyName);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    @OverridingMethodsMustInvokeSuper
-    public void removeVetoableChangeListener(String propertyName, VetoableChangeListener listener) {
-        vcs.removeVetoableChangeListener(propertyName, listener);
-    }
-
     /**
      * Inform all registered listeners of a vetoable change. If the
      * propertyName is "CanDelete" ALL listeners with an interest in the bean
@@ -473,19 +417,20 @@ public abstract class AbstractManager<E extends NamedBean> extends PropertyChang
      * to the user and the delete process should be aborted.
      *
      * @param p   The programmatic name of the property that is to be changed.
-     *            "CanDelete" will enquire with all listerners if the item can
-     *            be deleted. "DoDelete" tells the listerner to delete the item.
+     *            "CanDelete" will inquire with all listeners if the item can
+     *            be deleted. "DoDelete" tells the listener to delete the item.
      * @param old The old value of the property.
      * @param n   The new value of the property.
-     * @throws PropertyVetoException - if the recipients wishes the delete to be
+     * @throws PropertyVetoException if the recipients wishes the delete to be
      *                               aborted.
      */
     @OverridingMethodsMustInvokeSuper
-    protected void fireVetoableChange(String p, Object old, Object n) throws PropertyVetoException {
+    @Override
+    public void fireVetoableChange(String p, Object old, Object n) throws PropertyVetoException {
         PropertyChangeEvent evt = new PropertyChangeEvent(this, p, old, n);
         if (p.equals("CanDelete")) { //IN18N
             StringBuilder message = new StringBuilder();
-            for (VetoableChangeListener vc : vcs.getVetoableChangeListeners()) {
+            for (VetoableChangeListener vc : vetoableChangeSupport.getVetoableChangeListeners()) {
                 try {
                     vc.vetoableChange(evt);
                 } catch (PropertyVetoException e) {
@@ -493,14 +438,13 @@ public abstract class AbstractManager<E extends NamedBean> extends PropertyChang
                         log.info(e.getMessage());
                         throw e;
                     }
-                    message.append(e.getMessage());
-                    message.append("<hr>"); //IN18N
+                    message.append(e.getMessage()).append("<hr>"); //IN18N
                 }
             }
             throw new PropertyVetoException(message.toString(), evt);
         } else {
             try {
-                vcs.fireVetoableChange(evt);
+                vetoableChangeSupport.fireVetoableChange(evt);
             } catch (PropertyVetoException e) {
                 log.error("Change vetoed.", e);
             }

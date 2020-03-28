@@ -112,7 +112,7 @@ public class SRCPThrottle extends AbstractThrottle {
         float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
         sendUpdate();
-        notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
+        firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting);
     }
 
     @Override
@@ -120,7 +120,7 @@ public class SRCPThrottle extends AbstractThrottle {
         boolean old = isForward;
         isForward = forward;
         sendUpdate();
-        notifyPropertyChangeListener(Throttle.ISFORWARD, old, isForward);
+        firePropertyChange(Throttle.ISFORWARD, old, isForward);
     }
 
     private DccLocoAddress address;

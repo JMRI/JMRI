@@ -14,7 +14,7 @@ import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.Throttle;
 import jmri.ThrottleListener;
-import jmri.beans.PropertyChangeProviderImpl;
+import jmri.beans.PropertyChangeSupport;
 
 /**
  * An abstract implementation of DccThrottle. Based on Glen Oberhauser's
@@ -25,7 +25,7 @@ import jmri.beans.PropertyChangeProviderImpl;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2005
  */
-abstract public class AbstractThrottle extends PropertyChangeProviderImpl implements DccThrottle {
+abstract public class AbstractThrottle extends PropertyChangeSupport implements DccThrottle {
 
     protected float speedSetting;
     /**
@@ -127,7 +127,7 @@ abstract public class AbstractThrottle extends PropertyChangeProviderImpl implem
     @Override
     public void setSpeedSetting(float speed, boolean allowDuplicates, boolean allowDuplicatesOnStop) {
         if (Math.abs(this.speedSetting - speed) > 0.0001) {
-            notifyPropertyChangeListener(SPEEDSETTING, this.speedSetting, this.speedSetting = speed);
+            firePropertyChange(SPEEDSETTING, this.speedSetting, this.speedSetting = speed);
         }
         record(speed);
     }
@@ -162,7 +162,7 @@ abstract public class AbstractThrottle extends PropertyChangeProviderImpl implem
      */
     @Override
     public void setIsForward(boolean forward) {
-        notifyPropertyChangeListener(ISFORWARD, isForward, isForward = forward);
+        firePropertyChange(ISFORWARD, isForward, isForward = forward);
     }
 
     /*
@@ -653,7 +653,7 @@ abstract public class AbstractThrottle extends PropertyChangeProviderImpl implem
      * <p>
      */
     protected void notifyThrottleDisconnect() {
-        notifyPropertyChangeListener("ThrottleConnected", true, false); // NOI18N
+        firePropertyChange("ThrottleConnected", true, false); // NOI18N
     }
 
     // set initial values purely for changelistener following
@@ -673,7 +673,7 @@ abstract public class AbstractThrottle extends PropertyChangeProviderImpl implem
      */
     @Override
     public void notifyThrottleDispatchEnabled(boolean newVal) {
-        notifyPropertyChangeListener("DispatchEnabled", _dispatchEnabled, _dispatchEnabled = newVal); // NOI18N
+        firePropertyChange("DispatchEnabled", _dispatchEnabled, _dispatchEnabled = newVal); // NOI18N
     }
 
     /**
@@ -688,7 +688,7 @@ abstract public class AbstractThrottle extends PropertyChangeProviderImpl implem
      */
     @Override
     public void notifyThrottleReleaseEnabled(boolean newVal) {
-        notifyPropertyChangeListener("ReleaseEnabled", _releaseEnabled, _releaseEnabled = newVal); // NOI18N
+        firePropertyChange("ReleaseEnabled", _releaseEnabled, _releaseEnabled = newVal); // NOI18N
     }
 
     /**
@@ -733,9 +733,11 @@ abstract public class AbstractThrottle extends PropertyChangeProviderImpl implem
      * @param property the name of the property to send notifications for
      * @param oldValue the old value of the property
      * @param newValue the new value of the property
+     * @deprecated since 4.19.5; use {@link #firePropertyChange(java.lang.String, java.lang.Object, java.lang.Object)} instead
      */
+    @Deprecated
     protected void notifyPropertyChangeListener(String property, Object oldValue, Object newValue) {
-        propertyChangeSupport.firePropertyChange(property, oldValue, newValue);
+        firePropertyChange(property, oldValue, newValue);
     }
 
     /**
@@ -1074,7 +1076,7 @@ abstract public class AbstractThrottle extends PropertyChangeProviderImpl implem
         }
         boolean old = FUNCTION_BOOLEAN_ARRAY[fn];
         FUNCTION_BOOLEAN_ARRAY[fn] = state;
-        notifyPropertyChangeListener(Throttle.FUNCTION_STRING_ARRAY[fn], old, state);
+        firePropertyChange(Throttle.FUNCTION_STRING_ARRAY[fn], old, state);
     }
 
     /**
@@ -1181,7 +1183,7 @@ abstract public class AbstractThrottle extends PropertyChangeProviderImpl implem
         boolean old = this.f0Momentary;
         this.f0Momentary = f0Momentary;
         sendMomentaryFunctionGroup1();
-        notifyPropertyChangeListener(Throttle.F0Momentary, old, this.f0Momentary);
+        firePropertyChange(Throttle.F0Momentary, old, this.f0Momentary);
     }
 
     /**
@@ -1192,7 +1194,7 @@ abstract public class AbstractThrottle extends PropertyChangeProviderImpl implem
         boolean old = this.f1Momentary;
         this.f1Momentary = f1Momentary;
         sendMomentaryFunctionGroup1();
-        notifyPropertyChangeListener(Throttle.F1Momentary, old, this.f1Momentary);
+        firePropertyChange(Throttle.F1Momentary, old, this.f1Momentary);
     }
 
     /**
@@ -1203,7 +1205,7 @@ abstract public class AbstractThrottle extends PropertyChangeProviderImpl implem
         boolean old = this.f2Momentary;
         this.f2Momentary = f2Momentary;
         sendMomentaryFunctionGroup1();
-        notifyPropertyChangeListener(Throttle.F2Momentary, old, this.f2Momentary);
+        firePropertyChange(Throttle.F2Momentary, old, this.f2Momentary);
     }
 
     /**
@@ -1214,7 +1216,7 @@ abstract public class AbstractThrottle extends PropertyChangeProviderImpl implem
         boolean old = this.f3Momentary;
         this.f3Momentary = f3Momentary;
         sendMomentaryFunctionGroup1();
-        notifyPropertyChangeListener(Throttle.F3Momentary, old, this.f3Momentary);
+        firePropertyChange(Throttle.F3Momentary, old, this.f3Momentary);
     }
 
     /**
@@ -1225,7 +1227,7 @@ abstract public class AbstractThrottle extends PropertyChangeProviderImpl implem
         boolean old = this.f4Momentary;
         this.f4Momentary = f4Momentary;
         sendMomentaryFunctionGroup1();
-        notifyPropertyChangeListener(Throttle.F4Momentary, old, this.f4Momentary);
+        firePropertyChange(Throttle.F4Momentary, old, this.f4Momentary);
     }
 
     /**
@@ -1236,7 +1238,7 @@ abstract public class AbstractThrottle extends PropertyChangeProviderImpl implem
         boolean old = this.f5Momentary;
         this.f5Momentary = f5Momentary;
         sendMomentaryFunctionGroup2();
-        notifyPropertyChangeListener(Throttle.F5Momentary, old, this.f5Momentary);
+        firePropertyChange(Throttle.F5Momentary, old, this.f5Momentary);
     }
 
     /**
@@ -1247,7 +1249,7 @@ abstract public class AbstractThrottle extends PropertyChangeProviderImpl implem
         boolean old = this.f6Momentary;
         this.f6Momentary = f6Momentary;
         sendMomentaryFunctionGroup2();
-        notifyPropertyChangeListener(Throttle.F6Momentary, old, this.f6Momentary);
+        firePropertyChange(Throttle.F6Momentary, old, this.f6Momentary);
     }
 
     /**
@@ -1258,7 +1260,7 @@ abstract public class AbstractThrottle extends PropertyChangeProviderImpl implem
         boolean old = this.f7Momentary;
         this.f7Momentary = f7Momentary;
         sendMomentaryFunctionGroup2();
-        notifyPropertyChangeListener(Throttle.F7Momentary, old, this.f7Momentary);
+        firePropertyChange(Throttle.F7Momentary, old, this.f7Momentary);
     }
 
     /**
@@ -1269,7 +1271,7 @@ abstract public class AbstractThrottle extends PropertyChangeProviderImpl implem
         boolean old = this.f8Momentary;
         this.f8Momentary = f8Momentary;
         sendMomentaryFunctionGroup2();
-        notifyPropertyChangeListener(Throttle.F8Momentary, old, this.f8Momentary);
+        firePropertyChange(Throttle.F8Momentary, old, this.f8Momentary);
     }
 
     /**
@@ -1280,7 +1282,7 @@ abstract public class AbstractThrottle extends PropertyChangeProviderImpl implem
         boolean old = this.f9Momentary;
         this.f9Momentary = f9Momentary;
         sendMomentaryFunctionGroup3();
-        notifyPropertyChangeListener(Throttle.F9Momentary, old, this.f9Momentary);
+        firePropertyChange(Throttle.F9Momentary, old, this.f9Momentary);
     }
 
     /**
@@ -1291,7 +1293,7 @@ abstract public class AbstractThrottle extends PropertyChangeProviderImpl implem
         boolean old = this.f10Momentary;
         this.f10Momentary = f10Momentary;
         sendMomentaryFunctionGroup3();
-        notifyPropertyChangeListener(Throttle.F10Momentary, old, this.f10Momentary);
+        firePropertyChange(Throttle.F10Momentary, old, this.f10Momentary);
     }
 
     /**
@@ -1302,7 +1304,7 @@ abstract public class AbstractThrottle extends PropertyChangeProviderImpl implem
         boolean old = this.f11Momentary;
         this.f11Momentary = f11Momentary;
         sendMomentaryFunctionGroup3();
-        notifyPropertyChangeListener(Throttle.F11Momentary, old, this.f11Momentary);
+        firePropertyChange(Throttle.F11Momentary, old, this.f11Momentary);
     }
 
     /**
@@ -1313,7 +1315,7 @@ abstract public class AbstractThrottle extends PropertyChangeProviderImpl implem
         boolean old = this.f12Momentary;
         this.f12Momentary = f12Momentary;
         sendMomentaryFunctionGroup3();
-        notifyPropertyChangeListener(Throttle.F12Momentary, old, this.f12Momentary);
+        firePropertyChange(Throttle.F12Momentary, old, this.f12Momentary);
     }
 
     /**
@@ -1324,7 +1326,7 @@ abstract public class AbstractThrottle extends PropertyChangeProviderImpl implem
         boolean old = this.f13Momentary;
         this.f13Momentary = f13Momentary;
         sendMomentaryFunctionGroup4();
-        notifyPropertyChangeListener(Throttle.F13Momentary, old, this.f13Momentary);
+        firePropertyChange(Throttle.F13Momentary, old, this.f13Momentary);
     }
 
     /**
@@ -1335,7 +1337,7 @@ abstract public class AbstractThrottle extends PropertyChangeProviderImpl implem
         boolean old = this.f14Momentary;
         this.f14Momentary = f14Momentary;
         sendMomentaryFunctionGroup4();
-        notifyPropertyChangeListener(Throttle.F14Momentary, old, this.f14Momentary);
+        firePropertyChange(Throttle.F14Momentary, old, this.f14Momentary);
     }
 
     /**
@@ -1346,7 +1348,7 @@ abstract public class AbstractThrottle extends PropertyChangeProviderImpl implem
         boolean old = this.f15Momentary;
         this.f15Momentary = f15Momentary;
         sendMomentaryFunctionGroup4();
-        notifyPropertyChangeListener(Throttle.F15Momentary, old, this.f15Momentary);
+        firePropertyChange(Throttle.F15Momentary, old, this.f15Momentary);
     }
 
     /**
@@ -1357,7 +1359,7 @@ abstract public class AbstractThrottle extends PropertyChangeProviderImpl implem
         boolean old = this.f16Momentary;
         this.f16Momentary = f16Momentary;
         sendMomentaryFunctionGroup4();
-        notifyPropertyChangeListener(Throttle.F16Momentary, old, this.f16Momentary);
+        firePropertyChange(Throttle.F16Momentary, old, this.f16Momentary);
     }
 
     /**
@@ -1368,7 +1370,7 @@ abstract public class AbstractThrottle extends PropertyChangeProviderImpl implem
         boolean old = this.f17Momentary;
         this.f17Momentary = f17Momentary;
         sendMomentaryFunctionGroup4();
-        notifyPropertyChangeListener(Throttle.F17Momentary, old, this.f17Momentary);
+        firePropertyChange(Throttle.F17Momentary, old, this.f17Momentary);
     }
 
     /**
@@ -1379,7 +1381,7 @@ abstract public class AbstractThrottle extends PropertyChangeProviderImpl implem
         boolean old = this.f18Momentary;
         this.f18Momentary = f18Momentary;
         sendMomentaryFunctionGroup4();
-        notifyPropertyChangeListener(Throttle.F18Momentary, old, this.f18Momentary);
+        firePropertyChange(Throttle.F18Momentary, old, this.f18Momentary);
     }
 
     /**
@@ -1390,7 +1392,7 @@ abstract public class AbstractThrottle extends PropertyChangeProviderImpl implem
         boolean old = this.f19Momentary;
         this.f19Momentary = f19Momentary;
         sendMomentaryFunctionGroup4();
-        notifyPropertyChangeListener(Throttle.F19Momentary, old, this.f19Momentary);
+        firePropertyChange(Throttle.F19Momentary, old, this.f19Momentary);
     }
 
     /**
@@ -1401,7 +1403,7 @@ abstract public class AbstractThrottle extends PropertyChangeProviderImpl implem
         boolean old = this.f20Momentary;
         this.f20Momentary = f20Momentary;
         sendMomentaryFunctionGroup4();
-        notifyPropertyChangeListener(Throttle.F20Momentary, old, this.f20Momentary);
+        firePropertyChange(Throttle.F20Momentary, old, this.f20Momentary);
     }
 
     /**
@@ -1412,7 +1414,7 @@ abstract public class AbstractThrottle extends PropertyChangeProviderImpl implem
         boolean old = this.f21Momentary;
         this.f21Momentary = f21Momentary;
         sendMomentaryFunctionGroup5();
-        notifyPropertyChangeListener(Throttle.F21Momentary, old, this.f21Momentary);
+        firePropertyChange(Throttle.F21Momentary, old, this.f21Momentary);
     }
 
     /**
@@ -1423,7 +1425,7 @@ abstract public class AbstractThrottle extends PropertyChangeProviderImpl implem
         boolean old = this.f22Momentary;
         this.f22Momentary = f22Momentary;
         sendMomentaryFunctionGroup5();
-        notifyPropertyChangeListener(Throttle.F22Momentary, old, this.f22Momentary);
+        firePropertyChange(Throttle.F22Momentary, old, this.f22Momentary);
     }
 
     /**
@@ -1434,7 +1436,7 @@ abstract public class AbstractThrottle extends PropertyChangeProviderImpl implem
         boolean old = this.f23Momentary;
         this.f23Momentary = f23Momentary;
         sendMomentaryFunctionGroup5();
-        notifyPropertyChangeListener(Throttle.F23Momentary, old, this.f23Momentary);
+        firePropertyChange(Throttle.F23Momentary, old, this.f23Momentary);
     }
 
     /**
@@ -1445,7 +1447,7 @@ abstract public class AbstractThrottle extends PropertyChangeProviderImpl implem
         boolean old = this.f24Momentary;
         this.f24Momentary = f24Momentary;
         sendMomentaryFunctionGroup5();
-        notifyPropertyChangeListener(Throttle.F24Momentary, old, this.f24Momentary);
+        firePropertyChange(Throttle.F24Momentary, old, this.f24Momentary);
     }
 
     /**
@@ -1456,7 +1458,7 @@ abstract public class AbstractThrottle extends PropertyChangeProviderImpl implem
         boolean old = this.f25Momentary;
         this.f25Momentary = f25Momentary;
         sendMomentaryFunctionGroup5();
-        notifyPropertyChangeListener(Throttle.F25Momentary, old, this.f25Momentary);
+        firePropertyChange(Throttle.F25Momentary, old, this.f25Momentary);
     }
 
     /**
@@ -1467,7 +1469,7 @@ abstract public class AbstractThrottle extends PropertyChangeProviderImpl implem
         boolean old = this.f26Momentary;
         this.f26Momentary = f26Momentary;
         sendMomentaryFunctionGroup5();
-        notifyPropertyChangeListener(Throttle.F26Momentary, old, this.f26Momentary);
+        firePropertyChange(Throttle.F26Momentary, old, this.f26Momentary);
     }
 
     /**
@@ -1478,7 +1480,7 @@ abstract public class AbstractThrottle extends PropertyChangeProviderImpl implem
         boolean old = this.f27Momentary;
         this.f27Momentary = f27Momentary;
         sendMomentaryFunctionGroup5();
-        notifyPropertyChangeListener(Throttle.F27Momentary, old, this.f27Momentary);
+        firePropertyChange(Throttle.F27Momentary, old, this.f27Momentary);
     }
 
     /**
@@ -1489,7 +1491,7 @@ abstract public class AbstractThrottle extends PropertyChangeProviderImpl implem
         boolean old = this.f28Momentary;
         this.f28Momentary = f28Momentary;
         sendMomentaryFunctionGroup5();
-        notifyPropertyChangeListener(Throttle.F28Momentary, old, this.f28Momentary);
+        firePropertyChange(Throttle.F28Momentary, old, this.f28Momentary);
     }
 
     /**
@@ -1557,7 +1559,7 @@ abstract public class AbstractThrottle extends PropertyChangeProviderImpl implem
     @Override
     public void setSpeedStepMode(SpeedStepMode mode) {
         log.debug("Speed Step Mode Change from:{} to:{}", speedStepMode, mode);
-        notifyPropertyChangeListener(SPEEDSTEPS, speedStepMode, speedStepMode = mode);
+        firePropertyChange(SPEEDSTEPS, speedStepMode, speedStepMode = mode);
     }
 
     @Override

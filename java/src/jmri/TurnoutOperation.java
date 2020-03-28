@@ -1,7 +1,7 @@
 package jmri;
 
 import javax.annotation.Nonnull;
-import jmri.beans.PropertyChangeProviderImpl;
+import jmri.beans.PropertyChangeSupport;
 import jmri.implementation.AbstractTurnout;
 
 /**
@@ -87,7 +87,7 @@ import jmri.implementation.AbstractTurnout;
  *
  * @author John Harper Copyright 2005
  */
-public abstract class TurnoutOperation extends PropertyChangeProviderImpl implements Comparable<Object> {
+public abstract class TurnoutOperation extends PropertyChangeSupport implements Comparable<Object> {
 
     String name;
     int feedbackModes = 0;

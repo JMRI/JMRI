@@ -583,7 +583,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
                 log.error("We have no control over the ecos object " + this.objectNumber + "Trying a forced control");
             } else {
                 if (_hadControl) {
-                    notifyPropertyChangeListener("LostControl", 0, 0);
+                    firePropertyChange("LostControl", 0, 0);
                     _hadControl = false;
                     ecosretry = 0;
                 } else {
@@ -593,7 +593,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
         } else {
             ecosretry = 0;
             if (_hadControl) {
-                notifyPropertyChangeListener("LostControl", 0, 0);
+                firePropertyChange("LostControl", 0, 0);
             } else {
                 ((EcosDccThrottleManager) adapterMemo.get(jmri.ThrottleManager.class)).throttleSetup(this, this.address, false);
             }

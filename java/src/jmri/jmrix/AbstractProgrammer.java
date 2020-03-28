@@ -6,7 +6,7 @@ import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
-import jmri.beans.PropertyChangeProviderImpl;
+import jmri.beans.PropertyChangeSupport;
 
 /**
  * Common implementations for the Programmer interface.
@@ -20,7 +20,7 @@ import jmri.beans.PropertyChangeProviderImpl;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2012, 2013
  */
-public abstract class AbstractProgrammer extends PropertyChangeProviderImpl implements Programmer {
+public abstract class AbstractProgrammer extends PropertyChangeSupport implements Programmer {
 
     /** {@inheritDoc} */
     @Override
@@ -77,8 +77,17 @@ public abstract class AbstractProgrammer extends PropertyChangeProviderImpl impl
         }
     }
 
+    /**
+     * Notify listeners of a property change.
+     * 
+     * @param key property name
+     * @param oldValue old value of property
+     * @param value new value of property
+     * @deprecated since 4.19.5; use {@link #firePropertyChange(java.lang.String, java.lang.Object, java.lang.Object)} instead
+     */
+    @Deprecated
     protected void notifyPropertyChange(String key, Object oldValue, Object value) {
-        propertyChangeSupport.firePropertyChange(key, oldValue, value);
+        firePropertyChange(key, oldValue, value);
     }
 
     /** {@inheritDoc} */
@@ -133,7 +142,7 @@ public abstract class AbstractProgrammer extends PropertyChangeProviderImpl impl
         if (validModes.contains(m)) {
             ProgrammingMode oldMode = mode;
             mode = m;
-            notifyPropertyChange("Mode", oldMode, m);
+            firePropertyChange("Mode", oldMode, m);
         } else {
             throw new IllegalArgumentException("Invalid requested mode: " + m);
         }

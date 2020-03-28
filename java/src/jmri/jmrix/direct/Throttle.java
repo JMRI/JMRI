@@ -107,7 +107,7 @@ public class Throttle extends AbstractThrottle {
         for (int j = 0; j < step.length(); j++) {
             m.setElement(i++, step.charAt(j));
         }
-        notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
+        firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting);
         record(speed);
         // tcl.sendMessage(m, null);
     }
@@ -117,7 +117,7 @@ public class Throttle extends AbstractThrottle {
         boolean old = isForward;
         isForward = forward;
         setSpeedSetting(speedSetting);  // send the command
-        notifyPropertyChangeListener(ISFORWARD, old, isForward);
+        firePropertyChange(ISFORWARD, old, isForward);
     }
 
     @Override

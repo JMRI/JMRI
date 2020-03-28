@@ -200,7 +200,7 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
         tc.sendTamsMessage(tm, this);
         tmq.add(tm);
 
-        notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
+        firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting);
     }
 
     @Override
@@ -208,7 +208,7 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
         boolean old = isForward;
         isForward = forward;
         setSpeedSetting(speedSetting);  // send the command
-        notifyPropertyChangeListener(ISFORWARD, old, isForward);
+        firePropertyChange(ISFORWARD, old, isForward);
     }
 
     private final DccLocoAddress address;
@@ -291,11 +291,11 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
                     
                     if (((tr.getElement(3) & 0x80) == 0) && isForward) {
                         isForward = false;
-                        notifyPropertyChangeListener(ISFORWARD, true, isForward);
+                        firePropertyChange(ISFORWARD, true, isForward);
                     }
                     if (((tr.getElement(3) & 0x80) == 128) && !isForward) {
                         isForward = true;
-                        notifyPropertyChangeListener(ISFORWARD, false, isForward);
+                        firePropertyChange(ISFORWARD, false, isForward);
                     }
                     
                     appendFuncString(1,sb,((tr.getElement(1) & 0x01) == 0x01));
@@ -328,10 +328,10 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
                     
                     if (lines[4].equals("r") && isForward) {
                         isForward = false;
-                        notifyPropertyChangeListener(ISFORWARD, true, isForward);
+                        firePropertyChange(ISFORWARD, true, isForward);
                     } else if (lines[4].equals("f") && !isForward) {
                         isForward = true;
-                        notifyPropertyChangeListener(ISFORWARD, false, isForward);
+                        firePropertyChange(ISFORWARD, false, isForward);
                     }
                     
                     updateFunction(1,lines[5].equals("1"));

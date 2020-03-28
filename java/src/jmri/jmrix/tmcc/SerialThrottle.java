@@ -225,7 +225,7 @@ public class SerialThrottle extends AbstractThrottle {
         tc.sendSerialMessage(m, null);
         tc.sendSerialMessage(m, null);
         tc.sendSerialMessage(m, null);
-        notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
+        firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting);
         record(speed);
     }
 
@@ -245,7 +245,7 @@ public class SerialThrottle extends AbstractThrottle {
         tc.sendSerialMessage(m, null);
         tc.sendSerialMessage(m, null);
         tc.sendSerialMessage(m, null);
-        notifyPropertyChangeListener(ISFORWARD, old, isForward);
+        firePropertyChange(ISFORWARD, old, isForward);
     }
 
     protected void sendToLayout(int value) {

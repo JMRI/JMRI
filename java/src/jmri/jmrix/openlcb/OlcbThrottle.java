@@ -97,7 +97,7 @@ public class OlcbThrottle extends AbstractThrottle {
         }
 
         // notify 
-        notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
+        firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting);
         record(speed);
     }
 
@@ -106,7 +106,7 @@ public class OlcbThrottle extends AbstractThrottle {
         boolean old = isForward;
         isForward = forward;
         setSpeedSetting(speedSetting);  // send the command
-        notifyPropertyChangeListener(ISFORWARD, old, isForward);
+        firePropertyChange(ISFORWARD, old, isForward);
     }
 
     // functions - note that we use the naming for DCC, though that's not the implication;
