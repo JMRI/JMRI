@@ -1,5 +1,6 @@
 /**
  * @see jmri.server.json
  */
-@edu.umd.cs.findbugs.annotations.SuppressFBWarnings({})
+// include empty DefaultAnnotation to avoid excessive recompilation
+@edu.umd.cs.findbugs.annotations.DefaultAnnotation(value={})
 package jmri.jmris.json;
