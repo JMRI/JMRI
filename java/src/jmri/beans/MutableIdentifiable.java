@@ -6,7 +6,7 @@ import javax.annotation.Nonnull;
  * An object that has a publicly mutable identity property.
  *
  * @author Randall Wood Copyright 2020
- * @see IdentifiedBean
+ * @see Identifiable
  */
 public interface MutableIdentifiable extends Identifiable {
 
