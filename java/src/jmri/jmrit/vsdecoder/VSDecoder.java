@@ -499,7 +499,7 @@ public class VSDecoder implements PropertyChangeListener {
         String property = evt.getPropertyName();
         // Respond to events from the new GUI.
         if (evt.getSource() instanceof VSDControl) {
-            if (property.equals(VSDControl.PCIdMap.get(VSDControl.PropertyChangeId.OPTION_CHANGE))) {
+            if (property.equals(VSDControl.OPTION_CHANGE)) {
                 Train selected_train = jmri.InstanceManager.getDefault(TrainManager.class).getTrainByName((String) evt.getNewValue());
                 if (selected_train != null) {
                     selected_train.addPropertyChangeListener(this);
@@ -529,21 +529,21 @@ public class VSDecoder implements PropertyChangeListener {
         }
 
         // Respond to events from the old GUI.
-        if ((property.equals(VSDManagerFrame.PCIDMap.get(VSDManagerFrame.PropertyChangeID.MUTE)))
-                || (property.equals(VSDecoderPane.PCIDMap.get(VSDecoderPane.PropertyChangeID.MUTE)))) {
+        if (property.equals(VSDManagerFrame.MUTE)
+                || property.equals(VSDecoderPane.MUTE)) {
             // Either GUI Mute button
             log.debug("VSD: Mute change. value: {}", evt.getNewValue());
             Boolean b = (Boolean) evt.getNewValue();
             this.mute(b.booleanValue());
 
-        } else if ((property.equals(VSDManagerFrame.PCIDMap.get(VSDManagerFrame.PropertyChangeID.VOLUME_CHANGE)))
-                || (property.equals(VSDecoderPane.PCIDMap.get(VSDecoderPane.PropertyChangeID.VOLUME_CHANGE)))) {
+        } else if (property.equals(VSDManagerFrame.VOLUME_CHANGE)
+                || property.equals(VSDecoderPane.VOLUME_CHANGE)) {
             // Either GUI Volume slider
             log.debug("VSD: Volume change. value: {}", evt.getNewValue());
             // Slider gives integer 0-100. Need to change that to a float 0.0-1.0
             this.setMasterVolume((1.0f * (Integer) evt.getNewValue()) / 100.0f);
 
-        } else if (property.equals(VSDecoderPane.PCIDMap.get(VSDecoderPane.PropertyChangeID.ADDRESS_CHANGE))) {
+        } else if (property.equals(VSDecoderPane.ADDRESS_CHANGE)) {
             // OLD GUI Address Change
             log.debug("Decoder set address: {}", (LocoAddress) evt.getNewValue());
             this.setAddress((LocoAddress) evt.getNewValue());

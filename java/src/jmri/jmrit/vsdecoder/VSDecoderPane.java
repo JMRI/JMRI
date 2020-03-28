@@ -30,13 +30,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.File;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -61,22 +57,39 @@ import org.slf4j.LoggerFactory;
  */
 public class VSDecoderPane extends JmriPanel {
 
+    final static String ADDRESS_CHANGE = "AddressChange"; // NOI18N
+    final static String PROFILE_SELECT = "ProfileSelect"; // NOI18N
+    final static String MUTE = "Mute"; // NOI18N
+    final static String VOLUME_CHANGE = "VolumeChange"; // NOI18N
+
+    /**
+     *
+     * @deprecated since 4.19.5; use {@link #ADDRESS_CHANGE}, {@link #PROFILE_SELECT},
+     * {@link #MUTE}, {@link #VOLUME_CHANGE} for property names instead
+     */
+    @Deprecated
     public static enum PropertyChangeID {
 
         ADDRESS_CHANGE, PROFILE_SELECT, MUTE, VOLUME_CHANGE
     }
 
+    /**
+     *
+     * @deprecated since 4.19.5; use {@link #ADDRESS_CHANGE}, {@link #PROFILE_SELECT},
+     * {@link #MUTE}, {@link #VOLUME_CHANGE} for property names instead
+     */
+    @Deprecated
     public static final Map<PropertyChangeID, String> PCIDMap;
 
     static {
-        Map<PropertyChangeID, String> aMap = new HashMap<PropertyChangeID, String>();
-        aMap.put(PropertyChangeID.ADDRESS_CHANGE, "AddressChange");
-        aMap.put(PropertyChangeID.PROFILE_SELECT, "ProfileSelect");
-        aMap.put(PropertyChangeID.MUTE, "Mute");
-        aMap.put(PropertyChangeID.VOLUME_CHANGE, "VolumeChange");
+        Map<PropertyChangeID, String> aMap = new HashMap<>();
+        aMap.put(PropertyChangeID.ADDRESS_CHANGE, ADDRESS_CHANGE);
+        aMap.put(PropertyChangeID.PROFILE_SELECT, PROFILE_SELECT);
+        aMap.put(PropertyChangeID.MUTE, MUTE);
+        aMap.put(PropertyChangeID.VOLUME_CHANGE, VOLUME_CHANGE);
         PCIDMap = Collections.unmodifiableMap(aMap);
     }
-
+    
     String decoder_id;
     VSDecoderManager decoder_mgr;
 
@@ -274,7 +287,7 @@ public class VSDecoderPane extends JmriPanel {
     public void muteButtonPressed(ActionEvent e) {
         JToggleButton b = (JToggleButton) e.getSource();
         log.debug("Mute button pressed. value = " + b.isSelected());
-        firePropertyChange(PropertyChangeID.MUTE, !b.isSelected(), b.isSelected());
+        firePropertyChange(MUTE, !b.isSelected(), b.isSelected());
         // do something.
     }
 
@@ -285,51 +298,30 @@ public class VSDecoderPane extends JmriPanel {
     public void volumeChange(ChangeEvent e) {
         JSlider v = (JSlider) e.getSource();
         log.debug("Volume slider moved. value = " + v.getValue());
-        firePropertyChange(PropertyChangeID.VOLUME_CHANGE, v.getValue(), v.getValue());
+        firePropertyChange(VOLUME_CHANGE, v.getValue(), v.getValue());
     }
 
     // VSDecoderManager Events
-    /**
-     * Add a listener for this Pane's property change events
-     */
-    @Override
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-        List<PropertyChangeListener> l = Arrays.asList(listenerList.getListeners(PropertyChangeListener.class));
-        if (!l.contains(listener)) {
-            listenerList.add(PropertyChangeListener.class, listener);
-        }
-    }
 
     /**
-     * Remove a listener
-     */
-    @Override
-    public void removePropertyChangeListener(PropertyChangeListener listener) {
-        listenerList.remove(PropertyChangeListener.class, listener);
-    }
-
-    /**
-     * Fire a property change from this object
+     * Fire a property change from this object.
+     * @deprecated since 4.19.5; use parent class methods instead
      */
     // NOTE: should this be public???
+    @Deprecated
     public void firePropertyChange(PropertyChangeID id, Object oldProp, Object newProp) {
-        String pcname;
-
-        // map the property change ID
-        pcname = PCIDMap.get(id);
-        // Fire the actual PropertyChangeEvent
-        firePropertyChange(new PropertyChangeEvent(this, pcname, oldProp, newProp));
+        firePropertyChange(PCIDMap.get(id), oldProp, newProp);
     }
 
     /**
-     * Fire a property change from this object
+     * Fire a property change notification on an address change.
+     * 
+     * @param oldAddress the old address
+     * @param newAddress the new address
      */
-    void firePropertyChange(PropertyChangeEvent evt) {
-        //Object[] listeners = listenerList.getListenerList();
-
-        for (PropertyChangeListener l : listenerList.getListeners(PropertyChangeListener.class)) {
-            l.propertyChange(evt);
-        }
+    // package protected
+    void fireAddressChange(LocoAddress oldAddress, LocoAddress newAddress) {
+        firePropertyChange(ADDRESS_CHANGE, oldAddress, newAddress);
     }
 
     /**
@@ -444,7 +436,7 @@ public class VSDecoderPane extends JmriPanel {
     public void setAddress(LocoAddress a) {
         if (a != null) {
             log.debug("Pane Set Address: " + a);
-            firePropertyChange(PropertyChangeID.ADDRESS_CHANGE, null, a);
+            firePropertyChange(ADDRESS_CHANGE, null, a);
 
             //VSDecoder decoder = VSDecoderManager.instance().getVSDecoderByID(decoder_id);
             //if (decoder != null) {

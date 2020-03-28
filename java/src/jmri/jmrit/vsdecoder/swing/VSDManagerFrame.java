@@ -7,7 +7,6 @@ import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -57,23 +56,41 @@ import org.slf4j.LoggerFactory;
  */
 public class VSDManagerFrame extends JmriJFrame {
 
+    public static final String MUTE = "VSDMF:Mute"; // NOI18N
+    public static final String VOLUME_CHANGE = "VSDMF:VolumeChange"; // NOI18N
+    public static final String ADD_DECODER = "VSDMF:AddDecoder"; // NOI18N
+    public static final String REMOVE_DECODER = "VSDMF:RemoveDecoder"; // NOI18N
+    public static final String CLOSE_WINDOW = "VSDMF:CloseWindow"; // NOI18N
+
+    /**
+     * 
+     * @deprecated since 4.19.5; use {@link #MUTE}, {@link #VOLUME_CHANGE},
+     * {@link #ADD_DECODER}, {@link #REMOVE_DECODER}, {@link #CLOSE_WINDOW} instead
+     */
+    @Deprecated
     public static enum PropertyChangeID {
 
         MUTE, VOLUME_CHANGE, ADD_DECODER, REMOVE_DECODER, CLOSE_WINDOW
     }
 
+    /**
+     * 
+     * @deprecated since 4.19.5; use {@link #MUTE}, {@link #VOLUME_CHANGE},
+     * {@link #ADD_DECODER}, {@link #REMOVE_DECODER}, {@link #CLOSE_WINDOW} instead
+     */
+    @Deprecated
     public static final Map<PropertyChangeID, String> PCIDMap;
 
     static {
         Map<PropertyChangeID, String> aMap = new HashMap<>();
-        aMap.put(PropertyChangeID.MUTE, "VSDMF:Mute");
-        aMap.put(PropertyChangeID.VOLUME_CHANGE, "VSDMF:VolumeChange");
-        aMap.put(PropertyChangeID.ADD_DECODER, "VSDMF:AddDecoder");
-        aMap.put(PropertyChangeID.REMOVE_DECODER, "VSDMF:RemoveDecoder");
-        aMap.put(PropertyChangeID.CLOSE_WINDOW, "VSDMF:CloseWindow");
+        aMap.put(PropertyChangeID.MUTE, MUTE);
+        aMap.put(PropertyChangeID.VOLUME_CHANGE, VOLUME_CHANGE);
+        aMap.put(PropertyChangeID.ADD_DECODER, ADD_DECODER);
+        aMap.put(PropertyChangeID.REMOVE_DECODER, REMOVE_DECODER);
+        aMap.put(PropertyChangeID.CLOSE_WINDOW, CLOSE_WINDOW);
         PCIDMap = Collections.unmodifiableMap(aMap);
     }
-
+    
     // Map of Mnemonic KeyEvent values to GUI Components
     private static final Map<String, Integer> Mnemonics = new HashMap<>();
 
@@ -169,7 +186,7 @@ public class VSDManagerFrame extends JmriJFrame {
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
-                firePropertyChange(PropertyChangeID.CLOSE_WINDOW, null, null);
+                firePropertyChange(CLOSE_WINDOW, null, null);
             }
         });
 
@@ -219,7 +236,7 @@ public class VSDManagerFrame extends JmriJFrame {
     protected void muteButtonPressed(ActionEvent e) {
         JToggleButton b = (JToggleButton) e.getSource();
         log.debug("Mute button pressed. value: {}", b.isSelected());
-        firePropertyChange(PropertyChangeID.MUTE, !b.isSelected(), b.isSelected());
+        firePropertyChange(MUTE, !b.isSelected(), b.isSelected());
     }
 
     /**
@@ -238,7 +255,7 @@ public class VSDManagerFrame extends JmriJFrame {
                 addButtonPropertyChange(event);
             }
         });
-        //firePropertyChange(PropertyChangeId.ADD_DECODER, null, null);
+        //firePropertyChange(ADD_DECODER, null, null);
     }
 
     /**
@@ -286,7 +303,7 @@ public class VSDManagerFrame extends JmriJFrame {
             this.pack();
             //this.setVisible(true);
             // Do we need to make newControl a listener to newDecoder?
-            //firePropertyChange(PropertyChangeId.ADD_DECODER, null, newDecoder);
+            //firePropertyChange(ADD_DECODER, null, newDecoder);
         }
     }
 
@@ -295,7 +312,7 @@ public class VSDManagerFrame extends JmriJFrame {
      */
     protected void vsdControlPropertyChange(PropertyChangeEvent event) {
         String property = event.getPropertyName();
-        if (property.equals(VSDControl.PCIdMap.get(VSDControl.PropertyChangeId.DELETE))) {
+        if (property.equals(VSDControl.DELETE)) {
             String ov = (String) event.getOldValue();
             String nv = (String) event.getNewValue();
             VSDecoder vsd = VSDecoderManager.instance().getVSDecoderByAddress(nv);
@@ -303,8 +320,8 @@ public class VSDManagerFrame extends JmriJFrame {
                 log.debug("VSD is null.");
             }
             this.removePropertyChangeListener(vsd);
-            log.debug("vsdControlPropertyChange. ID: {}, old: {}, new: {}", PCIDMap.get(PropertyChangeID.REMOVE_DECODER), ov, nv);
-            firePropertyChange(PropertyChangeID.REMOVE_DECODER, ov, nv);
+            log.debug("vsdControlPropertyChange. ID: {}, old: {}, new: {}", REMOVE_DECODER, ov, nv);
+            firePropertyChange(REMOVE_DECODER, ov, nv);
             decoderPane.remove((VSDControl) event.getSource());
             if (decoderPane.getComponentCount() == 0) {
                 decoderPane.add(decoderBlank);
@@ -332,7 +349,7 @@ public class VSDManagerFrame extends JmriJFrame {
     protected void volumeChange(ChangeEvent e) {
         JSlider v = (JSlider) e.getSource();
         log.debug("Volume slider moved. value: {}", v.getValue());
-        firePropertyChange(PropertyChangeID.VOLUME_CHANGE, v.getValue(), v.getValue());
+        firePropertyChange(VOLUME_CHANGE, v.getValue(), v.getValue());
     }
 
     private void buildMenu() {
@@ -359,53 +376,21 @@ public class VSDManagerFrame extends JmriJFrame {
     }
 
     // VSDecoderManager Events
-    /**
-     * Add a listener for this Pane's property change events
-     */
-    @Override
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-        List<PropertyChangeListener> l = Arrays.asList(listenerList.getListeners(PropertyChangeListener.class));
-        if (!l.contains(listener)) {
-            listenerList.add(PropertyChangeListener.class, listener);
-        }
-    }
 
     /**
-     * Remove a listener
-     */
-    @Override
-    public void removePropertyChangeListener(PropertyChangeListener listener) {
-        if (listener == null) {
-            log.warn("No listener!");
-        }
-        listenerList.remove(PropertyChangeListener.class, listener);
-    }
-
-    /**
-     * Fire a property change from this object
+     * Fire a property change from this object.
+     * @deprecated since 4.19.5 without direct replacement
      */
     // NOTE: should this be public???
+    @Deprecated
     private void firePropertyChange(PropertyChangeID id, Object oldProp, Object newProp) {
         // map the property change ID
         String pcname = PCIDMap.get(id);
-        PropertyChangeEvent pce = new PropertyChangeEvent(this, pcname, oldProp, newProp);
         // Fire the actual PropertyChangeEvent
         log.debug("Firing property change: {}", pcname);
-        firePropertyChange(pce);
+        firePropertyChange(pcname, oldProp, newProp);
     }
 
-    /**
-     * Fire a property change from this object
-     */
-    private void firePropertyChange(PropertyChangeEvent evt) {
-        if (evt == null) {
-            log.warn("EVT is NULL!!");
-        }
-        for (PropertyChangeListener l : listenerList.getListeners(PropertyChangeListener.class)) {
-            l.propertyChange(evt);
-        }
-    }
-
-    private final static Logger log = LoggerFactory.getLogger(VSDManagerFrame.class);
+    private static final Logger log = LoggerFactory.getLogger(VSDManagerFrame.class);
 
 }

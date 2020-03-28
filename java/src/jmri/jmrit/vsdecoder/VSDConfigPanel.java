@@ -105,8 +105,7 @@ public class VSDConfigPanel extends JmriPanel {
         // Simulates the clicking of the address Set button
         VSDecoder dec = main_pane.getDecoder();
         if (addressSelector.getAddress() != null) {
-            main_pane.firePropertyChange(VSDecoderPane.PropertyChangeID.ADDRESS_CHANGE,
-                    dec.getAddress(), addressSelector.getAddress());
+            main_pane.fireAddressChange(dec.getAddress(), addressSelector.getAddress());
         }
     }
 
