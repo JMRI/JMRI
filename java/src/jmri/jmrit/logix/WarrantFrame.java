@@ -120,7 +120,13 @@ public class WarrantFrame extends WarrantRoute {
      */
     protected WarrantFrame(Warrant startW, Warrant endW) {
         super();
-        _warrant = new Warrant(InstanceManager.getDefault(WarrantManager.class).getAutoSystemName(), null);
+        WarrantManager mgr = InstanceManager.getDefault(WarrantManager.class);
+        String sName = mgr.getAutoSystemName();
+        while (mgr.getBySystemName(sName) != null) {
+            mgr.updateAutoNumber(sName);
+            sName = mgr.getAutoSystemName();
+        }
+        _warrant = new Warrant(sName, null);
         if (startW != null) {   
             setup(startW);
             if (endW != null) {     // concatenate warrants
@@ -183,6 +189,17 @@ public class WarrantFrame extends WarrantRoute {
         _speedUtil.setRosterId(spU.getRosterId());
         _speedUtil.setDccAddress(spU.getDccAddress());
         setTrainInfo(warrant.getTrainName());
+
+        ActionListener checkBoxChange = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                _dirty = true;
+            }
+        };
+        _shareRouteBox.addActionListener(checkBoxChange);
+        _addTracker.addActionListener(checkBoxChange);
+        _noRampBox.addActionListener(checkBoxChange);
+        _runETOnlyBox.addActionListener(checkBoxChange);
     }
 
     private void init() {
@@ -205,10 +222,15 @@ public class WarrantFrame extends WarrantRoute {
         if (!_throttleCommands.isEmpty()) {
             _showScript.setSelected(true);
         }
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
-                close();
+                if (_dirty && askClose() && _warrant.getRunMode() == Warrant.MODE_NONE) {
+                    // if runMode != MODE_NONE, this is probably a panic shutdown. Don't halt it.
+                    return;
+                }
+                WarrantTableAction.getDefault().closeWarrantFrame();
             }
         });
 
@@ -218,8 +240,18 @@ public class WarrantFrame extends WarrantRoute {
         setLocation(0, 100);
         setVisible(true);
         pack();
+        _dirty = false;
     }
 
+    private boolean askClose() {
+        if (JOptionPane.showConfirmDialog(this, Bundle.getMessage("saveOrClose"),
+                Bundle.getMessage("QuestionTitle"), JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+            return true;
+        }
+        return false;
+    }
+ 
     private JPanel makeTopPanel() {
         JPanel topPanel = new JPanel();
         topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.PAGE_AXIS));
@@ -239,11 +271,10 @@ public class WarrantFrame extends WarrantRoute {
         }
         _sysNameBox.setBackground(Color.white);
         panel.add(_sysNameBox);
-        panel.add(_userNameBox);
         panel.add(Box.createHorizontalStrut(2 * STRUT_SIZE));
-        panel.add(Box.createHorizontalStrut(STRUT_SIZE));
         panel.add(new JLabel(Bundle.getMessage("LabelUserName")));
         panel.add(Box.createHorizontalStrut(STRUT_SIZE));
+        panel.add(_userNameBox);
         panel.add(Box.createHorizontalStrut(2 * STRUT_SIZE));
         topPanel.add(panel);
         topPanel.add(Box.createVerticalStrut(STRUT_SIZE));
@@ -802,7 +833,7 @@ public class WarrantFrame extends WarrantRoute {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (save()) {
-                    close();
+                    WarrantTableAction.getDefault().closeWarrantFrame();
                 }
             }
         });
@@ -937,6 +968,7 @@ public class WarrantFrame extends WarrantRoute {
         if (msg == null) {
             msg = WarrantTableFrame.getDefault().getModel().checkAddressInUse(_warrant);
         }
+        toFront();
 
         if (msg != null) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("LearnError", msg),
@@ -1030,6 +1062,7 @@ public class WarrantFrame extends WarrantRoute {
                 model.addNXWarrant(_warrant);
             }
         }
+        toFront();
         if (msg != null) {
             JOptionPane.showMessageDialog(this, msg, Bundle.getMessage("WarningTitle"),
                     JOptionPane.WARNING_MESSAGE);
@@ -1345,6 +1378,7 @@ public class WarrantFrame extends WarrantRoute {
         String msg = routeIsValid();
         if (msg != null) {
             msg = Bundle.getMessage("SaveError", msg);
+            fatal = true;
         }
         if (msg == null) {
             msg = checkLocoAddress();
@@ -1425,11 +1459,15 @@ public class WarrantFrame extends WarrantRoute {
         _warrant.setBlockOrders(getOrders());
         _warrant.setThrottleCommands(_throttleCommands);
         _warrant.setSpeedUtil(_speedUtil);  // transfer SpeedUtil to warrant
+        if (_saveWarrant == null) {
+            mgr.register(_warrant);
+        }
 
         if (log.isDebugEnabled()) log.debug("warrant {} saved _train {} name= {}",
                 _warrant.getDisplayName(), _speedUtil.getRosterId(), getTrainName());
         WarrantTableAction.getDefault().updateWarrantMenu();
         WarrantTableFrame.getDefault().getModel().fireTableDataChanged();
+        _dirty = false;
         return true;
     }
 
@@ -1437,10 +1475,10 @@ public class WarrantFrame extends WarrantRoute {
         return _throttleCommands;
     }
 
+    // shut down, but don't dispose
     protected void close() {
         clearTempWarrant();
         stopRunTrain();
-        WarrantTableAction.getDefault().closeWarrantFrame();
     }
 
     /**
