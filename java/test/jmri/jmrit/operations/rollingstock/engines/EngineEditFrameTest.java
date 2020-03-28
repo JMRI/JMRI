@@ -50,7 +50,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
         Assert.assertTrue(f.isShowing());
 
         f.roadNumberTextField.setText("123");
-        JemmyUtil.enterClickAndLeave(f.clearRoadNumberButton);
+        JemmyUtil.enterPushAndLeave(f.clearRoadNumberButton);
         Assert.assertEquals("road number", "", f.roadNumberTextField.getText());
 
         JUnitUtil.dispose(f);
@@ -70,7 +70,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
         // "*" is not a legal character for road number
         f.roadNumberTextField.setText("6*6");
 
-        JemmyUtil.enterClickAndLeave(f.addButton);
+        JemmyUtil.enterPushAndLeave(f.addButton);
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("roadNumNG"), Bundle.getMessage("ButtonOK"));
 
         // test number too long
@@ -81,7 +81,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
 
         f.roadNumberTextField.setText(sb.toString());
 
-        JemmyUtil.enterClickAndLeave(f.addButton);
+        JemmyUtil.enterPushAndLeave(f.addButton);
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("RoadNumTooLong"), Bundle.getMessage("ButtonOK"));
 
         // confirm that delete and save buttons are disabled
@@ -91,7 +91,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
         // enter a good road number
         f.roadNumberTextField.setText("123");
 
-        JemmyUtil.enterClickAndLeave(f.addButton);
+        JemmyUtil.enterPushAndLeave(f.addButton);
         // confirm that delete and save buttons are enabled
         Assert.assertTrue(f.saveButton.isEnabled());
         Assert.assertTrue(f.deleteButton.isEnabled());
@@ -123,7 +123,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
         // "*" is not a legal character for road number
         f.roadNumberTextField.setText("6*6");
 
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterPushAndLeave(f.saveButton);
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("roadNumNG"), Bundle.getMessage("ButtonOK"));
 
         // test number too long
@@ -134,13 +134,13 @@ public class EngineEditFrameTest extends OperationsTestCase {
 
         f.roadNumberTextField.setText(sb.toString());
 
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterPushAndLeave(f.saveButton);
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("RoadNumTooLong"), Bundle.getMessage("ButtonOK"));
 
         // enter a good road number
         f.roadNumberTextField.setText("123");
 
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterPushAndLeave(f.saveButton);
         
         Assert.assertNull(cManager.getByRoadAndNumber("PC", "5016"));
         Assert.assertNotNull(cManager.getByRoadAndNumber("PC", "123"));
@@ -172,7 +172,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
 
         // change road number for this engine
         f.roadNumberTextField.setText("54321");
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterPushAndLeave(f.saveButton);
         engine = engineManager.getByRoadAndNumber("PC", "54321");
         Assert.assertNotNull("engine exists", engine);
         // confirm engine id was modified
@@ -183,7 +183,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
 
         // change road name
         f.roadComboBox.setSelectedItem("SP");
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterPushAndLeave(f.saveButton);
         engine = engineManager.getByRoadAndNumber("SP", "54321");
         Assert.assertNotNull("engine exists", engine);
         // confirm engine id was modified
@@ -216,7 +216,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
         // enter an existing road number
         f.roadNumberTextField.setText("5019");
 
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterPushAndLeave(f.saveButton);
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("engineCanNotUpdate"), Bundle.getMessage("ButtonOK"));
 
         JUnitUtil.dispose(f);
@@ -240,11 +240,11 @@ public class EngineEditFrameTest extends OperationsTestCase {
   
         f.weightTonsTextField.setText("Bogus Weight");
         // new dialog warning engine weight
-        JemmyUtil.enterClickAndLeave(f.addButton);
+        JemmyUtil.enterPushAndLeave(f.addButton);
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("WeightTonError"), Bundle.getMessage("ButtonOK"));
 
         f.weightTonsTextField.setText("100");
-        JemmyUtil.enterClickAndLeave(f.addButton);
+        JemmyUtil.enterPushAndLeave(f.addButton);
 
         // confirm that delete and save buttons are enabled
         Assert.assertTrue(f.saveButton.isEnabled());
@@ -263,7 +263,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
   
         f.hpTextField.setText("Bogus HP");
         // new dialog warning engine HP
-        JemmyUtil.enterClickAndLeave(f.addButton);
+        JemmyUtil.enterPushAndLeave(f.addButton);
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("engineCanNotHp"), Bundle.getMessage("ButtonOK"));
 
         JUnitUtil.dispose(f);
@@ -276,7 +276,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
         EngineEditFrame f = new EngineEditFrame();
         f.initComponents();
 
-        JemmyUtil.enterClickAndLeave(f.editRoadButton);
+        JemmyUtil.enterPushAndLeave(f.editRoadButton);
         Assert.assertTrue(f.engineAttributeEditFrame.isShowing());
         Assert.assertEquals("Check attribute", EngineAttributeEditFrame.ROAD, f.engineAttributeEditFrame._comboboxName);
         
@@ -295,7 +295,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
         EngineEditFrame f = new EngineEditFrame();
         f.initComponents();
 
-        JemmyUtil.enterClickAndLeave(f.editModelButton);
+        JemmyUtil.enterPushAndLeave(f.editModelButton);
         Assert.assertTrue(f.engineAttributeEditFrame.isShowing());
         Assert.assertEquals("Check attribute", EngineAttributeEditFrame.MODEL, f.engineAttributeEditFrame._comboboxName);
 
@@ -310,7 +310,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
         EngineEditFrame f = new EngineEditFrame();
         f.initComponents();
 
-        JemmyUtil.enterClickAndLeave(f.editTypeButton);
+        JemmyUtil.enterPushAndLeave(f.editTypeButton);
         Assert.assertTrue(f.engineAttributeEditFrame.isShowing());
         Assert.assertEquals("Check attribute", EngineAttributeEditFrame.TYPE, f.engineAttributeEditFrame._comboboxName);
 
@@ -325,7 +325,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
         EngineEditFrame f = new EngineEditFrame();
         f.initComponents();
 
-        JemmyUtil.enterClickAndLeave(f.editLengthButton);
+        JemmyUtil.enterPushAndLeave(f.editLengthButton);
         Assert.assertTrue(f.engineAttributeEditFrame.isShowing());
         Assert.assertEquals("Check attribute", EngineAttributeEditFrame.LENGTH, f.engineAttributeEditFrame._comboboxName);
 
@@ -340,7 +340,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
         EngineEditFrame f = new EngineEditFrame();
         f.initComponents();
 
-        JemmyUtil.enterClickAndLeave(f.editOwnerButton);
+        JemmyUtil.enterPushAndLeave(f.editOwnerButton);
         Assert.assertTrue(f.engineAttributeEditFrame.isShowing());
         Assert.assertEquals("Check attribute", EngineAttributeEditFrame.OWNER, f.engineAttributeEditFrame._comboboxName);
 
@@ -355,7 +355,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
         EngineEditFrame f = new EngineEditFrame();
         f.initComponents();
 
-        JemmyUtil.enterClickAndLeave(f.editGroupButton);
+        JemmyUtil.enterPushAndLeave(f.editGroupButton);
         Assert.assertTrue(f.engineAttributeEditFrame.isShowing());
         Assert.assertEquals("Check attribute", EngineAttributeEditFrame.CONSIST, f.engineAttributeEditFrame._comboboxName);
 
@@ -388,7 +388,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
 
         // test no track selected error
         f.locationBox.setSelectedIndex(1);
-        JemmyUtil.enterClickAndLeave(f.addButton);
+        JemmyUtil.enterPushAndLeave(f.addButton);
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("rsCanNotLoc"), Bundle.getMessage("ButtonOK"));
 
         engine = cm.getByRoadAndNumber("SP", "10345");
@@ -397,13 +397,13 @@ public class EngineEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("engine location", null, engine.getLocation());
 
         f.trackLocationBox.setSelectedIndex(1);
-        JemmyUtil.enterClickAndLeave(f.addButton);
+        JemmyUtil.enterPushAndLeave(f.addButton);
 
         // engine already exists
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("engineCanNotUpdate"), Bundle.getMessage("ButtonOK"));
         Assert.assertEquals("engine location", null, engine.getLocation());
 
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterPushAndLeave(f.saveButton);
         // engine location should have been updated
         Assert.assertEquals("engine location", loc1, engine.getLocation());
 
@@ -411,7 +411,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
         f.locationBox.setSelectedIndex(2);
         f.trackLocationBox.setSelectedIndex(1);
 
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterPushAndLeave(f.saveButton);
         Assert.assertEquals("engine location", loc2, engine.getLocation());
 
         // add a track
@@ -426,7 +426,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
 
         // try to set engine to test spur, with a length of 0
         f.trackLocationBox.setSelectedIndex(2);
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterPushAndLeave(f.saveButton);
 
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("rsCanNotLoc"), Bundle.getMessage("ButtonOK"));
 
@@ -440,7 +440,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
         Assert.assertNotEquals("track", testSpur, engine.getTrack());
 
         // do it again, but say yes
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterPushAndLeave(f.saveButton);
 
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("rsCanNotLoc"), Bundle.getMessage("ButtonOK"));
         JemmyUtil.pressDialogButton(f, MessageFormat
@@ -475,7 +475,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
         f.builtTextField.setText("1999");
         f.ownerComboBox.setSelectedItem("AT");
         f.commentTextField.setText("test Engine comment field");
-        JemmyUtil.enterClickAndLeave(f.addButton);
+        JemmyUtil.enterPushAndLeave(f.addButton);
 
         EngineManager cManager = InstanceManager.getDefault(EngineManager.class);
         Assert.assertEquals("number of Engines", 5, cManager.getNumEntries());
@@ -494,7 +494,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
         // make B unit
         JemmyUtil.enterClickAndLeave(f.bUnitCheckBox);
 
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterPushAndLeave(f.saveButton);
         Assert.assertEquals("number of Engines", 5, cManager.getNumEntries());
         
         Assert.assertTrue(e6.isBunit());
@@ -540,7 +540,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("Engine track", track, f.trackLocationBox.getSelectedItem());
 
         // test delete button
-        JemmyUtil.enterClickAndLeave(f.deleteButton);
+        JemmyUtil.enterPushAndLeave(f.deleteButton);
         Assert.assertEquals("number of Engines", 3, cManager.getNumEntries());
 
         JUnitUtil.dispose(f);
@@ -885,7 +885,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
 
         Consist c = engineManager.newConsist("TEST_CONSIST");
         f.groupComboBox.setSelectedItem(c.getName());
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterPushAndLeave(f.saveButton);
         Assert.assertEquals("consist name", "TEST_CONSIST", e1.getConsistName());
 
         JUnitUtil.dispose(f);

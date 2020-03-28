@@ -50,7 +50,7 @@ public class IgnoreUsedTrackFrameTest extends OperationsTestCase {
         Assert.assertEquals(0, track.getIgnoreUsedLengthPercentage());
         
         JemmyUtil.enterClickAndLeave(iutf.seventyfivePercent);
-        JemmyUtil.enterClickAndLeave(iutf.saveButton);
+        JemmyUtil.enterPushAndLeave(iutf.saveButton);
         
         Assert.assertEquals(75, track.getIgnoreUsedLengthPercentage());
         

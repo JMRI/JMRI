@@ -40,7 +40,7 @@ public class PrintOptionFrameTest extends OperationsTestCase {
         // test save button
         JemmyUtil.enterClickAndLeave(pop.formatSwitchListCheckBox);
         Assert.assertTrue(pop.isDirty());
-        JemmyUtil.enterClickAndLeave(pop.saveButton);
+        JemmyUtil.enterPushAndLeave(pop.saveButton);
         
         Assert.assertFalse(pop.isDirty());
         Assert.assertFalse(Setup.isSwitchListFormatSameAsManifest());
