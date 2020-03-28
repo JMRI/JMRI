@@ -3,15 +3,19 @@ package jmri.jmris.simpleserver;
 import java.io.File;
 
 import jmri.InstanceManager;
+import jmri.InstanceManagerAutoDefault;
 import jmri.InstanceManagerDelegate;
 import jmri.util.FileUtil;
 
-public class SimpleServerManager {
+public class SimpleServerManager implements InstanceManagerAutoDefault {
 
     private SimpleServerPreferences preferences;
     private SimpleServer server;
     private final InstanceManagerDelegate instanceManagerDelegate;
 
+    public SimpleServerManager(){
+        this(new InstanceManagerDelegate());
+    }
 
     private SimpleServerManager(InstanceManagerDelegate instanceManagerDelegate) {
         this.instanceManagerDelegate = instanceManagerDelegate;

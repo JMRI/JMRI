@@ -1,5 +1,7 @@
 package jmri.jmris.simpleserver;
 
+import jmri.InstanceManagerDelegate;
+
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
@@ -10,17 +12,24 @@ import javax.swing.AbstractAction;
  */
 public class SimpleServerAction extends AbstractAction {
 
+    public final InstanceManagerDelegate instanceManagerDelegate;
+
     public SimpleServerAction(String s) {
-        super(s);
+        this(s,new InstanceManagerDelegate());
     }
 
     public SimpleServerAction() {
         this("Start JMRI Simple Server");
     }
 
+    public SimpleServerAction(String s, InstanceManagerDelegate instanceManagerDelegate){
+        super(s);
+        this.instanceManagerDelegate = instanceManagerDelegate;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        SimpleServerManager.getInstance().getServer().start();
+        instanceManagerDelegate.getDefault(SimpleServerManager.class).getServer().start();
     }
 }
 
