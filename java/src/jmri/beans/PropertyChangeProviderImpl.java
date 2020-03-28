@@ -1,7 +1,6 @@
 package jmri.beans;
 
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 
 import javax.annotation.CheckForNull;
 
@@ -14,7 +13,8 @@ import javax.annotation.CheckForNull;
  * PropertyChangeProvider interface without introducing the complexity of the
  * other implementations of PropertyChangeProvider in this package. When
  * designing new classes, it would be preferable to subclass
- * {@link ArbitraryBean}, {@link Bean}, or {@link ConstrainedBean} depending on
+ * {@link ArbitraryBean}, {@link Bean}, {@link ConstrainedBean},
+ * {@link PropertyChangeSupport}, or {@link VetoableChangeSupport} depending on
  * the design requirements of the new class.
  * <p>
  * This class is thread safe.
@@ -23,13 +23,15 @@ import javax.annotation.CheckForNull;
  * @see ArbitraryBean
  * @see Bean
  * @see ConstrainedBean
+ * @see PropertyChangeSupport
+ * @see VetoableChangeSupport
  */
 public class PropertyChangeProviderImpl implements PropertyChangeProvider {
 
     /**
      * Provide a {@link java.beans.PropertyChangeSupport} helper.
      */
-    protected final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
+    protected final java.beans.PropertyChangeSupport propertyChangeSupport = new java.beans.PropertyChangeSupport(this);
 
     /** {@inheritDoc} */
     @Override
