@@ -267,7 +267,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
     }
 
     /**
-     * Set the speed {@literal &} direction.
+     * Set the speed and direction.
      * <p>
      * This intentionally skips the emergency stop value of 1.
      *

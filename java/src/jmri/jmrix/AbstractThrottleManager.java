@@ -831,7 +831,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
             log.debug("Address {} still has active users",t.getLocoAddress());
             return false;
         }
-        if (t.getListeners().size() > 0) {
+        if (t.getPropertyChangeListeners().length > 0) {
             log.debug("Throttle {} still has active propertyChangeListeners registered to the throttle",t.getLocoAddress());
             return false;
         }
@@ -1138,10 +1138,10 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
             }
             //This handles moving the listeners from the old throttle to the new one
             LocoAddress la = this.throttle.getLocoAddress();
-            Vector<PropertyChangeListener> v = old.getListeners();
-            for (PropertyChangeListener prop : v) {
+            PropertyChangeEvent e = new PropertyChangeEvent(this, "throttleAssignmentChanged", null, la); // NOI18N
+            for (PropertyChangeListener prop : old.getPropertyChangeListeners()) {
                 this.throttle.addPropertyChangeListener(prop);
-                prop.propertyChange(new PropertyChangeEvent(this, "throttleAssignmentChanged", null, la));
+                prop.propertyChange(e);
             }
         }
 

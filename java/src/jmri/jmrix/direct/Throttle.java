@@ -73,7 +73,7 @@ public class Throttle extends AbstractThrottle {
     }
 
     /**
-     * Set the speed {@literal &} direction.
+     * Set the speed and direction.
      * <p>
      * This intentionally skips the emergency stop value of 1.
      *
@@ -107,9 +107,7 @@ public class Throttle extends AbstractThrottle {
         for (int j = 0; j < step.length(); j++) {
             m.setElement(i++, step.charAt(j));
         }
-        if (oldSpeed != this.speedSetting) {
-            notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
-        }
+        notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
         record(speed);
         // tcl.sendMessage(m, null);
     }
@@ -119,9 +117,7 @@ public class Throttle extends AbstractThrottle {
         boolean old = isForward;
         isForward = forward;
         setSpeedSetting(speedSetting);  // send the command
-        if (old != isForward) {
-            notifyPropertyChangeListener(ISFORWARD, old, isForward);
-        }
+        notifyPropertyChangeListener(ISFORWARD, old, isForward);
     }
 
     @Override

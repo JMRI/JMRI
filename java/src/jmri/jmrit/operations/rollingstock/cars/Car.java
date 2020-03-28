@@ -665,7 +665,7 @@ public class Car extends RollingStock {
      * Sets the car's destination on the layout
      *
      * @param track (yard, spur, staging, or interchange track)
-     * @param force when true ignore track length, type, {@literal &} road when
+     * @param force when true ignore track length, type, and road when
      *            setting destination
      * @return "okay" if successful, "type" if the rolling stock's type isn't
      *         acceptable, or "length" if the rolling stock length didn't fit,

@@ -99,7 +99,7 @@ public class SprogCSThrottle extends AbstractThrottle {
     }
 
     /**
-     * Set the speed {@literal &} direction.
+     * Set the speed and direction.
      * <p>
      * This intentionally skips the emergency stop value of 1 in 128 step mode
      * and the stop and estop values 1-3 in 28 step mode.
@@ -125,9 +125,7 @@ public class SprogCSThrottle extends AbstractThrottle {
                 value = 1;        // emergency stop
             }
             commandStation.setSpeed(SpeedStepMode.NMRA_DCC_28, address, value, isForward);
-            if (Math.abs(oldSpeed - this.speedSetting) > 0.0001) {
-                notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
-            }
+            notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
         } else {
             // 128 step mode speed commands are
             // stop, estop, 2, 3, ..., 127
@@ -144,9 +142,7 @@ public class SprogCSThrottle extends AbstractThrottle {
                 value = 1;        // emergency stop
             }
             commandStation.setSpeed(SpeedStepMode.NMRA_DCC_128, address, value, isForward);
-            if (Math.abs(oldSpeed - this.speedSetting) > 0.0001) {
-                notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
-            }
+            notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
         }
         record(speed);
     }
@@ -156,9 +152,7 @@ public class SprogCSThrottle extends AbstractThrottle {
         boolean old = isForward;
         isForward = forward;
         setSpeedSetting(speedSetting);  // Update the speed setting
-        if (old != isForward) {
-            notifyPropertyChangeListener(ISFORWARD, old, isForward);
-        }
+        notifyPropertyChangeListener(ISFORWARD, old, isForward);
     }
 
     @Override

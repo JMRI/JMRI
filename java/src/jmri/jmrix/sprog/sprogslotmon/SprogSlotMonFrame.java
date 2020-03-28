@@ -252,7 +252,7 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame implements SprogList
     }
 
     /**
-     * Internal routine to handle timer starts {@literal &} restarts
+     * Internal routine to handle timer starts and restarts
      * 
      * @param delay timer delay
      */

@@ -694,7 +694,7 @@ public class LocoIOData
     }
 
     /**
-     * Internal routine to handle timer starts {@literal &} restarts.
+     * Internal routine to handle timer starts and restarts.
      */
     protected void restartTimer(int delay) {
         if (timer == null) {

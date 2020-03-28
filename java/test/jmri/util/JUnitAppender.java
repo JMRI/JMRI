@@ -1,5 +1,7 @@
 package jmri.util;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
 import org.apache.commons.lang3.StringUtils;
@@ -244,6 +246,10 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
             instance().superappend(evt);
         }
         return false;
+    }
+
+    public static void assertNoErrorMessage() {
+        assertThat(list).isEmpty();
     }
 
     /**

@@ -104,7 +104,7 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
     }
 
     /**
-     * Set the speed {@literal &} direction.
+     * Set the speed and direction.
      * <p>
      * This intentionally skips the emergency stop value of 1.
      *
@@ -126,12 +126,8 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
         } else {
             tc.sendMarklinMessage(MarklinMessage.setLocoSpeed(getCANAddress(), value), this);
         }
-        if (log.isDebugEnabled()) {
-            log.debug("Float speed = " + speed + " Int speed = " + value);
-        }
-        if (oldSpeed != this.speedSetting) {
-            notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
-        }
+        log.debug("Float speed = {} Int speed = ", speed, value);
+        notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
     }
 
     /**
@@ -150,9 +146,7 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
         isForward = forward;
         setSpeedSetting(0.0f); //Stop the loco first before changing direction.
         tc.sendMarklinMessage(MarklinMessage.setLocoDirection(getCANAddress(), (forward ? 0x01 : 0x02)), this);
-        if (old != isForward) {
-            notifyPropertyChangeListener(ISFORWARD, old, isForward);
-        }
+        notifyPropertyChangeListener(ISFORWARD, old, isForward);
     }
 
     private LocoAddress address;
@@ -221,36 +215,34 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
                         if (!isForward) {
                             speedSetting = 0.0f;
                             super.setSpeedSetting(speedSetting);
-                            notifyPropertyChangeListener(ISFORWARD, isForward, true);
                             isForward = true;
+                            notifyPropertyChangeListener(ISFORWARD, false, isForward);
                         }
                         return;
                     case 0x02:
                         if (isForward) {
                             speedSetting = 0.0f;
                             super.setSpeedSetting(speedSetting);
-                            notifyPropertyChangeListener(ISFORWARD, isForward, false);
                             isForward = false;
+                            notifyPropertyChangeListener(ISFORWARD, true, isForward);
                         }
                         return;
                     case 0x03:
                         speedSetting = 0.0f;
                         super.setSpeedSetting(speedSetting);
-                        notifyPropertyChangeListener(ISFORWARD, isForward, !isForward);
                         isForward = !isForward;
+                        notifyPropertyChangeListener(ISFORWARD, !isForward, isForward);
                         return;
                     default:
-                        log.error("No Match Found for loco direction " + m.getElement(9));
+                        log.error("No Match Found for loco direction {}", m.getElement(9));
                         return;
                 }
             }
             if (m.getCommand() == MarklinConstants.LOCOSPEED) {
                 int speed = m.getElement(9);
                 speed = (speed << 8) + (m.getElement(10));
-                Float newSpeed = Float.valueOf(floatSpeed(speed));
-                if (log.isDebugEnabled()) {
-                    log.debug("Speed raw " + speed + " float " + newSpeed);
-                }
+                Float newSpeed = floatSpeed(speed);
+                log.debug("Speed raw {} float {}", speed, newSpeed);
                 super.setSpeedSetting(newSpeed);
             }
             if (m.getCommand() == MarklinConstants.LOCOFUNCTION) {

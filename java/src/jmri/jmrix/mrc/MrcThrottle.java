@@ -167,7 +167,7 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener 
     }
 
     /**
-     * Set the speed {@literal &} direction.
+     * Set the speed and direction.
      * <p>
      *
      * @param speed Number from 0 to 1, or less than zero for emergency stop
@@ -211,9 +211,7 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener 
         }
         tc.sendMrcMessage(m);
 
-        if (oldSpeed != this.speedSetting) {
-            notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting); //IN18N
-        }
+        notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
         record(speed);
     }
 
@@ -223,9 +221,7 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener 
         isForward = forward;
         setSpeedSetting(speedSetting);  // send the command
         log.debug("setIsForward= {}", forward);
-        if (old != isForward) {
-            notifyPropertyChangeListener(ISFORWARD, old, isForward); //IN18N
-        }
+        notifyPropertyChangeListener(ISFORWARD, old, isForward);
     }
 
     @Override
@@ -251,19 +247,19 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener 
             if (MrcPackets.startsWith(m, MrcPackets.THROTTLEPACKETHEADER)) {
                 if (m.getElement(10) == 0x02) {
                     //128
-                    log.debug("speed Packet from another controller for our loco"); //IN18N
+                    log.debug("speed Packet from another controller for our loco");
                     int speed = m.getElement(8);
                     if ((m.getElement(8) & 0x80) == 0x80) {
                         //Forward
                         if (!this.isForward) {
                             this.isForward = true;
-                            notifyPropertyChangeListener(ISFORWARD, !isForward, isForward); //IN18N
+                            notifyPropertyChangeListener(ISFORWARD, !isForward, isForward);
                         }
                         //speed = m.getElement(8);
                     } else if (this.isForward) {
                         //reverse
                         this.isForward = false;
-                        notifyPropertyChangeListener(ISFORWARD, !isForward, isForward); //IN18N
+                        notifyPropertyChangeListener(ISFORWARD, !isForward, isForward);
                         //speed = m.getElement(8);
                     }
                     speed = (speed & 0x7f) - 1;
@@ -274,8 +270,9 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener 
                     
                     // next line is the FE_FLOATING_POINT_EQUALITY annotated above
                     if (val != this.speedSetting) {
-                        notifyPropertyChangeListener(SPEEDSETTING, this.speedSetting, val); //IN18N
+                        float old = this.speedSetting;
                         this.speedSetting = val;
+                        notifyPropertyChangeListener(SPEEDSETTING, old, this.speedSetting);
                         record(val);
                     }
                 } else if (m.getElement(10) == 0x00) {

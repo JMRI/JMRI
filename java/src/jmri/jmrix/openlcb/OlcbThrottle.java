@@ -74,7 +74,7 @@ public class OlcbThrottle extends AbstractThrottle {
     }
 
     /**
-     * Set the speed {@literal &} direction
+     * Set the speed and direction
      * <p>
      * This intentionally skips the emergency stop value of 1.
      *
@@ -97,9 +97,7 @@ public class OlcbThrottle extends AbstractThrottle {
         }
 
         // notify 
-        if (oldSpeed != this.speedSetting) {
-            notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
-        }
+        notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
         record(speed);
     }
 
@@ -108,9 +106,7 @@ public class OlcbThrottle extends AbstractThrottle {
         boolean old = isForward;
         isForward = forward;
         setSpeedSetting(speedSetting);  // send the command
-        if (old != isForward) {
-            notifyPropertyChangeListener(ISFORWARD, old, isForward);
-        }
+        notifyPropertyChangeListener(ISFORWARD, old, isForward);
     }
 
     // functions - note that we use the naming for DCC, though that's not the implication;

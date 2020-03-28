@@ -144,14 +144,13 @@ public class SprogThrottle extends AbstractThrottle {
         }
         m = new SprogMessage("M h" + Integer.toHexString(mode));
         ((SprogSystemConnectionMemo)adapterMemo).getSprogTrafficController().sendSprogMessage(m, null);
-        if ((speedStepMode != Mode) && (Mode != SpeedStepMode.NMRA_DCC_27)) {
-            notifyPropertyChangeListener(SPEEDSTEPS, this.speedStepMode,
-                    this.speedStepMode = Mode);
+        if (Mode != SpeedStepMode.NMRA_DCC_27) {
+            notifyPropertyChangeListener(SPEEDSTEPS, this.speedStepMode, this.speedStepMode = Mode);
         }
     }
 
     /**
-     * Set the speed {@literal &} direction.
+     * Set the speed and direction.
      * <p>
      * This intentionally skips the emergency stop value of 1 in 128 step mode
      * and the stop and estop values 1-3 in 28 step mode.
@@ -194,9 +193,7 @@ public class SprogThrottle extends AbstractThrottle {
             }
 
             ((SprogSystemConnectionMemo)adapterMemo).getSprogTrafficController().sendSprogMessage(m, null);
-            if (Math.abs(oldSpeed - this.speedSetting) > 0.0001) {
-                notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
-            }
+            notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
         } else {
             // 128 step mode speed commands are
             // stop, estop, 2, 3, ..., 127
@@ -227,9 +224,7 @@ public class SprogThrottle extends AbstractThrottle {
             }
 
             ((SprogSystemConnectionMemo)adapterMemo).getSprogTrafficController().sendSprogMessage(m, null);
-            if (Math.abs(oldSpeed - this.speedSetting) > 0.0001) {
-                notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
-            }
+            notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
         }
         record(speed);
     }
@@ -239,9 +234,7 @@ public class SprogThrottle extends AbstractThrottle {
         boolean old = isForward;
         isForward = forward;
         setSpeedSetting(speedSetting);  // send the command
-        if (old != isForward) {
-            notifyPropertyChangeListener(ISFORWARD, old, isForward);
-        }
+        notifyPropertyChangeListener(ISFORWARD, old, isForward);
     }
 
     @Override

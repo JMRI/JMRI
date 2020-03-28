@@ -47,7 +47,7 @@ public abstract class Action {
      *
      * @param code the integer to be modified by masking off menu bits.
      *
-     * @return code {@literal &} ActionCodes.CODE_MASK
+     * @return code and ActionCodes.CODE_MASK
      */
     protected int getCode(int code) {
         return code & ActionCodes.CODE_MASK;
