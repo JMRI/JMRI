@@ -125,7 +125,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         String oldNumber = _number;
         _number = number;
         if (!oldNumber.equals(number)) {
-            propertyChangeSupport.firePropertyChange("rolling stock number", oldNumber, number); // NOI18N
+            firePropertyChange("rolling stock number", oldNumber, number); // NOI18N
             String oldId = _id;
             _id = createId(_road, number);
             setDirtyAndFirePropertyChange(Xml.ID, oldId, _id);
@@ -140,7 +140,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         String old = _road;
         _road = road;
         if (!old.equals(road)) {
-            propertyChangeSupport.firePropertyChange("rolling stock road", old, road); // NOI18N
+            firePropertyChange("rolling stock road", old, road); // NOI18N
             String oldId = _id;
             _id = createId(road, _number);
             setDirtyAndFirePropertyChange(Xml.ID, oldId, _id);

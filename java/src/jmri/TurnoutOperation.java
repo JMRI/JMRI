@@ -225,7 +225,7 @@ public abstract class TurnoutOperation extends PropertyChangeSupport implements 
         if (!isDefinitive()) {
             InstanceManager.getDefault(TurnoutOperationManager.class).removeOperation(this);
             name = "*deleted";
-            propertyChangeSupport.firePropertyChange("Deleted", null, null);  // this will remove all dangling references
+            firePropertyChange("Deleted", null, null);  // this will remove all dangling references
         }
     }
 
