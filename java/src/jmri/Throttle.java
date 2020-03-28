@@ -70,6 +70,12 @@ public interface Throttle {
     public static final String F26 = "F26"; // NOI18N
     public static final String F27 = "F27"; // NOI18N
     public static final String F28 = "F28"; // NOI18N
+    
+    public static final String[] FUNCTION_STRING_ARRAY = new String[]{
+        F0,F1,F2,F3,F4,F5,F6,F7,F8,F9,F10,F11,F12,F13,F14,
+        F15,F16,F17,F18,F19,F20,F21,F22,F23,F24,F25,F26,F27,F28
+    };
+    
     /**
      * Constants to represent the functions F0 through F28.
      */

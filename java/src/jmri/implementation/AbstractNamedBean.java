@@ -11,7 +11,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.CheckForNull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import jmri.NamedBean;
-import jmri.beans.Beans;
+import jmri.beans.BeanUtil;
 
 /**
  * Abstract base for the NamedBean interface.
@@ -177,7 +177,7 @@ public abstract class AbstractNamedBean implements NamedBean {
     @OverridingMethodsMustInvokeSuper
     public synchronized void removePropertyChangeListener(PropertyChangeListener listener) {
         pcs.removePropertyChangeListener(listener);
-        if (listener != null && !Beans.contains(pcs.getPropertyChangeListeners(), listener)) {
+        if (listener != null && !BeanUtil.contains(pcs.getPropertyChangeListeners(), listener)) {
             register.remove(listener);
             listenerRefs.remove(listener);
         }
@@ -187,7 +187,7 @@ public abstract class AbstractNamedBean implements NamedBean {
     @OverridingMethodsMustInvokeSuper
     public synchronized void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
         pcs.removePropertyChangeListener(propertyName, listener);
-        if (listener != null && !Beans.contains(pcs.getPropertyChangeListeners(), listener)) {
+        if (listener != null && !BeanUtil.contains(pcs.getPropertyChangeListeners(), listener)) {
             register.remove(listener);
             listenerRefs.remove(listener);
         }

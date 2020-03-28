@@ -8,12 +8,12 @@
             <ul>
                 <li></li>
             </ul>
-		
+
 	    <h4>Bachrus Speedo</h4>
             <ul>
                 <li></li>
             </ul>
-		
+
         <h4>C/MRI</h4>
             <ul>
                 <li></li>
@@ -278,7 +278,7 @@
             <ul>
                 <li></li>
             </ul>
-	    
+
 	    <h4>Team Digital</h4>
             <ul>
                 <li></li>
@@ -333,7 +333,16 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>The displayed names in the <strong>Section</strong> and <strong>Transit</strong>
+             tables, along with the transit selection and block selections in the
+             <strong>Activate New Train</strong> Dispatcher window, now behave like other
+             JMRI tools.  Instead of the <strong>system name (user name)</strong> format,
+             the names use the <strong>display name</strong> format.  The display name format
+             uses the <strong>user name</strong>.  If not available, the system name is used.</li>
+             <li>The list size for the dropdown combo boxes use the content size instead of
+             the default 8 rows.</li>
+             <li>The Section, Transit, and Dispatcher help documents have been updated.  The
+             Section and Transit help have been cleaned up to reduce redundant verbiage.</li>
         </ul>
 
    <h3>Internationalization</h3>
@@ -403,7 +412,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>Jython has been updated to version 2.7.2</li>
         </ul>
 
     <h3>Signals</h3>
@@ -425,7 +434,7 @@
             <ul>
                 <li></li>
             </ul>
-            
+
     	<h4>Signal Groups</h4>
             <ul>
                 <li></li>
@@ -456,12 +465,12 @@
         <a id="throttle" name="throttle"></a>
         <ul>
             <li>Add a speed step dropdown to the extended throttle;
-                this makes it easier to select the speed step mode and 
-                makes it possible to select the less common speed step modes 
-                exposed by some systems. 
+                this makes it easier to select the speed step mode and
+                makes it possible to select the less common speed step modes
+                exposed by some systems.
             </li>
-            <li>Consolidated the throttle layout code, 
-                centralized the logic for determining if throttle icons should be shown, 
+            <li>Consolidated the throttle layout code,
+                centralized the logic for determining if throttle icons should be shown,
                 and added unit tests for the control panel layout and some preferences.
             </li>
         </ul>
@@ -481,7 +490,9 @@
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
-            <li></li>
+            <li>The <strong>Warrant List</strong> now responds to changes in window size.
+            The length of the status field varies as needed and keeps the
+            <strong>Stop All Trains</strong> button visible even on small screens.</li>
         </ul>
 
    <h3>Web Access</h3>
@@ -501,7 +512,7 @@
         <ul>
             <li></li>
         </ul>
-        
+
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>

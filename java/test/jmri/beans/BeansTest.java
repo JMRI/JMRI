@@ -16,7 +16,7 @@ import java.util.Set;
 import org.junit.Test;
 
 /**
- * Tests for {@link jmri.beans.Beans} static methods.
+ * Tests for jmri.beans.Beans static methods.
  *
  * @author Randall Wood
  */

@@ -162,7 +162,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         JLabel title = new JLabel(Bundle.getMessage("ShowWarrants"));
         title.setHorizontalAlignment(SwingConstants.CENTER);
 
-        JLabel statusLabel = new JLabel("Status: ");
+        JLabel statusLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("status")));
         _status.addMouseListener(this);
         _status.setBackground(Color.white);
         _status.setFont(_status.getFont().deriveFont(Font.BOLD));

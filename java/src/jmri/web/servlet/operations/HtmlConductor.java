@@ -23,7 +23,7 @@ import jmri.util.FileUtil;
 
 /**
  *
- * @author rhwood
+ * @author Randall Wood
  */
 public class HtmlConductor extends HtmlTrainCommon {
 

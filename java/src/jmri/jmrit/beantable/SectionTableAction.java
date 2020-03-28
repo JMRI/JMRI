@@ -6,8 +6,10 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultCellEditor;
@@ -319,7 +321,6 @@ public class SectionTableAction extends AbstractTableAction<Section> {
     boolean addCreateActive = true;
     ArrayList<LayoutEditor> lePanelList = null;
     LayoutEditor curLayoutEditor = null;
-    ArrayList<Block> blockBoxList = new ArrayList<>();
     Block beginBlock = null;
     Block endBlock = null;
     Sensor fSensor = null;
@@ -332,6 +333,7 @@ public class SectionTableAction extends AbstractTableAction<Section> {
     // add/create variables
     JmriJFrame addFrame = null;
     JTextField sysName = new JTextField(15);
+    JLabel sysNameFixed = new JLabel("");
     JTextField userName = new JTextField(17);
     JLabel sysNameLabel = new JLabel(Bundle.getMessage("LabelSystemName"));
     JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
@@ -339,10 +341,10 @@ public class SectionTableAction extends AbstractTableAction<Section> {
     jmri.UserPreferencesManager pref;
     JButton create = null;
     JButton update = null;
-    JComboBox<String> blockBox = new JComboBox<String>();
     JButton addBlock = null;
     JButton deleteBlocks = null;
     JComboBox<String> layoutEditorBox = new JComboBox<String>();
+    NamedBeanComboBox<Block> blockBox;
     NamedBeanComboBox<Sensor> forwardSensorBox;
     NamedBeanComboBox<Sensor> reverseSensorBox;
     NamedBeanComboBox<Sensor> forwardStopSensorBox;
@@ -374,7 +376,7 @@ public class SectionTableAction extends AbstractTableAction<Section> {
             // no section - should never happen, but protects against a $%^#@ exception
             return;
         }
-        sysName.setText(sName);
+        sysNameFixed.setText(sName);
         editMode = true;
         addEditPressed();
     }
@@ -390,6 +392,7 @@ public class SectionTableAction extends AbstractTableAction<Section> {
             p.setLayout(new FlowLayout());
             p.add(sysNameLabel);
             sysNameLabel.setLabelFor(sysName);
+            p.add(sysNameFixed);
             p.add(sysName);
             p.add(_autoSystemName);
             _autoSystemName.addActionListener(new ActionListener() {
@@ -452,6 +455,7 @@ public class SectionTableAction extends AbstractTableAction<Section> {
             });
             deleteBlocks.setToolTipText(rbx.getString("DeleteAllBlocksButtonHint"));
             p13.add(new JLabel("     "));
+            initializeBlockCombo();
             p13.add(blockBox);
             blockBox.setToolTipText(rbx.getString("BlockBoxHint"));
             p13.add(addBlock = new JButton(rbx.getString("AddBlockButton")));
@@ -628,7 +632,8 @@ public class SectionTableAction extends AbstractTableAction<Section> {
             create.setVisible(false);
             update.setVisible(true);
             sysName.setVisible(true);
-            sysName.setEnabled(false);
+            sysName.setVisible(false);
+            sysNameFixed.setVisible(true);
             initializeEditInformation();
             addFrame.setTitle(Bundle.getMessage("TitleEditSection"));
         } else {
@@ -637,7 +642,7 @@ public class SectionTableAction extends AbstractTableAction<Section> {
             create.setVisible(true);
             update.setVisible(false);
             sysName.setVisible(true);
-            sysName.setEnabled(true);
+            sysNameFixed.setVisible(false);
             autoSystemName();
             clearForCreate();
             addFrame.setTitle(Bundle.getMessage("TitleAddSection"));
@@ -873,14 +878,13 @@ public class SectionTableAction extends AbstractTableAction<Section> {
     }
 
     void addBlockPressed(ActionEvent e) {
-        if (blockBoxList.size() == 0) {
+        if (blockBox.getItemCount() == 0) {
             JOptionPane.showMessageDialog(addFrame, rbx
                     .getString("Message5"), Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
-        int index = blockBox.getSelectedIndex();
-        Block b = blockBoxList.get(index);
+        Block b = blockBox.getSelectedItem();
         if (b != null) {
             blockList.add(b);
             if (blockList.size() == 1) {
@@ -921,26 +925,26 @@ public class SectionTableAction extends AbstractTableAction<Section> {
      * Build a combo box to select Blocks for this Section.
      */
     private void initializeBlockCombo() {
-        blockBox.removeAllItems();
-        for (int j = blockBoxList.size(); j > 0; j--) {
-            blockBoxList.remove(j - 1);
+        if (blockBox == null) {
+            blockBox = new NamedBeanComboBox<>(InstanceManager.getDefault(BlockManager.class));
         }
         if (blockList.size() == 0) {
             // No blocks selected, all blocks are eligible
-            for (Block b : blockManager.getNamedBeanSet()) {
-                blockBox.addItem(b.getDisplayName());
-                blockBoxList.add(b);
-            }
+            blockBox.setExcludedItems(new HashSet<Block>());
         } else {
             // limit combo list to Blocks bonded to the currently selected Block that are not already in the Section
+            Set<Block> excludes = new HashSet<>(InstanceManager.getDefault(jmri.BlockManager.class).getNamedBeanSet());
             for (Block b : blockManager.getNamedBeanSet()) {
                 if ((!inSection(b)) && connected(b, endBlock)) {
-                    blockBox.addItem(b.getDisplayName());
-                    blockBoxList.add(b);
+                    excludes.remove(b);
                 }
             }
+            blockBox.setExcludedItems(excludes);
         }
-        JComboBoxUtil.setupComboBoxMaxRows(blockBox);
+        if (blockBox.getItemCount()> 0) {
+            blockBox.setSelectedIndex(0);
+            JComboBoxUtil.setupComboBoxMaxRows(blockBox);
+        }
     }
 
     private boolean inSection(Block b) {
