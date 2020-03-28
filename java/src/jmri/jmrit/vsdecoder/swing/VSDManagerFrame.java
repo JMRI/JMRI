@@ -375,22 +375,6 @@ public class VSDManagerFrame extends JmriJFrame {
         this.addHelpMenu("package.jmri.jmrit.vsdecoder.swing.VSDManagerFrame", true);
     }
 
-    // VSDecoderManager Events
-
-    /**
-     * Fire a property change from this object.
-     * @deprecated since 4.19.5 without direct replacement
-     */
-    // NOTE: should this be public???
-    @Deprecated
-    private void firePropertyChange(PropertyChangeID id, Object oldProp, Object newProp) {
-        // map the property change ID
-        String pcname = PCIDMap.get(id);
-        // Fire the actual PropertyChangeEvent
-        log.debug("Firing property change: {}", pcname);
-        firePropertyChange(pcname, oldProp, newProp);
-    }
-
     private static final Logger log = LoggerFactory.getLogger(VSDManagerFrame.class);
 
 }
