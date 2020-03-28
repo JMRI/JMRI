@@ -5,7 +5,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.beans.VetoableChangeSupport;
@@ -21,6 +20,7 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.Sensor;
+import jmri.beans.PropertyChangeProviderImpl;
 import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
@@ -46,7 +46,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson Copyright (C) 2011
  */
-public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.InstanceManagerAutoDefault,
+public class EntryExitPairs extends PropertyChangeProviderImpl implements jmri.Manager<DestinationPoints>, jmri.InstanceManagerAutoDefault,
         PropertyChangeListener {
 
     public int routingMethod = LayoutBlockConnectivityTools.METRIC;
@@ -1294,20 +1294,8 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
         }
     }
 
-    PropertyChangeSupport pcs = new PropertyChangeSupport(this);
-
-    @Override
-    public synchronized void addPropertyChangeListener(PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    @Override
-    public synchronized void removePropertyChangeListener(PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-    }
-
     protected void firePropertyChange(String p, Object old, Object n) {
-        pcs.firePropertyChange(p, old, n);
+        propertyChangeSupport.firePropertyChange(p, old, n);
     }
 
     boolean runWhenStabilised = false;
@@ -1391,27 +1379,6 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     @Override
     public synchronized void removeVetoableChangeListener(VetoableChangeListener l) {
         vcs.removeVetoableChangeListener(l);
-    }
-
-
-    @Override
-    public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
-        pcs.addPropertyChangeListener(propertyName, listener);
-    }
-
-    @Override
-    public PropertyChangeListener[] getPropertyChangeListeners() {
-        return pcs.getPropertyChangeListeners();
-    }
-
-    @Override
-    public PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
-        return pcs.getPropertyChangeListeners(propertyName);
-    }
-
-    @Override
-    public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
-        pcs.removePropertyChangeListener(propertyName, listener);
     }
 
     @Override

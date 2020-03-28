@@ -15,6 +15,7 @@ import jmri.Manager;
 import jmri.NamedBean;
 import jmri.NamedBean.DuplicateSystemNameException;
 import jmri.NamedBeanPropertyDescriptor;
+import jmri.beans.PropertyChangeProviderImpl;
 import jmri.jmrix.SystemConnectionMemo;
 
 /**
@@ -33,7 +34,7 @@ import jmri.jmrix.SystemConnectionMemo;
  *
  * @author Bob Jacobsen Copyright (C) 2003
  */
-public abstract class AbstractManager<E extends NamedBean> implements Manager<E>, PropertyChangeListener, VetoableChangeListener {
+public abstract class AbstractManager<E extends NamedBean> extends PropertyChangeProviderImpl implements Manager<E>, PropertyChangeListener, VetoableChangeListener {
 
     // The data model consists of several components:
     // * The primary reference is _beans, a SortedSet of NamedBeans, sorted automatically on system name.
@@ -406,60 +407,14 @@ public abstract class AbstractManager<E extends NamedBean> implements Manager<E>
         return Collections.unmodifiableSortedSet(_beans);
     }
 
-    private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
-
-    /** {@inheritDoc} */
-    @Override
-    @OverridingMethodsMustInvokeSuper
-    public synchronized void addPropertyChangeListener(PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    @OverridingMethodsMustInvokeSuper
-    public synchronized void removePropertyChangeListener(PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    @OverridingMethodsMustInvokeSuper
-    public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
-        pcs.addPropertyChangeListener(propertyName, listener);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    @Nonnull
-    @OverridingMethodsMustInvokeSuper
-    public PropertyChangeListener[] getPropertyChangeListeners() {
-        return pcs.getPropertyChangeListeners();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    @Nonnull
-    @OverridingMethodsMustInvokeSuper
-    public PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
-        return pcs.getPropertyChangeListeners(propertyName);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    @OverridingMethodsMustInvokeSuper
-    public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
-        pcs.removePropertyChangeListener(propertyName, listener);
-    }
-
     @OverridingMethodsMustInvokeSuper
     protected void firePropertyChange(String p, Object old, Object n) {
-        pcs.firePropertyChange(p, old, n);
+        propertyChangeSupport.firePropertyChange(p, old, n);
     }
 
     @OverridingMethodsMustInvokeSuper
     protected void fireIndexedPropertyChange(String propertyName, int index, Object oldValue, Object newValue) {
-        pcs.fireIndexedPropertyChange(propertyName, index, oldValue, newValue);
+        propertyChangeSupport.fireIndexedPropertyChange(propertyName, index, oldValue, newValue);
     }
 
     private VetoableChangeSupport vcs = new VetoableChangeSupport(this);
