@@ -102,5 +102,5 @@ public class SimpleTurnoutServer extends AbstractTurnoutServer {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SimpleTurnoutServer.class);
+    private static final Logger log = LoggerFactory.getLogger(SimpleTurnoutServer.class);
 }

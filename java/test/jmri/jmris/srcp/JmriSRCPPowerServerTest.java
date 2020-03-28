@@ -10,11 +10,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.beans.PropertyChangeEvent;
-import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.in;
 
 
 /**
@@ -108,7 +106,7 @@ public class JmriSRCPPowerServerTest extends jmri.jmris.AbstractPowerServerTestB
     @BeforeEach
     @Override
     public void setUp() {
-        JUnitUtil.setUpForMockInstanceManager();
+        JUnitUtil.setUpLoggingAndCommonProperties();
         instanceManagerDelegate = Mockito.mock(InstanceManagerDelegate.class);
         powerManager = Mockito.mock(PowerManager.class);
         Mockito.when(instanceManagerDelegate.getDefault(PowerManager.class)).thenReturn(powerManager);

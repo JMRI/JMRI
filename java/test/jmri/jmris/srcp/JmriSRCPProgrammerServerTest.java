@@ -1,6 +1,5 @@
 package jmri.jmris.srcp;
 
-import jmri.AddressedProgrammerManager;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManagerDelegate;
 import jmri.Programmer;
@@ -39,7 +38,7 @@ public class JmriSRCPProgrammerServerTest{
 
     @BeforeEach
     public void setUp() {
-        JUnitUtil.setUpForMockInstanceManager();
+        JUnitUtil.setUpLoggingAndCommonProperties();
         instanceManagerDelegate = Mockito.mock(InstanceManagerDelegate.class);
     }
 

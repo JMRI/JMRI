@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
  */
 public class SimpleSensorServer extends AbstractSensorServer {
 
+    private static final String SENSOR = "SENSOR ";
     private DataOutputStream output;
     private JmriConnection connection;
 
@@ -51,11 +52,11 @@ public class SimpleSensorServer extends AbstractSensorServer {
         addSensorToList(sensorName);
 
         if (Status == Sensor.INACTIVE) {
-            this.sendMessage("SENSOR " + sensorName + " INACTIVE\n");
+            this.sendMessage(SENSOR + sensorName + " INACTIVE\n");
         } else if (Status == Sensor.ACTIVE) {
-            this.sendMessage("SENSOR " + sensorName + " ACTIVE\n");
+            this.sendMessage(SENSOR + sensorName + " ACTIVE\n");
         } else {
-            this.sendMessage("SENSOR " + sensorName + " UNKNOWN\n");
+            this.sendMessage(SENSOR + sensorName + " UNKNOWN\n");
         }
     }
 

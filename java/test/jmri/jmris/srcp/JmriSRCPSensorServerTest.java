@@ -89,7 +89,7 @@ public class JmriSRCPSensorServerTest extends jmri.jmris.AbstractSensorServerTes
     @BeforeEach
     @Override
     public void setUp() {
-        JUnitUtil.setUpForMockInstanceManager();
+        JUnitUtil.setUpLoggingAndCommonProperties();
         instanceManagerDelegate = Mockito.mock(InstanceManagerDelegate.class);
         SensorManager sensorManager = Mockito.mock(SensorManager.class);
         Mockito.when(instanceManagerDelegate.getDefault(SensorManager.class)).thenReturn(sensorManager);

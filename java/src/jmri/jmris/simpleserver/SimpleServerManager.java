@@ -1,6 +1,8 @@
 package jmri.jmris.simpleserver;
 
 import java.io.File;
+
+import jmri.InstanceManager;
 import jmri.InstanceManagerDelegate;
 import jmri.util.FileUtil;
 
@@ -24,6 +26,12 @@ public class SimpleServerManager {
         preferences = instanceManagerDelegate.getDefault(SimpleServerPreferences.class);
     }
 
+    /**
+     *
+     * @return the instance of the SimpleServerManager
+     * @deprecated since 4.19.5.  Use InstanceManager.getDefault(SimpleServerManager.class) instead
+     */
+    @Deprecated
     public static SimpleServerManager getInstance() {
         InstanceManagerDelegate instanceManagerDelegate = new InstanceManagerDelegate();
         if (instanceManagerDelegate.getNullableDefault(SimpleServerManager.class) == null) {
@@ -40,7 +48,7 @@ public class SimpleServerManager {
     }
 
     public static SimpleServerPreferences getSimpleServerPreferences() {
-        return getInstance().getPreferences();
+        return InstanceManager.getDefault(SimpleServerManager.class).getPreferences();
     }
 
     public SimpleServer getServer() {
@@ -51,6 +59,6 @@ public class SimpleServerManager {
     }
 
     public static SimpleServer getSimpleServer() {
-        return getInstance().getServer();
+        return InstanceManager.getDefault(SimpleServerManager.class).getServer();
     }
 }

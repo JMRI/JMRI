@@ -18,6 +18,7 @@ import jmri.jmris.JmriConnection;
  */
 public class SimpleReporterServer extends AbstractReporterServer {
 
+    private static final String REPORTER = "REPORTER ";
     private DataOutputStream output;
     private JmriConnection connection;
     private InstanceManagerDelegate instanceManager;
@@ -51,12 +52,12 @@ public class SimpleReporterServer extends AbstractReporterServer {
         addReporterToList(reporterName);
         if (r != null) {
             if (r instanceof jmri.Reportable ) {
-               this.sendMessage("REPORTER " + reporterName + " " + ((jmri.Reportable)r).toReportString() + "\n");
+               this.sendMessage(REPORTER + reporterName + " " + ((jmri.Reportable)r).toReportString() + "\n");
             } else {
-               this.sendMessage("REPORTER " + reporterName + " " + r.toString() + "\n");
+               this.sendMessage(REPORTER + reporterName + " " + r.toString() + "\n");
             }
         } else {
-            this.sendMessage("REPORTER " + reporterName + "\n");
+            this.sendMessage(REPORTER + reporterName + "\n");
         }
     }
 
@@ -67,10 +68,11 @@ public class SimpleReporterServer extends AbstractReporterServer {
 
     @Override
     public void parseStatus(String statusString) throws JmriException, IOException {
-        int index, index2;
-        index = statusString.indexOf(" ") + 1;
-        index2 = statusString.indexOf(" ", index + 1);
-        int newlinepos = statusString.indexOf("\n");
+        int index;
+        int index2;
+        index = statusString.indexOf(' ' ) + 1;
+        index2 = statusString.indexOf(' ', index + 1);
+        int newlinepos = statusString.indexOf('\n');
         String reporterName = statusString.substring(index, index2>0?index2:newlinepos);
         initReporter(reporterName);
         // the string should be "REPORTER xxxxxx REPORTSTRING\n\r"
@@ -99,5 +101,5 @@ public class SimpleReporterServer extends AbstractReporterServer {
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SimpleReporterServer.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SimpleReporterServer.class);
 }

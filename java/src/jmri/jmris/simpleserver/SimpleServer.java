@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
  */
 public class SimpleServer extends JmriServer {
 
+    private static final String NOT_SUPPORTED = "not supported\n";
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmris.simpleserver.SimpleServerBundle");
 
     private final InstanceManagerDelegate instanceManagerDelegate;
@@ -86,51 +87,49 @@ public class SimpleServer extends JmriServer {
                 break;
             }
 
-            if (log.isDebugEnabled()) {
-                log.debug("Received from client: " + cmd);
-            }
+            log.debug("Received from client: {}",cmd);
             if (cmd.startsWith("POWER")) {
                 try {
                     powerServer.parseStatus(cmd);
                     powerServer.sendStatus(instanceManagerDelegate.getDefault(jmri.PowerManager.class).getPower());
                 } catch (JmriException je) {
-                    outStream.writeBytes("not supported\n");
+                    outStream.writeBytes(NOT_SUPPORTED);
                 }
             } else if (cmd.startsWith("TURNOUT")) {
                 try {
                     turnoutServer.parseStatus(cmd);
                 } catch (JmriException je) {
-                    outStream.writeBytes("not supported\n");
+                    outStream.writeBytes(NOT_SUPPORTED);
                 }
             } else if (cmd.startsWith("LIGHT")) {
                 try {
                     lightServer.parseStatus(cmd);
                 } catch (JmriException je) {
-                    outStream.writeBytes("not supported\n");
+                    outStream.writeBytes(NOT_SUPPORTED);
                 }
             } else if (cmd.startsWith("SENSOR")) {
                 try {
                     sensorServer.parseStatus(cmd);
                 } catch (JmriException je) {
-                    outStream.writeBytes("not supported\n");
+                    outStream.writeBytes(NOT_SUPPORTED);
                 }
             } else if (cmd.startsWith("SIGNALHEAD")) {
                 try {
                     signalHeadServer.parseStatus(cmd);
                 } catch (JmriException je) {
-                    outStream.writeBytes("not supported\n");
+                    outStream.writeBytes(NOT_SUPPORTED);
                 }
             } else if (cmd.startsWith("REPORTER")) {
                 try {
                     reporterServer.parseStatus(cmd);
                 } catch (JmriException je) {
-                    outStream.writeBytes("not supported\n");
+                    outStream.writeBytes(NOT_SUPPORTED);
                 }
             } else if (cmd.startsWith(SimpleOperationsServer.OPERATIONS)) {
                 try {
                     operationsServer.parseStatus(cmd);
                 } catch (JmriException je) {
-                    outStream.writeBytes("not supported\n");
+                    outStream.writeBytes(NOT_SUPPORTED);
                 }
             } else {
                 outStream.writeBytes("Unknown Command " + cmd + "\n");
@@ -138,5 +137,5 @@ public class SimpleServer extends JmriServer {
         }
         inputScanner.close();
     }
-    private final static Logger log = LoggerFactory.getLogger(SimpleServer.class);
+    private static final Logger log = LoggerFactory.getLogger(SimpleServer.class);
 }

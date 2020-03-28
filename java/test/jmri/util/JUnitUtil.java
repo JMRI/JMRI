@@ -172,7 +172,7 @@ public class JUnitUtil {
      * JMRI standard setUp for tests that mock the InstanceManager. This should be the first line in the {@code @Before}
      * annotated method if the tests mock the InstanceManager.
      */
-    public static void setUpForMockInstanceManager() {
+    public static void setUpLoggingAndCommonProperties() {
         if (!isLoggingInitialized) {
             // init logging if needed
             isLoggingInitialized = true;
@@ -226,7 +226,7 @@ public class JUnitUtil {
      */
     public static void setUp() {
         // all the setup for a MockInstanceManager applies
-        setUpForMockInstanceManager();
+        setUpLoggingAndCommonProperties();
 
         // Do a minimal amount of de-novo setup
         resetInstanceManager();

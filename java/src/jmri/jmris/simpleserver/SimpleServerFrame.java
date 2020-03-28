@@ -2,8 +2,6 @@ package jmri.jmris.simpleserver;
 
 import jmri.InstanceManagerDelegate;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
@@ -41,32 +39,16 @@ public class SimpleServerFrame extends jmri.util.JmriJFrame {
         pack();
 
         // install start button handler
-        startButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                startSimpleServer();
-            }
-        }
-        );
+        startButton.addActionListener(a -> startSimpleServer());
 
         // install stop button handler
-        stopButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                stopSimpleServer();
-            }
-        }
-        );
+        stopButton.addActionListener(a -> stopSimpleServer());
 
         // install close button handler
-        closeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                setVisible(false);
-                dispose();
-            }
-        }
-        );
+        closeButton.addActionListener(a -> {
+            setVisible(false);
+            dispose();
+        });
 
     }
 
@@ -78,12 +60,6 @@ public class SimpleServerFrame extends jmri.util.JmriJFrame {
     void thisWindowClosing(java.awt.event.WindowEvent e) {
         setVisible(false);
         dispose();
-    }
-
-    @Override
-    public void dispose() {
-        // take apart the JFrame
-        super.dispose();
     }
 
     public void startSimpleServer() {

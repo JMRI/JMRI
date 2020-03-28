@@ -20,9 +20,6 @@ public class SimpleServerAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
-        // SimpleServerFrame f = new SimpleServerFrame();
-        // f.setVisible(true);
         SimpleServerManager.getInstance().getServer().start();
     }
 }
