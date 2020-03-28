@@ -375,12 +375,12 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
             log.debug("Found {} receivers", n);
 
             // find max receiver number
-            int max = Integer.valueOf(r.get(r.size() - 1));
+            int max = Integer.parseInt(r.get(r.size() - 1));
             log.debug("Highest receiver address is {}", max);
 
             offsetArray = new int[n];
             for (int i = 0; i < n; i++) {
-                offsetArray[i] = Integer.valueOf(r.get(i + 2));
+                offsetArray[i] = Integer.parseInt(r.get(i + 2));
             }
 
         } catch (IOException e) {

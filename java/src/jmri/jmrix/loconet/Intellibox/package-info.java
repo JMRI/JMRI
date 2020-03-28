@@ -11,5 +11,6 @@
  * Uhlenbrock page</a>.
  */
 //@annotations for the entire package go here
-@edu.umd.cs.findbugs.annotations.SuppressFBWarnings({})
+// include empty DefaultAnnotation to avoid excessive recompilation
+@edu.umd.cs.findbugs.annotations.DefaultAnnotation(value={})
 package jmri.jmrix.loconet.Intellibox;

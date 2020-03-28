@@ -242,8 +242,6 @@ variables, and by shortening certain method calls.
 
         <li>warrants</li>
 
-        <li>entryExitPairs <span class="since">since 4.19.2</span></li>
-        
       </ul>These can then be referenced directly in Jython as
       <pre style="font-family: monospace;">t2 = turnouts.provideTurnout("12");
 </pre>Note that the variable t2 did not need to be declared.

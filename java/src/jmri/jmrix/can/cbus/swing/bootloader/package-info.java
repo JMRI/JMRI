@@ -11,5 +11,6 @@
  * <!-- Put @see and @since tags down here. -->
  * @since 4.19
  */
-@edu.umd.cs.findbugs.annotations.SuppressFBWarnings({})
+// include empty DefaultAnnotation to avoid excessive recompilation
+@edu.umd.cs.findbugs.annotations.DefaultAnnotation(value={})
 package jmri.jmrix.can.cbus.swing.bootloader;
