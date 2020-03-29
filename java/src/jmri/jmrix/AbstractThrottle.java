@@ -157,7 +157,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      * Implementing functions should override this function, but should either
      * make a call to super.setIsForward() to notify the listeners, or should
      * notify the listeners themselves.
-     * <p>
+     *
      * @param forward true if forward; false otherwise
      */
     @Override
@@ -692,14 +692,15 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
     }
 
     /**
-     * Remove notification listener {@inheritDoc}
-     * <p>
+     * {@inheritDoc}
      */
     @Override
     public void removePropertyChangeListener(PropertyChangeListener l) {
+        log.debug("Removing property change {}", l);
         super.removePropertyChangeListener(l);
-        if ((getPropertyChangeListeners().length == 0)) {
-            log.debug("No listeners so will call the dispose in the InstanceManger with an empty throttleListener null value");
+        log.debug("remove listeners size is {}", getPropertyChangeListeners().length);
+        if (getPropertyChangeListeners().length == 0) {
+            log.debug("No listeners so calling ThrottleManager.dispose with an empty ThrottleListener");
             InstanceManager.throttleManagerInstance().disposeThrottle(this, new ThrottleListener() {
                 @Override
                 public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
@@ -729,11 +730,13 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
     /**
      * Trigger the notification of all PropertyChangeListeners. Will only notify
      * if oldValue and newValue are not equal and non-null.
-     * <p>
+     *
      * @param property the name of the property to send notifications for
      * @param oldValue the old value of the property
      * @param newValue the new value of the property
-     * @deprecated since 4.19.5; use {@link #firePropertyChange(java.lang.String, java.lang.Object, java.lang.Object)} instead
+     * @deprecated since 4.19.5; use
+     * {@link #firePropertyChange(java.lang.String, java.lang.Object, java.lang.Object)}
+     * instead
      */
     @Deprecated
     protected void notifyPropertyChangeListener(String property, Object oldValue, Object newValue) {
@@ -744,6 +747,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      * {@inheritDoc}
      */
     @Override
+    @Deprecated
     public List<PropertyChangeListener> getListeners() {
         return Arrays.asList(getPropertyChangeListeners());
     }
@@ -1571,8 +1575,11 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
     long start;
 
     /**
-     * Processes updated speed from subclasses. Used to keep track of total
-     * operating time.
+     * Processes updated speed from subclasses. Tracks total operating time for
+     * the roster entry by starting the clock if speed is non-zero or stopping
+     * the clock otherwise.
+     *
+     * @param speed the current speed
      */
     protected void record(float speed) {
         if (re == null) {
