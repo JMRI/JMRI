@@ -2919,7 +2919,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
 
     protected static void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
         InstanceManager.getDefault(OperationsSetupXml.class).setDirty(true);
-        firePropertyChange(p, old, n);
+        getDefault().firePropertyChange(p, old, n);
     }
 
     public static Setup getDefault() {

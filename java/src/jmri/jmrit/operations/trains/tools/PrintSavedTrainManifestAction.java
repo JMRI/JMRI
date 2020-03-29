@@ -31,7 +31,7 @@ public class PrintSavedTrainManifestAction extends AbstractAction implements jav
         _isPreview = isPreview;
         _train = train;
         setEnabled(Setup.isSaveTrainManifestsEnabled());
-        Setup.addPropertyChangeListener(this);
+        Setup.getDefault().addPropertyChangeListener(this);
     }
 
     /**
