@@ -156,7 +156,7 @@
 
         <h4>BLI</h4>
             <ul>
-                <li></li>
+                <li>Blueline change version range</li>
             </ul>
 
         <h4>BNM Hobbies</h4>
@@ -323,6 +323,14 @@
             <ul>
                 <li></li>
             </ul>
+
+    <h3>Circuit Builder</h3>
+        <a id="CB" name="CB"></a>
+        <ul>
+            <li>The system name is auto generated when the<strong>Add New Detector Circuit
+            </strong> window is opened. This name may be changed before the Occupancy
+            Block is created. After creating, the field is removed from the window.</li>
+        </ul>
 
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
@@ -493,6 +501,10 @@
             <li>The <strong>Warrant List</strong> now responds to changes in window size.
             The length of the status field varies as needed and keeps the
             <strong>Stop All Trains</strong> button visible even on small screens.</li>
+        </ul>
+        <ul>
+            <li>When creating a new warrant the system name is auto generated. This name may be
+            changed before the warrant is saved. After saving the field can not be edited.</li>
         </ul>
 
    <h3>Web Access</h3>

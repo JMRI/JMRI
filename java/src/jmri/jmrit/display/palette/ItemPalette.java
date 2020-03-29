@@ -207,7 +207,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
     public static void loadIcons(Editor ed) {
         if (_iconMaps == null) {
             // long t = System.currentTimeMillis();
-            new jmri.jmrit.catalog.configurexml.DefaultCatalogTreeManagerXml().readCatalogTrees();
+            InstanceManager.getDefault(jmri.CatalogTreeManager.class).loadImageIndex();
             _iconMaps = new HashMap<>();
             _indicatorTOMaps = new HashMap<>();
 
@@ -423,12 +423,12 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         instance.setVisible(true);
         return instance;
     }
-    
+
     public ItemPalette(String title, Editor ed) {
         super(false, false);
         init(title, ed);
     }
-    
+
     private void init(String title, Editor ed) {
         this.setTitle(title);
         loadIcons(ed);
@@ -515,7 +515,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
 
         _tabPane.addChangeListener(palette);
     }
-    
+
     static void addItemTab(ItemPanel itemPanel, String key, String tabTitle) {
         JScrollPane scrollPane = new JScrollPane(itemPanel);
         _tabPane.add(scrollPane, Bundle.getMessage(tabTitle));
@@ -555,7 +555,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         if (log.isDebugEnabled()) {
             deltaDim = new Dimension(totalDim.width - oldTabDim.width, totalDim.height - oldTabDim.height);
             log.debug(" old _tabPane Dim= ({}, {}) oldType=({})= ({}, {})newType=({})= ({}, {}). diff= ({}, {})",
-                    totalDim.width, totalDim.height, _currentItemPanel._itemType, oldTabDim.width, oldTabDim.height,  
+                    totalDim.width, totalDim.height, _currentItemPanel._itemType, oldTabDim.width, oldTabDim.height,
                     p._itemType, newTabDim.width, newTabDim.height, deltaDim.width, deltaDim.height);
         }
         deltaDim = p.shellDimension(p);
@@ -770,7 +770,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
     }
 
     ///////////////////////////////////////////////////////////////////////////////
-    
+
     static protected HashMap<String, NamedIcon> cloneMap(HashMap<String, NamedIcon> map) {
         HashMap<String, NamedIcon> clone = new HashMap<>();
         if (map != null) {

@@ -13,6 +13,7 @@ import jmri.util.JUnitUtil;
 import jmri.util.prefs.InitializationException;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -77,6 +78,8 @@ public class ManagerDefaultSelectorTest {
 
     @Test
     public void testSingleSystemPreferencesValid() throws InitializationException {
+        Assume.assumeFalse(java.awt.GraphicsEnvironment.isHeadless());
+
         ManagerDefaultSelector mds = new ManagerDefaultSelector();
         // assert default state
         Assert.assertFalse(mds.isAllInternalDefaultsValid());
@@ -128,6 +131,8 @@ public class ManagerDefaultSelectorTest {
 
     @Test
     public void testAuxInternalPreferencesValid() throws InitializationException {
+        Assume.assumeFalse(java.awt.GraphicsEnvironment.isHeadless());
+
         ManagerDefaultSelector mds = new ManagerDefaultSelector();
         Profile profile = ProfileManager.getDefault().getActiveProfile();
 
@@ -192,6 +197,8 @@ public class ManagerDefaultSelectorTest {
 
     @Test
     public void testTwoLoconetPreferencesValid() throws InitializationException {
+        Assume.assumeFalse(java.awt.GraphicsEnvironment.isHeadless());
+
         ManagerDefaultSelector mds = new ManagerDefaultSelector();
         Profile profile = ProfileManager.getDefault().getActiveProfile();
 

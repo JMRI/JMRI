@@ -182,30 +182,8 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         }
         pack();
         setVisible(true);
-        makeCatalogWorker = new MakeCatalog();
-        makeCatalogWorker.execute();
-        log.debug("Init SwingWorker launched");
     }
-    static class MakeCatalog extends SwingWorker<CatalogPanel, Object> {
 
-        @Override
-        public CatalogPanel doInBackground() {
-            return CatalogPanel.makeDefaultCatalog();
-        }
-        /**
-         * Minimal implementation to catch and log errors
-         */
-        @Override
-        protected void done() {
-            try {
-                get();  // called to get errors
-            } catch (InterruptedException | java.util.concurrent.ExecutionException e) {
-                log.error("Exception while in MakeCatalog", e);
-            }
-        }
-    }
-    MakeCatalog makeCatalogWorker;
-    
     protected void makeIconMenu() {
         _iconMenu = new JMenu(Bundle.getMessage("MenuIcon"));
         _menuBar.add(_iconMenu, 0);
@@ -343,7 +321,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             int idx = _menuBar.getComponentIndex(oldMenu);
             _menuBar.remove(oldMenu);
             _menuBar.add(_warrantMenu, idx);
-            
+
         }
         _menuBar.revalidate();
     }
@@ -1001,7 +979,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     ////////////////// Overridden methods of Editor //////////////////
     private boolean _manualSelection = false;
 
-    @Override 
+    @Override
     public void deselectSelectionGroup() {
         _circuitBuilder.hidePortalIcons();
         super.deselectSelectionGroup();
