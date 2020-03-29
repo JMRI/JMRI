@@ -3,7 +3,6 @@ package jmri.jmris.srcp;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import jmri.InstanceManagerDelegate;
 import jmri.PowerManager;
 import jmri.jmris.AbstractPowerServer;
 import org.slf4j.Logger;
@@ -19,12 +18,8 @@ public class JmriSRCPPowerServer extends AbstractPowerServer {
     private OutputStream output;
 
     public JmriSRCPPowerServer(OutputStream outStream) {
-        this(outStream,new InstanceManagerDelegate());
-    }
-
-    public JmriSRCPPowerServer(OutputStream outputStream, InstanceManagerDelegate instanceManagerDelegate){
-        super(instanceManagerDelegate);
-        output = outputStream;
+        super();
+        output = outStream;
         mgrOK();
     }
 

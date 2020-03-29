@@ -5,7 +5,8 @@ import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import jmri.InstanceManagerDelegate;
+
+import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Sensor;
 import jmri.SensorManager;
@@ -22,14 +23,8 @@ public abstract class AbstractSensorServer {
     private static final String ERROR_SENDING_STATUS = "Error Sending Status";
     private final HashMap<String, SensorListener> sensors;
     private static final Logger log = LoggerFactory.getLogger(AbstractSensorServer.class);
-    protected InstanceManagerDelegate instanceManager;
 
     public AbstractSensorServer(){
-        this(new InstanceManagerDelegate());
-    }
-
-    public AbstractSensorServer(InstanceManagerDelegate instanceManager) {
-        this.instanceManager = instanceManager;
         sensors = new HashMap<>();
     }
 
@@ -44,7 +39,7 @@ public abstract class AbstractSensorServer {
 
     protected synchronized void addSensorToList(String sensorName) {
         if (!sensors.containsKey(sensorName)) {
-            Sensor s = instanceManager.getDefault(SensorManager.class).getSensor(sensorName);
+            Sensor s = InstanceManager.getDefault(SensorManager.class).getSensor(sensorName);
             if(s!=null) {
                SensorListener sl = new SensorListener(sensorName);
                s.addPropertyChangeListener(sl);
@@ -55,7 +50,7 @@ public abstract class AbstractSensorServer {
 
     protected synchronized void removeSensorFromList(String sensorName) {
         if (sensors.containsKey(sensorName)) {
-            Sensor s = instanceManager.getDefault(SensorManager.class).getSensor(sensorName);
+            Sensor s = InstanceManager.getDefault(SensorManager.class).getSensor(sensorName);
             if(s!=null) {
                s.removePropertyChangeListener(sensors.get(sensorName));
                sensors.remove(sensorName);
@@ -64,7 +59,7 @@ public abstract class AbstractSensorServer {
     }
 
     public Sensor initSensor(String sensorName) {
-        Sensor sensor = instanceManager.getDefault(SensorManager.class).provideSensor(sensorName);
+        Sensor sensor = InstanceManager.getDefault(SensorManager.class).provideSensor(sensorName);
         this.addSensorToList(sensorName);
         return sensor;
     }
@@ -74,7 +69,7 @@ public abstract class AbstractSensorServer {
         // load address from sensorAddrTextField
         try {
             addSensorToList(sensorName);
-            sensor = instanceManager.getDefault(SensorManager.class).getSensor(sensorName);
+            sensor = InstanceManager.getDefault(SensorManager.class).getSensor(sensorName);
             if (sensor == null) {
                 log.error("Sensor {} is not available", sensorName);
             } else {
@@ -95,7 +90,7 @@ public abstract class AbstractSensorServer {
 
     public void dispose() {
         for (Map.Entry<String, SensorListener> sensor : this.sensors.entrySet()) {
-            Sensor s = instanceManager.getDefault(SensorManager.class).getSensor(sensor.getKey());
+            Sensor s = InstanceManager.getDefault(SensorManager.class).getSensor(sensor.getKey());
             if(s!=null) {
                s.removePropertyChangeListener(sensor.getValue());
             }
@@ -107,7 +102,7 @@ public abstract class AbstractSensorServer {
         Sensor sensor;
         try {
             addSensorToList(sensorName);
-            sensor = instanceManager.getDefault(SensorManager.class).getSensor(sensorName);
+            sensor = InstanceManager.getDefault(SensorManager.class).getSensor(sensorName);
 
             if (sensor == null) {
                 log.error("Sensor {} is not available",sensorName);
@@ -139,7 +134,7 @@ public abstract class AbstractSensorServer {
 
         SensorListener(String sensorName) {
             name = sensorName;
-            sensor = instanceManager.getDefault(SensorManager.class).getSensor(sensorName);
+            sensor = InstanceManager.getDefault(SensorManager.class).getSensor(sensorName);
         }
 
         // update state as state of sensor changes

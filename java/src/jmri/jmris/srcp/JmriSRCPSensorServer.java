@@ -5,7 +5,7 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import jmri.InstanceManagerDelegate;
+import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.jmris.AbstractSensorServer;
@@ -23,11 +23,7 @@ public class JmriSRCPSensorServer extends AbstractSensorServer implements Proper
     private OutputStream output;
 
     public JmriSRCPSensorServer(DataInputStream inStream, OutputStream outStream) {
-        this(inStream,outStream,new InstanceManagerDelegate());
-    }
-
-    public JmriSRCPSensorServer(DataInputStream inStream, OutputStream outStream, InstanceManagerDelegate instanceManager) {
-        super(instanceManager);
+        super();
         output = outStream;
     }
 
@@ -39,7 +35,7 @@ public class JmriSRCPSensorServer extends AbstractSensorServer implements Proper
     public void sendStatus(String sensorName, int Status) throws IOException {
         int bus = 0;
         int address = 0;
-        java.util.List<SystemConnectionMemo> list = instanceManager.getList(SystemConnectionMemo.class);
+        java.util.List<SystemConnectionMemo> list = InstanceManager.getList(SystemConnectionMemo.class);
         for (SystemConnectionMemo memo : list) {
             String prefix = memo.getSystemPrefix();
             if (sensorName.startsWith(prefix)) {
@@ -71,7 +67,7 @@ public class JmriSRCPSensorServer extends AbstractSensorServer implements Proper
 
     public void sendStatus(int bus, int address) throws IOException {
         log.debug("send Status called with bus {} and address {}",bus,address);
-        java.util.List<SystemConnectionMemo> list = instanceManager.getList(SystemConnectionMemo.class);
+        java.util.List<SystemConnectionMemo> list = InstanceManager.getList(SystemConnectionMemo.class);
         SystemConnectionMemo memo;
         try {
             memo = list.get(bus);
@@ -82,7 +78,7 @@ public class JmriSRCPSensorServer extends AbstractSensorServer implements Proper
         String sensorName = memo.getSystemPrefix()
                 + "S" + address;
         try {
-            int Status = instanceManager.getDefault(SensorManager.class).provideSensor(sensorName).getKnownState();
+            int Status = InstanceManager.getDefault(SensorManager.class).provideSensor(sensorName).getKnownState();
             if (Status == Sensor.ACTIVE) {
                 output.write(("100 INFO " + bus + " FB " + address + " 1\n\r").getBytes());
             } else if (Status == Sensor.INACTIVE) {
@@ -112,7 +108,7 @@ public class JmriSRCPSensorServer extends AbstractSensorServer implements Proper
      */
     public void parseStatus(int bus, int address, int value) throws java.io.IOException {
         log.debug("parse Status called with bus {} address {} and value {}",bus,address,value);
-        java.util.List<SystemConnectionMemo> list = instanceManager.getList(SystemConnectionMemo.class);
+        java.util.List<SystemConnectionMemo> list = InstanceManager.getList(SystemConnectionMemo.class);
         SystemConnectionMemo memo;
         try {
             memo = list.get(bus - 1);
@@ -138,7 +134,7 @@ public class JmriSRCPSensorServer extends AbstractSensorServer implements Proper
 
     @Override
     protected synchronized void addSensorToList(String sensorName) {
-        Sensor s = instanceManager.getDefault(SensorManager.class).getSensor(sensorName);
+        Sensor s = InstanceManager.getDefault(SensorManager.class).getSensor(sensorName);
         if(s!=null) {
             s.addPropertyChangeListener(this);
         }
@@ -146,7 +142,7 @@ public class JmriSRCPSensorServer extends AbstractSensorServer implements Proper
 
     @Override
     protected synchronized void removeSensorFromList(String sensorName) {
-        Sensor s = instanceManager.getDefault(SensorManager.class).getSensor(sensorName);
+        Sensor s = InstanceManager.getDefault(SensorManager.class).getSensor(sensorName);
         if(s!=null) {
             s.removePropertyChangeListener(this);
         }
@@ -159,7 +155,7 @@ public class JmriSRCPSensorServer extends AbstractSensorServer implements Proper
         if (e.getPropertyName().equals("KnownState")) {
             try {
                 String Name = ((jmri.Sensor) e.getSource()).getSystemName();
-                java.util.List<SystemConnectionMemo> memoList = instanceManager.getList(SystemConnectionMemo.class);
+                java.util.List<SystemConnectionMemo> memoList = InstanceManager.getList(SystemConnectionMemo.class);
                 int i = 0;
                 int address;
                 for (SystemConnectionMemo memo : memoList) {

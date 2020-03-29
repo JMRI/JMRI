@@ -3,7 +3,6 @@ package jmri.jmris.srcp;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import jmri.InstanceManagerDelegate;
 import jmri.ProgListener;
 import jmri.jmris.AbstractProgrammerServer;
 import org.slf4j.Logger;
@@ -19,12 +18,7 @@ public class JmriSRCPProgrammerServer extends AbstractProgrammerServer {
 
     private OutputStream output;
 
-    public JmriSRCPProgrammerServer(OutputStream outputStream){
-        this(outputStream,new InstanceManagerDelegate());
-    }
-
-    public JmriSRCPProgrammerServer(OutputStream outStream,InstanceManagerDelegate instanceManagerDelegate) {
-        super(instanceManagerDelegate);
+    public JmriSRCPProgrammerServer(OutputStream outStream) {
         output = outStream;
     }
 

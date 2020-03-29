@@ -3,7 +3,8 @@ package jmri.jmris.simpleserver;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import jmri.InstanceManagerDelegate;
+
+import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.SignalHead;
 import jmri.jmris.AbstractSignalHeadServer;
@@ -19,26 +20,15 @@ public class SimpleSignalHeadServer extends AbstractSignalHeadServer {
 
     private DataOutputStream output;
     private JmriConnection connection;
-    private final InstanceManagerDelegate instanceManagerDelegate;
 
-    public SimpleSignalHeadServer(JmriConnection connection){
-        this(connection,new InstanceManagerDelegate());
-    }
-
-    public SimpleSignalHeadServer(JmriConnection connection,InstanceManagerDelegate instanceManagerDelegate) {
+    public SimpleSignalHeadServer(JmriConnection connection) {
         super();
         this.connection = connection;
-        this.instanceManagerDelegate = instanceManagerDelegate;
     }
 
     public SimpleSignalHeadServer(DataInputStream inStream, DataOutputStream outStream){
-        this(inStream,outStream, new InstanceManagerDelegate());
-    }
-
-    public SimpleSignalHeadServer(DataInputStream inStream, DataOutputStream outStream, InstanceManagerDelegate instanceManagerDelegate) {
         super();
         output = outStream;
-        this.instanceManagerDelegate = instanceManagerDelegate;
     }
 
     /*
@@ -61,7 +51,7 @@ public class SimpleSignalHeadServer extends AbstractSignalHeadServer {
         if (status.length == 3) {
             this.setSignalHeadAppearance(status[1], status[2]);
         } else {
-            SignalHead signalHead = instanceManagerDelegate.getDefault(jmri.SignalHeadManager.class).getSignalHead(status[1]);
+            SignalHead signalHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(status[1]);
             if(signalHead != null) {
                this.sendStatus(signalHead.getSystemName(), signalHead.getAppearance());
             } else {

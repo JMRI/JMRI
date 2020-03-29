@@ -9,6 +9,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.picocontainer.behaviors.Stored;
 
 import javax.annotation.Nonnull;
 import java.io.ByteArrayOutputStream;
@@ -61,70 +62,19 @@ public class JmriSRCPSensorServerTest extends jmri.jmris.AbstractSensorServerTes
 
     }
 
-    // test the property change sequence for an ACTIVE property change.
-    @Override
-    @Test
-    public void testPropertyChangeOnStatus() {
-        Throwable thrown = catchThrowable( () -> {
-            ss.initSensor("IS1");
-            sen.setState(Sensor.ACTIVE);
-        });
-        assertThat(thrown).withFailMessage("Exception setting Status" ).isNull();
-        checkSensorActiveSent();
-    }
-
-    // test the property change sequence for an INACTIVE property change.
-    @Override
-    @Test
-    public void testPropertyChangeOffStatus() {
-        Throwable thrown = catchThrowable( () -> {
-            ss.initSensor("IS1");
-            sen.setState(Sensor.INACTIVE);
-        });
-        assertThat(thrown).withFailMessage("Exception setting Status").isNull();
-        checkSensorInActiveSent();
-    }
-
- // The minimal setup for log4J
+    // The minimal setup for log4J
     @BeforeEach
     @Override
     public void setUp() {
-        JUnitUtil.setUpLoggingAndCommonProperties();
-        instanceManagerDelegate = Mockito.mock(InstanceManagerDelegate.class);
-        SensorManager sensorManager = Mockito.mock(SensorManager.class);
-        Mockito.when(instanceManagerDelegate.getDefault(SensorManager.class)).thenReturn(sensorManager);
-        Mockito.when(instanceManagerDelegate.getNullableDefault(SensorManager.class)).thenReturn(sensorManager);
-        sen = new AbstractSensor("IS1") {
+        JUnitUtil.setUp();
 
-            @Override
-            public void requestUpdateFromLayout() {
-                // nothing to do
-            }
-
-            @Override
-            public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, NamedBean n) {
-                return (new PreferNumericComparator()).compare(suffix1, suffix2);
-            }
-        };
-        Mockito.when(sensorManager.provideSensor("IS1")).thenReturn(sen);
-        Mockito.when(sensorManager.getSensor("IS1")).thenReturn(sen);
-
-        SystemConnectionMemo memo = Mockito.mock(SystemConnectionMemo.class);
-        Mockito.when(memo.getSystemPrefix()).thenReturn("I");
-        Mockito.when(memo.get(SensorManager.class)).thenReturn(sensorManager);
-        Mockito.when(instanceManagerDelegate.getList(SystemConnectionMemo.class)).thenReturn(Collections.singletonList(memo));
-
+        jmri.util.JUnitUtil.initInternalSensorManager();
         output = new ByteArrayOutputStream();
-        DataInputStream input = new java.io.DataInputStream(System.in);
-        ss = new JmriSRCPSensorServer(input, output,instanceManagerDelegate);
+        java.io.DataInputStream input = new java.io.DataInputStream(System.in);
+        ss = new JmriSRCPSensorServer(input, output);
     }
 
-    @AfterEach
-    public void tearDown() throws Exception {
-        output = null;
-        instanceManagerDelegate = null;
-        sen.dispose();
-        sen = null;
+    @AfterEach public void tearDown() throws Exception {
         ss.dispose();
         ss = null;
         JUnitUtil.tearDown();

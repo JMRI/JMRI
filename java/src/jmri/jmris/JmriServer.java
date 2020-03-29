@@ -7,7 +7,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
-import jmri.InstanceManagerDelegate;
+
+import jmri.InstanceManager;
 import jmri.ShutDownTask;
 import jmri.util.zeroconf.ZeroConfService;
 import org.slf4j.Logger;
@@ -28,11 +29,10 @@ public class JmriServer {
     protected ShutDownTask shutDownTask = null;
     private Thread listenThread = null;
     protected ArrayList<ClientListener> connectedClientThreads = new ArrayList<>();
-    private InstanceManagerDelegate instanceManager;
 
     // Create a new server using the default port
     public JmriServer() {
-        this(3000,new InstanceManagerDelegate());
+        this(3000);
     }
 
     // Create a new server using a given port and no timeout
@@ -40,17 +40,9 @@ public class JmriServer {
         this(port, 0);
     }
 
-    public JmriServer(int port, InstanceManagerDelegate instanceManager) {
-        this(port, 0, instanceManager);
-    }
-
     // Create a new server using a given port with a timeout
     // A timeout of 0 is infinite
     public JmriServer(int port, int timeout) {
-        this(port,timeout,new InstanceManagerDelegate());
-    }
-
-    public JmriServer(int port, int timeout, InstanceManagerDelegate instanceManager) {
         super();
         // Try registering the server on the given port
         try {
@@ -60,7 +52,6 @@ public class JmriServer {
         }
         this.portNo = port;
         this.timeout = timeout;
-        this.instanceManager = instanceManager;
     }
 
     // Maintain a vector of connected clients
@@ -88,7 +79,7 @@ public class JmriServer {
             this.advertise();
         }
         if (this.shutDownTask != null) {
-            instanceManager.getDefault(jmri.ShutDownManager.class).register(this.shutDownTask);
+            InstanceManager.getDefault(jmri.ShutDownManager.class).register(this.shutDownTask);
         }
     }
 
@@ -115,7 +106,7 @@ public class JmriServer {
         this.listenThread = null;
         this.service.stop();
         if (this.shutDownTask != null) {
-            instanceManager.getDefault(jmri.ShutDownManager.class).deregister(this.shutDownTask);
+            InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(this.shutDownTask);
         }
     }
 

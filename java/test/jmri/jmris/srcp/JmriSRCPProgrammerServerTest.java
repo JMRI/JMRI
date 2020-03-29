@@ -1,7 +1,7 @@
 package jmri.jmris.srcp;
 
 import jmri.GlobalProgrammerManager;
-import jmri.InstanceManagerDelegate;
+import jmri.InstanceManager;
 import jmri.Programmer;
 import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.AfterEach;
@@ -22,24 +22,20 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class JmriSRCPProgrammerServerTest{
 
-    private InstanceManagerDelegate instanceManagerDelegate;
-
     @Test
     public void testCtor() {
         OutputStream output = new ByteArrayOutputStream();
         GlobalProgrammerManager programmerManager = Mockito.mock(GlobalProgrammerManager.class);
-        Mockito.when(instanceManagerDelegate.getDefault(GlobalProgrammerManager.class)).thenReturn(programmerManager);
-        Mockito.when(instanceManagerDelegate.getNullableDefault(GlobalProgrammerManager.class)).thenReturn(programmerManager);
+        InstanceManager.setDefault(GlobalProgrammerManager.class,programmerManager);
         Programmer programmer = Mockito.mock(Programmer.class);
         Mockito.when(programmerManager.getGlobalProgrammer()).thenReturn(programmer);
-        JmriSRCPProgrammerServer a = new JmriSRCPProgrammerServer(output,instanceManagerDelegate);
+        JmriSRCPProgrammerServer a = new JmriSRCPProgrammerServer(output);
         assertThat(a).isNotNull();
     }
 
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUpLoggingAndCommonProperties();
-        instanceManagerDelegate = Mockito.mock(InstanceManagerDelegate.class);
     }
 
     @AfterEach

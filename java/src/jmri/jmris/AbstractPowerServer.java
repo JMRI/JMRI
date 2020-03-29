@@ -2,7 +2,7 @@ package jmri.jmris;
 
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
-import jmri.InstanceManagerDelegate;
+import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.PowerManager;
 import org.slf4j.Logger;
@@ -13,22 +13,29 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2010
  */
-public abstract class AbstractPowerServer implements PropertyChangeListener {
+abstract public class AbstractPowerServer implements PropertyChangeListener {
 
-    private InstanceManagerDelegate instanceManager;
+    public AbstractPowerServer() {
 
-    public AbstractPowerServer(){
-        this(new InstanceManagerDelegate());
-    }
-
-    public AbstractPowerServer(InstanceManagerDelegate instanceManager){
-
-        this.instanceManager = instanceManager;
+        // Check to see if the Power Manger has a current status
+/*        if(mgrOK()) {
+         try {
+         sendStatus(p.getPower());
+         } catch (JmriException ex) {
+         try {
+         sendErrorStatus();
+         } catch (IOException ie) {
+         } catch (java.lang.NullPointerException je) {
+         }
+         } catch(IOException ie2) {
+         } catch (java.lang.NullPointerException je2) {
+         }
+         }*/
     }
 
     protected boolean mgrOK() {
         if (p == null) {
-            p = instanceManager.getNullableDefault(PowerManager.class);
+            p = InstanceManager.getNullableDefault(PowerManager.class);
             if (p == null) {
                 log.error("No power manager instance found");
                 try {

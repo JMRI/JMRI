@@ -81,7 +81,7 @@ public class SimpleSensorServerTest extends jmri.jmris.AbstractSensorServerTestB
     @Test 
     public void parseActiveStatus() throws Exception {
         ss.parseStatus("SENSOR IS1 ACTIVE\n");
-        jmri.Sensor sensor = (instanceManagerDelegate.getDefault(jmri.SensorManager.class)).getSensor("IS1");
+        jmri.Sensor sensor = (InstanceManager.getDefault(jmri.SensorManager.class)).getSensor("IS1");
         assertThat(sensor.getState()).isEqualTo(jmri.Sensor.ACTIVE).withFailMessage("Parse Active Status Check");
         // parsing the status also causes a message to return to
         // the client.
@@ -92,7 +92,7 @@ public class SimpleSensorServerTest extends jmri.jmris.AbstractSensorServerTestB
     @Test 
     public void parseInactiveStatus() throws Exception {
          ss.parseStatus("SENSOR IS1 INACTIVE\n");
-         jmri.Sensor sensor = (instanceManagerDelegate.getDefault(jmri.SensorManager.class)).getSensor("IS1");
+         jmri.Sensor sensor = (InstanceManager.getDefault(jmri.SensorManager.class)).getSensor("IS1");
          assertThat(sensor.getState()).isEqualTo(jmri.Sensor.INACTIVE).withFailMessage("Parse Inactive Status Check");
          // parsing the status also causes a message to return to
          // the client.
@@ -106,7 +106,7 @@ public class SimpleSensorServerTest extends jmri.jmris.AbstractSensorServerTestB
         // nothing has changed the sensor, so it should be unknown.
         checkSensorUnknownSent();
         // verify the sensor exists, it should have been created with provideSensor.
-        assertThat(instanceManagerDelegate.getDefault(jmri.SensorManager.class).getSensor("IS1")).isNotNull();
+        assertThat(InstanceManager.getDefault(jmri.SensorManager.class).getSensor("IS1")).isNotNull();
     }
 
     // test Parsing an blank status message.
@@ -116,7 +116,7 @@ public class SimpleSensorServerTest extends jmri.jmris.AbstractSensorServerTestB
         // nothing has changed the sensor, so it should be unknown.
         checkSensorUnknownSent();
         // verify the sensor exists, it should have been created with provideSensor.
-        assertThat(instanceManagerDelegate.getDefault(jmri.SensorManager.class).getSensor("IS1")).isNotNull();
+        assertThat(InstanceManager.getDefault(jmri.SensorManager.class).getSensor("IS1")).isNotNull();
     }
 
     // test Parsing an other status message.
@@ -164,30 +164,8 @@ public class SimpleSensorServerTest extends jmri.jmris.AbstractSensorServerTestB
     @BeforeEach
     @Override
     public void setUp() {
-        JUnitUtil.setUpLoggingAndCommonProperties();
-        instanceManagerDelegate = Mockito.mock(InstanceManagerDelegate.class);
-        SensorManager sensorManager = Mockito.mock(SensorManager.class);
-        Mockito.when(instanceManagerDelegate.getDefault(SensorManager.class)).thenReturn(sensorManager);
-        Mockito.when(instanceManagerDelegate.getNullableDefault(SensorManager.class)).thenReturn(sensorManager);
-        Sensor sen = new AbstractSensor("IS1") {
-
-            @Override
-            public void requestUpdateFromLayout() {
-                // nothing to do
-            }
-
-            @Override
-            public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, NamedBean n) {
-                return (new PreferNumericComparator()).compare(suffix1, suffix2);
-            }
-        };
-        Mockito.when(sensorManager.provideSensor("IS1")).thenReturn(sen);
-        Mockito.when(sensorManager.getSensor("IS1")).thenReturn(sen);
-
-        SystemConnectionMemo memo = Mockito.mock(SystemConnectionMemo.class);
-        Mockito.when(memo.getSystemPrefix()).thenReturn("I");
-        Mockito.when(memo.get(SensorManager.class)).thenReturn(sensorManager);
-        Mockito.when(instanceManagerDelegate.getList(SystemConnectionMemo.class)).thenReturn(Collections.singletonList(memo));
+        JUnitUtil.setUp();
+        jmri.util.JUnitUtil.initInternalSensorManager();
         sb = new StringBuilder();
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
@@ -197,7 +175,7 @@ public class SimpleSensorServerTest extends jmri.jmris.AbstractSensorServerTestB
                     }
                 });
         java.io.DataInputStream input = new java.io.DataInputStream(System.in);
-        ss = new SimpleSensorServer(input, output,instanceManagerDelegate);
+        ss = new SimpleSensorServer(input, output);
     }
 
     @AfterEach public void tearDown() throws Exception {

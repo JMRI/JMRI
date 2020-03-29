@@ -5,7 +5,8 @@ import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import jmri.InstanceManagerDelegate;
+
+import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Turnout;
 import org.slf4j.Logger;
@@ -21,15 +22,9 @@ abstract public class AbstractTurnoutServer {
 
     protected final HashMap<String, TurnoutListener> turnouts;
     private final static Logger log = LoggerFactory.getLogger(AbstractTurnoutServer.class);
-    private InstanceManagerDelegate instanceManager;
 
     public AbstractTurnoutServer(){
-        this(new InstanceManagerDelegate());
-    }
-
-    public AbstractTurnoutServer(InstanceManagerDelegate instanceManager) {
         turnouts = new HashMap<String, TurnoutListener>();
-        this.instanceManager = instanceManager;
     }
 
     /*
@@ -43,7 +38,7 @@ abstract public class AbstractTurnoutServer {
 
     synchronized protected void addTurnoutToList(String turnoutName) {
         if (!turnouts.containsKey(turnoutName)) {
-            Turnout t = instanceManager.turnoutManagerInstance().getTurnout(turnoutName);
+            Turnout t = InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
             if(t!=null) {
                TurnoutListener tl = new TurnoutListener(turnoutName);
                t.addPropertyChangeListener(tl);
@@ -54,7 +49,7 @@ abstract public class AbstractTurnoutServer {
 
     synchronized protected void removeTurnoutFromList(String turnoutName) {
         if (turnouts.containsKey(turnoutName)) {
-            Turnout t = instanceManager.turnoutManagerInstance().getTurnout(turnoutName);
+            Turnout t = InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
             if(t!=null) {
                t.removePropertyChangeListener(turnouts.get(turnoutName));
                turnouts.remove(turnoutName);
@@ -63,7 +58,7 @@ abstract public class AbstractTurnoutServer {
     }
 
     public Turnout initTurnout(String turnoutName) throws IllegalArgumentException {
-        Turnout turnout = instanceManager.turnoutManagerInstance().provideTurnout(turnoutName);
+        Turnout turnout = InstanceManager.turnoutManagerInstance().provideTurnout(turnoutName);
         this.addTurnoutToList(turnoutName);
         return turnout;
     }
@@ -77,7 +72,7 @@ abstract public class AbstractTurnoutServer {
                 sendErrorStatus(turnoutName);
                 return;
             }
-            Turnout turnout = instanceManager.turnoutManagerInstance().getTurnout(turnoutName);
+            Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
             if (turnout == null) {
                 log.error("Turnout {} is not available", turnoutName);
             } else {
@@ -93,7 +88,7 @@ abstract public class AbstractTurnoutServer {
     public void throwTurnout(String turnoutName) {
         // load address from switchAddrTextField
         try {
-            Turnout turnout = instanceManager.turnoutManagerInstance().getTurnout(turnoutName);
+            Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
             if (!turnouts.containsKey(turnoutName)) {
                 // enforce that initTurnout must be called before moving a
                 // turnout
@@ -117,7 +112,7 @@ abstract public class AbstractTurnoutServer {
 
     public void dispose() {
         for (Map.Entry<String, TurnoutListener> turnout : this.turnouts.entrySet()) {
-            Turnout t = instanceManager.turnoutManagerInstance().getTurnout(turnout.getKey());
+            Turnout t = InstanceManager.turnoutManagerInstance().getTurnout(turnout.getKey());
             if(t!=null) {
                t.removePropertyChangeListener(turnout.getValue());
             }
@@ -137,7 +132,7 @@ abstract public class AbstractTurnoutServer {
 
         protected TurnoutListener(String turnoutName) {
             name = turnoutName;
-            turnout = instanceManager.turnoutManagerInstance().getTurnout(turnoutName);
+            turnout = InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
         }
 
         // update state as state of turnout changes

@@ -1,6 +1,6 @@
 package jmri.jmris.srcp;
 
-import jmri.InstanceManagerDelegate;
+import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.PowerManager;
 import jmri.util.JUnitUtil;
@@ -23,7 +23,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class JmriSRCPPowerServerTest extends jmri.jmris.AbstractPowerServerTestBase {
         
     private StringBuilder sb = null;
-    private InstanceManagerDelegate instanceManagerDelegate;
     private PowerManager powerManager;
 
     // test parsing an ON status message.
@@ -107,10 +106,8 @@ public class JmriSRCPPowerServerTest extends jmri.jmris.AbstractPowerServerTestB
     @Override
     public void setUp() {
         JUnitUtil.setUpLoggingAndCommonProperties();
-        instanceManagerDelegate = Mockito.mock(InstanceManagerDelegate.class);
         powerManager = Mockito.mock(PowerManager.class);
-        Mockito.when(instanceManagerDelegate.getDefault(PowerManager.class)).thenReturn(powerManager);
-        Mockito.when(instanceManagerDelegate.getNullableDefault(PowerManager.class)).thenReturn(powerManager);
+        InstanceManager.setDefault(PowerManager.class,powerManager);
         sb = new StringBuilder();
         OutputStream output = new OutputStream() {
             @Override
@@ -118,7 +115,7 @@ public class JmriSRCPPowerServerTest extends jmri.jmris.AbstractPowerServerTestB
                 sb.append((char) b);
             }
         };
-        ps = new JmriSRCPPowerServer(output,instanceManagerDelegate);
+        ps = new JmriSRCPPowerServer(output);
     }
 
     @AfterEach
@@ -126,9 +123,8 @@ public class JmriSRCPPowerServerTest extends jmri.jmris.AbstractPowerServerTestB
         ps.dispose();
         ps = null;
         sb = null;
-        instanceManagerDelegate = null;
         powerManager = null;
-        JUnitUtil.tearDown(); // ToDo refactor common teardown so there is a version that doesn't init instance manager.
+        JUnitUtil.tearDown();
     }
 
 }

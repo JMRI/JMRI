@@ -3,7 +3,8 @@ package jmri.jmris.simpleserver;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import jmri.InstanceManagerDelegate;
+
+import jmri.InstanceManager;
 import jmri.Turnout;
 import jmri.jmris.AbstractTurnoutServer;
 import jmri.jmris.JmriConnection;
@@ -21,23 +22,12 @@ public class SimpleTurnoutServer extends AbstractTurnoutServer {
     private static final String TURNOUT = "TURNOUT ";
     private DataOutputStream output;
     private JmriConnection connection;
-    private final InstanceManagerDelegate instanceManagerDelegate;
 
     public SimpleTurnoutServer(JmriConnection connection){
-        this(connection,new InstanceManagerDelegate());
-    }
-
-    public SimpleTurnoutServer(JmriConnection connection,InstanceManagerDelegate instanceManagerDelegate) {
         this.connection = connection;
-        this.instanceManagerDelegate = instanceManagerDelegate;
     }
 
     public SimpleTurnoutServer(DataInputStream inStream,DataOutputStream outStream){
-        this(inStream,outStream,new InstanceManagerDelegate());
-    }
-
-    public SimpleTurnoutServer(DataInputStream inStream, DataOutputStream outStream, InstanceManagerDelegate instanceManagerDelegate) {
-        this.instanceManagerDelegate = instanceManagerDelegate;
         output = outStream;
     }
 
@@ -87,7 +77,7 @@ public class SimpleTurnoutServer extends AbstractTurnoutServer {
             // default case, return status for this turnout
             try {
                 sendStatus(statusString.substring(index),
-                    instanceManagerDelegate.turnoutManagerInstance().provideTurnout(statusString.substring(index)).getKnownState());
+                    InstanceManager.turnoutManagerInstance().provideTurnout(statusString.substring(index)).getKnownState());
             } catch (IllegalArgumentException ex) {
                 log.warn("Failed to provide Turnout \"{}\" in parseStatus", statusString.substring(index));
             }

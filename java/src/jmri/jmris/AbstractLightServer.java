@@ -5,8 +5,7 @@ import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
-import jmri.InstanceManagerDelegate;
+import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Light;
 import org.slf4j.Logger;
@@ -23,15 +22,8 @@ abstract public class AbstractLightServer {
     private final HashMap<String, LightListener> lights;
     private final static Logger log = LoggerFactory.getLogger(AbstractLightServer.class);
 
-    private InstanceManagerDelegate instanceManager;
-
-    public AbstractLightServer(){
-        this(new InstanceManagerDelegate());
-    }
-
-    public AbstractLightServer(InstanceManagerDelegate instanceManager) {
+    public AbstractLightServer() {
         lights = new HashMap<String, LightListener>();
-        this.instanceManager = instanceManager;
     }
 
     /*
@@ -45,7 +37,7 @@ abstract public class AbstractLightServer {
 
     synchronized protected void addLightToList(String lightName) {
         if (!lights.containsKey(lightName)) {
-            Light li = instanceManager.lightManagerInstance().getLight(lightName);
+            Light li = InstanceManager.lightManagerInstance().getLight(lightName);
             if (li != null) {
                 lights.put(lightName, new LightListener(lightName));
                 li.addPropertyChangeListener(lights.get(lightName));
@@ -57,7 +49,7 @@ abstract public class AbstractLightServer {
 
     synchronized protected void removeLightFromList(String lightName) {
         if (lights.containsKey(lightName)) {
-            Light li = instanceManager.lightManagerInstance().getLight(lightName);
+            Light li = InstanceManager.lightManagerInstance().getLight(lightName);
             if (li != null) {
                 li.removePropertyChangeListener(lights.get(lightName));
                 lights.remove(lightName);
@@ -68,7 +60,7 @@ abstract public class AbstractLightServer {
     }
 
     public Light initLight(String lightName)  throws IllegalArgumentException {
-        Light light = instanceManager.lightManagerInstance().provideLight(lightName);
+        Light light = InstanceManager.lightManagerInstance().provideLight(lightName);
         this.addLightToList(lightName);
         return light;        
     }
@@ -79,7 +71,7 @@ abstract public class AbstractLightServer {
         try {
 
             addLightToList(lightName);
-            light = instanceManager.lightManagerInstance().getLight(lightName);
+            light = InstanceManager.lightManagerInstance().getLight(lightName);
             if (light == null) {
                 log.error("Light {} is not available", lightName);
             } else {
@@ -97,7 +89,7 @@ abstract public class AbstractLightServer {
         // load address from switchAddrTextField
         try {
             addLightToList(lightName);
-            light = instanceManager.lightManagerInstance().getLight(lightName);
+            light = InstanceManager.lightManagerInstance().getLight(lightName);
 
             if (light == null) {
                 log.error("Light {} is not available", lightName);
@@ -113,7 +105,7 @@ abstract public class AbstractLightServer {
 
     public void dispose() {
         for (Map.Entry<String, LightListener> light : this.lights.entrySet()) {
-            Light li = instanceManager.lightManagerInstance().getLight(light.getKey());
+            Light li = InstanceManager.lightManagerInstance().getLight(light.getKey());
             if (li != null) {
                 li.removePropertyChangeListener(light.getValue());
             }
@@ -125,7 +117,7 @@ abstract public class AbstractLightServer {
 
         LightListener(String lightName) {
             name = lightName;
-            light = instanceManager.lightManagerInstance().getLight(lightName);
+            light = InstanceManager.lightManagerInstance().getLight(lightName);
         }
 
         // update state as state of light changes

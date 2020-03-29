@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
-import jmri.InstanceManagerDelegate;
 import jmri.jmris.JmriServer;
 import jmri.jmris.srcp.parser.ParseException;
 import jmri.jmris.srcp.parser.SRCPParser;
@@ -26,20 +25,13 @@ import org.slf4j.LoggerFactory;
  */
 public class JmriSRCPServer extends JmriServer {
 
-    private final InstanceManagerDelegate instanceManagerDelegate;
-
     // Create a new server using the default port
     public JmriSRCPServer() {
         this(4303);  // 4303 is assigned to SRCP by IANA.
     }
 
     public JmriSRCPServer(int port){
-        this(port,new InstanceManagerDelegate());
-    }
-
-    public JmriSRCPServer(int port, InstanceManagerDelegate instanceManagerDelegate) {
         super(port);
-        this.instanceManagerDelegate = instanceManagerDelegate;
     }
 
     // Advertise the service with ZeroConf
@@ -54,7 +46,7 @@ public class JmriSRCPServer extends JmriServer {
     public void handleClient(DataInputStream inStream, DataOutputStream outStream) throws IOException {
         // Listen for commands from the client until the connection closes
         SRCPParser parser = null;
-        TimeStampedOutput outputStream = new TimeStampedOutput(outStream,instanceManagerDelegate);
+        TimeStampedOutput outputStream = new TimeStampedOutput(outStream);
 
         // interface components
         JmriSRCPServiceHandler sh = new JmriSRCPServiceHandler(12345); // need real client port.

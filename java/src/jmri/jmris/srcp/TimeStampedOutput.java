@@ -1,7 +1,6 @@
 package jmri.jmris.srcp;
 
 import jmri.InstanceManager;
-import jmri.InstanceManagerDelegate;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -16,17 +15,11 @@ import java.util.Date;
  */
 public class TimeStampedOutput extends OutputStream {
 
-    private final InstanceManagerDelegate instanceManagerDelegate;
     private final OutputStream outputStream;
 
     public TimeStampedOutput(OutputStream outputStream){
-        this(outputStream,new InstanceManagerDelegate());
-    }
-
-    public TimeStampedOutput(OutputStream outputStream,InstanceManagerDelegate instanceManagerDelegate){
         super();
         this.outputStream = outputStream;
-        this.instanceManagerDelegate = instanceManagerDelegate;
     }
 
     @Override
@@ -36,7 +29,7 @@ public class TimeStampedOutput extends OutputStream {
 
     @Override
     public synchronized void write(byte[] bytes) throws IOException {
-        Date currentTime = instanceManagerDelegate.getDefault(jmri.Timebase.class).getTime();
+        Date currentTime = InstanceManager.getDefault(jmri.Timebase.class).getTime();
         long time = currentTime.getTime();
         String timeString = String.format("%s.%s ",time/1000,time%1000);
         byte[] outputBytes = new byte[timeString.length() + bytes.length];

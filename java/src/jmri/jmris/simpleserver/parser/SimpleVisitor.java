@@ -1,6 +1,6 @@
 package jmri.jmris.simpleserver.parser;
 
-import jmri.InstanceManagerDelegate;
+import jmri.InstanceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,15 +11,9 @@ import org.slf4j.LoggerFactory;
 public class SimpleVisitor extends JmriServerParserDefaultVisitor {
 
     private String outputString = null;
-    private InstanceManagerDelegate instanceManager;
 
     public SimpleVisitor(){
-        this(new InstanceManagerDelegate());
-    }
-
-    public SimpleVisitor(InstanceManagerDelegate instanceManager){
         super();
-        this.instanceManager = instanceManager;
     }
 
     public String getOutputString() {
@@ -33,7 +27,7 @@ public class SimpleVisitor extends JmriServerParserDefaultVisitor {
             // this is just a request for status
                try{
                   ((jmri.jmris.simpleserver.SimplePowerServer)
-                   data).sendStatus(instanceManager.getDefault(jmri.PowerManager.class).getPower());
+                   data).sendStatus(InstanceManager.getDefault(jmri.PowerManager.class).getPower());
                } catch(java.io.IOException | jmri.JmriException je){
                    log.error("Error sending Power status to client {}",je);
                }
