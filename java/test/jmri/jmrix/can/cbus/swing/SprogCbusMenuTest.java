@@ -23,7 +23,7 @@ public class SprogCbusMenuTest {
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
-        CbusMenu action = new CbusMenu(m);
+        SprogCbusMenu action = new SprogCbusMenu(m);
         Assert.assertNotNull("exists", action);
     }
 
