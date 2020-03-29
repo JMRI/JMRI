@@ -24,7 +24,7 @@
  * or removed and for a listener to listen to all changes or only to specific
  * changes. Subclasses of VetoableChangeProvider in this package, principally
  * {@link jmri.beans.ConstrainedBean}, {@link jmri.beans.ConstrainedArbitraryBean},
- * and {@link jmri.beans.VetoableChageSupport} provide simple concrete
+ * and {@link jmri.beans.VetoableChangeSupport} provide simple concrete
  * implementations of that interface that can be built upon.</dd>
  * <dt>Implementing support for arbitrary properties</dt>
  * <dd>A number of JMRI objects support the addition of user-defined properties
