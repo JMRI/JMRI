@@ -345,10 +345,6 @@
         for generating multiple documentation forms is also being
         considered.</li>
 
-        <li>
-        We also need to complete the conversion from JFCUnit to Jemmy for
-        Swing testing.</li>
-
         <li>USB access technology has advanced a lot since support
         for some basic libraries was added to JMRI. At some point,
         we should replace those early library versions, but it will
@@ -356,9 +352,10 @@
 
         <li>Our <a href="Logging.shtml">logging methodology</a> is
         now a hybrid of native logging (in some included
-        libraries), Log4J (our original solution) and SLF4J (the
-        most recent addition). It's likely that we'll eventually
-        simplify that.</li>
+        libraries), Log4J 1.2.15 (our original solution) and SLF4J (the
+        most recent addition). We may choose to simplify that, but at 
+        least we have to move to Log4J 2 at some point.
+        </li>
 
       </ul>
 

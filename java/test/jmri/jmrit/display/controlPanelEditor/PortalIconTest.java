@@ -48,8 +48,6 @@ public class PortalIconTest extends PositionableIconTest {
     public void tearDown() {
         if (editor != null) {
             JUnitUtil.dispose(editor);
-            if (((ControlPanelEditor)editor).makeCatalogWorker != null) 
-                JUnitUtil.waitFor(() -> {return ((ControlPanelEditor)editor).makeCatalogWorker.isDone();}, "wait for catalog SwingWorker failed");
         }
         super.tearDown();
     }

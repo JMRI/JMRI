@@ -78,7 +78,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     @Override
     protected void sendFunctionGroup1() {
         XNetMessage msg = XNetMessage.getFunctionGroup1OpsMsg(this.getDccAddress(),
-                f0, f1, f2, f3, f4);
+            getFunction(0), getFunction(1), getFunction(2), getFunction(3), getFunction(4));
         // now, queue the message for sending to the command station
         queueMessage(msg, THROTTLEFUNCSENT);
     }
@@ -89,7 +89,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     @Override
     protected void sendFunctionGroup2() {
         XNetMessage msg = XNetMessage.getFunctionGroup2OpsMsg(this.getDccAddress(),
-                f5, f6, f7, f8);
+            getFunction(5), getFunction(6), getFunction(7), getFunction(8));
         // now, queue the message for sending to the command station
         queueMessage(msg, THROTTLEFUNCSENT);
     }
@@ -101,7 +101,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     @Override
     protected void sendFunctionGroup3() {
         XNetMessage msg = XNetMessage.getFunctionGroup3OpsMsg(this.getDccAddress(),
-                f9, f10, f11, f12);
+            getFunction(9), getFunction(10), getFunction(11), getFunction(12));
         // now, queue the message for sending to the command station
         queueMessage(msg, THROTTLEFUNCSENT);
     }
@@ -123,7 +123,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     protected void sendFunctionGroup4() {
         if (csVersionSupportsHighFunctions()) {
             XNetMessage msg = XNetMessage.getFunctionGroup4OpsMsg(this.getDccAddress(),
-                    f13, f14, f15, f16, f17, f18, f19, f20);
+                getFunction(13), getFunction(14), getFunction(15), getFunction(16),
+                getFunction(17), getFunction(18), getFunction(19), getFunction(20));
             // now, queue the message for sending to the command station
             queueMessage(msg, THROTTLEFUNCSENT);
         }
@@ -137,7 +138,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     protected void sendFunctionGroup5() {
         if (csVersionSupportsHighFunctions()) {
             XNetMessage msg = XNetMessage.getFunctionGroup5OpsMsg(this.getDccAddress(),
-                    f21, f22, f23, f24, f25, f26, f27, f28);
+                getFunction(21), getFunction(22), getFunction(23), getFunction(24),
+                getFunction(25), getFunction(26), getFunction(27), getFunction(28));
             // now, queue the message for sending to the command station
             queueMessage(msg, THROTTLEFUNCSENT);
         }
@@ -715,246 +717,86 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         log.trace("Parsing Function F0-F12 status, function bytes: {} and {}",
                   b3,b4);
         /* data byte 3 is the status of F0 F4 F3 F2 F1 */
-        checkForFunctionValueChange(Throttle.F0,b3,0x10,getF0());
-        checkForFunctionValueChange(Throttle.F1,b3,0x01,getF1());
-        checkForFunctionValueChange(Throttle.F2,b3,0x02,getF2());
-        checkForFunctionValueChange(Throttle.F3,b3,0x04,getF3());
-        checkForFunctionValueChange(Throttle.F4,b3,0x08,getF4());
+        updateFunction(0,(b3 & 0x10) == 0x10);
+        updateFunction(1,(b3 & 0x01) == 0x01);
+        updateFunction(2,(b3 & 0x02) == 0x02);
+        updateFunction(3,(b3 & 0x04) == 0x04);
+        updateFunction(4,(b3 & 0x08) == 0x08);
         /* data byte 4 is the status of F12 F11 F10 F9 F8 F7 F6 F5 */
-        checkForFunctionValueChange(Throttle.F5,b4,0x01,getF5());
-        checkForFunctionValueChange(Throttle.F6,b4,0x02,getF6());
-        checkForFunctionValueChange(Throttle.F7,b4,0x04,getF7());
-        checkForFunctionValueChange(Throttle.F8,b4,0x08,getF8());
-        checkForFunctionValueChange(Throttle.F9,b4,0x10,getF9());
-        checkForFunctionValueChange(Throttle.F10,b4,0x20,getF10());
-        checkForFunctionValueChange(Throttle.F11,b4,0x40,getF11());
-        checkForFunctionValueChange(Throttle.F12,b4,0x80,getF12());
+        updateFunction(5,(b4 & 0x01) == 0x01);
+        updateFunction(6,(b4 & 0x02) == 0x02);
+        updateFunction(7,(b4 & 0x04) == 0x04);
+        updateFunction(8,(b4 & 0x08) == 0x08);
+        updateFunction(9,(b4 & 0x10) == 0x10);
+        updateFunction(10,(b4 & 0x20) == 0x20);
+        updateFunction(11,(b4 & 0x40) == 0x40);
+        updateFunction(12,(b4 & 0x80) == 0x80);
     }
 
     protected void parseFunctionHighInformation(int b3, int b4) {
         log.trace("Parsing Function F13-F28 status, function bytes: {} and {}",
                 b3,b4);
         /* data byte 3 is the status of F20 F19 F18 F17 F16 F15 F14 F13 */
-        checkForFunctionValueChange(Throttle.F13,b3,0x01,getF13());
-        checkForFunctionValueChange(Throttle.F14,b3,0x02,getF14());
-        checkForFunctionValueChange(Throttle.F15,b3,0x04,getF15());
-        checkForFunctionValueChange(Throttle.F16,b3,0x08,getF16());
-        checkForFunctionValueChange(Throttle.F17,b3,0x10,getF17());
-        checkForFunctionValueChange(Throttle.F18,b3,0x20,getF18());
-        checkForFunctionValueChange(Throttle.F19,b3,0x40,getF19());
-        checkForFunctionValueChange(Throttle.F20,b3,0x80,getF20());
+        updateFunction(13,(b3 & 0x01) == 0x01);
+        updateFunction(14,(b3 & 0x02) == 0x02);
+        updateFunction(15,(b3 & 0x04) == 0x04);
+        updateFunction(16,(b3 & 0x08) == 0x08);
+        updateFunction(17,(b3 & 0x10) == 0x10);
+        updateFunction(18,(b3 & 0x20) == 0x20);
+        updateFunction(19,(b3 & 0x40) == 0x40);
+        updateFunction(20,(b3 & 0x80) == 0x80);
         /* data byte 4 is the status of F28 F27 F26 F25 F24 F23 F22 F21 */
-        checkForFunctionValueChange(Throttle.F21,b4,0x01,getF21());
-        checkForFunctionValueChange(Throttle.F22,b4,0x02,getF22());
-        checkForFunctionValueChange(Throttle.F23,b4,0x04,getF23());
-        checkForFunctionValueChange(Throttle.F24,b4,0x08,getF24());
-        checkForFunctionValueChange(Throttle.F25,b4,0x10,getF25());
-        checkForFunctionValueChange(Throttle.F26,b4,0x20,getF26());
-        checkForFunctionValueChange(Throttle.F27,b4,0x40,getF27());
-        checkForFunctionValueChange(Throttle.F28,b4,0x80,getF28());
-    }
-
-
-    protected void checkForFunctionValueChange(String Function,int bytevalue,int bitmask,boolean currentValue){
-        if ((bytevalue & bitmask) == bitmask && !currentValue) {
-            notifyFunctionChanged(Function,true);
-        } else if ((bytevalue & bitmask) == 0x00 && currentValue) {
-            notifyFunctionChanged(Function,false);
-        }
-    }
-
-    protected void notifyFunctionChanged(String function,boolean newValue){
-        switch(function){
-            case Throttle.F0:
-                notifyPropertyChangeListener(Throttle.F0,
-                        Boolean.valueOf(this.f0),
-                        Boolean.valueOf(this.f0 = newValue));
-                break;
-            case Throttle.F1:
-                notifyPropertyChangeListener(Throttle.F1,
-                        Boolean.valueOf(this.f1),
-                        Boolean.valueOf(this.f1 = newValue));
-                break;
-            case Throttle.F2:
-                notifyPropertyChangeListener(Throttle.F2,
-                        Boolean.valueOf(this.f2),
-                        Boolean.valueOf(this.f2 = newValue));
-                break;
-            case Throttle.F3:
-                notifyPropertyChangeListener(Throttle.F3,
-                        Boolean.valueOf(this.f3),
-                        Boolean.valueOf(this.f3 = newValue));
-                break;
-            case Throttle.F4:
-                notifyPropertyChangeListener(Throttle.F4,
-                        Boolean.valueOf(this.f4),
-                        Boolean.valueOf(this.f4 = newValue));
-                break;
-            case Throttle.F5:
-                notifyPropertyChangeListener(Throttle.F5,
-                        Boolean.valueOf(this.f5),
-                        Boolean.valueOf(this.f5 = newValue));
-                break;
-            case Throttle.F6:
-                notifyPropertyChangeListener(Throttle.F6,
-                        Boolean.valueOf(this.f6),
-                        Boolean.valueOf(this.f6 = newValue));
-                break;
-            case Throttle.F7:
-                notifyPropertyChangeListener(Throttle.F7,
-                        Boolean.valueOf(this.f7),
-                        Boolean.valueOf(this.f7 = newValue));
-                break;
-            case Throttle.F8:
-                notifyPropertyChangeListener(Throttle.F8,
-                        Boolean.valueOf(this.f8),
-                        Boolean.valueOf(this.f8 = newValue));
-                break;
-            case Throttle.F9:
-                notifyPropertyChangeListener(Throttle.F8,
-                        Boolean.valueOf(this.f9),
-                        Boolean.valueOf(this.f9 = newValue));
-                break;
-            case Throttle.F10:
-                notifyPropertyChangeListener(Throttle.F10,
-                        Boolean.valueOf(this.f10),
-                        Boolean.valueOf(this.f10 = newValue));
-                break;
-            case Throttle.F11:
-                notifyPropertyChangeListener(Throttle.F11,
-                        Boolean.valueOf(this.f11),
-                        Boolean.valueOf(this.f11 = newValue));
-                break;
-            case Throttle.F12:
-                notifyPropertyChangeListener(Throttle.F12,
-                        Boolean.valueOf(this.f12),
-                        Boolean.valueOf(this.f12 = newValue));
-                break;
-            case Throttle.F13:
-                notifyPropertyChangeListener(Throttle.F13,
-                        Boolean.valueOf(this.f13),
-                        Boolean.valueOf(this.f13 = newValue));
-                break;
-            case Throttle.F14:
-                notifyPropertyChangeListener(Throttle.F14,
-                        Boolean.valueOf(this.f14),
-                        Boolean.valueOf(this.f14 = newValue));
-                break;
-            case Throttle.F15:
-                notifyPropertyChangeListener(Throttle.F15,
-                        Boolean.valueOf(this.f15),
-                        Boolean.valueOf(this.f15 = newValue));
-                break;
-            case Throttle.F16:
-                notifyPropertyChangeListener(Throttle.F16,
-                        Boolean.valueOf(this.f16),
-                        Boolean.valueOf(this.f16 = newValue));
-                break;
-            case Throttle.F17:
-                notifyPropertyChangeListener(Throttle.F17,
-                        Boolean.valueOf(this.f17),
-                        Boolean.valueOf(this.f17 = newValue));
-                break;
-            case Throttle.F18:
-                notifyPropertyChangeListener(Throttle.F18,
-                        Boolean.valueOf(this.f18),
-                        Boolean.valueOf(this.f18 = newValue));
-                break;
-            case Throttle.F19:
-                notifyPropertyChangeListener(Throttle.F19,
-                        Boolean.valueOf(this.f19),
-                        Boolean.valueOf(this.f19 = newValue));
-                break;
-            case Throttle.F20:
-                notifyPropertyChangeListener(Throttle.F20,
-                        Boolean.valueOf(this.f20),
-                        Boolean.valueOf(this.f20 = newValue));
-                break;
-            case Throttle.F21:
-                notifyPropertyChangeListener(Throttle.F21,
-                        Boolean.valueOf(this.f21),
-                        Boolean.valueOf(this.f21 = newValue));
-                break;
-            case Throttle.F22:
-                notifyPropertyChangeListener(Throttle.F22,
-                        Boolean.valueOf(this.f22),
-                        Boolean.valueOf(this.f22 = newValue));
-                break;
-            case Throttle.F23:
-                notifyPropertyChangeListener(Throttle.F23,
-                        Boolean.valueOf(this.f23),
-                        Boolean.valueOf(this.f23 = newValue));
-                break;
-            case Throttle.F24:
-                notifyPropertyChangeListener(Throttle.F24,
-                        Boolean.valueOf(this.f24),
-                        Boolean.valueOf(this.f24 = newValue));
-                break;
-            case Throttle.F25:
-                notifyPropertyChangeListener(Throttle.F25,
-                        Boolean.valueOf(this.f25),
-                        Boolean.valueOf(this.f25 = newValue));
-                break;
-            case Throttle.F26:
-                notifyPropertyChangeListener(Throttle.F26,
-                        Boolean.valueOf(this.f26),
-                        Boolean.valueOf(this.f26 = newValue));
-                break;
-            case Throttle.F27:
-                notifyPropertyChangeListener(Throttle.F27,
-                        Boolean.valueOf(this.f27),
-                        Boolean.valueOf(this.f27 = newValue));
-                break;
-            case Throttle.F28:
-                notifyPropertyChangeListener(Throttle.F28,
-                        Boolean.valueOf(this.f28),
-                        Boolean.valueOf(this.f28 = newValue));
-                break;
-            default:
-                log.trace("Attempt to set unknonw function {} to {}",function,newValue);
-        }
+        updateFunction(21,(b4 & 0x01) == 0x01);
+        updateFunction(22,(b4 & 0x02) == 0x02);
+        updateFunction(23,(b4 & 0x04) == 0x04);
+        updateFunction(24,(b4 & 0x08) == 0x08);
+        updateFunction(25,(b4 & 0x10) == 0x10);
+        updateFunction(26,(b4 & 0x20) == 0x20);
+        updateFunction(27,(b4 & 0x40) == 0x40);
+        updateFunction(28,(b4 & 0x80) == 0x80);
+        
     }
 
     protected void parseFunctionMomentaryInformation(int b3, int b4) {
         log.trace("Parsing Function Momentary status, function bytes: {} and {}",
                   b3,b4);
         /* data byte 3 is the momentary status of F0 F4 F3 F2 F1 */
-        checkForFunctionValueChange(Throttle.F0Momentary,b3,0x10,getF0Momentary());
-        checkForFunctionValueChange(Throttle.F1Momentary,b3,0x01,getF1Momentary());
-        checkForFunctionValueChange(Throttle.F2Momentary,b3,0x02,getF2Momentary());
-        checkForFunctionValueChange(Throttle.F3Momentary,b3,0x04,getF3Momentary());
-        checkForFunctionValueChange(Throttle.F4Momentary,b3,0x08,getF4Momentary());
+        checkForFunctionMomentaryValueChange(Throttle.F0Momentary,b3,0x10,getF0Momentary());
+        checkForFunctionMomentaryValueChange(Throttle.F1Momentary,b3,0x01,getF1Momentary());
+        checkForFunctionMomentaryValueChange(Throttle.F2Momentary,b3,0x02,getF2Momentary());
+        checkForFunctionMomentaryValueChange(Throttle.F3Momentary,b3,0x04,getF3Momentary());
+        checkForFunctionMomentaryValueChange(Throttle.F4Momentary,b3,0x08,getF4Momentary());
         /* data byte 4 is the momentary status of F12 F11 F10 F9 F8 F7 F6 F5 */
-        checkForFunctionValueChange(Throttle.F5Momentary,b4,0x01,getF5Momentary());
-        checkForFunctionValueChange(Throttle.F6Momentary,b4,0x02,getF6Momentary());
-        checkForFunctionValueChange(Throttle.F7Momentary,b4,0x04,getF7Momentary());
-        checkForFunctionValueChange(Throttle.F8Momentary,b4,0x08,getF8Momentary());
-        checkForFunctionValueChange(Throttle.F9Momentary,b4,0x10,getF9Momentary());
-        checkForFunctionValueChange(Throttle.F10Momentary,b4,0x20,getF10Momentary());
-        checkForFunctionValueChange(Throttle.F11Momentary,b4,0x40,getF11Momentary());
-        checkForFunctionValueChange(Throttle.F12Momentary,b4,0x80,getF12Momentary());
+        checkForFunctionMomentaryValueChange(Throttle.F5Momentary,b4,0x01,getF5Momentary());
+        checkForFunctionMomentaryValueChange(Throttle.F6Momentary,b4,0x02,getF6Momentary());
+        checkForFunctionMomentaryValueChange(Throttle.F7Momentary,b4,0x04,getF7Momentary());
+        checkForFunctionMomentaryValueChange(Throttle.F8Momentary,b4,0x08,getF8Momentary());
+        checkForFunctionMomentaryValueChange(Throttle.F9Momentary,b4,0x10,getF9Momentary());
+        checkForFunctionMomentaryValueChange(Throttle.F10Momentary,b4,0x20,getF10Momentary());
+        checkForFunctionMomentaryValueChange(Throttle.F11Momentary,b4,0x40,getF11Momentary());
+        checkForFunctionMomentaryValueChange(Throttle.F12Momentary,b4,0x80,getF12Momentary());
     }
 
     protected void parseFunctionHighMomentaryInformation(int b3, int b4) {
         log.trace("Parsing Function F13-F28 Momentary status, function bytes: {} and {}",
                   b3,b4);
         /* data byte 3 is the momentary status of F20 F19 F17 F16 F15 F14 F13 */
-        checkForFunctionValueChange(Throttle.F14Momentary,b3,0x02,getF14Momentary());
-        checkForFunctionValueChange(Throttle.F15Momentary,b3,0x04,getF15Momentary());
-        checkForFunctionValueChange(Throttle.F16Momentary,b3,0x08,getF16Momentary());
-        checkForFunctionValueChange(Throttle.F17Momentary,b3,0x10,getF17Momentary());
-        checkForFunctionValueChange(Throttle.F18Momentary,b3,0x20,getF18Momentary());
-        checkForFunctionValueChange(Throttle.F19Momentary,b3,0x40,getF19Momentary());
-        checkForFunctionValueChange(Throttle.F20Momentary,b3,0x80,getF20Momentary());
+        checkForFunctionMomentaryValueChange(Throttle.F14Momentary,b3,0x02,getF14Momentary());
+        checkForFunctionMomentaryValueChange(Throttle.F15Momentary,b3,0x04,getF15Momentary());
+        checkForFunctionMomentaryValueChange(Throttle.F16Momentary,b3,0x08,getF16Momentary());
+        checkForFunctionMomentaryValueChange(Throttle.F17Momentary,b3,0x10,getF17Momentary());
+        checkForFunctionMomentaryValueChange(Throttle.F18Momentary,b3,0x20,getF18Momentary());
+        checkForFunctionMomentaryValueChange(Throttle.F19Momentary,b3,0x40,getF19Momentary());
+        checkForFunctionMomentaryValueChange(Throttle.F20Momentary,b3,0x80,getF20Momentary());
         /* data byte 4 is the momentary status of F28 F27 F26 F25 F24 F23 F22 F21 */
-        checkForFunctionValueChange(Throttle.F21Momentary,b4,0x01,getF21Momentary());
-        checkForFunctionValueChange(Throttle.F22Momentary,b4,0x02,getF22Momentary());
-        checkForFunctionValueChange(Throttle.F23Momentary,b4,0x04,getF23Momentary());
-        checkForFunctionValueChange(Throttle.F24Momentary,b4,0x08,getF24Momentary());
-        checkForFunctionValueChange(Throttle.F25Momentary,b4,0x10,getF25Momentary());
-        checkForFunctionValueChange(Throttle.F26Momentary,b4,0x20,getF26Momentary());
-        checkForFunctionValueChange(Throttle.F27Momentary,b4,0x40,getF27Momentary());
-        checkForFunctionValueChange(Throttle.F28Momentary,b4,0x80,getF28Momentary());
+        checkForFunctionMomentaryValueChange(Throttle.F21Momentary,b4,0x01,getF21Momentary());
+        checkForFunctionMomentaryValueChange(Throttle.F22Momentary,b4,0x02,getF22Momentary());
+        checkForFunctionMomentaryValueChange(Throttle.F23Momentary,b4,0x04,getF23Momentary());
+        checkForFunctionMomentaryValueChange(Throttle.F24Momentary,b4,0x08,getF24Momentary());
+        checkForFunctionMomentaryValueChange(Throttle.F25Momentary,b4,0x10,getF25Momentary());
+        checkForFunctionMomentaryValueChange(Throttle.F26Momentary,b4,0x20,getF26Momentary());
+        checkForFunctionMomentaryValueChange(Throttle.F27Momentary,b4,0x40,getF27Momentary());
+        checkForFunctionMomentaryValueChange(Throttle.F28Momentary,b4,0x80,getF28Momentary());
     }
 
     protected void checkForFunctionMomentaryValueChange(String Function,int bytevalue,int bitmask,boolean currentValue){

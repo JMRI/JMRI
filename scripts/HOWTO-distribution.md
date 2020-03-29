@@ -1,31 +1,11 @@
 # How we build and release JMRI distributions
 [Online version](https://github.com/JMRI/JMRI/blob/master/scripts/HOWTO-distribution.md)
 
-Our release procedure is, in outline:
+Our release procedure is, in outline, creates a branch at some instant labeled with the release, building distribution files and checking them, and then applying a tag via GitHub to create the distribution. For more details, see below.
 
-* Create a GitHub Issue to hold discussion with conventional title "Develop release-n.n.n". 
+#### Note on release numbers and file names
 
-* Do lots of updates and merge completely onto master
-
-* In an up-to-date Git repository, update the release.properties file with the new version number
-
-* Create a branch named "release-n.n.n" (note initial lower case). 
-
-* Push the branch back to the JMRI/JMRI repository (you can't use a pull request until the branch exists), then switch back to master so you don't accidentally change the release branch
-
-* Jenkins build from release-n.n.n branch.  
-
-* If needed, fetch and merge again from master to get necessary updates. This means that the test release is always from the HEAD of master. 
-
-* After Jenkins has processed the final set of changes, directly publish the files in the usual SF.net way, etc.
-
-* Turn off the Jenkins job; this is so it doesn't fail after later steps
-
-* We're also using GitHub releases for distributing the files; this is being done in parallel, so the SF.net file method will co-exist for quite a while
-
-* Put a tag titled vn.n.n (note initial lower case) on the end of the branch. This starts in a personal fork, then gets pushed back to JMRI/JMRI. 
-
-* Delete the branch (to clean up the list of branches in various GUI tools), which can be done in the main JMRI/JMRI repo via the web interface
+Our released filenames are generated with [semantic versioning](http://semver.org) format in which the `+R202c9ee` indicates build meta-data, specifically the hash for the tag point.  Originally, the GitHub binary-file release system changed the '+' to a '.', so our scripts below did that too.  That was fixed at the start of 2018, so we no longer do it, but there are some old releases with that filename format.
 
 
 ### Issues
@@ -50,9 +30,6 @@ This has the nice property that if multiple things arise, they can definitely be
 
 The problem is that there are production people who aren't used to working off the master branch.
 
-### Note on file names
-
-Our filenames are generated with [semantic versioning](http://semver.org) format in which the `+R202c9ee` indicates build meta-data, specifically the hash for the tag point.  Originally, the GitHub binary-file release system changed the '+' to a '.', so our scripts below did that too.  That was fixed at the start of 2018, so we no longer do it, but there are some old releases with that filename format.
 
 ============================================================================
 

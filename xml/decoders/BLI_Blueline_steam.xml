@@ -12,14 +12,16 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Michael Mosher" version="3" lastUpdated="20200327"/>
   <version author="Michael Mosher" version="2" lastUpdated="20070805"/>
   <version author="Michael Mosher" version="1" lastUpdated="20070716"/>
   <!-- Version 1 New file based off diesel file -->
   <!-- Version 2 Removed paged mode programming -->
+  <!-- Version 3 Change revision range -->
   <decoder>
     <family name="Blueline" mfg="Broadway Limited Imports, LLC">
       <model model="Steam" numOuts="3" numFns="14">
-        <versionCV lowVersionID="32"/>
+        <versionCV lowVersionID="32" highVersionID="63"/>
         <output name="1" label="headlight"/>
         <output name="2" label="rearlight"/>
         <output name="Whistle"/>

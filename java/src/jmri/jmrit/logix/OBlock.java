@@ -177,21 +177,18 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     public boolean setSensor(String pName) {
         Sensor oldSensor = getSensor();
         Sensor newSensor = null;
-        if (pName != null && pName.trim().length() > 2) {
+        if (pName != null && pName.trim().length() > 0) {
             newSensor = InstanceManager.sensorManagerInstance().getByUserName(pName);
             if (newSensor == null) {
                 newSensor = InstanceManager.sensorManagerInstance().getBySystemName(pName);
             }
             if (newSensor == null) {
-                return false;   // no sensor named 'pName' exists
+                log.error("No sensor named '{}' exists.", pName);
+                return false;
             }
         }
         if (oldSensor != null) {
             if (oldSensor.equals(newSensor)) {
-                return true;
-            }
-        } else {
-            if (newSensor == null) {
                 return true;
             }
         }
@@ -224,7 +221,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     public boolean setErrorSensor(String pName) {
         NamedBeanHandle<Sensor> newErrSensorHdl = null;
         Sensor newErrSensor = null;
-        if (pName != null && pName.trim().length() > 2) {
+        if (pName != null && pName.trim().length() > 0) {
             newErrSensor = InstanceManager.sensorManagerInstance().getByUserName(pName);
             if (newErrSensor == null) {
                 newErrSensor = InstanceManager.sensorManagerInstance().getBySystemName(pName);
@@ -233,6 +230,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
                 newErrSensorHdl = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, newErrSensor);
            }
            if (newErrSensor == null) {
+               log.error("No sensor named '{}' exists.", pName);
                return false;
            }
         }
@@ -241,10 +239,6 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
                 return true;
             } else {
                 getErrorSensor().removePropertyChangeListener(this);
-            }
-        } else {
-            if (newErrSensorHdl == null) {
-                return true;
             }
         }
 

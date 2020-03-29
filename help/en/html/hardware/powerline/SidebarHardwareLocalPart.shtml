@@ -1,0 +1,11 @@
+<!-- Local part for powerline/Sidebar.shtml -->
+
+	<dt><h3 style="padding-left: 1em;"><a href="index.shtml">Powerline X10</a></h3></dt>
+		<dd>
+		<ul>
+                    <li><a href="Names.shtml">Naming</a>
+                    <li><a href="Compatibility.shtml">Compatibility</a>
+                </ul>
+		</dd>
+
+<!-- /SidebarHardwareLocalPart.shtml -->
