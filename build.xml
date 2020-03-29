@@ -1911,6 +1911,8 @@
             <link href="https://commons.apache.org/proper/commons-csv/apidocs/"/>
             <link href="http://logging.apache.org/log4j/1.2/apidocs/"/>
             <link href="https://commons.apache.org/proper/commons-lang/javadocs/api-release"/>
+            <link href="https://javadoc.io/static/com.github.spotbugs/spotbugs-annotations/3.1.7/"/>
+            <link href="https://javadoc.io/doc/com.google.code.findbugs/jsr305/3.0.1/"/>
             <!-- marking this one offline as it doesn't currently serve the 'package-list' document -->
             <link offline="true" href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/" packagelistLoc="lib/joal-2.3.1-packagelist"/>
             <!-- The following Javadocs were built with JDK 11+ and can't be directly linked -->
@@ -2000,6 +2002,8 @@
             <link href="https://commons.apache.org/proper/commons-csv/apidocs/"/>
             <link href="http://logging.apache.org/log4j/1.2/apidocs/"/>
             <link href="https://commons.apache.org/proper/commons-lang/javadocs/api-release"/>
+            <link href="https://javadoc.io/static/com.github.spotbugs/spotbugs-annotations/3.1.7/"/>
+            <link href="https://javadoc.io/doc/com.google.code.findbugs/jsr305/3.0.1/"/>
             <!-- marking this one offline as it doesn't currently serve the 'package-list' document -->
             <link offline="true" href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/" packagelistLoc="lib/joal-2.3.1-packagelist"/>
             <!-- The following Javadocs were built with JDK 11+ and can't be directly linked -->
@@ -2107,6 +2111,8 @@
             <link href="https://commons.apache.org/proper/commons-csv/apidocs/"/>
             <link href="http://logging.apache.org/log4j/1.2/apidocs/"/>
             <link href="https://commons.apache.org/proper/commons-lang/javadocs/api-release"/>
+            <link href="https://javadoc.io/static/com.github.spotbugs/spotbugs-annotations/3.1.7/"/>
+            <link href="https://javadoc.io/doc/com.google.code.findbugs/jsr305/3.0.1/"/>
             <!-- marking this one offline as it doesn't currently serve the 'package-list' document -->
             <link offline="true" href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/" packagelistLoc="lib/joal-2.3.1-packagelist"/>
             <!-- The following Javadocs were built with JDK 11+ and can't be directly linked -->

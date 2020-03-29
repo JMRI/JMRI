@@ -334,17 +334,6 @@ public class SwitchboardEditor extends Editor {
         setupEditorPane(); // re-layout all the toolbar items
         updatePressed();   // refresh default Switchboard, updates all buttons
         pack();
-
-        // TODO choose your own icons
-//        class makeCatalog extends SwingWorker<CatalogPanel, Object> {
-//
-//            @Override
-//            public CatalogPanel doInBackground() {
-//                return CatalogPanel.makeDefaultCatalog();
-//            }
-//        }
-//        (new makeCatalog()).execute();
-//        log.debug("Init SwingWorker launched");
     }
 
     /**

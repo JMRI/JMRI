@@ -68,7 +68,7 @@ public class Measurement {
         if (!valid) {
             return false;
         }
-        return !(Math.abs(x) > 1.E10 || Math.abs(x) > 1.E10 || Math.abs(x) > 1.E10);
+        return !(Math.abs(x) > 1.E10 || Math.abs(y) > 1.E10 || Math.abs(z) > 1.E10);
     }
 
     public void setValidPosition(boolean val) {
