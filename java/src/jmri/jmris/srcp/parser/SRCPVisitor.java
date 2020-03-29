@@ -12,16 +12,6 @@ import org.slf4j.LoggerFactory;
 public class SRCPVisitor extends SRCPParserDefaultVisitor {
 
     private String outputString = null;
-    private InstanceManager instanceManager;
-
-    public SRCPVisitor(){
-        this(InstanceManager.getDefault());
-    }
-
-    public SRCPVisitor(InstanceManager instanceManager){
-        this.instanceManager = instanceManager;
-    }
-
 
     public String getOutputString() {
         return outputString;
@@ -35,7 +25,7 @@ public class SRCPVisitor extends SRCPParserDefaultVisitor {
         // and ask it what is supported
         try {
             jmri.jmrix.SystemConnectionMemo memo
-                    = instanceManager.getList(jmri.jmrix.SystemConnectionMemo.class).get(bus - 1);
+                    = InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class).get(bus - 1);
             if (memo != null) {
                 log.debug("devicegroup " + devicegroup);
                 if (devicegroup.equals("FB")) {
@@ -141,7 +131,7 @@ public class SRCPVisitor extends SRCPParserDefaultVisitor {
             // This is a message asking for the power status
             try {
                 ((jmri.jmris.ServiceHandler) data).getPowerServer().sendStatus(
-                        instanceManager.getDefault(jmri.PowerManager.class).getPower());
+                        InstanceManager.getDefault(jmri.PowerManager.class).getPower());
             } catch (jmri.JmriException je) {
                 // We shouldn't have any errors here.
                 // If we do, something is horibly wrong.
@@ -221,7 +211,7 @@ public class SRCPVisitor extends SRCPParserDefaultVisitor {
                     // and ask it what is supported
                     try {
                         jmri.jmrix.SystemConnectionMemo memo
-                                = instanceManager.getList(jmri.jmrix.SystemConnectionMemo.class).get(bus - 1);
+                                = InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class).get(bus - 1);
                         if (memo != null) {
                             outputString = outputString + " DESCRIPTION";
                             if (memo.provides(jmri.SensorManager.class)) {
@@ -276,7 +266,7 @@ public class SRCPVisitor extends SRCPParserDefaultVisitor {
                 // and ask it what is supported
                 // with 2 arguments, we send a description of a specific device.
                 jmri.jmrix.SystemConnectionMemo memo
-                        = instanceManager.getList(jmri.jmrix.SystemConnectionMemo.class).get(bus - 1);
+                        = InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class).get(bus - 1);
                 if (memo != null) {
                     String devicegroup = (String) ((SimpleNode) descriptionnode.jjtGetChild(0)).jjtGetValue();
                     String address = (String) ((SimpleNode) descriptionnode.jjtGetChild(1)).jjtGetValue();
@@ -389,9 +379,6 @@ public class SRCPVisitor extends SRCPParserDefaultVisitor {
             int value = Integer.parseInt(((String) ((SimpleNode) node.jjtGetChild(3)).jjtGetValue()));
             try {
                 ((jmri.jmris.srcp.JmriSRCPSensorServer) ((jmri.jmris.ServiceHandler) data).getSensorServer()).parseStatus(bus, address, value);
-            } catch (jmri.JmriException je) {
-                // We shouldn't have any errors here.
-                // If we do, something is horibly wrong.
             } catch (java.io.IOException ie) {
             }
         } else if (((SimpleNode) node.jjtGetChild(1)).jjtGetValue().equals("SM")

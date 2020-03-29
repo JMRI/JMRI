@@ -5,6 +5,7 @@ import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.SignalMast;
@@ -22,14 +23,8 @@ abstract public class AbstractSignalMastServer {
 
     private final HashMap<String, SignalMastListener> signalMasts;
     static private final Logger log = LoggerFactory.getLogger(AbstractSignalMastServer.class);
-    private InstanceManager instanceManager;
 
     public AbstractSignalMastServer(){
-        this(InstanceManager.getDefault());
-    }
-
-    public AbstractSignalMastServer(InstanceManager instanceManager) {
-        this.instanceManager = instanceManager;
         signalMasts = new HashMap<String, SignalMastListener>();
     }
 
@@ -44,7 +39,7 @@ abstract public class AbstractSignalMastServer {
 
     synchronized protected void addSignalMastToList(String signalMastName) {
         if (!signalMasts.containsKey(signalMastName)) {
-            SignalMast sm = instanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(signalMastName);
+            SignalMast sm = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(signalMastName);
             if(sm!=null) {
                SignalMastListener sml =  new SignalMastListener(signalMastName);
                sm.addPropertyChangeListener(sml);
@@ -56,7 +51,7 @@ abstract public class AbstractSignalMastServer {
 
     synchronized protected void removeSignalMastFromList(String signalMastName) {
         if (signalMasts.containsKey(signalMastName)) {
-            SignalMast sm = instanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(signalMastName);
+            SignalMast sm = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(signalMastName);
             if(sm!=null) {
                sm.removePropertyChangeListener(signalMasts.get(signalMastName));
                signalMasts.remove(signalMastName);
@@ -68,7 +63,7 @@ abstract public class AbstractSignalMastServer {
         SignalMast signalMast;
         try {
             addSignalMastToList(signalMastName);
-            signalMast = instanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(signalMastName);
+            signalMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(signalMastName);
             if (signalMast == null) {
                 log.error("SignalMast {} is not available.", signalMastName);
             } else {
@@ -94,7 +89,7 @@ abstract public class AbstractSignalMastServer {
 
     public void dispose() {
         for (Map.Entry<String, SignalMastListener> signalMast : this.signalMasts.entrySet()) {
-            SignalMast sm = instanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(signalMast.getKey());
+            SignalMast sm = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(signalMast.getKey());
             if(sm != null) {
                sm.removePropertyChangeListener(signalMast.getValue());
             }
@@ -109,7 +104,7 @@ abstract public class AbstractSignalMastServer {
 
         SignalMastListener(String signalMastName) {
             name = signalMastName;
-            signalMast = instanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(signalMastName);
+            signalMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(signalMastName);
         }
 
         // update state as state of signalMast changes

@@ -16,11 +16,8 @@ import jmri.InstanceManager;
 public class JmriSRCPServiceHandler extends jmri.jmris.ServiceHandler {
 
     public JmriSRCPServiceHandler(int port) {
-        this(port, InstanceManager.getDefault());
-    }
-    public JmriSRCPServiceHandler(int port, InstanceManager instanceManager) {
         super();
-        _session_number = port + (instanceManager.getDefault(jmri.Timebase.class).getTime().getTime());
+        _session_number = port + (InstanceManager.getDefault(jmri.Timebase.class).getTime().getTime());
     }
 
     public long getSessionNumber() {

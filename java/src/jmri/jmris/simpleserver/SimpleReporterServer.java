@@ -18,28 +18,18 @@ import jmri.jmris.JmriConnection;
  */
 public class SimpleReporterServer extends AbstractReporterServer {
 
+    private static final String REPORTER = "REPORTER ";
     private DataOutputStream output;
     private JmriConnection connection;
-    private InstanceManager instanceManager;
 
-    public SimpleReporterServer(JmriConnection connection){
-        this(connection,InstanceManager.getDefault());
-    }
-
-    public SimpleReporterServer(JmriConnection connection,InstanceManager instanceManager) {
+    public SimpleReporterServer(JmriConnection connection) {
         super();
         this.connection = connection;
-        this.instanceManager = instanceManager;
     }
 
     public SimpleReporterServer(DataInputStream inStream, DataOutputStream outStream) {
-        this(inStream,outStream,InstanceManager.getDefault());
-    }
-
-    public SimpleReporterServer(DataInputStream inStream, DataOutputStream outStream,InstanceManager instanceManager) {
         super();
         output = outStream;
-        this.instanceManager = instanceManager;
     }
 
 
@@ -51,12 +41,12 @@ public class SimpleReporterServer extends AbstractReporterServer {
         addReporterToList(reporterName);
         if (r != null) {
             if (r instanceof jmri.Reportable ) {
-               this.sendMessage("REPORTER " + reporterName + " " + ((jmri.Reportable)r).toReportString() + "\n");
+               this.sendMessage(REPORTER + reporterName + " " + ((jmri.Reportable)r).toReportString() + "\n");
             } else {
-               this.sendMessage("REPORTER " + reporterName + " " + r.toString() + "\n");
+               this.sendMessage(REPORTER + reporterName + " " + r.toString() + "\n");
             }
         } else {
-            this.sendMessage("REPORTER " + reporterName + "\n");
+            this.sendMessage(REPORTER + reporterName + "\n");
         }
     }
 
@@ -67,10 +57,11 @@ public class SimpleReporterServer extends AbstractReporterServer {
 
     @Override
     public void parseStatus(String statusString) throws JmriException, IOException {
-        int index, index2;
-        index = statusString.indexOf(" ") + 1;
-        index2 = statusString.indexOf(" ", index + 1);
-        int newlinepos = statusString.indexOf("\n");
+        int index;
+        int index2;
+        index = statusString.indexOf(' ' ) + 1;
+        index2 = statusString.indexOf(' ', index + 1);
+        int newlinepos = statusString.indexOf('\n');
         String reporterName = statusString.substring(index, index2>0?index2:newlinepos);
         initReporter(reporterName);
         // the string should be "REPORTER xxxxxx REPORTSTRING\n\r"
@@ -83,7 +74,7 @@ public class SimpleReporterServer extends AbstractReporterServer {
         } else {
             // send the current status if the report
             try {
-               Reporter reporter = instanceManager.getDefault(jmri.ReporterManager.class).provideReporter(reporterName);
+               Reporter reporter = InstanceManager.getDefault(jmri.ReporterManager.class).provideReporter(reporterName);
                sendReport(reporterName, reporter.getCurrentReport());
             } catch (IllegalArgumentException ex) {
                 log.warn("Failed to provide Reporter \"{}\" in parseStatus", reporterName);
@@ -99,5 +90,5 @@ public class SimpleReporterServer extends AbstractReporterServer {
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SimpleReporterServer.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SimpleReporterServer.class);
 }

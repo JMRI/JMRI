@@ -3,6 +3,7 @@ package jmri.jmris;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
+
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Timebase;
@@ -21,12 +22,8 @@ abstract public class AbstractTimeServer {
     protected PropertyChangeListener timeListener = null;
     protected Timebase timebase = null;
 
-    public AbstractTimeServer() {
-        this(InstanceManager.getDefault());
-    }
-
-    public AbstractTimeServer(InstanceManager instanceManager){
-        this(instanceManager.getDefault(Timebase.class));
+    public AbstractTimeServer(){
+        this(InstanceManager.getDefault(Timebase.class));
     }
 
     public AbstractTimeServer(Timebase timebase){

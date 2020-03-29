@@ -17,19 +17,13 @@ import jmri.jmris.JmriServer;
  */
 public class JmriSRCPServerFrame extends jmri.util.JmriJFrame {
 
-    private InstanceManager instanceManager;
 
     public JmriSRCPServerFrame() {
         this("Jmri SRCP Server Starter");
     }
 
     public JmriSRCPServerFrame(String FrameName) {
-        this(FrameName,InstanceManager.getDefault());
-    }
-
-    public JmriSRCPServerFrame(String FrameName,InstanceManager instanceManager) {
         super(FrameName);
-        this.instanceManager = instanceManager;
         getContentPane().setLayout(new BoxLayout(getContentPane(),
                 BoxLayout.Y_AXIS));
 
@@ -89,11 +83,11 @@ public class JmriSRCPServerFrame extends jmri.util.JmriJFrame {
     }
 
     public void startSRCPServer() {
-        instanceManager.getDefault(JmriServer.class).start();
+        InstanceManager.getDefault(JmriServer.class).start();
     }
 
     public void stopSRCPServer() {
-        instanceManager.getDefault(JmriServer.class).stop();
+        InstanceManager.getDefault(JmriServer.class).stop();
     }
 
 }

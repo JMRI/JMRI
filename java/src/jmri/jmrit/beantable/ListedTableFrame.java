@@ -70,7 +70,7 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
     public ListedTableFrame(String s) {
         super(s);
         if (jmri.InstanceManager.getNullableDefault(jmri.jmrit.beantable.ListedTableFrame.class) == null) {
-            // We add this to the instanceManager so that other components can add to the table
+            // We add this to the InstanceManager so that other components can add to the table
             jmri.InstanceManager.store(this, jmri.jmrit.beantable.ListedTableFrame.class);
         }
         if (!init) {

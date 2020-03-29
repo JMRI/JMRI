@@ -11,15 +11,9 @@ import org.slf4j.LoggerFactory;
 public class SimpleVisitor extends JmriServerParserDefaultVisitor {
 
     private String outputString = null;
-    private InstanceManager instanceManager;
 
     public SimpleVisitor(){
-        this(InstanceManager.getDefault());
-    }
-
-    public SimpleVisitor(InstanceManager instanceManager){
         super();
-        this.instanceManager = instanceManager;
     }
 
     public String getOutputString() {
@@ -28,14 +22,14 @@ public class SimpleVisitor extends JmriServerParserDefaultVisitor {
 
     @Override
     public Object visit(ASTpowercmd node, Object data){
-        log.debug("Power Command Production " + node.jjtGetValue());
+        log.debug("Power Command Production {}",node.jjtGetValue());
         if(node.jjtGetNumChildren()==0) {
             // this is just a request for status
                try{
                   ((jmri.jmris.simpleserver.SimplePowerServer)
-                   data).sendStatus(instanceManager.getDefault(jmri.PowerManager.class).getPower());
-               } catch(java.io.IOException ioe){
-               } catch(jmri.JmriException je){
+                   data).sendStatus(InstanceManager.getDefault(jmri.PowerManager.class).getPower());
+               } catch(java.io.IOException | jmri.JmriException je){
+                   log.error("Error sending Power status to client {}",je);
                }
         }else{
             if (((SimpleNode)node.jjtGetChild(1)).jjtGetValue().equals("ON"))
@@ -47,6 +41,6 @@ public class SimpleVisitor extends JmriServerParserDefaultVisitor {
         return data;
     }
     
-    private final static Logger log = LoggerFactory.getLogger(SimpleVisitor.class);
+    private static final Logger log = LoggerFactory.getLogger(SimpleVisitor.class);
 
 }

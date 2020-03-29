@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import jmri.InstanceManager;
 import jmri.Sensor;
+import jmri.SensorManager;
 import jmri.jmris.AbstractSensorServer;
 import jmri.jmris.JmriConnection;
 import org.slf4j.Logger;
@@ -19,28 +20,18 @@ import org.slf4j.LoggerFactory;
  */
 public class SimpleSensorServer extends AbstractSensorServer {
 
+    private static final String SENSOR = "SENSOR ";
     private DataOutputStream output;
     private JmriConnection connection;
-    private InstanceManager instanceManager;
 
     public SimpleSensorServer(JmriConnection connection){
-        this(connection,InstanceManager.getDefault());
-    }
-
-    public SimpleSensorServer(JmriConnection connection,InstanceManager instanceManager) {
         super();
         this.connection = connection;
-        this.instanceManager = instanceManager;
     }
 
     public SimpleSensorServer(DataInputStream inStream, DataOutputStream outStream) {
-        this(inStream,outStream,InstanceManager.getDefault());
-    }
-
-    public SimpleSensorServer(DataInputStream inStream, DataOutputStream outStream,InstanceManager instanceManager) {
         super();
         output = outStream;
-        this.instanceManager = instanceManager;
     }
 
 
@@ -52,11 +43,11 @@ public class SimpleSensorServer extends AbstractSensorServer {
         addSensorToList(sensorName);
 
         if (Status == Sensor.INACTIVE) {
-            this.sendMessage("SENSOR " + sensorName + " INACTIVE\n");
+            this.sendMessage(SENSOR + sensorName + " INACTIVE\n");
         } else if (Status == Sensor.ACTIVE) {
-            this.sendMessage("SENSOR " + sensorName + " ACTIVE\n");
+            this.sendMessage(SENSOR + sensorName + " ACTIVE\n");
         } else {
-            this.sendMessage("SENSOR " + sensorName + " UNKNOWN\n");
+            this.sendMessage(SENSOR + sensorName + " UNKNOWN\n");
         }
     }
 
@@ -93,7 +84,7 @@ public class SimpleSensorServer extends AbstractSensorServer {
                 sensorName = sensorName.substring(0,sensorName.indexOf(' '));
             }
             try {
-                Sensor sensor = instanceManager.sensorManagerInstance().provideSensor(sensorName);
+                Sensor sensor = InstanceManager.getDefault(SensorManager.class).provideSensor(sensorName);
                 sendStatus(sensorName, sensor.getKnownState());
             } catch (IllegalArgumentException ex) {
                 log.warn("Failed to provide Sensor \"{}\" in sendStatus", sensorName);
