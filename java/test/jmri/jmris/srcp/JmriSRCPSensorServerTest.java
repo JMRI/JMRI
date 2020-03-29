@@ -26,7 +26,6 @@ import static org.assertj.core.api.Assertions.catchThrowable;
  */
 public class JmriSRCPSensorServerTest extends jmri.jmris.AbstractSensorServerTestBase {
 
-    private Sensor sen;
     private ByteArrayOutputStream output;
 
     /**
