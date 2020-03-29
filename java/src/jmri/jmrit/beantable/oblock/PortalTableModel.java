@@ -278,6 +278,7 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
         return 5;
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent e) {
         String property = e.getPropertyName();
         if (log.isDebugEnabled()) {

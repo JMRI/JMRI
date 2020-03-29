@@ -203,6 +203,6 @@ public class XNetLight extends AbstractLight implements XNetListener {
         internalState = OFFSENT;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XNetLight.class);
+    private static final Logger log = LoggerFactory.getLogger(XNetLight.class);
 
 }

@@ -166,6 +166,13 @@
  * <a href="https://semver.org">semantic version rules</a>,
  * prior to that the version is just a major.minor version.
  * <dl>
+ * <dt>5.4.0 (JMRI 4.19.5)</dt>
+ * <dd>
+ * <ul>
+ * <li>Allows the feedback mode and feedback sensors to be manipulated for
+ * turnouts.</li>
+ * </ul>
+ * </dd>
  * <dt>5.3.0 (JMRI 4.19.2)</dt>
  * <dd>
  * <ul>
@@ -286,4 +293,6 @@
  * @see jmri.server.json.JsonServer
  * @see jmri.spi.JsonServiceFactory
  */
+// include empty DefaultAnnotation to avoid excessive recompilation
+@edu.umd.cs.findbugs.annotations.DefaultAnnotation(value={})
 package jmri.server.json;

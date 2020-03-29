@@ -49,17 +49,23 @@
       <p>DCC++ is an Open Source Arduino-based <a href=
       "#documentation">Do-it-Yourself</a> DCC Command Station.</p>
 
-      <p>You can learn more about DCC++ on the 
-      <a href="https://sites.google.com/site/dccppsite/home" target="_blank">DCC++ Website</a>.</p>
-      
       <p>
       Note:  DCC++ is a separate project from JMRI.  
       If you have 
       questions about building a DCC++ system, operating it,
-      etc, you should get help via the 
-      <a href="https://sites.google.com/site/dccppsite/home" target="_blank">DCC++ Website</a>
+      etc, you should get help via  
+      <a href="https://www.trainboard.com/highball/index.php?threads/dcc-update-project-2020.130071/">the DCC++ TrainBoard thread</a>
       and the 
-      <a href="https://www.trainboard.com/highball/index.php?forums/dcc.177/" target="_blank">DCC++ Trainboard discussion</a>.
+      <a href="https://www.trainboard.com/highball/index.php?threads/dcc-2020-update-project-documentation.130401/">the DCC++ Documentation TrainBoard thread</a>.
+      There's also information on the 
+      <a href="https://github.com/DCC-EX">DCC++ GitHub repository</a>
+      and
+      <a href="https://dcc-ex.github.io/">associated documentation</a>.
+      There was also an older
+      <a href="https://sites.google.com/site/dccppsite/home">DCC++ Website</a>
+      and the 
+      <a href="https://www.trainboard.com/highball/index.php?forums/dcc.177/">DCC++ Trainboard discussion</a>.
+
       The JMRI discussion groups can only provide limited
       support for DCC++ itself.  
       </p>

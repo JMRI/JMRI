@@ -91,14 +91,13 @@ public abstract class PreferencesBean extends Bean {
     @Override
     protected void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
         this.propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
-        if (!DIRTY.equals(propertyName)) {
-            this.setIsDirty(true);
-        }
+        this.setIsDirty(true);
     }
 
     @Override
     protected void firePropertyChange(String propertyName, boolean oldValue, boolean newValue) {
         this.propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
+        // don't force dirty to true if we just changed dirty
         if (!DIRTY.equals(propertyName)) {
             this.setIsDirty(true);
         }
@@ -107,9 +106,7 @@ public abstract class PreferencesBean extends Bean {
     @Override
     protected void firePropertyChange(String propertyName, int oldValue, int newValue) {
         this.propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
-        if (!DIRTY.equals(propertyName)) {
-            this.setIsDirty(true);
-        }
+        this.setIsDirty(true);
     }
 
 }

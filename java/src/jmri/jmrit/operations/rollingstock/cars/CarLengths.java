@@ -23,18 +23,6 @@ public class CarLengths extends RollingStockAttribute implements InstanceManager
     public CarLengths() {
     }
 
-    /**
-     * Get the default instance of this class.
-     *
-     * @return the default instance of this class
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static synchronized CarLengths instance() {
-        return InstanceManager.getDefault(CarLengths.class);
-    }
-
     @Override
     protected String getDefaultNames() {
         return LENGTHS;

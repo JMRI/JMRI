@@ -36,20 +36,11 @@ public class Analytic_AAlgorithm extends AbstractCalculator {
     }
 
     public Analytic_AAlgorithm(Point3d sensor1, Point3d sensor2, Point3d sensor3, double vsound) {
-        this(null, vsound);
-        sensors = new Point3d[3];
-        sensors[0] = sensor1;
-        sensors[1] = sensor2;
-        sensors[2] = sensor3;
+        this(new Point3d[]{sensor1, sensor2, sensor3}, vsound);
     }
 
     public Analytic_AAlgorithm(Point3d sensor1, Point3d sensor2, Point3d sensor3, Point3d sensor4, double vsound) {
-        this(null, vsound);
-        sensors = new Point3d[4];
-        sensors[0] = sensor1;
-        sensors[1] = sensor2;
-        sensors[2] = sensor3;
-        sensors[3] = sensor4;
+        this(new Point3d[]{sensor1, sensor2, sensor3, sensor4}, vsound);
     }
 
     double Vs;

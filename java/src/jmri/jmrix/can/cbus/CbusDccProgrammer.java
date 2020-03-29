@@ -33,9 +33,9 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
     @Nonnull
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<>();
-        ret.add(ProgrammingMode.PAGEMODE);
         ret.add(ProgrammingMode.DIRECTBITMODE);
         ret.add(ProgrammingMode.DIRECTBYTEMODE);
+        ret.add(ProgrammingMode.PAGEMODE);
         ret.add(ProgrammingMode.REGISTERMODE);
         return ret;
     }

@@ -204,6 +204,6 @@ public class LIUSBAdapter extends XNetSerialPortController {
     }
     static volatile LIUSBAdapter mInstance = null;
 
-    private final static Logger log = LoggerFactory.getLogger(LIUSBAdapter.class);
+    private static final Logger log = LoggerFactory.getLogger(LIUSBAdapter.class);
 
 }

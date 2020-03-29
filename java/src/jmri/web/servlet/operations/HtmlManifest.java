@@ -26,7 +26,7 @@ import jmri.server.json.operations.JsonOperations;
 
 /**
  *
- * @author rhwood
+ * @author Randall Wood
  */
 public class HtmlManifest extends HtmlTrainCommon {
 

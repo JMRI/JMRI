@@ -51,7 +51,7 @@ import org.slf4j.LoggerFactory;
  * automatically start the application with that profile after 10 seconds unless
  * the user intervenes.
  *
- * @author rhwood
+ * @author Randall Wood
  */
 public class ProfileManagerDialog extends JDialog {
 

@@ -25,19 +25,7 @@ public class Throttle extends AbstractThrottle {
 
         // cache settings.
         this.speedSetting = 0;
-        this.f0 = false;
-        this.f1 = false;
-        this.f2 = false;
-        this.f3 = false;
-        this.f4 = false;
-        this.f5 = false;
-        this.f6 = false;
-        this.f7 = false;
-        this.f8 = false;
-        this.f9 = false;
-        this.f10 = false;
-        this.f11 = false;
-        this.f12 = false;
+        // Functions default to false
         this.address = address;
         this.isForward = true;
     }
