@@ -205,7 +205,7 @@ public class TrainsScriptFrame extends OperationsFrame {
         if (fc == null) {
             log.error("Could not find user directory");
         } else {
-            fc.setFileFilter(new FileNameExtensionFilter("PythonScriptFiles", "py")); // NOI18N
+            fc.setFileFilter(new FileNameExtensionFilter(Bundle.getMessage("PythonScriptFiles"), "py")); // NOI18N
             fc.setDialogTitle(Bundle.getMessage("FindDesiredScriptFile"));
             // when reusing the chooser, make sure new files are included
             fc.rescanCurrentDirectory();
