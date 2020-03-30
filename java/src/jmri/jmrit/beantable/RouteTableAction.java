@@ -89,6 +89,34 @@ public class RouteTableAction extends AbstractTableAction<Route> {
     @Override
     protected void createModel() {
 
+        // initialize GUI elements once
+        if (m == null) {
+            _systemName = new JTextField(10);
+            _userName = new JTextField(22);
+            _autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));
+            systemNameAuto = this.getClass().getName() + ".AutoSystemName";
+            soundFile = new JTextField(20);
+            scriptFile = new JTextField(20);
+            sensor1mode = new JComboBox<>(sensorInputModes);
+            sensor2mode = new JComboBox<>(sensorInputModes);
+            sensor3mode = new JComboBox<>(sensorInputModes);
+            timeDelay = new JSpinner();
+            cTurnoutStateBox = new JComboBox<>(turnoutInputModes);
+            cLockTurnoutStateBox = new JComboBox<>(lockTurnoutInputModes);
+            nameLabel = new JLabel(Bundle.getMessage("LabelSystemName"));
+            userLabel = new JLabel(Bundle.getMessage("LabelUserName"));
+            fixedSystemName = new JLabel("xxxxxxxxxxx");
+            createButton = new JButton(Bundle.getMessage("ButtonCreate"));
+            editButton = new JButton(Bundle.getMessage("ButtonEdit"));
+            cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
+            cancelEditButton = new JButton(Bundle.getMessage("ButtonCancelEdit", Bundle.getMessage("ButtonEdit"))); // I18N for word sequence "Cancel Edit"
+            deleteButton = new JButton(Bundle.getMessage("ButtonDelete") + " " + Bundle.getMessage("BeanNameRoute")); // I18N "Delete Route"
+            updateButton = new JButton(Bundle.getMessage("ButtonUpdate"));
+            exportButton = new JButton(Bundle.getMessage("ButtonExport"));
+            status1 = new JLabel(createInst);
+            status2 = new JLabel(editInst);
+        }
+
         // late initialization of string "constants" so that TurnoutManager
         // has time to be fully configured
         RouteTableAction.setClosedString(Bundle.getMessage("Set") + " "
@@ -394,60 +422,60 @@ public class RouteTableAction extends AbstractTableAction<Route> {
         box.setSelectedItem(result);
     }
 
-    JTextField _systemName = new JTextField(10);
-    JTextField _userName = new JTextField(22);
-    JCheckBox _autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));
-    String systemNameAuto = this.getClass().getName() + ".AutoSystemName";
+    JTextField _systemName;
+    JTextField _userName;
+    JCheckBox _autoSystemName;
+    String systemNameAuto;
     jmri.UserPreferencesManager pref;
 
-    JmriJFrame addFrame = null;
+    JmriJFrame addFrame;
     RouteTurnoutModel _routeTurnoutModel;
     JScrollPane _routeTurnoutScrollPane;
     RouteSensorModel _routeSensorModel;
     JScrollPane _routeSensorScrollPane;
 
-    JTextField soundFile = new JTextField(20);
-    JTextField scriptFile = new JTextField(20);
+    JTextField soundFile;
+    JTextField scriptFile;
     NamedBeanComboBox<Sensor> turnoutsAlignedSensor;
 
     NamedBeanComboBox<Sensor> sensor1;
 
-    JComboBox<String> sensor1mode = new JComboBox<>(sensorInputModes);
+    JComboBox<String> sensor1mode;
     NamedBeanComboBox<Sensor> sensor2;
-    JComboBox<String> sensor2mode = new JComboBox<>(sensorInputModes);
+    JComboBox<String> sensor2mode;
     NamedBeanComboBox<Sensor> sensor3;
-    JComboBox<String> sensor3mode = new JComboBox<>(sensorInputModes);
+    JComboBox<String> sensor3mode;
 
     NamedBeanComboBox<Turnout> cTurnout;
     NamedBeanComboBox<Turnout> cLockTurnout;
-    JSpinner timeDelay = new JSpinner();
+    JSpinner timeDelay;
 
-    JComboBox<String> cTurnoutStateBox = new JComboBox<>(turnoutInputModes);
-    JComboBox<String> cLockTurnoutStateBox = new JComboBox<>(lockTurnoutInputModes);
+    JComboBox<String> cTurnoutStateBox;
+    JComboBox<String> cLockTurnoutStateBox;
 
-    ButtonGroup selGroup = null;
-    JRadioButton allButton = null;
-    JRadioButton includedButton = null;
+    ButtonGroup selGroup;
+    JRadioButton allButton;
+    JRadioButton includedButton;
 
-    JLabel nameLabel = new JLabel(Bundle.getMessage("LabelSystemName"));
-    JLabel userLabel = new JLabel(Bundle.getMessage("LabelUserName"));
-    JLabel fixedSystemName = new JLabel("xxxxxxxxxxx");
+    JLabel nameLabel;
+    JLabel userLabel;
+    JLabel fixedSystemName;
 
-    JButton createButton = new JButton(Bundle.getMessage("ButtonCreate"));
-    JButton editButton = new JButton(Bundle.getMessage("ButtonEdit"));
-    JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
-    JButton cancelEditButton = new JButton(Bundle.getMessage("ButtonCancelEdit", Bundle.getMessage("ButtonEdit"))); // I18N for word sequence "Cancel Edit"
-    JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete") + " " + Bundle.getMessage("BeanNameRoute")); // I18N "Delete Route"
-    JButton updateButton = new JButton(Bundle.getMessage("ButtonUpdate"));
-    JButton exportButton = new JButton(Bundle.getMessage("ButtonExport"));
+    JButton createButton;
+    JButton editButton;
+    JButton cancelButton;
+    JButton cancelEditButton; // I18N for word sequence "Cancel Edit"
+    JButton deleteButton; // I18N "Delete Route"
+    JButton updateButton;
+    JButton exportButton;
 
     static final String createInst = Bundle.getMessage("RouteAddStatusInitial1", Bundle.getMessage("ButtonCreate")); // I18N to include original button name in help string
     static final String editInst = Bundle.getMessage("RouteAddStatusInitial2", Bundle.getMessage("ButtonEdit"));
     static final String updateInst = Bundle.getMessage("RouteAddStatusInitial3", Bundle.getMessage("ButtonUpdate"));
     static final String cancelInst = Bundle.getMessage("RouteAddStatusInitial4", Bundle.getMessage("ButtonCancelEdit", Bundle.getMessage("ButtonEdit")));
 
-    JLabel status1 = new JLabel(createInst);
-    JLabel status2 = new JLabel(editInst);
+    JLabel status1;
+    JLabel status2;
 
     JPanel p2xt = null;   // Turnout list table
     JPanel p2xs = null;   // Sensor list table
@@ -1365,6 +1393,10 @@ public class RouteTableAction extends AbstractTableAction<Route> {
      * @param e the action event
      */
     void exportPressed(ActionEvent e) {
+        String logixPrefix = InstanceManager.getDefault(jmri.LogixManager.class).getSystemNamePrefix();
+        String LOGIX_SYS_NAME = logixPrefix + ":RTX:";
+        String CONDITIONAL_SYS_PREFIX = LOGIX_SYS_NAME + "C";
+
         curRoute = checkNamesOK();
         String sName = _systemName.getText();
         if (sName.length() == 0) {
@@ -2089,15 +2121,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
 
     private boolean showAll = true;   // false indicates show only included Turnouts
 
-    public final static String LOGIX_SYS_NAME;
-    public final static String CONDITIONAL_SYS_PREFIX;
     private static int ROW_HEIGHT;
-
-    static {
-        String logixPrefix = InstanceManager.getDefault(jmri.LogixManager.class).getSystemNamePrefix();
-        LOGIX_SYS_NAME = logixPrefix + ":RTX:";
-        CONDITIONAL_SYS_PREFIX = LOGIX_SYS_NAME + "C";
-    }
 
     private static String[] COLUMN_NAMES = {Bundle.getMessage("ColumnSystemName"),
         Bundle.getMessage("ColumnUserName"),
