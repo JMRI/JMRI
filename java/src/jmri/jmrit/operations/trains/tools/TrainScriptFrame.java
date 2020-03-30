@@ -404,9 +404,7 @@ public class TrainScriptFrame extends OperationsFrame {
             int retVal = fc.showOpenDialog(null);
             // handle selection or cancel
             if (retVal == JFileChooser.APPROVE_OPTION) {
-                File file = fc.getSelectedFile();
-                // Run the script from it's filename
-                return file;
+                return fc.getSelectedFile();
             }
         }
         return null;
