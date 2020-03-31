@@ -18,7 +18,7 @@ public class ManageLocationsActionTest {
     @Test
     public void testStringCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ManageLocationsAction action = new ManageLocationsAction("Test VSD Manage Locations Action","");
+        ManageLocationsAction action = new ManageLocationsAction("Test VSD Manage Locations Action");
         Assert.assertNotNull("exists", action);
     }
 
