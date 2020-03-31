@@ -385,7 +385,7 @@ public class VSDecoder implements PropertyChangeListener {
         if (create_xy_series) {   
             log.info("{}: {}\t{}", this.getAddress(), (float) Math.round(p.x*10000)/10000, p.y);
         }
-        log.debug("( " + this.getAddress() + ") Set Position: " + p);
+        log.debug("( {} ). Set Position: {}", this.getAddress(), p);
 
         this.lastPos = p; // save this position
 
