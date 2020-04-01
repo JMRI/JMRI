@@ -343,7 +343,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
             mRefreshTimer.start();
             log.debug("Initially starting refresh timer for slot {} address {}", slot.getSlot(), slot.locoAddr());
         }
-        firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting); // NOI18N
+        firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting);
         record(speed);
     }
 
@@ -361,7 +361,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         isForward = forward;
         log.debug("setIsForward to {}, old value {}", isForward, old);
         sendFunctionGroup1();
-        firePropertyChange(ISFORWARD, old, this.isForward); // NOI18N
+        firePropertyChange(ISFORWARD, old, this.isForward);
     }
 
     /**
@@ -501,17 +501,15 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
             float old = this.speedSetting;
             this.speedSetting = floatSpeed(slot.speed());
             log.debug("notifyChangedSlot: old speed: {} new speed: {}", old, this.speedSetting); // NOI18N
-            firePropertyChange(SPEEDSETTING, old, this.speedSetting); // NOI18N
+            firePropertyChange(SPEEDSETTING, old, this.speedSetting);
         }
 
-        firePropertyChange(ISFORWARD, this.isForward, this.isForward = slot.isForward()); // NOI18N
+        firePropertyChange(ISFORWARD, this.isForward, this.isForward = slot.isForward());
 
         // Slot status
         if (slotStatus != slot.slotStatus()) {
             int newStat = slot.slotStatus();
-            if (log.isDebugEnabled()) {
-                log.debug("Slot status changed from " + LnConstants.LOCO_STAT(slotStatus) + " to " + LnConstants.LOCO_STAT(newStat)); // NOI18N
-            }
+            log.debug("Slot status changed from {} to {}", LnConstants.LOCO_STAT(slotStatus), LnConstants.LOCO_STAT(newStat)); // NOI18N
             // PropertyChangeListeners notification: ThrottleConnected from True to False when disconnected
             firePropertyChange("ThrottleConnected", (slotStatus & LnConstants.LOCOSTAT_MASK) == LnConstants.LOCO_IN_USE, // NOI18N
                     !((slotStatus & LnConstants.LOCOSTAT_MASK) == LnConstants.LOCO_IN_USE));
@@ -565,15 +563,9 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     @Override
     public void setSpeedStepMode(SpeedStepMode Mode) {
         int status = slot.slotStatus();
-        if (log.isDebugEnabled()) {
-            log.debug("Speed Step Mode Change to Mode: " + Mode // NOI18N
-                    + " Current mode is: " + this.speedStepMode); // NOI18N
-            log.debug("Current Slot Mode: " + LnConstants.DEC_MODE(status)); // NOI18N
-        }
-        if (speedStepMode != Mode) {
-            firePropertyChange(SPEEDSTEPS, this.speedStepMode, // NOI18N
-                    this.speedStepMode = Mode);
-        }
+        log.debug("Speed Step Mode Change to Mode: {} Current mode is: {}", Mode, this.speedStepMode); // NOI18N
+        log.debug("Current Slot Mode: {}", LnConstants.DEC_MODE(status)); // NOI18N
+        firePropertyChange(SPEEDSTEPS, this.speedStepMode, this.speedStepMode = Mode);
         if (Mode == SpeedStepMode.NMRA_DCC_14) {
             log.debug("14 speed step change"); // NOI18N
             status = status & ((~LnConstants.DEC_MODE_MASK)
