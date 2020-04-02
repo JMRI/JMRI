@@ -27,7 +27,7 @@ import org.netbeans.jemmy.operators.JDialogOperator;
 //import org.netbeans.jemmy.*;
 /**
  *
- * @author Pete Cressman Copyright (C) 2019   
+ * @author Pete Cressman Copyright (C) 2019
  */
 public class ConvertDialogTest {
 
@@ -61,7 +61,6 @@ public class ConvertDialogTest {
 
         dialog.dispose();
         frame.dispose();
-        if (frame.makeCatalogWorker != null) JUnitUtil.waitFor(() -> {return frame.makeCatalogWorker.isDone();}, "wait for catalog SwingWorker failed");
     }
 
     // The minimal setup for log4J

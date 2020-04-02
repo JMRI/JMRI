@@ -28,5 +28,6 @@
  * in any class in this package refer to the results of
 {@link jmri.profile.ProfileManager#getActiveProfile()}.
  */
-@edu.umd.cs.findbugs.annotations.SuppressFBWarnings({})
+// include empty DefaultAnnotation to avoid excessive recompilation
+@edu.umd.cs.findbugs.annotations.DefaultAnnotation(value={})
 package jmri.util.prefs;

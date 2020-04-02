@@ -9,5 +9,6 @@
  * The {@link jmri.util.com} package contains several sets of
  * imported code.
  */
-@edu.umd.cs.findbugs.annotations.SuppressFBWarnings({})
+// include empty DefaultAnnotation to avoid excessive recompilation
+@edu.umd.cs.findbugs.annotations.DefaultAnnotation(value={})
 package jmri.util;

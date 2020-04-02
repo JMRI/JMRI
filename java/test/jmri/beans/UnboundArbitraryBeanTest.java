@@ -13,7 +13,7 @@ import org.junit.Test;
 
 /**
  *
- * @author rhwood
+ * @author Randall Wood
  */
 public class UnboundArbitraryBeanTest {
 

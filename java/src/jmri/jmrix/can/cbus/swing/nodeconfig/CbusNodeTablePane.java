@@ -17,6 +17,7 @@ import javax.swing.table.TableRowSorter;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.node.CbusNodeConstants;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
+import jmri.util.ThreadingUtil;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
@@ -131,11 +132,21 @@ public class CbusNodeTablePane extends JPanel {
         validate();
         repaint();
         
-        nodeModel.fireTableDataChanged();
         nodeModel.addTableModelListener((TableModelEvent e) -> {
             if (nodeModel.getRequestNodeRowToDisplay()>-1) {
-                nodeTable.setRowSelectionInterval(nodeModel.getRequestNodeRowToDisplay(), nodeModel.getRequestNodeRowToDisplay());
-                nodeTable.scrollRectToVisible(nodeTable.getCellRect(nodeModel.getRequestNodeRowToDisplay(), 0, true));
+                setRowToNode();
+            }
+        });
+        nodeModel.fireTableDataChanged();
+    }
+    
+    private void setRowToNode(){
+        ThreadingUtil.runOnGUIEventually(() -> {
+            int newRow = nodeModel.getRequestNodeRowToDisplay();
+            if ( newRow>-1 ) {
+                nodeTable.setRowSelectionInterval(newRow, newRow);
+                nodeTable.scrollRectToVisible(nodeTable.getCellRect(newRow, 0, true));
+                nodeModel.setRequestNodeDisplay(-1);
             }
         });
     }
