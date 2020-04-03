@@ -145,7 +145,7 @@ public class EnginesTableFrameTest extends OperationsTestCase {
         Thread find = new Thread(new Runnable() {
             @Override
             public void run() {
-                JemmyUtil.enterClickAndLeave(etf.findButton);
+                JemmyUtil.enterPushAndLeave(etf.findButton);
             }
         });
         find.setName("Find Engine"); // NOI18N
@@ -157,11 +157,11 @@ public class EnginesTableFrameTest extends OperationsTestCase {
         
         // table is sorted by model, Engines with number 2 are in the first and 2nd rows
         Assert.assertEquals("find Engine by number 1st", 0, etf.enginesTable.getSelectedRow());
-        JemmyUtil.enterClickAndLeave(etf.findButton);
+        JemmyUtil.enterPushAndLeave(etf.findButton);
         Assert.assertEquals("find Engine by number 2nd", 1, etf.enginesTable.getSelectedRow());
 
         // create the EngineEditFrame
-        JemmyUtil.enterClickAndLeave(etf.addButton);
+        JemmyUtil.enterPushAndLeave(etf.addButton);
 
         JUnitUtil.dispose(etf);
         JUnitOperationsUtil.checkOperationsShutDownTask();

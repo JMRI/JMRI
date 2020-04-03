@@ -74,8 +74,8 @@ public class LocationsByCarLoadFrameTest extends OperationsTestCase {
         lclf.initComponents(loc);
         Assert.assertTrue("frame visible", lclf.isVisible());
         
-        JemmyUtil.enterClickAndLeave(lclf.clearButton);
-        JemmyUtil.enterClickAndLeave(lclf.saveButton);
+        JemmyUtil.enterPushAndLeave(lclf.clearButton);
+        JemmyUtil.enterPushAndLeave(lclf.saveButton);
         
         // confirm change
         Assert.assertFalse(track.acceptsLoad("E", "Flat"));

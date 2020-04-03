@@ -44,11 +44,11 @@ public class LayoutBlockTest {
 
         // get a memory and associate it with the layout block.
         Memory mem = jmri.InstanceManager.getDefault(jmri.MemoryManager.class).provideMemory("IM1");
-    
-        layoutBlock.setMemory(mem,"IM1"); 
+
+        layoutBlock.setMemory(mem, "IM1");
 
         // verify the memory is associated
-        Assert.assertEquals("memory saved",mem,layoutBlock.getMemory());
+        Assert.assertEquals("memory saved", mem, layoutBlock.getMemory());
 
         // Get the referenced block
         Block block = jmri.InstanceManager.getDefault(jmri.BlockManager.class).getByUserName("Test Block");
@@ -57,7 +57,7 @@ public class LayoutBlockTest {
         block.setValue("hello world");
 
         // and verify the value is in the memory
-        Assert.assertEquals("memory content same as block value",block.getValue(),mem.getValue());
+        Assert.assertEquals("memory content same as block value", block.getValue(), mem.getValue());
 
     }
 
@@ -68,11 +68,11 @@ public class LayoutBlockTest {
 
         // get a memory and associate it with the layout block.
         Memory mem = jmri.InstanceManager.getDefault(jmri.MemoryManager.class).provideMemory("IM1");
-    
-        layoutBlock.setMemory(mem,"IM1"); 
+
+        layoutBlock.setMemory(mem, "IM1");
 
         // verify the memory is associated
-        Assert.assertEquals("memory saved",mem,layoutBlock.getMemory());
+        Assert.assertEquals("memory saved", mem, layoutBlock.getMemory());
 
         // Get the referenced block
         Block block = jmri.InstanceManager.getDefault(jmri.BlockManager.class).getByUserName("Test Block");
@@ -84,7 +84,7 @@ public class LayoutBlockTest {
         block.setValue(re);
 
         // and verify the value is in the memory
-        Assert.assertEquals("memory content same as block value",block.getValue(),mem.getValue());
+        Assert.assertEquals("memory content same as block value", block.getValue(), mem.getValue());
     }
 
     @Test
@@ -94,11 +94,11 @@ public class LayoutBlockTest {
 
         // get a memory and associate it with the layout block.
         Memory mem = jmri.InstanceManager.getDefault(jmri.MemoryManager.class).provideMemory("IM1");
-    
-        layoutBlock.setMemory(mem,"IM1"); 
+
+        layoutBlock.setMemory(mem, "IM1");
 
         // verify the memory is associated
-        Assert.assertEquals("memory saved",mem,layoutBlock.getMemory());
+        Assert.assertEquals("memory saved", mem, layoutBlock.getMemory());
 
         // Get the referenced block
         Block block = jmri.InstanceManager.getDefault(jmri.BlockManager.class).getByUserName("Test Block");
@@ -109,10 +109,8 @@ public class LayoutBlockTest {
         block.setValue(tag);
 
         // and verify the value is in the memory
-        Assert.assertEquals("memory content same as block value",block.getValue(),mem.getValue());
+        Assert.assertEquals("memory content same as block value", block.getValue(), mem.getValue());
     }
-
-
 
     // from here down is testing infrastructure
     @Before

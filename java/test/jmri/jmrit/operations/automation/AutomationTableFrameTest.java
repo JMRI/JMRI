@@ -31,7 +31,7 @@ public class AutomationTableFrameTest extends OperationsTestCase {
         Assert.assertFalse(f.runActionButton.isEnabled());
         Assert.assertFalse(f.resumeActionButton.isEnabled());
 
-        JemmyUtil.enterClickAndLeave(f.addAutomationButton);
+        JemmyUtil.enterPushAndLeave(f.addAutomationButton);
 
         Assert.assertEquals("Number of automations", 1, manager.getSize());
         Automation automation = manager.getAutomationByName("New Automation Test Name");
@@ -50,7 +50,7 @@ public class AutomationTableFrameTest extends OperationsTestCase {
         Assert.assertFalse(f.resumeActionButton.isEnabled());
 
         // Test add action button
-        JemmyUtil.enterClickAndLeave(f.addActionButton);
+        JemmyUtil.enterPushAndLeave(f.addActionButton);
         Assert.assertEquals(1, automation.getSize());
         Assert.assertNotNull("The first item", automation.getCurrentAutomationItem());
         Assert.assertEquals("1c1", automation.getCurrentAutomationItem().getId());
@@ -66,8 +66,8 @@ public class AutomationTableFrameTest extends OperationsTestCase {
         Assert.assertTrue(f.resumeActionButton.isEnabled());
 
         // add two more actions
-        JemmyUtil.enterClickAndLeave(f.addActionButton);
-        JemmyUtil.enterClickAndLeave(f.addActionButton);
+        JemmyUtil.enterPushAndLeave(f.addActionButton);
+        JemmyUtil.enterPushAndLeave(f.addActionButton);
         Assert.assertEquals(3, automation.getSize());
         jmri.util.JUnitUtil.waitFor(()
                 -> {
@@ -81,7 +81,7 @@ public class AutomationTableFrameTest extends OperationsTestCase {
         Assert.assertEquals("1c3", automation.getItemBySequenceId(3).getId());
 
         // test step button
-        JemmyUtil.enterClickAndLeave(f.stepActionButton);
+        JemmyUtil.enterPushAndLeave(f.stepActionButton);
         jmri.util.JUnitUtil.waitFor(()
                 -> {
             return automation.getCurrentAutomationItem() != null && "1c2".equals(automation.getCurrentAutomationItem().getId());
@@ -89,7 +89,7 @@ public class AutomationTableFrameTest extends OperationsTestCase {
                 "The 2nd item: getId() was 1c2");
         Assert.assertEquals("Do Nothing", automation.getCurrentAutomationItem().getActionName());
 
-        JemmyUtil.enterClickAndLeave(f.stepActionButton);
+        JemmyUtil.enterPushAndLeave(f.stepActionButton);
         jmri.util.JUnitUtil.waitFor(()
                 -> {
             return automation.getCurrentAutomationItem() != null && "1c3".equals(automation.getCurrentAutomationItem().getId());
@@ -98,7 +98,7 @@ public class AutomationTableFrameTest extends OperationsTestCase {
         Assert.assertEquals("Do Nothing", automation.getCurrentAutomationItem().getActionName());
 
         // back to the start
-        JemmyUtil.enterClickAndLeave(f.stepActionButton);
+        JemmyUtil.enterPushAndLeave(f.stepActionButton);
         jmri.util.JUnitUtil.waitFor(()
                 -> {
             return automation.getCurrentAutomationItem() != null && "1c1".equals(automation.getCurrentAutomationItem().getId());
@@ -132,14 +132,14 @@ public class AutomationTableFrameTest extends OperationsTestCase {
 
         // test add button, add item at top of table
         JemmyUtil.enterClickAndLeave(f.addActionAtTopRadioButton);
-        JemmyUtil.enterClickAndLeave(f.addActionButton);
+        JemmyUtil.enterPushAndLeave(f.addActionButton);
 
         Assert.assertNotNull("The first item", automation.getCurrentAutomationItem());
         Assert.assertEquals("1c1", automation.getCurrentAutomationItem().getId());
         Assert.assertEquals("Do Nothing", automation.getCurrentAutomationItem().getActionName());
         Assert.assertEquals(1, automation.getSize());
 
-        JemmyUtil.enterClickAndLeave(f.addActionButton);
+        JemmyUtil.enterPushAndLeave(f.addActionButton);
 
         Assert.assertNotNull("The first item is now in second place", automation.getCurrentAutomationItem());
         Assert.assertEquals("1c1", automation.getCurrentAutomationItem().getId());
@@ -148,7 +148,7 @@ public class AutomationTableFrameTest extends OperationsTestCase {
         Assert.assertEquals("1c2", automation.getItemBySequenceId(1).getId());
         Assert.assertEquals("1c1", automation.getItemBySequenceId(2).getId());
 
-        JemmyUtil.enterClickAndLeave(f.addActionButton);
+        JemmyUtil.enterPushAndLeave(f.addActionButton);
 
         Assert.assertNotNull("The first item is now in 3rd place", automation.getCurrentAutomationItem());
         Assert.assertEquals("1c1", automation.getCurrentAutomationItem().getId());
@@ -160,7 +160,7 @@ public class AutomationTableFrameTest extends OperationsTestCase {
 
         // test add action in middle radio button
         JemmyUtil.enterClickAndLeave(f.addActionAtMiddleRadioButton);
-        JemmyUtil.enterClickAndLeave(f.addActionButton);
+        JemmyUtil.enterPushAndLeave(f.addActionButton);
 
         Assert.assertNotNull("The first item is now in second place", automation.getCurrentAutomationItem());
         Assert.assertEquals("1c1", automation.getCurrentAutomationItem().getId());
@@ -173,7 +173,7 @@ public class AutomationTableFrameTest extends OperationsTestCase {
 
         // test delete button
         Assert.assertEquals(1, InstanceManager.getDefault(AutomationManager.class).getSize());
-        JemmyUtil.enterClickAndLeave(f.deleteAutomationButton);
+        JemmyUtil.enterPushAndLeave(f.deleteAutomationButton);
         // confirm delete dialog window should appear
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("DeleteAutomation?"), Bundle.getMessage("ButtonYes"));
         Assert.assertEquals(0, InstanceManager.getDefault(AutomationManager.class).getSize());
@@ -205,7 +205,7 @@ public class AutomationTableFrameTest extends OperationsTestCase {
 
         // test delete button
         Assert.assertEquals(1, InstanceManager.getDefault(AutomationManager.class).getSize());
-        JemmyUtil.enterClickAndLeave(f.deleteAutomationButton);
+        JemmyUtil.enterPushAndLeave(f.deleteAutomationButton);
         // confirm delete dialog window should appear
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("DeleteAutomation?"), Bundle.getMessage("ButtonNo"));
         Assert.assertEquals(1, InstanceManager.getDefault(AutomationManager.class).getSize());

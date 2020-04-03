@@ -129,7 +129,7 @@ public class PrintLocationsActionTest extends OperationsTestCase {
         LocationPrintOptionFrame f = pla.new LocationPrintOptionFrame(pla);
         Assert.assertNotNull("exists", f);
 
-        JemmyUtil.enterClickAndLeave(f.okayButton); // closes window
+        JemmyUtil.enterPushAndLeave(f.okayButton); // closes window
 
         // confirm print preview window is showing
         ResourceBundle rb = ResourceBundle
@@ -160,7 +160,7 @@ public class PrintLocationsActionTest extends OperationsTestCase {
                 (LocationPrintOptionFrame) JmriJFrame.getFrame(Bundle.getMessage("MenuItemPreview"));
         Assert.assertNotNull("exists", printOptionFrame);
 
-        JemmyUtil.enterClickAndLeave(printOptionFrame.okayButton); // closes window
+        JemmyUtil.enterPushAndLeave(printOptionFrame.okayButton); // closes window
 
         // confirm print preview window is showing
         ResourceBundle rb = ResourceBundle
