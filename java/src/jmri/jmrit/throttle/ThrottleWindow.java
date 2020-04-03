@@ -763,7 +763,7 @@ public class ThrottleWindow extends JmriJFrame {
             setTitleTextType(e.getAttribute("titleType").getValue());
         }
         if (e.getAttribute("isEditMode") != null) {
-            isEditMode = new Boolean(e.getAttribute("isEditMode").getValue());
+            isEditMode = Boolean.valueOf(e.getAttribute("isEditMode").getValue());
         }
 
         Element window = e.getChild("window");
