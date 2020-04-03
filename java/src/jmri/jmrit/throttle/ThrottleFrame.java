@@ -83,6 +83,10 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
 
     private String title;
     private String lastUsedSaveFile = null;
+
+    private boolean isEditMode = true;
+    private boolean willSwitch = false;
+
     private static final String DEFAULT_THROTTLE_FILENAME = "JMRI_ThrottlePreference.xml";
 
     public static String getDefaultThrottleFolder() {
@@ -219,7 +223,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
 
         boolean switchAfter = false;
         if (!isEditMode) {
-            switchMode();
+            setEditMode(true);
             switchAfter = true;
         }
 
@@ -256,7 +260,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         }
 //     checkPosition();
         if (switchAfter) {
-            switchMode();
+            setEditMode(false);
         }
     }
 
@@ -546,20 +550,19 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         }
     }
 
-    private boolean isEditMode = true;
-    private boolean willSwitch = false;
-
-    public void switchMode() {
+    public void setEditMode(boolean mode) {
+        if (mode == isEditMode)
+            return;
         if (isVisible()) {
-            if (isEditMode) {
+            if (!mode) {
                 playRendering();
             } else {
                 editRendering();
             }
-            isEditMode = !isEditMode;
+            isEditMode = mode;
             willSwitch = false;
         } else {
-            willSwitch = !willSwitch;
+            willSwitch = true;
         }
         throttleWindow.updateGUI();
     }
@@ -680,7 +683,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
     public Element getXml() {
         boolean switchAfter = false;
         if (!isEditMode) {
-            switchMode();
+            setEditMode(true);
             switchAfter = true;
         }
 
@@ -728,7 +731,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         }
         me.setContent(children);
         if (switchAfter) {
-            switchMode();
+            setEditMode(false);
         }
         return me;
     }
@@ -768,7 +771,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
 
         boolean switchAfter = false;
         if (!isEditMode) {
-            switchMode();
+            setEditMode(true);
             switchAfter = true;
         }
 
@@ -827,7 +830,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         }
         setFrameTitle();
         if (switchAfter) {
-            switchMode();
+            setEditMode(false);
         }
     }
 
@@ -874,7 +877,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
     public void componentShown(ComponentEvent e) {
         throttleWindow.setCurrentThrottleFrame(this);
         if (willSwitch) {
-            switchMode();
+            setEditMode(this.throttleWindow.getEditMode());
             repaint();
         }
         throttleWindow.updateGUI();
