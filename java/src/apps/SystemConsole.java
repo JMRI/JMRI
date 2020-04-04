@@ -89,7 +89,7 @@ public final class SystemConsole extends JTextArea {
 
     private int fontStyle = Font.PLAIN;
 
-    private String fontFamily = "Monospaced";  //NOI18N
+    private String fontFamily = "Monospaced";  // NOI18N
 
     public static final int WRAP_STYLE_NONE = 0x00;
     public static final int WRAP_STYLE_LINE = 0x01;
@@ -104,8 +104,8 @@ public final class SystemConsole extends JTextArea {
     private JCheckBox autoScroll;
     private JCheckBox alwaysOnTop;
 
-    private final String alwaysScrollCheck = this.getClass().getName() + ".alwaysScroll"; //NOI18N
-    private final String alwaysOnTopCheck = this.getClass().getName() + ".alwaysOnTop";   //NOI18N
+    private final String alwaysScrollCheck = this.getClass().getName() + ".alwaysScroll"; // NOI18N
+    private final String alwaysOnTopCheck = this.getClass().getName() + ".alwaysOnTop";   // NOI18N
 
     final public int MAX_CONSOLE_LINES = 5000;  // public, not static so can be modified via a script
 
