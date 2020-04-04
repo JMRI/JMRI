@@ -45,6 +45,8 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractTurnout extends AbstractNamedBean implements
         Turnout, PropertyChangeListener {
 
+    private Turnout leadingTurnout = null;
+
     protected AbstractTurnout(String systemName) {
         super(systemName);
     }
@@ -797,6 +799,8 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         } else if (evt.getSource() == getFirstSensor()
                 || evt.getSource() == getSecondSensor()) {
             sensorPropertyChange(evt);
+        } else if (evt.getSource() == leadingTurnout) {
+            leadingTurnoutPropertyChange(evt);
         }
     }
 
@@ -874,6 +878,17 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
                    newKnownState(UNKNOWN);
             }
             // end TWOSENSOR block
+        }
+    }
+
+    public void leadingTurnoutPropertyChange(PropertyChangeEvent evt) {
+        if ("KnownState".equals(evt.getPropertyName())) {
+            int state = (int) evt.getNewValue();
+            if (getInverted()) {
+                this.newKnownState(Turnout.invertTurnoutState(state));
+            } else {
+                this.newKnownState(state);
+            }
         }
     }
 
@@ -1035,7 +1050,8 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         if ("CanDelete".equals(evt.getPropertyName())) { //IN18N
-            if (evt.getOldValue().equals(getFirstSensor()) || evt.getOldValue().equals(getSecondSensor())) {
+            Object old = evt.getOldValue();
+            if (old.equals(getFirstSensor()) || old.equals(getSecondSensor()) || old.equals(leadingTurnout)) {
                 java.beans.PropertyChangeEvent e = new java.beans.PropertyChangeEvent(this, "DoNotDelete", null, null);
                 throw new java.beans.PropertyVetoException(Bundle.getMessage("InUseSensorTurnoutVeto", getDisplayName()), e); //IN18N
             }
@@ -1052,8 +1068,46 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
             if (bean.equals(getSecondSensor())) {
                 report.add(new NamedBeanUsageReport("TurnoutFeedback2"));  // NOI18N
             }
+            if (bean.equals(getLeadingTurnout())) {
+                report.add(new NamedBeanUsageReport("LeadingTurnout")); // NOI18N
+            }
         }
         return report;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isCanFollow() {
+        return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @CheckForNull
+    public Turnout getLeadingTurnout() {
+        return leadingTurnout;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setLeadingTurnout(@CheckForNull Turnout turnout) {
+        if (isCanFollow()) {
+            Turnout old = leadingTurnout;
+            leadingTurnout = turnout;
+            firePropertyChange("LeadingTurnout", old, leadingTurnout);
+            if (old != null) {
+                old.removePropertyChangeListener("KnownState", this);
+            }
+            if (leadingTurnout != null) {
+                leadingTurnout.addPropertyChangeListener("KnownState", this);
+            }
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractTurnout.class);

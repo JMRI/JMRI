@@ -521,4 +521,30 @@ public interface Turnout extends DigitalIO {
 
     public void setStraightSpeed(String s) throws JmriException;
 
+    /**
+     * Check if this Turnout can follow the state of another Turnout.
+     * 
+     * @return true if this Turnout is capable of following; false otherwise
+     */
+    // Note: not `canFollow()` to allow JavaBeans introspection to find
+    // the property "canFollow"
+    public boolean isCanFollow();
+
+    /**
+     * Get the Turnout this Turnout is following.
+     * 
+     * @return the leading Turnout or null if none; null if
+     *         {@link #isCanFollow()} is false
+     */
+    @CheckForNull
+    public Turnout getLeadingTurnout();
+
+    /**
+     * Set the Turnout this Turnout will follow.
+     * 
+     * @param turnout the leading Turnout or null if this Turnout should not
+     *                follow another Turnout; silently ignored if
+     *                {@link #isCanFollow()} is false
+     */
+    public void setLeadingTurnout(@CheckForNull Turnout turnout);
 }
