@@ -316,6 +316,10 @@ public class ThrottleWindow extends JmriJFrame {
         return isEditMode;
     }
 
+    public void switchMode() {
+        setEditMode(!isEditMode);
+    }
+
     public Jynstrument ynstrument(String path) {
         Jynstrument it = JynstrumentFactory.createInstrument(path, this);
         if (it == null) {

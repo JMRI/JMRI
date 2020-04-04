@@ -567,6 +567,14 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         throttleWindow.updateGUI();
     }
 
+    public boolean getEditMode() {
+        return isEditMode;
+    }
+
+    public void switchMode() {
+        setEditMode(!isEditMode);
+    }
+
     /**
      * Handle my own destruction.
      * <ol>
