@@ -883,12 +883,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
     public void leadingTurnoutPropertyChange(PropertyChangeEvent evt) {
         if ("KnownState".equals(evt.getPropertyName())) {
-            int state = (int) evt.getNewValue();
-            if (getInverted()) {
-                this.newKnownState(Turnout.invertTurnoutState(state));
-            } else {
-                this.newKnownState(state);
-            }
+            this.newKnownState((int) evt.getNewValue());
         }
     }
 
