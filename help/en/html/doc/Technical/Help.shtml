@@ -26,7 +26,7 @@
     <div class="para">      
      <p>This page talks about technical aspects of how JMRI provides help information 
      using <a href="https://javahelp.java.net">JavaHelp</a> and <a href=
-      "https://sourceforge.net/projects/jhelpdev/</a> as well as some suggestions on 
+      "https://sourceforge.net/projects/jhelpdev/">JHelpDev</a> as well as some suggestions on 
       common approaches for help pages.     </p>
 
 	    <ul class="snav">
