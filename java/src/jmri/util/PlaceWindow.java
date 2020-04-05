@@ -259,7 +259,6 @@ public class PlaceWindow implements InstanceManagerAutoDefault {
         offScreen = -ya;        // !(ya >= 0)
         log.debug("offScreen= {} minOff = {}, ya= {}", offScreen, minOff, ya);
         if (offScreen < minOff) {
-            minOff = offScreen;
             ya = 0;
             loc = new Point(vOff, ya);
         }

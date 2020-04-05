@@ -1,6 +1,9 @@
 package jmri.jmrit.display;
 
+import java.awt.GraphicsEnvironment;
+
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Test;
 
 import jmri.jmrit.display.EditorScaffold;
@@ -15,6 +18,7 @@ public class PreviewPanelTest  {
 
     @Test
     public void testCtor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         EditorScaffold editor = new EditorScaffold("ED");
         DisplayFrame df = new DisplayFrame("DisplayFrame", editor);
         PreviewPanel p = new PreviewPanel(df, null, null, true);
