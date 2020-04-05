@@ -541,6 +541,9 @@ public interface Turnout extends DigitalIO {
 
     /**
      * Set the Turnout this Turnout will follow.
+     * <p>
+     * Note that it is valid for two or more turnouts to follow each other in a
+     * circular pattern.
      * 
      * @param turnout the leading Turnout or null if this Turnout should not
      *                follow another Turnout; silently ignored if
