@@ -20,8 +20,7 @@ public class ClockItemPanelTest {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         DisplayFrame df = new DisplayFrame("Clock item Panel Test");
-        EditorScaffold es = new EditorScaffold();
-        ClockItemPanel t = new ClockItemPanel(df,"test",es);
+        ClockItemPanel t = new ClockItemPanel(df,"test");
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(df);
     }

@@ -24,8 +24,7 @@ public class TableItemPanelTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         PickListModel<Turnout> tableModel = PickListModel.turnoutPickModelInstance();
         DisplayFrame df = new DisplayFrame("Table Item Panel Test"); // NOI18N
-        Editor editor = new EditorScaffold();
-        TableItemPanel<Turnout> t = new TableItemPanel<Turnout>(df,"IS01","",tableModel,editor); // NOI18N
+        TableItemPanel<Turnout> t = new TableItemPanel<Turnout>(df,"IS01","",tableModel); // NOI18N
         Assert.assertNotNull("exists",t); // NOI18N
         JUnitUtil.dispose(df);
     }

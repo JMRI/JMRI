@@ -20,8 +20,7 @@ public class BackgroundItemPanelTest {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         DisplayFrame df = new DisplayFrame();
-        EditorScaffold es = new EditorScaffold();
-        BackgroundItemPanel t = new BackgroundItemPanel(df,"test",es);
+        BackgroundItemPanel t = new BackgroundItemPanel(df,"test");
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(df);
     }
