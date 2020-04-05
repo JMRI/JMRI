@@ -31,7 +31,7 @@
 
 	    <ul class="snav">
 		<li><a href="#web">Web Access</a></li>
-		<li><a href="#limitations">Limitations</a></li>
+		<li><a href="#limitations">Standards and Limitations</a></li>
     	<li><a href="#check">Checking Changes</a></li>
         <li><a href="#tocAndIndex">TOC and Index</a></li>
         <li><a href="#jhelpdev">Creating Control Files</a></li>
@@ -160,7 +160,7 @@
 
 <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = --> 
       <a name="limitations" id="limitations"></a>     
-      <h2>Limitations of JavaHelp HTML</h2>
+      <h2>Standards for and Limitations of JavaHelp HTML</h2>
 
     <div class="para">      
 
@@ -222,8 +222,8 @@
         preferably with https://. In most cases they will be automatically opened in an external web browser.
         [If you are already looking at the help page in an external browser, these pages may be opened in a
         new tab or in the same tab (overwriting the current page), depending on how the person who wrote the
-        help page coded the reference. As of this writing (2020/03/23), there is an on-going debate as to the
-        prefered method.</li>
+        help page coded the reference. As of this writing (2020/04/04), there is an on-going debate as to the
+        prefered method.]</li>
       </ul>
 
              <p><a href="#helpTop">[Go to top of page]</a></p>
