@@ -87,7 +87,7 @@
       needs to be moved, please post a note to the jmri-developers online groups.io forum
       as there are members who occassionally try to do some housekeeping.]</p>
       
-      <p></p>In the long run, we want only two branches to the help file
+      <p>In the long run, we want only two branches to the help file
       structure: the "package" part of the tree for help
       information that is specific to a particular piece of code,
       and another part of the tree for more general information.
@@ -96,7 +96,7 @@
       just one). The web is meant to be a <em>web</em>, with many
       paths through it to reach content. The second part of the
       tree ("html") should also be organized as "one page, one topic", with
-      links to connect them as needed.
+      links to connect them as needed.</p>
       
              <p><a href="#helpTop">[Go to top of page]</a></p>
        </div>
