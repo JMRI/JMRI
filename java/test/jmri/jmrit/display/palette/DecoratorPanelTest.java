@@ -46,8 +46,8 @@ public class DecoratorPanelTest {
 
     @After
     public void tearDown() {
-        JUnitUtil.dispose(df);
         JUnitUtil.dispose(editor);
+        JUnitUtil.dispose(df);
         JUnitUtil.tearDown();
     }
 

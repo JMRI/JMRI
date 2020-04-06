@@ -6,7 +6,6 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Test;
 
-import jmri.jmrit.display.EditorScaffold;
 import jmri.util.JUnitUtil;
 
 /**
