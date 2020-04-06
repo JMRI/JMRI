@@ -23,16 +23,22 @@ public class DecoratorPanelTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        editor = new EditorScaffold("Editor");
+        df = new DisplayFrame("DisplayFrame", editor);
         DecoratorPanel dec = new DecoratorPanel(df);
         Assert.assertNotNull("exists", dec);
+        df.dispose();
     }
 
     @Test
     public void testInit() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        editor = new EditorScaffold("Editor");
+        df = new DisplayFrame("DisplayFrame", editor);
         DecoratorPanel dec = new DecoratorPanel(df);
         dec.initDecoratorPanel(new PositionableLabel("one", editor));
         Assert.assertNotNull("exists", dec);
+        df.dispose();
     }
 
     // The minimal setup for log4J
@@ -40,14 +46,10 @@ public class DecoratorPanelTest {
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
-        editor = new EditorScaffold("Editor");
-        df = new DisplayFrame("DisplayFrame", editor);
     }
 
     @After
     public void tearDown() {
-        JUnitUtil.dispose(editor);
-        JUnitUtil.dispose(df);
         JUnitUtil.tearDown();
     }
 

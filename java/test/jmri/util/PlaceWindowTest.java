@@ -4,6 +4,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.awt.Dimension;
@@ -25,6 +26,7 @@ public class PlaceWindowTest {
     }
 
     @Test
+    @Ignore("Placement point dependent on GUI used by system")
     public void testNextTo() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JFrame w1 = new JFrame();
