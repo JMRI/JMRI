@@ -1130,8 +1130,8 @@ public class LayoutTurnout extends LayoutTrack {
             setDisableWhenOccupied(false);
         }
         Turnout secondTurnout = getSecondTurnout();
-        if (secondTurnout != null) {
-            secondTurnout.setLeadingTurnout(turnout);
+        if (secondTurnout != null && secondTurnout.getFeedbackMode() == Turnout.DIRECT) {
+            secondTurnout.setLeadingTurnout(turnout, false);
         }
     }
 
@@ -1154,7 +1154,10 @@ public class LayoutTurnout extends LayoutTrack {
 
         if (secondNamedTurnout != null) {
             deactivateTurnout();
-            secondNamedTurnout.getBean().setLeadingTurnout(null);
+            Turnout turnout = secondNamedTurnout.getBean();
+            if (turnout.getLeadingTurnout() == namedTurnout.getBean()) {
+                turnout.setLeadingTurnout(null);
+            }
         }
         String oldSecondTurnoutName = secondTurnoutName;
         secondTurnoutName = tName;
@@ -1164,7 +1167,9 @@ public class LayoutTurnout extends LayoutTrack {
         }
         if (turnout != null) {
             secondNamedTurnout = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(secondTurnoutName, turnout);
-            turnout.setLeadingTurnout(getTurnout());
+            if (turnout.getFeedbackMode() == Turnout.DIRECT) {
+                turnout.setLeadingTurnout(getTurnout(), false);
+            }
         } else {
             secondTurnoutName = "";
             secondNamedTurnout = null;
@@ -2426,9 +2431,7 @@ public class LayoutTurnout extends LayoutTrack {
             } else {
                 getTurnout().setCommandedState(state);
                 Turnout secondTurnout = getSecondTurnout();
-                // only send command to the second turnout if it is not following
-                // another turnout (presumably the first turnout)
-                if (secondTurnout != null && secondTurnout.getLeadingTurnout() == null) {
+                if (secondTurnout != null) {
                     if (secondTurnoutInverted) {
                         secondTurnout.setCommandedState(Turnout.invertTurnoutState(state));
                     } else {

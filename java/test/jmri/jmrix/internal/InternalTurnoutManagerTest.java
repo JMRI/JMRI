@@ -100,6 +100,8 @@ public class InternalTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgr
         assertThat(t2.getFeedbackMode()).isEqualTo(Turnout.DIRECT);
         assertThat(t1.getLeadingTurnout()).isNull();
         assertThat(t2.getLeadingTurnout()).isNull();
+        assertThat(t1.isFollowingCommandedState()).isTrue();
+        assertThat(t2.isFollowingCommandedState()).isTrue();
 
         t1.setCommandedState(Turnout.CLOSED);
         assertThat(t1.getKnownState()).isEqualTo(Turnout.CLOSED);
@@ -133,6 +135,19 @@ public class InternalTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgr
         // will throw stack overflow if not correctly implemented
         t2.setCommandedState(Turnout.CLOSED);
         assertThat(t1.getKnownState()).isEqualTo(Turnout.CLOSED);
+        assertThat(t2.getKnownState()).isEqualTo(Turnout.CLOSED);
+        
+        // verify
+        t1.setFeedbackMode(Turnout.DELAYED);
+        t1.setLeadingTurnout(null);
+        t2.setFollowingCommandedState(false);
+        assertThat(t1.getCommandedState()).isEqualTo(Turnout.CLOSED);
+        assertThat(t2.getCommandedState()).isEqualTo(Turnout.CLOSED);
+        t1.setCommandedState(Turnout.THROWN);
+        assertThat(t1.getKnownState()).isEqualTo(Turnout.INCONSISTENT);
+        assertThat(t2.getKnownState()).isEqualTo(Turnout.INCONSISTENT);
+        JUnitUtil.waitFor(() -> t1.getKnownState() == Turnout.CLOSED);
+        assertThat(t1.getKnownState()).isEqualTo(Turnout.THROWN);
         assertThat(t2.getKnownState()).isEqualTo(Turnout.CLOSED);
     }
     

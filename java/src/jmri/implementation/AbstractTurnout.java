@@ -46,6 +46,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         Turnout, PropertyChangeListener {
 
     private Turnout leadingTurnout = null;
+    private boolean followingCommandedState = true;
 
     protected AbstractTurnout(String systemName) {
         super(systemName);
@@ -881,9 +882,15 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         }
     }
 
-    public void leadingTurnoutPropertyChange(PropertyChangeEvent evt) {
-        if ("KnownState".equals(evt.getPropertyName())) {
-            this.newKnownState((int) evt.getNewValue());
+    protected void leadingTurnoutPropertyChange(PropertyChangeEvent evt) {
+        int state = (int) evt.getNewValue();
+        if ("KnownState".equals(evt.getPropertyName())
+                && leadingTurnout != null) {
+            if (followingCommandedState || state != leadingTurnout.getCommandedState()) {
+                newKnownState(state);
+            } else {
+                newKnownState(getCommandedState());
+            }
         }
     }
 
@@ -1103,6 +1110,31 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
                 leadingTurnout.addPropertyChangeListener("KnownState", this);
             }
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setLeadingTurnout(@CheckForNull Turnout turnout, boolean followingCommandedState) {
+        setLeadingTurnout(turnout);
+        setFollowingCommandedState(followingCommandedState);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isFollowingCommandedState() {
+        return followingCommandedState;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setFollowingCommandedState(boolean following) {
+        followingCommandedState = following;
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractTurnout.class);
