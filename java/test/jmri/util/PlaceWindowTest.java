@@ -21,6 +21,7 @@ public class PlaceWindowTest {
 
     @Test
     public void testCTor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         PlaceWindow t = new PlaceWindow();
         Assert.assertNotNull("exists",t);
     }
