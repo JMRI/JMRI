@@ -92,7 +92,8 @@
       other on/off tasks where the control mechanisms of Lights fit
       the need.</p>
       
-      <p>Lights can be turned on or off by clicking the status column in the <a href="">
+      <p>Lights can be turned on or off by clicking the status column in the 
+      <a href="../../package/jmri/jmrit/beantable/LightTable.shtml">
       Lights Table.</a> They can aslo be automatically controlled:</p> 
 
       <ul>
@@ -177,9 +178,7 @@
       time you run JMRI, use <b>Store Configuration...</b> in the <b>File</b> menu at the top of 
       the Light Table (or other tables from the Tools menu), or select <b>Store Panel...</b>
       in the <b>Panel</b> menu.</p>
-      
-      <p></p>
-      
+       
       <p>The Light Control is enabled on loading, so will automatically monitor any changes in 
       state of its control sensor, turnout, or fast clock.  When a Light with no Light Control
       is loaded into the Light Table, it will default to an Off state.</p>
