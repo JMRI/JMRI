@@ -637,19 +637,19 @@ public class ActivateTrainFrame {
             cancelInitiateTrain(null);
             return;
         }
-        String transitName = selectedTransit.getSystemName();
+        String transitName = selectedTransit.getDisplayName();
         String trainName = "";
         int index = startingBlockBox.getSelectedIndex();
         if (index < 0) {
             return;
         }
-        String startBlockName = startingBlockBoxList.get(index).getSystemName();
+        String startBlockName = startingBlockBoxList.get(index).getDisplayName();
         int startBlockSeq = startingBlockSeqList.get(index).intValue();
         index = destinationBlockBox.getSelectedIndex();
         if (index < 0) {
             return;
         }
-        String endBlockName = destinationBlockBoxList.get(index).getSystemName();
+        String endBlockName = destinationBlockBoxList.get(index).getDisplayName();
         int endBlockSeq = destinationBlockSeqList.get(index).intValue();
         boolean autoRun = autoRunBox.isSelected();
         if (!checkResetWhenDone()) {
@@ -1152,7 +1152,7 @@ public class ActivateTrainFrame {
     private TrainInfo dialogToTrainInfo() {
         TrainInfo info = new TrainInfo();
         info.setTransitName((String) transitSelectBox.getSelectedItem());
-        info.setTransitId(selectedTransit.getSystemName());
+        info.setTransitId(selectedTransit.getDisplayName());
         if (_TrainsFromRoster || _TrainsFromOperations) {
             info.setTrainName((String) trainSelectBox.getSelectedItem());
             info.setDccAddress(" ");
@@ -1166,7 +1166,7 @@ public class ActivateTrainFrame {
         if (index < 0) {
             log.error("No Starting Block.");
         } else {
-            info.setStartBlockId(startingBlockBoxList.get(index).getSystemName());
+            info.setStartBlockId(startingBlockBoxList.get(index).getDisplayName());
             info.setStartBlockSeq(startingBlockSeqList.get(index).intValue());
         }
         info.setDestinationBlockName((String) destinationBlockBox.getSelectedItem());
@@ -1174,7 +1174,7 @@ public class ActivateTrainFrame {
         if (index < 0) {
             log.error("No Destination Block.");
         } else {
-            info.setDestinationBlockId(destinationBlockBoxList.get(index).getSystemName());
+            info.setDestinationBlockId(destinationBlockBoxList.get(index).getDisplayName());
             info.setDestinationBlockSeq(destinationBlockSeqList.get(index).intValue());
         }
         info.setTrainFromRoster(_TrainsFromRoster);

@@ -229,9 +229,9 @@ public class AutoActiveTrain implements ThrottleListener {
 
     public String getCurrentSignal() {
         if (InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SIGNALHEAD) {
-            return  (_controllingSignal == null  ) ? "" : _controllingSignal.getSystemName() ;
+            return  (_controllingSignal == null  ) ? "" : _controllingSignal.getDisplayName() ;
         } else {
-            return (_controllingSignalMast == null  ) ? "" : _controllingSignalMast.getSystemName();
+            return (_controllingSignalMast == null  ) ? "" : _controllingSignalMast.getDisplayName();
         }
     }
 
@@ -284,7 +284,7 @@ public class AutoActiveTrain implements ThrottleListener {
                         useSpeedProfile = true;
                     }
                 }
-                log.debug("{}: requested roster entry '{}', address={}, use speed profile={}", 
+                log.debug("{}: requested roster entry '{}', address={}, use speed profile={}",
                         _activeTrain.getTrainName(), re.getId(), _address, useSpeedProfile);
             } else {
                 ok = InstanceManager.throttleManagerInstance().requestThrottle(addressForRequest, this, false);
@@ -341,7 +341,7 @@ public class AutoActiveTrain implements ThrottleListener {
     public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
         log.error("Throttle request failed for {} because {}", address, reason);
     }
-    
+
     /**
      * {@inheritDoc}
      * @deprecated since 4.15.7; use #notifyDecisionRequired
@@ -438,7 +438,7 @@ public class AutoActiveTrain implements ThrottleListener {
      */
     protected void handleSectionOccupancyChange(AllocatedSection as) {
         if (!isInAllocatedList(as)) {
-            log.debug("Unexpected occupancy change notification - Section {}", as.getSection().getSystemName());
+            log.debug("Unexpected occupancy change notification - Section {}", as.getSection().getDisplayName());
             return;
         }
         if (as.getSection().getOccupancy() == Section.OCCUPIED) {
@@ -461,7 +461,7 @@ public class AutoActiveTrain implements ThrottleListener {
         if (b.getState() == Block.OCCUPIED) {
             // Block changed to OCCUPIED - train has entered this block
             log.debug("{}: handleBlockStateChange to OCCUPIED section {}, block {}, length {}", _activeTrain.getTrainName(),
-                    as.getSection().getSystemName(),
+                    as.getSection().getDisplayName(),
                     b.getUserName(), getBlockLength(b));
             if (b == _nextBlock || _nextBlock == null) {
                 _currentBlock = b;
@@ -524,9 +524,9 @@ public class AutoActiveTrain implements ThrottleListener {
             }
         } else if (b.getState() == Block.UNOCCUPIED) {
             log.debug("{}: handleBlockStateChange to UNOCCUPIED - Section {}, Block {}, speed {}", _activeTrain.getTrainName(),
-                    as.getSection().getSystemName(), b.getUserName(), _targetSpeed);
+                    as.getSection().getDisplayName(), b.getUserName(), _targetSpeed);
             if (_stoppingByBlockOccupancy && (b == _stoppingBlock)) {
-                log.trace("{}: setStopNow by block occupancy from Block unoccupied, Block= {}", _activeTrain.getTrainName(), b.getSystemName());
+                log.trace("{}: setStopNow by block occupancy from Block unoccupied, Block= {}", _activeTrain.getTrainName(), b.getDisplayName());
                 _stoppingByBlockOccupancy = false;
                 _stoppingBlock = null;
 // djd may need more code here
@@ -580,7 +580,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 if (ep != null) {
                     _nextBlock = ep.getBlock();
                 } else {
-                    log.error("failure to get entry point to Transit from Block {}", _currentBlock.getSystemName());
+                    log.error("failure to get entry point to Transit from Block {}", _currentBlock.getDisplayName());
                 }
             }
             if (_nextBlock != null) {
@@ -618,7 +618,7 @@ public class AutoActiveTrain implements ThrottleListener {
         if (index >= 0) {
             _allocatedSectionList.remove(index);
         } else {
-            log.warn("unexpected call to removeAllocatedSection - Section {}", as.getSection().getSystemName());
+            log.warn("unexpected call to removeAllocatedSection - Section {}", as.getSection().getDisplayName());
         }
     }
 
@@ -682,7 +682,7 @@ public class AutoActiveTrain implements ThrottleListener {
                         }
                     }
                 });
-                log.debug("new current signal = {}", sh.getSystemName());
+                log.debug("new current signal = {}", sh.getDisplayName());
                 setSpeedBySignal();
             } // Note: null signal head will result when exiting throat-to-throat blocks.
             log.debug("new current signal is null - sometimes OK");
@@ -1098,14 +1098,14 @@ public class AutoActiveTrain implements ThrottleListener {
                 _stoppingBySensor = true;
             }
         } else if (_currentAllocatedSection.getLength() < _maxTrainLength || _stopBySpeedProfile) {
-            log.debug("{}: train will not fit in [{}] ({}<{}), stop.", _activeTrain.getTrainName(), 
+            log.debug("{}: train will not fit in [{}] ({}<{}), stop.", _activeTrain.getTrainName(),
                     _currentAllocatedSection.getSectionName(), _currentAllocatedSection.getLength(), _maxTrainLength);
             // train will not fit comfortably in the Section, stop it immediately
             // stopping by speed profile uses block length to stop
             //TODO: don't stop immediately, slow to stop instead
             setStopNow();
         } else if (_resistanceWheels) {
-            log.debug("{}: train will fit in [{}] ({}>={}), stop when prev block clears.", _activeTrain.getTrainName(), 
+            log.debug("{}: train will fit in [{}] ({}>={}), stop when prev block clears.", _activeTrain.getTrainName(),
                     _currentAllocatedSection.getSectionName(), _currentAllocatedSection.getLength(), _maxTrainLength);
             // train will fit in current allocated Section and has resistance wheels
             // try to stop by watching Section Block occupancy
@@ -1797,7 +1797,7 @@ public class AutoActiveTrain implements ThrottleListener {
                                     }
                                 }
                                 _throttle.setSpeedSetting(_currentSpeed);
-                                log.trace("_currentSpeed:{}", _currentSpeed);                                
+                                log.trace("_currentSpeed:{}", _currentSpeed);
                             } //ramping
                         } //if currentSpeed != targetSpeed
                     }
