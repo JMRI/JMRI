@@ -39,6 +39,7 @@ public class AutoTurnouts {
         _dispatcher = d;
     }
 
+    private static final DisplayOptions USERSYS = DisplayOptions.USERNAME_SYSTEMNAME;
     private final String closedText = InstanceManager.turnoutManagerInstance().getClosedText();
     private final String thrownText = InstanceManager.turnoutManagerInstance().getThrownText();
 
@@ -223,7 +224,7 @@ public class AutoTurnouts {
                 }
                 // check or ignore current setting based on flag, set in Options
                 if (!trustKnownTurnouts) {
-                    log.debug("{}: setting turnout {} to {}", at.getTrainName(), to.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME),
+                    log.debug("{}: setting turnout {} to {}", at.getTrainName(), to.getDisplayName(USERSYS),
                             (setting == Turnout.CLOSED ? closedText : thrownText));
                     to.setCommandedState(setting);
                     try {
@@ -237,7 +238,7 @@ public class AutoTurnouts {
                             // setting has been requested, is Section free and Block unoccupied
                             if ((s.getState() == Section.FREE) && (curBlock.getState() != Block.OCCUPIED)) {
                                 // send setting command
-                                log.debug("{}: turnout {} commanded to {}", at.getTrainName(), to.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME),
+                                log.debug("{}: turnout {} commanded to {}", at.getTrainName(), to.getDisplayName(USERSYS),
                                         (setting == Turnout.CLOSED ? closedText : thrownText));
                                 to.setCommandedState(setting);
                                 try {
@@ -251,7 +252,7 @@ public class AutoTurnouts {
                             turnoutsOK = false;
                         }
                     } else {
-                        log.debug("{}: turnout {} already {}, skipping", at.getTrainName(), to.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME),
+                        log.debug("{}: turnout {} already {}, skipping", at.getTrainName(), to.getDisplayName(USERSYS),
                                 (setting == Turnout.CLOSED ? closedText : thrownText));
                     }
                 }

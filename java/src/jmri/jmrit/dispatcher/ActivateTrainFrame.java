@@ -1235,7 +1235,7 @@ public class ActivateTrainFrame {
                 break;
             }
         }
-        if (!found) {
+        if (!found && box.getItemCount() > 0) {
             box.setSelectedIndex(0);
         }
         return found;

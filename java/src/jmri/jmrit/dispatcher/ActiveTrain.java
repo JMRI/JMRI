@@ -104,6 +104,8 @@ import org.slf4j.LoggerFactory;
  */
 public class ActiveTrain {
 
+    private static final jmri.NamedBean.DisplayOptions USERSYS = jmri.NamedBean.DisplayOptions.USERNAME_SYSTEMNAME;
+
     /**
      * Create an ActiveTrain.
      *
@@ -800,26 +802,26 @@ public class ActiveTrain {
                     for (int j = 0; j < bl.size(); j++) {
                         Block b = bl.get(j);
                         list.add(b);
-                        log.trace("block {} ({}) added to list for Section {} (fwd)", b.getDisplayName(),
+                        log.trace("block {} ({}) added to list for Section {} (fwd)", b.getDisplayName(USERSYS),
                                 (b.getState() == Block.OCCUPIED ? "OCCUPIED" : "UNOCCUPIED"),
-                                s.getDisplayName());
+                                s.getDisplayName(USERSYS));
                     }
                 } else { //not connected, add in reverse order
                     for (int j = bl.size() - 1; j >= 0; j--) {
                         Block b = bl.get(j);
                         list.add(b);
-                        log.trace("block {} ({}) added to list for Section {} (rev)", b.getDisplayName(),
+                        log.trace("block {} ({}) added to list for Section {} (rev)", b.getDisplayName(USERSYS),
                                 (b.getState() == Block.OCCUPIED ? "OCCUPIED" : "UNOCCUPIED"),
-                                s.getDisplayName());
+                                s.getDisplayName(USERSYS));
                     }
                 }
 
             } else { //single block sections are simply added to the outgoing list
                 Block b = bl.get(0);
                 list.add(b);
-                log.trace("block {} ({}) added to list for Section {} (one)", b.getDisplayName(),
+                log.trace("block {} ({}) added to list for Section {} (one)", b.getDisplayName(USERSYS),
                         (b.getState() == Block.OCCUPIED ? "OCCUPIED" : "UNOCCUPIED"),
-                        s.getDisplayName());
+                        s.getDisplayName(USERSYS));
             }
         }
         return list;

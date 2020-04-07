@@ -348,6 +348,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     private float maximumLineSpeed = 0.0f;
 
     // operational instance variables
+    private static final jmri.NamedBean.DisplayOptions USERSYS = jmri.NamedBean.DisplayOptions.USERNAME_SYSTEMNAME;
     private final List<ActiveTrain> activeTrainsList = new ArrayList<>();  // list of ActiveTrain objects
     private final List<java.beans.PropertyChangeListener> _atListeners
             = new ArrayList<>();
@@ -902,7 +903,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             return false;
         }
         if (at.getEndBlockSection() != s) {
-            log.error("Active trains end section " + at.getEndBlockSection().getDisplayName() + " is not the same as the requested section to remove " + s.getDisplayName());
+            log.error("Active trains end section " + at.getEndBlockSection().getDisplayName(USERSYS) + " is not the same as the requested section to remove " + s.getDisplayName(USERSYS));
             return false;
         }
         if (!at.getTransit().removeLastTemporarySection(s)) {
@@ -1531,22 +1532,22 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
      * @return the allocated section or null if not successful
      */
     public AllocatedSection allocateSection(AllocationRequest ar, Section ns) {
-        log.trace("{}: Checking Section [{}]", ar.getActiveTrain().getTrainName(), (ns != null ? ns.getDisplayName() : "auto"));
+        log.trace("{}: Checking Section [{}]", ar.getActiveTrain().getTrainName(), (ns != null ? ns.getDisplayName(USERSYS) : "auto"));
         AllocatedSection as = null;
         Section nextSection = null;
         int nextSectionSeqNo = 0;
         ActiveTrain at = ar.getActiveTrain();
         Section s = ar.getSection();
         if (at.reachedRestartPoint()) {
-            log.debug("{}: waiting for restart, [{}] not allocated", at.getTrainName(), s.getDisplayName());
+            log.debug("{}: waiting for restart, [{}] not allocated", at.getTrainName(), s.getDisplayName(USERSYS));
             return null;
         }
         if (at.holdAllocation()) {
-            log.debug("{}: allocation is held, [{}] not allocated", at.getTrainName(), s.getDisplayName());
+            log.debug("{}: allocation is held, [{}] not allocated", at.getTrainName(), s.getDisplayName(USERSYS));
             return null;
         }
         if (s.getState() != Section.FREE) {
-            log.debug("{}: section [{}] is not free", at.getTrainName(), s.getDisplayName());
+            log.debug("{}: section [{}] is not free", at.getTrainName(), s.getDisplayName(USERSYS));
             return null;
         }
         // skip occupancy check if this is the first allocation and the train is occupying the Section
@@ -1756,7 +1757,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             for (int i = 1; i < intermediateSections.size(); i++) {
                 Section se = intermediateSections.get(i);
                 if (preSec == mastHeldAtSection) {
-                    log.debug("Section is beyond held mast do not set turnouts {}", (tmpcur != null ? tmpcur.getDisplayName() : "null"));
+                    log.debug("Section is beyond held mast do not set turnouts {}", (tmpcur != null ? tmpcur.getDisplayName(USERSYS) : "null"));
                     break;
                 }
                 if (!checkTurnoutStates(tmpcur, tmpSeqNo, se, at, preSec)) {
@@ -1785,7 +1786,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             //The first section in the list will be the same as the nextSection, so we skip that.
             for (int i = 1; i < intermediateSections.size(); i++) {
                 if (tmpcur == mastHeldAtSection) {
-                    log.debug("Section is beyond held mast do not allocate any more sections {}", (tmpcur != null ? tmpcur.getDisplayName() : "null"));
+                    log.debug("Section is beyond held mast do not allocate any more sections {}", (tmpcur != null ? tmpcur.getDisplayName(USERSYS) : "null"));
                     break;
                 }
                 Section se = intermediateSections.get(i);

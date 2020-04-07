@@ -57,6 +57,7 @@ public class Transit extends AbstractNamedBean {
     /*
      * Instance variables (not saved between runs)
      */
+    private static final NamedBean.DisplayOptions USERSYS = NamedBean.DisplayOptions.USERNAME_SYSTEMNAME;
     private int mState = Transit.IDLE;
     private final ArrayList<TransitSection> mTransitSectionList = new ArrayList<>();
     private int mMaxSequence = 0;
@@ -453,8 +454,8 @@ public class Transit extends AbstractNamedBean {
                     lastIndex--;
                     lastTS = mTransitSectionList.get(lastIndex);
                 } else {
-                    log.warn("Section mismatch " + (firstTS.getSection()).getDisplayName() + " "
-                            + (lastTS.getSection()).getDisplayName());
+                    log.warn("Section mismatch " + (firstTS.getSection()).getDisplayName(USERSYS) + " "
+                            + (lastTS.getSection()).getDisplayName(USERSYS));
                     return false;
                 }
             }
@@ -462,8 +463,8 @@ public class Transit extends AbstractNamedBean {
         }
         // same Section, check direction
         if (firstTS.getDirection() != lastTS.getDirection()) {
-            log.warn("Direction mismatch " + (firstTS.getSection()).getDisplayName() + " "
-                    + (lastTS.getSection()).getDisplayName());
+            log.warn("Direction mismatch " + (firstTS.getSection()).getDisplayName(USERSYS) + " "
+                    + (lastTS.getSection()).getDisplayName(USERSYS));
             return false;
         }
         return true;
@@ -536,11 +537,11 @@ public class Transit extends AbstractNamedBean {
                         s.getForwardBlockingSensor().setState(Sensor.ACTIVE);
                     }
                 } else {
-                    log.warn("Missing forward blocking sensor for section " + s.getDisplayName());
+                    log.warn("Missing forward blocking sensor for section " + s.getDisplayName(USERSYS));
                     numErrors++;
                 }
             } catch (JmriException reason) {
-                log.error("Exception when initializing forward blocking Sensor for Section " + s.getDisplayName());
+                log.error("Exception when initializing forward blocking Sensor for Section " + s.getDisplayName(USERSYS));
                 numErrors++;
             }
             try {
@@ -549,11 +550,11 @@ public class Transit extends AbstractNamedBean {
                         s.getReverseBlockingSensor().setState(Sensor.ACTIVE);
                     }
                 } else {
-                    log.warn("Missing reverse blocking sensor for section " + s.getDisplayName());
+                    log.warn("Missing reverse blocking sensor for section " + s.getDisplayName(USERSYS));
                     numErrors++;
                 }
             } catch (JmriException reason) {
-                log.error("Exception when initializing reverse blocking Sensor for Section " + s.getDisplayName());
+                log.error("Exception when initializing reverse blocking Sensor for Section " + s.getDisplayName(USERSYS));
                 numErrors++;
             }
         }

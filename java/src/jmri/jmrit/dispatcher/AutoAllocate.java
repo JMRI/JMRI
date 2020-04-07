@@ -81,6 +81,7 @@ public class AutoAllocate {
     }
 
     // operational variables
+    private static final jmri.NamedBean.DisplayOptions USERSYS = jmri.NamedBean.DisplayOptions.USERNAME_SYSTEMNAME;
     private DispatcherFrame _dispatcher = null;
     private ConnectivityUtil _conUtil = null;
     private final List<AllocationPlan> _planList = new ArrayList<>();
@@ -198,7 +199,7 @@ public class AutoAllocate {
 //                            continue;
 //                        }
                         allocateMore(ar);
-                        continue;                        
+                        continue;
                     }
                 }
                 log.trace("Using Regular");
@@ -1384,9 +1385,9 @@ public class AutoAllocate {
 
         if (!sec.equals(mActiveTrain.getNextSectionToAllocate())) {
             log.error("Allocation request section does not match active train next section to allocate");
-            log.error("Section to allocate {}", sec.getDisplayName());
+            log.error("Section to allocate {}", sec.getDisplayName(USERSYS));
             if (mActiveTrain.getNextSectionToAllocate() != null) {
-                log.error("Active Train expected {}", mActiveTrain.getNextSectionToAllocate().getDisplayName());
+                log.error("Active Train expected {}", mActiveTrain.getNextSectionToAllocate().getDisplayName(USERSYS));
             }
             return false;
         }
