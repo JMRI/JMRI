@@ -59,11 +59,21 @@
 			<li><a href="I8N.shtml">Internationalization</a></li>
 			<li><a href="Logging.shtml">Logging &amp; Error Handling</a></li>
 			<li><a href="JUnit.shtml">Unit testing with JUnit</a></li>
-			<li><a href="Javadoc.shtml">Documentation with Javadoc and UML</a></li>
+			<li><a href="Javadoc.shtml">Documentation using Javadoc and UML</a></li>
 			<li><a href="SpotBugs.shtml">Run the SpotBugs static analysis tool</a></li>
-			<li><a href="Help.shtml">Providing help with JavaHelp</a></li>
+			<li><a href="Help.shtml">Providing help using JavaHelp</a></li>
 			<li><a href="FileNames.shtml">Portable Filename Method</a></li>
 			<li><a href="XmlPersistance.shtml">XML Persistance</a></li>
+			</ul>
+		</dd>
+
+		<dt><h3>Help and Web Site</h3></dt>
+		<dd>
+			<ul class="navigation">
+			<li><a href="Help.shtml">Providing Help using JavaHelp</a></li>
+			<li><a href="WebSite.shtml">The JMRI Web Site</a></li>
+            <li><a href="webupdate/UpdatingDocs.shtml">Updating JMRI Web and Help</a></li>
+			<li><a href="Javadoc.shtml">Program Documentation Using Javadoc</a></li>
 			</ul>
 		</dd>
 

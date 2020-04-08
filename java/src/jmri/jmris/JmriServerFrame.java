@@ -1,5 +1,7 @@
 package jmri.jmris;
 
+import jmri.InstanceManager;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
@@ -78,11 +80,11 @@ public class JmriServerFrame extends jmri.util.JmriJFrame {
     }
 
     public void startServer() {
-        jmri.InstanceManager.getDefault(JmriServer.class).start();
+        InstanceManager.getDefault(JmriServer.class).start();
     }
 
     public void stopServer() {
-        jmri.InstanceManager.getDefault(JmriServer.class).stop();
+        InstanceManager.getDefault(JmriServer.class).stop();
     }
 
 }
