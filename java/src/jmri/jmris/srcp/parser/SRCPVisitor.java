@@ -379,9 +379,6 @@ public class SRCPVisitor extends SRCPParserDefaultVisitor {
             int value = Integer.parseInt(((String) ((SimpleNode) node.jjtGetChild(3)).jjtGetValue()));
             try {
                 ((jmri.jmris.srcp.JmriSRCPSensorServer) ((jmri.jmris.ServiceHandler) data).getSensorServer()).parseStatus(bus, address, value);
-            } catch (jmri.JmriException je) {
-                // We shouldn't have any errors here.
-                // If we do, something is horibly wrong.
             } catch (java.io.IOException ie) {
             }
         } else if (((SimpleNode) node.jjtGetChild(1)).jjtGetValue().equals("SM")

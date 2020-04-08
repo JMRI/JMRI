@@ -1,7 +1,8 @@
 package jmri.jmris.srcp;
 
-import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+
 import jmri.ProgListener;
 import jmri.jmris.AbstractProgrammerServer;
 import org.slf4j.Logger;
@@ -15,10 +16,9 @@ import org.slf4j.LoggerFactory;
  */
 public class JmriSRCPProgrammerServer extends AbstractProgrammerServer {
 
-    private DataOutputStream output;
+    private OutputStream output;
 
-    public JmriSRCPProgrammerServer(DataOutputStream outStream) {
-        super();
+    public JmriSRCPProgrammerServer(OutputStream outStream) {
         output = outStream;
     }
 
@@ -29,25 +29,25 @@ public class JmriSRCPProgrammerServer extends AbstractProgrammerServer {
     @Override
     public void sendStatus(int CV, int value, int status) throws IOException {
         if (log.isDebugEnabled()) {
-            log.debug("sendStatus called for CV " + CV
-                    + " with value " + value + " and status " + status);
+            log.debug("sendStatus called for CV {} with value {} and status {}",CV,value,status);
         }
         if (status == ProgListener.OK) {
-            TimeStampedOutput.writeTimestamp(output, "100 INFO 1 SM " + CV + " CV " + value + "\n\r");
+            output.write(("100 INFO 1 SM " + CV + " CV " + value + "\n\r").getBytes());
         } else {
-            TimeStampedOutput.writeTimestamp(output, "416 ERROR no data\n\r");
+            output.write(Bundle.getMessage("Error416").getBytes());
         }
     }
 
     @Override
     public void sendNotAvailableStatus() throws IOException {
-        TimeStampedOutput.writeTimestamp(output, "499 ERROR unspecified error\n");
+        output.write(Bundle.getMessage("Error499").getBytes());
     }
 
     @Override
     public void parseRequest(String statusString) throws jmri.JmriException, java.io.IOException {
+        // SRCP requests are parsed through the common parser.
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JmriSRCPProgrammerServer.class);
+    private static final Logger log = LoggerFactory.getLogger(JmriSRCPProgrammerServer.class);
 
 }
