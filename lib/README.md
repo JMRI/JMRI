@@ -55,6 +55,9 @@ After that, add and commit the additional files that were created within lib/
 - from https://github.com/rhwood/jinputvalidator
 - javadoc at https://www.javadoc.io/doc/com.alexandriasoftware.swing/jinputvalidator/0.6.0
 
+##### assertJ: assertj-core-3.12.0.jar, assertj-swing-3.9.2.jar, assertj-swing-junit-3.9.2.jar
+- testing only
+
 ##### commons-lang3-3.2.1.jar
 - version 3.2.1
 - provides org.apache.commons.lang3

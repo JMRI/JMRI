@@ -1,9 +1,17 @@
 package jmri.jmris.simpleserver;
 
+import jmri.*;
+import jmri.implementation.AbstractSensor;
+import jmri.jmrix.SystemConnectionMemo;
 import jmri.util.JUnitUtil;
+import jmri.util.PreferNumericComparator;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+
+import javax.annotation.Nonnull;
+import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -73,7 +81,7 @@ public class SimpleSensorServerTest extends jmri.jmris.AbstractSensorServerTestB
     @Test 
     public void parseActiveStatus() throws Exception {
         ss.parseStatus("SENSOR IS1 ACTIVE\n");
-        jmri.Sensor sensor = (jmri.InstanceManager.getDefault(jmri.SensorManager.class)).getSensor("IS1");
+        jmri.Sensor sensor = (InstanceManager.getDefault(jmri.SensorManager.class)).getSensor("IS1");
         assertThat(sensor.getState()).isEqualTo(jmri.Sensor.ACTIVE).withFailMessage("Parse Active Status Check");
         // parsing the status also causes a message to return to
         // the client.
@@ -84,7 +92,7 @@ public class SimpleSensorServerTest extends jmri.jmris.AbstractSensorServerTestB
     @Test 
     public void parseInactiveStatus() throws Exception {
          ss.parseStatus("SENSOR IS1 INACTIVE\n");
-         jmri.Sensor sensor = (jmri.InstanceManager.getDefault(jmri.SensorManager.class)).getSensor("IS1");
+         jmri.Sensor sensor = (InstanceManager.getDefault(jmri.SensorManager.class)).getSensor("IS1");
          assertThat(sensor.getState()).isEqualTo(jmri.Sensor.INACTIVE).withFailMessage("Parse Inactive Status Check");
          // parsing the status also causes a message to return to
          // the client.
@@ -98,7 +106,7 @@ public class SimpleSensorServerTest extends jmri.jmris.AbstractSensorServerTestB
         // nothing has changed the sensor, so it should be unknown.
         checkSensorUnknownSent();
         // verify the sensor exists, it should have been created with provideSensor.
-        assertThat(jmri.InstanceManager.getDefault(jmri.SensorManager.class).getSensor("IS1")).isNotNull();
+        assertThat(InstanceManager.getDefault(jmri.SensorManager.class).getSensor("IS1")).isNotNull();
     }
 
     // test Parsing an blank status message.
@@ -108,7 +116,7 @@ public class SimpleSensorServerTest extends jmri.jmris.AbstractSensorServerTestB
         // nothing has changed the sensor, so it should be unknown.
         checkSensorUnknownSent();
         // verify the sensor exists, it should have been created with provideSensor.
-        assertThat(jmri.InstanceManager.getDefault(jmri.SensorManager.class).getSensor("IS1")).isNotNull();
+        assertThat(InstanceManager.getDefault(jmri.SensorManager.class).getSensor("IS1")).isNotNull();
     }
 
     // test Parsing an other status message.
@@ -157,11 +165,7 @@ public class SimpleSensorServerTest extends jmri.jmris.AbstractSensorServerTestB
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-
-        jmri.util.JUnitUtil.initInternalTurnoutManager();
-        jmri.util.JUnitUtil.initInternalLightManager();
         jmri.util.JUnitUtil.initInternalSensorManager();
-        jmri.util.JUnitUtil.initDebugThrottleManager();
         sb = new StringBuilder();
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {

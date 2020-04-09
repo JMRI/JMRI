@@ -117,7 +117,7 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
 
     public RollingStockEditFrame(String title) {
         super(title);
-        //instanceManager = InstanceManger.getInstance();
+        //InstanceManager = InstanceManger.getInstance();
     }
 
     abstract protected RollingStockAttribute getTypeManager();

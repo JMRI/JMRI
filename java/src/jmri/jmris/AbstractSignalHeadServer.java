@@ -5,6 +5,7 @@ import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.SignalHead;
@@ -22,7 +23,7 @@ abstract public class AbstractSignalHeadServer {
     private final HashMap<String, SignalHeadListener> signalHeads;
     private static final Logger log = LoggerFactory.getLogger(AbstractSignalHeadServer.class);
 
-    public AbstractSignalHeadServer() {
+    public AbstractSignalHeadServer(){
         signalHeads = new HashMap<String, SignalHeadListener>();
     }
 
