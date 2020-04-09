@@ -62,31 +62,8 @@ public class VSDecoder implements PropertyChangeListener {
     int topspeed_rev;
     int setup_index; // Can be set by a Route
 
-    // List of registered event listeners
-    protected javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
-
     HashMap<String, VSDSound> sound_list; // list of sounds
     HashMap<String, SoundEvent> event_list; // list of events
-
-    /**
-     * Construct a VSDecoder with a given name and ID (system name)
-     *
-     * @param id   (String) System Name of this VSDecoder
-     * @param name (String) Sound Profile name for this VSDecoder
-     */
-    @Deprecated
-    public VSDecoder(String id, String name) {
-
-        config = new VSDConfig();
-        config.setProfileName(name);
-        config.setId(id);
-
-        sound_list = new HashMap<String, VSDSound>();
-        event_list = new HashMap<String, SoundEvent>();
-
-        // Force re-initialization
-        initialized = _init();
-    }
 
     /**
      * Construct a VSDecoder with the given system name (id) and configuration
@@ -221,49 +198,6 @@ public class VSDecoder implements PropertyChangeListener {
      */
     public String getVSDFilePath() {
         return config.getVSDPath();
-    }
-
-    // VSDecoder Events
-    /**
-     * Add a listener for this object's events
-     *
-     * @param listener handle
-     */
-    public void addEventListener(VSDecoderListener listener) {
-        listenerList.add(VSDecoderListener.class, listener);
-    }
-
-    /**
-     * Remove a listener for this object's events
-     *
-     * @param listener handle
-     */
-    public void removeEventListener(VSDecoderListener listener) {
-        listenerList.remove(VSDecoderListener.class, listener);
-    }
-
-    /**
-     * Fire an event to this object's listeners
-     */
-    private void fireMyEvent(VSDecoderEvent evt) {
-        for (VSDecoderListener l : listenerList.getListeners(VSDecoderListener.class)) {
-            l.eventAction(evt);
-        }
-    }
-
-    /**
-     * Handle Window events from this VSDecoder's GUI window.
-     *
-     * @param e the window event to handle
-     */
-    public void windowChange(java.awt.event.WindowEvent e) {
-        log.debug("decoder.windowChange() - {}", e.toString());
-        log.debug("param string: {}", e.paramString());
-        // if (e.paramString().equals("WINDOW_CLOSING")) {
-        // Shut down the sounds.
-        this.shutdown();
-
-        // }
     }
 
     /**
@@ -451,7 +385,7 @@ public class VSDecoder implements PropertyChangeListener {
         if (create_xy_series) {   
             log.info("{}: {}\t{}", this.getAddress(), (float) Math.round(p.x*10000)/10000, p.y);
         }
-        log.debug("( " + this.getAddress() + ") Set Position: " + p.toString());
+        log.debug("( {} ). Set Position: {}", this.getAddress(), p);
 
         this.lastPos = p; // save this position
 
@@ -476,7 +410,6 @@ public class VSDecoder implements PropertyChangeListener {
         for (VSDSound vs : sound_list.values()) {
             vs.setVolume(tv);
         }
-        fireMyEvent(new VSDecoderEvent(this, VSDecoderEvent.EventType.LOCATION_CHANGE, p));
     }
 
     /**
@@ -528,28 +461,7 @@ public class VSDecoder implements PropertyChangeListener {
             return;
         }
 
-        // Respond to events from the old GUI.
-        if (property.equals(VSDManagerFrame.MUTE)
-                || property.equals(VSDecoderPane.MUTE)) {
-            // Either GUI Mute button
-            log.debug("VSD: Mute change. value: {}", evt.getNewValue());
-            Boolean b = (Boolean) evt.getNewValue();
-            this.mute(b.booleanValue());
-
-        } else if (property.equals(VSDManagerFrame.VOLUME_CHANGE)
-                || property.equals(VSDecoderPane.VOLUME_CHANGE)) {
-            // Either GUI Volume slider
-            log.debug("VSD: Volume change. value: {}", evt.getNewValue());
-            // Slider gives integer 0-100. Need to change that to a float 0.0-1.0
-            this.setMasterVolume((1.0f * (Integer) evt.getNewValue()) / 100.0f);
-
-        } else if (property.equals(VSDecoderPane.ADDRESS_CHANGE)) {
-            // OLD GUI Address Change
-            log.debug("Decoder set address: {}", (LocoAddress) evt.getNewValue());
-            this.setAddress((LocoAddress) evt.getNewValue());
-            this.enable();
-
-        } else if (property.equals(Train.TRAIN_LOCATION_CHANGED_PROPERTY)) {
+        if (property.equals(Train.TRAIN_LOCATION_CHANGED_PROPERTY)) {
             // Train Location Move (either GUI)
             PhysicalLocation p = getTrainPosition((Train) evt.getSource());
             if (p != null) {
