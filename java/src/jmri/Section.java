@@ -1687,7 +1687,7 @@ public class Section extends AbstractNamedBean {
                     // have a signalled block boundary
                     SignalHead sh = cUtil.getSignalHeadAtAnchor(p, cBlock, false);
                     if (sh == null) {
-                        log.warn("Unexpected missing signal head at boundary of Block {}", cBlock.getUserName());
+                        log.warn("Unexpected missing signal head at boundary of Block {}", cBlock.getDisplayName(USERSYS));
                         errorCount++;
                     } else {
                         int direction = cUtil.getDirectionFromAnchor(mForwardEntryPoints,
@@ -2178,7 +2178,7 @@ public class Section extends AbstractNamedBean {
                                         }
                                     } else {
                                         log.warn("Turnout {} - SSL for head {} cannot handle direction sensor for second diverging track.",
-                                                tLinked.getTurnoutName(), a1Head.getDisplayName(USERSYS));
+                                                tLinked.getTurnout().getDisplayName(USERSYS), a1Head.getDisplayName(USERSYS));
                                         errorCount++;
                                     }
                                 } else if (((TrackSegment) t.getConnectB()).getLayoutBlock().getBlock() == cBlock) {
@@ -2326,11 +2326,7 @@ public class Section extends AbstractNamedBean {
         }
         // set up missing signal head message, if any
         if ((missingSignalsBB + missingSignalsTurnouts + missingSignalsLevelXings) > 0) {
-            String s = "Section - " + getDisplayName();
-            String uname = getUserName();
-            if ((uname != null) && (!uname.equals(""))) {
-                s = s + "(" + uname + ")";
-            }
+            String s = "Section - " + getDisplayName(USERSYS);
             if (missingSignalsBB > 0) {
                 s = s + ", " + (missingSignalsBB) + " anchor point signal heads missing";
             }
@@ -2431,7 +2427,7 @@ public class Section extends AbstractNamedBean {
                 if (userName != null) {
                     LayoutBlock lBlock = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(userName);
                     if (lBlock == null) {
-                        log.error("Layout Block {} not found. Paths not checked.", i);
+                        log.error("Layout Block {} not found. Paths not checked.", userName);
                     } else {
                         lBlock.updatePathsUsingPanel(lePanel);
                     }
@@ -2442,47 +2438,47 @@ public class Section extends AbstractNamedBean {
         if (mBlockEntries.size() > 1) {
             for (int i = 0; i < (mBlockEntries.size() - 1); i++) {
                 if (!connected(getBlockBySequenceNumber(i), getBlockBySequenceNumber(i + 1))) {
-                    String s = "Sequential Blocks - " + getBlockBySequenceNumber(i).getDisplayName()
-                            + ", " + getBlockBySequenceNumber(i + 1).getDisplayName()
-                            + " - are not connected in Section " + getDisplayName() + ".";
+                    String s = "Sequential Blocks - " + getBlockBySequenceNumber(i).getDisplayName(USERSYS)
+                            + ", " + getBlockBySequenceNumber(i + 1).getDisplayName(USERSYS)
+                            + " - are not connected in Section " + getDisplayName(USERSYS) + ".";
                     return s;
                 }
                 if (!connected(getBlockBySequenceNumber(i + 1), getBlockBySequenceNumber(i))) {
-                    String s = "Sequential Blocks - " + getBlockBySequenceNumber(i).getDisplayName()
-                            + ", " + getBlockBySequenceNumber(i + 1).getDisplayName()
-                            + " - Paths are not consistent - Section " + getDisplayName() + ".";
+                    String s = "Sequential Blocks - " + getBlockBySequenceNumber(i).getDisplayName(USERSYS)
+                            + ", " + getBlockBySequenceNumber(i + 1).getDisplayName(USERSYS)
+                            + " - Paths are not consistent - Section " + getDisplayName(USERSYS) + ".";
                     return s;
                 }
             }
         }
         // validate entry points
         if ((mForwardEntryPoints.size() == 0) && (mReverseEntryPoints.size() == 0)) {
-            String s = "Section " + getDisplayName() + "has no Entry Points.";
+            String s = "Section " + getDisplayName(USERSYS) + "has no Entry Points.";
             return s;
         }
         if (mForwardEntryPoints.size() > 0) {
             for (int i = 0; i < mForwardEntryPoints.size(); i++) {
                 EntryPoint ep = mForwardEntryPoints.get(i);
                 if (!containsBlock(ep.getBlock())) {
-                    String s = "Entry Point Block, " + ep.getBlock().getDisplayName()
-                            + ", is not a Block in Section " + getDisplayName() + ".";
+                    String s = "Entry Point Block, " + ep.getBlock().getDisplayName(USERSYS)
+                            + ", is not a Block in Section " + getDisplayName(USERSYS) + ".";
                     return s;
                 }
                 if (!connectsToBlock(ep.getFromBlock())) {
-                    String s = "Entry Point From Block, " + ep.getBlock().getDisplayName()
-                            + ", is not connected to a Block in Section " + getDisplayName() + ".";
+                    String s = "Entry Point From Block, " + ep.getBlock().getDisplayName(USERSYS)
+                            + ", is not connected to a Block in Section " + getDisplayName(USERSYS) + ".";
                     return s;
                 }
                 if (!ep.isForwardType()) {
                     String s = "Direction of FORWARD Entry Point From Block "
-                            + ep.getFromBlock().getDisplayName() + " to Section "
-                            + getDisplayName() + " is incorrectly set.";
+                            + ep.getFromBlock().getDisplayName(USERSYS) + " to Section "
+                            + getDisplayName(USERSYS) + " is incorrectly set.";
                     return s;
                 }
                 if (!connected(ep.getBlock(), ep.getFromBlock())) {
-                    String s = "Entry Point Blocks, " + ep.getBlock().getDisplayName()
-                            + " and " + ep.getFromBlock().getDisplayName()
-                            + ", are not connected in Section " + getDisplayName() + ".";
+                    String s = "Entry Point Blocks, " + ep.getBlock().getDisplayName(USERSYS)
+                            + " and " + ep.getFromBlock().getDisplayName(USERSYS)
+                            + ", are not connected in Section " + getDisplayName(USERSYS) + ".";
                     return s;
                 }
             }
@@ -2491,25 +2487,25 @@ public class Section extends AbstractNamedBean {
             for (int i = 0; i < mReverseEntryPoints.size(); i++) {
                 EntryPoint ep = mReverseEntryPoints.get(i);
                 if (!containsBlock(ep.getBlock())) {
-                    String s = "Entry Point Block, " + ep.getBlock().getDisplayName()
-                            + ", is not a Block in Section " + getDisplayName() + ".";
+                    String s = "Entry Point Block, " + ep.getBlock().getDisplayName(USERSYS)
+                            + ", is not a Block in Section " + getDisplayName(USERSYS) + ".";
                     return s;
                 }
                 if (!connectsToBlock(ep.getFromBlock())) {
-                    String s = "Entry Point From Block, " + ep.getBlock().getDisplayName()
-                            + ", is not connected to a Block in Section " + getDisplayName() + ".";
+                    String s = "Entry Point From Block, " + ep.getBlock().getDisplayName(USERSYS)
+                            + ", is not connected to a Block in Section " + getDisplayName(USERSYS) + ".";
                     return s;
                 }
                 if (!ep.isReverseType()) {
                     String s = "Direction of REVERSE Entry Point From Block "
-                            + ep.getFromBlock().getDisplayName() + " to Section "
-                            + getDisplayName() + " is incorrectly set.";
+                            + ep.getFromBlock().getDisplayName(USERSYS) + " to Section "
+                            + getDisplayName(USERSYS) + " is incorrectly set.";
                     return s;
                 }
                 if (!connected(ep.getBlock(), ep.getFromBlock())) {
-                    String s = "Entry Point Blocks, " + ep.getBlock().getDisplayName()
-                            + " and " + ep.getFromBlock().getDisplayName()
-                            + ", are not connected in Section " + getDisplayName() + ".";
+                    String s = "Entry Point Blocks, " + ep.getBlock().getDisplayName(USERSYS)
+                            + " and " + ep.getFromBlock().getDisplayName(USERSYS)
+                            + ", are not connected in Section " + getDisplayName(USERSYS) + ".";
                     return s;
                 }
             }

@@ -1117,7 +1117,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                         "Error4"), new Object[]{startBlockName}), Bundle.getMessage("ErrorTitle"),
                         JOptionPane.ERROR_MESSAGE);
             }
-            log.error("Bad startBlockName '{}' when attempting to create an Active Train", startBlockName);
+            log.error("Bad startBlockName '{}' when attempting to create an Active Train", startBlock.getDisplayName(USERSYS));
             return null;
         }
         if (isInAllocatedSection(startBlock)) {
@@ -1126,7 +1126,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                         "Error5"), new Object[]{startBlock.getDisplayName()}), Bundle.getMessage("ErrorTitle"),
                         JOptionPane.ERROR_MESSAGE);
             }
-            log.error("Start block '{}' in allocated Section, cannot create an Active Train", startBlockName);
+            log.error("Start block '{}' in allocated Section, cannot create an Active Train", startBlock.getDisplayName(USERSYS));
             return null;
         }
         if (_HasOccupancyDetection && (!(startBlock.getState() == Block.OCCUPIED))) {
@@ -1135,7 +1135,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                         "Error6"), new Object[]{startBlock.getDisplayName()}), Bundle.getMessage("ErrorTitle"),
                         JOptionPane.ERROR_MESSAGE);
             }
-            log.error("No train in start block '{}', cannot create an Active Train", startBlockName);
+            log.error("No train in start block '{}', cannot create an Active Train", startBlock.getDisplayName(USERSYS));
             return null;
         }
         if (startBlockSectionSequenceNumber <= 0) {
@@ -1159,7 +1159,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                         "Error7"), new Object[]{endBlockName}), Bundle.getMessage("ErrorTitle"),
                         JOptionPane.ERROR_MESSAGE);
             }
-            log.error("Bad endBlockName '{}' when attempting to create an Active Train", endBlockName);
+            log.error("Bad endBlockName '{}' when attempting to create an Active Train", endBlock.getDisplayName(USERSYS));
             return null;
         }
         if ((endBlockSectionSequenceNumber <= 0) && (t.getBlockCount(endBlock) > 1)) {
@@ -1861,7 +1861,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         }
         at.addAllocatedSection(as);
         allocatedSections.add(as);
-        log.debug("{}: Allocated section [{}]", at.getTrainName(), as.getSectionName());
+        log.debug("{}: Allocated section [{}]", at.getTrainName(), as.getSection().getDisplayName(USERSYS));
         return as;
     }
 
@@ -2149,7 +2149,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                                         }
                                     }
                                     if (foundOne) {
-                                        log.debug("{}: releasing section [{}]", at.getTrainName(), as.getSectionName());
+                                        log.debug("{}: releasing section [{}]", at.getTrainName(), as.getSection().getDisplayName(USERSYS));
                                         releaseAllocatedSection(as, false);
                                     }
                                 }

@@ -470,9 +470,9 @@ public class ActiveTrain {
                             if (resetStartSensor) {
                                 try {
                                     getDelaySensor().setKnownState(jmri.Sensor.INACTIVE);
-                                    log.debug("Start sensor {} set back to inActive", getDelaySensorName());
+                                    log.debug("Start sensor {} set back to inActive", getDelaySensor().getDisplayName(USERSYS));
                                 } catch (jmri.JmriException ex) {
-                                    log.error("Error resetting start sensor {} back to inActive", getDelaySensorName());
+                                    log.error("Error resetting start sensor {} back to inActive", getDelaySensor().getDisplayName(USERSYS));
                                 }
                             }
                         }
@@ -503,7 +503,7 @@ public class ActiveTrain {
                             if (resetRestartSensor) {
                                 try {
                                     getRestartSensor().setKnownState(jmri.Sensor.INACTIVE);
-                                    log.debug("Restart sensor {} set back to inActive", getRestartSensorName());
+                                    log.debug("Restart sensor {} set back to inActive", getRestartSensor().getDisplayName(USERSYS));
                                 } catch (jmri.JmriException ex) {
                                     log.error("Error resetting restart sensor back to inActive");
                                 }
@@ -704,7 +704,7 @@ public class ActiveTrain {
             }
         }
         if (index < 0) {
-            log.error("Attempt to remove an unallocated Section " + as.getSectionName());
+            log.error("Attempt to remove an unallocated Section " + as.getSection().getDisplayName(USERSYS));
             return;
         }
         mAllocatedSections.remove(index);

@@ -172,8 +172,8 @@ public class AutoTurnouts {
             // which would point to a threading issue.
             try {
             log.error("[{}]direction[{}] Section[{}]Error in turnout check/set request - initial Block[{}] and Section[{}] mismatch",
-                    at.getActiveTrainName(),at.isAllocationReversed(),s.getUserName(),
-                    at.getStartBlock().getUserName(),at.getEndBlock().getUserName());
+                    at.getActiveTrainName(),at.isAllocationReversed(),s.getDisplayName(USERSYS),
+                    at.getStartBlock().getUserName(),at.getEndBlock().getDisplayName(USERSYS));
             } catch (Exception ex ) {
                 log.warn(ex.getLocalizedMessage());
             }
@@ -199,7 +199,7 @@ public class AutoTurnouts {
                     ((!at.isAllocationReversed() && curBlock != at.getEndBlock()) ||
                             (at.isAllocationReversed() && curBlock != at.getStartBlock())))) {
                 log.error("[{}]Error in block sequence numbers when setting/checking turnouts.",
-                        curBlock.getUserName());
+                        curBlock.getDisplayName(USERSYS));
                 return false;
             }
         }
