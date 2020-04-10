@@ -72,7 +72,7 @@
         <label xml:lang="ca">Voltatge Alt</label>
         <tooltip xml:lang="de">Festlegung der Höchstgeschwindigkeit der Lok</tooltip>
     </variable>
-    <variable CV="6" default="88" item="Vmid" include="LokSound 5 DCC,LokSound 5 micro DCC,LokSound 5 micro DCC Direct,LokSound 5 L DCC">
+    <variable CV="6" default="88" item="Vmid" include="LokSound 5 DCC,LokSound 5 micro DCC,LokSound 5 micro DCC Direct,LokSound 5 L DCC,LokPilot 5 DCC,LokPilot 5 micro DCC,LokPilot 5 micro DCC Next18,LokPilot 5 L DCC,LokPilot 5 Fx micro DCC,LokPilot 5 MKL DCC">
         <decVal min="1"/>
         <label>Vmid</label>
         <label xml:lang="de">Mittengeschwindigkeit</label>
@@ -226,7 +226,7 @@
         <tooltip xml:lang="de">Setzen Sie diesen Wert auf Decoder-Typ: 1 = Motor, 2 = Sound, 3 = Funktion, etc.</tooltip>
     </variable>
     <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
-    <xi:include href="http://jmri.org/xml/decoders/esu/v4cv21.22.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/esu/v5ConsistCVs.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/nmra/consistAccelDecelSigned.xml"/>
     <variable CV="27" mask="XXXXXXXV" item="ESU V4 ABC Brake Right Rail Higher">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -262,7 +262,7 @@
         <variable CV="27" mask="XXVXXXXX" item="ESU V4 Selectrix Brake Reverse" default="0">
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
             <label>Brake on reverse polarity of brake diode</label>
-        <label xml:lang="de">Bremsen wenn Polarität entgegengesetzt der Fahrtrichtung</label>
+            <label xml:lang="de">Bremsen wenn Polarität entgegengesetzt der Fahrtrichtung</label>
         </variable>
         <variable CV="27" mask="XVXXXXXX" item="ESU V4 Selectrix Brake Forward" default="0">
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -307,7 +307,7 @@
         <label xml:lang="de">RailCom® aktiv</label>
         <label xml:lang="ca">Railcom Actiu</label>
     </variable>
-    <variable CV="29" mask="XXXVXXXX" item="Speed Table Definition" include="LokSound 5 DCC,LokSound 5 micro DCC,LokSound 5 micro DCC Direct,LokSound 5 L DCC">
+    <variable CV="29" mask="XXXVXXXX" item="Speed Table Definition" include="LokSound 5 DCC,LokSound 5 micro DCC,LokSound 5 micro DCC Direct,LokSound 5 L DCC,LokPilot 5 DCC,LokPilot 5 micro DCC,LokPilot 5 micro DCC Next18,LokPilot 5 L DCC,LokPilot 5 Fx micro DCC,LokPilot 5 MKL DCC">
         <enumVal>
             <enumChoice choice="Use Vstart, Vmid, Vhigh">
                 <choice>Use Vstart, Vmid, Vhigh</choice>
@@ -492,6 +492,28 @@
             <label xml:lang="ca">Reteall enrere</label>
         </variable>
     </variables>
+    <variable CV="57" default="143" item="Sound Steam Chuffs Step 1" tooltip="Set to zero for cam input">
+        <decVal/>
+        <label>Chuff spacing speed step 1</label>
+        <label xml:lang="it">Velocità distanza Chuff step 1</label>
+        <label xml:lang="de">Dampfstöße bei FS=1</label>
+        <label xml:lang="ca">Espaiat entre xufs pas 1</label>
+        <tooltip xml:lang="de">Setzen Sie den Wert auf 0 wenn ein externer Radsensor verwendet wird.</tooltip>
+    </variable>
+    <variable CV="58" default="43" item="Sound Steam Chuffs Decrease Rate">
+        <decVal/>
+        <label>Chuff spacing decrease rate</label>
+        <label xml:lang="it">Decremento distanza Chuff</label>
+        <label xml:lang="de">Anpassung bei höheren FS</label>
+        <label xml:lang="ca">Taxa decreiement xuf</label>
+    </variable>
+    <variable CV="100" default="0" item="Motor Option 3">
+        <decVal/>
+        <label>Motor Current Limiter</label>
+        <label xml:lang="de">Motor Current Limiter</label>
+        <tooltip>Limits the maximum curent allowed to be drawn by the motor. 0 is limiter disabled, 1 is 0.39%, 255 is 100%.</tooltip>
+        <tooltip xml:lang="de">Limits the maximum curent allowed to be drawn by the motor. 0 is limiter disabled, 1 is 0.39%, 255 is 100%.</tooltip>
+    </variable>
     <variable CV="101" default="64" item="ESU V5 Shunt Trim">
         <decVal max="128"/>
         <label>Shunting Mode Trim</label>
@@ -631,6 +653,20 @@
         <tooltip>At speed step 255. Unit is 0.1 milliseconds.</tooltip>
         <tooltip xml:lang="de">Länge der Meßlücke in 0,1 Millisekunden bei Fahrstufe 255</tooltip>
     </variable>
+    <variable CV="122" mask="XXXXXXXV" default="1" item="ESU V4 Memory Settings Functions">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Remember Current Function States</label>
+        <label xml:lang="fr">Sauvegarde fonction</label>
+        <label xml:lang="de">Speicherung der Funktionstastenstellung</label>
+        <label xml:lang="ca">Desa l'estat de les funcions</label>
+    </variable>
+    <variable CV="122" mask="XXXXXXVX" default="1" item="ESU V4 Memory Settings Speed">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Remember Current Speed</label>
+        <label xml:lang="fr">Sauvegarde vitesse actuelle</label>
+        <label xml:lang="de">Speicherung der Geschwindigkeit</label>
+        <label xml:lang="ca">Recorda velocitats Actuals</label>
+    </variable>
     <variable CV="123" default="100" item="ESU V4 ABC Reduced Speed">
         <decVal/>
         <label>ABC mode reduced speed</label>
@@ -667,7 +703,7 @@
         <label xml:lang="de">Motorschutz bei Blockierung</label>
         <label xml:lang="ca">Protecciò d'escalfametn del motor</label>
     </variable>
-    <variable CV="124" mask="XVXXXXXX" default="0" item="Motor Option 3">
+    <variable CV="124" mask="XVXXXXXX" default="0" item="Motor Option 4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Automatic Parking Brake</label>
         <label xml:lang="de">Parkbremse</label>
@@ -728,33 +764,58 @@
         <label xml:lang="de">ABC-Modus „Empfindlichkeit”</label>
         <label xml:lang="ca">Límit de detecció de voltatge sistema ABC</label>
     </variable>
+    <variable CV="141" default="20" tooltip="Unit is .0041 seconds" item="ESU V4 Function Settings Smoke Chuffs Slider 2">
+        <decVal/>
+        <label>Smoke Unit Minimum Steam Chuff Duration</label>
+        <label xml:lang="it">Durata Min.Chuff per Gener.Fumo</label>
+        <label xml:lang="de">Minimale Dauer</label>
+        <label xml:lang="ca">Unitat mínima de duració de xuf</label>
+        <tooltip xml:lang="de">die Einheit ist 0.0041 s</tooltip>
+    </variable>
+    <variable CV="142" default="122" tooltip="Unit is .0041 seconds" item="ESU V4 Function Settings Smoke Chuffs Slider 3">
+        <decVal/>
+        <label>Smoke Unit Maximum Steam Chuff Duration</label>
+        <label xml:lang="it">Durata Max.Chuff per Gener.Fumo</label>
+        <label xml:lang="de">Maximale Dauer</label>
+        <label xml:lang="ca">Unitat màxima de duració de xuf</label>
+        <tooltip xml:lang="de">die Einheit ist 0.0041 s</tooltip>
+    </variable>
+    <variable CV="143" default="102" item="ESU V4 Function Settings Smoke Chuffs Slider 1">
+        <decVal/>
+        <label>Smoke Unit Chuff Duration rel. to trig. dist.</label>
+        <label xml:lang="it">Durata Suono per Gener.Fumo in funz.dist.Trigger</label>
+        <label xml:lang="de">Dauer der Dampfstöße (relativ zu Trigger-Impulsen)</label>
+        <label xml:lang="ca">Unitat de xuf en relació a distància</label>
+    </variable>
     <!-- A nicht beschrieben -->
-    <variable CV="138" default="128" item="ESU V4 Function Settings Smoke Unit Slider 2" exclude="Essential Sound Unit">
-        <decVal/>
-        <label>Fan Speed Trim</label>
-        <label xml:lang="de">           Lüftergeschwindigkeit          </label>
-        <label xml:lang="ca">Ajust de temperatura del ventilador</label>
-    </variable>
-    <variable CV="139" default="128" item="ESU V4 Function Settings Smoke Unit Slider 3" exclude="Essential Sound Unit">
-        <decVal/>
-        <label>Temperature Trim</label>
-        <label xml:lang="de">            Temperaturregelung            </label>
-        <label xml:lang="ca">Ajust de temperatura</label>
-    </variable>
-    <variable CV="140" default="120" tooltip="Unit is 5 seconds" item="ESU V4 Function Settings Smoke Unit Slider 1" exclude="Essential Sound Unit">
-        <decVal/>
-        <label>Smoke Unit Automatic Power Off Time</label>
-        <label xml:lang="de"> automatische Abschaltung Rauchentwickler </label>
-        <tooltip xml:lang="de">die Einheit sind 5 sec</tooltip>
-        <label xml:lang="ca">TEmps apagat del fumigen</label>
-    </variable>
-    <variable CV="144" default="150" tooltip="Unit is degrees Celsius" item="ESU V4 Function Settings Smoke Unit Slider 4" exclude="Essential Sound Unit">
-        <decVal/>
-        <label>Preheating Temperature for Secondary Smoke Unit</label>
-        <label xml:lang="de">Vorwärmtemperatur für Sekundärraucheinheit</label>
-        <label xml:lang="ca">Temperatra de preescalfat de segon fumigen</label>
-        <tooltip xml:lang="de">die Einheit ist Grad Celsius</tooltip>
-    </variable>
+    <variables exclude="ESU LokPilot 5,Essential Sound Unit">
+        <variable CV="138" default="128" item="ESU V4 Function Settings Smoke Unit Slider 2">
+            <decVal/>
+            <label>Fan Speed Trim</label>
+            <label xml:lang="de">           Lüftergeschwindigkeit          </label>
+            <label xml:lang="ca">Ajust de temperatura del ventilador</label>
+        </variable>
+        <variable CV="139" default="128" item="ESU V4 Function Settings Smoke Unit Slider 3">
+            <decVal/>
+            <label>Temperature Trim</label>
+            <label xml:lang="de">            Temperaturregelung            </label>
+            <label xml:lang="ca">Ajust de temperatura</label>
+        </variable>
+        <variable CV="140" default="120" tooltip="Unit is 5 seconds" item="ESU V4 Function Settings Smoke Unit Slider 1">
+            <decVal/>
+            <label>Smoke Unit Automatic Power Off Time</label>
+            <label xml:lang="de"> automatische Abschaltung Rauchentwickler </label>
+            <tooltip xml:lang="de">die Einheit sind 5 sec</tooltip>
+            <label xml:lang="ca">TEmps apagat del fumigen</label>
+        </variable>
+        <variable CV="144" default="150" tooltip="Unit is degrees Celsius" item="ESU V4 Function Settings Smoke Unit Slider 4">
+            <decVal/>
+            <label>Preheating Temperature for Secondary Smoke Unit</label>
+            <label xml:lang="de">Vorwärmtemperatur für Sekundärraucheinheit</label>
+            <label xml:lang="ca">Temperatra de preescalfat de segon fumigen</label>
+            <tooltip xml:lang="de">die Einheit ist Grad Celsius</tooltip>
+        </variable>
+    </variables>
     <variable CV="149" default="0" item="ESU V5 ABC Shuttle Train">
         <decVal/>
         <label>ABC Shuttle Train</label>
@@ -831,20 +892,64 @@
         <tooltip>Highest speed step that can be reached when Brake Function 3 is active.</tooltip>
     </variable>
     <variables exclude="Essential Sound Unit">
-        <variable CV="246" default="0" item="ESU V4 Function Settings Auto Uncoupling Slider 1" exclude="LokPilot Fx V4.0">
+        <variable CV="191" default="0" item="M4MfgId">
+            <decVal/>
+            <label>M4 Manufacturer ID</label>
+            <tooltip>The M4 manufacturer's ID number</tooltip>
+            <tooltip xml:lang="ca">M4 Número de fabricant</tooltip>
+            <tooltip xml:lang="cs">M4 ID číslo výrobce</tooltip>
+            <tooltip xml:lang="de">M4 Hersteller ID</tooltip>
+            <tooltip xml:lang="fr">M4 ID constructeur</tooltip>
+            <tooltip xml:lang="it">M4 ID Costruttore</tooltip>
+            <tooltip xml:lang="nl">M4 ID decoderfabrikant</tooltip>
+        </variable>
+        <variable CV="192:4" item="M4SerNo">
+            <splitHexVal case="upper"/>
+            <label>M4 Decoder Serial Number</label>
+            <label xml:lang="de">M4 Seriennummer</label>
+            <tooltip>The M4 Decoder Serial number</tooltip>
+            <tooltip xml:lang="ca">M4 Número de versió del descodificador</tooltip>
+            <tooltip xml:lang="cs">M4 Číslo verze dekodéru</tooltip>
+            <tooltip xml:lang="de">M4 Dekoderversion</tooltip>
+            <tooltip xml:lang="fr">M4 Version de décodeur</tooltip>
+            <tooltip xml:lang="it">M4 Numero versione del Decoder</tooltip>
+            <tooltip xml:lang="nl">M4 Decoderversienummer</tooltip>
+        </variable>
+        <variable CV="249" default="0" item="Sound Steam Chuffs Min Distance">
+            <decVal/>
+            <label>Chuff minimum spacing</label>
+            <label xml:lang="it">Durata Min.distanza Chuff</label>
+            <label xml:lang="de">Minimaler Abstand der Dampfstöße</label>
+            <label xml:lang="ca">Temps mínim entre xufs</label>
+        </variable>
+        <variable CV="250" default="0" item="Sound Steam Chuffs Secondary Trigger">
+            <decVal/>
+            <label>Chuff secondary trigger</label>
+            <label xml:lang="it">Trigger secondario Chuff</label>
+            <label xml:lang="de">Sekundärer Trigger</label>
+            <label xml:lang="ca">Disparador secundari</label>
+        </variable>
+        <variable CV="245" default="0" tooltip="Unit is 16 milliseconds" item="ESU Auto Uncoupling Wait Time" exclude="LokPilot Fx V4.0">
+            <decVal/>
+            <label>Auto Uncoupling Wait Time</label>
+            <label xml:lang="de">Auto Uncoupling Wait Time</label>
+            <tooltip xml:lang="de">die Einheit sind 0.016384 sec</tooltip>
+            <label xml:lang="ca">Auto Uncoupling Wait Time</label>
+        </variable>
+        <variable CV="246" default="0" item="ESU Auto Uncoupling Speed" exclude="LokPilot Fx V4.0">
             <decVal/>
             <label>Auto Uncoupling Speed</label>
             <label xml:lang="de">Entkuppeln - Fahrtgeschwindigkeit</label>
             <label xml:lang="ca">Velociat de desenganxat automàtic</label>
         </variable>
-        <variable CV="247" default="0" tooltip="Unit is 16 milliseconds" item="ESU V4 Function Settings Auto Uncoupling Slider 3" exclude="LokPilot Fx V4.0">
+        <variable CV="247" default="0" tooltip="Unit is 16 milliseconds" item="ESU Auto Uncoupling Remove Time" exclude="LokPilot Fx V4.0">
             <decVal/>
             <label>Auto Uncoupling Remove Time</label>
             <label xml:lang="de">     Entkuppeln - Abrückzeit     </label>
             <tooltip xml:lang="de">die Einheit sind 0.016384 sec</tooltip>
             <label xml:lang="ca">Temps d'autodesacoblament d'un tren</label>
         </variable>
-        <variable CV="248" default="0" tooltip="Unit is 16 milliseconds" item="ESU V4 Function Settings Auto Uncoupling Slider 2" exclude="LokPilot Fx V4.0">
+        <variable CV="248" default="0" tooltip="Unit is 16 milliseconds" item="ESU Auto Uncoupling Push Time" exclude="LokPilot Fx V4.0">
             <decVal/>
             <label>Auto Uncoupling Push Time</label>
             <label xml:lang="de">    Entkuppeln - Andrückzeit     </label>
@@ -852,7 +957,7 @@
             <label xml:lang="ca">Temps d'empenyer enn desenganxat automàtic</label>
         </variable>
     </variables>
-    <variable CV="252" include="ESU LokPilot V4.0" default="0" tooltip="Unit is 0.06535 seconds" item="ESU V4 Starting Delay Time">
+    <variable CV="252" include="ESU LokPilot 5" default="0" tooltip="Unit is 0.06535 seconds" item="ESU V4 Starting Delay Time">
         <decVal/>
         <label>&lt;html&gt;Prime Mover Startup Delay&lt;br&gt;if Virtual Drive Sound Enabled&lt;/html&gt;</label>
     </variable>
@@ -880,17 +985,17 @@
     <constant item="PICV" default="31" comment="CV used for Primary Index"/>
     <constant item="SICV" default="32" comment="CV used for Secondary Index"/>
     <!-- Firmware Version -->
-    <variable CV="0.255.285" readOnly="yes" item="Firmware Build Number">
-        <splitVal highCV="0.255.286"/>
+    <variable CV="0.255.285:2" readOnly="no" item="Firmware Build Number">
+        <splitVal/>
         <label>Firmware Build Number</label>
         <label xml:lang="de">Firmware Build Nummer</label>
         <label xml:lang="ca">Número de firmware</label>
     </variable>
-    <variable CV="0.255.287" readOnly="yes" item="Firmware Minor Version">
+    <variable CV="0.255.287" readOnly="no" item="Firmware Minor Version">
         <decVal/>
         <label>Firmware Minor Version</label>
     </variable>
-    <variable CV="0.255.288" readOnly="yes" item="Firmware Major Version">
+    <variable CV="0.255.288" readOnly="no" item="Firmware Major Version">
         <decVal/>
         <label>Firmware Major Version</label>
     </variable>
@@ -898,7 +1003,9 @@
     <variables exclude="Essential Sound Unit">
         <xi:include href="http://jmri.org/xml/decoders/esu/v4projectInfoCVs.xml"/>
     </variables>
-    <xi:include href="http://jmri.org/xml/decoders/esu/v5soundCVs.xml"/>
+    <variables exclude="ESU LokPilot 5">
+        <xi:include href="http://jmri.org/xml/decoders/esu/v5soundCVs.xml"/>
+    </variables>
     <xi:include href="http://jmri.org/xml/decoders/esu/v5fnOutCVs.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/esu/v5randFuncCVs.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/esu/susiMapCVs.xml"/>
