@@ -202,6 +202,9 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
                 mb.join();
             } catch (InterruptedException ex) {
                 log.warn("stopReadNCEconsistThread interrupted");
+            } catch (Throwable t) {
+                log.error("stopReadNCEconsistThread caught ", t);
+                throw t;
             } finally {
                 mb = null;
             }
@@ -340,10 +343,15 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
         // load up the consist lists by lead, rear, and then mid
         @Override
         public void run() {
-            readConsistMemory(_consistNum, LEAD);
-            readConsistMemory(_consistNum, REAR);
-            readConsistMemory(_consistNum, MID);
-            setValid(true);
+            try{
+                readConsistMemory(_consistNum, LEAD);
+                readConsistMemory(_consistNum, REAR);
+                readConsistMemory(_consistNum, MID);
+                setValid(true);
+            } catch (Throwable t) {
+                log.error("NceReadConsist.run caught ", t);
+                throw t;
+            }
         }
 
         /**
