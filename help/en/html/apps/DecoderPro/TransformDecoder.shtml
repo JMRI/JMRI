@@ -358,7 +358,7 @@ xsltproc scom.xsl decoder-template.xml > decoder-gen.xml
       </p>
       <pre>
 &lt;xsl:template match="variables">
-    <variables>
+    &lt;variables>
       &lt;xsl:copy-of select="node()"/>
       &lt;!-- call-template instructions, that generate the content; example follows -->
       &lt;xsl:call-template name="generate-masts">
