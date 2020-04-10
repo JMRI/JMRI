@@ -52,7 +52,7 @@ public abstract class RollingStockAttribute extends PropertyChangeSupport {
     }
 
     protected String getDefaultNames() {
-        return "Error"; // overridden //  NOI18N
+        return "Error"; // overridden // NOI18N
     }
 
     public void setNames(String[] names) {

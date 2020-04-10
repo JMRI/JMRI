@@ -257,7 +257,7 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
 
     public void writeIdTagDetails() throws java.io.IOException {
         if (this.dirty) {
-            new DefaultIdTagManagerXml(this,"IdTags.xml").store();  //NOI18N
+            new DefaultIdTagManagerXml(this,"IdTags.xml").store();  // NOI18N
             this.dirty = false;
             log.debug("...done writing IdTag details");
         }
@@ -265,7 +265,7 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
 
     public void readIdTagDetails() {
         log.debug("reading idTag Details");
-        new DefaultIdTagManagerXml(this,"IdTags.xml").load();  //NOI18N
+        new DefaultIdTagManagerXml(this,"IdTags.xml").load();  // NOI18N
         this.dirty = false;
         log.debug("...done reading IdTag details");
     }

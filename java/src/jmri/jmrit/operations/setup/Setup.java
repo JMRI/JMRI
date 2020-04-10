@@ -326,12 +326,12 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     private boolean showTrackMoves = false; // when true show track moves in table
 
     // property changes
-    public static final String SWITCH_LIST_CSV_PROPERTY_CHANGE = "setupSwitchListCSVChange"; //  NOI18N
-    public static final String MANIFEST_CSV_PROPERTY_CHANGE = "setupManifestCSVChange"; //  NOI18N
-    public static final String REAL_TIME_PROPERTY_CHANGE = "setupSwitchListRealTime"; //  NOI18N
-    public static final String SHOW_TRACK_MOVES_PROPERTY_CHANGE = "setupShowTrackMoves"; //  NOI18N
-    public static final String SAVE_TRAIN_MANIFEST_PROPERTY_CHANGE = "saveTrainManifestChange"; //  NOI18N
-    public static final String ALLOW_CARS_TO_RETURN_PROPERTY_CHANGE = "allowCarsToReturnChange"; //  NOI18N
+    public static final String SWITCH_LIST_CSV_PROPERTY_CHANGE = "setupSwitchListCSVChange"; // NOI18N
+    public static final String MANIFEST_CSV_PROPERTY_CHANGE = "setupManifestCSVChange"; // NOI18N
+    public static final String REAL_TIME_PROPERTY_CHANGE = "setupSwitchListRealTime"; // NOI18N
+    public static final String SHOW_TRACK_MOVES_PROPERTY_CHANGE = "setupShowTrackMoves"; // NOI18N
+    public static final String SAVE_TRAIN_MANIFEST_PROPERTY_CHANGE = "saveTrainManifestChange"; // NOI18N
+    public static final String ALLOW_CARS_TO_RETURN_PROPERTY_CHANGE = "allowCarsToReturnChange"; // NOI18N
 
     public static boolean isMainMenuEnabled() {
         InstanceManager.getDefault(OperationsSetupXml.class); // load file

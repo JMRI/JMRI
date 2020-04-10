@@ -1102,7 +1102,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         @Override
         public String helpTarget() {
             return "package.jmri.jmrit.display.EditLayoutBlock";
-        }  //IN18N
+        }  // NOI18N
 
         @Override
         protected void initPanels() {
@@ -4752,7 +4752,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
     @Override
     public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
-        if ("CanDelete".equals(evt.getPropertyName())) {    //IN18N
+        if ("CanDelete".equals(evt.getPropertyName())) {    // NOI18N
             if (evt.getOldValue() instanceof Sensor) {
                 if (evt.getOldValue().equals(getOccupancySensor())) {
                     throw new PropertyVetoException(getDisplayName(), evt);
@@ -4764,7 +4764,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                     throw new PropertyVetoException(getDisplayName(), evt);
                 }
             }
-        } else if ("DoDelete".equals(evt.getPropertyName())) {  //IN18N
+        } else if ("DoDelete".equals(evt.getPropertyName())) {  // NOI18N
             //Do nothing at this stage
             if (evt.getOldValue() instanceof Sensor) {
                 if (evt.getOldValue().equals(getOccupancySensor())) {

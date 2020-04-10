@@ -472,7 +472,7 @@ public class MrcPackets {
                 txt.append(TWO_DIGITS.format(m.getElement(2) & 0x1F))
                         .append(Bundle.getMessage("MrcPacketsClockTimeSep"))
                         .append(TWO_DIGITS.format(m.getElement(4)))
-                        .append(Bundle.getMessage("MrcPacketsClockMode24"));//IN18N
+                        .append(Bundle.getMessage("MrcPacketsClockMode24"));// NOI18N
                 break;
             case 0xC0: // Unk format
                 txt.append(TWO_DIGITS.format(m.getElement(2) & 0x1F))

@@ -49,7 +49,7 @@ public class MrcPowerManager
             tc.sendMrcMessage(l);
         }
         power = v;
-        firePropertyChange("Power", old, power); //IN18N
+        firePropertyChange("Power", old, power); // NOI18N
     }
 
     @Override
@@ -84,7 +84,7 @@ public class MrcPowerManager
 
     private void checkTC() throws JmriException {
         if (tc == null) {
-            throw new JmriException("Use power manager after dispose"); //IN18N
+            throw new JmriException("Use power manager after dispose"); // NOI18N
         }
     }
 

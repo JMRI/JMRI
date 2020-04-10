@@ -2769,7 +2769,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         NamedBean nb = (NamedBean) evt.getOldValue();
-        if ("CanDelete".equals(evt.getPropertyName())) { //NOI18N
+        if ("CanDelete".equals(evt.getPropertyName())) { // NOI18N
             boolean found = false;
             StringBuilder message = new StringBuilder();
             if (nb instanceof SignalMast) {
@@ -2815,7 +2815,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
             if (found) {
                 throw new java.beans.PropertyVetoException(message.toString(), evt);
             }
-        } else if ("DoDelete".equals(evt.getPropertyName())) { //IN18N
+        } else if ("DoDelete".equals(evt.getPropertyName())) { // NOI18N
             if (nb instanceof SignalMast) {
                 if (nb.equals(source)) {
                     dispose();

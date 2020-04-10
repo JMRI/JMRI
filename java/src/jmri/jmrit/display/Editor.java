@@ -2604,7 +2604,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 });
             }
         } else {
-            log.error("No icon editor specified for {}", name); //NOI18N
+            log.error("No icon editor specified for {}", name); // NOI18N
         }
         if (add) {
             txt = MessageFormat.format(Bundle.getMessage("AddItem"), Bundle.getMessage(BundleName));
@@ -3238,9 +3238,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     @Override
     public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
         NamedBean nb = (NamedBean) evt.getOldValue();
-        if ("CanDelete".equals(evt.getPropertyName())) { //IN18N
+        if ("CanDelete".equals(evt.getPropertyName())) { // NOI18N
             StringBuilder message = new StringBuilder();
-            message.append(Bundle.getMessage("VetoInUseEditorHeader", getName())); //IN18N
+            message.append(Bundle.getMessage("VetoInUseEditorHeader", getName())); // NOI18N
             message.append("<br>");
             boolean found = false;
             int count = 0;
@@ -3253,11 +3253,11 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             if (found) {
                 message.append(Bundle.getMessage("VetoFoundInPanel", count));
                 message.append("<br>");
-                message.append(Bundle.getMessage("VetoReferencesWillBeRemoved")); //IN18N
+                message.append(Bundle.getMessage("VetoReferencesWillBeRemoved")); // NOI18N
                 message.append("<br>");
                 throw new PropertyVetoException(message.toString(), evt);
             }
-        } else if ("DoDelete".equals(evt.getPropertyName())) { //IN18N
+        } else if ("DoDelete".equals(evt.getPropertyName())) { // NOI18N
             ArrayList<Positionable> toDelete = new ArrayList<>();
             for (Positionable p : _contents) {
                 if (nb.equals(p.getNamedBean())) {

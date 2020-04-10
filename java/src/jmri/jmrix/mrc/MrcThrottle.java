@@ -180,7 +180,7 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener 
         MrcMessage m;
         int value;
         if (super.speedStepMode == jmri.SpeedStepMode.NMRA_DCC_128) {
-            log.debug("setSpeedSetting= {}", speed); //IN18N
+            log.debug("setSpeedSetting= {}", speed); // NOI18N
             //MRC use a value between 0-127 no matter what the controller is set to
             value = (int) ((127 - 1) * speed);     // -1 for rescale to avoid estop
             if (value > 0) {
@@ -300,7 +300,7 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener 
                     }
 
                     if (val != this.speedSetting) {
-                        firePropertyChange(SPEEDSETTING, this.speedSetting, val); //IN18N
+                        firePropertyChange(SPEEDSETTING, this.speedSetting, val);
                         this.speedSetting = val;
                         record(val);
                     }
