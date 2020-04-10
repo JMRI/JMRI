@@ -198,7 +198,8 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
     private synchronized void stopReadNCEconsistThread() {
         if (mb != null) {
             try {
-                mb.stop();
+                mb.interrupt();
+                //mb.stop();
                 mb.join();
             } catch (InterruptedException ex) {
                 log.warn("stopReadNCEconsistThread interrupted");
@@ -348,8 +349,12 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
                 readConsistMemory(_consistNum, REAR);
                 readConsistMemory(_consistNum, MID);
                 setValid(true);
+            } catch (InterruptedException e) {
+                return; // we're done!
             } catch (Throwable t) {
-                log.error("NceReadConsist.run caught ", t);
+                if ( ! (t instanceof java.lang.ThreadDeath) ) {
+                    log.error("NceReadConsist.run caught ", t);
+                }
                 throw t;
             }
         }
@@ -358,7 +363,7 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
          * Reads 16 bytes of NCE consist memory based on consist number and loco
          * number 0=lead 1=rear 2=mid
          */
-        private void readConsistMemory(int consistNum, int eNum) {
+        private void readConsistMemory(int consistNum, int eNum) throws InterruptedException { // throw interrupt upward
             if (consistNum > CONSIST_MAX || consistNum < CONSIST_MIN) {
                 log.error("Requesting consist " + consistNum + " out of range");
                 return;
@@ -390,15 +395,11 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
         }
 
         // wait up to 30 sec per read
-        private boolean readWait() {
+        private boolean readWait() throws InterruptedException { // throw interrupt upward
             int waitcount = 30;
             while (_busy > 0) {
                 synchronized (this) {
-                    try {
-                        wait(1000);
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt(); // retain if needed later
-                    }
+                    wait(1000);
                 }
                 if (waitcount-- < 0) {
                     log.error("read timeout");
