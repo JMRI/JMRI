@@ -363,7 +363,7 @@ public abstract class AbstractManager<E extends NamedBean> implements Manager<E>
             }
 
             // called DisplayListName, as DisplayName might get used at some point by a NamedBean
-            firePropertyChange("DisplayListName", old, now); //IN18N
+            firePropertyChange("DisplayListName", old, now); // NOI18N
         }
     }
 
@@ -528,18 +528,18 @@ public abstract class AbstractManager<E extends NamedBean> implements Manager<E>
     @OverridingMethodsMustInvokeSuper
     protected void fireVetoableChange(String p, Object old, Object n) throws PropertyVetoException {
         PropertyChangeEvent evt = new PropertyChangeEvent(this, p, old, n);
-        if (p.equals("CanDelete")) { //IN18N
+        if (p.equals("CanDelete")) { // NOI18N
             StringBuilder message = new StringBuilder();
             for (VetoableChangeListener vc : vcs.getVetoableChangeListeners()) {
                 try {
                     vc.vetoableChange(evt);
                 } catch (PropertyVetoException e) {
-                    if (e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")) { //IN18N
+                    if (e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")) { // NOI18N
                         log.info(e.getMessage());
                         throw e;
                     }
                     message.append(e.getMessage());
-                    message.append("<hr>"); //IN18N
+                    message.append("<hr>"); // NOI18N
                 }
             }
             throw new PropertyVetoException(message.toString(), evt);
@@ -557,7 +557,7 @@ public abstract class AbstractManager<E extends NamedBean> implements Manager<E>
     @OverridingMethodsMustInvokeSuper
     public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
 
-        if ("CanDelete".equals(evt.getPropertyName())) { //IN18N
+        if ("CanDelete".equals(evt.getPropertyName())) { // NOI18N
             StringBuilder message = new StringBuilder();
             message.append(Bundle.getMessage("VetoFoundIn", getBeanTypeHandled()))
                     .append("<ul>");
@@ -566,7 +566,7 @@ public abstract class AbstractManager<E extends NamedBean> implements Manager<E>
                 try {
                     nb.vetoableChange(evt);
                 } catch (PropertyVetoException e) {
-                    if (e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")) { //IN18N
+                    if (e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")) { // NOI18N
                         throw e;
                     }
                     found = true;

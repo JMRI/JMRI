@@ -1051,11 +1051,11 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
-        if ("CanDelete".equals(evt.getPropertyName())) { //IN18N
+        if ("CanDelete".equals(evt.getPropertyName())) { // NOI18N
             Object old = evt.getOldValue();
             if (old.equals(getFirstSensor()) || old.equals(getSecondSensor()) || old.equals(leadingTurnout)) {
                 java.beans.PropertyChangeEvent e = new java.beans.PropertyChangeEvent(this, "DoNotDelete", null, null);
-                throw new java.beans.PropertyVetoException(Bundle.getMessage("InUseSensorTurnoutVeto", getDisplayName()), e); //IN18N
+                throw new java.beans.PropertyVetoException(Bundle.getMessage("InUseSensorTurnoutVeto", getDisplayName()), e); // NOI18N
             }
         }
     }

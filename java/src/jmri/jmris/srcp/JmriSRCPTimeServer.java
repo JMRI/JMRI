@@ -4,6 +4,8 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+
 import jmri.JmriException;
 import jmri.TimebaseRateException;
 import jmri.jmris.AbstractTimeServer;
@@ -17,12 +19,12 @@ import org.slf4j.LoggerFactory;
  */
 public class JmriSRCPTimeServer extends AbstractTimeServer {
 
-    private final DataOutputStream output;
+    private final OutputStream output;
 
     private int modelrate = 1;
     private int realrate = 1;
 
-    public JmriSRCPTimeServer(DataOutputStream outStream) {
+    public JmriSRCPTimeServer(OutputStream outStream) {
         super();
         output = outStream;
     }
@@ -37,12 +39,12 @@ public class JmriSRCPTimeServer extends AbstractTimeServer {
         java.util.GregorianCalendar cal = new java.util.GregorianCalendar();
         cal.setTime(timebase.getTime());
         long day = jmri.util.DateUtil.julianDayFromCalendar(cal);
-        TimeStampedOutput.writeTimestamp(output, "100 INFO 0 TIME " + day + " " + sdf.format(timebase.getTime()) + "\n\r");
+        output.write(("100 INFO 0 TIME " + day + " " + sdf.format(timebase.getTime()) + "\n\r").getBytes());
     }
 
     @Override
     public void sendRate() throws IOException {
-        TimeStampedOutput.writeTimestamp(output, "101 INFO 0 TIME " + modelrate + " " + realrate + "\n\r");
+        output.write(("101 INFO 0 TIME " + modelrate + " " + realrate + "\n\r").getBytes());
     }
 
     @Override
@@ -122,7 +124,7 @@ public class JmriSRCPTimeServer extends AbstractTimeServer {
             // and start the timeListener.
             listenToTimebase(true);
             try {
-                TimeStampedOutput.writeTimestamp(output, "200 Ok\n\r");
+                output.write("200 Ok\n\r".getBytes());
             } catch (IOException ie) {
                 log.warn("Unable to send message to client: {}", ie.getMessage());
             }
@@ -183,6 +185,6 @@ public class JmriSRCPTimeServer extends AbstractTimeServer {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JmriSRCPTimeServer.class);
+    private static final Logger log = LoggerFactory.getLogger(JmriSRCPTimeServer.class);
 
 }

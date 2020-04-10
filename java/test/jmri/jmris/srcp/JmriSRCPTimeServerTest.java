@@ -4,6 +4,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.OutputStream;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -49,14 +51,13 @@ public class JmriSRCPTimeServerTest extends jmri.jmris.AbstractTimeServerTestBas
         jmri.util.JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         sb = new StringBuilder();
-        java.io.DataOutputStream output = new java.io.DataOutputStream(
-                new java.io.OutputStream() {
+        OutputStream output = new java.io.OutputStream() {
                     @Override
                     public void write(int b) throws java.io.IOException {
                         sb.append((char)b);
                     }
-                });
-        a = new JmriSRCPTimeServer(output);
+                };
+        a = new JmriSRCPTimeServer(new TimeStampedOutput(output));
     }
 
     @AfterEach

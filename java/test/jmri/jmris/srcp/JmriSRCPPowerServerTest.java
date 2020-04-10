@@ -1,9 +1,17 @@
 package jmri.jmris.srcp;
 
+import jmri.InstanceManager;
+import jmri.JmriException;
+import jmri.PowerManager;
 import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+
+import java.beans.PropertyChangeEvent;
+import java.io.OutputStream;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 
@@ -15,13 +23,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class JmriSRCPPowerServerTest extends jmri.jmris.AbstractPowerServerTestBase {
         
     private StringBuilder sb = null;
+    private PowerManager powerManager;
 
     // test parsing an ON status message.
     @Test
     public void testParseOnStatus() throws Exception {
         ps.parseStatus("1234 SET 0 POWER ON\n");
-        assertThat(jmri.PowerManager.ON).isEqualTo(jmri.InstanceManager
-                      .getDefault(jmri.PowerManager.class).getPower()).withFailMessage("Parse On Status Check");
+        Mockito.verify(powerManager).setPower(PowerManager.ON);
+        Mockito.when(powerManager.getPower()).thenReturn(PowerManager.ON);
+        ps.propertyChange(new PropertyChangeEvent(powerManager,"Power",PowerManager.OFF,PowerManager.ON));
         assertThat(sb.toString()).endsWith("100 INFO 0 POWER ON\n\r").withFailMessage("status as a result of parsing on");
     }
 
@@ -29,9 +39,34 @@ public class JmriSRCPPowerServerTest extends jmri.jmris.AbstractPowerServerTestB
     @Test
     public void testParseOffStatus() throws Exception {
         ps.parseStatus("1234 SET 0 POWER OFF\n");
-        assertThat(jmri.PowerManager.OFF).isEqualTo(jmri.InstanceManager
-                      .getDefault(jmri.PowerManager.class).getPower()).withFailMessage("Parse OFF Status Check");
+        Mockito.verify(powerManager).setPower(PowerManager.OFF);
+        Mockito.when(powerManager.getPower()).thenReturn(PowerManager.OFF);
+        ps.propertyChange(new PropertyChangeEvent(powerManager,"Power",PowerManager.ON,PowerManager.OFF));
         assertThat(sb.toString()).endsWith("100 INFO 0 POWER OFF\n\r").withFailMessage("status as a result of parsing off");
+    }
+
+    @Override
+    @Test
+    public void testPropertyChangeOnStatus() {
+        try {
+            Mockito.when(powerManager.getPower()).thenReturn(PowerManager.ON);
+            ps.propertyChange(new PropertyChangeEvent(powerManager, "Power", PowerManager.OFF, PowerManager.ON));
+            assertThat(sb.toString()).endsWith("100 INFO 0 POWER ON\n\r").withFailMessage("status as a result of property change on");
+        } catch (JmriException je) {
+            //false exception due to mocking
+        }
+    }
+
+    @Override
+    @Test
+    public void testPropertyChangeOffStatus()  {
+        try {
+            Mockito.when(powerManager.getPower()).thenReturn(PowerManager.OFF);
+            ps.propertyChange(new PropertyChangeEvent(powerManager, "Power", PowerManager.ON, PowerManager.OFF));
+            assertThat(sb.toString()).endsWith("100 INFO 0 POWER OFF\n\r").withFailMessage("status as a result of property change off");
+        } catch (JmriException je) {
+            //false exception due to mocking
+        }
     }
 
     /**
@@ -70,16 +105,16 @@ public class JmriSRCPPowerServerTest extends jmri.jmris.AbstractPowerServerTestB
     @BeforeEach
     @Override
     public void setUp() {
-        JUnitUtil.setUp();
-        jmri.util.JUnitUtil.initDebugPowerManager();
+        JUnitUtil.setUpLoggingAndCommonProperties();
+        powerManager = Mockito.mock(PowerManager.class);
+        InstanceManager.setDefault(PowerManager.class,powerManager);
         sb = new StringBuilder();
-        java.io.DataOutputStream output = new java.io.DataOutputStream(
-                new java.io.OutputStream() {
+        OutputStream output = new OutputStream() {
             @Override
             public void write(int b) throws java.io.IOException {
                 sb.append((char) b);
             }
-        });
+        };
         ps = new JmriSRCPPowerServer(output);
     }
 
@@ -88,6 +123,7 @@ public class JmriSRCPPowerServerTest extends jmri.jmris.AbstractPowerServerTestB
         ps.dispose();
         ps = null;
         sb = null;
+        powerManager = null;
         JUnitUtil.tearDown();
     }
 

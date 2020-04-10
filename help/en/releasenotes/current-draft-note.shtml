@@ -528,7 +528,11 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li></li>
+            <li>The VSD old graphical user interface (GUI) was removed. For users who call VSD
+            from JMRI PanelPro, nothing changes. For users who call VSD from a Jython script,
+            theoretically the script can fail. Please see also
+            <a href="http://jmri.org/help/en/package/jmri/jmrit/vsdecoder/VSDecoderFrame.shtml">here</a>.
+            </li>
         </ul>
 
     <h3>Miscellaneous</h3>

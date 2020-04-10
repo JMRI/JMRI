@@ -51,7 +51,7 @@ public abstract class RollingStockAttribute {
     }
 
     protected String getDefaultNames() {
-        return "Error"; // overridden //  NOI18N
+        return "Error"; // overridden // NOI18N
     }
 
     public void setNames(String[] names) {

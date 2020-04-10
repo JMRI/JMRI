@@ -982,7 +982,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         //
         // use direct turnout control
         //
-        useDirectTurnoutControlCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("UseDirectTurnoutControl")); //IN18N
+        useDirectTurnoutControlCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("UseDirectTurnoutControl")); // NOI18N
         optionMenu.add(useDirectTurnoutControlCheckBoxMenuItem);
         useDirectTurnoutControlCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
             setDirectTurnoutControl(useDirectTurnoutControlCheckBoxMenuItem.isSelected());
@@ -7731,9 +7731,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             throws PropertyVetoException {
         NamedBean nb = (NamedBean) evt.getOldValue();
 
-        if ("CanDelete".equals(evt.getPropertyName())) { //IN18N
+        if ("CanDelete".equals(evt.getPropertyName())) { // NOI18N
             StringBuilder message = new StringBuilder();
-            message.append(Bundle.getMessage("VetoInUseLayoutEditorHeader", toString())); //IN18N
+            message.append(Bundle.getMessage("VetoInUseLayoutEditorHeader", toString())); // NOI18N
             message.append("<ul>");
             boolean found = false;
 
@@ -7879,10 +7879,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
             if (found) {
                 message.append("</ul>");
-                message.append(Bundle.getMessage("VetoReferencesWillBeRemoved")); //IN18N
+                message.append(Bundle.getMessage("VetoReferencesWillBeRemoved")); // NOI18N
                 throw new PropertyVetoException(message.toString(), evt);
             }
-        } else if ("DoDelete".equals(evt.getPropertyName())) { //IN18N
+        } else if ("DoDelete".equals(evt.getPropertyName())) { // NOI18N
             if (nb instanceof SignalHead) {
                 removeSignalHead((SignalHead) nb);
                 removeBeanRefs(nb);

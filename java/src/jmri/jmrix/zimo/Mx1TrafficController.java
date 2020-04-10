@@ -131,7 +131,7 @@ public abstract class Mx1TrafficController implements Mx1Interface {
 
     public String getUserName() {
         if (adaptermemo == null) {
-            return "Zimo"; //IN18N
+            return "Zimo"; // NOI18N
         }
         return adaptermemo.getUserName();
     }
