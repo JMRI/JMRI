@@ -194,12 +194,10 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
         }
     }
 
-    @SuppressWarnings("deprecation") // Thread.stop not likely to be removed
     private synchronized void stopReadNCEconsistThread() {
         if (mb != null) {
             try {
                 mb.interrupt();
-                //mb.stop();
                 mb.join();
             } catch (InterruptedException ex) {
                 log.warn("stopReadNCEconsistThread interrupted");
