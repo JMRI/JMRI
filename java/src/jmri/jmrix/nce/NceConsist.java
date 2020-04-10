@@ -183,7 +183,7 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
 
     private NceReadConsist mb = null;
 
-    private void startReadNCEconsistThread(boolean check) {
+    private synchronized void startReadNCEconsistThread(boolean check) {
         // read command station memory to get the current consist (can't be a USB, only PH)
         if (tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_NONE) {
             mb = new NceReadConsist();
@@ -195,7 +195,7 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
     }
 
     @SuppressWarnings("deprecation") // Thread.stop not likely to be removed
-    private void stopReadNCEconsistThread() {
+    private synchronized void stopReadNCEconsistThread() {
         if (mb != null) {
             try {
                 mb.stop();
