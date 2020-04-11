@@ -182,7 +182,6 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
         List<Element> turnoutList = shared.getChildren("turnout");
         log.debug("Found {} turnouts", turnoutList.size());
         TurnoutManager tm = InstanceManager.turnoutManagerInstance();
-        tm.setDataListenerMute(true);
 
         try {
             if (shared.getChild("defaultclosedspeed") != null) {
@@ -371,8 +370,6 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
                 log.error(ex.toString());
             }
         }
-
-        tm.setDataListenerMute(false);
 
         return result;
     }

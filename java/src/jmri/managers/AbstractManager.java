@@ -529,6 +529,7 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
         if (e != null) listeners.remove(e);
     }
 
+    @SuppressWarnings("deprecation")
     private final List<ManagerDataListener<E>> listeners = new ArrayList<>();
 
     private boolean muted = false;
@@ -536,33 +537,30 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
     /** {@inheritDoc} */
     @Override
     @Deprecated
+    @SuppressWarnings("deprecation")
     public void setDataListenerMute(boolean m) {
         if (muted && !m) {
             // send a total update, as we haven't kept track of specifics
             ManagerDataEvent<E> e = new ManagerDataEvent<>(this, ManagerDataEvent.CONTENTS_CHANGED, 0, getObjectCount()-1, null);
-            for (ManagerDataListener<E> listener : listeners) {
-                listener.contentsChanged(e);
-            }          
+            listeners.forEach(listener -> listener.contentsChanged(e));          
         }
         this.muted = m;
     }
 
     @Deprecated
+    @SuppressWarnings("deprecation")
     protected void fireDataListenersAdded(int start, int end, E changedBean) {
         if (muted) return;
         ManagerDataEvent<E> e = new ManagerDataEvent<>(this, ManagerDataEvent.INTERVAL_ADDED, start, end, changedBean);
-        for (ManagerDataListener<E> m : listeners) {
-            m.intervalAdded(e);
-        }
+        listeners.forEach(m -> m.intervalAdded(e));
     }
 
     @Deprecated
+    @SuppressWarnings("deprecation")
     protected void fireDataListenersRemoved(int start, int end, E changedBean) {
         if (muted) return;
         ManagerDataEvent<E> e = new ManagerDataEvent<>(this, ManagerDataEvent.INTERVAL_REMOVED, start, end, changedBean);
-        for (ManagerDataListener<E> m : listeners) {
-            m.intervalRemoved(e);
-        }
+        listeners.forEach(m -> m.intervalRemoved(e));
     }
 
     public void updateAutoNumber(String systemName) {
