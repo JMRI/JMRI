@@ -228,7 +228,7 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
         Sensor s4 = l.provideSensor("ZS2");
 
         // property listener should have been immediately invoked
-        Assert.assertEquals("propertyListenerCount", 4, propertyListenerCount);
+        Assert.assertEquals("propertyListenerCount", 5, propertyListenerCount);
         Assert.assertEquals("last call", "length", propertyListenerLast);
 
         // listener should have been immediately invoked
