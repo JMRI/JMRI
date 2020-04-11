@@ -2,12 +2,9 @@ package jmri.jmrix;
 
 import java.awt.GraphicsEnvironment;
 import jmri.util.JmriJFrame;
-import org.junit.After;
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import jmri.util.junit.rules.RetryRule;
+import org.junit.*;
 
 /**
  * JUnit tests for the AbstractMonPane class
@@ -20,6 +17,9 @@ import org.junit.Test;
  * @author Paul Bender Copyright (C) 2016
  */
 public abstract class AbstractMonPaneTestBase extends jmri.util.swing.JmriPanelTest {
+
+    @Rule
+    public RetryRule retryRule = new RetryRule(2); // allow 2 retries
 
     // implementing classes must set pane to the pane under test in setUp.
     protected AbstractMonPane pane = null;
