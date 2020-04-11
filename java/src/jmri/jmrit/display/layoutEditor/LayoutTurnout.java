@@ -1129,6 +1129,10 @@ public class LayoutTurnout extends LayoutTrack {
             namedTurnout = null;
             setDisableWhenOccupied(false);
         }
+        Turnout secondTurnout = getSecondTurnout();
+        if (secondTurnout != null && secondTurnout.getFeedbackMode() == Turnout.DIRECT) {
+            secondTurnout.setLeadingTurnout(turnout, false);
+        }
     }
 
     public Turnout getSecondTurnout() {
@@ -1150,6 +1154,10 @@ public class LayoutTurnout extends LayoutTrack {
 
         if (secondNamedTurnout != null) {
             deactivateTurnout();
+            Turnout turnout = secondNamedTurnout.getBean();
+            if (turnout.getLeadingTurnout() == namedTurnout.getBean()) {
+                turnout.setLeadingTurnout(null);
+            }
         }
         String oldSecondTurnoutName = secondTurnoutName;
         secondTurnoutName = tName;
@@ -1159,6 +1167,9 @@ public class LayoutTurnout extends LayoutTrack {
         }
         if (turnout != null) {
             secondNamedTurnout = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(secondTurnoutName, turnout);
+            if (turnout.getFeedbackMode() == Turnout.DIRECT) {
+                turnout.setLeadingTurnout(getTurnout(), false);
+            }
         } else {
             secondTurnoutName = "";
             secondNamedTurnout = null;
@@ -2407,8 +2418,8 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     /**
-     * Set the LayoutTurnout state Used for sending the toggle command Checks
-     * not diabled, disable when occupied Also sets secondary Turnout commanded
+     * Set the LayoutTurnout state. Used for sending the toggle command Checks
+     * not disabled, disable when occupied Also sets secondary Turnout commanded
      * state
      *
      * @param state New state to set, eg Turnout.CLOSED
@@ -2419,15 +2430,12 @@ public class LayoutTurnout extends LayoutTrack {
                 log.debug("Turnout not changed as Block is Occupied");
             } else {
                 getTurnout().setCommandedState(state);
-                if (getSecondTurnout() != null) {
+                Turnout secondTurnout = getSecondTurnout();
+                if (secondTurnout != null) {
                     if (secondTurnoutInverted) {
-                        if (state == Turnout.CLOSED) {
-                            getSecondTurnout().setCommandedState(Turnout.THROWN);
-                        } else {
-                            getSecondTurnout().setCommandedState(Turnout.CLOSED);
-                        }
+                        secondTurnout.setCommandedState(Turnout.invertTurnoutState(state));
                     } else {
-                        getSecondTurnout().setCommandedState(state);
+                        secondTurnout.setCommandedState(state);
                     }
                 }
             }
