@@ -11,29 +11,38 @@ import jmri.util.JUnitUtil;
 /**
  * @author Randall Wood Copyright 2020
  */
-public class IdentifiedBeanTest {
-    
-    private IdentifiedBean bean;
+public class MutableIdentifiableTest {
+
+    private MutableIdentifiable bean;
 
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        bean = new IdentifiedBean() {
+        bean = new MutableIdentifiable() {
 
+            private String id = "bean";
             @Override
             public String getId() {
-                return "bean";
-            }};
+                return id;
+            }
+
+            @Override
+            public void setId(String id) {
+                this.id = id;
+            }
+        };
     }
-    
+
     @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }
 
     @Test
-    public void testGetId() {
+    public void testSetId() {
         assertThat(bean.getId()).isEqualTo("bean");
+        bean.setId("changed");
+        assertThat(bean.getId()).isEqualTo("changed");
     }
-    
+
 }

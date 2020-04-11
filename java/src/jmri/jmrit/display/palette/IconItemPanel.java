@@ -144,7 +144,7 @@ public class IconItemPanel extends ItemPanel {
     
     /*
      * Plain icons have only one family, usually named "set".
-     * Override for plain icon {@literal &} background and put all icons here.
+     * Override for plain icon and background and put all icons here.
      */
     protected void initIconFamiliesPanel(boolean addComboBox) {
         if (_iconPanel == null) { // create a new one
