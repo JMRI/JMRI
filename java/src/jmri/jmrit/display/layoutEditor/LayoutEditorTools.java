@@ -2092,10 +2092,6 @@ public class LayoutEditorTools {
             setSignalsAtBlockBoundaryCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
 
-            //make this button the default button (return or enter activates)
-            JRootPane rootPane = SwingUtilities.getRootPane(setSignalsDone);
-            rootPane.setDefaultButton(setSignalsDone);
-
             setSignalsAtBlockBoundaryFrame.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
