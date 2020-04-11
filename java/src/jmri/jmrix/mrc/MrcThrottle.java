@@ -180,7 +180,7 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener 
         MrcMessage m;
         int value;
         if (super.speedStepMode == jmri.SpeedStepMode.NMRA_DCC_128) {
-            log.debug("setSpeedSetting= {}", speed); //IN18N
+            log.debug("setSpeedSetting= {}", speed); // NOI18N
             //MRC use a value between 0-127 no matter what the controller is set to
             value = (int) ((127 - 1) * speed);     // -1 for rescale to avoid estop
             if (value > 0) {
@@ -212,7 +212,7 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener 
         tc.sendMrcMessage(m);
 
         if (oldSpeed != this.speedSetting) {
-            notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting); //IN18N
+            notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting); // NOI18N
         }
         record(speed);
     }
@@ -224,7 +224,7 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener 
         setSpeedSetting(speedSetting);  // send the command
         log.debug("setIsForward= {}", forward);
         if (old != isForward) {
-            notifyPropertyChangeListener(ISFORWARD, old, isForward); //IN18N
+            notifyPropertyChangeListener(ISFORWARD, old, isForward); // NOI18N
         }
     }
 
@@ -251,19 +251,19 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener 
             if (MrcPackets.startsWith(m, MrcPackets.THROTTLEPACKETHEADER)) {
                 if (m.getElement(10) == 0x02) {
                     //128
-                    log.debug("speed Packet from another controller for our loco"); //IN18N
+                    log.debug("speed Packet from another controller for our loco"); // NOI18N
                     int speed = m.getElement(8);
                     if ((m.getElement(8) & 0x80) == 0x80) {
                         //Forward
                         if (!this.isForward) {
                             this.isForward = true;
-                            notifyPropertyChangeListener(ISFORWARD, !isForward, isForward); //IN18N
+                            notifyPropertyChangeListener(ISFORWARD, !isForward, isForward); // NOI18N
                         }
                         //speed = m.getElement(8);
                     } else if (this.isForward) {
                         //reverse
                         this.isForward = false;
-                        notifyPropertyChangeListener(ISFORWARD, !isForward, isForward); //IN18N
+                        notifyPropertyChangeListener(ISFORWARD, !isForward, isForward); // NOI18N
                         //speed = m.getElement(8);
                     }
                     speed = (speed & 0x7f) - 1;
@@ -274,7 +274,7 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener 
                     
                     // next line is the FE_FLOATING_POINT_EQUALITY annotated above
                     if (val != this.speedSetting) {
-                        notifyPropertyChangeListener(SPEEDSETTING, this.speedSetting, val); //IN18N
+                        notifyPropertyChangeListener(SPEEDSETTING, this.speedSetting, val); // NOI18N
                         this.speedSetting = val;
                         record(val);
                     }
@@ -303,7 +303,7 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener 
                     }
 
                     if (val != this.speedSetting) {
-                        notifyPropertyChangeListener(SPEEDSETTING, this.speedSetting, val); //IN18N
+                        notifyPropertyChangeListener(SPEEDSETTING, this.speedSetting, val); // NOI18N
                         this.speedSetting = val;
                         record(val);
                     }

@@ -15,7 +15,9 @@
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
     <!-- ver1 made from the ESU_LokSoundV4_0 file -->
+    <!-- ver2 updates for new firmware and reorganise code shared with LokPilot 5  -->
     <version author="Dave Heap" version="1" lastUpdated="20190507"/>
+    <version author="Dave Heap" version="2" lastUpdated="20200410"/>
     <decoder>
         <family name="ESU LokSound 5" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
             <model model="LokSound 5" numOuts="20" maxMotorCurrent="1.5A" extFnsESU="V5" productID="33554582">
@@ -40,6 +42,9 @@
                 <size length="51.8" width="25.4" height="14" units="mm"/>
             </model>
             <model model="LokSound 5 XL" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554591">
+                <size length="51.0" width="40.0" height="14.0" units="mm"/>
+            </model>
+            <model model="LokSound 5 MKL" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554598">
                 <size length="51.0" width="40.0" height="14.0" units="mm"/>
             </model>
             <xi:include href="http://jmri.org/xml/decoders/esu/v5lsOutputLabels.xml"/>
@@ -95,6 +100,7 @@
     <!--   <xi:include href="http://jmri.org/xml/decoders/esu/v4testPane.xml"/> -->
     <xi:include href="http://jmri.org/xml/decoders/esu/v4basicSpeedControlPane.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/esu/v4speedTablePane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/esu/v5ConsistPane.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/esu/v4advancedPane.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/esu/v4lightsPane.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/esu/v4soundPane.xml"/>

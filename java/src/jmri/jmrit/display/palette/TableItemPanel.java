@@ -37,8 +37,9 @@ import org.slf4j.LoggerFactory;
  * FamilyItemPanel extension for placing of CPE item types that come from tool Tables
  * - e.g. Turnouts, Sensors, Lights, Signal Heads, etc.
  *
- * @author Pete Cressman Copyright (c) 2010, 2011
+ * @author Pete Cressman Copyright (c) 2010, 2011, 2020
  */
+
 public class TableItemPanel<E extends NamedBean> extends FamilyItemPanel implements ListSelectionListener {
 
     int ROW_HEIGHT;
@@ -60,10 +61,9 @@ public class TableItemPanel<E extends NamedBean> extends FamilyItemPanel impleme
      * @param type        item type
      * @param family      icon family
      * @param model       list model
-     * @param editor      associated Panel editor
      */
-    public TableItemPanel(DisplayFrame parentFrame, String type, String family, PickListModel<E> model, Editor editor) {
-        super(parentFrame, type, family, editor);
+    public TableItemPanel(DisplayFrame parentFrame, String type, String family, PickListModel<E> model) {
+        super(parentFrame, type, family);
         _model = model;
     }
 
@@ -74,7 +74,7 @@ public class TableItemPanel<E extends NamedBean> extends FamilyItemPanel impleme
     public void init() {
         if (!_initialized) {
             super.init();
-            add(initTablePanel(_model, _editor), 0); // top of Panel
+            add(initTablePanel(_model), 0); // top of Panel
             _buttonPosition = 1;
         }
         hideIcons();
@@ -86,7 +86,7 @@ public class TableItemPanel<E extends NamedBean> extends FamilyItemPanel impleme
      */
     @Override
     public void init(ActionListener doneAction, HashMap<String, NamedIcon> iconMap) {
-        add(initTablePanel(_model, _editor), 0);
+        add(initTablePanel(_model), 0);
         _buttonPosition = 1;
         super.init(doneAction, iconMap);
     }
@@ -94,7 +94,7 @@ public class TableItemPanel<E extends NamedBean> extends FamilyItemPanel impleme
     /*
      * Top Panel.
      */
-    protected JPanel initTablePanel(PickListModel<E> model, Editor editor) {
+    protected JPanel initTablePanel(PickListModel<E> model) {
         _table = model.makePickTable();
         _table.getSelectionModel().addListSelectionListener(this);
         ROW_HEIGHT = _table.getRowHeight();
@@ -135,7 +135,7 @@ public class TableItemPanel<E extends NamedBean> extends FamilyItemPanel impleme
     }
 
     protected void makeAddToTableWindow() {
-        _addTableDialog = new JDialog(_paletteFrame, Bundle.getMessage("AddToTableTitle"), true);
+        _addTableDialog = new JDialog(_frame, Bundle.getMessage("AddToTableTitle"), true);
 
         ActionListener cancelListener = new ActionListener() {
             @Override
@@ -152,9 +152,9 @@ public class TableItemPanel<E extends NamedBean> extends FamilyItemPanel impleme
                 _sysNametext, _userNametext, "addToTable", okListener, cancelListener);
         _addTableDialog.getContentPane().add(addPanel);
         _addTableDialog.pack();
-        _addTableDialog.setSize(_paletteFrame.getSize().width - 20, _addTableDialog.getPreferredSize().height);
+        _addTableDialog.setSize(_frame.getSize().width - 20, _addTableDialog.getPreferredSize().height);
         _addTableDialog.setLocation(10, 35);
-        _addTableDialog.setLocationRelativeTo(_paletteFrame);
+        _addTableDialog.setLocationRelativeTo(_frame);
         _addTableDialog.toFront();
         _addTableDialog.setVisible(true);
     }
@@ -184,7 +184,7 @@ public class TableItemPanel<E extends NamedBean> extends FamilyItemPanel impleme
                 }
                 _addTableDialog.dispose();
             } catch (IllegalArgumentException ex) {
-                JOptionPane.showMessageDialog(_paletteFrame, ex.getMessage(),
+                JOptionPane.showMessageDialog(_frame, ex.getMessage(),
                         Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             }
         }
@@ -302,9 +302,10 @@ public class TableItemPanel<E extends NamedBean> extends FamilyItemPanel impleme
                 return null;
             }
 
+            Editor editor = _frame.getEditor();
             if (flavor.isMimeTypeEqual(Editor.POSITIONABLE_FLAVOR)) {
                 if (_itemType.equals("Turnout")) {
-                    TurnoutIcon t = new TurnoutIcon(_editor);
+                    TurnoutIcon t = new TurnoutIcon(editor);
                     t.setTurnout(bean.getDisplayName());
                     Iterator<Entry<String, NamedIcon>> iter = iMap.entrySet().iterator();
                     while (iter.hasNext()) {
@@ -316,7 +317,7 @@ public class TableItemPanel<E extends NamedBean> extends FamilyItemPanel impleme
                     return t;
                 } else if (_itemType.equals("Sensor")) {
                     SensorIcon s = new SensorIcon(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif",
-                            "resources/icons/smallschematics/tracksegments/circuit-error.gif"), _editor);
+                            "resources/icons/smallschematics/tracksegments/circuit-error.gif"), editor);
                     Iterator<Entry<String, NamedIcon>> iter = iMap.entrySet().iterator();
                     while (iter.hasNext()) {
                         Entry<String, NamedIcon> ent = iter.next();
@@ -327,7 +328,7 @@ public class TableItemPanel<E extends NamedBean> extends FamilyItemPanel impleme
                     s.setLevel(Editor.SENSORS);
                     return s;
                 } else if (_itemType.equals("Light")) {
-                    LightIcon l = new LightIcon(_editor);
+                    LightIcon l = new LightIcon(editor);
                     l.setOffIcon(iMap.get("StateOff"));
                     l.setOnIcon(iMap.get("StateOn"));
                     l.setInconsistentIcon(iMap.get("BeanStateInconsistent"));

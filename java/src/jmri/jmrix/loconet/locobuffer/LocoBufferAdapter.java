@@ -38,7 +38,7 @@ public class LocoBufferAdapter extends LnPortController {
         option1Name = "FlowControl"; // NOI18N
         option2Name = "CommandStation"; // NOI18N
         option3Name = "TurnoutHandle"; // NOI18N
-        option4Name = "PacketizerType"; //NOI18N
+        option4Name = "PacketizerType"; // NOI18N
         options.put(option1Name, new Option(Bundle.getMessage("XconnectionUsesLabel", Bundle.getMessage("TypeSerial")), validOption1));  // NOI18N
         options.put(option2Name, new Option(Bundle.getMessage("CommandStationTypeLabel"), getCommandStationListWithStandaloneLN(), false));  // NOI18N
         options.put(option3Name, new Option(Bundle.getMessage("TurnoutHandling"),

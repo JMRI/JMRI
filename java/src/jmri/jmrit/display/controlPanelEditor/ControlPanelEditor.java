@@ -51,7 +51,6 @@ import javax.swing.SwingWorker;
 import jmri.CatalogTreeManager;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
-import jmri.jmrit.catalog.CatalogPanel;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.CoordinateEdit;
@@ -1069,7 +1068,17 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             }
         } else {
             if (event.isControlDown() && (event.isPopupTrigger() || event.isMetaDown() || event.isAltDown())) {
-                new ColorDialog(this, getTargetPanel(), ColorDialog.ONLY, null);
+                ActionListener ca = null;
+                Editor ed = this;
+                ca = new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if (_itemPalette != null) {
+                            _itemPalette.setEditor(ed);
+                        }
+                    }
+                };
+                new ColorDialog(this, getTargetPanel(), ColorDialog.ONLY, ca);
             }
         }
         if (!isEditable() && selection != null && selection.isHidden()) {
