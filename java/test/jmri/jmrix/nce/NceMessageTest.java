@@ -21,7 +21,11 @@ public class NceMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         JUnitUtil.setUp();
         tc = new NceTrafficController();
         saveCommandOptions = tc.getCommandOptions();
-        m = msg = new NceMessage(1);
+        try {
+            m = msg = new NceMessage(1);
+        } catch (Throwable t) { // debug for "Could not initialize class jmri.jmrix.nce.NceMessage"
+            log.error("caught in NceMesssage ctor", t);
+        }
     }
 
     @After
@@ -165,5 +169,7 @@ public class NceMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         msg = NceMessage.sendPacketMessage(tc, new byte[]{(byte) 0x81, (byte) 0xff, (byte) 0x7e});
         Assert.assertEquals("content", "93 02 81 FF 7E", msg.toString());
     }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NceMessageTest.class);
 
 }

@@ -14,40 +14,47 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-    <!-- ver1 made from the ESU_LokSoundV4_0 file -->
-    <!-- ver2 updates for new firmware and reorganise code shared with LokPilot 5  -->
-    <version author="Dave Heap" version="1" lastUpdated="20190507"/>
-    <version author="Dave Heap" version="2" lastUpdated="20200410"/>
+    <!-- ver1 made from the ESU_LokPilotV4_0 file -->
+    <version author="Dave Heap" version="1" lastUpdated="20200410"/>
     <decoder>
-        <family name="ESU LokSound 5" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
-            <model model="LokSound 5" numOuts="20" maxMotorCurrent="1.5A" extFnsESU="V5" productID="33554582">
+        <family name="ESU LokPilot 5" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
+            <model model="LokPilot 5" numOuts="20" maxMotorCurrent="1.5A" extFnsESU="V5" productID="33554600">
                 <size length="30.5" width="15.5" height="5.5" units="mm"/>
             </model>
-            <model model="LokSound 5 DCC" numOuts="20" maxMotorCurrent="1.5A" extFnsESU="V5" productID="33554588">
+            <model model="LokPilot 5 DCC" numOuts="20" maxMotorCurrent="1.5A" extFnsESU="V5" productID="33554602">
                 <size length="30.5" width="15.5" height="5.5" units="mm"/>
             </model>
-            <model model="LokSound 5 micro" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="33554587">
+            <model model="LokPilot 5 micro" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="16777390">
                 <size length="25.5" width="10.6" height="4.5" units="mm"/>
             </model>
-            <model model="LokSound 5 micro DCC" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="33554590">
+            <model model="LokPilot 5 micro DCC" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="16777391">
                 <size length="25.5" width="10.6" height="4.5" units="mm"/>
             </model>
-            <model model="LokSound 5 micro DCC Direct" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="16777370">
+            <model model="LokPilot 5 micro Next18" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="33554604">
                 <size length="21.0" width="10.6" height="4.0" units="mm"/>
             </model>
-            <model model="LokSound 5 L" numOuts="20" maxMotorCurrent="3A" extFnsESU="V5" productID="33554589">
+            <model model="LokPilot 5 micro DCC Next18" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="33554605">
+                <size length="21.0" width="10.6" height="4.0" units="mm"/>
+            </model>
+            <model model="LokPilot 5 L" numOuts="20" maxMotorCurrent="3A" extFnsESU="V5" productID="33554609">
                 <size length="51.8" width="25.4" height="14" units="mm"/>
             </model>
-            <model model="LokSound 5 L DCC" numOuts="20" maxMotorCurrent="3A" extFnsESU="V5" productID="33554592">
+            <model model="LokPilot 5 L DCC" numOuts="20" maxMotorCurrent="3A" extFnsESU="V5" productID="33554610">
                 <size length="51.8" width="25.4" height="14" units="mm"/>
             </model>
-            <model model="LokSound 5 XL" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554591">
+            <model model="LokPilot 5 Fx micro" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554611">
                 <size length="51.0" width="40.0" height="14.0" units="mm"/>
             </model>
-            <model model="LokSound 5 MKL" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554598">
+            <model model="LokPilot 5 Fx micro DCC" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554612">
                 <size length="51.0" width="40.0" height="14.0" units="mm"/>
             </model>
-            <xi:include href="http://jmri.org/xml/decoders/esu/v5lsOutputLabels.xml"/>
+            <model model="LokPilot 5 MKL" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554601">
+                <size length="51.0" width="40.0" height="14.0" units="mm"/>
+            </model>
+            <model model="LokPilot 5 MKL DCC" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554608">
+                <size length="51.0" width="40.0" height="14.0" units="mm"/>
+            </model>
+            <xi:include href="http://jmri.org/xml/decoders/esu/v5lpOutputLabels.xml"/>
             <functionlabels>
                 <functionlabel num="0" lockable="true">
                     <text>Light</text>
@@ -104,7 +111,6 @@
     <xi:include href="http://jmri.org/xml/decoders/esu/v4advancedPane.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/esu/v4lightsPane.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/esu/v4soundPane.xml"/>
-    <xi:include href="http://jmri.org/xml/decoders/esu/v4soundLevelsPane.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/esu/v5randFuncPane.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/esu/v4fnOutPane.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/esu/v4fnSetPane.xml"/>
