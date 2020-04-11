@@ -12,7 +12,7 @@ package jmri.jmrix.nce;
 public class NceReply extends jmri.jmrix.AbstractMRReply {
 
     NceTrafficController tc;
-    protected static final jmri.jmrix.nce.ncemon.NceMonBinary nceMon = new jmri.jmrix.nce.ncemon.NceMonBinary();
+    private static final jmri.jmrix.nce.ncemon.NceMonBinary nceMon = new jmri.jmrix.nce.ncemon.NceMonBinary();
 
     // create a new one
     public NceReply(NceTrafficController tc) {
