@@ -23,8 +23,7 @@ public class ReporterItemPanelTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         PickListModel<jmri.Reporter> tableModel = PickListModel.reporterPickModelInstance();
         DisplayFrame df = new DisplayFrame("Reporter Item Panel Test");
-        Editor editor = new EditorScaffold();
-        ReporterItemPanel t = new ReporterItemPanel(df,"IR01","",tableModel,editor);
+        ReporterItemPanel t = new ReporterItemPanel(df,"IR01","",tableModel);
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(df);
     }

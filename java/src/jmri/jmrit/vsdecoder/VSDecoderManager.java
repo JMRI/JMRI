@@ -54,7 +54,7 @@ import org.slf4j.LoggerFactory;
 public class VSDecoderManager implements PropertyChangeListener {
 
     //private static final ResourceBundle rb = VSDecoderBundle.bundle();
-    private static final String vsd_property_change_name = "VSDecoder Manager"; //NOI18N
+    private static final String vsd_property_change_name = "VSDecoder Manager"; // NOI18N
 
     // Array-pointer for blockParameter
     private static final int radius = 0;

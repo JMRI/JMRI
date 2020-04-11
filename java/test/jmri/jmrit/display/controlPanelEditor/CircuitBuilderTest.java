@@ -130,7 +130,7 @@ public class CircuitBuilderTest {
     }
 
     @Test
-//    @org.junit.Ignore ("'OK' button does not dismiss dialog.")
+    @org.junit.Ignore ("'OK' button does not dismiss dialog.")
     public void testEditPortalError() {
         getCPEandCB();
 

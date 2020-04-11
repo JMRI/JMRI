@@ -255,7 +255,7 @@ public class DetectionPanel extends JPanel {
             } else {
                 Sensor sensor = InstanceManager.sensorManagerInstance().getSensor(name);
                 if (sensor == null) {
-                    JOptionPane.showMessageDialog(_parent._paletteFrame,
+                    JOptionPane.showMessageDialog(_parent._frame,
                             Bundle.getMessage("InvalidOccDetector", name),
                             Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
                     _occDetectorName.setText(null);
