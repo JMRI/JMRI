@@ -5,6 +5,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Color;
 import java.awt.Point;
 import jmri.InstanceManager;
+import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -24,7 +25,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2013
  */
-public class RouteLocation implements java.beans.PropertyChangeListener {
+public class RouteLocation extends PropertyChangeSupport implements java.beans.PropertyChangeListener {
 
     public static final String NONE = "";
 
@@ -649,20 +650,6 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
         if (e.getPropertyName().equals(Location.NAME_CHANGED_PROPERTY)) {
             firePropertyChange(e.getPropertyName(), e.getOldValue(), e.getNewValue());
         }
-    }
-
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-    }
-
-    protected void firePropertyChange(String p, Object old, Object n) {
-        pcs.firePropertyChange(p, old, n);
     }
 
     protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {

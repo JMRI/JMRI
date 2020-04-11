@@ -181,7 +181,7 @@ public interface UserPreferencesManager {
      * Show an error message ("don't forget ...") with a given dialog title and
      * user message. Use a given preference name to determine whether to show it
      * in the future. added flag to indicate that the message should be
-     * suppressed JMRI session only. The classString {@literal &} item
+     * suppressed JMRI session only. The classString and item
      * parameters should form a unique value
      *
      * @param title          Message Box title
@@ -199,7 +199,7 @@ public interface UserPreferencesManager {
      * Show an info message ("don't forget ...") with a given dialog title and
      * user message. Use a given preference name to determine whether to show it
      * in the future. added flag to indicate that the message should be
-     * suppressed JMRI session only. The classString {@literal &} item
+     * suppressed JMRI session only. The classString and item
      * parameters should form a unique value
      *
      * @param title          Message Box title
@@ -217,7 +217,7 @@ public interface UserPreferencesManager {
      * Show a warning message ("don't forget ...") with a given dialog title and
      * user message. Use a given preference name to determine whether to show it
      * in the future. added flag to indicate that the message should be
-     * suppressed JMRI session only. The classString {@literal &} item
+     * suppressed JMRI session only. The classString and item
      * parameters should form a unique value
      *
      * @param title          Message Box title

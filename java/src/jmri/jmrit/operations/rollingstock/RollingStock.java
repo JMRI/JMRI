@@ -11,7 +11,8 @@ import org.slf4j.LoggerFactory;
 import jmri.IdTag;
 import jmri.IdTagManager;
 import jmri.InstanceManager;
-import jmri.beans.IdentifiedBean;
+import jmri.beans.Identifiable;
+import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
@@ -29,7 +30,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  *
  * @author Daniel Boudreau Copyright (C) 2009, 2010, 2013
  */
-public abstract class RollingStock extends IdentifiedBean implements PropertyChangeListener {
+public abstract class RollingStock extends PropertyChangeSupport implements Identifiable, PropertyChangeListener {
 
     public static final String NONE = "";
     public static final int DEFAULT_BLOCKING_ORDER = 0;
@@ -124,7 +125,7 @@ public abstract class RollingStock extends IdentifiedBean implements PropertyCha
         String oldNumber = _number;
         _number = number;
         if (!oldNumber.equals(number)) {
-            propertyChangeSupport.firePropertyChange("rolling stock number", oldNumber, number); // NOI18N
+            firePropertyChange("rolling stock number", oldNumber, number); // NOI18N
             String oldId = _id;
             _id = createId(_road, number);
             setDirtyAndFirePropertyChange(Xml.ID, oldId, _id);
@@ -139,7 +140,7 @@ public abstract class RollingStock extends IdentifiedBean implements PropertyCha
         String old = _road;
         _road = road;
         if (!old.equals(road)) {
-            propertyChangeSupport.firePropertyChange("rolling stock road", old, road); // NOI18N
+            firePropertyChange("rolling stock road", old, road); // NOI18N
             String oldId = _id;
             _id = createId(road, _number);
             setDirtyAndFirePropertyChange(Xml.ID, oldId, _id);
@@ -521,7 +522,7 @@ public abstract class RollingStock extends IdentifiedBean implements PropertyCha
      * @param destination The Location.
      *
      * @param track (yard, spur, staging, or interchange track)
-     * @param force when true ignore track length, type, {@literal &} road when
+     * @param force when true ignore track length, type, and road when
      *            setting destination
      * @return "okay" if successful, "type" if the rolling stock's type isn't
      *         acceptable, or "length" if the rolling stock length didn't fit.
@@ -1519,7 +1520,7 @@ public abstract class RollingStock extends IdentifiedBean implements PropertyCha
     }
 
     protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
-        propertyChangeSupport.firePropertyChange(p, old, n);
+        firePropertyChange(p, old, n);
     }
 
     private final static Logger log = LoggerFactory.getLogger(RollingStock.class);

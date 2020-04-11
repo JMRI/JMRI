@@ -10,9 +10,9 @@ import org.junit.*;
 public class VSDControlTest {
 
     @Test
-    @Ignore("tests causes NPE, needs more setup")
     public void testCTor() {
-        VSDControl t = new VSDControl();
+        Assume.assumeFalse(java.awt.GraphicsEnvironment.isHeadless());
+        VSDControl t = new VSDControl("Test");
         Assert.assertNotNull("exists",t);
     }
 

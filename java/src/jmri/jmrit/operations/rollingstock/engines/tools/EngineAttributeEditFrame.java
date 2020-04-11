@@ -341,7 +341,7 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
         InstanceManager.getDefault(EngineLengths.class).removePropertyChangeListener(this);
         InstanceManager.getDefault(CarOwners.class).removePropertyChangeListener(this);
         engineManager.removePropertyChangeListener(this);
-        firePcs(DISPOSE, _comboboxName, null);
+        firePropertyChange(DISPOSE, _comboboxName, null);
         super.dispose();
     }
 
@@ -369,24 +369,6 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
         if (e.getPropertyName().equals(EngineManager.CONSISTLISTLENGTH_CHANGED_PROPERTY)) {
             engineManager.updateConsistComboBox(comboBox);
         }
-    }
-
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-
-    @Override
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    @Override
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-    }
-
-    // note firePropertyChange occurs during frame creation
-    private void firePcs(String p, Object old, Object n) {
-        log.debug("EngineAttribute firePropertyChange {}", p);
-        pcs.firePropertyChange(p, old, n);
     }
 
     private final static Logger log = LoggerFactory.getLogger(EngineAttributeEditFrame.class);
