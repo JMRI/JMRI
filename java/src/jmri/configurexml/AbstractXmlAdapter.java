@@ -93,9 +93,13 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
     /**
      * Support for Enum I/O via XML
      */
-    public class EnumIO <T extends Enum<T>> {  // public to be usable in other packages
+    public static class EnumIO <T extends Enum<T>> {  // public to be usable in other packages
     
-        // this implementation just uses ordinal for now
+        // This implementation just uses ordinal for now,
+        // so the order of definitions in the enum has to 
+        // match up with the (former) constant values.
+        // Later, we can add an explicit mapping here (rather
+        // than having to define it in the enum itself)
 
         public EnumIO(Class<T> clazz) {
             this.clazz = clazz;
