@@ -69,7 +69,7 @@ public class OptionFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(p.routerCheckBox);
         Assert.assertFalse("router", p.routerCheckBox.isSelected());
 
-        JemmyUtil.enterClickAndLeave(p.saveButton);
+        JemmyUtil.enterPushAndLeave(p.saveButton);
         // done
         JUnitUtil.dispose(f);
 

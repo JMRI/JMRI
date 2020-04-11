@@ -35,7 +35,7 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
         // create one interchange track
         f.trackNameTextField.setText("new interchange track");
         f.trackLengthTextField.setText("321");
-        JemmyUtil.enterClickAndLeave(f.addTrackButton);
+        JemmyUtil.enterPushAndLeave(f.addTrackButton);
 
         Track t = l.getTrackByName("new interchange track", Track.INTERCHANGE);
         Assert.assertNotNull("new interchange track", t);
@@ -58,7 +58,7 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
         // create one interchange tracks
         f.trackNameTextField.setText("2nd interchange track");
         f.trackLengthTextField.setText("4331");
-        JemmyUtil.enterClickAndLeave(f.addTrackButton);
+        JemmyUtil.enterPushAndLeave(f.addTrackButton);
         Track t = l.getTrackByName("2nd interchange track", Track.INTERCHANGE);
         Assert.assertNotNull("2nd interchange track", t);
         Assert.assertEquals("2nd interchange track length", 4331, t.getLength());
@@ -68,7 +68,7 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(f.eastCheckBox);
         JemmyUtil.enterClickAndLeave(f.southCheckBox);
 
-        JemmyUtil.enterClickAndLeave(f.saveTrackButton);
+        JemmyUtil.enterPushAndLeave(f.saveTrackButton);
 
         Assert.assertEquals("west and north", Track.NORTH + Track.WEST, t.getTrainDirections());
 
@@ -86,19 +86,19 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
         // create one interchange tracks
         f.trackNameTextField.setText("2nd interchange track");
         f.trackLengthTextField.setText("4331");
-        JemmyUtil.enterClickAndLeave(f.addTrackButton);
+        JemmyUtil.enterPushAndLeave(f.addTrackButton);
 
         Track t = l.getTrackByName("2nd interchange track", Track.INTERCHANGE);
 
         // check track accepts Boxcars
         Assert.assertTrue("2nd interchange track accepts Boxcars", t.acceptsTypeName("Boxcar"));
         // test clear car types button
-        JemmyUtil.enterClickAndLeave(f.clearButton);
-        JemmyUtil.enterClickAndLeave(f.saveTrackButton);
+        JemmyUtil.enterPushAndLeave(f.clearButton);
+        JemmyUtil.enterPushAndLeave(f.saveTrackButton);
         Assert.assertFalse("2nd interchange track doesn't accept Boxcars", t.acceptsTypeName("Boxcar"));
 
-        JemmyUtil.enterClickAndLeave(f.setButton);
-        JemmyUtil.enterClickAndLeave(f.saveTrackButton);
+        JemmyUtil.enterPushAndLeave(f.setButton);
+        JemmyUtil.enterPushAndLeave(f.saveTrackButton);
         Assert.assertTrue("2nd interchange track accepts Boxcars again", t.acceptsTypeName("Boxcar"));
 
         JUnitUtil.dispose(f);
@@ -115,17 +115,17 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
         // create two interchange tracks
         f.trackNameTextField.setText("new interchange track");
         f.trackLengthTextField.setText("321");
-        JemmyUtil.enterClickAndLeave(f.addTrackButton);
+        JemmyUtil.enterPushAndLeave(f.addTrackButton);
 
         f.trackNameTextField.setText("2nd interchange track");
         f.trackLengthTextField.setText("4331");
-        JemmyUtil.enterClickAndLeave(f.addTrackButton);
+        JemmyUtil.enterPushAndLeave(f.addTrackButton);
 
         // deselect east and south check boxes
         JemmyUtil.enterClickAndLeave(f.eastCheckBox);
         JemmyUtil.enterClickAndLeave(f.southCheckBox);
 
-        JemmyUtil.enterClickAndLeave(f.saveTrackButton);
+        JemmyUtil.enterPushAndLeave(f.saveTrackButton);
 
         JUnitUtil.dispose(f);
 

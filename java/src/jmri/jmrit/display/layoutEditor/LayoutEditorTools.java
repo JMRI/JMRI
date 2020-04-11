@@ -221,6 +221,7 @@ public class LayoutEditorTools {
             panel1.add(turnoutNameLabel);
             panel1.add(turnoutComboBox);
             turnoutNameLabel.setLabelFor(turnoutComboBox);
+            turnoutComboBox.setName("turnoutComboBox");
             turnoutComboBox.setToolTipText(Bundle.getMessage("SignalsTurnoutNameHint"));
             theContentPane.add(panel1);
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
@@ -266,10 +267,11 @@ public class LayoutEditorTools {
             JLabel throatContinuingLabel = new JLabel(
                     Bundle.getMessage("MakeLabel", throatContinuingString));
             panel21.add(throatContinuingLabel);
-            panel21.add(throatContinuingSignalHeadComboBox);
-            throatContinuingLabel.setLabelFor(throatContinuingSignalHeadComboBox);
-            theContentPane.add(panel21);
             throatContinuingSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
+            throatContinuingSignalHeadComboBox.setName("throatContinuingSignalHeadComboBox");
+            throatContinuingLabel.setLabelFor(throatContinuingSignalHeadComboBox);
+            panel21.add(throatContinuingSignalHeadComboBox);
+            theContentPane.add(panel21);
 
             JPanel panel22 = new JPanel(new FlowLayout());
             panel22.add(new JLabel("   "));
@@ -286,6 +288,7 @@ public class LayoutEditorTools {
             panel31.add(throatDivergingLabel);
             panel31.add(throatDivergingSignalHeadComboBox);
             throatDivergingLabel.setLabelFor(throatDivergingSignalHeadComboBox);
+            throatDivergingSignalHeadComboBox.setName("throatDivergingSignalHeadComboBox");
             theContentPane.add(panel31);
             throatDivergingSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
 
@@ -304,6 +307,7 @@ public class LayoutEditorTools {
             panel41.add(continuingLabel);
             panel41.add(continuingSignalHeadComboBox);
             continuingLabel.setLabelFor(continuingSignalHeadComboBox);
+            continuingSignalHeadComboBox.setName("continuingSignalHeadComboBox");
             theContentPane.add(panel41);
             continuingSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
 
@@ -322,6 +326,7 @@ public class LayoutEditorTools {
             panel51.add(divergingLabel);
             panel51.add(divergingSignalHeadComboBox);
             divergingLabel.setLabelFor(divergingSignalHeadComboBox);
+            divergingSignalHeadComboBox.setName("divergingSignalHeadComboBox");
             theContentPane.add(panel51);
             divergingSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
 
@@ -4533,36 +4538,28 @@ public class LayoutEditorTools {
             null, DisplayOptions.DISPLAYNAME);
 
     private final NamedBeanComboBox<SignalHead> a1TToTSignalHeadComboBox = new NamedBeanComboBox<>(
-            InstanceManager.getDefault(SignalHeadManager.class
-            ),
+            InstanceManager.getDefault(SignalHeadManager.class),
             null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<SignalHead> a2TToTSignalHeadComboBox = new NamedBeanComboBox<>(
-            InstanceManager.getDefault(SignalHeadManager.class
-            ),
+            InstanceManager.getDefault(SignalHeadManager.class),
             null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<SignalHead> b1TToTSignalHeadComboBox = new NamedBeanComboBox<>(
-            InstanceManager.getDefault(SignalHeadManager.class
-            ),
+            InstanceManager.getDefault(SignalHeadManager.class),
             null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<SignalHead> b2TToTSignalHeadComboBox = new NamedBeanComboBox<>(
-            InstanceManager.getDefault(SignalHeadManager.class
-            ),
+            InstanceManager.getDefault(SignalHeadManager.class),
             null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<SignalHead> c1TToTSignalHeadComboBox = new NamedBeanComboBox<>(
-            InstanceManager.getDefault(SignalHeadManager.class
-            ),
+            InstanceManager.getDefault(SignalHeadManager.class),
             null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<SignalHead> c2TToTSignalHeadComboBox = new NamedBeanComboBox<>(
-            InstanceManager.getDefault(SignalHeadManager.class
-            ),
+            InstanceManager.getDefault(SignalHeadManager.class),
             null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<SignalHead> d1TToTSignalHeadComboBox = new NamedBeanComboBox<>(
-            InstanceManager.getDefault(SignalHeadManager.class
-            ),
+            InstanceManager.getDefault(SignalHeadManager.class),
             null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<SignalHead> d2TToTSignalHeadComboBox = new NamedBeanComboBox<>(
-            InstanceManager.getDefault(SignalHeadManager.class
-            ),
+            InstanceManager.getDefault(SignalHeadManager.class),
             null, DisplayOptions.DISPLAYNAME);
 
     private final JCheckBox setA1TToTHead = new JCheckBox(Bundle.getMessage("PlaceHead"));
@@ -4652,6 +4649,8 @@ public class LayoutEditorTools {
                     + Bundle.getMessage("Name"));
             panel1a.add(ttotTurnoutName1Label);
             panel1a.add(turnout1ComboBox);
+            ttotTurnoutName1Label.setLabelFor(turnout1ComboBox);
+            turnout1ComboBox.setName("turnout1ComboBox");
             turnout1ComboBox.setToolTipText(Bundle.getMessage("SignalsTurnoutNameHint"));
             theContentPane.add(panel1a);
 
@@ -4660,6 +4659,8 @@ public class LayoutEditorTools {
                     + Bundle.getMessage("Name"));
             panel1b.add(ttotTurnoutName2Label);
             panel1b.add(turnout2ComboBox);
+            ttotTurnoutName2Label.setLabelFor(turnout2ComboBox);
+            turnout2ComboBox.setName("turnout2ComboBox");
             turnout2ComboBox.setToolTipText(Bundle.getMessage("SignalsTurnoutNameHint"));
             theContentPane.add(panel1b);
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
@@ -4725,6 +4726,7 @@ public class LayoutEditorTools {
             panel21.add(a1TToTSignalHeadComboBox);
             theContentPane.add(panel21);
             a1TToTSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
+            a1TToTSignalHeadComboBox.setName("a1TToTSignalHeadComboBox");   //for testing
 
             JPanel panel22 = new JPanel(new FlowLayout());
             panel22.add(new JLabel(Bundle.getMessage("OrBoth") + " 2 " + Bundle.getMessage("Tracks)") + "	  "));
@@ -4742,6 +4744,7 @@ public class LayoutEditorTools {
             panel23.add(a2TToTSignalHeadComboBox);
             theContentPane.add(panel23);
             a2TToTSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
+            a2TToTSignalHeadComboBox.setName("a2TToTSignalHeadComboBox");   //for testing
 
             JPanel panel24 = new JPanel(new FlowLayout());
             panel24.add(new JLabel("				"));
@@ -4765,6 +4768,7 @@ public class LayoutEditorTools {
             panel31.add(b1TToTSignalHeadComboBox);
             theContentPane.add(panel31);
             b1TToTSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
+            b1TToTSignalHeadComboBox.setName("b1TToTSignalHeadComboBox");   //for testing
 
             JPanel panel32 = new JPanel(new FlowLayout());
             panel32.add(new JLabel(Bundle.getMessage("OrBoth") + " 2 " + Bundle.getMessage("Tracks)") + "	  "));
@@ -4782,6 +4786,7 @@ public class LayoutEditorTools {
             panel33.add(b2TToTSignalHeadComboBox);
             theContentPane.add(panel33);
             b2TToTSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
+            b2TToTSignalHeadComboBox.setName("b2TToTSignalHeadComboBox");   //for testing
 
             JPanel panel34 = new JPanel(new FlowLayout());
             panel34.add(new JLabel("				"));
@@ -4807,6 +4812,7 @@ public class LayoutEditorTools {
             panel41.add(c1TToTSignalHeadComboBox);
             theContentPane.add(panel41);
             c1TToTSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
+            c1TToTSignalHeadComboBox.setName("c1TToTSignalHeadComboBox");   //for testing
 
             JPanel panel42 = new JPanel(new FlowLayout());
             panel42.add(new JLabel(Bundle.getMessage("OrBoth") + " 1 " + Bundle.getMessage("Tracks)") + "	  "));
@@ -4824,6 +4830,7 @@ public class LayoutEditorTools {
             panel43.add(c2TToTSignalHeadComboBox);
             theContentPane.add(panel43);
             c2TToTSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
+            c2TToTSignalHeadComboBox.setName("c2TToTSignalHeadComboBox");   //for testing
 
             JPanel panel44 = new JPanel(new FlowLayout());
             panel44.add(new JLabel("				"));
@@ -4847,6 +4854,7 @@ public class LayoutEditorTools {
             panel51.add(d1TToTSignalHeadComboBox);
             theContentPane.add(panel51);
             d1TToTSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
+            d1TToTSignalHeadComboBox.setName("d1TToTSignalHeadComboBox");   //for testing
 
             JPanel panel52 = new JPanel(new FlowLayout());
             panel52.add(new JLabel(Bundle.getMessage("OrBoth") + " 1 " + Bundle.getMessage("Tracks)") + "	  "));
@@ -4864,6 +4872,7 @@ public class LayoutEditorTools {
             panel53.add(d2TToTSignalHeadComboBox);
             theContentPane.add(panel53);
             d2TToTSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
+            d2TToTSignalHeadComboBox.setName("d2TToTSignalHeadComboBox");   //for testing
 
             JPanel panel54 = new JPanel(new FlowLayout());
             panel54.add(new JLabel("				"));

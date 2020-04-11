@@ -41,7 +41,7 @@ public class TrackCopyFrameTest extends OperationsTestCase {
         Assert.assertNotNull("exists",tcf);
         tcf.setVisible(true);
         
-        JemmyUtil.enterClickAndLeave(tcf.copyButton);
+        JemmyUtil.enterPushAndLeave(tcf.copyButton);
         
         // error dialog window show appear
         JemmyUtil.pressDialogButton(tcf, MessageFormat.format(Bundle
@@ -50,7 +50,7 @@ public class TrackCopyFrameTest extends OperationsTestCase {
         // enter a name for the new track
         tcf.trackNameTextField.setText("Test track name");
         
-        JemmyUtil.enterClickAndLeave(tcf.copyButton);
+        JemmyUtil.enterPushAndLeave(tcf.copyButton);
         
         // error dialog window show appear
         JemmyUtil.pressDialogButton(tcf, Bundle.getMessage("SelectTrackToCopy"), Bundle.getMessage("ButtonOK"));
@@ -61,7 +61,7 @@ public class TrackCopyFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(tcf.moveRollingStockCheckBox);
         JemmyUtil.enterClickAndLeave(tcf.deleteTrackCheckBox);
         
-        JemmyUtil.enterClickAndLeave(tcf.copyButton);
+        JemmyUtil.enterPushAndLeave(tcf.copyButton);
         Assert.assertNotNull(acton.getTrackByName("Test track name", Track.INTERCHANGE));
 
         JUnitUtil.dispose(f);
@@ -89,7 +89,7 @@ public class TrackCopyFrameTest extends OperationsTestCase {
         // confirm that copy button is enabled
         Assert.assertTrue(tcf.copyButton.isEnabled());
         
-        JemmyUtil.enterClickAndLeave(tcf.copyButton);
+        JemmyUtil.enterPushAndLeave(tcf.copyButton);
         
         // error dialog window show appear
         JemmyUtil.pressDialogButton(tcf, MessageFormat.format(Bundle
@@ -98,7 +98,7 @@ public class TrackCopyFrameTest extends OperationsTestCase {
         // enter a name for the new track
         tcf.trackNameTextField.setText("Test track name");
         
-        JemmyUtil.enterClickAndLeave(tcf.copyButton);
+        JemmyUtil.enterPushAndLeave(tcf.copyButton);
         
         // error dialog window show appear
         JemmyUtil.pressDialogButton(tcf, Bundle.getMessage("SelectTrackToCopy"), Bundle.getMessage("ButtonOK"));
@@ -109,7 +109,7 @@ public class TrackCopyFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(tcf.moveRollingStockCheckBox);
         JemmyUtil.enterClickAndLeave(tcf.deleteTrackCheckBox);
         
-        JemmyUtil.enterClickAndLeave(tcf.copyButton);
+        JemmyUtil.enterPushAndLeave(tcf.copyButton);
         Assert.assertNotNull(boston.getTrackByName("Test track name", Track.INTERCHANGE));
 
         JUnitUtil.dispose(tcf);
@@ -125,7 +125,7 @@ public class TrackCopyFrameTest extends OperationsTestCase {
         Assert.assertNotNull("exists",tcf);
         tcf.setVisible(true);
         
-        JemmyUtil.enterClickAndLeave(tcf.copyButton);
+        JemmyUtil.enterPushAndLeave(tcf.copyButton);
         
         // error dialog window show appear
         JemmyUtil.pressDialogButton(tcf, MessageFormat.format(Bundle
@@ -134,7 +134,7 @@ public class TrackCopyFrameTest extends OperationsTestCase {
         // enter a name for the new track to fail longer than 25 characters
         tcf.trackNameTextField.setText("Very Long Test Track Name X");
         
-        JemmyUtil.enterClickAndLeave(tcf.copyButton);
+        JemmyUtil.enterPushAndLeave(tcf.copyButton);
         
         // error dialog window show appear
         JemmyUtil.pressDialogButton(tcf, MessageFormat.format(Bundle
@@ -155,7 +155,7 @@ public class TrackCopyFrameTest extends OperationsTestCase {
         Assert.assertNotNull("exists",tcf);
         tcf.setVisible(true);
         
-        JemmyUtil.enterClickAndLeave(tcf.copyButton);
+        JemmyUtil.enterPushAndLeave(tcf.copyButton);
         
         // error dialog window show appear
         JemmyUtil.pressDialogButton(tcf, MessageFormat.format(Bundle
@@ -164,7 +164,7 @@ public class TrackCopyFrameTest extends OperationsTestCase {
         // enter the same name
         tcf.trackNameTextField.setText(acton.getTrackList().get(2).getName());
         
-        JemmyUtil.enterClickAndLeave(tcf.copyButton);
+        JemmyUtil.enterPushAndLeave(tcf.copyButton);
         
         // error dialog window show appear
         JemmyUtil.pressDialogButton(tcf, MessageFormat.format(Bundle
@@ -184,7 +184,7 @@ public class TrackCopyFrameTest extends OperationsTestCase {
         Assert.assertNotNull("exists",tcf);
         tcf.setVisible(true);
         
-        JemmyUtil.enterClickAndLeave(tcf.saveButton);
+        JemmyUtil.enterPushAndLeave(tcf.saveButton);
 
         JUnitUtil.dispose(f);
         JUnitUtil.dispose(tcf);

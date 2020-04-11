@@ -1696,7 +1696,8 @@ public class TrackSegment extends LayoutTrack {
         //create a new anchor
         Point2D p = getCentreSeg();
         PositionablePoint newAnchor = layoutEditor.addAnchor(p);
-        //link it to me
+
+        // link it to me
         layoutEditor.setLink(newAnchor, POS_POINT, this, LayoutTrack.TRACK);
 
         //get unique name for a new track segment
@@ -1748,7 +1749,7 @@ public class TrackSegment extends LayoutTrack {
             layoutEditor.setLink(connect2, type2, newTrackSegment, LayoutTrack.TRACK);
         }
 
-        //link the new anchor to the new track segment
+        // link the new anchor to the new track segment
         layoutEditor.setLink(newAnchor, POS_POINT, newTrackSegment, LayoutTrack.TRACK);
 
         //link me to the new newAnchor
