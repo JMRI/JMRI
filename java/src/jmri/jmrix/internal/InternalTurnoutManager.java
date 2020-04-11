@@ -48,6 +48,11 @@ public class InternalTurnoutManager extends AbstractTurnoutManager {
             public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, NamedBean n) {
                 return (new PreferNumericComparator()).compare(suffix1, suffix2);
             }
+            
+            @Override
+            public boolean isCanFollow() {
+                return true;
+            }
         };
     }
 

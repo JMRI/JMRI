@@ -403,23 +403,6 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
         return true;
     }
 
-    private java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-
-    @Override
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    @Override
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-    }
-
-    @Override
-    protected void firePropertyChange(String p, Object old, Object n) {
-        pcs.firePropertyChange(p, old, n);
-    }
-
     /**
      * The PropertyChangeListener interface in this class is intended to keep
      * track of roster entries and sync them up with the Ecos.

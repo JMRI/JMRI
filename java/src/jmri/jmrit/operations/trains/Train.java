@@ -18,7 +18,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
-import jmri.beans.IdentifiedBean;
+import jmri.beans.Identifiable;
+import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.operations.OperationsXml;
@@ -49,7 +50,7 @@ import jmri.util.FileUtil;
  *
  * @author Rodney Black Copyright (C) 2011
  */
-public class Train extends IdentifiedBean implements PropertyChangeListener {
+public class Train extends PropertyChangeSupport implements Identifiable, PropertyChangeListener {
 
     /*
      * WARNING DO NOT LOAD CAR OR ENGINE MANAGERS WHEN Train.java IS CREATED IT
@@ -4327,7 +4328,7 @@ public class Train extends IdentifiedBean implements PropertyChangeListener {
 
     protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
         InstanceManager.getDefault(TrainManagerXml.class).setDirty(true);
-        propertyChangeSupport.firePropertyChange(p, old, n);
+        firePropertyChange(p, old, n);
     }
 
     private final static Logger log = LoggerFactory.getLogger(Train.class);

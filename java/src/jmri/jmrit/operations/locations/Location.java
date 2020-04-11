@@ -10,7 +10,8 @@ import java.util.List;
 import javax.swing.JComboBox;
 import jmri.InstanceManager;
 import jmri.Reporter;
-import jmri.beans.IdentifiedBean;
+import jmri.beans.Identifiable;
+import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
@@ -32,7 +33,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2012, 2013
  */
-public class Location extends IdentifiedBean implements PropertyChangeListener {
+public class Location extends PropertyChangeSupport implements Identifiable, PropertyChangeListener {
 
     public static final String LOC_TRACK_REGIX = "s";
 
@@ -1637,7 +1638,7 @@ public class Location extends IdentifiedBean implements PropertyChangeListener {
 
     protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
         InstanceManager.getDefault(LocationManagerXml.class).setDirty(true);
-        propertyChangeSupport.firePropertyChange(p, old, n);
+        firePropertyChange(p, old, n);
     }
 
     private final static Logger log = LoggerFactory.getLogger(Location.class);
