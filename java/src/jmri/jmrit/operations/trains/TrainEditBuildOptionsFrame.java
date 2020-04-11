@@ -402,7 +402,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
         InstanceManager.getDefault(EngineModels.class).addPropertyChangeListener(this);
 
         // get notified if return to staging option changes
-        Setup.addPropertyChangeListener(this);
+        Setup.getDefault().addPropertyChangeListener(this);
 
         initMinimumSize();
     }
@@ -971,7 +971,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
     public void dispose() {
         InstanceManager.getDefault(CarOwners.class).removePropertyChangeListener(this);
         InstanceManager.getDefault(EngineModels.class).removePropertyChangeListener(this);
-        Setup.removePropertyChangeListener(this);
+        Setup.getDefault().removePropertyChangeListener(this);
         if (_train != null) {
             _train.removePropertyChangeListener(this);
         }

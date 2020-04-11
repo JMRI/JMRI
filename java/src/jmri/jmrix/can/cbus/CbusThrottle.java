@@ -298,7 +298,7 @@ public class CbusThrottle extends AbstractThrottle {
 
         if (Math.abs(oldSpeed - this.speedSetting) > 0.0001) {
             sendToLayout();
-            notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
+            firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting);
             record(this.speedSetting); // float
         }
     }
@@ -345,7 +345,7 @@ public class CbusThrottle extends AbstractThrottle {
         }
 
         if (Math.abs(oldSpeed - this.speedSetting) > 0.0001) {
-            notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
+            firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting);
             record(this.speedSetting); // float
         }
     }
@@ -361,7 +361,7 @@ public class CbusThrottle extends AbstractThrottle {
         this.isForward = forward;
         if (old != this.isForward) {
             sendToLayout();
-            notifyPropertyChangeListener(ISFORWARD, old, isForward);
+            firePropertyChange(ISFORWARD, old, isForward);
         }
     }
     
@@ -415,7 +415,7 @@ public class CbusThrottle extends AbstractThrottle {
      */
     protected void setStolen(boolean isStolen){
         if (isStolen != _isStolen){
-            notifyPropertyChangeListener("IsAvailable", isStolen, _isStolen); // PCL is opposite of local boolean
+            firePropertyChange("IsAvailable", isStolen, _isStolen); // PCL is opposite of local boolean
             _isStolen = isStolen;
         }
         if (isStolen){ // stop keep-alive messages

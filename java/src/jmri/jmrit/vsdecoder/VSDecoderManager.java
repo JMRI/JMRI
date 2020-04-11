@@ -591,7 +591,7 @@ public class VSDecoderManager implements PropertyChangeListener {
             log.debug("Block property change! name: {} old: {} new = {}", evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
             blockPropertyChange(evt);
         } else if (evt.getSource() instanceof VSDManagerFrame) {
-            if (evt.getPropertyName().equals(VSDManagerFrame.PCIDMap.get(VSDManagerFrame.PropertyChangeID.REMOVE_DECODER))) {
+            if (evt.getPropertyName().equals(VSDManagerFrame.REMOVE_DECODER)) {
                 // Shut down the requested decoder and remove it from the manager's hash maps. 
                 // Unless there are "illegal" handles, this should put the decoder on the garbage heap.  I think.
                 String sa = (String) evt.getNewValue();
@@ -606,7 +606,7 @@ public class VSDecoderManager implements PropertyChangeListener {
                 timertable.remove(d.getId()); // Remove timer
                 locorow--; // prepare array index for eventually adding a new decoder
                 //debugPrintDecoderList();
-            } else if (evt.getPropertyName().equals(VSDManagerFrame.PCIDMap.get(VSDManagerFrame.PropertyChangeID.CLOSE_WINDOW))) {
+            } else if (evt.getPropertyName().equals(VSDManagerFrame.CLOSE_WINDOW)) {
                 // Note this assumes there is only one VSDManagerFrame open at a time.
                 shutdownDecoders();
                 if (managerFrame != null) {

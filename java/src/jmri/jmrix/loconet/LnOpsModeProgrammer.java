@@ -2,7 +2,6 @@ package jmri.jmrix.loconet;
 
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
@@ -11,6 +10,7 @@ import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
+import jmri.beans.PropertyChangeSupport;
 
 /**
  * Provide an Ops Mode Programmer via a wrapper that works with the LocoNet
@@ -20,7 +20,7 @@ import jmri.ProgrammingMode;
  * @author Bob Jacobsen Copyright (C) 2002
  * @author B. Milhaupt, Copyright (C) 2018
  */
-public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener {
+public class LnOpsModeProgrammer extends PropertyChangeSupport implements AddressedProgrammer, LocoNetListener {
 
     LocoNetSystemConnectionMemo memo;
     int mAddress;
@@ -413,7 +413,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     public final void setMode(ProgrammingMode m) {
         if (getSupportedModes().contains(m)) {
             mode = m;
-            notifyPropertyChange("Mode", mode, m); // NOI18N
+            firePropertyChange("Mode", mode, m); // NOI18N
         } else {
             throw new IllegalArgumentException("Invalid requested mode: " + m); // NOI18N
         }
@@ -460,31 +460,6 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
             return WriteConfirmMode.NotVerified;
         }
         return WriteConfirmMode.DecoderReply;
-    }
-
-    /**
-     * Provide a {@link java.beans.PropertyChangeSupport} helper.
-     */
-    private final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-        propertyChangeSupport.addPropertyChangeListener(listener);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void removePropertyChangeListener(PropertyChangeListener listener) {
-        propertyChangeSupport.removePropertyChangeListener(listener);
-    }
-
-    protected void notifyPropertyChange(String key, Object oldValue, Object value) {
-        propertyChangeSupport.firePropertyChange(key, oldValue, value);
     }
 
     /**

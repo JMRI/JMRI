@@ -100,7 +100,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
         if (_location != null) {
             _location.addPropertyChangeListener(this);
         }
-        Setup.addPropertyChangeListener(this);
+        Setup.getDefault().addPropertyChangeListener(this);
         initTable();
         table.setRowHeight(new JComboBox<>().getPreferredSize().height);
         // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
@@ -479,7 +479,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
         if (tef != null) {
             tef.dispose();
         }
-        Setup.removePropertyChangeListener(this);
+        Setup.getDefault().removePropertyChangeListener(this);
         tracksList.clear();
         fireTableDataChanged();
     }
