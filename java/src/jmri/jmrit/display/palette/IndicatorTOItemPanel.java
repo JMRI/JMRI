@@ -44,8 +44,8 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
     private DetectionPanel _detectPanel;
     protected HashMap<String, HashMap<String, NamedIcon>> _iconGroupsMap;
 
-    public IndicatorTOItemPanel(DisplayFrame parentFrame, String type, String family, PickListModel<Turnout> model, Editor editor) {
-        super(parentFrame, type, family, model, editor);
+    public IndicatorTOItemPanel(DisplayFrame parentFrame, String type, String family, PickListModel<Turnout> model) {
+        super(parentFrame, type, family, model);
     }
 
     /**
@@ -58,7 +58,7 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
         if (!_initialized) {
             _update = false;
             _suppressDragging = false;
-            add(initTablePanel(_model, _editor)); // top of Panel
+            add(initTablePanel(_model)); // top of Panel
             _detectPanel = new DetectionPanel(this);
             add(_detectPanel);
             initIconFamiliesPanel();
@@ -127,7 +127,7 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
             }
         }
         if (ItemPalette.getLevel4Family(_itemType, _family) != null) {
-            JOptionPane.showMessageDialog(_paletteFrame,
+            JOptionPane.showMessageDialog(_frame,
                     Bundle.getMessage("DuplicateFamilyName", _family, _itemType),
                     Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             // make sure name does not duplicate a known name
@@ -135,7 +135,7 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
         }
         if (!_suppressNamePrompts) {
             if (_family == null || _family.trim().length() == 0) {
-                _family = JOptionPane.showInputDialog(_paletteFrame, Bundle.getMessage("NoFamilyName"),
+                _family = JOptionPane.showInputDialog(_frame, Bundle.getMessage("NoFamilyName"),
                         Bundle.getMessage("QuestionTitle"), JOptionPane.QUESTION_MESSAGE);
                 if (_family == null || _family.trim().length() == 0) {
                     // bail out
@@ -144,11 +144,11 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
                     return;
                 }
             }
-            int result = JOptionPane.showConfirmDialog(_paletteFrame,
+            int result = JOptionPane.showConfirmDialog(_frame,
                     Bundle.getMessage("UnkownFamilyName", _family), Bundle.getMessage("QuestionTitle"),
                     JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (result == JOptionPane.YES_OPTION) {
-                ItemPalette.addLevel4Family(_paletteFrame, _itemType, _family, iconMaps);
+                ItemPalette.addLevel4Family(_itemType, _family, iconMaps);
             } else if (result == JOptionPane.NO_OPTION) {
                 _suppressNamePrompts = true;
             }
@@ -159,8 +159,8 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
      * Get a handle in order to change visibility.
      */
     @Override
-    protected JPanel initTablePanel(PickListModel<Turnout> model, Editor editor) {
-        _tablePanel = super.initTablePanel(model, editor);
+    protected JPanel initTablePanel(PickListModel<Turnout> model) {
+        _tablePanel = super.initTablePanel(model);
         return _tablePanel;
     }
 
@@ -320,7 +320,7 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
 
     @Override
     protected boolean newFamilyDialog() {
-        String family = JOptionPane.showInputDialog(_paletteFrame, Bundle.getMessage("EnterFamilyName"),
+        String family = JOptionPane.showInputDialog(_frame, Bundle.getMessage("EnterFamilyName"),
                 Bundle.getMessage("createNewIconSet", _itemType), JOptionPane.QUESTION_MESSAGE);
         if (family == null || family.trim().length() == 0) {
             // bail out
@@ -329,7 +329,7 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
         Iterator<String> iter = ItemPalette.getLevel4FamilyMaps(_itemType).keySet().iterator();
         while (iter.hasNext()) {
             if (family.equals(iter.next())) {
-                JOptionPane.showMessageDialog(_paletteFrame,
+                JOptionPane.showMessageDialog(_frame,
                         Bundle.getMessage("DuplicateFamilyName", family, _itemType),
                         Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
                 return false;
@@ -383,7 +383,7 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
      */
     @Override
     protected void deleteFamilySet() {
-        if (JOptionPane.showConfirmDialog(_paletteFrame, Bundle.getMessage("confirmDelete", _family),
+        if (JOptionPane.showConfirmDialog(_frame, Bundle.getMessage("confirmDelete", _family),
                 Bundle.getMessage("QuestionTitle"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
                 == JOptionPane.YES_OPTION) {
             ItemPalette.removeLevel4IconMap(_itemType, _family, null);
@@ -401,7 +401,7 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
         for (int i = 0; i < STATUS_KEYS.length; i++) {
             _iconGroupsMap.put(STATUS_KEYS[i], makeNewIconMap("Turnout")); // NOI18N
         }
-        ItemPalette.addLevel4Family(_editor, _itemType, family, _iconGroupsMap);
+        ItemPalette.addLevel4Family(_itemType, family, _iconGroupsMap);
         _tablePanel.setVisible(true);
         initIconFamiliesPanel();
         setFamily(family);
@@ -412,19 +412,19 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
      * Action item to rename an icon family.
      */
     protected void renameFamily() {
-        String family = JOptionPane.showInputDialog(_paletteFrame, Bundle.getMessage("EnterFamilyName"),
+        String family = JOptionPane.showInputDialog(_frame, Bundle.getMessage("EnterFamilyName"),
                 Bundle.getMessage("renameFamily"), JOptionPane.QUESTION_MESSAGE);
         if (family != null && family.trim().length() > 0) {
             ItemPalette.removeLevel4IconMap(_itemType, _family, null);
             _family = family;
-            ItemPalette.addLevel4Family(_editor, _itemType, family, _iconGroupsMap);
+            ItemPalette.addLevel4Family(_itemType, family, _iconGroupsMap);
             _tablePanel.setVisible(true);
             initIconFamiliesPanel();
             setFamily(family);
         }
     }
 
-   /**
+   /*
      * _iconGroupsMap holds edit changes when done is pressed.
      */
     protected void updateIconGroupsMap(String key, HashMap<String, NamedIcon> iconMap) {
@@ -546,7 +546,7 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
             }
 
             if (flavor.isMimeTypeEqual(Editor.POSITIONABLE_FLAVOR)) {
-                IndicatorTurnoutIcon t = new IndicatorTurnoutIcon(_editor);
+                IndicatorTurnoutIcon t = new IndicatorTurnoutIcon(_frame.getEditor());
 
                 t.setOccBlock(_detectPanel.getOccBlock());
                 t.setOccSensor(_detectPanel.getOccSensor());

@@ -24,6 +24,7 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
@@ -2939,31 +2940,34 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         }
         popup.add(new AbstractAction(Bundle.getMessage("TextAttributes")) {
             Positionable comp;
+            Editor ed;
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                (new TextAttrDialog(comp)).setVisible(true);
+                (new TextAttrDialog(comp, ed)).setVisible(true);
             }
 
             AbstractAction init(Positionable pos, Editor e) { // e unused?
                 comp = pos;
+                ed = e;
                 return this;
             }
         }.init(p, this));
         return true;
     }
 
-    public class TextAttrDialog extends JDialog {
+    public class TextAttrDialog extends DisplayFrame {
 
         Positionable _pos;
         DecoratorPanel _decorator;
+        BufferedImage[] _backgrounds;
 
-        TextAttrDialog(Positionable p) {
-            super(_targetFrame, Bundle.getMessage("TextAttributes"), true);
+        TextAttrDialog(Positionable p, Editor ed) {
+            super(Bundle.getMessage("TextAttributes"), ed);
             _pos = p;
             JPanel panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-            _decorator = new DecoratorPanel(_pos.getEditor(), null);
+            _decorator = new DecoratorPanel(this);
             _decorator.initDecoratorPanel(_pos);
             panel.add(_decorator);
             panel.add(makeDoneButtonPanel());
