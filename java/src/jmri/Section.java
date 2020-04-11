@@ -1842,7 +1842,7 @@ public class Section extends AbstractNamedBean {
                 LayoutTurnout t = turnoutList.get(m);
                 if (cUtil.layoutTurnoutHasRequiredSignals(t)) {
                     // have a signalled turnout
-                    if ((t.getLinkType() == LayoutTurnout.NO_LINK)
+                    if ((t.getLinkType() == LayoutTurnout.LinkType.NO_LINK)
                             && ((t.getTurnoutType() == LayoutTurnout.RH_TURNOUT)
                             || (t.getTurnoutType() == LayoutTurnout.LH_TURNOUT)
                             || (t.getTurnoutType() == LayoutTurnout.WYE_TURNOUT))) {
@@ -1948,12 +1948,12 @@ public class Section extends AbstractNamedBean {
                                 }
                             }
                         }
-                    } else if (t.getLinkType() != LayoutTurnout.NO_LINK) {
+                    } else if (t.getLinkType() != LayoutTurnout.LinkType.NO_LINK) {
                         // special linked turnout
                         LayoutTurnout tLinked = getLayoutTurnoutFromTurnoutName(t.getLinkedTurnoutName(), panel);
                         if (tLinked == null) {
                             log.error("null Layout Turnout linked to turnout {}", t.getTurnout().getSystemName());
-                        } else if (t.getLinkType() == LayoutTurnout.THROAT_TO_THROAT) {
+                        } else if (t.getLinkType() == LayoutTurnout.LinkType.THROAT_TO_THROAT) {
                             SignalHead b1Head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(
                                     t.getSignalB1Name());
                             SignalHead b2Head = null;
@@ -2070,7 +2070,7 @@ public class Section extends AbstractNamedBean {
                                     }
                                 }
                             }
-                        } else if (t.getLinkType() == LayoutTurnout.FIRST_3_WAY) {
+                        } else if (t.getLinkType() == LayoutTurnout.LinkType.FIRST_3_WAY) {
                             SignalHead a1Head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(
                                     t.getSignalA1Name());
                             SignalHead a2Head = null;
@@ -2136,7 +2136,7 @@ public class Section extends AbstractNamedBean {
                                     }
                                 }
                             }
-                        } else if (t.getLinkType() == LayoutTurnout.SECOND_3_WAY) {
+                        } else if (t.getLinkType() == LayoutTurnout.LinkType.SECOND_3_WAY) {
                             SignalHead bHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(
                                     t.getSignalB1Name());
                             SignalHead cHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(
