@@ -680,7 +680,7 @@ public class ConnectivityUtil {
      */
     public boolean layoutTurnoutHasRequiredSignals(@Nonnull LayoutTurnout t) {
         switch (t.getLinkType()) {
-            case LayoutTurnout.NO_LINK:
+            case NO_LINK:
                 if ((t.getTurnoutType() == LayoutTurnout.RH_TURNOUT)
                         || (t.getTurnoutType() == LayoutTurnout.LH_TURNOUT)
                         || (t.getTurnoutType() == LayoutTurnout.WYE_TURNOUT)) {
@@ -711,11 +711,11 @@ public class ConnectivityUtil {
                             && !t.getSignalC1Name().isEmpty()
                             && !t.getSignalD1Name().isEmpty();
                 }
-            case LayoutTurnout.FIRST_3_WAY:
+            case FIRST_3_WAY:
                 return (!t.getSignalA1Name().isEmpty()
                         && !t.getSignalC1Name().isEmpty());
-            case LayoutTurnout.SECOND_3_WAY:
-            case LayoutTurnout.THROAT_TO_THROAT:
+            case SECOND_3_WAY:
+            case THROAT_TO_THROAT:
                 return (!t.getSignalB1Name().isEmpty()
                         && !t.getSignalC1Name().isEmpty());
             default:
@@ -1349,7 +1349,7 @@ public class ConnectivityUtil {
                         } else {
                             // linked turnout - node type A
                             LayoutTurnout lto = layoutEditor.getFinder().findLayoutTurnoutByName(lt.getLinkedTurnoutName());
-                            if (lt.getLinkType() == LayoutTurnout.THROAT_TO_THROAT) {
+                            if (lt.getLinkType() == LayoutTurnout.LinkType.THROAT_TO_THROAT) {
                                 switch (cNodeState) {
                                     case 0:
                                         if (lto.getContinuingSense() == Turnout.CLOSED) {
@@ -1374,7 +1374,7 @@ public class ConnectivityUtil {
                                         return null;
                                 }
                                 pObject = lto;
-                            } else if (lt.getLinkType() == LayoutTurnout.FIRST_3_WAY) {
+                            } else if (lt.getLinkType() == LayoutTurnout.LinkType.FIRST_3_WAY) {
                                 switch (cNodeState) {
                                     case 0:
                                         if (lto.getContinuingSense() == Turnout.CLOSED) {
@@ -1449,15 +1449,15 @@ public class ConnectivityUtil {
                             || (lt.getTurnoutType() == LayoutTurnout.WYE_TURNOUT)) {
                         if ((lt.getLinkedTurnoutName() == null)
                                 || (lt.getLinkedTurnoutName().isEmpty())
-                                || (lt.getLinkType() == LayoutTurnout.FIRST_3_WAY)) {
+                                || (lt.getLinkType() == LayoutTurnout.LinkType.FIRST_3_WAY)) {
                             tTrack = (TrackSegment) (lt.getConnectA());
                             pType = LayoutTrack.TURNOUT_A;
                         } else {
                             LayoutTurnout lto = layoutEditor.getFinder().findLayoutTurnoutByName(lt.getLinkedTurnoutName());
-                            if (lt.getLinkType() == LayoutTurnout.SECOND_3_WAY) {
+                            if (lt.getLinkType() == LayoutTurnout.LinkType.SECOND_3_WAY) {
                                 tTrack = (TrackSegment) (lto.getConnectA());
                                 pType = LayoutTrack.TURNOUT_A;
-                            } else if (lt.getLinkType() == LayoutTurnout.THROAT_TO_THROAT) {
+                            } else if (lt.getLinkType() == LayoutTurnout.LinkType.THROAT_TO_THROAT) {
                                 switch (cNodeState) {
                                     case 0:
                                         if (lto.getContinuingSense() == Turnout.CLOSED) {

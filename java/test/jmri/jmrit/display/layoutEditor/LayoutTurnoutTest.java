@@ -169,18 +169,18 @@ public class LayoutTurnoutTest {
     @Test
     public void testGetSignalHead() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.NONE));
-        JUnitAppender.assertWarnMessage("Right Hand.getSignalHead(0); Unhandled point type");
+        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.Geometry.NONE));
+        JUnitAppender.assertWarnMessage("Right Hand.getSignalHead(NONE); Unhandled point type");
 
-        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.POINTA1));
-        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.POINTA2));
-        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.POINTA3));
-        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.POINTB1));
-        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.POINTB2));
-        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.POINTC1));
-        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.POINTC2));
-        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.POINTD1));
-        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.POINTD2));
+        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.Geometry.POINTA1));
+        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.Geometry.POINTA2));
+        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.Geometry.POINTA3));
+        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.Geometry.POINTB1));
+        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.Geometry.POINTB2));
+        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.Geometry.POINTC1));
+        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.Geometry.POINTC2));
+        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.Geometry.POINTD1));
+        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.Geometry.POINTD2));
     }
 
     @Test
@@ -219,42 +219,42 @@ public class LayoutTurnoutTest {
     @Test
     public void testGetLinkType() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertEquals(ltRH.getLinkType(), LayoutTurnout.NO_LINK);
-        Assert.assertEquals(ltLH.getLinkType(), LayoutTurnout.NO_LINK);
-        Assert.assertEquals(ltWY.getLinkType(), LayoutTurnout.NO_LINK);
-        Assert.assertEquals(ltDX.getLinkType(), LayoutTurnout.NO_LINK);
-        Assert.assertEquals(ltRX.getLinkType(), LayoutTurnout.NO_LINK);
-        Assert.assertEquals(ltLX.getLinkType(), LayoutTurnout.NO_LINK);
+        Assert.assertEquals(ltRH.getLinkType(), LayoutTurnout.LinkType.NO_LINK);
+        Assert.assertEquals(ltLH.getLinkType(), LayoutTurnout.LinkType.NO_LINK);
+        Assert.assertEquals(ltWY.getLinkType(), LayoutTurnout.LinkType.NO_LINK);
+        Assert.assertEquals(ltDX.getLinkType(), LayoutTurnout.LinkType.NO_LINK);
+        Assert.assertEquals(ltRX.getLinkType(), LayoutTurnout.LinkType.NO_LINK);
+        Assert.assertEquals(ltLX.getLinkType(), LayoutTurnout.LinkType.NO_LINK);
     }
 
     @Test
     public void testSetLinkType() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ltRH.setLinkType(LayoutTurnout.THROAT_TO_THROAT);
-        Assert.assertEquals(ltRH.getLinkType(), LayoutTurnout.THROAT_TO_THROAT);
-        ltLH.setLinkType(LayoutTurnout.THROAT_TO_THROAT);
-        Assert.assertEquals(ltLH.getLinkType(), LayoutTurnout.THROAT_TO_THROAT);
-        ltWY.setLinkType(LayoutTurnout.THROAT_TO_THROAT);
-        Assert.assertEquals(ltWY.getLinkType(), LayoutTurnout.THROAT_TO_THROAT);
-        ltDX.setLinkType(LayoutTurnout.THROAT_TO_THROAT);
-        Assert.assertEquals(ltDX.getLinkType(), LayoutTurnout.THROAT_TO_THROAT);
-        ltRX.setLinkType(LayoutTurnout.THROAT_TO_THROAT);
-        Assert.assertEquals(ltRX.getLinkType(), LayoutTurnout.THROAT_TO_THROAT);
-        ltLX.setLinkType(LayoutTurnout.THROAT_TO_THROAT);
-        Assert.assertEquals(ltLX.getLinkType(), LayoutTurnout.THROAT_TO_THROAT);
+        ltRH.setLinkType(LayoutTurnout.LinkType.THROAT_TO_THROAT);
+        Assert.assertEquals(ltRH.getLinkType(), LayoutTurnout.LinkType.THROAT_TO_THROAT);
+        ltLH.setLinkType(LayoutTurnout.LinkType.THROAT_TO_THROAT);
+        Assert.assertEquals(ltLH.getLinkType(), LayoutTurnout.LinkType.THROAT_TO_THROAT);
+        ltWY.setLinkType(LayoutTurnout.LinkType.THROAT_TO_THROAT);
+        Assert.assertEquals(ltWY.getLinkType(), LayoutTurnout.LinkType.THROAT_TO_THROAT);
+        ltDX.setLinkType(LayoutTurnout.LinkType.THROAT_TO_THROAT);
+        Assert.assertEquals(ltDX.getLinkType(), LayoutTurnout.LinkType.THROAT_TO_THROAT);
+        ltRX.setLinkType(LayoutTurnout.LinkType.THROAT_TO_THROAT);
+        Assert.assertEquals(ltRX.getLinkType(), LayoutTurnout.LinkType.THROAT_TO_THROAT);
+        ltLX.setLinkType(LayoutTurnout.LinkType.THROAT_TO_THROAT);
+        Assert.assertEquals(ltLX.getLinkType(), LayoutTurnout.LinkType.THROAT_TO_THROAT);
 
-        ltRH.setLinkType(LayoutTurnout.NO_LINK);
-        Assert.assertEquals(ltRH.getLinkType(), LayoutTurnout.NO_LINK);
-        ltLH.setLinkType(LayoutTurnout.NO_LINK);
-        Assert.assertEquals(ltLH.getLinkType(), LayoutTurnout.NO_LINK);
-        ltWY.setLinkType(LayoutTurnout.NO_LINK);
-        Assert.assertEquals(ltWY.getLinkType(), LayoutTurnout.NO_LINK);
-        ltDX.setLinkType(LayoutTurnout.NO_LINK);
-        Assert.assertEquals(ltDX.getLinkType(), LayoutTurnout.NO_LINK);
-        ltRX.setLinkType(LayoutTurnout.NO_LINK);
-        Assert.assertEquals(ltRX.getLinkType(), LayoutTurnout.NO_LINK);
-        ltLX.setLinkType(LayoutTurnout.NO_LINK);
-        Assert.assertEquals(ltLX.getLinkType(), LayoutTurnout.NO_LINK);
+        ltRH.setLinkType(LayoutTurnout.LinkType.NO_LINK);
+        Assert.assertEquals(ltRH.getLinkType(), LayoutTurnout.LinkType.NO_LINK);
+        ltLH.setLinkType(LayoutTurnout.LinkType.NO_LINK);
+        Assert.assertEquals(ltLH.getLinkType(), LayoutTurnout.LinkType.NO_LINK);
+        ltWY.setLinkType(LayoutTurnout.LinkType.NO_LINK);
+        Assert.assertEquals(ltWY.getLinkType(), LayoutTurnout.LinkType.NO_LINK);
+        ltDX.setLinkType(LayoutTurnout.LinkType.NO_LINK);
+        Assert.assertEquals(ltDX.getLinkType(), LayoutTurnout.LinkType.NO_LINK);
+        ltRX.setLinkType(LayoutTurnout.LinkType.NO_LINK);
+        Assert.assertEquals(ltRX.getLinkType(), LayoutTurnout.LinkType.NO_LINK);
+        ltLX.setLinkType(LayoutTurnout.LinkType.NO_LINK);
+        Assert.assertEquals(ltLX.getLinkType(), LayoutTurnout.LinkType.NO_LINK);
     }
 
     @Test

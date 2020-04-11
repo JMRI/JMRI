@@ -1,6 +1,8 @@
 package jmri.jmrit.display.layoutEditor.configurexml;
 
 import java.awt.geom.Point2D;
+import javax.annotation.Nonnull;
+
 import jmri.Turnout;
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
@@ -21,6 +23,8 @@ import org.slf4j.LoggerFactory;
  */
 public class LayoutTurnoutXml extends AbstractXmlAdapter {
 
+    EnumIO<LayoutTurnout.LinkType> enumMap = new EnumIO<>(LayoutTurnout.LinkType.class);
+    
     public LayoutTurnoutXml() {
     }
 
@@ -297,11 +301,11 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
         a = element.getAttribute("linkedturnoutname");
         if (a != null) {
             l.linkedTurnoutName = a.getValue();
-            try {
-                l.linkType = element.getAttribute("linktype").getIntValue();
-            } catch (org.jdom2.DataConversionException e) {
-                log.error("failed to convert linked layout turnout type");
-            }
+            //try {
+                l.linkType = enumMap.inputFromAttribute(element.getAttribute("linktype"));
+            //} catch (org.jdom2.DataConversionException e) {
+            //    log.error("failed to convert linked layout turnout type");
+            //}
         }
         a = element.getAttribute("continuing");
         if (a != null) {

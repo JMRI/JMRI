@@ -131,14 +131,23 @@ public class LayoutTurnout extends LayoutTrack {
     public static final int DOUBLE_SLIP = 8;    // used for LayoutSlip which extends this class
 
     // defined constants - link types
-    public static final int NO_LINK = 0;
-    public static final int FIRST_3_WAY = 1;       // this turnout is the first turnout of a 3-way
+    //public static final int NO_LINK = 0;
+    //public static final int FIRST_3_WAY = 1;       // this turnout is the first turnout of a 3-way
     // turnout pair (closest to the throat)
-    public static final int SECOND_3_WAY = 2;      // this turnout is the second turnout of a 3-way
+    //public static final int SECOND_3_WAY = 2;      // this turnout is the second turnout of a 3-way
     // turnout pair (furthest from the throat)
-    public static final int THROAT_TO_THROAT = 3;  // this turnout is one of two throat-to-throat
+    //public static final int THROAT_TO_THROAT = 3;  // this turnout is one of two throat-to-throat
     // turnouts - no signals at throat
 
+    public enum LinkType {
+        NO_LINK,
+        FIRST_3_WAY,    // this turnout is the first turnout of a 3-way
+                        // turnout pair (closest to the throat)
+        SECOND_3_WAY,   // this turnout is the second turnout of a 3-way
+                        // turnout pair (furthest from the throat)
+        THROAT_TO_THROAT  // this turnout is one of two throat-to-throat
+                        // turnouts - no signals at throat
+    }
     // operational instance variables (not saved between sessions)
     public static final int UNKNOWN = Turnout.UNKNOWN;
     public static final int INCONSISTENT = Turnout.INCONSISTENT;
@@ -184,16 +193,29 @@ public class LayoutTurnout extends LayoutTrack {
     protected NamedBeanHandle<SignalHead> signalD1HeadNamed = null; // single or double crossover only
     protected NamedBeanHandle<SignalHead> signalD2HeadNamed = null; // LH_Xover and double crossover only
 
-    public static final int POINTA1 = 0x01;
-    public static final int POINTA2 = 0x03;
-    public static final int POINTA3 = 0x05;
-    public static final int POINTB1 = 0x10;
-    public static final int POINTB2 = 0x12;
-    public static final int POINTC1 = 0x20;
-    public static final int POINTC2 = 0x22;
-    public static final int POINTD1 = 0x30;
-    public static final int POINTD2 = 0x32;
+    // public static final int POINTA1 = 0x01;
+    // public static final int POINTA2 = 0x03;
+    // public static final int POINTA3 = 0x05;
+    // public static final int POINTB1 = 0x10;
+    // public static final int POINTB2 = 0x12;
+    // public static final int POINTC1 = 0x20;
+    // public static final int POINTC2 = 0x22;
+    // public static final int POINTD1 = 0x30;
+    // public static final int POINTD2 = 0x32;
 
+    public enum Geometry {
+        NONE,
+        POINTA1,
+        POINTA2,
+        POINTA3,
+        POINTB1,
+        POINTB2,
+        POINTC1,
+        POINTC2,
+        POINTD1,
+        POINTD2
+    }
+    
     protected NamedBeanHandle<SignalMast> signalAMastNamed = null; // Throat
     protected NamedBeanHandle<SignalMast> signalBMastNamed = null; // Continuing
     protected NamedBeanHandle<SignalMast> signalCMastNamed = null; // diverging
@@ -226,7 +248,7 @@ public class LayoutTurnout extends LayoutTrack {
     private int version = 1;
 
     public String linkedTurnoutName = ""; // name of the linked Turnout (as entered in tool)
-    public int linkType = NO_LINK;
+    public LinkType linkType = LinkType.NO_LINK;
 
     private boolean useBlockSpeed = false;
 
@@ -392,7 +414,7 @@ public class LayoutTurnout extends LayoutTrack {
         return result;
     }
 
-    public SignalHead getSignalHead(int loc) {
+    public SignalHead getSignalHead(Geometry loc) {
         NamedBeanHandle<SignalHead> signalHead = null;
         switch (loc) {
             case POINTA1:
@@ -703,31 +725,31 @@ public class LayoutTurnout extends LayoutTrack {
                 setSensorD(null);
             }
         } else if (nb instanceof SignalHead) {
-            if (nb.equals(getSignalHead(POINTA1))) {
+            if (nb.equals(getSignalHead(Geometry.POINTA1))) {
                 setSignalA1Name(null);
             }
-            if (nb.equals(getSignalHead(POINTA2))) {
+            if (nb.equals(getSignalHead(Geometry.POINTA2))) {
                 setSignalA2Name(null);
             }
-            if (nb.equals(getSignalHead(POINTA3))) {
+            if (nb.equals(getSignalHead(Geometry.POINTA3))) {
                 setSignalA3Name(null);
             }
-            if (nb.equals(getSignalHead(POINTB1))) {
+            if (nb.equals(getSignalHead(Geometry.POINTB1))) {
                 setSignalB1Name(null);
             }
-            if (nb.equals(getSignalHead(POINTB2))) {
+            if (nb.equals(getSignalHead(Geometry.POINTB2))) {
                 setSignalB2Name(null);
             }
-            if (nb.equals(getSignalHead(POINTC1))) {
+            if (nb.equals(getSignalHead(Geometry.POINTC1))) {
                 setSignalC1Name(null);
             }
-            if (nb.equals(getSignalHead(POINTC2))) {
+            if (nb.equals(getSignalHead(Geometry.POINTC2))) {
                 setSignalC2Name(null);
             }
-            if (nb.equals(getSignalHead(POINTD1))) {
+            if (nb.equals(getSignalHead(Geometry.POINTD1))) {
                 setSignalD1Name(null);
             }
-            if (nb.equals(getSignalHead(POINTD2))) {
+            if (nb.equals(getSignalHead(Geometry.POINTD2))) {
                 setSignalD2Name(null);
             }
         }
@@ -1053,11 +1075,11 @@ public class LayoutTurnout extends LayoutTrack {
         linkedTurnoutName = s;
     }  //Could be done with changing over to a NamedBeanHandle
 
-    public int getLinkType() {
+    public LinkType getLinkType() {
         return linkType;
     }
 
-    public void setLinkType(int type) {
+    public void setLinkType(LinkType type) {
         linkType = type;
     }
 
@@ -2851,16 +2873,16 @@ public class LayoutTurnout extends LayoutTrack {
                         if (isTurnoutTypeXover()) {
                             tools.setSignalsAtXoverTurnoutFromMenu(LayoutTurnout.this,
                                     letbp.signalIconEditor, letbp.signalFrame);
-                        } else if (linkType == NO_LINK) {
+                        } else if (linkType == LinkType.NO_LINK) {
                             tools.setSignalsAtTurnoutFromMenu(LayoutTurnout.this,
                                     letbp.signalIconEditor, letbp.signalFrame);
-                        } else if (linkType == THROAT_TO_THROAT) {
+                        } else if (linkType == LinkType.THROAT_TO_THROAT) {
                             tools.setSignalsAtThroatToThroatTurnoutsFromMenu(LayoutTurnout.this, linkedTurnoutName,
                                     letbp.signalIconEditor, letbp.signalFrame);
-                        } else if (linkType == FIRST_3_WAY) {
+                        } else if (linkType == LinkType.FIRST_3_WAY) {
                             tools.setSignalsAt3WayTurnoutFromMenu(getTurnoutName(), linkedTurnoutName,
                                     letbp.signalIconEditor, letbp.signalFrame);
-                        } else if (linkType == SECOND_3_WAY) {
+                        } else if (linkType == LinkType.SECOND_3_WAY) {
                             tools.setSignalsAt3WayTurnoutFromMenu(linkedTurnoutName, getTurnoutName(),
                                     letbp.signalIconEditor, letbp.signalFrame);
                         }

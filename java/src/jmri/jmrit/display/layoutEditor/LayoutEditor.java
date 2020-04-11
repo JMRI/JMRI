@@ -8209,16 +8209,16 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             if (isLBLockUsed(bean, xing.getLayoutBlockBD())) {
                 usageReport.add(new NamedBeanUsageReport("LayoutEditorXingBlock", data));
             }
-            if (isUsedInXing(bean, xing, LevelXing.POINTA)) {
+            if (isUsedInXing(bean, xing, LevelXing.Geometry.POINTA)) {
                 usageReport.add(new NamedBeanUsageReport("LayoutEditorXingOther", data));
             }
-            if (isUsedInXing(bean, xing, LevelXing.POINTB)) {
+            if (isUsedInXing(bean, xing, LevelXing.Geometry.POINTB)) {
                 usageReport.add(new NamedBeanUsageReport("LayoutEditorXingOther", data));
             }
-            if (isUsedInXing(bean, xing, LevelXing.POINTC)) {
+            if (isUsedInXing(bean, xing, LevelXing.Geometry.POINTC)) {
                 usageReport.add(new NamedBeanUsageReport("LayoutEditorXingOther", data));
             }
-            if (isUsedInXing(bean, xing, LevelXing.POINTD)) {
+            if (isUsedInXing(bean, xing, LevelXing.Geometry.POINTD)) {
                 usageReport.add(new NamedBeanUsageReport("LayoutEditorXingOther", data));
             }
         }
@@ -8247,7 +8247,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return result;
     }
 
-    boolean isUsedInXing(NamedBean bean, LevelXing xing, int point) {
+    boolean isUsedInXing(NamedBean bean, LevelXing xing, LevelXing.Geometry point) {
         boolean result = false;
         if (bean.equals(xing.getSensor(point))) {
             result = true;
