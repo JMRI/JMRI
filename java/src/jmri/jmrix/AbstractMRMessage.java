@@ -14,6 +14,10 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2003
  */
 abstract public class AbstractMRMessage extends AbstractMessage {
+    /**
+     * Tracks the message from the layout.
+     */
+    private final AbstractMRReply inReplyTo;
 
     /**
      * Create a new AbstractMRMessage instance.
@@ -23,6 +27,9 @@ abstract public class AbstractMRMessage extends AbstractMessage {
         setNeededMode(AbstractMRTrafficController.NORMALMODE);
         setTimeout(SHORT_TIMEOUT);  // default value is the short timeout
         setRetries(0); // default to no retries
+
+        // possible diagnostics: The reply being currently processed
+        inReplyTo = AbstractMRTrafficController.currentReply.get();
     }
 
     /**
@@ -132,7 +139,7 @@ abstract public class AbstractMRMessage extends AbstractMessage {
     final public void setBinary(boolean b) {
         _isBinary = b;
     }
-
+    
     /**
      * Minimum timeout that's acceptable.
      * <p>
@@ -268,7 +275,23 @@ abstract public class AbstractMRMessage extends AbstractMessage {
                 s += (char) _dataChars[i];
             }
         }
+        if (log.isDebugEnabled()) {
+            s += ", msg-id:" + Integer.toHexString(System.identityHashCode(this));
+        }
         return s;
+    }
+    
+    /**
+     * Provides the reply from the layout, that triggered creation of the message. 
+     * If the message was created as part of processing of a reply from the layout,
+     * the method will return that reply object instance. It can be used to track
+     * command-response chains when diagnosing communication issues.
+     * <p>
+     * This is for diagnostic purposes only.
+     * @return reply from the layout, or {@code null} if not known.
+     */
+    public AbstractMRReply getInReplyTo() {
+        return inReplyTo;
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractMRMessage.class);

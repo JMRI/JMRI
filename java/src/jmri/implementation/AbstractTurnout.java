@@ -174,6 +174,8 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         if (_knownState != s) {
             int oldState = _knownState;
             _knownState = s;
+            log.debug("Turnout {} changing KnownState from {} to {}", 
+                    getSystemName(), oldState, s);
             firePropertyChange("KnownState", oldState, _knownState);
         }
         _knownState = s;
@@ -181,6 +183,8 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         // set the commanded state to match
         if ((_knownState == THROWN && _commandedState != THROWN)
                 || (_knownState == CLOSED && _commandedState != CLOSED)) {
+            log.debug("Turnout {} changing Commanded from {} to {}", 
+                    getSystemName(), _commandedState, s);
             newCommandedState(_knownState);
         }
     }

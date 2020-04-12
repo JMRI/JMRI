@@ -263,6 +263,9 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
         int i;
         for (i = 0; i < msg.maxSize(); i++) {
             byte char1 = readByteProtected(istream);
+            if (i == 0) {
+                notifyMessageStart(msg);
+            }
             msg.setElement(i, char1 & 0xFF);
             if (endOfMessage(msg)) {
                 break;

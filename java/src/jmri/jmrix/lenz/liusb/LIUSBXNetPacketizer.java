@@ -61,6 +61,9 @@ public class LIUSBXNetPacketizer extends XNetPacketizer {
         log.debug("loading characters from port");
         for (i = 0; i < msg.maxSize(); i++) {
             byte char1 = readByteProtected(istream);
+            if (i == 0) {
+                notifyMessageStart(msg);
+            }
             // This is a test for the LIUSB device
             while ((i == 0) && ((char1 & 0xF0) == 0xF0)) {
                 if ((char1 & 0xFF) != 0xF0 && (char1 & 0xFF) != 0xF2) {
@@ -76,6 +79,9 @@ public class LIUSBXNetPacketizer extends XNetPacketizer {
             // responses to messages we sent.  If they are unrequested
             // information, they are preceeded by 0xFF 0xFD.
             if (lastbyte == (byte) 0xFD) {
+                if (i == 0) {
+                    log.debug("Receiving unsolicited message, starting with {}", Integer.toHexString(char1));
+                }
                 msg.setUnsolicited();
             }
             msg.setElement(i, char1 & 0xFF);

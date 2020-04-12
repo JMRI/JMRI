@@ -70,6 +70,9 @@ public class LIUSBEthernetXNetPacketizer extends jmri.jmrix.lenz.liusb.LIUSBXNet
         byte lastbyte = (byte) 0xFF;
         log.debug("loading characters from port");
         for (i = 0; i < msg.maxSize(); i++) {
+            if (i == 0) {
+                notifyMessageStart(msg);
+            }
             byte char1 = readByteProtected(istream);
             // This is a test for the LIUSB device
             while ((i == 0) && ((char1 & 0xF0) == 0xF0)) {
@@ -86,6 +89,9 @@ public class LIUSBEthernetXNetPacketizer extends jmri.jmrix.lenz.liusb.LIUSBXNet
             // responses to messages we sent.  If they are unrequested
             // information, they are preceeded by 0xFF 0xFD.
             if (lastbyte == (byte) 0xFD) {
+                if (i == 0) {
+                    log.debug("Receiving unsolicited message, starting with {}", Integer.toHexString(char1));
+                }
                 msg.setUnsolicited();
             }
             msg.setElement(i, char1 & 0xFF);

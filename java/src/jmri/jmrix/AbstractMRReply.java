@@ -15,7 +15,13 @@ import org.slf4j.LoggerFactory;
  */
 abstract public class AbstractMRReply extends AbstractMessage {
     // is this logically an abstract class?
-
+    
+    /**
+     * Links to the command this reply probably belongs to.
+     * Volatile since may be read from another thread.
+     */
+    private volatile AbstractMRMessage   repliesTo;
+    
     /**
      * Create a new AbstractMRReply instance.
      */
@@ -118,6 +124,10 @@ abstract public class AbstractMRReply extends AbstractMessage {
                 s += (char) _dataChars[i];
             }
         }
+        if (log.isDebugEnabled()) {
+            s += ", unsolicited: " + isUnsolicited();
+            s += ", msg-id:" + Integer.toHexString(System.identityHashCode(this));
+        }
         return s;
     }
 
@@ -183,6 +193,24 @@ abstract public class AbstractMRReply extends AbstractMessage {
     public int maxSize() {
         return DEFAULTMAXSIZE;
     }
+
+    /**
+     * Attaches the message currently being transmistted to this reply. Marks the reply
+     * as a likely response to the command sent to the layout, based on
+     * the state of the transmit thread. Note that even replies marked with some transmitted
+     * message may be, in fact, unsolicited, just concurrently received.
+     * 
+     * @param msg the transmitted command
+     */
+    protected void attachTo(AbstractMRMessage msg) {
+        assert repliesTo == null;
+        repliesTo = msg;
+    }
+
+    public AbstractMRMessage getRepliesTo() {
+        return repliesTo;
+    }
+    
     static public final int DEFAULTMAXSIZE = 120;
 
     // contents
