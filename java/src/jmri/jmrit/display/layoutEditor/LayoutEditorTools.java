@@ -2078,19 +2078,18 @@ public class LayoutEditorTools {
             });
             setSignalsAtBlockBoundaryDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
 
-            //make this button the default button (return or enter activates)
-            //Note: We have to invoke this later because we don't currently have a root pane
-            SwingUtilities.invokeLater(() -> {
-                JRootPane rootPane = SwingUtilities.getRootPane(setSignalsAtBlockBoundaryDone);
-                rootPane.setDefaultButton(setSignalsAtBlockBoundaryDone);
-            });
-
             panel6.add(setSignalsAtBlockBoundaryCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             setSignalsAtBlockBoundaryCancel.addActionListener((ActionEvent e) -> {
                 setSignalsAtBlockBoundaryCancelPressed(e);
             });
             setSignalsAtBlockBoundaryCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
+
+            //make this button the default button (return or enter activates)
+            JRootPane rootPane = SwingUtilities.getRootPane(setSignalsAtBlockBoundaryDone);
+            if (rootPane != null) { //this should never happen but just in case...
+                rootPane.setDefaultButton(setSignalsAtBlockBoundaryDone);
+            }
 
             setSignalsAtBlockBoundaryFrame.addWindowListener(new WindowAdapter() {
                 @Override
@@ -2847,19 +2846,19 @@ public class LayoutEditorTools {
             });
             setXoverSignalsDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
 
-            //make this button the default button (return or enter activates)
-            //Note: We have to invoke this later because we don't currently have a root pane
-            SwingUtilities.invokeLater(() -> {
-                JRootPane rootPane = SwingUtilities.getRootPane(setXoverSignalsDone);
-                rootPane.setDefaultButton(setXoverSignalsDone);
-            });
-
             panel6.add(setXoverSignalsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             setXoverSignalsCancel.addActionListener((ActionEvent e) -> {
                 setXoverSignalsCancelPressed(e);
             });
             setXoverSignalsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
+
+            //make this button the default button (return or enter activates)
+            JRootPane rootPane = SwingUtilities.getRootPane(setXoverSignalsDone);
+            if (rootPane != null) {
+                rootPane.setDefaultButton(setXoverSignalsDone);
+            }
+
             setSignalsAtXoverTurnoutFrame.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
@@ -3890,19 +3889,19 @@ public class LayoutEditorTools {
             });
             setXingSignalsDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
 
-            //make this button the default button (return or enter activates)
-            //Note: We have to invoke this later because we don't currently have a root pane
-            SwingUtilities.invokeLater(() -> {
-                JRootPane rootPane = SwingUtilities.getRootPane(setXingSignalsDone);
-                rootPane.setDefaultButton(setXingSignalsDone);
-            });
-
             panel6.add(setXingSignalsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             setXingSignalsCancel.addActionListener((ActionEvent e) -> {
                 setXingSignalsCancelPressed(e);
             });
             setXingSignalsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
+
+            //make this button the default button (return or enter activates)
+            JRootPane rootPane = SwingUtilities.getRootPane(setXingSignalsDone);
+            if (rootPane != null) {
+                rootPane.setDefaultButton(setXingSignalsDone);
+            }
+
             setSignalsAtLevelXingFrame.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
@@ -4888,19 +4887,19 @@ public class LayoutEditorTools {
             });
             setTToTSignalsDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
 
-            //make this button the default button (return or enter activates)
-            //Note: We have to invoke this later because we don't currently have a root pane
-            SwingUtilities.invokeLater(() -> {
-                JRootPane rootPane = SwingUtilities.getRootPane(setTToTSignalsDone);
-                rootPane.setDefaultButton(setTToTSignalsDone);
-            });
-
             panel6.add(setTToTSignalsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             setTToTSignalsCancel.addActionListener((ActionEvent e) -> {
                 setTToTSignalsCancelPressed(e);
             });
             setTToTSignalsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
+
+            //make this button the default button (return or enter activates)
+            JRootPane rootPane = SwingUtilities.getRootPane(setTToTSignalsDone);
+            if (rootPane != null) {
+                rootPane.setDefaultButton(setTToTSignalsDone);
+            }
+
             setSignalsAtThroatToThroatTurnoutsFrame.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
@@ -6346,19 +6345,19 @@ public class LayoutEditorTools {
             });
             set3WaySignalsDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
 
-            //make this button the default button (return or enter activates)
-            //Note: We have to invoke this later because we don't currently have a root pane
-            SwingUtilities.invokeLater(() -> {
-                JRootPane rootPane = SwingUtilities.getRootPane(set3WaySignalsDone);
-                rootPane.setDefaultButton(set3WaySignalsDone);
-            });
-
             panel6.add(set3WaySignalsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             set3WaySignalsCancel.addActionListener((ActionEvent e) -> {
                 set3WaySignalsCancelPressed(e);
             });
             set3WaySignalsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
+
+            //make this button the default button (return or enter activates)
+            JRootPane rootPane = SwingUtilities.getRootPane(set3WaySignalsDone);
+            if (rootPane != null) {
+                rootPane.setDefaultButton(set3WaySignalsDone);
+            }
+
             setSignalsAt3WayTurnoutFrame.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
@@ -7533,19 +7532,19 @@ public class LayoutEditorTools {
             });
             setSensorsAtBlockBoundaryDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
 
-            //make this button the default button (return or enter activates)
-            //Note: We have to invoke this later because we don't currently have a root pane
-            SwingUtilities.invokeLater(() -> {
-                JRootPane rootPane = SwingUtilities.getRootPane(setSensorsAtBlockBoundaryDone);
-                rootPane.setDefaultButton(setSensorsAtBlockBoundaryDone);
-            });
-
             panel6.add(setSensorsAtBlockBoundaryCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             setSensorsAtBlockBoundaryCancel.addActionListener((ActionEvent e) -> {
                 setSensorsAtBlockBoundaryCancelPressed(e);
             });
             setSensorsAtBlockBoundaryCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6, BorderLayout.SOUTH);
+
+            //make this button the default button (return or enter activates)
+            JRootPane rootPane = SwingUtilities.getRootPane(setSensorsAtBlockBoundaryDone);
+            if (rootPane != null) {
+                rootPane.setDefaultButton(setSensorsAtBlockBoundaryDone);
+            }
+
             setSensorsAtBlockBoundaryFrame.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
@@ -8123,19 +8122,19 @@ public class LayoutEditorTools {
             });
             setSignalMastsAtBlockBoundaryDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
 
-            //make this button the default button (return or enter activates)
-            //Note: We have to invoke this later because we don't currently have a root pane
-            SwingUtilities.invokeLater(() -> {
-                JRootPane rootPane = SwingUtilities.getRootPane(setSignalMastsAtBlockBoundaryDone);
-                rootPane.setDefaultButton(setSignalMastsAtBlockBoundaryDone);
-            });
-
             panel6.add(setSignalMastsAtBlockBoundaryCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             setSignalMastsAtBlockBoundaryCancel.addActionListener((ActionEvent e) -> {
                 setSignalMastsAtBlockBoundaryCancelPressed(e);
             });
             setSignalMastsAtBlockBoundaryCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
+
+            //make this button the default button (return or enter activates)
+            JRootPane rootPane = SwingUtilities.getRootPane(setSignalMastsAtBlockBoundaryDone);
+            if (rootPane != null) {
+                rootPane.setDefaultButton(setSignalMastsAtBlockBoundaryDone);
+            }
+
             setSignalMastsAtBlockBoundaryFrame.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
@@ -9236,19 +9235,18 @@ public class LayoutEditorTools {
             });
             setSignalMastsDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
 
-            //make this button the default button (return or enter activates)
-            //Note: We have to invoke this later because we don't currently have a root pane
-            SwingUtilities.invokeLater(() -> {
-                JRootPane rootPane = SwingUtilities.getRootPane(setSignalMastsDone);
-                rootPane.setDefaultButton(setSignalMastsDone);
-            });
-
             panel6.add(setSignalMastsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             setSignalMastsCancel.addActionListener((ActionEvent e) -> {
                 setSignalMastsCancelPressed(e);
             });
             setSignalMastsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
+
+            //make this button the default button (return or enter activates)
+            JRootPane rootPane = SwingUtilities.getRootPane(setSignalMastsDone);
+            if (rootPane != null) {
+                rootPane.setDefaultButton(setSignalMastsDone);
+            }
         }
 
         turnoutSignalMastA.getCombo().setExcludedItems(new HashSet<>());
