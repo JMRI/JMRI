@@ -22,6 +22,29 @@ public class LayoutTurnoutTest {
     private LayoutTurnout ltLX = null;
 
     @Test
+    public void testEnums() {
+        // Check that enum ordinal values used for I/O don't 
+        // change.  Want to remove this once I/O is done 
+        // via enum names instead of numbers.
+        
+        Assert.assertEquals(0, LayoutTurnout.TurnoutType.NONE.ordinal());
+        Assert.assertEquals(1, LayoutTurnout.TurnoutType.RH_TURNOUT.ordinal());
+        Assert.assertEquals(2, LayoutTurnout.TurnoutType.LH_TURNOUT.ordinal());
+        Assert.assertEquals(3, LayoutTurnout.TurnoutType.WYE_TURNOUT.ordinal());
+        Assert.assertEquals(4, LayoutTurnout.TurnoutType.DOUBLE_XOVER.ordinal());
+        Assert.assertEquals(5, LayoutTurnout.TurnoutType.RH_XOVER.ordinal());
+        Assert.assertEquals(6, LayoutTurnout.TurnoutType.LH_XOVER.ordinal());
+        Assert.assertEquals(7, LayoutTurnout.TurnoutType.SINGLE_SLIP.ordinal());
+        Assert.assertEquals(8, LayoutTurnout.TurnoutType.DOUBLE_SLIP.ordinal());
+        
+        Assert.assertEquals(0, LayoutTurnout.LinkType.NO_LINK.ordinal());
+        Assert.assertEquals(1, LayoutTurnout.LinkType.FIRST_3_WAY.ordinal());
+        Assert.assertEquals(2, LayoutTurnout.LinkType.SECOND_3_WAY.ordinal());
+        Assert.assertEquals(3, LayoutTurnout.LinkType.THROAT_TO_THROAT.ordinal());
+    }
+    
+    
+    @Test
     public void testNew() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
