@@ -260,12 +260,12 @@ public class LayoutTurnoutTest {
     @Test
     public void testGetTurnoutType() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertEquals(ltRH.getTurnoutType(), LayoutTurnout.RH_TURNOUT);
-        Assert.assertEquals(ltLH.getTurnoutType(), LayoutTurnout.LH_TURNOUT);
-        Assert.assertEquals(ltWY.getTurnoutType(), LayoutTurnout.WYE_TURNOUT);
-        Assert.assertEquals(ltDX.getTurnoutType(), LayoutTurnout.DOUBLE_XOVER);
-        Assert.assertEquals(ltRX.getTurnoutType(), LayoutTurnout.RH_XOVER);
-        Assert.assertEquals(ltLX.getTurnoutType(), LayoutTurnout.LH_XOVER);
+        Assert.assertEquals(ltRH.getTurnoutType(), LayoutTurnout.TurnoutType.RH_TURNOUT);
+        Assert.assertEquals(ltLH.getTurnoutType(), LayoutTurnout.TurnoutType.LH_TURNOUT);
+        Assert.assertEquals(ltWY.getTurnoutType(), LayoutTurnout.TurnoutType.WYE_TURNOUT);
+        Assert.assertEquals(ltDX.getTurnoutType(), LayoutTurnout.TurnoutType.DOUBLE_XOVER);
+        Assert.assertEquals(ltRX.getTurnoutType(), LayoutTurnout.TurnoutType.RH_XOVER);
+        Assert.assertEquals(ltLX.getTurnoutType(), LayoutTurnout.TurnoutType.LH_XOVER);
     }
 
     @Test
@@ -1085,27 +1085,27 @@ public class LayoutTurnoutTest {
             Point2D delta = new Point2D.Double(50.0, 75.0);
 
             ltRH = new LayoutTurnout("Right Hand",
-                    LayoutTurnout.RH_TURNOUT, point, 33.0, 1.1, 1.2, layoutEditor);
+                    LayoutTurnout.TurnoutType.RH_TURNOUT, point, 33.0, 1.1, 1.2, layoutEditor);
 
             point = MathUtil.add(point, delta);
             ltLH = new LayoutTurnout("Left Hand",
-                    LayoutTurnout.LH_TURNOUT, point, 66.0, 1.3, 1.4, layoutEditor);
+                    LayoutTurnout.TurnoutType.LH_TURNOUT, point, 66.0, 1.3, 1.4, layoutEditor);
 
             point = MathUtil.add(point, delta);
             ltWY = new LayoutTurnout("Wye",
-                    LayoutTurnout.WYE_TURNOUT, point, 99.0, 1.5, 1.6, layoutEditor);
+                    LayoutTurnout.TurnoutType.WYE_TURNOUT, point, 99.0, 1.5, 1.6, layoutEditor);
 
             point = MathUtil.add(point, delta);
             ltDX = new LayoutTurnout("Double XOver",
-                    LayoutTurnout.DOUBLE_XOVER, point, 132.0, 1.7, 1.8, layoutEditor);
+                    LayoutTurnout.TurnoutType.DOUBLE_XOVER, point, 132.0, 1.7, 1.8, layoutEditor);
 
             point = MathUtil.add(point, delta);
             ltRX = new LayoutTurnout("Right Hand XOver",
-                    LayoutTurnout.RH_XOVER, point, 165.0, 1.9, 2.0, layoutEditor);
+                    LayoutTurnout.TurnoutType.RH_XOVER, point, 165.0, 1.9, 2.0, layoutEditor);
 
             point = MathUtil.add(point, delta);
             ltLX = new LayoutTurnout("Left Hand XOver",
-                    LayoutTurnout.LH_XOVER, point, 198.0, 2.1, 2.2, layoutEditor);
+                    LayoutTurnout.TurnoutType.LH_XOVER, point, 198.0, 2.1, 2.2, layoutEditor);
         }
     }
 

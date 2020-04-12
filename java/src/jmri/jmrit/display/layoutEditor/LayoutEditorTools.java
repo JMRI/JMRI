@@ -1108,7 +1108,7 @@ public class LayoutEditorTools {
         for (LayoutTurnout t : layoutEditor.getLayoutTurnouts()) {
             if (t.getTurnout() == turnout) {
                 //have the layout turnout corresponding to the turnout
-                if ((t.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)
+                if ((t.getTurnoutType() == LayoutTurnout.TurnoutType.DOUBLE_XOVER)
                         && (!requireDoubleXover)) {
                     JOptionPane.showMessageDialog(theFrame,
                             Bundle.getMessage("InfoMessage1"),
@@ -1116,7 +1116,7 @@ public class LayoutEditorTools {
                             JOptionPane.INFORMATION_MESSAGE);
                     return null;
                 }
-                if (requireDoubleXover && (t.getTurnoutType() != LayoutTurnout.DOUBLE_XOVER)) {
+                if (requireDoubleXover && (t.getTurnoutType() != LayoutTurnout.TurnoutType.DOUBLE_XOVER)) {
                     JOptionPane.showMessageDialog(theFrame,
                             Bundle.getMessage("InfoMessage8"),
                             Bundle.getMessage("MessageTitle"),
@@ -1699,7 +1699,7 @@ public class LayoutEditorTools {
             } else if (type == LayoutTrack.SLIP_B) {
                 LayoutSlip sl = (LayoutSlip) connect;
                 String signalName;
-                if (sl.getTurnoutType() == LayoutSlip.DOUBLE_SLIP) {
+                if (sl.getTurnoutType() == LayoutSlip.TurnoutType.DOUBLE_SLIP) {
                     signalName = sl.getSignalB2Name();
                     if (!signalName.isEmpty()) {
                         auxSignal = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(signalName);
@@ -1722,7 +1722,7 @@ public class LayoutEditorTools {
             } else if (type == LayoutTrack.SLIP_C) {
                 LayoutSlip sl = (LayoutSlip) connect;
                 String signalName;
-                if (sl.getTurnoutType() == LayoutSlip.DOUBLE_SLIP) {
+                if (sl.getTurnoutType() == LayoutSlip.TurnoutType.DOUBLE_SLIP) {
                     signalName = sl.getSignalC2Name();
                     if (!signalName.isEmpty()) {
                         auxSignal = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(signalName);
@@ -1785,8 +1785,8 @@ public class LayoutEditorTools {
 
     @CheckReturnValue
     private TrackSegment getContinuingTrack(@Nonnull LayoutTurnout to, int type) {
-        int ty = to.getTurnoutType();
-        if ((ty == LayoutTurnout.RH_TURNOUT) || (ty == LayoutTurnout.LH_TURNOUT)) {
+        LayoutTurnout.TurnoutType ty = to.getTurnoutType();
+        if ((ty == LayoutTurnout.TurnoutType.RH_TURNOUT) || (ty == LayoutTurnout.TurnoutType.LH_TURNOUT)) {
             if (type == LayoutTrack.TURNOUT_A) {
                 if (to.getContinuingSense() == Turnout.CLOSED) {
                     return (TrackSegment) to.getConnectB();
@@ -1796,8 +1796,8 @@ public class LayoutEditorTools {
             } else {
                 return (TrackSegment) to.getConnectA();
             }
-        } else if ((ty == LayoutTurnout.DOUBLE_XOVER) || (ty == LayoutTurnout.RH_XOVER)
-                || (ty == LayoutTurnout.LH_XOVER)) {
+        } else if ((ty == LayoutTurnout.TurnoutType.DOUBLE_XOVER) || (ty == LayoutTurnout.TurnoutType.RH_XOVER)
+                || (ty == LayoutTurnout.TurnoutType.LH_XOVER)) {
             if (type == LayoutTrack.TURNOUT_A) {
                 return (TrackSegment) to.getConnectB();
             } else if (type == LayoutTrack.TURNOUT_B) {
@@ -2580,8 +2580,8 @@ public class LayoutEditorTools {
     private SignalHead d1Head = null;
     private SignalHead d2Head = null;
 
-    private int xoverType = LayoutTurnout.DOUBLE_XOVER;	 //changes to RH_XOVER or LH_XOVER as required
-    private int xoverCurr = LayoutTurnout.UNKNOWN;          //Controls creating the frame
+    private LayoutTurnout.TurnoutType xoverType = LayoutTurnout.TurnoutType.DOUBLE_XOVER;	 //changes to RH_XOVER or LH_XOVER as required
+    private LayoutTurnout.TurnoutType xoverCurr = LayoutTurnout.TurnoutType.NONE;          //Controls creating the frame
     private String xoverTurnoutName = "";
     private final JLabel xoverTurnoutNameLabel = new JLabel("");
 
@@ -2591,8 +2591,8 @@ public class LayoutEditorTools {
         layoutTurnout = to;
         turnout = to.getTurnout();
         xoverType = layoutTurnout.getTurnoutType();
-        if ((xoverType != LayoutTurnout.DOUBLE_XOVER) && (xoverType != LayoutTurnout.RH_XOVER)
-                && (xoverType != LayoutTurnout.LH_XOVER)) {
+        if ((xoverType != LayoutTurnout.TurnoutType.DOUBLE_XOVER) && (xoverType != LayoutTurnout.TurnoutType.RH_XOVER)
+                && (xoverType != LayoutTurnout.TurnoutType.LH_XOVER)) {
             log.error("entered Set Signals at XOver, with a non-crossover turnout");
             return;
         }
@@ -2713,7 +2713,7 @@ public class LayoutEditorTools {
             panel22.add(setupA1Logic);
             setupA1Logic.setToolTipText(Bundle.getMessage("SetLogicHint"));
             theContentPane.add(panel22);
-            if (!(xoverType == LayoutTurnout.LH_XOVER)) {
+            if (!(xoverType == LayoutTurnout.TurnoutType.LH_XOVER)) {
                 JPanel panel23 = new JPanel(new FlowLayout());
                 JLabel a2Label = new JLabel(Bundle.getMessage("MakeLabel",
                         Bundle.getMessage("XDiverging", "A")));
@@ -2747,7 +2747,7 @@ public class LayoutEditorTools {
             panel32.add(setupB1Logic);
             setupB1Logic.setToolTipText(Bundle.getMessage("SetLogicHint"));
             theContentPane.add(panel32);
-            if (!(xoverType == LayoutTurnout.RH_XOVER)) {
+            if (!(xoverType == LayoutTurnout.TurnoutType.RH_XOVER)) {
                 JPanel panel33 = new JPanel(new FlowLayout());
                 JLabel b2Label = new JLabel(Bundle.getMessage("MakeLabel",
                         Bundle.getMessage("XDiverging", "B")));
@@ -2781,7 +2781,7 @@ public class LayoutEditorTools {
             panel42.add(setupC1Logic);
             setupC1Logic.setToolTipText(Bundle.getMessage("SetLogicHint"));
             theContentPane.add(panel42);
-            if (!(xoverType == LayoutTurnout.LH_XOVER)) {
+            if (!(xoverType == LayoutTurnout.TurnoutType.LH_XOVER)) {
                 JPanel panel43 = new JPanel(new FlowLayout());
                 JLabel c2Label = new JLabel(Bundle.getMessage("MakeLabel",
                         Bundle.getMessage("XDiverging", "C")));
@@ -2815,7 +2815,7 @@ public class LayoutEditorTools {
             panel52.add(setupD1Logic);
             setupD1Logic.setToolTipText(Bundle.getMessage("SetLogicHint"));
             theContentPane.add(panel52);
-            if (xoverType != LayoutTurnout.RH_XOVER) {
+            if (xoverType != LayoutTurnout.TurnoutType.RH_XOVER) {
                 JPanel panel53 = new JPanel(new FlowLayout());
                 JLabel d2Label = new JLabel(Bundle.getMessage("MakeLabel",
                         Bundle.getMessage("XDiverging", "D")));
@@ -3240,7 +3240,7 @@ public class LayoutEditorTools {
         }
         //setup logic if requested
         if (setupA1Logic.isSelected() || setupA2Logic.isSelected()) {
-            if (xoverType == LayoutTurnout.LH_XOVER) {
+            if (xoverType == LayoutTurnout.TurnoutType.LH_XOVER) {
                 setLogicXoverContinuing(a1Head, (TrackSegment) layoutTurnout.getConnectB());
             } else {
                 setLogicXover(a1Head, (TrackSegment) layoutTurnout.getConnectB(), a2Head,
@@ -3249,7 +3249,7 @@ public class LayoutEditorTools {
             }
         }
         if (setupB1Logic.isSelected() || setupB2Logic.isSelected()) {
-            if (xoverType == LayoutTurnout.RH_XOVER) {
+            if (xoverType == LayoutTurnout.TurnoutType.RH_XOVER) {
                 setLogicXoverContinuing(b1Head, (TrackSegment) layoutTurnout.getConnectA());
             } else {
                 setLogicXover(b1Head, (TrackSegment) layoutTurnout.getConnectA(), b2Head,
@@ -3258,7 +3258,7 @@ public class LayoutEditorTools {
             }
         }
         if (setupC1Logic.isSelected() || setupC2Logic.isSelected()) {
-            if (xoverType == LayoutTurnout.LH_XOVER) {
+            if (xoverType == LayoutTurnout.TurnoutType.LH_XOVER) {
                 setLogicXoverContinuing(c1Head, (TrackSegment) layoutTurnout.getConnectD());
             } else {
                 setLogicXover(c1Head, (TrackSegment) layoutTurnout.getConnectD(), c2Head,
@@ -3267,7 +3267,7 @@ public class LayoutEditorTools {
             }
         }
         if (setupD1Logic.isSelected() || setupD2Logic.isSelected()) {
-            if (xoverType == LayoutTurnout.RH_XOVER) {
+            if (xoverType == LayoutTurnout.TurnoutType.RH_XOVER) {
                 setLogicXoverContinuing(d1Head, (TrackSegment) layoutTurnout.getConnectC());
             } else {
                 setLogicXover(d1Head, (TrackSegment) layoutTurnout.getConnectC(), d2Head,
@@ -3293,7 +3293,7 @@ public class LayoutEditorTools {
         if (a1Head == null) {
             return false;
         }
-        if (!(xoverType == LayoutTurnout.LH_XOVER)) {
+        if (!(xoverType == LayoutTurnout.TurnoutType.LH_XOVER)) {
             a2Head = getSignalHeadFromEntry(a2SignalHeadComboBox, false, setSignalsAtXoverTurnoutFrame);
         } else {
             a2Head = null;
@@ -3302,7 +3302,7 @@ public class LayoutEditorTools {
         if (b1Head == null) {
             return false;
         }
-        if (!(xoverType == LayoutTurnout.RH_XOVER)) {
+        if (!(xoverType == LayoutTurnout.TurnoutType.RH_XOVER)) {
             b2Head = getSignalHeadFromEntry(b2SignalHeadComboBox, false, setSignalsAtXoverTurnoutFrame);
         } else {
             b2Head = null;
@@ -3311,7 +3311,7 @@ public class LayoutEditorTools {
         if (c1Head == null) {
             return false;
         }
-        if (!(xoverType == LayoutTurnout.LH_XOVER)) {
+        if (!(xoverType == LayoutTurnout.TurnoutType.LH_XOVER)) {
             c2Head = getSignalHeadFromEntry(c2SignalHeadComboBox, false, setSignalsAtXoverTurnoutFrame);
         } else {
             c2Head = null;
@@ -3320,7 +3320,7 @@ public class LayoutEditorTools {
         if (d1Head == null) {
             return false;
         }
-        if (!(xoverType == LayoutTurnout.RH_XOVER)) {
+        if (!(xoverType == LayoutTurnout.TurnoutType.RH_XOVER)) {
             d2Head = getSignalHeadFromEntry(d2SignalHeadComboBox, false, setSignalsAtXoverTurnoutFrame);
         } else {
             d2Head = null;
@@ -12454,7 +12454,7 @@ public class LayoutEditorTools {
                     if (slip.getDisplayName().equals(slipNameComboBox.getSelectedItem())) {
                         //slip1NameField.setText(slip.getDisplayName());
                         getSlipTurnoutSignalsGetSaved(e);
-                        boolean enable = (slip.getSlipType() == LayoutSlip.DOUBLE_SLIP);
+                        boolean enable = (slip.getSlipType() == LayoutSlip.TurnoutType.DOUBLE_SLIP);
                         dblSlipC2SigPanel.setVisible(enable);
                         dblSlipB2SigPanel.setVisible(enable);
                         setSignalsAtSlipFrame.pack();
@@ -12701,7 +12701,7 @@ public class LayoutEditorTools {
         setupAllLogic.setSelected(false);
 
         boolean enable = (layoutSlip != null
-                && layoutSlip.getSlipType() == LayoutSlip.DOUBLE_SLIP);
+                && layoutSlip.getSlipType() == LayoutSlip.TurnoutType.DOUBLE_SLIP);
         dblSlipC2SigPanel.setVisible(enable);
         dblSlipB2SigPanel.setVisible(enable);
 
@@ -12917,7 +12917,7 @@ public class LayoutEditorTools {
             }
         }
 
-        if (layoutSlip.getTurnoutType() == LayoutSlip.DOUBLE_SLIP) {
+        if (layoutSlip.getTurnoutType() == LayoutSlip.TurnoutType.DOUBLE_SLIP) {
             signalHeadName = b2SlipSignalHeadComboBox.getSelectedItemDisplayName();
             if (signalHeadName == null) {
                 signalHeadName = "";
@@ -13020,7 +13020,7 @@ public class LayoutEditorTools {
             }
         }
 
-        if (layoutSlip.getTurnoutType() == LayoutSlip.DOUBLE_SLIP) {
+        if (layoutSlip.getTurnoutType() == LayoutSlip.TurnoutType.DOUBLE_SLIP) {
             signalHeadName = c2SlipSignalHeadComboBox.getSelectedItemDisplayName();
             if (signalHeadName == null) {
                 signalHeadName = "";
@@ -13780,9 +13780,9 @@ public class LayoutEditorTools {
             inMenu.add(new JSeparator());
         }
         LayoutTurnout.LinkType linkType = layoutTurnout.getLinkType();
-        if ((layoutTurnout.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)
-                || (layoutTurnout.getTurnoutType() == LayoutTurnout.RH_XOVER)
-                || (layoutTurnout.getTurnoutType() == LayoutTurnout.LH_XOVER)) {
+        if ((layoutTurnout.getTurnoutType() == LayoutTurnout.TurnoutType.DOUBLE_XOVER)
+                || (layoutTurnout.getTurnoutType() == LayoutTurnout.TurnoutType.RH_XOVER)
+                || (layoutTurnout.getTurnoutType() == LayoutTurnout.TurnoutType.LH_XOVER)) {
             JMenuItem jmi = inMenu.add(Bundle.getMessage("Crossover"));
             jmi.setEnabled(false);
             inMenu.add(new JSeparator());

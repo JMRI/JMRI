@@ -624,8 +624,8 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             lt = (LayoutTurnout) connected;
 
             //check for double crossover or LH crossover
-            if (((lt.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)
-                    || (lt.getTurnoutType() == LayoutTurnout.LH_XOVER))) {
+            if (((lt.getTurnoutType() == LayoutTurnout.TurnoutType.DOUBLE_XOVER)
+                    || (lt.getTurnoutType() == LayoutTurnout.TurnoutType.LH_XOVER))) {
                 if (facingIsBlock1) {
                     if (lt.getSignalHead(LayoutTurnout.Geometry.POINTB2) == null) {	//there is only one signal at B, return it
                         return lt.getSignalHead(LayoutTurnout.Geometry.POINTB1);
@@ -814,8 +814,8 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             lt = (LayoutTurnout) connected;
 
             //check for double crossover or RH crossover
-            if ((lt.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)
-                    || (lt.getTurnoutType() == LayoutTurnout.RH_XOVER)) {
+            if ((lt.getTurnoutType() == LayoutTurnout.TurnoutType.DOUBLE_XOVER)
+                    || (lt.getTurnoutType() == LayoutTurnout.TurnoutType.RH_XOVER)) {
                 if (facingIsBlock1) {
                     if (lt.getSignalHead(LayoutTurnout.Geometry.POINTC2) == null) {	//there is only one head at C, return it
                         return lt.getSignalHead(LayoutTurnout.Geometry.POINTC1);
@@ -917,7 +917,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             if ((lt.getLinkType() == LayoutTurnout.LinkType.NO_LINK) && (lt.getContinuingSense() == Turnout.CLOSED)) {
                 if (facingIsBlock1) {
                     return lt.getSignalHead(LayoutTurnout.Geometry.POINTC1);
-                } else if (lt.getTurnoutType() == LayoutTurnout.LH_XOVER) {	//LH turnout - this is continuing track for D connection
+                } else if (lt.getTurnoutType() == LayoutTurnout.TurnoutType.LH_XOVER) {	//LH turnout - this is continuing track for D connection
                     return lt.getSignalHead(LayoutTurnout.Geometry.POINTD1);
                 } else {
                     //RH, LH or WYE turnout, this is diverging track for A connection
@@ -1012,7 +1012,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             //block boundary is at D connectin of a crossover turnout
             lt = (LayoutTurnout) connected;
 
-            if (lt.getTurnoutType() == LayoutTurnout.RH_XOVER) {
+            if (lt.getTurnoutType() == LayoutTurnout.TurnoutType.RH_XOVER) {
                 //no diverging route possible, this is continuing track for C connection
                 if (facingIsBlock1) {
                     return lt.getSignalHead(LayoutTurnout.Geometry.POINTD1);
@@ -1132,7 +1132,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                 }
 
                 case LayoutTrack.SLIP_B: {
-                    if (ls.getTurnoutType() == LayoutSlip.DOUBLE_SLIP) {
+                    if (ls.getTurnoutType() == LayoutSlip.TurnoutType.DOUBLE_SLIP) {
                         if (ls.getSlipState() == LayoutSlip.STATE_BC) {
                             return ls.getSignalHead(LayoutTurnout.Geometry.POINTB2);
                         } else {
@@ -1144,7 +1144,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                 }
 
                 case LayoutTrack.SLIP_C: {
-                    if (ls.getTurnoutType() == LayoutSlip.DOUBLE_SLIP) {
+                    if (ls.getTurnoutType() == LayoutSlip.TurnoutType.DOUBLE_SLIP) {
                         if (ls.getSlipState() == LayoutSlip.STATE_BC) {
                             return ls.getSignalHead(LayoutTurnout.Geometry.POINTC2);
                         } else {
