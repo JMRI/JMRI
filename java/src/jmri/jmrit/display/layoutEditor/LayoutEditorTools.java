@@ -426,8 +426,8 @@ public class LayoutEditorTools {
                 needRedraw = true;
             }
         } else {
-            int assigned = isHeadAssignedHere(throatContinuingHead, layoutTurnout);
-            if (assigned == LayoutTurnout.NONE) {
+            LayoutTurnout.Geometry assigned = isHeadAssignedHere(throatContinuingHead, layoutTurnout);
+            if (assigned == LayoutTurnout.Geometry.NONE) {
                 if (isHeadOnPanel(throatContinuingHead)
                         && isHeadAssignedAnywhere(throatContinuingHead)) {
                     JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame,
@@ -468,8 +468,8 @@ public class LayoutEditorTools {
                 needRedraw = true;
             }
         } else if (throatDivergingHead != null) {
-            int assigned = isHeadAssignedHere(throatDivergingHead, layoutTurnout);
-            if (assigned == LayoutTurnout.NONE) {
+            LayoutTurnout.Geometry assigned = isHeadAssignedHere(throatDivergingHead, layoutTurnout);
+            if (assigned == LayoutTurnout.Geometry.NONE) {
                 if (isHeadOnPanel(throatDivergingHead)
                         && isHeadAssignedAnywhere(throatDivergingHead)) {
                     JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame,
@@ -516,8 +516,8 @@ public class LayoutEditorTools {
                 needRedraw = true;
             }
         } else {
-            int assigned = isHeadAssignedHere(continuingHead, layoutTurnout);
-            if (assigned == LayoutTurnout.NONE) {
+            LayoutTurnout.Geometry assigned = isHeadAssignedHere(continuingHead, layoutTurnout);
+            if (assigned == LayoutTurnout.Geometry.NONE) {
                 if (isHeadOnPanel(continuingHead)
                         && isHeadAssignedAnywhere(continuingHead)) {
                     JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame,
@@ -561,8 +561,8 @@ public class LayoutEditorTools {
                 needRedraw = true;
             }
         } else {
-            int assigned = isHeadAssignedHere(divergingHead, layoutTurnout);
-            if (assigned == LayoutTurnout.NONE) {
+            LayoutTurnout.Geometry assigned = isHeadAssignedHere(divergingHead, layoutTurnout);
+            if (assigned == LayoutTurnout.Geometry.NONE) {
                 if (isHeadOnPanel(divergingHead)
                         && isHeadAssignedAnywhere(divergingHead)) {
                     JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame,
@@ -594,7 +594,7 @@ public class LayoutEditorTools {
             setLogicDiverging();
         }
         //make sure this layout turnout is not linked to another
-        layoutTurnout.setLinkType(LayoutTurnout.NO_LINK);
+        layoutTurnout.setLinkType(LayoutTurnout.LinkType.NO_LINK);
         layoutTurnout.setLinkedTurnoutName("");
         //finish up
         setSignalsAtTurnoutOpenFlag = false;
@@ -1108,7 +1108,7 @@ public class LayoutEditorTools {
         for (LayoutTurnout t : layoutEditor.getLayoutTurnouts()) {
             if (t.getTurnout() == turnout) {
                 //have the layout turnout corresponding to the turnout
-                if ((t.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)
+                if ((t.getTurnoutType() == LayoutTurnout.TurnoutType.DOUBLE_XOVER)
                         && (!requireDoubleXover)) {
                     JOptionPane.showMessageDialog(theFrame,
                             Bundle.getMessage("InfoMessage1"),
@@ -1116,7 +1116,7 @@ public class LayoutEditorTools {
                             JOptionPane.INFORMATION_MESSAGE);
                     return null;
                 }
-                if (requireDoubleXover && (t.getTurnoutType() != LayoutTurnout.DOUBLE_XOVER)) {
+                if (requireDoubleXover && (t.getTurnoutType() != LayoutTurnout.TurnoutType.DOUBLE_XOVER)) {
                     JOptionPane.showMessageDialog(theFrame,
                             Bundle.getMessage("InfoMessage8"),
                             Bundle.getMessage("MessageTitle"),
@@ -1250,24 +1250,24 @@ public class LayoutEditorTools {
      * specifies the turnout position of the signal head according to the code
      * listed at the beginning of this module.
      */
-    private int isHeadAssignedHere(@Nonnull SignalHead head, @Nonnull LayoutTurnout lTurnout) {
-        int result = LayoutTurnout.NONE;
+    private LayoutTurnout.Geometry isHeadAssignedHere(@Nonnull SignalHead head, @Nonnull LayoutTurnout lTurnout) {
+        LayoutTurnout.Geometry result = LayoutTurnout.Geometry.NONE;
 
-        Map<String, Integer> map = new HashMap<String, Integer>();
-        map.put(lTurnout.getSignalA1Name(), LayoutTurnout.POINTA1);
-        map.put(lTurnout.getSignalA2Name(), LayoutTurnout.POINTA2);
-        map.put(lTurnout.getSignalA3Name(), LayoutTurnout.POINTA3);
-        map.put(lTurnout.getSignalB1Name(), LayoutTurnout.POINTB1);
-        map.put(lTurnout.getSignalB2Name(), LayoutTurnout.POINTB2);
-        map.put(lTurnout.getSignalC1Name(), LayoutTurnout.POINTC1);
-        map.put(lTurnout.getSignalC2Name(), LayoutTurnout.POINTC2);
-        map.put(lTurnout.getSignalD1Name(), LayoutTurnout.POINTD1);
-        map.put(lTurnout.getSignalD2Name(), LayoutTurnout.POINTD2);
+        Map<String, LayoutTurnout.Geometry> map = new HashMap<String, LayoutTurnout.Geometry>();
+        map.put(lTurnout.getSignalA1Name(), LayoutTurnout.Geometry.POINTA1);
+        map.put(lTurnout.getSignalA2Name(), LayoutTurnout.Geometry.POINTA2);
+        map.put(lTurnout.getSignalA3Name(), LayoutTurnout.Geometry.POINTA3);
+        map.put(lTurnout.getSignalB1Name(), LayoutTurnout.Geometry.POINTB1);
+        map.put(lTurnout.getSignalB2Name(), LayoutTurnout.Geometry.POINTB2);
+        map.put(lTurnout.getSignalC1Name(), LayoutTurnout.Geometry.POINTC1);
+        map.put(lTurnout.getSignalC2Name(), LayoutTurnout.Geometry.POINTC2);
+        map.put(lTurnout.getSignalD1Name(), LayoutTurnout.Geometry.POINTD1);
+        map.put(lTurnout.getSignalD2Name(), LayoutTurnout.Geometry.POINTD2);
 
         String sName = head.getSystemName();
         String uName = head.getUserName();
 
-        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+        for (Map.Entry<String, LayoutTurnout.Geometry> entry : map.entrySet()) {
             String signalName = entry.getKey();
 
             if (!signalName.isEmpty() && (signalName.equals(sName) || signalName.equals(uName))) {
@@ -1277,7 +1277,7 @@ public class LayoutEditorTools {
         }
 
         return result;
-    }   //isHeadAssignedHere
+    }
 
     /**
      * Returns true if an icon for the specified SignalHead is on the panel
@@ -1300,7 +1300,7 @@ public class LayoutEditorTools {
         String uName = head.getUserName();
 
         for (LayoutTurnout to : layoutEditor.getLayoutTurnouts()) {
-            if (isHeadAssignedHere(head, to) != LayoutTurnout.NONE) {
+            if (isHeadAssignedHere(head, to) != LayoutTurnout.Geometry.NONE) {
                 return true;
             }
         }
@@ -1699,7 +1699,7 @@ public class LayoutEditorTools {
             } else if (type == LayoutTrack.SLIP_B) {
                 LayoutSlip sl = (LayoutSlip) connect;
                 String signalName;
-                if (sl.getTurnoutType() == LayoutSlip.DOUBLE_SLIP) {
+                if (sl.getTurnoutType() == LayoutSlip.TurnoutType.DOUBLE_SLIP) {
                     signalName = sl.getSignalB2Name();
                     if (!signalName.isEmpty()) {
                         auxSignal = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(signalName);
@@ -1722,7 +1722,7 @@ public class LayoutEditorTools {
             } else if (type == LayoutTrack.SLIP_C) {
                 LayoutSlip sl = (LayoutSlip) connect;
                 String signalName;
-                if (sl.getTurnoutType() == LayoutSlip.DOUBLE_SLIP) {
+                if (sl.getTurnoutType() == LayoutSlip.TurnoutType.DOUBLE_SLIP) {
                     signalName = sl.getSignalC2Name();
                     if (!signalName.isEmpty()) {
                         auxSignal = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(signalName);
@@ -1785,8 +1785,8 @@ public class LayoutEditorTools {
 
     @CheckReturnValue
     private TrackSegment getContinuingTrack(@Nonnull LayoutTurnout to, int type) {
-        int ty = to.getTurnoutType();
-        if ((ty == LayoutTurnout.RH_TURNOUT) || (ty == LayoutTurnout.LH_TURNOUT)) {
+        LayoutTurnout.TurnoutType ty = to.getTurnoutType();
+        if ((ty == LayoutTurnout.TurnoutType.RH_TURNOUT) || (ty == LayoutTurnout.TurnoutType.LH_TURNOUT)) {
             if (type == LayoutTrack.TURNOUT_A) {
                 if (to.getContinuingSense() == Turnout.CLOSED) {
                     return (TrackSegment) to.getConnectB();
@@ -1796,8 +1796,8 @@ public class LayoutEditorTools {
             } else {
                 return (TrackSegment) to.getConnectA();
             }
-        } else if ((ty == LayoutTurnout.DOUBLE_XOVER) || (ty == LayoutTurnout.RH_XOVER)
-                || (ty == LayoutTurnout.LH_XOVER)) {
+        } else if ((ty == LayoutTurnout.TurnoutType.DOUBLE_XOVER) || (ty == LayoutTurnout.TurnoutType.RH_XOVER)
+                || (ty == LayoutTurnout.TurnoutType.LH_XOVER)) {
             if (type == LayoutTrack.TURNOUT_A) {
                 return (TrackSegment) to.getConnectB();
             } else if (type == LayoutTrack.TURNOUT_B) {
@@ -2580,8 +2580,8 @@ public class LayoutEditorTools {
     private SignalHead d1Head = null;
     private SignalHead d2Head = null;
 
-    private int xoverType = LayoutTurnout.DOUBLE_XOVER;	 //changes to RH_XOVER or LH_XOVER as required
-    private int xoverCurr = LayoutTurnout.UNKNOWN;          //Controls creating the frame
+    private LayoutTurnout.TurnoutType xoverType = LayoutTurnout.TurnoutType.DOUBLE_XOVER;	 //changes to RH_XOVER or LH_XOVER as required
+    private LayoutTurnout.TurnoutType xoverCurr = LayoutTurnout.TurnoutType.NONE;          //Controls creating the frame
     private String xoverTurnoutName = "";
     private final JLabel xoverTurnoutNameLabel = new JLabel("");
 
@@ -2591,8 +2591,8 @@ public class LayoutEditorTools {
         layoutTurnout = to;
         turnout = to.getTurnout();
         xoverType = layoutTurnout.getTurnoutType();
-        if ((xoverType != LayoutTurnout.DOUBLE_XOVER) && (xoverType != LayoutTurnout.RH_XOVER)
-                && (xoverType != LayoutTurnout.LH_XOVER)) {
+        if ((xoverType != LayoutTurnout.TurnoutType.DOUBLE_XOVER) && (xoverType != LayoutTurnout.TurnoutType.RH_XOVER)
+                && (xoverType != LayoutTurnout.TurnoutType.LH_XOVER)) {
             log.error("entered Set Signals at XOver, with a non-crossover turnout");
             return;
         }
@@ -2713,7 +2713,7 @@ public class LayoutEditorTools {
             panel22.add(setupA1Logic);
             setupA1Logic.setToolTipText(Bundle.getMessage("SetLogicHint"));
             theContentPane.add(panel22);
-            if (!(xoverType == LayoutTurnout.LH_XOVER)) {
+            if (!(xoverType == LayoutTurnout.TurnoutType.LH_XOVER)) {
                 JPanel panel23 = new JPanel(new FlowLayout());
                 JLabel a2Label = new JLabel(Bundle.getMessage("MakeLabel",
                         Bundle.getMessage("XDiverging", "A")));
@@ -2747,7 +2747,7 @@ public class LayoutEditorTools {
             panel32.add(setupB1Logic);
             setupB1Logic.setToolTipText(Bundle.getMessage("SetLogicHint"));
             theContentPane.add(panel32);
-            if (!(xoverType == LayoutTurnout.RH_XOVER)) {
+            if (!(xoverType == LayoutTurnout.TurnoutType.RH_XOVER)) {
                 JPanel panel33 = new JPanel(new FlowLayout());
                 JLabel b2Label = new JLabel(Bundle.getMessage("MakeLabel",
                         Bundle.getMessage("XDiverging", "B")));
@@ -2781,7 +2781,7 @@ public class LayoutEditorTools {
             panel42.add(setupC1Logic);
             setupC1Logic.setToolTipText(Bundle.getMessage("SetLogicHint"));
             theContentPane.add(panel42);
-            if (!(xoverType == LayoutTurnout.LH_XOVER)) {
+            if (!(xoverType == LayoutTurnout.TurnoutType.LH_XOVER)) {
                 JPanel panel43 = new JPanel(new FlowLayout());
                 JLabel c2Label = new JLabel(Bundle.getMessage("MakeLabel",
                         Bundle.getMessage("XDiverging", "C")));
@@ -2815,7 +2815,7 @@ public class LayoutEditorTools {
             panel52.add(setupD1Logic);
             setupD1Logic.setToolTipText(Bundle.getMessage("SetLogicHint"));
             theContentPane.add(panel52);
-            if (xoverType != LayoutTurnout.RH_XOVER) {
+            if (xoverType != LayoutTurnout.TurnoutType.RH_XOVER) {
                 JPanel panel53 = new JPanel(new FlowLayout());
                 JLabel d2Label = new JLabel(Bundle.getMessage("MakeLabel",
                         Bundle.getMessage("XDiverging", "D")));
@@ -2927,8 +2927,8 @@ public class LayoutEditorTools {
                 needRedraw = true;
             }
         } else {
-            int assigned = isHeadAssignedHere(a1Head, layoutTurnout);
-            if (assigned == LayoutTurnout.NONE) {
+            LayoutTurnout.Geometry assigned = isHeadAssignedHere(a1Head, layoutTurnout);
+            if (assigned == LayoutTurnout.Geometry.NONE) {
                 if (isHeadOnPanel(a1Head)
                         && isHeadAssignedAnywhere(a1Head)) {
                     JOptionPane.showMessageDialog(setSignalsAtXoverTurnoutFrame,
@@ -2967,8 +2967,8 @@ public class LayoutEditorTools {
                 needRedraw = true;
             }
         } else if (a2Head != null) {
-            int assigned = isHeadAssignedHere(a2Head, layoutTurnout);
-            if (assigned == LayoutTurnout.NONE) {
+            LayoutTurnout.Geometry assigned = isHeadAssignedHere(a2Head, layoutTurnout);
+            if (assigned == LayoutTurnout.Geometry.NONE) {
                 if (isHeadOnPanel(a2Head)
                         && isHeadAssignedAnywhere(a2Head)) {
                     JOptionPane.showMessageDialog(setSignalsAtXoverTurnoutFrame,
@@ -3010,8 +3010,8 @@ public class LayoutEditorTools {
                 needRedraw = true;
             }
         } else {
-            int assigned = isHeadAssignedHere(b1Head, layoutTurnout);
-            if (assigned == LayoutTurnout.NONE) {
+            LayoutTurnout.Geometry assigned = isHeadAssignedHere(b1Head, layoutTurnout);
+            if (assigned == LayoutTurnout.Geometry.NONE) {
                 if (isHeadOnPanel(b1Head)
                         && isHeadAssignedAnywhere(b1Head)) {
                     JOptionPane.showMessageDialog(setSignalsAtXoverTurnoutFrame,
@@ -3050,8 +3050,8 @@ public class LayoutEditorTools {
                 needRedraw = true;
             }
         } else if (b2Head != null) {
-            int assigned = isHeadAssignedHere(b2Head, layoutTurnout);
-            if (assigned == LayoutTurnout.NONE) {
+            LayoutTurnout.Geometry assigned = isHeadAssignedHere(b2Head, layoutTurnout);
+            if (assigned == LayoutTurnout.Geometry.NONE) {
                 if (isHeadOnPanel(b2Head)
                         && isHeadAssignedAnywhere(b2Head)) {
                     JOptionPane.showMessageDialog(setSignalsAtXoverTurnoutFrame,
@@ -3093,8 +3093,8 @@ public class LayoutEditorTools {
                 needRedraw = true;
             }
         } else {
-            int assigned = isHeadAssignedHere(c1Head, layoutTurnout);
-            if (assigned == LayoutTurnout.NONE) {
+            LayoutTurnout.Geometry assigned = isHeadAssignedHere(c1Head, layoutTurnout);
+            if (assigned == LayoutTurnout.Geometry.NONE) {
                 if (isHeadOnPanel(c1Head)
                         && isHeadAssignedAnywhere(c1Head)) {
                     JOptionPane.showMessageDialog(setSignalsAtXoverTurnoutFrame,
@@ -3133,8 +3133,8 @@ public class LayoutEditorTools {
                 needRedraw = true;
             }
         } else if (c2Head != null) {
-            int assigned = isHeadAssignedHere(c2Head, layoutTurnout);
-            if (assigned == LayoutTurnout.NONE) {
+            LayoutTurnout.Geometry assigned = isHeadAssignedHere(c2Head, layoutTurnout);
+            if (assigned == LayoutTurnout.Geometry.NONE) {
                 if (isHeadOnPanel(c2Head)
                         && isHeadAssignedAnywhere(c2Head)) {
                     JOptionPane.showMessageDialog(setSignalsAtXoverTurnoutFrame,
@@ -3176,8 +3176,8 @@ public class LayoutEditorTools {
                 needRedraw = true;
             }
         } else {
-            int assigned = isHeadAssignedHere(d1Head, layoutTurnout);
-            if (assigned == LayoutTurnout.NONE) {
+            LayoutTurnout.Geometry assigned = isHeadAssignedHere(d1Head, layoutTurnout);
+            if (assigned == LayoutTurnout.Geometry.NONE) {
                 if (isHeadOnPanel(d1Head)
                         && isHeadAssignedAnywhere(d1Head)) {
                     JOptionPane.showMessageDialog(setSignalsAtXoverTurnoutFrame,
@@ -3216,8 +3216,8 @@ public class LayoutEditorTools {
                 needRedraw = true;
             }
         } else if (d2Head != null) {
-            int assigned = isHeadAssignedHere(d2Head, layoutTurnout);
-            if (assigned == LayoutTurnout.NONE) {
+            LayoutTurnout.Geometry assigned = isHeadAssignedHere(d2Head, layoutTurnout);
+            if (assigned == LayoutTurnout.Geometry.NONE) {
                 if (isHeadOnPanel(d2Head)
                         && isHeadAssignedAnywhere(d2Head)) {
                     JOptionPane.showMessageDialog(setSignalsAtXoverTurnoutFrame,
@@ -3240,7 +3240,7 @@ public class LayoutEditorTools {
         }
         //setup logic if requested
         if (setupA1Logic.isSelected() || setupA2Logic.isSelected()) {
-            if (xoverType == LayoutTurnout.LH_XOVER) {
+            if (xoverType == LayoutTurnout.TurnoutType.LH_XOVER) {
                 setLogicXoverContinuing(a1Head, (TrackSegment) layoutTurnout.getConnectB());
             } else {
                 setLogicXover(a1Head, (TrackSegment) layoutTurnout.getConnectB(), a2Head,
@@ -3249,7 +3249,7 @@ public class LayoutEditorTools {
             }
         }
         if (setupB1Logic.isSelected() || setupB2Logic.isSelected()) {
-            if (xoverType == LayoutTurnout.RH_XOVER) {
+            if (xoverType == LayoutTurnout.TurnoutType.RH_XOVER) {
                 setLogicXoverContinuing(b1Head, (TrackSegment) layoutTurnout.getConnectA());
             } else {
                 setLogicXover(b1Head, (TrackSegment) layoutTurnout.getConnectA(), b2Head,
@@ -3258,7 +3258,7 @@ public class LayoutEditorTools {
             }
         }
         if (setupC1Logic.isSelected() || setupC2Logic.isSelected()) {
-            if (xoverType == LayoutTurnout.LH_XOVER) {
+            if (xoverType == LayoutTurnout.TurnoutType.LH_XOVER) {
                 setLogicXoverContinuing(c1Head, (TrackSegment) layoutTurnout.getConnectD());
             } else {
                 setLogicXover(c1Head, (TrackSegment) layoutTurnout.getConnectD(), c2Head,
@@ -3267,7 +3267,7 @@ public class LayoutEditorTools {
             }
         }
         if (setupD1Logic.isSelected() || setupD2Logic.isSelected()) {
-            if (xoverType == LayoutTurnout.RH_XOVER) {
+            if (xoverType == LayoutTurnout.TurnoutType.RH_XOVER) {
                 setLogicXoverContinuing(d1Head, (TrackSegment) layoutTurnout.getConnectC());
             } else {
                 setLogicXover(d1Head, (TrackSegment) layoutTurnout.getConnectC(), d2Head,
@@ -3276,7 +3276,7 @@ public class LayoutEditorTools {
             }
         }
         //make sure this layout turnout is not linked to another
-        layoutTurnout.setLinkType(LayoutTurnout.NO_LINK);
+        layoutTurnout.setLinkType(LayoutTurnout.LinkType.NO_LINK);
         layoutTurnout.setLinkedTurnoutName("");
         //finish up
         setSignalsAtXoverTurnoutOpenFlag = false;
@@ -3293,7 +3293,7 @@ public class LayoutEditorTools {
         if (a1Head == null) {
             return false;
         }
-        if (!(xoverType == LayoutTurnout.LH_XOVER)) {
+        if (!(xoverType == LayoutTurnout.TurnoutType.LH_XOVER)) {
             a2Head = getSignalHeadFromEntry(a2SignalHeadComboBox, false, setSignalsAtXoverTurnoutFrame);
         } else {
             a2Head = null;
@@ -3302,7 +3302,7 @@ public class LayoutEditorTools {
         if (b1Head == null) {
             return false;
         }
-        if (!(xoverType == LayoutTurnout.RH_XOVER)) {
+        if (!(xoverType == LayoutTurnout.TurnoutType.RH_XOVER)) {
             b2Head = getSignalHeadFromEntry(b2SignalHeadComboBox, false, setSignalsAtXoverTurnoutFrame);
         } else {
             b2Head = null;
@@ -3311,7 +3311,7 @@ public class LayoutEditorTools {
         if (c1Head == null) {
             return false;
         }
-        if (!(xoverType == LayoutTurnout.LH_XOVER)) {
+        if (!(xoverType == LayoutTurnout.TurnoutType.LH_XOVER)) {
             c2Head = getSignalHeadFromEntry(c2SignalHeadComboBox, false, setSignalsAtXoverTurnoutFrame);
         } else {
             c2Head = null;
@@ -3320,7 +3320,7 @@ public class LayoutEditorTools {
         if (d1Head == null) {
             return false;
         }
-        if (!(xoverType == LayoutTurnout.RH_XOVER)) {
+        if (!(xoverType == LayoutTurnout.TurnoutType.RH_XOVER)) {
             d2Head = getSignalHeadFromEntry(d2SignalHeadComboBox, false, setSignalsAtXoverTurnoutFrame);
         } else {
             d2Head = null;
@@ -3948,10 +3948,10 @@ public class LayoutEditorTools {
         if (!getLevelCrossingInformation()) {
             return;
         }
-        aSignalHeadComboBox.setSelectedItem(levelXing.getSignalHead(LevelXing.POINTA));
-        bSignalHeadComboBox.setSelectedItem(levelXing.getSignalHead(LevelXing.POINTB));
-        cSignalHeadComboBox.setSelectedItem(levelXing.getSignalHead(LevelXing.POINTC));
-        dSignalHeadComboBox.setSelectedItem(levelXing.getSignalHead(LevelXing.POINTD));
+        aSignalHeadComboBox.setSelectedItem(levelXing.getSignalHead(LevelXing.Geometry.POINTA));
+        bSignalHeadComboBox.setSelectedItem(levelXing.getSignalHead(LevelXing.Geometry.POINTB));
+        cSignalHeadComboBox.setSelectedItem(levelXing.getSignalHead(LevelXing.Geometry.POINTC));
+        dSignalHeadComboBox.setSelectedItem(levelXing.getSignalHead(LevelXing.Geometry.POINTD));
     }
 
     private void setXingSignalsCancelPressed(ActionEvent a) {
@@ -5177,8 +5177,8 @@ public class LayoutEditorTools {
                 needRedraw = true;
             }
         } else {
-            int assigned = isHeadAssignedHere(a1TToTHead, layoutTurnout1);
-            if (assigned == LayoutTurnout.NONE) {
+            LayoutTurnout.Geometry assigned = isHeadAssignedHere(a1TToTHead, layoutTurnout1);
+            if (assigned == LayoutTurnout.Geometry.NONE) {
                 if (isHeadOnPanel(a1TToTHead)
                         && isHeadAssignedAnywhere(a1TToTHead)) {
                     JOptionPane.showMessageDialog(setSignalsAtThroatToThroatTurnoutsFrame,
@@ -5222,8 +5222,8 @@ public class LayoutEditorTools {
                 needRedraw = true;
             }
         } else if (a2TToTHead != null) {
-            int assigned = isHeadAssignedHere(a2TToTHead, layoutTurnout1);
-            if (assigned == LayoutTurnout.NONE) {
+            LayoutTurnout.Geometry assigned = isHeadAssignedHere(a2TToTHead, layoutTurnout1);
+            if (assigned == LayoutTurnout.Geometry.NONE) {
                 if (isHeadOnPanel(a2TToTHead)
                         && isHeadAssignedAnywhere(a2TToTHead)) {
                     JOptionPane.showMessageDialog(setSignalsAtThroatToThroatTurnoutsFrame,
@@ -5270,8 +5270,8 @@ public class LayoutEditorTools {
                 needRedraw = true;
             }
         } else {
-            int assigned = isHeadAssignedHere(b1TToTHead, layoutTurnout1);
-            if (assigned == LayoutTurnout.NONE) {
+            LayoutTurnout.Geometry assigned = isHeadAssignedHere(b1TToTHead, layoutTurnout1);
+            if (assigned == LayoutTurnout.Geometry.NONE) {
                 if (isHeadOnPanel(b1TToTHead)
                         && isHeadAssignedAnywhere(b1TToTHead)) {
                     JOptionPane.showMessageDialog(setSignalsAtThroatToThroatTurnoutsFrame,
@@ -5315,8 +5315,8 @@ public class LayoutEditorTools {
                 needRedraw = true;
             }
         } else if (b2TToTHead != null) {
-            int assigned = isHeadAssignedHere(b2TToTHead, layoutTurnout1);
-            if (assigned == LayoutTurnout.NONE) {
+            LayoutTurnout.Geometry assigned = isHeadAssignedHere(b2TToTHead, layoutTurnout1);
+            if (assigned == LayoutTurnout.Geometry.NONE) {
                 if (isHeadOnPanel(b2TToTHead)
                         && isHeadAssignedAnywhere(b2TToTHead)) {
                     JOptionPane.showMessageDialog(setSignalsAtThroatToThroatTurnoutsFrame,
@@ -5364,8 +5364,8 @@ public class LayoutEditorTools {
                 needRedraw = true;
             }
         } else {
-            int assigned = isHeadAssignedHere(c1TToTHead, layoutTurnout2);
-            if (assigned == LayoutTurnout.NONE) {
+            LayoutTurnout.Geometry assigned = isHeadAssignedHere(c1TToTHead, layoutTurnout2);
+            if (assigned == LayoutTurnout.Geometry.NONE) {
                 if (isHeadOnPanel(c1TToTHead)
                         && isHeadAssignedAnywhere(c1TToTHead)) {
                     JOptionPane.showMessageDialog(setSignalsAtThroatToThroatTurnoutsFrame,
@@ -5409,8 +5409,8 @@ public class LayoutEditorTools {
                 needRedraw = true;
             }
         } else if (c2TToTHead != null) {
-            int assigned = isHeadAssignedHere(c2TToTHead, layoutTurnout2);
-            if (assigned == LayoutTurnout.NONE) {
+            LayoutTurnout.Geometry assigned = isHeadAssignedHere(c2TToTHead, layoutTurnout2);
+            if (assigned == LayoutTurnout.Geometry.NONE) {
                 if (isHeadOnPanel(c2TToTHead)
                         && isHeadAssignedAnywhere(c2TToTHead)) {
                     JOptionPane.showMessageDialog(setSignalsAtThroatToThroatTurnoutsFrame,
@@ -5457,8 +5457,8 @@ public class LayoutEditorTools {
                 needRedraw = true;
             }
         } else {
-            int assigned = isHeadAssignedHere(d1TToTHead, layoutTurnout2);
-            if (assigned == LayoutTurnout.NONE) {
+            LayoutTurnout.Geometry assigned = isHeadAssignedHere(d1TToTHead, layoutTurnout2);
+            if (assigned == LayoutTurnout.Geometry.NONE) {
                 if (isHeadOnPanel(d1TToTHead)
                         && isHeadAssignedAnywhere(d1TToTHead)) {
                     JOptionPane.showMessageDialog(setSignalsAtThroatToThroatTurnoutsFrame,
@@ -5502,8 +5502,8 @@ public class LayoutEditorTools {
                 needRedraw = true;
             }
         } else if (d2TToTHead != null) {
-            int assigned = isHeadAssignedHere(d2TToTHead, layoutTurnout2);
-            if (assigned == LayoutTurnout.NONE) {
+            LayoutTurnout.Geometry assigned = isHeadAssignedHere(d2TToTHead, layoutTurnout2);
+            if (assigned == LayoutTurnout.Geometry.NONE) {
                 if (isHeadOnPanel(d2TToTHead)
                         && isHeadAssignedAnywhere(d2TToTHead)) {
                     JOptionPane.showMessageDialog(setSignalsAtThroatToThroatTurnoutsFrame,
@@ -5548,9 +5548,9 @@ public class LayoutEditorTools {
         }
         //link the two turnouts
         layoutTurnout1.setLinkedTurnoutName(turnout2ComboBox.getSelectedItemDisplayName());
-        layoutTurnout1.setLinkType(LayoutTurnout.THROAT_TO_THROAT);
+        layoutTurnout1.setLinkType(LayoutTurnout.LinkType.THROAT_TO_THROAT);
         layoutTurnout2.setLinkedTurnoutName(turnout1ComboBox.getSelectedItemDisplayName());
-        layoutTurnout2.setLinkType(LayoutTurnout.THROAT_TO_THROAT);
+        layoutTurnout2.setLinkType(LayoutTurnout.LinkType.THROAT_TO_THROAT);
         //finish up
         setSignalsAtThroatToThroatTurnoutsOpenFlag = false;
         setSignalsAtThroatToThroatTurnoutsFrame.setVisible(false);
@@ -6609,8 +6609,8 @@ public class LayoutEditorTools {
                 needRedraw = true;
             }
         } else {
-            int assigned = isHeadAssignedHere(a13WayHead, layoutTurnoutA);
-            if (assigned == LayoutTurnout.NONE) {
+            LayoutTurnout.Geometry assigned = isHeadAssignedHere(a13WayHead, layoutTurnoutA);
+            if (assigned == LayoutTurnout.Geometry.NONE) {
                 if (isHeadOnPanel(a13WayHead)
                         && isHeadAssignedAnywhere(a13WayHead)) {
                     JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
@@ -6650,8 +6650,8 @@ public class LayoutEditorTools {
                 needRedraw = true;
             }
         } else if (a23WayHead != null) {
-            int assigned = isHeadAssignedHere(a23WayHead, layoutTurnoutA);
-            if (assigned == LayoutTurnout.NONE) {
+            LayoutTurnout.Geometry assigned = isHeadAssignedHere(a23WayHead, layoutTurnoutA);
+            if (assigned == LayoutTurnout.Geometry.NONE) {
                 if (isHeadOnPanel(a23WayHead)
                         && isHeadAssignedAnywhere(a23WayHead)) {
                     JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
@@ -6694,8 +6694,8 @@ public class LayoutEditorTools {
                 needRedraw = true;
             }
         } else if (a33WayHead != null) {
-            int assigned = isHeadAssignedHere(a33WayHead, layoutTurnoutA);
-            if (assigned == LayoutTurnout.NONE) {
+            LayoutTurnout.Geometry assigned = isHeadAssignedHere(a33WayHead, layoutTurnoutA);
+            if (assigned == LayoutTurnout.Geometry.NONE) {
                 if (isHeadOnPanel(a33WayHead)
                         && isHeadAssignedAnywhere(a33WayHead)) {
                     JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
@@ -6738,8 +6738,8 @@ public class LayoutEditorTools {
                 needRedraw = true;
             }
         } else {
-            int assigned = isHeadAssignedHere(b3WayHead, layoutTurnoutA);
-            if (assigned == LayoutTurnout.NONE) {
+            LayoutTurnout.Geometry assigned = isHeadAssignedHere(b3WayHead, layoutTurnoutA);
+            if (assigned == LayoutTurnout.Geometry.NONE) {
                 if (isHeadOnPanel(b3WayHead)
                         && isHeadAssignedAnywhere(b3WayHead)) {
                     JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
@@ -6780,8 +6780,8 @@ public class LayoutEditorTools {
                 needRedraw = true;
             }
         } else {
-            int assigned = isHeadAssignedHere(c3WayHead, layoutTurnoutB);
-            if (assigned == LayoutTurnout.NONE) {
+            LayoutTurnout.Geometry assigned = isHeadAssignedHere(c3WayHead, layoutTurnoutB);
+            if (assigned == LayoutTurnout.Geometry.NONE) {
                 if (isHeadOnPanel(c3WayHead)
                         && isHeadAssignedAnywhere(c3WayHead)) {
                     JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
@@ -6821,8 +6821,8 @@ public class LayoutEditorTools {
                 needRedraw = true;
             }
         } else {
-            int assigned = isHeadAssignedHere(d3WayHead, layoutTurnoutB);
-            if (assigned == LayoutTurnout.NONE) {
+            LayoutTurnout.Geometry assigned = isHeadAssignedHere(d3WayHead, layoutTurnoutB);
+            if (assigned == LayoutTurnout.Geometry.NONE) {
                 if (isHeadOnPanel(d3WayHead)
                         && isHeadAssignedAnywhere(d3WayHead)) {
                     JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
@@ -6865,13 +6865,13 @@ public class LayoutEditorTools {
             signalHeadName = "";
         }
         layoutTurnoutA.setLinkedTurnoutName(signalHeadName);
-        layoutTurnoutA.setLinkType(LayoutTurnout.FIRST_3_WAY);
+        layoutTurnoutA.setLinkType(LayoutTurnout.LinkType.FIRST_3_WAY);
         signalHeadName = turnoutAComboBox.getSelectedItemDisplayName();
         if (signalHeadName == null) {
             signalHeadName = "";
         }
         layoutTurnoutB.setLinkedTurnoutName(signalHeadName);
-        layoutTurnoutB.setLinkType(LayoutTurnout.SECOND_3_WAY);
+        layoutTurnoutB.setLinkType(LayoutTurnout.LinkType.SECOND_3_WAY);
         //finish up
         setSignalsAt3WayTurnoutOpenFlag = false;
         setSignalsAt3WayTurnoutFrame.setVisible(false);
@@ -7696,7 +7696,7 @@ public class LayoutEditorTools {
         if (!result) {
             //check turnouts and slips
             for (LayoutTurnout to : layoutEditor.getLayoutTurnoutsAndSlips()) {
-                if (whereIsSensorAssigned(sensor, to) != LayoutTurnout.NONE) {
+                if (whereIsSensorAssigned(sensor, to) != LayoutTurnout.Geometry.NONE) {
                     result = true;
                     break;
                 }
@@ -7727,8 +7727,8 @@ public class LayoutEditorTools {
         return result;
     }   //isSensorAssignedAnywhere
 
-    private int whereIsSensorAssigned(Sensor sensor, LayoutTurnout lTurnout) {
-        int result = LayoutTurnout.NONE;
+    private LayoutTurnout.Geometry whereIsSensorAssigned(Sensor sensor, LayoutTurnout lTurnout) {
+        LayoutTurnout.Geometry result = LayoutTurnout.Geometry.NONE;
 
         if (sensor != null && lTurnout != null) {
             String sName = sensor.getSystemName();
@@ -7736,23 +7736,23 @@ public class LayoutEditorTools {
 
             String name = lTurnout.getSensorAName();
             if (!name.isEmpty() && name.equals(uName) || name.equals(sName)) {
-                return LayoutTurnout.POINTA1;
+                return LayoutTurnout.Geometry.POINTA1;
             }
             name = lTurnout.getSensorBName();
             if (!name.isEmpty() && name.equals(uName) || name.equals(sName)) {
-                return LayoutTurnout.POINTA2;
+                return LayoutTurnout.Geometry.POINTA2;
             }
             name = lTurnout.getSensorCName();
             if (!name.isEmpty() && name.equals(uName) || name.equals(sName)) {
-                return LayoutTurnout.POINTA3;
+                return LayoutTurnout.Geometry.POINTA3;
             }
             name = lTurnout.getSensorDName();
             if (!name.isEmpty() && name.equals(uName) || name.equals(sName)) {
-                return LayoutTurnout.POINTB1;
+                return LayoutTurnout.Geometry.POINTB1;
             }
         }
         return result;
-    }   //whereIsSensorAssigned
+    }
 
     /**
      * Display an error dialog.
@@ -9348,8 +9348,8 @@ public class LayoutEditorTools {
                 needRedraw = true;
             }
         } else if (turnoutMast != null) {
-            int assigned = isMastAssignedHere(turnoutMast, layoutTurnout);
-            if (assigned == LayoutTurnout.NONE) {
+            LayoutTurnout.Geometry assigned = isMastAssignedHere(turnoutMast, layoutTurnout);
+            if (assigned == LayoutTurnout.Geometry.NONE) {
                 if (isSignalMastOnPanel(turnoutMast)
                         && isSignalMastAssignedAnywhere(turnoutMast)) {
                     JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame,
@@ -9389,8 +9389,8 @@ public class LayoutEditorTools {
                 needRedraw = true;
             }
         } else if (turnoutMastB != null) {
-            int assigned = isMastAssignedHere(turnoutMastB, layoutTurnout);
-            if (assigned == LayoutTurnout.NONE) {
+            LayoutTurnout.Geometry assigned = isMastAssignedHere(turnoutMastB, layoutTurnout);
+            if (assigned == LayoutTurnout.Geometry.NONE) {
                 if (isSignalMastOnPanel(turnoutMastB)
                         && isSignalMastAssignedAnywhere(turnoutMastB)) {
                     JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame,
@@ -9431,8 +9431,8 @@ public class LayoutEditorTools {
                     needRedraw = true;
                 }
             } else {
-                int assigned = isMastAssignedHere(turnoutMastC, layoutTurnout);
-                if (assigned == LayoutTurnout.NONE) {
+                LayoutTurnout.Geometry assigned = isMastAssignedHere(turnoutMastC, layoutTurnout);
+                if (assigned == LayoutTurnout.Geometry.NONE) {
                     if (isSignalMastOnPanel(turnoutMastC)
                             && isSignalMastAssignedAnywhere(turnoutMastC)) {
                         JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame,
@@ -9478,8 +9478,8 @@ public class LayoutEditorTools {
                     needRedraw = true;
                 }
             } else {
-                int assigned = isMastAssignedHere(turnoutMastD, layoutTurnout);
-                if (assigned == LayoutTurnout.NONE) {
+                LayoutTurnout.Geometry assigned = isMastAssignedHere(turnoutMastD, layoutTurnout);
+                if (assigned == LayoutTurnout.Geometry.NONE) {
                     if (isSignalMastOnPanel(turnoutMastD)
                             && isSignalMastAssignedAnywhere(turnoutMastD)) {
                         JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame,
@@ -9503,7 +9503,7 @@ public class LayoutEditorTools {
         }
 
         //make sure this layout turnout is not linked to another
-        layoutTurnout.setLinkType(LayoutTurnout.NO_LINK);
+        layoutTurnout.setLinkType(LayoutTurnout.LinkType.NO_LINK);
         layoutTurnout.setLinkedTurnoutName("");
         //finish up
         setSignalMastsAtTurnoutOpenFlag = false;
@@ -9576,32 +9576,32 @@ public class LayoutEditorTools {
         turnoutSignalMastD.getCombo().setExcludedItems(usedMasts);
     }
 
-    private int isMastAssignedHere(
+    private LayoutTurnout.Geometry isMastAssignedHere(
             @CheckForNull SignalMast mast,
             @CheckForNull LayoutTurnout lTurnout) {
         if ((mast == null) || (lTurnout == null)) {
-            return LayoutTurnout.NONE;
+            return LayoutTurnout.Geometry.NONE;
         }
         String sysName = mast.getSystemName();
         String uName = mast.getUserName();
 
         String name = lTurnout.getSignalAMastName();
         if (!name.isEmpty() && (name.equals(uName) || name.equals(sysName))) {
-            return LayoutTurnout.POINTA1;
+            return LayoutTurnout.Geometry.POINTA1;
         }
         name = lTurnout.getSignalBMastName();
         if (!name.isEmpty() && (name.equals(uName) || name.equals(sysName))) {
-            return LayoutTurnout.POINTA2;
+            return LayoutTurnout.Geometry.POINTA2;
         }
         name = lTurnout.getSignalCMastName();
         if (!name.isEmpty() && (name.equals(uName) || name.equals(sysName))) {
-            return LayoutTurnout.POINTA3;
+            return LayoutTurnout.Geometry.POINTA3;
         }
         name = lTurnout.getSignalDMastName();
         if (!name.isEmpty() && (name.equals(uName) || name.equals(sysName))) {
-            return LayoutTurnout.POINTB1;
+            return LayoutTurnout.Geometry.POINTB1;
         }
-        return LayoutTurnout.NONE;
+        return LayoutTurnout.Geometry.NONE;
     }   //isMastAssignedHere
 
     public void removeAssignment(@Nonnull SignalMast mast) {
@@ -11086,7 +11086,7 @@ public class LayoutEditorTools {
         }
 
         //make sure this layout turnout is not linked to another
-        layoutTurnout.setLinkType(LayoutTurnout.NO_LINK);
+        layoutTurnout.setLinkType(LayoutTurnout.LinkType.NO_LINK);
         layoutTurnout.setLinkedTurnoutName("");
 
         //finish up
@@ -12454,7 +12454,7 @@ public class LayoutEditorTools {
                     if (slip.getDisplayName().equals(slipNameComboBox.getSelectedItem())) {
                         //slip1NameField.setText(slip.getDisplayName());
                         getSlipTurnoutSignalsGetSaved(e);
-                        boolean enable = (slip.getSlipType() == LayoutSlip.DOUBLE_SLIP);
+                        boolean enable = (slip.getSlipType() == LayoutSlip.TurnoutType.DOUBLE_SLIP);
                         dblSlipC2SigPanel.setVisible(enable);
                         dblSlipB2SigPanel.setVisible(enable);
                         setSignalsAtSlipFrame.pack();
@@ -12701,7 +12701,7 @@ public class LayoutEditorTools {
         setupAllLogic.setSelected(false);
 
         boolean enable = (layoutSlip != null
-                && layoutSlip.getSlipType() == LayoutSlip.DOUBLE_SLIP);
+                && layoutSlip.getSlipType() == LayoutSlip.TurnoutType.DOUBLE_SLIP);
         dblSlipC2SigPanel.setVisible(enable);
         dblSlipB2SigPanel.setVisible(enable);
 
@@ -12804,8 +12804,8 @@ public class LayoutEditorTools {
                 needRedraw = true;
             }
         } else {
-            int assigned = isHeadAssignedHere(a1SlipHead, layoutSlip);
-            if (assigned == LayoutTurnout.NONE) {
+            LayoutTurnout.Geometry assigned = isHeadAssignedHere(a1SlipHead, layoutSlip);
+            if (assigned == LayoutTurnout.Geometry.NONE) {
                 if (isHeadOnPanel(a1SlipHead)
                         && isHeadAssignedAnywhere(a1SlipHead)) {
                     JOptionPane.showMessageDialog(setSignalsAtSlipFrame,
@@ -12849,8 +12849,8 @@ public class LayoutEditorTools {
                 needRedraw = true;
             }
         } else if (a2SlipHead != null) {
-            int assigned = isHeadAssignedHere(a2SlipHead, layoutSlip);
-            if (assigned == LayoutTurnout.NONE) {
+            LayoutTurnout.Geometry assigned = isHeadAssignedHere(a2SlipHead, layoutSlip);
+            if (assigned == LayoutTurnout.Geometry.NONE) {
                 if (isHeadOnPanel(a2SlipHead)
                         && isHeadAssignedAnywhere(a2SlipHead)) {
                     JOptionPane.showMessageDialog(setSignalsAtSlipFrame,
@@ -12897,8 +12897,8 @@ public class LayoutEditorTools {
                 needRedraw = true;
             }
         } else {
-            int assigned = isHeadAssignedHere(b1SlipHead, layoutSlip);
-            if (assigned == LayoutTurnout.NONE) {
+            LayoutTurnout.Geometry assigned = isHeadAssignedHere(b1SlipHead, layoutSlip);
+            if (assigned == LayoutTurnout.Geometry.NONE) {
                 if (isHeadOnPanel(b1SlipHead)
                         && isHeadAssignedAnywhere(b1SlipHead)) {
                     JOptionPane.showMessageDialog(setSignalsAtSlipFrame,
@@ -12917,7 +12917,7 @@ public class LayoutEditorTools {
             }
         }
 
-        if (layoutSlip.getTurnoutType() == LayoutSlip.DOUBLE_SLIP) {
+        if (layoutSlip.getTurnoutType() == LayoutSlip.TurnoutType.DOUBLE_SLIP) {
             signalHeadName = b2SlipSignalHeadComboBox.getSelectedItemDisplayName();
             if (signalHeadName == null) {
                 signalHeadName = "";
@@ -12943,8 +12943,8 @@ public class LayoutEditorTools {
                     needRedraw = true;
                 }
             } else if (b2SlipHead != null) {
-                int assigned = isHeadAssignedHere(b2SlipHead, layoutSlip);
-                if (assigned == LayoutTurnout.NONE) {
+                LayoutTurnout.Geometry assigned = isHeadAssignedHere(b2SlipHead, layoutSlip);
+                if (assigned == LayoutTurnout.Geometry.NONE) {
                     if (isHeadOnPanel(b2SlipHead)
                             && isHeadAssignedAnywhere(b2SlipHead)) {
                         JOptionPane.showMessageDialog(setSignalsAtSlipFrame,
@@ -13000,8 +13000,8 @@ public class LayoutEditorTools {
                 needRedraw = true;
             }
         } else {
-            int assigned = isHeadAssignedHere(c1SlipHead, layoutSlip);
-            if (assigned == LayoutTurnout.NONE) {
+            LayoutTurnout.Geometry assigned = isHeadAssignedHere(c1SlipHead, layoutSlip);
+            if (assigned == LayoutTurnout.Geometry.NONE) {
                 if (isHeadOnPanel(c1SlipHead)
                         && isHeadAssignedAnywhere(c1SlipHead)) {
                     JOptionPane.showMessageDialog(setSignalsAtSlipFrame,
@@ -13020,7 +13020,7 @@ public class LayoutEditorTools {
             }
         }
 
-        if (layoutSlip.getTurnoutType() == LayoutSlip.DOUBLE_SLIP) {
+        if (layoutSlip.getTurnoutType() == LayoutSlip.TurnoutType.DOUBLE_SLIP) {
             signalHeadName = c2SlipSignalHeadComboBox.getSelectedItemDisplayName();
             if (signalHeadName == null) {
                 signalHeadName = "";
@@ -13046,8 +13046,8 @@ public class LayoutEditorTools {
                     needRedraw = true;
                 }
             } else if (c2SlipHead != null) {
-                int assigned = isHeadAssignedHere(c2SlipHead, layoutSlip);
-                if (assigned == LayoutTurnout.NONE) {
+                LayoutTurnout.Geometry assigned = isHeadAssignedHere(c2SlipHead, layoutSlip);
+                if (assigned == LayoutTurnout.Geometry.NONE) {
                     if (isHeadOnPanel(c2SlipHead)
                             && isHeadAssignedAnywhere(c2SlipHead)) {
                         JOptionPane.showMessageDialog(setSignalsAtSlipFrame,
@@ -13102,8 +13102,8 @@ public class LayoutEditorTools {
                 needRedraw = true;
             }
         } else {
-            int assigned = isHeadAssignedHere(d1SlipHead, layoutSlip);
-            if (assigned == LayoutTurnout.NONE) {
+            LayoutTurnout.Geometry assigned = isHeadAssignedHere(d1SlipHead, layoutSlip);
+            if (assigned == LayoutTurnout.Geometry.NONE) {
                 if (isHeadOnPanel(d1SlipHead)
                         && isHeadAssignedAnywhere(d1SlipHead)) {
                     JOptionPane.showMessageDialog(setSignalsAtSlipFrame,
@@ -13147,8 +13147,8 @@ public class LayoutEditorTools {
                 needRedraw = true;
             }
         } else if (d2SlipHead != null) {
-            int assigned = isHeadAssignedHere(d2SlipHead, layoutSlip);
-            if (assigned == LayoutTurnout.NONE) {
+            LayoutTurnout.Geometry assigned = isHeadAssignedHere(d2SlipHead, layoutSlip);
+            if (assigned == LayoutTurnout.Geometry.NONE) {
                 if (isHeadOnPanel(d2SlipHead)
                         && isHeadAssignedAnywhere(d2SlipHead)) {
                     JOptionPane.showMessageDialog(setSignalsAtSlipFrame,
@@ -13779,10 +13779,10 @@ public class LayoutEditorTools {
         if (before_mcc != 0) {
             inMenu.add(new JSeparator());
         }
-        int linkType = layoutTurnout.getLinkType();
-        if ((layoutTurnout.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)
-                || (layoutTurnout.getTurnoutType() == LayoutTurnout.RH_XOVER)
-                || (layoutTurnout.getTurnoutType() == LayoutTurnout.LH_XOVER)) {
+        LayoutTurnout.LinkType linkType = layoutTurnout.getLinkType();
+        if ((layoutTurnout.getTurnoutType() == LayoutTurnout.TurnoutType.DOUBLE_XOVER)
+                || (layoutTurnout.getTurnoutType() == LayoutTurnout.TurnoutType.RH_XOVER)
+                || (layoutTurnout.getTurnoutType() == LayoutTurnout.TurnoutType.LH_XOVER)) {
             JMenuItem jmi = inMenu.add(Bundle.getMessage("Crossover"));
             jmi.setEnabled(false);
             inMenu.add(new JSeparator());
@@ -13795,7 +13795,7 @@ public class LayoutEditorTools {
             addInfoToMenu("C " + divergingString, layoutTurnout.getSignalC2Name(), inMenu);
             addInfoToMenu("D " + continuingString, layoutTurnout.getSignalD1Name(), inMenu);
             addInfoToMenu("D " + divergingString, layoutTurnout.getSignalD2Name(), inMenu);
-        } else if (linkType == LayoutTurnout.NO_LINK) {
+        } else if (linkType == LayoutTurnout.LinkType.NO_LINK) {
             JMenuItem jmi = inMenu.add(Bundle.getMessage("BeanNameTurnout"));
             jmi.setEnabled(false);
             inMenu.add(new JSeparator());
@@ -13804,7 +13804,7 @@ public class LayoutEditorTools {
             addInfoToMenu(throatDivergingString, layoutTurnout.getSignalA2Name(), inMenu);
             addInfoToMenu(continuingString, layoutTurnout.getSignalB1Name(), inMenu);
             addInfoToMenu(divergingString, layoutTurnout.getSignalC1Name(), inMenu);
-        } else if (linkType == LayoutTurnout.THROAT_TO_THROAT) {
+        } else if (linkType == LayoutTurnout.LinkType.THROAT_TO_THROAT) {
             String menuString = Bundle.getMessage("ThroatToThroat") + " (";
             menuString += Bundle.getMessage("BeanNameTurnout") + ", " + Bundle.getMessage("BeanNameRoute");
             menuString += ", " + Bundle.getMessage("BeanNameSignalHead") + ":)";
@@ -13820,7 +13820,7 @@ public class LayoutEditorTools {
             addInfoToMenu(westString + ", " + continuingString + ", " + divergingString, layoutTurnout2.getSignalB2Name(), inMenu);
             addInfoToMenu(westString + ", " + divergingString + ", " + continuingString, layoutTurnout2.getSignalC1Name(), inMenu);
             addInfoToMenu(westString + ", " + divergingString + ", " + divergingString, layoutTurnout2.getSignalC2Name(), inMenu);
-        } else if (linkType == LayoutTurnout.FIRST_3_WAY) {
+        } else if (linkType == LayoutTurnout.LinkType.FIRST_3_WAY) {
             JMenuItem jmi = inMenu.add(Bundle.getMessage("ThreeWay"));
             jmi.setEnabled(false);
             inMenu.add(new JSeparator());
@@ -13831,7 +13831,7 @@ public class LayoutEditorTools {
             addInfoToMenu(continuingString, layoutTurnoutA.getSignalC1Name(), inMenu);
             addInfoToMenu(divergingAString, layoutTurnoutB.getSignalB1Name(), inMenu);
             addInfoToMenu(divergingBString, layoutTurnoutB.getSignalC1Name(), inMenu);
-        } else if (linkType == LayoutTurnout.SECOND_3_WAY) {
+        } else if (linkType == LayoutTurnout.LinkType.SECOND_3_WAY) {
             JMenuItem jmi = inMenu.add(Bundle.getMessage("ThreeWay"));
             jmi.setEnabled(false);
             inMenu.add(new JSeparator());

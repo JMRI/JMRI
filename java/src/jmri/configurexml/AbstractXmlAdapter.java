@@ -1,5 +1,8 @@
 package jmri.configurexml;
 
+import javax.annotation.Nonnull;
+
+import org.jdom2.Attribute;
 import org.jdom2.Element;
 
 /**
@@ -33,13 +36,13 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
 
     /** {@inheritDoc} */
     @Override
-    public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException { // may not need exception
+    public boolean load(@Nonnull Element shared, Element perNode) throws JmriConfigureXmlException { // may not need exception
         return this.load(shared);
     }
 
     /** {@inheritDoc} */
     @Override
-    public void load(Element shared, Element perNode, Object o) throws JmriConfigureXmlException { // may not need exception
+    public void load(@Nonnull Element shared, Element perNode, Object o) throws JmriConfigureXmlException { // may not need exception
         this.load(shared, o);
     }
 
@@ -68,7 +71,7 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
 
     /** {@inheritDoc} */
     @Override
-    public Element store(Object o, boolean shared) {
+    public Element store(@Nonnull Object o, boolean shared) {
         if (shared) {
             return this.store(o);
         }
@@ -87,4 +90,37 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
         return this.errorHandler;
     }
 
+    /**
+     * Support for Enum I/O via XML
+     */
+    public static class EnumIO <T extends Enum<T>> {  // public to be usable in other packages
+    
+        // This implementation just uses ordinal for now,
+        // so the order of definitions in the enum has to 
+        // match up with the (former) constant values.
+        // Later, we can add an explicit mapping here (rather
+        // than having to define it in the enum itself)
+
+        public EnumIO(Class<T> clazz) {
+            this.clazz = clazz;
+        }
+        Class<T> clazz;
+        
+        @Nonnull
+        public String outputFromEnum(@Nonnull T e) {
+            int ordinal = e.ordinal();
+            return ""+ordinal;
+        }
+        
+        @Nonnull
+        public T inputFromString(@Nonnull String s) {
+            int content = Integer.parseInt(s);
+            return clazz.getEnumConstants()[content];
+        }
+
+        @Nonnull
+        public T inputFromAttribute(@Nonnull Attribute a) {
+            return inputFromString(a.getValue());
+        }
+    }
 }

@@ -3316,23 +3316,23 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 }
 
                 if (leToolBarPanel.turnoutRHButton.isSelected()) {
-                    addLayoutTurnout(LayoutTurnout.RH_TURNOUT);
+                    addLayoutTurnout(LayoutTurnout.TurnoutType.RH_TURNOUT);
                 } else if (leToolBarPanel.turnoutLHButton.isSelected()) {
-                    addLayoutTurnout(LayoutTurnout.LH_TURNOUT);
+                    addLayoutTurnout(LayoutTurnout.TurnoutType.LH_TURNOUT);
                 } else if (leToolBarPanel.turnoutWYEButton.isSelected()) {
-                    addLayoutTurnout(LayoutTurnout.WYE_TURNOUT);
+                    addLayoutTurnout(LayoutTurnout.TurnoutType.WYE_TURNOUT);
                 } else if (leToolBarPanel.doubleXoverButton.isSelected()) {
-                    addLayoutTurnout(LayoutTurnout.DOUBLE_XOVER);
+                    addLayoutTurnout(LayoutTurnout.TurnoutType.DOUBLE_XOVER);
                 } else if (leToolBarPanel.rhXoverButton.isSelected()) {
-                    addLayoutTurnout(LayoutTurnout.RH_XOVER);
+                    addLayoutTurnout(LayoutTurnout.TurnoutType.RH_XOVER);
                 } else if (leToolBarPanel.lhXoverButton.isSelected()) {
-                    addLayoutTurnout(LayoutTurnout.LH_XOVER);
+                    addLayoutTurnout(LayoutTurnout.TurnoutType.LH_XOVER);
                 } else if (leToolBarPanel.levelXingButton.isSelected()) {
                     addLevelXing();
                 } else if (leToolBarPanel.layoutSingleSlipButton.isSelected()) {
-                    addLayoutSlip(LayoutSlip.SINGLE_SLIP);
+                    addLayoutSlip(LayoutSlip.TurnoutType.SINGLE_SLIP);
                 } else if (leToolBarPanel.layoutDoubleSlipButton.isSelected()) {
-                    addLayoutSlip(LayoutSlip.DOUBLE_SLIP);
+                    addLayoutSlip(LayoutSlip.TurnoutType.DOUBLE_SLIP);
                 } else if (leToolBarPanel.endBumperButton.isSelected()) {
                     addEndBumper();
                 } else if (leToolBarPanel.anchorButton.isSelected()) {
@@ -4003,7 +4003,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     LayoutTurnout ft = (LayoutTurnout) foundTrack;
                     addTrackSegment();
 
-                    if ((ft.getTurnoutType() == LayoutTurnout.RH_TURNOUT) || (ft.getTurnoutType() == LayoutTurnout.LH_TURNOUT)) {
+                    if ((ft.getTurnoutType() == LayoutTurnout.TurnoutType.RH_TURNOUT) || (ft.getTurnoutType() == LayoutTurnout.TurnoutType.LH_TURNOUT)) {
                         rotateTurnout(ft);
                     }
 
@@ -4029,7 +4029,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             return;
         }
 
-        if ((be.getTurnoutType() != LayoutTurnout.RH_TURNOUT) && (be.getTurnoutType() != LayoutTurnout.LH_TURNOUT)) {
+        if ((be.getTurnoutType() != LayoutTurnout.TurnoutType.RH_TURNOUT) && (be.getTurnoutType() != LayoutTurnout.TurnoutType.LH_TURNOUT)) {
             return;
         }
 
@@ -4870,7 +4870,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      *
      * @param type the slip type
      */
-    public void addLayoutSlip(int type) {
+    public void addLayoutSlip(LayoutTurnout.TurnoutType type) {
         //get the rotation entry
         double rot = 0.0;
         String s = leToolBarPanel.rotationComboBox.getEditor().getItem().toString().trim();
@@ -4963,7 +4963,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      *
      * @param type the turnout type
      */
-    public void addLayoutTurnout(int type) {
+    public void addLayoutTurnout(LayoutTurnout.TurnoutType type) {
         //get the rotation entry
         double rot = 0.0;
         String s = leToolBarPanel.rotationComboBox.getEditor().getItem().toString().trim();
@@ -8099,7 +8099,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             if (isLBLockUsed(bean, turnout.getLayoutBlock())) {
                 usageReport.add(new NamedBeanUsageReport("LayoutEditorTurnoutBlock", data));
             }
-            if (turnout.getTurnoutType() > LayoutTurnout.WYE_TURNOUT) {
+            if (turnout.hasEnteringDoubleTrack())  {
                 if (isLBLockUsed(bean, turnout.getLayoutBlockB())) {
                     usageReport.add(new NamedBeanUsageReport("LayoutEditorTurnoutBlock", data));
                 }
@@ -8209,16 +8209,16 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             if (isLBLockUsed(bean, xing.getLayoutBlockBD())) {
                 usageReport.add(new NamedBeanUsageReport("LayoutEditorXingBlock", data));
             }
-            if (isUsedInXing(bean, xing, LevelXing.POINTA)) {
+            if (isUsedInXing(bean, xing, LevelXing.Geometry.POINTA)) {
                 usageReport.add(new NamedBeanUsageReport("LayoutEditorXingOther", data));
             }
-            if (isUsedInXing(bean, xing, LevelXing.POINTB)) {
+            if (isUsedInXing(bean, xing, LevelXing.Geometry.POINTB)) {
                 usageReport.add(new NamedBeanUsageReport("LayoutEditorXingOther", data));
             }
-            if (isUsedInXing(bean, xing, LevelXing.POINTC)) {
+            if (isUsedInXing(bean, xing, LevelXing.Geometry.POINTC)) {
                 usageReport.add(new NamedBeanUsageReport("LayoutEditorXingOther", data));
             }
-            if (isUsedInXing(bean, xing, LevelXing.POINTD)) {
+            if (isUsedInXing(bean, xing, LevelXing.Geometry.POINTD)) {
                 usageReport.add(new NamedBeanUsageReport("LayoutEditorXingOther", data));
             }
         }
@@ -8247,7 +8247,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return result;
     }
 
-    boolean isUsedInXing(NamedBean bean, LevelXing xing, int point) {
+    boolean isUsedInXing(NamedBean bean, LevelXing xing, LevelXing.Geometry point) {
         boolean result = false;
         if (bean.equals(xing.getSensor(point))) {
             result = true;
