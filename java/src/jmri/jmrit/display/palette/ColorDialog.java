@@ -135,6 +135,7 @@ public class ColorDialog extends JDialog implements ChangeListener {
             _chooser = JmriColorChooser.extendColorChooser(new JColorChooser(_saveColor));
             _chooser.getSelectionModel().addChangeListener(this);
             _chooser.setPreviewPanel(new JPanel());
+            JmriColorChooser.suppressAddRecentColor(true);
             panel.add(_chooser);
             panel.add(Box.createVerticalStrut(STRUT));
 
@@ -206,6 +207,7 @@ public class ColorDialog extends JDialog implements ChangeListener {
                     if (_util != null) {
                         _util.setSuppressRecentColor(false);
                     }
+                    JmriColorChooser.suppressAddRecentColor(false);
                     JmriColorChooser.addRecentColor(_chooser.getColor());
                     dispose();
             });
