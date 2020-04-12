@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.InstanceManagerAutoInitialize;
-import jmri.beans.PropertyChangeProviderImpl;
+import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
@@ -41,7 +41,7 @@ import jmri.util.ColorUtil;
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011, 2012, 2013,
  * 2014
  */
-public class TrainManager extends PropertyChangeProviderImpl implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize, PropertyChangeListener {
+public class TrainManager extends PropertyChangeSupport implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize, PropertyChangeListener {
 
     static final String NONE = "";
 
@@ -1171,7 +1171,7 @@ public class TrainManager extends PropertyChangeProviderImpl implements Instance
 
     private void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
         InstanceManager.getDefault(TrainManagerXml.class).setDirty(true);
-        propertyChangeSupport.firePropertyChange(p, old, n);
+        firePropertyChange(p, old, n);
     }
 
     private final static Logger log = LoggerFactory.getLogger(TrainManager.class);

@@ -147,7 +147,6 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
             }
             manager.put(address, throttle);
             manager.put(throttle, server);
-            manager.attachListener(address, throttle);
         }
         if (entry != null) {
             throttle.throttle.setRosterEntry(entry);
@@ -302,9 +301,10 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
                 case STATUS:
                     this.sendStatus(server);
                     break;
+                case ADDRESS:
                 case NAME:
                 case THROTTLE:
-                    // no action for name or throttle property
+                    // no action for address, name, or throttle property
                     break;
                 default:
                     log.debug("Unknown field \"{}\": \"{}\"", k, v);

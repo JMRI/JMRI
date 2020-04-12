@@ -105,7 +105,7 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
 
     /**
      * Send the message to set the state of functions F13 to F20 in function
-     * Group 4 {@literal &} 5
+     * Group 4 and 5
      */
     @Override
     protected void sendFunctionGroup4() {
@@ -155,7 +155,7 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
     }
 
     /**
-     * Set the speed {@literal &} direction.
+     * Set the speed and direction.
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
@@ -165,9 +165,7 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
         float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
         sendSpeedCmd();
-        if (oldSpeed != this.speedSetting) {
-            notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting); //IN18N
-        }
+        firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting);
         record(speed);
     }
 
@@ -243,9 +241,7 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
         isForward = forward;
         setSpeedSetting(speedSetting);  // send the command
         log.debug("setIsForward= {}", forward);
-        if (old != isForward) {
-            notifyPropertyChangeListener(ISFORWARD, old, isForward); //IN18N
-        }
+        firePropertyChange(ISFORWARD, old, isForward);
     }
 
     @Override

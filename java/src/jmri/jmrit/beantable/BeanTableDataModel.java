@@ -1013,7 +1013,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             try {
                 getManager().deleteBean(t, "CanDelete");  // NOI18N
             } catch (PropertyVetoException e) {
-                if (e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")) { //NOI18N
+                if (e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")) { // NOI18N
                     log.warn(e.getMessage());
                     message.append(Bundle.getMessage("VetoDeleteBean", t.getBeanType(), t.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME), e.getMessage()));
                     JOptionPane.showMessageDialog(null, message.toString(),

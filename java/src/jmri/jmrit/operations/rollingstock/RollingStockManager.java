@@ -9,7 +9,7 @@ import java.util.List;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
-import jmri.beans.PropertyChangeProviderImpl;
+import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.trains.Train;
@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * @author Daniel Boudreau Copyright (C) 2010, 2011
  * @param <T> the type of RollingStock managed by this manager
  */
-public abstract class RollingStockManager<T extends RollingStock> extends PropertyChangeProviderImpl implements PropertyChangeListener {
+public abstract class RollingStockManager<T extends RollingStock> extends PropertyChangeSupport implements PropertyChangeListener {
 
     public static final String NONE = "";
 
@@ -614,10 +614,6 @@ public abstract class RollingStockManager<T extends RollingStock> extends Proper
             // fire so listeners that rebuild internal lists get signal of change in id, even without change in size
             firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, _hashTable.size(), _hashTable.size());
         }
-    }
-
-    protected void firePropertyChange(String p, Object old, Object n) {
-        propertyChangeSupport.firePropertyChange(p, old, n);
     }
 
     private final static Logger log = LoggerFactory.getLogger(RollingStockManager.class);

@@ -138,7 +138,7 @@
       <p>The information from the Signal Group Table is used by the
       Signal Mast Logic to calculate the specified behavior of a
       Signal Group. You can test this by manually changing one of
-      the Indicator Signal Heads in de <a href=
+      the Indicator Signal Heads in the <a href=
       "../../../package/jmri/jmrit/beantable/SignalHeadTable.shtml">
       Signal Head Table</a>.</p>
 

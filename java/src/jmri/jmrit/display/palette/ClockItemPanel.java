@@ -25,8 +25,8 @@ import org.slf4j.LoggerFactory;
  */
 public class ClockItemPanel extends IconItemPanel {
 
-    public ClockItemPanel(DisplayFrame parentFrame, String type, Editor editor) {
-        super(parentFrame, type, editor);
+    public ClockItemPanel(DisplayFrame parentFrame, String type) {
+        super(parentFrame, type);
         setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
     }
 
@@ -73,7 +73,7 @@ public class ClockItemPanel extends IconItemPanel {
             }
             _iconPanel.add(panel);
         }
-        _iconPanel.setImage(_backgrounds[_paletteFrame.getPreviewBg()]); // pick up shared setting
+        _iconPanel.setImage(_frame.getPreviewBackground()); // pick up shared setting
     }
 
     public class ClockDragJLabel extends DragJLabel {
@@ -93,9 +93,9 @@ public class ClockItemPanel extends IconItemPanel {
                 AnalogClock2Display c;
                 String link = _linkName.getText().trim();
                 if (link.length() == 0) {
-                    c = new AnalogClock2Display(_editor);
+                    c = new AnalogClock2Display(_frame.getEditor());
                 } else {
-                    c = new AnalogClock2Display(_editor, link);
+                    c = new AnalogClock2Display(_frame.getEditor(), link);
                 }
                 c.setOpaque(false);
                 c.update();

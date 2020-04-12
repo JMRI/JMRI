@@ -173,7 +173,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 
         addComboBoxAction(switchListPageComboBox);
 
-        Setup.addPropertyChangeListener(this);
+        Setup.getDefault().addPropertyChangeListener(this);
 
         // build menu
         JMenuBar menuBar = new JMenuBar();
@@ -577,7 +577,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
     @Override
     public void dispose() {
         locationManager.removePropertyChangeListener(this);
-        Setup.removePropertyChangeListener(this);
+        Setup.getDefault().removePropertyChangeListener(this);
         for (Location location : locationManager.getLocationsByNameList()) {
             location.removePropertyChangeListener(this);
         }

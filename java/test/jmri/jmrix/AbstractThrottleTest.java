@@ -1,5 +1,7 @@
 package jmri.jmrix;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Vector;
@@ -9,6 +11,7 @@ import jmri.InstanceManager;
 import jmri.LocoAddress;
 import jmri.SpeedStepMode;
 import jmri.ThrottleListener;
+import jmri.util.JUnitAppender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.util.JUnitUtil;
@@ -710,11 +713,8 @@ public class AbstractThrottleTest {
      */
     @Test
     public void testNotifyPropertyChangeListener() {
-        String property = "";
-        Object oldValue = null;
-        Object newValue = null;
-        instance.notifyPropertyChangeListener(property, oldValue, newValue);
-        jmri.util.JUnitAppender.assertErrorMessage("notifyPropertyChangeListener without change");
+        instance.notifyPropertyChangeListener("", null, null);
+        JUnitAppender.assertNoErrorMessage();
     }
 
     /**
@@ -722,9 +722,7 @@ public class AbstractThrottleTest {
      */
     @Test
     public void testGetListeners() {
-        Vector<PropertyChangeListener> expResult = new Vector<>();
-        Vector<PropertyChangeListener> result = instance.getListeners();
-        Assert.assertEquals(expResult, result);
+        assertThat(instance.getListeners()).isEmpty();
     }
 
     /**

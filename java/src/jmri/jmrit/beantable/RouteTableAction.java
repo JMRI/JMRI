@@ -321,10 +321,10 @@ public class RouteTableAction extends AbstractTableAction<Route> {
             // want to update when enabled parameter changes
             @Override
             protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
-                if (e.getPropertyName().equals("Enabled")) { //NOI18N
+                if (e.getPropertyName().equals("Enabled")) { // NOI18N
                     return true;
                 }
-                if (e.getPropertyName().equals("Locked")) { //NOI18N
+                if (e.getPropertyName().equals("Locked")) { // NOI18N
                     return true;
                 } else {
                     return super.matchPropertyName(e);
@@ -912,7 +912,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
                 showInfoMessage(Bundle.getMessage("ReminderTitle"),  // NOI18N
                         Bundle.getMessage("ReminderSaveString", Bundle.getMessage("MenuItemRouteTable")),  // NOI18N
                         getClassName(),
-                        "remindSaveRoute"); //NOI18N
+                        "remindSaveRoute"); // NOI18N
     }
 
     void autoSystemName() {

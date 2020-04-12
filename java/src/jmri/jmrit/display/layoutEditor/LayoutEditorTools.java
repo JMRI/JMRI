@@ -2092,10 +2092,6 @@ public class LayoutEditorTools {
             setSignalsAtBlockBoundaryCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
 
-            //make this button the default button (return or enter activates)
-            JRootPane rootPane = SwingUtilities.getRootPane(setSignalsDone);
-            rootPane.setDefaultButton(setSignalsDone);
-
             setSignalsAtBlockBoundaryFrame.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
@@ -7765,10 +7761,10 @@ public class LayoutEditorTools {
      */
     void sensorAssignedElseWhere(@Nonnull Sensor sensor) {
         JOptionPane.showMessageDialog(setSensorsAtBlockBoundaryFrame,
-                Bundle.getMessage("SensorsError6", //NOI18N
+                Bundle.getMessage("SensorsError6", // NOI18N
                         new Object[]{sensor.getDisplayName()}),
                 Bundle.getMessage("ErrorTitle"),
-                JOptionPane.ERROR_MESSAGE);  //NOI18N
+                JOptionPane.ERROR_MESSAGE);  // NOI18N
     }
 
     /**
@@ -7784,9 +7780,9 @@ public class LayoutEditorTools {
      * @return true if the sensor has been removed.
      */
     public boolean removeSensorAssignment(@Nonnull Sensor sensor) {
-        log.trace("Remove sensor assignment at block boundary for '{}'", sensor.getDisplayName());  //NOI18N
+        log.trace("Remove sensor assignment at block boundary for '{}'", sensor.getDisplayName());  // NOI18N
         if (!InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).deleteNxPair(sensor)) {
-            log.trace("Removal of NX pairs for sensor '{}' failed", sensor.getDisplayName());  //NOI18N
+            log.trace("Removal of NX pairs for sensor '{}' failed", sensor.getDisplayName());  // NOI18N
             return false;
         }
         for (PositionablePoint po : layoutEditor.getPositionablePoints()) {
@@ -7839,7 +7835,7 @@ public class LayoutEditorTools {
      * @return true if the removal was successful.
      */
     public boolean removeSensorFromPanel(@Nonnull Sensor sensor) {
-        log.trace("Remove sensor icon and assignment for '{}'", sensor.getDisplayName());  //NOI18N
+        log.trace("Remove sensor icon and assignment for '{}'", sensor.getDisplayName());  // NOI18N
         if (!removeSensorAssignment(sensor)) {
             return false;
         }
@@ -7897,7 +7893,7 @@ public class LayoutEditorTools {
     }
 
     private void setSensorsAtBlockBoundaryDonePressed(ActionEvent a) {
-        log.trace("setSensorsAtBlockBoundaryDonePressed");  //NOI18N
+        log.trace("setSensorsAtBlockBoundaryDonePressed");  // NOI18N
         if (!getSimpleBlockInformation()) {
             return;
         }
@@ -7908,12 +7904,12 @@ public class LayoutEditorTools {
         Sensor currWestSensor = InstanceManager.sensorManagerInstance().getSensor(boundary.getWestBoundSensorName());
 
         if (log.isTraceEnabled()) {
-            log.trace("current sensors: east = {}, west = {}", //NOI18N
-                    (currEastSensor == null) ? "- none- " : currEastSensor.getDisplayName(), //NOI18N
-                    (currWestSensor == null) ? "- none- " : currWestSensor.getDisplayName());  //NOI18N
-            log.trace("new sensors: east = {}, west = {}", //NOI18N
-                    (eastSensor == null) ? "- none- " : eastSensor.getDisplayName(), //NOI18N
-                    (westSensor == null) ? "- none- " : westSensor.getDisplayName());  //NOI18N
+            log.trace("current sensors: east = {}, west = {}", // NOI18N
+                    (currEastSensor == null) ? "- none- " : currEastSensor.getDisplayName(), // NOI18N
+                    (currWestSensor == null) ? "- none- " : currWestSensor.getDisplayName());  // NOI18N
+            log.trace("new sensors: east = {}, west = {}", // NOI18N
+                    (eastSensor == null) ? "- none- " : eastSensor.getDisplayName(), // NOI18N
+                    (westSensor == null) ? "- none- " : westSensor.getDisplayName());  // NOI18N
         }
 
         if (eastSensor == null) {
@@ -7921,7 +7917,7 @@ public class LayoutEditorTools {
                 boundary.setEastBoundSensor(null);
             }
         } else if (eastBoundSensor != null) {
-            setBoundarySensor(eastSensor, currEastSensor, eastBoundSensor, "East");  //NOI18N
+            setBoundarySensor(eastSensor, currEastSensor, eastBoundSensor, "East");  // NOI18N
         }
 
         if (westSensor == null) {
@@ -7929,7 +7925,7 @@ public class LayoutEditorTools {
                 boundary.setWestBoundSensor(null);
             }
         } else if (westBoundSensor != null) {
-            setBoundarySensor(westSensor, currWestSensor, westBoundSensor, "West");  //NOI18N
+            setBoundarySensor(westSensor, currWestSensor, westBoundSensor, "West");  // NOI18N
         }
 
         setSensorsAtBlockBoundaryOpenFlag = false;
@@ -7955,15 +7951,15 @@ public class LayoutEditorTools {
             BeanDetails<Sensor> beanDetail, String direction) {
         if (currSensor == null) {
             if (!isSensorAssignedAnywhere(newSensor)) {
-                log.trace("Add sensor '{}'", newSensor.getDisplayName());  //NOI18N
-                if (direction.equals("West")) {  //NOI18N
+                log.trace("Add sensor '{}'", newSensor.getDisplayName());  // NOI18N
+                if (direction.equals("West")) {  // NOI18N
                     boundary.setWestBoundSensor(beanDetail.getText());
                 } else {
                     boundary.setEastBoundSensor(beanDetail.getText());
                 }
                 if (beanDetail.addToPanel()) {
-                    log.trace("Add icon for sensor '{}'", newSensor.getDisplayName());  //NOI18N
-                    if (direction.equals("West")) {  //NOI18N
+                    log.trace("Add icon for sensor '{}'", newSensor.getDisplayName());  // NOI18N
+                    if (direction.equals("West")) {  // NOI18N
                         placeWestBoundIcon(getSensorIcon(beanDetail.getText()),
                                 beanDetail.isRightSelected(), 0.0);
                     } else {
@@ -7978,8 +7974,8 @@ public class LayoutEditorTools {
         } else if (currSensor == newSensor) {
             if (beanDetail.addToPanel()) {
                 if (!isSensorOnPanel(newSensor)) {
-                    log.trace("Add icon for existing sensor '{}'", newSensor.getDisplayName());  //NOI18N
-                    if (direction.equals("West")) {  //NOI18N
+                    log.trace("Add icon for existing sensor '{}'", newSensor.getDisplayName());  // NOI18N
+                    if (direction.equals("West")) {  // NOI18N
                         placeWestBoundIcon(getSensorIcon(beanDetail.getText()),
                                 beanDetail.isRightSelected(), 0.0);
                     } else {
@@ -7992,17 +7988,17 @@ public class LayoutEditorTools {
         } else {
             if (!isSensorAssignedAnywhere(newSensor)) {
                 if (removeSensorFromPanel(currSensor)) {
-                    log.trace("Replace sensor '{}' with sensor '{}'", //NOI18N
+                    log.trace("Replace sensor '{}' with sensor '{}'", // NOI18N
                             currSensor.getDisplayName(), newSensor.getDisplayName());
-                    if (direction.equals("West")) {  //NOI18N
+                    if (direction.equals("West")) {  // NOI18N
                         boundary.setWestBoundSensor(beanDetail.getText());
                     } else {
                         boundary.setEastBoundSensor(beanDetail.getText());
                     }
                     if (beanDetail.addToPanel()) {
-                        log.trace("Add icon for replacement sensor '{}'", //NOI18N
+                        log.trace("Add icon for replacement sensor '{}'", // NOI18N
                                 newSensor.getDisplayName());
-                        if (direction.equals("West")) {  //NOI18N
+                        if (direction.equals("West")) {  // NOI18N
                             placeWestBoundIcon(getSensorIcon(beanDetail.getText()),
                                     beanDetail.isRightSelected(), 0.0);
                         } else {
@@ -8064,9 +8060,9 @@ public class LayoutEditorTools {
         if (setSignalMastsAtBlockBoundaryFrame == null) {
             setSignalMastsAtBlockBoundaryOpenFlag = false;
 
-            eastSignalMast = new BeanDetails<>("SignalMast", //NOI18N
+            eastSignalMast = new BeanDetails<>("SignalMast", // NOI18N
                     InstanceManager.getDefault(SignalMastManager.class));
-            westSignalMast = new BeanDetails<>("SignalMast", //NOI18N
+            westSignalMast = new BeanDetails<>("SignalMast", // NOI18N
                     InstanceManager.getDefault(SignalMastManager.class));
 
             setSignalMastsAtBlockBoundaryFrame = new JmriJFrame(Bundle.getMessage("SignalMastsAtBoundary"), false, true);
@@ -9183,13 +9179,13 @@ public class LayoutEditorTools {
         if (setSignalMastsAtTurnoutFrame == null) {
             setSignalMastsAtTurnoutOpenFlag = false;
 
-            turnoutSignalMastA = new BeanDetails<>("SignalMast", //NOI18N
+            turnoutSignalMastA = new BeanDetails<>("SignalMast", // NOI18N
                     InstanceManager.getDefault(SignalMastManager.class));
-            turnoutSignalMastB = new BeanDetails<>("SignalMast", //NOI18N
+            turnoutSignalMastB = new BeanDetails<>("SignalMast", // NOI18N
                     InstanceManager.getDefault(SignalMastManager.class));
-            turnoutSignalMastC = new BeanDetails<>("SignalMast", //NOI18N
+            turnoutSignalMastC = new BeanDetails<>("SignalMast", // NOI18N
                     InstanceManager.getDefault(SignalMastManager.class));
-            turnoutSignalMastD = new BeanDetails<>("SignalMast", //NOI18N
+            turnoutSignalMastD = new BeanDetails<>("SignalMast", // NOI18N
                     InstanceManager.getDefault(SignalMastManager.class));
 
             turnoutSignalMastA.getDetailsPanel().setBackground(new Color(255, 255, 200));
@@ -10885,10 +10881,10 @@ public class LayoutEditorTools {
         if (setSensorsAtTurnoutFrame == null) {
             setSensorsAtTurnoutOpenFlag = false;
 
-            turnoutSensorA = new BeanDetails<>("Sensor", InstanceManager.sensorManagerInstance());  //NOI18N
-            turnoutSensorB = new BeanDetails<>("Sensor", InstanceManager.sensorManagerInstance());  //NOI18N
-            turnoutSensorC = new BeanDetails<>("Sensor", InstanceManager.sensorManagerInstance());  //NOI18N
-            turnoutSensorD = new BeanDetails<>("Sensor", InstanceManager.sensorManagerInstance());  //NOI18N
+            turnoutSensorA = new BeanDetails<>("Sensor", InstanceManager.sensorManagerInstance());  // NOI18N
+            turnoutSensorB = new BeanDetails<>("Sensor", InstanceManager.sensorManagerInstance());  // NOI18N
+            turnoutSensorC = new BeanDetails<>("Sensor", InstanceManager.sensorManagerInstance());  // NOI18N
+            turnoutSensorD = new BeanDetails<>("Sensor", InstanceManager.sensorManagerInstance());  // NOI18N
 
             turnoutSensorA.getDetailsPanel().setBackground(new Color(255, 255, 200));
             turnoutSensorB.getDetailsPanel().setBackground(new Color(200, 255, 255));
@@ -11027,7 +11023,7 @@ public class LayoutEditorTools {
     SensorIcon turnoutSensorBlockIcon;
 
     private void setSensorsDonePressed(ActionEvent a) {
-        log.trace("setSensorsDonePressed (turnouts)");  //NOI18N
+        log.trace("setSensorsDonePressed (turnouts)");  // NOI18N
         if (!getTurnoutSensorInformation()) {
             return;
         }
@@ -11044,16 +11040,16 @@ public class LayoutEditorTools {
         Sensor currSensorD = layoutTurnout.getSensorD();
 
         if (log.isTraceEnabled()) {
-            log.trace("current sensors: A = {}, B = {}, C = {}, D = {}", //NOI18N
-                    (currSensorA == null) ? "- none- " : currSensorA.getDisplayName(), //NOI18N
-                    (currSensorB == null) ? "- none- " : currSensorB.getDisplayName(), //NOI18N
-                    (currSensorC == null) ? "- none- " : currSensorC.getDisplayName(), //NOI18N
-                    (currSensorD == null) ? "- none- " : currSensorD.getDisplayName());  //NOI18N
-            log.trace("new sensors: A = {}, B = {}, C = {}, D = {}", //NOI18N
-                    (sensorA == null) ? "- none- " : sensorA.getDisplayName(), //NOI18N
-                    (sensorB == null) ? "- none- " : sensorB.getDisplayName(), //NOI18N
-                    (sensorC == null) ? "- none- " : sensorC.getDisplayName(), //NOI18N
-                    (sensorD == null) ? "- none- " : sensorD.getDisplayName());  //NOI18N
+            log.trace("current sensors: A = {}, B = {}, C = {}, D = {}", // NOI18N
+                    (currSensorA == null) ? "- none- " : currSensorA.getDisplayName(), // NOI18N
+                    (currSensorB == null) ? "- none- " : currSensorB.getDisplayName(), // NOI18N
+                    (currSensorC == null) ? "- none- " : currSensorC.getDisplayName(), // NOI18N
+                    (currSensorD == null) ? "- none- " : currSensorD.getDisplayName());  // NOI18N
+            log.trace("new sensors: A = {}, B = {}, C = {}, D = {}", // NOI18N
+                    (sensorA == null) ? "- none- " : sensorA.getDisplayName(), // NOI18N
+                    (sensorB == null) ? "- none- " : sensorB.getDisplayName(), // NOI18N
+                    (sensorC == null) ? "- none- " : sensorC.getDisplayName(), // NOI18N
+                    (sensorD == null) ? "- none- " : sensorD.getDisplayName());  // NOI18N
         }
 
         //place/remove sensors as requested
@@ -11121,25 +11117,25 @@ public class LayoutEditorTools {
             BeanDetails beanDetail, LayoutTrack connect, Point2D coords, String position) {
         if (currSensor == null) {
             if (!isSensorAssignedAnywhere(newSensor)) {
-                log.trace("Add sensor '{}'", newSensor.getDisplayName());  //NOI18N
+                log.trace("Add sensor '{}'", newSensor.getDisplayName());  // NOI18N
                 switch (position) {
-                    case "A":  //NOI18N
+                    case "A":  // NOI18N
                         trackItem.setSensorA(beanDetail.getText());
                         break;
-                    case "B":  //NOI18N
+                    case "B":  // NOI18N
                         trackItem.setSensorB(beanDetail.getText());
                         break;
-                    case "C":  //NOI18N
+                    case "C":  // NOI18N
                         trackItem.setSensorC(beanDetail.getText());
                         break;
-                    case "D":  //NOI18N
+                    case "D":  // NOI18N
                         trackItem.setSensorD(beanDetail.getText());
                         break;
                     default:
                         break;
                 }
                 if (beanDetail.addToPanel()) {
-                    log.trace("Add icon for sensor '{}'", newSensor.getDisplayName());  //NOI18N
+                    log.trace("Add icon for sensor '{}'", newSensor.getDisplayName());  // NOI18N
                     placingBlock(getSensorIcon(beanDetail.getText()),
                             beanDetail.isRightSelected(), 0.0,
                             connect, coords);
@@ -11151,7 +11147,7 @@ public class LayoutEditorTools {
         } else if (currSensor == newSensor) {
             if (beanDetail.addToPanel()) {
                 if (!isSensorOnPanel(newSensor)) {
-                    log.trace("Add icon for existing sensor '{}'", newSensor.getDisplayName());  //NOI18N
+                    log.trace("Add icon for existing sensor '{}'", newSensor.getDisplayName());  // NOI18N
                     placingBlock(getSensorIcon(beanDetail.getText()),
                             beanDetail.isRightSelected(), 0.0,
                             connect, coords);
@@ -11161,26 +11157,26 @@ public class LayoutEditorTools {
         } else {
             if (!isSensorAssignedAnywhere(newSensor)) {
                 if (removeSensorFromPanel(currSensor)) {
-                    log.trace("Replace sensor '{}' with sensor '{}'", //NOI18N
+                    log.trace("Replace sensor '{}' with sensor '{}'", // NOI18N
                             currSensor.getDisplayName(), newSensor.getDisplayName());
                     switch (position) {
-                        case "A":  //NOI18N
+                        case "A":  // NOI18N
                             trackItem.setSensorA(beanDetail.getText());
                             break;
-                        case "B":  //NOI18N
+                        case "B":  // NOI18N
                             trackItem.setSensorB(beanDetail.getText());
                             break;
-                        case "C":  //NOI18N
+                        case "C":  // NOI18N
                             trackItem.setSensorC(beanDetail.getText());
                             break;
-                        case "D":  //NOI18N
+                        case "D":  // NOI18N
                             trackItem.setSensorD(beanDetail.getText());
                             break;
                         default:
                             break;
                     }
                     if (beanDetail.addToPanel()) {
-                        log.trace("Add icon for replacement sensor '{}'", //NOI18N
+                        log.trace("Add icon for replacement sensor '{}'", // NOI18N
                                 newSensor.getDisplayName());
                         placingBlock(getSensorIcon(beanDetail.getText()),
                                 beanDetail.isRightSelected(), 0.0,
@@ -11555,7 +11551,7 @@ public class LayoutEditorTools {
     }
 
     private void setXingSensorsDonePressed(ActionEvent a) {
-        log.trace("setXingSensorsDonePressed");  //NOI18N
+        log.trace("setXingSensorsDonePressed");  // NOI18N
 
         if (!getLevelCrossingSensorInformation()) {
             return;
@@ -11572,16 +11568,16 @@ public class LayoutEditorTools {
         Sensor currSensorD = levelXing.getSensorD();
 
         if (log.isTraceEnabled()) {
-            log.trace("current sensors: A = {}, B = {}, C = {}, D = {}", //NOI18N
-                    (currSensorA == null) ? "- none- " : currSensorA.getDisplayName(), //NOI18N
-                    (currSensorB == null) ? "- none- " : currSensorB.getDisplayName(), //NOI18N
-                    (currSensorC == null) ? "- none- " : currSensorC.getDisplayName(), //NOI18N
-                    (currSensorD == null) ? "- none- " : currSensorD.getDisplayName());  //NOI18N
-            log.trace("new sensors: A = {}, B = {}, C = {}, D = {}", //NOI18N
-                    (aSensor == null) ? "- none- " : aSensor.getDisplayName(), //NOI18N
-                    (bSensor == null) ? "- none- " : bSensor.getDisplayName(), //NOI18N
-                    (cSensor == null) ? "- none- " : cSensor.getDisplayName(), //NOI18N
-                    (dSensor == null) ? "- none- " : dSensor.getDisplayName());  //NOI18N
+            log.trace("current sensors: A = {}, B = {}, C = {}, D = {}", // NOI18N
+                    (currSensorA == null) ? "- none- " : currSensorA.getDisplayName(), // NOI18N
+                    (currSensorB == null) ? "- none- " : currSensorB.getDisplayName(), // NOI18N
+                    (currSensorC == null) ? "- none- " : currSensorC.getDisplayName(), // NOI18N
+                    (currSensorD == null) ? "- none- " : currSensorD.getDisplayName());  // NOI18N
+            log.trace("new sensors: A = {}, B = {}, C = {}, D = {}", // NOI18N
+                    (aSensor == null) ? "- none- " : aSensor.getDisplayName(), // NOI18N
+                    (bSensor == null) ? "- none- " : bSensor.getDisplayName(), // NOI18N
+                    (cSensor == null) ? "- none- " : cSensor.getDisplayName(), // NOI18N
+                    (dSensor == null) ? "- none- " : dSensor.getDisplayName());  // NOI18N
         }
 
         //place/remove sensors as requested
@@ -11644,25 +11640,25 @@ public class LayoutEditorTools {
             LayoutTrack connect, Point2D coords, String position) {
         if (currSensor == null) {
             if (!isSensorAssignedAnywhere(newSensor)) {
-                log.trace("Add sensor '{}'", newSensor.getDisplayName());  //NOI18N
+                log.trace("Add sensor '{}'", newSensor.getDisplayName());  // NOI18N
                 switch (position) {
-                    case "A":  //NOI18N
+                    case "A":  // NOI18N
                         levelXing.setSensorAName(beanDetail.getText());
                         break;
-                    case "B":  //NOI18N
+                    case "B":  // NOI18N
                         levelXing.setSensorBName(beanDetail.getText());
                         break;
-                    case "C":  //NOI18N
+                    case "C":  // NOI18N
                         levelXing.setSensorCName(beanDetail.getText());
                         break;
-                    case "D":  //NOI18N
+                    case "D":  // NOI18N
                         levelXing.setSensorDName(beanDetail.getText());
                         break;
                     default:
                         break;
                 }
                 if (beanDetail.addToPanel()) {
-                    log.trace("Add icon for sensor '{}'", newSensor.getDisplayName());  //NOI18N
+                    log.trace("Add icon for sensor '{}'", newSensor.getDisplayName());  // NOI18N
                     placingBlock(getSensorIcon(beanDetail.getText()),
                             beanDetail.isRightSelected(), 0.0, connect, coords);
                     needRedraw = true;
@@ -11673,7 +11669,7 @@ public class LayoutEditorTools {
         } else if (currSensor == newSensor) {
             if (beanDetail.addToPanel()) {
                 if (!isSensorOnPanel(newSensor)) {
-                    log.trace("Add icon for existing sensor '{}'", newSensor.getDisplayName());  //NOI18N
+                    log.trace("Add icon for existing sensor '{}'", newSensor.getDisplayName());  // NOI18N
                     placingBlock(getSensorIcon(beanDetail.getText()),
                             beanDetail.isRightSelected(), 0.0, connect, coords);
                     needRedraw = true;
@@ -11682,26 +11678,26 @@ public class LayoutEditorTools {
         } else {
             if (!isSensorAssignedAnywhere(newSensor)) {
                 if (removeSensorFromPanel(currSensor)) {
-                    log.trace("Replace sensor '{}' with sensor '{}'", //NOI18N
+                    log.trace("Replace sensor '{}' with sensor '{}'", // NOI18N
                             currSensor.getDisplayName(), newSensor.getDisplayName());
                     switch (position) {
-                        case "A":  //NOI18N
+                        case "A":  // NOI18N
                             levelXing.setSensorAName(beanDetail.getText());
                             break;
-                        case "B":  //NOI18N
+                        case "B":  // NOI18N
                             levelXing.setSensorBName(beanDetail.getText());
                             break;
-                        case "C":  //NOI18N
+                        case "C":  // NOI18N
                             levelXing.setSensorCName(beanDetail.getText());
                             break;
-                        case "D":  //NOI18N
+                        case "D":  // NOI18N
                             levelXing.setSensorDName(beanDetail.getText());
                             break;
                         default:
                             break;
                     }
                     if (beanDetail.addToPanel()) {
-                        log.trace("Add icon for replacement sensor '{}'", //NOI18N
+                        log.trace("Add icon for replacement sensor '{}'", // NOI18N
                                 newSensor.getDisplayName());
                         placingBlock(getSensorIcon(beanDetail.getText()),
                                 beanDetail.isRightSelected(), 0.0, connect, coords);
@@ -12131,16 +12127,16 @@ public class LayoutEditorTools {
         Sensor currSensorD = layoutSlip.getSensorD();
 
         if (log.isTraceEnabled()) {
-            log.trace("current sensors: A = {}, B = {}, C = {}, D = {}", //NOI18N
-                    (currSensorA == null) ? "- none- " : currSensorA.getDisplayName(), //NOI18N
-                    (currSensorB == null) ? "- none- " : currSensorB.getDisplayName(), //NOI18N
-                    (currSensorC == null) ? "- none- " : currSensorC.getDisplayName(), //NOI18N
-                    (currSensorD == null) ? "- none- " : currSensorD.getDisplayName());  //NOI18N
-            log.trace("new sensors: A = {}, B = {}, C = {}, D = {}", //NOI18N
-                    (sensorA == null) ? "- none- " : sensorA.getDisplayName(), //NOI18N
-                    (sensorB == null) ? "- none- " : sensorB.getDisplayName(), //NOI18N
-                    (sensorC == null) ? "- none- " : sensorC.getDisplayName(), //NOI18N
-                    (sensorD == null) ? "- none- " : sensorD.getDisplayName());  //NOI18N
+            log.trace("current sensors: A = {}, B = {}, C = {}, D = {}", // NOI18N
+                    (currSensorA == null) ? "- none- " : currSensorA.getDisplayName(), // NOI18N
+                    (currSensorB == null) ? "- none- " : currSensorB.getDisplayName(), // NOI18N
+                    (currSensorC == null) ? "- none- " : currSensorC.getDisplayName(), // NOI18N
+                    (currSensorD == null) ? "- none- " : currSensorD.getDisplayName());  // NOI18N
+            log.trace("new sensors: A = {}, B = {}, C = {}, D = {}", // NOI18N
+                    (sensorA == null) ? "- none- " : sensorA.getDisplayName(), // NOI18N
+                    (sensorB == null) ? "- none- " : sensorB.getDisplayName(), // NOI18N
+                    (sensorC == null) ? "- none- " : sensorC.getDisplayName(), // NOI18N
+                    (sensorD == null) ? "- none- " : sensorD.getDisplayName());  // NOI18N
         }
 
         //place/remove sensors as requested

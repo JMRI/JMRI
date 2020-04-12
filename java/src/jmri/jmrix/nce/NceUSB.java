@@ -5,7 +5,7 @@ package jmri.jmrix.nce;
  * SB3 V1.28 - 6.3.1 (No program track on an SB3) When used with PH-Pro or PH-10
  * - 6.3.2 (limited set of features available through cab bus)
  * <p>
- * From NCE 2007 (with some minor corrections, formatting {@literal &} additional info):
+ * From NCE 2007 (with some minor corrections, formatting and additional info):
  * <p>
  * I've added two new binary commands on the Power Cab. They are for OPs
  * programming of locomotives and OPs programming of accessories/signals The
