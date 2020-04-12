@@ -23,6 +23,8 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
     public LayoutSlipXml() {
     }
 
+    EnumIO<LayoutSlip.TurnoutType> tTypeEnumMap = new EnumIO<>(LayoutSlip.TurnoutType.class);
+
     /**
      * Default implementation for storing the contents of a LayoutSlip
      *
@@ -38,7 +40,7 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
 
         // include attributes
         element.setAttribute("ident", p.getName());
-        element.setAttribute("slipType", "" + p.getSlipType());
+        element.setAttribute("slipType", tTypeEnumMap.outputFromEnum(p.getTurnoutType()));
 
         element.setAttribute("hidden", "" + (p.isHidden() ? "yes" : "no"));
         element.setAttribute("disabled", "" + (p.isDisabled() ? "yes" : "no"));
@@ -158,7 +160,7 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
         state.addContent(new Element("turnoutB").addContent("" + p.getTurnoutBState(LayoutSlip.STATE_BD)));
         states.addContent(state);
 
-        if (p.getSlipType() == LayoutSlip.DOUBLE_SLIP) {
+        if (p.getSlipType() == LayoutSlip.TurnoutType.DOUBLE_SLIP) {
             state = new Element("B-C");
             state.addContent(new Element("turnout").addContent("" + p.getTurnoutState(LayoutSlip.STATE_BC)));
             state.addContent(new Element("turnoutB").addContent("" + p.getTurnoutBState(LayoutSlip.STATE_BC)));
@@ -196,14 +198,8 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
         } catch (org.jdom2.DataConversionException e) {
             log.error("failed to convert layoutslip center  attribute");
         }
-        int type = LayoutSlip.SINGLE_SLIP;
-        try {
-            type = element.getAttribute("slipType").getIntValue();
-        } catch (org.jdom2.DataConversionException e) {
-            log.error("failed to convert layoutslip type attribute");
-        } catch (java.lang.NullPointerException e) {
-            //can be ignored as panel file may not support method
-        }
+
+        LayoutSlip.TurnoutType type = tTypeEnumMap.inputFromAttribute(element.getAttribute("slipType"));
 
         // create the new LayoutSlip
         LayoutSlip l = new LayoutSlip(name, new Point2D.Double(x, y), 0.0, p, type);

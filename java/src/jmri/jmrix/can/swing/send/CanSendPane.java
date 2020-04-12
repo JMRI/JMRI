@@ -186,7 +186,7 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel {
     javax.swing.Timer timer = null;
 
     /**
-     * Internal routine to handle timer starts {@literal &} restarts
+     * Internal routine to handle timer starts and restarts
      * @param delay in ms
      */
     protected void restartTimer(int delay) {

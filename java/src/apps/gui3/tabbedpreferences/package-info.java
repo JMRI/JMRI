@@ -50,5 +50,6 @@
  * @see jmri.swing.PreferencesPanel
  * @see apps.AppConfigBase
  */
-@edu.umd.cs.findbugs.annotations.SuppressFBWarnings({})
+// include empty DefaultAnnotation to avoid excessive recompilation
+@edu.umd.cs.findbugs.annotations.DefaultAnnotation(value={})
 package apps.gui3.tabbedpreferences;

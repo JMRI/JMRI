@@ -2,7 +2,6 @@ package jmri.jmrix.can.cbus.swing;
 
 import javax.swing.JMenu;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.ConfigurationManager;
 import jmri.jmrix.can.swing.CanNamedPaneAction;
 
 /**

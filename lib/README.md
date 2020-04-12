@@ -54,6 +54,9 @@ After that, add and commit the additional files that were created within lib/
 - from https://github.com/rhwood/jinputvalidator
 - javadoc at https://www.javadoc.io/doc/com.alexandriasoftware.swing/jinputvalidator/0.6.0
 
+##### assertJ: assertj-core-3.12.0.jar, assertj-swing-3.9.2.jar, assertj-swing-junit-3.9.2.jar
+- testing only
+
 ##### commons-lang3-3.2.1.jar
 - version 3.2.1
 - provides org.apache.commons.lang3
@@ -137,9 +140,10 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
         lib/windows/x64/intelbth_x64.dll
         lib/windows/x86/intelbth.dll
 
-##### jython-standalone-2.7.1.jar
-- from http://repo1.maven.org/maven2/org/python/jython-standalone/2.7.1/
-- unlike jython-2.7.1.jar, includes embedded standard python libs
+##### jython-standalone-2.7.2.jar
+- from http://repo1.maven.org/maven2/org/python/jython-standalone/2.7.2/
+- unlike jython-2.7.2.jar, includes embedded standard python libs
+- unlike jython-slim-2.7.2.jar, includes embedded Java dependencies
 
 ##### jinput (including jinput.jar, three jinput DLLs, and two libjinputs)
 - from <https://jinput.dev.java.net/> jinput_dist_20090401

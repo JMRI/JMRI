@@ -2,16 +2,16 @@ package jmri.server.json.turnout;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.io.DataOutputStream;
-
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import jmri.server.json.JSON;
-import jmri.server.json.JsonMockConnection;
+import jmri.server.json.JsonServiceFactoryTestBase;
 
-public class JsonTurnoutServiceFactoryTest {
+/**
+ * @author Randall Wood Copyright 2020
+ */
+public class JsonTurnoutServiceFactoryTest extends JsonServiceFactoryTestBase<JsonTurnoutHttpService, JsonTurnoutSocketService> {
 
     @Test
     public void testConstants() {
@@ -19,13 +19,16 @@ public class JsonTurnoutServiceFactoryTest {
         assertThat(JsonTurnoutServiceFactory.TURNOUTS).isEqualTo(JsonTurnout.TURNOUTS);
     }
 
+    @Override
     @Test
-    public void testGetHttpService() {
-        assertThat(new JsonTurnoutServiceFactory().getHttpService(new ObjectMapper(), JSON.V5)).isNotNull();
+    public void testGetTypesV5() {
+        assertThat(factory.getTypes(JSON.V5)).containsExactly(JsonTurnout.TURNOUT, JsonTurnout.TURNOUTS);
     }
 
-    @Test
-    public void testGetSocketService() {
-        assertThat(new JsonTurnoutServiceFactory().getSocketService(new JsonMockConnection((DataOutputStream) null), JSON.V5)).isNotNull();
+    @BeforeEach
+    @Override
+    public void setUp() throws Exception {
+        super.setUp();
+        factory = new JsonTurnoutServiceFactory();
     }
 }

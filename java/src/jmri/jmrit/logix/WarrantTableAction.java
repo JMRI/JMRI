@@ -204,6 +204,7 @@ public class WarrantTableAction extends AbstractAction {
 
     protected void closeWarrantFrame() {
         if (_openFrame != null) {
+            _openFrame.close();
             _openFrame.dispose();
             _openFrame = null;
         }

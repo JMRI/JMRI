@@ -706,7 +706,7 @@ public class LayoutBlockConnectivityTools {
         List<LayoutTrackExpectedState<LayoutTurnout>> turnoutList = ct.getTurnoutList(curBlock.getBlock(), prevBlock, nextBlock);
         for (int i = 0; i < turnoutList.size(); i++) {
             LayoutTurnout lt = turnoutList.get(i).getObject();
-            if (lt.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER) {
+            if (lt.getTurnoutType() == LayoutTurnout.TurnoutType.DOUBLE_XOVER) {
                 if (turnoutList.get(i).getExpectedState() == jmri.Turnout.THROWN) {
                     jmri.Turnout t = lt.getTurnout();
                     if (t.getKnownState() == jmri.Turnout.THROWN) {

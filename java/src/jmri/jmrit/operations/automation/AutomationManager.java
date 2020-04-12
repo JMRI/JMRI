@@ -8,6 +8,7 @@ import java.util.List;
 import javax.swing.JComboBox;
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
+import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 import org.jdom2.Element;
@@ -20,7 +21,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2016
  */
-public class AutomationManager implements InstanceManagerAutoDefault, PropertyChangeListener {
+public class AutomationManager extends PropertyChangeSupport implements InstanceManagerAutoDefault, PropertyChangeListener {
 
     public static final String LISTLENGTH_CHANGED_PROPERTY = "automationListLength"; // NOI18N
     private int _id = 0; // retain highest automation Id seen to ensure no Id collisions
@@ -266,20 +267,10 @@ public class AutomationManager implements InstanceManagerAutoDefault, PropertyCh
         }
     }
 
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-    }
-
     protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
         // set dirty
         InstanceManager.getDefault(TrainManagerXml.class).setDirty(true);
-        pcs.firePropertyChange(p, old, n);
+        firePropertyChange(p, old, n);
     }
 
     private final static Logger log = LoggerFactory.getLogger(AutomationManager.class);

@@ -25,7 +25,7 @@ public class DetectionPanelTest {
             ip = ItemPalette.getDefault("Test ItemPalette", es);
             ip.pack();
         });
-        TextItemPanel tip = new TextItemPanel(ip, "test", es);
+        TextItemPanel tip = new TextItemPanel(ip, "test");
         DetectionPanel t = new DetectionPanel(tip);
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(ip);
