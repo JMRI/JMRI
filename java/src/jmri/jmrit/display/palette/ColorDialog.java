@@ -60,7 +60,7 @@ public class ColorDialog extends JDialog implements ChangeListener {
          * 
          * @param client Window holding the component
          * @param t target whose color may be changed
-         * @param type whicd attribute is being changed
+         * @param type which attribute is being changed
          * @param ca callback to tell client the component's color was changed. 
          * May be null if client doesen't care.
          */
