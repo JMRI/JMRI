@@ -237,6 +237,7 @@ public class ColorDialog extends JDialog implements ChangeListener {
             }
             _target.setOpaque(_saveOpaque);
             log.debug("Cancel: color= {}", _saveColor);
+            JmriColorChooser.suppressAddRecentColor(false);
             dispose();
         }
 

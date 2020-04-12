@@ -111,6 +111,7 @@ public class JmriColorChooser {
             }
         }
         chooser.setChooserPanels(newPanels);
+        _suppressAdd = false;
         return chooser;
     }
 }
