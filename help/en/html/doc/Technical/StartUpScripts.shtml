@@ -208,8 +208,8 @@
         <dt><code>--serial-ports=<em>SERIAL_PORTS</em></code></dt>
 
         <dd>Set the names of usable serial ports to the comma
-        separated list of ports in <em>SERIAL_PORTS</em>. This is
-        ignored on macOS.</dd>
+        separated list of ports in <em>SERIAL_PORTS</em> excluding the root
+        of the device tree (typically "/dev/").</dd>
 
         <dt><code>--settingsdir=<em>SETTINGS_DIR</em></code></dt>
 
