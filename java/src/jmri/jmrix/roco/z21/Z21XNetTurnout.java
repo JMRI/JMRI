@@ -43,7 +43,7 @@ public class Z21XNetTurnout extends XNetTurnout {
             tc.sendXNetMessage(msg, null);
             sendOffMessage(s);
         } else {
-            queueMessage(msg,COMMANDSENT,this);
+            queueMessage(msg, COMMANDSENT, s, this);
         }
     }
 
@@ -60,7 +60,7 @@ public class Z21XNetTurnout extends XNetTurnout {
         // (see section 5.1 of the protocol documenation ).
         XNetMessage msg = Z21XNetMessage.getZ21TurnoutInfoRequestMessage(mNumber);
         msg.setBroadcastReply();
-        queueMessage(msg,IDLE,null); //status is returned via the manager.
+        queueMessage(msg, IDLE, -1, null); //status is returned via the manager.
     }
 
     // Handle a timeout notification.
@@ -69,7 +69,7 @@ public class Z21XNetTurnout extends XNetTurnout {
         log.debug("Notified of timeout on message {}",msg);
         // If we're in the OFFSENT state, we need to send another OFF message.
         synchronized (this) {
-            if (internalState == OFFSENT) {
+            if (isOffsentState()) {
                sendOffMessage(getCommandedState());
             }
         }

@@ -1,10 +1,11 @@
 package jmri.jmrix.lenz;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import jmri.implementation.AbstractTurnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.annotation.concurrent.GuardedBy;
-import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * Extend jmri.AbstractTurnout for XNet layouts
@@ -108,11 +109,36 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class XNetTurnout extends AbstractTurnout implements XNetListener {
 
     /* State information */
+    /**
+     * OFF message has been sent. Need to send more OFF messages because
+     * of design decision (reasons unexplained/undocumented) to send at least 2 of them.
+     */
     protected static final int OFFSENT = 1;
     protected static final int COMMANDSENT = 2;
+    /**
+     * All required OFF messages are sent. Can stop sending messages on
+     * first OK received.
+     */
+    protected static final int OFFSENT_LAST = 3;
     protected static final int STATUSREQUESTSENT = 4;
     protected static final int IDLE = 0;
+    
     protected int internalState = IDLE;
+    
+    /**
+     * Last commanded state forwarded to the layout, for the purpose of turning 
+     * the output OFF. -1 (the default) means that OFF command is formed from
+     * the current KnwonState. The value must be set, when the command instruction
+     * is queued for transmission. Reset when new command is processed from
+     * the turnout queue, or the Turnout goes idle. Correctness rely on the
+     * queuing mechanism.
+     * <p>
+     * This allows to compensate effects of temporary incorrect changes of 
+     * Known/Commanded state implied by paired feedback processing, so wrong
+     * messages are not sent back to the layout.
+     */
+    @GuardedBy("this")
+    private int lastLayoutCommanded = -1;
 
     /* Static arrays to hold Lenz specific feedback mode information */
     static String[] modeNames = null;
@@ -132,7 +158,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         _prefix = prefix;
         mNumber = pNumber;
 
-        requestList = new LinkedBlockingQueue<>();
+        requestList = new ArrayDeque<>();
 
         /* Add additiona feedback types information */
         _validFeedbackTypes |= MONITORING | EXACT | SIGNAL;
@@ -238,7 +264,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
             tc.sendXNetMessage(msg, null);
             sendOffMessage();
         } else {
-            queueMessage(msg, COMMANDSENT, this);
+            queueMessage(msg, COMMANDSENT, s, this);
         }
     }
 
@@ -263,7 +289,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         // address in for the address. after the message is returned.
         XNetMessage msg = XNetMessage.getFeedbackRequestMsg(mNumber,
                 ((mNumber - 1) % 4) < 2);
-        queueMessage(msg,IDLE,null); //status is returned via the manager.
+        queueMessage(msg,IDLE, -1, null); //status is returned via the manager.
 
     }
 
@@ -299,13 +325,29 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     }
 
     /**
+     * The reply being processed, for the execution of
+     * {@link #message(jmri.jmrix.lenz.XNetReply)}. 
+     * Allows to access the message context anywhere during message processing.
+     * The field is cleared at the end, and has {@code null} value in any
+     * other situation. Currently used to prevent multiple {@link #sendOffMessage()}
+     * within the same reply.
+     * <p>
+     * Note that XNetTurnoutStateListener reacts on property changes, so {@link #newCommandedState}
+     * or {@link #newKnownState} invokes the listener without proper reply context. It gets
+     * the context from this thread-local.
+     */
+    private transient final ThreadLocal<XNetReply> processingReply = new ThreadLocal<>();
+    
+    /**
      * Handle an incoming message from the XpressNet.
      */
     @Override
     public synchronized void message(XNetReply l) {
         try {
+            processingReply.set(l);
             message0(l);
         } finally {
+            processingReply.remove();
             log.debug("End-Turnout: {}, internal state: {}, commanded {}, known {}, processed message: {}", 
                     getSystemName(), internalState, getCommandedState(), getKnownState(), l);
         }
@@ -314,8 +356,8 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     private synchronized void message0(XNetReply l) {
         log.debug("Turnout: {}, internal state: {}, commanded {}, known {}, received message: {}", 
                 getSystemName(), internalState, getCommandedState(), getKnownState(), l);
-        if (internalState == OFFSENT) {
-            if (l.isOkMessage() && !l.isUnsolicited()) {
+        if (isOffsentState()) {
+            if (l.isOkMessage() && !l.isUnsolicited() && (internalState == OFFSENT_LAST)) {
                 /* the command was successfully received */
                 synchronized (this) {
                     newKnownState(getCommandedState());
@@ -330,7 +372,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                 /* Default Behavior: If anything other than an OK message
                  is received, Send another OFF message. */
                 log.debug("Message is not OK message. Message received was: {}", l);
-                sendOffMessage();
+                sendOffMessageOnce(l);
             }
         }
 
@@ -348,6 +390,10 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         }
     }
 
+    protected final boolean isOffsentState() {
+        return internalState == OFFSENT || internalState == OFFSENT_LAST;
+    }
+    
     /**
      * Listen for the messages to the LI100/LI101.
      */
@@ -362,7 +408,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     public synchronized void notifyTimeout(XNetMessage msg) {
         log.debug("Notified of timeout on message {}", msg);
         // If we're in the OFFSENT state, we need to send another OFF message.
-        if (internalState == OFFSENT) {
+        if (isOffsentState()) {
             sendOffMessage();
         }
     }
@@ -410,9 +456,9 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                             if (l.isUnsolicited()) {
                                 l.resetUnsolicited();
                             }
-                            sendOffMessage();
-                            // Explicitly send two off messages in Direct Mode
-                            sendOffMessage();
+                            // Note: this will transition to OFFSENT, the OFF-confirmation OK
+                            // will be handled by the branch below -> two OFF messages will be sent.
+                            sendOffMessageOnce(l);
                             break;
                         }
                     }
@@ -420,9 +466,10 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
             } else if (l.isOkMessage()) {
                 // Finally, we may just receive an OK message.
                 log.debug("Turnout {} DIRECT feedback mode - OK message triggering OFF message.", mNumber);
-                sendOffMessage();
-                // Explicitly send two off messages in Direct Mode
-                sendOffMessage();
+                // The OFF series may be initiated by OK message or a feedback, but
+                // sendOffMessage* will internally transition to OFFSENT and OFFSENT_LAST making
+                // aways exactly two OFFs on output. 
+                sendOffMessageOnce(l);
             }
         }
     }
@@ -471,7 +518,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                         if (parseFeedbackMessage(l, i) != -1) {
                             // We need to tell the turnout to shut off the output.
                             log.debug("Turnout {} MONITORING feedback mode - state change from feedback, CommandedState != KnownState.", mNumber);
-                            sendOffMessage();
+                            sendOffMessageOnce(l);
                             break;
                         }
                     }
@@ -479,7 +526,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
             } else if (l.isOkMessage()) {
                 // Finally, we may just receive an OK message.
                 log.debug("Turnout {} MONITORING feedback mode - OK message triggering OFF message.", mNumber);
-                sendOffMessage();
+                sendOffMessageOnce(l);
             }
         }
     }
@@ -537,7 +584,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                                 // request for this nibble
                                 XNetMessage msg = XNetMessage.getFeedbackRequestMsg(
                                         mNumber, ((mNumber % 4) <= 1));
-                                queueMessage(msg,STATUSREQUESTSENT ,null); //status is returned via the manager.
+                                queueMessage(msg,STATUSREQUESTSENT, -1, null); //status is returned via the manager.
                             } else {
                                 log.debug("Turnout {} EXACT feedback mode - state change from feedback, CommandedState!=KnownState - motion complete", mNumber);
                                 // If the motion is completed, behave as though
@@ -545,7 +592,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                                 parseFeedbackMessage(reply, i);
                                 // We need to tell the turnout to shut off the
                                 // output.
-                                sendOffMessage();
+                                sendOffMessageOnce(reply);
                             }
                         } else if (messageType == 0) {
                             log.debug("Turnout {} EXACT feedback mode - state change from feedback, CommandedState!=KnownState - Turnout does not provide feedback", mNumber);
@@ -555,7 +602,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                             // contents of the message and act accordingly.
                             parseFeedbackMessage(reply, i);
                             // We need to tell the turnout to shut off the output.
-                            sendOffMessage();
+                            sendOffMessageOnce(reply);
                         }
                         break;
                     }
@@ -563,15 +610,80 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
             } else if (reply.isOkMessage()) {
                 // Finally, we may just receive an OK message.
                 log.debug("Turnout {} EXACT feedback mode - OK message triggering OFF message.", mNumber);
-                sendOffMessage();
+                sendOffMessageOnce(reply);
             }
         }
     }
+    
+    private boolean markReplyConsumedForOff(XNetReply reply) {
+        if (reply == null) {
+            // can't determine reply, allow OFF
+            return false;
+        } else {
+            return reply.markConsumed(reply.getFeedbackConsumedBit(mNumber));
+        }
+    }
+    
+    /**
+     * Sends OFF message once for the reply. If called more than once for the same
+     * reply, the call will have no effect. 
+     * @param r the reply
+     * @return true, if the message was sent.
+     */
+    @SuppressWarnings("deprecation")
+    protected boolean sendOffMessageOnce(XNetReply r) {
+        if (markReplyConsumedForOff(r)) {
+            log.debug("Not sending OFF for {}, already marked.", r);
+            // do not sent an event to the layout, but make known state transition.
+            newKnownState(getCommandedState());
+            return false;
+        }
+        if (internalState == OFFSENT_LAST && r.isFeedbackBroadcastMessage()) {
+            log.debug("Sent already enough OFFs, ignoring {}, waiting for OK", r);
+            newKnownState(getCommandedState());
+            return false;
+        }
+        // backwards compatibility: existing code may override sendOffMessage. This
+        // calls potentially customized implementation.s
+        sendOffMessage();
+        return true;
+    }
+    
+    /**
+     * Sends an OFF message once for the reply being processed. The context
+     * reply instance is acquired automatically, if called from within the 
+     * {@link #message(jmri.jmrix.lenz.XNetReply)} execution. If called from
+     * a different thread, the reply context can't be derived and the OFF message
+     * is always sent.
+     * @return true, if the message was sent.
+     */
+    protected boolean sendOffMessageOnce() {
+        return sendOffMessageOnce(processingReply.get());
+    }
 
     /**
-     * Send an "Off" message to the decoder for this output.
+     * Send an "Off" message to the decoder for this output. 
+     * @deprecated this method may generate spurious OFF messages
+     * when called several times during the course of reply processing.
+     * Use {@link #sendOffMessageOnce(jmri.jmrix.lenz.XNetReply)}.
      */
+    @Deprecated
     protected synchronized void sendOffMessage() {
+        XNetReply r = processingReply.get();
+        // just for the sake, if an old code calls sendOffMessage directly, mark
+        // the action as consumed for potential sendOffMessageOnce calls.
+        markReplyConsumedForOff(r);
+        doSendOffMessage();
+    }
+    
+    /**
+     * Really sends the off message. This method is called when the message
+     * off has not been sent yet during this Reply processing, or when a legacy
+     * code called {@link #sendOffMessage()}.
+     * <p>
+     * Override to implement a different behaviour, scheduling of the message etc.
+     */
+    protected synchronized void doSendOffMessage() {
         // We need to tell the turnout to shut off the output.
         if (log.isDebugEnabled()) {
             log.debug("Sending off message for turnout {} commanded state={}", mNumber, getCommandedState());
@@ -579,28 +691,41 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         }
         XNetMessage msg = getOffMessage();
         // Set the known state to the commanded state.
-        synchronized (this) {
-            // To avoid some of the command station busy
-            // messages, add a short delay before sending the
-            // first off message.
-            if (internalState != OFFSENT) {
-                jmri.util.ThreadingUtil.runOnLayoutDelayed( () ->
-                   tc.sendHighPriorityXNetMessage(msg, this), 30);
-                newKnownState(getCommandedState());
-                internalState = OFFSENT;
-                return;
-            }
-            newKnownState(getCommandedState());
-            internalState = OFFSENT;
+        // To avoid some of the command station busy
+        // messages, add a short delay before sending the
+        // first off message.
+        if (!isOffsentState()) {
+            jmri.util.ThreadingUtil.runOnLayoutDelayed( () ->
+               tc.sendHighPriorityXNetMessage(msg, this), 30);
+        } else {
+            // Then send the message.
+            tc.sendHighPriorityXNetMessage(msg, this);
         }
-        // Then send the message.
-        tc.sendHighPriorityXNetMessage(msg, this);
+        int is = internalState;
+        newKnownState(getCommandedState());
+        switch (is) {
+            case IDLE:
+            case COMMANDSENT:
+                internalState = OFFSENT;
+                break;
+            case OFFSENT:
+            case OFFSENT_LAST:
+                internalState = OFFSENT_LAST;
+                break;
+            default:
+                log.warn("Sending off for {} in an unexpected state: {}", getSystemName(), internalState);
+                break;
+        }
     }
 
     protected synchronized XNetMessage getOffMessage(){
-         return ( XNetMessage.getTurnoutCommandMsg(mNumber,
-                getCommandedState() == _mClosed,
-                getCommandedState() == _mThrown,
+        int c = lastLayoutCommanded;
+        if (c == -1) {
+            c = getCommandedState();
+        }
+        return ( XNetMessage.getTurnoutCommandMsg(mNumber,
+                c == _mClosed,
+                c == _mThrown,
                 false) );
     }
 
@@ -759,7 +884,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                             if (log.isDebugEnabled()) {
                                 log.debug("propertyChange CommandedState: {}", _turnout.getCommandedState());
                             }
-                            _turnout.sendOffMessage();
+                            _turnout.sendOffMessageOnce();
                         }
                     }
                 }
@@ -773,49 +898,48 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     XNetTurnoutStateListener _stateListener;  // Internal class object
 
     // A queue to hold outstanding messages
-    protected LinkedBlockingQueue<RequestMessage> requestList = null;
+    @GuardedBy("this")
+    protected final Deque<RequestMessage> requestList;
 
     /**
      * Send message from queue.
      */
     protected synchronized void sendQueuedMessage() {
-
         RequestMessage msg = null;
         // check to see if the queue has a message in it, and if it does,
         // remove the first message
-        if (!requestList.isEmpty()) {
+        msg = requestList.poll();
+        // if the queue is not empty, remove the first message
+        // from the queue, send the message, and set the state machine
+        // to the requried state.
+        if (msg != null) {
             log.debug("sending message to traffic controller");
-            // if the queue is not empty, remove the first message
-            // from the queue, send the message, and set the state machine
-            // to the requried state.
-            try {
-                msg = requestList.take();
-            } catch (java.lang.InterruptedException ie) {
-                return; // if there was an error, exit.
-            }
-            if (msg != null) {
-                internalState = msg.getState();
-                tc.sendXNetMessage(msg.getMsg(), msg.getListener());
-            }
+            internalState = msg.getState();
+            lastLayoutCommanded = msg.commanded;
+            tc.sendXNetMessage(msg.getMsg(), msg.getListener());
         } else {
             log.debug("message queue empty");
             // if the queue is empty, set the state to idle.
             internalState = IDLE;
+            lastLayoutCommanded = -1;
         }
     }
-
+    
     /**
-     * Queue a message.
+     * Queue a message. If another command is being processed ({@link #internalState} != {@link #IDLE}), it queues
+     * the message + associated info for later processing. If the internalState is {@link #IDLE}, 
+     * the message is passed immediately for transmission.
+     * 
+     * @param message to queue.
+     * @param s - the <b>internal state</b> to set when the message is put into the transmit queue.
+     * @param c - the desired <b>commanded state</b>. Use -1 for queries.
+     * @param l - the listener to be notified on command's acknowledge.
      */
-    protected synchronized void queueMessage(XNetMessage m, int s, XNetListener l) {
+    protected synchronized void queueMessage(XNetMessage m, int s, int c, XNetListener l) {
         log.debug("adding message {} to message queue.  Current Internal State {}",m,internalState);
         // put the message in the queue
-        RequestMessage msg = new RequestMessage(m, s, l);
-        try {
-            requestList.put(msg);
-        } catch (java.lang.InterruptedException ie) {
-            log.trace("Interrupted while queueing message {}",msg);
-        }
+        RequestMessage msg = new RequestMessage(m, s, c, l);
+        requestList.offer(msg);
         // if the state is idle, trigger the message send
         if (internalState == IDLE ) {
             sendQueuedMessage();
@@ -827,13 +951,15 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
      */
     protected static class RequestMessage {
 
-        private int state;
-        private XNetMessage msg;
-        private XNetListener listener;
+        private final int state;
+        private final int commanded;
+        private final XNetMessage msg;
+        private final XNetListener listener;
 
-        RequestMessage(XNetMessage m, int s, XNetListener listener) {
+        RequestMessage(XNetMessage m, int s, int c, XNetListener listener) {
             state = s;
             msg = m;
+            commanded = c;
             this.listener = listener;
         }
 
