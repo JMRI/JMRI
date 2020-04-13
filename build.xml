@@ -749,8 +749,7 @@
             <sysproperty key="jmri.skipTestsRequiringSeparateRunning" value="true"/><!-- skip intermittent tests -->
             <sysproperty key="user.language" value="en"/>
             <sysproperty key="user.country" value="US"/>
-            <sysproperty key="java.awt.headless" value="true"/>
-            <sysproperty key="cucumber.options" value="--tags 'not @Ignore' --tags 'not @Headed' --tags 'not @webtest'"/>
+            <sysproperty key="cucumber.options" value="--tags 'not @Ignore' --tags --tags 'not @webtest'"/>
 
             <arg value="--scan-classpath"/>
             <arg value="--details=none"/>
@@ -768,7 +767,7 @@
         </fail>
     </target>
 
-    <target depends="-test-single-src,-test-single-test,tests,runtime-library-selection" description="Run single unit test." name="test-single-coverage">
+    <target depends="-test-single-src,-test-single-test,tests,runtime-library-selection" description="Run single unit test with Coverage." name="test-single-coverage">
         <mkdir dir="${tempdir}"/>
         <mkdir dir="${testreport}"/>
         <jacoco:agent property="jacocoagent" destfile="${jacocoexec}" excludes="org.slf4j.*" />
@@ -787,8 +786,7 @@
             <sysproperty key="jmri.skipTestsRequiringSeparateRunning" value="true"/><!-- skip intermittent tests -->
             <sysproperty key="user.language" value="en"/>
             <sysproperty key="user.country" value="US"/>
-            <sysproperty key="java.awt.headless" value="true"/>
-            <sysproperty key="cucumber.options" value="--tags 'not @Ignore' --tags 'not @Headed' --tags 'not @webtest'"/>
+            <sysproperty key="cucumber.options" value="--tags 'not @Ignore' --tags 'not @webtest'"/>
 
             <arg value="--scan-classpath"/>
             <arg value="--details=none"/>
