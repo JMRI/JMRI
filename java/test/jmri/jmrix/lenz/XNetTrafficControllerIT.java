@@ -223,8 +223,8 @@ public class XNetTrafficControllerIT {
         XNetMessage m = XNetMessage.getCSVersionRequestMessage();       
         XNetMessage m2 = XNetMessage.getCSStatusRequestMessage();
         XNetMessage m3 = XNetMessage.getLocomotiveInfoRequestMsg(1);
-        XNetMessage m4 = XNetMessage.getCSVersionRequestMessage();
-        XNetMessage m5 = XNetMessage.getLocomotiveInfoRequestMsg(1);
+        XNetMessage m4 = XNetMessage.getLocomotiveFunctionStatusMsg(1);
+        XNetMessage m5 = XNetMessage.getEmergencyOffMsg();
         
         CountDownLatch l = new CountDownLatch(5);
         XNetListener callback = new XNetListenerScaffold() {
