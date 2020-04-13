@@ -76,7 +76,7 @@ public class LayoutConnectivity {
     private TrackSegment track1 = null;
 
     private LayoutTrack connect2 = null;
-    private LayoutEditor.HitPointTypes typeConnect2 = LayoutEditor.HitPointTypes.NONE;
+    private LayoutEditor.HitPointType typeConnect2 = LayoutEditor.HitPointType.NONE;
 
     private LayoutTurnout xover = null;
     private int xoverBoundaryType = NONE;
@@ -131,7 +131,7 @@ public class LayoutConnectivity {
         return (false);
     }
 
-    public void setConnections(TrackSegment t, LayoutTrack o, LayoutEditor.HitPointTypes type, PositionablePoint p) {
+    public void setConnections(TrackSegment t, LayoutTrack o, LayoutEditor.HitPointType type, PositionablePoint p) {
         track1 = t;
         if (t == null) {
             log.error("null track1 when setting up LayoutConnectivity");
@@ -160,7 +160,7 @@ public class LayoutConnectivity {
         return connect2;
     }
 
-    public LayoutEditor.HitPointTypes getConnectedType() {
+    public LayoutEditor.HitPointType getConnectedType() {
         return typeConnect2;
     }
 

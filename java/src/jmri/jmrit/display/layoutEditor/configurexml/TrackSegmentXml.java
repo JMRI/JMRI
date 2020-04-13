@@ -240,25 +240,25 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
         String con1Name = element.getAttribute("connect1name").getValue();
         String con2Name = element.getAttribute("connect2name").getValue();
 
-        LayoutEditor.HitPointTypes type1 = LayoutEditor.HitPointTypes.NONE;
+        LayoutEditor.HitPointType type1 = LayoutEditor.HitPointType.NONE;
         try {
             attribute = element.getAttribute("type1");
-            type1 = LayoutEditor.HitPointTypes.valueOf(attribute.getValue());
+            type1 = LayoutEditor.HitPointType.valueOf(attribute.getValue());
         } catch (IllegalArgumentException e) {
             try {
-                type1 = LayoutEditor.HitPointTypes.getValue(attribute.getIntValue());
+                type1 = LayoutEditor.HitPointType.getValue(attribute.getIntValue());
             } catch (DataConversionException | NullPointerException e1) {
                 log.error("failed to convert tracksegment type1 attribute");
             }
         }
 
-        LayoutEditor.HitPointTypes type2 = LayoutEditor.HitPointTypes.NONE;
+        LayoutEditor.HitPointType type2 = LayoutEditor.HitPointType.NONE;
         try {
             attribute = element.getAttribute("type2");
-            type2 = LayoutEditor.HitPointTypes.valueOf(attribute.getValue());
+            type2 = LayoutEditor.HitPointType.valueOf(attribute.getValue());
         } catch (IllegalArgumentException e) {
             try {
-                type2 = LayoutEditor.HitPointTypes.getValue(attribute.getIntValue());
+                type2 = LayoutEditor.HitPointType.getValue(attribute.getIntValue());
             } catch (DataConversionException | NullPointerException e1) {
                 log.error("failed to convert tracksegment type2 attribute");
             }

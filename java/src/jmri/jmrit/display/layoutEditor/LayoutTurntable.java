@@ -460,14 +460,14 @@ public class LayoutTurntable extends LayoutTrack {
      * @return the coordinates
      */
     @Override
-    public Point2D getCoordsForConnectionType(LayoutEditor.HitPointTypes connectionType) {
+    public Point2D getCoordsForConnectionType(LayoutEditor.HitPointType connectionType) {
         Point2D result = getCoordsCenter();
-        if (LayoutEditor.HitPointTypes.TURNTABLE_CENTER == connectionType) {
+        if (LayoutEditor.HitPointType.TURNTABLE_CENTER == connectionType) {
             // nothing to see here, move along...
             // (results are already correct)
-        } else if (LayoutEditor.HitPointTypes.isTurntableRayHitType(connectionType)) {
+        } else if (LayoutEditor.HitPointType.isTurntableRayHitType(connectionType)) {
             result = getRayCoordsIndexed(connectionType.getValue()
-                    - LayoutEditor.HitPointTypes.TURNTABLE_RAY_0.getValue());
+                    - LayoutEditor.HitPointType.TURNTABLE_RAY_0.getValue());
         } else {
             log.error("{}.getCoordsForConnectionType({}); Invalid connection type",
                     getName(), connectionType); // NOI18N
@@ -479,10 +479,10 @@ public class LayoutTurntable extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    public LayoutTrack getConnection(LayoutEditor.HitPointTypes connectionType) throws jmri.JmriException {
+    public LayoutTrack getConnection(LayoutEditor.HitPointType connectionType) throws jmri.JmriException {
         LayoutTrack result = null;
-        if (LayoutEditor.HitPointTypes.isTurntableRayHitType(connectionType)) {
-            result = getRayConnectIndexed(connectionType.getValue() - LayoutEditor.HitPointTypes.TURNTABLE_RAY_0.getValue());
+        if (LayoutEditor.HitPointType.isTurntableRayHitType(connectionType)) {
+            result = getRayConnectIndexed(connectionType.getValue() - LayoutEditor.HitPointType.TURNTABLE_RAY_0.getValue());
         } else {
             String errString = MessageFormat.format("{0}.getCoordsForConnectionType({1}); Invalid connection type",
                     getName(), connectionType); // NOI18N
@@ -496,16 +496,16 @@ public class LayoutTurntable extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    public void setConnection(LayoutEditor.HitPointTypes connectionType, LayoutTrack o, LayoutEditor.HitPointTypes type) throws jmri.JmriException {
-        if ((type != LayoutEditor.HitPointTypes.TRACK) && (type != LayoutEditor.HitPointTypes.NONE)) {
+    public void setConnection(LayoutEditor.HitPointType connectionType, LayoutTrack o, LayoutEditor.HitPointType type) throws jmri.JmriException {
+        if ((type != LayoutEditor.HitPointType.TRACK) && (type != LayoutEditor.HitPointType.NONE)) {
             String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); Invalid type",
                     getName(), connectionType, (o == null) ? "null" : o.getName(), type); // NOI18N
             log.error(errString); // NOI18N
             throw new jmri.JmriException(errString);
         }
-        if (LayoutEditor.HitPointTypes.isTurntableRayHitType(connectionType)) {
+        if (LayoutEditor.HitPointType.isTurntableRayHitType(connectionType)) {
             if ((o == null) || (o instanceof TrackSegment)) {
-                setRayConnect((TrackSegment) o, connectionType.getValue() - LayoutEditor.HitPointTypes.TURNTABLE_RAY_0.getValue());
+                setRayConnect((TrackSegment) o, connectionType.getValue() - LayoutEditor.HitPointType.TURNTABLE_RAY_0.getValue());
             } else {
                 String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); Invalid object: {4}",
                         getName(), connectionType, o.getName(),
@@ -615,8 +615,8 @@ public class LayoutTurntable extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    protected LayoutEditor.HitPointTypes findHitPointType(Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
-        LayoutEditor.HitPointTypes result = LayoutEditor.HitPointTypes.NONE;  // assume point not on connection
+    protected LayoutEditor.HitPointType findHitPointType(Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
+        LayoutEditor.HitPointType result = LayoutEditor.HitPointType.NONE;  // assume point not on connection
         //note: optimization here: instead of creating rectangles for all the
         // points to check below, we create a rectangle for the test point
         // and test if the points below are in that rectangle instead.
@@ -632,7 +632,7 @@ public class LayoutTurntable extends LayoutTrack {
             if (distance < minDistance) {
                 minDistance = distance;
                 minPoint = p;
-                result = LayoutEditor.HitPointTypes.TURNTABLE_CENTER;
+                result = LayoutEditor.HitPointType.TURNTABLE_CENTER;
             }
         }
 
@@ -643,14 +643,13 @@ public class LayoutTurntable extends LayoutTrack {
                 if (distance < minDistance) {
                     minDistance = distance;
                     minPoint = p;
-                    result = LayoutEditor.HitPointTypes.getValue(
-                            LayoutEditor.HitPointTypes.TURNTABLE_RAY_0.getValue() + getRayIndex(k));
+                    result = LayoutEditor.HitPointType.getValue(LayoutEditor.HitPointType.TURNTABLE_RAY_0.getValue() + getRayIndex(k));
                 }
             }
         }
         if ((useRectangles && !r.contains(minPoint))
                 || (!useRectangles && (minDistance > circleRadius))) {
-            result = LayoutEditor.HitPointTypes.NONE;
+            result = LayoutEditor.HitPointType.NONE;
         }
         return result;
     }
@@ -1212,11 +1211,11 @@ public class LayoutTurntable extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    protected void highlightUnconnected(Graphics2D g2, LayoutEditor.HitPointTypes specificType) {
+    protected void highlightUnconnected(Graphics2D g2, LayoutEditor.HitPointType specificType) {
         int specificTypeValue = specificType.getValue();
         for (int j = 0; j < getNumberRays(); j++) {
-            if ((specificType == LayoutEditor.HitPointTypes.NONE)
-                    || (specificTypeValue == (LayoutEditor.HitPointTypes.TURNTABLE_RAY_0.getValue() + j))) {
+            if ((specificType == LayoutEditor.HitPointType.NONE)
+                    || (specificTypeValue == (LayoutEditor.HitPointType.TURNTABLE_RAY_0.getValue() + j))) {
                 if (getRayConnectOrdered(j) == null) {
                     Point2D pt = getRayCoordsOrdered(j);
                     g2.fill(trackControlCircleAt(pt));
@@ -1290,12 +1289,12 @@ public class LayoutTurntable extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    public List<LayoutEditor.HitPointTypes> checkForFreeConnections() {
-        List<LayoutEditor.HitPointTypes> result = new ArrayList<>();
+    public List<LayoutEditor.HitPointType> checkForFreeConnections() {
+        List<LayoutEditor.HitPointType> result = new ArrayList<>();
 
         for (int k = 0; k < getNumberRays(); k++) {
             if (getRayConnectOrdered(k) == null) {
-                result.add(LayoutEditor.HitPointTypes.getValue(LayoutEditor.HitPointTypes.TURNTABLE_RAY_0.getValue() + getRayIndex(k)));
+                result.add(LayoutEditor.HitPointType.getValue(LayoutEditor.HitPointType.TURNTABLE_RAY_0.getValue() + getRayIndex(k)));
             }
         }
         return result;

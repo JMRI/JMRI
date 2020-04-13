@@ -524,7 +524,7 @@ public class LayoutEditorFindItems {
     * @deprecated since 4.7.1 use @link{findObjectByName()} instead.
      */
     @Deprecated
-    public LayoutTrack findObjectByTypeAndName(LayoutEditor.HitPointTypes type, String name) {
+    public LayoutTrack findObjectByTypeAndName(LayoutEditor.HitPointType type, String name) {
         if (name.isEmpty()) {
             return null;
         }
@@ -551,7 +551,7 @@ public class LayoutEditorFindItems {
             case TRACK:
                 return findTrackSegmentByName(name);
             default:
-                if (LayoutEditor.HitPointTypes.isTurntableRayHitType(type)) {
+                if (LayoutEditor.HitPointType.isTurntableRayHitType(type)) {
                     return findLayoutTurntableByName(name);
                 }
         }

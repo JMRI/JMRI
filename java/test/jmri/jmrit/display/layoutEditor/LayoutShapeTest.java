@@ -148,27 +148,27 @@ public class LayoutShapeTest {
         Assert.assertNotNull("LayoutShape not null", ls);
 
         // First: miss
-        LayoutEditor.HitPointTypes hitType = ls.findHitPointType(MathUtil.zeroPoint2D, true);
-        Assert.assertTrue("ls.findHitPointType equals NONE", hitType == LayoutEditor.HitPointTypes.NONE);
+        LayoutEditor.HitPointType hitType = ls.findHitPointType(MathUtil.zeroPoint2D, true);
+        Assert.assertTrue("ls.findHitPointType equals NONE", hitType == LayoutEditor.HitPointType.NONE);
 
         // now try hit getCoordsLeft -> SHAPE_CENTER
         hitType = ls.findHitPointType(ls.getCoordsCenter(), true);
-        Assert.assertEquals("ls.findHitPointType equals SHAPE_CENTER", LayoutEditor.HitPointTypes.SHAPE_CENTER, hitType);
+        Assert.assertEquals("ls.findHitPointType equals SHAPE_CENTER", LayoutEditor.HitPointType.SHAPE_CENTER, hitType);
         ///Assert.assertTrue("ls.findHitPointType equals SHAPE_CENTER", hitType == LayoutEditor.HitPointTypes.SHAPE_CENTER);
 
         ArrayList<LayoutShape.LayoutShapePoint> lspoints = ls.getPoints();
 
         hitType = ls.findHitPointType(lspoints.get(0).getPoint(), true);
-        Assert.assertEquals("ls.findHitPointType(point[0]) equals SHAPE_POINT_OFFSET_MIN", LayoutEditor.HitPointTypes.SHAPE_POINT_0, hitType);
+        Assert.assertEquals("ls.findHitPointType(point[0]) equals SHAPE_POINT_OFFSET_MIN", LayoutEditor.HitPointType.SHAPE_POINT_0, hitType);
 
         hitType = ls.findHitPointType(lspoints.get(1).getPoint(), true);
-        Assert.assertEquals("ls.findHitPointType(point[1]) equals SHAPE_POINT_1", LayoutEditor.HitPointTypes.SHAPE_POINT_1, hitType);
+        Assert.assertEquals("ls.findHitPointType(point[1]) equals SHAPE_POINT_1", LayoutEditor.HitPointType.SHAPE_POINT_1, hitType);
 
         hitType = ls.findHitPointType(lspoints.get(2).getPoint(), true);
-        Assert.assertEquals("ls.findHitPointType(point[2]) equals SHAPE_POINT_2", LayoutEditor.HitPointTypes.SHAPE_POINT_2, hitType);
+        Assert.assertEquals("ls.findHitPointType(point[2]) equals SHAPE_POINT_2", LayoutEditor.HitPointType.SHAPE_POINT_2, hitType);
 
         hitType = ls.findHitPointType(lspoints.get(3).getPoint(), true);
-        Assert.assertEquals("ls.findHitPointType(point[3]) equals SHAPE_POINT_3", LayoutEditor.HitPointTypes.SHAPE_POINT_3, hitType);
+        Assert.assertEquals("ls.findHitPointType(point[3]) equals SHAPE_POINT_3", LayoutEditor.HitPointType.SHAPE_POINT_3, hitType);
     }
 
     // from here down is testing infrastructure

@@ -271,7 +271,7 @@ public class LayoutEditorChecks {
         // check all tracks for free connections
         List<String> trackNames = new ArrayList<>();
         for (LayoutTrack layoutTrack : layoutEditor.getLayoutTracks()) {
-            List<LayoutEditor.HitPointTypes> connections = layoutTrack.checkForFreeConnections();
+            List<LayoutEditor.HitPointType> connections = layoutTrack.checkForFreeConnections();
             if (!connections.isEmpty()) {
                 // add this track's name to the list of track names
                 trackNames.add(layoutTrack.getName());

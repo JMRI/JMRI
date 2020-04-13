@@ -426,7 +426,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
 
         //not internal crossover block boundary
         LayoutTrack connected = lc.getConnectedObject();
-        LayoutEditor.HitPointTypes cType = lc.getConnectedType();
+        LayoutEditor.HitPointType cType = lc.getConnectedType();
         if (connected == null) {
             log.error("No connectivity object found between Blocks {}, {} {}", facingBlock.getDisplayName(),
                     protectedBlock.getDisplayName(), cType);
@@ -434,7 +434,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             return null;
         }
 
-        if (cType == LayoutEditor.HitPointTypes.TRACK) {
+        if (cType == LayoutEditor.HitPointType.TRACK) {
             // block boundary is at an Anchor Point
             //    LayoutEditorTools tools = panel.getLETools(); //TODO: Dead-code strip this
             PositionablePoint p = panel.getFinder().findPositionablePointAtTrackSegments(tr, (TrackSegment) connected);
@@ -448,7 +448,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             }
         }
 
-        if (cType == LayoutEditor.HitPointTypes.TURNOUT_A) {
+        if (cType == LayoutEditor.HitPointType.TURNOUT_A) {
             // block boundary is at the facing point of a turnout or A connection of a crossover turnout
             lt = (LayoutTurnout) connected;
 
@@ -617,7 +617,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             }
         }
 
-        if (cType == LayoutEditor.HitPointTypes.TURNOUT_B) {
+        if (cType == LayoutEditor.HitPointType.TURNOUT_B) {
             //block boundary is at the continuing track of a turnout or B connection of a crossover turnout
             lt = (LayoutTurnout) connected;
 
@@ -807,7 +807,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             }
         }
 
-        if (cType == LayoutEditor.HitPointTypes.TURNOUT_C) {
+        if (cType == LayoutEditor.HitPointType.TURNOUT_C) {
             //block boundary is at the diverging track of a turnout or C connection of a crossover turnout
             lt = (LayoutTurnout) connected;
 
@@ -1006,7 +1006,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             }
         }
 
-        if (cType == LayoutEditor.HitPointTypes.TURNOUT_D) {
+        if (cType == LayoutEditor.HitPointType.TURNOUT_D) {
             //block boundary is at D connectin of a crossover turnout
             lt = (LayoutTurnout) connected;
 
@@ -1113,7 +1113,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             }
         }
 
-        if (LayoutEditor.HitPointTypes.isSlipHitType(cType)) {
+        if (LayoutEditor.HitPointType.isSlipHitType(cType)) {
             if (!facingIsBlock1) {
                 return null;
             }
@@ -1168,7 +1168,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         }
 
         //block boundary must be at a level crossing
-        if (LayoutEditor.HitPointTypes.isLevelXingHitType(cType)) {
+        if (LayoutEditor.HitPointType.isLevelXingHitType(cType)) {
             log.error("{} {} Block Boundary not identified correctly - Blocks {}, {}",
                     cType, connected, facingBlock.getDisplayName(), protectedBlock.getDisplayName());
 
@@ -1274,7 +1274,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             if (t.getLayoutBlock() == fLayoutBlock) {
                 PositionablePoint p = null;
 
-                if (t.getType1() == LayoutEditor.HitPointTypes.POS_POINT) {
+                if (t.getType1() == LayoutEditor.HitPointType.POS_POINT) {
                     p = (PositionablePoint) t.getConnect1();
 
                     if (p.getType() == PositionablePoint.END_BUMPER) {
@@ -1288,7 +1288,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                     }
                 }
 
-                if (t.getType2() == LayoutEditor.HitPointTypes.POS_POINT) {
+                if (t.getType2() == LayoutEditor.HitPointType.POS_POINT) {
                     p = (PositionablePoint) t.getConnect2();
 
                     if (p.getType() == PositionablePoint.END_BUMPER) {
@@ -1340,7 +1340,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             if (t.getLayoutBlock() == fLayoutBlock) {
                 PositionablePoint p = null;
 
-                if (t.getType1() == LayoutEditor.HitPointTypes.POS_POINT) {
+                if (t.getType1() == LayoutEditor.HitPointType.POS_POINT) {
                     p = (PositionablePoint) t.getConnect1();
 
                     if (p.getType() == PositionablePoint.END_BUMPER) {
@@ -1354,7 +1354,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                     }
                 }
 
-                if (t.getType2() == LayoutEditor.HitPointTypes.POS_POINT) {
+                if (t.getType2() == LayoutEditor.HitPointType.POS_POINT) {
                     p = (PositionablePoint) t.getConnect2();
 
                     if (p.getType() == PositionablePoint.END_BUMPER) {
@@ -1527,36 +1527,36 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         LayoutTrack connected = lc.getConnectedObject();
 
         TrackSegment tr = lc.getTrackSegment();
-        LayoutEditor.HitPointTypes cType = lc.getConnectedType();
+        LayoutEditor.HitPointType cType = lc.getConnectedType();
 
         if (connected == null) {
             if (lc.getXover() != null) {
                 if (lc.getXoverBoundaryType() == LayoutConnectivity.XOVER_BOUNDARY_AB) {
                     if (fLayoutBlock == lc.getXover().getLayoutBlock()) {
-                        cType = LayoutEditor.HitPointTypes.TURNOUT_A;
+                        cType = LayoutEditor.HitPointType.TURNOUT_A;
                     } else {
-                        cType = LayoutEditor.HitPointTypes.TURNOUT_B;
+                        cType = LayoutEditor.HitPointType.TURNOUT_B;
                     }
                     connected = lc.getXover();
                 } else if (lc.getXoverBoundaryType() == LayoutConnectivity.XOVER_BOUNDARY_CD) {
                     if (fLayoutBlock == lc.getXover().getLayoutBlockC()) {
-                        cType = LayoutEditor.HitPointTypes.TURNOUT_C;
+                        cType = LayoutEditor.HitPointType.TURNOUT_C;
                     } else {
-                        cType = LayoutEditor.HitPointTypes.TURNOUT_D;
+                        cType = LayoutEditor.HitPointType.TURNOUT_D;
                     }
                     connected = lc.getXover();
                 } else if (lc.getXoverBoundaryType() == LayoutConnectivity.XOVER_BOUNDARY_AC) {
                     if (fLayoutBlock == lc.getXover().getLayoutBlock()) {
-                        cType = LayoutEditor.HitPointTypes.TURNOUT_A;
+                        cType = LayoutEditor.HitPointType.TURNOUT_A;
                     } else {
-                        cType = LayoutEditor.HitPointTypes.TURNOUT_C;
+                        cType = LayoutEditor.HitPointType.TURNOUT_C;
                     }
                     connected = lc.getXover();
                 } else if (lc.getXoverBoundaryType() == LayoutConnectivity.XOVER_BOUNDARY_BD) {
                     if (fLayoutBlock == lc.getXover().getLayoutBlockB()) {
-                        cType = LayoutEditor.HitPointTypes.TURNOUT_B;
+                        cType = LayoutEditor.HitPointType.TURNOUT_B;
                     } else {
-                        cType = LayoutEditor.HitPointTypes.TURNOUT_D;
+                        cType = LayoutEditor.HitPointType.TURNOUT_D;
                     }
                     connected = lc.getXover();
                 }
@@ -1570,7 +1570,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             return null;
         }
 
-        if (cType == LayoutEditor.HitPointTypes.TRACK) {
+        if (cType == LayoutEditor.HitPointType.TRACK) {
             //block boundary is at an Anchor Point
             PositionablePoint p = panel.getFinder().findPositionablePointAtTrackSegments(tr, (TrackSegment) connected);
 
@@ -1592,7 +1592,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             }
         }
 
-        if (cType == LayoutEditor.HitPointTypes.TURNOUT_A) {
+        if (cType == LayoutEditor.HitPointType.TURNOUT_A) {
             lt = (LayoutTurnout) connected;
 
             if ((lt.getLinkType() == LayoutTurnout.LinkType.NO_LINK) || (lt.getLinkType() == LayoutTurnout.LinkType.FIRST_3_WAY)) {
@@ -1622,7 +1622,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             return null;
         }
 
-        if (cType == LayoutEditor.HitPointTypes.TURNOUT_B) {
+        if (cType == LayoutEditor.HitPointType.TURNOUT_B) {
             lt = (LayoutTurnout) connected;
 
             if ((T.equals(SignalMast.class) && (lt.getSignalBMast() != null))
@@ -1650,7 +1650,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             return null;
         }
 
-        if (cType == LayoutEditor.HitPointTypes.TURNOUT_C) {
+        if (cType == LayoutEditor.HitPointType.TURNOUT_C) {
             lt = (LayoutTurnout) connected;
 
             if ((T.equals(SignalMast.class) && (lt.getSignalCMast() != null))
@@ -1678,7 +1678,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             return null;
         }
 
-        if (cType == LayoutEditor.HitPointTypes.TURNOUT_D) {
+        if (cType == LayoutEditor.HitPointType.TURNOUT_D) {
             lt = (LayoutTurnout) connected;
 
             if ((T.equals(SignalMast.class) && (lt.getSignalDMast() != null))
@@ -1710,10 +1710,10 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             return null;
         }
 
-        if (LayoutEditor.HitPointTypes.isSlipHitType(cType)) {
+        if (LayoutEditor.HitPointType.isSlipHitType(cType)) {
             LayoutSlip ls = (LayoutSlip) connected;
 
-            if (cType == LayoutEditor.HitPointTypes.SLIP_A) {
+            if (cType == LayoutEditor.HitPointType.SLIP_A) {
                 if (T.equals(SignalMast.class)) {
                     return ls.getSignalAMast();
                 } else if (T.equals(Sensor.class)) {
@@ -1721,7 +1721,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                 }
             }
 
-            if (cType == LayoutEditor.HitPointTypes.SLIP_B) {
+            if (cType == LayoutEditor.HitPointType.SLIP_B) {
                 if (T.equals(SignalMast.class)) {
                     return ls.getSignalBMast();
                 } else if (T.equals(Sensor.class)) {
@@ -1729,7 +1729,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                 }
             }
 
-            if (cType == LayoutEditor.HitPointTypes.SLIP_C) {
+            if (cType == LayoutEditor.HitPointType.SLIP_C) {
                 if (T.equals(SignalMast.class)) {
                     return ls.getSignalCMast();
                 } else if (T.equals(Sensor.class)) {
@@ -1737,7 +1737,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                 }
             }
 
-            if (cType == LayoutEditor.HitPointTypes.SLIP_D) {
+            if (cType == LayoutEditor.HitPointType.SLIP_D) {
                 if (T.equals(SignalMast.class)) {
                     return ls.getSignalDMast();
                 } else if (T.equals(Sensor.class)) {
@@ -1746,7 +1746,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             }
         }
 
-        if (LayoutEditor.HitPointTypes.isLevelXingHitType(cType)) {
+        if (LayoutEditor.HitPointType.isLevelXingHitType(cType)) {
             log.error("Block Boundary not identified correctly - Blocks {}, {}", facingBlock.getDisplayName(),
                     protectedBlock.getDisplayName());
 
@@ -1757,7 +1757,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         xing, nor do we consider the signal mast, that is protecting the in block on the xing */
         LevelXing xing = (LevelXing) connected;
 
-        if (cType == LayoutEditor.HitPointTypes.LEVEL_XING_A) {
+        if (cType == LayoutEditor.HitPointType.LEVEL_XING_A) {
             //block boundary is at the A connection of a level crossing
             if (T.equals(SignalMast.class)) {
                 return xing.getSignalAMast();
@@ -1766,7 +1766,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             }
         }
 
-        if (cType == LayoutEditor.HitPointTypes.LEVEL_XING_B) {
+        if (cType == LayoutEditor.HitPointType.LEVEL_XING_B) {
             //block boundary is at the B connection of a level crossing
             if (T.equals(SignalMast.class)) {
                 return xing.getSignalBMast();
@@ -1775,7 +1775,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             }
         }
 
-        if (cType == LayoutEditor.HitPointTypes.LEVEL_XING_C) {
+        if (cType == LayoutEditor.HitPointType.LEVEL_XING_C) {
             //block boundary is at the C connection of a level crossing
             if (T.equals(SignalMast.class)) {
                 return xing.getSignalCMast();
@@ -1784,7 +1784,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             }
         }
 
-        if (cType == LayoutEditor.HitPointTypes.LEVEL_XING_D) {
+        if (cType == LayoutEditor.HitPointType.LEVEL_XING_D) {
             if (T.equals(SignalMast.class)) {
                 return xing.getSignalDMast();
             } else if (T.equals(Sensor.class)) {
