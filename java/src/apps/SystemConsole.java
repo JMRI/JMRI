@@ -591,6 +591,7 @@ public final class SystemConsole extends JTextArea {
     public void open() {
         redirectSystemStreams(getOutputStream(), getErrorStream());
     }
+
     /**
      * Retrieve the current console colour scheme
      *
