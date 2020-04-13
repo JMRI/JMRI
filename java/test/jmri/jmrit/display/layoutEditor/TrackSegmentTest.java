@@ -28,8 +28,8 @@ public class TrackSegmentTest {
             TrackSegment ts = new TrackSegment("TS01", null, LayoutEditor.HitPointTypes.NONE, null, LayoutEditor.HitPointTypes.NONE, false, false, layoutEditor);
             Assert.assertNotNull("TrackSegment TS01 not null", ts);
             JUnitAppender.assertErrorMessage("Invalid object in TrackSegment constructor call - TS01");
-            JUnitAppender.assertErrorMessage("Invalid connect type 1 ('0') in TrackSegment constructor - TS01");
-            JUnitAppender.assertErrorMessage("Invalid connect type 2 ('0') in TrackSegment constructor - TS01");
+            JUnitAppender.assertErrorMessage("Invalid connect type 1 ('NONE') in TrackSegment constructor - TS01");
+            JUnitAppender.assertErrorMessage("Invalid connect type 2 ('NONE') in TrackSegment constructor - TS01");
         }
     }
 
@@ -38,7 +38,7 @@ public class TrackSegmentTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         if ((layoutEditor != null) && (trackSegment != null)) {
             Assert.assertFalse("trackSegment.replaceTrackConnection(null, null, NONE) fail", trackSegment.replaceTrackConnection(null, null, LayoutEditor.HitPointTypes.NONE));
-            JUnitAppender.assertWarnMessage("TS1.replaceTrackConnection(null, null, 0); Can't replace null track connection with null");
+            JUnitAppender.assertWarnMessage("TS1.replaceTrackConnection(null, null, NONE); Can't replace null track connection with null");
 
             LayoutTrack c1 = trackSegment.getConnect1();
             LayoutEditor.HitPointTypes t1 = trackSegment.getType1();
@@ -57,7 +57,7 @@ public class TrackSegmentTest {
     public void testToString() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         if ((layoutEditor != null) && (trackSegment != null)) {
-            Assert.assertEquals("trackSegment.toString()", "TrackSegment TS1 c1:{A1 (1)}, c2:{A2 (1)}", trackSegment.toString());
+            Assert.assertEquals("trackSegment.toString()", "TrackSegment TS1 c1:{A1 (POS_POINT)}, c2:{A2 (POS_POINT)}", trackSegment.toString());
         }
     }
 
@@ -165,7 +165,7 @@ public class TrackSegmentTest {
             } catch (NullPointerException e) {
             }
             Assert.assertNull("trackSegment.getLayoutBlock() == null", trackSegment.getLayoutBlock());
-            JUnitAppender.assertErrorMessage("provideLayoutBlock: The block name does not return a block.");
+            JUnitAppender.assertErrorMessage("provideLayoutBlock: The block name 'invalid name' does not return a block.");
 
 //            LayoutBlock layoutBlock = new LayoutBlock("ILB999", "Test Block");
 //            trackSegment.setLayoutBlockByName("ILB999");

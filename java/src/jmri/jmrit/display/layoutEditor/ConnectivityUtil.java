@@ -167,7 +167,7 @@ public class ConnectivityUtil {
                 trackSegment = null;
                 prevConnectTrack = xt;
                 switch (lc.getXoverBoundaryType()) {
-                    case LayoutConnectivity.XOVER_BOUNDARY_AB:
+                    case LayoutConnectivity.XOVER_BOUNDARY_AB: {
                         setting = Turnout.CLOSED;
                         if (((TrackSegment) xt.getConnectA() != null) && (currLayoutBlock == ((TrackSegment) xt.getConnectA()).getLayoutBlock())) {
                             // block exits Xover at A
@@ -179,7 +179,8 @@ public class ConnectivityUtil {
                             prevConnectType = LayoutEditor.HitPointTypes.TURNOUT_B;
                         }
                         break;
-                    case LayoutConnectivity.XOVER_BOUNDARY_CD:
+                    }
+                    case LayoutConnectivity.XOVER_BOUNDARY_CD: {
                         setting = Turnout.CLOSED;
                         if (((TrackSegment) xt.getConnectC() != null) && (currLayoutBlock == ((TrackSegment) xt.getConnectC()).getLayoutBlock())) {
                             // block exits Xover at C
@@ -191,7 +192,8 @@ public class ConnectivityUtil {
                             prevConnectType = LayoutEditor.HitPointTypes.TURNOUT_D;
                         }
                         break;
-                    case LayoutConnectivity.XOVER_BOUNDARY_AC:
+                    }
+                    case LayoutConnectivity.XOVER_BOUNDARY_AC: {
                         if (((TrackSegment) xt.getConnectA() != null) && (currLayoutBlock == ((TrackSegment) xt.getConnectA()).getLayoutBlock())) {
                             // block exits Xover at A
                             trackSegment = (TrackSegment) xt.getConnectA();
@@ -202,7 +204,8 @@ public class ConnectivityUtil {
                             prevConnectType = LayoutEditor.HitPointTypes.TURNOUT_C;
                         }
                         break;
-                    case LayoutConnectivity.XOVER_BOUNDARY_BD:
+                    }
+                    case LayoutConnectivity.XOVER_BOUNDARY_BD: {
                         if (((TrackSegment) xt.getConnectB() != null) && (currLayoutBlock == ((TrackSegment) xt.getConnectB()).getLayoutBlock())) {
                             // block exits Xover at B
                             trackSegment = (TrackSegment) xt.getConnectB();
@@ -213,8 +216,11 @@ public class ConnectivityUtil {
                             prevConnectType = LayoutEditor.HitPointTypes.TURNOUT_D;
                         }
                         break;
-                    default:
+                    }
+                    default: {
+                        log.error("Unhandled crossover boundary type: {}", lc.getXoverBoundaryType());
                         break;
+                    }
                 }
                 result.add(new LayoutTrackExpectedState<>(xt, setting));
                 notFound = false;
@@ -327,6 +333,10 @@ public class ConnectivityUtil {
                             // same block
                             setupOpposingTrackSegment((LevelXing) cObject, cType);
                         }
+                        break;
+                    }
+                    default: {
+                        log.warn("Unhandled Level Crossing type: {}", cType);
                         break;
                     }
                 }
@@ -479,9 +489,10 @@ public class ConnectivityUtil {
                                 trackSegment = null;
                             }
                             break;
-                        default:
+                        default: {
                             log.warn("Unhandled crossover type: {}", cType);
                             break;
+                        }
                     }
                 } else if ((tType == LayoutTurnout.TurnoutType.RH_TURNOUT) || (tType == LayoutTurnout.TurnoutType.LH_TURNOUT)
                         || (tType == LayoutTurnout.TurnoutType.WYE_TURNOUT)) {

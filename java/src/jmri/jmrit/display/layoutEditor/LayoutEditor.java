@@ -87,7 +87,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         MARKER(17),
         TRACK_CIRCLE_CENTRE(18),
         UNUSED_19(19),
-        SLIP_CENTER(20), //should be @Deprecated (use SLIP_LEFT & SLIP_RIGHT instead)
+        @Deprecated //(use SLIP_LEFT & SLIP_RIGHT instead)
+        SLIP_CENTER(20),
         SLIP_A(21),
         SLIP_B(22),
         SLIP_C(23),
@@ -117,16 +118,16 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         SHAPE_POINT_7(47), //   /
         SHAPE_POINT_8(48), //  /
         SHAPE_POINT_9(49), // offset for Shape points (maximum)
-        TURNTABLE_RAY_0(50), // offset for turntable connection points
+        TURNTABLE_RAY_0(50), // offset for turntable connection points (minimum)
         TURNTABLE_RAY_1(51), // \
         TURNTABLE_RAY_2(52), //  \
         TURNTABLE_RAY_3(53), //   \
         TURNTABLE_RAY_4(54), //    \
         TURNTABLE_RAY_5(55), //     \
-        TURNTABLE_RAY_6(56), //      |
-        TURNTABLE_RAY_7(57), //      |
-        TURNTABLE_RAY_8(58), //      |
-        TURNTABLE_RAY_9(59), //      |
+        TURNTABLE_RAY_6(56), //      \
+        TURNTABLE_RAY_7(57), //       |
+        TURNTABLE_RAY_8(58), //       |
+        TURNTABLE_RAY_9(59), //       |
         TURNTABLE_RAY_10(60), //      |
         TURNTABLE_RAY_11(61), //      |
         TURNTABLE_RAY_12(62), //      |
@@ -175,12 +176,12 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         TURNTABLE_RAY_55(75), //      |
         TURNTABLE_RAY_56(76), //      |
         TURNTABLE_RAY_57(77), //      |
-        TURNTABLE_RAY_58(78), //      |
-        TURNTABLE_RAY_59(79), //      |
-        TURNTABLE_RAY_60(70), //     /
-        TURNTABLE_RAY_61(70), //    /
-        TURNTABLE_RAY_62(72), //   /
-        TURNTABLE_RAY_63(73); //  /
+        TURNTABLE_RAY_58(78), //     /
+        TURNTABLE_RAY_59(79), //    /
+        TURNTABLE_RAY_60(70), //   /
+        TURNTABLE_RAY_61(70), //  /
+        TURNTABLE_RAY_62(72), // /
+        TURNTABLE_RAY_63(73); // offset for turntable connection points (maximum)
 
         private final transient Integer value;
         private transient static final Map<Integer, HitPointTypes> ENUM_MAP;
@@ -207,8 +208,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             return value;
         }
 
-        private static HitPointTypeComparator hitPointTypeComparator = new HitPointTypeComparator();
-
+        //private static HitPointTypeComparator hitPointTypeComparator = new HitPointTypeComparator();
         // public so that this can be used for sorting if need be
         public static class HitPointTypeComparator implements Comparator<HitPointTypes> {
 
@@ -662,8 +662,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         setSaveSize(true);
         layoutName = name;
 
-        editorUseOldLocSize = InstanceManager.getDefault(apps.gui.GuiLafPreferencesManager.class
-        ).isEditorUseOldLocSize();
+        editorUseOldLocSize = InstanceManager.getDefault(apps.gui.GuiLafPreferencesManager.class).isEditorUseOldLocSize();
 
         //initialise keycode map
         initStringsToVTCodes();
@@ -720,8 +719,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
 
         //confirm that panel hasn't already been loaded
-        if (InstanceManager.getDefault(PanelMenu.class
-        ).isPanelNameUsed(name)) {
+        if (InstanceManager.getDefault(PanelMenu.class).isPanelNameUsed(name)) {
             log.warn(
                     "File contains a panel with the same name ({}) as an existing panel", name);
         }
@@ -734,8 +732,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         SwingUtilities.invokeLater(() -> {
             //initialize preferences
-            InstanceManager.getOptionalDefault(UserPreferencesManager.class
-            ).ifPresent((prefsMgr) -> {
+            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
                 String windowFrameRef = getWindowFrameRef();
 
                 Object prefsProp = prefsMgr.getProperty(windowFrameRef, "toolBarSide");
@@ -1348,8 +1345,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
             if (newName != null) {
                 if (!newName.equals(getLayoutName())) {
-                    if (InstanceManager.getDefault(PanelMenu.class
-                    ).isPanelNameUsed(newName)) {
+                    if (InstanceManager.getDefault(PanelMenu.class).isPanelNameUsed(newName)) {
                         JOptionPane.showMessageDialog(
                                 null, Bundle.getMessage("CanNotRename"), Bundle.getMessage("PanelExist"),
                                 JOptionPane.ERROR_MESSAGE);
@@ -1357,8 +1353,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                         setTitle(newName);
                         setLayoutName(newName);
                         getLayoutTrackDrawingOptions().setName(newName);
-                        InstanceManager.getDefault(PanelMenu.class
-                        ).renameEditorPanel(LayoutEditor.this);
+                        InstanceManager.getDefault(PanelMenu.class).renameEditorPanel(LayoutEditor.this);
                         setDirty();
 
                         if (toolBarSide.equals(ToolBarSide.eFLOAT) && isEditable()) {
@@ -1963,8 +1958,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         // null if edit toolbar is not setup yet...
         if (!newToolBarSide.equals(toolBarSide)) {
             toolBarSide = newToolBarSide;
-            InstanceManager.getOptionalDefault(UserPreferencesManager.class
-            ).ifPresent((prefsMgr) -> {
+            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
                 prefsMgr.setProperty(getWindowFrameRef(), "toolBarSide", toolBarSide.getName());
             });
             toolBarSideTopButton.setSelected(toolBarSide.equals(ToolBarSide.eTOP));
@@ -2013,8 +2007,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
             wideToolBarCheckBoxMenuItem.setSelected(leToolBarPanel.toolBarIsWide);
 
-            InstanceManager.getOptionalDefault(UserPreferencesManager.class
-            ).ifPresent((prefsMgr) -> {
+            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
                 //Note: since prefs default to false and we want wide to be the default
                 //we invert it and save it as thin
                 prefsMgr.setSimplePreferenceState(getWindowFrameRef() + ".toolBarThin", !leToolBarPanel.toolBarIsWide);
@@ -2160,8 +2153,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         //Note: We have to invoke this stuff later because _targetPanel is not setup yet
         SwingUtilities.invokeLater(() -> {
             //get the window specific saved zoom user preference
-            InstanceManager.getOptionalDefault(UserPreferencesManager.class
-            ).ifPresent((prefsMgr) -> {
+            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
                 Object zoomProp = prefsMgr.getProperty(getWindowFrameRef(), "zoom");
 
                 log.debug(
@@ -2458,8 +2450,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             leToolBarPanel.zoomLabel.setText(String.format("x%1$,.2f", newZoom));
 
             //save the window specific saved zoom user preference
-            InstanceManager.getOptionalDefault(UserPreferencesManager.class
-            ).ifPresent((prefsMgr) -> {
+            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
                 prefsMgr.setProperty(getWindowFrameRef(), "zoom", zoomFactor);
             });
         }
@@ -2650,8 +2641,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         JMenuItem newTrainItem = new JMenuItem(Bundle.getMessage("MenuItemNewTrain"));
         dispMenu.add(newTrainItem);
         newTrainItem.addActionListener((ActionEvent event) -> {
-            if (InstanceManager.getDefault(TransitManager.class
-            ).getNamedBeanSet().size() <= 0) {
+            if (InstanceManager.getDefault(TransitManager.class).getNamedBeanSet().size() <= 0) {
                 //Inform the user that there are no Transits available, and don't open the window
                 JOptionPane.showMessageDialog(
                         null,
@@ -2719,8 +2709,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         if (newName == null) {
             newName = "";
         }
-        LayoutBlock b = InstanceManager.getDefault(LayoutBlockManager.class
-        ).getByUserName(newName);
+        LayoutBlock b = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(newName);
         _layoutTrackSelection.forEach((lt) -> {
             lt.setAllLayoutBlocks(b);
         });
@@ -5588,28 +5577,24 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         if (inBlockName.isEmpty()) {
             //nothing entered, try autoAssign
             if (autoAssignBlocks) {
-                newBlk = InstanceManager.getDefault(LayoutBlockManager.class
-                ).createNewLayoutBlock();
+                newBlk = InstanceManager.getDefault(LayoutBlockManager.class).createNewLayoutBlock();
                 if (null == newBlk) {
                     log.error("provideLayoutBlock: Failure to auto-assign LayoutBlock '{}'.", inBlockName);
                 }
             }
         } else {
             //check if this Layout Block already exists
-            result = InstanceManager.getDefault(LayoutBlockManager.class
-            ).getByUserName(inBlockName);
+            result = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(inBlockName);
             if (result == null) { //(no)
                 // The combo box name can be either a block system name or a block user name
-                Block checkBlock = InstanceManager.getDefault(BlockManager.class
-                ).getBlock(inBlockName);
+                Block checkBlock = InstanceManager.getDefault(BlockManager.class).getBlock(inBlockName);
                 if (checkBlock == null) {
-                    log.error("provideLayoutBlock: The block name does not return a block.");
+                    log.error("provideLayoutBlock: The block name '{}' does not return a block.", inBlockName);
                 } else {
                     String checkUserName = checkBlock.getUserName();
                     if (checkUserName != null && checkUserName.equals(inBlockName)) {
                         // Go ahead and use the name for the layout block
-                        newBlk = InstanceManager.getDefault(LayoutBlockManager.class
-                        ).createNewLayoutBlock(null, inBlockName);
+                        newBlk = InstanceManager.getDefault(LayoutBlockManager.class).createNewLayoutBlock(null, inBlockName);
                         if (newBlk == null) {
                             log.error("provideLayoutBlock: Failure to create new LayoutBlock '{}'.", inBlockName);
                         }
@@ -5621,8 +5606,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                                 JOptionPane.PLAIN_MESSAGE);
                         if (blkUserName != null && !blkUserName.isEmpty()) {
                             // Verify the user name
-                            Block checkDuplicate = InstanceManager.getDefault(BlockManager.class
-                            ).getByUserName(blkUserName);
+                            Block checkDuplicate = InstanceManager.getDefault(BlockManager.class).getByUserName(blkUserName);
                             if (checkDuplicate != null) {
                                 JOptionPane.showMessageDialog(getTargetFrame(),
                                         Bundle.getMessage("BlkUserNameInUse", blkUserName),
@@ -5630,8 +5614,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                             } else {
                                 // OK to use as a block user name
                                 checkBlock.setUserName(blkUserName);
-                                newBlk = InstanceManager.getDefault(LayoutBlockManager.class
-                                ).createNewLayoutBlock(null, blkUserName);
+                                newBlk = InstanceManager.getDefault(LayoutBlockManager.class).createNewLayoutBlock(null, blkUserName);
                                 if (newBlk == null) {
                                     log.error("provideLayoutBlock: Failure to create new LayoutBlock '{}' with a new user name.", blkUserName);
                                 }
@@ -5704,8 +5687,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      */
     public LayoutBlock getLayoutBlock(@Nonnull String blockID) {
         //check if this Layout Block already exists
-        LayoutBlock blk = InstanceManager.getDefault(LayoutBlockManager.class
-        ).getByUserName(blockID);
+        LayoutBlock blk = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(blockID);
         if (blk == null) {
             log.error("LayoutBlock '{}' not found when panel loaded", blockID);
             return null;
@@ -6577,8 +6559,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         SignalHead mHead = null;
 
         if (!newName.isEmpty()) {
-            mHead = InstanceManager.getDefault(SignalHeadManager.class
-            ).getSignalHead(newName);
+            mHead = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(newName);
 
             /*if (mHead == null)
             mHead = InstanceManager.getDefault(SignalHeadManager.class).getByUserName(newName);
@@ -6622,12 +6603,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     @CheckForNull
     SignalHead getSignalHead(@Nonnull String name) {
-        SignalHead sh = InstanceManager.getDefault(SignalHeadManager.class
-        ).getBySystemName(name);
+        SignalHead sh = InstanceManager.getDefault(SignalHeadManager.class).getBySystemName(name);
 
         if (sh == null) {
-            sh = InstanceManager.getDefault(SignalHeadManager.class
-            ).getByUserName(name);
+            sh = InstanceManager.getDefault(SignalHeadManager.class).getByUserName(name);
         }
 
         if (sh == null) {
@@ -6671,8 +6650,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         SignalMast mMast = null;
 
         if (!newName.isEmpty()) {
-            mMast = InstanceManager.getDefault(SignalMastManager.class
-            ).getSignalMast(newName);
+            mMast = InstanceManager.getDefault(SignalMastManager.class).getSignalMast(newName);
             leToolBarPanel.signalMastComboBox.setSelectedItem(mMast);
         }
 
@@ -6702,12 +6680,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     SignalMast getSignalMast(@Nonnull String name) {
-        SignalMast sh = InstanceManager.getDefault(SignalMastManager.class
-        ).getBySystemName(name);
+        SignalMast sh = InstanceManager.getDefault(SignalMastManager.class).getBySystemName(name);
 
         if (sh == null) {
-            sh = InstanceManager.getDefault(SignalMastManager.class
-            ).getByUserName(name);
+            sh = InstanceManager.getDefault(SignalMastManager.class).getByUserName(name);
         }
 
         if (sh == null) {
@@ -7576,8 +7552,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
                 }
             }
-            InstanceManager.getOptionalDefault(UserPreferencesManager.class
-            ).ifPresent((prefsMgr) -> {
+            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
                 prefsMgr.setSimplePreferenceState(getWindowFrameRef() + ".showHelpBar", showHelpBar);
             });
         }
@@ -7629,8 +7604,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 antialiasingOnCheckBoxMenuItem.setSelected(antialiasingOn);
 
             }
-            InstanceManager.getOptionalDefault(UserPreferencesManager.class
-            ).ifPresent((prefsMgr) -> {
+            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
                 prefsMgr.setSimplePreferenceState(getWindowFrameRef() + ".antialiasingOn", antialiasingOn);
             });
         }
@@ -7647,8 +7621,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
             }
 
-            InstanceManager.getOptionalDefault(UserPreferencesManager.class
-            ).ifPresent((prefsMgr) -> {
+            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
                 prefsMgr.setSimplePreferenceState(getWindowFrameRef() + ".highlightSelectedBlock", highlightSelectedBlockFlag);
             });
 

@@ -362,7 +362,7 @@ public class LayoutTurnoutTest {
         Assert.assertEquals("ltRH.getCoordsForConnectionType(NONE) is equal to...",
                 new Point2D.Double(150.0, 100.0),
                 ltRH.getCoordsForConnectionType(LayoutEditor.HitPointTypes.NONE));
-        JUnitAppender.assertErrorMessage("Right Hand.getCoordsForConnectionType(0); Invalid Connection Type");
+        JUnitAppender.assertErrorMessage("Right Hand.getCoordsForConnectionType(NONE); Invalid Connection Type");
         Assert.assertEquals("ltRH.getCoordsForConnectionType(TURNOUT_A) is equal to...",
                 new Point2D.Double(132.0, 87.0),
                 ltRH.getCoordsForConnectionType(LayoutEditor.HitPointTypes.TURNOUT_A));
@@ -382,7 +382,7 @@ public class LayoutTurnoutTest {
         Assert.assertEquals("ltLH.getCoordsForConnectionType(NONE) is equal to...",
                 new Point2D.Double(200.0, 175.0),
                 ltLH.getCoordsForConnectionType(LayoutEditor.HitPointTypes.NONE));
-        JUnitAppender.assertErrorMessage("Left Hand.getCoordsForConnectionType(0); Invalid Connection Type");
+        JUnitAppender.assertErrorMessage("Left Hand.getCoordsForConnectionType(NONE); Invalid Connection Type");
         Assert.assertEquals("ltLH.getCoordsForConnectionType(TURNOUT_A) is equal to...",
                 new Point2D.Double(189.0, 149.0),
                 ltLH.getCoordsForConnectionType(LayoutEditor.HitPointTypes.TURNOUT_A));
@@ -402,7 +402,7 @@ public class LayoutTurnoutTest {
         Assert.assertEquals("ltWY.getCoordsForConnectionType(NONE) is equal to...",
                 new Point2D.Double(250.0, 250.0),
                 ltWY.getCoordsForConnectionType(LayoutEditor.HitPointTypes.NONE));
-        JUnitAppender.assertErrorMessage("Wye.getCoordsForConnectionType(0); Invalid Connection Type");
+        JUnitAppender.assertErrorMessage("Wye.getCoordsForConnectionType(NONE); Invalid Connection Type");
         Assert.assertEquals("ltWY.getCoordsForConnectionType(TURNOUT_A) is equal to...",
                 new Point2D.Double(254.5, 218.5),
                 ltWY.getCoordsForConnectionType(LayoutEditor.HitPointTypes.TURNOUT_A));
@@ -422,7 +422,7 @@ public class LayoutTurnoutTest {
         Assert.assertEquals("ltDX.getCoordsForConnectionType(NONE) is equal to...",
                 new Point2D.Double(300.0, 325.0),
                 ltDX.getCoordsForConnectionType(LayoutEditor.HitPointTypes.NONE));
-        JUnitAppender.assertErrorMessage("Double XOver.getCoordsForConnectionType(0); Invalid Connection Type");
+        JUnitAppender.assertErrorMessage("Double XOver.getCoordsForConnectionType(NONE); Invalid Connection Type");
         Assert.assertEquals("ltDX.getCoordsForConnectionType(TURNOUT_A) is equal to...",
                 new Point2D.Double(347.0, 297.0),
                 ltDX.getCoordsForConnectionType(LayoutEditor.HitPointTypes.TURNOUT_A));
@@ -442,7 +442,7 @@ public class LayoutTurnoutTest {
         Assert.assertEquals("ltRX.getCoordsForConnectionType(NONE) is equal to...",
                 new Point2D.Double(350.0, 400.0),
                 ltRX.getCoordsForConnectionType(LayoutEditor.HitPointTypes.NONE));
-        JUnitAppender.assertErrorMessage("Right Hand XOver.getCoordsForConnectionType(0); Invalid Connection Type");
+        JUnitAppender.assertErrorMessage("Right Hand XOver.getCoordsForConnectionType(NONE); Invalid Connection Type");
         Assert.assertEquals("ltRX.getCoordsForConnectionType(TURNOUT_A) is equal to...",
                 new Point2D.Double(410.0, 404.0),
                 ltRX.getCoordsForConnectionType(LayoutEditor.HitPointTypes.TURNOUT_A));
@@ -462,7 +462,7 @@ public class LayoutTurnoutTest {
         Assert.assertEquals("ltLX.getCoordsForConnectionType(NONE) is equal to...",
                 new Point2D.Double(400.0, 475.0),
                 ltLX.getCoordsForConnectionType(LayoutEditor.HitPointTypes.NONE));
-        JUnitAppender.assertErrorMessage("Left Hand XOver.getCoordsForConnectionType(0); Invalid Connection Type");
+        JUnitAppender.assertErrorMessage("Left Hand XOver.getCoordsForConnectionType(NONE); Invalid Connection Type");
         Assert.assertEquals("ltLX.getCoordsForConnectionType(TURNOUT_A) is equal to...",
                 new Point2D.Double(413.0, 503.0),
                 ltLX.getCoordsForConnectionType(LayoutEditor.HitPointTypes.TURNOUT_A));
@@ -574,7 +574,7 @@ public class LayoutTurnoutTest {
             Assert.fail("No exception thrown on ltRH.getConnection(invalid type)");
         } catch (JmriException ex) {
         }
-        JUnitAppender.assertErrorMessage("Right Hand.getConnection(0); Invalid Connection Type");
+        JUnitAppender.assertErrorMessage("Right Hand.getConnection(NONE); Invalid Connection Type");
 
         try {
             Assert.assertNull("ltLH.getConnection(invalid type) is null",
@@ -582,7 +582,7 @@ public class LayoutTurnoutTest {
             Assert.fail("No exception thrown on ltLH.getConnection(invalid type)");
         } catch (JmriException ex) {
         }
-        JUnitAppender.assertErrorMessage("Left Hand.getConnection(0); Invalid Connection Type");
+        JUnitAppender.assertErrorMessage("Left Hand.getConnection(NONE); Invalid Connection Type");
 
         try {
             Assert.assertNull("ltWY.getConnection(invalid type) is null",
@@ -590,7 +590,7 @@ public class LayoutTurnoutTest {
             Assert.fail("No exception thrown on ltWY.getConnection(invalid type)");
         } catch (JmriException ex) {
         }
-        JUnitAppender.assertErrorMessage("Wye.getConnection(0); Invalid Connection Type");
+        JUnitAppender.assertErrorMessage("Wye.getConnection(NONE); Invalid Connection Type");
 
         try {
             Assert.assertNull("ltDX.getConnection(invalid type) is null",
@@ -598,7 +598,7 @@ public class LayoutTurnoutTest {
             Assert.fail("No exception thrown on ltDX.getConnection(invalid type)");
         } catch (JmriException ex) {
         }
-        JUnitAppender.assertErrorMessage("Double XOver.getConnection(0); Invalid Connection Type");
+        JUnitAppender.assertErrorMessage("Double XOver.getConnection(NONE); Invalid Connection Type");
 
         try {
             Assert.assertNull("ltRX.getConnection(invalid type) is null",
@@ -606,7 +606,7 @@ public class LayoutTurnoutTest {
             Assert.fail("No exception thrown on ltRX.getConnection(invalid type)");
         } catch (JmriException ex) {
         }
-        JUnitAppender.assertErrorMessage("Right Hand XOver.getConnection(0); Invalid Connection Type");
+        JUnitAppender.assertErrorMessage("Right Hand XOver.getConnection(NONE); Invalid Connection Type");
 
         try {
             Assert.assertNull("ltLX.getConnection(invalid type) is null",
@@ -614,7 +614,7 @@ public class LayoutTurnoutTest {
             Assert.fail("No exception thrown on ltLX.getConnection(invalid type)");
         } catch (JmriException ex) {
         }
-        JUnitAppender.assertErrorMessage("Left Hand XOver.getConnection(0); Invalid Connection Type");
+        JUnitAppender.assertErrorMessage("Left Hand XOver.getConnection(NONE); Invalid Connection Type");
     }
 
     @Test
@@ -676,7 +676,7 @@ public class LayoutTurnoutTest {
             Assert.fail("No exception thrown on ltRH.setConnection(Invalid Connection Type)");
         } catch (JmriException ex) {
         }
-        JUnitAppender.assertErrorMessage("Right Hand.setConnection(0, null, 0); Invalid Connection Type");
+        JUnitAppender.assertErrorMessage("Right Hand.setConnection(NONE, null, NONE); Invalid Connection Type");
 
         try {
             // test unexpected type
@@ -684,7 +684,7 @@ public class LayoutTurnoutTest {
             Assert.fail("No exception thrown on ltRH.setConnection(unexpected type)");
         } catch (JmriException ex) {
         }
-        JUnitAppender.assertErrorMessage("Right Hand.setConnection(1, null, 1); unexpected type");
+        JUnitAppender.assertErrorMessage("Right Hand.setConnection(POS_POINT, null, POS_POINT); unexpected type");
 
         try {
             // test valid types
@@ -700,40 +700,40 @@ public class LayoutTurnoutTest {
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
 
         ltRH.setConnectA(null, LayoutEditor.HitPointTypes.POS_POINT);
-        JUnitAppender.assertErrorMessage("Right Hand.setConnectA(null, 1); unexpected type");
+        JUnitAppender.assertErrorMessage("Right Hand.setConnectA(null, POS_POINT); unexpected type");
         ltRH.setConnectB(null, LayoutEditor.HitPointTypes.POS_POINT);
-        JUnitAppender.assertErrorMessage("Right Hand.setConnectB(null, 1); unexpected type");
+        JUnitAppender.assertErrorMessage("Right Hand.setConnectB(null, POS_POINT); unexpected type");
         ltRH.setConnectC(null, LayoutEditor.HitPointTypes.POS_POINT);
-        JUnitAppender.assertErrorMessage("Right Hand.setConnectC(null, 1); unexpected type");
+        JUnitAppender.assertErrorMessage("Right Hand.setConnectC(null, POS_POINT); unexpected type");
         ltRH.setConnectD(null, LayoutEditor.HitPointTypes.POS_POINT);
-        JUnitAppender.assertErrorMessage("Right Hand.setConnectD(null, 1); unexpected type");
+        JUnitAppender.assertErrorMessage("Right Hand.setConnectD(null, POS_POINT); unexpected type");
 
         ltLH.setConnectA(null, LayoutEditor.HitPointTypes.POS_POINT);
-        JUnitAppender.assertErrorMessage("Left Hand.setConnectA(null, 1); unexpected type");
+        JUnitAppender.assertErrorMessage("Left Hand.setConnectA(null, POS_POINT); unexpected type");
         ltLH.setConnectB(null, LayoutEditor.HitPointTypes.POS_POINT);
-        JUnitAppender.assertErrorMessage("Left Hand.setConnectB(null, 1); unexpected type");
+        JUnitAppender.assertErrorMessage("Left Hand.setConnectB(null, POS_POINT); unexpected type");
         ltLH.setConnectC(null, LayoutEditor.HitPointTypes.POS_POINT);
-        JUnitAppender.assertErrorMessage("Left Hand.setConnectC(null, 1); unexpected type");
+        JUnitAppender.assertErrorMessage("Left Hand.setConnectC(null, POS_POINT); unexpected type");
         ltLH.setConnectD(null, LayoutEditor.HitPointTypes.POS_POINT);
-        JUnitAppender.assertErrorMessage("Left Hand.setConnectD(null, 1); unexpected type");
+        JUnitAppender.assertErrorMessage("Left Hand.setConnectD(null, POS_POINT); unexpected type");
 
         ltWY.setConnectA(null, LayoutEditor.HitPointTypes.POS_POINT);
-        JUnitAppender.assertErrorMessage("Wye.setConnectA(null, 1); unexpected type");
+        JUnitAppender.assertErrorMessage("Wye.setConnectA(null, POS_POINT); unexpected type");
         ltWY.setConnectB(null, LayoutEditor.HitPointTypes.POS_POINT);
-        JUnitAppender.assertErrorMessage("Wye.setConnectB(null, 1); unexpected type");
+        JUnitAppender.assertErrorMessage("Wye.setConnectB(null, POS_POINT); unexpected type");
         ltWY.setConnectC(null, LayoutEditor.HitPointTypes.POS_POINT);
-        JUnitAppender.assertErrorMessage("Wye.setConnectC(null, 1); unexpected type");
+        JUnitAppender.assertErrorMessage("Wye.setConnectC(null, POS_POINT); unexpected type");
         ltWY.setConnectD(null, LayoutEditor.HitPointTypes.POS_POINT);
-        JUnitAppender.assertErrorMessage("Wye.setConnectD(null, 1); unexpected type");
+        JUnitAppender.assertErrorMessage("Wye.setConnectD(null, POS_POINT); unexpected type");
 
         ltDX.setConnectA(null, LayoutEditor.HitPointTypes.POS_POINT);
-        JUnitAppender.assertErrorMessage("Double XOver.setConnectA(null, 1); unexpected type");
+        JUnitAppender.assertErrorMessage("Double XOver.setConnectA(null, POS_POINT); unexpected type");
         ltDX.setConnectB(null, LayoutEditor.HitPointTypes.POS_POINT);
-        JUnitAppender.assertErrorMessage("Double XOver.setConnectB(null, 1); unexpected type");
+        JUnitAppender.assertErrorMessage("Double XOver.setConnectB(null, POS_POINT); unexpected type");
         ltDX.setConnectC(null, LayoutEditor.HitPointTypes.POS_POINT);
-        JUnitAppender.assertErrorMessage("Double XOver.setConnectC(null, 1); unexpected type");
+        JUnitAppender.assertErrorMessage("Double XOver.setConnectC(null, POS_POINT); unexpected type");
         ltDX.setConnectD(null, LayoutEditor.HitPointTypes.POS_POINT);
-        JUnitAppender.assertErrorMessage("Double XOver.setConnectD(null, 1); unexpected type");
+        JUnitAppender.assertErrorMessage("Double XOver.setConnectD(null, POS_POINT); unexpected type");
     }
 
     @Test

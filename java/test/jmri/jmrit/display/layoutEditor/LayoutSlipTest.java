@@ -147,18 +147,18 @@ public class LayoutSlipTest {
         Assert.assertNotNull("LayoutSlip double not null", ltd);
 
         try {
-            // this should throw up (SLIP_CENTER is not a valid connection type)
-            Assert.assertNull("lts.getConnectionType(SLIP_CENTER) is null", lts.getConnection(LayoutEditor.HitPointTypes.SLIP_CENTER));
-            Assert.fail("lts.getConnectionType(SLIP_CENTER): No exception thrown");
+            // this should throw up (NONE is not a valid connection type)
+            Assert.assertNull("lts.getConnectionType(NONE) is null", lts.getConnection(LayoutEditor.HitPointTypes.NONE));
+            Assert.fail("lts.getConnectionType(NONE): No exception thrown");
         } catch (jmri.JmriException e) {
-            JUnitAppender.assertErrorMessage("single.getConnection(20); Invalid Connection Type");
+            JUnitAppender.assertErrorMessage("single.getConnection(NONE); Invalid Connection Type");
         }
         try {
-            // this should throw up (SLIP_CENTER is not a valid connection type)
-            Assert.assertNull("ltd.getConnectionType(SLIP_CENTER) is null", ltd.getConnection(LayoutEditor.HitPointTypes.SLIP_CENTER));
-            Assert.fail("ltd.getConnectionType(SLIP_CENTER): No exception thrown");
+            // this should throw up (NONE is not a valid connection type)
+            Assert.assertNull("ltd.getConnectionType(NONE) is null", ltd.getConnection(LayoutEditor.HitPointTypes.NONE));
+            Assert.fail("ltd.getConnectionType(NONE): No exception thrown");
         } catch (jmri.JmriException e) {
-            JUnitAppender.assertErrorMessage("double.getConnection(20); Invalid Connection Type");
+            JUnitAppender.assertErrorMessage("double.getConnection(NONE); Invalid Connection Type");
         } // OK
     }
 
@@ -562,7 +562,7 @@ public class LayoutSlipTest {
             Assert.fail("No exception thrown on lts.getConnection(invalid type)");
         } catch (JmriException ex) {
         }
-        JUnitAppender.assertErrorMessage("single.getConnection(0); Invalid Connection Type");
+        JUnitAppender.assertErrorMessage("single.getConnection(NONE); Invalid Connection Type");
 
         try {
             // test Invalid Connection Type
@@ -571,7 +571,7 @@ public class LayoutSlipTest {
             Assert.fail("No exception thrown on ltd.getConnection(invalid type)");
         } catch (JmriException ex) {
         }
-        JUnitAppender.assertErrorMessage("double.getConnection(0); Invalid Connection Type");
+        JUnitAppender.assertErrorMessage("double.getConnection(NONE); Invalid Connection Type");
     }
 
     @Test
