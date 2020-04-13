@@ -164,12 +164,4 @@ public class XnTcpXNetPacketizerTest extends jmri.jmrix.lenz.XNetPacketizerTest 
         }
     }
 
-    @After
-    @Override
-    public void tearDown() {
-        tc.terminateThreads();
-        tc = null;
-        jmri.util.JUnitUtil.tearDown();
-    }
-
 }
