@@ -746,7 +746,7 @@
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
-            <sysproperty key="jmri.skipTestsRequiringSeparateRunning" value="true"/><!-- skip intermittent tests -->
+            <sysproperty key="jmri.skipTestsRequiringSeparateRunning" value="false"/><!-- skip intermittent tests -->
             <sysproperty key="user.language" value="en"/>
             <sysproperty key="user.country" value="US"/>
             <sysproperty key="cucumber.options" value="--tags 'not @Ignore' --tags 'not @webtest'"/>
@@ -783,7 +783,7 @@
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
-            <sysproperty key="jmri.skipTestsRequiringSeparateRunning" value="true"/><!-- skip intermittent tests -->
+            <sysproperty key="jmri.skipTestsRequiringSeparateRunning" value="false"/><!-- skip intermittent tests -->
             <sysproperty key="user.language" value="en"/>
             <sysproperty key="user.country" value="US"/>
             <sysproperty key="cucumber.options" value="--tags 'not @Ignore' --tags 'not @webtest'"/>
